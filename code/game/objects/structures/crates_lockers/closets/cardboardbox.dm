@@ -10,27 +10,23 @@
 	can_weld_shut = 0
 	cutting_tool = /obj/item/wirecutters
 	open_sound = "rustle"
+	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
 	var/move_speed_multiplier = 1
-	var/move_delay = FALSE
+	var/move_delay = 0
 	var/egged = 0
-	var/use_mob_movespeed = FALSE //Citadel adds snowflake box handling
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.IsStun() || user.IsKnockdown() || user.IsUnconscious() || !isturf(loc) || !has_gravity(loc))
 		return
-	move_delay = TRUE
-	var/oldloc = loc
-	step(src, direction)
-	if(oldloc != loc)
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), (use_mob_movespeed ? user.movement_delay() : CONFIG_GET(number/movedelay/walk_delay)) * move_speed_multiplier)
+	move_delay = 1
+	if(step(src, direction))
+		spawn(config.walk_speed*move_speed_multiplier)
+			move_delay = 0
 	else
-		ResetMoveDelay()
-
-/obj/structure/closet/cardboard/proc/ResetMoveDelay()
-	move_delay = FALSE
+		move_delay = 0
 
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
@@ -59,11 +55,6 @@
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 
-/obj/structure/closet/cardboard/handle_lock_addition() //Whoever heard of a lockable cardboard box anyway
-	return
-
-/obj/structure/closet/cardboard/handle_lock_removal()
-	return
 
 /obj/structure/closet/cardboard/metal
 	name = "large metal box"
@@ -71,9 +62,10 @@
 	icon_state = "metalbox"
 	max_integrity = 500
 	mob_storage_capacity = 5
-	resistance_flags = NONE
+	resistance_flags = 0
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weldingtool
 	open_sound = 'sound/machines/click.ogg'
+	cutting_sound = 'sound/items/welder.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS

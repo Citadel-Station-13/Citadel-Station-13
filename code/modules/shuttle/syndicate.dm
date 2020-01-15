@@ -2,7 +2,6 @@
 
 /obj/machinery/computer/shuttle/syndicate
 	name = "syndicate shuttle terminal"
-	desc = "The terminal used to control the syndicate transport shuttle."
 	circuit = /obj/item/circuitboard/computer/syndicate_shuttle
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
@@ -14,7 +13,6 @@
 
 /obj/machinery/computer/shuttle/syndicate/recall
 	name = "syndicate shuttle recall terminal"
-	desc = "Use this if your friends left you behind."
 	possible_destinations = "syndicate_away"
 
 
@@ -27,14 +25,8 @@
 		board.moved = TRUE
 	..()
 
-/obj/machinery/computer/shuttle/syndicate/allowed(mob/M)
-	if(issilicon(M) && !(ROLE_SYNDICATE in M.faction))
-		return FALSE
-	return ..()
-
 /obj/machinery/computer/shuttle/syndicate/drop_pod
 	name = "syndicate assault pod control"
-	desc = "Controls the drop pod's launch system."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
@@ -45,7 +37,7 @@
 
 /obj/machinery/computer/shuttle/syndicate/drop_pod/Topic(href, href_list)
 	if(href_list["move"])
-		if(!is_centcom_level(z))
+		if(z != ZLEVEL_CENTCOM)
 			to_chat(usr, "<span class='warning'>Pods are one way!</span>")
 			return 0
 	..()
@@ -55,13 +47,13 @@
 	desc = "Used to designate a precise transit location for the syndicate shuttle."
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
+	z_lock = ZLEVEL_STATION_PRIMARY
 	shuttleId = "syndicate"
-	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "syndicate_custom"
+	shuttlePortName = "custom location"
 	jumpto_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1)
 	view_range = 13
-	x_offset = -7
-	y_offset = -1
-	see_hidden = TRUE
+	x_offset = -4
+	y_offset = -2
 
 #undef SYNDICATE_CHALLENGE_TIMER

@@ -1,13 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space,
+/area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/space,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "c" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -16,142 +18,178 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "d" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"e" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "f" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/space,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "g" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
 /turf/closed/wall/mineral/titanium,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"h" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "i" = (
 /turf/closed/wall/mineral/titanium/overspace,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"j" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "k" = (
-/turf/open/floor/plasteel/dark,
-/area/ruin/powered/shuttle/medium_2)
+/turf/open/floor/plasteel/black,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "l" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/glass_external,
 /turf/open/floor/plating,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "m" = (
 /turf/open/floor/plasteel,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "n" = (
-/obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel/dark,
-/area/ruin/powered/shuttle/medium_2)
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plasteel/black,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "o" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/powered/shuttle/medium_2)
+/turf/open/floor/plasteel/darkblue,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "p" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
+/turf/open/floor/plasteel/darkyellow,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"q" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
 	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "r" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "s" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/powered/shuttle/medium_2)
+/turf/open/floor/plasteel/darkblue,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "t" = (
 /obj/machinery/sleeper{
+	icon_state = "sleeper";
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/powered/shuttle/medium_2)
+/turf/open/floor/plasteel/darkblue,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "u" = (
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/powered/shuttle/medium_2)
+/turf/open/floor/plasteel/darkyellow,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "v" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "w" = (
 /obj/machinery/power/smes/magical,
 /turf/open/floor/plating,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "x" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "y" = (
 /obj/structure/chair/comfy{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
+/turf/open/floor/plasteel/darkyellow,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"z" = (
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
 	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"A" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 "B" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ruin/powered/shuttle/medium_2)
+/area/ruin/powered{
+	name = "Shuttle"
+	})
 
 (1,1,1) = {"
 a
@@ -201,15 +239,15 @@ a
 (4,1,1) = {"
 b
 f
+j
 d
 d
-d
-d
+q
 a
+j
 d
 d
-d
-d
+q
 b
 f
 "}
@@ -219,10 +257,10 @@ c
 d
 d
 g
-g
+h
 l
-g
-g
+h
+z
 d
 d
 c
@@ -232,21 +270,21 @@ c
 d
 d
 g
-g
-g
+h
+h
 r
 m
 r
-g
-g
-g
+h
+h
+z
 d
 d
 "}
 (7,1,1) = {"
 d
 d
-g
+h
 m
 m
 m
@@ -254,74 +292,74 @@ m
 m
 m
 m
-g
+h
 d
 d
 "}
 (8,1,1) = {"
 d
 g
-g
+h
 n
-g
+h
 B
 w
 B
-g
+h
 n
-g
-g
+h
+z
 d
 "}
 (9,1,1) = {"
 d
-g
+h
 k
 k
-g
-g
+h
+h
 B
-g
-g
+h
+h
 k
 k
-g
+h
 d
 "}
 (10,1,1) = {"
-d
-g
+e
+h
 k
 k
-g
-g
-g
-g
-g
+h
+h
+h
+h
+h
 k
 k
-g
-d
+h
+A
 "}
 (11,1,1) = {"
 a
 i
-g
+h
 n
-g
-g
-g
-g
-g
+h
+h
+h
+h
+h
 n
-g
+h
 i
 a
 "}
 (12,1,1) = {"
 a
 a
-g
+h
 k
 k
 n
@@ -329,37 +367,37 @@ k
 n
 k
 k
-g
+h
 a
 a
 "}
 (13,1,1) = {"
 a
 a
-g
+h
 k
 k
-g
-g
-g
+h
+h
+h
 k
 k
-g
+h
 a
 a
 "}
 (14,1,1) = {"
 a
 a
-g
-g
+h
+h
 n
-g
-g
-g
+h
+h
+h
 n
-g
-g
+h
+h
 a
 a
 "}
@@ -369,9 +407,9 @@ a
 l
 k
 k
-g
-g
-g
+h
+h
+h
 k
 k
 l
@@ -382,13 +420,13 @@ a
 a
 a
 i
-g
+h
 n
-g
-g
-g
+h
+h
+h
 n
-g
+h
 i
 a
 a
@@ -397,13 +435,13 @@ a
 a
 a
 a
-g
+h
 k
 k
 k
 k
 k
-g
+h
 a
 a
 a
@@ -412,13 +450,13 @@ a
 a
 a
 a
-g
+h
 n
-g
-g
-g
+h
+h
+h
 n
-g
+h
 a
 a
 a
@@ -427,13 +465,13 @@ a
 a
 a
 a
-g
+h
 o
 s
 x
 k
 k
-g
+h
 a
 a
 a
@@ -442,13 +480,13 @@ a
 a
 a
 a
-g
+h
 o
 t
 x
 k
 k
-g
+h
 a
 a
 a
@@ -457,13 +495,13 @@ a
 a
 a
 a
-g
+h
 n
-g
-g
-g
+h
+h
+h
 n
-g
+h
 a
 a
 a
@@ -472,13 +510,13 @@ a
 a
 a
 a
-g
+h
 k
 k
 x
 k
 k
-g
+h
 a
 a
 a
@@ -487,13 +525,13 @@ a
 a
 a
 a
-g
+h
 k
 k
 x
 k
 k
-g
+h
 a
 a
 a
@@ -502,13 +540,13 @@ a
 a
 a
 a
-g
+h
 n
-g
-g
-g
+h
+h
+h
 n
-g
+h
 a
 a
 a
@@ -517,13 +555,13 @@ a
 a
 a
 a
-g
+h
 p
 p
 y
 p
 p
-g
+h
 a
 a
 a
@@ -532,13 +570,13 @@ a
 a
 a
 a
-g
+h
 p
 u
 u
 u
 p
-g
+h
 a
 a
 a
@@ -548,11 +586,11 @@ a
 a
 a
 i
-g
+h
 v
 v
 v
-g
+h
 i
 a
 a

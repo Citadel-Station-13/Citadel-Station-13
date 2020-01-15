@@ -9,7 +9,6 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 =  CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
-	var/checks_antimagic = FALSE
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 4
@@ -17,9 +16,10 @@
 	var/can_charge = 1
 	var/ammo_type
 	var/no_den_usage
+	origin_tech = null
 	clumsy_check = 0
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
-	pin = /obj/item/firing_pin/magic
+	pin = /obj/item/device/firing_pin/magic
 
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -32,10 +32,7 @@
 			return
 		else
 			no_den_usage = 0
-	if(checks_antimagic && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
-		to_chat(user, "<span class='warning'>Something is interfering with [src].</span>")
-		return
-	. = ..()
+	..()
 
 /obj/item/gun/magic/can_shoot()
 	return charges

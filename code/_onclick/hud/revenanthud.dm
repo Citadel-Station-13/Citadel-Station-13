@@ -3,5 +3,8 @@
 	..()
 
 	healths = new /obj/screen/healths/revenant()
-	healths.hud = src
 	infodisplay += healths
+
+/mob/living/simple_animal/revenant/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/revenant(src)

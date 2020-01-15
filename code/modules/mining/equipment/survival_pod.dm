@@ -4,7 +4,7 @@
 	icon_state = "away"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	has_gravity = TRUE
 	valid_territory = FALSE
 
 //Survival Capsule
@@ -14,6 +14,7 @@
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "engineering=3;bluespace=3"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
 	var/used = FALSE
@@ -33,8 +34,8 @@
 /obj/item/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	. += "This capsule has the [template.name] stored."
-	. += template.description
+	to_chat(user, "This capsule has the [template.name] stored.")
+	to_chat(user, template.description)
 
 /obj/item/survivalcapsule/attack_self()
 	//Can't grab when capsule is New() because templates aren't loaded then
@@ -57,27 +58,21 @@
 			used = FALSE
 			return
 
-		playsound(src, 'sound/effects/phasein.ogg', 100, 1)
+		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 
 		var/turf/T = deploy_location
-		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
-			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_VERBOSEJMP(T)]")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
+		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
+			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
+			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [get_area(T)][COORD(T)]")
 		template.load(deploy_location, centered = TRUE)
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
-//Non-default pods
-
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
+	origin_tech = "engineering=3;bluespace=4"
 	template_id = "shelter_beta"
-
-/obj/item/survivalcapsule/luxuryelite
-	name = "luxury elite bar capsule"
-	desc = "A luxury bar in a capsule. Bartender required and not included."
-	template_id = "shelter_charlie"
 
 //Pod objects
 
@@ -89,15 +84,6 @@
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
 
-/obj/structure/window/shuttle/survival_pod/spawner/north
-	dir = NORTH
-
-/obj/structure/window/shuttle/survival_pod/spawner/east
-	dir = EAST
-
-/obj/structure/window/shuttle/survival_pod/spawner/west
-	dir = WEST
-
 /obj/structure/window/reinforced/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
@@ -108,19 +94,46 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
-
-/obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
 	glass = TRUE
+	var/expected_dir = SOUTH //we visually turn when shuttle rotated, but need to not turn for any other reason
+
+/obj/machinery/door/airlock/survival_pod/setDir(direction)
+	direction = expected_dir
+	..()
+
+/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation)
+	expected_dir = angle2dir(rotation+dir2angle(dir))
+	..()
+
+/obj/machinery/door/airlock/survival_pod/vertical
+	dir = EAST
+	expected_dir = EAST
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
-	base_name = "pod airlock"
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
-	glass_type = /obj/machinery/door/airlock/survival_pod/glass
+	anchored = TRUE
+	state = 1
+	mineral = "glass"
+	material = "glass"
+	var/expected_dir = SOUTH
+
+/obj/structure/door_assembly/door_assembly_pod/setDir(direction)
+	direction = expected_dir
+	..()
+
+/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation)
+	expected_dir = angle2dir(rotation+dir2angle(dir))
+	..()
+
+/obj/structure/door_assembly/door_assembly_pod/vertical
+	dir = EAST
+	expected_dir = EAST
 
 //Windoor
 /obj/machinery/door/window/survival_pod
@@ -146,7 +159,7 @@
 		add_overlay("sleeper_cover")
 
 //Computer
-/obj/item/gps/computer
+/obj/item/device/gps/computer
 	name = "pod computer"
 	icon_state = "pod_computer"
 	icon = 'icons/obj/lavaland/pod_computer.dmi'
@@ -154,21 +167,18 @@
 	density = TRUE
 	pixel_y = -32
 
-/obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
-	if(flags_1 & NODECONSTRUCT_1)
-		return TRUE
-
-	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
-		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
-	if(I.use_tool(src, user, 20, volume=50))
-		new /obj/item/gps(loc)
-		qdel(src)
-	return TRUE
-
-/obj/item/gps/computer/attack_hand(mob/user)
-	. = ..()
-	if(.)
+/obj/item/device/gps/computer/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+		playsound(src.loc, W.usesound, 50, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
+						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 20*W.toolspeed, target = src))
+			new /obj/item/device/gps(loc)
+			qdel(src)
 		return
+	return ..()
+
+/obj/item/device/gps/computer/attack_hand(mob/user)
 	attack_self(user)
 
 //Bed
@@ -182,6 +192,8 @@
 	desc = "A heated storage unit."
 	icon_state = "donkvendor"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
+	icon_on = "donkvendor"
+	icon_off = "donkvendor"
 	light_range = 5
 	light_power = 1.2
 	light_color = "#DDFFD3"
@@ -189,9 +201,6 @@
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
 	var/empty = FALSE
-
-/obj/machinery/smartfridge/survival_pod/update_icon()
-	return
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	. = ..()
@@ -204,7 +213,7 @@
 		var/obj/item/storage/pill_bottle/dice/D = new(src)
 		load(D)
 	else
-		var/obj/item/instrument/guitar/G = new(src)
+		var/obj/item/device/instrument/guitar/G = new(src)
 		load(G)
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
@@ -223,6 +232,7 @@
 	desc = "A large machine releasing a constant gust of air."
 	anchored = TRUE
 	density = TRUE
+	var/arbitraryatmosblockingvar = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 5
 	CanAtmosPass = ATMOS_PASS_NO
@@ -233,15 +243,14 @@
 			new buildstacktype(loc,buildstackamount)
 	qdel(src)
 
-/obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
-	if(flags_1 & NODECONSTRUCT_1)
-		return TRUE
-
-	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
-		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
-	if(I.use_tool(src, user, 20, volume=50))
-		deconstruct()
-	return TRUE
+/obj/structure/fans/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+		playsound(src.loc, W.usesound, 50, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
+						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 20*W.toolspeed, target = src))
+			deconstruct()
+			return ..()
 
 /obj/structure/fans/tiny
 	name = "tiny fan"
@@ -254,6 +263,11 @@
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
 	air_update_turf(1)
+
+/obj/structure/fans/Destroy()
+	var/turf/T = loc
+	. = ..()
+	T.air_update_turf(1)
 
 //Inivisible, indestructible fans
 /obj/structure/fans/tiny/invisible
@@ -289,11 +303,11 @@
 	icon_state = "x2"
 	var/possible = list(/obj/item/ship_in_a_bottle,
 						/obj/item/gun/energy/pulse,
-						/obj/item/book/granter/martial/carp,
+						/obj/item/sleeping_carp_scroll,
 						/obj/item/melee/supermatter_sword,
 						/obj/item/shield/changeling,
 						/obj/item/lava_staff,
-						/obj/item/energy_katana,
+						/obj/item/dash/energy_katana,
 						/obj/item/hierophant_club,
 						/obj/item/his_grace,
 						/obj/item/gun/ballistic/minigun,

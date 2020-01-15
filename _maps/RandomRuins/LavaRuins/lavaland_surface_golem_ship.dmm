@@ -15,8 +15,8 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/item/mining_scanner,
-/obj/item/flashlight/lantern,
+/obj/item/device/mining_scanner,
+/obj/item/device/flashlight/lantern,
 /obj/item/card/id/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
@@ -28,8 +28,8 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/item/mining_scanner,
-/obj/item/flashlight/lantern,
+/obj/item/device/mining_scanner,
+/obj/item/device/flashlight/lantern,
 /obj/item/card/id/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
@@ -68,10 +68,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "k" = (
-/obj/machinery/computer/arcade/battle{
-	icon_state = "arcade";
-	dir = 4
-	},
+/obj/machinery/computer/arcade/battle,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "l" = (
@@ -109,10 +106,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "s" = (
-/obj/machinery/computer/arcade/orion_trail{
-	icon_state = "arcade";
-	dir = 4
-	},
+/obj/machinery/bluespace_beacon,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "t" = (
@@ -128,7 +122,7 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/obj/item/book/manual/wiki/research_and_development{
+/obj/item/book/manual/research_and_development{
 	name = "Sacred Text of the Liberator";
 	pixel_x = -4;
 	pixel_y = 3
@@ -150,6 +144,10 @@
 "x" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"y" = (
+/obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "z" = (
@@ -211,13 +209,13 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
+"J" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
 "K" = (
-/obj/machinery/door/airlock/titanium,
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/purple,
+/obj/machinery/light/small,
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "L" = (
 /obj/machinery/light/small{
@@ -244,13 +242,28 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"P" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "Q" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"R" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"S" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "T" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/titanium,
+/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "U" = (
@@ -264,11 +277,20 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
-"Y" = (
-/obj/machinery/door/airlock/titanium,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
+"W" = (
+/obj/machinery/light/small{
+	dir = 1
 	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"X" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Y" = (
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 
@@ -279,10 +301,14 @@ a
 a
 a
 a
+a
+a
 b
 b
 b
 b
+a
+a
 a
 a
 a
@@ -291,6 +317,8 @@ a
 a
 "}
 (2,1,1) = {"
+a
+a
 a
 a
 a
@@ -307,26 +335,34 @@ a
 a
 a
 a
+a
+a
 "}
 (3,1,1) = {"
 a
 a
 a
+a
+a
 b
 b
-H
+b
 b
 r
 l
 G
-T
 b
 b
+b
+a
+a
 a
 a
 a
 "}
 (4,1,1) = {"
+a
+a
 a
 a
 a
@@ -338,8 +374,10 @@ l
 l
 j
 l
-s
+y
 b
+a
+a
 a
 a
 a
@@ -348,6 +386,8 @@ a
 a
 a
 a
+a
+a
 b
 L
 l
@@ -358,11 +398,15 @@ j
 l
 l
 b
+a
+a
 a
 a
 a
 "}
 (6,1,1) = {"
+a
+a
 b
 b
 b
@@ -379,8 +423,12 @@ b
 b
 b
 b
+a
+a
 "}
 (7,1,1) = {"
+a
+a
 b
 c
 f
@@ -397,8 +445,12 @@ j
 f
 F
 b
+a
+a
 "}
 (8,1,1) = {"
+a
+a
 b
 c
 f
@@ -415,8 +467,12 @@ j
 f
 F
 b
+a
+a
 "}
 (9,1,1) = {"
+a
+a
 b
 c
 I
@@ -433,8 +489,12 @@ b
 V
 F
 b
+a
+a
 "}
 (10,1,1) = {"
+a
+a
 b
 c
 f
@@ -451,8 +511,12 @@ b
 f
 F
 b
+a
+a
 "}
 (11,1,1) = {"
+a
+a
 b
 c
 f
@@ -469,8 +533,12 @@ b
 f
 F
 b
+a
+a
 "}
 (12,1,1) = {"
+a
+a
 b
 c
 I
@@ -487,8 +555,12 @@ b
 V
 F
 b
+a
+a
 "}
 (13,1,1) = {"
+a
+a
 b
 d
 f
@@ -496,7 +568,7 @@ j
 l
 l
 l
-l
+s
 l
 l
 l
@@ -505,8 +577,12 @@ j
 f
 F
 b
+a
+a
 "}
 (14,1,1) = {"
+a
+a
 b
 d
 f
@@ -523,8 +599,12 @@ j
 f
 e
 b
+a
+a
 "}
 (15,1,1) = {"
+a
+a
 b
 d
 f
@@ -532,7 +612,7 @@ b
 l
 l
 l
-l
+Y
 l
 l
 l
@@ -541,9 +621,13 @@ b
 f
 f
 b
+a
+a
 "}
 (16,1,1) = {"
-T
+a
+a
+b
 e
 I
 b
@@ -558,10 +642,14 @@ B
 b
 V
 f
-T
+b
+a
+a
 "}
 (17,1,1) = {"
-T
+a
+a
+b
 f
 f
 b
@@ -576,9 +664,13 @@ C
 b
 f
 f
-T
+b
+a
+a
 "}
 (18,1,1) = {"
+a
+a
 b
 g
 g
@@ -586,8 +678,8 @@ b
 n
 l
 b
-Y
-Y
+j
+j
 b
 x
 D
@@ -595,8 +687,12 @@ b
 E
 E
 b
+a
+a
 "}
 (19,1,1) = {"
+a
+a
 b
 h
 h
@@ -613,8 +709,12 @@ b
 h
 h
 b
+a
+a
 "}
 (20,1,1) = {"
+a
+a
 b
 i
 i
@@ -622,8 +722,8 @@ b
 i
 i
 b
-K
-K
+H
+H
 b
 i
 i
@@ -631,4 +731,6 @@ b
 i
 i
 b
+a
+a
 "}

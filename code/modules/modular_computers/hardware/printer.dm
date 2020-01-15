@@ -2,6 +2,7 @@
 	name = "printer"
 	desc = "Computer-integrated printer with paper recycling module."
 	power_usage = 100
+	origin_tech = "programming=2;engineering=2"
 	icon_state = "printer"
 	w_class = WEIGHT_CLASS_NORMAL
 	device_type = MC_PRINT
@@ -10,11 +11,11 @@
 
 /obj/item/computer_hardware/printer/diagnostics(mob/living/user)
 	..()
-	to_chat(user, "Paper level: [stored_paper]/[max_paper].")
+	to_chat(user, "Paper level: [stored_paper]/[max_paper]")
 
 /obj/item/computer_hardware/printer/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>"
+	..()
+	to_chat(user, "<span class='notice'>Paper level: [stored_paper]/[max_paper]</span>")
 
 
 /obj/item/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")

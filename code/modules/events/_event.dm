@@ -1,26 +1,26 @@
 //this datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
-	var/name						//The human-readable name of the event
-	var/typepath					//The typepath of the event datum /datum/round_event
+	var/name					//The human-readable name of the event
+	var/typepath				//The typepath of the event datum /datum/round_event
 
-	var/weight = 10					//The weight this event has in the random-selection process.
-									//Higher weights are more likely to be picked.
-									//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
-									//0 here does NOT disable the event, it just makes it extremely unlikely
+	var/weight = 10				//The weight this event has in the random-selection process.
+								//Higher weights are more likely to be picked.
+								//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
+								//0 here does NOT disable the event, it just makes it extremely unlikely
 
-	var/earliest_start = 20 MINUTES	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
-	var/min_players = 0				//The minimum amount of alive, non-AFK human players on server required to start the event.
+	var/earliest_start = 12000	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
+	var/min_players = 0			//The minimum amount of alive, non-AFK human players on server required to start the event.
 
-	var/occurrences = 0				//How many times this event has occured
-	var/max_occurrences = 20		//The maximum number of times this event can occur (naturally), it can still be forced.
-									//By setting this to 0 you can effectively disable an event.
+	var/occurrences = 0			//How many times this event has occured
+	var/max_occurrences = 20	//The maximum number of times this event can occur (naturally), it can still be forced.
+								//By setting this to 0 you can effectively disable an event.
 
-	var/holidayID = ""				//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
-									//anything with a (non-null) holidayID which does not match holiday, cannot run.
+	var/holidayID = ""			//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
+								//anything with a (non-null) holidayID which does not match holiday, cannot run.
 	var/wizardevent = 0
 
-	var/alertadmins = 1				//should we let the admins know this event is firing
-									//should be disabled on events that fire a lot
+	var/alertadmins = 1			//should we let the admins know this event is firing
+								//should be disabled on events that fire a lot
 
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
@@ -28,20 +28,20 @@
 	var/triggering	//admin cancellation
 
 /datum/round_event_control/New()
+	..()
 	if(config && !wizardevent) // Magic is unaffected by configs
-		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
-		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
+		earliest_start = Ceiling(earliest_start * config.events_min_time_mul)
+		min_players = Ceiling(min_players * config.events_min_players_mul)
 
 /datum/round_event_control/wizard
 	wizardevent = 1
-	var/can_be_midround_wizard = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
 /datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
 	if(occurrences >= max_occurrences)
 		return FALSE
-	if(earliest_start >= world.time-SSticker.round_start_time)
+	if(earliest_start >= world.time)
 		return FALSE
 	if(wizardevent != SSevents.wizardmode)
 		return FALSE
@@ -55,20 +55,13 @@
 		return FALSE
 	return TRUE
 
-/datum/round_event_control/wizard/canSpawnEvent(var/players_amt, var/gamemode)
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if (locate(/datum/dynamic_ruleset/midround/from_ghosts/wizard) in mode.executed_rules)
-			return can_be_midround_wizard && ..()
-	return ..()
-
 /datum/round_event_control/proc/preRunEvent()
 	if(!ispath(typepath, /datum/round_event))
 		return EVENT_CANT_RUN
 
 	triggering = TRUE
 	if (alertadmins)
-		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		message_admins("Random Event triggering in 10 seconds: [name] ([typepath]) (<a href='?src=\ref[src];cancel=1'>CANCEL</a>)")
 		sleep(100)
 		var/gamemode = SSticker.mode.config_tag
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
@@ -90,13 +83,13 @@
 		triggering = FALSE
 		message_admins("[key_name_admin(usr)] cancelled event [name].")
 		log_admin_private("[key_name(usr)] cancelled event [name].")
-		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
+		SSblackbox.add_details("event_admin_cancelled","[typepath]")
 
 /datum/round_event_control/proc/runEvent(random)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
-	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
+	SSblackbox.add_details("event_ran","[E]")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
@@ -107,21 +100,16 @@
 
 	return E
 
-//Special admins setup
-/datum/round_event_control/proc/admin_setup()
-	return
-
 /datum/round_event	//NOTE: Times are measured in master controller ticks!
 	var/processing = TRUE
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to -1 if announcement should not be shown.
+	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to >0 if there is an announcement.
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
-	var/fakeable = TRUE		//Can be faked by fake news event.
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -142,7 +130,7 @@
 //Called when the tick is equal to the announceWhen variable.
 //Allows you to announce before starting or vice versa.
 //Only called once.
-/datum/round_event/proc/announce(fake)
+/datum/round_event/proc/announce()
 	return
 
 //Called on or after the tick counter is equal to startWhen.
@@ -170,28 +158,19 @@
 		return
 
 	if(activeFor == startWhen)
-		processing = FALSE
 		start()
-		processing = TRUE
 
 	if(activeFor == announceWhen)
-		processing = FALSE
-		announce(FALSE)
-		processing = TRUE
+		announce()
 
 	if(startWhen < activeFor && activeFor < endWhen)
-		processing = FALSE
 		tick()
-		processing = TRUE
 
 	if(activeFor == endWhen)
-		processing = FALSE
 		end()
-		processing = TRUE
 
 	// Everything is done, let's clean up.
 	if(activeFor >= endWhen && activeFor >= announceWhen && activeFor >= startWhen)
-		processing = FALSE
 		kill()
 
 	activeFor++

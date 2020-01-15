@@ -1,16 +1,17 @@
 //CONTAINS: Suit fibers and Detective's Scanning Computer
 
+/atom/var/list/suit_fibers
+
 /atom/proc/add_fibers(mob/living/carbon/human/M)
 	if(M.gloves && istype(M.gloves, /obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
-			if(add_blood_DNA(G.blood_DNA)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+			if(add_blood(G.blood_DNA)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands > 1)
-		if(add_blood_DNA(M.blood_DNA, M.diseases))
+		if(add_blood(M.blood_DNA))
 			M.bloody_hands--
-	if(!suit_fibers)
-		suit_fibers = list()
+	if(!suit_fibers) suit_fibers = list()
 	var/fibertext
 	var/item_multiplier = isitem(src)?1.2:1
 	if(M.wear_suit)
@@ -55,7 +56,7 @@
 		if(H.gloves)
 			hasgloves = "(gloves)"
 
-	var/current_time = TIME_STAMP("hh:mm:ss", FALSE)
+	var/current_time = time_stamp()
 	if(!fingerprintshidden[M.key])
 		fingerprintshidden[M.key] = "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
 	else
@@ -68,7 +69,7 @@
 
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
-/atom/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
+/atom/proc/add_fingerprint(mob/living/M, ignoregloves = 0)
 	if(!M || !M.key)
 		return
 
@@ -82,22 +83,32 @@
 		if(H.gloves) //Check if the gloves (if any) hide fingerprints
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.transfer_prints)
-				ignoregloves = TRUE
+				ignoregloves = 1
 
 			if(!ignoregloves)
-				H.gloves.add_fingerprint(H, TRUE) //ignoregloves = TRUE to avoid infinite loop.
+				H.gloves.add_fingerprint(H, 1) //ignoregloves = 1 to avoid infinite loop.
 				return
 
-		LAZYINITLIST(fingerprints) //Add the list if it does not exist
+		if(!fingerprints) //Add the list if it does not exist
+			fingerprints = list()
 		var/full_print = md5(H.dna.uni_identity)
 		fingerprints[full_print] = full_print
 
+
+
+
 /atom/proc/transfer_fingerprints_to(atom/A)
+
 	// Make sure everything are lists.
-	LAZYINITLIST(A.fingerprints)
-	LAZYINITLIST(A.fingerprintshidden)
-	LAZYINITLIST(fingerprints)
-	LAZYINITLIST(fingerprintshidden)
+	if(!islist(A.fingerprints))
+		A.fingerprints = list()
+	if(!islist(A.fingerprintshidden))
+		A.fingerprintshidden = list()
+
+	if(!islist(fingerprints))
+		fingerprints = list()
+	if(!islist(fingerprintshidden))
+		fingerprintshidden = list()
 
 	// Transfer
 	if(fingerprints)

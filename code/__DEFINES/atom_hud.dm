@@ -9,60 +9,40 @@
 #define IMPLOYAL_HUD	"5" // loyality implant
 #define IMPCHEM_HUD		"6" // chemical implant
 #define IMPTRACK_HUD	"7" // tracking implant
-#define DIAG_STAT_HUD	"8" // Silicon/Mech/Circuit Status
+#define DIAG_STAT_HUD	"8" // Silicon/Mech Status
 #define DIAG_HUD		"9" // Silicon health bar
-#define DIAG_BATT_HUD	"10"// Borg/Mech/Circutry power meter
+#define DIAG_BATT_HUD	"10"// Borg/Mech power meter
 #define DIAG_MECH_HUD	"11"// Mech health bar
 #define DIAG_BOT_HUD	"12"// Bot HUDs
-#define DIAG_CIRCUIT_HUD "13"// Circuit assembly health bar
-#define DIAG_TRACK_HUD	"14"// Mech/Silicon tracking beacon, Circutry long range icon
-#define DIAG_AIRLOCK_HUD "15"//Airlock shock overlay
-#define DIAG_PATH_HUD "16"//Bot path indicators
-#define GLAND_HUD "17"//Gland indicators for abductors
-#define SENTIENT_DISEASE_HUD	"18"
-#define AI_DETECT_HUD	"19"
-#define NANITE_HUD "20"
-#define DIAG_NANITE_FULL_HUD "21"
-#define RAD_HUD			"22"	//radation alerts for medical huds
+#define DIAG_TRACK_HUD	"13"// Mech tracking beacon
+#define DIAG_AIRLOCK_HUD "14"//Airlock shock overlay
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"23"
-
-//by default everything in the hud_list of an atom is an image
-//a value in hud_list with one of these will change that behavior
-#define HUD_LIST_LIST 1
+#define ANTAG_HUD		"15"
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
-#define DATA_HUD_SECURITY_BASIC			1
-#define DATA_HUD_SECURITY_ADVANCED		2
-#define DATA_HUD_MEDICAL_BASIC			3
-#define DATA_HUD_MEDICAL_ADVANCED		4
-#define DATA_HUD_DIAGNOSTIC_BASIC		5
-#define DATA_HUD_DIAGNOSTIC_ADVANCED	6
-#define DATA_HUD_ABDUCTOR				7
-#define DATA_HUD_SENTIENT_DISEASE		8
-#define DATA_HUD_AI_DETECT				9
-
+#define DATA_HUD_SECURITY_BASIC		1
+#define DATA_HUD_SECURITY_ADVANCED	2
+#define DATA_HUD_MEDICAL_BASIC		3
+#define DATA_HUD_MEDICAL_ADVANCED	4
+#define DATA_HUD_DIAGNOSTIC			5
 //antag HUD defines
-#define ANTAG_HUD_CULT			10
-#define ANTAG_HUD_REV			11
-#define ANTAG_HUD_OPS			12
-#define ANTAG_HUD_WIZ			13
-#define ANTAG_HUD_SHADOW    	14
-#define ANTAG_HUD_TRAITOR 		15
-#define ANTAG_HUD_NINJA 		16
-#define ANTAG_HUD_CHANGELING 	17
-#define ANTAG_HUD_ABDUCTOR 		18
-#define ANTAG_HUD_DEVIL			19
-#define ANTAG_HUD_SINTOUCHED	20
-#define ANTAG_HUD_SOULLESS		21
-#define ANTAG_HUD_CLOCKWORK		22
-#define ANTAG_HUD_BROTHER		23
-#define ANTAG_HUD_BLOODSUCKER   24
+#define ANTAG_HUD_CULT			6
+#define ANTAG_HUD_REV			7
+#define ANTAG_HUD_OPS			8
+#define ANTAG_HUD_WIZ			9
+#define ANTAG_HUD_SHADOW    	10
+#define ANTAG_HUD_TRAITOR 		11
+#define ANTAG_HUD_NINJA 		12
+#define ANTAG_HUD_CHANGELING 	13
+#define ANTAG_HUD_ABDUCTOR 		14
+#define ANTAG_HUD_DEVIL			15
+#define ANTAG_HUD_SINTOUCHED	16
+#define ANTAG_HUD_SOULLESS		17
+#define ANTAG_HUD_CLOCKWORK		18
+#define ANTAG_HUD_BROTHER		19
 
 // Notification action types
 #define NOTIFY_JUMP "jump"
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
-
-#define ADD_HUD_TO_COOLDOWN 20 //cooldown for being shown the images for any particular data hud

@@ -3,28 +3,28 @@
 	desc = "We're leaving together\n\
 		But still it's farewell\n\
 		And maybe we'll come back\n\
-		To Earth, who can tell?"
+		To earth, who can tell?"
 
+	var/displayed_text
+	var/atom/attached_to
+	color = "#ff0000"
+	var/text_size = 4
+	var/started = FALSE
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
 	layer = GHOST_LAYER
-	color = "#ff0000" // text color
-	var/text_size = 3 // larger values clip when the displayed text is larger than 2 digits.
-	var/started = FALSE
-	var/displayed_text
-	var/atom/attached_to
 
-/obj/effect/countdown/Initialize()
+/obj/effect/countdown/New(atom/A)
 	. = ..()
-	attach(loc)
+	attach(A)
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	. += "This countdown is displaying: [displayed_text]."
+	to_chat(user, "This countdown is displaying: [displayed_text]")
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
-	forceMove(get_turf(A))
+	loc = get_turf(A)
 
 /obj/effect/countdown/proc/start()
 	if(!started)
@@ -86,7 +86,7 @@
 
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"
-	color = "#18d100"
+	color = "#0C479D"
 	text_size = 1
 
 /obj/effect/countdown/clonepod/get_value()
@@ -108,7 +108,7 @@
 	if(!istype(G))
 		return
 	else if(G.obj_integrity && !G.purpose_fulfilled)
-		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_time(FALSE)]</div>"
+		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_text(FALSE)]</div>"
 
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
@@ -116,7 +116,7 @@
 	color = "#00ff80"
 
 /obj/effect/countdown/supermatter/get_value()
-	var/obj/machinery/power/supermatter_crystal/S = attached_to
+	var/obj/machinery/power/supermatter_shard/S = attached_to
 	if(!istype(S))
 		return
 	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity(), 1)]%</div>"
@@ -135,6 +135,7 @@
 
 /obj/effect/countdown/doomsday
 	name = "doomsday countdown"
+	text_size = 3
 
 /obj/effect/countdown/doomsday/get_value()
 	var/obj/machinery/doomsday_device/DD = attached_to
@@ -153,9 +154,3 @@
 	else
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
-
-/obj/effect/countdown/singularity_pull()
-	return
-
-/obj/effect/countdown/singularity_act()
-	return

@@ -4,16 +4,15 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/smash.ogg'
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
-	materials = list(MAT_METAL = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 80, acid = 30)
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
@@ -23,7 +22,7 @@
 	toggle_internals(user)
 
 /obj/item/tank/proc/toggle_internals(mob/user)
-	var/mob/living/carbon/H = user
+	var/mob/living/carbon/human/H = user
 	if(!istype(H))
 		return
 
@@ -32,20 +31,14 @@
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
-		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			var/obj/item/clothing/check
-			var/internals = FALSE
-
-			for(check in GET_INTERNAL_SLOTS(H))
-				if(istype(check, /obj/item/clothing/mask))
-					var/obj/item/clothing/mask/M = check
-					if(M.mask_adjusted)
-						M.adjustmask(H)
-				if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
-					internals = TRUE
-
-			if(!internals)
-				to_chat(H, "<span class='warning'>You are not wearing an internals mask!</span>")
+		if(!H.getorganslot("breathing_tube"))
+			if(!H.wear_mask)
+				to_chat(H, "<span class='warning'>You need a mask!</span>")
+				return
+			if(H.wear_mask.mask_adjusted)
+				H.wear_mask.adjustmask(H)
+			if(!(H.wear_mask.flags_1 & MASKINTERNALS_1))
+				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
 				return
 
 		if(H.internal)
@@ -74,15 +67,14 @@
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
-	. = ..()
+	..()
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user))
-		if (icon == src)
-			. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
+		if (icon == src) to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
-	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
+	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
@@ -100,7 +92,7 @@
 	else
 		descriptive = "furiously hot"
 
-	. += "<span class='notice'>It feels [descriptive].</span>"
+	to_chat(user, "<span class='notice'>It feels [descriptive].</span>")
 
 /obj/item/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -112,9 +104,6 @@
 			location.assume_air(air_contents)
 
 		qdel(src)
-
-/obj/item/tank/analyzer_act(mob/living/user, obj/item/I)
-	atmosanalyzer_scan(air_contents, user, src)
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
 	if(!disassembled)
@@ -134,7 +123,7 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		H.status_flags |= DISFIGURED
 		H.bleed_rate = 5
 		H.gib_animation()
 		sleep(3)
@@ -147,7 +136,10 @@
 
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/assembly_holder))
+	if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+		atmosanalyzer_scan(air_contents, user)
+
+	else if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
 	else
 		. = ..()
@@ -185,7 +177,7 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
-				pressure = initial(distribute_pressure)
+				pressure = TANK_DEFAULT_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "min")
 				pressure = TANK_MIN_RELEASE_PRESSURE
@@ -201,7 +193,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				distribute_pressure = CLAMP(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+				distribute_pressure = Clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
 	return air_contents.remove(amount)
@@ -232,6 +224,7 @@
 	air_contents.react()
 	check_status()
 
+
 /obj/item/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank
 
@@ -239,28 +232,26 @@
 		return 0
 
 	var/pressure = air_contents.return_pressure()
-	var/temperature = air_contents.return_temperature()
-
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc, /obj/item/transfer_valve))
+		if(!istype(src.loc, /obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 		//Give the gas a chance to build up more pressure through reacting
-		air_contents.react(src)
-		air_contents.react(src)
-		//Citadel Edit: removing extra react for "balance"
+		air_contents.react()
+		air_contents.react()
+		air_contents.react()
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
 
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		if(istype(src.loc, /obj/item/transfer_valve))
+		if(istype(src.loc, /obj/item/device/transfer_valve))
 			qdel(src.loc)
 		else
 			qdel(src)
 
-	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
+	else if(pressure > TANK_RUPTURE_PRESSURE)
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)

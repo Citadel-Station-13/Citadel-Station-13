@@ -11,7 +11,6 @@
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
 	active = FALSE
-	allow_switch_interact = FALSE
 	var/list/active_tables = list()
 	var/tables_required = 2
 
@@ -41,6 +40,10 @@
 		active = FALSE
 	update_icon()
 
+
+/obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
+	return
+
 /obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, params)
 	return
 
@@ -48,7 +51,7 @@
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
-	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
+	return
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
@@ -136,7 +139,7 @@
 /mob/living/simple_animal/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, an indestructible robot built to tend bars."
-	hacked = TRUE
+	seeStatic = FALSE
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
@@ -149,7 +152,7 @@
 	access_card.access |= ACCESS_CENT_BAR
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = NO_SPAWN
+	gold_core_spawnable = 0
 	name = "Barmaid"
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
@@ -165,7 +168,7 @@
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
-	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	access_card.flags_1 |= NODROP_1
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -187,10 +190,14 @@
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Knockdown(40)
-		M.throw_at(throwtarget, 5, 1)
+		M.throw_at(throwtarget, 5, 1,src)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
 		. = ..()
+
+/obj/structure/table/wood/bar/shuttleRotate(rotation)
+	. = ..()
+	boot_dir = angle2dir(rotation + dir2angle(boot_dir))
 
 /obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
@@ -199,18 +206,16 @@
 		if(H.mind && H.mind.assigned_role == "Bartender")
 			return TRUE
 
-	var/obj/item/card/id/ID = user.get_idcard(FALSE)
+	var/obj/item/card/id/ID = user.get_idcard()
 	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
-	timeleft = 0
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
-
 
 /obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
@@ -223,13 +228,13 @@
 
 
 #define LUXURY_MESSAGE_COOLDOWN 100
-/obj/effect/forcefield/luxury_shuttle/Bumped(atom/movable/AM)
+/obj/effect/forcefield/luxury_shuttle/CollidedWith(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
-
+	
 	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
 		return ..()
-
+	
 	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	var/total_cash = 0
@@ -245,17 +250,6 @@
 		counted_money += S
 		if(total_cash >= threshold)
 			break
-
-	if(AM.pulling)
-		if(istype(AM.pulling, /obj/item/coin))
-			var/obj/item/coin/C = AM.pulling
-			total_cash += C.value
-			counted_money += C
-
-		else if(istype(AM.pulling, /obj/item/stack/spacecash))
-			var/obj/item/stack/spacecash/S = AM.pulling
-			total_cash += S.value * S.amount
-			counted_money += S
 
 	if(total_cash >= threshold)
 		for(var/obj/I in counted_money)

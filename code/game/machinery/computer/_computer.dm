@@ -3,17 +3,18 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
 	max_integrity = 200
 	integrity_failure = 100
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 20)
-	var/brightness_on = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 20)
+	var/processing = FALSE
+	var/brightness_on = 2
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
-	var/authenticated = FALSE
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -21,7 +22,7 @@
 	if(!QDELETED(C))
 		qdel(circuit)
 		circuit = C
-		C.moveToNullspace()
+		C.loc = null
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)
@@ -35,9 +36,9 @@
 /obj/machinery/computer/ratvar_act()
 	if(!clockwork)
 		clockwork = TRUE
-		icon_screen = "ratvar[rand(1, 3)]"
-		icon_keyboard = "ratvar_key[rand(1, 2)]"
-		icon_state = "ratvarcomputer"
+		icon_screen = "ratvar[rand(1, 4)]"
+		icon_keyboard = "ratvar_key[rand(1, 6)]"
+		icon_state = "ratvarcomputer[rand(1, 4)]"
 		update_icon()
 
 /obj/machinery/computer/narsie_act()
@@ -50,19 +51,14 @@
 
 /obj/machinery/computer/update_icon()
 	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(stat & NOPOWER)
 		add_overlay("[icon_keyboard]_off")
 		return
 	add_overlay(icon_keyboard)
-
-	// This whole block lets screens ignore lighting and be visible even in the darkest room
-	// We can't do this for many things that emit light unfortunately because it layers over things that would be on top of it
-	var/overlay_state = icon_screen
 	if(stat & BROKEN)
-		overlay_state = "[icon_state]_broken"
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir, alpha=128)
+		add_overlay("[icon_state]_broken")
+	else
+		add_overlay(icon_screen)
 
 /obj/machinery/computer/power_change()
 	..()
@@ -73,15 +69,14 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
-	if(circuit && !(flags_1&NODECONSTRUCT_1))
-		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
-		if(I.use_tool(src, user, 20, volume=50))
+/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
+		playsound(src.loc, I.usesound, 50, 1)
+		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
+		if(do_after(user, 20*I.toolspeed, target = src))
 			deconstruct(TRUE, user)
-	return TRUE
-
+	else
+		return ..()
 
 /obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -102,31 +97,29 @@
 			set_light(0)
 
 /obj/machinery/computer/emp_act(severity)
-	. = ..()
-	if (!(. & EMP_PROTECT_SELF))
-		switch(severity)
-			if(1)
-				if(prob(50))
-					obj_break("energy")
-			if(2)
-				if(prob(10))
-					obj_break("energy")
+	switch(severity)
+		if(1)
+			if(prob(50))
+				obj_break("energy")
+		if(2)
+			if(prob(10))
+				obj_break("energy")
+	..()
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-			A.setDir(dir)
 			A.circuit = circuit
-			A.setAnchored(TRUE)
+			A.anchored = TRUE
 			if(stat & BROKEN)
 				if(user)
 					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				else
-					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-				new /obj/item/shard(drop_location())
-				new /obj/item/shard(drop_location())
+					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				new /obj/item/shard(src.loc)
+				new /obj/item/shard(src.loc)
 				A.state = 3
 				A.icon_state = "3"
 			else

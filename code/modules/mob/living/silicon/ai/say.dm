@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/silicon/ai/say(message, language)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message, language)
 		return
@@ -7,7 +7,7 @@
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+		return "<a href='?src=\ref[src];track=[html_encode(namepart)]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -15,7 +15,7 @@
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
 /mob/living/silicon/ai/IsVocal()
-	return !CONFIG_GET(flag/silent_ai)
+	return !config.silent_ai
 
 /mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
 	if(incapacitated())
@@ -31,6 +31,15 @@
 	else
 		return ..()
 
+/mob/living/silicon/ai/handle_inherent_channels(message, message_mode, language)
+	. = ..()
+	if(.)
+		return .
+
+	if(message_mode == MODE_HOLOPAD)
+		holopad_talk(message, language)
+		return 1
+
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
 
@@ -45,11 +54,11 @@
 		var/turf/padturf = get_turf(T)
 		var/padloc
 		if(padturf)
-			padloc = AREACOORD(padturf)
+			padloc = COORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
-		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		send_speech(message, 7, T, "robot", message_language = language)
+		log_talk(src,"HOLOPAD [padloc]: [key_name(src)] : [message]", LOGSAY)
+		send_speech(message, 7, T, "robot", get_spans(), language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
@@ -67,21 +76,16 @@
 	if(incapacitated())
 		return
 
-	var/dat = {"
-	<font class='bad'>WARNING:</font> Misuse of the announcement system will get you job banned.<BR><BR>
-	Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR>
-	<UL><LI>You can also click on the word to PREVIEW it.</LI>
-	<LI>You can only say 30 words for every announcement.</LI>
-	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI>
-	<LI>Numbers are in word format, e.g. eight, sixty, etc </LI>
-	<LI>Sound effects begin with an 's' before the actual word, e.g. scensor</LI>
-	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
-	"}
+	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
+	<UL><LI>You can also click on the word to preview it.</LI>\
+	<LI>You can only say 30 words for every announcement.</LI>\
+	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI></UL>\
+	<font class='bad'>WARNING:</font><BR>Misuse of the announcement system will get you job banned.<HR>"
 
 	var/index = 0
 	for(var/word in GLOB.vox_sounds)
 		index++
-		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
+		dat += "<A href='?src=\ref[src];say_word=[word]'>[capitalize(word)]</A>"
 		if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
@@ -99,8 +103,6 @@
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
 
 	last_announcement = message
-
-	var/voxType = input(src, "Male or female VOX?", "VOX-gender") in list("male", "female")
 
 	if(!message || announcing_vox > world.time)
 		return
@@ -123,9 +125,7 @@
 		if(!word)
 			words -= word
 			continue
-		if(!GLOB.vox_sounds[word] && voxType == "female")
-			incorrect_words += word
-		if(!GLOB.vox_sounds_male[word] && voxType == "male")
+		if(!GLOB.vox_sounds[word])
 			incorrect_words += word
 
 	if(incorrect_words.len)
@@ -137,21 +137,24 @@
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
 
 	for(var/word in words)
-		play_vox_word(word, src.z, null, voxType)
+		play_vox_word(word, src.z, null)
+/*
+	for(var/mob/M in player_list)
+		if(M.client)
+			var/turf/T = get_turf(M)
+			var/turf/our_turf = get_turf(src)
+			if(T.z == our_turf.z)
+				to_chat(M, "<b><font size = 3><font color = red>AI announcement:</font color> [message]</font size></b>")
+*/
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener, voxType = "female")
+/proc/play_vox_word(word, z_level, mob/only_listener)
 
 	word = lowertext(word)
 
-	if( (GLOB.vox_sounds[word] && voxType == "female") || (GLOB.vox_sounds_male[word] && voxType == "male") )
+	if(GLOB.vox_sounds[word])
 
-		var/sound_file
-
-		if(voxType == "female")
-			sound_file = GLOB.vox_sounds[word]
-		else
-			sound_file = GLOB.vox_sounds_male[word]
+		var/sound_file = GLOB.vox_sounds[word]
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
@@ -168,7 +171,6 @@
 		return 1
 	return 0
 
-#undef VOX_DELAY
 #endif
 
 /mob/living/silicon/ai/could_speak_in_language(datum/language/dt)

@@ -27,7 +27,7 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 500
-	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 80)
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 80)
 
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
@@ -36,14 +36,17 @@
 	var/strength = null
 
 /obj/structure/particle_accelerator/examine(mob/user)
-	. = ..()
+	..()
+
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			. += "Looks like it's not attached to the flooring."
+			to_chat(user, "Looks like it's not attached to the flooring")
 		if(PA_CONSTRUCTION_UNWIRED)
-			. += "It is missing some cables."
+			to_chat(user, "It is missing some cables")
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			. += "The panel is open."
+			to_chat(user, "The panel is open")
+
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/particle_accelerator/Destroy()
 	construction_state = PA_CONSTRUCTION_UNSECURED
@@ -53,10 +56,41 @@
 		master = null
 	return ..()
 
-/obj/structure/particle_accelerator/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
+/obj/structure/particle_accelerator/verb/rotate()
+	set name = "Rotate Clockwise"
+	set category = "Object"
+	set src in oview(1)
 
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+	if (anchored)
+		to_chat(usr, "It is fastened to the floor!")
+		return 0
+	setDir(turn(dir, -90))
+	return 1
+
+/obj/structure/particle_accelerator/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
+
+/obj/structure/particle_accelerator/verb/rotateccw()
+	set name = "Rotate Counter Clockwise"
+	set category = "Object"
+	set src in oview(1)
+
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+	if (anchored)
+		to_chat(usr, "It is fastened to the floor!")
+		return 0
+	setDir(turn(dir, 90))
+	return 1
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
 	var/did_something = FALSE
@@ -64,7 +98,7 @@
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/wrench) && !isinspace())
-				W.play_tool_sound(src, 75)
+				playsound(loc, W.usesound, 75, 1)
 				anchored = TRUE
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
@@ -72,7 +106,7 @@
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/wrench))
-				W.play_tool_sound(src, 75)
+				playsound(loc, W.usesound, 75, 1)
 				anchored = FALSE
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")
@@ -118,7 +152,7 @@
 	qdel(src)
 
 /obj/structure/particle_accelerator/Move()
-	. = ..()
+	..()
 	if(master && master.active)
 		master.toggle_power()
 		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.", INVESTIGATE_SINGULO)
@@ -153,13 +187,13 @@
 
 /obj/structure/particle_accelerator/end_cap
 	name = "Alpha Particle Generation Array"
-	desc = "This is where Alpha particles are generated from \[REDACTED\]."
+	desc = "This is where Alpha particles are generated from \[REDACTED\]"
 	icon_state = "end_cap"
 	reference = "end_cap"
 
 /obj/structure/particle_accelerator/power_box
 	name = "Particle Focusing EM Lens"
-	desc = "This uses electromagnetic waves to focus the Alpha particles."
+	desc = "This uses electromagnetic waves to focus the Alpha-Particles."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "power_box"
 	reference = "power_box"

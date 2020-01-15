@@ -22,15 +22,16 @@
 
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
-	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	..()
+	if(!user.canUseTopic(src, be_close=TRUE))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	flip(user)
-	return TRUE
+	else
+		flip(user)
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
-	if(!user.incapacitated())
+	if(user.canmove && !user.stat && !user.restrained())
 		src.flipped = !src.flipped
 		if(src.flipped)
 			icon_state = "[item_color]soft_flipped"
@@ -41,8 +42,8 @@
 		usr.update_inv_head()	//so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].</span>"
+	..()
+	to_chat(user, "<span class='notice'>Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].</span>")
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"
@@ -119,7 +120,7 @@
 	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	item_color = "sec"
-	armor = list("melee" = 30, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 50)
+	armor = list(melee = 30, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 20, acid = 50)
 	strip_delay = 60
 	dog_fashion = null
 
@@ -128,15 +129,4 @@
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
 	icon_state = "emtsoft"
 	item_color = "emt"
-	dog_fashion = null
-
-/obj/item/clothing/head/soft/baseball
-	name = "baseball cap"
-	desc = "It's a robust baseball hat, this one belongs to syndicate major league team."
-	icon_state = "baseballsoft"
-	item_color = "baseballsoft"
-	item_state = "baseballsoft"
-	flags_inv = HIDEEYES|HIDEFACE
-	armor = list("melee" = 35, "bullet" = 35, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 90)
-	strip_delay = 90 //You dont take a Major Leage cap
 	dog_fashion = null

@@ -4,23 +4,15 @@
 #define RANDOM_LOWER_X 50
 #define RANDOM_LOWER_Y 50
 
-#define RIVERGEN_SAFETY_LOCK 1000000
-
-/proc/spawn_rivers(target_z, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors/unexplored, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
+/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
-	var/list/possible_locs = block(locate(min_x, min_y, target_z), locate(max_x, max_y, target_z))
-	var/safety = 0
-	while(num_spawned < nodes && possible_locs.len && (safety++ < RIVERGEN_SAFETY_LOCK))
-		var/turf/T = pick(possible_locs)
-		var/area/A = get_area(T)
-		if(!istype(A, whitelist_area) || (T.flags_1 & NO_LAVA_GEN_1))
-			possible_locs -= T
-		else
-			river_nodes += new /obj/effect/landmark/river_waypoint(T)
-			num_spawned++
-	
-	safety = 0
+	while(num_spawned < nodes)
+		var/turf/F = locate(rand(min_x, max_x), rand(min_y, max_y), target_z)
+
+		river_nodes += new /obj/effect/landmark/river_waypoint(F)
+		num_spawned++
+
 	//make some randomly pathing rivers
 	for(var/A in river_nodes)
 		var/obj/effect/landmark/river_waypoint/W = A
@@ -28,13 +20,13 @@
 			continue
 		W.connected = 1
 		var/turf/cur_turf = get_turf(W)
-		cur_turf.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
+		cur_turf.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
 		var/turf/target_turf = get_turf(pick(river_nodes - W))
 		if(!target_turf)
 			break
 		var/detouring = 0
 		var/cur_dir = get_dir(cur_turf, target_turf)
-		while(cur_turf != target_turf && (safety++ < RIVERGEN_SAFETY_LOCK))
+		while(cur_turf != target_turf)
 
 			if(detouring) //randomly snake around a bit
 				if(prob(20))
@@ -51,13 +43,13 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 			var/area/new_area = get_area(cur_turf)
-			if(!istype(new_area, whitelist_area) || (cur_turf.flags_1 & NO_LAVA_GEN_1)) //Rivers will skip ruins
+			if(!istype(new_area, whitelist_area)) //Rivers will skip ruins
 				detouring = 0
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
 			else
-				var/turf/river_turf = cur_turf.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
+				var/turf/river_turf = cur_turf.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
 				river_turf.Spread(25, 11, whitelist_area)
 
 	for(var/WP in river_nodes)
@@ -79,7 +71,7 @@
 	for(var/F in RANGE_TURFS(1, src) - src)
 		var/turf/T = F
 		var/area/new_area = get_area(T)
-		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)) || (T.flags_1 & NO_LAVA_GEN_1) )
+		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)))
 			continue
 
 		if(!logged_turf_type && ismineralturf(T))
@@ -93,16 +85,16 @@
 
 	for(var/F in cardinal_turfs) //cardinal turfs are always changed but don't always spread
 		var/turf/T = F
-		if(!istype(T, logged_turf_type) && T.ChangeTurf(type, null, CHANGETURF_IGNORE_AIR) && prob(probability))
+		if(!istype(T, logged_turf_type) && T.ChangeTurf(type,FALSE,FALSE,TRUE) && prob(probability))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 
 	for(var/F in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
 		var/turf/T = F
-		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type, null, CHANGETURF_IGNORE_AIR))
+		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type,FALSE,FALSE,TRUE))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 		else if(ismineralturf(T))
 			var/turf/closed/mineral/M = T
-			M.ChangeTurf(M.turf_type, null, CHANGETURF_IGNORE_AIR)
+			M.ChangeTurf(M.turf_type,FALSE,FALSE,TRUE)
 
 
 #undef RANDOM_UPPER_X

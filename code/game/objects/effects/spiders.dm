@@ -2,7 +2,7 @@
 /obj/structure/spider
 	name = "web"
 	icon = 'icons/effects/effects.dmi'
-	desc = "It's stringy and sticky."
+	desc = "it's stringy and sticky"
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 15
@@ -37,24 +37,21 @@
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
-		return TRUE
+		return 1
 	else if(isliving(mover))
-		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
-			return TRUE
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
-			return FALSE
+			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
-	return TRUE
+	return 1
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
-	desc = "They seem to pulse slightly with an inner life."
+	desc = "They seem to pulse slightly with an inner life"
 	icon_state = "eggs"
 	var/amount_grown = 0
 	var/player_spiders = 0
-	var/directive = "" //Message from the mother
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
@@ -74,7 +71,6 @@
 			S.poison_type = poison_type
 			S.poison_per_bite = poison_per_bite
 			S.faction = faction.Copy()
-			S.directive = directive
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -91,7 +87,6 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/player_spiders = 0
-	var/directive = "" //Message from the mother
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
@@ -101,11 +96,10 @@
 	. = ..()
 
 /obj/structure/spider/spiderling/Initialize()
-	. = ..()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/swarming)
+	. = ..()
 
 /obj/structure/spider/spiderling/hunter
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
@@ -122,9 +116,9 @@
 /obj/structure/spider/spiderling/tarantula
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 
-/obj/structure/spider/spiderling/Bump(atom/user)
+/obj/structure/spider/spiderling/Collide(atom/user)
 	if(istype(user, /obj/structure/table))
-		forceMove(user.loc)
+		src.loc = user.loc
 	else
 		..()
 
@@ -136,7 +130,7 @@
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
+			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
 			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents.Add(temp_vent)
 			if(!vents.len)
@@ -144,16 +138,16 @@
 				return
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
-				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
+				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
 								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 
 			spawn(rand(20,60))
-				forceMove(exit_vent)
+				loc = exit_vent
 				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
 				spawn(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
-						forceMove(entry_vent)
+						loc = entry_vent
 						entry_vent = null
 						return
 
@@ -162,10 +156,10 @@
 					sleep(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
-						forceMove(entry_vent)
+						loc = entry_vent
 						entry_vent = null
 						return
-					forceMove(exit_vent.loc)
+					loc = exit_vent.loc
 					entry_vent = null
 					var/area/new_area = get_area(loc)
 					if(new_area)
@@ -198,17 +192,16 @@
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
 			S.faction = faction.Copy()
-			S.directive = directive
 			if(player_spiders)
 				S.playable_spider = TRUE
-				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=[REF(S)];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK, ignore_key = POLL_IGNORE_SPIDER, ignore_dnr_observers = TRUE)
+				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=\ref[S];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK)
 			qdel(src)
 
 
 
 /obj/structure/spider/cocoon
 	name = "cocoon"
-	desc = "Something wrapped in silky spider web."
+	desc = "Something wrapped in silky spider web"
 	icon_state = "cocoon1"
 	max_integrity = 60
 

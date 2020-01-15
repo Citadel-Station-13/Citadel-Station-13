@@ -26,7 +26,7 @@
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
 
-	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 5)))
+	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -49,7 +49,14 @@
 		if ("nothing")
 			// doot
 
-			return
+		// teehee
+		if ("delete")
+			qdel(src)
+
+		//If you want to re-add fire, just add "fire" = 15 to the pick list.
+		/*if ("fire")
+			new /obj/structure/closet/firecloset(src.loc)
+			qdel(src)*/
 
 /*
  * Fire Closet
@@ -61,8 +68,7 @@
 
 /obj/structure/closet/firecloset/PopulateContents()
 	..()
-	if (prob(50))
-		new /obj/item/reagent_containers/hypospray/medipen/firelocker(src)
+
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/tank/internals/oxygen/red(src)
@@ -70,12 +76,9 @@
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/full/PopulateContents()
-	..()
-	if (prob(50))
-		new /obj/item/reagent_containers/hypospray/medipen/firelocker(src)
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/flashlight(src)
+	new /obj/item/device/flashlight(src)
 	new /obj/item/tank/internals/oxygen/red(src)
 	new /obj/item/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
@@ -94,7 +97,7 @@
 	if(prob(40))
 		new /obj/item/clothing/suit/hazardvest(src)
 	if(prob(70))
-		new /obj/item/flashlight(src)
+		new /obj/item/device/flashlight(src)
 	if(prob(70))
 		new /obj/item/screwdriver(src)
 	if(prob(70))
@@ -106,7 +109,7 @@
 	if(prob(70))
 		new /obj/item/wirecutters(src)
 	if(prob(70))
-		new /obj/item/t_scanner(src)
+		new /obj/item/device/t_scanner(src)
 	if(prob(20))
 		new /obj/item/storage/belt/utility(src)
 	if(prob(30))
@@ -116,7 +119,7 @@
 	if(prob(30))
 		new /obj/item/stack/cable_coil/random(src)
 	if(prob(20))
-		new /obj/item/multitool(src)
+		new /obj/item/device/multitool(src)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	if(prob(40))
@@ -134,9 +137,7 @@
 
 /obj/structure/closet/radiation/PopulateContents()
 	..()
-	if(prob(50))
-		new /obj/item/storage/firstaid/radbgone(src)
-	new /obj/item/geiger_counter(src)
+	new /obj/item/device/geiger_counter(src)
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
 
@@ -150,42 +151,22 @@
 
 /obj/structure/closet/bombcloset/PopulateContents()
 	..()
-	if(prob(70))
-		new /obj/item/screwdriver(src)
-	if(prob(50))
-		new /obj/item/multitool(src)
-	if(prob(70))
-		new /obj/item/wirecutters(src)
-	new /obj/item/clothing/suit/bomb_suit(src)
-	new /obj/item/clothing/under/color/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/head/bomb_hood(src)
+	new /obj/item/clothing/suit/bomb_suit( src )
+	new /obj/item/clothing/under/color/black( src )
+	new /obj/item/clothing/shoes/sneakers/black( src )
+	new /obj/item/clothing/head/bomb_hood( src )
 
-/obj/structure/closet/bombcloset/security/PopulateContents()
-	..()
-	if(prob(90))
-		new /obj/item/screwdriver(src)
-	if(prob(70))
-		new /obj/item/multitool(src)
-	if(prob(90))
-		new /obj/item/wirecutters(src)
-	new /obj/item/clothing/suit/bomb_suit/security(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/head/bomb_hood/security(src)
 
-/obj/structure/closet/bombcloset/white/PopulateContents()
-	..()
-	if(prob(50))
-		new /obj/item/screwdriver(src)
-	if(prob(20))
-		new /obj/item/multitool(src)
-	if(prob(50))
-		new /obj/item/wirecutters(src)
-	new /obj/item/clothing/suit/bomb_suit/white(src)
-	new /obj/item/clothing/under/color/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/head/bomb_hood/white(src)
+/obj/structure/closet/bombclosetsecurity
+	name = "\improper EOD closet"
+	desc = "It's a storage unit for explosion-protective suits."
+	icon_state = "bomb"
+
+/obj/structure/closet/bombclosetsecurity/PopulateContents()
+	new /obj/item/clothing/suit/bomb_suit/security( src )
+	new /obj/item/clothing/under/rank/security( src )
+	new /obj/item/clothing/shoes/sneakers/brown( src )
+	new /obj/item/clothing/head/bomb_hood/security( src )
 
 /*
  * Ammunition

@@ -11,23 +11,20 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "e" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "f" = (
-/obj/machinery/computer/emergency_shuttle{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "g" = (
 /obj/structure/window/reinforced,
@@ -37,22 +34,22 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -30
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "h" = (
 /obj/machinery/door/window/southleft,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "i" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/gps{
+/obj/item/device/gps{
 	gpstag = "STV5"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "j" = (
-/obj/machinery/status_display/evac,
+/obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
@@ -63,9 +60,9 @@
 	dwidth = 3;
 	height = 5;
 	name = "Secure Transport Vessel 5";
-	width = 14
+	width = 14;
+	timid = 1
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "l" = (
@@ -76,7 +73,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -99,7 +96,6 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "r" = (
@@ -112,7 +108,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "s" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{

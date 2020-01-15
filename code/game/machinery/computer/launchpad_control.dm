@@ -18,8 +18,8 @@
 	return
 
 /obj/machinery/computer/launchpad/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
-		var/obj/item/multitool/M = W
+	if(istype(W, /obj/item/device/multitool))
+		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/launchpad))
 			if(LAZYLEN(launchpads) < maximum_pads)
 				launchpads |= M.buffer
@@ -29,6 +29,14 @@
 				to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")
 	else
 		return ..()
+
+/obj/machinery/computer/launchpad/attack_ai(mob/user)
+	attack_hand(user)
+
+/obj/machinery/computer/launchpad/attack_hand(mob/user)
+	if(..())
+		return
+	interact(user)
 
 /obj/machinery/computer/launchpad/proc/pad_exists(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
@@ -40,11 +48,10 @@
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	return pad
 
-/obj/machinery/computer/launchpad/ui_interact(mob/user)
-	. = ..()
+/obj/machinery/computer/launchpad/interact(mob/user)
 	var/list/t = list()
 	if(!LAZYLEN(launchpads))
-		obj_flags &= ~IN_USE     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
+		in_use = FALSE     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No launchpad located.</div><BR>"
 	else
 		for(var/i in 1 to LAZYLEN(launchpads))
@@ -53,7 +60,7 @@
 				if(pad.stat & NOPOWER)
 					t+= "<span class='linkOff'>[pad.display_name]</span>"
 				else
-					t+= "<A href='?src=[REF(src)];choose_pad=1;pad=[i]'>[pad.display_name]</A>"
+					t+= "<A href='?src=\ref[src];choose_pad=1;pad=[i]'>[pad.display_name]</A>"
 			else
 				launchpads -= get_pad(i)
 		t += "<BR>"
@@ -61,24 +68,24 @@
 		if(current_pad)
 			var/obj/machinery/launchpad/pad = get_pad(current_pad)
 			t += "<div class='statusDisplay'><b>[pad.display_name]</b></div>"
-			t += "<A href='?src=[REF(src)];change_name=1;pad=[current_pad]'>Rename</A>"
-			t += "<A href='?src=[REF(src)];remove=1;pad=[current_pad]'>Remove</A><BR><BR>"
-			t += "<A href='?src=[REF(src)];raisey=1;lowerx=1;pad=[current_pad]'>O</A>" //up-left
-			t += "<A href='?src=[REF(src)];raisey=1;pad=[current_pad]'>^</A>" //up
-			t += "<A href='?src=[REF(src)];raisey=1;raisex=1;pad=[current_pad]'>O</A><BR>" //up-right
-			t += "<A href='?src=[REF(src)];lowerx=1;pad=[current_pad]'><</A>"//left
-			t += "<A href='?src=[REF(src)];reset=1;pad=[current_pad]'>R</A>"//reset to 0
-			t += "<A href='?src=[REF(src)];raisex=1;pad=[current_pad]'>></A><BR>"//right
-			t += "<A href='?src=[REF(src)];lowery=1;lowerx=1;pad=[current_pad]'>O</A>"//down-left
-			t += "<A href='?src=[REF(src)];lowery=1;pad=[current_pad]'>v</A>"//down
-			t += "<A href='?src=[REF(src)];lowery=1;raisex=1;pad=[current_pad]'>O</A><BR>"//down-right
+			t += "<A href='?src=\ref[src];change_name=1;pad=[current_pad]'>Rename</A>"
+			t += "<A href='?src=\ref[src];remove=1;pad=[current_pad]'>Remove</A><BR><BR>"
+			t += "<A href='?src=\ref[src];raisey=1;lowerx=1;pad=[current_pad]'>O</A>" //up-left
+			t += "<A href='?src=\ref[src];raisey=1;pad=[current_pad]'>^</A>" //up
+			t += "<A href='?src=\ref[src];raisey=1;raisex=1;pad=[current_pad]'>O</A><BR>" //up-right
+			t += "<A href='?src=\ref[src];lowerx=1;pad=[current_pad]'><</A>"//left
+			t += "<A href='?src=\ref[src];reset=1;pad=[current_pad]'>R</A>"//reset to 0
+			t += "<A href='?src=\ref[src];raisex=1;pad=[current_pad]'>></A><BR>"//right
+			t += "<A href='?src=\ref[src];lowery=1;lowerx=1;pad=[current_pad]'>O</A>"//down-left
+			t += "<A href='?src=\ref[src];lowery=1;pad=[current_pad]'>v</A>"//down
+			t += "<A href='?src=\ref[src];lowery=1;raisex=1;pad=[current_pad]'>O</A><BR>"//down-right
 			t += "<BR>"
 			t += "<div class='statusDisplay'>Current offset:</div><BR>"
-			t += "<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"] <a href='?src=[REF(src)];sety=1;pad=[current_pad]'>\[SET\]</a></div><BR>"
-			t += "<div class='statusDisplay'>[abs(pad.x_offset)] [pad.x_offset > 0 ? "E":"W"] <a href='?src=[REF(src)];setx=1;pad=[current_pad]'>\[SET\]</a></div><BR>"
+			t += "<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"]</div><BR>"
+			t += "<div class='statusDisplay'>[abs(pad.x_offset)] [pad.x_offset > 0 ? "E":"W"]</div><BR>"
 
-			t += "<BR><A href='?src=[REF(src)];launch=1;pad=[current_pad]'>Launch</A>"
-			t += " <A href='?src=[REF(src)];pull=1;pad=[current_pad]'>Pull</A>"
+			t += "<BR><A href='?src=\ref[src];launch=1;pad=[current_pad]'>Launch</A>"
+			t += " <A href='?src=\ref[src];pull=1;pad=[current_pad]'>Pull</A>"
 
 	var/datum/browser/popup = new(user, "launchpad", name, 300, 500)
 	popup.set_content(t.Join())
@@ -128,20 +135,10 @@
 		pad.x_offset = 0
 
 	if(href_list["change_name"])
-		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15)
+		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15) as text|null
 		if(!new_name)
 			return
 		pad.display_name = new_name
-	
-	if(href_list["setx"])
-		var/newx = input(usr, "Input new x offset", pad.display_name, pad.x_offset) as null|num
-		if(!isnull(newx))
-			pad.x_offset = CLAMP(newx, -pad.range, pad.range)
-
-	if(href_list["sety"])
-		var/newy = input(usr, "Input new y offset", pad.display_name, pad.y_offset) as null|num
-		if(!isnull(newy))
-			pad.y_offset = CLAMP(newy, -pad.range, pad.range)
 
 	if(href_list["remove"])
 		if(usr && alert(usr, "Are you sure?", "Remove Launchpad", "I'm Sure", "Abort") != "Abort")

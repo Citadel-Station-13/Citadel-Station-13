@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - refactor: "Refactored that mess of a code for alternate worn clothing sprites for digitigrade and taurs."
-  - bugfix: "Fixed some issues with the aforementioned feature you may or may not have experienced because it was pretty lame."

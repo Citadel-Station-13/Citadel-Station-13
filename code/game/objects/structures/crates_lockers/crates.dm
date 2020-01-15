@@ -17,8 +17,6 @@
 
 /obj/structure/closet/crate/New()
 	..()
-	if(icon_state == "[initial(icon_state)]open")
-		opened = TRUE
 	update_icon()
 
 /obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
@@ -39,11 +37,10 @@
 		add_overlay("manifest")
 
 /obj/structure/closet/crate/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
 	if(manifest)
 		tear_manifest(user)
+		return
+	..()
 
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
@@ -54,12 +51,6 @@
 		manifest = null
 		update_icon()
 
-/obj/structure/closet/crate/handle_lock_addition()
-	return
-
-/obj/structure/closet/crate/handle_lock_removal()
-	return
-
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
@@ -69,24 +60,6 @@
 		user.put_in_hands(manifest)
 	manifest = null
 	update_icon()
-
-/obj/structure/closet/crate/coffin
-	name = "coffin"
-	desc = "It's a burial receptacle for the dearly departed."
-	icon_state = "coffin"
-	resistance_flags = FLAMMABLE
-	max_integrity = 70
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 5
-
-/obj/structure/closet/crate/coffin/examine(mob/user)
-	. = ..()
-	if(user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		. += {"<span class='cult'>This is a coffin which you can use to regenerate your burns and other wounds faster.</span>"}
-		. += {"<span class='cult'>You can also thicken your blood if you survive the day, and hide from the sun safely while inside.</span>"}
-	/*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-			. += {"<span class='cult'>This is a coffin which your master can use to shield himself from the unforgiving sun.\n
-			You yourself are still human and dont need it. Yet.</span>"} */
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -108,34 +81,14 @@
 	name = "freezer"
 	icon_state = "freezer"
 
-//Snowflake organ freezer code
-//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
-
-/obj/structure/closet/crate/freezer/open()
-	recursive_organ_check(src)
-	..()
-
-/obj/structure/closet/crate/freezer/close()
-	..()
-	recursive_organ_check(src)
-
-/obj/structure/closet/crate/freezer/Destroy()
-	recursive_organ_check(src)
-	..()
-
-/obj/structure/closet/crate/freezer/Initialize()
-	. = ..()
-	recursive_organ_check(src)
-
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."
-	icon_state = "surgery"
 
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
-	new /obj/item/reagent_containers/blood(src)
-	new /obj/item/reagent_containers/blood(src)
+	new /obj/item/reagent_containers/blood/empty(src)
+	new /obj/item/reagent_containers/blood/empty(src)
 	new /obj/item/reagent_containers/blood/AMinus(src)
 	new /obj/item/reagent_containers/blood/BMinus(src)
 	new /obj/item/reagent_containers/blood/BPlus(src)
@@ -192,32 +145,3 @@
 	name = "science crate"
 	desc = "A science crate."
 	icon_state = "scicrate"
-
-/obj/structure/closet/crate/solarpanel_small
-	name = "budget solar panel crate"
-	icon_state = "engi_e_crate"
-
-/obj/structure/closet/crate/solarpanel_small/PopulateContents()
-	..()
-	for(var/i in 1 to 13)
-		new /obj/item/solar_assembly(src)
-	new /obj/item/circuitboard/computer/solar_control(src)
-	new /obj/item/paper/guides/jobs/engi/solars(src)
-	new /obj/item/electronics/tracker(src)
-
-/obj/structure/closet/crate/goldcrate
-	name = "gold crate"
-
-/obj/structure/closet/crate/goldcrate/PopulateContents()
-	..()
-	for(var/i in 1 to 3)
-		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
-	new /obj/item/storage/belt/champion(src)
-
-/obj/structure/closet/crate/silvercrate
-	name = "silver crate"
-
-/obj/structure/closet/crate/silvercrate/PopulateContents()
-	..()
-	for(var/i in 1 to 5)
-		new /obj/item/coin/silver(src)

@@ -14,10 +14,10 @@
 	var/list/returnorg = list()
 	if(subzones)
 		// Include subzones - groin for chest, eyes and mouth for head
-		if(zone == BODY_ZONE_HEAD)
-			returnorg = getorganszone(BODY_ZONE_PRECISE_EYES) + getorganszone(BODY_ZONE_PRECISE_MOUTH)
-		if(zone == BODY_ZONE_CHEST)
-			returnorg = getorganszone(BODY_ZONE_PRECISE_GROIN)
+		if(zone == "head")
+			returnorg = getorganszone("eyes") + getorganszone("mouth")
+		if(zone == "chest")
+			returnorg = getorganszone("groin")
 
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X

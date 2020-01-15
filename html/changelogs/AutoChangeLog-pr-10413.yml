@@ -1,4 +1,0 @@
-author: "nik707"
-delete-after: True
-changes: 
-  - tweak: "engraving light_power from 1 to 0.3"

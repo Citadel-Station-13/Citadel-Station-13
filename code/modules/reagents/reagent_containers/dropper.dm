@@ -6,14 +6,11 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
-	reagent_flags = TRANSPARENT
+	container_type = TRANSPARENT_1
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(!target.reagents)
-		return
+	if(!proximity) return
+	if(!target.reagents) return
 
 	if(reagents.total_volume > 0)
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -67,9 +64,9 @@
 			var/R
 			if(reagents)
 				for(var/datum/reagent/A in src.reagents.reagent_list)
-					R += A.type + " ("
+					R += A.id + " ("
 					R += num2text(A.volume) + "),"
-			log_combat(user, M, "squirted", R)
+			add_logs(user, M, "squirted", R)
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")
@@ -97,6 +94,3 @@
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
-
-/obj/item/reagent_containers/dropper/get_belt_overlay()
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")

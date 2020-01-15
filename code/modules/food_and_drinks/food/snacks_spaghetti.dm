@@ -4,7 +4,7 @@
 	desc = "Now that's a nic'e pasta!"
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghetti"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	cooked_type = /obj/item/reagent_containers/food/snacks/boiledspaghetti
 	filling_color = "#F0E68C"
 	tastes = list("pasta" = 1)
@@ -16,8 +16,8 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghettiboiled"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bonus_reagents = list("nutriment" = 2)
+	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/pasta
 	filling_color = "#F0E68C"
 	tastes = list("pasta" = 1)
@@ -30,8 +30,8 @@
 	icon_state = "pastatomato"
 	trash = /obj/item/trash/plate
 	bitesize = 4
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list("nutriment" = 1, "tomatojuice" = 10, "vitamin" = 4)
+	list_reagents = list("nutriment" = 6, "tomatojuice" = 10, "vitamin" = 4)
 	filling_color = "#DC143C"
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtype = GRAIN | VEGETABLES
@@ -43,8 +43,8 @@
 	icon_state = "copypasta"
 	trash = /obj/item/trash/plate
 	bitesize = 4
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/tomatojuice = 20, /datum/reagent/consumable/nutriment/vitamin = 8)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+	list_reagents = list("nutriment" = 12, "tomatojuice" = 20, "vitamin" = 8)
 	filling_color = "#DC143C"
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtype = GRAIN | VEGETABLES
@@ -55,8 +55,8 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "meatballspaghetti"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+	list_reagents = list("nutriment" = 8, "vitamin" = 4)
 	filling_color = "#F0E68C"
 	tastes = list("pasta" = 1, "tomato" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
@@ -67,8 +67,8 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spesslaw"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 6)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
+	list_reagents = list("nutriment" = 8, "vitamin" = 6)
 	filling_color = "#F0E68C"
 	tastes = list("pasta" = 1, "tomato" = 1, "meat" = 1)
 	foodtype = GRAIN
@@ -79,8 +79,8 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "chowmein"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 4)
+	list_reagents = list("nutriment" = 7, "vitamin" = 6)
 	tastes = list("noodle" = 1, "tomato" = 1)
 	foodtype = GRAIN
 
@@ -90,7 +90,7 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "beefnoodle"
 	trash = /obj/item/reagent_containers/glass/bowl
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/liquidgibs = 3)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 6, "liquidgibs" = 3)
 	tastes = list("noodle" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
 
@@ -100,6 +100,6 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "butternoodles"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
 	tastes = list("noodle" = 1, "butter" = 1)
 	foodtype = GRAIN | DAIRY

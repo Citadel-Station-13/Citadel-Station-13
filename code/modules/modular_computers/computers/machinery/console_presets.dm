@@ -1,9 +1,9 @@
 /obj/machinery/modular_computer/console/preset
 	// Can be changed to give devices specific hardware
-	var/_has_id_slot = FALSE
-	var/_has_printer = FALSE
-	var/_has_battery = FALSE
-	var/_has_ai = FALSE
+	var/_has_id_slot = 0
+	var/_has_printer = 0
+	var/_has_battery = 0
+	var/_has_ai = 0
 
 /obj/machinery/modular_computer/console/preset/Initialize()
 	. = ..()
@@ -29,9 +29,8 @@
 
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/console/preset/engineering
-	console_department = "Engineering"
-	name = "engineering console"
-	desc = "A stationary computer. This one comes preloaded with engineering programs."
+	 console_department = "Engineering"
+	 desc = "A stationary computer. This one comes preloaded with engineering programs."
 
 /obj/machinery/modular_computer/console/preset/engineering/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
@@ -41,14 +40,9 @@
 
 // ===== RESEARCH CONSOLE =====
 /obj/machinery/modular_computer/console/preset/research
-	console_department = "Research"
-	name = "research director's console"
-	desc = "A stationary computer. This one comes preloaded with research programs."
-	_has_ai = TRUE
-
-/obj/machinery/modular_computer/console/preset/research/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click to eject the intelliCard.</span>"
+	 console_department = "Research"
+	 desc = "A stationary computer. This one comes preloaded with research programs."
+	 _has_ai = 1
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
@@ -60,15 +54,10 @@
 
 // ===== COMMAND CONSOLE =====
 /obj/machinery/modular_computer/console/preset/command
-	console_department = "Command"
-	name = "command console"
-	desc = "A stationary computer. This one comes preloaded with command programs."
-	_has_id_slot = TRUE
-	_has_printer = TRUE
-
-/obj/machinery/modular_computer/console/preset/command/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click [src] to eject the identification card.</span>"
+	 console_department = "Command"
+	 desc = "A stationary computer. This one comes preloaded with command programs."
+	 _has_id_slot = 1
+	 _has_printer = 1
 
 /obj/machinery/modular_computer/console/preset/command/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
@@ -77,9 +66,8 @@
 
 // ===== CIVILIAN CONSOLE =====
 /obj/machinery/modular_computer/console/preset/civilian
-	console_department = "Civilian"
-	name = "civilian console"
-	desc = "A stationary computer. This one comes preloaded with generic programs."
+	 console_department = "Civilian"
+	 desc = "A stationary computer. This one comes preloaded with generic programs."
 
 /obj/machinery/modular_computer/console/preset/civilian/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]

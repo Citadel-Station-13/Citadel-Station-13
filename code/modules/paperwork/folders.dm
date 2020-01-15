@@ -7,10 +7,6 @@
 	pressure_resistance = 2
 	resistance_flags = FLAMMABLE
 
-/obj/item/folder/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return OXYLOSS
-
 /obj/item/folder/blue
 	desc = "A blue folder."
 	icon_state = "folder_blue"
@@ -41,11 +37,8 @@
 		to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
 		update_icon()
 	else if(istype(W, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
-			return
 		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as text), 1, MAX_NAME_LEN)
-		if(user.canUseTopic(src, BE_CLOSE))
+		if((in_range(src,user) && user.stat == CONSCIOUS))
 			name = "folder[(n_name ? " - '[n_name]'" : null)]"
 
 
@@ -53,7 +46,7 @@
 	var/dat = "<title>[name]</title>"
 
 	for(var/obj/item/I in src)
-		dat += "<A href='?src=[REF(src)];remove=[REF(I)]'>Remove</A> - <A href='?src=[REF(src)];read=[REF(I)]'>[I.name]</A><BR>"
+		dat += "<A href='?src=\ref[src];remove=\ref[I]'>Remove</A> - <A href='?src=\ref[src];read=\ref[I]'>[I.name]</A><BR>"
 	user << browse(dat, "window=folder")
 	onclose(user, "folder")
 	add_fingerprint(usr)
@@ -69,7 +62,7 @@
 		if(href_list["remove"])
 			var/obj/item/I = locate(href_list["remove"])
 			if(istype(I) && I.loc == src)
-				I.forceMove(usr.loc)
+				I.loc = usr.loc
 				usr.put_in_hands(I)
 
 		if(href_list["read"])

@@ -3,12 +3,10 @@
 	desc = "This spell blinds and/or destroys/damages/heals and/or knockdowns/stuns the target."
 
 	var/amt_knockdown = 0
-	var/amt_hardstun
 	var/amt_unconscious = 0
 	var/amt_stun = 0
 
 	//set to negatives for healing
-	var/amt_dam_stam
 	var/amt_dam_fire = 0
 	var/amt_dam_brute = 0
 	var/amt_dam_oxy = 0
@@ -21,14 +19,10 @@
 
 	var/summon_type = null //this will put an obj at the target's location
 
-	var/check_anti_magic = TRUE
-	var/check_holy = FALSE
-
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
+
 	for(var/mob/living/target in targets)
 		playsound(target,sound, 50,1)
-		if(target.anti_magic_check(check_anti_magic, check_holy))
-			return
 		switch(destroys)
 			if("gib")
 				target.gib()
@@ -43,10 +37,7 @@
 		target.adjustToxLoss(amt_dam_tox)
 		target.adjustOxyLoss(amt_dam_oxy)
 		//disabling
-		if(!amt_knockdown && amt_dam_stam)
-			target.adjustStaminaLoss(amt_dam_stam)
-		else
-			target.Knockdown(amt_knockdown, override_hardstun = amt_hardstun, override_stamdmg = amt_dam_stam)
+		target.Knockdown(amt_knockdown)
 		target.Unconscious(amt_unconscious)
 		target.Stun(amt_stun)
 

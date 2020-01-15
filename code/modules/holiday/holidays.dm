@@ -8,9 +8,6 @@
 	var/begin_week = FALSE //If set to a number, then this holiday will begin on certain week
 	var/begin_weekday = FALSE //If set to a weekday, then this will trigger the holiday on the above week
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
-	var/current_year = 0
-	var/year_offset = 0
-	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -36,7 +33,7 @@
 	if(!end_month)
 		end_month = begin_month
 	if(begin_week && begin_weekday)
-		if(begin_week == ww && begin_weekday == ddd && begin_month == mm)
+		if(begin_week == ww && begin_weekday == ddd)
 			return TRUE
 	if(end_month > begin_month) //holiday spans multiple months in one year
 		if(mm == end_month) //in final month
@@ -70,7 +67,6 @@
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
-	drone_hat = /obj/item/clothing/head/festive
 
 /datum/holiday/new_year/getStationPrefix()
 	return pick("Party","New","Hangover","Resolution")
@@ -79,10 +75,6 @@
 	name = "Groundhog Day"
 	begin_day = 2
 	begin_month = FEBRUARY
-	drone_hat = /obj/item/clothing/head/helmet/space/chronos
-
-/datum/holiday/groundhog/getStationPrefix()
-	return pick("Deja Vu") //I have been to this place before
 
 /datum/holiday/valentines
 	name = VALENTINES
@@ -97,7 +89,6 @@
 	name = "Birthday of Space Station 13"
 	begin_day = 16
 	begin_month = FEBRUARY
-	drone_hat = /obj/item/clothing/head/festive
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YY")) - 3
@@ -152,17 +143,13 @@
 /datum/holiday/no_this_is_patrick/getStationPrefix()
 	return pick("Blarney","Green","Leprechaun","Booze")
 
-/datum/holiday/no_this_is_patrick/greet()
-	return "Happy National Inebriation Day!"
-
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
 	begin_day = 1
-	end_day = 5
+	end_day = 2
 	begin_month = APRIL
 
 /datum/holiday/april_fools/celebrate()
-	SSjob.set_overflow_role("Clown")
 	SSticker.login_music = 'sound/ambience/clown.ogg'
 	for(var/mob/dead/new_player/P in GLOB.mob_list)
 		if(P.client)
@@ -174,15 +161,7 @@
 	begin_month = APRIL
 
 /datum/holiday/fourtwenty/getStationPrefix()
-	return pick("Snoop","Blunt","Toke","Dank","Cheech","Chong")
-
-/datum/holiday/tea
-	name = "National Tea Day"
-	begin_day = 21
-	begin_month = APRIL
-
-/datum/holiday/tea/getStationPrefix()
-	return pick("Crumpet","Assam","Oolong","Pu-erh","Sweet Tea","Green","Black")
+	return pick("Snoop","Blunt","Toke","Dank")
 
 /datum/holiday/earth
 	name = "Earth Day"
@@ -193,24 +172,14 @@
 	name = "Labor Day"
 	begin_day = 1
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/head/hardhat
 
 /datum/holiday/firefighter
 	name = "Firefighter's Day"
 	begin_day = 4
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/head/hardhat/red
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
-
-/datum/holiday/bee
-	name = "Bee Day"
-	begin_day = 20
-	begin_month = MAY
-
-/datum/holiday/bee/getStationPrefix()
-	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
 
 /datum/holiday/summersolstice
 	name = "Summer Solstice"
@@ -221,24 +190,14 @@
 	name = "Doctor's Day"
 	begin_day = 1
 	begin_month = JULY
-	drone_hat = /obj/item/clothing/head/nursehat
 
 /datum/holiday/UFO
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
-	drone_hat = /obj/item/clothing/mask/facehugger/dead
 
 /datum/holiday/UFO/getStationPrefix() //Is such a thing even possible?
-	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
-
-/datum/holiday/USA
-	name = "Independence Day"
-	begin_day = 4
-	begin_month = JULY
-
-/datum/holiday/USA/getStationPrefix()
-	return pick("Independant","American","Burger","Bald Eagle","Star-Spangled")
+	return pick("Ayy","Truth","Tsoukalos","Mulder") //Yes it is!
 
 /datum/holiday/writer
 	name = "Writer's Day"
@@ -255,20 +214,13 @@
 
 /datum/holiday/beer
 	name = "Beer Day"
-
-/datum/holiday/beer/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if(mm == 8 && ddd == FRIDAY && ww == 1) //First Friday in August
-		return TRUE
-	return FALSE
-
-/datum/holiday/beer/getStationPrefix()
-	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
+	begin_day = 5
+	begin_month = AUGUST
 
 /datum/holiday/pirate
 	name = "Talk-Like-a-Pirate Day"
 	begin_day = 19
 	begin_month = SEPTEMBER
-	drone_hat = /obj/item/clothing/head/pirate
 
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
@@ -312,17 +264,15 @@
 	name = "Smiling Day"
 	begin_day = 7
 	begin_month = OCTOBER
-	drone_hat = /obj/item/clothing/head/papersack/smiley
 
 /datum/holiday/boss
 	name = "Boss' Day"
 	begin_day = 16
 	begin_month = OCTOBER
-	drone_hat = /obj/item/clothing/head/that
 
 /datum/holiday/halloween
 	name = HALLOWEEN
-	begin_day = 28
+	begin_day = 30
 	begin_month = OCTOBER
 	end_day = 2
 	end_month = NOVEMBER
@@ -332,16 +282,6 @@
 
 /datum/holiday/halloween/getStationPrefix()
 	return pick("Bone-Rattling","Mr. Bones' Own","2SPOOKY","Spooky","Scary","Skeletons")
-
-/datum/holiday/jacqueen //Subset of halloween
-	name = "jacqueen"
-	begin_day = 27
-	begin_month = OCTOBER
-	end_day = 2
-	end_month = NOVEMBER
-
-/datum/holiday/jacqueen/greet()
-	return "Jacqueline the great Pumpqueen has come to visit!"
 
 /datum/holiday/vegan
 	name = "Vegan Day"
@@ -357,7 +297,6 @@
 	name = "Flowers Day"
 	begin_day = 19
 	begin_month = NOVEMBER
-	drone_hat = /obj/item/reagent_containers/food/snacks/grown/moonflower
 
 /datum/holiday/hello
 	name = "Saying-'Hello' Day"
@@ -365,7 +304,7 @@
 	begin_month = NOVEMBER
 
 /datum/holiday/hello/greet()
-	return "[pick(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy", "Ni hao", "Guten Tag", "Konnichiwa", "G'day cunt"))]! " + ..()
+	return "[pick(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy"))]! " + ..()
 
 /datum/holiday/human_rights
 	name = "Human-Rights Day"
@@ -376,14 +315,12 @@
 	name = "Monkey Day"
 	begin_day = 14
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/gas/monkeymask
 
 /datum/holiday/thanksgiving
 	name = "Thanksgiving in the United States"
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY
-	drone_hat = /obj/item/clothing/head/that //This is the closest we can get to a pilgrim's hat
 
 /datum/holiday/thanksgiving/canada
 	name = "Thanksgiving in Canada"
@@ -411,15 +348,6 @@
 	begin_week = 3
 	begin_month = JUNE
 	begin_weekday = SUNDAY
-
-/datum/holiday/moth
-	name = "Moth Week"
-
-/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July
-	return mm == JULY && (ww == 4 || (ww == 5 && ddd == SUNDAY))
-
-/datum/holiday/moth/getStationPrefix()
-	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
 
 /datum/holiday/ramadan
 	name = "Start of Ramadan"
@@ -456,35 +384,21 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/rat/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 22
+	begin_day = 23
 	begin_month = DECEMBER
-	end_day = 27
-	drone_hat = /obj/item/clothing/head/santa
+	end_day = 25
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
-
-/datum/holiday/xmas/celebrate()
-	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
-
-/datum/holiday/xmas/proc/roundstart_celebrate()
-	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
-		Monitor.icon_state = "entertainment_xmas"
-
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
-		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
-
 
 /datum/holiday/festive_season
 	name = FESTIVE_SEASON
 	begin_day = 1
 	begin_month = DECEMBER
 	end_day = 31
-	drone_hat = /obj/item/clothing/head/santa
 
 /datum/holiday/festive_season/greet()
 	return "Have a nice festive season!"
@@ -507,17 +421,54 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/easter
 	name = EASTER
-	drone_hat = /obj/item/clothing/head/rabbitears
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 
 /datum/holiday/easter/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if(!begin_month)
-		current_year = text2num(time2text(world.timeofday, "YYYY"))
-		var/list/easterResults = EasterDate(current_year+year_offset)
+// Easter's celebration day is as snowflakey as Uhangi's code
 
-		begin_day = easterResults["day"]
-		begin_month = easterResults["month"]
+	if(!begin_month)
+
+		var/yy_string = "[yy]"
+// year = days after March 22that Easter falls on that year.
+// For 2015 Easter is on April 5th, so 2015 = 14 since the 5th is 14 days past the 22nd
+// If it's 2040 and this is still in use, invent a time machine and teach me a better way to do this. Also tell us about HL3.
+		var/list/easters = list(
+		"15" = 14,\
+		"16" = 6,\
+		"17" = 25,\
+		"18" = 10,\
+		"19" = 30,\
+		"20" = 22,\
+		"21" = 13,\
+		"22" = 26,\
+		"23" = 18,\
+		"24" = 9,\
+		"25" = 29,\
+		"26" = 14,\
+		"27" = 6,\
+		"28" = 25,\
+		"29" = 10,\
+		"30" = 30,\
+		"31" = 23,\
+		"32" = 6,\
+		"33" = 26,\
+		"34" = 18,\
+		"35" = 3,\
+		"36" = 22,\
+		"37" = 14,\
+		"38" = 34,\
+		"39" = 19,\
+		"40" = 9,\
+		)
+
+		begin_day = easters[yy_string]
+		if(begin_day <= 9)
+			begin_day += 22
+			begin_month = MARCH
+		else
+			begin_day -= 9
+			begin_month = APRIL
 
 		end_day = begin_day + days_extra
 		end_month = begin_month
@@ -540,16 +491,3 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	GLOB.maintenance_loot += list(
 		/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
 		/obj/item/storage/bag/easterbasket = 15)
-
-/datum/holiday/easter/greet()
-	return "Greetings! Have a Happy Easter and keep an eye out for Easter Bunnies!"
-
-/datum/holiday/easter/getStationPrefix()
-	return pick("Fluffy","Bunny","Easter","Egg")
-
-//Random citadel thing for halloween species
-/proc/force_enable_halloween_species()
-	var/list/oldlist = SSevents.holidays
-	SSevents.holidays = list(HALLOWEEN = new /datum/holiday/halloween)
-	generate_selectable_species(FALSE)
-	SSevents.holidays = oldlist

@@ -28,12 +28,9 @@
 				areasToOpen += A
 
 
-/datum/round_event/grey_tide/announce(fake)
+/datum/round_event/grey_tide/announce()
 	if(areasToOpen && areasToOpen.len > 0)
-		if(prob(50))
-			priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
-		else
-			print_command_report("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Gr3y.T1d3 virus")
+		priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 	else
 		log_world("ERROR: Could not initate grey-tide. No areas in the list!")
 		kill()
@@ -56,8 +53,6 @@
 				temp.update_icon()
 			else if(istype(O, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/temp = O
-				if(temp.critical_machine) //Skip doors in critical positions, such as the SM chamber.
-					continue
 				temp.prison_open()
 			else if(istype(O, /obj/machinery/door_timer))
 				var/obj/machinery/door_timer/temp = O

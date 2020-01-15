@@ -5,7 +5,6 @@
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 3
 	response_help = "pokes"
@@ -22,7 +21,7 @@
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
-	faction = list(ROLE_WIZARD)
+	faction = list("wizard")
 	status_flags = CANPUSH
 
 	retreat_distance = 3 //out of fireball range
@@ -37,8 +36,6 @@
 
 	var/next_cast = 0
 
-	do_footstep = TRUE
-
 /mob/living/simple_animal/hostile/wizard/Initialize()
 	. = ..()
 	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
@@ -46,8 +43,7 @@
 	fireball.human_req = 0
 	fireball.player_lock = 0
 	AddSpell(fireball)
-	var/obj/item/implant/exile/I = new
-	I.implant(src, null, TRUE)
+	implants += new /obj/item/implant/exile(src)
 
 	mm = new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	mm.clothes_req = 0

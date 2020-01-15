@@ -2,30 +2,20 @@ SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = INIT_ORDER_ICON_SMOOTHING
 	wait = 1
-	priority = FIRE_PRIOTITY_SMOOTHING
+	priority = 35
 	flags = SS_TICKER
 
 	var/list/smooth_queue = list()
-	var/list/deferred = list()
 
 /datum/controller/subsystem/icon_smooth/fire()
-	var/list/cached = smooth_queue
-	while(cached.len)
-		var/atom/A = cached[cached.len]
-		cached.len--
-		if (A.flags_1 & INITIALIZED_1)
-			smooth_icon(A)
-		else
-			deferred += A
+	while(smooth_queue.len)
+		var/atom/A = smooth_queue[smooth_queue.len]
+		smooth_queue.len--
+		smooth_icon(A)
 		if (MC_TICK_CHECK)
 			return
-
-	if (!cached.len)
-		if (deferred.len)
-			smooth_queue = deferred
-			deferred = cached
-		else
-			can_fire = 0
+	if (!smooth_queue.len)
+		can_fire = 0
 
 /datum/controller/subsystem/icon_smooth/Initialize()
 	smooth_zlevel(1,TRUE)
@@ -39,4 +29,4 @@ SUBSYSTEM_DEF(icon_smooth)
 		smooth_icon(A)
 		CHECK_TICK
 
-	return ..()
+	..()

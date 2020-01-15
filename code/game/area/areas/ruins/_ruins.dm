@@ -3,10 +3,9 @@
 /area/ruin
 	name = "\improper Unexplored Location"
 	icon_state = "away"
-	has_gravity = STANDARD_GRAVITY
+	has_gravity = TRUE
 	hidden = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	ambientsounds = RUINS
 
 
 /area/ruin/unpowered
@@ -17,3 +16,4 @@
 
 /area/ruin/powered
 	requires_power = FALSE
+	

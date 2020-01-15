@@ -19,15 +19,15 @@
 	return 0
 
 
-/mob/living/simple_animal/drone/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/mob/living/simple_animal/drone/can_equip(obj/item/I, slot)
 	switch(slot)
-		if(SLOT_HEAD)
+		if(slot_head)
 			if(head)
 				return 0
-			if(!((I.slot_flags & ITEM_SLOT_HEAD) || (I.slot_flags & ITEM_SLOT_MASK)))
+			if(!((I.slot_flags & SLOT_HEAD) || (I.slot_flags & SLOT_MASK)))
 				return 0
 			return 1
-		if(SLOT_GENERC_DEXTROUS_STORAGE)
+		if(slot_generic_dextrous_storage)
 			if(internal_storage)
 				return 0
 			return 1
@@ -36,9 +36,9 @@
 
 /mob/living/simple_animal/drone/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(SLOT_HEAD)
+		if(slot_head)
 			return head
-		if(SLOT_GENERC_DEXTROUS_STORAGE)
+		if(slot_generic_dextrous_storage)
 			return internal_storage
 	return ..()
 
@@ -58,15 +58,15 @@
 		I.pulledby.stop_pulling()
 
 	I.screen_loc = null // will get moved if inventory is visible
-	I.forceMove(src)
+	I.loc = src
 	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 
 	switch(slot)
-		if(SLOT_HEAD)
+		if(slot_head)
 			head = I
 			update_inv_head()
-		if(SLOT_GENERC_DEXTROUS_STORAGE)
+		if(slot_generic_dextrous_storage)
 			internal_storage = I
 			update_inv_internal_storage()
 		else
@@ -77,7 +77,7 @@
 	I.equipped(src, slot)
 
 /mob/living/simple_animal/drone/getBackSlot()
-	return SLOT_GENERC_DEXTROUS_STORAGE
+	return slot_generic_dextrous_storage
 
 /mob/living/simple_animal/drone/getBeltSlot()
-	return SLOT_GENERC_DEXTROUS_STORAGE
+	return slot_generic_dextrous_storage

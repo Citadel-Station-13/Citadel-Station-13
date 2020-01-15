@@ -11,8 +11,8 @@
 	var/codelen = 4
 	tamperproof = 90
 
-/obj/structure/closet/crate/secure/loot/Initialize()
-	. = ..()
+/obj/structure/closet/crate/secure/loot/New()
+	..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
 	for(var/i = 0, i < codelen, i++)
@@ -38,7 +38,8 @@
 		if(11 to 15)
 			new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 		if(16 to 20)
-			new /obj/item/stack/ore/diamond(src, 10)
+			for(var/i in 1 to 10)
+				new /obj/item/ore/diamond(src)
 		if(21 to 25)
 			for(var/i in 1 to 5)
 				new /obj/item/poster/random_contraband(src)
@@ -85,7 +86,8 @@
 				var/newitem = pick(subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace)
 				new newitem(src)
 		if(69 to 70)
-			new /obj/item/stack/ore/bluespace_crystal(src, 5)
+			for(var/i in 1 to 5)
+				new /obj/item/ore/bluespace_crystal(src)
 		if(71 to 72)
 			new /obj/item/pickaxe/drill(src)
 		if(73 to 74)
@@ -112,7 +114,7 @@
 		if(90)
 			new /obj/item/organ/heart(src)
 		if(91)
-			new /obj/item/soulstone/anybody(src)
+			new /obj/item/device/soulstone/anybody(src)
 		if(92)
 			new /obj/item/katana(src)
 		if(93)
@@ -121,7 +123,7 @@
 			new /obj/item/storage/backpack/clown(src)
 			new /obj/item/clothing/under/rank/clown(src)
 			new /obj/item/clothing/shoes/clown_shoes(src)
-			new /obj/item/pda/clown(src)
+			new /obj/item/device/pda/clown(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/bikehorn(src)
 			new /obj/item/toy/crayon/rainbow(src)
@@ -129,7 +131,7 @@
 		if(95)
 			new /obj/item/clothing/under/rank/mime(src)
 			new /obj/item/clothing/shoes/sneakers/black(src)
-			new /obj/item/pda/mime(src)
+			new /obj/item/device/pda/mime(src)
 			new /obj/item/clothing/gloves/color/white(src)
 			new /obj/item/clothing/mask/gas/mime(src)
 			new /obj/item/clothing/head/beret(src)
@@ -150,12 +152,11 @@
 		if(100)
 			new /obj/item/clothing/head/bearpelt(src)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
-		if(user.canUseTopic(src, BE_CLOSE))
+		if(user.canUseTopic(src, 1))
 			var/list/sanitised = list()
 			var/sanitycheck = 1
 			for(var/i=1,i<=length(input),i++) //put the guess into a list
@@ -169,7 +170,6 @@
 				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
-				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 			else if (input == null || sanitycheck == null || length(input) != codelen)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
@@ -181,20 +181,22 @@
 	else
 		return ..()
 
-//this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE))
-		attack_hand(user)
-		return TRUE
+	if(!user.canUseTopic(src))
+		return
+	attack_hand(user)
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/multitool))
+		if(istype(W, /obj/item/card/emag))
+			boom(user)
+			return
+		else if(istype(W, /obj/item/device/multitool))
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
 			else
-				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [attempts] failed access attempts.</span>")
+				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>")
 			if(lastattempt != null)
 				var/list/guess = list()
 				var/list/answer = list()
@@ -215,19 +217,6 @@
 			return
 	return ..()
 
-/obj/structure/closet/secure/loot/dive_into(mob/living/user)
-	if(!locked)
-		return ..()
-	to_chat(user, "<span class='notice'>That seems like a stupid idea.</span>")
-	return FALSE
-
-/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
-	if(!locked)
-		return
-	boom(user)
-	return TRUE
-
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
 	if(locked)
 		boom(user)
@@ -235,6 +224,4 @@
 		..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
-	if(!locked && disassembled)
-		return ..()
 	boom()

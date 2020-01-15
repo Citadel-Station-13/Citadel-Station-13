@@ -2,34 +2,25 @@
 	if(stat == DEAD)
 		return
 
-	silent = FALSE
+	silent = 0
 	losebreath = 0
 
 	if(!gibbed)
 		emote("deathgasp")
-	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
 
 	. = ..()
-
-	for(var/T in get_traumas())
-		var/datum/brain_trauma/BT = T
-		BT.on_death()
-
 	if(SSticker.mode)
 		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
-	var/atom/Tsec = drop_location()
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
-		M.forceMove(Tsec)
+		M.forceMove(loc)
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	..()
 
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
-	var/atom/Tsec = drop_location()
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
 			for(var/X in internal_organs)
@@ -42,9 +33,9 @@
 					qdel(O) //so the brain isn't transfered to the head when the head drops.
 					continue
 				var/org_zone = check_zone(O.zone) //both groin and chest organs.
-				if(org_zone == BODY_ZONE_CHEST)
+				if(org_zone == "chest")
 					O.Remove(src)
-					O.forceMove(Tsec)
+					O.forceMove(get_turf(src))
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
 		for(var/X in internal_organs)
@@ -56,7 +47,7 @@
 				qdel(I)
 				continue
 			I.Remove(src)
-			I.forceMove(Tsec)
+			I.forceMove(get_turf(src))
 			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
 
@@ -65,8 +56,3 @@
 		var/obj/item/bodypart/BP = X
 		BP.drop_limb()
 		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-
-/mob/living/carbon/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
-	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
-	return ..()

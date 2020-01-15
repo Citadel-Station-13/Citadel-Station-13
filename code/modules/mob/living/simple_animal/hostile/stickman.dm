@@ -5,7 +5,6 @@
 	icon_living = "stickman"
 	icon_dead = "stickman_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
@@ -13,7 +12,6 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	blood_volume = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -51,7 +49,6 @@
 	icon_state = "stickdog"
 	icon_living = "stickdog"
 	icon_dead = "stickdog_dead"
-	mob_biotypes = list(MOB_INORGANIC, MOB_BEAST)
 
 /mob/living/simple_animal/hostile/stickman/Initialize(mapload, var/wizard_summoned)
 	. = ..()

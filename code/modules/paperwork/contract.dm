@@ -5,7 +5,7 @@
 	throw_speed = 3
 	var/signed = FALSE
 	var/datum/mind/target
-	item_flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 
 /obj/item/paper/contract/proc/update_text()
 	return
@@ -28,7 +28,7 @@
 
 /obj/item/paper/contract/employment/update_text()
 	name = "paper- [target] employment contract"
-	info = "<center>Conditions of Employment</center><BR><BR><BR><BR>This Agreement is made and entered into as of the date of last signature below, by and between [target] (hereafter referred to as SLAVE), and Nanotrasen (hereafter referred to as the omnipresent and helpful watcher of humanity).<BR>WITNESSETH:<BR>WHEREAS, SLAVE is a natural born human or humanoid, possessing skills upon which he can aid the omnipresent and helpful watcher of humanity, who seeks employment in the omnipresent and helpful watcher of humanity.<BR>WHEREAS, the omnipresent and helpful watcher of humanity agrees to sporadically provide payment to SLAVE, in exchange for permanent servitude.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:<BR>In exchange for paltry payments, SLAVE agrees to work for the omnipresent and helpful watcher of humanity, for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.<BR>Should transfership of a soul not be possible, a lien shall be placed instead.<BR>Signed,<BR><i>[target]</i>"
+	info = "<center>Conditions of Employment</center><BR><BR><BR><BR>This Agreement is made and entered into as of the date of last signature below, by and between [target] (hereafter referred to as SLAVE), and Nanotrasen (hereafter referred to as the omnipresent and helpful watcher of humanity).<BR>WITNESSETH:<BR>WHEREAS, SLAVE is a natural born human or humanoid, posessing skills upon which he can aid the omnipresent and helpful watcher of humanity, who seeks employment in the omnipresent and helpful watcher of humanity.<BR>WHEREAS, the omnipresent and helpful watcher of humanity agrees to sporadically provide payment to SLAVE, in exchange for permanent servitude.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:<BR>In exchange for paltry payments, SLAVE agrees to work for the omnipresent and helpful watcher of humanity, for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.<BR>Should transfership of a soul not be possible, a lien shall be placed instead.<BR>Signed,<BR><i>[target]</i>"
 
 
 /obj/item/paper/contract/employment/attack(mob/living/M, mob/living/carbon/human/user)
@@ -45,6 +45,11 @@
 		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>")
 		M.return_soul()
 	else
+		if(ishuman(M))
+			var/mob/living/carbon/human/N = M
+			if(!istype(N.head, /obj/item/clothing/head/helmet))
+				N.adjustBrainLoss(10)
+				to_chat(N, "<span class='danger'>You feel dumber.</span>")
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 			"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 	return ..()
@@ -93,7 +98,7 @@
 /obj/item/paper/contract/infernal/New(atom/loc, mob/living/nTarget, datum/mind/nOwner)
 	..()
 	owner = nOwner
-	devil_datum = owner.has_antag_datum(/datum/antagonist/devil)
+	devil_datum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
 	target = nTarget
 	update_text()
 
@@ -173,8 +178,8 @@
 		attempt_signature(user)
 	else if(istype(P, /obj/item/stamp))
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>")
-	else if(P.get_temperature())
-		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>[src] refuses to ignite!</span>")
+	else if(P.is_hot())
+		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
 	else
 		return ..()
 
@@ -194,7 +199,7 @@
 		to_chat(user, "<span class='notice'>Your signature simply slides off the sheet, it seems this contract is not meant for you to sign.</span>")
 		return 0
 	if(user.mind.soulOwner == owner)
-		to_chat(user, "<span class='notice'>This devil already owns your soul, you may not sell it to [owner.p_them()] again.</span>")
+		to_chat(user, "<span class='notice'>This devil already owns your soul, you may not sell it to them again.</span>")
 		return 0
 	if(signed)
 		to_chat(user, "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>")
@@ -202,7 +207,7 @@
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='notice'>You do not possess a soul.</span>")
 		return 0
-	if(HAS_TRAIT(user, TRAIT_DUMB))
+	if(prob(user.getBrainLoss()))
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
 		return 0
@@ -220,7 +225,7 @@
 /obj/item/paper/contract/infernal/revive/attack(mob/M, mob/living/user)
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
 		if (cooldown)
-			to_chat(user, "<span class='notice'>Give [M] a chance to think through the contract, don't rush [M.p_them()].</span>")
+			to_chat(user, "<span class='notice'>Give [M] a chance to think through the contract, don't rush them.</span>")
 			return 0
 		cooldown = TRUE
 		var/mob/living/carbon/human/H = M
@@ -235,7 +240,7 @@
 			response = tgalert(target.current, "A devil is offering you another chance at life, at the price of your soul, do you accept?", "Infernal Resurrection", "Yes", "No", "Never for this round", 0, 200)
 		if(response == "Yes")
 			H.revive(1,0)
-			log_combat(user, H, "infernally revived via contract")
+			add_logs(user, H, "infernally revived via contract")
 			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
 			H.fakefire()
 			fulfillContract(H, 1)//Revival contracts are always signed in blood
@@ -251,12 +256,12 @@
 /obj/item/paper/contract/infernal/proc/fulfillContract(mob/living/carbon/human/user = target.current, blood = FALSE)
 	signed = TRUE
 	if(user.mind.soulOwner != user.mind) //They already sold their soul to someone else?
-		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(/datum/antagonist/devil)
+		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(ANTAG_DATUM_DEVIL)
 		ownerDevilInfo.remove_soul(user.mind) //Then they lose their claim.
 	user.mind.soulOwner = owner
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType
-	var/datum/antagonist/devil/devilInfo = owner.has_antag_datum(/datum/antagonist/devil)
+	var/datum/antagonist/devil/devilInfo = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
 	devilInfo.add_soul(user.mind)
 	update_text(user.real_name, blood)
 	to_chat(user, "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>")
@@ -299,14 +304,14 @@
 		id.assignment = "Captain"
 		id.update_label()
 		if(worn)
-			if(istype(worn, /obj/item/pda))
-				var/obj/item/pda/PDA = worn
+			if(istype(worn, /obj/item/device/pda))
+				var/obj/item/device/pda/PDA = worn
 				PDA.id = id
-				id.forceMove(worn)
+				id.loc = worn
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
 				W.front_id = id
-				id.forceMove(worn)
+				id.loc = worn
 				worn.update_icon()
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
 	ion.announceEvent = -1

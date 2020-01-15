@@ -14,11 +14,9 @@
  *		ID and security PDA cart boxes,
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
- *		Replacement light boxes,
- *		Ammo types,
- *		Action Figure Boxes,
- *		Various paper bags,
- *		Colored boxes
+ *		Replacement light boxes.
+ *		Action Figure Boxes
+ *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -33,22 +31,10 @@
 	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //exploits ahoy
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
 	update_icon()
-
-/obj/item/storage/box/suicide_act(mob/living/carbon/user)
-	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
-	if(myhead)
-		user.visible_message("<span class='suicide'>[user] puts [user.p_their()] head into \the [src], and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		myhead.dismember()
-		myhead.forceMove(src)//force your enemies to kill themselves with your head collection box!
-		playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
-		return BRUTELOSS
-	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return BRUTELOSS
 
 /obj/item/storage/box/update_icon()
 	. = ..()
@@ -67,15 +53,21 @@
 	if(!ispath(foldable))
 		return
 
+	//Close any open UI windows first
+	close_all()
+
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	var/obj/item/I = new foldable
-	qdel(src)
+	var/obj/item/I = new foldable(get_turf(src))
+	user.drop_item()
 	user.put_in_hands(I)
+	user.update_inv_hands()
+	qdel(src)
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
 		return 0
 	return ..()
+
 
 //Disk boxes
 /obj/item/storage/box/disks
@@ -86,6 +78,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
 
+
 /obj/item/storage/box/disks_plantgene
 	name = "plant data disks box"
 	illustration = "disk_kit"
@@ -94,97 +87,47 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/plantgene(src)
 
-/obj/item/storage/box/disks_nanite
-	name = "nanite program disks box"
-	illustration = "disk_kit"
-
-/obj/item/storage/box/disks_nanite/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/nanite_program(src)
-
 // Ordinary survival box
 /obj/item/storage/box/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
-	new /obj/item/radio/off(src)
+	new /obj/item/device/radio/off(src)
 
 /obj/item/storage/box/survival_mining/PopulateContents()
 	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
 
 // Engineer survival box
 /obj/item/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen/engi(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
-	new /obj/item/radio/off(src)
+	new /obj/item/device/radio/off(src)
 
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
 	new /obj/item/clothing/mask/gas/syndicate(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen/engi(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 
 // Security survival box
 /obj/item/storage/box/security/PopulateContents()
 	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/security/radio/PopulateContents()
 	..() // we want the regular stuff too
-	new /obj/item/radio/off(src)
-
-/obj/item/storage/box/seclooking
-	icon_state = "secbox"
-	illustration = null
-
-/obj/item/storage/box/cells
-	name = "box of powercells"
-	desc = "Contains powercells."
-	illustration = "power_cell"
-
-/obj/item/storage/box/ammoshells
-	name = "box of loose ammo"
-	desc = "Contains loose ammo."
-	illustration = "loose_ammo"
-
-/obj/item/storage/box/otwo
-	name = "box of o2 supplies"
-	desc = "Contains o2 supplies."
-	illustration = "02"
-
-/obj/item/storage/box/otwo/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/device/radio/off(src)
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -240,22 +183,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker( src )
 
-/obj/item/storage/box/beakers/bluespace
-	name = "box of bluespace beakers"
-	illustration = "beaker"
-
-/obj/item/storage/box/beakers/bluespace/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/glass/beaker/bluespace(src)
-
-/obj/item/storage/box/medsprays
-	name = "box of medical sprayers"
-	desc = "A box full of medical sprayers, with unscrewable caps and precision spray heads."
-
-/obj/item/storage/box/medsprays/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/medspray( src )
-
 /obj/item/storage/box/injectors
 	name = "box of DNA injectors"
 	desc = "This box contains injectors, it seems."
@@ -284,7 +211,7 @@
 
 /obj/item/storage/box/flashes/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/assembly/flash/handheld(src)
+		new /obj/item/device/assembly/flash/handheld(src)
 
 /obj/item/storage/box/wall_flash
 	name = "wall-mounted flash kit"
@@ -297,12 +224,13 @@
 
 	new /obj/item/wallframe/button(src)
 	new /obj/item/electronics/airlock(src)
-	var/obj/item/assembly/control/flasher/remote = new(src)
+	var/obj/item/device/assembly/control/flasher/remote = new(src)
 	remote.id = id
 	var/obj/item/wallframe/flasher/frame = new(src)
 	frame.id = id
-	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/screwdriver(src)
+
 
 /obj/item/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
@@ -413,13 +341,7 @@
 /obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
-	icon_state = "donkpocketbox"
-	illustration=null
-
-/obj/item/storage/box/donkpockets/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+	illustration = "donk_kit"
 
 /obj/item/storage/box/donkpockets/PopulateContents()
 	for(var/i in 1 to 6)
@@ -429,13 +351,9 @@
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
+	storage_slots = 7
+	can_hold = list(/obj/item/reagent_containers/food/snacks/monkeycube)
 	illustration = null
-
-/obj/item/storage/box/monkeycubes/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 7
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
@@ -457,10 +375,10 @@
 	illustration = "pda"
 
 /obj/item/storage/box/PDAs/PopulateContents()
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
+	new /obj/item/device/pda(src)
+	new /obj/item/device/pda(src)
+	new /obj/item/device/pda(src)
+	new /obj/item/device/pda(src)
 	new /obj/item/cartridge/head(src)
 
 	var/newcart = pick(	/obj/item/cartridge/engineering,
@@ -507,21 +425,21 @@
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"
 	desc = "A box full of standard firing pins, to allow newly-developed firearms to operate."
-	illustration = "firing_pins"
+	illustration = "id"
 
 /obj/item/storage/box/firingpins/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/firing_pin(src)
+		new /obj/item/device/firing_pin(src)
 
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
-	illustration = "firing_pins"
+	illustration = "id"
 
 /obj/item/storage/box/lasertagpins/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/firing_pin/tag/red(src)
-		new /obj/item/firing_pin/tag/blue(src)
+		new /obj/item/device/firing_pin/tag/red(src)
+		new /obj/item/device/firing_pin/tag/blue(src)
 
 /obj/item/storage/box/handcuffs
 	name = "box of spare handcuffs"
@@ -569,7 +487,7 @@
 
 /obj/item/storage/box/mousetraps/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/assembly/mousetrap(src)
+		new /obj/item/device/assembly/mousetrap(src)
 
 /obj/item/storage/box/pillbottles
 	name = "box of pill bottles"
@@ -585,15 +503,12 @@
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
-
-/obj/item/storage/box/snappops/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.can_hold = typecacheof(list(/obj/item/toy/snappop))
-	STR.max_items = 8
+	storage_slots = 8
+	can_hold = list(/obj/item/toy/snappop)
 
 /obj/item/storage/box/snappops/PopulateContents()
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/toy/snappop)
+	for(var/i in 1 to storage_slots)
+		new /obj/item/toy/snappop(src)
 
 /obj/item/storage/box/matches
 	name = "matchbox"
@@ -601,17 +516,14 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	item_state = "zippo"
+	storage_slots = 10
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = ITEM_SLOT_BELT
-
-/obj/item/storage/box/matches/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 10
-	STR.can_hold = typecacheof(list(/obj/item/match))
+	slot_flags = SLOT_BELT
+	can_hold = list(/obj/item/match)
 
 /obj/item/storage/box/matches/PopulateContents()
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/match)
+	for(var/i in 1 to storage_slots)
+		new /obj/item/match(src)
 
 /obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/match))
@@ -626,14 +538,10 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
-
-/obj/item/storage/box/lights/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 21
-	STR.can_hold = typecacheof(list(/obj/item/light/tube, /obj/item/light/bulb))
-	STR.max_combined_w_class = 21
-	STR.click_gather = TRUE
+	storage_slots=21
+	can_hold = list(/obj/item/light/tube, /obj/item/light/bulb)
+	max_combined_w_class = 21
+	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
 	for(var/i in 1 to 21)
@@ -656,6 +564,7 @@
 		new /obj/item/light/tube(src)
 	for(var/i in 1 to 7)
 		new /obj/item/light/bulb(src)
+
 
 /obj/item/storage/box/deputy
 	name = "box of deputy armbands"
@@ -699,44 +608,16 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"hugbox", /datum/mood_event/hugbox)
 
-/////clown box & honkbot assembly
-/obj/item/storage/box/clown
-	name = "clown box"
-	desc = "A colorful cardboard box for the clown"
-	illustration = "clown"
-
-/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
-		if(contents.len) //prevent accidently deleting contents
-			to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		qdel(I)
-		to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got an honkbot assembly now! Honk!</span>")
-		var/obj/item/bot_assembly/honkbot/A = new
-		qdel(src)
-		user.put_in_hands(A)
-	else
-		return ..()
-
-//////
 /obj/item/storage/box/hug/medical/PopulateContents()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
-// Clown survival box
 /obj/item/storage/box/hug/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/rubbershot
 	name = "box of rubber shots"
@@ -749,7 +630,7 @@
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
 
 /obj/item/storage/box/lethalshot
-	name = "box of buckshot (Lethal)"
+	name = "box of lethal shotgun shots"
 	desc = "A box full of lethal shots, designed for riot shotguns."
 	icon_state = "lethalshot_box"
 	illustration = null
@@ -768,46 +649,6 @@
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 
-/obj/item/storage/box/lethalslugs
-	name = "box of 12g shotgun slugs"
-	desc = "A box full of lethal 12g slug, designed for riot shotguns."
-	icon_state = "12g_box"
-	illustration = null
-
-/obj/item/storage/box/lethalslugs/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun(src)
-
-/obj/item/storage/box/stunslug
-	name = "box of stun slugs"
-	desc = "A box full of stun 12g slugs."
-	icon_state = "stunslug_box"
-	illustration = null
-
-/obj/item/storage/box/stunslug/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/stunslug(src)
-
-/obj/item/storage/box/techsslug
-	name = "box of tech shotgun shells"
-	desc = "A box full of tech shotgun shells."
-	icon_state = "techslug_box"
-	illustration = null
-
-/obj/item/storage/box/techsslug/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/techshell(src)
-
-/obj/item/storage/box/fireshot
-	name = "box of incendiary ammo"
-	desc = "A box full of incendiary ammo."
-	icon_state = "fireshot_box"
-	illustration = null
-
-/obj/item/storage/box/fireshot/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/incendiary(src)
-
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"
 	desc = "The latest set of collectable action figures."
@@ -818,24 +659,11 @@
 		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
 		new randomFigure(src)
 
-/obj/item/storage/box/mechfigures
-	name = "box of mech figures"
-	desc = "The latest set of collectable mech figures."
-	icon_state = "box"
-
-/obj/item/storage/box/mechfigures/PopulateContents()
-	for(var/i in 1 to 4)
-		var/randomFigure = pick(subtypesof(/obj/item/toy/prize/))
-		new randomFigure(src)
-
-
-
-
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"
 #define SYNDI "SyndiSnacks"
 #define HEART "Heart"
-#define SMILEY "SmileyFace"
+#define SMILE "SmileyFace"
 
 /obj/item/storage/box/papersack
 	name = "paper sack"
@@ -855,9 +683,9 @@
 	if(istype(W, /obj/item/pen))
 		//if a pen is used on the sack, dialogue to change its design appears
 		if(contents.len)
-			to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
+			to_chat(user, "<span class='warning'>You can't modify this [src] with items still inside!</span>")
 			return
-		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILEY, "Cancel")
+		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
 		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
 		if(get_dist(usr, src) > 1)
 			to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
@@ -865,7 +693,7 @@
 		var/choice = designs.Find(switchDesign)
 		if(design == designs[choice] || designs[choice] == "Cancel")
 			return 0
-		to_chat(usr, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
+		to_chat(usr, "<span class='notice'>You make some modifications to the [src] using your pen.</span>")
 		design = designs[choice]
 		icon_state = "paperbag_[design]"
 		item_state = "paperbag_[design]"
@@ -878,18 +706,18 @@
 				desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
 			if(HEART)
 				desc = "A paper sack with a heart etched onto the side."
-			if(SMILEY)
+			if(SMILE)
 				desc = "A paper sack with a crude smile etched onto the side."
 		return 0
-	else if(W.get_sharpness())
+	else if(W.is_sharp())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
-				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", MSG_VISUAL)
+				user.show_message("<span class='notice'>You cut eyeholes into the [src].</span>", 1)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
 				return 0
 			else if(item_state == "paperbag_SmileyFace")
-				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", MSG_VISUAL)
+				user.show_message("<span class='notice'>You cut eyeholes into the [src] and modify the design.</span>", 1)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
 				return 0
@@ -899,12 +727,12 @@
 #undef NANOTRASEN
 #undef SYNDI
 #undef HEART
-#undef SMILEY
+#undef SMILE
 
-/obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef spawns with, it shouldn't actually exist.
+/obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
-	var/theme_name
+	var/theme_name 
 
 /obj/item/storage/box/ingredients/Initialize()
 	. = ..()
@@ -1066,205 +894,10 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 
+
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
 
 /obj/item/storage/box/fountainpens/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/pen/fountain(src)
-
-/obj/item/storage/box/holy_grenades
-	name = "box of holy hand grenades"
-	desc = "Contains several grenades used to rapidly purge heresy."
-	illustration = "flashbang"
-
-/obj/item/storage/box/holy_grenades/PopulateContents()
-	for(var/i in 1 to 7)
-		new/obj/item/grenade/chem_grenade/holy(src)
-
-/obj/item/storage/box/stockparts/basic //for ruins where it's a bad idea to give access to an autolathe/protolathe, but still want to make stock parts accessible
-	name = "box of stock parts"
-	desc = "Contains a variety of basic stock parts."
-
-/obj/item/storage/box/stockparts/basic/PopulateContents()
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/matter_bin(src)
-
-/obj/item/storage/box/stockparts/deluxe
-	name = "box of deluxe stock parts"
-	desc = "Contains a variety of deluxe stock parts."
-	icon_state = "syndiebox"
-
-/obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
-
-//Colored boxes.
-/obj/item/storage/box/green
-	icon_state = "box_green"
-	illustration = null
-
-/obj/item/storage/box/blue
-	icon_state = "box_blue"
-	illustration = null
-
-/obj/item/storage/box/purple
-	icon_state = "box_purple"
-	illustration = null
-
-/obj/item/storage/box/red
-	icon_state = "box_red"
-	illustration = null
-
-/obj/item/storage/box/yellow
-	icon_state = "box_yellow"
-	illustration = null
-
-/obj/item/storage/box/brown
-	icon_state = "box_brown"
-	illustration = null
-
-/obj/item/storage/box/pink
-	icon_state = "box_pink"
-	illustration = null
-
-/obj/item/storage/box/mre //base MRE type.
-	name = "Nanotrasen MRE Ration Kit Menu 0"
-	desc = "A package containing food suspended in an outdated bluespace pocket which lasts for centuries. If you're lucky you may even be able to enjoy the meal without getting food poisoning."
-	icon_state = "mre"
-	illustration = null
-	var/can_expire = TRUE
-	var/spawner_chance = 2
-	var/expiration_date
-	var/expiration_date_min = 2300
-	var/expiration_date_max = 2700
-
-/obj/item/storage/box/mre/Initialize()
-	. = ..()
-	if(can_expire)
-		expiration_date = rand(expiration_date_min, expiration_date_max)
-		desc += "\n<span_clas='notice'>An expiry date is listed on it. It reads: [expiration_date]</span>"
-		var/spess_current_year = GLOB.year_integer
-		if(expiration_date < spess_current_year)
-			var/gross_risk = min(round(spess_current_year - expiration_date * 0.1), 1)
-			var/toxic_risk = min(round(spess_current_year - expiration_date * 0.01), 1)
-			for(var/obj/item/reagent_containers/food/snacks/S in contents)
-				if(prob(gross_risk))
-					ENABLE_BITFIELD(S.foodtype, GROSS)
-				if(prob(toxic_risk))
-					ENABLE_BITFIELD(S.foodtype, TOXIC)
-
-/obj/item/storage/box/mre/menu1
-	name = "\improper Nanotrasen MRE Ration Kit Menu 1"
-
-/obj/item/storage/box/mre/menu1/safe
-	desc = "A package containing food suspended in a bluespace pocket capable of lasting till the end of time."
-	spawner_chance = 0
-	can_expire = FALSE
-
-/obj/item/storage/box/mre/menu1/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/breadslice/plain(src)
-	new /obj/item/reagent_containers/food/snacks/breadslice/creamcheese(src)
-	new /obj/item/reagent_containers/food/condiment/pack/ketchup(src)
-	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
-
-/obj/item/storage/box/mre/menu2
-	name = "\improper Nanotrasen MRE Ration Kit Menu 2"
-
-/obj/item/storage/box/mre/menu2/safe
-	spawner_chance = 0
-	desc = "A package containing food suspended in a bluespace pocket capable of lasting till the end of time."
-	can_expire = FALSE
-
-/obj/item/storage/box/mre/menu2/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/omelette(src)
-	new /obj/item/reagent_containers/food/snacks/meat/cutlet/plain(src)
-	new /obj/item/reagent_containers/food/snacks/fries(src)
-	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
-
-/obj/item/storage/box/mre/menu3
-	name = "\improper Nanotrasen MRE Ration Kit Menu 3"
-	desc = "The holy grail of MREs. This item contains the fabled MRE pizza, spicy nachos and a sample of coffee instant type 2. Any NT employee lucky enough to get their hands on one of these is truly blessed."
-	icon_state = "menu3"
-	can_expire = FALSE //always fresh, never expired.
-	spawner_chance = 1
-
-/obj/item/storage/box/mre/menu3/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/pizzaslice/pepperoni(src)
-	new /obj/item/reagent_containers/food/snacks/breadslice/plain(src)
-	new /obj/item/reagent_containers/food/snacks/cubannachos(src)
-	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
-	new /obj/item/reagent_containers/food/drinks/coffee/type2(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
-
-/obj/item/storage/box/mre/menu4
-	name = "\improper Nanotrasen MRE Ration Kit Menu 4"
-
-/obj/item/storage/box/mre/menu4/safe
-	spawner_chance = 0
-	desc = "A package containing food suspended in a bluespace pocket capable of lasting till the end of time."
-	can_expire = FALSE
-
-/obj/item/storage/box/mre/menu4/PopulateContents()
-	if(prob(66))
-		new /obj/item/reagent_containers/food/snacks/salad/boiledrice(src)
-	else
-		new /obj/item/reagent_containers/food/snacks/salad/ricebowl(src)
-	new /obj/item/reagent_containers/food/snacks/burger/tofu(src)
-	new /obj/item/reagent_containers/food/snacks/salad/fruit(src)
-	new /obj/item/reagent_containers/food/snacks/cracker(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
-
-//Where do I put this?
-/obj/item/secbat
-	name = "Secbat box"
-	desc = "Contained inside is a secbat for use with law enforcement."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "box"
-	item_state = "syringe_kit"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-
-/obj/item/secbat/attack_self(mob/user)
-	new /mob/living/simple_animal/hostile/retaliate/bat/secbat(user.loc)
-	to_chat(user, "<span class='notice'>You open the box, releasing the secbat!</span>")
-	var/obj/item/stack/sheet/cardboard/I = new(user.drop_location())
-	qdel(src)
-	user.put_in_hands(I)
-
-/obj/item/storage/box/marshmallow
-	name = "box of marshmallows"
-	desc = "A box of marshmallows."
-	illustration = "marshmallow"
-
-/obj/item/storage/box/marshmallow/PopulateContents()
-	for (var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/snacks/marshmallow(src)

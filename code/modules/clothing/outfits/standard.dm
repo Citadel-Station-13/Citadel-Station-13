@@ -48,12 +48,12 @@
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	backpack_contents = list(/obj/item/stack/tile/plasteel=6)
 
-/datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
-	bucket.reagents.add_reagent(/datum/reagent/water,70)
+	bucket.reagents.add_reagent("water",70)
 
 /datum/outfit/laser_tag
 	name = "Laser Tag Red"
@@ -62,7 +62,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/red
 	head = /obj/item/clothing/head/helmet/redtaghelm
 	gloves = /obj/item/clothing/gloves/color/red
-	ears = /obj/item/radio/headset
+	ears = /obj/item/device/radio/headset
 	suit = /obj/item/clothing/suit/redtag
 	back = /obj/item/storage/backpack
 	suit_store = /obj/item/gun/energy/laser/redtag
@@ -78,37 +78,19 @@
 	suit_store = /obj/item/gun/energy/laser/bluetag
 
 /datum/outfit/pirate
-	name = "Space Pirate"
+	name = "Pirate"
 
 	uniform = /obj/item/clothing/under/pirate
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	suit = /obj/item/clothing/suit/pirate
 	head = /obj/item/clothing/head/bandana
 	glasses = /obj/item/clothing/glasses/eyepatch
+	r_hand = /obj/item/melee/transforming/energy/sword/pirate
 
 /datum/outfit/pirate/space
+	name = "Space Pirate"
+
 	suit = /obj/item/clothing/suit/space/pirate
-	head = /obj/item/clothing/head/helmet/space/pirate/bandana
-	mask = /obj/item/clothing/mask/breath
-	suit_store = /obj/item/tank/internals/oxygen
-	ears = /obj/item/radio/headset/syndicate
-	id = /obj/item/card/id
-
-/datum/outfit/pirate/space/captain
 	head = /obj/item/clothing/head/helmet/space/pirate
-
-/datum/outfit/pirate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	H.faction |= "pirate"
-
-	var/obj/item/radio/R = H.ears
-	if(R)
-		R.set_frequency(FREQ_SYNDICATE)
-		R.freqlock = TRUE
-
-	var/obj/item/card/id/W = H.wear_id
-	if(W)
-		W.registered_name = H.real_name
-		W.update_label(H.real_name)
 
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
@@ -117,7 +99,7 @@
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas/clown_hat
-	ears = /obj/item/radio/headset
+	ears = /obj/item/device/radio/headset
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	l_pocket = /obj/item/reagent_containers/food/snacks/grown/banana
@@ -125,7 +107,7 @@
 	id = /obj/item/card/id
 	r_hand = /obj/item/twohanded/fireaxe
 
-/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -143,15 +125,15 @@
 	gloves = /obj/item/clothing/gloves/color/latex
 	mask = /obj/item/clothing/mask/surgical
 	head = /obj/item/clothing/head/welding
-	ears = /obj/item/radio/headset
+	ears = /obj/item/device/radio/headset
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	suit = /obj/item/clothing/suit/apron
 	l_pocket = /obj/item/kitchen/knife
 	r_pocket = /obj/item/scalpel
 	r_hand = /obj/item/twohanded/fireaxe
 
-/datum/outfit/psycho/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
+/datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
+	for(var/obj/item/carried_item in H.get_equipped_items())
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	for(var/obj/item/I in H.held_items)
 		I.add_mob_blood(H)
@@ -163,14 +145,14 @@
 	uniform = /obj/item/clothing/under/suit_jacket
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
-	ears = /obj/item/radio/headset
+	ears = /obj/item/device/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 	l_hand = /obj/item/storage/secure/briefcase
 	id = /obj/item/card/id/syndicate
-	belt = /obj/item/pda/heads
+	belt = /obj/item/device/pda/heads
 
-/datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
 	U.attach_accessory(new /obj/item/clothing/accessory/waistcoat(H))
 
@@ -182,13 +164,13 @@
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
 	for(var/i = 3 to 0 step -1)
-		SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/stack/spacecash/c1000, null, TRUE, TRUE)
-	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/energy/kinetic_accelerator/crossbow, null, TRUE, TRUE)
-	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/ballistic/revolver/mateba, null, TRUE, TRUE)
-	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/ammo_box/a357, null, TRUE, TRUE)
-	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/grenade/plastic/x4, null, TRUE, TRUE)
+		sec_briefcase.handle_item_insertion(new /obj/item/stack/spacecash/c1000,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/gun/energy/kinetic_accelerator/crossbow,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/gun/ballistic/revolver/mateba,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/grenade/plastic/x4,1)
 
-	var/obj/item/pda/heads/pda = H.belt
+	var/obj/item/device/pda/heads/pda = H.belt
 	pda.owner = H.real_name
 	pda.ownjob = "Reaper"
 	pda.update_label()
@@ -206,7 +188,7 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/radio/headset/headset_cent/commander
+	ears = /obj/item/device/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
@@ -216,7 +198,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id
 
-/datum/outfit/centcom_commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/centcom_commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -236,7 +218,7 @@
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	ears = /obj/item/radio/headset/headset_cent/commander
+	ears = /obj/item/device/radio/headset/headset_cent/commander
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	head = /obj/item/clothing/head/helmet/space/beret
 	belt = /obj/item/gun/energy/pulse/pistol/m1911
@@ -244,7 +226,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id
 
-/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -256,9 +238,9 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-	var/obj/item/radio/headset/R = H.ears
-	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
+	var/obj/item/device/radio/headset/R = H.ears
+	R.set_frequency(GLOB.CENTCOM_FREQ)
+	R.freqlock = 1
 
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"
@@ -275,27 +257,13 @@
 	uniform = /obj/item/clothing/under/color/lightpurple
 	suit = /obj/item/clothing/suit/wizrobe
 	shoes = /obj/item/clothing/shoes/sandal/magic
-	ears = /obj/item/radio/headset
+	ears = /obj/item/device/radio/headset
 	head = /obj/item/clothing/head/wizard
 	r_pocket = /obj/item/teleportation_scroll
 	r_hand = /obj/item/spellbook
 	l_hand = /obj/item/staff
 	back = /obj/item/storage/backpack
 	backpack_contents = list(/obj/item/storage/box=1)
-
-/datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	if(visualsOnly)
-		return
-
-	var/obj/item/spellbook/S = locate() in H.held_items
-	if(S)
-		S.owner = H
-
-/datum/outfit/wizard/apprentice
-	name = "Wizard Apprentice"
-	r_hand = null
-	l_hand = null
-	r_pocket = /obj/item/teleportation_scroll/apprentice
 
 /datum/outfit/wizard/red
 	name = "Red Wizard"
@@ -317,7 +285,7 @@
 	head = /obj/item/clothing/head/pirate/captain
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/radio/headset/headset_cent
+	ears = /obj/item/device/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	suit = /obj/item/clothing/suit/pirate/captain
 	back = /obj/item/storage/backpack/satchel/leather
@@ -325,7 +293,7 @@
 
 	id = /obj/item/card/id
 
-/datum/outfit/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -344,12 +312,12 @@
 	head = /obj/item/clothing/head/fedora
 	shoes = /obj/item/clothing/shoes/laceup
 	gloves = /obj/item/clothing/gloves/color/black
-	ears = /obj/item/radio/headset
+	ears = /obj/item/device/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
 	r_hand = /obj/item/gun/ballistic/automatic/tommygun
 	id = /obj/item/card/id
 
-/datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -382,24 +350,24 @@
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	r_hand = /obj/item/gun/energy/pulse/loyalpin
 	id = /obj/item/card/id
-	ears = /obj/item/radio/headset/headset_cent/alt
+	ears = /obj/item/device/radio/headset/headset_cent/alt
 
 	backpack_contents = list(/obj/item/storage/box=1,\
 		/obj/item/ammo_box/a357=1,\
 		/obj/item/storage/firstaid/regular=1,\
 		/obj/item/storage/box/flashbangs=1,\
-		/obj/item/flashlight=1,\
+		/obj/item/device/flashlight=1,\
 		/obj/item/grenade/plastic/x4=1)
 
-/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
+	var/obj/item/device/radio/R = H.ears
+	R.set_frequency(GLOB.CENTCOM_FREQ)
+	R.freqlock = 1
 
-	var/obj/item/implant/mindshield/L = new //Here you go Deuryn
+	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//Here you go Deuryn
 	L.implant(H, null, 1)
 
 
@@ -424,17 +392,6 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/tank/internals/oxygen
 
-/datum/outfit/debug //Debug objs plus hardsuit
-	name = "Debug outfit"
-	uniform = /obj/item/clothing/under/patriotsuit
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	shoes = /obj/item/clothing/shoes/magboots/advance
-	suit_store = /obj/item/tank/internals/oxygen
-	mask = /obj/item/clothing/mask/gas/welding
-	belt = /obj/item/storage/belt/utility/chief/full
-	gloves = /obj/item/clothing/gloves/combat
-	id = /obj/item/card/id/ert
-	glasses = /obj/item/clothing/glasses/meson/night
-	ears = /obj/item/radio/headset/headset_cent/commander
-	back = /obj/item/storage/backpack/holding
-	backpack_contents = list(/obj/item/card/emag=1,	/obj/item/flashlight/emp/debug=1, /obj/item/construction/rcd/combat=1, /obj/item/gun/magic/wand/resurrection/debug=1, /obj/item/melee/transforming/energy/axe=1)
+
+
+

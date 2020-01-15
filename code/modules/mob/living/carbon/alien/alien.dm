@@ -1,9 +1,15 @@
+#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
+
+
 /mob/living/carbon/alien
 	name = "alien"
+	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
 	dna = null
-	faction = list(ROLE_ALIEN)
+	faction = list("alien")
 	ventcrawler = VENTCRAWLER_ALWAYS
 	sight = SEE_MOBS
 	see_in_dark = 4
@@ -20,7 +26,7 @@
 
 	var/heat_protection = 0.5
 	var/leaping = 0
-	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
+	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
@@ -60,11 +66,11 @@
 			//Place is hotter than we are
 			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
 			if(thermal_protection < 1)
-				adjust_bodytemperature((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
+				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 		else
-			adjust_bodytemperature(1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
+			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
 		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
@@ -103,12 +109,11 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/i in GLOB.mob_living_list)
-			var/mob/living/L = i
-			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
-				var/obj/item/organ/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/body_egg/alien_embryo)
+		for (var/mob/living/C in GLOB.mob_list)
+			if(C.status_flags & XENO_HOST)
+				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
-					var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")
+					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 					client.images += I
 	return
 
@@ -140,6 +145,12 @@ Des: Removes all infected images from the alien.
 	if(mind)
 		mind.transfer_to(new_xeno)
 	qdel(src)
+
+	// TODO make orbiters orbit the new xeno, or make xenos species rather than types
+
+#undef HEAT_DAMAGE_LEVEL_1
+#undef HEAT_DAMAGE_LEVEL_2
+#undef HEAT_DAMAGE_LEVEL_3
 
 /mob/living/carbon/alien/can_hold_items()
 	return has_fine_manipulation

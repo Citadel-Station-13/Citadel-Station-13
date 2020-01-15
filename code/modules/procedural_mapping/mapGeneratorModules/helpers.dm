@@ -14,11 +14,7 @@
 		SSair.remove_from_active(T)
 	for(var/turf/open/T in map)
 		if(T.air)
-			if(T.initial_gas_mix)
-				T.air.parse_gas_string(T.initial_gas_mix)
-				T.temperature = T.air.temperature
-			else
-				T.air.copy_from_turf(T)
+			T.air.copy_from_turf(T)
 		SSair.add_to_active(T)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete
@@ -32,11 +28,11 @@
 		return
 	for(var/V in mother.map)
 		var/turf/T = V
-		T.empty(deleteturfs? null : T.type, null, ignore_typecache, CHANGETURF_FORCEOP)
+		T.empty(deleteturfs? null : T.type, ignore_typecache = ignore_typecache, forceop = TRUE)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs/New()
 	..()
-	ignore_typecache = GLOB.typecache_mob
+	ignore_typecache = typecacheof(list(/mob))
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/leave_turfs
 	deleteturfs = FALSE
@@ -46,7 +42,7 @@
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/regeneration_delete/New()
 	..()
-	ignore_typecache = GLOB.typecache_mob
+	ignore_typecache = typecacheof(list(/mob))
 
 //Only places atoms/turfs on area borders
 /datum/mapGeneratorModule/border

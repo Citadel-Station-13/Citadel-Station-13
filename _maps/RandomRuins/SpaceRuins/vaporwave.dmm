@@ -5,7 +5,7 @@
 "b" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "c" = (
 /obj/structure/lattice,
 /turf/open/floor/plating/asteroid/airless,
@@ -52,7 +52,7 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "m" = (
 /obj/structure/table/reinforced,
-/obj/item/taperecorder,
+/obj/item/device/taperecorder,
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "n" = (
@@ -88,7 +88,7 @@
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "t" = (
-/obj/item/instrument/eguitar,
+/obj/item/device/instrument/eguitar,
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "u" = (
@@ -104,7 +104,7 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "x" = (
 /obj/structure/closet/crate/bin,
-/obj/item/tape/random,
+/obj/item/device/tape/random,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "y" = (
@@ -117,14 +117,12 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "A" = (
 /obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
+/turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "B" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
+/turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
@@ -133,34 +131,29 @@
 	desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base.";
 	dir = 8
 	},
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
+/turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "D" = (
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/plasteel/airless/asteroid{
 	icon_state = "recharge_floor_asteroid"
 	},
 /area/ruin/unpowered/no_grav)
 "E" = (
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)
 "F" = (
 /obj/structure/statue/sandstone/venus{
 	dir = 4
 	},
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
+/turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "G" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
+/turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
@@ -169,31 +162,32 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "I" = (
+/turf/open/space,
 /obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)
 "J" = (
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/plasteel/airless/asteroid{
 	icon_state = "stairs-l"
 	},
 /area/ruin/unpowered/no_grav)
 "K" = (
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/plasteel/airless/asteroid{
 	icon_state = "stairs-m"
 	},
 /area/ruin/unpowered/no_grav)
 "L" = (
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/plasteel/airless/asteroid{
 	icon_state = "stairs-r"
 	},
 /area/ruin/unpowered/no_grav)
 "M" = (
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"N" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)
 "O" = (
 /obj/structure/chair/comfy/black{
@@ -208,12 +202,23 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
+"Q" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/space/has_grav/powered/aesthetic)
 "R" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
+/turf/open/floor/plating/astplate{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"S" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
@@ -368,7 +373,7 @@ k
 f
 D
 J
-I
+N
 d
 "}
 (10,1,1) = {"
@@ -386,7 +391,7 @@ z
 E
 K
 E
-I
+N
 "}
 (11,1,1) = {"
 a
@@ -403,7 +408,7 @@ f
 D
 L
 E
-I
+N
 "}
 (12,1,1) = {"
 a

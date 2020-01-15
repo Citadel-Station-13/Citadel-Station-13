@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space,
+/area/shuttle/transport)
 "ab" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 4
@@ -17,11 +17,18 @@
 "ad" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
+"ae" = (
+/turf/open/space,
+/area/space)
 "af" = (
 /turf/closed/wall/r_wall,
 /area/shuttle/transport)
 "ag" = (
 /turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"ah" = (
+/obj/structure/foamedmetal,
+/turf/open/space,
 /area/shuttle/transport)
 "ai" = (
 /obj/machinery/vending/liberationstation,
@@ -35,9 +42,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "al" = (
-/obj/machinery/computer/shuttle/ferry/request{
-	dir = 8
-	},
+/obj/machinery/computer/shuttle/ferry/request,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "am" = (
@@ -68,7 +73,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ar" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "as" = (
@@ -90,9 +95,20 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
+"ax" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"ay" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
 "az" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
+/area/shuttle/transport)
+"aA" = (
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "aB" = (
 /obj/structure/grille/broken,
@@ -132,12 +148,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aJ" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aK" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
+/obj/item/device/flashlight/lamp/green,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aL" = (
@@ -160,6 +176,8 @@
 	height = 27;
 	id = "ferry";
 	name = "The Lighthouse";
+	roundstart_move = "ferry_away";
+	timid = 1;
 	port_direction = 2;
 	width = 16
 	},
@@ -199,7 +217,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aW" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -211,6 +229,9 @@
 "aY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"aZ" = (
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "ba" = (
 /obj/machinery/conveyor{
@@ -258,9 +279,10 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bg" = (
-/obj/machinery/conveyor/inverted{
+/obj/machinery/conveyor{
 	dir = 10;
-	id = "garbage"
+	id = "garbage";
+	verted = -1
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
@@ -368,7 +390,7 @@ bi
 bj
 "}
 (6,1,1) = {"
-aa
+ae
 ad
 aM
 al
@@ -386,8 +408,8 @@ aM
 ad
 "}
 (7,1,1) = {"
-aa
-aa
+ae
+ae
 ad
 ad
 aM
@@ -401,13 +423,13 @@ aL
 bf
 aM
 ad
-aa
+ae
 "}
 (8,1,1) = {"
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
 ad
 ar
 au
@@ -418,14 +440,14 @@ au
 bb
 bg
 ad
-aa
-aa
+ae
+ae
 "}
 (9,1,1) = {"
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
 ap
 ap
 av
@@ -436,15 +458,15 @@ aC
 bc
 aM
 ad
-aa
-aa
+ae
+ae
 "}
 (10,1,1) = {"
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 ap
 au
 aD
@@ -453,16 +475,16 @@ aD
 aD
 bd
 ad
-aa
-aa
-aa
+ae
+ae
+ae
 "}
 (11,1,1) = {"
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 ap
 ap
 aD
@@ -471,295 +493,295 @@ aD
 aD
 aM
 ad
-aa
-aa
-aa
+ae
+ae
+ae
 "}
 (12,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ap
 aD
 aD
 aD
 aD
 ad
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
 "}
 (13,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ap
 aE
 aN
 aE
 aM
 ad
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
 "}
 (14,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 aw
 aE
 aN
 aE
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (15,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 aw
 aE
 aE
 aE
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (16,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 ak
 aE
 ak
 aY
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (17,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 aF
 aE
 aT
 aw
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (18,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 aG
 aE
 aU
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (19,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 aH
 aE
 aV
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (20,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-az
+ae
+ae
+ae
+ae
+ae
+ae
+ay
 aI
 aE
 aW
-az
-aa
-aa
-aa
-aa
-aa
+ay
+ae
+ae
+ae
+ae
+ae
 "}
 (21,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 ak
 aE
 aW
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (22,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 aJ
 aE
 aW
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (23,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 aJ
 aE
 aW
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (24,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 az
 aJ
 aE
 aW
 az
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (25,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 aJ
 aE
 aW
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (26,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
 aK
 aE
 aW
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}
 (27,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
+ae
 ad
-az
+ay
 aO
-az
+ay
 ad
-aa
-aa
-aa
-aa
-aa
+ae
+ae
+ae
+ae
+ae
 "}

@@ -6,7 +6,7 @@
 	icon_keyboard = "atmos_key"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
-	var/receive_frequency = FREQ_ATMOS_ALARMS
+	var/receive_frequency = 1437
 	var/datum/radio_frequency/radio_connection
 
 	light_color = LIGHT_COLOR_CYAN
@@ -57,17 +57,15 @@
 /obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, receive_frequency)
 	receive_frequency = new_frequency
-	radio_connection = SSradio.add_object(src, receive_frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, receive_frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
-	if(!signal)
-		return
+	if(!signal || signal.encryption) return
 
 	var/zone = signal.data["zone"]
 	var/severity = signal.data["alert"]
 
-	if(!zone || !severity)
-		return
+	if(!zone || !severity) return
 
 	minor_alarms -= zone
 	priority_alarms -= zone
@@ -80,21 +78,9 @@
 
 /obj/machinery/computer/atmos_alert/update_icon()
 	..()
-	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	var/overlay_state = icon_screen
 	if(stat & (NOPOWER|BROKEN))
-		add_overlay("[icon_keyboard]_off")
 		return
-	add_overlay(icon_keyboard)
 	if(priority_alarms.len)
-		overlay_state = "alert:2"
 		add_overlay("alert:2")
 	else if(minor_alarms.len)
-		overlay_state = "alert:1"
 		add_overlay("alert:1")
-	else
-		overlay_state = "alert:0"
-		add_overlay("alert:0")
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir, alpha=128)

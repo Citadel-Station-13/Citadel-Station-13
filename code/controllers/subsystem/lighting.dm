@@ -8,13 +8,15 @@ SUBSYSTEM_DEF(lighting)
 	init_order = INIT_ORDER_LIGHTING
 	flags = SS_TICKER
 
+	var/initialized = FALSE
+
 /datum/controller/subsystem/lighting/stat_entry()
 	..("L:[GLOB.lighting_update_lights.len]|C:[GLOB.lighting_update_corners.len]|O:[GLOB.lighting_update_objects.len]")
 
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
 	if(!initialized)
-		if (CONFIG_GET(flag/starlight))
+		if (config.starlight)
 			for(var/I in GLOB.sortedAreas)
 				var/area/A = I
 				if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
@@ -22,10 +24,10 @@ SUBSYSTEM_DEF(lighting)
 
 		create_all_lighting_objects()
 		initialized = TRUE
-
+	
 	fire(FALSE, TRUE)
 
-	return ..()
+	..()
 
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)

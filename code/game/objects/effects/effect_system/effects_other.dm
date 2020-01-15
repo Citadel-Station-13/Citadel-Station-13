@@ -8,13 +8,8 @@
 
 /datum/effect_system/trail_follow
 	var/turf/oldposition
-	var/active = FALSE
-	var/allow_overlap = FALSE
-	var/auto_process = TRUE
-	var/qdel_in_time = 10
-	var/fadetype = "ion_fade"
-	var/fade = TRUE
-	var/nograv_required = FALSE
+	var/processing = TRUE
+	var/on = TRUE
 
 /datum/effect_system/trail_follow/set_up(atom/atom)
 	attach(atom)
@@ -22,48 +17,36 @@
 
 /datum/effect_system/trail_follow/Destroy()
 	oldposition = null
-	stop()
 	return ..()
 
 /datum/effect_system/trail_follow/proc/stop()
+	processing = FALSE
+	on = FALSE
 	oldposition = null
-	STOP_PROCESSING(SSfastprocess, src)
-	active = FALSE
-	return TRUE
-
-/datum/effect_system/trail_follow/start()
-	oldposition = get_turf(holder)
-	if(!check_conditions())
-		return FALSE
-	if(auto_process)
-		START_PROCESSING(SSfastprocess, src)
-	active = TRUE
-	return TRUE
-
-/datum/effect_system/trail_follow/process()
-	generate_effect()
-
-/datum/effect_system/trail_follow/generate_effect()
-	if(!check_conditions())
-		return stop()
-	if(oldposition && !(oldposition == get_turf(holder)))
-		if(!oldposition.has_gravity() || !nograv_required)
-			var/obj/effect/E = new effect_type(oldposition)
-			set_dir(E)
-			if(fade)
-				flick(fadetype, E)
-				E.icon_state = ""
-			if(qdel_in_time)
-				QDEL_IN(E, qdel_in_time)
-	oldposition = get_turf(holder)
-
-/datum/effect_system/trail_follow/proc/check_conditions()
-	if(!get_turf(holder))
-		return FALSE
-	return TRUE
 
 /datum/effect_system/trail_follow/steam
 	effect_type = /obj/effect/particle_effect/steam
+
+/datum/effect_system/trail_follow/steam/start()
+	if(!on)
+		on = TRUE
+		processing = TRUE
+		if(!oldposition)
+			oldposition = get_turf(holder)
+	if(processing)
+		processing = FALSE
+		if(number < 3)
+			var/obj/effect/particle_effect/steam/I = new /obj/effect/particle_effect/steam(oldposition)
+			number++
+			I.setDir(holder.dir)
+			oldposition = get_turf(holder)
+			spawn(10)
+				qdel(I)
+				number--
+		spawn(2)
+			if(on)
+				processing = TRUE
+				start()
 
 /obj/effect/particle_effect/ion_trails
 	name = "ion trails"
@@ -75,11 +58,47 @@
 
 /datum/effect_system/trail_follow/ion
 	effect_type = /obj/effect/particle_effect/ion_trails
-	nograv_required = TRUE
-	qdel_in_time = 20
+	var/fadetype = "ion_fade"
+	var/fade = 1
+	var/nograv_required = 1
 
-/datum/effect_system/trail_follow/proc/set_dir(obj/effect/particle_effect/ion_trails/I)
+/datum/effect_system/trail_follow/ion/start() //Whoever is responsible for this abomination of code should become an hero
+	if(!on)
+		on = TRUE
+		processing = TRUE
+		if(!oldposition)
+			oldposition = get_turf(holder)
+	if(processing)
+		processing = FALSE
+		var/turf/T = get_turf(holder)
+		if(T != oldposition)
+			if(!T.has_gravity() || !nograv_required)
+				var/obj/effect/particle_effect/ion_trails/I = new effect_type(oldposition)
+				set_dir(I)
+				if(fade)
+					flick(fadetype, I)
+					I.icon_state = ""
+				spawn(20)
+					qdel(I)
+			oldposition = T
+		spawn(2)
+			if(on)
+				processing = TRUE
+				start()
+
+/datum/effect_system/trail_follow/ion/proc/set_dir(obj/effect/particle_effect/ion_trails/I)
 	I.setDir(holder.dir)
+
+/datum/effect_system/trail_follow/ion/flight
+	effect_type = /obj/effect/particle_effect/ion_trails/flight
+	fadetype = "ion_fade_flight"
+	nograv_required = 0
+
+/datum/effect_system/trail_follow/ion/flight/set_dir(obj/effect/particle_effect/ion_trails/I)
+	if(istype(holder, /obj/item/device/flightpack))
+		var/obj/item/device/flightpack/F = holder
+		I.setDir(F.suit.user.dir)
+
 
 //Reagent-based explosion effect
 
@@ -104,4 +123,15 @@
 	if(explosion_message)
 		location.visible_message("<span class='danger'>The solution violently explodes!</span>", \
 								"<span class='italics'>You hear an explosion!</span>")
-	dyn_explosion(location, amount, flashing_factor)
+	if (amount < 1)
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(2, 1, location)
+		s.start()
+
+		for(var/mob/living/L in viewers(1, location))
+			if(prob(50 * amount))
+				to_chat(L, "<span class='danger'>The explosion knocks you down.</span>")
+				L.Knockdown(rand(20,100))
+		return
+	else
+		dyn_explosion(location, amount, flashing_factor)

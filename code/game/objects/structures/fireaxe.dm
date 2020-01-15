@@ -1,20 +1,19 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
+	var/obj/item/twohanded/fireaxe/fireaxe = new/obj/item/twohanded/fireaxe
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list("melee" = 50, "bullet" = 20, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
-	max_integrity = 150
-	integrity_failure = 50
+	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/locked = TRUE
 	var/open = FALSE
-	var/obj/item/twohanded/fireaxe/fireaxe
+	max_integrity = 150
+	integrity_failure = 50
 
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
-	fireaxe = new
 	update_icon()
 
 /obj/structure/fireaxecabinet/Destroy()
@@ -23,16 +22,16 @@
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(iscyborg(user) || istype(I, /obj/item/multitool))
+	if(iscyborg(user) || istype(I, /obj/item/device/multitool))
 		toggle_lock(user)
 	else if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
-		if(obj_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=2))
-				return
-
+		var/obj/item/weldingtool/WT = I
+		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
-			if(I.use_tool(src, user, 40, volume=50, amount=2))
+			playsound(loc, WT.usesound, 40, 1)
+			if(do_after(user, 40*I.toolspeed, target = src))
 				obj_integrity = max_integrity
+				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
@@ -54,9 +53,10 @@
 			if(F.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
-			if(!user.transferItemToLoc(F, src))
+			if(!user.drop_item())
 				return
 			fireaxe = F
+			F.forceMove(src)
 			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return
@@ -105,9 +105,6 @@
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
 	if(open || broken)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
@@ -125,7 +122,7 @@
 		return
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
-	return attack_hand(user)
+	attack_hand(user)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)

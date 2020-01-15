@@ -6,7 +6,6 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "machinegun"
 	can_buckle = TRUE
-	anchored = FALSE
 	density = TRUE
 	max_integrity = 100
 	buckle_lying = FALSE
@@ -38,7 +37,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
+			buckled_mob.client.change_view(world.view)
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -69,15 +68,14 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
-	if (!update_positioning())
+	if(!LAZYLEN(buckled_mobs))
 		return PROCESS_KILL
+	update_positioning()
 
 /obj/machinery/manned_turret/proc/update_positioning()
-	if (!LAZYLEN(buckled_mobs))
-		return FALSE
 	var/mob/living/controller = buckled_mobs[1]
 	if(!istype(controller))
-		return FALSE
+		return
 	var/client/C = controller.client
 	if(C)
 		var/atom/A = C.mouseObject
@@ -145,13 +143,14 @@
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
-	if(user.incapacitated() || !(user in buckled_mobs))
+	if(user.incapacitated())
 		return
 	update_positioning()						//REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/item/projectile/P = new projectile_type(targets_from)
+	P.current = targets_from
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
@@ -180,16 +179,15 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
+	flags_1 = ABSTRACT_1 | NODROP_1 | NOBLUDGEON_1 | DROPDEL_1
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	turret = loc
-	if(!istype(turret))
-		return INITIALIZE_HINT_QDEL
+    . = ..()
+    turret = loc
+    if(!istype(turret))
+        return INITIALIZE_HINT_QDEL
 
 /obj/item/gun_control/Destroy()
 	turret = null
@@ -203,13 +201,13 @@
 	O.attacked_by(src, user)
 
 /obj/item/gun_control/attack(mob/living/M, mob/living/user)
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
+	user.lastattacked = M
+	M.lastattacker = user
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 
 /obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
-	. = ..()
+	..()
 	var/obj/machinery/manned_turret/E = user.buckled
 	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, params)
 	E.direction_track(user, targeted_atom)

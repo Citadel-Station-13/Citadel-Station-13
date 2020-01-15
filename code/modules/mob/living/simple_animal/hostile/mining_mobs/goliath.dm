@@ -1,38 +1,36 @@
 //A slow but strong beast that tries to stun using its tentacles
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
-	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions."
+	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath"
 	icon_living = "Goliath"
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	move_to_delay = 10
+	move_to_delay = 40
 	ranged = 1
-	ranged_cooldown_time = 60
+	ranged_cooldown_time = 120
 	friendly = "wails at"
 	speak_emote = list("bellows")
+	vision_range = 4
 	speed = 3
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
 	obj_damage = 100
-	melee_damage_lower = 18
-	melee_damage_upper = 18
+	melee_damage_lower = 25
+	melee_damage_upper = 25
 	attacktext = "pulverizes"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
-	vision_range = 4
-	aggro_vision_range = 7
+	aggro_vision_range = 9
+	idle_vision_range = 5
 	anchored = TRUE //Stays anchored until death as to be unpullable
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
-
-	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	. = ..()
@@ -66,7 +64,7 @@
 		pre_attack = 0
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	ranged_cooldown -= 5
+	ranged_cooldown -= 10
 	handle_preattack()
 	. = ..()
 
@@ -88,8 +86,7 @@
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
-	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -110,12 +107,10 @@
 	maxHealth = 400
 	health = 400
 	speed = 4
-	ranged_cooldown_time = 80
 	pre_attack_icon = "Goliath_preattack"
 	throw_message = "does nothing to the rocky hide of the"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide) //A throwback to the asteroid days
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
-	guaranteed_butcher_results = list()
 	crusher_drop_mod = 30
 	wander = FALSE
 	var/list/cached_tentacle_turfs
@@ -124,8 +119,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
 	. = ..()
-	if(!.) // dead
-		return
 	if(isturf(loc))
 		if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)
 			LAZYCLEARLIST(cached_tentacle_turfs)
@@ -184,15 +177,8 @@
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
-		var/mob/living/carbon/C = L
-		var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
-		if(S && S.resistance_flags & GOLIATH_RESISTANCE)
-			L.Stun(25)
-		else if(S && S.resistance_flags & GOLIATH_WEAKNESS)
-			L.Stun(115)
-		else
-			L.Stun(75)
-		L.adjustBruteLoss(rand(15,20)) // Less stun more harm
+		L.Stun(100)
+		L.adjustBruteLoss(rand(10,15))
 		latched = TRUE
 	if(!latched)
 		retract()

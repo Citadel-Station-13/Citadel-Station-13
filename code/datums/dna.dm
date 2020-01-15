@@ -5,36 +5,17 @@
 	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
-	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
-	var/nameless = FALSE
-	var/custom_species	//siiiiigh I guess this is important
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
-	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 
 /datum/dna/New(mob/living/new_holder)
-	if(istype(new_holder))
+	if(new_holder)
 		holder = new_holder
-
-/datum/dna/Destroy()
-	if(iscarbon(holder))
-		var/mob/living/carbon/cholder = holder
-		if(cholder.dna == src)
-			cholder.dna = null
-	holder = null
-
-	if(delete_species)
-		QDEL_NULL(species)
-
-	mutations.Cut()					//This only references mutations, just dereference.
-	temporary_mutations.Cut()		//^
-	previous.Cut()					//^
-
-	return ..()
 
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))
@@ -42,16 +23,10 @@
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
-	destination.dna.features = features.Copy()
 	destination.set_species(species.type, icon_update=0)
+	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
-	destination.dna.nameless = nameless
-	destination.dna.custom_species = custom_species
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
-	if(ishuman(destination))
-		var/mob/living/carbon/human/H = destination
-		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
-	destination.flavor_text = destination.dna.features["flavor_text"] //Update the flavor_text to use new dna text
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
 
@@ -63,8 +38,6 @@
 	new_dna.features = features.Copy()
 	new_dna.species = new species.type
 	new_dna.real_name = real_name
-	new_dna.nameless = nameless
-	new_dna.custom_species = custom_species
 	new_dna.mutations = mutations.Copy()
 
 /datum/dna/proc/add_mutation(mutation_name)
@@ -105,21 +78,6 @@
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
-		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features["mcolor"])
-		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features["mcolor2"])
-		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features["mcolor3"])
-		if(!GLOB.mam_tails_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
-		L[DNA_MUTANTTAIL_BLOCK] = construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
-		if(!GLOB.mam_ears_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
-		L[DNA_MUTANTEAR_BLOCK] = construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
-		if(!GLOB.mam_body_markings_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
-		L[DNA_MUTANTMARKING_BLOCK] = construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
-		if(!GLOB.taur_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, GLOB.taur_list)
-		L[DNA_TAUR_BLOCK] = construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
@@ -170,23 +128,28 @@
 			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
-		if(DNA_COLOR_ONE_BLOCK)
-			sanitize_hexcolor(features["mcolor"])
-		if(DNA_COLOR_TWO_BLOCK)
-			sanitize_hexcolor(features["mcolor2"])
-		if(DNA_COLOR_THREE_BLOCK)
-			sanitize_hexcolor(features["mcolor3"])
-		if(DNA_MUTANTTAIL_BLOCK)
-			construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
-		if(DNA_MUTANTEAR_BLOCK)
-			construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
-		if(DNA_MUTANTMARKING_BLOCK)
-			construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
-		if(DNA_TAUR_BLOCK)
-			construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
+
+/datum/dna/proc/mutations_say_mods(message)
+	if(message)
+		for(var/datum/mutation/human/M in mutations)
+			message = M.say_mod(message)
+		return message
+
+/datum/dna/proc/mutations_get_spans()
+	var/list/spans = list()
+	for(var/datum/mutation/human/M in mutations)
+		spans |= M.get_spans()
+	return spans
+
+/datum/dna/proc/species_get_spans()
+	var/list/spans = list()
+	if(species)
+		spans |= species.get_spans()
+	return spans
+
 
 /datum/dna/proc/is_same_as(datum/dna/D)
-	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name && nameless == D.nameless && custom_species == D.custom_species)
+	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
 			return 1
 	return 0
@@ -235,25 +198,22 @@
 			stored_dna.species = mrace //not calling any species update procs since we're a brain, not a monkey/human
 
 
-/mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
+/mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
 	if(mrace && has_dna())
-		var/datum/species/new_race
+		dna.species.on_species_loss(src)
+		var/old_species = dna.species
 		if(ispath(mrace))
-			new_race = new mrace
-		else if(istype(mrace))
-			new_race = mrace
+			dna.species = new mrace()
 		else
-			return
-		dna.species.on_species_loss(src, new_race, pref_load)
-		var/datum/species/old_species = dna.species
-		dna.species = new_race
-		dna.species.on_species_gain(src, old_species, pref_load)
+			dna.species = mrace
+		dna.species.on_species_gain(src, old_species)
 
-/mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
+/mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)
 	..()
 	if(icon_update)
 		update_body()
 		update_hair()
+		update_body_parts()
 		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 
@@ -268,7 +228,6 @@
 
 	if(newfeatures)
 		dna.features = newfeatures
-		flavor_text = dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 	if(mrace)
 		var/datum/species/newrace = new mrace.type
@@ -300,7 +259,7 @@
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
 	if(!dna.species)
-		var/rando_race = pick(GLOB.roundstart_races)
+		var/rando_race = pick(config.roundstart_races)
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed

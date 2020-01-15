@@ -1,72 +1,97 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space,
+/area/space)
 "b" = (
 /turf/closed/mineral,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "c" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "d" = (
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "e" = (
 /obj/machinery/computer/emergency_shuttle{
-	dir = 4;
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "f" = (
 /mob/living/simple_animal/hostile/asteroid/goliath,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "g" = (
 /obj/structure/mineral_door/iron,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "h" = (
 /obj/item/pickaxe,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "i" = (
 /obj/effect/station_crash,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
+"j" = (
+/obj/docking_port/mobile/emergency{
+	dwidth = 20;
+	height = 40;
+	name = "a meteor with engines strapped to it";
+	timid = 1;
+	width = 40
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "k" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "l" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "m" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 "n" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape/meteor)
-"L" = (
-/obj/docking_port/mobile/emergency{
-	dwidth = 20;
-	height = 40;
-	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
-	name = "\proper a meteor with engines strapped to it";
-	width = 40
-	},
-/turf/open/floor/plating/asteroid,
-/area/shuttle/escape/meteor)
+/area/shuttle/escape{
+	luminosity = 0
+	})
 
 (1,1,1) = {"
 a
@@ -74,12 +99,6 @@ a
 a
 b
 b
-b
-b
-b
-b
-b
-b
 d
 d
 d
@@ -89,7 +108,13 @@ b
 d
 d
 d
-L
+b
+b
+b
+d
+d
+d
+j
 d
 d
 b
@@ -98,13 +123,13 @@ d
 d
 d
 d
-b
-b
-b
-b
-b
-b
-b
+d
+d
+d
+d
+d
+d
+d
 b
 a
 a
@@ -116,7 +141,7 @@ a
 b
 b
 b
-b
+d
 d
 d
 b
@@ -138,15 +163,15 @@ b
 b
 b
 b
-d
-d
-d
-d
-d
 b
 b
-b
-b
+d
+d
+d
+d
+d
+d
+d
 b
 b
 a
@@ -181,12 +206,12 @@ b
 b
 b
 b
-d
-d
-d
-d
-d
-d
+b
+b
+b
+b
+b
+b
 b
 b
 b
@@ -225,10 +250,10 @@ b
 b
 b
 b
-d
-d
-d
-d
+b
+b
+b
+b
 b
 b
 b
@@ -243,7 +268,7 @@ b
 b
 b
 b
-d
+b
 b
 b
 b
@@ -285,7 +310,7 @@ b
 b
 b
 b
-d
+b
 b
 b
 b
@@ -327,7 +352,7 @@ b
 b
 b
 b
-d
+b
 b
 b
 b
@@ -369,7 +394,7 @@ b
 b
 b
 b
-d
+b
 b
 b
 b
@@ -411,7 +436,7 @@ b
 b
 b
 b
-d
+b
 b
 b
 b
@@ -453,7 +478,7 @@ b
 b
 b
 b
-d
+b
 b
 b
 b

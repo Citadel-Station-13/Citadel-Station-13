@@ -6,15 +6,15 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
+	origin_tech = "materials=2;engineering=2"
 	max_integrity = 300
 	var/equip_cooldown = 0 // cooldown after use
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitFflags
+	var/range = MELEE //bitflags
 	var/salvageable = 1
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
-	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
@@ -25,7 +25,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_equip_info()
 	if(chassis)
-		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 		return 1
 	return
 
@@ -35,7 +35,7 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()
-		chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
+		chassis.occupant_message("<span class='danger'>The [src] is destroyed!</span>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
 		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
 		chassis = null
@@ -43,16 +43,15 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
 	if(chassis)
-		log_message("Critical failure", color="red")
+		log_message("Critical failure",1)
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
-	if(!chassis)
-		return
+	if(!chassis) return
 	var/txt = "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;"
 	if(chassis.selected == src)
 		txt += "<b>[src.name]</b>"
 	else if(selectable)
-		txt += "<a href='?src=[REF(chassis)];select_equip=[REF(src)]'>[src.name]</a>"
+		txt += "<a href='?src=\ref[chassis];select_equip=\ref[src]'>[src.name]</a>"
 	else
 		txt += "[src.name]"
 
@@ -76,9 +75,6 @@
 		return 0
 	if(energy_drain && !chassis.has_charge(energy_drain))
 		return 0
-	if(chassis.equipment_disabled)
-		to_chat(chassis.occupant, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
-		return 0
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
@@ -97,16 +93,9 @@
 	chassis.use_power(energy_drain)
 	. = do_after(chassis.occupant, equip_cooldown, target=target)
 	set_ready_state(1)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
+	if(!chassis || 	chassis.loc != C || src != chassis.selected)
 		return 0
 
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, delay)
-	if(!chassis)
-		return
-	var/C = chassis.loc
-	. = do_after(chassis.occupant, delay, target=target)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
-		return 0
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(M.equipment.len<M.max_equip)
@@ -115,7 +104,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
 	chassis = M
-	forceMove(M)
+	src.loc = M
 	M.log_message("[src] initialized.")
 	if(!M.selected && selectable)
 		M.selected = src
@@ -142,7 +131,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state
 	if(chassis)
-		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)
@@ -150,11 +139,9 @@
 		chassis.occupant_message("[icon2html(src, chassis.occupant)] [message]")
 	return
 
-/obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
+/obj/item/mecha_parts/mecha_equipment/proc/log_message(message)
 	if(chassis)
-		chassis.log_message("([src]) [message]", message_type, color)
-	else
-		..()
+		chassis.log_message("<i>[src]:</i> [message]")
 	return
 
 

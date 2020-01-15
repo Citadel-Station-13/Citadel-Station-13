@@ -42,13 +42,13 @@
 	addtimer(CALLBACK(src, .proc/ninitialize_six, delay, U), delay)
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize_six(delay, mob/living/carbon/human/U)
-	to_chat(U, "<span class='notice'>Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.</span>")
+	to_chat(U, "<span class='notice'>Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[DisplayPower(cell.charge)]</B>.</span>")
 	addtimer(CALLBACK(src, .proc/ninitialize_seven, delay, U), delay)
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize_seven(delay, mob/living/carbon/human/U)
 	to_chat(U, "<span class='notice'>All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name].</span>")
 	s_initialized = TRUE
-	START_PROCESSING(SSprocessing, src)
+	ntick()
 	s_busy = FALSE
 
 
@@ -91,5 +91,4 @@
 	unlock_suit()
 	U.regenerate_icons()
 	s_initialized = FALSE
-	STOP_PROCESSING(SSprocessing, src)
 	s_busy = FALSE

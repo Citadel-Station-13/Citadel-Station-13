@@ -3,11 +3,11 @@
 	desc = "Use this to escape from those evil Red Shirts."
 	icon_state = "freedom"
 	item_color = "r"
+	origin_tech = "combat=5;magnets=3;biotech=4;syndicate=2"
 	uses = 4
 
 
 /obj/item/implant/freedom/activate()
-	. = ..()
 	uses--
 	to_chat(imp_in, "You feel a faint click.")
 	if(iscarbon(imp_in))

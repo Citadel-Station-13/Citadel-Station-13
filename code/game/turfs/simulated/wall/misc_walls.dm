@@ -7,7 +7,6 @@
 	smooth = SMOOTH_MORE
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
-	explosion_block = 10
 	girder_type = /obj/structure/girder/cult
 
 /turf/closed/wall/mineral/cult/Initialize()
@@ -50,54 +49,37 @@
 /turf/closed/wall/clockwork
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	explosion_block = 5
+	explosion_block = 2
 	hardness = 10
 	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
-	baseturfs = /turf/open/floor/clockwork/reebe
-	var/heated
-	var/obj/effect/clockwork/overlay/wall/realappearance
+	var/obj/effect/clockwork/overlay/wall/realappearence
+	var/obj/structure/destructible/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/Initialize()
-	. = ..()
+	..()
 	new /obj/effect/temp_visual/ratvar/wall(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
-	realappearance = new /obj/effect/clockwork/overlay/wall(src)
-	realappearance.linked = src
+	realappearence = new /obj/effect/clockwork/overlay/wall(src)
+	realappearence.linked = src
+	change_construction_value(5)
+
+/turf/closed/wall/clockwork/examine(mob/user)
+	..()
+	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
+		to_chat(user, "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>")
 
 /turf/closed/wall/clockwork/Destroy()
-	if(realappearance)
-		qdel(realappearance)
-		realappearance = null
-	if(heated)
-		var/mob/camera/eminence/E = get_eminence()
-		if(E)
-			E.superheated_walls--
-
+	if(linkedcache)
+		linkedcache.linkedwall = null
+		linkedcache = null
+	change_construction_value(-5)
+	if(realappearence)
+		qdel(realappearence)
+		realappearence = null
 	return ..()
-
-/turf/closed/wall/clockwork/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(heated && the_rcd.canRturf)
-		return ..()
-
-/turf/closed/wall/clockwork/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(heated && the_rcd.canRturf)
-		return ..()
-
-/turf/closed/wall/clockwork/try_destroy(obj/item/I, mob/user, turf/T)
-	if(!heated)
-		return ..()
-	if(!istype(I, /obj/item/pickaxe/drill/jackhammer))
-		return FALSE
-	to_chat(user, "<span class='notice'>You begin to smash though [src]...</span>")
-	if(!do_after(user, 70, TRUE, src))
-		return FALSE
-	I.play_tool_sound(src)
-	visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
-	dismantle_wall()
-	return TRUE
 
 /turf/closed/wall/clockwork/ReplaceWithLattice()
 	..()
@@ -115,20 +97,20 @@
 /turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()
-		ScrapeAway()
+		ChangeTurf(/turf/open/floor/plating)
 	else
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)
-		ScrapeAway()
+		ChangeTurf(/turf/open/floor/clockwork)
 
 	for(var/obj/O in src) //Eject contents!
 		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else
-			O.forceMove(src)
+			O.loc = src
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)
@@ -137,36 +119,6 @@
 		new/obj/item/clockwork/alloy_shards/medium(src)
 	for(var/i in 1 to 3)
 		new/obj/item/clockwork/alloy_shards/small(src)
-
-/turf/closed/wall/clockwork/attack_hulk(mob/living/user, does_attack_animation = 0)
-	..()
-	if(heated)
-		to_chat(user, "<span class='userdanger'>The wall is searing hot to the touch!</span>")
-		user.adjustFireLoss(5)
-		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50, TRUE)
-
-/turf/closed/wall/clockwork/mech_melee_attack(obj/mecha/M)
-	..()
-	if(heated)
-		to_chat(M.occupant, "<span class='userdanger'>The wall's intense heat completely reflects your [M.name]'s attack!</span>")
-		M.take_damage(20, BURN)
-
-/turf/closed/wall/clockwork/proc/turn_up_the_heat()
-	if(!heated)
-		name = "superheated [name]"
-		visible_message("<span class='warning'>[src] sizzles with heat!</span>")
-		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50, TRUE)
-		heated = TRUE
-		hardness = -100 //Lower numbers are tougher, so this makes the wall essentially impervious to smashing
-		slicing_duration = 150
-		animate(realappearance, color = "#FFC3C3", time = 5)
-	else
-		name = initial(name)
-		visible_message("<span class='notice'>[src] cools down.</span>")
-		heated = FALSE
-		hardness = initial(hardness)
-		slicing_duration = initial(slicing_duration)
-		animate(realappearance, color = initial(realappearance.color), time = 25)
 
 
 /turf/closed/wall/vault
@@ -180,7 +132,6 @@
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
-	bullet_sizzle = TRUE
 
 /turf/closed/wall/rust
 	name = "rusted wall"
@@ -193,12 +144,3 @@
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	hardness = 15
-
-/turf/closed/wall/mineral/bronze
-	name = "clockwork wall"
-	desc = "A huge chunk of bronze, decorated like gears and cogs."
-	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall"
-	sheet_type = /obj/item/stack/tile/bronze
-	sheet_amount = 2
-	girder_type = /obj/structure/girder/bronze

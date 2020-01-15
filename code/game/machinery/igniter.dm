@@ -2,45 +2,38 @@
 	name = "igniter"
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "igniter0"
-	plane = FLOOR_PLANE
+	icon_state = "igniter1"
+	var/id = null
+	var/on = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	max_integrity = 300
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 70, "energy" = 50, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
+	armor = list(melee = 50, bullet = 30, laser = 70, energy = 50, bomb = 20, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
-	var/id = null
-	var/on = FALSE
 
-/obj/machinery/igniter/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/igniter/attack_ai(mob/user)
+	return src.attack_hand(user)
 
-/obj/machinery/igniter/incinerator_atmos
-	id = INCINERATOR_ATMOS_IGNITER
-
-/obj/machinery/igniter/incinerator_syndicatelava
-	id = INCINERATOR_SYNDICATELAVA_IGNITER
-
-/obj/machinery/igniter/on
-	on = TRUE
-	icon_state = "igniter1"
+/obj/machinery/igniter/attack_paw(mob/user)
+	return src.attack_hand(user)
 
 /obj/machinery/igniter/attack_hand(mob/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	add_fingerprint(user)
 
 	use_power(50)
-	on = !( on )
-	icon_state = "igniter[on]"
+	src.on = !( src.on )
+	src.icon_state = text("igniter[]", src.on)
+	return
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (src.on && !(stat & NOPOWER) )
 		var/turf/location = src.loc
 		if (isturf(location))
-			location.hotspot_expose(700,10,1)
+			location.hotspot_expose(1000,500,1)
 	return 1
 
 /obj/machinery/igniter/Initialize()
@@ -60,15 +53,13 @@
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
-	resistance_flags = FIRE_PROOF
 	var/id = null
 	var/disable = 0
 	var/last_spark = 0
 	var/base_state = "migniter"
 	var/datum/effect_system/spark_spread/spark_system
-
-/obj/machinery/sparker/toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+	anchored = TRUE
+	resistance_flags = FIRE_PROOF
 
 /obj/machinery/sparker/Initialize()
 	. = ..()
@@ -126,12 +117,10 @@
 	use_power(1000)
 	var/turf/location = src.loc
 	if (isturf(location))
-		location.hotspot_expose(1000,100,1)
+		location.hotspot_expose(1000,500,1)
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)
-	. = ..()
-	if (. & EMP_PROTECT_SELF)
-		return
 	if(!(stat & (BROKEN|NOPOWER)))
 		ignite()
+	..()

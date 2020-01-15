@@ -1,71 +1,37 @@
 /turf/closed
+	var/thermite = 0
 	layer = CLOSED_TURF_LAYER
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	rad_insulation = RAD_MEDIUM_INSULATION
-
-/turf/closed/AfterChange()
-	. = ..()
-	SSair.high_pressure_delta -= src
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
-
-/turf/closed/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
-		return TRUE
-	return ..()
 
 /turf/closed/indestructible
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
-/turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
+/turf/closed/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	return
 
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
 	return 0
-
-/turf/closed/indestructible/Melt()
-	to_be_destroyed = FALSE
-	return src
-
-/turf/closed/indestructible/singularity_act()
-	return
 
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
 
-/turf/closed/indestructible/sandstone
-	name = "sandstone wall"
-	desc = "A wall with sandstone plating. Rough."
-	icon = 'icons/turf/walls/sandstone_wall.dmi'
-	icon_state = "sandstone"
-	baseturfs = /turf/closed/indestructible/sandstone
-	smooth = SMOOTH_TRUE
-
-/turf/closed/indestructible/wood
-	name = "wooden wall"
-	desc = "A wall with wooden plating. Stiff."
-	icon = 'icons/turf/walls/wood_wall.dmi'
-	icon_state = "wood"
-	baseturfs = /turf/closed/indestructible/wood
-	smooth = SMOOTH_TRUE
-
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
-	icon = 'icons/blank_title.png'
+	icon = 'config/title_screens/images/blank.png'
 	icon_state = ""
 	layer = FLY_LAYER
-	bullet_bounce_sound = null
 
 /turf/closed/indestructible/splashscreen/New()
 	SStitle.splash_turf = src
@@ -84,7 +50,6 @@
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
-	explosion_block = INFINITY
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
@@ -125,8 +90,6 @@
 	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snowrock"
-	bullet_sizzle = TRUE
-	bullet_bounce_sound = null
 
 /turf/closed/indestructible/rock/snow/ice
 	name = "iced rock"
@@ -146,7 +109,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "necro"
 	explosion_block = 50
-	baseturfs = /turf/closed/indestructible/necropolis
+	baseturf = /turf/closed/indestructible/necropolis
 
 /turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -160,7 +123,7 @@
 	icon_state = "wall"
 	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
 	explosion_block = 50
-	baseturfs = /turf/closed/indestructible/riveted/boss
+	baseturf = /turf/closed/indestructible/riveted/boss
 
 /turf/closed/indestructible/riveted/boss/see_through
 	opacity = FALSE

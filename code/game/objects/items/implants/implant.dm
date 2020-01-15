@@ -2,23 +2,21 @@
 	name = "implant"
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
+	origin_tech = "materials=2;biotech=3;programming=2"
 	actions_types = list(/datum/action/item_action/hands_free/activate)
-	var/activated = TRUE //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
+	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
 	var/mob/living/imp_in = null
 	item_color = "b"
 	var/allow_multiple = FALSE
 	var/uses = -1
-	item_flags = DROPDEL
+	flags_1 = DROPDEL_1
 
 
 /obj/item/implant/proc/trigger(emote, mob/living/carbon/source)
 	return
 
-/obj/item/implant/proc/on_death(emote, mob/living/carbon/source)
-	return
-
 /obj/item/implant/proc/activate()
-	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
+	return
 
 /obj/item/implant/ui_action_click()
 	activate("action_button")
@@ -40,27 +38,13 @@
 //What does the implant do upon injection?
 //return 1 if the implant injects
 //return 0 if there is no room for implant / it fails
-/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = FALSE)
-	if(SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTING, args) & COMPONENT_STOP_IMPLANTING)
-		return
+/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = 0)
 	LAZYINITLIST(target.implants)
 	if(!target.can_be_implanted() || !can_be_implanted_in(target))
-		return FALSE
+		return 0
 	for(var/X in target.implants)
-		var/obj/item/implant/imp_e = X
-		var/flags = SEND_SIGNAL(imp_e, COMSIG_IMPLANT_OTHER, args, src)
-		if(flags & COMPONENT_DELETE_NEW_IMPLANT)
-			UNSETEMPTY(target.implants)
-			qdel(src)
-			return TRUE
-		if(flags & COMPONENT_DELETE_OLD_IMPLANT)
-			qdel(imp_e)
-			continue
-		if(flags & COMPONENT_STOP_IMPLANTING)
-			UNSETEMPTY(target.implants)
-			return FALSE
-
-		if(istype(imp_e, type))
+		if(istype(X, type))
+			var/obj/item/implant/imp_e = X
 			if(!allow_multiple)
 				if(imp_e.uses < initial(imp_e.uses)*2)
 					if(uses == -1)
@@ -68,11 +52,11 @@
 					else
 						imp_e.uses = min(imp_e.uses + uses, initial(imp_e.uses)*2)
 					qdel(src)
-					return TRUE
+					return 1
 				else
-					return FALSE
+					return 0
 
-	moveToNullspace()
+	src.loc = target
 	imp_in = target
 	target.implants += src
 	if(activated)
@@ -84,17 +68,17 @@
 		H.sec_hud_set_implants()
 
 	if(user)
-		log_combat(user, target, "implanted", "\a [name]")
+		add_logs(user, target, "implanted", object="[name]")
 
-	return TRUE
+	return 1
 
-/obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
-	SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVING, args)
+/obj/item/implant/proc/removed(mob/living/source, silent = 0, special = 0)
+	src.loc = null
 	imp_in = null
 	source.implants -= src
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.Remove(source)
+		A.Grant(source)
 	if(ishuman(source))
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()
@@ -107,7 +91,7 @@
 	return ..()
 
 /obj/item/implant/proc/get_data()
-	return "No information available about this implant."
+	return "No information available"
 
 /obj/item/implant/dropped(mob/user)
 	. = 1

@@ -1,10 +1,13 @@
 //Charger
 /mob/living/simple_animal/hostile/guardian/charger
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	ranged = 1 //technically
 	ranged_message = "charges"
-	ranged_cooldown_time = 20
-	damage_coeff = list(BRUTE = 0.2, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5)
-	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, take half damage, have near immunity to brute damage, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
+	ranged_cooldown_time = 40
+	speed = -1
+	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
+	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, have medium damage resistance, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
@@ -30,7 +33,7 @@
 
 /mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom)
 	charging = 1
-	throw_at(targeted_atom, range, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charging_end))
+	throw_at(targeted_atom, range, 1, src, 0, callback = CALLBACK(src, .proc/charging_end))
 
 /mob/living/simple_animal/hostile/guardian/charger/proc/charging_end()
 	charging = 0
@@ -54,8 +57,10 @@
 			var/blocked = FALSE
 			if(hasmatchingsummoner(A)) //if the summoner matches don't hurt them
 				blocked = TRUE
-			if(L.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
-				blocked = TRUE
+			if(ishuman(A))
+				var/mob/living/carbon/human/H = A
+				if(H.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
+					blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()
 				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")

@@ -8,70 +8,72 @@
 	item_state = "candle1"
 	w_class = WEIGHT_CLASS_TINY
 	light_color = LIGHT_COLOR_FIRE
-	heat = 1000
-	var/wax = 1000
+	var/wax = 200
 	var/lit = FALSE
 	var/infinite = FALSE
 	var/start_lit = FALSE
+	heat = 1000
 
-/obj/item/candle/Initialize()
-	. = ..()
+/obj/item/candle/New()
+	..()
 	if(start_lit)
-		light()
+		// No visible message
+		light(show_message = FALSE)
 
 /obj/item/candle/update_icon()
-	icon_state = "candle[(wax > 400) ? ((wax > 750) ? 1 : 2) : 3][lit ? "_lit" : ""]"
+	var/i
+	if(wax>150)
+		i = 1
+	else if(wax>80)
+		i = 2
+	else i = 3
+	icon_state = "candle[i][lit ? "_lit" : ""]"
+
 
 /obj/item/candle/attackby(obj/item/W, mob/user, params)
+	..()
 	var/msg = W.ignition_effect(src, user)
 	if(msg)
 		light(msg)
-	else
-		return ..()
 
 /obj/item/candle/fire_act(exposed_temperature, exposed_volume)
-	if(!lit)
+	if(!src.lit)
 		light() //honk
-	return ..()
-
-/obj/item/candle/get_temperature()
-	return lit * heat
+	..()
 
 /obj/item/candle/proc/light(show_message)
-	if(!lit)
-		lit = TRUE
+	if(!src.lit)
+		src.lit = TRUE
+		//src.damtype = "fire"
 		if(show_message)
 			usr.visible_message(show_message)
 		set_light(CANDLE_LUMINOSITY)
 		START_PROCESSING(SSobj, src)
 		update_icon()
 
-/obj/item/candle/proc/put_out_candle()
-	if(!lit)
-		return
-	lit = FALSE
-	update_icon()
-	set_light(0)
-	return TRUE
-
-/obj/item/candle/extinguish()
-	put_out_candle()
-	return ..()
 
 /obj/item/candle/process()
 	if(!lit)
-		return PROCESS_KILL
+		return
 	if(!infinite)
 		wax--
 	if(!wax)
-		new /obj/item/trash/candle(loc)
+		new/obj/item/trash/candle(src.loc)
 		qdel(src)
 	update_icon()
 	open_flame()
 
 /obj/item/candle/attack_self(mob/user)
-	if(put_out_candle())
-		user.visible_message("<span class='notice'>[user] snuffs [src].</span>")
+	if(lit)
+		user.visible_message(
+			"<span class='notice'>[user] snuffs [src].</span>")
+		lit = FALSE
+		update_icon()
+		set_light(0)
+
+/obj/item/candle/is_hot()
+	return lit * heat
+
 
 /obj/item/candle/infinite
 	infinite = TRUE

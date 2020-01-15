@@ -1,10 +1,9 @@
 ///Mining Base////
 
-#define ZONE_SET	0
 #define BAD_ZLEVEL	1
 #define BAD_AREA	2
 #define BAD_COORDS	3
-#define BAD_TURF	4
+#define ZONE_SET	4
 
 /area/shuttle/auxillary_base
 	name = "Auxillary Base"
@@ -24,31 +23,34 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	req_one_access = list(ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_HEADS, ACCESS_RESEARCH)
 	var/possible_destinations
 	clockwork = TRUE
-	var/obj/item/gps/internal/base/locator
+	var/obj/item/device/gps/internal/base/locator
 	circuit = /obj/item/circuitboard/computer/auxillary_base
 
 /obj/machinery/computer/auxillary_base/Initialize()
 	. = ..()
 	locator = new(src)
 
-/obj/machinery/computer/auxillary_base/ui_interact(mob/user)
-	. = ..()
+/obj/machinery/computer/auxillary_base/attack_hand(mob/user)
+	if(..(user))
+		return
+	add_fingerprint(usr)
+
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	var/dat = "[is_station_level(z) ? "Docking clamps engaged. Standing by." : "Mining Shuttle Uplink: [M ? M.getStatusText() : "*OFFLINE*"]"]<br>"
+	var/dat = "[(z in GLOB.station_z_levels) ? "Docking clamps engaged. Standing by." : "Mining Shuttle Uplink: [M ? M.getStatusText() : "*OFFLINE*"]"]<br>"
 	if(M)
 		var/destination_found
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 			if(!options.Find(S.id))
 				continue
-			if(!M.check_dock(S, silent=TRUE))
+			if(!M.check_dock(S))
 				continue
 			destination_found = 1
-			dat += "<A href='?src=[REF(src)];move=[S.id]'>Send to [S.name]</A><br>"
-		if(!destination_found && is_station_level(z)) //Only available if miners are lazy and did not set an LZ using the remote.
-			dat += "<A href='?src=[REF(src)];random=1'>Prepare for blind drop? (Dangerous)</A><br>"
+			dat += "<A href='?src=\ref[src];move=[S.id]'>Send to [S.name]</A><br>"
+		if(!destination_found && (z in GLOB.station_z_levels)) //Only available if miners are lazy and did not set an LZ using the remote.
+			dat += "<A href='?src=\ref[src];random=1'>Prepare for blind drop? (Dangerous)</A><br>"
 	if(LAZYLEN(turrets))
-		dat += "<br><b>Perimeter Defense System:</b> <A href='?src=[REF(src)];turrets_power=on'>Enable All</A> / <A href='?src=[REF(src)];turrets_power=off'>Disable All</A><br> \
+		dat += "<br><b>Perimeter Defense System:</b> <A href='?src=\ref[src];turrets_power=on'>Enable All</A> / <A href='?src=\ref[src];turrets_power=off'>Disable All</A><br> \
 		Units connected: [LAZYLEN(turrets)]<br>\
 		Unit | Condition | Status | Direction | Distance<br>"
 		for(var/PDT in turrets)
@@ -63,10 +65,10 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 				status = "<span class='average'><b>Firing</b></span>"
 			else
 				status = "<span class='good'>All Clear</span>"
-			dat += "[T.name] | [integrity]% | [status] | [dir2text(get_dir(src, T))] | [get_dist(src, T)]m <A href='?src=[REF(src)];single_turret_power=[REF(T)]'>Toggle Power</A><br>"
+			dat += "[T.name] | [integrity]% | [status] | [dir2text(get_dir(src, T))] | [get_dist(src, T)]m <A href='?src=\ref[src];single_turret_power=\ref[T]'>Toggle Power</A><br>"
 
 
-	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
+	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
 
 	var/datum/browser/popup = new(user, "computer", "base management", 550, 300) //width, height
 	popup.set_content("<center>[dat]</center>")
@@ -84,7 +86,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	if(href_list["move"])
-		if(!is_station_level(z) && shuttleId == "colony_drop")
+		if(!(z in GLOB.station_z_levels) && shuttleId == "colony_drop")
 			to_chat(usr, "<span class='warning'>You can't move the base again!</span>")
 			return
 		var/shuttle_error = SSshuttle.moveShuttle(shuttleId, href_list["move"], 1)
@@ -99,10 +101,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	if(href_list["random"] && !possible_destinations)
 		usr.changeNext_move(CLICK_CD_RAPID) //Anti-spam
-		var/list/all_mining_turfs = list()
-		for (var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
-			all_mining_turfs += Z_TURFS(z_level)
-		var/turf/LZ = safepick(all_mining_turfs) //Pick a random mining Z-level turf
+		var/turf/LZ = safepick(Z_TURFS(ZLEVEL_MINING)) //Pick a random mining Z-level turf
 		if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
 		//Find a suitable mining turf. Reduces chance of landing in a bad area
 			to_chat(usr, "<span class='warning'>Landing zone scan failed. Please try again.</span>")
@@ -129,51 +128,40 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	updateUsrDialog()
 
 /obj/machinery/computer/auxillary_base/proc/set_mining_mode()
-	if(is_mining_level(z)) //The console switches to controlling the mining shuttle once landed.
+	if(z == ZLEVEL_MINING) //The console switches to controlling the mining shuttle once landed.
 		req_one_access = list()
 		shuttleId = "mining" //The base can only be dropped once, so this gives the console a new purpose.
 		possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 
-/obj/machinery/computer/auxillary_base/proc/set_landing_zone(turf/T, mob/user, no_restrictions)
+/obj/machinery/computer/auxillary_base/proc/set_landing_zone(turf/T, mob/user, var/no_restrictions)
+
 	var/obj/docking_port/mobile/auxillary_base/base_dock = locate(/obj/docking_port/mobile/auxillary_base) in SSshuttle.mobile
 	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
 		to_chat(user, "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>")
 		return
 	if(!no_restrictions)
-		var/static/list/disallowed_turf_types = typecacheof(list(
-			/turf/closed,
-			/turf/open/lava,
-			/turf/open/indestructible,
-			)) - typecacheof(list(
-			/turf/closed/mineral,
-			))
-
-		if(!is_mining_level(T.z))
+		if(T.z != ZLEVEL_MINING)
 			return BAD_ZLEVEL
+		var/colony_radius = max(base_dock.width, base_dock.height)*0.5
+		if(T.x - colony_radius < 1 || T.x + colony_radius >= world.maxx || T.y - colony_radius < 1 || T.y + colony_radius >= world.maxx)
+			return BAD_COORDS //Avoid dropping the base too close to map boundaries, as it results in parts of it being left in space
 
-		
-		var/list/colony_turfs = base_dock.return_ordered_turfs(T.x,T.y,T.z,base_dock.dir)
-		for(var/i in 1 to colony_turfs.len)
-			CHECK_TICK
-			var/turf/place = colony_turfs[i]
-			if(!place)
-				return BAD_COORDS
-			if(!istype(place.loc, /area/lavaland/surface))
-				return BAD_AREA
-			if(disallowed_turf_types[place.type])
-				return BAD_TURF
+		var/list/area_counter = get_areas_in_range(colony_radius, T)
+		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
+			return BAD_AREA
 
 
 	var/area/A = get_area(T)
 
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.id = "colony_drop([REF(src)])"
+	landing_zone.id = "colony_drop(\ref[src])"
 	landing_zone.name = "Landing Zone ([T.x], [T.y])"
 	landing_zone.dwidth = base_dock.dwidth
 	landing_zone.dheight = base_dock.dheight
 	landing_zone.width = base_dock.width
 	landing_zone.height = base_dock.height
 	landing_zone.setDir(base_dock.dir)
+	landing_zone.turf_type = T.type
 	landing_zone.area_type = A.type
 
 	possible_destinations += "[landing_zone.id];"
@@ -184,19 +172,20 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	return ZONE_SET
 
 
-/obj/item/assault_pod/mining
+/obj/item/device/assault_pod/mining
 	name = "Landing Field Designator"
 	icon_state = "gangtool-purple"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
 	w_class = WEIGHT_CLASS_SMALL
 	shuttle_id = "colony_drop"
 	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
 
-/obj/item/assault_pod/mining/attack_self(mob/living/user)
+/obj/item/device/assault_pod/mining/attack_self(mob/living/user)
 	if(setting)
 		return
 
@@ -211,7 +200,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/obj/machinery/computer/auxillary_base/AB
 
 	for (var/obj/machinery/computer/auxillary_base/A in GLOB.machines)
-		if(is_station_level(A.z))
+		if(A.z in GLOB.station_z_levels)
 			AB = A
 			break
 	if(!AB)
@@ -219,18 +208,16 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	switch(AB.set_landing_zone(T, user, no_restrictions))
-		if(ZONE_SET)
-			qdel(src)
 		if(BAD_ZLEVEL)
 			to_chat(user, "<span class='warning'>This uplink can only be used in a designed mining zone.</span>")
 		if(BAD_AREA)
-			to_chat(user, "<span class='warning'>Unable to acquire a targeting lock. Find an area clear of structures or entirely within one.</span>")
+			to_chat(user, "<span class='warning'>Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one.</span>")
 		if(BAD_COORDS)
 			to_chat(user, "<span class='warning'>Location is too close to the edge of the station's scanning range. Move several paces away and try again.</span>")
-		if(BAD_TURF)
-			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone.</span>")
+		if(ZONE_SET)
+			qdel(src)
 
-/obj/item/assault_pod/mining/unrestricted
+/obj/item/device/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
 	desc = "Allows the deployment of the mining base ANYWHERE. Use with caution."
 	no_restrictions = TRUE
@@ -245,21 +232,13 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	width = 9
 	height = 9
 
-/obj/docking_port/mobile/auxillary_base/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
-	for(var/i in new_turfs)
-		var/turf/place = i
-		if(istype(place, /turf/closed/mineral))
-			place.ScrapeAway()
-	return ..()
-
-/obj/docking_port/stationary/public_mining_dock
+obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
 	id = "disabled" //The Aux Base has to leave before this can be used as a dock.
 	//Should be checked on the map to ensure it matchs the mining shuttle dimensions.
 	dwidth = 3
 	width = 7
 	height = 5
-	area_type = /area/construction/mining/aux_base
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"
@@ -275,9 +254,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 
 /obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
 	if(anchored)
 		to_chat(user, "<span class='warning'>Landing zone already set.</span>")
 		return
@@ -291,7 +267,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	var/turf/landing_spot = get_turf(src)
 
-	if(!is_mining_level(landing_spot.z))
+	if(landing_spot.z != ZLEVEL_MINING)
 		to_chat(user, "<span class='warning'>This device is only to be used in a mining zone.</span>")
 		return
 	var/obj/machinery/computer/auxillary_base/aux_base_console
@@ -318,11 +294,12 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			Mport.width = SM.width
 			Mport.height = SM.height
 			Mport.setDir(dir)
+			Mport.turf_type = landing_spot.type
 			Mport.area_type = A.type
 
 			break
 	if(!Mport)
-		to_chat(user, "<span class='warning'>This station is not equipped with an appropriate mining shuttle. Please contact Nanotrasen Support.</span>")
+		to_chat(user, "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>")
 		return
 
 	var/obj/docking_port/mobile/mining_shuttle
@@ -341,20 +318,14 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		qdel(Mport)
 		return
 
-	for(var/i in 1 to landing_turfs.len) //You land NEAR the base, not IN it.
-		var/turf/L = landing_turfs[i]
-		if(!L) //This happens at map edges
-			to_chat(user, "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>")
-			SSshuttle.stationary.Remove(Mport)
-			qdel(Mport)
-			return
+	for(var/L in landing_turfs) //You land NEAR the base, not IN it.
 		if(istype(get_area(L), /area/shuttle/auxillary_base))
 			to_chat(user, "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>")
 			SSshuttle.stationary.Remove(Mport)
 			qdel(Mport)
 			return
 
-	if(mining_shuttle.canDock(Mport) != SHUTTLE_CAN_DOCK)
+	if(!mining_shuttle.canDock(Mport))
 		to_chat(user, "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>")
 		SSshuttle.stationary.Remove(Mport)
 		qdel(Mport)
@@ -371,8 +342,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/structure/mining_shuttle_beacon/attack_robot(mob/user)
 	return attack_hand(user) //So borgies can help
 
-#undef ZONE_SET
 #undef BAD_ZLEVEL
 #undef BAD_AREA
 #undef BAD_COORDS
-#undef BAD_TURF
+#undef ZONE_SET

@@ -15,8 +15,8 @@
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/grass/carpet, /obj/item/seeds/grass/fairy)
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05)
+	mutatelist = list(/obj/item/seeds/grass/carpet)
+	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/grass
 	seed = /obj/item/seeds/grass
@@ -27,7 +27,6 @@
 	bitesize_mod = 2
 	var/stacktype = /obj/item/stack/tile/grass
 	var/tile_coefficient = 0.02 // 1/50
-	distill_reagent = /datum/reagent/consumable/ethanol/beer/light
 
 /obj/item/reagent_containers/food/snacks/grown/grass/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You prepare the astroturf.</span>")
@@ -37,59 +36,19 @@
 			continue
 		grassAmt += 1 + round(G.seed.potency * tile_coefficient)
 		qdel(G)
-	new stacktype(user.drop_location(), grassAmt)
+	var/obj/item/stack/tile/GT = new stacktype(user.loc)
+	while(grassAmt > GT.max_amount)
+		GT.amount = GT.max_amount
+		grassAmt -= GT.max_amount
+		GT = new stacktype(user.loc)
+	GT.amount = grassAmt
+	for(var/obj/item/stack/tile/T in user.loc)
+		if((T.type == stacktype) && (T.amount < T.max_amount))
+			GT.merge(T)
+			if(GT.amount <= 0)
+				break
 	qdel(src)
-
-//Fairygrass
-/obj/item/seeds/grass/fairy
-	name = "pack of fairygrass seeds"
-	desc = "These seeds grow into a more mystical grass."
-	icon_state = "seed-fairygrass"
-	species = "fairygrass"
-	plantname = "Fairygrass"
-	product = /obj/item/reagent_containers/food/snacks/grown/grass/fairy
-	icon_grow = "fairygrass-grow"
-	icon_dead = "fairygrass-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
-
-/obj/item/reagent_containers/food/snacks/grown/grass/fairy
-	seed = /obj/item/seeds/grass/fairy
-	name = "fairygrass"
-	desc = "Glowing, and smells fainly of mushrooms."
-	icon_state = "fairygrassclump"
-	filling_color = "#3399ff"
-	stacktype = /obj/item/stack/tile/fairygrass
-
-/obj/item/reagent_containers/food/snacks/grown/grass/fairy/attack_self(mob/user)
-	var/datum/plant_gene/trait/glow/G = null
-	for(var/datum/plant_gene/trait/glow/gene in seed.genes)
-		G = gene
-		break
-
-	stacktype = initial(stacktype)
-
-	if(G)
-		switch(G.type)
-			if(/datum/plant_gene/trait/glow/white)
-				stacktype = /obj/item/stack/tile/fairygrass/white
-			if(/datum/plant_gene/trait/glow/red)
-				stacktype = /obj/item/stack/tile/fairygrass/red
-			if(/datum/plant_gene/trait/glow/yellow)
-				stacktype = /obj/item/stack/tile/fairygrass/yellow
-			if(/datum/plant_gene/trait/glow/green)
-				stacktype = /obj/item/stack/tile/fairygrass/green
-			if(/datum/plant_gene/trait/glow/blue)
-				stacktype = /obj/item/stack/tile/fairygrass/blue
-			if(/datum/plant_gene/trait/glow/purple)
-				stacktype = /obj/item/stack/tile/fairygrass/purple
-			if(/datum/plant_gene/trait/glow/pink)
-				stacktype = /obj/item/stack/tile/fairygrass/pink
-
-	. = ..()
-
-
-
+	return
 
 // Carpet
 /obj/item/seeds/grass/carpet
@@ -108,4 +67,3 @@
 	desc = "The textile industry's dark secret."
 	icon_state = "carpetclump"
 	stacktype = /obj/item/stack/tile/carpet
-	can_distill = FALSE

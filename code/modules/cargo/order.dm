@@ -77,14 +77,14 @@
 	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
 	P.update_icon()
-	P.forceMove(C)
+	P.loc = C
 	C.manifest = P
 	C.update_icon()
 
 	return P
 
-/datum/supply_order/proc/generate(atom/A)
-	var/obj/structure/closet/crate/C = pack.generate(A)
+/datum/supply_order/proc/generate(turf/T)
+	var/obj/structure/closet/crate/C = pack.generate(T)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = generateManifest(C)
 
 	if(M.errors & MANIFEST_ERROR_ITEM)
@@ -95,16 +95,3 @@
 			while(--lost >= 0)
 				qdel(pick(C.contents))
 	return C
-
-//Paperwork for NT
-/obj/item/folder/paperwork
-	name = "Incomplete Paperwork"
-	desc = "These should've been filled out four months ago! Unfinished grant papers issued by Nanotrasen's finance department. Complete this page for additional funding."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "docs_generic"
-
-/obj/item/folder/paperwork_correct
-	name = "Finished Paperwork"
-	desc = "A neat stack of filled-out forms, in triplicate and signed. Is there anything more satisfying? Make sure they get stamped."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "docs_verified"

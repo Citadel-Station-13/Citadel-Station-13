@@ -226,7 +226,7 @@
         "OXYGEN",
         "CARBON DIOXIDE",
         "ELECTRICITY",
-        "CREW CONTACT",
+        "HUMAN CONTACT",
         "CYBORG CONTACT",
         "MEDICINE",
         "FLOORS",
@@ -347,7 +347,7 @@
         "HEADS OF CREW",
         "CAPTAINS AND HEADS",
         "CYBORGS",
-        "ARTIFICIAL INTELLIGENCES",
+        "ARTIFICAL INTELLIGENCES",
         "DRONES"
     ],
     "iondrinks": [
@@ -656,7 +656,7 @@
         "JETPACKS",
         "JUMPSUITS",
         "LASERS",
-        "LIGHT BULBS",
+        "LIGHTBULBS",
         "LIGHTS",
         "LOCKERS",
         "MACHINES",
@@ -827,7 +827,6 @@
     ],
     "ionspecies": [
         "HUMAN BEINGS",
-        "CAT PEOPLE",
         "MONKEYS",
         "POD PEOPLE",
         "CYBORGS",

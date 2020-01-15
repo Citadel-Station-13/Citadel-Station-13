@@ -3,7 +3,7 @@
 ////////////////////
 //Drones with custom laws
 //Drones with custom shells
-//Drones with overridden procs
+//Drones with overriden procs
 //Drones with camogear for hat related memes
 //Drone type for use with polymorph (no preloaded items, random appearance)
 
@@ -18,7 +18,7 @@
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
 	initial_language_holder = /datum/language_holder/drone/syndicate
-	faction = list(ROLE_SYNDICATE)
+	faction = list("syndicate")
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
 	heavy_emp_damage = 10
@@ -26,15 +26,15 @@
 	"1. Interfere.\n"+\
 	"2. Kill.\n"+\
 	"3. Destroy."
-	default_storage = /obj/item/uplink
+	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+	seeStatic = 0 //Our programming is superior.
 	hacked = TRUE
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.telecrystals = 10
+	internal_storage.hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
@@ -43,13 +43,12 @@
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
-	default_storage = /obj/item/uplink/nuclear
+	default_storage = /obj/item/device/radio/uplink/nuclear
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.telecrystals = 30
-	var/obj/item/implant/weapons_auth/W = new
+	internal_storage.hidden_uplink.telecrystals = 30
+	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src)
 
 /mob/living/simple_animal/drone/snowflake
@@ -127,13 +126,13 @@
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/storage/toolbox/brass/prefilled
+	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	flavortext = "<b><span class='nezbere'>You are a cogscarab,</span> a tiny building construct of Ratvar. While you're weak and can't recite scripture, \
-	you have a set of quick tools, as well as a replica fabricator that can create brass and convert objects.<br><br>Work with the servants of Ratvar \
-	to construct and maintain defenses at the City of Cogs. If there are no servants, use this time to experiment with base designs!"
+	flavortext = "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt fabricator that can convert brass \
+	to power, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
+	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create.</b>"
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal fabricator
 	default_storage = /obj/item/storage/toolbox/brass/prefilled/ratvar
@@ -147,11 +146,12 @@
 	qdel(access_card) //we don't have free access
 	access_card = null
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
+	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
-	add_servant_of_ratvar(src, TRUE, GLOB.servants_active)
+	add_servant_of_ratvar(src, TRUE)
 	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
@@ -223,7 +223,7 @@
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
+/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
 	. = ..()
 	if(.)
 		update_icons()
@@ -234,11 +234,6 @@
 		update_icons()
 
 /mob/living/simple_animal/drone/cogscarab/AdjustKnockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/update_canmove()
 	. = ..()
 	if(.)
 		update_icons()

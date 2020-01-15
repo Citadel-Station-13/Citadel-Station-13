@@ -5,12 +5,11 @@
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
+	anchored = TRUE
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
-	interaction_flags_atom = NONE
-	interaction_flags_machine = NONE
-	light_range = 4
+	luminosity = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
@@ -20,7 +19,6 @@
 	FG2.fields -= src
 	return ..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/field/containment/attack_hand(mob/user)
 	if(get_dist(src, user) > 1)
 		return FALSE
@@ -59,8 +57,8 @@
 /obj/machinery/field/containment/Crossed(mob/mover)
 	if(isliving(mover))
 		shock(mover)
-
-	if(ismachinery(mover) || isstructure(mover) || ismecha(mover))
+	
+	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
 		bump_field(mover)
 
 /obj/machinery/field/containment/proc/set_master(master1,master2)
@@ -78,7 +76,6 @@
 
 /obj/machinery/field/containment/Move()
 	qdel(src)
-	return FALSE
 
 
 // Abstract Field Class
@@ -87,19 +84,19 @@
 /obj/machinery/field
 	var/hasShocked = FALSE //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 
-/obj/machinery/field/Bumped(atom/movable/mover)
+/obj/machinery/field/CollidedWith(atom/movable/mover)
 	if(hasShocked)
 		return
 	if(isliving(mover))
 		shock(mover)
 		return
-	if(ismachinery(mover) || isstructure(mover) || ismecha(mover))
+	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
 		bump_field(mover)
 		return
 
 
 /obj/machinery/field/CanPass(atom/movable/mover, turf/target)
-	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
+	if(hasShocked || isliving(mover) || istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
 		return FALSE
 	return ..()
 

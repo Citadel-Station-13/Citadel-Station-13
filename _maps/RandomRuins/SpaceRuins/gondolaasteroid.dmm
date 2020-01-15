@@ -23,6 +23,11 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
+"g" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav{
+	dynamic_lighting = 1
+	})
 "h" = (
 /mob/living/simple_animal/pet/gondola,
 /turf/open/floor/plating/asteroid/airless,
@@ -76,19 +81,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "u" = (
-/obj/machinery/door/airlock/survival_pod/glass{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav)
-"T" = (
-/obj/machinery/door/airlock/survival_pod/glass{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
+/obj/machinery/door/airlock/survival_pod/vertical,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 
@@ -768,7 +761,7 @@ b
 b
 b
 b
-c
+g
 c
 c
 c
@@ -793,7 +786,7 @@ c
 c
 u
 c
-T
+u
 "}
 (20,1,1) = {"
 a

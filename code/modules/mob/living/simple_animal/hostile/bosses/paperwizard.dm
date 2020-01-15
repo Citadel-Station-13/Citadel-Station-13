@@ -2,7 +2,6 @@
 /mob/living/simple_animal/hostile/boss/paper_wizard
 	name = "Mjor the Creative"
 	desc = "A wizard with a taste for the arts."
-	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
 	faction = list("hostile","stickman")
 	del_on_death = TRUE
@@ -22,8 +21,6 @@
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	var/list/copies = list()
-
-	do_footstep = TRUE
 
 
 //Summon Ability
@@ -90,7 +87,7 @@
 			boss.atb.refund(boss_cost)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy
-	desc = "'Tis a ruse!"
+	desc = "tis a ruse!"
 	health = 1
 	maxHealth = 1
 	alpha = 200
@@ -130,7 +127,7 @@
 			qdel(copy)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
-	. = ..()
+	..()
 	qdel(src) //I see through your ruse!
 
 //fancy effects

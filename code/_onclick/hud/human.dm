@@ -15,10 +15,10 @@
 			targetmob = M
 
 	if(usr.hud_used.inventory_shown && targetmob.hud_used)
-		usr.hud_used.inventory_shown = FALSE
+		usr.hud_used.inventory_shown = 0
 		usr.client.screen -= targetmob.hud_used.toggleable_inventory
 	else
-		usr.hud_used.inventory_shown = TRUE
+		usr.hud_used.inventory_shown = 1
 		usr.client.screen += targetmob.hud_used.toggleable_inventory
 
 	targetmob.hud_used.hidden_inventory_update(usr)
@@ -28,7 +28,7 @@
 	icon_state = "act_equip"
 
 /obj/screen/human/equip/Click()
-	if(ismecha(usr.loc)) // stops inventory actions in a mech
+	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return 1
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
@@ -80,84 +80,49 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
-/datum/hud/human/New(mob/living/carbon/human/owner)
+/mob/living/carbon/human/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
+
+
+/datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
 	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
-
-	var/widescreenlayout = FALSE //CIT CHANGE - adds support for different hud layouts depending on widescreen pref
-	if(owner.client && owner.client.prefs && owner.client.prefs.widescreenpref) //CIT CHANGE - ditto
-		widescreenlayout = TRUE // CIT CHANGE - ditto
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
 	using = new /obj/screen/craft
 	using.icon = ui_style
-	if(!widescreenlayout) // CIT CHANGE
-		using.screen_loc = ui_boxcraft // CIT CHANGE
-	using.hud = src
 	static_inventory += using
 
 	using = new/obj/screen/language_menu
 	using.icon = ui_style
-	if(!widescreenlayout) // CIT CHANGE
-		using.screen_loc = ui_boxlang // CIT CHANGE
-	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/area_creator
 	using.icon = ui_style
-	if(!widescreenlayout) // CIT CHANGE
-		using.screen_loc = ui_boxarea // CIT CHANGE
-	using.hud = src
-	static_inventory += using
-
-	using = new /obj/screen/voretoggle() //We fancy Vore now
-	using.icon = tg_ui_icon_to_cit_ui(ui_style)
-	using.screen_loc = ui_voremode
-	if(!widescreenlayout)
-		using.screen_loc = ui_boxvore
-	using.hud = src
 	static_inventory += using
 
 	action_intent = new /obj/screen/act_intent/segmented
 	action_intent.icon_state = mymob.a_intent
-	action_intent.hud = src
 	static_inventory += action_intent
 
 	using = new /obj/screen/mov_intent
-	using.icon = tg_ui_icon_to_cit_ui(ui_style) // CIT CHANGE - overrides mov intent icon
+	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.hud = src
 	static_inventory += using
-
-	//CITADEL CHANGES - sprint button
-	using = new /obj/screen/sprintbutton
-	using.icon = tg_ui_icon_to_cit_ui(ui_style)
-	using.icon_state = (owner.sprinting ? "act_sprint_on" : "act_sprint")
-	using.screen_loc = ui_movi
-	using.hud = src
-	static_inventory += using
-	//END OF CITADEL CHANGES
-
-	//same as above but buffer.
-	sprint_buffer = new /obj/screen/sprint_buffer
-	sprint_buffer.screen_loc = ui_sprintbufferloc
-	sprint_buffer.hud = src
-	static_inventory += sprint_buffer
-
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
-	using.hud = src
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
-	inv_box.slot_id = SLOT_W_UNIFORM
+	inv_box.slot_id = slot_w_uniform
 	inv_box.icon_state = "uniform"
 	inv_box.screen_loc = ui_iclothing
 	toggleable_inventory += inv_box
@@ -165,25 +130,23 @@
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "o_clothing"
 	inv_box.icon = ui_style
-	inv_box.slot_id = SLOT_WEAR_SUIT
+	inv_box.slot_id = slot_wear_suit
 	inv_box.icon_state = "suit"
 	inv_box.screen_loc = ui_oclothing
 	toggleable_inventory += inv_box
 
-	build_hand_slots()
+	build_hand_slots(ui_style)
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand_position(owner,1)
-	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
-	using.hud = src
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
@@ -191,7 +154,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_id
-	inv_box.slot_id = SLOT_WEAR_ID
+	inv_box.slot_id = slot_wear_id
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -199,7 +162,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_mask
-	inv_box.slot_id = SLOT_WEAR_MASK
+	inv_box.slot_id = slot_wear_mask
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -207,7 +170,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "neck"
 	inv_box.screen_loc = ui_neck
-	inv_box.slot_id = SLOT_NECK
+	inv_box.slot_id = slot_neck
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -215,7 +178,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
-	inv_box.slot_id = SLOT_BACK
+	inv_box.slot_id = slot_back
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -223,7 +186,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage1
-	inv_box.slot_id = SLOT_L_STORE
+	inv_box.slot_id = slot_l_store
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -231,7 +194,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage2
-	inv_box.slot_id = SLOT_R_STORE
+	inv_box.slot_id = slot_r_store
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -239,39 +202,22 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
 	inv_box.screen_loc = ui_sstore1
-	inv_box.slot_id = SLOT_S_STORE
+	inv_box.slot_id = slot_s_store
 	static_inventory += inv_box
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
-	using.screen_loc = ui_overridden_resist // CIT CHANGE - changes this to overridden resist
-	using.hud = src
-	hotkeybuttons += using
-
-	//CIT CHANGES - rest and combat mode buttons
-	using = new /obj/screen/restbutton()
-	using.icon = tg_ui_icon_to_cit_ui(ui_style)
 	using.screen_loc = ui_pull_resist
-	using.hud = src
-	static_inventory += using
-
-	using = new /obj/screen/combattoggle()
-	using.icon = tg_ui_icon_to_cit_ui(ui_style)
-	using.screen_loc = ui_combat_toggle
-	using.hud = src
-	static_inventory += using
-	//END OF CIT CHANGES
+	hotkeybuttons += using
 
 	using = new /obj/screen/human/toggle()
 	using.icon = ui_style
 	using.screen_loc = ui_inventory
-	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/human/equip()
 	using.icon = ui_style
 	using.screen_loc = ui_equip_position(mymob)
-	using.hud = src
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
@@ -279,7 +225,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
 	inv_box.screen_loc = ui_gloves
-	inv_box.slot_id = SLOT_GLOVES
+	inv_box.slot_id = slot_gloves
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -287,7 +233,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "glasses"
 	inv_box.screen_loc = ui_glasses
-	inv_box.slot_id = SLOT_GLASSES
+	inv_box.slot_id = slot_glasses
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -295,7 +241,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
 	inv_box.screen_loc = ui_ears
-	inv_box.slot_id = SLOT_EARS
+	inv_box.slot_id = slot_ears
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -303,7 +249,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "head"
 	inv_box.screen_loc = ui_head
-	inv_box.slot_id = SLOT_HEAD
+	inv_box.slot_id = slot_head
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -311,7 +257,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
 	inv_box.screen_loc = ui_shoes
-	inv_box.slot_id = SLOT_SHOES
+	inv_box.slot_id = slot_shoes
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -320,77 +266,41 @@
 	inv_box.icon_state = "belt"
 //	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_belt
-	inv_box.slot_id = SLOT_BELT
+	inv_box.slot_id = slot_belt
 	static_inventory += inv_box
 
 	throw_icon = new /obj/screen/throw_catch()
 	throw_icon.icon = ui_style
 	throw_icon.screen_loc = ui_drop_throw
-	throw_icon.hud = src
 	hotkeybuttons += throw_icon
 
 	internals = new /obj/screen/internals()
-	internals.hud = src
 	infodisplay += internals
 
 	healths = new /obj/screen/healths()
-	healths.hud = src
 	infodisplay += healths
-	//CIT CHANGE - adds arousal and stamina to hud
-	arousal = new /obj/screen/arousal()
-	arousal.icon_state = (owner.canbearoused == 1 ? "arousal0" : "")
-	arousal.hud = src
-	infodisplay += arousal
-
-	staminas = new /obj/screen/staminas()
-	staminas.hud = src
-	infodisplay += staminas
-
-	if(!CONFIG_GET(flag/disable_stambuffer))
-		staminabuffer = new /obj/screen/staminabuffer()
-		staminabuffer.hud = src
-		infodisplay += staminabuffer
-	//END OF CIT CHANGES
 
 	healthdoll = new /obj/screen/healthdoll()
-	healthdoll.hud = src
 	infodisplay += healthdoll
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.hud = src
-	pull_icon.update_icon()
+	pull_icon.update_icon(mymob)
 	pull_icon.screen_loc = ui_pull_resist
 	static_inventory += pull_icon
 
 	lingchemdisplay = new /obj/screen/ling/chems()
-	lingchemdisplay.hud = src
 	infodisplay += lingchemdisplay
 
 	lingstingdisplay = new /obj/screen/ling/sting()
-	lingstingdisplay.hud = src
 	infodisplay += lingstingdisplay
 
 	devilsouldisplay = new /obj/screen/devil/soul_counter
-	devilsouldisplay.hud = src
 	infodisplay += devilsouldisplay
-
-	blood_display = new /obj/screen/bloodsucker/blood_counter	// Blood Volume
-	blood_display.hud = src
-	infodisplay += blood_display
-
-	vamprank_display = new /obj/screen/bloodsucker/rank_counter	// Vampire Rank
-	vamprank_display.hud = src
-	infodisplay += vamprank_display
-
-	sunlight_display = new /obj/screen/bloodsucker/sunlight_counter	// Sunlight
-	sunlight_display.hud = src
-	infodisplay += sunlight_display
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
-	zone_select.hud = src
-	zone_select.update_icon()
+	zone_select.update_icon(mymob)
 	static_inventory += zone_select
 
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
@@ -399,14 +309,10 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-	update_locked_slots()
-
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
 		return
 	var/mob/living/carbon/human/H = mymob
-	if(!istype(H) || !H.dna.species)
-		return
 	var/datum/species/S = H.dna.species
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
@@ -522,7 +428,7 @@
 
 	if(hud_used.hotkey_ui_hidden)
 		client.screen += hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = FALSE
+		hud_used.hotkey_ui_hidden = 0
 	else
 		client.screen -= hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = TRUE
+		hud_used.hotkey_ui_hidden = 1

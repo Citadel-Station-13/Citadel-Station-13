@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -30,7 +30,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "h" = (
-/obj/item/gps/computer,
+/obj/item/device/gps/computer,
 /obj/structure/tubes,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
@@ -109,7 +109,7 @@
 	icon_state = "blood1";
 	dir = 1
 	},
-/obj/machinery/door/airlock/survival_pod/glass,
+/obj/machinery/door/airlock/survival_pod,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "u" = (
@@ -168,16 +168,21 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"B" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/ruin/powered)
 
 (1,1,1) = {"
 a
 a
 a
-b
-b
-b
-b
-b
+a
+a
+a
+a
+a
+a
 a
 a
 a
@@ -185,19 +190,35 @@ a
 (2,1,1) = {"
 a
 a
+a
+a
 b
 b
-e
-b
-e
 b
 b
+b
+a
 a
 a
 "}
 (3,1,1) = {"
 a
 a
+a
+b
+b
+e
+b
+e
+b
+b
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
 b
 d
 d
@@ -208,7 +229,8 @@ b
 a
 a
 "}
-(4,1,1) = {"
+(5,1,1) = {"
+a
 a
 b
 c
@@ -221,7 +243,8 @@ w
 b
 b
 "}
-(5,1,1) = {"
+(6,1,1) = {"
+a
 a
 b
 b
@@ -234,7 +257,8 @@ x
 b
 b
 "}
-(6,1,1) = {"
+(7,1,1) = {"
+a
 b
 b
 c
@@ -247,20 +271,22 @@ y
 b
 b
 "}
-(7,1,1) = {"
+(8,1,1) = {"
+a
 a
 b
 b
 d
 d
-d
+B
 d
 d
 z
 j
 j
 "}
-(8,1,1) = {"
+(9,1,1) = {"
+a
 a
 a
 b
@@ -273,7 +299,8 @@ A
 b
 b
 "}
-(9,1,1) = {"
+(10,1,1) = {"
+a
 a
 a
 b
@@ -286,7 +313,8 @@ a
 a
 a
 "}
-(10,1,1) = {"
+(11,1,1) = {"
+a
 a
 a
 a
@@ -295,6 +323,20 @@ a
 o
 j
 b
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a

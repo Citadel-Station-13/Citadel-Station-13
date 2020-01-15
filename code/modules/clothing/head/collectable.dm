@@ -27,6 +27,7 @@
 	icon_state = "chef"
 	item_state = "chef"
 	dynamic_hair_suffix = ""
+
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/collectable/paper
@@ -70,7 +71,7 @@
 	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
-	resistance_flags = NONE
+	resistance_flags = 0
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
@@ -142,7 +143,7 @@
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
-	resistance_flags = NONE
+	resistance_flags = 0
 	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/collectable/swat
@@ -150,5 +151,5 @@
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
 	icon_state = "swat"
 	item_state = "swat"
-	resistance_flags = NONE
+	resistance_flags = 0
 	flags_inv = HIDEHAIR

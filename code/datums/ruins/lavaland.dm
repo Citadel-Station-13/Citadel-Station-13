@@ -115,20 +115,12 @@
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
 
-/datum/map_template/ruin/lavaland/ratvar
-	name = "Dead God"
-	id = "ratvar"
-	description = "Ratvars final resting place."
-	suffix = "lavaland_surface_dead_ratvar.dmm"
-	cost = 0
-	allow_duplicates = FALSE
-
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"
 	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
 	suffix = "lavaland_surface_hierophant.dmm"
-	always_place = TRUE
+	cost = -1
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner
@@ -150,24 +142,16 @@
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
 	id = "ufo-crash"
-	description = "Turns out that keeping your abductees unconscious is really important. Who knew?"
+	description = "Turns out that keeping your abductees unconcious is really important. Who knew?"
 	suffix = "lavaland_surface_ufo_crash.dmm"
 	cost = 5
 
-/* Replaced with Alien Nest Ruins
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"
 	id = "xeno-nest"
 	description = "These xenomorphs got bored of horrifically slaughtering people on space stations, and have settled down on a nice lava filled hellscape to focus on what's really important in life. \
 	Quality memes."
 	suffix = "lavaland_surface_xeno_nest.dmm"
-	cost = 20 */
-
-/datum/map_template/ruin/lavaland/alien_nest
-	name = "Alien Nest"
-	id = "alien-nest"
-	description = "Not even Necropolis is safe from alien infestation. The competition for hosts has locked the legion and aliens in an endless conflict that can only be resolved by a PKA."
-	suffix = "lavaland_surface_alien_nest.dmm"
 	cost = 20
 
 /datum/map_template/ruin/lavaland/fountain
@@ -223,19 +207,3 @@
 	suffix = "lavaland_surface_random_ripley.dmm"
 	allow_duplicates = FALSE
 	cost = 5
-
-/datum/map_template/ruin/lavaland/puzzle
-	name = "Ancient Puzzle"
-	id = "puzzle"
-	description = "Mystery to be solved."
-	suffix = "lavaland_surface_puzzle.dmm"
-	cost = 5
-
-/datum/map_template/ruin/lavaland/elite_tumor
-	name = "Pulsating Tumor"
-	id = "tumor"
-	description = "A strange tumor which houses a powerful beast..."
-	suffix = "lavaland_surface_elite_tumor.dmm"
-	cost = 5
-	always_place = TRUE
-	allow_duplicates = TRUE 

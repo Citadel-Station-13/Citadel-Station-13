@@ -35,8 +35,7 @@
 	return TRUE
 
 /datum/language/proc/get_icon()
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
-	return sheet.icon_tag("language-[icon_state]")
+	return "[icon2html(icon, world, icon_state)]"
 
 /datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)
@@ -50,7 +49,7 @@
 
 	for(var/i in 0 to name_count)
 		new_name = ""
-		var/Y = rand(FLOOR(syllable_count/syllable_divisor, 1), syllable_count)
+		var/Y = rand(Floor(syllable_count/syllable_divisor), syllable_count)
 		for(var/x in Y to 0)
 			new_name += pick(syllables)
 		full_name += " [capitalize(lowertext(new_name))]"

@@ -5,11 +5,13 @@
 
 	icon             = LIGHTING_ICON
 	icon_state       = "transparent"
-	color            = null //we manually set color in init instead
+	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
+
+	blend_mode       = BLEND_ADD
 
 	var/needs_update = FALSE
 	var/turf/myturf
@@ -17,9 +19,6 @@
 /atom/movable/lighting_object/Initialize(mapload)
 	. = ..()
 	verbs.Cut()
-	//We avoid setting this in the base as if we do then the parent atom handling will add_atom_color it and that
-	//is totally unsuitable for this object, as we are always changing its colour manually
-	color = LIGHTING_BASE_MATRIX
 
 	myturf = loc
 	if (myturf.lighting_object)
@@ -139,9 +138,6 @@
 	return
 
 /atom/movable/lighting_object/blob_act()
-	return
-
-/atom/movable/lighting_object/onTransitZ()
 	return
 
 // Override here to prevent things accidentally moving around overlays.

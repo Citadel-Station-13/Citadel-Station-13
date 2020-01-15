@@ -5,8 +5,8 @@
 	idle_power_usage = 100
 	var/siphoning = FALSE
 	var/next_warning = 0
-	var/obj/item/radio/radio
-	var/radio_channel = RADIO_CHANNEL_COMMON
+	var/obj/item/device/radio/radio
+	var/radio_channel = "Common"
 	var/minimum_time_between_warnings = 400
 
 /obj/machinery/computer/bank_machine/Initialize()
@@ -43,25 +43,30 @@
 			say("Station funds depleted. Halting siphon.")
 			siphoning = FALSE
 		else
-			new /obj/item/stack/spacecash/c200(drop_location()) // will autostack
+			new /obj/item/stack/spacecash/c200(get_turf(src)) // will autostack
 			playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 			SSshuttle.points -= 200
 			if(next_warning < world.time && prob(15))
 				var/area/A = get_area(loc)
 				var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
-				radio.talk_into(src, message, radio_channel)
+				radio.talk_into(src, message, radio_channel, get_spans())
 				next_warning = world.time + minimum_time_between_warnings
 
-/obj/machinery/computer/bank_machine/ui_interact(mob/user)
-	. = ..()
-	var/dat = "[station_name()] secure vault. Authorized personnel only.<br>"
+/obj/machinery/computer/bank_machine/get_spans()
+	. = ..() | SPAN_ROBOT
+
+/obj/machinery/computer/bank_machine/attack_hand(mob/user)
+	if(..())
+		return
+	src.add_fingerprint(usr)
+	var/dat = "[world.name] secure vault. Authorized personnel only.<br>"
 	dat += "Current Balance: [SSshuttle.points] credits.<br>"
 	if(!siphoning)
-		dat += "<A href='?src=[REF(src)];siphon=1'>Siphon Credits</A><br>"
+		dat += "<A href='?src=\ref[src];siphon=1'>Siphon Credits</A><br>"
 	else
-		dat += "<A href='?src=[REF(src)];halt=1'>Halt Credit Siphon</A><br>"
+		dat += "<A href='?src=\ref[src];halt=1'>Halt Credit Siphon</A><br>"
 
-	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
+	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
 
 	var/datum/browser/popup = new(user, "computer", "Bank Vault", 300, 200)
 	popup.set_content("<center>[dat]</center>")

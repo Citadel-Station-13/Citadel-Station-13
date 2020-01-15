@@ -8,7 +8,7 @@
 	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
-	var/obj/item/assembly/signaler/anomaly/aSignal
+	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 	var/area/impact_area
 
 	var/lifespan = 990
@@ -26,12 +26,10 @@
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
-	aSignal.anomaly_type = type
 
-	var/frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
-	if(ISMULTIPLE(frequency, 2))//signaller frequencies are always uneven!
-		frequency++
-	aSignal.set_frequency(frequency)
+	aSignal.frequency = rand(1200, 1599)
+	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+		aSignal.frequency++
 
 	if(new_lifespan)
 		lifespan = new_lifespan
@@ -69,13 +67,13 @@
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
 	for(var/atom/movable/O in src)
-		O.forceMove(drop_location())
+		O.loc = src.loc
 
 	qdel(src)
 
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/analyzer))
+	if(istype(I, /obj/item/device/analyzer))
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
 ///////////////////////
@@ -85,6 +83,10 @@
 	icon_state = "shield2"
 	density = FALSE
 	var/boing = 0
+
+/obj/effect/anomaly/grav/New()
+	..()
+	aSignal.origin_tech = "magnets=7"
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -105,10 +107,10 @@
 /obj/effect/anomaly/grav/Crossed(mob/A)
 	gravShock(A)
 
-/obj/effect/anomaly/grav/Bump(mob/A)
+/obj/effect/anomaly/grav/Collide(mob/A)
 	gravShock(A)
 
-/obj/effect/anomaly/grav/Bumped(atom/movable/AM)
+/obj/effect/anomaly/grav/CollidedWith(atom/movable/AM)
 	gravShock(AM)
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/living/A)
@@ -117,20 +119,6 @@
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
 		boing = 0
-
-/obj/effect/anomaly/grav/high
-	var/grav_field
-
-/obj/effect/anomaly/grav/high/Initialize(mapload, new_lifespan)
-	. = ..()
-	setup_grav_field()
-
-/obj/effect/anomaly/grav/high/proc/setup_grav_field()
-	grav_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 7, "host" = src, "gravity_value" = rand(0,3)))
-
-/obj/effect/anomaly/grav/high/Destroy()
-	QDEL_NULL(grav_field)
-	. = ..()
 
 /////////////////////
 
@@ -142,6 +130,10 @@
 	var/shockdamage = 20
 	var/explosive = TRUE
 
+/obj/effect/anomaly/flux/New()
+	..()
+	aSignal.origin_tech = "powerstorage=7"
+
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
 	canshock = 1
@@ -151,10 +143,10 @@
 /obj/effect/anomaly/flux/Crossed(mob/living/M)
 	mobShock(M)
 
-/obj/effect/anomaly/flux/Bump(mob/living/M)
+/obj/effect/anomaly/flux/Collide(mob/living/M)
 	mobShock(M)
 
-/obj/effect/anomaly/flux/Bumped(atom/movable/AM)
+/obj/effect/anomaly/flux/CollidedWith(atom/movable/AM)
 	mobShock(AM)
 
 /obj/effect/anomaly/flux/proc/mobShock(mob/living/M)
@@ -187,22 +179,26 @@
 	icon_state = "bluespace"
 	density = TRUE
 
+/obj/effect/anomaly/bluespace/New()
+	..()
+	aSignal.origin_tech = "bluespace=7"
+
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
 	for(var/mob/living/M in range(1,src))
-		do_teleport(M, locate(M.x, M.y, M.z), 4, channel = TELEPORT_CHANNEL_BLUESPACE)
+		do_teleport(M, locate(M.x, M.y, M.z), 4)
 
-/obj/effect/anomaly/bluespace/Bumped(atom/movable/AM)
+/obj/effect/anomaly/bluespace/CollidedWith(atom/movable/AM)
 	if(isliving(AM))
-		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
+		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8)
 
 /obj/effect/anomaly/bluespace/detonate()
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 			// Calculate new position (searches through beacons in world)
-		var/obj/item/beacon/chosen
+		var/obj/item/device/radio/beacon/chosen
 		var/list/possible = list()
-		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
+		for(var/obj/item/device/radio/beacon/W in GLOB.teleportbeacons)
 			possible += W
 
 		if(possible.len > 0)
@@ -225,14 +221,12 @@
 			var/y_distance = TO.y - FROM.y
 			var/x_distance = TO.x - FROM.x
 			for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
-				if(istype(A, /obj/item/beacon))
-					continue // don't teleport beacons because that's just insanely stupid
-				if(A.anchored)
-					continue
+				if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+				if(A.anchored) continue
 
 				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-					A.forceMove(newloc)
+					A.loc = newloc
 
 				spawn()
 					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
@@ -256,6 +250,10 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 	var/ticks = 0
+
+/obj/effect/anomaly/pyro/New()
+	..()
+	aSignal.origin_tech = "plasmatech=7"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -288,6 +286,10 @@
 	name = "vortex anomaly"
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
+
+/obj/effect/anomaly/bhole/New()
+	..()
+	aSignal.origin_tech = "engineering=7"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

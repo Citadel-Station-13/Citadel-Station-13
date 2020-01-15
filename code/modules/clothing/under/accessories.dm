@@ -9,17 +9,17 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/above_suit = FALSE
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
-	var/datum/component/storage/detached_pockets
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	if(storage)
-		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
+	if(pockets) // Attach storage to jumpsuit
+		if(U.pockets) // storage items conflict
 			return FALSE
-		U.TakeComponent(storage)
-		detached_pockets = storage
+
+		pockets.loc = U
+		U.pockets = pockets
+
 	U.attached_accessory = src
-	forceMove(U)
+	loc = U
 	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
 	if(minimize_when_attached)
@@ -28,24 +28,22 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	if (islist(U.armor) || isnull(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
-		U.armor = getArmor(arglist(U.armor))	// we have to check that the armor list has been transformed into a datum before we try to call a proc on it
-																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
-	if (islist(armor) || isnull(armor))
-		armor = getArmor(arglist(armor))
-
-	U.armor = U.armor.attachArmor(armor)
+	for(var/armor_type in armor)
+		U.armor[armor_type] += armor[armor_type]
 
 	if(isliving(user))
 		on_uniform_equip(U, user)
 
 	return TRUE
 
-/obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
-	if(detached_pockets && detached_pockets.parent == U)
-		TakeComponent(detached_pockets)
 
-	U.armor = U.armor.detachArmor(armor)
+/obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
+	if(pockets && pockets == U.pockets)
+		pockets.loc = src
+		U.pockets = null
+
+	for(var/armor_type in armor)
+		U.armor[armor_type] -= armor[armor_type]
 
 	if(isliving(user))
 		on_uniform_dropped(U, user)
@@ -66,19 +64,16 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick(mob/user)
-	. = ..()
-	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		if(initial(above_suit))
-			above_suit = !above_suit
-			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
-			return TRUE
+/obj/item/clothing/accessory/AltClick()
+	if(initial(above_suit))
+		above_suit = !above_suit
+		to_chat(usr, "\The [src] will be worn [above_suit ? "above" : "below"] your suit.")
 
 /obj/item/clothing/accessory/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>"
+	..()
+	to_chat(user, "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>")
 	if(initial(above_suit))
-		. += "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>"
+		to_chat(user, "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>")
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
@@ -138,17 +133,14 @@
 						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(input)
-							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
-							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
+							SSblackbox.add_details("commendation", json_encode(list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input)))
+							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <font color='blue'>[name]</font>! \n- [input]"
 							commended = TRUE
-							desc += "<br>The inscription reads: [input] - [user.real_name]"
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 
-		else
-			to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
-	else
-		..()
+		else to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
+	else ..()
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
@@ -158,31 +150,6 @@
 	name = "bronze heart medal"
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
-
-/obj/item/clothing/accessory/medal/engineer
-	name = "\"Shift's Best Electrician\" award"
-	desc = "An award bestowed upon engineers who have excelled at keeping the station running in the best possible condition against all odds."
-	icon_state = "engineer"
-
-/obj/item/clothing/accessory/medal/greytide
-	name = "\"Greytider of the shift\" award"
-	desc = "An award for only the most annoying of assistants.  Locked doors mean nothing to you and behaving is not in your vocabulary"
-	icon_state = "greytide"
-
-/obj/item/clothing/accessory/medal/ribbon
-	name = "ribbon"
-	desc = "A ribbon"
-	icon_state = "cargo"
-	item_color = "cargo"
-
-/obj/item/clothing/accessory/medal/ribbon/cargo
-	name = "\"cargo tech of the shift\" award"
-	desc = "An award bestowed only upon those cargotechs who have exhibited devotion to their duty in keeping with the highest traditions of Cargonia."
-
-/obj/item/clothing/accessory/medal/ribbon/medical_doctor
-	name = "\"doctor of the shift\" award"
-	desc = "An award bestowed only upon the most capable doctors who have upheld the Hippocratic Oath to the best of their ability"
-	icon_state = "medical_doctor"
 
 /obj/item/clothing/accessory/medal/silver
 	name = "silver medal"
@@ -213,12 +180,6 @@
 	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/accessory/medal/gold/captain/family
-	name = "old medal of captaincy"
-	desc = "A rustic badge pure gold, has been through hell and back by the looks, the syndcate have been after these by the looks of it for generations..."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 10) //Pure gold
-	materials = list(MAT_GOLD=2000)
-
 /obj/item/clothing/accessory/medal/gold/heroism
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by CentCom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
@@ -229,7 +190,7 @@
 	icon_state = "plasma"
 	item_color = "plasma"
 	medaltype = "medal-plasma"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = -10, acid = 0) //It's made of plasma. Of course it's flammable.
 	materials = list(MAT_PLASMA=1000)
 
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -241,6 +202,8 @@
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"
 	desc = "A plasma medal which represents significant contributions to the field of science or engineering."
+
+
 
 ////////////
 //Armbands//
@@ -302,11 +265,6 @@
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
 
-/obj/item/clothing/accessory/lawyers_badge/attack_self(mob/user)
-	if(prob(1))
-		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
-	user.visible_message("[user] shows [user.p_their()] attorney's badge.", "<span class='notice'>You show your attorney's badge.</span>")
-
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(L)
@@ -325,18 +283,14 @@
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
 	item_color = "pocketprotector"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
+	pockets = /obj/item/storage/internal/pocket/pocketprotector
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize()
-	. = ..()
-	new /obj/item/pen/red(src)
-	new /obj/item/pen(src)
-	new /obj/item/pen/blue(src)
+/obj/item/clothing/accessory/pocketprotector/full
+	pockets = /obj/item/storage/internal/pocket/pocketprotector/full
 
-/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize()
-	. = ..()
-	for(var/i in 1 to 3)
-		new /obj/item/lipstick/random(src)
+/obj/item/clothing/accessory/pocketprotector/cosmetology
+	pockets = /obj/item/storage/internal/pocket/pocketprotector/cosmetology
+
 
 ////////////////
 //OONGA BOONGA//
@@ -347,7 +301,8 @@
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
 	item_color = "talisman"
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
+
 
 /obj/item/clothing/accessory/skullcodpiece
 	name = "skull codpiece"
@@ -355,37 +310,4 @@
 	icon_state = "skull"
 	item_color = "skull"
 	above_suit = TRUE
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
-
-/obj/item/clothing/accessory/skullcodpiece/fake
-	name = "false codpiece"
-	desc = "A plastic ornament, intended to protect the important things in life. It's not very good at it."
-	icon_state = "skull"
-	item_color = "skull"
-	above_suit = TRUE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-
-/////////////////////
-//Syndie Accessories//
-/////////////////////
-
-/obj/item/clothing/accessory/padding
-	name = "soft padding"
-	desc = "Some long sheets of padding to help soften the blows of a physical attacks."
-	icon_state = "padding"
-	item_color = "nothing"
-	armor = list("melee" = 15, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 45)
-
-/obj/item/clothing/accessory/kevlar
-	name = "kevlar sheets"
-	desc = "Long thin sheets of kevlar to help resist bullets and some physical attacks."
-	icon_state = "padding"
-	item_color = "nothing"
-	armor = list("melee" = 10, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
-
-/obj/item/clothing/accessory/plastics
-	name = "underling plastic sheet"
-	desc = "A full body sheet of white plastic to help defuse lasers and energy based weapons."
-	icon_state = "plastics"
-	item_color = "nothing"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = -40)
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)

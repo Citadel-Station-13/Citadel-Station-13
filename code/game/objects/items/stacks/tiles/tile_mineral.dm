@@ -3,6 +3,7 @@
 	singular_name = "plasma floor tile"
 	desc = "A tile made out of highly flammable plasma. This can only end well."
 	icon_state = "tile_plasma"
+	origin_tech = "plasmatech=1"
 	turf_type = /turf/open/floor/mineral/plasma
 	mineralType = "plasma"
 	materials = list(MAT_PLASMA=500)
@@ -39,6 +40,7 @@
 	singular_name = "diamond floor tile"
 	desc = "A tile made out of diamond. Wow, just, wow."
 	icon_state = "tile_diamond"
+	origin_tech = "materials=2"
 	turf_type = /turf/open/floor/mineral/diamond
 	mineralType = "diamond"
 	materials = list(MAT_DIAMOND=500)
@@ -58,6 +60,7 @@
 	desc = "A tile made out of alien alloy."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "tile_abductor"
+	origin_tech = "materials=6;abductor=1"
 	turf_type = /turf/open/floor/mineral/abductor
 	mineralType = "abductor"
 
@@ -66,15 +69,17 @@
 	singular_name = "titanium floor tile"
 	desc = "A tile made of titanium, used for shuttles."
 	icon_state = "tile_shuttle"
+	origin_tech = "materials=2"
 	turf_type = /turf/open/floor/mineral/titanium
 	mineralType = "titanium"
 	materials = list(MAT_TITANIUM=500)
 
 /obj/item/stack/tile/mineral/plastitanium
-	name = "plastitanium tile"
-	singular_name = "plastitanium floor tile"
-	desc = "A tile made of plastitanium, used for very evil shuttles."
+	name = "plas-titanium tile"
+	singular_name = "plas-titanium floor tile"
+	desc = "A tile made of plas-titanium, used for very evil shuttles."
 	icon_state = "tile_darkshuttle"
+	origin_tech = "materials=2"
 	turf_type = /turf/open/floor/mineral/plastitanium
 	mineralType = "plastitanium"
 	materials = list(MAT_TITANIUM=250, MAT_PLASMA=250)

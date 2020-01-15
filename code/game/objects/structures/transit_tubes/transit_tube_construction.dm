@@ -5,33 +5,23 @@
 	name = "unattached transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
-	desc = "An unattached segment of transit tube."
 	density = FALSE
 	layer = LOW_ITEM_LAYER //same as the built tube
 	anchored = FALSE
-	var/const/time_to_unwrench = 2 SECONDS
 	var/flipped = 0
 	var/build_type = /obj/structure/transit_tube
 	var/flipped_build_type
 	var/base_icon
 
-/obj/structure/c_transit_tube/proc/can_wrench_in_loc(mob/user)
-	var/turf/source_turf = get_turf(loc)
-	var/existing_tubes = 0
-	for(var/obj/structure/transit_tube/tube in source_turf)
-		existing_tubes++
-		if(existing_tubes >= 2)
-			to_chat(user, "<span class='warning'>You cannot wrench any more transit tubes!</span>")
-			return FALSE
-	return TRUE
+/obj/structure/c_transit_tube/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/structure/c_transit_tube/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS,null,null,CALLBACK(src,.proc/after_rot))
+/obj/structure/c_transit_tube/proc/tube_rotate()
+	setDir(turn(dir, -90))
 
-/obj/structure/c_transit_tube/proc/after_rot(mob/user,rotation_type)
-	if(flipped_build_type && rotation_type == ROTATION_FLIP)
-		setDir(turn(dir,-180)) //Turn back we don't actually flip
+/obj/structure/c_transit_tube/proc/tube_flip()
+	if(flipped_build_type)
 		flipped = !flipped
 		var/cur_flip = initial(flipped) ? !flipped : flipped
 		if(cur_flip)
@@ -39,18 +29,53 @@
 		else
 			build_type = initial(build_type)
 		icon_state = "[base_icon][flipped]"
+	else
+		setDir(turn(dir, 180))
 
-/obj/structure/c_transit_tube/wrench_act(mob/living/user, obj/item/I)
-	if(!can_wrench_in_loc(user))
+// disposals-style flip and rotate verbs
+/obj/structure/c_transit_tube/verb/rotate()
+	set name = "Rotate Tube"
+	set category = "Object"
+	set src in view(1)
+
+	if(usr.incapacitated())
 		return
-	to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
-	add_fingerprint(user)
-	if(I.use_tool(src, user, time_to_unwrench, volume=50, extra_checks=CALLBACK(src, .proc/can_wrench_in_loc, user)))
-		to_chat(user, "<span class='notice'>You attach the [name].</span>")
-		var/obj/structure/transit_tube/R = new build_type(loc, dir)
-		transfer_fingerprints_to(R)
-		qdel(src)
-	return TRUE
+
+	tube_rotate()
+
+/obj/structure/c_transit_tube/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(!in_range(src, user))
+		return
+	tube_rotate()
+
+/obj/structure/c_transit_tube/verb/flip()
+	set name = "Flip"
+	set category = "Object"
+	set src in view(1)
+
+	if(usr.incapacitated())
+		return
+	tube_flip()
+
+
+/obj/structure/c_transit_tube/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wrench))
+		to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
+		add_fingerprint(user)
+		playsound(src.loc, I.usesound, 50, 1)
+		if(do_after(user, 40*I.toolspeed, target = src))
+			if(QDELETED(src))
+				return
+			to_chat(user, "<span class='notice'>You attach the [name].</span>")
+			var/obj/structure/transit_tube/R = new build_type(loc, dir)
+			transfer_fingerprints_to(R)
+			qdel(src)
+	else
+		return ..()
 
 // transit tube station
 /obj/structure/c_transit_tube/station

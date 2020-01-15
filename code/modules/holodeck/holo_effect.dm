@@ -32,7 +32,7 @@
 
 /obj/effect/holodeck_effect/cards/activate(var/obj/machinery/computer/holodeck/HC)
 	D = new(loc)
-	safety(!(HC.obj_flags & EMAGGED))
+	safety(!HC.emagged)
 	D.holo = HC
 	return D
 
@@ -78,12 +78,6 @@
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & mob.vars)
 		mob.vars[v] = null
-	ENABLE_BITFIELD(mob.flags_1, HOLOGRAM_1)
-	if(isliving(mob))
-		var/mob/living/L = mob
-		L.feeding = FALSE
-		L.devourable = FALSE
-		L.digestable = FALSE
 	return mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(var/obj/machinery/computer/holodeck/HC)
@@ -106,11 +100,6 @@
 
 /obj/effect/holodeck_effect/mobspawner/penguin
 	mobtype = /mob/living/simple_animal/pet/penguin/emperor
-
-/obj/effect/holodeck_effect/mobspawner/penguin/Initialize()
-	if(prob(1))
-		mobtype = /mob/living/simple_animal/pet/penguin/emperor/shamebrero
-	return ..()
 
 /obj/effect/holodeck_effect/mobspawner/penguin_baby
 	mobtype = /mob/living/simple_animal/pet/penguin/baby

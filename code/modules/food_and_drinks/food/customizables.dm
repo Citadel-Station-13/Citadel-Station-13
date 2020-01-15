@@ -15,14 +15,15 @@
 	bitesize = 4
 	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
+	unique_rename = 1
 
-	var/ingMax = 32
+	var/ingMax = 12
 	var/list/ingredients = list()
 	var/ingredients_placement = INGREDIENTS_FILL
 	var/customname = "custom"
 
 /obj/item/reagent_containers/food/snacks/customizable/examine(mob/user)
-	. = ..()
+	..()
 	var/ingredients_listed = ""
 	for(var/obj/item/reagent_containers/food/snacks/ING in ingredients)
 		ingredients_listed += "[ING.name], "
@@ -32,10 +33,8 @@
 	if(ingredients.len>5)
 		size = "big"
 	if(ingredients.len>8)
-		size = "huge"
-	if(ingredients.len>16)
 		size = "monster"
-	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
+	to_chat(user, "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)].")
 
 /obj/item/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/reagent_containers/food/snacks/customizable) && istype(I, /obj/item/reagent_containers/food/snacks))
@@ -55,11 +54,10 @@
 			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			foodtype |= S.foodtype
-			update_snack_overlays(S)
+			update_overlays(S)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
-	else
-		. = ..()
+	else . = ..()
 
 
 /obj/item/reagent_containers/food/snacks/customizable/proc/update_name(obj/item/reagent_containers/food/snacks/S)
@@ -103,7 +101,7 @@
 		rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
 		filling_color = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
-/obj/item/reagent_containers/food/snacks/customizable/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
+/obj/item/reagent_containers/food/snacks/customizable/update_overlays(obj/item/reagent_containers/food/snacks/S)
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
 		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
@@ -120,8 +118,8 @@
 		if(INGREDIENTS_STACKPLUSTOP)
 			filling.pixel_x = rand(-1,1)
 			filling.pixel_y = 2 * ingredients.len - 1
-			if(overlays && overlays.len >= ingredients.len) //remove the old top if it exists
-				overlays -= overlays[ingredients.len]
+			if(our_overlays)
+				our_overlays.Cut(ingredients.len)	//???, add overlay calls later in this proc will queue the compile if necessary
 			var/mutable_appearance/TOP = mutable_appearance(icon, "[icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3
 			add_overlay(filling)
@@ -139,7 +137,7 @@
 /obj/item/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/reagent_containers/food/snacks/slice, reagents_per_slice)
 	..()
 	slice.filling_color = filling_color
-	slice.update_snack_overlays(src)
+	slice.update_overlays(src)
 
 
 /obj/item/reagent_containers/food/snacks/customizable/Destroy()
@@ -160,7 +158,7 @@
 	desc = "A timeless classic."
 	ingredients_placement = INGREDIENTS_STACKPLUSTOP
 	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "custburg"
+	icon_state = "bun"
 	foodtype = GRAIN
 
 
@@ -189,7 +187,7 @@
 	desc = "Delicious food on a stick."
 	ingredients_placement = INGREDIENTS_LINE
 	trash = /obj/item/stack/rods
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	list_reagents = list("nutriment" = 1)
 	ingMax = 6
 	icon_state = "rod"
 
@@ -277,8 +275,8 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "wishsoup"
 
-/obj/item/reagent_containers/food/snacks/customizable/soup/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/customizable/soup/New()
+	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 
@@ -292,7 +290,7 @@
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
-	reagent_flags = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	materials = list(MAT_GLASS = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -304,17 +302,16 @@
 		else if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
-			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
+			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
 				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 			else
 				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/salad(get_turf(src))
 				A.initialize_custom_food(src, S, user)
-	else
-		. = ..()
+	else . = ..()
 	return
 
-/obj/item/reagent_containers/glass/bowl/on_reagent_change(changetype)
+/obj/item/reagent_containers/glass/bowl/on_reagent_change()
 	..()
 	update_icon()
 

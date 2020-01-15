@@ -2,7 +2,7 @@
     "map_name": "Runtime Station",
     "map_path": "map_files/debug",
     "map_file": "runtimestation.dmm",
-	"shuttles": {
-	    "cargo": "cargo_delta"
-    }
+    "minetype": "lavaland",
+    "transition_config": "default",
+    "allow_custom_shuttles": "no"
 }

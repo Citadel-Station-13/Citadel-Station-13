@@ -16,7 +16,8 @@
 	ranged_cooldown_time = 1 //fast!
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
-	playstyle_string = "<span class='holoparasite'>As a <b>ranged</b> type, you have 10% damage reduction, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.</span>"
+	range = 13
+	playstyle_string = "<span class='holoparasite'>As a <b>ranged</b> type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.</span>"
@@ -35,7 +36,8 @@
 			obj_damage = initial(obj_damage)
 			environment_smash = initial(environment_smash)
 			alpha = 255
-			range = 13
+			range = initial(range)
+			incorporeal_move = FALSE
 			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
 			toggle = FALSE
 		else
@@ -46,6 +48,7 @@
 			environment_smash = ENVIRONMENT_SMASH_NONE
 			alpha = 45
 			range = 255
+			incorporeal_move = INCORPOREAL_MOVE_BASIC
 			to_chat(src, "<span class='danger'><B>You switch to scout mode.</span></B>")
 			toggle = TRUE
 	else
@@ -114,19 +117,3 @@
 		var/list/guardians = spawner.summoner.hasparasites()
 		for(var/para in guardians)
 			to_chat(para, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")
-
-/obj/effect/snare/singularity_act()
-	return
-
-/obj/effect/snare/singularity_pull()
-	return
-
-/mob/living/simple_animal/hostile/guardian/ranged/Manifest(forced)
-	if (toggle)
-		incorporeal_move = INCORPOREAL_MOVE_BASIC
-	. = ..()
-
-/mob/living/simple_animal/hostile/guardian/ranged/Recall(forced)
-	// To stop scout mode from moving when recalled
-	incorporeal_move = FALSE
-	. = ..()

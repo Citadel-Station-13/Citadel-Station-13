@@ -6,38 +6,37 @@ Assistant
 	flag = ASSISTANT
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = -1
+	spawn_positions = -1
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/assistant
-	antag_rep = 7
-	display_order = JOB_DISPLAY_ORDER_ASSISTANT
-	dresscodecompliant = FALSE
+
 
 /datum/job/assistant/get_access()
-	if(CONFIG_GET(flag/assistants_have_maint_access) || !CONFIG_GET(flag/jobs_have_minimal_access)) //Config has assistant maint access set
+	if((config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) || !config.jobs_have_minimal_access) //Config has assistant maint access set
 		. = ..()
 		. |= list(ACCESS_MAINT_TUNNELS)
 	else
 		return ..()
 
+/datum/job/assistant/config_check()
+	if(config && !(config.assistant_cap == 0))
+		total_positions = config.assistant_cap
+		spawn_positions = config.assistant_cap
+		return 1
+	return 0
+
+
 /datum/outfit/job/assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
 
-/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()
-	var/suited = !preference_source || preference_source.prefs.jumpsuit_style == PREF_SUIT
-	if (CONFIG_GET(flag/grey_assistants))
-		if(suited)
-			uniform = /obj/item/clothing/under/color/grey
-		else
-			uniform = /obj/item/clothing/under/skirt/color/grey
+	if (config.grey_assistants)
+		uniform = /obj/item/clothing/under/color/grey
 	else
-		if(suited)
-			uniform = /obj/item/clothing/under/color/random
-		else
-			uniform = /obj/item/clothing/under/skirt/color/random
+		uniform = /obj/item/clothing/under/color/random

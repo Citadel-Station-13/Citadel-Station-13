@@ -6,7 +6,6 @@
 	icon_state = "gutlunch"
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
@@ -24,7 +23,7 @@
 	friendly = "pinches"
 	a_intent = INTENT_HELP
 	ventcrawler = VENTCRAWLER_ALWAYS
-	gold_core_spawnable = FRIENDLY_SPAWN
+	gold_core_spawnable = 2
 	stat_attack = UNCONSCIOUS
 	gender = NEUTER
 	stop_automated_movement = FALSE
@@ -39,34 +38,12 @@
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
 
-	wanted_objects = list(/obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/)
+	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
 	udder = new()
 	. = ..()
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
-	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
-		return FALSE
-
-	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return FALSE
-
-	if(isliving(the_target))
-		var/mob/living/L = the_target
-
-		if(faction_check_mob(L) && !attack_same)
-			return FALSE
-		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
-			return FALSE
-
-		return TRUE
-
-	if(isobj(the_target) && is_type_in_typecache(the_target, wanted_objects))
-		return TRUE
-
-	return FALSE
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Destroy()
 	QDEL_NULL(udder)
@@ -124,14 +101,13 @@
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
 
-/obj/item/udder/gutlunch/Initialize()
-	. = ..()
+/obj/item/udder/gutlunch/New()
 	reagents = new(50)
 	reagents.my_atom = src
 
 /obj/item/udder/gutlunch/generateMilk()
 	if(prob(60))
-		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5))
+		reagents.add_reagent("cream", rand(2, 5))
 	if(prob(45))
-		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
+		reagents.add_reagent("salglu_solution", rand(2,5))
 

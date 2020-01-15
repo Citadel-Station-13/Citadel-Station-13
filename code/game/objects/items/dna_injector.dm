@@ -8,6 +8,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "biotech=1"
 
 	var/damage_coeff  = 1
 	var/list/fields
@@ -31,14 +32,14 @@
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	prepare()
 
-	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_NOCLONE))
+	if(M.has_dna() && !(RADIMMUNE in M.dna.species.species_traits) && !(M.disabilities & NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
 			HM.force_lose(M)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if(HM.name == RACEMUT)
-				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 			HM.force_give(M)
 		if(fields)
@@ -50,7 +51,7 @@
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
-		log_attack("[log_msg] [loc_name(user)]")
+		log_attack(log_msg)
 		return TRUE
 	return FALSE
 
@@ -65,7 +66,7 @@
 		var/mob/living/carbon/human/humantarget = target
 		if (!humantarget.can_inject(user, 1))
 			return
-	log_combat(user, target, "attempted to inject", src)
+	add_logs(user, target, "attempted to inject", src)
 
 	if(target != user)
 		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", "<span class='userdanger'>[user] is trying to inject [target] with [src]!</span>")
@@ -77,7 +78,7 @@
 	else
 		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")
 
-	log_combat(user, target, "injected", src)
+	add_logs(user, target, "injected", src)
 
 	if(!inject(target, user))	//Now we actually do the heavy lifting.
 		to_chat(user, "<span class='notice'>It appears that [target] does not have compatible DNA.</span>")
@@ -98,12 +99,12 @@
 	add_mutations_static = list(HULK)
 
 /obj/item/dnainjector/xraymut
-	name = "\improper DNA injector (X-ray)"
+	name = "\improper DNA injector (Xray)"
 	desc = "Finally you can see what the Captain does."
 	add_mutations_static = list(XRAY)
 
 /obj/item/dnainjector/antixray
-	name = "\improper DNA injector (Anti-X-ray)"
+	name = "\improper DNA injector (Anti-Xray)"
 	desc = "It will make you see harder."
 	remove_mutations_static = list(XRAY)
 
@@ -130,7 +131,7 @@
 ////////////////////////////////////
 /obj/item/dnainjector/anticough
 	name = "\improper DNA injector (Anti-Cough)"
-	desc = "Will stop that awful noise."
+	desc = "Will stop that aweful noise."
 	remove_mutations_static = list(COUGH)
 
 /obj/item/dnainjector/coughmut
@@ -160,7 +161,7 @@
 
 /obj/item/dnainjector/antitour
 	name = "\improper DNA injector (Anti-Tour.)"
-	desc = "Will cure Tourette's."
+	desc = "Will cure tourrets."
 	remove_mutations_static = list(TOURETTES)
 
 /obj/item/dnainjector/tourmut
@@ -170,7 +171,7 @@
 
 /obj/item/dnainjector/stuttmut
 	name = "\improper DNA injector (Stutt.)"
-	desc = "Makes you s-s-stuttterrr."
+	desc = "Makes you s-s-stuttterrr"
 	add_mutations_static = list(NERVOUS)
 
 /obj/item/dnainjector/antistutt
@@ -264,13 +265,13 @@
 	name = "\improper DNA injector (Smile)"
 	add_mutations_static = list(SMILE)
 
-/obj/item/dnainjector/unintelligiblemut
-	name = "\improper DNA injector (Unintelligible)"
-	add_mutations_static = list(UNINTELLIGIBLE)
+/obj/item/dnainjector/unintelligablemut
+	name = "\improper DNA injector (Unintelligable)"
+	add_mutations_static = list(UNINTELLIGABLE)
 
-/obj/item/dnainjector/antiunintelligible
-	name = "\improper DNA injector (Anti-Unintelligible)"
-	remove_mutations_static = list(UNINTELLIGIBLE)
+/obj/item/dnainjector/antiunintelligable
+	name = "\improper DNA injector (Anti-Unintelligable)"
+	remove_mutations_static = list(UNINTELLIGABLE)
 
 /obj/item/dnainjector/swedishmut
 	name = "\improper DNA injector (Swedish)"
@@ -313,7 +314,7 @@
 		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 		return FALSE
 
-	if(M.has_dna() && !(HAS_TRAIT(M, TRAIT_NOCLONE)))
+	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
@@ -328,7 +329,7 @@
 			if((HM in M.dna.mutations) && !(M.dna.temporary_mutations[HM.name]))
 				continue //Skip permanent mutations we already have.
 			if(HM.name == RACEMUT && ishuman(M))
-				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 				M = HM.force_give(M)
 			else
@@ -353,7 +354,7 @@
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
-		log_attack("[log_msg] [loc_name(user)]")
+		log_attack(log_msg)
 		return TRUE
 	else
 		return FALSE

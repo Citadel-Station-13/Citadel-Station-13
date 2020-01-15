@@ -6,17 +6,16 @@
 	alertadmins = 0
 
 /datum/round_event/camera_failure
-	fakeable = FALSE
+	startWhen = 1
+	endWhen = 2
+	announceWhen = 0
 
-/datum/round_event/camera_failure/start()
+/datum/round_event/camera_failure/tick()
 	var/iterations = 1
-	var/list/cameras = GLOB.cameranet.cameras.Copy()
+	var/obj/machinery/camera/C = pick(GLOB.cameranet.cameras)
 	while(prob(round(100/iterations)))
-		var/obj/machinery/camera/C = pick_n_take(cameras)
-		if (!C)
-			break
-		if (!("ss13" in C.network))
-			continue
+		while(!("SS13" in C.network))
+			C = pick(GLOB.cameranet.cameras)
 		if(C.status)
 			C.toggle_cam(null, 0)
 		iterations *= 2.5

@@ -5,16 +5,8 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	if(message)
-		say(message)
+	usr.say(message)
 
-/mob/say_mod(input, message_mode)
-	var/customsayverb = findtext(input, "*")
-	if(customsayverb && message_mode != MODE_WHISPER_CRIT)
-		message_mode = MODE_CUSTOM_SAY
-		return lowertext(copytext(input, 1, customsayverb))
-	else
-		return ..()
 
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
@@ -27,7 +19,7 @@
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
-/mob/verb/me_verb(message as message)
+/mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
 
@@ -37,7 +29,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message,TRUE)
+	usr.emote("me",1,message)
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name
@@ -47,15 +39,9 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	var/jb = jobban_isbanned(src, "OOC")
-	if(QDELETED(src))
-		return
-
-	if(jb)
+	if(jobban_isbanned(src, "OOC"))
 		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
 		return
-
-
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
@@ -76,29 +62,21 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/spanned = say_quote(message)
-	message = emoji_parse(message)
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(spanned)]</span></span>"
-	log_talk(message, LOG_SAY, tag="DEAD")
-	deadchat_broadcast(rendered, follow_target = src, speaker_key = key)
+	var/K
 
-/mob/proc/check_emote(message)
-	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2), intentional = TRUE)
-		return 1
+	if(key)
+		K = src.key
+
+	message = src.say_quote(message, get_spans())
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
+
+	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
+
+/mob/proc/emote(var/act)
+	return
 
 /mob/proc/hivecheck()
 	return 0
 
 /mob/proc/lingcheck()
-	return LINGHIVE_NONE
-
-/mob/proc/get_message_mode(message)
-	var/key = copytext(message, 1, 2)
-	if(key == "#")
-		return MODE_WHISPER
-	else if(key == ";")
-		return MODE_HEADSET
-	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext(message, 2, 3))
-		return GLOB.department_radio_keys[key_symbol]
+	return 0

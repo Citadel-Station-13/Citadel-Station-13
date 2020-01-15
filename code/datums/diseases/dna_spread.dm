@@ -2,16 +2,16 @@
 	name = "Space Retrovirus"
 	max_stages = 4
 	spread_text = "On contact"
-	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
+	spread_flags = CONTACT_GENERAL
 	cure_text = "Mutadone"
-	cures = list(/datum/reagent/medicine/mutadone)
+	cures = list("mutadone")
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	agent = "S4E1 retrovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	var/datum/dna/original_dna = null
 	var/transformed = 0
 	desc = "This disease transplants the genetic code of the initial vector into new hosts."
-	severity = DISEASE_SEVERITY_MEDIUM
+	severity = MEDIUM
 
 
 /datum/disease/dnaspread/stage_act()

@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(events)
 		control += E				//add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
-	return ..()
+	..()
 
 
 /datum/controller/subsystem/events/fire(resumed = 0)
@@ -56,7 +56,9 @@ SUBSYSTEM_DEF(events)
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/controller/subsystem/events/proc/spawnEvent()
 	set waitfor = FALSE	//for the admin prompt
-	if(!CONFIG_GET(flag/allow_random_events))
+	if(!config.allow_random_events)
+//		var/datum/round_event_control/E = locate(/datum/round_event_control/dust) in control
+//		if(E)	E.runEvent()
 		return
 
 	var/gamemode = SSticker.mode.config_tag
@@ -93,6 +95,25 @@ SUBSYSTEM_DEF(events)
 	else if(. == EVENT_READY)
 		E.runEvent(TRUE)
 
+/datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
+	var/list/safe_areas = list(
+	/area/ai_monitored/turret_protected/ai,
+	/area/ai_monitored/turret_protected/ai_upload,
+	/area/engine,
+	/area/solar,
+	/area/holodeck,
+	/area/shuttle
+	)
+
+	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
+	var/list/danger_areas = list(
+	/area/engine/break_room,
+	/area/crew_quarters/heads/chief)
+
+	//Need to locate() as it's just a list of paths.
+	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas)) in GLOB.sortedAreas
+
+
 //allows a client to trigger an event
 //aka Badmin Central
 // > Not in modules/admin
@@ -112,7 +133,7 @@ SUBSYSTEM_DEF(events)
 	var/magic 	= ""
 	var/holiday = ""
 	for(var/datum/round_event_control/E in SSevents.control)
-		dat = "<BR><A href='?src=[REF(src)];[HrefToken()];forceevent=[REF(E)]'>[E]</A>"
+		dat = "<BR><A href='?src=\ref[src];[HrefToken()];forceevent=\ref[E]'>[E]</A>"
 		if(E.holidayID)
 			holiday	+= dat
 		else if(E.wizardevent)
@@ -150,13 +171,13 @@ SUBSYSTEM_DEF(events)
 
 //sets up the holidays and holidays list
 /datum/controller/subsystem/events/proc/getHoliday()
-	if(!CONFIG_GET(flag/allow_holidays))
+	if(!config.allow_holidays)
 		return		// Holiday stuff was not enabled in the config!
 
 	var/YY = text2num(time2text(world.timeofday, "YY")) 	// get the current year
 	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
 	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
-	var/DDD = time2text(world.timeofday, "DDD")	// get the current weekday
+	var/DDD = text2num(time2text(world.timeofday, "DDD")) 	// get the current weekday
 	var/W = weekdayofthemonth()	// is this the first monday? second? etc.
 
 	for(var/H in subtypesof(/datum/holiday))

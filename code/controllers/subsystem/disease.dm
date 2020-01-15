@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(disease)
 	name = "Disease"
-	flags = SS_NO_FIRE
+	flags = SS_NO_FIRE | SS_NO_INIT
 
 	var/list/active_diseases = list() //List of Active disease in all mobs; purely for quick referencing.
 	var/list/diseases
@@ -11,13 +11,6 @@ SUBSYSTEM_DEF(disease)
 /datum/controller/subsystem/disease/PreInit()
 	if(!diseases)
 		diseases = subtypesof(/datum/disease)
-
-/datum/controller/subsystem/disease/Initialize(timeofday)
-	var/list/all_common_diseases = diseases - typesof(/datum/disease/advance)
-	for(var/common_disease_type in all_common_diseases)
-		var/datum/disease/prototype = new common_disease_type()
-		archive_diseases[prototype.GetDiseaseID()] = prototype
-	return ..()
 
 /datum/controller/subsystem/disease/stat_entry(msg)
 	..("P:[active_diseases.len]")

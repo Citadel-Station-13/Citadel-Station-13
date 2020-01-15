@@ -15,10 +15,10 @@
 
 /datum/station_goal/station_shield/on_report()
 	//Unlock
-	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat]
+	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/misc/shield_sat]
 	P.special_enabled = TRUE
 
-	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat_control]
+	P = SSshuttle.supply_packs[/datum/supply_pack/misc/shield_sat_control]
 	P.special_enabled = TRUE
 
 /datum/station_goal/station_shield/check_completion()
@@ -31,7 +31,7 @@
 /datum/station_goal/proc/get_coverage()
 	var/list/coverage = list()
 	for(var/obj/machinery/satellite/meteor_shield/A in GLOB.machines)
-		if(!A.active || !is_station_level(A.z))
+		if(!A.active || !(A.z in GLOB.station_z_levels))
 			continue
 		coverage |= view(A.kill_range,A)
 	return coverage.len
@@ -83,15 +83,14 @@
 
 
 /obj/machinery/satellite
-	name = "\improper Defunct Satellite"
+	name = "Defunct Satellite"
 	desc = ""
 	icon = 'icons/obj/machines/satellite.dmi'
 	icon_state = "sat_inactive"
-	anchored = FALSE
-	density = TRUE
-	use_power = FALSE
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
+	density = TRUE
+	use_power = FALSE
 	var/static/gid = 0
 	var/id = 0
 
@@ -105,10 +104,10 @@
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
 		if(user)
-			to_chat(user, "<span class='warning'>You can only activate [src] in space.</span>")
+			to_chat(user, "<span class='warning'>You can only active the [src] in space.</span>")
 		return FALSE
 	if(user)
-		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] [src].</span>")
+		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] the [src]</span>")
 	active = !active
 	if(active)
 		animate(src, pixel_y = 2, time = 10, loop = -1)
@@ -122,43 +121,17 @@
 	icon_state = active ? "sat_active" : "sat_inactive"
 
 /obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/multitool))
-		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]</span>")
+	if(istype(I, /obj/item/device/multitool))
+		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>")
 	else
 		return ..()
 
 /obj/machinery/satellite/meteor_shield
-	name = "\improper Meteor Shield Satellite"
-	desc = "A meteor point-defense satellite."
+	name = "Meteor Shield Satellite"
+	desc = "Meteor Point Defense Satellite"
 	mode = "M-SHIELD"
 	speed_process = TRUE
 	var/kill_range = 14
-	density = 0
-
-/obj/machinery/satellite/meteor_shield/sci
-	name = "\improper Meteor Shield Satellite"
-	desc = "A station made meteor point-defense satellite."
-	mode = "M-SHIELD"
-
-/obj/item/disk/meteor
-	name = "Meteor Shield Upgrade Disk"
-	desc = "A floppy disk that allows meteor shields to fire at longer ranges and lowers meteor drawing from gravitational fields.."
-
-/obj/machinery/satellite/meteor_shield/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/disk/meteor))
-		to_chat(user, "<span class='notice'>The disk uploads better tracking and rang modification software.</span>")
-		kill_range = 17
-	else
-		return ..()
-
-/obj/machinery/satellite/meteor_shield/sci/toggle(user)
-	if(!..(user))
-		return FALSE
-	if(obj_flags & EMAGGED)
-		if(active)
-			change_meteor_chance(8)
-		else
-			change_meteor_chance(0.125)
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))
@@ -174,14 +147,14 @@
 			continue
 		if(get_dist(M,src) > kill_range)
 			continue
-		if(!(obj_flags & EMAGGED) && space_los(M))
+		if(!emagged && space_los(M))
 			Beam(get_turf(M),icon_state="sat_beam",time=5,maxdistance=kill_range)
 			qdel(M)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(!..(user))
 		return FALSE
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		if(active)
 			change_meteor_chance(2)
 		else
@@ -194,15 +167,12 @@
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()
-	if(active && (obj_flags & EMAGGED))
+	if(active && emagged)
 		change_meteor_chance(0.5)
 
-/obj/machinery/satellite/meteor_shield/emag_act(mob/user)
-	. = ..()
-	if(obj_flags & EMAGGED)
+/obj/machinery/satellite/meteor_shield/emag_act()
+	if(emagged)
 		return
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
+	emagged = TRUE
 	if(active)
-		change_meteor_chance(4)
-	return TRUE
+		change_meteor_chance(2)

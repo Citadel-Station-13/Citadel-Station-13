@@ -4,9 +4,6 @@
 
 /obj/effect/mob_spawn
 	name = "Unknown"
-	density = TRUE
-	anchored = TRUE
-	var/job_description = null
 	var/mob_type = null
 	var/mob_name = ""
 	var/mob_gender = null
@@ -17,7 +14,6 @@
 	var/faction = null
 	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE		//Don't set a name or gender, just go random
-	var/antagonist_type
 	var/objectives = null
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
@@ -26,14 +22,12 @@
 	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
 	var/assignedrole
-	var/show_flavour = TRUE
+	density = TRUE
+	anchored = TRUE
 	var/banType = "lavaland"
-	var/ghost_usable = TRUE
-	var/skip_reentry_check = FALSE //Skips the ghost role blacklist time for people who ghost/suicide/cryo
 
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/attack_ghost(mob/user, latejoinercalling)
-	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
+/obj/effect/mob_spawn/attack_ghost(mob/user)
+	if(!SSticker.HasRoundStarted() || !loc)
 		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
@@ -41,45 +35,25 @@
 	if(jobban_isbanned(user, banType))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
-	if(QDELETED(src) || QDELETED(user))
-		return
-	if(isobserver(user))
-		var/mob/dead/observer/O = user
-		if(!O.can_reenter_round() && !skip_reentry_check)
-			return FALSE
-	var/ghost_role = alert(latejoinercalling ? "Latejoin as [mob_name]? (This is a ghost role, and as such, it's very likely to be off-station.)" : "Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return
-	if(QDELETED(src) || QDELETED(user))
-		return
-	if(latejoinercalling)
-		var/mob/dead/new_player/NP = user
-		if(istype(NP))
-			NP.close_spawn_windows()
-			NP.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-	log_game("[key_name(user)] became [mob_name]")
+	log_game("[user.ckey] became [mob_name]")
 	create(ckey = user.ckey)
-	return TRUE
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
-	else if(ghost_usable)
+	else
 		GLOB.poi_list |= src
-		LAZYADD(GLOB.mob_spawners[job_description ? job_description : name], src)
-
+		LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
-	var/job_name = job_description ? job_description : name
-	LAZYREMOVE(GLOB.mob_spawners[job_name], src)
-	if(!LAZYLEN(GLOB.mob_spawners[job_name]))
-		GLOB.mob_spawners -= job_name
+	var/list/spawners = GLOB.mob_spawners[name]
+	LAZYREMOVE(spawners, src)
 	return ..()
-
-/obj/effect/mob_spawn/proc/can_latejoin() //If it can be taken from the lobby.
-	return ghost_usable
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
@@ -87,7 +61,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, name)
+/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -109,19 +83,12 @@
 
 	if(ckey)
 		M.ckey = ckey
-		if(show_flavour)
+		if(flavour)
 			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
-		var/datum/antagonist/A
-		if(antagonist_type)
-			A = MM.add_antag_datum(antagonist_type)
 		if(objectives)
-			if(!A)
-				A = MM.add_antag_datum(/datum/antagonist/custom)
 			for(var/objective in objectives)
-				var/datum/objective/O = new/datum/objective(objective)
-				O.owner = MM
-				A.objectives += O
+				MM.objectives += new/datum/objective(objective)
 		if(assignedrole)
 			M.mind.assigned_role = assignedrole
 		special(M, name)
@@ -138,7 +105,6 @@
 	var/mob_species = null		//Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/datum/outfit/outfit = /datum/outfit	//If this is a path, it will be instanced in Initialize()
 	var/disable_pda = TRUE
-	var/disable_sensors = TRUE
 	//All of these only affect the ID that the outfit has placed in the ID slot
 	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
@@ -167,10 +133,6 @@
 	var/backpack_contents = -1
 	var/suit_store = -1
 
-	var/hair_style
-	var/facial_hair_style
-	var/skin_tone
-
 /obj/effect/mob_spawn/human/Initialize()
 	if(ispath(outfit))
 		outfit = new outfit()
@@ -188,20 +150,6 @@
 	H.underwear = "Nude"
 	H.undershirt = "Nude"
 	H.socks = "Nude"
-	if(hair_style)
-		H.hair_style = hair_style
-	else
-		H.hair_style = random_hair_style(gender)
-	if(facial_hair_style)
-		H.facial_hair_style = facial_hair_style
-	else
-		H.facial_hair_style = random_facial_hair_style(gender)
-	if(skin_tone)
-		H.skin_tone = skin_tone
-	else
-		H.skin_tone = random_skin_tone()
-	H.update_hair()
-	H.update_body()
 	if(outfit)
 		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)
@@ -211,15 +159,9 @@
 		H.equipOutfit(outfit)
 		if(disable_pda)
 			// We don't want corpse PDAs to show up in the messenger list.
-			var/obj/item/pda/PDA = locate(/obj/item/pda) in H
+			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
 			if(PDA)
 				PDA.toff = TRUE
-		if(disable_sensors)
-			// Using crew monitors to find corpses while creative makes finding certain ruins too easy.
-			var/obj/item/clothing/under/C = H.w_uniform
-			if(istype(C))
-				C.sensor_mode = NO_SENSORS
-
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		if(id_access)
@@ -246,25 +188,22 @@
 	brute_damage = 1000
 
 /obj/effect/mob_spawn/human/alive
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	death = FALSE
 	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
 
-/obj/effect/mob_spawn/human/corpse/delayed
-	ghost_usable = FALSE //These are just not-yet-set corpses.
-	instant = FALSE
 
 //Non-human spawners
 
-/obj/effect/mob_spawn/AICorpse/create(ckey, name) //Creates a corrupted AI
+/obj/effect/mob_spawn/AICorpse/create() //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc
 	if(A)
 		return
 	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
-	M.aiPDA.toff = TRUE //turns the AI's PDA messenger off, stopping it showing up on player PDAs
+	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
 	qdel(src)
 
@@ -277,7 +216,7 @@
 /obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
 	S.colour = mobcolour
 
-/obj/effect/mob_spawn/human/facehugger/create(ckey, name) //Creates a squashed facehugger
+/obj/effect/mob_spawn/human/facehugger/create() //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
 	O.Die() //call the facehugger's death proc
@@ -288,8 +227,7 @@
 	mob_type = 	/mob/living/simple_animal/mouse
 	death = FALSE
 	roundstart = FALSE
-	job_description = "Mouse"
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 
 /obj/effect/mob_spawn/cow
@@ -297,9 +235,8 @@
 	mob_type = 	/mob/living/simple_animal/cow
 	death = FALSE
 	roundstart = FALSE
-	job_description = "Cow"
 	mob_gender = FEMALE
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
@@ -319,10 +256,6 @@
 /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection
 	disease = /datum/disease/fluspanish
 
-/obj/effect/mob_spawn/human/corpse/cargo_tech
-	name = "Cargo Tech"
-	outfit = /datum/outfit/job/cargo_tech
-
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"
 	outfit = /datum/outfit/job/cook
@@ -338,16 +271,15 @@
 	roundstart = FALSE
 	random = TRUE
 	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You are a space doctor!</span>"
+	flavour_text = "You are a space doctor!"
 	assignedrole = "Space Doctor"
-	job_description = "Off-station Doctor"
 
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
 	..()
 	// Remove radio and PDA so they wouldn't annoy station crew.
-	var/list/del_types = list(/obj/item/pda, /obj/item/radio/headset)
+	var/list/del_types = list(/obj/item/device/pda, /obj/item/device/radio/headset)
 	for(var/del_type in del_types)
 		var/obj/item/I = locate(del_type) in H
 		qdel(I)
@@ -369,10 +301,10 @@
 
 /obj/effect/mob_spawn/human/miner
 	name = "Shaft Miner"
-	outfit = /datum/outfit/job/miner
+	outfit = /datum/outfit/job/miner/asteroid
 
 /obj/effect/mob_spawn/human/miner/rig
-	outfit = /datum/outfit/job/miner/equipped/hardsuit
+	outfit = /datum/outfit/job/miner/equipped/asteroid
 
 /obj/effect/mob_spawn/human/miner/explorer
 	outfit = /datum/outfit/job/miner/equipped
@@ -393,13 +325,11 @@
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
-	job_description = "Off-station Bartender"
 	name = "bartender sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You are a space bartender!</span><b> Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect.</b>"
+	flavour_text = "You are a space bartender!"
 	assignedrole = "Space Bartender"
-	id_job = "Bartender"
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -410,6 +340,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	id = /obj/item/card/id
 
+
 /obj/effect/mob_spawn/human/beach
 	outfit = /datum/outfit/beachbum
 
@@ -417,31 +348,20 @@
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
-	job_description = "Beach Biodome Bum"
 	mob_name = "Beach Bum"
 	name = "beach bum sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You're, like, totally a dudebro, bruh.</span><b> Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?</b>"
+	flavour_text = "You are a beach bum!"
 	assignedrole = "Beach Bum"
-
-/obj/effect/mob_spawn/human/beach/alive/lifeguard
-	flavour_text = "<span class='big bold'>You're a spunky lifeguard!</span><b> It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.</b>"
-	mob_gender = "female"
-	name = "lifeguard sleeper"
-	id_job = "Lifeguard"
-	job_description = "Beach Biodome Lifeguard"
-	uniform = /obj/item/clothing/under/shorts/red
 
 /datum/outfit/beachbum
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses
+	uniform = /obj/item/clothing/under/shorts/red
 	r_pocket = /obj/item/storage/wallet/random
-	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
-	uniform = /obj/item/clothing/under/pants/youngfolksjeans
-	id = /obj/item/card/id
 
-/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
@@ -457,7 +377,7 @@
 
 /datum/outfit/nanotrasenbridgeofficercorpse
 	name = "Bridge Officer Corpse"
-	ears = /obj/item/radio/headset/heads/hop
+	ears = /obj/item/device/radio/headset/heads/hop
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -475,7 +395,7 @@
 	name = "Nanotrasen Private Security Commander"
 	uniform = /obj/item/clothing/under/rank/centcom_commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
-	ears = /obj/item/radio/headset/heads/captain
+	ears = /obj/item/device/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
@@ -506,23 +426,21 @@
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE
 	roundstart = FALSE
-	job_description = "Nanotrasen Commander"
 	mob_name = "Nanotrasen Commander"
 	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You are a Nanotrasen Commander!</span>"
+	flavour_text = "You are a Nanotrasen Commander!"
 
 /obj/effect/mob_spawn/human/nanotrasensoldier/alive
 	death = FALSE
 	roundstart = FALSE
 	mob_name = "Private Security Officer"
-	job_description = "Nanotrasen Security"
 	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	faction = "nanotrasenprivate"
-	flavour_text = "<span class='big bold'>You are a Nanotrasen Private Security Officer!</span>"
+	flavour_text = "You are a Nanotrasen Private Security Officer!"
 
 
 /////////////////Spooky Undead//////////////////////
@@ -536,10 +454,9 @@
 /obj/effect/mob_spawn/human/skeleton/alive
 	death = FALSE
 	roundstart = FALSE
-	job_description = "Skeleton"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	flavour_text = "<span class='big bold'>By unknown powers, your skeletal remains have been reanimated!</span><b> Walk this mortal plain and terrorize all living adventurers who dare cross your path.</b>"
+	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
 	assignedrole = "Skeleton"
 
 /obj/effect/mob_spawn/human/zombie
@@ -551,10 +468,9 @@
 /obj/effect/mob_spawn/human/zombie/alive
 	death = FALSE
 	roundstart = FALSE
-	job_description = "Zombie"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	flavour_text = "<span class='big bold'>By unknown powers, your rotting remains have been resurrected!</span><b> Walk this mortal plain and terrorize all living adventurers who dare cross your path.</b>"
+	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
 
 
 /obj/effect/mob_spawn/human/abductor
@@ -578,9 +494,7 @@
 	uses = -1
 	outfit = /datum/outfit/spacebartender
 	assignedrole = "Space Bar Patron"
-	job_description = "Space Bar Patron"
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
 	if(despawn == "No" || !loc || !Adjacent(user))
@@ -595,57 +509,3 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-
-/obj/effect/mob_spawn/human/lavaknight
-	name = "odd cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."
-	mob_name = "a displaced knight from another dimension"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	roundstart = FALSE
-	id_job = "Knight"
-	job_description = "Cydonian Knight"
-	death = FALSE
-	random = TRUE
-	outfit = /datum/outfit/lavaknight
-	mob_species = /datum/species/human
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a knight who conveniently has some form of retrograde amnesia. \
-	You cannot remember where you came from. However, a few things remain burnt into your mind, most prominently a vow to never harm another sapient being under any circumstances unless it is hellbent on ending your life. \
-	Remember: hostile creatures and such are fair game for attacking, but <span class='danger'>under no circumstances are you to attack anything capable of thought and/or speech</span> unless it has made it its life's calling to chase you to the ends of the earth."
-	assignedrole = "Cydonian Knight"
-
-/obj/effect/mob_spawn/human/lavaknight/special(mob/living/new_spawn)
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.dna.features["mam_ears"] = "Cat, Big"	//cat people
-		H.dna.features["mcolor"] = H.hair_color
-		H.update_body()
-
-/obj/effect/mob_spawn/human/lavaknight/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
-	return ..()
-
-/datum/outfit/lavaknight
-	name = "Cydonian Knight"
-	uniform = /obj/item/clothing/under/assistantformal
-	mask = /obj/item/clothing/mask/breath
-	shoes = /obj/item/clothing/shoes/sneakers/black
-	r_pocket = /obj/item/melee/transforming/energy/sword/cx
-	suit = /obj/item/clothing/suit/space/hardsuit/lavaknight
-	suit_store = /obj/item/tank/internals/oxygen
-	id = /obj/item/card/id/knight/blue
-
-/obj/effect/mob_spawn/human/lavaknight/captain
-	name = "odd gilded cryogenics pod"
-	desc = "A humming cryo pod that appears to be gilded. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a knight who conveniently has some form of retrograde amnesia. \
-	You cannot remember where you came from. However, a few things remain burnt into your mind, most prominently a vow to never harm another sapient being under any circumstances unless it is hellbent on ending your life. \
-	Remember: hostile creatures and such are fair game for attacking, but <span class='danger'>under no circumstances are you to attack anything capable of thought and/or speech</span> unless it has made it its life's calling to chase you to the ends of the earth. \
-	You feel a natural instict to lead, and as such, you should strive to lead your comrades to safety, and hopefully home. You also feel a burning determination to uphold your vow, as well as your fellow comrade's."
-	outfit = /datum/outfit/lavaknight/captain
-	id_job = "Knight Captain"
-
-/datum/outfit/lavaknight/captain
-	name ="Cydonian Knight Captain"
-	l_pocket = /obj/item/twohanded/dualsaber/hypereutactic
-	id = /obj/item/card/id/knight/captain

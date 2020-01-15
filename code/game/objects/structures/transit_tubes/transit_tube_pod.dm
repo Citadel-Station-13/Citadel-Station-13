@@ -4,14 +4,16 @@
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
 	density = TRUE
+	layer = BELOW_OBJ_LAYER
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
 
 
 /obj/structure/transit_tube_pod/Initialize()
 	. = ..()
-	air_contents.gases[/datum/gas/oxygen] = MOLES_O2STANDARD
-	air_contents.gases[/datum/gas/nitrogen] = MOLES_N2STANDARD
+	air_contents.add_gases("o2", "n2")
+	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD
+	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
 
@@ -28,7 +30,7 @@
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/crowbar))
 		if(!moving)
-			I.play_tool_sound(src)
+			playsound(src.loc, I.usesound, 50, 1)
 			if(contents.len)
 				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
 				empty_pod()
@@ -86,8 +88,7 @@
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
 		return 1
-	else
-		return ..()
+	else return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
 	set waitfor = 0
@@ -134,7 +135,7 @@
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
 		setDir(next_dir)
-		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
+		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
 		if(current_tube && current_tube.should_stop_pod(src, next_dir))

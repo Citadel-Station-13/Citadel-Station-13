@@ -25,10 +25,17 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
 	target.notransform = 1
 	var/turf/mobloc = get_turf(target)
-	var/obj/effect/dummy/phased_mob/spell_jaunt/holder = new /obj/effect/dummy/phased_mob/spell_jaunt(mobloc)
+	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
 	new jaunt_out_type(mobloc, target.dir)
 	target.ExtinguishMob()
-	target.forceMove(holder)
+	if(target.buckled)
+		target.buckled.unbuckle_mob(target,force=1)
+	if(target.pulledby)
+		target.pulledby.stop_pulling()
+	target.stop_pulling()
+	if(target.has_buckled_mobs())
+		target.unbuckle_all_mobs(force=1)
+	target.loc = holder
 	target.reset_perspective(holder)
 	target.notransform=0 //mob is safely inside holder now, no need for protection.
 	jaunt_steam(mobloc)
@@ -44,8 +51,7 @@
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
-	new jaunt_in_type(mobloc, holder.dir)
-	target.setDir(holder.dir)
+	new jaunt_in_type(mobloc, target.dir)
 	sleep(jaunt_in_time)
 	qdel(holder)
 	if(!QDELETED(target))
@@ -62,7 +68,7 @@
 	steam.set_up(10, 0, mobloc)
 	steam.start()
 
-/obj/effect/dummy/phased_mob/spell_jaunt
+/obj/effect/dummy/spell_jaunt
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
@@ -74,30 +80,23 @@
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/dummy/phased_mob/spell_jaunt/Destroy()
+/obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
 	return ..()
 
-/obj/effect/dummy/phased_mob/spell_jaunt/relaymove(var/mob/user, direction)
-	if ((movedelay > world.time) || reappearing || !direction)
-		return
+/obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
+	if ((movedelay > world.time) || reappearing || !direction) return
 	var/turf/newLoc = get_step(src,direction)
 	setDir(direction)
-
+	if(!(newLoc.flags_1 & NOJAUNT_1))
+		loc = newLoc
+	else
+		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
 	movedelay = world.time + movespeed
 
-	if(newLoc.flags_1 & NOJAUNT_1)
-		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
-		return
-	if (locate(/obj/effect/blessing, newLoc))
-		to_chat(user, "<span class='warning'>Holy energies block your path!</span>")
-		return
-
-	forceMove(newLoc)
-
-/obj/effect/dummy/phased_mob/spell_jaunt/ex_act(blah)
+/obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return
-/obj/effect/dummy/phased_mob/spell_jaunt/bullet_act(blah)
+/obj/effect/dummy/spell_jaunt/bullet_act(blah)
 	return

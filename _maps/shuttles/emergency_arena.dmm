@@ -17,58 +17,75 @@
 /turf/open/indestructible/necropolis/air,
 /area/shuttle_arena)
 "f" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space,
+/area/space)
 "g" = (
 /turf/closed/indestructible/necropolis,
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "h" = (
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "i" = (
 /obj/structure/closet/crate/necropolis/dragon,
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "j" = (
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "k" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "l" = (
 /obj/structure/closet/crate/necropolis/tendril,
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "m" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "n" = (
 /obj/effect/forcefield/arena_shuttle_entrance,
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "o" = (
 /obj/effect/forcefield/arena_shuttle_entrance,
 /obj/docking_port/mobile/emergency{
-	name = "The Arena"
+	name = "The Arena";
+	timid = 1
 	},
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 "p" = (
 /obj/structure/healingfountain,
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape/arena)
-"z" = (
-/obj/effect/landmark/shuttle_arena_safe,
-/turf/open/indestructible/necropolis/air,
-/area/shuttle/escape/arena)
+/area/shuttle/escape{
+	noteleport = 1
+	})
 
 (1,1,1) = {"
 a
@@ -313,16 +330,16 @@ h
 h
 j
 j
-z
 j
 j
-z
+j
+j
 j
 h
-z
 j
 j
-z
+j
+j
 j
 j
 j
@@ -469,16 +486,16 @@ h
 h
 j
 j
-z
 j
 j
-z
 j
 j
-z
+j
+j
+j
 j
 h
-z
+j
 j
 j
 j

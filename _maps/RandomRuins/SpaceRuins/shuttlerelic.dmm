@@ -3,6 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
+/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 8
 	},
@@ -11,13 +12,15 @@
 /turf/closed/indestructible/oldshuttle,
 /area/ruin/powered)
 "d" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/airlock/glass,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "e" = (
+/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "f" = (
+/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 1
 	},
@@ -26,6 +29,7 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "h" = (
+/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 4
 	},
@@ -78,6 +82,28 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/spaceman,
 /turf/open/floor/oldshuttle,
+/area/ruin/powered)
+"p" = (
+/turf/open/floor/oldshuttle,
+/turf/closed/indestructible/oldshuttle/corner{
+	dir = 8
+	},
+/area/ruin/powered)
+"q" = (
+/turf/open/floor/oldshuttle,
+/turf/closed/indestructible/oldshuttle/corner,
+/area/ruin/powered)
+"r" = (
+/turf/template_noop,
+/turf/closed/indestructible/oldshuttle/corner{
+	dir = 1
+	},
+/area/ruin/powered)
+"s" = (
+/turf/template_noop,
+/turf/closed/indestructible/oldshuttle/corner{
+	dir = 4
+	},
 /area/ruin/powered)
 "t" = (
 /obj/machinery/power/generator,
@@ -162,7 +188,7 @@ g
 g
 g
 g
-b
+p
 d
 l
 w
@@ -178,8 +204,8 @@ c
 g
 g
 g
-b
-f
+p
+r
 a
 a
 a
@@ -199,7 +225,7 @@ c
 c
 c
 c
-h
+s
 a
 "}
 (7,1,1) = {"
@@ -217,7 +243,7 @@ i
 c
 u
 c
-h
+s
 "}
 (8,1,1) = {"
 b
@@ -233,7 +259,7 @@ m
 m
 c
 g
-e
+q
 c
 "}
 (9,1,1) = {"
@@ -247,7 +273,7 @@ m
 m
 m
 m
-b
+p
 c
 g
 g
@@ -281,7 +307,7 @@ m
 m
 m
 m
-e
+q
 c
 g
 g
@@ -301,7 +327,7 @@ m
 m
 c
 g
-b
+p
 c
 "}
 (13,1,1) = {"
@@ -319,7 +345,7 @@ i
 c
 u
 c
-f
+r
 "}
 (14,1,1) = {"
 a
@@ -335,7 +361,7 @@ c
 c
 c
 c
-f
+r
 a
 "}
 (15,1,1) = {"
@@ -348,8 +374,8 @@ c
 g
 g
 g
-e
-h
+q
+s
 a
 a
 a
@@ -366,7 +392,7 @@ g
 g
 g
 g
-e
+q
 d
 l
 v

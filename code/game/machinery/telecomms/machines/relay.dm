@@ -11,19 +11,20 @@
 	icon_state = "relay"
 	desc = "A mighty piece of hardware used to send massive amounts of data far away."
 	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
+	machinetype = 8
 	netspeed = 5
 	long_range_link = 1
 	circuit = /obj/item/circuitboard/machine/telecomms/relay
 	var/broadcasting = 1
 	var/receiving = 1
 
-/obj/machinery/telecomms/relay/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
+/obj/machinery/telecomms/relay/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Add our level and send it back
-	var/turf/T = get_turf(src)
-	if(can_send(signal) && T)
-		signal.levels |= T.z
+	if(can_send(signal))
+		signal.data["level"] |= listening_level
 
 // Checks to see if it can send/receive.
 
@@ -49,13 +50,9 @@
 /obj/machinery/telecomms/relay/preset
 	network = "tcommsat"
 
-/obj/machinery/telecomms/relay/Initialize(mapload)
-	. = ..()
-	if(autolinkers.len) //We want lateloaded presets to autolink (lateloaded aways/ruins/shuttles)
-		return INITIALIZE_HINT_LATELOAD
-
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
+	listening_level = 1
 	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/telecomms
@@ -71,16 +68,3 @@
 	hide = 1
 	toggled = FALSE
 	autolinkers = list("r_relay")
-
-/obj/machinery/telecomms/relay/preset/reebe
-	name = "hierophant relay"
-	desc = "An arcane telecommunications relay that ingeniously combines bluespace technology with the Hierophant network to send and receive messages to and from Reebe."
-	id = "Hierophant Relay"
-	icon = 'icons/obj/clockwork_objects.dmi'
-	hide = TRUE
-	autolinkers = list("h_relay")
-
-//Generic preset relay
-/obj/machinery/telecomms/relay/preset/auto
-	hide = TRUE
-	autolinkers = list("autorelay")

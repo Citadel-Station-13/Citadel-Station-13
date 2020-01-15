@@ -13,6 +13,8 @@
 	icon = 'icons/turf/walls/gold_wall.dmi'
 	icon_state = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
+	//var/electro = 1
+	//var/shocked = null
 	explosion_block = 0 //gold is a soft metal you dingus.
 	canSmoothWith = list(/turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold)
 
@@ -22,6 +24,8 @@
 	icon = 'icons/turf/walls/silver_wall.dmi'
 	icon_state = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
+	//var/electro = 0.75
+	//var/shocked = null
 	canSmoothWith = list(/turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver)
 
 /turf/closed/wall/mineral/diamond
@@ -34,13 +38,16 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
-/turf/closed/wall/mineral/bananium
+/turf/closed/wall/mineral/diamond/thermitemelt(mob/user)
+	return
+
+/turf/closed/wall/mineral/clown
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium)
+	canSmoothWith = list(/turf/closed/wall/mineral/clown, /obj/structure/falsewall/clown)
 
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -52,7 +59,6 @@
 	canSmoothWith = list(/turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
 
 /turf/closed/wall/mineral/uranium
-	article = "a"
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	icon = 'icons/turf/walls/uranium_wall.dmi'
@@ -64,7 +70,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(src, 40)
+			radiation_pulse(get_turf(src), 3, 3, 4, 0)
 			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -74,13 +80,13 @@
 
 /turf/closed/wall/mineral/uranium/attack_hand(mob/user)
 	radiate()
-	. = ..()
+	..()
 
 /turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/Bumped(atom/movable/AM)
+/turf/closed/wall/mineral/uranium/CollidedWith(atom/movable/AM)
 	radiate()
 	..()
 
@@ -94,16 +100,16 @@
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
-		log_game("Plasma wall ignited by [key_name(user)] in [AREACOORD(src)]")
-		ignite(W.get_temperature())
+	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
+		ignite(W.is_hot())
 		return
 	..()
 
 /turf/closed/wall/mineral/plasma/proc/PlasmaBurn(temperature)
 	new girder_type(src)
-	ScrapeAway()
+	src.ChangeTurf(/turf/open/floor/plasteel)
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
@@ -131,23 +137,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
-	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
-
-/turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
-	if(W.sharpness && W.force)
-		var/duration = (48/W.force) * 2 //In seconds, for now.
-		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
-			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration*10, target=src)) //Into deciseconds.
-			dismantle_wall(FALSE,FALSE)
-			return
-	return ..()
-
-/turf/closed/wall/mineral/wood/nonmetal
-	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
-	girder_type = /obj/structure/barricade/wooden
-	hardness = 50
-	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
+	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood)
 
 /turf/closed/wall/mineral/iron
 	name = "rough metal wall"
@@ -168,8 +158,6 @@
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
 	girder_type = null
-	bullet_sizzle = TRUE
-	bullet_bounce_sound = null
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"
@@ -182,14 +170,11 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor)
 
-/////////////////////Titanium walls/////////////////////
-
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle"
-	explosion_block = 3
 	flags_1 = CAN_BE_DIRTY_1 | CHECK_RICOCHET_1
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
@@ -223,7 +208,7 @@
 		T.atom_colours = atom_colours.Copy()
 		T.update_atom_colour()
 	if(T.dir != dir)
-		T.setDir(dir)
+		T.dir = dir
 	T.transform = transform
 	return T
 
@@ -237,49 +222,21 @@
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "smooth"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
 
 /turf/closed/wall/mineral/titanium/survival/nodiagonal
 	smooth = SMOOTH_MORE
 
 /turf/closed/wall/mineral/titanium/survival/pod
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
-
-/////////////////////Plastitanium walls/////////////////////
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
-	icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "map-shuttle"
-	explosion_block = 4
-	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
-
-/turf/closed/wall/mineral/plastitanium/nodiagonal
-	smooth = SMOOTH_MORE
-	icon_state = "map-shuttle_nd"
-
-/turf/closed/wall/mineral/plastitanium/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
+	icon_state = "wall3"
+	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	smooth = SMOOTH_FALSE
-
-/turf/closed/wall/mineral/plastitanium/overspace
-	icon_state = "map-overspace"
-	fixed_underlay = list("space"=1)
-
-/turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
-	var/datum/explosion/acted_explosion = null
-	for(var/datum/explosion/E in GLOB.explosions)
-		if(E.explosion_id == explosion_id)
-			acted_explosion = E
-			break
-	if(acted_explosion && istype(acted_explosion.explosion_source, /obj/item/bombcore))
-		var/obj/item/bombcore/large/bombcore = new(get_turf(src))
-		bombcore.detonate()
-	..()
 
 //have to copypaste this code
 /turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)
@@ -295,7 +252,7 @@
 		T.atom_colours = atom_colours.Copy()
 		T.update_atom_colour()
 	if(T.dir != dir)
-		T.setDir(dir)
+		T.dir = dir
 	T.transform = transform
 	return T
 

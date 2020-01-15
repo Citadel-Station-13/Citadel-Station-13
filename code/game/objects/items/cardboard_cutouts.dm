@@ -9,16 +9,15 @@
 	// Possible restyles for the cutout;
 	// add an entry in change_appearance() if you add to here
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
-		"Traitor", "Nuke Op", "Cultist", "Brass Cultist", "Clockwork Cultist",
+		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
 		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
-		"Laughter Demon", "Private Security Officer", "Securitron", "Gondola", "Monkey")
+		"Laughter Demon", "Private Security Officer")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
 
 	var/lastattacker = null
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
@@ -49,7 +48,7 @@
 		change_appearance(I, user)
 		return
 	// Why yes, this does closely resemble mob and object attack code.
-	if(I.item_flags & NOBLUDGEON)
+	if(I.flags_1 & NOBLUDGEON_1)
 		return
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
@@ -68,8 +67,6 @@
 			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/bullet/reusable))
-		P.on_hit(src, 0)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))
@@ -123,14 +120,10 @@
 			name = "Unknown"
 			desc = "A cardboard cutout of a cultist."
 			icon_state = "cutout_cultist"
-		if("Brass Cultist")
-			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-			desc = "A cardboard cutout of a \"servant\" of Ratvar."
-			icon_state = "cutout_servant"
 		if("Clockwork Cultist")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboard cutout of a servant of Ratvar."
-			icon_state = "cutout_new_servant"
+			icon_state = "cutout_servant"
 		if("Revolutionary")
 			name = "Unknown"
 			desc = "A cardboard cutout of a revolutionary."
@@ -183,18 +176,6 @@
 			name = "Private Security Officer"
 			desc = "A cardboard cutout of a private security officer."
 			icon_state = "cutout_ntsec"
-		if("Securitron")
-			name = "[pick("Officer", "Oftiser", "Sergeant", "General")][pick(" Genesky", " Pingsky", " Beepsky", " Pipsqueak", "-at-Armsky")]"
-			desc = "A cardboard cutout of a securitron."
-			icon_state = "cutout_law"
-		if("Gondola")
-			name = "gondola"
-			desc = "A cardboard cutout of a gondola."
-			icon_state = "cutout_gondola"
-		if("Monkey")
-			name = "monkey ([rand(1, 999)])"
-			desc = "A cardboard cutout of a monkey."
-			icon_state = "cutout_monky"
 	return 1
 
 /obj/item/cardboard_cutout/setDir(newdir)

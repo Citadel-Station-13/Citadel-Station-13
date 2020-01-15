@@ -8,12 +8,9 @@
 		if(toIndex <= 0)
 			toIndex += L.len + 1
 
-		var/datum/sortInstance/SI = GLOB.sortInstance
-		if(!SI)
-			SI = new
-		SI.L = L
-		SI.cmp = cmp
-		SI.associative = associative
+		GLOB.sortInstance.L = L
+		GLOB.sortInstance.cmp = cmp
+		GLOB.sortInstance.associative = associative
+		GLOB.sortInstance.mergeSort(fromIndex, toIndex)
 
-		SI.mergeSort(fromIndex, toIndex)
 	return L

@@ -1,6 +1,6 @@
 
 #define MUSICIAN_HEARCHECK_MINDELAY 4
-#define MUSIC_MAXLINES 600
+#define MUSIC_MAXLINES 300
 #define MUSIC_MAXLINECHARS 50
 
 /datum/song
@@ -104,12 +104,12 @@
 						playing = FALSE
 						hearing_mobs = null
 						return
-					if(!length(note))
+					if(!lentext(note))
 						continue
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
-					for(var/i=2 to length(note))
+					for(var/i=2 to lentext(note))
 						var/ni = copytext(note,i,i+1)
 						if(!text2num(ni))
 							if(ni == "#" || ni == "b" || ni == "n")
@@ -119,7 +119,7 @@
 						else
 							cur_oct[cur_note] = text2num(ni)
 					if(user.dizziness > 0 && prob(user.dizziness / 2))
-						cur_note = CLAMP(cur_note + rand(round(-user.dizziness / 10), round(user.dizziness / 10)), 1, 7)
+						cur_note = Clamp(cur_note + rand(round(-user.dizziness / 10), round(user.dizziness / 10)), 1, 7)
 					if(user.dizziness > 0 && prob(user.dizziness / 5))
 						if(prob(30))
 							cur_acc[cur_note] = "#"
@@ -144,31 +144,31 @@
 	if(lines.len > 0)
 		dat += "<H3>Playback</H3>"
 		if(!playing)
-			dat += "<A href='?src=[REF(src)];play=1'>Play</A> <SPAN CLASS='linkOn'>Stop</SPAN><BR><BR>"
+			dat += "<A href='?src=\ref[src];play=1'>Play</A> <SPAN CLASS='linkOn'>Stop</SPAN><BR><BR>"
 			dat += "Repeat Song: "
-			dat += repeat > 0 ? "<A href='?src=[REF(src)];repeat=-10'>-</A><A href='?src=[REF(src)];repeat=-1'>-</A>" : "<SPAN CLASS='linkOff'>-</SPAN><SPAN CLASS='linkOff'>-</SPAN>"
+			dat += repeat > 0 ? "<A href='?src=\ref[src];repeat=-10'>-</A><A href='?src=\ref[src];repeat=-1'>-</A>" : "<SPAN CLASS='linkOff'>-</SPAN><SPAN CLASS='linkOff'>-</SPAN>"
 			dat += " [repeat] times "
-			dat += repeat < max_repeats ? "<A href='?src=[REF(src)];repeat=1'>+</A><A href='?src=[REF(src)];repeat=10'>+</A>" : "<SPAN CLASS='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</SPAN>"
+			dat += repeat < max_repeats ? "<A href='?src=\ref[src];repeat=1'>+</A><A href='?src=\ref[src];repeat=10'>+</A>" : "<SPAN CLASS='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</SPAN>"
 			dat += "<BR>"
 		else
-			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
+			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=\ref[src];stop=1'>Stop</A><BR>"
 			dat += "Repeats left: <B>[repeat]</B><BR>"
 	if(!edit)
-		dat += "<BR><B><A href='?src=[REF(src)];edit=2'>Show Editor</A></B><BR>"
+		dat += "<BR><B><A href='?src=\ref[src];edit=2'>Show Editor</A></B><BR>"
 	else
 		dat += "<H3>Editing</H3>"
-		dat += "<B><A href='?src=[REF(src)];edit=1'>Hide Editor</A></B>"
-		dat += " <A href='?src=[REF(src)];newsong=1'>Start a New Song</A>"
-		dat += " <A href='?src=[REF(src)];import=1'>Import a Song</A><BR><BR>"
+		dat += "<B><A href='?src=\ref[src];edit=1'>Hide Editor</A></B>"
+		dat += " <A href='?src=\ref[src];newsong=1'>Start a New Song</A>"
+		dat += " <A href='?src=\ref[src];import=1'>Import a Song</A><BR><BR>"
 		var/bpm = round(600 / tempo)
-		dat += "Tempo: <A href='?src=[REF(src)];tempo=[world.tick_lag]'>-</A> [bpm] BPM <A href='?src=[REF(src)];tempo=-[world.tick_lag]'>+</A><BR><BR>"
+		dat += "Tempo: <A href='?src=\ref[src];tempo=[world.tick_lag]'>-</A> [bpm] BPM <A href='?src=\ref[src];tempo=-[world.tick_lag]'>+</A><BR><BR>"
 		var/linecount = 0
 		for(var/line in lines)
 			linecount += 1
-			dat += "Line [linecount]: <A href='?src=[REF(src)];modifyline=[linecount]'>Edit</A> <A href='?src=[REF(src)];deleteline=[linecount]'>X</A> [line]<BR>"
-		dat += "<A href='?src=[REF(src)];newline=1'>Add Line</A><BR><BR>"
+			dat += "Line [linecount]: <A href='?src=\ref[src];modifyline=[linecount]'>Edit</A> <A href='?src=\ref[src];deleteline=[linecount]'>X</A> [line]<BR>"
+		dat += "<A href='?src=\ref[src];newline=1'>Add Line</A><BR><BR>"
 		if(help)
-			dat += "<B><A href='?src=[REF(src)];help=1'>Hide Help</A></B><BR>"
+			dat += "<B><A href='?src=\ref[src];help=1'>Hide Help</A></B><BR>"
 			dat += {"
 					Lines are a series of chords, separated by commas (,), each with notes separated by hyphens (-).<br>
 					Every note in a chord will play together, with chord timed by the tempo.<br>
@@ -176,7 +176,7 @@
 					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
 					By default, every note is natural and in octave 3. Defining otherwise is remembered for each note.<br>
 					Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.<br>
-					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is <i>C3,C4,C4,C3</i><br>
+					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is C3,C4,C4,C3</i><br>
 					Chords can be played simply by seperating each note with a hyphon: <i>A-C#,Cn-E,E-G#,Gn-B</i><br>
 					A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
 					To make a chord be a different time, end it with /x, where the chord length will be length<br>
@@ -187,7 +187,7 @@
 					A song may only contain up to [MUSIC_MAXLINES] lines.<br>
 					"}
 		else
-			dat += "<B><A href='?src=[REF(src)];help=2'>Show Help</A></B><BR>"
+			dat += "<B><A href='?src=\ref[src];help=2'>Show Help</A></B><BR>"
 
 	var/datum/browser/popup = new(user, "instrument", instrumentObj.name, 700, 500)
 	popup.set_content(dat)
@@ -209,7 +209,7 @@
 			lines.Cut(MUSIC_MAXLINES + 1)
 		var/linenum = 1
 		for(var/l in lines)
-			if(length(l) > MUSIC_MAXLINECHARS)
+			if(lentext(l) > MUSIC_MAXLINECHARS)
 				to_chat(usr, "Line [linenum] too long!")
 				lines.Remove(l)
 			else
@@ -236,11 +236,11 @@
 			if(!in_range(instrumentObj, usr))
 				return
 
-			if(length(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
+			if(lentext(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 				if(cont == "no")
 					break
-		while(length(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
+		while(lentext(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 		ParseSong(t)
 
 	else if(href_list["help"])
@@ -272,7 +272,7 @@
 			return
 		if(lines.len > MUSIC_MAXLINES)
 			return
-		if(length(newline) > MUSIC_MAXLINECHARS)
+		if(lentext(newline) > MUSIC_MAXLINECHARS)
 			newline = copytext(newline, 1, MUSIC_MAXLINECHARS)
 		lines.Add(newline)
 
@@ -287,7 +287,7 @@
 		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
 		if(!content || !in_range(instrumentObj, usr))
 			return
-		if(length(content) > MUSIC_MAXLINECHARS)
+		if(lentext(content) > MUSIC_MAXLINECHARS)
 			content = copytext(content, 1, MUSIC_MAXLINECHARS)
 		if(num > lines.len || num < 1)
 			return
@@ -328,14 +328,12 @@
 	density = TRUE
 	var/datum/song/song
 
-/obj/structure/piano/unanchored
-	anchored = FALSE
 
 /obj/structure/piano/New()
 	..()
 	song = new("piano", src)
 
-	if(prob(50) && icon_state == initial(icon_state))
+	if(prob(50))
 		name = "space minimoog"
 		desc = "This is a minimoog, like a space piano, but more spacey!"
 		icon_state = "minimoog"
@@ -355,27 +353,40 @@
 		song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
 
 /obj/structure/piano/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	interact(user)
-
-/obj/structure/piano/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/structure/piano/interact(mob/user)
-	ui_interact(user)
-
-/obj/structure/piano/ui_interact(mob/user)
-	if(!user || !anchored)
-		return
-
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
+	interact(user)
+
+/obj/structure/piano/attack_paw(mob/user)
+	return src.attack_hand(user)
+
+/obj/structure/piano/interact(mob/user)
+	if(!user || !anchored)
+		return
+
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/structure/piano/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I, 40)
-	return TRUE
+/obj/structure/piano/attackby(obj/item/O, mob/user, params)
+	if (istype(O, /obj/item/wrench))
+		if (!anchored && !isinspace())
+			playsound(src, O.usesound, 50, 1)
+			to_chat(user, "<span class='notice'> You begin to tighten \the [src] to the floor...</span>")
+			if (do_after(user, 20*O.toolspeed, target = src))
+				user.visible_message( \
+					"[user] tightens \the [src]'s casters.", \
+					"<span class='notice'>You tighten \the [src]'s casters. Now it can be played again.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
+				anchored = TRUE
+		else if(anchored)
+			playsound(src, O.usesound, 50, 1)
+			to_chat(user, "<span class='notice'> You begin to loosen \the [src]'s casters...</span>")
+			if (do_after(user, 40*O.toolspeed, target = src))
+				user.visible_message( \
+					"[user] loosens \the [src]'s casters.", \
+					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
+				anchored = FALSE
+	else
+		return ..()

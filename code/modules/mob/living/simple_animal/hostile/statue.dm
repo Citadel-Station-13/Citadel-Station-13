@@ -2,14 +2,13 @@
 
 /mob/living/simple_animal/hostile/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
-	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you.." // same as an ordinary statue with the added "eye following you" description
+	desc = "An incredibly lifelike marble carving. Its eyes seems to follow you.." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
 	a_intent = INTENT_HARM
-	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -18,7 +17,6 @@
 	maxHealth = 50000
 	health = 50000
 	healable = 0
-	blood_volume = 0
 
 	harm_intent_damage = 10
 	obj_damage = 100
@@ -40,11 +38,14 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	vision_range = 12
 	aggro_vision_range = 12
+	idle_vision_range = 12
 
 	search_objects = 1 // So that it can see through walls
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = TRUE
+
+	gold_core_spawnable = 1
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
@@ -96,7 +97,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/hostile/statue/DestroyPathToTarget()
+/mob/living/simple_animal/hostile/statue/DestroySurroundings()
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
@@ -134,7 +135,7 @@
 
 // Cannot talk
 
-/mob/living/simple_animal/hostile/statue/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/statue/say()
 	return 0
 
 // Turn to dust when gibbed
@@ -186,7 +187,7 @@
 	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
-	for(var/mob/living/L in GLOB.alive_mob_list)
+	for(var/mob/living/L in GLOB.living_mob_list)
 		var/turf/T = get_turf(L.loc)
 		if(T && T in targets)
 			L.blind_eyes(4)

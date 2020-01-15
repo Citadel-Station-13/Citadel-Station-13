@@ -20,13 +20,6 @@
 		return
 	Trigger(H)
 
-
-/obj/effect/step_trigger/singularity_act()
-	return
-
-/obj/effect/step_trigger/singularity_pull()
-	return
-
 /* Sends a message to mob when triggered*/
 
 /obj/effect/step_trigger/message
@@ -117,8 +110,9 @@
 /obj/effect/step_trigger/teleporter/Trigger(atom/movable/A)
 	if(teleport_x && teleport_y && teleport_z)
 
-		var/turf/T = locate(teleport_x, teleport_y, teleport_z)
-		A.forceMove(T)
+		A.x = teleport_x
+		A.y = teleport_y
+		A.z = teleport_z
 
 /* Random teleporter, teleports atoms to locations ranging from teleport_x - teleport_x_offset, etc */
 
@@ -131,9 +125,9 @@
 	if(teleport_x && teleport_y && teleport_z)
 		if(teleport_x_offset && teleport_y_offset && teleport_z_offset)
 
-			var/turf/T = locate(rand(teleport_x, teleport_x_offset), rand(teleport_y, teleport_y_offset), rand(teleport_z, teleport_z_offset))
-			if (T)
-				A.forceMove(T)
+			A.x = rand(teleport_x, teleport_x_offset)
+			A.y = rand(teleport_y, teleport_y_offset)
+			A.z = rand(teleport_z, teleport_z_offset)
 
 /* Fancy teleporter, creates sparks and smokes when used */
 
@@ -197,3 +191,4 @@
 
 	if(happens_once)
 		qdel(src)
+

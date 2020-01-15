@@ -14,7 +14,7 @@
 	icon_dead = "tea-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/tea/astra)
-	reagents_add = list(/datum/reagent/toxin/teapowder = 0.1)
+	reagents_add = list("vitamin" = 0.04, "teapowder" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/tea
 	seed = /obj/item/seeds/tea
@@ -22,9 +22,6 @@
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
 	filling_color = "#008000"
-	grind_results = list(/datum/reagent/toxin/teapowder = 0)
-	dry_grind = TRUE
-	can_distill = FALSE
 
 // Tea Astra
 /obj/item/seeds/tea/astra
@@ -33,8 +30,8 @@
 	species = "teaastra"
 	plantname = "Tea Astra Plant"
 	product = /obj/item/reagent_containers/food/snacks/grown/tea/astra
-	mutatelist = list(/obj/item/seeds/tea/catnip)
-	reagents_add = list(/datum/reagent/medicine/synaptizine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/teapowder = 0.1)
+	mutatelist = list()
+	reagents_add = list("synaptizine" = 0.1, "vitamin" = 0.04, "teapowder" = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/tea/astra
@@ -42,25 +39,7 @@
 	name = "Tea Astra tips"
 	icon_state = "tea_astra_leaves"
 	filling_color = "#4582B4"
-	grind_results = list(/datum/reagent/toxin/teapowder = 0, /datum/reagent/medicine/salglu_solution = 0)
 
-// Kitty drugs
-/obj/item/seeds/tea/catnip
-	name = "pack of catnip seeds"
-	icon_state = "seed-catnip"
-	desc = "Long stocks with flowering tips that has a chemical to make feline attracted to it."
-	species = "catnip"
-	plantname = "Catnip Plant"
-	product = /obj/item/reagent_containers/food/snacks/grown/tea/catnip
-	reagents_add = list(/datum/reagent/pax/catnip = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.06, /datum/reagent/toxin/teapowder = 0.3)
-	rarity = 50
-
-/obj/item/reagent_containers/food/snacks/grown/tea/catnip
-	seed = /obj/item/seeds/tea/catnip
-	name = "Catnip buds"
-	icon_state = "catnip"
-	filling_color = "#4582B4"
-	grind_results = list(/datum/reagent/pax/catnip = 2, /datum/reagent/water = 1)
 
 // Coffee
 /obj/item/seeds/coffee
@@ -79,7 +58,7 @@
 	icon_dead = "coffee-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/coffee/robusta)
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1)
+	reagents_add = list("vitamin" = 0.04, "coffeepowder" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/coffee
 	seed = /obj/item/seeds/coffee
@@ -88,9 +67,6 @@
 	icon_state = "coffee_arabica"
 	filling_color = "#DC143C"
 	bitesize_mod = 2
-	dry_grind = TRUE
-	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
-	distill_reagent = /datum/reagent/consumable/ethanol/kahlua
 
 // Coffee Robusta
 /obj/item/seeds/coffee/robusta
@@ -101,7 +77,7 @@
 	plantname = "Coffee Robusta Bush"
 	product = /obj/item/reagent_containers/food/snacks/grown/coffee/robusta
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/medicine/ephedrine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1)
+	reagents_add = list("ephedrine" = 0.1, "vitamin" = 0.04, "coffeepowder" = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/coffee/robusta
@@ -109,4 +85,3 @@
 	name = "coffee robusta beans"
 	desc = "Increases robustness by 37 percent!"
 	icon_state = "coffee_robusta"
-	grind_results = list(/datum/reagent/toxin/coffeepowder = 0, /datum/reagent/medicine/morphine = 0)

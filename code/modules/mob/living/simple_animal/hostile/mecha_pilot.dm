@@ -23,7 +23,6 @@
 	desc = "Death to Nanotrasen. This variant comes in MECHA DEATH flavour."
 	wanted_objects = list()
 	search_objects = 0
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 
 	var/spawn_mecha_type = /obj/mecha/combat/marauder/mauler/loaded
 	var/obj/mecha/mecha //Ref to pilot's mecha instance
@@ -42,7 +41,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/Initialize()
 	. = ..()
-	wanted_objects = typecacheof(/obj/mecha/combat, TRUE)
+	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
 	name = "Nanotrasen Mecha Pilot"
@@ -102,7 +101,7 @@
 	targets_from = src
 
 	//Find a new mecha
-	wanted_objects = typecacheof(/obj/mecha/combat, TRUE)
+	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
@@ -185,7 +184,7 @@
 			mecha_face_target(target)
 			target.mech_melee_attack(mecha)
 	else
-		if(ismecha(target))
+		if(istype(target, /obj/mecha))
 			var/obj/mecha/M = target
 			if(is_valid_mecha(M))
 				enter_mecha(M)
@@ -260,7 +259,7 @@
 //Yes they actually try and pull this shit
 //~simple animals~
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/CanAttack(atom/the_target)
-	if(ismecha(the_target))
+	if(istype(the_target, /obj/mecha))
 		var/obj/mecha/M = the_target
 		if(mecha)
 			if(M == mecha || !CanAttack(M.occupant))
@@ -284,12 +283,13 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	if(mecha && loc == mecha)
-		return mecha.relaymove(src, Dir)
-	return ..()
+		mecha.relaymove(src, Dir)
+		return
+	..()
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Goto(target, delay, minimum_distance)
 	if(mecha)
-		walk_to(mecha, target, minimum_distance, mecha.step_in)
+		walk_to(mecha, target, minimum_distance, delay)
 	else
 		..()

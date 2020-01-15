@@ -10,7 +10,6 @@
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
-	id = MARTIALART_WRESTLING
 	var/datum/action/slam/slam = new/datum/action/slam()
 	var/datum/action/throw_wrassle/throw_wrassle = new/datum/action/throw_wrassle()
 	var/datum/action/kick/kick = new/datum/action/kick()
@@ -49,9 +48,6 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
-		return
 	owner.visible_message("<span class='danger'>[owner] prepares to BODY SLAM!</span>", "<b><i>Your next attack will be a BODY SLAM.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "slam"
@@ -63,9 +59,6 @@
 /datum/action/throw_wrassle/Trigger()
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
-		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to THROW!</span>", "<b><i>Your next attack will be a THROW.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -79,9 +72,6 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
-		return
 	owner.visible_message("<span class='danger'>[owner] prepares to KICK!</span>", "<b><i>Your next attack will be a KICK.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "kick"
@@ -94,9 +84,6 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
-		return
 	owner.visible_message("<span class='danger'>[owner] prepares to STRIKE!</span>", "<b><i>Your next attack will be a STRIKE.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "strike"
@@ -108,9 +95,6 @@
 /datum/action/drop/Trigger()
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
-		return
-	if(HAS_TRAIT(owner, TRAIT_PACIFISM))
-		to_chat(owner, "<span class='warning'>You are too HIPPIE to WRESTLE other living beings!</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
 	var/mob/living/carbon/human/H = owner
@@ -137,7 +121,7 @@
 /datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	log_combat(A, D, "punched with wrestling")
+	add_logs(A, D, "punched with wrestling")
 	..()
 
 /datum/martial_art/wrestling/proc/throw_wrassle(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -207,15 +191,15 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/Knockdown, 20))
-	log_combat(A, D, "has thrown with wrestling")
+			D.throw_at(T, 10, 4, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 20))
+	add_logs(A, D, "has thrown with wrestling")
 	return 0
 
 /datum/martial_art/wrestling/proc/FlipAnimation(mob/living/carbon/human/D)
 	set waitfor = FALSE
 	if (D)
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-	sleep(15)
+	sleep (15)
 	if (D)
 		animate(D, transform = null, time = 1, loop = 0)
 
@@ -274,7 +258,7 @@
 				D.pixel_y = 0
 			return 0
 
-		sleep(1)
+		sleep (1)
 
 	if (A && D)
 		A.pixel_x = 0
@@ -324,7 +308,7 @@
 			D.pixel_y = 0
 
 
-	log_combat(A, D, "body-slammed")
+	add_logs(A, D, "body-slammed")
 	return 0
 
 /datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, turf/T)
@@ -346,7 +330,7 @@
 		D.adjustBruteLoss(rand(10,20))
 		playsound(A.loc, "swing_hit", 50, 1)
 		D.Unconscious(20)
-	log_combat(A, D, "headbutted")
+	add_logs(A, D, "headbutted")
 
 /datum/martial_art/wrestling/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
@@ -363,7 +347,7 @@
 	if (T && isturf(T))
 		D.Knockdown(20)
 		D.throw_at(T, 3, 2)
-	log_combat(A, D, "roundhouse-kicked")
+	add_logs(A, D, "roundhouse-kicked")
 
 /datum/martial_art/wrestling/proc/drop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
@@ -374,12 +358,9 @@
 
 	for (var/obj/O in oview(1, A))
 		if (O.density == 1)
-			if (O == A)
-				continue
-			if (O == D)
-				continue
-			if (O.opacity)
-				continue
+			if (O == A) continue
+			if (O == D) continue
+			if (O.opacity) continue
 			else
 				surface = O
 				ST = get_turf(O)
@@ -436,25 +417,25 @@
 	else
 		if (A)
 			A.pixel_y = 0
-	log_combat(A, D, "leg-dropped")
+	add_logs(A, D, "leg-dropped")
 	return
 
 /datum/martial_art/wrestling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	log_combat(A, D, "wrestling-disarmed")
+	add_logs(A, D, "wrestling-disarmed")
 	..()
 
 /datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	if(A.pulling == D || A == D) // don't stun grab yoursel
-		return FALSE
+	if(A.pulling == D)
+		return 1
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
 								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
 	D.Stun(rand(60,100))
-	log_combat(A, D, "cinched")
+	add_logs(A, D, "cinched")
 	return 1
 
 /obj/item/storage/belt/champion/wrestling
@@ -464,7 +445,7 @@
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
-	if(slot == SLOT_BELT)
+	if(slot == slot_belt)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 	return
@@ -473,6 +454,6 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(SLOT_BELT) == src)
+	if(H.get_item_by_slot(slot_belt) == src)
 		style.remove(H)
 	return

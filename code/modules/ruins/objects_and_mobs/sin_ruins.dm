@@ -9,12 +9,12 @@
 	density = TRUE
 	var/win_prob = 5
 
-/obj/structure/cursed_slot_machine/interact(mob/living/carbon/human/user)
+/obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	if(obj_flags & IN_USE)
+	if(in_use)
 		return
-	obj_flags |= IN_USE
+	in_use = TRUE
 	user.adjustCloneLoss(20)
 	if(user.stat)
 		to_chat(user, "<span class='userdanger'>No... just one more try...</span>")
@@ -24,11 +24,9 @@
 		know it'll be worth it.</span>")
 	icon_state = "slots2"
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
-	addtimer(CALLBACK(src, .proc/determine_victor, user), 50)
-
-/obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
+	sleep(50)
 	icon_state = "slots1"
-	obj_flags &= ~IN_USE
+	in_use = FALSE
 	if(prob(win_prob))
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, 0)
 		new/obj/structure/cursed_money(get_turf(src))
@@ -38,7 +36,6 @@
 	else
 		if(user)
 			to_chat(user, "<span class='boldwarning'>Fucking machine! Must be rigged. Still... one more try couldn't hurt, right?</span>")
-
 
 /obj/structure/cursed_money
 	name = "bag of money"
@@ -58,9 +55,6 @@
 	qdel(src)
 
 /obj/structure/cursed_money/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
 	user.visible_message("<span class='warning'>[user] opens the bag and \
 		and removes a die. The bag then vanishes.</span>",
 		"<span class='boldwarning'>You open the bag...!</span>\n\
@@ -70,6 +64,8 @@
 	var/obj/item/dice/d20/fate/one_use/critical_fail = new(T)
 	user.put_in_hands(critical_fail)
 	qdel(src)
+
+
 
 /obj/effect/gluttony //Gluttony's wall: Used in the Gluttony ruin. Only lets the overweight through.
 	name = "gluttony's wall"
@@ -85,13 +81,15 @@
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
 			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
-			return TRUE
+			return 1
 		else
 			to_chat(H, "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>")
 	if(istype(mover, /mob/living/simple_animal/hostile/morph))
-		return TRUE
+		return 1
 	else
-		return FALSE
+		return 0
+
+
 
 /obj/structure/mirror/magic/pride //Pride's mirror: Used in the Pride ruin.
 	name = "pride's mirror"
@@ -101,16 +99,9 @@
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
-
 	var/turf/T = get_turf(user)
-	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
-	var/turf/dest
-	if (levels.len)
-		dest = locate(T.x, T.y, pick(levels))
-
-	T.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
-	var/turf/open/chasm/C = T
-	C.set_target(dest)
+	T.ChangeTurf(/turf/open/chasm/straight_down)
+	var/turf/open/chasm/straight_down/C = T
 	C.drop(user)
 
 //can't be bothered to do sloth right now, will make later
@@ -129,7 +120,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
-	. = ..()
+	..()
 	if(!proximity)
 		return
 	if(!istype(user))
@@ -142,4 +133,4 @@
 			user.updateappearance(mutcolor_update=1)
 			user.domutcheck()
 			user.visible_message("<span class='warning'>[user]'s appearance shifts into [H]'s!</span>", \
-			"<span class='boldannounce'>[H.p_they(TRUE)] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't.</span>")
+			"<span class='boldannounce'>They think they're <i>sooo</i> much better than you. Not anymore, they won't.</span>")

@@ -16,9 +16,9 @@
 	var/warcry
 
 /obj/item/banner/examine(mob/user)
-	. = ..()
+	..()
 	if(inspiration_available)
-		. += "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>"
+		to_chat(user, "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>")
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
 	if(!inspiration_available)
@@ -30,7 +30,7 @@
 	"<span class='notice'>You raise [src] skywards, inspiring your allies!</span>")
 	playsound(src, "rustle", 100, FALSE)
 	if(warcry)
-		user.say("[warcry]", forced="banner")
+		user.say("[warcry]")
 	var/old_transform = user.transform
 	user.transform *= 1.2
 	animate(user, transform = old_transform, time = 10)
@@ -82,6 +82,14 @@
 /obj/item/banner/security/mundane
 	inspiration_available = FALSE
 
+/datum/crafting_recipe/security_banner
+	name = "Securistan Banner"
+	result = /obj/item/banner/security/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/security = 1)
+	category = CAT_MISC
+
 /obj/item/banner/medical
 	name = "meditopia banner"
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
@@ -95,10 +103,18 @@
 /obj/item/banner/medical/check_inspiration(mob/living/carbon/human/H)
 	return H.stat //Meditopia is moved to help those in need
 
+/datum/crafting_recipe/medical_banner
+	name = "Meditopia Banner"
+	result = /obj/item/banner/medical/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/medical = 1)
+	category = CAT_MISC
+
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
 	H.adjustToxLoss(-15)
 	H.setOxyLoss(0)
-	H.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
+	H.reagents.add_reagent("inaprovaline", 5)
 
 /obj/item/banner/science
 	name = "sciencia banner"
@@ -113,6 +129,14 @@
 /obj/item/banner/science/check_inspiration(mob/living/carbon/human/H)
 	return H.on_fire //Sciencia is pleased by dedication to the art of Toxins
 
+/datum/crafting_recipe/science_banner
+	name = "Sciencia Banner"
+	result = /obj/item/banner/science/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/scientist = 1)
+	category = CAT_MISC
+
 /obj/item/banner/cargo
 	name = "cargonia banner"
 	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
@@ -122,6 +146,14 @@
 
 /obj/item/banner/cargo/mundane
 	inspiration_available = FALSE
+
+/datum/crafting_recipe/cargo_banner
+	name = "Cargonia Banner"
+	result = /obj/item/banner/cargo/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/cargotech = 1)
+	category = CAT_MISC
 
 /obj/item/banner/engineering
 	name = "engitopia banner"
@@ -136,6 +168,14 @@
 /obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
 	H.radiation = 0
 
+/datum/crafting_recipe/engineering_banner
+	name = "Engitopia Banner"
+	result = /obj/item/banner/engineering/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/rank/engineer = 1)
+	category = CAT_MISC
+
 /obj/item/banner/command
 	name = "command banner"
 	desc = "The banner of Command, a staunch and ancient line of bueraucratic kings and queens."
@@ -147,7 +187,15 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/command/check_inspiration(mob/living/carbon/human/H)
-	return HAS_TRAIT(H, TRAIT_MINDSHIELD) //Command is stalwart but rewards their allies.
+	return H.isloyal() //Command is stalwart but rewards their allies.
+
+/datum/crafting_recipe/command_banner
+	name = "Command Banner"
+	result = /obj/item/banner/command/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/captainparade = 1)
+	category = CAT_MISC
 
 /obj/item/banner/red
 	name = "red banner"
@@ -159,17 +207,13 @@
 	name = "blue banner"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
-	desc = "A banner with the logo of the blue deity."
+	desc = "A banner with the logo of the blue deity"
 
 /obj/item/storage/backpack/bannerpack
 	name = "nanotrasen banner backpack"
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
+	max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 	icon_state = "bannerpack"
-
-/obj/item/storage/backpack/bannerpack/Initialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"
@@ -189,7 +233,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
 
 /obj/item/clothing/suit/armor/plate/crusader/red
 	icon_state = "crusader-red"
@@ -203,7 +247,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -217,7 +261,7 @@
 	desc = "A religious-looking hat."
 	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	flags_1 = 0
-	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 50, "bomb" = 70, "bio" = 50, "rad" = 50, "fire" = 60, "acid" = 60) //religion protects you from disease and radiation, honk.
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50, fire = 60, acid = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 
@@ -238,11 +282,11 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
+
 /obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
-	user.visible_message("[user] chants deeply and waves [user.p_their()] staff!")
+	user.visible_message("[user] chants deeply and waves their staff!")
 	if(do_after(user, 20,1,src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
@@ -276,12 +320,13 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60) //does this even do anything on boots?
-	clothing_flags = NOSLIP
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60) //does this even do anything on boots?
+	flags_1 = NOSLIP_1
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+
 
 /obj/item/clothing/shoes/plate/red
 	icon_state = "crusader-red"
@@ -289,9 +334,11 @@
 /obj/item/clothing/shoes/plate/blue
 	icon_state = "crusader-blue"
 
+
 /obj/item/storage/box/itemset/crusader
 	name = "Crusader's Armour Set" //i can't into ck2 references
 	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
+
 
 /obj/item/storage/box/itemset/crusader/blue/New()
 	..()
@@ -302,6 +349,7 @@
 	new /obj/item/clothing/gloves/plate/blue(src)
 	new /obj/item/clothing/shoes/plate/blue(src)
 
+
 /obj/item/storage/box/itemset/crusader/red/New()
 	..()
 	contents = list()
@@ -310,6 +358,7 @@
 	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
 	new /obj/item/clothing/gloves/plate/red(src)
 	new /obj/item/clothing/shoes/plate/red(src)
+
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."

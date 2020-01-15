@@ -4,6 +4,7 @@
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
 	density = TRUE
+	anchored = TRUE
 	state_open = TRUE
 	var/busy = FALSE
 	var/bloody_mess = 0
@@ -12,11 +13,10 @@
 	var/max_wash_capacity = 5
 
 /obj/machinery/washing_machine/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click it to start a wash cycle.</span>"
+	..()
+	to_chat(user, "<span class='notice'>Alt-click it to start a wash cycle.</span>")
 
 /obj/machinery/washing_machine/AltClick(mob/user)
-	. = ..()
 	if(!user.canUseTopic(src))
 		return
 
@@ -25,48 +25,30 @@
 
 	if(state_open)
 		to_chat(user, "<span class='notice'>Close the door first</span>")
-		return TRUE
+		return
 
 	if(bloody_mess)
 		to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
-		return TRUE
+		return
 
 	if(has_corgi)
 		bloody_mess = 1
 
 	busy = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
-	START_PROCESSING(SSfastprocess, src)
-	return TRUE
-
-/obj/machinery/washing_machine/process()
-	if (!busy)
-		animate(src, transform=matrix(), time=2)
-		return PROCESS_KILL
-	if (anchored)
-		if (prob(5))
-			var/matrix/M = new
-			M.Translate(rand(-1, 1), rand(0, 1))
-			animate(src, transform=M, time=1)
-			animate(transform=matrix(), time=1)
-	else
-		if (prob(1))
-			step(src, pick(GLOB.cardinals))
-		var/matrix/M = new
-		M.Translate(rand(-3, 3), rand(-1, 3))
-		animate(src, transform=M, time=2)
+	sleep(200)
+	wash_cycle()
 
 /obj/machinery/washing_machine/clean_blood()
 	..()
 	if(!busy)
-		bloody_mess = FALSE
+		bloody_mess = 0
 		update_icon()
+
 
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		AM.clean_blood()
 		AM.machine_wash(src)
 
@@ -82,7 +64,8 @@
 	return
 
 /obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/WM)
-	new /obj/item/stack/sheet/wetleather(drop_location(), amount)
+	var/obj/item/stack/sheet/wetleather/WL = new(loc)
+	WL.amount = amount
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
@@ -90,12 +73,6 @@
 	qdel(src)
 
 /obj/item/paper/machine_wash(obj/machinery/washing_machine/WM)
-	if(WM.color_source)
-		if(istype(WM.color_source, /obj/item/toy/crayon))
-			var/obj/item/toy/crayon/CR = WM.color_source
-			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
-
-/obj/item/reagents_containers/rag/towel/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
 		if(istype(WM.color_source, /obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
@@ -212,16 +189,9 @@
 		add_overlay("wm_panel")
 
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
-	if(panel_open && !busy && default_unfasten_wrench(user, W))
-		return
-
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_icon()
 		return
-
-	if(istype(W, /obj/item/clothing/head/mob_holder))
-		to_chat(user, "<span class='warning'>It's too unwieldly to put in this way.</span>")
-		return 1
 
 	else if(user.a_intent != INTENT_HARM)
 
@@ -249,9 +219,6 @@
 		return ..()
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy.</span>")
 		return

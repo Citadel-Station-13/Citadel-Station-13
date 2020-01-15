@@ -1,5 +1,4 @@
-/obj/item/melee/transforming
-	sharpness = IS_SHARP
+/obj/item/melee/transforming //TODO: make transforming energy weapons a subtype of this
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
@@ -9,11 +8,10 @@
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/list/attack_verb_off = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_SMALL
+	sharpness = IS_SHARP
 	var/bonus_active = FALSE //If the faction damage bonus is active
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
-	var/clumsy_check = TRUE
-	var/total_mass_on //Total mass in ounces when transformed. Primarily for balance purposes. Don't think about it too hard.
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()
@@ -23,8 +21,6 @@
 	else
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
-	if(sharpness)
-		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound)
 
 /obj/item/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))
@@ -47,7 +43,6 @@
 	active = !active
 	if(active)
 		force = force_on
-		total_mass = total_mass_on
 		throwforce = throwforce_on
 		hitsound = hitsound_on
 		throw_speed = 4
@@ -64,7 +59,6 @@
 			attack_verb = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
-		total_mass = initial(total_mass)
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
 	return TRUE
@@ -78,6 +72,6 @@
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
-	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+	if(user.disabilities & CLUMSY && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)

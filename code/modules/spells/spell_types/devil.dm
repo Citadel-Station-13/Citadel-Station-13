@@ -21,7 +21,7 @@
 	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
-	item_type = /obj/item/instrument/violin/golden
+	item_type = /obj/item/device/instrument/violin/golden
 	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
 	invocation_type = "whisper"
 	invocation = "I aint have this much fun since Georgia."
@@ -49,7 +49,7 @@
 	for(var/mob/living/carbon/C in targets)
 		if(C.mind && user.mind)
 			if(C.stat == DEAD)
-				if(user.dropItemToGround(user.get_active_held_item()))
+				if(user.drop_item())
 					var/obj/item/paper/contract/infernal/revive/contract = new(user.loc, C.mind, user.mind)
 					user.put_in_hands(contract)
 			else
@@ -104,7 +104,7 @@
 
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt/cast(list/targets, mob/living/user = usr)
 	if(istype(user))
-		if(istype(user.loc, /obj/effect/dummy/phased_mob/slaughter/))
+		if(istype(user.loc, /obj/effect/dummy/slaughter/))
 			if(valid_location(user))
 				to_chat(user, "<span class='warning'>You are now phasing in.</span>")
 				if(do_mob(user,user,150))
@@ -118,15 +118,14 @@
 				revert_cast()
 				return ..()
 		else
-			user.notransform = TRUE
+			user.notransform = 1
 			user.fakefire()
 			to_chat(src, "<span class='warning'>You begin to phase back into sinful flames.</span>")
 			if(do_mob(user,user,150))
 				user.infernalphaseout()
 			else
 				to_chat(user, "<span class='warning'>You must remain still while exiting.</span>")
-				user.notransform = FALSE
-				user.fakefireextinguish()
+				user.ExtinguishMob()
 		start_recharge()
 		return
 	revert_cast()
@@ -143,23 +142,31 @@
 /mob/living/proc/infernalphaseout()
 	dust_animation()
 	spawn_dust()
-	visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
+	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(loc)
-	ExtinguishMob()
-	forceMove(holder)
-	holder = holder
-	notransform = 0
+	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(loc)
+	src.ExtinguishMob()
+	if(buckled)
+		buckled.unbuckle_mob(src,force=1)
+	if(has_buckled_mobs())
+		unbuckle_all_mobs(force=1)
+	if(pulledby)
+		pulledby.stop_pulling()
+	if(pulling)
+		stop_pulling()
+	src.loc = holder
+	src.holder = holder
+	src.notransform = 0
 	fakefireextinguish()
 
 /mob/living/proc/infernalphasein()
-	if(notransform)
+	if(src.notransform)
 		to_chat(src, "<span class='warning'>You're too busy to jaunt in.</span>")
-		return FALSE
+		return 0
 	fakefire()
-	forceMove(drop_location())
-	client.eye = src
-	visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B></span>")
+	src.loc = get_turf(src)
+	src.client.eye = src
+	src.visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B></span>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	addtimer(CALLBACK(src, .proc/fakefireextinguish), 15, TIMER_UNIQUE)
 
@@ -193,11 +200,9 @@
 	for(var/mob/living/carbon/human/H in targets)
 		if(!H.mind)
 			continue
-		if(H.mind.has_antag_datum(/datum/antagonist/sintouched))
+		if(locate(/datum/objective/sintouched) in H.mind.objectives)
 			continue
-		if(H.anti_magic_check(FALSE, TRUE))
-			continue
-		H.mind.add_antag_datum(/datum/antagonist/sintouched)
+		H.influenceSin()
 		H.Knockdown(400)
 
 
@@ -234,7 +239,7 @@
 		dancefloor_exists = FALSE
 		for(var/i in 1 to dancefloor_turfs.len)
 			var/turf/T = dancefloor_turfs[i]
-			T.ChangeTurf(dancefloor_turfs_types[i], flags = CHANGETURF_INHERIT_AIR)
+			T.ChangeTurf(dancefloor_turfs_types[i])
 	else
 		var/list/funky_turfs = RANGE_TURFS(1, user)
 		for(var/turf/closed/solid in funky_turfs)
@@ -248,7 +253,7 @@
 			var/turf/T = t
 			dancefloor_turfs[i] = T
 			dancefloor_turfs_types[i] = T.type
-			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b, flags = CHANGETURF_INHERIT_AIR)
+			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
 			i++
 
 /datum/effect_system/smoke_spread/transparent/dancefloor_devil

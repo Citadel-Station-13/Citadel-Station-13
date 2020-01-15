@@ -2,6 +2,7 @@
 	name = "teleport"
 	icon = 'icons/obj/machines/teleporter.dmi'
 	density = TRUE
+	anchored = TRUE
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
@@ -34,18 +35,19 @@
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
 		return
-	for(var/direction in GLOB.cardinals)
-		power_station = locate(/obj/machinery/teleport/station, get_step(src, direction))
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
 		if(power_station)
 			break
 	return power_station
 
-/obj/machinery/teleport/hub/Bumped(atom/movable/AM)
-	if(is_centcom_level(z))
+/obj/machinery/teleport/hub/CollidedWith(atom/movable/AM)
+	if(z == ZLEVEL_CENTCOM)
 		to_chat(AM, "You can't use this here.")
-		return
 	if(is_ready())
 		teleport(AM)
+		use_power(5000)
+	return
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
@@ -53,31 +55,30 @@
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
 			update_icon()
 		return
+	if(exchange_parts(user, W))
+		return
 	if(default_deconstruction_crowbar(W))
 		return
 	return ..()
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
-	if (QDELETED(com))
+	if (!com)
 		return
-	if (QDELETED(com.target))
-		com.target = null
+	if (!com.target)
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (ismovableatom(M))
-		if(do_teleport(M, com.target, channel = TELEPORT_CHANNEL_BLUESPACE))
-			use_power(5000)
+		if(do_teleport(M, com.target))
+			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
+				if(ishuman(M))//don't remove people from the round randomly you jerks
+					var/mob/living/carbon/human/human = M
+					if(human.dna && human.dna.species.id == "human")
+						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
+						human.set_species(/datum/species/fly)
 
-			if(!calibrated && iscarbon(M) && prob(30 - ((accurate) * 10))) //oh dear a problem
-				var/mob/living/carbon/C = M
-				if(C.dna?.species && C.dna.species.id != "fly" && !HAS_TRAIT(C, TRAIT_RADIMMUNE))
-					to_chat(C, "<span class='italics'>You hear a buzzing in your ears.</span>")
-					C.set_species(/datum/species/fly)
-					log_game("[C] ([key_name(C)]) was turned into a fly person")
-					C.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
-
-			calibrated = FALSE
+					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+			calibrated = 0
 	return
 
 /obj/machinery/teleport/hub/update_icon()
@@ -126,13 +127,13 @@
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
-	for(var/direction in GLOB.cardinals)
-		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, direction))
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, dir))
 		if(teleporter_hub)
 			teleporter_hub.link_power_station()
 			break
-	for(var/direction in GLOB.cardinals)
-		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, direction))
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, dir))
 		if(teleporter_console)
 			teleporter_console.link_power_station()
 			break
@@ -150,8 +151,8 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
-		var/obj/item/multitool/M = W
+	if(istype(W, /obj/item/device/multitool))
+		var/obj/item/device/multitool/M = W
 		if(panel_open)
 			M.buffer = src
 			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
@@ -168,6 +169,9 @@
 		update_icon()
 		return
 
+	else if(exchange_parts(user, W))
+		return
+
 	else if(default_deconstruction_crowbar(W))
 		return
 
@@ -179,24 +183,32 @@
 	else
 		return ..()
 
-/obj/machinery/teleport/station/interact(mob/user)
-	toggle(user)
+/obj/machinery/teleport/station/attack_paw()
+	src.attack_hand()
+
+/obj/machinery/teleport/station/attack_ai()
+	src.attack_hand()
+
+/obj/machinery/teleport/station/attack_hand(mob/user)
+	if(!panel_open)
+		toggle(user)
 
 /obj/machinery/teleport/station/proc/toggle(mob/user)
 	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
 	if (teleporter_console.target)
 		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
-			to_chat(user, "<span class='alert'>The teleporter hub isn't responding.</span>")
+			visible_message("<span class='alert'>The teleporter hub isn't responding.</span>")
 		else
-			engaged = !engaged
+			src.engaged = !src.engaged
 			use_power(5000)
-			to_chat(user, "<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
+			visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
 	else
-		to_chat(user, "<span class='alert'>No target detected.</span>")
-		engaged = FALSE
+		visible_message("<span class='alert'>No target detected.</span>")
+		src.engaged = 0
 	teleporter_hub.update_icon()
-	add_fingerprint(user)
+	src.add_fingerprint(user)
+	return
 
 /obj/machinery/teleport/station/power_change()
 	..()
@@ -209,7 +221,5 @@
 		icon_state = "controller-o"
 	else if(stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
-	else if(teleporter_console && teleporter_console.calibrating)
-		icon_state = "controller-c"
 	else
 		icon_state = "controller"

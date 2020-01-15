@@ -1,11 +1,10 @@
-#define WHITE_TEAM "White"
-#define RED_TEAM "Red"
-#define BLUE_TEAM "Blue"
+#define WHITE_TEAM "white"
+#define RED_TEAM "red"
+#define BLUE_TEAM "blue"
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
 #define AMMO_DROP_LIFETIME 300
-#define CTF_REQUIRED_PLAYERS 4
 
 
 
@@ -24,9 +23,9 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
+	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
-	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
@@ -40,8 +39,6 @@
 		reset = new reset_path(get_turf(src))
 
 /obj/item/twohanded/ctf/process()
-	if(is_ctf_target(loc)) //don't reset from someone's hands.
-		return PROCESS_KILL
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in GLOB.player_list)
@@ -50,9 +47,8 @@
 				to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
 		STOP_PROCESSING(SSobj, src)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/twohanded/ctf/attack_hand(mob/living/user)
-	if(!is_ctf_target(user) && !anyonecanpickup)
+	if(!is_ctf_target(user))
 		to_chat(user, "Non players shouldn't be moving the flag!")
 		return
 	if(team in user.faction)
@@ -67,18 +63,15 @@
 		dropped(user)
 		return
 	user.anchored = TRUE
-	user.status_flags &= ~CANPUSH
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			to_chat(M, "<span class='userdanger'>\The [src] has been taken!</span>")
 	STOP_PROCESSING(SSobj, src)
-	..()
 
 /obj/item/twohanded/ctf/dropped(mob/user)
 	..()
 	user.anchored = FALSE
-	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in GLOB.player_list)
@@ -126,12 +119,8 @@
 
 /proc/toggle_all_ctf(mob/user)
 	var/ctf_enabled = FALSE
-	var/area/A
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		ctf_enabled = CTF.toggle_ctf()
-		A = get_area(CTF)
-	for(var/obj/machinery/power/emitter/E in A)
-		E.active = ctf_enabled
 	message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
 	notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
 
@@ -140,9 +129,9 @@
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
-	var/team_span = ""
 	//Capture the Flag scoring
 	var/points = 0
 	var/points_to_win = 3
@@ -159,11 +148,21 @@
 
 	var/list/dead_barricades = list()
 
+	var/static/ctf_object_typecache
 	var/static/arena_reset = FALSE
-	var/static/list/people_who_want_to_play = list()
 
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
+	if(!ctf_object_typecache)
+		ctf_object_typecache = typecacheof(list(
+			/turf,
+			/mob,
+			/area,
+			/obj/machinery,
+			/obj/structure,
+			/obj/effect/ctf,
+			/obj/item/twohanded/ctf
+		))
 	GLOB.poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
@@ -189,7 +188,6 @@
 	name = "Red CTF Controller"
 	icon_state = "syndbeacon"
 	team = RED_TEAM
-	team_span = "redteamradio"
 	ctf_gear = /datum/outfit/ctf/red
 	instagib_gear = /datum/outfit/ctf/red/instagib
 
@@ -197,29 +195,15 @@
 	name = "Blue CTF Controller"
 	icon_state = "bluebeacon"
 	team = BLUE_TEAM
-	team_span = "blueteamradio"
 	ctf_gear = /datum/outfit/ctf/blue
 	instagib_gear = /datum/outfit/ctf/blue/instagib
 
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		if(user.client && user.client.holder)
 			var/response = alert("Enable CTF?", "CTF", "Yes", "No")
 			if(response == "Yes")
 				toggle_all_ctf(user)
-			return
-
-
-		people_who_want_to_play |= user.ckey
-		var/num = people_who_want_to_play.len
-		var/remaining = CTF_REQUIRED_PLAYERS - num
-		if(remaining <= 0)
-			people_who_want_to_play.Cut()
-			toggle_all_ctf()
-		else
-			to_chat(user, "<span class='notice'>CTF has been requested. [num]/[CTF_REQUIRED_PLAYERS] have readied up.</span>")
-
 		return
 
 	if(!SSticker.HasRoundStarted())
@@ -241,7 +225,7 @@
 			to_chat(user, "No switching teams while the round is going!")
 			return
 		if(CTF.team_members.len < src.team_members.len)
-			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] team to even things up.")
+			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up.")
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
@@ -284,7 +268,7 @@
 			for(var/mob/M in GLOB.player_list)
 				var/area/mob_area = get_area(M)
 				if(istype(mob_area, /area/ctf))
-					to_chat(M, "<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
+					to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
 		if(points >= points_to_win)
 			victory()
 
@@ -292,8 +276,8 @@
 	for(var/mob/M in GLOB.mob_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
-			to_chat(M, "<span class='narsie [team_span]'>[team] team wins!</span>")
-			to_chat(M, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
+			to_chat(M, "<span class='narsie'>[team] team wins!</span>")
+			to_chat(M, "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>")
 			for(var/obj/item/twohanded/ctf/W in M)
 				M.dropItemToGround(W)
 			M.dust()
@@ -307,6 +291,7 @@
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
 			CTF.arena_reset = FALSE
+			addtimer(CALLBACK(CTF, .proc/start_ctf), 300)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
 	if(!ctf_enabled)
@@ -324,7 +309,7 @@
 
 	dead_barricades.Cut()
 
-	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
+	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
 
 	if(!arena_reset)
 		reset_the_arena()
@@ -332,20 +317,12 @@
 
 /obj/machinery/capture_the_flag/proc/reset_the_arena()
 	var/area/A = get_area(src)
-	var/list/ctf_object_typecache = typecacheof(list(
-				/obj/machinery,
-				/obj/effect/ctf,
-				/obj/item/twohanded/ctf
-			))
 	for(var/atm in A)
-		if (isturf(A) || ismob(A) || isarea(A))
-			continue
-		if(isstructure(atm))
+		if(!is_type_in_typecache(atm, ctf_object_typecache))
+			qdel(atm)
+		if(istype(atm, /obj/structure))
 			var/obj/structure/S = atm
 			S.obj_integrity = S.max_integrity
-		else if(!is_type_in_typecache(atm, ctf_object_typecache))
-			qdel(atm)
-
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
@@ -475,7 +452,7 @@
 
 /datum/outfit/ctf
 	name = "CTF"
-	ears = /obj/item/radio/headset
+	ears = /obj/item/device/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
 	toggle_helmet = FALSE // see the whites of their eyes
@@ -487,7 +464,7 @@
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf
 
-/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
 		return
 	var/list/no_drops = list()
@@ -496,14 +473,14 @@
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
 
-	// The shielded hardsuit is already TRAIT_NODROP
-	no_drops += H.get_item_by_slot(SLOT_GLOVES)
-	no_drops += H.get_item_by_slot(SLOT_SHOES)
-	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
-	no_drops += H.get_item_by_slot(SLOT_EARS)
+	// The shielded hardsuit is already NODROP_1
+	no_drops += H.get_item_by_slot(slot_gloves)
+	no_drops += H.get_item_by_slot(slot_shoes)
+	no_drops += H.get_item_by_slot(slot_w_uniform)
+	no_drops += H.get_item_by_slot(slot_ears)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
+		I.flags_1 |= NODROP_1
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill
@@ -529,18 +506,18 @@
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
-/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_RED)
+	var/obj/item/device/radio/R = H.ears
+	R.set_frequency(GLOB.REDTEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
 
-/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_BLUE)
+	var/obj/item/device/radio/R = H.ears
+	R.set_frequency(GLOB.BLUETEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
@@ -557,7 +534,7 @@
 	anchored = TRUE
 	alpha = 255
 
-/obj/structure/trap/ctf/examine(mob/user)
+/obj/structure/trap/examine(mob/user)
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
@@ -608,10 +585,10 @@
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
 	reload(AM)
 
-/obj/effect/ctf/ammo/Bump(atom/movable/AM)
+/obj/effect/ctf/ammo/Collide(atom/movable/AM)
 	reload(AM)
 
-/obj/effect/ctf/ammo/Bumped(atom/movable/AM)
+/obj/effect/ctf/ammo/CollidedWith(atom/movable/AM)
 	reload(AM)
 
 /obj/effect/ctf/ammo/proc/reload(mob/living/M)
@@ -653,6 +630,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
@@ -668,9 +646,6 @@
 	capture(user)
 
 /obj/machinery/control_point/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
 	capture(user)
 
 /obj/machinery/control_point/proc/capture(mob/user)
@@ -692,4 +667,3 @@
 #undef INSTAGIB_RESPAWN
 #undef DEFAULT_RESPAWN
 #undef AMMO_DROP_LIFETIME
-#undef CTF_REQUIRED_PLAYERS

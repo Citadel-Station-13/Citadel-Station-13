@@ -10,21 +10,12 @@
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	var/active = 0
 	var/det_time = 50
 	var/display_timer = 1
-	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
-
-/obj/item/grenade/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
-	preprime(user, det_time)
-	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
-	sleep(det_time)//so you dont die instantly
-	return BRUTELOSS
 
 /obj/item/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
@@ -33,26 +24,20 @@
 		qdel(src)
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
-	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
-	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
-		if(prob(50))
-			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
-			preprime(user, 5, FALSE)
-			return FALSE
-	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
-		to_chat(user, "<span class='warning'>You pull the pin on [src]. Attached to it is a pink ribbon that says, \"<span class='clown'>HONK</span>\"</span>")
+	if(user.disabilities & CLUMSY && prob(50))
+		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 		preprime(user, 5, FALSE)
 		return FALSE
 	return TRUE
 
 
 /obj/item/grenade/examine(mob/user)
-	. = ..()
+	..()
 	if(display_timer)
 		if(det_time > 1)
-			. += "The timer is set to [DisplayTimeText(det_time)]."
+			to_chat(user, "The timer is set to [det_time/10] second\s.")
 		else
-			. += "\The [src] is set for instant detonation."
+			to_chat(user, "\The [src] is set for instant detonation.")
 
 
 /obj/item/grenade/attack_self(mob/user)
@@ -61,37 +46,32 @@
 			preprime(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
-	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed \a [src] for detonation at [ADMIN_VERBOSEJMP(T)]"
+	var/area/A = get_area(T)
+	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed \a [src] for detonation at [ADMIN_COORDJMP(T)]"
 	GLOB.bombers += message
 	message_admins(message)
-	log_game("[key_name(user)] has primed \a [src] for detonation at [AREACOORD(T)].")
+	log_game("[key_name(user)] has primed \a [src] for detonation at [A.name] [COORD(T)].")
 
-/obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
+/obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE)
 	var/turf/T = get_turf(src)
-	log_grenade(user, T) //Inbuilt admin procs already handle null users
-	if(user)
-		add_fingerprint(user)
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			C.throw_mode_on()
-		if(msg)
-			to_chat(user, "<span class='warning'>You prime [src]! [DisplayTimeText(det_time)]!</span>")
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
+	log_grenade(user, T)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
+	if(msg)
+		to_chat(user, "<span class='warning'>You prime \the [src]! [det_time/10] seconds!</span>")
+	playsound(loc, 'sound/weapons/armbomb.ogg', 60, 1)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
+	add_fingerprint(user)
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/proc/prime()
-	var/turf/T = get_turf(src)
-	log_game("Grenade detonation at [AREACOORD(T)], location [loc]")
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))
 		var/mob/M = loc
 		M.dropItemToGround(src)
-	else if(isitem(loc))
-		var/obj/item/I = loc
-		I.grenade_prime_react(src)
 
 
 /obj/item/grenade/attackby(obj/item/W, mob/user, params)
@@ -112,6 +92,10 @@
 		add_fingerprint(user)
 	else
 		return ..()
+
+/obj/item/grenade/attack_hand()
+	walk(src, null, null)
+	..()
 
 /obj/item/grenade/attack_paw(mob/user)
 	return attack_hand(user)

@@ -78,8 +78,6 @@
 
 /datum/datacore/proc/manifest()
 	for(var/mob/dead/new_player/N in GLOB.player_list)
-		if(N.new_character)
-			log_manifest(N.ckey,N.new_character.mind,N.new_character)
 		if(ishuman(N.new_character))
 			manifest_inject(N.new_character, N.client)
 		CHECK_TICK
@@ -199,7 +197,6 @@
 
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	set waitfor = FALSE
-	var/static/list/show_directions = list(SOUTH, WEST)
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -213,17 +210,11 @@
 		var/id = num2hex(record_id_num++,6)
 		if(!C)
 			C = H.client
-		var/image = get_id_photo(H, C, show_directions)
-		var/datum/picture/pf = new
-		var/datum/picture/ps = new
-		pf.picture_name = "[H]"
-		ps.picture_name = "[H]"
-		pf.picture_desc = "This is [H]."
-		ps.picture_desc = "This is [H]."
-		pf.picture_image = icon(image, dir = SOUTH)
-		ps.picture_image = icon(image, dir = WEST)
-		var/obj/item/photo/photo_front = new(null, pf)
-		var/obj/item/photo/photo_side = new(null, ps)
+		var/image = get_id_photo(H, C)
+		var/obj/item/photo/photo_front = new()
+		var/obj/item/photo/photo_side = new()
+		photo_front.photocreate(null, icon(image, dir = SOUTH))
+		photo_side.photocreate(null, icon(image, dir = WEST))
 
 		//These records should ~really~ be merged or something
 		//General Record
@@ -232,7 +223,8 @@
 		G.fields["name"]		= H.real_name
 		G.fields["rank"]		= assignment
 		G.fields["age"]			= H.age
-		G.fields["species"]	= H.dna.species.name
+		if(config.mutant_races)
+			G.fields["species"]	= H.dna.species.name
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
@@ -255,7 +247,7 @@
 		M.fields["alg_d"]		= "No allergies have been detected in this patient."
 		M.fields["cdi"]			= "None"
 		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		M.fields["notes"]		= H.get_trait_string(medical)
+		M.fields["notes"]		= "No notes."
 		medical += M
 
 		//Security Record
@@ -286,11 +278,11 @@
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C)
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P
 	if(!C)
 		C = H.client
 	if(C)
 		P = C.prefs
-	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
+	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST)

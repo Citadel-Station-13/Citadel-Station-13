@@ -1,6 +1,0 @@
-author: "Tlaltecuhtli, Nemvar, Trilby, Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "russian surplus crate, sec ammo crate, meat/veggie/fruit crate, rped crate, bomb suit crate, bio suit crate, parrot crate, chem crate, db crate"
-  - tweak: "lowered price of some crates which are overpriced for no reason aka the tablet crate and the mech circuits crates, track implant crate has also track .38 ammo"
-  - bugfix: "sectech vendor has a refill pack"

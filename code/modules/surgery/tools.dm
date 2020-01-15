@@ -4,43 +4,22 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
-	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	tool_behaviour = TOOL_RETRACTOR
-	toolspeed = 1
+	origin_tech = "materials=1;biotech=1"
 
-/obj/item/retractor/advanced
-	name = "mechanical pinches"
-	desc = "An agglomerate of rods and gears."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "retractor_a"
-	toolspeed = 0.7
-
-/obj/item/retractor/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_RETRACTOR)
-		tool_behaviour = TOOL_HEMOSTAT
-		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in hemostat mode.</span>")
-		icon_state = "hemostat_a"
-	else
-		tool_behaviour = TOOL_RETRACTOR
-		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in retractor mode.</span>")
-		icon_state = "retractor_a"
-
-/obj/item/retractor/advanced/examine(mob/living/user)
-	. = ..()
-	. += "<span class = 'notice> It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]. </span>"
 
 /obj/item/retractor/augment
-	name = "retractor"
+	name = "toolarm retractor"
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
+
 
 /obj/item/hemostat
 	name = "hemostat"
@@ -48,21 +27,21 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
-	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
-	tool_behaviour = TOOL_HEMOSTAT
-	toolspeed = 1
+
 
 /obj/item/hemostat/augment
-	name = "hemostat"
+	name = "toolarm hemostat"
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
 
@@ -73,21 +52,21 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
-	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
-	tool_behaviour = TOOL_CAUTERY
-	toolspeed = 1
+
 
 /obj/item/cautery/augment
-	name = "cautery"
+	name = "toolarm cautery"
 	desc = "A heated element that cauterizes wounds."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 	attack_verb = list("burnt")
 
@@ -101,42 +80,15 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
+	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
-	tool_behaviour = TOOL_DRILL
-	toolspeed = 1
 
-/obj/item/surgicaldrill/advanced
-	name = "searing tool"
-	desc = "It projects a high power laser used for medical application."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "surgicaldrill_a"
-	hitsound = 'sound/items/welder.ogg'
-
-/obj/item/surgicaldrill/advanced/Initialize()
-	. = ..()
-	set_light(1)
-
-/obj/item/surgicaldrill/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_DRILL)
-		tool_behaviour = TOOL_CAUTERY
-		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
-		icon_state = "cautery_a"
-	else
-		tool_behaviour = TOOL_DRILL
-		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
-		icon_state = "surgicaldrill_a"
-
-/obj/item/surgicaldrill/advanced/examine(mob/living/user)
-	. = ..()
-	. += "<span class = 'notice> It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode.</span>"
 
 /obj/item/surgicaldrill/augment
-	name = "surgical drill"
+	name = "toolarm surgical drill"
 	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
@@ -145,6 +97,7 @@
 	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 	attack_verb = list("drilled")
 
@@ -163,53 +116,13 @@
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
-	item_flags = SURGICAL_TOOL
+	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
-	tool_behaviour = TOOL_SCALPEL
-	toolspeed = 1
-
-/obj/item/scalpel/Initialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
-
-/obj/item/scalpel/advanced
-	name = "laser scalpel"
-	desc = "An advanced scalpel which uses laser technology to cut."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "scalpel_a"
-	hitsound = 'sound/weapons/blade1.ogg'
-	force = 16
-	toolspeed = 0.7
-	light_color = LIGHT_COLOR_GREEN
-	sharpness = IS_SHARP_ACCURATE
-
-/obj/item/scalpel/advanced/Initialize()
-	. = ..()
-	set_light(1)
-
-/obj/item/scalpel/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_SCALPEL)
-		tool_behaviour = TOOL_SAW
-		to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
-		set_light(2)
-		force += 1 //we don't want to ruin sharpened stuff
-		icon_state = "saw_a"
-	else
-		tool_behaviour = TOOL_SCALPEL
-		to_chat(user, "<span class='notice'>You lower the power of [src], it can no longer cut bones.</span>")
-		set_light(1)
-		force -= 1
-		icon_state = "scalpel_a"
-
-/obj/item/scalpel/advanced/examine(mob/living/user)
-	. = ..()
-	. += "<span class = 'notice> It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode. </span>"
 
 /obj/item/scalpel/augment
-	name = "scalpel"
+	name = "toolarm scalpel"
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
@@ -220,6 +133,7 @@
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
+	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	toolspeed = 0.5
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -239,7 +153,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
-	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -247,18 +160,12 @@
 	throw_speed = 2
 	throw_range = 5
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	origin_tech = "biotech=1;combat=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
-	tool_behaviour = TOOL_SAW
-	toolspeed = 1
-
-/obj/item/circular_saw/Initialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
-
 
 /obj/item/circular_saw/augment
-	name = "circular saw"
+	name = "toolarm circular saw"
 	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
@@ -271,6 +178,7 @@
 	throw_speed = 2
 	throw_range = 5
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	origin_tech = "biotech=1;combat=1"
 	toolspeed = 0.5
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
@@ -281,6 +189,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical_drapes"
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
 
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
@@ -292,10 +201,8 @@
 	desc = "A container for holding body parts."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
-	item_flags = SURGICAL_TOOL
 
 /obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(contents.len)
@@ -318,7 +225,7 @@
 	add_overlay(img)
 	add_overlay("evidence")
 	desc = "An organ storage container holding [I]."
-	I.forceMove(src)
+	I.loc = src
 	w_class = I.w_class
 
 /obj/item/organ_storage/attack_self(mob/user)
@@ -331,30 +238,4 @@
 		desc = "A container for holding body parts."
 	else
 		to_chat(user, "[src] is empty.")
-	return
-
-/obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
-	name = "\improper Surgical Processor"
-	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "spectrometer"
-	item_flags = NOBLUDGEON
-	var/list/advanced_surgeries = list()
-
-/obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(istype(O, /obj/item/disk/surgery))
-		to_chat(user, "<span class='notice'>You load the surgery protocol from [O] into [src].</span>")
-		var/obj/item/disk/surgery/D = O
-		if(do_after(user, 10, target = O))
-			advanced_surgeries |= D.surgeries
-		return TRUE
-	if(istype(O, /obj/machinery/computer/operating))
-		to_chat(user, "<span class='notice'>You copy surgery protocols from [O] into [src].</span>")
-		var/obj/machinery/computer/operating/OC = O
-		if(do_after(user, 10, target = O))
-			advanced_surgeries |= OC.advanced_surgeries
-		return TRUE
 	return

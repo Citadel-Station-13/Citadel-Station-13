@@ -7,7 +7,7 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
-#define STATUS_EFFECT_REFRESH 3 // if it only allows one, and new instances just instead refresh the timer
+#define BASIC_STATUS_EFFECT /datum/status_effect //Has no effect.
 
 ///////////
 // BUFFS //
@@ -28,12 +28,6 @@
 
 #define STATUS_EFFECT_BLOODDRUNK /datum/status_effect/blooddrunk //Stun immunity and greatly reduced damage taken
 
-#define STATUS_EFFECT_FLESHMEND /datum/status_effect/fleshmend //Very fast healing; suppressed by fire, and heals less fire damage
-
-#define STATUS_EFFECT_EXERCISED /datum/status_effect/exercised //Prevents heart disease
-
-#define STATUS_EFFECT_HIPPOCRATIC_OATH /datum/status_effect/hippocraticOath //Gives you an aura of healing as well as regrowing the Rod of Asclepius if lost
-
 /////////////
 // DEBUFFS //
 /////////////
@@ -46,10 +40,6 @@
 
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
-#define STATUS_EFFECT_TASED /datum/status_effect/no_combat_mode/electrode/ //the affected has been tased, preventing fine muscle control
-
-#define STATUS_EFFECT_PACIFY /datum/status_effect/pacify //the affected is pacified, preventing direct hostile actions
-
 #define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 
 #define STATUS_EFFECT_GEISTRACKER /datum/status_effect/geis_tracker //if you're using geis, this tracks that and keeps you from using scripture
@@ -57,8 +47,6 @@
 #define STATUS_EFFECT_MANIAMOTOR /datum/status_effect/maniamotor //disrupts, damages, and confuses the affected as long as they're in range of the motor
 #define MAX_MANIA_SEVERITY 100 //how high the mania severity can go
 #define MANIA_DAMAGE_TO_CONVERT 90 //how much damage is required before it'll convert affected targets
-
-#define STATUS_EFFECT_CHOKINGSTRAND /datum/status_effect/strandling //Choking Strand
 
 #define STATUS_EFFECT_HISWRATH /datum/status_effect/his_wrath //His Wrath.
 
@@ -68,26 +56,12 @@
 
 #define STATUS_EFFECT_SAWBLEED /datum/status_effect/saw_bleed //if the bleed builds up enough, takes a ton of damage
 
-#define STATUS_EFFECT_NECKSLICE /datum/status_effect/neck_slice //Creates the flavor messages for the neck-slice
-
 #define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
 #define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
 #define CURSE_SPAWNING	2 //spawns creatures that attack the target only
 #define CURSE_WASTING	4 //causes gradual damage
 #define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
-#define STATUS_EFFECT_KINDLE /datum/status_effect/kindle //A knockdown reduced by 1 second for every 3 points of damage the target takes.
-
-#define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
-
-#define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
-
-#define STATUS_EFFECT_BREASTS_ENLARGEMENT /datum/status_effect/chem/breast_enlarger //Applied slowdown due to the ominous bulk.
-
-#define STATUS_EFFECT_PENIS_ENLARGEMENT /datum/status_effect/chem/penis_enlarger //More applied slowdown, just like the above.
-
-#define STATUS_EFFECT_NO_COMBAT_MODE /datum/status_effect/no_combat_mode //Wont allow combat mode and will disable it
-#define STATUS_EFFECT_MESMERIZE /datum/status_effect/no_combat_mode/mesmerize //Just reskinned no_combat_mode
 /////////////
 // NEUTRAL //
 /////////////
@@ -97,12 +71,3 @@
 #define STATUS_EFFECT_CRUSHERDAMAGETRACKING /datum/status_effect/crusher_damage //tracks total kinetic crusher damage on a target
 
 #define STATUS_EFFECT_SYPHONMARK /datum/status_effect/syphon_mark //tracks kills for the KA death syphon module
-
-#define STATUS_EFFECT_INLOVE /datum/status_effect/in_love //Displays you as being in love with someone else, and makes hearts appear around them.
-
-/////////////
-//  SLIME  //
-/////////////
-
-#define STATUS_EFFECT_RAINBOWPROTECTION /datum/status_effect/rainbow_protection //Invulnerable and pacifistic
-#define STATUS_EFFECT_SLIMESKIN /datum/status_effect/slimeskin //Increased armor

@@ -2,14 +2,14 @@
 	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of planetary mining."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 3 //Move speed, lower is faster.
-	var/fast_pressure_step_in = 2
-	var/slow_pressure_step_in = 3
+	step_in = 4 //Move speed, lower is faster.
+	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
+	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
 	max_temperature = 20000
 	max_integrity = 200
-	lights_power = 8
+	lights_power = 7
 	deflect_chance = 15
-	armor = list("melee" = 30, "bullet" = 15, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -26,13 +26,15 @@
 	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment)
 		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
 		if(ore_box)
-			for(var/obj/item/stack/ore/ore in range(1, src))
+			for(var/obj/item/ore/ore in range(1, src))
 				if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc)) //we can reach it and it's in front of us? grab it!
 					ore.forceMove(ore_box)
 
 /obj/mecha/working/ripley/Destroy()
+	for(var/i=1, i <= hides, i++)
+		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	for(var/atom/movable/A in cargo)
-		A.forceMove(drop_location())
+		A.forceMove(loc)
 		step_rand(A)
 	cargo.Cut()
 	return ..()
@@ -47,31 +49,23 @@
 
 /obj/mecha/working/ripley/update_icon()
 	..()
-	var/datum/component/armor_plate/C = GetComponent(/datum/component/armor_plate)
-	if (C.amount)
+	if (hides)
 		cut_overlays()
-		if(C.amount < 3)
+		if(hides < 3)
 			add_overlay(occupant ? "ripley-g" : "ripley-g-open")
 		else
 			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
-
-/obj/mecha/working/ripley/Initialize()
-	. = ..()
-	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 10, "bullet" = 5, "laser" = 5))
 
 
 /obj/mecha/working/ripley/firefighter
 	desc = "Autonomous Power Loader Unit. This model is refitted with additional thermal protection."
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
-	step_in = 4
-	fast_pressure_step_in = 2
-	slow_pressure_step_in = 4
 	max_temperature = 65000
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 
@@ -80,29 +74,17 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	slow_pressure_step_in = 3
 	opacity=0
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
 
-/obj/mecha/working/ripley/deathripley/Initialize()
-	. = ..()
+/obj/mecha/working/ripley/deathripley/New()
+	..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
 	ME.attach(src)
-
-/obj/mecha/working/ripley/deathripley/real
-	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
-
-/obj/mecha/working/ripley/deathripley/real/Initialize()
-	. = ..()
-	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-		E.detach()
-		qdel(E)
-	equipment.Cut()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
-	ME.attach(src)
+	return
 
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
@@ -112,7 +94,7 @@
 /obj/mecha/working/ripley/mining/Initialize()
 	. = ..()
 	if(cell)
-		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
+		cell.charge = Floor(cell.charge * 0.25) //Starts at very low charge
 	if(prob(70)) //Maybe add a drill
 		if(prob(15)) //Possible diamond drill... Feeling lucky?
 			var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
@@ -147,10 +129,10 @@
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
-			occupant_message("<span class='notice'>You unload [O].</span>")
-			O.forceMove(drop_location())
-			cargo -= O
-			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
+			src.occupant_message("<span class='notice'>You unload [O].</span>")
+			O.forceMove(loc)
+			src.cargo -= O
+			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
 
@@ -159,7 +141,7 @@
 		var/obj/O = X
 		if(prob(30/severity))
 			cargo -= O
-			O.forceMove(drop_location())
+			O.forceMove(loc)
 	. = ..()
 
 /obj/mecha/working/ripley/get_stats_part()
@@ -167,7 +149,7 @@
 	output += "<b>Cargo Compartment Contents:</b><div style=\"margin-left: 15px;\">"
 	if(cargo.len)
 		for(var/obj/O in cargo)
-			output += "<a href='?src=[REF(src)];drop_from_cargo=[REF(O)]'>Unload</a> : [O]<br>"
+			output += "<a href='?src=\ref[src];drop_from_cargo=\ref[O]'>Unload</a> : [O]<br>"
 	else
 		output += "Nothing"
 	output += "</div>"
@@ -191,7 +173,7 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
 			return
 		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
-		O.forceMove(drop_location())
+		O.loc = loc
 		cargo -= O
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.

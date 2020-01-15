@@ -24,7 +24,7 @@ Bonus
 	stage_speed = -1
 	transmittable = -3
 	level = 4
-	severity = 4
+	severity = 3
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 80
@@ -32,8 +32,7 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/deafness/Start(datum/disease/advance/A)
-	if(!..())
-		return
+	..()
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
 	if(A.properties["resistance"] >= 9) //permanent deafness
@@ -49,10 +48,10 @@ Bonus
 				to_chat(M, "<span class='warning'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>")
 		if(5)
 			if(power > 2)
-				var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
-				if(istype(ears) && ears.damage < ears.maxHealth)
+				var/obj/item/organ/ears/ears = M.getorganslot("ears")
+				if(istype(ears) && ears.ear_damage < UNHEALING_EAR_DAMAGE)
 					to_chat(M, "<span class='userdanger'>Your ears pop painfully and start bleeding!</span>")
-					ears.damage = max(ears.damage, ears.maxHealth)
+					ears.ear_damage = max(ears.ear_damage, UNHEALING_EAR_DAMAGE)
 					M.emote("scream")
 			else
 				to_chat(M, "<span class='userdanger'>Your ears pop and begin ringing loudly!</span>")

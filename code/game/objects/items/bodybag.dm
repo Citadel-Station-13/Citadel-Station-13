@@ -11,7 +11,6 @@
 	deploy_bodybag(user, user.loc)
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	if(proximity)
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
@@ -22,16 +21,6 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/bodybag/suicide_act(mob/user)
-	if(isopenturf(user.loc))
-		user.visible_message("<span class='suicide'>[user] is crawling into [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
-		R.add_fingerprint(user)
-		qdel(src)
-		user.forceMove(R)
-		playsound(src, 'sound/items/zip.ogg', 15, 1, -3)
-		return (OXYLOSS)
-	..()
 
 // Bluespace bodybag
 
@@ -42,14 +31,12 @@
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
-	item_flags = NO_MAT_REDEMPTION
-
+	origin_tech = "bluespace=4;materials=4;plasmatech=4"
 
 /obj/item/bodybag/bluespace/examine(mob/user)
-	. = ..()
+	..()
 	if(contents.len)
-		var/s = contents.len == 1 ? "" : "s"
-		. += "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>"
+		to_chat(user, "<span class='notice'>You can make out the shapes of [contents.len] objects through the fabric.</span>")
 
 /obj/item/bodybag/bluespace/Destroy()
 	for(var/atom/movable/A in contents)

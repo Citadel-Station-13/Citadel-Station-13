@@ -21,8 +21,6 @@
 							CAT_BURGER,
 							CAT_CAKE,
 							CAT_EGG,
-							CAT_FISH,
-							CAT_ICE,   //Called Frozen
 							CAT_MEAT,
 							CAT_MISCFOOD,
 							CAT_PASTRY,
@@ -32,7 +30,7 @@
 							CAT_SANDWICH,
 							CAT_SOUP,
 							CAT_SPAGHETTI),
-						CAT_NONE) //Clothing subcategories
+                        CAT_CLOTHING) //Clothing subcategories
 
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
@@ -54,7 +52,6 @@
 
 
 /datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
-	contents = contents["other"]
 	main_loop:
 		for(var/A in R.reqs)
 			var/needed_amount = R.reqs[A]
@@ -86,61 +83,44 @@
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B
-				if(AM.flags_1 & HOLOGRAM_1)
+				if(AM.flags_2 & HOLOGRAM_2)
 					continue
 				. += AM
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
-	.["tool_behaviour"] = list()
-	.["other"] = list()
 	for(var/obj/item/I in get_environment(user))
-		if(I.flags_1 & HOLOGRAM_1)
+		if(I.flags_2 & HOLOGRAM_2)
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
-			.["other"][I.type] += S.amount
-		else if(I.tool_behaviour)
-			.["tool_behaviour"] += I.tool_behaviour
-			.["other"][I.type] += 1
+			.[I.type] += S.amount
 		else
 			if(istype(I, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = I
-				if(RC.is_drainable())
+				if(RC.container_type & OPENCONTAINER_1)
 					for(var/datum/reagent/A in RC.reagents.reagent_list)
-						.["other"][A.type] += A.volume
-			.["other"][I.type] += 1
+						.[A.type] += A.volume
+			.[I.type] += 1
 
 /datum/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
 	if(!R.tools.len)
-		return TRUE
+		return 1
 	var/list/possible_tools = list()
-	var/list/present_qualities = list()
-	present_qualities |= contents["tool_behaviour"]
 	for(var/obj/item/I in user.contents)
 		if(istype(I, /obj/item/storage))
 			for(var/obj/item/SI in I.contents)
 				possible_tools += SI.type
-				if(SI.tool_behaviour)
-					present_qualities.Add(SI.tool_behaviour)
-
 		possible_tools += I.type
-
-		if(I.tool_behaviour)
-			present_qualities.Add(I.tool_behaviour)
-
-	possible_tools |= contents["other"]
+	possible_tools += contents
 
 	main_loop:
 		for(var/A in R.tools)
-			if(A in present_qualities)
-				continue
-			else
-				for(var/I in possible_tools)
-					if(ispath(I, A))
-						continue main_loop
-			return FALSE
-	return TRUE
+			for(var/I in possible_tools)
+				if(ispath(I,A))
+					continue main_loop
+			return 0
+	return 1
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)
@@ -157,7 +137,7 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(send_feedback)
-					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
+					SSblackbox.add_details("object_crafted","[I.type]")
 				return 0
 			return "."
 		return ", missing tool."
@@ -185,7 +165,7 @@
 
 	After its done loop over deletion list and delete all the shit that wasnt taken by parts loop
 
-	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
+	del_reqs return the list of parts resulting object will recieve as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */
 
 /datum/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user)
@@ -225,7 +205,6 @@
 							RGNT.volume += RG.volume
 							RGNT.data += RG.data
 							qdel(RG)
-						RC.on_reagent_change()
 					else
 						surroundings -= RC
 			else if(ispath(A, /obj/item/stack))
@@ -317,8 +296,6 @@
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
-		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
-			continue
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 		if(check_contents(R, surroundings))
@@ -404,7 +381,7 @@
 /datum/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
 	var/list/data = list()
 	data["name"] = R.name
-	data["ref"] = "[REF(R)]"
+	data["ref"] = "\ref[R]"
 	var/req_text = ""
 	var/tool_text = ""
 	var/catalyst_text = ""
@@ -424,19 +401,9 @@
 	data["catalyst_text"] = catalyst_text
 
 	for(var/a in R.tools)
-		if(ispath(a, /obj/item))
-			var/obj/item/b = a
-			tool_text += " [initial(b.name)],"
-		else
-			tool_text += " [a],"
+		var/atom/A = a //cheat-typecast
+		tool_text += " [R.tools[A]] [initial(A.name)],"
 	tool_text = replacetext(tool_text,",","",-1)
 	data["tool_text"] = tool_text
 
 	return data
-
-//Mind helpers
-
-/datum/mind/proc/teach_crafting_recipe(R)
-	if(!learned_recipes)
-		learned_recipes = list()
-	learned_recipes |= R

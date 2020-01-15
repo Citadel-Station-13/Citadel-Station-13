@@ -38,11 +38,11 @@
 	var/static/mutable_appearance/cap_dead
 
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
-	. = ..()
+	..()
 	if(health >= maxHealth)
-		. += "<span class='info'>It looks healthy.</span>"
+		to_chat(user, "<span class='info'>It looks healthy.</span>")
 	else
-		. += "<span class='info'>It looks like it's been roughed up.</span>"
+		to_chat(user, "<span class='info'>It looks like it's been roughed up.</span>")
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
@@ -61,25 +61,6 @@
 	UpdateMushroomCap()
 	health = maxHealth
 	. = ..()
-
-/mob/living/simple_animal/hostile/mushroom/CanAttack(atom/the_target) // Mushroom-specific version of CanAttack to handle stupid attack_same = 2 crap so we don't have to do it for literally every single simple_animal/hostile because this shit never gets spawned
-	if(!the_target || isturf(the_target) || istype(the_target, /atom/movable/lighting_object))
-		return FALSE
-
-	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return FALSE
-
-	if(isliving(the_target))
-		var/mob/living/L = the_target
-
-		if (!faction_check_mob(L) && attack_same == 2)
-			return FALSE
-		if(L.stat > stat_attack)
-			return FALSE
-
-		return TRUE
-
-	return FALSE
 
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
@@ -166,9 +147,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	if(.) // the attack was blocked
-		return
+	..()
 	if(M.a_intent == INTENT_HARM)
 		Bruise()
 
@@ -187,6 +166,7 @@
 	var/counter
 	for(counter=0, counter<=powerlevel, counter++)
 		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)
-		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
-		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
-		S.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)
+		S.reagents.add_reagent("mushroomhallucinogen", powerlevel)
+		S.reagents.add_reagent("omnizine", powerlevel)
+		S.reagents.add_reagent("synaptizine", powerlevel)
+	qdel(src)

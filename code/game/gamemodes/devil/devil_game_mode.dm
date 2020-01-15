@@ -20,32 +20,30 @@
 		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
 /datum/game_mode/devil/pre_setup()
-	if(CONFIG_GET(flag/protect_roles_from_antagonist))
+	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
-	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
+	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
 	var/num_devils = 1
 
-	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
-	if(tsc)
-		num_devils = max(minimum_devils, min( round(num_players() / (tsc * 3))+ 2 + num_modifier, round(num_players() / (tsc * 1.5)) + num_modifier))
+	if(config.traitor_scaling_coeff)
+		num_devils = max(minimum_devils, min( round(num_players()/(config.traitor_scaling_coeff*3))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff*1.5)) + num_modifier ))
 	else
 		num_devils = max(minimum_devils, min(num_players(), traitors_possible))
 
 	for(var/j = 0, j < num_devils, j++)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/devil = antag_pick(antag_candidates)
+		var/datum/mind/devil = pick(antag_candidates)
 		devils += devil
 		devil.special_role = traitor_name
 		devil.restricted_roles = restricted_jobs
 
-		log_game("[key_name(devil)] has been selected as a [traitor_name]")
+		log_game("[devil.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(devil)
 
 	if(devils.len < required_enemies)
-		setup_error = "Not enough devil candidates"
 		return 0
 	return 1
 
@@ -53,6 +51,7 @@
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
 		post_setup_finalize(devil)
+	modePlayer += devils
 	..()
 	return 1
 
@@ -65,18 +64,18 @@
 	add_devil_objectives(devil,2)
 
 /proc/is_devil(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/devil)
+	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
 
 /proc/add_devil(mob/living/L, ascendable = FALSE)
 	if(!L || !L.mind)
 		return FALSE
-	var/datum/antagonist/devil/devil_datum = L.mind.add_antag_datum(/datum/antagonist/devil)
+	var/datum/antagonist/devil/devil_datum = L.mind.add_antag_datum(ANTAG_DATUM_DEVIL)
 	devil_datum.ascendable = ascendable
 	return devil_datum
 
 /proc/remove_devil(mob/living/L)
 	if(!L || !L.mind)
 		return FALSE
-	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(/datum/antagonist/devil)
+	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
 	devil_datum.on_removal()
 	return TRUE

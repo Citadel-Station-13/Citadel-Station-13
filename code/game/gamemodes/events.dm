@@ -1,7 +1,7 @@
 /proc/power_failure()
-	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", "poweroff")
+	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", 'sound/ai/poweroff.ogg')
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
-		if(istype(get_area(S), /area/ai_monitored/turret_protected) || !is_station_level(S.z))
+		if(istype(get_area(S), /area/ai_monitored/turret_protected) || !(S.z in GLOB.station_z_levels))
 			continue
 		S.charge = 0
 		S.output_level = 0
@@ -22,18 +22,17 @@
 				break
 		if(A.contents)
 			for(var/atom/AT in A.contents)
-				if(!is_station_level(AT.z)) //Only check one, it's enough.
+				if(!(AT.z in GLOB.station_z_levels)) //Only check one, it's enough.
 					skip = 1
 				break
-		if(skip)
-			continue
+		if(skip) continue
 		A.power_light = FALSE
 		A.power_equip = FALSE
 		A.power_environ = FALSE
 		A.power_change()
 
 	for(var/obj/machinery/power/apc/C in GLOB.apcs_list)
-		if(C.cell && is_station_level(C.z))
+		if(C.cell && (C.z in GLOB.station_z_levels))
 			var/area/A = C.area
 
 			var/skip = 0
@@ -41,20 +40,19 @@
 				if(istype(A,area_type))
 					skip = 1
 					break
-			if(skip)
-				continue
+			if(skip) continue
 
 			C.cell.charge = 0
 
 /proc/power_restore()
 
-	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", "poweron")
+	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", 'sound/ai/poweron.ogg')
 	for(var/obj/machinery/power/apc/C in GLOB.machines)
-		if(C.cell && is_station_level(C.z))
+		if(C.cell && (C.z in GLOB.station_z_levels))
 			C.cell.charge = C.cell.maxcharge
 			C.failure_timer = 0
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
-		if(!is_station_level(S.z))
+		if(!(S.z in GLOB.station_z_levels))
 			continue
 		S.charge = S.capacity
 		S.output_level = S.output_level_max
@@ -70,9 +68,9 @@
 
 /proc/power_restore_quick()
 
-	priority_announce("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal", "poweron")
+	priority_announce("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal", 'sound/ai/poweron.ogg')
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
-		if(!is_station_level(S.z))
+		if(!(S.z in GLOB.station_z_levels))
 			continue
 		S.charge = S.capacity
 		S.output_level = S.output_level_max

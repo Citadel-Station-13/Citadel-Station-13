@@ -1,5 +1,10 @@
 
-//returns TRUE if this mob has sufficient access to use this object
+/obj/var/list/req_access = null
+/obj/var/req_access_txt = "0" as text
+/obj/var/list/req_one_access = null
+/obj/var/req_one_access_txt = "0" as text
+
+//returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
@@ -10,8 +15,6 @@
 		return TRUE	//AI can do whatever it wants
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
-		return TRUE
-	else if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
 		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -35,12 +38,6 @@
 /obj/item/proc/GetID()
 	return null
 
-/obj/item/proc/RemoveID()
-	return null
-
-/obj/item/proc/InsertID()
-	return FALSE
-
 /obj/proc/text2access(access_text)
 	. = list()
 	if(!access_text)
@@ -63,35 +60,48 @@
 		for(var/b in text2access(req_one_access_txt))
 			req_one_access += b
 
-// Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
-	return check_access_list(I ? I.GetAccess() : null)
-
-/obj/proc/check_access_list(list/access_list)
 	gen_access()
 
-	if(!islist(req_access)) //something's very wrong
+	if(!istype(src.req_access, /list)) //something's very wrong
 		return TRUE
 
-	if(!req_access.len && !length(req_one_access))
+	var/list/L = src.req_access
+	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
 		return TRUE
-
-	if(!length(access_list) || !islist(access_list))
+	if(!I)
 		return FALSE
-
-	for(var/req in req_access)
-		if(!(req in access_list)) //doesn't have this access
+	for(var/req in src.req_access)
+		if(!(req in I.GetAccess())) //doesn't have this access
 			return FALSE
-
-	if(length(req_one_access))
-		for(var/req in req_one_access)
-			if(req in access_list) //has an access from the single access list
+	if(src.req_one_access && src.req_one_access.len)
+		for(var/req in src.req_one_access)
+			if(req in I.GetAccess()) //has an access from the single access list
 				return TRUE
 		return FALSE
 	return TRUE
 
-/obj/proc/check_access_ntnet(datum/netdata/data)
-	return check_access_list(data.passkey)
+
+/obj/proc/check_access_list(list/L)
+	if(!src.req_access  && !src.req_one_access)
+		return TRUE
+	if(!istype(src.req_access, /list))
+		return TRUE
+	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))
+		return TRUE
+	if(!L)
+		return FALSE
+	if(!istype(L, /list))
+		return FALSE
+	for(var/req in src.req_access)
+		if(!(req in L)) //doesn't have this access
+			return FALSE
+	if(src.req_one_access && src.req_one_access.len)
+		for(var/req in src.req_one_access)
+			if(req in L) //has an access from the single access list
+				return TRUE
+		return FALSE
+	return TRUE
 
 /proc/get_centcom_access(job)
 	switch(job)
@@ -127,17 +137,17 @@
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)
 
 /proc/get_all_accesses()
-	return list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT, ACCESS_ENTER_GENPOP, ACCESS_LEAVE_GENPOP,
-				ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_MORGUE, ACCESS_RD,
-				ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_CHEMISTRY, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_MAINT_TUNNELS,
-				ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD,
-				ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_HEADS, ACCESS_CAPTAIN, ACCESS_ALL_PERSONAL_LOCKERS,
-				ACCESS_TECH_STORAGE, ACCESS_CHAPEL_OFFICE, ACCESS_ATMOSPHERICS, ACCESS_KITCHEN,
-				ACCESS_BAR, ACCESS_JANITOR, ACCESS_CREMATORIUM, ACCESS_ROBOTICS, ACCESS_CARGO, ACCESS_CONSTRUCTION,
-				ACCESS_HYDROPONICS, ACCESS_LIBRARY, ACCESS_LAWYER, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_QM, ACCESS_SURGERY,
-				ACCESS_THEATRE, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_MAILSORTING, ACCESS_WEAPONS,
-				ACCESS_VAULT, ACCESS_MINING_STATION, ACCESS_XENOBIOLOGY, ACCESS_CE, ACCESS_HOP, ACCESS_HOS, ACCESS_RC_ANNOUNCE,
-				ACCESS_KEYCARD_AUTH, ACCESS_TCOMSAT, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM, ACCESS_MINISAT, ACCESS_NETWORK, ACCESS_CLONING)
+	return list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT,
+	            ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_MORGUE, ACCESS_RD,
+	            ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_CHEMISTRY, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_MAINT_TUNNELS,
+	            ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD,
+	            ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_HEADS, ACCESS_CAPTAIN, ACCESS_ALL_PERSONAL_LOCKERS,
+	            ACCESS_TECH_STORAGE, ACCESS_CHAPEL_OFFICE, ACCESS_ATMOSPHERICS, ACCESS_KITCHEN,
+	            ACCESS_BAR, ACCESS_JANITOR, ACCESS_CREMATORIUM, ACCESS_ROBOTICS, ACCESS_CARGO, ACCESS_CONSTRUCTION,
+	            ACCESS_HYDROPONICS, ACCESS_LIBRARY, ACCESS_LAWYER, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_QM, ACCESS_SURGERY,
+	            ACCESS_THEATRE, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_MAILSORTING, ACCESS_WEAPONS,
+	            ACCESS_HEADS_VAULT, ACCESS_MINING_STATION, ACCESS_XENOBIOLOGY, ACCESS_CE, ACCESS_HOP, ACCESS_HOS, ACCESS_RC_ANNOUNCE,
+	            ACCESS_KEYCARD_AUTH, ACCESS_TCOMSAT, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM, ACCESS_MINISAT, ACCESS_NETWORK, ACCESS_CLONING)
 
 /proc/get_all_centcom_access()
 	return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE, ACCESS_CENT_TELEPORTER, ACCESS_CENT_CAPTAIN)
@@ -163,7 +173,7 @@
 		if(1) //station general
 			return list(ACCESS_KITCHEN,ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_LIBRARY, ACCESS_THEATRE, ACCESS_LAWYER)
 		if(2) //security
-			return list(ACCESS_SEC_DOORS, ACCESS_WEAPONS, ACCESS_SECURITY, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT, ACCESS_HOS, ACCESS_ENTER_GENPOP, ACCESS_LEAVE_GENPOP,)
+			return list(ACCESS_SEC_DOORS, ACCESS_WEAPONS, ACCESS_SECURITY, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT, ACCESS_HOS)
 		if(3) //medbay
 			return list(ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_SURGERY, ACCESS_CMO)
 		if(4) //research
@@ -171,9 +181,9 @@
 		if(5) //engineering and maintenance
 			return list(ACCESS_CONSTRUCTION, ACCESS_MAINT_TUNNELS, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_TECH_STORAGE, ACCESS_ATMOSPHERICS, ACCESS_TCOMSAT, ACCESS_MINISAT, ACCESS_CE)
 		if(6) //supply
-			return list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_CARGO, ACCESS_QM, ACCESS_VAULT)
+			return list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_CARGO, ACCESS_QM)
 		if(7) //command
-			return list(ACCESS_HEADS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_GATEWAY, ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_HOP, ACCESS_CAPTAIN, ACCESS_VAULT)
+			return list(ACCESS_HEADS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_GATEWAY, ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_HEADS_VAULT, ACCESS_HOP, ACCESS_CAPTAIN)
 
 /proc/get_region_accesses_name(code)
 	switch(code)
@@ -201,13 +211,13 @@
 		if(ACCESS_CARGO_BOT)
 			return "Delivery Chutes"
 		if(ACCESS_SECURITY)
-			return "Security Equipment"
+			return "Security"
 		if(ACCESS_BRIG)
-			return "Holding Cells and Prisoner Management"
+			return "Holding Cells"
 		if(ACCESS_COURT)
 			return "Courtroom"
 		if(ACCESS_FORENSICS_LOCKERS)
-			return "Forensics Lockers"
+			return "Forensics"
 		if(ACCESS_MEDICAL)
 			return "Medical"
 		if(ACCESS_GENETICS)
@@ -229,7 +239,7 @@
 		if(ACCESS_ENGINE)
 			return "Engineering"
 		if(ACCESS_ENGINE_EQUIP)
-			return "Power and Engineering Equipment"
+			return "Power Equipment"
 		if(ACCESS_MAINT_TUNNELS)
 			return "Maintenance"
 		if(ACCESS_EXTERNAL_AIRLOCKS)
@@ -245,7 +255,7 @@
 		if(ACCESS_EVA)
 			return "EVA"
 		if(ACCESS_HEADS)
-			return "Bridge and Command Equipment"
+			return "Bridge"
 		if(ACCESS_CAPTAIN)
 			return "Captain"
 		if(ACCESS_ALL_PERSONAL_LOCKERS)
@@ -296,7 +306,7 @@
 			return "Mint"
 		if(ACCESS_MINT_VAULT)
 			return "Mint Vault"
-		if(ACCESS_VAULT)
+		if(ACCESS_HEADS_VAULT)
 			return "Main Vault"
 		if(ACCESS_MINING_STATION)
 			return "Mining EVA"
@@ -317,11 +327,7 @@
 		if(ACCESS_GATEWAY)
 			return "Gateway"
 		if(ACCESS_SEC_DOORS)
-			return "Security SubDepartment Doors"
-		if(ACCESS_ENTER_GENPOP)
-			return "Prison Turnstile Entrance"
-		if(ACCESS_LEAVE_GENPOP)
-			return "Prison Turnstile Exit"
+			return "Brig"
 		if(ACCESS_MINERAL_STOREROOM)
 			return "Mineral Storage"
 		if(ACCESS_MINISAT)

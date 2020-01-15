@@ -13,12 +13,13 @@
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/wrench) && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 50))
-			user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
-			playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
-			new/obj/item/stack/sheet/metal(drop_location())
-			qdel(src)
+		playsound(user, I.usesound, 50, 1)
+		if(!do_after(user, 50, target = src))
+			return 0
+		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
+		playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
+		new/obj/item/stack/sheet/metal(get_turf(src))
+		qdel(src)
 		return
 	..()
 
@@ -32,7 +33,7 @@
 /obj/structure/fluff/empty_sleeper //Empty sleepers are created by a good few ghost roles in lavaland.
 	name = "empty sleeper"
 	desc = "An open sleeper. It looks as though it would be awaiting another patient, were it not broken."
-	icon = 'icons/obj/machines/sleeper.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper-open"
 
 /obj/structure/fluff/empty_sleeper/nanotrasen
@@ -70,13 +71,6 @@
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
 	icon_state = "drake_statue_falling"
 
-/obj/structure/fluff/lightpost
-	name = "lightpost"
-	desc = "A homely lightpost adorned with festive decor."
-	icon = 'icons/obj/2x2.dmi'
-	icon_state = "lightpost"
-	deconstructible = FALSE
-	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/bus
 	name = "bus"
@@ -111,8 +105,7 @@
 	icon_state = "driverseat"
 
 /obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
-	playsound(src, 'sound/items/carhorn.ogg', 50, 1)
-	. = ..()
+	playsound(src.loc, 'sound/items/carhorn.ogg', 50, 1)
 
 /obj/structure/fluff/paper
 	name = "dense lining of papers"
@@ -168,73 +161,3 @@
 	name = "shrine"
 	desc = "A shrine dedicated to a deity."
 	icon_state = "shrine"
-
-/obj/structure/fluff/fokoff_sign
-	name = "crude sign"
-	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
-	icon = 'icons/obj/fluff.dmi'
-	icon_state = "fokof"
-
-/obj/structure/fluff/snowlegion
-	name = "snowlegion"
-	desc = "Looks like that weird kid with the tiger plushie has been round here again."
-	icon = 'icons/obj/fluff.dmi'
-	icon_state = "snowlegion"
-	anchored = TRUE
-	deconstructible = FALSE
-
-/obj/structure/fluff/big_chain
-	name = "giant chain"
-	desc = "A towering link of chains leading up to the ceiling."
-	icon = 'icons/effects/32x96.dmi'
-	icon_state = "chain"
-	layer = ABOVE_OBJ_LAYER
-	anchored = TRUE
-	density = TRUE
-	deconstructible = FALSE
-
-/obj/structure/fluff/railing
-	name = "railing"
-	desc = "Basic railing meant to protect idiots like you from falling."
-	icon = 'icons/obj/fluff.dmi'
-	icon_state = "railing"
-	density = TRUE
-	anchored = TRUE
-	deconstructible = FALSE
-
-/obj/structure/fluff/railing/corner
-	icon_state = "railing_corner"
-	density = FALSE
-
-/obj/structure/fluff/beach_towel
-	name = "beach towel"
-	desc = "A towel decorated in various beach-themed designs."
-	icon = 'icons/obj/fluff.dmi'
-	icon_state = "railing"
-	density = FALSE
-	anchored = TRUE
-	deconstructible = FALSE
-
-/obj/structure/fluff/beach_umbrella
-	name = "beach umbrella"
-	desc = "A fancy umbrella designed to keep the sun off beach-goers."
-	icon = 'icons/obj/fluff.dmi'
-	icon_state = "brella"
-	density = FALSE
-	anchored = TRUE
-	deconstructible = FALSE
-
-/obj/structure/fluff/beach_umbrella/security
-	icon_state = "hos_brella"
-
-/obj/structure/fluff/beach_umbrella/science
-	icon_state = "rd_brella"
-
-/obj/structure/fluff/beach_umbrella/engine
-	icon_state = "ce_brella"
-
-/obj/structure/fluff/beach_umbrella/cap
-	icon_state = "cap_brella"
-
-/obj/structure/fluff/beach_umbrella/syndi
-	icon_state = "syndi_brella"

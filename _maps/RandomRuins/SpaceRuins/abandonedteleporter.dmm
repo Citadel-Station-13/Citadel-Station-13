@@ -8,7 +8,7 @@
 "c" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "d" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plating/airless,
@@ -65,23 +65,26 @@
 /area/ruin/space/abandoned_tele)
 "p" = (
 /obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/flashlight,
+/obj/item/device/flashlight,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/beacon,
+/obj/item/device/radio/beacon,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "s" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"t" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "u" = (
@@ -110,8 +113,8 @@
 /area/ruin/space/abandoned_tele)
 "z" = (
 /obj/structure/closet/crate,
-/obj/item/aicard,
-/obj/item/multitool,
+/obj/item/device/aicard,
+/obj/item/device/multitool,
 /obj/item/weldingtool,
 /obj/item/wrench,
 /obj/item/circuitboard/computer/teleporter,
@@ -125,12 +128,9 @@
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
-"O" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
+"C" = (
+/obj/structure/lattice,
+/turf/open/space,
 /area/ruin/space/abandoned_tele)
 
 (1,1,1) = {"
@@ -181,7 +181,7 @@ c
 c
 k
 h
-k
+t
 c
 c
 a
@@ -194,7 +194,7 @@ a
 c
 b
 b
-O
+p
 b
 b
 c
@@ -254,7 +254,7 @@ r
 v
 m
 h
-c
+C
 c
 a
 c

@@ -6,7 +6,6 @@
 	icon_living = "russianmelee"
 	icon_dead = "russianmelee_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
@@ -28,8 +27,6 @@
 	faction = list("russian")
 	status_flags = CANPUSH
 	del_on_death = 1
-
-	do_footstep = TRUE
 
 
 /mob/living/simple_animal/hostile/russian/ranged
@@ -64,7 +61,7 @@
 	icon_living = "russianofficer"
 	maxHealth = 65
 	health = 65
-	rapid = 3
+	rapid = 1
 	casingtype = /obj/item/ammo_casing/c9mm
 	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged/officer,
 				/obj/item/gun/ballistic/automatic/pistol/APS)

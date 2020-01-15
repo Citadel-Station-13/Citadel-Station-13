@@ -28,7 +28,6 @@
 	//A neutered symptom has no effect, and only affects statistics.
 	var/neutered = FALSE
 	var/list/thresholds
-	var/naturally_occuring = TRUE //if this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms
@@ -38,17 +37,13 @@
 			return
 	CRASH("We couldn't assign an ID!")
 
-// Called when processing of the advance disease that holds this symptom infects a host and upon each Refresh() of that advance disease.
+// Called when processing of the advance disease, which holds this symptom, starts.
 /datum/symptom/proc/Start(datum/disease/advance/A)
-	if(neutered)
-		return FALSE
-	return TRUE
+	next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10) //so it doesn't instantly activate on infection
 
 // Called when the advance disease is going to be deleted or when the advance disease stops processing.
 /datum/symptom/proc/End(datum/disease/advance/A)
-	if(neutered)
-		return FALSE
-	return TRUE
+	return
 
 /datum/symptom/proc/Activate(datum/disease/advance/A)
 	if(neutered)
@@ -59,11 +54,6 @@
 		next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10)
 		return TRUE
 
-/datum/symptom/proc/on_stage_change(datum/disease/advance/A)
-	if(neutered)
-		return FALSE
-	return TRUE
-
 /datum/symptom/proc/Copy()
 	var/datum/symptom/new_symp = new type
 	new_symp.name = name
@@ -72,10 +62,4 @@
 	return new_symp
 
 /datum/symptom/proc/generate_threshold_desc()
-	return
-
-/datum/symptom/proc/OnAdd(datum/disease/advance/A)		//Overload when a symptom needs to be active before processing, like changing biotypes.
-	return
-
-/datum/symptom/proc/OnRemove(datum/disease/advance/A)	//But dont forget to remove them too.
 	return

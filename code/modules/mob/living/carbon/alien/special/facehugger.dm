@@ -15,13 +15,12 @@
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
-	clothing_flags = ALLOWINTERNALS
+	flags_1 = MASKINTERNALS_1
 	throw_range = 5
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
 	max_integrity = 100
-	mutantrace_variation = STYLE_MUZZLE
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
@@ -33,18 +32,16 @@
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	sterile = TRUE
+	sterile = 1
 
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"
 	item_state = "facehugger_inactive"
-	sterile = TRUE
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
 	item_state = "facehugger_impregnated"
-	sterile = TRUE
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -56,14 +53,14 @@
 	return O.attack_obj(src, user)
 
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
-	return attack_hand(user)
+	attack_hand(user)
+	return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		if(Leap(user))
 			return
-	. = ..()
+	..()
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
@@ -71,16 +68,16 @@
 		Leap(M)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
-	. = ..()
+	..()
 	if(!real)//So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			. += "<span class='boldannounce'>[src] is not moving.</span>"
+			to_chat(user, "<span class='boldannounce'>[src] is not moving.</span>")
 		if(CONSCIOUS)
-			. += "<span class='boldannounce'>[src] seems to be active!</span>"
+			to_chat(user, "<span class='boldannounce'>[src] seems to be active!</span>")
 	if (sterile)
-		. += "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
+		to_chat(user, "<span class='boldannounce'>It looks like the proboscis has been removed.</span>")
 
 
 /obj/item/clothing/mask/facehugger/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -134,7 +131,7 @@
 			return FALSE
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
-		if(!target.get_bodypart(BODY_ZONE_HEAD))
+		if(!target.get_bodypart("head"))
 			return FALSE
 
 		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
@@ -172,7 +169,7 @@
 			if(target.dropItemToGround(W))
 				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
 									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
-		target.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, 0, 1, 1)
+		target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
 	return TRUE // time for a smoke
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
@@ -205,13 +202,14 @@
 			return
 
 	if(!sterile)
+		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
 		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>", \
 								"<span class='userdanger'>[src] falls limp after violating [target]'s face!</span>")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
 
-		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
+		var/obj/item/bodypart/chest/LC = target.get_bodypart("chest")
 		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			new /obj/item/organ/body_egg/alien_embryo(target)
 
@@ -257,7 +255,7 @@
 		return 1
 
 	var/mob/living/carbon/C = M
-	if(ishuman(C) && !(SLOT_WEAR_MASK in C.dna.species.no_equip))
+	if(ishuman(C) && !(slot_wear_mask in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C
 		if(H.is_mouth_covered(head_only = 1))
 			return 0

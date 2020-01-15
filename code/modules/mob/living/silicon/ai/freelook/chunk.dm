@@ -8,10 +8,13 @@
 /datum/camerachunk
 	var/list/obscuredTurfs = list()
 	var/list/visibleTurfs = list()
+	var/list/obscured = list()
 	var/list/cameras = list()
 	var/list/turfs = list()
 	var/list/seenby = list()
+	var/visible = FALSE
 	var/changed = 0
+	var/updating = 0
 	var/x = 0
 	var/y = 0
 	var/z = 0
@@ -19,24 +22,25 @@
 // Add an AI eye to the chunk, then update if changed.
 
 /datum/camerachunk/proc/add(mob/camera/aiEye/eye)
+	var/client/client = eye.GetViewerClient()
+	if(client)
+		client.images += obscured
 	eye.visibleCameraChunks += src
+	visible++
 	seenby += eye
-	if(changed)
+	if(changed && !updating)
 		update()
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/camera/aiEye/eye, remove_static_with_last_chunk = TRUE)
+/datum/camerachunk/proc/remove(mob/camera/aiEye/eye)
+	var/client/client = eye.GetViewerClient()
+	if(client)
+		client.images -= obscured
 	eye.visibleCameraChunks -= src
 	seenby -= eye
-	if(remove_static_with_last_chunk && !eye.visibleCameraChunks.len)
-		var/client/client = eye.GetViewerClient()
-		if(client)
-			switch(eye.use_static)
-				if(USE_STATIC_TRANSPARENT)
-					client.images -= GLOB.cameranet.obscured_transparent
-				if(USE_STATIC_OPAQUE)
-					client.images -= GLOB.cameranet.obscured
+	if(visible > 0)
+		visible--
 
 // Called when a chunk has changed. I.E: A wall was deleted.
 
@@ -49,14 +53,21 @@
 // instead be flagged to update the next time an AI Eye moves near it.
 
 /datum/camerachunk/proc/hasChanged(update_now = 0)
-	if(seenby.len || update_now)
-		addtimer(CALLBACK(src, .proc/update), UPDATE_BUFFER, TIMER_UNIQUE)
+	if(visible || update_now)
+		if(!updating)
+			updating = 1
+			spawn(UPDATE_BUFFER) // Batch large changes, such as many doors opening or closing at once
+				update()
+				updating = 0
 	else
 		changed = 1
 
 // The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 
 /datum/camerachunk/proc/update()
+
+	set background = BACKGROUND_ENABLED
+
 	var/list/newVisibleTurfs = list()
 
 	for(var/camera in cameras)
@@ -89,18 +100,39 @@
 
 	for(var/turf in visAdded)
 		var/turf/t = turf
-		t.vis_contents -= GLOB.cameranet.vis_contents_objects
+		if(t.obscured)
+			obscured -= t.obscured
+			for(var/eye in seenby)
+				var/mob/camera/aiEye/m = eye
+				if(!m)
+					continue
+				var/client/client = m.GetViewerClient()
+				if(client)
+					client.images -= t.obscured
 
 	for(var/turf in visRemoved)
 		var/turf/t = turf
-		if(obscuredTurfs[t] && !istype(t, /turf/open/ai_visible))
-			t.vis_contents += GLOB.cameranet.vis_contents_objects
+		if(obscuredTurfs[t])
+			if(!t.obscured)
+				t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
+				t.obscured.plane = LIGHTING_PLANE+1
+			obscured += t.obscured
+			for(var/eye in seenby)
+				var/mob/camera/aiEye/m = eye
+				if(!m)
+					seenby -= m
+					continue
+				var/client/client = m.GetViewerClient()
+				if(client)
+					client.images += t.obscured
 
 	changed = 0
 
 // Create a new camera chunk, since the chunks are made as they are needed.
 
-/datum/camerachunk/New(x, y, z)
+/datum/camerachunk/New(loc, x, y, z)
+
+	// 0xf = 15
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
 
@@ -136,7 +168,10 @@
 
 	for(var/turf in obscuredTurfs)
 		var/turf/t = turf
-		t.vis_contents += GLOB.cameranet.vis_contents_objects
+		if(!t.obscured)
+			t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
+			t.obscured.plane = LIGHTING_PLANE+1
+		obscured += t.obscured
 
 #undef UPDATE_BUFFER
 #undef CHUNK_SIZE

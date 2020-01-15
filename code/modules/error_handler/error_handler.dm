@@ -1,28 +1,11 @@
-GLOBAL_VAR_INIT(total_runtimes, GLOB.total_runtimes || 0)
+GLOBAL_VAR_INIT(total_runtimes, 0)
 GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
-#ifdef USE_CUSTOM_ERROR_HANDLER
-#define ERROR_USEFUL_LEN 2
-
+#ifdef DEBUG
 /world/Error(exception/E, datum/e_src)
-	GLOB.total_runtimes++
-
 	if(!istype(E)) //Something threw an unusual exception
-		log_world("uncaught runtime error: [E]")
+		log_world("\[[time_stamp()]] Uncaught exception: [E]")
 		return ..()
-
-	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
-	if(copytext(E.name,1,32) == "Maximum recursion level reached")
-		//log to world while intentionally triggering the byond bug.
-		log_world("runtime error: [E.name]\n[E.desc]")
-		//if we got to here without silently ending, the byond bug has been fixed.
-		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
-		return //this will never happen.
-
-	if (islist(stack_trace_storage))
-		for (var/line in splittext(E.desc, "\n"))
-			if (text2ascii(line) != 32)
-				stack_trace_storage += line
 
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
@@ -30,6 +13,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()
+
+	GLOB.total_runtimes++
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
@@ -48,20 +33,14 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	// We can runtime before config is initialized because BYOND initialize objs/map before a bunch of other stuff happens.
 	// This is a bunch of workaround code for that. Hooray!
-	var/configured_error_cooldown
-	var/configured_error_limit
-	var/configured_error_silence_time
-	if(config && config.entries)
-		configured_error_cooldown = CONFIG_GET(number/error_cooldown)
-		configured_error_limit = CONFIG_GET(number/error_limit)
-		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
-	else
-		var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
-		configured_error_cooldown = initial(CE.config_entry_value)
-		CE = /datum/config_entry/number/error_limit
-		configured_error_limit = initial(CE.config_entry_value)
-		CE = /datum/config_entry/number/error_silence_time
-		configured_error_silence_time = initial(CE.config_entry_value)
+
+	var/configured_error_cooldown = initial(config.error_cooldown)
+	var/configured_error_limit = initial(config.error_limit)
+	var/configured_error_silence_time = initial(config.error_silence_time)
+	if(config)
+		configured_error_cooldown = config.error_cooldown
+		configured_error_limit = config.error_limit
+		configured_error_silence_time = config.error_silence_time
 
 
 	//Each occurence of a unique error adds to its cooldown time...
@@ -76,7 +55,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)
-				SEND_TEXT(world.log, "\[[TIME_STAMP("hh:mm:ss", FALSE)]] Skipped [skipcount] runtimes in [E.file],[E.line].")
+				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
 				GLOB.error_cache.log_error(E, skip_count = skipcount)
 
 	error_last_seen[erroruid] = world.time
@@ -85,8 +64,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/list/usrinfo = null
 	var/locinfo
 	if(istype(usr))
-		usrinfo = list("  usr: [key_name(usr)]")
-		locinfo = loc_name(usr)
+		usrinfo = list("  usr: [datum_info_line(usr)]")
+		locinfo = atom_loc_line(usr)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
 	// The proceeding mess will almost definitely break if error messages are ever changed
@@ -113,18 +92,24 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
-	var/main_line = "\[[TIME_STAMP("hh:mm:ss", FALSE)]] Runtime in [E.file],[E.line]: [E]"
-	SEND_TEXT(world.log, main_line)
+	SEND_TEXT(world.log, "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]")
 	for(var/line in desclines)
 		SEND_TEXT(world.log, line)
 
-#ifdef UNIT_TESTS
-	if(GLOB.current_test)
-		//good day, sir
-		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]")
-#endif
+/* This logs the runtime in the old format */
 
+	E.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][E.name]"
 
-	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
-	log_runtime("runtime error: [E.name]\n[E.desc]")
+	//Original
+	//
+	var/list/split = splittext(E.desc, "\n")
+	for (var/i in 1 to split.len)
+		if (split[i] != "")
+			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
+	E.desc = jointext(split, "\n")
+	world.log = GLOB.world_runtime_log
+	..(E)
+
+	world.log = null
+
 #endif

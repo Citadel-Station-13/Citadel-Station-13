@@ -5,16 +5,15 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "honeycomb"
 	possible_transfer_amounts = list()
-	spillable = FALSE
+	spillable = 0
 	disease_amount = 0
 	volume = 10
 	amount_per_transfer_from_this = 0
-	list_reagents = list(/datum/reagent/consumable/honey = 5)
-	grind_results = list()
+	list_reagents = list("honey" = 5)
 	var/honey_color = ""
 
-/obj/item/reagent_containers/honeycomb/Initialize()
-	. = ..()
+/obj/item/reagent_containers/honeycomb/New()
+	..()
 	pixel_x = rand(8,-8)
 	pixel_y = rand(8,-8)
 	update_icon()
@@ -31,10 +30,10 @@
 
 /obj/item/reagent_containers/honeycomb/proc/set_reagent(reagent)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent]
-	if(R)
+	if(istype(R))
 		name = "honeycomb ([R.name])"
 		honey_color = R.color
-		reagents.add_reagent(reagent,5)
+		reagents.add_reagent(R.id,5)
 	else
 		honey_color = ""
 	update_icon()

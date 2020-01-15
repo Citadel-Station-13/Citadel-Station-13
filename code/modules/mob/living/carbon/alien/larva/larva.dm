@@ -5,7 +5,6 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	density = FALSE
-	hud_type = /datum/hud/larva
 
 	maxHealth = 25
 	health = 25
@@ -14,8 +13,9 @@
 	var/max_grown = 100
 	var/time_of_birth
 
-	rotate_on_lying = FALSE
+	rotate_on_lying = 0
 	bodyparts = list(/obj/item/bodypart/chest/larva, /obj/item/bodypart/head/larva)
+
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/Initialize()

@@ -4,8 +4,6 @@
 	icon_state = "largebins"
 	open_sound = 'sound/effects/bin_open.ogg'
 	close_sound = 'sound/effects/bin_close.ogg'
-	material_drop = /obj/item/stack/sheet/plastic
-	material_drop_amount = 40
 	anchored = TRUE
 	horizontal = FALSE
 	delivery_icon = null
@@ -29,10 +27,13 @@
 		var/obj/item/storage/bag/trash/T = W
 		to_chat(user, "<span class='notice'>You fill the bag.</span>")
 		for(var/obj/item/O in src)
-			SEND_SIGNAL(T, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE)
+			if(T.can_be_inserted(O, 1))
+				O.loc = T
 		T.update_icon()
 		do_animate()
-		return TRUE
+	else if(istype(W, /obj/item/wrench))
+		anchored = !anchored
+		playsound(src.loc, W.usesound, 75, 1)
 	else
 		return ..()
 

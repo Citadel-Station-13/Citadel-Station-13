@@ -105,15 +105,19 @@ a
 a
 a
 a
-b
-b
-b
+a
+a
+a
+a
+a
 a
 a
 a
 a
 "}
 (2,1,1) = {"
+a
+a
 a
 a
 a
@@ -172,26 +176,28 @@ a
 a
 a
 a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
 b
 a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
-a
-a
-a
-b
 "}
 (4,1,1) = {"
 a
@@ -214,6 +220,7 @@ a
 a
 a
 a
+b
 a
 a
 a
@@ -228,10 +235,11 @@ a
 a
 a
 a
+b
 a
 a
 a
-a
+b
 "}
 (5,1,1) = {"
 a
@@ -243,20 +251,6 @@ a
 a
 a
 a
-c
-c
-c
-c
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
 a
 a
 a
@@ -270,7 +264,23 @@ a
 a
 a
 a
-b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 "}
 (6,1,1) = {"
@@ -281,12 +291,24 @@ a
 a
 a
 a
+a
+a
+a
+a
 c
 c
 c
 c
-c
-c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
 a
 a
 a
@@ -300,17 +322,7 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+b
 a
 "}
 (7,1,1) = {"
@@ -320,15 +332,15 @@ a
 a
 a
 a
-b
-b
-b
-b
-b
+a
+a
+a
 c
 c
 c
 c
+c
+c
 a
 a
 a
@@ -338,9 +350,11 @@ a
 a
 a
 a
-b
-b
-b
+a
+a
+a
+a
+a
 a
 a
 a
@@ -359,19 +373,21 @@ a
 a
 a
 a
+a
+a
+a
 b
 b
 b
 b
 b
-b
 c
 c
 c
 c
-c
-c
-c
+a
+a
+a
 a
 a
 a
@@ -399,9 +415,8 @@ a
 a
 a
 a
-b
-b
-b
+a
+a
 b
 b
 b
@@ -413,6 +428,8 @@ c
 c
 c
 c
+c
+c
 a
 a
 a
@@ -422,7 +439,8 @@ a
 b
 b
 b
-b
+a
+a
 a
 a
 a
@@ -439,6 +457,8 @@ a
 a
 a
 a
+a
+a
 b
 b
 b
@@ -448,9 +468,9 @@ b
 b
 b
 b
-b
-b
-b
+c
+c
+c
 c
 c
 a
@@ -478,7 +498,9 @@ a
 a
 a
 a
-b
+a
+a
+a
 b
 b
 b
@@ -493,16 +515,16 @@ b
 b
 c
 c
-c
-c
 a
 a
 a
 a
 a
 a
-a
-a
+b
+b
+b
+b
 a
 a
 a
@@ -518,6 +540,8 @@ a
 a
 a
 a
+a
+a
 b
 b
 b
@@ -531,7 +555,7 @@ b
 b
 b
 b
-b
+c
 c
 c
 c
@@ -558,6 +582,8 @@ a
 a
 a
 a
+a
+a
 b
 b
 b
@@ -575,8 +601,8 @@ b
 c
 c
 c
-c
-c
+a
+a
 a
 a
 a
@@ -598,6 +624,50 @@ a
 a
 a
 a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
 b
 b
 b
@@ -633,7 +703,9 @@ a
 a
 a
 "}
-(15,1,1) = {"
+(16,1,1) = {"
+a
+a
 a
 a
 a
@@ -673,7 +745,9 @@ a
 a
 a
 "}
-(16,1,1) = {"
+(17,1,1) = {"
+a
+a
 a
 a
 a
@@ -713,7 +787,9 @@ a
 a
 a
 "}
-(17,1,1) = {"
+(18,1,1) = {"
+a
+a
 a
 a
 a
@@ -753,7 +829,9 @@ a
 a
 a
 "}
-(18,1,1) = {"
+(19,1,1) = {"
+a
+a
 a
 a
 a
@@ -793,7 +871,9 @@ a
 a
 a
 "}
-(19,1,1) = {"
+(20,1,1) = {"
+a
+a
 a
 a
 a
@@ -833,7 +913,9 @@ a
 a
 a
 "}
-(20,1,1) = {"
+(21,1,1) = {"
+a
+a
 a
 a
 a
@@ -873,7 +955,9 @@ b
 b
 a
 "}
-(21,1,1) = {"
+(22,1,1) = {"
+a
+a
 a
 a
 a
@@ -913,7 +997,9 @@ b
 b
 a
 "}
-(22,1,1) = {"
+(23,1,1) = {"
+a
+a
 a
 a
 a
@@ -953,7 +1039,9 @@ b
 b
 b
 "}
-(23,1,1) = {"
+(24,1,1) = {"
+a
+a
 a
 a
 a
@@ -993,7 +1081,9 @@ b
 b
 b
 "}
-(24,1,1) = {"
+(25,1,1) = {"
+a
+a
 a
 a
 a
@@ -1033,7 +1123,9 @@ b
 b
 b
 "}
-(25,1,1) = {"
+(26,1,1) = {"
+a
+a
 a
 b
 a
@@ -1073,46 +1165,6 @@ b
 b
 b
 "}
-(26,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-b
-b
-"}
 (27,1,1) = {"
 a
 a
@@ -1123,6 +1175,8 @@ a
 a
 a
 a
+a
+a
 b
 b
 b
@@ -1139,7 +1193,7 @@ b
 b
 b
 b
-b
+c
 c
 c
 c
@@ -1154,6 +1208,8 @@ b
 b
 "}
 (28,1,1) = {"
+a
+a
 a
 a
 a
@@ -1203,6 +1259,8 @@ a
 a
 a
 a
+a
+a
 b
 b
 b
@@ -1219,7 +1277,7 @@ b
 b
 b
 b
-c
+b
 c
 c
 c
@@ -1235,8 +1293,6 @@ b
 "}
 (30,1,1) = {"
 a
-b
-b
 a
 a
 a
@@ -1244,6 +1300,10 @@ a
 a
 a
 a
+a
+a
+a
+b
 b
 b
 b
@@ -1268,13 +1328,15 @@ c
 c
 c
 c
-b
-b
+c
+c
 b
 b
 "}
 (31,1,1) = {"
-b
+a
+a
+a
 b
 b
 a
@@ -1299,33 +1361,35 @@ b
 b
 b
 b
+c
+c
+c
+c
+c
+c
+c
+c
+c
 b
-c
-c
-c
-c
-c
-c
-c
-c
 b
 b
 b
-a
 "}
 (32,1,1) = {"
+a
+a
 b
 b
 b
+a
+a
+a
+a
+a
+a
+a
 b
-a
-a
-a
-a
-a
-a
-a
-a
+b
 b
 b
 b
@@ -1346,8 +1410,8 @@ c
 c
 c
 c
-b
-b
+c
+c
 b
 b
 b
@@ -1355,6 +1419,8 @@ a
 "}
 (33,1,1) = {"
 a
+a
+b
 b
 b
 b
@@ -1380,10 +1446,10 @@ b
 b
 b
 b
-b
-b
-b
-b
+c
+c
+c
+c
 c
 c
 b
@@ -1394,6 +1460,11 @@ b
 a
 "}
 (34,1,1) = {"
+a
+a
+a
+b
+b
 b
 a
 a
@@ -1401,11 +1472,6 @@ a
 a
 a
 a
-b
-a
-a
-a
-a
 a
 a
 b
@@ -1426,14 +1492,18 @@ b
 b
 b
 b
+c
+c
 b
 b
 b
 b
-a
+b
 a
 "}
 (35,1,1) = {"
+a
+a
 b
 a
 a
@@ -1441,7 +1511,7 @@ a
 a
 a
 a
-a
+b
 a
 a
 a
@@ -1476,6 +1546,50 @@ a
 (36,1,1) = {"
 a
 a
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(37,1,1) = {"
+a
+a
+a
+a
 a
 a
 b
@@ -1513,7 +1627,9 @@ b
 a
 a
 "}
-(37,1,1) = {"
+(38,1,1) = {"
+a
+a
 a
 a
 a
@@ -1547,6 +1663,90 @@ b
 b
 b
 b
+a
+a
+a
+a
+a
+"}
+(39,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(40,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 a
 a

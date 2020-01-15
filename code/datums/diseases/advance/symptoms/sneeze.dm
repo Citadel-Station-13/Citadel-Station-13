@@ -6,7 +6,7 @@ Sneezing
 	Very Noticable.
 	Increases resistance.
 	Doesn't increase stage speed.
-	Very transmissible.
+	Very transmittable.
 	Low Level.
 
 Bonus
@@ -31,8 +31,7 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
-	if(!..())
-		return
+	..()
 	if(A.properties["transmittable"] >= 9) //longer spread range
 		power = 2
 	if(A.properties["stealth"] >= 4)
@@ -48,5 +47,4 @@ Bonus
 				M.emote("sniff")
 		else
 			M.emote("sneeze")
-			if(M.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
-				A.spread(4 + power)
+			A.spread(4 + power)

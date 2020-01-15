@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space,
+/area/space)
 "b" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -12,14 +12,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "d" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/machinery/door/airlock/glass{
 	name = "Shuttle Airlock"
 	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/black,
 /area/shuttle/abandoned)
 "e" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/black,
 /area/shuttle/abandoned)
 "f" = (
 /turf/open/floor/plasteel,
@@ -43,7 +42,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "j" = (
@@ -66,7 +65,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "l" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -76,13 +75,13 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "n" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "o" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/machinery/door/airlock/glass{
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
@@ -95,10 +94,11 @@
 	name = "White Ship";
 	port_direction = 4;
 	preferred_direction = 1;
+	roundstart_move = "whiteship_away";
+	timid = 1;
 	width = 9
 	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/black,
 /area/shuttle/abandoned)
 "p" = (
 /obj/structure/window/reinforced{
@@ -112,7 +112,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "q" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plating/abductor,

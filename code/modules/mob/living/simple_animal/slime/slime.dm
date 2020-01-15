@@ -26,7 +26,8 @@
 	health = 150
 	healable = 0
 	gender = NEUTER
-	blood_volume = 0 //Until someome reworks for them to have slime jelly
+
+	nutrition = 700
 
 	see_in_dark = 8
 
@@ -63,8 +64,6 @@
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
-	do_footstep = TRUE
-
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
@@ -76,12 +75,6 @@
 	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
 	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
 	"cerulean", "sepia", "black", "pyrite")
-
-	///////////CORE-CROSSING CODE
-
-	var/effectmod //What core modification is being used.
-	var/applied = 0 //How many extracts of the modtype have been applied.
-
 
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
@@ -100,13 +93,6 @@
 	create_reagents(100)
 	set_colour(new_colour)
 	. = ..()
-	nutrition = 700
-
-/mob/living/simple_animal/slime/Destroy()
-	for (var/A in actions)
-		var/datum/action/AC = A
-		AC.Remove(src)
-	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
@@ -137,39 +123,32 @@
 		icon_state = icon_dead
 	..()
 
-/mob/living/simple_animal/slime/on_reagent_change()
-	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
-	var/amount = 0
-	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
-		amount = 2
-	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
-		amount = 5
-	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
-
-/mob/living/simple_animal/slime/updatehealth()
-	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, FALSE)
-	var/health_deficiency = (100 - health)
-	var/mod = 0
-	if(health_deficiency >= 45)
-		mod += (health_deficiency / 25)
-	if(health <= 0)
-		mod += 2
-	add_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, TRUE, 100, multiplicative_slowdown = mod)
-
-/mob/living/simple_animal/slime/adjust_bodytemperature()
-	. = ..()
-	var/mod = 0
+/mob/living/simple_animal/slime/movement_delay()
 	if(bodytemperature >= 330.23) // 135 F or 57.08 C
-		mod = -1	// slimes become supercharged at high temperatures
-	else if(bodytemperature < 183.222)
-		mod = (283.222 - bodytemperature) / 10 * 1.75
-	if(mod)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
+		return -1	// slimes become supercharged at high temperatures
 
-/mob/living/simple_animal/slime/ObjBump(obj/O)
+	. = ..()
+
+	var/health_deficiency = (100 - health)
+	if(health_deficiency >= 45)
+		. += (health_deficiency / 25)
+
+	if(bodytemperature < 183.222)
+		. += (283.222 - bodytemperature) / 10 * 1.75
+
+	if(reagents)
+		if(reagents.has_reagent("morphine")) // morphine slows slimes down
+			. *= 2
+
+		if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
+			. *= 5
+
+	if(health <= 0) // if damaged, the slime moves twice as slow
+		. *= 2
+
+	. += config.slime_delay
+
+/mob/living/simple_animal/slime/ObjCollide(obj/O)
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)
@@ -231,17 +210,15 @@
 	return 0
 
 /mob/living/simple_animal/slime/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
 	powerlevel = 0 // oh no, the power!
+	..()
 
 /mob/living/simple_animal/slime/MouseDrop(atom/movable/A as mob|obj)
 	if(isliving(A) && A != src && usr == src)
 		var/mob/living/Food = A
 		if(CanFeedon(Food))
 			Feedon(Food)
-	return ..()
+	..()
 
 /mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
@@ -253,40 +230,41 @@
 	return
 
 /mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M)
-	. = ..()
-	if(!. || M == src) //unsuccessful slime shock
-		return
-	if(buckled)
-		Feedstop(silent = TRUE)
-		visible_message("<span class='danger'>[M] pulls [src] off!</span>")
-		return
-	attacked += 5
-	if(nutrition >= 100) //steal some nutrition. negval handled in life()
-		nutrition -= (50 + (40 * M.is_adult))
-		M.add_nutrition(50 + (40 * M.is_adult))
-	if(health > 0)
-		M.adjustBruteLoss(-10 + (-10 * M.is_adult))
-		M.updatehealth()
+	if(..()) //successful slime attack
+		if(M == src)
+			return
+		if(buckled)
+			Feedstop(silent=1)
+			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
+			return
+		attacked += 5
+		if(nutrition >= 100) //steal some nutrition. negval handled in life()
+			nutrition -= (50 + (40 * M.is_adult))
+			M.add_nutrition(50 + (40 * M.is_adult))
+		if(health > 0)
+			M.adjustBruteLoss(-10 + (-10 * M.is_adult))
+			M.updatehealth()
 
 /mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
 		attacked += 10
 
+
 /mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M)
-	. = ..()
-	if(.)//successful monkey bite.
+	if(..()) //successful monkey bite.
 		attacked += 10
 
 /mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L)
-	. = ..()
-	if(.) //successful larva bite.
+	if(..()) //successful larva bite.
 		attacked += 10
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
 		discipline_slime(user)
 		return ..()
+
+
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(buckled)
@@ -314,26 +292,24 @@
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			if(M.a_intent == INTENT_HELP || M.a_intent == INTENT_DISARM)
+			if(M.a_intent == INTENT_HELP)
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M,M.a_intent))
+					if(S.next_step(M))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
 
 /mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M)
-	. = ..()
-	if(!.) // the attack was blocked or was help/grab intent
-		return
-	attacked += 10
-	discipline_slime(M)
+	if(..()) //if harm or disarm intent.
+		attacked += 10
+		discipline_slime(M)
 
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+		if(user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user,user.a_intent))
+				if(S.next_step(user))
 					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
@@ -359,49 +335,7 @@
 			force_effect = round(W.force/2)
 		if(prob(10 + force_effect))
 			discipline_slime(user)
-	if(istype(W, /obj/item/storage/bag/bio))
-		var/obj/item/storage/P = W
-		if(!effectmod)
-			to_chat(user, "<span class='warning'>The slime is not currently being mutated.</span>")
-			return
-		var/hasOutput = FALSE //Have we outputted text?
-		var/hasFound = FALSE //Have we found an extract to be added?
-		for(var/obj/item/slime_extract/S in P.contents)
-			if(S.effectmod == effectmod)
-				SEND_SIGNAL(P, COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
-				qdel(S)
-				applied++
-				hasFound = TRUE
-			if(applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
-				to_chat(user, "<span class='notice'>You feed the slime as many of the extracts from the bag as you can, and it mutates!</span>")
-				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
-				spawn_corecross()
-				hasOutput = TRUE
-				break
-		if(!hasOutput)
-			if(!hasFound)
-				to_chat(user, "<span class='warning'>There are no extracts in the bag that this slime will accept!</span>")
-			else
-				to_chat(user, "<span class='notice'>You feed the slime some extracts from the bag.</span>")
-				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
-		return
 	..()
-
-/mob/living/simple_animal/slime/proc/spawn_corecross()
-	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
-	visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
-	playsound(src, 'sound/magic/smoke.ogg', 50, 1)
-	var/crosspath
-	for(var/X in crossbreeds)
-		var/obj/item/slimecross/S = X
-		if(initial(S.colour) == colour && initial(S.effect) == effectmod)
-			crosspath = S
-			break
-	if(crosspath)
-		new crosspath(loc)
-	else
-		visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
-	qdel(src)
 
 /mob/living/simple_animal/slime/proc/apply_water()
 	adjustBruteLoss(rand(15,20))
@@ -412,32 +346,37 @@
 	return
 
 /mob/living/simple_animal/slime/examine(mob/user)
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
+
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
 	if (src.stat == DEAD)
-		. += "<span class='deadsay'>It is limp and unresponsive.</span>"
+		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
 	else
 		if (stat == UNCONSCIOUS) // Slime stasis
-			. += "<span class='deadsay'>It appears to be alive but unresponsive.</span>"
-		if (getBruteLoss())
-			if (getBruteLoss() < 40)
-				. += "<span class='warning'>It has some punctures in its flesh!"
+			msg += "<span class='deadsay'>It appears to be alive but unresponsive.</span>\n"
+		if (src.getBruteLoss())
+			msg += "<span class='warning'>"
+			if (src.getBruteLoss() < 40)
+				msg += "It has some punctures in its flesh!"
 			else
-				. += "<span class='danger'>It has severe punctures and tears in its flesh!</span>"
+				msg += "<B>It has severe punctures and tears in its flesh!</B>"
+			msg += "</span>\n"
 
 		switch(powerlevel)
 			if(2 to 3)
-				. += "It is flickering gently with a little electrical activity."
+				msg += "It is flickering gently with a little electrical activity.\n"
 
 			if(4 to 5)
-				. += "It is glowing gently with moderate levels of electrical activity."
+				msg += "It is glowing gently with moderate levels of electrical activity.\n"
 
 			if(6 to 9)
-				. += "<span class='warning'>It is glowing brightly with high levels of electrical activity.</span>"
+				msg += "<span class='warning'>It is glowing brightly with high levels of electrical activity.</span>\n"
 
 			if(10)
-				. += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>"
+				msg += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>\n"
 
-	. += "*---------*</span>"
+	msg += "*---------*</span>"
+	to_chat(user, msg)
+	return
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
 	if(stat)
@@ -453,7 +392,7 @@
 	if(Target)
 		Target = null
 	if(buckled)
-		Feedstop(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
+		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
 
 	SStun = world.time + rand(20,60)
 	spawn(0)
@@ -477,9 +416,6 @@
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
 		return 3
-
-/mob/living/simple_animal/slime/can_be_implanted()
-	return TRUE
 
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))

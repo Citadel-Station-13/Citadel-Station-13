@@ -7,15 +7,7 @@
     <ui-button
       state='{{swap_button_state}}'
       action='swap' params='{"ref": "{{ref}}"}'>
-      {{#if occupied == "owner"}}
-        You Are Here
-      {{else}}
-        {{#if occupied == "stranger"}}
-          Occupied
-        {{else}}
-          Swap
-        {{/if}}
-      {{/if}}
+      {{is_current ? "You Are Here" : "Swap"}}
     </ui-button>
 
   </ui-section>

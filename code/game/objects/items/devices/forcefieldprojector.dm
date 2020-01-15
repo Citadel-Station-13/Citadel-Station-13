@@ -1,23 +1,22 @@
-/obj/item/forcefield_projector
+/obj/item/device/forcefield
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "signmaker_forcefield"
-	slot_flags = ITEM_SLOT_BELT
+	icon_state = "signmaker_engi"
+	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	item_flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=250, MAT_GLASS=500)
-	var/max_shield_integrity = 100
+	origin_tech = "magnets=5;engineering=5;powerstorage=4"
+	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3
 	var/list/current_fields
 	var/field_distance_limit = 7
 
-/obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
+/obj/item/device/forcefield/afterattack(atom/target, mob/user, proximity_flag)
 	if(!check_allowed_items(target, 1))
 		return
 	if(istype(target, /obj/structure/projected_forcefield))
@@ -34,10 +33,6 @@
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
 		return
-	var/obj/structure/projected_forcefield/same = locate() in T
-	if(same)
-		to_chat(user, "<span class='notice'>There is already a forcefield on [T]!</span>")
-		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
 	user.visible_message("<span class='warning'>[user] projects a forcefield!</span>","<span class='notice'>You project a forcefield.</span>")
@@ -45,29 +40,27 @@
 	current_fields += F
 	user.changeNext_move(CLICK_CD_MELEE)
 
-/obj/item/forcefield_projector/attack_self(mob/user)
+/obj/item/device/forcefield/attack_self(mob/user)
 	if(LAZYLEN(current_fields))
 		to_chat(user, "<span class='notice'>You deactivate [src], disabling all active forcefields.</span>")
 		for(var/obj/structure/projected_forcefield/F in current_fields)
 			qdel(F)
 
-/obj/item/forcefield_projector/examine(mob/user)
-	. = ..()
+/obj/item/device/forcefield/examine(mob/user)
+	..()
 	var/percent_charge = round((shield_integrity/max_shield_integrity)*100)
-	. += "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>"
+	to_chat(user, "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>")
 
-/obj/item/forcefield_projector/Initialize(mapload)
-	. = ..()
+/obj/item/device/forcefield/Initialize(mapload)
+	..()
 	current_fields = list()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/forcefield_projector/Destroy()
+/obj/item/device/forcefield/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	for(var/i in current_fields)
-		qdel(i)
 	return ..()
 
-/obj/item/forcefield_projector/process()
+/obj/item/device/forcefield/process()
 	if(!LAZYLEN(current_fields))
 		shield_integrity = min(shield_integrity + 4, max_shield_integrity)
 	else
@@ -87,10 +80,10 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	armor = list("melee" = 0, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
-	var/obj/item/forcefield_projector/generator
+	armor = list(melee = 0, bullet = 25, laser = 50, energy = 50, bomb = 25, bio = 100, rad = 100, fire = 100, acid = 100)
+	var/obj/item/device/forcefield/generator
 
-/obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)
+/obj/structure/projected_forcefield/Initialize(mapload, obj/item/device/forcefield/origin)
 	. = ..()
 	generator = origin
 
@@ -102,7 +95,7 @@
 	return ..()
 
 /obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
+	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	return !density
 

@@ -41,7 +41,7 @@
 	name = "a hand teleporter."
 	targetitem = /obj/item/hand_tele
 	difficulty = 5
-	excludefromjob = list("Captain", "Research Director")
+	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack."
@@ -53,7 +53,7 @@
 	name = "the chief engineer's advanced magnetic boots."
 	targetitem =  /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
-	excludefromjob = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+	excludefromjob = list("Chief Engineer")
 
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy."
@@ -62,19 +62,16 @@
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/hypo
-	name = "the Chief Medical Officer's MKII hypospray."
-	targetitem = /obj/item/hypospray/mkii/CMO //CITADEL EDIT, changing theft objective for the Hypo MK II
+	name = "the hypospray."
+	targetitem = /obj/item/reagent_containers/hypospray/CMO
 	difficulty = 5
-	excludefromjob = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Virologist", "Geneticist")
+	excludefromjob = list("Chief Medical Officer")
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk."
 	targetitem = /obj/item/disk/nuclear
 	difficulty = 5
 	excludefromjob = list("Captain")
-
-/datum/objective_item/steal/nukedisc/check_special_completion(obj/item/disk/nuclear/N)
-	return !N.fake
 
 /datum/objective_item/steal/reflector
 	name = "a reflector vest."
@@ -83,10 +80,10 @@
 	excludefromjob = list("Head of Security", "Warden")
 
 /datum/objective_item/steal/reactive
-	name = "a reactive teleport armor."
+	name = "the reactive teleport armor."
 	targetitem = /obj/item/clothing/suit/armor/reactive
 	difficulty = 5
-	excludefromjob = list("Research Director","Scientist", "Roboticist")
+	excludefromjob = list("Research Director")
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization."
@@ -124,16 +121,16 @@
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
-	found_amount += T.air_contents.gases[/datum/gas/plasma]
+	found_amount += T.air_contents.gases["plasma"] ? T.air_contents.gases["plasma"][MOLES] : 0
 	return found_amount>=target_amount
 
 
 /datum/objective_item/steal/functionalai
 	name = "a functional AI."
-	targetitem = /obj/item/aicard
+	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/aicard/C)
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
 		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
 			return 1
@@ -143,23 +140,23 @@
 	name = "the station blueprints."
 	targetitem = /obj/item/areaeditor/blueprints
 	difficulty = 10
-	excludefromjob = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+	excludefromjob = list("Chief Engineer")
 	altitems = list(/obj/item/photo)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
-		return TRUE
+		return 1
 	if(istype(I, /obj/item/photo))
 		var/obj/item/photo/P = I
-		if(P.picture.has_blueprints)	//if the blueprints are in frame
-			return TRUE
-	return FALSE
+		if(P.blueprints)	//if the blueprints are in frame
+			return 1
+	return 0
 
 /datum/objective_item/steal/slime
 	name = "an unused sample of slime extract."
 	targetitem = /obj/item/slime_extract
 	difficulty = 3
-	excludefromjob = list("Research Director","Scientist", "Roboticist")
+	excludefromjob = list("Research Director","Scientist")
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)
@@ -216,7 +213,7 @@
 
 /datum/objective_item/special/laserpointer
 	name = "a laser pointer."
-	targetitem = /obj/item/laser_pointer
+	targetitem = /obj/item/device/laser_pointer
 	difficulty = 5
 
 /datum/objective_item/special/corgimeat

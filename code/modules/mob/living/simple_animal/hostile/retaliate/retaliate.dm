@@ -8,7 +8,7 @@
 			return L
 		else
 			enemies -= L
-	else if(ismecha(A))
+	else if(istype(A, /obj/mecha))
 		var/obj/mecha/M = A
 		if(M.occupant)
 			return A
@@ -30,7 +30,7 @@
 			var/mob/living/M = A
 			if(faction_check_mob(M) && attack_same || !faction_check_mob(M))
 				enemies |= M
-		else if(ismecha(A))
+		else if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			if(M.occupant)
 				enemies |= M

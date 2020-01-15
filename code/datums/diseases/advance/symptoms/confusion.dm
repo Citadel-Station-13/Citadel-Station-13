@@ -6,7 +6,7 @@ Confusion
 	Little bit hidden.
 	Lowers resistance.
 	Decreases stage speed.
-	Not very transmissibile.
+	Not very transmittable.
 	Intense Level.
 
 Bonus
@@ -34,8 +34,7 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/confusion/Start(datum/disease/advance/A)
-	if(!..())
-		return
+	..()
 	if(A.properties["resistance"] >= 6)
 		brain_damage = TRUE
 	if(A.properties["transmittable"] >= 6)
@@ -54,8 +53,8 @@ Bonus
 		else
 			to_chat(M, "<span class='userdanger'>You can't think straight!</span>")
 			M.confused = min(100 * power, M.confused + 8)
-			if(brain_damage)
-				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
+			if(brain_damage && M.getBrainLoss()<=80)
+				M.adjustBrainLoss(5 * power)
 				M.updatehealth()
 
 	return

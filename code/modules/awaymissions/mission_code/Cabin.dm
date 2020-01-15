@@ -1,24 +1,7 @@
 
-/*Cabin areas*/
-/area/awaymission/snowforest
-	name = "Snow Forest"
-	icon_state = "away"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-
-/area/awaymission/cabin
-	name = "Cabin"
-	icon_state = "away2"
-	requires_power = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-
-/area/awaymission/snowforest/lumbermill
-	name = "Lumbermill"
-	icon_state = "away3"
-
 /obj/structure/firepit
 	name = "firepit"
-	desc = "Warm and toasty."
+	desc = "warm and toasty"
 	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "firepit-active"
 	density = FALSE
@@ -28,10 +11,12 @@
 	..()
 	toggleFirepit()
 
-/obj/structure/firepit/interact(mob/living/user)
+/obj/structure/firepit/attack_hand(mob/living/user)
 	if(active)
-		active = FALSE
+		active = 0
 		toggleFirepit()
+	else
+		..()
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
@@ -46,7 +31,6 @@
 		W.fire_act()
 
 /obj/structure/firepit/proc/toggleFirepit()
-	active = !active
 	if(active)
 		set_light(8)
 		icon_state = "firepit-active"
@@ -71,7 +55,7 @@
 /obj/machinery/recycler/lumbermill
 	name = "lumbermill saw"
 	desc = "Faster then the cartoons!"
-	obj_flags = CAN_BE_HIT | EMAGGED
+	emagged = 2 //Always gibs people
 	item_recycle_sound = 'sound/weapons/chainsawhit.ogg'
 
 /obj/machinery/recycler/lumbermill/recycle_item(obj/item/grown/log/L)

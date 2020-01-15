@@ -2,17 +2,9 @@
 	name = "ears"
 	icon_state = "ears"
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
-	zone = BODY_ZONE_HEAD
-	slot = ORGAN_SLOT_EARS
+	zone = "head"
+	slot = "ears"
 	gender = PLURAL
-
-	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = STANDARD_ORGAN_DECAY
-
-	low_threshold_passed = "<span class='info'>Your ears begin to resonate with an internal ring sometimes.</span>"
-	now_failing = "<span class='warning'>You are unable to hear at all!</span>"
-	now_fixed = "<span class='info'>Noise slowly begins filling your ears once more.</span>"
-	low_threshold_cleared = "<span class='info'>The ringing in your ears has died down.</span>"
 
 	// `deaf` measures "ticks" of deafness. While > 0, the person is unable
 	// to hear anything.
@@ -23,49 +15,42 @@
 	// without external aid (earmuffs, drugs)
 	var/ear_damage = 0
 
-	//Resistance against loud noises
-	var/bang_protect = 0
-	// Multiplier for both long term and short term ear damage
-	var/damage_multiplier = 1
+	var/bang_protect = 0	//Resistance against loud noises
 
 /obj/item/organ/ears/on_life()
 	if(!iscarbon(owner))
 		return
-	..()
 	var/mob/living/carbon/C = owner
-	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING))	//ear damage can be repaired from the failing condition
-		organ_flags &= ~ORGAN_FAILING
 	// genetic deafness prevents the body from using the ears, even if healthy
-	if(HAS_TRAIT(C, TRAIT_DEAF))
+	if(C.disabilities & DEAF)
 		deaf = max(deaf, 1)
-	else if(!(organ_flags & ORGAN_FAILING)) // if this organ is failing, do not clear deaf stacks.
-		deaf = max(deaf - 1, 0)
-		if(prob(damage / 20) && (damage > low_threshold))
-			adjustEarDamage(0, 4)
-			SEND_SOUND(C, sound('sound/weapons/flash_ring.ogg'))
-			to_chat(C, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
-	else if((organ_flags & ORGAN_FAILING) && (deaf == 0))
-		deaf = 1	//stop being not deaf you deaf idiot
+	else
+		if(C.ears && (C.ears.flags_2 & HEALS_EARS_2))
+			deaf = max(deaf - 1, 1)
+			ear_damage = max(ear_damage - 0.1, 0)
+		// if higher than UNHEALING_EAR_DAMAGE, no natural healing occurs.
+		if(ear_damage < UNHEALING_EAR_DAMAGE)
+			ear_damage = max(ear_damage - 0.05, 0)
+			deaf = max(deaf - 1, 0)
 
 /obj/item/organ/ears/proc/restoreEars()
 	deaf = 0
 	ear_damage = 0
-	organ_flags &= ~ORGAN_FAILING
 
 	var/mob/living/carbon/C = owner
 
-	if(iscarbon(owner) && HAS_TRAIT(C, TRAIT_DEAF))
+	if(iscarbon(owner) && C.disabilities & DEAF)
 		deaf = 1
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
-	ear_damage = max(ear_damage + (ddmg*damage_multiplier), 0)
-	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	ear_damage = max(ear_damage + ddmg, 0)
+	deaf = max(deaf + ddeaf, 0)
 
 /obj/item/organ/ears/proc/minimumDeafTicks(value)
 	deaf = max(deaf, value)
 
-/obj/item/organ/ears/invincible
-	damage_multiplier = 0
+/obj/item/organ/ears/invincible/adjustEarDamage(ddmg, ddeaf)
+	return
 
 
 /mob/proc/restoreEars()
@@ -94,45 +79,18 @@
 	name = "cat ears"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
-	damage_multiplier = 2
+
+/obj/item/organ/ears/cat/adjustEarDamage(ddmg, ddeaf)
+	..(ddmg*2,ddeaf*2)
 
 /obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
-	if(istype(H))
-		color = H.hair_color
-		H.dna.species.mutant_bodyparts |= "ears"
-		H.dna.features["ears"] = "Cat"
-		H.update_body()
+	color = H.hair_color
+	H.dna.features["ears"] = "Cat"
+	H.update_body()
 
 /obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
-	if(istype(H))
-		color = H.hair_color
-		H.dna.features["ears"] = "None"
-		H.dna.species.mutant_bodyparts -= "ears"
-		H.update_body()
-
-/obj/item/organ/ears/bronze
-	name = "tin ears"
-	desc = "The robust ears of a bronze golem. "
-	damage_multiplier = 0.1 //STRONK
-	bang_protect = 1 //Fear me weaklings.
-
-/obj/item/organ/ears/cybernetic
-	name = "cybernetic ears"
-	icon_state = "ears-c"
-	desc = "a basic cybernetic designed to mimic the operation of ears."
-	damage_multiplier = 0.9
-	organ_flags = ORGAN_SYNTHETIC
-
-/obj/item/organ/ears/cybernetic/upgraded
-	name = "upgraded cybernetic ears"
-	icon_state = "ears-c-u"
-	desc = "an advanced cybernetic ear, surpassing the performance of organic ears"
-	damage_multiplier = 0.5
-
-/obj/item/organ/ears/cybernetic/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	damage += 40/severity
+	color = H.hair_color
+	H.dna.features["ears"] = "None"
+	H.update_body()

@@ -4,11 +4,9 @@
 	name = "fire coderbus" //name of the subsystem
 	var/init_order = INIT_ORDER_DEFAULT		//order of initialization. Higher numbers are initialized first, lower numbers later. Use defines in __DEFINES/subsystems.dm for easy understanding of order.
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
-	var/priority = FIRE_PRIORITY_DEFAULT	//When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
+	var/priority = 50		//When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
 
 	var/flags = 0			//see MC.dm in __DEFINES Most flags must be set on world start to take full effect. (You can also restart the mc to force them to process again)
-
-	var/initialized = FALSE	//set to TRUE after it has been initialized, will obviously never be set if the subsystem doesn't initialize
 
 	//set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
 	//	use the SS_NO_FIRE flag instead for systems that never fire to keep it from even being added to the list
@@ -36,7 +34,8 @@
 	var/static/list/failure_strikes //How many times we suspect a subsystem type has crashed the MC, 3 strikes and you're out!
 
 //Do not override
-///datum/controller/subsystem/New()
+/datum/controller/subsystem/New()
+	return
 
 // Used to initialize the subsystem BEFORE the map has loaded
 // Called AFTER Recover if that is called
@@ -70,7 +69,7 @@
 	can_fire = 0
 	flags |= SS_NO_FIRE
 	Master.subsystems -= src
-	return ..()
+
 
 //Queue it to run.
 //	(we loop thru a linked list until we get to the end or find the right point)
@@ -155,16 +154,13 @@
 		if(SS_SLEEPING)
 			state = SS_PAUSING
 
-/datum/controller/subsystem/proc/subsystem_log(msg)
-	return log_subsystem(name, msg)
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/controller/subsystem/Initialize(start_timeofday)
-	initialized = TRUE
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	to_chat(world, "<span class='boldannounce'>[msg]</span>")
-	log_subsystem("INIT", msg)
+	log_world(msg)
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
@@ -174,7 +170,7 @@
 
 
 
-	if(can_fire && !(SS_NO_FIRE & flags))
+	if(can_fire && !(SS_NO_FIRE in flags))
 		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"

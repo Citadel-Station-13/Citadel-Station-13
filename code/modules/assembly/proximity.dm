@@ -1,104 +1,87 @@
-/obj/item/assembly/prox_sensor
+/obj/item/device/assembly/prox_sensor
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
-	attachable = TRUE
+	origin_tech = "magnets=1;engineering=1"
+	attachable = 1
 
-	var/scanning = FALSE
-	var/timing = FALSE
+	var/scanning = 0
+	var/timing = 0
 	var/time = 10
 	var/sensitivity = 1
-	var/hearing_range = 3
 
-/obj/item/assembly/prox_sensor/Initialize()
+/obj/item/device/assembly/prox_sensor/proc/toggle_scan()
+
+
+/obj/item/device/assembly/prox_sensor/proc/sense()
+
+
+/obj/item/device/assembly/prox_sensor/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 0)
-	START_PROCESSING(SSobj, src)
 
-/obj/item/assembly/prox_sensor/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
+/obj/item/device/assembly/prox_sensor/describe()
+	if(timing)
+		return "<span class='notice'>The proximity sensor is arming.</span>"
+	return "The proximity sensor is [scanning?"armed":"disarmed"]."
 
-/obj/item/assembly/prox_sensor/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>"
-
-/obj/item/assembly/prox_sensor/activate()
+/obj/item/device/assembly/prox_sensor/activate()
 	if(!..())
-		return FALSE//Cooldown check
-	if(!scanning)
-		timing = !timing
-	else
-		scanning = FALSE
+		return 0//Cooldown check
+	timing = !timing
 	update_icon()
-	return TRUE
+	return 1
 
-/obj/item/assembly/prox_sensor/on_detach()
-	. = ..()
-	if(!.)
-		return
-	else
-		proximity_monitor.SetHost(src,src)
-
-
-/obj/item/assembly/prox_sensor/toggle_secure()
+/obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
 		if(scanning)
 			toggle_scan()
-			proximity_monitor.SetHost(src,src)
-		timing = FALSE
-		STOP_PROCESSING(SSobj, src)
+			proximity_monitor.host = src
+		timing = 0
 	else
-		START_PROCESSING(SSobj, src)
-		proximity_monitor.SetHost(loc,src)
+		proximity_monitor.host = loc
 	update_icon()
 	return secured
 
 
-
-/obj/item/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/effect/beam))
 		return
 	sense()
 
-/obj/item/assembly/prox_sensor/proc/sense()
-	if(!scanning || !secured || next_activate > world.time)
-		return FALSE
-	pulse(FALSE)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
-	for(var/CHM in get_hearers_in_view(hearing_range, src))
-		if(ismob(CHM))
-			var/mob/LM = CHM
-			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+
+/obj/item/device/assembly/prox_sensor/sense()
+	if(!secured || next_activate > world.time)
+		return 0
+	pulse(0)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 3)
 	next_activate = world.time + 30
-	return TRUE
 
 
-/obj/item/assembly/prox_sensor/process()
-	if(!timing)
-		return
-	time--
-	if(time <= 0)
-		timing = FALSE
-		toggle_scan(TRUE)
-		time = initial(time)
+/obj/item/device/assembly/prox_sensor/process()
+	if(timing)
+		time--
+		if(time <= 0)
+			timing = 0
+			toggle_scan(1)
+			time = initial(time)
 
-/obj/item/assembly/prox_sensor/proc/toggle_scan(scan)
+/obj/item/device/assembly/prox_sensor/toggle_scan(scan)
 	if(!secured)
-		return FALSE
+		return 0
 	scanning = scan
 	proximity_monitor.SetRange(scanning ? sensitivity : 0)
 	update_icon()
 
-/obj/item/assembly/prox_sensor/proc/sensitivity_change(value)
+/obj/item/device/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
 	sensitivity = sense
 	if(scanning && proximity_monitor.SetRange(sense))
 		sense()
 
-/obj/item/assembly/prox_sensor/update_icon()
+/obj/item/device/assembly/prox_sensor/update_icon()
 	cut_overlays()
 	attached_overlays = list()
 	if(timing)
@@ -111,25 +94,21 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/prox_sensor/ui_interact(mob/user)//TODO: Change this to the wires thingy
-	. = ..()
+/obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(is_secured(user))
 		var/second = time % 60
 		var/minute = (time - second) / 60
-		var/dat = "<TT><B>Proximity Sensor</B></TT>"
-		if(!scanning)
-			dat += "<BR>[(timing ? "<A href='?src=[REF(src)];time=0'>Arming</A>" : "<A href='?src=[REF(src)];time=1'>Not Arming</A>")] [minute]:[second]"
-			dat += "<BR><A href='?src=[REF(src)];tp=-30'>-</A> <A href='?src=[REF(src)];tp=-1'>-</A> <A href='?src=[REF(src)];tp=1'>+</A> <A href='?src=[REF(src)];tp=30'>+</A>"
-		dat += "<BR><A href='?src=[REF(src)];scanning=[scanning?"0'>Armed":"1'>Unarmed (Movement sensor active when armed!)"]</A>"
-		dat += "<BR>Detection range: <A href='?src=[REF(src)];sense=down'>-</A> [sensitivity] <A href='?src=[REF(src)];sense=up'>+</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
+		var/dat = "<TT><B>Proximity Sensor</B>\n[(timing ? "<A href='?src=\ref[src];time=0'>Arming</A>" : "<A href='?src=\ref[src];time=1'>Not Arming</A>")] [minute]:[second]\n<A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT>"
+		dat += "<BR><A href='?src=\ref[src];scanning=[scanning?"0'>Armed":"1'>Unarmed"]</A> (Movement sensor active when armed!)"
+		dat += "<BR>Detection range: <A href='?src=\ref[src];sense=down'>-</A> [sensitivity] <A href='?src=\ref[src];sense=up'>+</A>"
+		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
+		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
 		user << browse(dat, "window=prox")
 		onclose(user, "prox")
 		return
 
 
-/obj/item/assembly/prox_sensor/Topic(href, href_list)
+/obj/item/device/assembly/prox_sensor/Topic(href, href_list)
 	..()
 	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=prox")

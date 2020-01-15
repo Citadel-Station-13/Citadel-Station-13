@@ -1,7 +1,8 @@
 /obj/item/implant/weapons_auth
 	name = "firearms authentication implant"
-	desc = "Lets you shoot your guns."
+	desc = "Lets you shoot your guns"
 	icon_state = "auth"
+	origin_tech = "magnets=2;programming=7;biotech=5;syndicate=5"
 	activated = 0
 
 /obj/item/implant/weapons_auth/get_data()
@@ -17,6 +18,7 @@
 	name = "adrenal implant"
 	desc = "Removes all stuns."
 	icon_state = "adrenal"
+	origin_tech = "materials=2;biotech=4;combat=3;syndicate=4"
 	uses = 3
 
 /obj/item/implant/adrenalin/get_data()
@@ -31,10 +33,18 @@
 	return dat
 
 /obj/item/implant/adrenalin/activate()
-	. = ..()
 	uses--
-	imp_in.do_adrenaline(150, TRUE, 0, 0, TRUE, list(/datum/reagent/medicine/inaprovaline = 3, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/regen_jelly = 10, /datum/reagent/medicine/stimulants = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	imp_in.SetStun(0)
+	imp_in.SetKnockdown(0)
+	imp_in.SetUnconscious(0)
+	imp_in.adjustStaminaLoss(-75)
+	imp_in.lying = 0
+	imp_in.update_canmove()
+
+	imp_in.reagents.add_reagent("synaptizine", 10)
+	imp_in.reagents.add_reagent("omnizine", 10)
+	imp_in.reagents.add_reagent("stimulants", 10)
 	if(!uses)
 		qdel(src)
 
@@ -43,10 +53,10 @@
 	name = "emp implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
+	origin_tech = "biotech=3;magnets=4;syndicate=1"
 	uses = 3
 
 /obj/item/implant/emp/activate()
-	. = ..()
 	uses--
 	empulse(imp_in, 3, 5)
 	if(!uses)

@@ -10,9 +10,6 @@
 	energy_drain = 10
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
-	harmful = TRUE
-	tool_behaviour = TOOL_RETRACTOR
-	toolspeed = 0.8
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)
 	if(..())
@@ -42,7 +39,7 @@
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
-					O.forceMove(chassis)
+					O.loc = chassis
 					O.anchored = FALSE
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
@@ -55,8 +52,7 @@
 
 	else if(isliving(target))
 		var/mob/living/M = target
-		if(M.stat == DEAD)
-			return
+		if(M.stat == DEAD) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
 			M.take_overall_damage(dam_force)
 			if(!M)
@@ -66,7 +62,7 @@
 			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
 								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
 								"<span class='italics'>You hear something crack.</span>")
-			log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+			add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -80,14 +76,6 @@
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them!"
 	energy_drain = 0
-	dam_force = 0
-	var/real_clamp = FALSE
-
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
-	desc = "They won't know what clamped them! This time for real!"
-	energy_drain = 10
-	dam_force = 20
-	real_clamp = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(atom/target)
 	if(!action_checks(target))
@@ -102,7 +90,7 @@
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
-					O.forceMove(chassis)
+					O.loc = chassis
 					O.anchored = FALSE
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
@@ -115,44 +103,13 @@
 
 	else if(isliving(target))
 		var/mob/living/M = target
-		if(M.stat == DEAD)
-			return
+		if(M.stat == DEAD) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
-			if(real_clamp)
-				M.take_overall_damage(dam_force)
-				if(!M)
-					return
-				M.adjustOxyLoss(round(dam_force/2))
-				M.updatehealth()
-				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
-									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-				log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
-			else
-				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
-									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-		else if(chassis.occupant.a_intent == INTENT_DISARM)
-			if(real_clamp)
-				var/mob/living/carbon/C = target
-				var/play_sound = FALSE
-				var/limbs_gone = ""
-				var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)
-				if(affected != null)
-					affected.dismember(damtype)
-					play_sound = TRUE
-					limbs_gone = ", [affected]"
-				affected = C.get_bodypart(BODY_ZONE_R_ARM)
-				if(affected != null)
-					affected.dismember(damtype)
-					play_sound = TRUE
-					limbs_gone = "[limbs_gone], [affected]"
-				if(play_sound)
-					playsound(src, get_dismember_sound(), 80, TRUE)
-					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
-								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
-					log_combat(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
-			else
-				target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
-								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
+			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
+								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
+		if(chassis.occupant.a_intent == INTENT_DISARM)
+			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
+								"<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
 		else
 			step_away(M,chassis)
 			target.visible_message("[chassis] tosses [target] like a piece of paper.")
@@ -168,10 +125,11 @@
 	energy_drain = 0
 	range = MELEE|RANGED
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
-	. = ..()
+/obj/item/mecha_parts/mecha_equipment/extinguisher/New()
 	create_reagents(1000)
-	reagents.add_reagent(/datum/reagent/water, 1000)
+	reagents.add_reagent("water", 1000)
+	..()
+	return
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 	if(!action_checks(target) || get_dist(chassis, target)>3)
@@ -219,6 +177,9 @@
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
 
+/obj/item/mecha_parts/mecha_equipment/extinguisher/on_reagent_change()
+	return
+
 /obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/mecha/working/M as obj)
 	if(..())
 		if(istype(M))
@@ -231,19 +192,19 @@
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
+	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4;engineering=4"
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
-	item_flags = NO_MAT_REDEMPTION
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 
-/obj/item/mecha_parts/mecha_equipment/rcd/Initialize()
-	. = ..()
+/obj/item/mecha_parts/mecha_equipment/rcd/New()
 	GLOB.rcd_list += src
+	..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
-	GLOB.rcd_list -= src
-	return ..()
+ 	GLOB.rcd_list -= src
+ 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
 	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
@@ -262,14 +223,14 @@
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
-					W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+					W.ChangeTurf(/turf/open/floor/plating)
 					playsound(W, 'sound/items/deconstruct.ogg', 50, 1)
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
-					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+					F.ChangeTurf(F.baseturf)
 					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("Deconstructing [target]...")
@@ -282,14 +243,14 @@
 				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
-					S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+					S.ChangeTurf(/turf/open/floor/plating)
 					playsound(S, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
-					F.PlaceOnTop(/turf/closed/wall)
+					F.ChangeTurf(/turf/closed/wall)
 					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)
@@ -324,7 +285,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
-	return "[..()] \[<a href='?src=[REF(src)];mode=0'>D</a>|<a href='?src=[REF(src)];mode=1'>C</a>|<a href='?src=[REF(src)];mode=2'>A</a>\]"
+	return "[..()] \[<a href='?src=\ref[src];mode=0'>D</a>|<a href='?src=\ref[src];mode=1'>C</a>|<a href='?src=\ref[src];mode=2'>A</a>\]"
 
 
 
@@ -339,9 +300,10 @@
 	var/obj/item/stack/cable_coil/cable
 	var/max_cable = 1000
 
-/obj/item/mecha_parts/mecha_equipment/cable_layer/Initialize()
-	. = ..()
-	cable = new(src, 0)
+/obj/item/mecha_parts/mecha_equipment/cable_layer/New()
+	cable = new(src)
+	cable.amount = 0
+	..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/can_attach(obj/mecha/working/M)
 	if(..())
@@ -372,11 +334,12 @@
 		if(to_load)
 			to_load = min(target.amount, to_load)
 			if(!cable)
-				cable = new(src, 0)
+				cable = new(src)
+				cable.amount = 0
 			cable.amount += to_load
 			target.use(to_load)
 			occupant_message("<span class='notice'>[to_load] meters of cable successfully loaded.</span>")
-			send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
+			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 		else
 			occupant_message("<span class='warning'>Reel is full.</span>")
 	else
@@ -396,7 +359,8 @@
 			m = min(m, cable.amount)
 			if(m)
 				use_cable(m)
-				new /obj/item/stack/cable_coil(get_turf(chassis), m)
+				var/obj/item/stack/cable_coil/CC = new (get_turf(chassis))
+				CC.amount = m
 		else
 			occupant_message("There's no more cable on the reel.")
 	return
@@ -404,7 +368,7 @@
 /obj/item/mecha_parts/mecha_equipment/cable_layer/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=[REF(src)];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=[REF(src)];cut=1'>Cut</a>" : null]"
+		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=\ref[src];cut=1'>Cut</a>" : null]"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/use_cable(amount)
@@ -426,7 +390,7 @@
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
 	if(isfloorturf(new_turf))
 		var/turf/open/floor/T = new_turf
-		if(!isplatingturf(T))
+		if(!istype(T, /turf/open/floor/plating))
 			if(!T.broken && !T.burnt)
 				new T.floor_tile(T)
 			T.make_plating()
@@ -441,7 +405,8 @@
 			return reset()
 	if(!use_cable(1))
 		return reset()
-	var/obj/structure/cable/NC = new(new_turf, "red")
+	var/obj/structure/cable/NC = new(new_turf)
+	NC.cableColor("red")
 	NC.d1 = 0
 	NC.d2 = fdirn
 	NC.update_icon()

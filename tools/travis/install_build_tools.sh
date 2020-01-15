@@ -1,12 +1,11 @@
 #!/bin/bash
-set -euo pipefail
+set -e
 
-source dependencies.sh
+if [ "$BUILD_TOOLS" = true ]; then
+      rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $NODE_VERSION
+      npm install -g gulp-cli
+      pip install --user PyYaml -q
+      pip install --user beautifulsoup4 -q
+fi;
 
-source ~/.nvm/nvm.sh
-nvm install $NODE_VERSION
 
-pip3 install --user PyYaml
-pip3 install --user beautifulsoup4
-
-phpenv global $PHP_VERSION

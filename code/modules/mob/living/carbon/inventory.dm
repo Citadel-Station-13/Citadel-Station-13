@@ -1,16 +1,16 @@
 /mob/living/carbon/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(SLOT_BACK)
+		if(slot_back)
 			return back
-		if(SLOT_WEAR_MASK)
+		if(slot_wear_mask)
 			return wear_mask
-		if(SLOT_NECK)
+		if(slot_neck)
 			return wear_neck
-		if(SLOT_HEAD)
+		if(slot_head)
 			return head
-		if(SLOT_HANDCUFFED)
+		if(slot_handcuffed)
 			return handcuffed
-		if(SLOT_LEGCUFFED)
+		if(slot_legcuffed)
 			return legcuffed
 	return null
 
@@ -50,30 +50,33 @@
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 	switch(slot)
-		if(SLOT_BACK)
+		if(slot_back)
 			back = I
 			update_inv_back()
-		if(SLOT_WEAR_MASK)
+		if(slot_wear_mask)
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
-		if(SLOT_HEAD)
+		if(slot_head)
 			head = I
 			head_update(I)
-		if(SLOT_NECK)
+		if(slot_neck)
 			wear_neck = I
 			update_inv_neck(I)
-		if(SLOT_HANDCUFFED)
+		if(slot_handcuffed)
 			handcuffed = I
 			update_handcuffed()
-		if(SLOT_LEGCUFFED)
+		if(slot_legcuffed)
 			legcuffed = I
 			update_inv_legcuffed()
-		if(SLOT_HANDS)
+		if(slot_hands)
 			put_in_hands(I)
 			update_inv_hands()
-		if(SLOT_IN_BACKPACK)
-			if(!SEND_SIGNAL(back, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
-				not_handled = TRUE
+		if(slot_in_backpack)
+			var/obj/item/storage/B = back
+			var/prev_jimmies = B.rustle_jimmies
+			B.rustle_jimmies = FALSE //don't conspicously rustle
+			B.handle_item_insertion(I, 1, src)
+			B.rustle_jimmies = prev_jimmies
 		else
 			not_handled = TRUE
 
@@ -85,7 +88,7 @@
 
 	return not_handled
 
-/mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
+/mob/living/carbon/doUnEquip(obj/item/I)
 	. = ..() //Sets the default return value to what the parent returns.
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
@@ -137,6 +140,3 @@
 		update_inv_wear_mask()
 	update_inv_head()
 
-/mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
-	var/index = get_held_index_of_item(I)
-	return index && hand_bodyparts[index]

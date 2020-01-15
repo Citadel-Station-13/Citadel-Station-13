@@ -1,21 +1,18 @@
 /datum/species/fly
-	name = "Anthromorphic Fly"
+	name = "Flyperson"
 	id = "fly"
 	say_mod = "buzzes"
-	species_traits = list(NOEYES)
-	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly
 	mutantstomach = /obj/item/organ/stomach/fly
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	disliked_food = null
 	liked_food = GROSS
-	exotic_bloodtype = "BUG"
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == /datum/reagent/toxin/pestkiller)
+	if(chem.id == "pestkiller")
 		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
 

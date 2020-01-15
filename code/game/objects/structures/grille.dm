@@ -1,5 +1,5 @@
 /obj/structure/grille
-	desc = "A flimsy framework of metal rods."
+	desc = "A flimsy lattice of metal rods, with screws to secure it to the floor."
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
@@ -8,7 +8,7 @@
 	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
-	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 	max_integrity = 50
 	integrity_failure = 20
 	var/rods_type = /obj/item/stack/rods
@@ -16,32 +16,6 @@
 	var/rods_broken = TRUE
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-
-/obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	. = ..()
-	update_icon()
-
-/obj/structure/grille/update_icon()
-	if(QDELETED(src) || broken)
-		return
-
-	var/ratio = obj_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
-
-	if(smooth)
-		queue_smooth(src)
-
-	if(ratio > 50)
-		return
-	icon_state = "grille50_[rand(0,3)]"
-
-/obj/structure/grille/examine(mob/user)
-	. = ..()
-	if(anchored)
-		. += "<span class='notice'>It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.</span>"
-	else
-		. += "<span class='notice'>The anchoring screws are <i>unscrewed</i>. The rods look like they could be <b>cut</b> through.</span>"
 
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -50,8 +24,7 @@
 		if(RCD_WINDOWGRILLE)
 			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
 				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
-			else
-				return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
+			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/construction/rcd/the_rcd, passed_mode)
@@ -65,7 +38,7 @@
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the window.</span>")
 			var/obj/structure/window/WD = new the_rcd.window_type(drop_location())
-			WD.setAnchored(TRUE)
+			WD.anchored = TRUE
 			return TRUE
 	return FALSE
 
@@ -76,19 +49,15 @@
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
 
-/obj/structure/grille/Bumped(atom/movable/AM)
+/obj/structure/grille/CollidedWith(atom/movable/AM)
 	if(!ismob(AM))
 		return
 	var/mob/M = AM
 	shock(M, 70)
 
-/obj/structure/grille/attack_animal(mob/user)
-	. = ..()
-	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille)
-		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
-	return attack_hand(user)
+	attack_hand(user)
 
 /obj/structure/grille/hulk_damage()
 	return 60
@@ -100,13 +69,9 @@
 		return TRUE
 
 /obj/structure/grille/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
-	log_combat(user, src, "hit")
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
@@ -119,7 +84,7 @@
 
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
+	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return TRUE
 	else
 		if(istype(mover, /obj/item/projectile) && density)
@@ -131,19 +96,19 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSGRILLE)
+		. = . || mover.checkpass(PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/wirecutters))
 		if(!shock(user, 100))
-			W.play_tool_sound(src, 100)
+			playsound(src, W.usesound, 100, 1)
 			deconstruct()
 	else if((istype(W, /obj/item/screwdriver)) && (isturf(loc) || anchored))
 		if(!shock(user, 90))
-			W.play_tool_sound(src, 100)
-			setAnchored(!anchored)
+			playsound(src, W.usesound, 100, 1)
+			anchored = !anchored
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
 								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
 			return
@@ -184,15 +149,11 @@
 					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
 				else if(istype(W, /obj/item/stack/sheet/rglass))
 					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
-				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
-					WD = new/obj/structure/window/shuttle(drop_location())
-				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
-					WD = new/obj/structure/window/plastitanium(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
-				WD.setAnchored(FALSE)
+				WD.anchored = FALSE
 				WD.state = 0
 				ST.use(2)
 				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")
@@ -261,17 +222,15 @@
 /obj/structure/grille/hitby(AM as mob|obj)
 	if(isobj(AM))
 		if(prob(50) && anchored && !broken)
-			var/obj/O = AM
-			if(O.throwforce != 0 && O.damtype != STAMINA)//don't want to let people spam tesla bolts, this way it will break after time
-				var/turf/T = get_turf(src)
-				var/obj/structure/cable/C = T.get_cable_node()
-				if(C)
-					playsound(src, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-					tesla_zap(src, 3, C.newavail() * 0.01, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN | TESLA_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
-					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
+			var/turf/T = get_turf(src)
+			var/obj/structure/cable/C = T.get_cable_node()
+			if(C)
+				playsound(src, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
+				tesla_zap(src, 3, C.powernet.avail * 0.01) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
+				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
-/obj/structure/grille/get_dumping_location(datum/component/storage/source,mob/user)
+/obj/structure/grille/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement

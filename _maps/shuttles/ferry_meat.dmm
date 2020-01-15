@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space,
+/area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
@@ -11,19 +11,21 @@
 "c" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
+"d" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
 "e" = (
+/turf/open/floor/plasteel/freezer,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "f" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "g" = (
-/obj/machinery/computer/shuttle/ferry/request{
-	dir = 8
-	},
+/obj/machinery/computer/shuttle/ferry/request,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "h" = (
@@ -90,7 +92,7 @@
 /area/shuttle/transport)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "o" = (
@@ -110,10 +112,22 @@
 	height = 12;
 	id = "ferry";
 	name = "ferry shuttle";
+	roundstart_move = "ferry_away";
 	port_direction = 2;
-	width = 5
+	width = 5;
+	timid = 1
 	},
 /turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"r" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"s" = (
+/turf/open/floor/plasteel/freezer,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "t" = (
 /obj/structure/closet/chefcloset,
@@ -126,15 +140,18 @@
 "v" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
-	req_access_txt = "28"
+	req_access = "28"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "w" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"x" = (
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 
 (1,1,1) = {"

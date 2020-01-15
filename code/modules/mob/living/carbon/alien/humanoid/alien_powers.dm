@@ -10,15 +10,15 @@ Doesn't work on other aliens/AI.*/
 	name = "Alien Power"
 	panel = "Alien"
 	var/plasma_cost = 0
-	var/check_turf = FALSE
-	has_action = TRUE
-	base_action = /datum/action/spell_action/alien
-	action_icon = 'icons/mob/actions/actions_xeno.dmi'
-	action_icon_state = "spell_default"
-	action_background_icon_state = "bg_alien"
+	var/check_turf = 0
+	var/has_action = 1
+	var/datum/action/spell_action/alien/action = null
+	var/action_icon = 'icons/mob/actions/actions_xeno.dmi'
+	var/action_icon_state = "spell_default"
+	var/action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/alien/Initialize()
-	. = ..()
+/obj/effect/proc_holder/alien/New()
+	..()
 	action = new(src)
 
 /obj/effect/proc_holder/alien/Click()
@@ -30,48 +30,35 @@ Doesn't work on other aliens/AI.*/
 			user.adjustPlasma(-plasma_cost)
 	return 1
 
-/obj/effect/proc_holder/alien/on_gain(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/proc/on_gain(mob/living/carbon/user)
 	return
 
-/obj/effect/proc_holder/alien/on_lose(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/proc/on_lose(mob/living/carbon/user)
 	return
 
-/obj/effect/proc_holder/alien/fire(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/proc/fire(mob/living/carbon/user)
 	return 1
 
-/obj/effect/proc_holder/alien/get_panel_text()
-	. = ..()
-	if(plasma_cost > 0)
-		return "[plasma_cost]"
-
-/obj/effect/proc_holder/alien/proc/cost_check(check_turf = FALSE, mob/living/carbon/user, silent = FALSE)
+/obj/effect/proc_holder/alien/proc/cost_check(check_turf=0,mob/living/carbon/user,silent = 0)
 	if(user.stat)
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>You must be conscious to do this.</span>")
-		return FALSE
+		return 0
 	if(user.getPlasma() < plasma_cost)
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>Not enough plasma stored.</span>")
-		return FALSE
+		return 0
 	if(check_turf && (!isturf(user.loc) || isspaceturf(user.loc)))
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>Bad place for a garden!</span>")
-		return FALSE
-	return TRUE
-
-/obj/effect/proc_holder/alien/proc/check_vent_block(mob/living/user)
-	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
-	if(atmos_thing)
-		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
-		if(rusure != "Yes")
-			return FALSE
-	return TRUE
+		return 0
+	return 1
 
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
-	desc = "Plants some alien weeds."
+	desc = "Plants some alien weeds"
 	plasma_cost = 50
-	check_turf = TRUE
+	check_turf = 1
 	action_icon_state = "alien_plant"
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
@@ -84,7 +71,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/whisper
 	name = "Whisper"
-	desc = "Whisper to someone."
+	desc = "Whisper to someone"
 	plasma_cost = 10
 	action_icon_state = "alien_whisper"
 
@@ -95,15 +82,9 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
 	if(!M)
 		return 0
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(user, "<span class='noticealien'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
-		return FALSE
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
-			return
-		log_directed_talk(user, M, msg, LOG_SAY, tag="alien whisper")
+		log_talk(user,"AlienWhisper: [key_name(user)]->[M.key] : [msg]",LOGSAY)
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
 		for(var/ded in GLOB.dead_mob_list)
@@ -118,7 +99,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/transfer
 	name = "Transfer Plasma"
-	desc = "Transfer Plasma to another alien."
+	desc = "Transfer Plasma to another alien"
 	plasma_cost = 0
 	action_icon_state = "alien_transfer"
 
@@ -165,7 +146,7 @@ Doesn't work on other aliens/AI.*/
 
 			return 0
 	else
-		to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
+		to_chat(src, "<span class='noticealien'>Target is too far away.</span>")
 		return 0
 
 
@@ -177,16 +158,16 @@ Doesn't work on other aliens/AI.*/
 		return corrode(O,user)
 
 /mob/living/carbon/proc/corrosive_acid(O as obj|turf in oview(1)) // right click menu verb ugh
-	set name = "Corrosive Acid"
+	set name = "Corrossive Acid"
 
 	if(!iscarbon(usr))
 		return
 	var/mob/living/carbon/user = usr
 	var/obj/effect/proc_holder/alien/acid/A = locate() in user.abilities
-	if(!A)
-		return
+	if(!A) return
 	if(user.getPlasma() > A.plasma_cost && A.corrode(O))
 		user.adjustPlasma(-A.plasma_cost)
+
 
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
@@ -198,7 +179,7 @@ Doesn't work on other aliens/AI.*/
 	var/message
 	if(active)
 		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
-		remove_ranged_ability(message)
+		remove_ranged_ability(user,message)
 	else
 		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
 		add_ranged_ability(user, message, TRUE)
@@ -212,7 +193,7 @@ Doesn't work on other aliens/AI.*/
 		return
 	var/p_cost = 50
 	if(!iscarbon(ranged_ability_user) || ranged_ability_user.lying || ranged_ability_user.stat)
-		remove_ranged_ability()
+		remove_ranged_ability(ranged_ability_user)
 		return
 
 	var/mob/living/carbon/user = ranged_ability_user
@@ -229,7 +210,8 @@ Doesn't work on other aliens/AI.*/
 
 	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
 	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
-	A.preparePixelProjectile(target, user, params)
+	A.current = U
+	A.preparePixelProjectile(target, get_turf(target), user, params)
 	A.fire()
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost)
@@ -237,27 +219,28 @@ Doesn't work on other aliens/AI.*/
 	return TRUE
 
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
-	remove_ranged_ability()
+	if(user.ranged_ability == src)
+		user.ranged_ability = null
 
-/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user,msg,forced)
+/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user, msg)
 	..()
 	if(isalienadult(user))
 		var/mob/living/carbon/alien/humanoid/A = user
 		A.drooling = 1
 		A.update_icons()
 
-/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(msg)
-	if(isalienadult(ranged_ability_user))
-		var/mob/living/carbon/alien/humanoid/A = ranged_ability_user
+/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(mob/living/user, msg)
+	..()
+	if(isalienadult(user))
+		var/mob/living/carbon/alien/humanoid/A = user
 		A.drooling = 0
 		A.update_icons()
-	..()
 
 /obj/effect/proc_holder/alien/resin
 	name = "Secrete Resin"
 	desc = "Secrete tough malleable resin."
 	plasma_cost = 55
-	check_turf = TRUE
+	check_turf = 1
 	var/list/structures = list(
 		"resin wall" = /obj/structure/alien/resin/wall,
 		"resin membrane" = /obj/structure/alien/resin/membrane,
@@ -268,26 +251,22 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/resin) in user.loc)
 		to_chat(user, "<span class='danger'>There is already a resin structure there.</span>")
-		return FALSE
-
-	if(!check_vent_block(user))
-		return FALSE
-
+		return 0
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
 	if(!choice)
-		return FALSE
+		return 0
 	if (!cost_check(check_turf,user))
-		return FALSE
+		return 0
 	to_chat(user, "<span class='notice'>You shape a [choice].</span>")
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
 	choice = structures[choice]
 	new choice(user.loc)
-	return TRUE
+	return 1
 
 /obj/effect/proc_holder/alien/regurgitate
 	name = "Regurgitate"
-	desc = "Empties the contents of your stomach."
+	desc = "Empties the contents of your stomach"
 	plasma_cost = 0
 	action_icon_state = "alien_barf"
 
@@ -295,7 +274,7 @@ Doesn't work on other aliens/AI.*/
 	if(user.stomach_contents.len)
 		for(var/atom/movable/A in user.stomach_contents)
 			user.stomach_contents.Remove(A)
-			A.forceMove(user.drop_location())
+			A.loc = user.loc
 			if(isliving(A))
 				var/mob/M = A
 				M.reset_perspective()
@@ -324,15 +303,13 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-	if(!vessel)
-		return 0
+	if(!vessel) return 0
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-	if(!vessel)
-		return 0
+	if(!vessel) return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/X in abilities)
@@ -351,3 +328,7 @@ Doesn't work on other aliens/AI.*/
 		return 1
 
 	return 0
+
+
+/proc/cmp_abilities_cost(obj/effect/proc_holder/alien/a, obj/effect/proc_holder/alien/b)
+	return b.plasma_cost - a.plasma_cost

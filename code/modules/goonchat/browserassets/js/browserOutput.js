@@ -22,7 +22,7 @@ window.onerror = function(msg, url, line, col, error) {
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message;
+var $messages, $subOptions, $contextMenu, $filterMessages;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -35,11 +35,10 @@ var opts = {
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
 	'restarting': false, //Is the round restarting?
-	'colorPreset': 0, 	// index in the color presets list.
 
 	//Options menu
-	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
-	'suppressSubClose': false, //Whether or not we should be hiding the selected sub menu
+	'subOptionsLoop': null, //Contains the interval loop for closing the options menu
+	'suppressOptionsClose': false, //Whether or not we should be hiding the suboptions menu
 	'highlightTerms': [],
 	'highlightLimit': 5,
 	'highlightColor': '#FFFF00', //The color of the highlighted message
@@ -66,20 +65,8 @@ var opts = {
 	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
 	'volumeUpdating': false, //True if volume update function set to fire
 	'updatedVolume': 0, //The volume level that is sent to the server
-	
-	'defaultMusicVolume': 25,
-
-	'messageCombining': true,
 
 };
-
-// Array of names for chat display color presets.
-// If not set to normal, a CSS file `browserOutput_${name}.css` will be added to the head.
-var colorPresets = [
-	'normal',
-	'light',
-	'dark'
-]
 
 function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
@@ -104,59 +91,8 @@ if (typeof String.prototype.trim !== 'function') {
 	};
 }
 
-function updateColorPreset() {
-	var el = $("#colorPresetLink")[0];
-	el.href = "browserOutput_"+colorPresets[opts.colorPreset]+".css";
-	runByond('?_src_=chat&proc=colorPresetPost&preset='+colorPresets[opts.colorPreset]);
-}
-
-// Linkify the contents of a node, within its parent.
-function linkify(parent, insertBefore, text) {
-	var start = 0;
-	var match;
-	var regex = /(?:(?:https?:\/\/)|(?:www\.))(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;()]+/ig;
-	while ((match = regex.exec(text)) !== null) {
-		// add the unmatched text
-		parent.insertBefore(document.createTextNode(text.substring(start, match.index)), insertBefore);
-
-		var href = match[0];
-		if (!/^https?:\/\//i.test(match[0])) {
-			href = "http://" + match[0];
-		}
-
-		// add the link
-		var link = document.createElement("a");
-		link.href = href;
-		link.textContent = match[0];
-		parent.insertBefore(link, insertBefore);
-
-		start = regex.lastIndex;
-	}
-	if (start !== 0) {
-		// add the remaining text and remove the original text node
-		parent.insertBefore(document.createTextNode(text.substring(start)), insertBefore);
-		parent.removeChild(insertBefore);
-	}
-}
-
-// Recursively linkify the children of a given node.
-function linkify_node(node) {
-	var children = node.childNodes;
-	// work backwards to avoid the risk of looping forever on our own output
-	for (var i = children.length - 1; i >= 0; --i) {
-		var child = children[i];
-		if (child.nodeType == Node.TEXT_NODE) {
-			// text is to be linkified
-			linkify(node, child, child.textContent);
-		} else if (child.nodeName != "A" && child.nodeName != "a") {
-			// do not linkify existing links
-			linkify_node(child);
-		}
-	}
-}
-
 //Shit fucking piece of crap that doesn't work god fuckin damn it
-function linkify_fallback(text) {
+function linkify(text) {
 	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src="|href=").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
 	return text.replace(rex, function ($0, $1) {
 		if(/^https?:\/\/.+/i.test($0)) {
@@ -173,16 +109,7 @@ function byondDecode(message) {
 	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
 	// Marvelous.
 	message = message.replace(/\+/g, "%20");
-	try { 
-		// This is a workaround for the above not always working when BYOND's shitty url encoding breaks. (byond bug id:2399401)
-		if (decodeURIComponent) {
-			message = decodeURIComponent(message);
-		} else {
-			throw new Error("Easiest way to trigger the fallback")
-		}
-	} catch (err) {
-		message = unescape(message);
-	}
+	message = decoder(message);
 	return message;
 }
 
@@ -267,106 +194,124 @@ function output(message, flag) {
 	if (flag !== 'internal')
 		opts.lastPang = Date.now();
 
-	message = byondDecode(message).trim();
+	message = byondDecode(message)
 
-	//Stuff we do along with appending a message
-	var atBottom = false;
-	var bodyHeight = $('body').height();
-	var messagesHeight = $messages.outerHeight();
-	var scrollPos = $('body,html').scrollTop();
-
-	//Should we snap the output to the bottom?
-	if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
-		atBottom = true;
-		if ($('#newMessages').length) {
-			$('#newMessages').remove();
-		}
-	//If not, put the new messages box in
-	} else {
-		if ($('#newMessages').length) {
-			var messages = $('#newMessages .number').text();
-			messages = parseInt(messages);
-			messages++;
-			$('#newMessages .number').text(messages);
-			if (messages == 2) {
-				$('#newMessages .messageWord').append('s');
+	//The behemoth of filter-code (for Admin message filters)
+	//Note: This is proooobably hella inefficient
+	var filteredOut = false;
+	if (opts.hasOwnProperty('showMessagesFilters') && !opts.showMessagesFilters['All'].show) {
+		//Get this filter type (defined by class on message)
+		var messageHtml = $.parseHTML(message),
+			messageClasses;
+		if (opts.hasOwnProperty('filterHideAll') && opts.filterHideAll) {
+			var internal = false;
+			messageClasses = (!!$(messageHtml).attr('class') ? $(messageHtml).attr('class').split(/\s+/) : false);
+			if (messageClasses) {
+				for (var i = 0; i < messageClasses.length; i++) { //Every class
+					if (messageClasses[i] == 'internal') {
+						internal = true;
+						break;
+					}
+				}
+			}
+			if (!internal) {
+				filteredOut = 'All';
 			}
 		} else {
-			$messages.after('<a href="#" id="newMessages"><span class="number">1</span> new <span class="messageWord">message</span> <i class="icon-double-angle-down"></i></a>');
+			//If the element or it's child have any classes
+			if (!!$(messageHtml).attr('class') || !!$(messageHtml).children().attr('class')) {
+				messageClasses = $(messageHtml).attr('class').split(/\s+/);
+				if (!!$(messageHtml).children().attr('class')) {
+					messageClasses = messageClasses.concat($(messageHtml).children().attr('class').split(/\s+/));
+				}
+				var tempCount = 0;
+				for (var i = 0; i < messageClasses.length; i++) { //Every class
+					var thisClass = messageClasses[i];
+					$.each(opts.showMessagesFilters, function(key, val) { //Every filter
+						if (key !== 'All' && val.show === false && typeof val.match != 'undefined') {
+							for (var i = 0; i < val.match.length; i++) {
+								var matchClass = val.match[i];
+								if (matchClass == thisClass) {
+									filteredOut = key;
+									break;
+								}
+							}
+						}
+						if (filteredOut) return false;
+					});
+					if (filteredOut) break;
+					tempCount++;
+				}
+			} else {
+				if (!opts.showMessagesFilters['Misc'].show) {
+					filteredOut = 'Misc';
+				}
+			}
 		}
 	}
 
+	//Stuff we do along with appending a message
+	var atBottom = false;
+	if (!filteredOut) {
+		var bodyHeight = $('body').height();
+		var messagesHeight = $messages.outerHeight();
+		var scrollPos = $('body,html').scrollTop();
+
+		//Should we snap the output to the bottom?
+		if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
+			atBottom = true;
+			if ($('#newMessages').length) {
+				$('#newMessages').remove();
+			}
+		//If not, put the new messages box in
+		} else {
+			if ($('#newMessages').length) {
+				var messages = $('#newMessages .number').text();
+				messages = parseInt(messages);
+				messages++;
+				$('#newMessages .number').text(messages);
+				if (messages == 2) {
+					$('#newMessages .messageWord').append('s');
+				}
+			} else {
+				$messages.after('<a href="#" id="newMessages"><span class="number">1</span> new <span class="messageWord">message</span> <i class="icon-double-angle-down"></i></a>');
+			}
+		}
+	}
+
+	//Url stuff
+	if (message.length && flag != 'preventLink') {
+		message = linkify(message);
+	}
 
 	opts.messageCount++;
 
 	//Pop the top message off if history limit reached
-	//if (opts.messageCount >= opts.messageLimit) {
-		//$messages.children('div.entry:first-child').remove();
-		//opts.messageCount--; //I guess the count should only ever equal the limit
-	//}
+	if (opts.messageCount >= opts.messageLimit) {
+		$messages.children('div.entry:first-child').remove();
+		opts.messageCount--; //I guess the count should only ever equal the limit
+	}
 
-	// Create the element - if combining is off, we use it, and if it's on, we
-	// might discard it bug need to check its text content. Some messages vary
-	// only in HTML markup, have the same text content, and should combine.
+	//Actually append the message
 	var entry = document.createElement('div');
-	entry.innerHTML = message;
-	var trimmed_message = entry.textContent || entry.innerText || "";
+	entry.className = 'entry';
 
-	var handled = false;
-	if (opts.messageCombining) {
-		var lastmessages = $messages.children('div.entry:last-child').last();
-		if (lastmessages.length && $last_message && $last_message == trimmed_message) {
-			var badge = lastmessages.children('.r').last();
-			if (badge.length) {
-				badge = badge.detach();
-				badge.text(parseInt(badge.text()) + 1);
-			} else {
-				badge = $('<span/>', {'class': 'r', 'text': 2});
-			}
-			lastmessages.html(message);
-			lastmessages.append(badge);
-			badge.animate({
-				"font-size": "0.9em"
-			}, 100, function() {
-				badge.animate({
-					"font-size": "0.7em"
-				}, 100);
-			});
-			opts.messageCount--;
-			handled = true;
-		}
+	if (filteredOut) {
+		entry.className += ' hidden';
+		entry.setAttribute('data-filter', filteredOut);
 	}
 
-	if (!handled) {
-		//Actually append the message
-		entry.className = 'entry';
-
-		$last_message = trimmed_message;
-		$messages[0].appendChild(entry);
-		$(entry).find("img.icon").error(iconError);
-
-		var to_linkify = $(entry).find(".linkify");
-		if (typeof Node === 'undefined') {
-			// Linkify fallback for old IE
-			for(var i = 0; i < to_linkify.length; ++i) {
-				to_linkify[i].innerHTML = linkify_fallback(to_linkify[i].innerHTML);
-			}
-		} else {
-			// Linkify for modern IE versions
-			for(var i = 0; i < to_linkify.length; ++i) {
-				linkify_node(to_linkify[i]);
-			}
-		}
-
-		//Actually do the snap
-		//Stuff we can do after the message shows can go here, in the interests of responsiveness
-		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
-			highlightTerms(entry);
-		}
-	}
-
-	if (atBottom) {
+	entry.innerHTML = message.trim();
+	$messages[0].appendChild(entry);
+	$(entry).find("img.icon").error(iconError);
+	//Actually do the snap
+	if (!filteredOut && atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
+	}
+
+	//Stuff we can do after the message shows can go here, in the interests of responsiveness
+	if (opts.highlightTerms && opts.highlightTerms.length > 0) {
+		highlightTerms(entry);
 	}
 }
 
@@ -385,7 +330,7 @@ function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = 'expires='+d.toUTCString();
-	document.cookie = cname + '=' + cvalue + '; ' + expires + "; path=/";
+	document.cookie = cname + '=' + cvalue + '; ' + expires;
 }
 
 function getCookie(cname) {
@@ -421,8 +366,8 @@ function handleClientData(ckey, ip, compid) {
 				return; //Record already exists
 			}
 		}
-		//Lets make sure we obey our limit (can connect from server with higher limit)
-		while (opts.clientData.length >= opts.clientDataLimit) {
+
+		if (opts.clientData.length >= opts.clientDataLimit) {
 			opts.clientData.shift();
 		}
 	} else {
@@ -460,8 +405,6 @@ function ehjaxCallback(data) {
 	} else if (data == 'roundrestart') {
 		opts.restarting = true;
 		internalOutput('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>', 'internal');
-	} else if (data == 'stopMusic') {
-		$('#adminMusic').prop('src', '');
 	} else {
 		//Oh we're actually being sent data instead of an instruction
 		var dataJ;
@@ -486,6 +429,15 @@ function ehjaxCallback(data) {
 				handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
 			}
 			sendVolumeUpdate();
+		} else if (data.firebug) {
+			if (data.trigger) {
+				internalOutput('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
+			} else {
+				internalOutput('<span class="internal boldnshit">Loading firebug console...</span>', 'internal');
+			}
+			var firebugEl = document.createElement('script');
+			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
+			document.body.appendChild(firebugEl);
 		} else if (data.adminMusic) {
 			if (typeof data.adminMusic === 'string') {
 				var adminMusic = byondDecode(data.adminMusic);
@@ -531,46 +483,6 @@ function sendVolumeUpdate() {
 	}
 }
 
-function subSlideUp() {
-	$(this).removeClass('scroll');
-	$(this).css('height', '');
-}
-
-function startSubLoop() {
-	if (opts.selectedSubLoop) {
-		clearInterval(opts.selectedSubLoop);
-	}
-	return setInterval(function() {
-		if (!opts.suppressSubClose && $selectedSub.is(':visible')) {
-			$selectedSub.slideUp('fast', subSlideUp);
-			clearInterval(opts.selectedSubLoop);
-		}
-	}, 5000); //every 5 seconds
-}
-
-function handleToggleClick($sub, $toggle) {
-	if ($selectedSub !== $sub && $selectedSub.is(':visible')) {
-		$selectedSub.slideUp('fast', subSlideUp);
-	}
-	$selectedSub = $sub
-	if ($selectedSub.is(':visible')) {
-		$selectedSub.slideUp('fast', subSlideUp);
-		clearInterval(opts.selectedSubLoop);
-	} else {
-		$selectedSub.slideDown('fast', function() {
-			var windowHeight = $(window).height();
-			var toggleHeight = $toggle.outerHeight();
-			var priorSubHeight = $selectedSub.outerHeight();
-			var newSubHeight = windowHeight - toggleHeight;
-			$(this).height(newSubHeight);
-			if (priorSubHeight > (windowHeight - toggleHeight)) {
-				$(this).addClass('scroll');
-			}
-		});
-		opts.selectedSubLoop = startSubLoop();
-	}
-}
-
 /*****************************************
 *
 * DOM READY
@@ -585,8 +497,6 @@ if (typeof $ === 'undefined') {
 $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
-	$subAudio = $('#subAudio');
-	$selectedSub = $subOptions;
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
@@ -610,22 +520,15 @@ $(function() {
 	******************************************/
 	var savedConfig = {
 		'sfontSize': getCookie('fontsize'),
-		'slineHeight': getCookie('lineheight'),
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
-		'smessagecombining': getCookie('messagecombining'),
-		'scolorPreset': getCookie('colorpreset'),
 	};
 
 	if (savedConfig.sfontSize) {
 		$messages.css('font-size', savedConfig.sfontSize);
 		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
-	}
-	if (savedConfig.slineHeight) {
-		$("body").css('line-height', savedConfig.slineHeight);
-		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
@@ -652,13 +555,6 @@ $(function() {
 		opts.highlightColor = savedConfig.shighlightColor;
 		internalOutput('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
 	}
-
-	if (savedConfig.scolorPreset) {
-		opts.colorPreset = Number(savedConfig.scolorPreset);
-		updateColorPreset();
-		internalOutput('<span class="internal boldnshit">Loaded color preset of: '+colorPresets[opts.colorPreset]+'</span>', 'internal');
-	}
-
 	if (savedConfig.smusicVolume) {
 		var newVolume = clamp(savedConfig.smusicVolume, 0, 100);
 		$('#adminMusic').prop('volume', newVolume / 100);
@@ -667,17 +563,7 @@ $(function() {
 		sendVolumeUpdate();
 		internalOutput('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.smusicVolume+'</span>', 'internal');
 	}
-	else{
-		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
-	}
-	
-	if (savedConfig.smessagecombining) {
-		if (savedConfig.smessagecombining == 'false') {
-			opts.messageCombining = false;
-		} else {
-			opts.messageCombining = true;
-		}
-	}
+
 	(function() {
 		var dataCookie = getCookie('connData');
 		if (dataCookie) {
@@ -721,9 +607,12 @@ $(function() {
 	});
 
 	$messages.on('mousedown', function(e) {
-		if ($selectedSub && $selectedSub.is(':visible')) {
-			$selectedSub.slideUp('fast', subSlideUp);
-			clearInterval(opts.selectedSubLoop);
+		if ($subOptions && $subOptions.is(':visible')) {
+			$subOptions.slideUp('fast', function() {
+				$(this).removeClass('scroll');
+				$(this).css('height', '');
+			});
+			clearInterval(opts.subOptionsLoop);
 		}
 	});
 
@@ -842,18 +731,41 @@ $(function() {
 	});
 
 	$('#toggleOptions').click(function(e) {
-		handleToggleClick($subOptions, $(this));
-	});
-	$('#toggleAudio').click(function(e) {
-		handleToggleClick($subAudio, $(this));
+		if ($subOptions.is(':visible')) {
+			$subOptions.slideUp('fast', function() {
+				$(this).removeClass('scroll');
+				$(this).css('height', '');
+			});
+			clearInterval(opts.subOptionsLoop);
+		} else {
+			$subOptions.slideDown('fast', function() {
+				var windowHeight = $(window).height();
+				var toggleHeight = $('#toggleOptions').outerHeight();
+				var priorSubHeight = $subOptions.outerHeight();
+				var newSubHeight = windowHeight - toggleHeight;
+				$(this).height(newSubHeight);
+				if (priorSubHeight > (windowHeight - toggleHeight)) {
+					$(this).addClass('scroll');
+				}
+			});
+			opts.subOptionsLoop = setInterval(function() {
+				if (!opts.suppressOptionsClose && $('#subOptions').is(':visible')) {
+					$subOptions.slideUp('fast', function() {
+						$(this).removeClass('scroll');
+						$(this).css('height', '');
+					});
+					clearInterval(opts.subOptionsLoop);
+				}
+			}, 5000); //Every 5 seconds
+		}
 	});
 
-	$('.sub, .toggle').mouseenter(function() {
-		opts.suppressSubClose = true;
+	$('#subOptions, #toggleOptions').mouseenter(function() {
+		opts.suppressOptionsClose = true;
 	});
 
-	$('.sub, .toggle').mouseleave(function() {
-		opts.suppressSubClose = false;
+	$('#subOptions, #toggleOptions').mouseleave(function() {
+		opts.suppressOptionsClose = false;
 	});
 
 	$('#decreaseFont').click(function(e) {
@@ -872,28 +784,6 @@ $(function() {
 		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
 	});
 
-	$('#decreaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont
-		lineheightvar -= 0.1;
-		lineheightvar = lineheightvar.toFixed(1)
-		$("body").css({'line-height': lineheightvar});
-		setCookie('lineheight', lineheightvar, 365);
-		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
-	});
-
-	$('#increaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont
-		lineheightvar += 0.1;
-		lineheightvar = lineheightvar.toFixed(1)
-		$("body").css({'line-height': lineheightvar});
-		setCookie('lineheight', lineheightvar, 365);
-		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
-	});
-
 	$('#togglePing').click(function(e) {
 		if (opts.pingDisabled) {
 			$('#ping').slideDown('fast');
@@ -906,26 +796,23 @@ $(function() {
 	});
 
 	$('#saveLog').click(function(e) {
-		// Requires IE 10+ to issue download commands. Just opening a popup
-		// window will cause Ctrl+S to save a blank page, ignoring innerHTML.
-		if (!window.Blob) {
-			output('<span class="big red">This function is only supported on IE 10+. Upgrade if possible.</span>', 'internal');
-			return;
-		}
-
 		$.ajax({
 			type: 'GET',
 			url: 'browserOutput.css',
 			success: function(styleData) {
-				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
+				var win;
 
-				var fname = 'SS13 Chat Log';
-				var date = new Date(), month = date.getMonth(), day = date.getDay(), hours = date.getHours(), mins = date.getMinutes(), secs = date.getSeconds();
-				fname += ' ' + date.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
-				fname += ' ' + (hours < 10 ? '0' : '') + hours + (mins < 10 ? '0' : '') + mins + (secs < 10 ? '0' : '') + secs;
-				fname += '.html';
+				try {
+					win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=600, top=' + (screen.height/2 - 635/2) + ', left=' + (screen.width/2 - 780/2));
+				} catch (e) {
+					return;
+				}
 
-				window.navigator.msSaveBlob(blob, fname);
+				if (win) {
+					win.document.head.innerHTML = '<title>Chat Log</title>';
+					win.document.head.innerHTML += '<style>' + styleData + '</style>';
+					win.document.body.innerHTML = $messages.html();
+				}
 			}
 		});
 	});
@@ -994,13 +881,6 @@ $(function() {
 		opts.messageCount = 0;
 	});
 	
-	$('#changeColorPreset').click(function() {
-		opts.colorPreset = (opts.colorPreset+1) % colorPresets.length;
-		updateColorPreset();
-		setCookie('colorpreset', opts.colorPreset, 365);
-		internalOutput('<span class="internal boldnshit">Changed color preset to: '+colorPresets[opts.colorPreset]);
-	});
-
 	$('#musicVolumeSpan').hover(function() {
 		$('#musicVolumeText').addClass('hidden');
 		$('#musicVolume').removeClass('hidden');
@@ -1019,11 +899,6 @@ $(function() {
 			setTimeout(sendVolumeUpdate, opts.volumeUpdateDelay);
 			opts.volumeUpdating = true;
 		}
-	});
-
-	$('#toggleCombine').click(function(e) {
-		opts.messageCombining = !opts.messageCombining;
-		setCookie('messagecombining', (opts.messageCombining ? 'true' : 'false'), 365);
 	});
 
 	$('img.icon').error(iconError);

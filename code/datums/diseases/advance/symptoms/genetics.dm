@@ -10,7 +10,7 @@ DNA Saboteur
 	Fatal Level.
 
 Bonus
-	Cleans the DNA of a person and then randomly gives them a trait.
+	Cleans the DNA of a person and then randomly gives them a disability.
 
 //////////////////////////////////////
 */
@@ -23,7 +23,7 @@ Bonus
 	stage_speed = 0
 	transmittable = -3
 	level = 6
-	severity = 4
+	severity = 3
 	var/list/possible_mutations
 	var/archived_dna = null
 	base_message_chance = 50
@@ -49,8 +49,7 @@ Bonus
 
 // Archive their DNA before they were infected.
 /datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
-	if(!..())
-		return
+	..()
 	if(A.properties["stealth"] >= 5) //don't restore dna after curing
 		no_reset = TRUE
 	if(A.properties["stage_rate"] >= 10) //mutate more often
@@ -67,8 +66,6 @@ Bonus
 
 // Give them back their old DNA when cured.
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
-	if(!..())
-		return
 	if(!no_reset)
 		var/mob/living/carbon/M = A.affected_mob
 		if(M && archived_dna)

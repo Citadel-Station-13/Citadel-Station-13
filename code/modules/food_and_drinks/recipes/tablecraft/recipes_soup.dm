@@ -33,7 +33,7 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/nettle = 1,
+		/obj/item/grown/nettle = 1,
 		/obj/item/reagent_containers/food/snacks/grown/potato = 1,
 		/obj/item/reagent_containers/food/snacks/boiledegg = 1
 	)
@@ -140,7 +140,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/stack/ore/bananium = 1
+		/obj/item/ore/bananium = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/clownstears
 	subcategory = CAT_SOUP

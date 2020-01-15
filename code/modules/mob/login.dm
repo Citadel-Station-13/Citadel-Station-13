@@ -11,7 +11,6 @@
 		create_mob_hud()
 	if(hud_used)
 		hud_used.show_hud(hud_used.hud_version)
-		hud_used.update_ui_style(ui_style2icon(client.prefs.UI_style))
 
 	next_move = 1
 
@@ -27,29 +26,22 @@
 
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
+	if(ckey in GLOB.deadmins)
+		verbs += /client/proc/readmin
+
 	add_click_catcher()
 
 	sync_mind()
 
-	//Reload alternate appearances
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	client.sethotkeys() //set mob specific hotkeys
 
 	update_client_colour()
-	update_mouse_pointer()
 	if(client)
-		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
+		client.click_intercept = null
 
-		if(client.player_details && istype(client.player_details))
-			if(client.player_details.player_actions.len)
-				for(var/datum/action/A in client.player_details.player_actions)
-					A.Grant(src)
+		client.change_view(world.view) // Resets the client.view in case it was changed.
 
-			for(var/foo in client.player_details.post_login_callbacks)
-				var/datum/callback/CB = foo
-				CB.Invoke()
-
-	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
+	if(!GLOB.individual_log_list[ckey])
+		GLOB.individual_log_list[ckey] = logging
+	else
+		logging = GLOB.individual_log_list[ckey]

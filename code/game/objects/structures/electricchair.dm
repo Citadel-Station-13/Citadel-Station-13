@@ -1,6 +1,6 @@
 /obj/structure/chair/e_chair
 	name = "electric chair"
-	desc = "Looks absolutely SHOCKING!"
+	desc = "Looks absolutely SHOCKING!\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "echair0"
 	var/obj/item/assembly/shock_kit/part = null
 	var/last_time = 1
@@ -13,9 +13,9 @@
 /obj/structure/chair/e_chair/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench))
 		var/obj/structure/chair/C = new /obj/structure/chair(loc)
-		W.play_tool_sound(src)
+		playsound(loc, W.usesound, 50, 1)
 		C.setDir(dir)
-		part.forceMove(loc)
+		part.loc = loc
 		part.master = null
 		part = null
 		qdel(src)

@@ -17,7 +17,7 @@
 	maxHealth = 250
 	max_mobs = 3
 	spawn_time = 300 //30 seconds default
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
+	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
 	spawn_text = "emerges from"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -28,10 +28,10 @@
 	var/obj/effect/light_emitter/tendril/emitted_light
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril)
+	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
 
 /mob/living/simple_animal/hostile/spawner/lavaland/legion
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
+	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Initialize()
 	. = ..()
@@ -39,33 +39,39 @@
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
-			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
-	gps = new /obj/item/gps/internal(src)
+			M.ChangeTurf(M.turf_type,FALSE,FALSE,TRUE)
+	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	QDEL_NULL(emitted_light)
 	QDEL_NULL(gps)
-	return ..()
+	. = ..()
 
+#define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_living_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_list)
 		if(other != src)
 			last_tendril = FALSE
 			break
-	if(last_tendril && !(flags_1 & ADMIN_SPAWNED_1))
-		if(SSmedals.hub_enabled)
+	if(last_tendril && !admin_spawned)
+		if(global.medal_hub && global.medal_pass && global.medals_enabled)
 			for(var/mob/living/L in view(7,src))
-				if(L.stat || !L.client)
+				if(L.stat)
 					continue
-				SSmedals.UnlockMedal("[BOSS_MEDAL_TENDRIL] [ALL_KILL_MEDAL]", L.client)
-				SSmedals.SetScore(TENDRIL_CLEAR_SCORE, L.client, 1)
+				if(L.client)
+					var/client/C = L.client
+					var/suffixm = ALL_KILL_MEDAL
+					var/prefix = MEDAL_PREFIX
+					UnlockMedal("[prefix] [suffixm]",C)
+					SetScore(TENDRIL_CLEAR_SCORE,C,1)
 	..()
+#undef MEDAL_PREFIX
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
-	layer = TABLE_LAYER
+	layer = BELOW_OBJ_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE
@@ -91,5 +97,5 @@
 	visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 	for(var/turf/T in range(2,src))
 		if(!T.density)
-			T.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland, flags = CHANGETURF_INHERIT_AIR)
+			T.TerraformTurf(/turf/open/chasm/straight_down/lava_land_surface)
 	qdel(src)

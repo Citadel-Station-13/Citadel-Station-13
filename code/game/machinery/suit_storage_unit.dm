@@ -1,9 +1,10 @@
 // SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
-	desc = "An industrial unit made to hold and decontaminate irradiated equipment. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
-	icon = 'icons/obj/machines/suit_storage.dmi'
+	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
+	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "close"
+	anchored = TRUE
 	density = TRUE
 	max_integrity = 250
 
@@ -41,7 +42,6 @@
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type= /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/ce
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/elite
@@ -51,7 +51,6 @@
 /obj/machinery/suit_storage_unit/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/tank/jetpack/oxygen/security
 
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
@@ -64,7 +63,7 @@
 	storage_type = /obj/item/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
-	suit_type = /obj/item/clothing/suit/hooded/explorer/standard
+	suit_type = /obj/item/clothing/suit/hooded/explorer
 	mask_type = /obj/item/clothing/mask/gas/explorer
 
 /obj/machinery/suit_storage_unit/mining/eva
@@ -103,16 +102,6 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/emergency_oxygen/double
-
-/obj/machinery/suit_storage_unit/radsuit
-	name = "radiation suit storage unit"
-	suit_type = /obj/item/clothing/suit/radiation
-	helmet_type = /obj/item/clothing/head/radiation
-	storage_type = /obj/item/geiger_counter
-
-/obj/machinery/suit_storage_unit/open
-	state_open = TRUE
-	density = FALSE
 
 /obj/machinery/suit_storage_unit/Initialize()
 	. = ..()
@@ -203,20 +192,20 @@
 		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
-			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind [user.p_them()]!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
+			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
 		else
 			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!<span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
 		close_machine(target)
 		add_fingerprint(user)
 
 /obj/machinery/suit_storage_unit/proc/cook()
-	var/mob/living/mob_occupant = occupant
 	if(uv_cycles)
 		uv_cycles--
 		uv = TRUE
 		locked = TRUE
 		update_icon()
 		if(occupant)
+			var/mob/living/mob_occupant = occupant
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
@@ -245,31 +234,10 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
-				mob_occupant.radiation = 0
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
-			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
-			if(suit)
-				things_to_clear += suit
-				things_to_clear += suit.GetAllContents()
-			if(helmet)
-				things_to_clear += helmet
-				things_to_clear += helmet.GetAllContents()
-			if(mask)
-				things_to_clear += mask
-				things_to_clear += mask.GetAllContents()
-			if(storage)
-				things_to_clear += storage
-				things_to_clear += storage.GetAllContents()
-			if(occupant)
-				things_to_clear += occupant
-				things_to_clear += occupant.GetAllContents()
-			for(var/atom/movable/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
-				AM.clean_blood()
-				AM.fingerprints = list()
-				var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
-				if(contamination)
-					qdel(contamination)
+			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
+				I.clean_blood()
+				I.fingerprints = list()
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
@@ -320,51 +288,48 @@
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
-		visible_message("<span class='notice'>You see [user] burst out of [src]!</span>", \
+		visible_message("<span class='notice'>You see [user] bursts out of [src]!</span>", \
 			"<span class='notice'>You escape the cramped confines of [src]!</span>")
 		open_machine()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(state_open && is_operational())
-		if(istype(I, /obj/item/clothing/head/mob_holder))
-			to_chat(user, "<span class='warning'>You can't quite fit that in while you hold it!</span>")
-			return
-		if(istype(I, /obj/item/clothing/suit))
+		if(istype(I, /obj/item/clothing/suit/space))
 			if(suit)
 				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
 			suit = I
-		else if(istype(I, /obj/item/clothing/head))
+		else if(istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
 				to_chat(user, "<span class='warning'>The unit already contains a helmet!</span>")
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
 			helmet = I
 		else if(istype(I, /obj/item/clothing/mask))
 			if(mask)
 				to_chat(user, "<span class='warning'>The unit already contains a mask!</span>")
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
 			mask = I
 		else
 			if(storage)
 				to_chat(user, "<span class='warning'>The auxiliary storage compartment is full!</span>")
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
 			storage = I
 
+		I.loc = src
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
 		update_icon()
 		return
 
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
-		return
 	if(!state_open)
 		if(default_deconstruction_screwdriver(user, "panel", "close", I))
 			return
@@ -413,8 +378,6 @@
 					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE
 		if("lock")
-			if(state_open)
-				return
 			locked = !locked
 			. = TRUE
 		if("uv")

@@ -1,13 +1,13 @@
 //Fire
 /mob/living/simple_animal/hostile/guardian/fire
 	a_intent = INTENT_HELP
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	melee_damage_lower = 7
+	melee_damage_upper = 7
 	attack_sound = 'sound/items/welder.ogg'
 	attacktext = "ignites"
-	melee_damage_type = BURN
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.1, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
-	playstyle_string = "<span class='holoparasite'>As a <b>chaos</b> type, you take 30% damage reduction to all but burn, which you are almost immune to. You will ignite any enemy you bump into. in addition, your melee attacks will cause human targets to see everyone as you.</span>"
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+	range = 7
+	playstyle_string = "<span class='holoparasite'>As a <b>chaos</b> type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will cause human targets to see everyone as you.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Wizard, bringer of endless chaos!</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
@@ -27,17 +27,17 @@
 	..()
 	collision_ignite(AM)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bumped(atom/movable/AM)
+/mob/living/simple_animal/hostile/guardian/fire/CollidedWith(atom/movable/AM)
 	..()
 	collision_ignite(AM)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/Collide(AM as mob|obj)
 	..()
 	collision_ignite(AM)
 
 /mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
 	if(isliving(AM))
 		var/mob/living/M = AM
-		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 10)
-			M.fire_stacks = 10
+		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
+			M.fire_stacks = 7
 			M.IgniteMob()

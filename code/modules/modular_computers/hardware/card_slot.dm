@@ -4,6 +4,7 @@
 	power_usage = 10 //W
 	icon_state = "card_mini"
 	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "programming=2"
 	device_type = MC_CARD
 
 	var/obj/item/card/id/stored_card = null
@@ -29,21 +30,10 @@
 		return stored_card2
 	return ..()
 
-/obj/item/computer_hardware/card_slot/RemoveID()
-	if(stored_card)
-		. = stored_card
-		if(!try_eject(1))
-			return null
-		return
-	if(stored_card2)
-		. = stored_card2
-		if(!try_eject(2))
-			return null
-
-/obj/item/computer_hardware/card_slot/on_install(obj/item/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/card_slot/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
 
-/obj/item/computer_hardware/card_slot/on_remove(obj/item/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/card_slot/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
 	M.remove_verb(device_type)
 
 /obj/item/computer_hardware/card_slot/try_insert(obj/item/I, mob/living/user = null)
@@ -67,19 +57,11 @@
 	else
 		stored_card2 = I
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 
 	return TRUE
 
 
 /obj/item/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null, forced = 0)
-	if (get_dist(src,user) > 1)
-		if (iscarbon(user))
-			var/mob/living/carbon/H = user
-			if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
-				return FALSE
-		else
-			return FALSE
 	if(!stored_card && !stored_card2)
 		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
 		return FALSE
@@ -111,7 +93,6 @@
 				P.event_idremoved(1, slot)
 
 		to_chat(user, "<span class='notice'>You remove the card[ejected>1 ? "s" : ""] from \the [src].</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		return TRUE
 	return FALSE
 
@@ -124,6 +105,6 @@
 		return
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)
-	. = ..()
+	..()
 	if(stored_card || stored_card2)
-		. += "There appears to be something loaded in the card slots."
+		to_chat(user, "There appears to be something loaded in the card slots.")

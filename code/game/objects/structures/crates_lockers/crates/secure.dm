@@ -5,7 +5,7 @@
 	secure = TRUE
 	locked = TRUE
 	max_integrity = 500
-	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	armor = list(melee = 30, bullet = 50, laser = 50, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 	var/tamperproof = 0
 
 /obj/structure/closet/crate/secure/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -23,10 +23,9 @@
 		add_overlay("securecrateg")
 
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
+	if(prob(tamperproof))
 		boom()
-	else
-		..()
+	..()
 
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)

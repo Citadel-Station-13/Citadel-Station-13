@@ -1,9 +1,5 @@
-/obj/item/modular_computer/attack_self(mob/user)
-	. = ..()
-	ui_interact(user)
-
 // Operates TGUI
-/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/device/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(!enabled)
 		if(ui)
 			ui.close()
@@ -43,7 +39,7 @@
 		ui.set_autoupdate(state = 1)
 
 
-/obj/item/modular_computer/ui_data(mob/user)
+/obj/item/device/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["programs"] = list()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
@@ -61,7 +57,7 @@
 
 
 // Handles user's GUI input
-/obj/item/modular_computer/ui_act(action, params)
+/obj/item/device/modular_computer/ui_act(action, params)
 	if(..())
 		return
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
@@ -147,7 +143,7 @@
 			var/mob/user = usr
 			var/new_color
 			while(!new_color)
-				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
+				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color") as null|color
 				if(!new_color)
 					return
 				if(color_hex2num(new_color) < 200) //Colors too dark are rejected
@@ -159,7 +155,7 @@
 		else
 			return
 
-/obj/item/modular_computer/ui_host()
+/obj/item/device/modular_computer/ui_host()
 	if(physical)
 		return physical
 	return src

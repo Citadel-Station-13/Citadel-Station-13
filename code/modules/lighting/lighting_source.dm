@@ -28,11 +28,6 @@
 
 	var/needs_update = LIGHTING_NO_UPDATE    // Whether we are queued for an update.
 
-// Thanks to Lohikar for flinging this tiny bit of code at me, increasing my brain cell count from 1 to 2 in the process.
-// This macro will only offset up to 1 tile, but anything with a greater offset is an outlier and probably should handle its own lighting offsets.
-// Anything pixelshifted 16px or more will be considered on the next tile.
-#define GET_APPROXIMATE_PIXEL_DIR(PX, PY) ((!(PX) ? 0 : ((PX >= 16 ? EAST : (PX <= -16 ? WEST : 0)))) | (!PY ? 0 : (PY >= 16 ? NORTH : (PY <= -16 ? SOUTH : 0))))
-#define UPDATE_APPROXIMATE_PIXEL_TURF var/_mask = GET_APPROXIMATE_PIXEL_DIR(top_atom.pixel_x, top_atom.pixel_y); pixel_turf = _mask ? (get_step(source_turf, _mask) || source_turf) : source_turf
 
 /datum/light_source/New(var/atom/owner, var/atom/top)
 	source_atom = owner // Set our new owner.
@@ -42,7 +37,7 @@
 		LAZYADD(top_atom.light_sources, src)
 
 	source_turf = top_atom
-	UPDATE_APPROXIMATE_PIXEL_TURF
+	pixel_turf = get_turf_pixel(top_atom) || source_turf
 
 	light_power = source_atom.light_power
 	light_range = source_atom.light_range
@@ -62,10 +57,9 @@
 	if (top_atom)
 		LAZYREMOVE(top_atom.light_sources, src)
 
-	if (needs_update)
-		GLOB.lighting_update_lights -= src
-
 	. = ..()
+	if(!force)
+		return QDEL_HINT_IWILLGC
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
@@ -115,24 +109,13 @@
 // If you're wondering what's with the backslashes, the backslashes cause BYOND to not automatically end the line.
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
-
-//Original lighting falloff calculation. This looks the best out of the three. However, this is also the most expensive.
-//#define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
-
-//Cubic lighting falloff. This has the *exact* same range as the original lighting falloff calculation, down to the exact decimal, but it looks a little unnatural due to the harsher falloff and how it's generally brighter across the board.
-//#define LUM_FALLOFF(C, T) (1 - CLAMP01((((C.x - T.x) * (C.x - T.x)) + ((C.y - T.y) * (C.y - T.y)) + LIGHTING_HEIGHT) / max(1, light_range*light_range)))
-
-//Linear lighting falloff. This resembles the original lighting falloff calculation the best, but results in lights having a slightly larger range, which is most noticable with large light sources. This also results in lights being diamond-shaped, fuck. This looks the darkest out of the three due to how lights are brighter closer to the source compared to the original falloff algorithm. This falloff method also does not at all take into account lighting height, as it acts as a flat reduction to light range with this method.
-//#define LUM_FALLOFF(C, T) (1 - CLAMP01(((abs(C.x - T.x) + abs(C.y - T.y))) / max(1, light_range+1)))
-
-//Linear lighting falloff but with an octagonal shape in place of a diamond shape. Lummox JR please add pointer support.
-#define GET_LUM_DIST(DISTX, DISTY) (DISTX + DISTY + abs(DISTX - DISTY)*0.4)
-#define LUM_FALLOFF(C, T) (1 - CLAMP01(max(GET_LUM_DIST(abs(C.x - T.x), abs(C.y - T.y)),LIGHTING_HEIGHT) / max(1, light_range+1)))
+#define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 
 #define APPLY_CORNER(C)                      \
 	. = LUM_FALLOFF(C, pixel_turf);          \
 	. *= light_power;                        \
 	var/OLD = effect_str[C];                 \
+                                             \
 	effect_str[C] = .;                       \
                                              \
 	C.update_lumcount                        \
@@ -141,6 +124,7 @@
 		(. * lum_g) - (OLD * applied_lum_g), \
 		(. * lum_b) - (OLD * applied_lum_b)  \
 	);
+
 
 #define REMOVE_CORNER(C)                     \
 	. = -effect_str[C];                      \
@@ -152,6 +136,42 @@
 	);
 
 // This is the define used to calculate falloff.
+
+/*
+/datum/light_source/proc/apply_lum()
+	var/static/update_gen = 1
+	applied = 1
+
+	// Keep track of the last applied lum values so that the lighting can be reversed
+	var/thing
+	var/datum/lighting_corner/C
+	var/corners = list()
+	LAZYINITLIST(effect_str)
+	FOR_DVIEW(var/turf/T, light_range+1, source_turf, INVISIBILITY_LIGHTING)
+		var/list/turf_corners = T.get_corners()
+
+		for (thing in turf_corners)
+			C = thing
+			if (C.update_gen == update_gen)
+				continue
+
+			C.update_gen = update_gen
+			LAZYADD(C.affecting,src)
+
+			if (!C.active)
+				effect_str[C] = 0
+				continue
+
+			APPLY_CORNER(C)
+
+		LAZYADD(T.affecting_lights, src)
+		LAZYADD(affecting_turfs, T)
+	FOR_DVIEW_END
+	update_gen++
+	applied_lum_r = lum_r
+	applied_lum_g = lum_g
+	applied_lum_b = lum_b
+*/
 
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
@@ -182,9 +202,8 @@
 
 /datum/light_source/proc/update_corners()
 	var/update = FALSE
-	var/atom/source_atom = src.source_atom
 
-	if (QDELETED(source_atom))
+	if (!source_atom || QDELETED(source_atom))
 		qdel(src)
 		return
 
@@ -207,12 +226,17 @@
 	if (isturf(top_atom))
 		if (source_turf != top_atom)
 			source_turf = top_atom
-			UPDATE_APPROXIMATE_PIXEL_TURF
+			pixel_turf = source_turf
 			update = TRUE
 	else if (top_atom.loc != source_turf)
 		source_turf = top_atom.loc
-		UPDATE_APPROXIMATE_PIXEL_TURF
+		pixel_turf = get_turf_pixel(top_atom)
 		update = TRUE
+	else
+		var/P = get_turf_pixel(top_atom)
+		if (P != pixel_turf)
+			pixel_turf = P
+			update = TRUE
 
 	if (!isturf(source_turf))
 		if (applied)
@@ -243,9 +267,11 @@
 	var/turf/T
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
-		source_turf.luminosity = CEILING(light_range, 1)
-		for(T in view(CEILING(light_range, 1), source_turf))
+		source_turf.luminosity = Ceiling(light_range)
+		for(T in view(Ceiling(light_range), source_turf))
 			for (thing in T.get_corners(source_turf))
+				if(!thing)
+					continue
 				C = thing
 				corners[C] = 0
 			turfs += T
@@ -267,6 +293,8 @@
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
 		for (thing in  corners - effect_str) // New corners
+			if(!thing)
+				continue
 			C = thing
 			LAZYADD(C.affecting, src)
 			if (!C.active)
@@ -276,6 +304,8 @@
 	else
 		L = corners - effect_str
 		for (thing in L) // New corners
+			if(!thing)
+				continue
 			C = thing
 			LAZYADD(C.affecting, src)
 			if (!C.active)
@@ -284,6 +314,8 @@
 			APPLY_CORNER(C)
 
 		for (thing in corners - L) // Existing corners
+			if(!thing)
+				continue
 			C = thing
 			if (!C.active)
 				effect_str[C] = 0
@@ -292,6 +324,8 @@
 
 	L = effect_str - corners
 	for (thing in L) // Old, now gone, corners.
+		if(!thing)
+			continue
 		C = thing
 		REMOVE_CORNER(C)
 		LAZYREMOVE(C.affecting, src)
@@ -306,6 +340,5 @@
 
 #undef EFFECT_UPDATE
 #undef LUM_FALLOFF
-#undef GET_LUM_DIST
 #undef REMOVE_CORNER
 #undef APPLY_CORNER

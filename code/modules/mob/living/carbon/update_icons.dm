@@ -1,3 +1,31 @@
+//IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
+/mob/living/carbon/update_transform()
+	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
+	var/final_pixel_y = pixel_y
+	var/final_dir = dir
+	var/changed = 0
+	if(lying != lying_prev && rotate_on_lying)
+		changed++
+		ntransform.TurnTo(lying_prev,lying)
+		if(lying == 0) //Lying to standing
+			final_pixel_y = get_standard_pixel_y_offset()
+		else //if(lying != 0)
+			if(lying_prev == 0) //Standing to lying
+				pixel_y = get_standard_pixel_y_offset()
+				final_pixel_y = get_standard_pixel_y_offset(lying)
+				if(dir & (EAST|WEST)) //Facing east or west
+					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
+
+	if(resize != RESIZE_DEFAULT_SIZE)
+		changed++
+		ntransform.Scale(resize)
+		resize = RESIZE_DEFAULT_SIZE
+
+	if(changed)
+		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, dir = final_dir, easing = EASE_IN|EASE_OUT)
+		floating = 0  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
+
+
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
 
@@ -69,12 +97,8 @@
 
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
-	var/dam_colors = "#E62525"
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		dam_colors = bloodtype_to_color(H.dna.blood_type)
 
-	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER, color = dam_colors)
+	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 
 	for(var/X in bodyparts)
@@ -91,11 +115,11 @@
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
 
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
+	if(!get_bodypart("head")) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[SLOT_WEAR_MASK])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_MASK]
+	if(client && hud_used && hud_used.inv_slots[slot_wear_mask])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_wear_mask]
 		inv.update_icon()
 
 	if(wear_mask)
@@ -108,8 +132,8 @@
 /mob/living/carbon/update_inv_neck()
 	remove_overlay(NECK_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[SLOT_NECK])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_NECK]
+	if(client && hud_used && hud_used.inv_slots[slot_neck])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_neck]
 		inv.update_icon()
 
 	if(wear_neck)
@@ -122,24 +146,23 @@
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[SLOT_BACK])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_BACK]
+	if(client && hud_used && hud_used.inv_slots[slot_back])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_back]
 		inv.update_icon()
 
 	if(back)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		update_hud_back(back)
-
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
+	if(!get_bodypart("head")) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[SLOT_BACK])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_HEAD]
+	if(client && hud_used && hud_used.inv_slots[slot_back])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_head]
 		inv.update_icon()
 
 	if(head)
@@ -152,22 +175,9 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		var/mutable_appearance/cuffs = mutable_appearance('icons/mob/restraints.dmi', handcuffed.item_state, -HANDCUFF_LAYER)
-		cuffs.color = handcuffed.color
-
-		overlays_standing[HANDCUFF_LAYER] = cuffs
+		overlays_standing[HANDCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		apply_overlay(HANDCUFF_LAYER)
 
-/mob/living/carbon/update_inv_legcuffed()
-	remove_overlay(LEGCUFF_LAYER)
-	clear_alert("legcuffed")
-	if(legcuffed)
-		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
-		legcuffs.color = legcuffed.color
-
-		overlays_standing[LEGCUFF_LAYER] = legcuffs
-		apply_overlay(LEGCUFF_LAYER)
-		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = legcuffed)
 
 //mob HUD updates for items in our inventory
 
@@ -200,7 +210,7 @@
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
-/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
+/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 
 
@@ -268,7 +278,7 @@
 		else
 			. += "-robotic"
 
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+	if(disabilities & HUSK)
 		. += "-husk"
 
 

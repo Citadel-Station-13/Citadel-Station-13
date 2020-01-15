@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/examine()
 	. = ..()
-	. += "It has [uses_left] use\s remaining."
+	usr.show_message("It has [uses_left] uses remaining.", 1)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
@@ -38,7 +38,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, "You link the extraction pack to the beacon system.")
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
-	. = ..()
 	if(!beacon)
 		to_chat(user, "[src] is not linked to a beacon, and cannot be used.")
 		return
@@ -64,10 +63,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
 			if(loc == user && istype(user.back, /obj/item/storage/backpack))
 				var/obj/item/storage/backpack/B = user.back
-				SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
+				if(B.can_be_inserted(src,stop_messages = 1))
+					B.handle_item_insertion(src)
 			uses_left--
 			if(uses_left <= 0)
-				user.transferItemToLoc(src, A, TRUE)
+				user.drop_item(src)
+				loc = A
 			var/mutable_appearance/balloon
 			var/mutable_appearance/balloon2
 			var/mutable_appearance/balloon3
@@ -80,7 +81,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				A.density = FALSE
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
-			A.forceMove(holder_obj)
+			A.loc = holder_obj
 			balloon2 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_expand")
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
@@ -113,7 +114,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/list/flooring_near_beacon = list()
 			for(var/turf/open/floor in orange(1, beacon))
 				flooring_near_beacon += floor
-			holder_obj.forceMove(pick(flooring_near_beacon))
+			holder_obj.loc = pick(flooring_near_beacon)
 			animate(holder_obj, pixel_z = 10, time = 50)
 			sleep(50)
 			animate(holder_obj, pixel_z = 15, time = 10)
@@ -131,7 +132,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			A.density = initial(A.density)
 			animate(holder_obj, pixel_z = 0, time = 5)
 			sleep(5)
-			A.forceMove(holder_obj.loc)
+			A.loc = holder_obj.loc
 			qdel(holder_obj)
 			if(uses_left <= 0)
 				qdel(src)
@@ -159,7 +160,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/structure/extraction_point/Initialize()
 	. = ..()
-	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
+	var/area/area_name = get_area(src)
+	name += " ([rand(100,999)]) ([area_name.name])"
 	GLOB.total_extraction_beacons += src
 
 /obj/structure/extraction_point/Destroy()
@@ -182,9 +184,3 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(L.stat != DEAD)
 				return 1
 	return 0
-
-/obj/effect/extraction_holder/singularity_pull()
-	return
-
-/obj/effect/extraction_holder/singularity_pull()
-	return

@@ -12,29 +12,34 @@
 #define BRAIN		"brain"
 
 //bitflag damage defines used for suicide_act
-#define BRUTELOSS 		(1<<0)
-#define FIRELOSS 		(1<<1)
-#define TOXLOSS 		(1<<2)
-#define OXYLOSS 		(1<<3)
-#define SHAME 			(1<<4)
-#define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
+#define BRUTELOSS 1
+#define FIRELOSS 2
+#define TOXLOSS 4
+#define OXYLOSS 8
+#define SHAME 16
 
-#define EFFECT_STUN		"stun"
-#define EFFECT_KNOCKDOWN		"knockdown"
-#define EFFECT_UNCONSCIOUS	"unconscious"
-#define EFFECT_IRRADIATE	"irradiate"
-#define EFFECT_STUTTER		"stutter"
-#define EFFECT_SLUR 		"slur"
-#define EFFECT_EYE_BLUR	"eye_blur"
-#define EFFECT_DROWSY		"drowsy"
-#define EFFECT_JITTER		"jitter"
+#define STUN		"stun"
+#define KNOCKDOWN		"knockdown"
+#define UNCONSCIOUS	"unconscious"
+#define IRRADIATE	"irradiate"
+#define STUTTER		"stutter"
+#define SLUR 		"slur"
+#define EYE_BLUR	"eye_blur"
+#define DROWSY		"drowsy"
+#define JITTER		"jitter"
 
 //Bitflags defining which status effects could be or are inflicted on a mob
-#define CANSTUN			(1<<0)
-#define CANKNOCKDOWN	(1<<1)
-#define CANUNCONSCIOUS	(1<<2)
-#define CANPUSH			(1<<3)
-#define GODMODE			(1<<4)
+#define CANSTUN		1
+#define CANKNOCKDOWN	2
+#define CANUNCONSCIOUS	4
+#define CANPUSH		8
+#define IGNORESLOWDOWN	16
+#define GOTTAGOFAST	32
+#define GOTTAGOREALLYFAST	64
+#define GODMODE		4096
+#define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
+#define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
+#define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
@@ -79,8 +84,6 @@
 #define ATTACK_EFFECT_SMASH		"smash"
 #define ATTACK_EFFECT_CLAW		"claw"
 #define ATTACK_EFFECT_DISARM	"disarm"
-#define ATTACK_EFFECT_ASS_SLAP  "ass_slap"
-#define ATTACK_EFFECT_FACE_SLAP "face_slap"
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
@@ -98,20 +101,6 @@
 
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
-#define DEFAULT_MESSAGE_RANGE 7
-
-//Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 30
-#define SHOVE_KNOCKDOWN_HUMAN 30
-#define SHOVE_KNOCKDOWN_TABLE 30
-#define SHOVE_KNOCKDOWN_COLLATERAL 10
-//for the shove slowdown, see __DEFINES/movespeed_modification.dm
-#define SHOVE_SLOWDOWN_LENGTH 30
-#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
-//Shove disarming item list
-GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
-	/obj/item/gun)))
-
 
 //Combat object defines
 
@@ -124,9 +113,13 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_IMPACT_PAIN_MULTIPLIER			4	//Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
 #define EMBED_THROWSPEED_THRESHOLD				4	//The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME			150	//A Time in ticks, total removal time = (this/item.w_class)
+#define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
 
+//Gun Stuff
+#define SAWN_INTACT  0
+#define SAWN_OFF     1
 //Gun weapon weight
+#define WEAPON_DUAL_WIELD 0
 #define WEAPON_LIGHT 1
 #define WEAPON_MEDIUM 2
 #define WEAPON_HEAVY 3
@@ -134,10 +127,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
-//E-gun self-recharge values
-#define EGUN_NO_SELFCHARGE 0
-#define EGUN_SELFCHARGE 1
-#define EGUN_SELFCHARGE_BORG 2
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -159,41 +148,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EXPLODE_DEVASTATE 1
 #define EXPLODE_HEAVY 2
 #define EXPLODE_LIGHT 3
-#define EXPLODE_GIB_THRESHOLD 50
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
-
-#define GRENADE_CLUMSY_FUMBLE 1
-#define GRENADE_NONCLUMSY_FUMBLE 2
-#define GRENADE_NO_FUMBLE 3
-
-#define BODY_ZONE_HEAD		"head"
-#define BODY_ZONE_CHEST		"chest"
-#define BODY_ZONE_L_ARM		"l_arm"
-#define BODY_ZONE_R_ARM		"r_arm"
-#define BODY_ZONE_L_LEG		"l_leg"
-#define BODY_ZONE_R_LEG		"r_leg"
-
-#define BODY_ZONE_PRECISE_EYES		"eyes"
-#define BODY_ZONE_PRECISE_MOUTH		"mouth"
-#define BODY_ZONE_PRECISE_GROIN		"groin"
-#define BODY_ZONE_PRECISE_L_HAND	"l_hand"
-#define BODY_ZONE_PRECISE_R_HAND	"r_hand"
-#define BODY_ZONE_PRECISE_L_FOOT	"l_foot"
-#define BODY_ZONE_PRECISE_R_FOOT	"r_foot"
-
-//We will round to this value in damage calculations.
-#define DAMAGE_PRECISION 0.1
-
-//items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
-#define TOTAL_MASS_TINY_ITEM		1.25
-#define TOTAL_MASS_SMALL_ITEM		2.5
-#define TOTAL_MASS_NORMAL_ITEM		3.75
-#define TOTAL_MASS_BULKY_ITEM		5
-#define TOTAL_MASS_HUGE_ITEM		6.25
-#define TOTAL_MASS_GIGANTIC_ITEM	7.5
-
-#define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
-#define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
-#define TOTAL_MASS_TOY_SWORD 1.5

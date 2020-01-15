@@ -12,14 +12,14 @@
 /obj/item/gun/magic/wand/Initialize()
 	if(prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
 		if(prob(33))
-			max_charges = CEILING(max_charges / 3, 1)
+			max_charges = Ceiling(max_charges / 3)
 		else
-			max_charges = CEILING(max_charges / 2, 1)
+			max_charges = Ceiling(max_charges / 2)
 	return ..()
 
 /obj/item/gun/magic/wand/examine(mob/user)
-	. = ..()
-	. += "Has [charges] charge\s remaining."
+	..()
+	to_chat(user, "Has [charges] charge\s remaining.")
 
 /obj/item/gun/magic/wand/update_icon()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
@@ -43,14 +43,14 @@
 				no_den_usage = 0
 		zap_self(user)
 	else
-		. = ..()
+		..()
 	update_icon()
 
 
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user)
 	user.visible_message("<span class='danger'>[user] zaps [user.p_them()]self with [src].</span>")
 	playsound(user, fire_sound, 50, 1)
-	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", LOG_ATTACK)
+	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", INDIVIDUAL_ATTACK_LOG)
 
 
 /////////////////////////////////////
@@ -87,21 +87,14 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/gun/magic/wand/resurrection/zap_self(mob/living/user)
-	..()
-	charges--
-	if(user.anti_magic_check())
-		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
-		return
 	user.revive(full_heal = 1)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.regenerate_limbs()
 		C.regenerate_organs()
 	to_chat(user, "<span class='notice'>You feel great!</span>")
-
-/obj/item/gun/magic/wand/resurrection/debug //for testing
-	name = "debug wand of healing"
-	max_charges = 500
+	charges--
+	..()
 
 /////////////////////////////////////
 //WAND OF POLYMORPH
@@ -134,7 +127,7 @@
 	no_den_usage = 1
 
 /obj/item/gun/magic/wand/teleport/zap_self(mob/living/user)
-	if(do_teleport(user, user, 10, channel = TELEPORT_CHANNEL_MAGIC))
+	if(do_teleport(user, user, 10))
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(3, user.loc)
 		smoke.start()

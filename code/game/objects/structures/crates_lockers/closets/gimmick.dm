@@ -4,8 +4,6 @@
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	cutting_tool = /obj/item/screwdriver
 
 /obj/structure/closet/acloset
 	name = "strange closet"
@@ -19,7 +17,7 @@
 	icon_state = "syndicate"
 
 /obj/structure/closet/gimmick/russian
-	name = "\improper Russian surplus closet"
+	name = "russian surplus closet"
 	desc = "It's a storage unit for Russian standard-issue surplus."
 
 /obj/structure/closet/gimmick/russian/PopulateContents()
@@ -106,4 +104,4 @@
 	new /obj/item/clothing/suit/space/nasavoid(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/stock_parts/cell(src)
-	new /obj/item/multitool(src)
+	new /obj/item/device/multitool(src)

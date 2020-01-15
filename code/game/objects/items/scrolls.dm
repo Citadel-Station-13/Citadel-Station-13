@@ -8,11 +8,13 @@
 	item_state = "paper"
 	throw_speed = 3
 	throw_range = 7
+	origin_tech = "bluespace=6"
 	resistance_flags = FLAMMABLE
 
 /obj/item/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
 	uses = 1
+	origin_tech = "bluespace=5"
 
 
 
@@ -22,7 +24,7 @@
 	dat += "Number of uses: [src.uses]<BR>"
 	dat += "<HR>"
 	dat += "<B>Four uses, use them wisely:</B><BR>"
-	dat += "<A href='byond://?src=[REF(src)];spell_teleport=1'>Teleport</A><BR>"
+	dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A><BR>"
 	dat += "Kind regards,<br>Wizards Federation<br><br>P.S. Don't forget to bring your gear, you'll need it to cast most spells.<HR>"
 	user << browse(dat, "window=scroll")
 	onclose(user, "scroll")
@@ -66,8 +68,7 @@
 		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 		return
 
-	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
-		smoke.start()
-		uses--
-	else
-		to_chat(user, "The spell matrix was disrupted by something near the destination.")
+	user.forceMove(pick(L))
+
+	smoke.start()
+	uses--

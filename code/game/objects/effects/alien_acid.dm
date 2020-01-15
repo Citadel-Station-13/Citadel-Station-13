@@ -1,7 +1,16 @@
+/* Alien shit!
+ * Contains:
+ *		effect/acid
+ */
+
+
+/*
+ * Acid
+ */
 /obj/effect/acid
 	gender = PLURAL
 	name = "acid"
-	desc = "Burbling corrosive stuff."
+	desc = "Burbling corrossive stuff."
 	icon_state = "acid"
 	density = FALSE
 	opacity = 0
@@ -11,13 +20,13 @@
 	var/turf/target
 
 
-/obj/effect/acid/Initialize(mapload, acid_pwr, acid_amt)
-	. = ..()
+/obj/effect/acid/New(loc, acid_pwr, acid_amt)
+	..(loc)
 
 	target = get_turf(src)
 
 	if(acid_amt)
-		acid_level = min( (CLAMP(round(acid_amt, 1), 0, INFINITY)) *acid_pwr, 12000) //capped so the acid effect doesn't last a half hour on the floor.
+		acid_level = min(acid_amt*acid_pwr, 12000) //capped so the acid effect doesn't last a half hour on the floor.
 
 	//handle APCs and newscasters and stuff nicely
 	pixel_x = target.pixel_x + rand(-4,4)

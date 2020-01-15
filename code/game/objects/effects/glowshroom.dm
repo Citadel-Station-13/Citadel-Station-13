@@ -9,7 +9,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	max_integrity = 5
+	max_integrity = 30
 	var/delay = 1200
 	var/floor = 0
 	var/generation = 1
@@ -36,7 +36,7 @@
 
 /obj/structure/glowshroom/examine(mob/user)
 	. = ..()
-	. += "This is a [generation]\th generation [name]!"
+	to_chat(user, "This is a [generation]\th generation [name]!")
 
 /obj/structure/glowshroom/Destroy()
 	if(myseed)
@@ -56,14 +56,11 @@
 		myseed.adjust_production(rand(-3,6))
 		myseed.adjust_endurance(rand(-3,6))
 	delay = delay - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
-	obj_integrity = myseed.endurance / 7
-	max_integrity = myseed.endurance / 7
-	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
-		myseed.genes -= G
-		G = new G
-		myseed.genes += G
-	set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+	obj_integrity = myseed.endurance
+	max_integrity = myseed.endurance
+	if(myseed.get_gene(/datum/plant_gene/trait/glow))
+		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)
@@ -78,7 +75,7 @@
 				pixel_x = -32
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
-		icon_state = base_icon_state
+		icon_state = "[base_icon_state]f"
 
 	addtimer(CALLBACK(src, .proc/Spread), delay)
 
@@ -96,7 +93,7 @@
 			for(var/turf/open/floor/earth in view(3,src))
 				if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 					continue
-				if(!disease_air_spread_walk(ownturf, earth))
+				if(!ownturf.CanAtmosPass(earth))
 					continue
 				if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,earth))
 					possibleLocs += earth

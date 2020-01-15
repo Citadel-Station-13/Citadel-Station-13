@@ -9,10 +9,10 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
-/turf/closed/wall/mineral/bananium,
+/turf/closed/wall/mineral/clown,
 /area/ruin/unpowered)
 "e" = (
-/obj/machinery/door/airlock/bananium,
+/obj/machinery/door/airlock/clown,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "f" = (
@@ -27,18 +27,19 @@
 /area/ruin/unpowered)
 "i" = (
 /obj/structure/closet/crate,
-/obj/item/stack/ore/bananium,
-/obj/item/stack/ore/bananium,
-/obj/item/stack/ore/bananium,
-/obj/item/stack/ore/bananium,
-/obj/item/stack/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "j" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	icon_state = "crateopen";
+	opened = 1
 	},
-/obj/item/stack/ore/bananium,
+/obj/item/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "k" = (
@@ -83,7 +84,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "p" = (
-/obj/item/stack/ore/bananium,
+/obj/item/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "q" = (
@@ -147,10 +148,10 @@
 /area/ruin/unpowered)
 "y" = (
 /obj/structure/closet/crate,
-/obj/item/stack/ore/bananium,
-/obj/item/stack/ore/bananium,
-/obj/item/stack/ore/bananium,
-/obj/item/stack/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "z" = (

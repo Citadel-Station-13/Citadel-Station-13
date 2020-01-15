@@ -1,18 +1,16 @@
 /obj/item/bodypart/head
-	name = BODY_ZONE_HEAD
+	name = "head"
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = "default_human_head"
 	max_damage = 200
-	body_zone = BODY_ZONE_HEAD
+	body_zone = "head"
 	body_part = HEAD
 	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
 	px_x = 0
 	px_y = -8
-	stam_damage_coeff = 1
-	max_stamina_damage = 0 //Setting this to 0 since this has the same exact effects as the chest when disabled
 
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
@@ -32,13 +30,6 @@
 
 	var/lip_style = null
 	var/lip_color = "white"
-	//If the head is a special sprite
-	var/custom_head
-
-/obj/item/bodypart/head/can_dismember(obj/item/I)
-	if(!((owner.stat == DEAD) || owner.InFullCritical()))
-		return FALSE
-	return ..()
 
 /obj/item/bodypart/head/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
@@ -50,10 +41,10 @@
 				user.visible_message("<span class='warning'>[user] saws [src] open and pulls out a brain!</span>", "<span class='notice'>You saw [src] open and pull out a brain.</span>")
 			if(brainmob)
 				brainmob.container = null
-				brainmob.forceMove(brain)
+				brainmob.loc = brain
 				brain.brainmob = brainmob
 				brainmob = null
-			brain.forceMove(T)
+			brain.loc = T
 			brain = null
 			update_icon_dropped()
 		else
@@ -70,7 +61,7 @@
 		C = owner
 
 	real_name = C.real_name
-	if(HAS_TRAIT(C, TRAIT_HUSK))
+	if(C.disabilities & HUSK)
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"
@@ -120,8 +111,6 @@
 	..()
 
 /obj/item/bodypart/head/update_icon_dropped()
-	if(custom_head)
-		return
 	var/list/standing = get_limb_icon(1)
 	if(!standing.len)
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
@@ -132,42 +121,42 @@
 	add_overlay(standing)
 
 /obj/item/bodypart/head/get_limb_icon(dropped)
-	if(custom_head)
-		return
 	cut_overlays()
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
+		var/datum/sprite_accessory/S
 
 		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hair_style)
-				var/datum/sprite_accessory/S = GLOB.facial_hair_styles_list[facial_hair_style]
+				S = GLOB.facial_hair_styles_list[facial_hair_style]
 				if(S)
 					var/image/facial_overlay = image(S.icon, "[S.icon_state]", -HAIR_LAYER, SOUTH)
 					facial_overlay.color = "#" + facial_hair_color
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
 
+			var/image/hair_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
+			. += hair_overlay
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
-				var/image/debrain_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
 				if(animal_origin == ALIEN_BODYPART)
-					debrain_overlay.icon = 'icons/mob/animal_parts.dmi'
-					debrain_overlay.icon_state = "debrained_alien"
+					hair_overlay.icon = 'icons/mob/animal_parts.dmi'
+					hair_overlay.icon_state = "debrained_alien"
 				else if(animal_origin == LARVA_BODYPART)
-					debrain_overlay.icon = 'icons/mob/animal_parts.dmi'
-					debrain_overlay.icon_state = "debrained_larva"
+					hair_overlay.icon = 'icons/mob/animal_parts.dmi'
+					hair_overlay.icon_state = "debrained_larva"
 				else if(!(NOBLOOD in species_flags_list))
-					debrain_overlay.icon = 'icons/mob/human_face.dmi'
-					debrain_overlay.icon_state = "debrained"
-				. += debrain_overlay
+					hair_overlay.icon = 'icons/mob/human_face.dmi'
+					hair_overlay.icon_state = "debrained"
 			else
-				var/datum/sprite_accessory/S2 = GLOB.hair_styles_list[hair_style]
-				if(S2)
-					var/image/hair_overlay = image(S2.icon, "[S2.icon_state]", -HAIR_LAYER, SOUTH)
-					hair_overlay.color = "#" + hair_color
-					hair_overlay.alpha = hair_alpha
-					. += hair_overlay
+				if(hair_style)
+					S = GLOB.hair_styles_list[hair_style]
+					if(S)
+						hair_overlay.icon = icon
+						hair_overlay.icon_state = "[S.icon_state]"
+						hair_overlay.color = "#" + hair_color
+						hair_overlay.alpha = hair_alpha
 
 
 		// lipstick

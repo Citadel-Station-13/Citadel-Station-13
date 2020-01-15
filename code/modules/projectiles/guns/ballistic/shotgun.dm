@@ -6,13 +6,12 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = SLOT_BACK
+	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	casing_ejector = FALSE
 	var/recentpump = 0 // to prevent spammage
 	weapon_weight = WEAPON_MEDIUM
-
-	pb_knockback = 2
 
 /obj/item/gun/ballistic/shotgun/attackby(obj/item/A, mob/user, params)
 	. = ..()
@@ -39,24 +38,17 @@
 /obj/item/gun/ballistic/shotgun/attack_self(mob/living/user)
 	if(recentpump > world.time)
 		return
-	if(istype(user) && user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes pumping shotguns impossible in stamina softcrit
-		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
-		return//CIT CHANGE - ditto
-	pump(user, TRUE)
+	pump(user)
 	recentpump = world.time + 10
-	if(istype(user))//CIT CHANGE - makes pumping shotguns cost a lil bit of stamina.
-		user.adjustStaminaLossBuffered(2) //CIT CHANGE - DITTO. make this scale inversely to the strength stat when stats/skills are added
 	return
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
 	if(chambered && chambered.BB)
-		process_fire(user, user, FALSE)
+		process_fire(user, user,0)
 		. = 1
 
-/obj/item/gun/ballistic/shotgun/proc/pump(mob/M, visible = TRUE)
-	if(visible)
-		M.visible_message("<span class='warning'>[M] racks [src].</span>", "<span class='warning'>You rack [src].</span>")
+/obj/item/gun/ballistic/shotgun/proc/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pump_unload(M)
 	pump_reload(M)
@@ -65,8 +57,8 @@
 
 /obj/item/gun/ballistic/shotgun/proc/pump_unload(mob/M)
 	if(chambered)//We have a shell in the chamber
-		chambered.forceMove(drop_location())//Eject casing
-		chambered.bounce_away()
+		chambered.loc = get_turf(src)//Eject casing
+		chambered.SpinAnimation(5, 1)
 		chambered = null
 
 /obj/item/gun/ballistic/shotgun/proc/pump_reload(mob/M)
@@ -75,10 +67,11 @@
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
 
+
 /obj/item/gun/ballistic/shotgun/examine(mob/user)
-	. = ..()
+	..()
 	if (chambered)
-		. += "A [chambered.BB ? "live" : "spent"] one is in the chamber."
+		to_chat(user, "A [chambered.BB ? "live" : "spent"] one is in the chamber.")
 
 /obj/item/gun/ballistic/shotgun/lethal
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
@@ -91,13 +84,10 @@
 	icon_state = "riotshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
-	unique_reskin = list("Tatical" = "riotshotgun",
-						"Wood Stock" = "wood_riotshotgun"
-						)
 
 /obj/item/gun/ballistic/shotgun/riot/attackby(obj/item/A, mob/user, params)
 	..()
-	if(A.tool_behaviour == TOOL_SAW || istype(A, /obj/item/gun/energy/plasmacutter))
+	if(istype(A, /obj/item/circular_saw) || istype(A, /obj/item/gun/energy/plasmacutter))
 		sawoff(user)
 	if(istype(A, /obj/item/melee/transforming/energy))
 		var/obj/item/melee/transforming/energy/W = A
@@ -113,20 +103,9 @@
 	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
-	slot_flags = 0 //no ITEM_SLOT_BACK sprite, alas
+	slot_flags = 0 //no SLOT_BACK sprite, alas
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = FALSE
-	can_bayonet = TRUE
-	knife_x_offset = 27
-	knife_y_offset = 13
-
-/obj/item/gun/ballistic/shotgun/boltaction/improvised
-	name = "Makeshift 7.62mm Rifle"
-	icon_state = "ishotgun"
-	item_state = "shotgun"
-	desc = "A large zip gun more or less that takes a single 7.62mm bullet"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/improvised
-	can_bayonet = FALSE
 
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
@@ -145,8 +124,9 @@
 	. = ..()
 
 /obj/item/gun/ballistic/shotgun/boltaction/examine(mob/user)
-	. = ..()
-	. += "The bolt is [bolt_open ? "open" : "closed"]."
+	..()
+	to_chat(user, "The bolt is [bolt_open ? "open" : "closed"].")
+
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -157,14 +137,14 @@
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage
 	name = "arcane barrage"
-	desc = "Pew Pew Pew."
+	desc = "Pew Pew Pew"
 	fire_sound = 'sound/weapons/emitter.ogg'
-	pin = /obj/item/firing_pin/magic
+	pin = /obj/item/device/firing_pin/magic
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
-	can_bayonet = FALSE
-	item_flags = NEEDS_PERMIT | DROPDEL
-	flags_1 = NONE
+
+	flags_1 = DROPDEL_1
+
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/Initialize()
@@ -192,11 +172,11 @@
 	if(guns_left)
 		var/obj/item/gun/ballistic/shotgun/boltaction/enchanted/GUN = new gun_type
 		GUN.guns_left = guns_left - 1
-		user.dropItemToGround(src, TRUE)
+		user.drop_item()
 		user.swap_hand()
 		user.put_in_hands(GUN)
 	else
-		user.dropItemToGround(src, TRUE)
+		user.drop_item()
 	discard_gun(user)
 
 // Automatic Shotguns//
@@ -209,50 +189,17 @@
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
-	fire_delay = 3
+	origin_tech = "combat=6"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
-	unique_reskin = list("Tatical" = "cshotgun",
-						"Slick" = "cshotgun_slick"
-						)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
-	name = "warden's combat shotgun"
-	desc = "A modified version of the semi automatic combat shotgun with a collapsible stock. For close encounters."
+	name = "compact combat shotgun"
+	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
 	icon_state = "cshotgunc"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
-	w_class = WEIGHT_CLASS_NORMAL
-	var/stock = FALSE
-	recoil = 5
-	spread = 2
-
-/obj/item/gun/ballistic/shotgun/automatic/combat/compact/AltClick(mob/living/user)
-	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	toggle_stock(user)
-	return TRUE
-
-/obj/item/gun/ballistic/shotgun/automatic/combat/compact/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click to toggle the stock.</span>"
-
-/obj/item/gun/ballistic/shotgun/automatic/combat/compact/proc/toggle_stock(mob/living/user)
-	stock = !stock
-	if(stock)
-		w_class = WEIGHT_CLASS_HUGE
-		to_chat(user, "You unfold the stock.")
-		recoil = 1
-		spread = 0
-	else
-		w_class = WEIGHT_CLASS_NORMAL
-		to_chat(user, "You fold the stock.")
-		recoil = 5
-		spread = 2
-	update_icon()
-
-/obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon()
-	icon_state = "[current_skin ? unique_reskin[current_skin] : "cshotgun"][stock ? "" : "c"]"
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
+	w_class = WEIGHT_CLASS_BULKY
 
 //Dual Feed Shotgun
 
@@ -260,14 +207,11 @@
 	name = "cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
 	icon_state = "cycler"
+	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = WEIGHT_CLASS_HUGE
 	var/toggled = FALSE
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
-
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click to pump it.</span>"
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
 	. = ..()
@@ -292,10 +236,9 @@
 		to_chat(user, "You switch to tube A.")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(user.incapacitated() || !Adjacent(user) || !istype(user))
 		return
 	pump()
-	return TRUE
+
 
 // DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm

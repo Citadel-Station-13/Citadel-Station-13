@@ -13,7 +13,7 @@
 
 /datum/objective/devil/soulquantity/check_completion()
 	var/count = 0
-	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls) //Just a sanity check.
 		var/datum/mind/L = S
@@ -44,6 +44,8 @@
 			contractName = "of revival"
 		if(CONTRACT_KNOWLEDGE)
 			contractName = "for knowledge"
+		//if(CONTRACT_UNWILLING)	//Makes round unfun.
+		//	contractName = "against their will"
 	update_explanation_text()
 
 /datum/objective/devil/soulquality/update_explanation_text()
@@ -51,7 +53,7 @@
 
 /datum/objective/devil/soulquality/check_completion()
 	var/count = 0
-	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls)
 		var/datum/mind/L = S
@@ -69,8 +71,8 @@
 	explanation_text = "Ensure at least [target_amount] mortals are sintouched."
 
 /datum/objective/devil/sintouch/check_completion()
-	var/list/touched = get_antag_minds(/datum/antagonist/sintouched)
-	return touched.len >= target_amount
+	return target_amount>=SSticker.mode.sintouched.len
+
 
 
 /datum/objective/devil/buy_target
@@ -92,19 +94,19 @@
 /datum/objective/devil/outsell/New()
 
 /datum/objective/devil/outsell/update_explanation_text()
-	var/datum/antagonist/devil/opponent = target.has_antag_datum(/datum/antagonist/devil)
+	var/datum/antagonist/devil/opponent = target.has_antag_datum(ANTAG_DATUM_DEVIL)
 	explanation_text = "Purchase and retain control over more souls than [opponent.truename], known to mortals as [target.name], the [target.assigned_role]."
 
 /datum/objective/devil/outsell/check_completion()
 	var/selfcount = 0
-	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls)
 		var/datum/mind/L = S
 		if(L.soulOwner == owner)
 			selfcount++
 	var/targetcount = 0
-	devilDatum = target.has_antag_datum(/datum/antagonist/devil)
+	devilDatum = target.has_antag_datum(ANTAG_DATUM_DEVIL)
 	souls = devilDatum.soulsOwned
 	for(var/S in souls)
 		var/datum/mind/L = S

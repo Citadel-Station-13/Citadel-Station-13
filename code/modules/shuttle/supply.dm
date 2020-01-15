@@ -5,32 +5,23 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/spider/spiderling,
 		/obj/item/disk/nuclear,
 		/obj/machinery/nuclearbomb,
-		/obj/item/beacon,
-		/obj/singularity/narsie,
-		/obj/singularity/wizard,
+		/obj/item/device/radio/beacon,
+		/obj/singularity,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
 		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
 		/obj/effect/mob_spawn,
 		/obj/effect/hierophant,
-		/obj/structure/receiving_pad,
+		/obj/structure/recieving_pad,
 		/obj/effect/clockwork/spatial_gateway,
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
-		/obj/item/warp_cube,
-		/obj/machinery/rnd/production/protolathe, //print tracking beacons, send shuttle
+		/obj/item/device/warp_cube,
+		/obj/machinery/r_n_d/protolathe, //print tracking beacons, send shuttle
 		/obj/machinery/autolathe, //same
 		/obj/item/projectile/beam/wormhole,
 		/obj/effect/portal,
-		/obj/item/shared_storage,
-		/obj/structure/extraction_point,
-		/obj/machinery/syndicatebomb,
-		/obj/item/hilbertshotel
-	)))
-
-GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
-	/mob/living/simple_animal/revenant,
-	/mob/living/simple_animal/slaughter
+		/obj/item/device/shared_storage
 	)))
 
 /obj/docking_port/mobile/supply
@@ -43,52 +34,37 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 	width = 12
 	dwidth = 5
 	height = 7
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
+	roundstart_move = "supply_away"
 
-
-	//Export categories for this run, this is set by console sending the shuttle.
-	var/export_categories = EXPORT_CARGO
+	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
+	var/contraband = FALSE
+	var/emagged = FALSE
 
 /obj/docking_port/mobile/supply/register()
 	. = ..()
 	SSshuttle.supply = src
 
 /obj/docking_port/mobile/supply/canMove()
-	if(is_station_level(z))
-		return check_blacklist(shuttle_areas, GLOB.blacklisted_cargo_types - GLOB.cargo_shuttle_leave_behind_typecache)
+	if(z in GLOB.station_z_levels)
+		return check_blacklist(shuttle_areas)
 	return ..()
 
-/obj/docking_port/mobile/supply/enterTransit()
-	var/list/leave_behind = list()
-	for(var/i in check_blacklist(shuttle_areas, GLOB.cargo_shuttle_leave_behind_typecache))
-		var/atom/movable/AM = i
-		leave_behind[AM] = AM.loc
-	. = ..()
-	for(var/kicked in leave_behind)
-		var/atom/movable/victim = kicked
-		var/atom/oldloc = leave_behind[victim]
-		victim.forceMove(oldloc)
-
-/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances, list/typecache)
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
 		for(var/trf in shuttle_area)
 			var/turf/T = trf
 			for(var/a in T.GetAllContents())
-				if(is_type_in_typecache(a, typecache))
+				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
 					return FALSE
-				if(istype(a, /obj/structure/closet))//Prevents eigenlockers from ending up at CC
-					var/obj/structure/closet/c = a
-					if(c.eigen_teleport == TRUE)
-						return FALSE
 	return TRUE
 
-/obj/docking_port/mobile/supply/request(obj/docking_port/stationary/S)
+/obj/docking_port/mobile/supply/request()
 	if(mode != SHUTTLE_IDLE)
 		return 2
 	return ..()
 
-/obj/docking_port/mobile/supply/initiate_docking()
+/obj/docking_port/mobile/supply/dock()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
 	. = ..() // Fly/enter transit.
@@ -123,10 +99,11 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
-		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
+		SSblackbox.add_details("cargo_imports",
+			"[SO.pack.type]|[SO.pack.name]|[SO.pack.cost]")
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)] has shipped.")
+			message_admins("\A [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 		purchases++
 
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
@@ -138,41 +115,27 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 		setupExports()
 
 	var/msg = ""
-	var/matched_bounty = FALSE
-
-	var/datum/export_report/ex = new
+	var/sold_atoms = ""
 
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		for(var/atom/movable/AM in shuttle_area)
-			if(iscameramob(AM))
+			if(AM.anchored)
 				continue
-			if(bounty_ship_item_and_contents(AM, dry_run = FALSE))
-				matched_bounty = TRUE
-			if(!AM.anchored || istype(AM, /obj/mecha))
-				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
+			sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
-	if(ex.exported_atoms)
-		ex.exported_atoms += "." //ugh
+	if(sold_atoms)
+		sold_atoms += "."
 
-	if(matched_bounty)
-		msg += "Bounty items received. An update has been sent to all bounty consoles. "
-
-	for(var/datum/export/E in ex.total_amount)
-		var/export_text = E.total_printout(ex)
+	for(var/a in GLOB.exports_list)
+		var/datum/export/E = a
+		var/export_text = E.total_printout()
 		if(!export_text)
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += ex.total_value[E]
-
-	for(var/datum/reagent/R in ex.total_reagents)
-		var/amount = ex.total_reagents[R]
-		var/value = amount*R.value
-		if(!value)
-			continue
-		msg += "[value] credits: received [amount]u of [R.name].\n"
-		SSshuttle.points += value
+		SSshuttle.points += E.total_cost
+		E.export_end()
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [ex.exported_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

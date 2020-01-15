@@ -1,11 +1,10 @@
 /datum/export/material
-	k_elasticity = 0
 	cost = 5 // Cost per MINERAL_MATERIAL_AMOUNT, which is 2000cm3 as of April 2016.
 	message = "cm3 of developer's tears. Please, report this on github"
 	var/material_id = null
 	export_types = list(
 		/obj/item/stack/sheet/mineral, /obj/item/stack/tile/mineral,
-		/obj/item/stack/ore, /obj/item/coin)
+		/obj/item/ore, /obj/item/coin)
 // Yes, it's a base type containing export_types.
 // But it has no material_id, so any applies_to check will return false, and these types reduce amount of copypasta a lot
 
@@ -23,69 +22,73 @@
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
 		amount *= S.amount
-		if(istype(I, /obj/item/stack/ore))
-			amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
+	else if(istype(I, /obj/item/ore))
+		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
 	return round(amount/MINERAL_MATERIAL_AMOUNT)
 
-// Materials. Selling raw can lead to a big payout but takes a lot of work for miners to get a lot. Best to craft art/rnd gear
+// Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
 
+// Bananium. Exporting it makes the clown cry. Priceless.
 /datum/export/material/bananium
-	cost = 500
+	cost = 5000
 	material_id = MAT_BANANIUM
 	message = "cm3 of bananium"
 
+// Diamonds. Rare and expensive.
 /datum/export/material/diamond
-	cost = 250
+	cost = 2500
 	material_id = MAT_DIAMOND
 	message = "cm3 of diamonds"
 
+// Plasma. The oil of 26 century. The reason why you are here.
 /datum/export/material/plasma
-	cost = 100
+	cost = 300
+	k_elasticity = 0
 	material_id = MAT_PLASMA
 	message = "cm3 of plasma"
 
+// Uranium. Still useful for both power generation and nuclear annihilation.
 /datum/export/material/uranium
-	cost = 50
+	cost = 400
 	material_id = MAT_URANIUM
 	message = "cm3 of uranium"
 
+// Gold. Used in electronics and corrosion-resistant plating.
 /datum/export/material/gold
-	cost = 60
+	cost = 250
 	material_id = MAT_GOLD
 	message = "cm3 of gold"
 
+// Silver.
 /datum/export/material/silver
-	cost = 25
+	cost = 100
 	material_id = MAT_SILVER
 	message = "cm3 of silver"
 
+// Titanium.
 /datum/export/material/titanium
-	cost = 60
+	cost = 250
 	material_id = MAT_TITANIUM
 	message = "cm3 of titanium"
 
+// Plastitanium.
 /datum/export/material/plastitanium
-	cost = 165 // plasma + titanium costs
-	material_id = MAT_TITANIUM // code can only check for one material_id; plastitanium is half plasma, half titanium
+	cost = 550
+	material_id = MAT_TITANIUM // code can only check for one material_id; plastitanium is half plasma, half titanium, so ((250 x 250) + (250 x 500)) / 250
 	message = "cm3 of plastitanium"
 
-/datum/export/material/plastic
-	cost = 5
-	material_id = MAT_PLASTIC
-	message = "cm3 of plastic"
-
+// Metal. Common building material.
 /datum/export/material/metal
-	cost = 3
 	message = "cm3 of metal"
 	material_id = MAT_METAL
 	export_types = list(
 		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
-		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
+		/obj/item/stack/rods, /obj/item/ore, /obj/item/coin)
 
+// Glass. Common building material.
 /datum/export/material/glass
-	cost = 3
 	message = "cm3 of glass"
 	material_id = MAT_GLASS
-	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
+	export_types = list(/obj/item/stack/sheet/glass, /obj/item/ore,
 		/obj/item/shard)

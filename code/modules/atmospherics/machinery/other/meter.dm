@@ -1,62 +1,33 @@
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
-	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
+	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
-	layer = GAS_PUMP_LAYER
+	var/atom/target = null
+	anchored = TRUE
 	power_channel = ENVIRON
+	var/frequency = 0
+	var/id_tag
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	max_integrity = 150
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 40, "acid" = 0)
-	var/frequency = 0
-	var/atom/target
-	var/id_tag
-	var/target_layer = PIPING_LAYER_DEFAULT
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
 
-/obj/machinery/meter/atmos
-	frequency = FREQ_ATMOS_STORAGE
 
-/obj/machinery/meter/atmos/atmos_waste_loop
-	name = "waste loop gas flow meter"
-	id_tag = ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE
-
-/obj/machinery/meter/atmos/distro_loop
-	name = "distribution loop gas flow meter"
-	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
+/obj/machinery/meter/Initialize(mapload)
+	. = ..()
+	SSair.atmos_machinery += src
+	if (!target)
+		target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
-	target = null
+	src.target = null
 	return ..()
-
-/obj/machinery/meter/Initialize(mapload, new_piping_layer)
-	if(!isnull(new_piping_layer))
-		target_layer = new_piping_layer
-	SSair.atmos_machinery += src
-	if(!target)
-		reattach_to_layer()
-	return ..()
-
-/obj/machinery/meter/proc/reattach_to_layer()
-	var/obj/machinery/atmospherics/candidate
-	for(var/obj/machinery/atmospherics/pipe/pipe in loc)
-		if(pipe.piping_layer == target_layer)
-			candidate = pipe
-			if(pipe.level == 2)
-				break
-	if(candidate)
-		target = candidate
-		setAttachLayer(candidate.piping_layer)
-
-/obj/machinery/meter/proc/setAttachLayer(var/new_layer)
-	target_layer = new_layer
-	pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
-	pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 
 /obj/machinery/meter/process_atmos()
-	if(!(target?.flags_1 & INITIALIZED_1))
+	if(!target)
 		icon_state = "meterX"
 		return 0
 
@@ -92,57 +63,72 @@
 		if(!radio_connection)
 			return
 
-		var/datum/signal/signal = new(list(
+		var/datum/signal/signal = new
+		signal.source = src
+		signal.transmission_method = 1
+		signal.data = list(
 			"id_tag" = id_tag,
 			"device" = "AM",
 			"pressure" = round(env_pressure),
 			"sigtype" = "status"
-		))
+		)
 		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/proc/status()
-	if (target)
+	var/t = ""
+	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			. = "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)] K ([round(environment.temperature-T0C,0.01)]&deg;C)."
+			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)] K ([round(environment.temperature-T0C,0.01)]&deg;C)"
 		else
-			. = "The sensor error light is blinking."
+			t += "The sensor error light is blinking."
 	else
-		. = "The connect error light is blinking."
+		t += "The connect error light is blinking."
+	return t
 
 /obj/machinery/meter/examine(mob/user)
-	. = ..()
-	. += status()
+	..()
+	to_chat(user, status())
 
-/obj/machinery/meter/wrench_act(mob/user, obj/item/I)
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (I.use_tool(src, user, 40, volume=50))
-		user.visible_message(
-			"[user] unfastens \the [src].",
-			"<span class='notice'>You unfasten \the [src].</span>",
-			"<span class='italics'>You hear ratchet.</span>")
-		deconstruct()
-	return TRUE
 
-/obj/machinery/meter/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/pipe_meter(loc)
-	qdel(src)
-
-/obj/machinery/meter/interact(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
+/obj/machinery/meter/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/wrench))
+		playsound(src.loc, W.usesound, 50, 1)
+		to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+		if (do_after(user, 40*W.toolspeed, target = src))
+			user.visible_message( \
+				"[user] unfastens \the [src].", \
+				"<span class='notice'>You unfasten \the [src].</span>", \
+				"<span class='italics'>You hear ratchet.</span>")
+			new /obj/item/pipe_meter(src.loc)
+			qdel(src)
 	else
-		to_chat(user, status())
+		return ..()
+
+/obj/machinery/meter/attack_ai(mob/user)
+	return src.attack_hand(user)
+
+/obj/machinery/meter/attack_paw(mob/user)
+	return src.attack_hand(user)
+
+/obj/machinery/meter/attack_hand(mob/user)
+
+	if(stat & (NOPOWER|BROKEN))
+		return 1
+	else
+		to_chat(usr, status())
+		return 1
 
 /obj/machinery/meter/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
-		deconstruct()
+		new /obj/item/pipe_meter(loc)
+		qdel(src)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 //	why are you yelling?
 /obj/machinery/meter/turf
 
-/obj/machinery/meter/turf/reattach_to_layer()
-	target = loc
+/obj/machinery/meter/turf/Initialize()
+	. = ..()
+	src.target = loc

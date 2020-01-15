@@ -30,7 +30,6 @@
 	//Processing
 	var/process_inner_turfs = FALSE	//Don't do this unless it's absolutely necessary
 	var/process_edge_turfs = FALSE	//Don't do this either unless it's absolutely necessary, you can just track what things are inside manually or on the initial setup.
-	var/requires_processing = FALSE
 	var/setup_edge_turfs = FALSE	//Setup edge turfs/all field turfs. Set either or both to ON when you need it, it's defaulting to off unless you do to save CPU.
 	var/setup_field_turfs = FALSE
 	var/use_host_turf = FALSE		//For fields from items carried on mobs to check turf instead of loc...
@@ -42,7 +41,6 @@
 
 /datum/proximity_monitor/advanced/Destroy()
 	full_cleanup()
-	STOP_PROCESSING(SSfields, src)
 	return ..()
 
 /datum/proximity_monitor/advanced/proc/assume_params(list/field_params)
@@ -77,10 +75,6 @@
 /datum/proximity_monitor/advanced/proc/process_inner_turf(turf/T)
 
 /datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
-
-/datum/proximity_monitor/advanced/New()
-	if(requires_processing)
-		START_PROCESSING(SSfields, src)
 
 /datum/proximity_monitor/advanced/proc/Initialize()
 	setup_field()
@@ -256,6 +250,11 @@
 	setup_field_turfs = TRUE
 	setup_edge_turfs = TRUE
 
+/datum/proximity_monitor/advanced/debug/recalculate_field()
+	..()
+
+/datum/proximity_monitor/advanced/debug/post_setup_field()
+	..()
 
 /datum/proximity_monitor/advanced/debug/setup_edge_turf(turf/T)
 	T.color = set_edgeturf_color
@@ -276,53 +275,41 @@
 	..()
 
 //DEBUG FIELD ITEM
-/obj/item/multitool/field_debug
+/obj/item/device/multitool/field_debug
 	name = "strange multitool"
 	desc = "Seems to project a colored field!"
 	var/list/field_params = list("field_shape" = FIELD_SHAPE_RADIUS_SQUARE, "current_range" = 5, "set_fieldturf_color" = "#aaffff", "set_edgeturf_color" = "#ffaaff")
 	var/field_type = /datum/proximity_monitor/advanced/debug
 	var/operating = FALSE
 	var/datum/proximity_monitor/advanced/current = null
-	var/mob/listeningTo
 
-/obj/item/multitool/field_debug/Initialize()
-	. = ..()
+/obj/item/device/multitool/field_debug/New()
 	START_PROCESSING(SSobj, src)
+	..()
 
-/obj/item/multitool/field_debug/Destroy()
+/obj/item/device/multitool/field_debug/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(current)
-	listeningTo = null
-	return ..()
+	..()
 
-/obj/item/multitool/field_debug/proc/setup_debug_field()
+/obj/item/device/multitool/field_debug/proc/setup_debug_field()
 	var/list/new_params = field_params.Copy()
 	new_params["host"] = src
 	current = make_field(field_type, new_params)
 
-/obj/item/multitool/field_debug/attack_self(mob/user)
+/obj/item/device/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
-	to_chat(user, "You turn [src] [operating? "on":"off"].")
-	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	listeningTo = null
+	to_chat(user, "You turn the [src] [operating? "on":"off"].")
 	if(!istype(current) && operating)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
-		listeningTo = user
 		setup_debug_field()
 	else if(!operating)
 		QDEL_NULL(current)
 
-/obj/item/multitool/field_debug/dropped()
-	. = ..()
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
-
-/obj/item/multitool/field_debug/proc/on_mob_move()
+/obj/item/device/multitool/field_debug/on_mob_move()
 	check_turf(get_turf(src))
 
-/obj/item/multitool/field_debug/process()
+/obj/item/device/multitool/field_debug/process()
 	check_turf(get_turf(src))
 
-/obj/item/multitool/field_debug/proc/check_turf(turf/T)
+/obj/item/device/multitool/field_debug/proc/check_turf(turf/T)
 	current.HandleMove()

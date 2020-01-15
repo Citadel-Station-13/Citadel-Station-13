@@ -3,6 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -12,6 +13,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/authorship)
 "d" = (
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -42,7 +44,7 @@
 /area/ruin/space/has_grav/powered/authorship)
 "i" = (
 /obj/structure/table,
-/obj/item/flashlight/lamp,
+/obj/item/device/flashlight/lamp,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -80,6 +82,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/authorship)
+"q" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/authorship)
 "r" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -102,7 +108,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "u" = (
-/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/airlock/glass,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "v" = (
@@ -126,6 +132,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "z" = (
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -135,6 +142,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "B" = (
+/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -255,9 +263,9 @@ d
 c
 c
 c
-p
+q
 u
-p
+q
 c
 c
 c

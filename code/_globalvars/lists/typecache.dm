@@ -3,12 +3,7 @@
 
 //Note: typecache can only replace istype if you know for sure the thing is at least a datum.
 
-GLOBAL_LIST_INIT(typecache_mob, typecacheof(/mob))
+GLOBAL_LIST_INIT(typecache_mob, typecacheof(list(/mob)))
 
-GLOBAL_LIST_INIT(typecache_living, typecacheof(/mob/living))
 
-GLOBAL_LIST_INIT(typecache_stack, typecacheof(/obj/item/stack))
 
-GLOBAL_LIST_INIT(typecache_machine_or_structure, typecacheof(list(/obj/machinery, /obj/structure)))
-
-GLOBAL_LIST_INIT(freezing_objects, typecacheof(list(/obj/structure/closet/crate/freezer, /obj/structure/closet/secure_closet/freezer, /obj/structure/bodycontainer, /obj/item/autosurgeon, /obj/machinery/smartfridge/organ)))			//list of all cold objects, that freeze organs when inside

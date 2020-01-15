@@ -6,114 +6,87 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
 
 	if (handcuffed)
-		. += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>"
+		msg += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>\n"
 	if (head)
-		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head."
+		msg += "[t_He] [t_is] wearing [icon2html(head, user)] \a [src.head] on [t_his] head. \n"
 	if (wear_mask)
-		. += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face."
+		msg += "[t_He] [t_is] wearing [icon2html(wear_mask, user)] \a [src.wear_mask] on [t_his] face.\n"
 	if (wear_neck)
-		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
-	if(can_be_held)
-		. += "[t_He] looks small enough to be picked up with <b>Alt+Click</b>!\n"
-
-
+		msg += "[t_He] [t_is] wearing [icon2html(wear_neck, user)] \a [src.wear_neck] around [t_his] neck.\n"
 
 	for(var/obj/item/I in held_items)
-		if(!(I.item_flags & ABSTRACT))
-			. += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))]."
+		if(!(I.flags_1 & ABSTRACT_1))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>[t_He] [t_is] holding [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "[t_He] [t_is] holding [icon2html(I, user)] \a [I] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	if (back)
-		. += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back."
+		msg += "[t_He] [t_has] [icon2html(back, user)] \a [src.back] on [t_his] back.\n"
 	var/appears_dead = 0
 	if (stat == DEAD)
 		appears_dead = 1
 		if(getorgan(/obj/item/organ/brain))
-			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>"
-		else if(get_bodypart(BODY_ZONE_HEAD))
-			. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
+			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>\n"
+		else if(get_bodypart("head"))
+			msg += "<span class='deadsay'>[t_He] appears that [t_his] brain is missing...</span>\n"
 
 	var/list/missing = get_missing_limbs()
 	for(var/t in missing)
-		if(t==BODY_ZONE_HEAD)
-			. += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
+		if(t=="head")
+			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 			continue
-		. += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
+		msg += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 
-	var/list/msg = list()
+	msg += "<span class='warning'>"
 	var/temp = getBruteLoss()
-	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
-		if(temp)
-			if (temp < 25)
-				msg += "[t_He] [t_has] minor bruising.\n"
-			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
-			else
-				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
+	if(temp)
+		if (temp < 30)
+			msg += "[t_He] [t_has] minor bruising.\n"
+		else
+			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
-		temp = getFireLoss()
-		if(temp)
-			if (temp < 25)
-				msg += "[t_He] [t_has] minor burns.\n"
-			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
-			else
-				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+	temp = getFireLoss()
+	if(temp)
+		if (temp < 30)
+			msg += "[t_He] [t_has] minor burns.\n"
+		else
+			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
-		temp = getCloneLoss()
-		if(temp)
-			if(temp < 25)
-				msg += "[t_He] [t_is] slightly deformed.\n"
-			else if (temp < 50)
-				msg += "[t_He] [t_is] <b>moderately</b> deformed!\n"
-			else
-				msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
+	temp = getCloneLoss()
+	if(temp)
+		if(getCloneLoss() < 30)
+			msg += "[t_He] [t_is] slightly deformed.\n"
+		else
+			msg += "<b>[t_He] [t_is] severely deformed.</b>\n"
 
-	if(HAS_TRAIT(src, TRAIT_DUMB))
-		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
+	if(getBrainLoss() > 60)
+		msg += "[t_He] seems to be clumsy and unable to think.\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
 	if(fire_stacks < 0)
-		msg += "[t_He] look[p_s()] a little soaked.\n"
+		msg += "[t_He] [t_is] looks a little soaked.\n"
 
 	if(pulledby && pulledby.grab_state)
 		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
 
-	if(msg.len)
-		. += "<span class='warning'>[msg.Join("")]</span>"
+	msg += "</span>"
 
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
-			. += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep."
+			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
 		else if(InCritical())
-			. += "[t_His] breathing is shallow and labored."
+			msg += "[t_His] breathing is shallow and labored.\n"
 
 		if(digitalcamo)
-			. += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner."
+			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"
 
-	if(combatmode)
-		. += "[t_He] [t_is] visibly tense[resting ? "." : ", and [t_is] standing in combative stance."]"
 
-	var/trait_exam = common_trait_examine()
-	if (!isnull(trait_exam))
-		. += trait_exam
 
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
-	if(mood)
-		switch(mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
-				. += "[t_He] look[p_s()] depressed."
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
-				. += "[t_He] look[p_s()] very sad."
-			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
-				. += "[t_He] look[p_s()] a bit down."
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-				. += "[t_He] look[p_s()] quite happy."
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				. += "[t_He] look[p_s()] very happy."
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				. += "[t_He] look[p_s()] ecstatic."
-	. += "*---------*</span>"
+	msg += "*---------*</span>"
+
+	to_chat(user, msg)

@@ -1,6 +1,6 @@
 /obj/structure/trap
 	name = "IT'S A TRAP"
-	desc = "Stepping on me is a guaranteed bad day."
+	desc = "stepping on me is a guaranteed bad day"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "trap"
 	density = FALSE
@@ -38,7 +38,7 @@
 	if(user.mind && user.mind in immune_minds)
 		return
 	if(get_dist(user, src) <= 1)
-		. += "<span class='notice'>You reveal [src]!</span>"
+		to_chat(user, "<span class='notice'>You reveal [src]!</span>")
 		flare()
 
 /obj/structure/trap/proc/flare()
@@ -65,8 +65,6 @@
 		var/mob/M = AM
 		if(M.mind in immune_minds)
 			return
-		if(M.anti_magic_check())
-			flare()
 	if(charges <= 0)
 		return
 	flare()
@@ -107,7 +105,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
 	L.Knockdown(20)
-	L.adjust_bodytemperature(-300)
+	L.bodytemperature -= 300
 	L.apply_status_effect(/datum/status_effect/freon)
 
 

@@ -13,6 +13,7 @@ The console is located at computer/gulag_teleporter.dm
 	icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
@@ -46,7 +47,6 @@ The console is located at computer/gulag_teleporter.dm
 	update_icon()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
-	. = ..()
 	if(locked)
 		to_chat(user, "<span class='warning'>[src] is locked!</span>")
 		return
@@ -135,19 +135,17 @@ The console is located at computer/gulag_teleporter.dm
 	if(linked_reclaimer)
 		linked_reclaimer.stored_items[occupant] = list()
 	var/mob/living/mob_occupant = occupant
-	for(var/A in mob_occupant.get_equipped_items(TRUE))
-		var/obj/item/I = A
-		if(is_type_in_typecache(I, telegulag_required_items) || !mob_occupant.temporarilyRemoveItemFromInventory(I))
-			continue
-		if(istype(I, /obj/item/restraints/handcuffs))
-			I.forceMove(get_turf(src))
-			continue
-		if(linked_reclaimer)
-			linked_reclaimer.stored_items[mob_occupant] += I
-			linked_reclaimer.contents += I
-			I.forceMove(linked_reclaimer)
-		else
-			I.forceMove(src)
+	for(var/obj/item/W in mob_occupant)
+		if(!is_type_in_typecache(W, telegulag_required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
+			if(istype(W, /obj/item/restraints/handcuffs))
+				W.forceMove(get_turf(src))
+				continue
+			if(linked_reclaimer)
+				linked_reclaimer.stored_items[mob_occupant] += W
+				linked_reclaimer.contents += W
+				W.forceMove(linked_reclaimer)
+			else
+				W.forceMove(src)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))
@@ -166,16 +164,17 @@ The console is located at computer/gulag_teleporter.dm
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
+	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
-							/obj/item/stack/ore/bluespace_crystal = 2,
+							/obj/item/ore/bluespace_crystal = 2,
 							/obj/item/stock_parts/scanning_module,
 							/obj/item/stock_parts/manipulator)
-	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */
 /obj/structure/gulag_beacon
 	name = "labor camp bluespace beacon"
-	desc = "A receiving beacon for bluespace teleportations."
+	desc = "A recieving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"
 	resistance_flags = INDESTRUCTIBLE

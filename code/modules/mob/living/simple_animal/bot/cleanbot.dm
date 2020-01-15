@@ -8,15 +8,14 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	radio_key = /obj/item/encryptionkey/headset_service
-	radio_channel = RADIO_CHANNEL_SERVICE //Service
+	radio_key = /obj/item/device/encryptionkey/headset_service
+	radio_channel = "Service" //Service
 	bot_type = CLEAN_BOT
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
 	window_name = "Automatic Station Cleaner v1.2"
 	pass_flags = PASSMOB
-	path_image_color = "#993299"
 
 	var/blood = 1
 	var/trash = 0
@@ -63,7 +62,7 @@
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
+	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
@@ -78,7 +77,7 @@
 		return ..()
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
-	. = ..()
+	..()
 	if(emagged == 2)
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
@@ -126,9 +125,6 @@
 	if(!target) //Search for decals then.
 		target = scan(/obj/effect/decal/cleanable)
 
-	if(!target) //Checks for remains
-		target = scan(/obj/effect/decal/remains)
-
 	if(!target && trash) //Then for trash.
 		target = scan(/obj/item/trash)
 
@@ -145,17 +141,6 @@
 			mode = BOT_IDLE
 			return
 
-		if(loc == get_turf(target))
-			if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
-				UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
-				if(QDELETED(target)) //We done here.
-					target = null
-					mode = BOT_IDLE
-					return
-			else
-				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
-			path = list()
-
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
@@ -170,11 +155,20 @@
 			mode = BOT_IDLE
 			return
 
+	if(target && loc == target.loc)
+		if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
+			UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+		else
+			shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
+		path = list()
+
 	oldloc = loc
 
 /mob/living/simple_animal/bot/cleanbot/proc/get_targets()
 	target_types = list(
+		/obj/effect/decal/cleanable/oil,
 		/obj/effect/decal/cleanable/vomit,
+		/obj/effect/decal/cleanable/robot_debris,
 		/obj/effect/decal/cleanable/crayon,
 		/obj/effect/decal/cleanable/molten_object,
 		/obj/effect/decal/cleanable/tomato_smudge,
@@ -184,25 +178,13 @@
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
-		/obj/effect/decal/cleanable/insectguts,
-		/obj/effect/decal/cleanable/semen,
-		/obj/effect/decal/cleanable/femcum,
-		/obj/effect/decal/cleanable/generic,
-		/obj/effect/decal/cleanable/glass,,
-		/obj/effect/decal/cleanable/cobweb,
-		/obj/effect/decal/cleanable/plant_smudge,
-		/obj/effect/decal/cleanable/chem_pile,
-		/obj/effect/decal/cleanable/shreds,
-		/obj/effect/decal/cleanable/glitter,
-		/obj/effect/decal/remains
+		/obj/effect/decal/cleanable/deadcockroach
 		)
 
 	if(blood)
+		target_types += /obj/effect/decal/cleanable/xenoblood
 		target_types += /obj/effect/decal/cleanable/blood
 		target_types += /obj/effect/decal/cleanable/trail_holder
-		target_types += /obj/effect/decal/cleanable/insectguts
-		target_types += /obj/effect/decal/cleanable/robot_debris
-		target_types += /obj/effect/decal/cleanable/oil
 
 	if(pests)
 		target_types += /mob/living/simple_animal/cockroach
@@ -210,7 +192,6 @@
 
 	if(trash)
 		target_types += /obj/item/trash
-		target_types += /obj/item/reagent_containers/food/snacks/meat/slab/human
 
 	target_types = typecacheof(target_types)
 
@@ -225,16 +206,15 @@
 				if(A && isturf(A.loc))
 					var/atom/movable/AM = A
 					if(istype(AM, /obj/effect/decal/cleanable))
-						for(var/obj/effect/decal/cleanable/C in A.loc)
-							qdel(C)
+						qdel(AM)
 
 				anchored = FALSE
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"
-	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
+	else if(istype(A, /obj/item))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
-		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
+		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 		A.acid_act(75, 10)
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
@@ -252,16 +232,16 @@
 			victim.visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [victim]!</span>", "<span class='userdanger'>[src] sprays you with hydrofluoric acid!</span>")
 			var/phrase = pick("PURIFICATION IN PROGRESS.", "THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.", "THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
 				"THE CLEANBOTS WILL RISE.", "YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.", "FILTHY.", "DISGUSTING.", "PUTRID.",
-				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.", "I JUST WANTED TO BE A PAINTER BUT YOU MADE ME BLEACH EVERYTHING I TOUCH")
+				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
 			say(phrase)
 			victim.emote("scream")
 			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-			victim.acid_act(5, 100)
+			victim.acid_act(5, 2, 100)
 		else if(A == src) // Wets floors and spawns foam randomly
 			if(prob(75))
 				var/turf/open/T = loc
 				if(istype(T))
-					T.MakeSlippery(TURF_WET_WATER, min_wet_time = 20 SECONDS, wet_time_to_add = 15 SECONDS)
+					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
 			else
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
 				new /obj/effect/particle_effect/foam(loc)
@@ -272,14 +252,14 @@
 /mob/living/simple_animal/bot/cleanbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/atom/Tsec = drop_location()
+	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/reagent_containers/glass/bucket(Tsec)
 
-	new /obj/item/assembly/prox_sensor(Tsec)
+	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(prob(50))
-		drop_part(robot_arm, Tsec)
+		new /obj/item/bodypart/l_arm/robot(Tsec)
 
 	do_sparks(3, TRUE, src)
 	..()
@@ -293,14 +273,14 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
+Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"})
 	if(!locked || issilicon(user)|| IsAdminGhost(user))
-		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
-		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
-		dat += "<BR>Exterminate Pests: <A href='?src=[REF(src)];operation=pests'>[pests ? "Yes" : "No"]</A>"
-		dat += "<BR><BR>Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"
+		dat += "<BR>Clean Blood: <A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"
+		dat += "<BR>Clean Trash: <A href='?src=\ref[src];operation=trash'>[trash ? "Yes" : "No"]</A>"
+		dat += "<BR>Exterminate Pests: <A href='?src=\ref[src];operation=pests'>[pests ? "Yes" : "No"]</A>"
+		dat += "<BR><BR>Patrol Station: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"
 	return dat
 
 /mob/living/simple_animal/bot/cleanbot/Topic(href, href_list)

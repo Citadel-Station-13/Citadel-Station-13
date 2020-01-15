@@ -9,7 +9,7 @@
 
 
 /*
- * DATA CARDS - Used for the IC data card reader
+ * DATA CARDS - Used for the teleporter
  */
 /obj/item/card
 	name = "card"
@@ -19,54 +19,31 @@
 
 	var/list/files = list()
 
-/obj/item/card/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return BRUTELOSS
-
 /obj/item/card/data
-	name = "data card"
-	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one has a stripe running down the middle."
-	icon_state = "data_1"
-	obj_flags = UNIQUE_RENAME
+	name = "data disk"
+	desc = "A disk of data."
+	icon_state = "data"
 	var/function = "storage"
 	var/data = "null"
 	var/special = null
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	var/detail_color = COLOR_ASSEMBLY_ORANGE
 
-/obj/item/card/data/Initialize()
-	.=..()
-	update_icon()
+/obj/item/card/data/verb/label(t as text)
+	set name = "Label Disk"
+	set category = "Object"
+	set src in usr
 
-/obj/item/card/data/update_icon()
-	cut_overlays()
-	if(detail_color == COLOR_FLOORTILE_GRAY)
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/card.dmi', "[icon_state]-color")
-	detail_overlay.color = detail_color
-	add_overlay(detail_overlay)
 
-/obj/item/card/data/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/integrated_electronics/detailer))
-		var/obj/item/integrated_electronics/detailer/D = I
-		detail_color = D.detail_color
-		update_icon()
-	return ..()
-
-/obj/item/proc/GetCard()
-
-/obj/item/card/data/GetCard()
-	return src
-
-/obj/item/card/data/full_color
-	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one has the entire card colored."
-	icon_state = "data_2"
-
-/obj/item/card/data/disk
-	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one inexplicibly looks like a floppy disk."
-	icon_state = "data_3"
+	if (t)
+		src.name = "data disk- '[t]'"
+	else
+		src.name = "data disk"
+	src.add_fingerprint(usr)
+	return
 
 /*
  * ID CARDS
@@ -78,82 +55,25 @@
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
+	origin_tech = "magnets=2;syndicate=2"
+	flags_1 = NOBLUDGEON_1
 	var/prox_check = TRUE //If the emag requires you to be in range
-	var/uses = 15
 
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
+	origin_tech = "bluespace=4;magnets=4;syndicate=5"
 	prox_check = FALSE
 
 /obj/item/card/emag/attack()
 	return
 
 /obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	var/atom/A = target
-	if(!proximity && prox_check || !(isobj(A) || issilicon(A) || isbot(A) || isdrone(A)))
+	if(!proximity && prox_check)
 		return
-	if(istype(A, /obj/item/storage) && !(istype(A, /obj/item/storage/lockbox) || istype(A, /obj/item/storage/pod)))
-		return
-	if(!uses)
-		user.visible_message("<span class='warning'>[src] emits a weak spark. It's burnt out!</span>")
-		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
-		return
-	else if(uses <= 3)
-		playsound(src, 'sound/effects/light_flicker.ogg', 30, 1)	//Tiiiiiiny warning sound to let ya know your emag's almost dead
-	if(!A.emag_act(user))
-		return
-	uses = max(uses - 1, 0)
-	if(!uses)
-		user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
-		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
-
-/obj/item/card/emag/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>It has <b>[uses ? uses : "no"]</b> charges left.</span>"
-
-/obj/item/card/emag/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/emagrecharge))
-		var/obj/item/emagrecharge/ER = W
-		if(ER.uses)
-			uses += ER.uses
-			to_chat(user, "<span class='notice'>You have added [ER.uses] charges to [src]. It now has [uses] charges.</span>")
-			playsound(src, "sparks", 100, 1)
-			ER.uses = 0
-		else
-			to_chat(user, "<span class='warning'>[ER] has no charges left.</span>")
-		return
-	. = ..()
-
-/obj/item/emagrecharge
-	name = "electromagnet charging device"
-	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices, sadly this can't be recharged like a normal cell."
-	icon = 'icons/obj/module.dmi'
-	icon_state = "cell_mini"
-	item_flags = NOBLUDGEON
-	var/uses = 5	//Dictates how many charges the device adds to compatible items
-
-/obj/item/emagrecharge/examine(mob/user)
-	. = ..()
-	if(uses)
-		. += "<span class='notice'>It can add up to [uses] charges to compatible devices</span>"
-	else
-		. += "<span class='warning'>It has a small, red, blinking light coming from inside of it. It's spent.</span>"
-
-/obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
-	name = "cryptographic sequencer"
-	icon_state = "emag"
-	item_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-
-/obj/item/card/emagfake/afterattack()
-	. = ..()
-	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+	A.emag_act(user)
 
 /obj/item/card/id
 	name = "identification card"
@@ -162,8 +82,8 @@
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	slot_flags = ITEM_SLOT_ID
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	slot_flags = SLOT_ID
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
@@ -186,24 +106,20 @@
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
-	if(Adjacent(user))
-		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
+	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
-		add_fingerprint(user)
-		return
+	src.add_fingerprint(user)
+	return
 
 /obj/item/card/id/examine(mob/user)
-	. = ..()
+	..()
 	if(mining_points)
-		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 
 /obj/item/card/id/GetAccess()
 	return access
 
 /obj/item/card/id/GetID()
-	return src
-
-/obj/item/card/id/RemoveID()
 	return src
 
 /*
@@ -229,12 +145,6 @@ update_label("John Doe", "Clowny")
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
-/obj/item/card/id/silver/reaper
-	name = "Thirteen's ID Card (Reaper)"
-	access = list(ACCESS_MAINT_TUNNELS)
-	assignment = "Reaper"
-	registered_name = "Thirteen"
-
 /obj/item/card/id/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
@@ -246,6 +156,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
+	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
 /obj/item/card/id/syndicate/Initialize()
@@ -289,10 +200,6 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/syndicate/anyone
 	anyone = TRUE
 
-/obj/item/card/id/syndicate/nuke_leader
-	name = "lead agent card"
-	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
-
 /obj/item/card/id/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
@@ -317,7 +224,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/centcom
 	name = "\improper CentCom ID"
-	desc = "An ID straight from Central Command."
+	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -328,7 +235,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert
 	name = "\improper CentCom ID"
-	desc = "An ERT ID card."
+	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
@@ -361,14 +268,6 @@ update_label("John Doe", "Clowny")
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/ert/chaplain
-	registered_name = "Religious Response Officer"
-	assignment = "Religious Response Officer"
-
-/obj/item/card/id/ert/chaplain/Initialize()
-	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
-	. = ..()
-
 /obj/item/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
@@ -377,41 +276,12 @@ update_label("John Doe", "Clowny")
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	assignment = "Prisoner"
-	access = list(ACCESS_ENTER_GENPOP)
-
-	//Lavaland labor camp
+	registered_name = "Scum"
 	var/goal = 0 //How far from freedom?
 	var/points = 0
-	//Genpop
-	var/sentence = 0	//When world.time is greater than this number, the card will have its ACCESS_ENTER_GENPOP access replaced with ACCESS_LEAVE_GENPOP the next time it's checked, unless this value is 0/null
-	var/crime= "\[REDACTED\]"
 
-/obj/item/card/id/prisoner/GetAccess()
-	if((sentence && world.time >= sentence) || (goal && points >= goal))
-		access = list(ACCESS_LEAVE_GENPOP)
-	return ..()
-
-/obj/item/card/id/prisoner/process()
-	if(!sentence)
-		STOP_PROCESSING(SSobj, src)
-		return
-	if(world.time >= sentence)
-		playsound(loc, 'sound/machines/ping.ogg', 50, 1)
-		if(isliving(loc))
-			to_chat(loc, "<span class='boldnotice'>[src]</span><span class='notice'> buzzes: You have served your sentence! You may now exit prison through the turnstiles and collect your belongings.</span>")
-		STOP_PROCESSING(SSobj, src)
-	return
-
-/obj/item/card/id/prisoner/examine(mob/user)
-	. = ..()
-	if(sentence && world.time < sentence)
-		. += "<span class='notice'>You're currently serving a sentence for [crime]. <b>[DisplayTimeText(sentence - world.time)]</b> left.</span>"
-	else if(goal)
-		. += "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>"
-	else if(!sentence)
-		. += "<span class='warning'>You are currently serving a permanent sentence for [crime].</span>"
-	else
-		. += "<span class='notice'>Your sentence is up! You're free!</span>"
+/obj/item/card/id/prisoner/attack_self(mob/user)
+	to_chat(usr, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
 
 /obj/item/card/id/prisoner/one
 	name = "Prisoner #13-001"
@@ -443,7 +313,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/mining
 	name = "mining ID"
-	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"
@@ -462,83 +332,25 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/away/old
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	icon_state = "centcom"
-
-/obj/item/card/id/away/old/sec
-	name = "Charlie Station Security Officer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	assignment = "Charlie Station Security Officer"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
-
-/obj/item/card/id/away/old/sci
-	name = "Charlie Station Scientist's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	assignment = "Charlie Station Scientist"
 	access = list(ACCESS_AWAY_GENERAL)
 
+/obj/item/card/id/away/old/sec
+	name = "Security Officer ID"
+	desc = "Security officers ID card."
+	icon_state = "centcom"
+
+/obj/item/card/id/away/old/sci
+	name = "Scientist ID"
+	desc = "Scientists ID card."
+	icon_state = "centcom"
+
 /obj/item/card/id/away/old/eng
-	name = "Charlie Station Engineer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	assignment = "Charlie Station Engineer"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
+	name = "Engineer ID"
+	desc = "Engineers ID card."
+	icon_state = "centcom"
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
-	desc = "A special ID card that allows access to APC terminals."
+	desc = "Special ID card to allow access to APCs"
+	icon_state = "centcom"
 	access = list(ACCESS_ENGINE_EQUIP)
-
-//Polychromatic Knight Badge
-
-/obj/item/card/id/knight
-	var/id_color = "#00FF00" //defaults to green
-	name = "knight badge"
-	icon_state = "knight"
-	desc = "A badge denoting the owner as a knight! It has a strip for swiping like an ID"
-
-/obj/item/card/id/knight/update_label(newname, newjob)
-	if(newname || newjob)
-		name = "[(!newname)	? "knight badge"	: "[newname]'s Knight Badge"][(!newjob) ? "" : " ([newjob])"]"
-		return
-
-	name = "[(!registered_name)	? "knight badge"	: "[registered_name]'s Knight Badge"][(!assignment) ? "" : " ([assignment])"]"
-
-/obj/item/card/id/knight/update_icon()
-	var/mutable_appearance/id_overlay = mutable_appearance(icon, "knight_overlay")
-
-	if(id_color)
-		id_overlay.color = id_color
-	cut_overlays()
-
-	add_overlay(id_overlay)
-
-/obj/item/card/id/knight/AltClick(mob/living/user)
-	. = ..()
-	if(!in_range(src, user))	//Basic checks to prevent abuse
-		return
-	if(user.incapacitated() || !istype(user))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return TRUE
-	if(alert("Are you sure you want to recolor your id?", "Confirm Repaint", "Yes", "No") == "Yes")
-		var/energy_color_input = input(usr,"","Choose Energy Color",id_color) as color|null
-		if(!in_range(src, user) || !energy_color_input)
-			return TRUE
-		if(user.incapacitated() || !istype(user))
-			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-			return TRUE
-		id_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
-		update_icon()
-		return TRUE
-
-/obj/item/card/id/knight/Initialize()
-	. = ..()
-	update_icon()
-
-/obj/item/card/id/knight/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click to recolor it.</span>"
-
-/obj/item/card/id/knight/blue
-	id_color = "#0000FF"
-
-/obj/item/card/id/knight/captain
-	id_color = "#FFD700"

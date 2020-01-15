@@ -23,7 +23,7 @@ Bonus
 	stage_speed = -3
 	transmittable = -1
 	level = 5
-	severity = 2
+	severity = 3
 	base_message_chance = 25
 	symptom_delay_min = 25
 	symptom_delay_max = 90
@@ -32,8 +32,7 @@ Bonus
 					  <b>Stealth 4:</b> The virus mimics positive symptoms.."
 
 /datum/symptom/hallucigen/Start(datum/disease/advance/A)
-	if(!..())
-		return
+	..()
 	if(A.properties["stealth"] >= 4) //fake good symptom messages
 		fake_healthy = TRUE
 		base_message_chance = 50
@@ -50,7 +49,7 @@ Bonus
 		if(1, 2)
 			if(prob(base_message_chance))
 				if(!fake_healthy)
-					to_chat(M, "<span class='notice'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whisper with no source.", "Your head aches.")]</span>")
+					to_chat(M, "<span class='notice'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whispher with no source.", "Your head aches.")]</span>")
 				else
 					to_chat(M, "<span class='notice'>[pick(healthy_messages)]</span>")
 		if(3, 4)

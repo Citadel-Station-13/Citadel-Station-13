@@ -1,13 +1,9 @@
 //Vars that will not be copied when using /DuplicateObject
-GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
-	"tag", "datum_components", "area", "type", "loc", "locs", "vars", "parent", "parent_type", "verbs", "ckey", "key",
-	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup"
-	))
+GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs","vars", "parent","parent_type", "verbs","ckey","key","power_supply","contents","reagents","stat","x","y","z","group","atmos_adjacent_turfs"))
 
 /proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc = FALSE, atom/newloc = null, nerf = FALSE, holoitem=FALSE)
-	RETURN_TYPE(original.type)
 	if(!original)
-		return
+		return null
 	var/atom/O
 
 	if(sameloc)
@@ -35,12 +31,12 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 			I.damtype = STAMINA // thou shalt not
 
 		N.update_icon()
-		if(ismachinery(O))
+		if(istype(O, /obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
 
 	if(holoitem)
-		O.flags_1 |= HOLOGRAM_1
+		O.flags_2 |= HOLOGRAM_2
 	return O
 
 
@@ -51,8 +47,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
-	if(!A || !src)
-		return 0
+	if(!A || !src) return 0
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
@@ -82,6 +77,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	var/copiedobjs = list()
 
 	for (var/turf/T in refined_src)
+		//var/datum/coords/C_src = refined_src[T]
 		var/coordstring = refined_src[T]
 		var/turf/B = refined_trg[coordstring]
 		if(!istype(B))
@@ -107,7 +103,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
-			if(iscameramob(M))
+			if(istype(M, /mob/camera))
 				continue // If we need to check for more mobs, I'll add a variable
 			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()
@@ -123,7 +119,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)
-			CALCULATE_ADJACENT_TURFS(T1)
+			T1.CalculateAdjacentTurfs()
 			SSair.add_to_active(T1,1)
 
 

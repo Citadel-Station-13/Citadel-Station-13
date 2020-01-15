@@ -18,14 +18,22 @@
 
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
-	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	if(!mapload)
 		return
 	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
 	if(P && !bin_pen)
-		P.forceMove(src)
+		P.loc = src
 		bin_pen = P
 		update_icon()
+		var/static/warned = FALSE
+		if(P.type == /obj/item/pen && !warned)
+			warning("one or more paperbins ate a pen duing initialize()")
+			warned = TRUE
+
+/obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
+	if(!total_paper)
+		return
+	..()
 
 /obj/item/paper_bin/Destroy()
 	if(papers)
@@ -51,24 +59,21 @@
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-		
-	else
-		. = ..()
 
 	add_fingerprint(M)
+
 
 /obj/item/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
+
 /obj/item/paper_bin/attack_hand(mob/user)
 	if(user.lying)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
-		P.add_fingerprint(user)
-		P.forceMove(user.loc)
+		P.loc = user.loc
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 		bin_pen = null
@@ -89,14 +94,14 @@
 					P.rigged = 1
 					P.updateinfolinks()
 
-		P.add_fingerprint(user)
-		P.forceMove(user.loc)
+		P.loc = user.loc
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+
 	add_fingerprint(user)
-	return ..()
+
 
 /obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/paper))
@@ -118,11 +123,11 @@
 		return ..()
 
 /obj/item/paper_bin/examine(mob/user)
-	. = ..()
+	..()
 	if(total_paper)
-		. += "It contains [total_paper > 1 ? "[total_paper] papers" : " one paper"]."
+		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
 	else
-		. += "It doesn't contain anything."
+		to_chat(user, "It doesn't contain anything.")
 
 
 /obj/item/paper_bin/update_icon()
@@ -146,17 +151,14 @@
 	icon_state = "paper_bundle"
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
-
 /obj/item/paper_bin/bundlenatural/attack_hand(mob/user)
 	..()
 	if(total_paper < 1)
 		qdel(src)
-
 /obj/item/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)
 	qdel(src)
-
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
-	if(W.get_sharpness())
+	if(W.is_sharp())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
 		var/turf/T = get_turf(src.loc)
 		while(total_paper > 0)

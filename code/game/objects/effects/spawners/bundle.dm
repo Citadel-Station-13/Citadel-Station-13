@@ -22,7 +22,7 @@
 		/obj/item/reagent_containers/food/snacks/egg)
 
 /obj/effect/spawner/bundle/costume/gladiator
-	name = "gladiator costume spawner"
+	name = "gladitator costume spawner"
 	items = list(
 		/obj/item/clothing/under/gladiator,
 		/obj/item/clothing/head/helmet/gladiator)
@@ -133,7 +133,7 @@
 /obj/effect/spawner/bundle/costume/holiday_priest
 	name = "holiday priest costume spawner"
 	items = list(
-		/obj/item/clothing/suit/chaplain/holidaypriest)
+		/obj/item/clothing/suit/holidaypriest)
 
 /obj/effect/spawner/bundle/costume/marisawizard
 	name = "marisa wizard costume spawner"

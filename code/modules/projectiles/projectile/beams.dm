@@ -16,17 +16,11 @@
 	is_reflectable = TRUE
 
 /obj/item/projectile/beam/laser
-	tracer_type = /obj/effect/projectile/tracer/laser
-	muzzle_type = /obj/effect/projectile/muzzle/laser
-	impact_type = /obj/effect/projectile/impact/laser
 
 /obj/item/projectile/beam/laser/heavylaser
 	name = "heavy laser"
 	icon_state = "heavylaser"
 	damage = 40
-	tracer_type = /obj/effect/projectile/tracer/heavy_laser
-	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
-	impact_type = /obj/effect/projectile/impact/heavy_laser
 
 /obj/item/projectile/beam/laser/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -38,8 +32,6 @@
 
 /obj/item/projectile/beam/weak
 	damage = 15
-
-/obj/item/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
 /obj/item/projectile/beam/practice
@@ -53,33 +45,25 @@
 	damage = 5
 
 /obj/item/projectile/beam/xray
-	name = "\improper X-ray beam"
+	name = "xray beam"
 	icon_state = "xray"
 	damage = 15
-	irradiate = 300
+	irradiate = 30
 	range = 15
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
-
+	forcedodge = 1
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
-	tracer_type = /obj/effect/projectile/tracer/xray
-	muzzle_type = /obj/effect/projectile/muzzle/xray
-	impact_type = /obj/effect/projectile/impact/xray
 
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 28 // Citadel change for balance from 36
+	damage = 36
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
-	speed = 0.6
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
-	tracer_type = /obj/effect/projectile/tracer/disabler
-	muzzle_type = /obj/effect/projectile/muzzle/disabler
-	impact_type = /obj/effect/projectile/impact/disabler
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
@@ -87,13 +71,10 @@
 	damage = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
-	tracer_type = /obj/effect/projectile/tracer/pulse
-	muzzle_type = /obj/effect/projectile/muzzle/pulse
-	impact_type = /obj/effect/projectile/impact/pulse
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
+	if(isturf(target) || istype(target, /obj/structure/))
 		target.ex_act(EXPLODE_HEAVY)
 
 /obj/item/projectile/beam/pulse/shotgun
@@ -114,6 +95,8 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
+	legacy = 1
+	animate_movement = SLIDE_STEPS
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 
@@ -144,27 +127,10 @@
 	suit_types = list(/obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = LIGHT_COLOR_RED
-	tracer_type = /obj/effect/projectile/tracer/laser
-	muzzle_type = /obj/effect/projectile/muzzle/laser
-	impact_type = /obj/effect/projectile/impact/laser
-
-/obj/item/projectile/beam/lasertag/redtag/hitscan
-	hitscan = TRUE
-
-/obj/item/projectile/beam/lasertag/redtag/hitscan/holy
-	name = "lasrifle beam"
-	damage = 0.1
-	damage_type = BURN
 
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)
-	tracer_type = /obj/effect/projectile/tracer/laser/blue
-	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
-	impact_type = /obj/effect/projectile/impact/laser/blue
-
-/obj/item/projectile/beam/lasertag/bluetag/hitscan
-	hitscan = TRUE
 
 /obj/item/projectile/beam/instakill
 	name = "instagib laser"
@@ -190,21 +156,3 @@
 		var/mob/living/carbon/M = target
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
-
-//a shrink ray that shrinks stuff, which grows back after a short while.
-/obj/item/projectile/beam/shrink
-	name = "shrink ray"
-	icon_state = "blue_laser"
-	hitsound = 'sound/weapons/shrink_hit.ogg'
-	damage = 0
-	damage_type = STAMINA
-	flag = "energy"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
-	light_color = LIGHT_COLOR_BLUE
-	var/shrink_time = 90
-
-/obj/item/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
-		return
-	target.AddComponent(/datum/component/shrink, shrink_time)

@@ -11,7 +11,7 @@
 
 //do things for each entry in Generate_list
 //return value sets Generate_list[verbpath]
-/datum/verbs/proc/HandleVerb(list/entry, procpath/verbpath, ...)
+/datum/verbs/proc/HandleVerb(list/entry, atom/verb/verbpath, ...)
 	return entry
 
 /datum/verbs/New()
@@ -78,11 +78,11 @@
 				if (childname == "[child.type]")
 					var/list/tree = splittext(childname, "/")
 					childname = tree[tree.len]
-				.[child.type] = "parent=[url_encode(type)];name=[childname]"
+				.[child.type] = "parent=[url_encode(type)];name=[url_encode(childname)]"
 				. += childlist
 
 	for (var/thing in verblist)
-		var/procpath/verbpath = thing
+		var/atom/verb/verbpath = thing
 		if (!verbpath)
 			stack_trace("Bad VERB in [type] verblist: [english_list(verblist)]")
 		var/list/entry = list()
@@ -92,7 +92,7 @@
 			entry["command"] = copytext(verbpath.name,2)
 		else
 			entry["command"] = replacetext(verbpath.name, " ", "-")
-
+		
 		.[verbpath] = HandleVerb(arglist(list(entry, verbpath) + args))
 
 /world/proc/LoadVerbs(verb_type)

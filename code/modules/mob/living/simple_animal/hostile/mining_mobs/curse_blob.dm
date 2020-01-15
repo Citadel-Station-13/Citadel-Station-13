@@ -5,11 +5,11 @@
 	icon_state = "curseblob"
 	icon_living = "curseblob"
 	icon_aggro = "curseblob"
-	mob_biotypes = list(MOB_SPIRIT)
 	movement_type = FLYING
 	move_to_delay = 5
 	vision_range = 20
 	aggro_vision_range = 20
+	idle_vision_range = 20
 	maxHealth = 40 //easy to kill, but oh, will you be seeing a lot of them.
 	health = 40
 	melee_damage_lower = 10
@@ -22,7 +22,6 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	sentience_type = SENTIENCE_BOSS
 	layer = LARGE_MOB_LAYER
-	blood_volume = 0
 	var/doing_move_loop = FALSE
 	var/mob/living/set_target
 	var/timerid

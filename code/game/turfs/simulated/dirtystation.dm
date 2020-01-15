@@ -28,6 +28,8 @@
 	var/static/list/high_dirt_areas = typecacheof(list(/area/science/test_area,
 														/area/mine/production,
 														/area/mine/living_quarters,
+														/area/mine/north_outpost,
+														/area/mine/west_outpost,
 														/area/ruin/space))
 	if(is_type_in_typecache(A, high_dirt_areas))
 		new /obj/effect/decal/cleanable/dirt(src)	//vanilla, but it works
@@ -70,7 +72,7 @@
 		return
 
 		//Hangars and pods covered in oil.
-	var/static/list/oily_areas = typecacheof(/area/quartermaster)
+	var/static/list/oily_areas = typecacheof(list(/area/quartermaster))
 	if(is_type_in_typecache(A, oily_areas))
 		if(prob(25))
 			new /obj/effect/decal/cleanable/oil(src)
@@ -82,6 +84,7 @@
 
 		//Areas where gibs will be present. Robusting probably happened some time ago.
 	var/static/list/gib_covered_areas = typecacheof(list(/area/ai_monitored/turret_protected,
+														/area/prison,
 														/area/security,
 														/area/crew_quarters/heads/hos))
 	if(is_type_in_typecache(A, gib_covered_areas))
