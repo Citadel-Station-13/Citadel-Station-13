@@ -3,32 +3,30 @@
 /obj/effect/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
-	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 	blood_state = BLOOD_STATE_OIL
-	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	mergeable_decal = FALSE
-
-/obj/effect/decal/cleanable/robot_debris/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
+	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
-	set waitfor = 0
-	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
-		sleep(2)
-		if (i > 0)
-			if (prob(40))
-				new /obj/effect/decal/cleanable/oil/streak(src.loc)
-			else if (prob(10))
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, src)
-				s.start()
-		if (!step_to(src, get_step(src, direction), 0))
-			break
+	spawn (0)
+		var/direction = pick(directions)
+		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
+			sleep(3)
+			if (i > 0)
+				if (prob(40))
+					new /obj/effect/decal/cleanable/oil/streak(src.loc)
+				else if (prob(10))
+					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+					s.set_up(3, 1, src)
+					s.start()
+			if (step_to(src, get_step(src, direction), 0))
+				break
 
 /obj/effect/decal/cleanable/robot_debris/ex_act()
 	return
@@ -45,21 +43,26 @@
 /obj/effect/decal/cleanable/oil
 	name = "motor oil"
 	desc = "It's black and greasy. Looks like Beepsky made another mess."
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "floor1"
+	var/viruses = list()
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_OIL
-	bloodiness = BLOOD_AMOUNT_PER_DECAL
+	bloodiness = MAX_SHOE_BLOODINESS
 
-/obj/effect/decal/cleanable/oil/Initialize()
-	. = ..()
-	reagents.add_reagent(/datum/reagent/oil, 30)
-	reagents.add_reagent(/datum/reagent/liquidgibs/oil, 5)
+/obj/effect/decal/cleanable/oil/New()
+	..()
+	reagents.add_reagent("oil", 30)
+
+/obj/effect/decal/cleanable/oil/Destroy()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	viruses = null
+	return ..()
 
 /obj/effect/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
-
-/obj/effect/decal/cleanable/oil/slippery
-
-/obj/effect/decal/cleanable/oil/slippery/Initialize()
-	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))

@@ -1,345 +1,345 @@
-/obj/mecha/proc/get_armour_facing(relative_dir)
-	switch(relative_dir)
-		if(0) // BACKSTAB!
-			return facing_modifiers[BACK_ARMOUR]
-		if(45, 90, 270, 315)
-			return facing_modifiers[SIDE_ARMOUR]
-		if(225, 180, 135)
-			return facing_modifiers[FRONT_ARMOUR]
-	return 1 //always return non-0
 
-/obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	. = ..()
-	if(. && obj_integrity > 0)
-		spark_system.start()
-		switch(damage_flag)
-			if("fire")
-				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL))
-			if("melee")
-				check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			else
-				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))
-		if(. >= 5 || prob(33))
-			occupant_message("<span class='userdanger'>Taking damage!</span>")
-		log_append_to_last("Took [damage_amount] points of damage. Damage type: \"[damage_type]\".",1)
+/obj/mecha/proc/take_damage(amount, type="brute")
+	if(amount)
+		var/damage = absorbDamage(amount,type)
+		health -= damage
+		update_health()
+		occupant_message("<span class='userdanger'>Taking damage!</span>")
+		log_append_to_last("Took [damage] points of damage. Damage type: \"[type]\".",1)
 
-/obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	. = ..()
-	if(!damage_amount)
-		return 0
-	var/booster_deflection_modifier = 1
-	var/booster_damage_modifier = 1
-	if(damage_flag == "bullet" || damage_flag == "laser" || damage_flag == "energy")
-		for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/B in equipment)
-			if(B.projectile_react())
-				booster_deflection_modifier = B.deflect_coeff
-				booster_damage_modifier = B.damage_coeff
-				break
-	else if(damage_flag == "melee")
-		for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/B in equipment)
-			if(B.attack_react())
-				booster_deflection_modifier *= B.deflect_coeff
-				booster_damage_modifier *= B.damage_coeff
-				break
-
-	if(attack_dir)
-		var/facing_modifier = get_armour_facing(dir2angle(attack_dir) - dir2angle(src))
-		booster_damage_modifier /= facing_modifier
-		booster_deflection_modifier *= facing_modifier
-	if(prob(deflect_chance * booster_deflection_modifier))
-		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
-		log_append_to_last("Armor saved.")
-		return 0
-	if(.)
-		. *= booster_damage_modifier
+/obj/mecha/proc/absorbDamage(damage,damage_type)
+	var/coeff = 1
+	if(damage_absorption[damage_type])
+		coeff = damage_absorption[damage_type]
+	return damage*coeff
 
 
-/obj/mecha/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
-	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
-	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
-	log_message("Attack by hand/paw. Attacker - [user].", color="red")
-	log_append_to_last("Armor saved.")
-
-/obj/mecha/attack_paw(mob/user as mob)
-	return attack_hand(user)
-
-
-/obj/mecha/attack_alien(mob/living/user)
-	log_message("Attack by alien. Attacker - [user].", color="red")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	attack_generic(user, 15, BRUTE, "melee", 0)
-
-/obj/mecha/attack_animal(mob/living/simple_animal/user)
-	log_message("Attack by simple animal. Attacker - [user].", color="red")
-	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("custom", message = "[user.friendly] [src].")
-		return 0
+/obj/mecha/proc/update_health()
+	if(src.health > 0)
+		src.spark_system.start()
 	else
-		var/play_soundeffect = 1
-		if(user.environment_smash)
-			play_soundeffect = 0
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
-		if(user.obj_damage)
-			animal_damage = user.obj_damage
-		animal_damage = min(animal_damage, 20*user.environment_smash)
-		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
-		log_combat(user, src, "attacked")
-		return 1
-
-
-/obj/mecha/hulk_damage()
-	return 15
+		qdel(src)
 
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(.)
-		log_message("Attack by hulk. Attacker - [user].", color="red")
-		log_combat(user, src, "punched", "hulk powers")
+	if(!prob(src.deflect_chance))
+		..(user, 1)
+		take_damage(15)
+		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		user.visible_message("<span class='danger'>[user] hits [src.name], doing some damage.</span>", "<span class='danger'>You hit [src.name] with all your might. The metal creaks and bends.</span>")
+		occupant_message("<span class='userdanger'>[user] hits [src.name], doing some damage.</span>")
+		return 1
+	return 0
 
-/obj/mecha/blob_act(obj/structure/blob/B)
-	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
+/obj/mecha/attack_hand(mob/living/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+	user.do_attack_animation(src)
+	src.log_message("Attack by hand/paw. Attacker - [user].",1)
+	user.visible_message("<span class='danger'>[user] hits [src.name]. Nothing happens</span>","<span class='danger'>You hit [src.name] with no visible effect.</span>")
+	src.log_append_to_last("Armor saved.")
+	return
+
+/obj/mecha/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+
+
+/obj/mecha/attack_alien(mob/living/user as mob)
+	src.log_message("Attack by alien. Attacker - [user].",1)
+	user.changeNext_move(CLICK_CD_MELEE) //Now stompy alien killer mechs are actually scary to aliens!
+	user.do_attack_animation(src)
+	if(!prob(src.deflect_chance))
+		take_damage(15)
+		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
+		visible_message("<span class='danger'>The [user] slashes at [src.name]'s armor!</span>")
+	else
+		src.log_append_to_last("Armor saved.")
+		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
+		user << "\green Your claws had no effect!"
+		visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
+	return
+
+
+/obj/mecha/attack_animal(mob/living/simple_animal/user as mob)
+	src.log_message("Attack by simple animal. Attacker - [user].",1)
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(user.melee_damage_upper == 0)
+		user.emote("[user.friendly] [src]")
+	else
+		user.do_attack_animation(src)
+		if(!prob(src.deflect_chance))
+			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+			take_damage(damage)
+			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+			visible_message("<span class='danger'>[user] [user.attacktext] [src]!</span>")
+			add_logs(user, src, "attacked")
+		else
+			src.log_append_to_last("Armor saved.")
+			playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
+			visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
+			add_logs(user, src, "attacked")
+	return
 
 /obj/mecha/attack_tk()
 	return
 
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
-	log_message("Hit by [A].", color="red")
-	. = ..()
+	log_message("Hit by [A].",1)
+	var/deflection = deflect_chance
+	var/dam_coeff = 1
+	var/counter_tracking = 0
+	for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/B in equipment)
+		if(B.projectile_react())
+			deflection *= B.deflect_coeff
+			dam_coeff *= B.damage_coeff
+			counter_tracking = 1
+			break
+	if(istype(A, /obj/item/mecha_parts/mecha_tracking))
+		if(!counter_tracking)
+			A.forceMove(src)
+			visible_message("The [A] fastens firmly to [src].")
+			return
+		else
+			deflection = 100 //will bounce off
+	if(prob(deflection) || istype(A, /mob))
+		visible_message("[A] bounces off the [src.name] armor")
+		log_append_to_last("Armor saved.")
+		if(istype(A, /mob/living))
+			var/mob/living/M = A
+			M.take_organ_damage(10)
+	else if(istype(A, /obj))
+		var/obj/O = A
+		if(O.throwforce)
+			visible_message("<span class='danger'>[src.name] is hit by [A].</span>")
+			take_damage(O.throwforce*dam_coeff)
+			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+	return
 
 
-/obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
-	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", color="red")
-	. = ..()
+/obj/mecha/bullet_act(var/obj/item/projectile/Proj) //wrapper
+	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
+	var/deflection = deflect_chance
+	var/dam_coeff = 1
+	for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/B in equipment)
+		if(B.projectile_react())
+			deflection *= B.deflect_coeff
+			dam_coeff *= B.damage_coeff
+			break
+	if(prob(deflection))
+		visible_message("The [src.name] armor deflects the projectile")
+		log_append_to_last("Armor saved.")
+		return
+	var/ignore_threshold
+	if(Proj.flag == "taser")
+		use_power(200)
+		return
+	if(istype(Proj, /obj/item/projectile/beam/pulse))
+		ignore_threshold = 1
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		take_damage(Proj.damage*dam_coeff,Proj.flag)
+		visible_message("<span class='danger'>[src.name] is hit by [Proj].</span>")
+		check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
+	Proj.on_hit(src)
 
 /obj/mecha/ex_act(severity, target)
-	log_message("Affected by explosion of severity: [severity].", color="red")
-	if(prob(deflect_chance))
+	src.log_message("Affected by explosion of severity: [severity].",1)
+	if(prob(src.deflect_chance))
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
-	. = ..()
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if (prob(30))
+				qdel(src)
+			else
+				take_damage(initial(src.health)/2)
+				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
+		if(3)
+			if (prob(5))
+				qdel(src)
+			else
+				take_damage(initial(src.health)/5)
+				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
+	return
 
-/obj/mecha/contents_explosion(severity, target)
-	severity++
-	for(var/X in equipment)
-		var/obj/item/mecha_parts/mecha_equipment/ME = X
-		ME.ex_act(severity,target)
-	for(var/Y in trackers)
-		var/obj/item/mecha_parts/mecha_tracking/MT = Y
-		MT.ex_act(severity, target)
-	if(occupant)
-		occupant.ex_act(severity,target)
-
-/obj/mecha/handle_atom_del(atom/A)
-	if(A == occupant)
-		occupant = null
-		icon_state = initial(icon_state)+"-open"
-		setDir(dir_in)
+/obj/mecha/blob_act()
+	take_damage(30, "brute")
+	return
 
 /obj/mecha/emp_act(severity)
-	. = ..()
-	if (. & EMP_PROTECT_SELF)
-		return
 	if(get_charge())
-		use_power((cell.charge/3)/(severity*2))
-		take_damage(30 / severity, BURN, "energy", 1)
-	log_message("EMP detected", color="red")
-
-	if(istype(src, /obj/mecha/combat))
-		mouse_pointer = 'icons/mecha/mecha_mouse-disable.dmi'
-		occupant?.update_mouse_pointer()
-	if(!equipment_disabled && occupant) //prevent spamming this message with back-to-back EMPs
-		to_chat(occupant, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
-	addtimer(CALLBACK(src, /obj/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
-	equipment_disabled = 1
+		use_power((cell.charge/2)/severity)
+		take_damage(50 / severity,"energy")
+	src.log_message("EMP detected",1)
+	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
+	return
 
 /obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature>max_temperature)
-		log_message("Exposed to dangerous temperature.", color="red")
-		take_damage(5, BURN, 0, 1)
+	if(exposed_temperature>src.max_temperature)
+		log_message("Exposed to dangerous temperature.",1)
+		take_damage(5,"fire")
+		check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
+	return
+
 
 /obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
 
-	if(istype(W, /obj/item/mmi))
+	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
-			to_chat(user, "[src]-[W] interface initialized successfully.")
+			user << "[src]-[W] interface initialized successfuly"
 		else
-			to_chat(user, "[src]-[W] interface initialization failed.")
+			user << "[src]-[W] interface initialization failed."
 		return
 
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
-				if(!user.temporarilyRemoveItemFromInventory(W))
+				if(!user.drop_item())
 					return
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 			else
-				to_chat(user, "<span class='warning'>You were unable to attach [W] to [src]!</span>")
+				user << "<span class='warning'>You were unable to attach [W] to [src]!</span>"
 		return
-	if(W.GetID())
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(user))
-				var/obj/item/card/id/id_card
-				if(istype(W, /obj/item/card/id))
+				var/obj/item/weapon/card/id/id_card
+				if(istype(W, /obj/item/weapon/card/id))
 					id_card = W
 				else
-					var/obj/item/pda/pda = W
+					var/obj/item/device/pda/pda = W
 					id_card = pda.id
 				output_maintenance_dialog(id_card, user)
 				return
 			else
-				to_chat(user, "<span class='warning'>Invalid ID: Access denied.</span>")
+				user << "<span class='warning'>Invalid ID: Access denied.</span>"
 		else
-			to_chat(user, "<span class='warning'>Maintenance protocols disabled by operator.</span>")
-	else if(istype(W, /obj/item/wrench))
+			user << "<span class='warning'>Maintenance protocols disabled by operator.</span>"
+	else if(istype(W, /obj/item/weapon/wrench))
 		if(state==1)
 			state = 2
-			to_chat(user, "<span class='notice'>You undo the securing bolts.</span>")
+			user << "<span class='notice'>You undo the securing bolts.</span>"
 		else if(state==2)
 			state = 1
-			to_chat(user, "<span class='notice'>You tighten the securing bolts.</span>")
+			user << "<span class='notice'>You tighten the securing bolts.</span>"
 		return
-	else if(istype(W, /obj/item/crowbar))
+	else if(istype(W, /obj/item/weapon/crowbar))
 		if(state==2)
 			state = 3
-			to_chat(user, "<span class='notice'>You open the hatch to the power unit.</span>")
+			user << "<span class='notice'>You open the hatch to the power unit.</span>"
 		else if(state==3)
 			state=2
-			to_chat(user, "<span class='notice'>You close the hatch to the power unit.</span>")
+			user << "<span class='notice'>You close the hatch to the power unit.</span>"
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(state == 3 && (internal_damage & MECHA_INT_SHORT_CIRCUIT))
 			var/obj/item/stack/cable_coil/CC = W
 			if(CC.use(2))
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
-				to_chat(user, "<span class='notice'>You replace the fused wires.</span>")
+				user << "<span class='notice'>You replace the fused wires.</span>"
 			else
-				to_chat(user, "<span class='warning'>You need two lengths of cable to fix this mech!</span>")
+				user << "<span class='warning'>You need two lengths of cable to fix this mech!</span>"
 		return
-	else if(istype(W, /obj/item/screwdriver) && user.a_intent != INTENT_HARM)
+	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
-			to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
-		else if(state==3 && cell)
-			cell.forceMove(loc)
-			cell = null
+			user << "<span class='notice'>You repair the damaged temperature controller.</span>"
+		else if(state==3 && src.cell)
+			src.cell.forceMove(src.loc)
+			src.cell = null
 			state = 4
-			to_chat(user, "<span class='notice'>You unscrew and pry out the powercell.</span>")
-			log_message("Powercell removed")
-		else if(state==4 && cell)
+			user << "<span class='notice'>You unscrew and pry out the powercell.</span>"
+			src.log_message("Powercell removed")
+		else if(state==4 && src.cell)
 			state=3
-			to_chat(user, "<span class='notice'>You screw the cell in place.</span>")
+			user << "<span class='notice'>You screw the cell in place.</span>"
 		return
 
-	else if(istype(W, /obj/item/stock_parts/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
-			if(!cell)
-				if(!user.transferItemToLoc(W, src))
+			if(!src.cell)
+				if(!user.drop_item())
 					return
-				var/obj/item/stock_parts/cell/C = W
-				to_chat(user, "<span class='notice'>You install the powercell.</span>")
-				cell = C
-				log_message("Powercell installed")
+				var/obj/item/weapon/stock_parts/cell/C = W
+				user << "<span class='notice'>You install the powercell.</span>"
+				C.forceMove(src)
+				C.use(C.charge * 0.8)
+				src.cell = C
+				src.log_message("Powercell installed")
 			else
-				to_chat(user, "<span class='notice'>There's already a powercell installed.</span>")
+				user << "<span class='notice'>There's already a powercell installed.</span>"
 		return
 
-	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(obj_integrity < max_integrity)
-			if(W.use_tool(src, user, 0, volume=50, amount=1))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(src.health<initial(src.health))
+			if (WT.remove_fuel(0,user))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
 					clearInternalDamage(MECHA_INT_TANK_BREACH)
-					to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
+					user << "<span class='notice'>You repair the damaged gas tank.</span>"
 				else
-					user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to [src].</span>")
-					obj_integrity += min(10, max_integrity-obj_integrity)
-					if(obj_integrity == max_integrity)
-						to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
-			return 1
+					user.visible_message("<span class='notice'>[user] repairs some damage to [src.name].</span>")
+					src.health += min(10, initial(src.health)-src.health)
+			else
+				user << "<span class='warning'>The welder must be on for this task!</span>"
+				return 1
 		else
-			to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
+			user << "<span class='warning'>The [src.name] is at full integrity!</span>"
 		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>")
+		if(!user.unEquip(W))
+			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
-		trackers += W
+		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
-		diag_hud_set_mechtracking()
 		return
-	else
-		return ..()
 
-/obj/mecha/attacked_by(obj/item/I, mob/living/user)
-	log_message("Attacked by [I]. Attacker - [user]")
-	..()
+	else if(!(W.flags&NOBLUDGEON))
+		user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+		user.do_attack_animation(src)
+		log_message("Attacked by [W]. Attacker - [user]")
+		var/deflection = deflect_chance
+		var/dam_coeff = 1
+		for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/B in equipment)
+			if(B.attack_react(user))
+				deflection *= B.deflect_coeff
+				dam_coeff *= B.damage_coeff
+				break
+		if(prob(deflection))
+			user << "<span class='danger'>The [W] bounces off [src.name] armor.</span>"
+			src.log_append_to_last("Armor saved.")
+			return 0
+		else
+			user.visible_message("<span class='danger'>[user] hits [src] with [W].</span>", "<span class='danger'>You hit [src] with [W].</span>")
+			take_damage(round(W.force*dam_coeff),W.damtype)
+			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+			return 1
+
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)
 	if(target.reagents)
-		if(target.reagents.get_reagent_amount(/datum/reagent/cryptobiolin) + force < force*2)
-			target.reagents.add_reagent(/datum/reagent/cryptobiolin, force/2)
-		if(target.reagents.get_reagent_amount(/datum/reagent/toxin) + force < force*2)
-			target.reagents.add_reagent(/datum/reagent/toxin, force/2.5)
+		if(target.reagents.get_reagent_amount("cryptobiolin") + force < force*2)
+			target.reagents.add_reagent("cryptobiolin", force/2)
+		if(target.reagents.get_reagent_amount("toxin") + force < force*2)
+			target.reagents.add_reagent("toxin", force/2.5)
 
+
+/atom/proc/mech_melee_attack(obj/mecha/M)
+	return
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)
-	if(!has_charge(melee_energy_drain))
-		return 0
-	use_power(melee_energy_drain)
-	if(M.damtype == BRUTE || M.damtype == BURN)
-		log_combat(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
-		. = ..()
-
-/obj/mecha/proc/full_repair(charge_cell)
-	obj_integrity = max_integrity
-	if(cell && charge_cell)
-		cell.charge = cell.maxcharge
-	if(internal_damage & MECHA_INT_FIRE)
-		clearInternalDamage(MECHA_INT_FIRE)
-	if(internal_damage & MECHA_INT_TEMP_CONTROL)
-		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
-	if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
-		clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
-	if(internal_damage & MECHA_INT_TANK_BREACH)
-		clearInternalDamage(MECHA_INT_TANK_BREACH)
-	if(internal_damage & MECHA_INT_CONTROL_LOST)
-		clearInternalDamage(MECHA_INT_CONTROL_LOST)
-
-/obj/mecha/narsie_act()
-	if(occupant)
-		var/mob/living/L = occupant
-		go_out(TRUE)
-		if(L)
-			L.narsie_act()
-
-/obj/mecha/ratvar_act()
-	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)
-		if(is_servant_of_ratvar(occupant)) //reward the minion that got a mech by repairing it
-			full_repair(TRUE)
-		else
-			var/mob/living/L = occupant
-			go_out(TRUE)
-			if(L)
-				L.ratvar_act()
-
-/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
-	if(!no_effect)
-		if(selected)
-			used_item = selected
-		else if(!visual_effect_icon)
-			visual_effect_icon = ATTACK_EFFECT_SMASH
-			if(damtype == BURN)
-				visual_effect_icon = ATTACK_EFFECT_MECHFIRE
-			else if(damtype == TOX)
-				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
-	..()
+	if(M.damtype =="brute")
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+	else if(M.damtype == "fire")
+		playsound(src, 'sound/items/Welder.ogg', 50, 1)
+	else
+		return
+	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
+	take_damage(M.force, damtype)
+	add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+	return

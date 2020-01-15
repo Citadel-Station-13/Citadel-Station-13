@@ -2,72 +2,72 @@
 //machineryness
 
 /obj/structure/mineral_door
-	name = "metal door"
-	density = TRUE
-	anchored = TRUE
-	opacity = TRUE
-	layer = CLOSED_DOOR_LAYER
+	name = "mineral door"
+	density = 1
+	anchored = 1
+	opacity = 1
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 
-	var/initial_state
+	var/mineralType = "metal"
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
 	var/close_delay = -1 //-1 if does not auto close.
-	max_integrity = 200
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
-	var/sheetType = /obj/item/stack/sheet/metal
-	var/sheetAmount = 7
+	var/hardness = 1
+	var/oreAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	rad_insulation = RAD_MEDIUM_INSULATION
 
-/obj/structure/mineral_door/Initialize()
-	. = ..()
-	initial_state = icon_state
-	air_update_turf(TRUE)
+/obj/structure/mineral_door/New(location)
+	..()
+	icon_state = mineralType
+	name = "[mineralType] door"
+	air_update_turf(1)
+	return
+
+/obj/structure/mineral_door/Destroy()
+	density = 0
+	air_update_turf(1)
+	return ..()
 
 /obj/structure/mineral_door/Move()
 	var/turf/T = loc
-	. = ..()
+	..()
 	move_update_air(T)
 
-/obj/structure/mineral_door/Bumped(atom/movable/AM)
+/obj/structure/mineral_door/Bumped(atom/user)
 	..()
 	if(!state)
-		return TryToSwitchState(AM)
+		return TryToSwitchState(user)
+	return
 
 /obj/structure/mineral_door/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
 	if(isAI(user)) //so the AI can't open it
 		return
-	else if(iscyborg(user)) //but cyborgs can
+	else if(isrobot(user)) //but cyborgs can
 		if(get_dist(user,src) <= 1) //not remotely though
 			return TryToSwitchState(user)
 
 /obj/structure/mineral_door/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/structure/mineral_door/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
 	return TryToSwitchState(user)
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
+/obj/structure/mineral_door/attack_hand(mob/user)
+	return TryToSwitchState(user)
+
+/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
 
+/obj/structure/mineral_door/CanAtmosPass()
+	return !density
+
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
-	if(isSwitchingStates)
-		return
+	if(isSwitchingStates) return
 	if(isliving(user))
 		var/mob/living/M = user
-		if(world.time - M.last_bumped <= 60)
-			return //NOTE do we really need that?
+		if(world.time - M.last_bumped <= 60) return //NOTE do we really need that?
 		if(M.client)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
@@ -75,7 +75,7 @@
 					SwitchState()
 			else
 				SwitchState()
-	else if(ismecha(user))
+	else if(istype(user, /obj/mecha))
 		SwitchState()
 
 /obj/structure/mineral_door/proc/SwitchState()
@@ -86,173 +86,167 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
-	playsound(src, openSound, 100, 1)
-	set_opacity(FALSE)
-	flick("[initial_state]opening",src)
+	playsound(loc, openSound, 100, 1)
+	flick("[mineralType]opening",src)
 	sleep(10)
-	density = FALSE
-	layer = OPEN_DOOR_LAYER
+	density = 0
+	opacity = 0
 	state = 1
 	air_update_turf(1)
 	update_icon()
 	isSwitchingStates = 0
 
 	if(close_delay != -1)
-		addtimer(CALLBACK(src, .proc/Close), close_delay)
+		spawn(close_delay)
+			if(!isSwitchingStates && state == 1)
+				Close()
 
 /obj/structure/mineral_door/proc/Close()
-	if(isSwitchingStates || state != 1)
-		return
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
 		return
 	isSwitchingStates = 1
 	playsound(loc, closeSound, 100, 1)
-	flick("[initial_state]closing",src)
+	flick("[mineralType]closing",src)
 	sleep(10)
-	density = TRUE
-	set_opacity(TRUE)
+	density = 1
+	opacity = 1
 	state = 0
-	layer = initial(layer)
 	air_update_turf(1)
 	update_icon()
 	isSwitchingStates = 0
 
 /obj/structure/mineral_door/update_icon()
 	if(state)
-		icon_state = "[initial_state]open"
+		icon_state = "[mineralType]open"
 	else
-		icon_state = initial_state
+		icon_state = mineralType
 
-/obj/structure/mineral_door/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MINING)
-		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
-		if(I.use_tool(src, user, 40, volume=50))
-			to_chat(user, "<span class='notice'>You finish digging.</span>")
-			deconstruct(TRUE)
-	else if(user.a_intent != INTENT_HARM)
-		return attack_hand(user)
+/obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/pickaxe))
+		var/obj/item/weapon/pickaxe/digTool = W
+		user << "<span class='notice'>You start digging the [name]...</span>"
+		if(do_after(user,digTool.digspeed*hardness, target = src) && src)
+			user << "<span class='notice'>You finish digging.</span>"
+			Dismantle()
+	else if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
+		hardness -= W.force/100
+		user << "<span class='danger'>You hit the [name] with your [W.name]!</span>"
+		CheckHardness()
 	else
-		return ..()
-
-/obj/structure/mineral_door/deconstruct(disassembled = TRUE)
-	var/turf/T = get_turf(src)
-	if(disassembled)
-		new sheetType(T, sheetAmount)
-	else
-		new sheetType(T, max(sheetAmount - 2, 1))
-	qdel(src)
-
-/obj/structure/mineral_door/iron
-	name = "iron door"
-	max_integrity = 300
-
-/obj/structure/mineral_door/silver
-	name = "silver door"
-	icon_state = "silver"
-	sheetType = /obj/item/stack/sheet/mineral/silver
-	max_integrity = 300
-	rad_insulation = RAD_HEAVY_INSULATION
-
-/obj/structure/mineral_door/gold
-	name = "gold door"
-	icon_state = "gold"
-	sheetType = /obj/item/stack/sheet/mineral/gold
-	rad_insulation = RAD_HEAVY_INSULATION
-
-/obj/structure/mineral_door/uranium
-	name = "uranium door"
-	icon_state = "uranium"
-	sheetType = /obj/item/stack/sheet/mineral/uranium
-	max_integrity = 300
-	light_range = 2
-
-/obj/structure/mineral_door/uranium/ComponentInitialize()
+		attack_hand(user)
 	return
 
+
+/obj/structure/mineral_door/bullet_act(obj/item/projectile/Proj)
+	hardness -= Proj.damage
+	..()
+	CheckHardness()
+	return
+
+
+/obj/structure/mineral_door/proc/CheckHardness()
+	if(hardness <= 0)
+		Dismantle(1)
+
+/obj/structure/mineral_door/proc/Dismantle(devastated = 0)
+	if(!devastated)
+		if (mineralType == "metal")
+			var/ore = /obj/item/stack/sheet/metal
+			for(var/i = 1, i <= oreAmount, i++)
+				new ore(get_turf(src))
+		else
+			var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+			for(var/i = 1, i <= oreAmount, i++)
+				new ore(get_turf(src))
+	else
+		if (mineralType == "metal")
+			var/ore = /obj/item/stack/sheet/metal
+			for(var/i = 3, i <= oreAmount, i++)
+				new ore(get_turf(src))
+		else
+			var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+			for(var/i = 3, i <= oreAmount, i++)
+				new ore(get_turf(src))
+	qdel(src)
+
+/obj/structure/mineral_door/ex_act(severity = 1)
+	switch(severity)
+		if(1)
+			Dismantle(1)
+		if(2)
+			if(prob(20))
+				Dismantle(1)
+			else
+				hardness--
+				CheckHardness()
+		if(3)
+			hardness -= 0.1
+			CheckHardness()
+	return
+
+
+
+/obj/structure/mineral_door/iron
+	mineralType = "metal"
+	hardness = 3
+
+/obj/structure/mineral_door/silver
+	mineralType = "silver"
+	hardness = 3
+
+/obj/structure/mineral_door/gold
+	mineralType = "gold"
+
+/obj/structure/mineral_door/uranium
+	mineralType = "uranium"
+	hardness = 3
+	luminosity = 2
+
 /obj/structure/mineral_door/sandstone
-	name = "sandstone door"
-	icon_state = "sandstone"
-	sheetType = /obj/item/stack/sheet/mineral/sandstone
-	max_integrity = 100
+	mineralType = "sandstone"
+	hardness = 0.5
 
 /obj/structure/mineral_door/transparent
-	opacity = FALSE
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	opacity = 0
 
 /obj/structure/mineral_door/transparent/Close()
 	..()
-	set_opacity(FALSE)
+	opacity = 0
 
 /obj/structure/mineral_door/transparent/plasma
-	name = "plasma door"
-	icon_state = "plasma"
-	sheetType = /obj/item/stack/sheet/mineral/plasma
+	mineralType = "plasma"
 
-/obj/structure/mineral_door/transparent/plasma/ComponentInitialize()
-	return
-
-/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature())
-		var/turf/T = get_turf(src)
-		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma mineral door ignited by [key_name(user)] in [AREACOORD(T)]")
-		TemperatureAct()
-	else
-		return ..()
+/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.is_hot())
+		message_admins("Plasma mineral door ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("Plasma mineral door ignited by [key_name(user)] in ([x],[y],[z])")
+		TemperatureAct(100)
+	..()
 
 /obj/structure/mineral_door/transparent/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		TemperatureAct()
+		TemperatureAct(exposed_temperature)
 
-/obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct()
-	atmos_spawn_air("plasma=500;TEMP=1000")
-	deconstruct(FALSE)
+/obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct(temperature)
+	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 500)
+	hardness = 0
+	CheckHardness()
 
 /obj/structure/mineral_door/transparent/diamond
-	name = "diamond door"
-	icon_state = "diamond"
-	sheetType = /obj/item/stack/sheet/mineral/diamond
-	max_integrity = 1000
-	rad_insulation = RAD_EXTREME_INSULATION
+	mineralType = "diamond"
+	hardness = 10
 
 /obj/structure/mineral_door/wood
-	name = "wood door"
-	icon_state = "wood"
+	mineralType = "wood"
+	hardness = 1
 	openSound = 'sound/effects/doorcreaky.ogg'
 	closeSound = 'sound/effects/doorcreaky.ogg'
-	sheetType = /obj/item/stack/sheet/mineral/wood
-	resistance_flags = FLAMMABLE
-	max_integrity = 200
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	burn_state = FLAMMABLE
+	burntime = 30
 
-/obj/structure/mineral_door/woodrustic
-	name = "rustic wood door"
-	icon_state = "woodrustic"
-	openSound = 'sound/effects/doorcreaky.ogg'
-	closeSound = 'sound/effects/doorcreaky.ogg'
-	sheetType = /obj/item/stack/sheet/mineral/wood
-	sheetAmount = 10
-	max_integrity = 200
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
-
-/obj/structure/mineral_door/paperframe
-	name = "paper frame door"
-	icon_state = "paperframe"
-	openSound = 'sound/effects/doorcreaky.ogg'
-	closeSound = 'sound/effects/doorcreaky.ogg'
-	sheetType = /obj/item/stack/sheet/paperframes
-	sheetAmount = 3
-	resistance_flags = FLAMMABLE
-	max_integrity = 20
-
-/obj/structure/mineral_door/paperframe/Initialize()
-	. = ..()
-	queue_smooth_neighbors(src)
-
-/obj/structure/mineral_door/paperframe/ComponentInitialize()
-	return
-
-/obj/structure/mineral_door/paperframe/Destroy()
-	queue_smooth_neighbors(src)
-	return ..()
+/obj/structure/mineral_door/wood/Dismantle(devastated = 0)
+	if(!devastated)
+		for(var/i = 1, i <= oreAmount, i++)
+			new/obj/item/stack/sheet/mineral/wood(get_turf(src))
+	qdel(src)

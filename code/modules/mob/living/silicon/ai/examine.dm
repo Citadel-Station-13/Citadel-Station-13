@@ -1,22 +1,25 @@
 /mob/living/silicon/ai/examine(mob/user)
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] <EM>[src]</EM>!")
-	if (stat == DEAD)
-		. += "<span class='deadsay'>It appears to be powered-down.</span>"
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <EM>[src]</EM>!\n"
+	if (src.stat == DEAD)
+		msg += "<span class='deadsay'>It appears to be powered-down.</span>\n"
 	else
-		if (getBruteLoss())
-			if (getBruteLoss() < 30)
-				. += "<span class='warning'>It looks slightly dented.</span>"
+		msg += "<span class='warning'>"
+		if (src.getBruteLoss())
+			if (src.getBruteLoss() < 30)
+				msg += "It looks slightly dented.\n"
 			else
-				. += "<span class='danger'>It looks severely dented!</span>"
-		if (getFireLoss())
-			if (getFireLoss() < 30)
-				. += "<span class='warning'>It looks slightly charred.</span>"
+				msg += "<B>It looks severely dented!</B>\n"
+		if (src.getFireLoss())
+			if (src.getFireLoss() < 30)
+				msg += "It looks slightly charred.\n"
 			else
-				. += "<span class='danger'>Its casing is melted and heat-warped!</span>"
-		if(deployed_shell)
-			. += "The wireless networking light is blinking."
-		else if (!shunted && !client)
-			. += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem..."
-	. += "*---------*</span>"
+				msg += "<B>Its casing is melted and heat-warped!</B>\n"
 
-	. += ..()
+		if (src.stat == UNCONSCIOUS)
+			msg += "It is non-responsive and displaying the text: \"RUNTIME: Sensory Overload, stack 26/3\".\n"
+		msg += "</span>"
+		if (shunted == 0 && !src.client)
+			msg += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem...\n"
+	msg += "*---------*</span>"
+
+	user << msg

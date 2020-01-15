@@ -3,28 +3,38 @@
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner"
-	density = TRUE
-	use_power = IDLE_POWER_USE
+	density = 1
+	var/locked = 0
+	anchored = 1
+	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
-	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
-	circuit = /obj/item/circuitboard/machine/clonescanner
-	var/locked = FALSE
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
-	var/message_cooldown
-	var/breakout_time = 1200
+
+/obj/machinery/dna_scannernew/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonescanner(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	RefreshParts()
+
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
-	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
+	for(var/obj/item/weapon/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
-	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
 		precision_coeff = P.rating
-	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
+	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
 
 /obj/machinery/dna_scannernew/update_icon()
@@ -52,7 +62,7 @@
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)
-		to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
+		user << "<span class='notice'>Close the maintenance panel first.</span>"
 		return
 
 	if(state_open)
@@ -60,117 +70,101 @@
 		return
 
 	else if(locked)
-		to_chat(user, "<span class='notice'>The bolts are locked down, securing the door shut.</span>")
+		user << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
 		return
 
 	open_machine()
 
-/obj/machinery/dna_scannernew/container_resist(mob/living/user)
-	if(!locked)
-		open_machine()
+/obj/machinery/dna_scannernew/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 2
+	if(state_open || !locked)	//Open and unlocked, no need to escape
+		state_open = 1
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
-	if(do_after(user,(breakout_time), target = src))
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>"
+	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
+
+	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
-		locked = FALSE
-		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
-			"<span class='notice'>You successfully break out of [src]!</span>")
+
+		locked = 0
+		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
+		user << "<span class='notice'>You successfully break out of [src]!</span>"
+
 		open_machine()
 
-/obj/machinery/dna_scannernew/proc/locate_computer(type_)
-	for(var/direction in GLOB.cardinals)
-		var/C = locate(type_, get_step(src, direction))
-		if(C)
-			return C
-	return null
-
-/obj/machinery/dna_scannernew/close_machine(atom/movable/target)
+/obj/machinery/dna_scannernew/close_machine()
 	if(!state_open)
-		return FALSE
-
-	..(target)
-
-	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
-	if(istype(mob_occupant))
-		if(locate_computer(/obj/machinery/computer/cloning))
-			if(!mob_occupant.suiciding && !(HAS_TRAIT(mob_occupant, TRAIT_NOCLONE)) && !mob_occupant.hellbound)
-				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
-
-	// DNA manipulators cannot operate on severed heads or brains
-	if(isliving(occupant))
-		var/obj/machinery/computer/scan_consolenew/console = locate_computer(/obj/machinery/computer/scan_consolenew)
-		if(console)
-			console.on_scanner_close()
-
-	return TRUE
-
-/obj/machinery/dna_scannernew/open_machine()
-	if(state_open || panel_open)
-		return FALSE
+		return 0
 
 	..()
 
-	return TRUE
+	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
+	if(occupant)
+		if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
+			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
+			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
+			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
+
+			occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
+
+		var/obj/machinery/computer/scan_consolenew/console
+		for(dir in list(NORTH,EAST,SOUTH,WEST))
+			console = locate(/obj/machinery/computer/scan_consolenew, get_step(src, dir))
+			if(console)
+				console.on_scanner_close()
+				break
+	return 1
+
+/obj/machinery/dna_scannernew/open_machine()
+	if(state_open)
+		return 0
+
+	..()
+
+	return 1
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat || locked)
-		if(message_cooldown <= world.time)
-			message_cooldown = world.time + 50
-			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
+
 	open_machine()
+	return
 
-/obj/machinery/dna_scannernew/screwdriver_act(mob/living/user, obj/item/I)
-	. = TRUE
-	if(..())
-		return
-	if(occupant)
-		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
-		return
-	if(state_open)
-		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
-		return
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I)) //sent icon_state is irrelevant...
-		update_icon() //..since we're updating the icon here, since the scanner can be unpowered when opened/closed
-		return
-	return FALSE
+/obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
 
-/obj/machinery/dna_scannernew/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(default_change_direction_wrench(user, I))
-		return TRUE
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
+		return
 
-/obj/machinery/dna_scannernew/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
+	if(exchange_parts(user, I))
+		return
+
 	if(default_pry_open(I))
-		return TRUE
+		return
+
 	if(default_deconstruction_crowbar(I))
-		return TRUE
+		return
 
-/obj/machinery/dna_scannernew/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		I.play_tool_sound(src, 50)
-		visible_message("<span class='notice'>[usr] pries open [src].</span>", "<span class='notice'>You pry open [src].</span>")
-		open_machine()
+	if(istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
+		if(!ismob(G.affecting))
+			return
 
-/obj/machinery/dna_scannernew/interact(mob/user)
+		if(!state_open)
+			user << "<span class='notice'>Open the scanner first.</span>"
+			return
+
+		var/mob/M = G.affecting
+		M.loc = loc
+		user.stop_pulling()
+		qdel(G)
+
+/obj/machinery/dna_scannernew/attack_hand(mob/user)
+	if(..(user,1,0)) //don't set the machine, since there's no dialog
+		return
+
 	toggle_open(user)
-
-/obj/machinery/dna_scannernew/AltClick(mob/user)
-	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
-		return
-	interact(user)
-	return TRUE
-
-/obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
-		return
-	close_machine(target)

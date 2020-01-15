@@ -1,60 +1,42 @@
 /client/proc/manipulate_organs(mob/living/carbon/C in world)
 	set name = "Manipulate Organs"
 	set category = "Debug"
-	var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") as null|anything in list("add organ", "add implant", "drop organ/implant", "remove organ/implant", "cancel")
-	if (!operation)
-		return
+	var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") in list("add organ", "add implant", "drop organ/implant", "remove organ/implant", "cancel")
 
 	var/list/organs = list()
 	switch(operation)
 		if("add organ")
-			for(var/path in subtypesof(/obj/item/organ))
-				var/dat = replacetext("[path]", "/obj/item/organ/", ":")
+			for(var/path in subtypesof(/obj/item/organ/internal))
+				var/dat = replacetext("[path]", "/obj/item/organ/internal/", ":")
 				organs[dat] = path
 
-			var/obj/item/organ/organ = input("Select organ type:", "Organ Manipulation", null) as null|anything in organs
-			if(!organ)
-				return
+			var/obj/item/organ/internal/organ = input("Select organ type:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			organ = new organ
 			organ.Insert(C)
-			log_admin("[key_name(usr)] has added organ [organ.type] to [key_name(C)]")
-			message_admins("[key_name_admin(usr)] has added organ [organ.type] to [ADMIN_LOOKUPFLW(C)]")
 
 		if("add implant")
-			for(var/path in subtypesof(/obj/item/implant))
-				var/dat = replacetext("[path]", "/obj/item/implant/", ":")
+			for(var/path in subtypesof(/obj/item/weapon/implant))
+				var/dat = replacetext("[path]", "/obj/item/weapon/implant/", ":")
 				organs[dat] = path
 
-			var/obj/item/implant/organ = input("Select implant type:", "Organ Manipulation", null) as null|anything in organs
-			if(!organ)
-				return
+			var/obj/item/weapon/implant/organ = input("Select implant type:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			organ = new organ
 			organ.implant(C)
-			log_admin("[key_name(usr)] has added implant [organ.type] to [key_name(C)]")
-			message_admins("[key_name_admin(usr)] has added implant [organ.type] to [ADMIN_LOOKUPFLW(C)]")
 
 		if("drop organ/implant", "remove organ/implant")
-			for(var/X in C.internal_organs)
-				var/obj/item/organ/I = X
+			for(var/obj/item/organ/internal/I in C.internal_organs)
 				organs["[I.name] ([I.type])"] = I
 
-			for(var/X in C.implants)
-				var/obj/item/implant/I = X
+			for(var/obj/item/weapon/implant/I in C)
 				organs["[I.name] ([I.type])"] = I
 
-			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) as null|anything in organs
-			if(!organ)
-				return
+			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
-			if(!organ)
-				return
-			var/obj/item/organ/O
-			var/obj/item/implant/I
-
-			log_admin("[key_name(usr)] has removed [organ.type] from [key_name(C)]")
-			message_admins("[key_name_admin(usr)] has removed [organ.type] from [ADMIN_LOOKUPFLW(C)]")
+			if(!organ) return
+			var/obj/item/organ/internal/O
+			var/obj/item/weapon/implant/I
 
 			if(isorgan(organ))
 				O = organ
@@ -63,12 +45,12 @@
 				I = organ
 				I.removed(C)
 
-			organ.forceMove(get_turf(C))
+			organ.loc = get_turf(C)
 
 			if(operation == "remove organ/implant")
 				qdel(organ)
 			else if(I) // Put the implant in case.
-				var/obj/item/implantcase/case = new(get_turf(C))
+				var/obj/item/weapon/implantcase/case = new(get_turf(C))
 				case.imp = I
-				I.forceMove(case)
+				I.loc = case
 				case.update_icon()

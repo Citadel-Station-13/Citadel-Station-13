@@ -1,5 +1,0 @@
-author: "Bhijn"
-delete-after: True
-changes: 
-  - rscadd: "Added a preference to make the sprint hotkey be a toggle instead of a hold bind"
-  - rscadd: "Added a preference to bind the sprint hotkey to space instead of shift."

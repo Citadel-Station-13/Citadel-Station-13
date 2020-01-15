@@ -1,67 +1,122 @@
-/mob/CanPass(atom/movable/mover, turf/target)
-	if((mover.pass_flags & PASSMOB))
-		return TRUE
+/mob/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)
+		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
+	if(mover.checkpass(PASSMOB))
+		return 1
 	if(buckled == mover)
-		return TRUE
+		return 1
 	if(ismob(mover))
-		if (mover in buckled_mobs)
-			return TRUE
-	return (!mover.density || !density || lying || (mover.throwing && mover.throwing.thrower == src && !ismob(mover)))
+		var/mob/moving_mob = mover
+		if ((other_mobs && moving_mob.other_mobs))
+			return 1
+		if (mover == buckled_mob)
+			return 1
+	return (!mover.density || !density || lying)
 
-//DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
-//See mob_movespeed.dm
-/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
-	return cached_multiplicative_slowdown
+
+
+/client/Northeast()
+	swap_hand()
+	return
+
+
+/client/Southeast()
+	attack_self()
+	return
+
+
+/client/Southwest()
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.toggle_throw_mode()
+	else
+		usr << "<span class='danger'>This mob type cannot throw items.</span>"
+	return
+
+
+/client/Northwest()
+	if(!usr.get_active_hand())
+		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
+		return
+	usr.drop_item()
+
+//This gets called when you press the delete button.
+/client/verb/delete_key_pressed()
+	set hidden = 1
+
+	if(!usr.pulling)
+		usr << "<span class='notice'>You are not pulling anything.</span>"
+		return
+	usr.stop_pulling()
+
+/client/verb/swap_hand()
+	set category = "IC"
+	set name = "Swap hands"
+
+	if(mob)
+		mob.swap_hand()
+
+/client/verb/attack_self()
+	set hidden = 1
+	if(mob)
+		mob.mode()
+	return
+
 
 /client/verb/drop_item()
 	set hidden = 1
-	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
-		mob.dropItemToGround(mob.get_active_held_item())
+	if(!isrobot(mob))
+		mob.drop_item_v()
 	return
+
+
+/client/Center()
+	if(isobj(mob.loc))
+		var/obj/O = mob.loc
+		if(mob.canmove)
+			return O.relaymove(mob, 0)
+	return
+
 
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
 			step(mob.control_object,direct)
-			if(!mob.control_object)
-				return
-			mob.control_object.setDir(direct)
+			if(!mob.control_object)	return
+			mob.control_object.dir = direct
 		else
-			mob.control_object.forceMove(get_step(mob.control_object,direct))
+			mob.control_object.loc = get_step(mob.control_object,direct)
+	return
 
-#define MOVEMENT_DELAY_BUFFER 0.75
-#define MOVEMENT_DELAY_BUFFER_DELTA 1.25
 
 /client/Move(n, direct)
-	if(world.time < move_delay) //do not move anything ahead of this check please
-		return FALSE
-	else
-		next_move_dir_add = 0
-		next_move_dir_sub = 0
-	var/old_move_delay = move_delay
-	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
-		return FALSE
-	if(!n || !direct)
-		return FALSE
+		return 0
 	if(mob.notransform)
-		return FALSE	//This is sota the goto stop mobs from moving var
+		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
+	if(world.time < move_delay)
+		return 0
 	if(!isliving(mob))
-		return mob.Move(n, direct)
+		return mob.Move(n,direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
-		return FALSE
-	if(mob.force_moving)
-		return FALSE
+		return 0
+	if(moving)
+		return 0
+	if(isliving(mob))
+		var/mob/living/L = mob
+		if(L.incorporeal_move)	//Move though walls
+			Process_Incorpmove(direct)
+			return 0
 
-	var/mob/living/L = mob  //Already checked for isliving earlier
-	if(L.incorporeal_move)	//Move though walls
-		Process_Incorpmove(direct)
-		return FALSE
+	if(Process_Grab())	return
+
+	if(mob.buckled)							//if we're buckled to something, tell it we moved.
+		return mob.buckled.relaymove(mob, direct)
 
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
@@ -69,72 +124,116 @@
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
 
-	if(Process_Grab()) //are we restrained by someone's grip?
-		return
-
-	if(mob.buckled)							//if we're buckled to something, tell it we moved.
-		return mob.buckled.relaymove(mob, direct)
-
 	if(!mob.canmove)
-		return FALSE
+		return 0
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
-		return FALSE
+		return 0
+
+	if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
+		for(var/mob/M in orange(1, mob))
+			if(M.pulling == mob)
+				if(!M.incapacitated() && mob.Adjacent(M))
+					src << "<span class='warning'>You're restrained! You can't move!</span>"
+					move_delay = world.time + 10
+					return 0
+				else
+					M.stop_pulling()
+
+
 	//We are now going to move
-	var/add_delay = mob.movement_delay()
-	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
-		move_delay = old_move_delay
+	moving = 1
+	move_delay = mob.movement_delay() + world.time
+
+	//Something with pulling things
+	if(locate(/obj/item/weapon/grab, mob))
+		move_delay = max(move_delay, world.time + 7)
+		var/list/L = mob.ret_grab()
+		if(istype(L, /list))
+			if(L.len == 2)
+				L -= mob
+				var/mob/M = L[1]
+				if(M)
+					if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
+						. = ..()
+						if (isturf(M.loc))
+							var/diag = get_dir(mob, M)
+							if ((diag - 1) & diag)
+							else
+								diag = null
+							if ((get_dist(mob, M) > 1 || diag))
+								step(M, get_dir(M.loc, mob.loc))
+			else
+				for(var/mob/M in L)
+					M.other_mobs = 1
+					if(mob != M)
+						M.animate_movement = 3
+				for(var/mob/M in L)
+					spawn( 0 )
+						step(M, direct)
+						return
+					spawn( 1 )
+						M.other_mobs = null
+						M.animate_movement = 2
+						return
+
+	if(mob.confused)
+		if(mob.confused > 40)
+			step(mob, pick(cardinal))
+		else if(prob(mob.confused * 1.5))
+			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
+		else if(prob(mob.confused * 3))
+			step(mob, angle2dir(dir2angle(direct) + pick(45, -45)))
+		else
+			step(mob, direct)
 	else
-		move_delay = world.time
-	var/oldloc = mob.loc
+		. = ..()
 
-	if(L.confused)
-		var/newdir = 0
-		if(L.confused > 40)
-			newdir = pick(GLOB.alldirs)
-		else if(prob(L.confused * 1.5))
-			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-		else if(prob(L.confused * 3))
-			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
-		if(newdir)
-			direct = newdir
-			n = get_step(L, direct)
+	moving = 0
+	if(mob && .)
+		mob.throwing = 0
 
-	. = ..()
+	return .
 
-	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
-		add_delay *= 2
-	if(mob.loc != oldloc)
-		move_delay += add_delay
-	if(.) // If mob is null here, we deserve the runtime
-		if(mob.throwing)
-			mob.throwing.finalize(FALSE)
-
-	for(var/obj/O in mob.user_movement_hooks)
-		O.intercept_user_move(direct, mob, n, oldloc)
-
-	var/atom/movable/P = mob.pulling
-	if(P && !ismob(P) && P.density)
-		mob.setDir(turn(mob.dir, 180))
 
 ///Process_Grab()
 ///Called by client/Move()
 ///Checks to see if you are being grabbed and if so attemps to break it
 /client/proc/Process_Grab()
-	if(mob.pulledby)
-		if(mob.incapacitated(ignore_restraints = 1))
-			move_delay = world.time + 10
-			return TRUE
-		else if(mob.restrained(ignore_grab = 1))
-			move_delay = world.time + 10
-			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
-			return TRUE
-		else
-			return mob.resist_grab(1)
+	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
+		var/list/grabbing = list()
+
+		if(istype(mob.l_hand, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/G = mob.l_hand
+			grabbing += G.affecting
+
+		if(istype(mob.r_hand, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/G = mob.r_hand
+			grabbing += G.affecting
+
+		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
+			if(G.state == GRAB_PASSIVE && !grabbing.Find(G.assailant))
+				qdel(G)
+
+			if(G.state == GRAB_AGGRESSIVE)
+				move_delay = world.time + 10
+				if(!prob(25))
+					return 1
+				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s grip!</span>")
+				qdel(G)
+
+			if(G.state == GRAB_NECK)
+				move_delay = world.time + 10
+				if(!prob(5))
+					return 1
+				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s headlock!</span>")
+				qdel(G)
+	return 0
+
 
 ///Process_Incorpmove
 ///Called by client/Move()
@@ -145,12 +244,10 @@
 		return
 	var/mob/living/L = mob
 	switch(L.incorporeal_move)
-		if(INCORPOREAL_MOVE_BASIC)
-			var/T = get_step(L,direct)
-			if(T)
-				L.forceMove(T)
-			L.setDir(direct)
-		if(INCORPOREAL_MOVE_SHADOW)
+		if(1)
+			L.loc = get_step(L, direct)
+			L.dir = direct
+		if(2)
 			if(prob(50))
 				var/locx
 				var/locy
@@ -177,231 +274,105 @@
 							return
 					else
 						return
-				var/target = locate(locx,locy,mobloc.z)
-				if(target)
-					L.loc = target
+				L.loc = locate(locx,locy,mobloc.z)
+				spawn(0)
 					var/limit = 2//For only two trailing shadows.
 					for(var/turf/T in getline(mobloc, L.loc))
-						new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
+						spawn(0)
+							anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
 						limit--
-						if(limit<=0)
-							break
+						if(limit<=0)	break
 			else
-				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
-				var/T = get_step(L,direct)
-				if(T)
-					L.forceMove(T)
-			L.setDir(direct)
-		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
-			var/turf/open/floor/stepTurf = get_step(L, direct)
-			if(stepTurf)
-				for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
-					to_chat(L, "<span class='warning'>[S] bars your passage!</span>")
-					if(isrevenant(L))
-						var/mob/living/simple_animal/revenant/R = L
-						R.reveal(20)
-						R.stun(20)
-					return
-				if(stepTurf.flags_1 & NOJAUNT_1)
-					to_chat(L, "<span class='warning'>Some strange aura is blocking the way.</span>")
-					return
-				if (locate(/obj/effect/blessing, stepTurf))
-					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
-					return
-
-				L.forceMove(stepTurf)
-			L.setDir(direct)
-	return TRUE
+				spawn(0)
+					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
+				L.loc = get_step(L, direct)
+			L.dir = direct
+		if(3) //Incorporeal move, but blocked by holy-watered tiles
+			var/turf/simulated/floor/stepTurf = get_step(L, direct)
+			if(stepTurf.flags & NOJAUNT)
+				L << "<span class='warning'>Holy energies block your path.</span>"
+				L.notransform = 1
+				spawn(2)
+					L.notransform = 0
+			else
+				L.loc = get_step(L, direct)
+				L.dir = direct
+	return 1
 
 
 ///Process_Spacemove
 ///Called by /client/Move()
 ///For moving in space
-///return TRUE for movement 0 for none
+///Return 1 for movement 0 for none
 /mob/Process_Spacemove(movement_dir = 0)
-	if(spacewalk || ..())
-		return TRUE
-	var/atom/movable/backup = get_spacemove_backup()
-	if(backup)
-		if(istype(backup) && movement_dir && !backup.anchored)
-			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-				to_chat(src, "<span class='info'>You push off of [backup] to propel yourself.</span>")
-		return TRUE
-	return FALSE
 
-/mob/get_spacemove_backup()
-	for(var/A in orange(1, get_turf(src)))
+	if(..())
+		return 1
+
+	var/atom/movable/dense_object_backup
+	for(var/atom/A in orange(1, get_turf(src)))
 		if(isarea(A))
 			continue
+
 		else if(isturf(A))
 			var/turf/turf = A
-			if(isspaceturf(turf))
+			if(istype(turf,/turf/space))
 				continue
+
 			if(!turf.density && !mob_negates_gravity())
 				continue
-			return A
+
+			return 1
+
 		else
 			var/atom/movable/AM = A
-			if(AM == buckled)
+			if(AM == buckled) //Kind of unnecessary but let's just be sure
 				continue
-			if(ismob(AM))
-				var/mob/M = AM
-				if(M.buckled)
-					continue
-			if(!AM.CanPass(src) || AM.density)
+			if(AM.density)
 				if(AM.anchored)
-					return AM
+					return 1
 				if(pulling == AM)
 					continue
-				. = AM
+				dense_object_backup = AM
 
-/mob/proc/mob_has_gravity()
-	return has_gravity()
+	if(movement_dir && dense_object_backup)
+		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
+			src << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>"
+
+
+		return 1
+	return 0
+
+/mob/proc/mob_has_gravity(turf/T)
+	return has_gravity(src, T)
 
 /mob/proc/mob_negates_gravity()
-	return FALSE
+	return 0
 
+/mob/proc/Move_Pulled(atom/A)
+	if (!canmove || restrained() || !pulling)
+		return
+	if (pulling.anchored)
+		return
+	if (!pulling.Adjacent(src))
+		return
+	if (A == loc && pulling.density)
+		return
+	if (!Process_Spacemove(get_dir(pulling.loc, A)))
+		return
+	if (ismob(pulling))
+		var/mob/M = pulling
+		var/atom/movable/t = M.pulling
+		M.stop_pulling()
+		step(pulling, get_dir(pulling.loc, A))
+		if(M)
+			M.start_pulling(t)
+	else
+		step(pulling, get_dir(pulling.loc, A))
+	return
 
 /mob/proc/slip(s_amount, w_amount, obj/O, lube)
 	return
 
 /mob/proc/update_gravity()
 	return
-
-//bodypart selection - Cyberboss
-//8 toggles through head - eyes - mouth
-//4: r-arm 5: chest 6: l-arm
-//1: r-leg 2: groin 3: l-leg
-
-/client/proc/check_has_body_select()
-	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /obj/screen/zone_sel)
-
-/client/verb/body_toggle_head()
-	set name = "body-toggle-head"
-	set hidden = 1
-
-	if(!check_has_body_select())
-		return
-
-	var/next_in_line
-	switch(mob.zone_selected)
-		if(BODY_ZONE_HEAD)
-			next_in_line = BODY_ZONE_PRECISE_EYES
-		if(BODY_ZONE_PRECISE_EYES)
-			next_in_line = BODY_ZONE_PRECISE_MOUTH
-		else
-			next_in_line = BODY_ZONE_HEAD
-
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(next_in_line, mob)
-
-/client/verb/body_r_arm()
-	set name = "body-r-arm"
-	set hidden = 1
-
-	if(!check_has_body_select())
-		return
-
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
-
-/client/verb/body_chest()
-	set name = "body-chest"
-	set hidden = 1
-
-	if(!check_has_body_select())
-		return
-
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
-
-/client/verb/body_l_arm()
-	set name = "body-l-arm"
-	set hidden = 1
-
-	if(!check_has_body_select())
-		return
-
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
-
-/client/verb/body_r_leg()
-	set name = "body-r-leg"
-	set hidden = 1
-
-	if(!check_has_body_select())
-		return
-
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
-
-/client/verb/body_groin()
-	set name = "body-groin"
-	set hidden = 1
-
-	if(!check_has_body_select())
-		return
-
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
-
-/client/verb/body_l_leg()
-	set name = "body-l-leg"
-	set hidden = 1
-
-	if(!check_has_body_select())
-		return
-
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
-
-/client/verb/toggle_walk_run()
-	set name = "toggle-walk-run"
-	set hidden = TRUE
-	set instant = TRUE
-	if(mob)
-		mob.toggle_move_intent(usr)
-
-/mob/proc/toggle_move_intent(mob/user)
-	if(m_intent == MOVE_INTENT_RUN)
-		m_intent = MOVE_INTENT_WALK
-	else
-		if (HAS_TRAIT(src,TRAIT_NORUNNING))	// FULPSTATION 7/10/19 So you can't run during fortitude.
-			to_chat(src, "You find yourself unable to run.")
-			return FALSE
-		m_intent = MOVE_INTENT_RUN
-	if(hud_used && hud_used.static_inventory)
-		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.update_icon()
-
-/mob/verb/up()
-	set name = "Move Upwards"
-	set category = "IC"
-
-	if(zMove(UP, TRUE))
-		to_chat(src, "<span class='notice'>You move upwards.</span>")
-
-/mob/verb/down()
-	set name = "Move Down"
-	set category = "IC"
-
-	if(zMove(DOWN, TRUE))
-		to_chat(src, "<span class='notice'>You move down.</span>")
-
-/mob/proc/zMove(dir, feedback = FALSE)
-	if(dir != UP && dir != DOWN)
-		return FALSE
-	var/turf/target = get_step_multiz(src, dir)
-	if(!target)
-		if(feedback)
-			to_chat(src, "<span class='warning'>There's nothing in that direction!</span>")
-		return FALSE
-	if(!canZMove(dir, target))
-		if(feedback)
-			to_chat(src, "<span class='warning'>You couldn't move there!</span>")
-		return FALSE
-	forceMove(target)
-	return TRUE
-
-/mob/proc/canZMove(direction, turf/target)
-	return FALSE

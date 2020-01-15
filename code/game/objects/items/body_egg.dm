@@ -1,52 +1,53 @@
-/obj/item/organ/body_egg
+/obj/item/organ/internal/body_egg
 	name = "body egg"
 	desc = "All slimy and yuck."
 	icon_state = "innards"
-	zone = BODY_ZONE_CHEST
+	origin_tech = "biotech=5"
+	zone = "chest"
 	slot = "parasite_egg"
 
-/obj/item/organ/body_egg/on_find(mob/living/finder)
+/obj/item/organ/internal/body_egg/on_find(mob/living/finder)
 	..()
-	to_chat(finder, "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>")
+	finder << "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>"
 
-/obj/item/organ/body_egg/New(loc)
+/obj/item/organ/internal/body_egg/New(loc)
 	if(iscarbon(loc))
 		src.Insert(loc)
 	return ..()
 
-/obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/internal/body_egg/Insert(var/mob/living/carbon/M, special = 0)
 	..()
-	ADD_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
+	owner.status_flags |= XENO_HOST
+	SSobj.processing |= src
 	owner.med_hud_set_status()
-	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
+	spawn(0)
+		AddInfectionImages(owner)
 
-/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/body_egg/Remove(var/mob/living/carbon/M, special = 0)
+	SSobj.processing.Remove(src)
 	if(owner)
-		REMOVE_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
+		owner.status_flags &= ~(XENO_HOST)
 		owner.med_hud_set_status()
-		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
+		spawn(0)
+			RemoveInfectionImages(owner)
 	..()
 
-/obj/item/organ/body_egg/on_death()
-	. = ..()
-	if(!owner)
+/obj/item/organ/internal/body_egg/process()
+	if(!owner)	return
+	if(!(src in owner.internal_organs))
+		Remove(owner)
 		return
 	egg_process()
 
-/obj/item/organ/body_egg/on_life()
-	. = ..()
-	egg_process()
-
-
-/obj/item/organ/body_egg/proc/egg_process()
+/obj/item/organ/internal/body_egg/proc/egg_process()
 	return
 
-/obj/item/organ/body_egg/proc/RefreshInfectionImage()
+/obj/item/organ/internal/body_egg/proc/RefreshInfectionImage()
 	RemoveInfectionImages()
 	AddInfectionImages()
 
-/obj/item/organ/body_egg/proc/AddInfectionImages(mob/living/carbon/C)
+/obj/item/organ/internal/body_egg/proc/AddInfectionImages()
 	return
 
-/obj/item/organ/body_egg/proc/RemoveInfectionImages(mob/living/carbon/C)
+/obj/item/organ/internal/body_egg/proc/RemoveInfectionImages()
 	return

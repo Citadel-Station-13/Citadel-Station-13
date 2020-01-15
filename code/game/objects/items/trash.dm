@@ -1,11 +1,9 @@
 //Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/janitor.dmi'
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	desc = "This is rubbish."
-	w_class = WEIGHT_CLASS_TINY
-	resistance_flags = FLAMMABLE
+	w_class = 1
+	burn_state = FLAMMABLE
 
 /obj/item/trash/raisins
 	name = "\improper 4no raisins"
@@ -42,11 +40,7 @@
 /obj/item/trash/plate
 	name = "plate"
 	icon_state = "plate"
-	resistance_flags = NONE
-
-/obj/item/trash/plate/alt
-	desc = "Still some dip left. Sadly still just trash..."
-	icon_state = "plate1"
+	burn_state = FIRE_PROOF
 
 /obj/item/trash/pistachios
 	name = "pistachios pack"
@@ -59,7 +53,7 @@
 /obj/item/trash/tray
 	name = "tray"
 	icon_state = "tray"
-	resistance_flags = NONE
+	burn_state = FIRE_PROOF
 
 /obj/item/trash/candle
 	name = "candle"
@@ -69,13 +63,6 @@
 /obj/item/trash/can
 	name = "crushed can"
 	icon_state = "cola"
-	resistance_flags = NONE
-	grind_results = list(/datum/reagent/aluminium = 10)
-
-/obj/item/trash/boritos
-	name = "boritos bag"
-	icon_state = "boritos"
-	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
-
+	burn_state = FIRE_PROOF
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

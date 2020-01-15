@@ -1,42 +1,15 @@
 /client/proc/panicbunker()
 	set category = "Server"
 	set name = "Toggle Panic Bunker"
-	if (!CONFIG_GET(flag/sql_enabled))
-		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
+	if (!config.sql_enabled)
+		usr << "<span class='adminnotice'>The Database is not enabled!</span>"
 		return
 
-	var/new_pb = !CONFIG_GET(flag/panic_bunker)
-	CONFIG_SET(flag/panic_bunker, new_pb)
+	config.panic_bunker = (!config.panic_bunker)
 
-	log_admin("[key_name(usr)] has toggled the Panic Bunker, it is now [new_pb ? "on" : "off"]")
-	message_admins("[key_name_admin(usr)] has toggled the Panic Bunker, it is now [new_pb ? "enabled" : "disabled"].")
-	if (new_pb && !SSdbcore.Connect())
+	log_admin("[key_name(usr)] has toggled the Panic Bunker, it is now [(config.panic_bunker?"on":"off")]")
+	message_admins("[key_name_admin(usr)] has toggled the Panic Bunker, it is now [(config.panic_bunker?"enabled":"disabled")].")
+	if (config.panic_bunker && (!dbcon || !dbcon.IsConnected()))
 		message_admins("The Database is not connected! Panic bunker will not work until the connection is reestablished.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Panic Bunker", "[new_pb ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	send2irc("Panic Bunker", "[key_name(usr)] has toggled the Panic Bunker, it is now [new_pb ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb","PANIC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/addbunkerbypass(ckeytobypass as text)
-	set category = "Special Verbs"
-	set name = "Add PB Bypass"
-	set desc = "Allows a given ckey to connect despite the panic bunker for a given round."
-	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
-		return
-
-	GLOB.bunker_passthrough |= ckey(ckeytobypass)
-	log_admin("[key_name(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
-	message_admins("[key_name_admin(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
-	send2irc("Panic Bunker", "[key_name(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
-
-/client/proc/revokebunkerbypass(ckeytobypass as text)
-	set category = "Special Verbs"
-	set name = "Revoke PB Bypass"
-	set desc = "Revoke's a ckey's permission to bypass the panic bunker for a given round."
-	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
-		return
-
-	GLOB.bunker_passthrough -= ckey(ckeytobypass)
-	log_admin("[key_name(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")
-	message_admins("[key_name_admin(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")
-	send2irc("Panic Bunker", "[key_name(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")

@@ -5,30 +5,34 @@
 	name = "bluespace gigabeacon"
 	desc = "A device that draws power from bluespace and creates a permanent tracking beacon."
 	level = 1		// underfloor
-	layer = LOW_OBJ_LAYER
-	use_power = IDLE_POWER_USE
+	layer = 2.5
+	anchored = 1
+	use_power = 1
 	idle_power_usage = 0
-	var/obj/item/beacon/Beacon
+	var/obj/item/device/radio/beacon/Beacon
 
-/obj/machinery/bluespace_beacon/Initialize()
-	. = ..()
+/obj/machinery/bluespace_beacon/New()
+	..()
 	var/turf/T = loc
-	Beacon = new(T)
+	Beacon = new /obj/item/device/radio/beacon
 	Beacon.invisibility = INVISIBILITY_MAXIMUM
+	Beacon.loc = T
 
 	hide(T.intact)
 
 /obj/machinery/bluespace_beacon/Destroy()
-	QDEL_NULL(Beacon)
+	if(Beacon)
+		qdel(Beacon)
+	Beacon = null
 	return ..()
 
 // update the invisibility and icon
 /obj/machinery/bluespace_beacon/hide(intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
+	invisibility = intact ? 101 : 0
+	updateicon()
 
 // update the icon_state
-/obj/machinery/bluespace_beacon/update_icon()
+/obj/machinery/bluespace_beacon/proc/updateicon()
 	var/state="floor_beacon"
 
 	if(invisibility)
@@ -40,9 +44,13 @@
 /obj/machinery/bluespace_beacon/process()
 	if(!Beacon)
 		var/turf/T = loc
-		Beacon = new(T)
+		Beacon = new /obj/item/device/radio/beacon
 		Beacon.invisibility = INVISIBILITY_MAXIMUM
-	else if (Beacon.loc != loc)
-		Beacon.forceMove(loc)
+		Beacon.loc = T
+	if(Beacon)
+		if(Beacon.loc != loc)
+			Beacon.loc = loc
 
-	update_icon()
+	updateicon()
+
+

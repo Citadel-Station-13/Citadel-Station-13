@@ -1,58 +1,45 @@
 /obj/machinery/biogenerator
-	name = "biogenerator"
+	name = "Biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
-	icon = 'icons/obj/machines/biogenerator.dmi'
+	icon = 'icons/obj/biogenerator.dmi'
 	icon_state = "biogen-empty"
-	density = TRUE
-	use_power = IDLE_POWER_USE
+	density = 1
+	anchored = 1
+	use_power = 1
 	idle_power_usage = 40
-	circuit = /obj/item/circuitboard/machine/biogenerator
-	var/processing = FALSE
-	var/obj/item/reagent_containers/glass/beaker = null
+	var/processing = 0
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/points = 0
 	var/menustat = "menu"
 	var/efficiency = 0
 	var/productivity = 0
 	var/max_items = 40
-	var/datum/techweb/stored_research
-	var/list/show_categories = list("Food", "Botany Chemicals", "Organic Materials")
-	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
 
-/obj/machinery/biogenerator/Initialize()
-	. = ..()
-	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
-	create_reagents(1000)
-
-/obj/machinery/biogenerator/Destroy()
-	QDEL_NULL(beaker)
-	return ..()
-
-/obj/machinery/biogenerator/contents_explosion(severity, target)
-	..()
-	if(beaker)
-		beaker.ex_act(severity, target)
-
-/obj/machinery/biogenerator/handle_atom_del(atom/A)
-	..()
-	if(A == beaker)
-		beaker = null
-		update_icon()
-		updateUsrDialog()
+/obj/machinery/biogenerator/New()
+		..()
+		create_reagents(1000)
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/biogenerator(null)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+		component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+		component_parts += new /obj/item/stack/cable_coil(null, 1)
+		RefreshParts()
 
 /obj/machinery/biogenerator/RefreshParts()
 	var/E = 0
 	var/P = 0
 	var/max_storage = 40
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		P += B.rating
 		max_storage = 40 * B.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E
 	productivity = P
 	max_items = max_storage
 
-/obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
+/obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
 	update_icon()
 
 /obj/machinery/biogenerator/update_icon()
@@ -67,97 +54,76 @@
 	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
-	if(user.a_intent == INTENT_HARM)
-		return ..()
-
-	if(processing)
-		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
-		return
-
-	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
+	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
 		if(beaker)
-			var/obj/item/reagent_containers/glass/B = beaker
-			B.forceMove(drop_location())
-			beaker = null
-		update_icon()
-		return
-
-	if(default_deconstruction_crowbar(O))
-		return
-
-	if(istype(O, /obj/item/reagent_containers/glass))
-		. = 1 //no afterattack
-		if(!panel_open)
-			if(beaker)
-				to_chat(user, "<span class='warning'>A container is already loaded into the machine.</span>")
-			else
-				if(!user.transferItemToLoc(O, src))
-					return
-				beaker = O
-				to_chat(user, "<span class='notice'>You add the container to the machine.</span>")
-				update_icon()
-				updateUsrDialog()
+			user << "<span class='warning'>A container is already loaded into the machine.</span>"
 		else
-			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
-		return
-
-	else if(istype(O, /obj/item/storage/bag/plants))
-		var/obj/item/storage/bag/plants/PB = O
+			user.unEquip(O)
+			O.loc = src
+			beaker = O
+			user << "<span class='notice'>You add the container to the machine.</span>"
+			updateUsrDialog()
+	else if(processing)
+		user << "<span class='warning'>The biogenerator is currently processing.</span>"
+	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/i = 0
-		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
+		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The biogenerator is already full! Activate it.</span>")
+			user << "<span class='warning'>The biogenerator is already full! Activate it.</span>"
 		else
-			for(var/obj/item/reagent_containers/food/snacks/grown/G in PB.contents)
+			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 				if(i >= max_items)
 					break
-				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
-					i++
+				G.loc = src
+				i++
 			if(i<max_items)
-				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
-			else if(PB.contents.len == 0)
-				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>")
+				user << "<span class='info'>You empty the plant bag into the biogenerator.</span>"
+			else if(O.contents.len == 0)
+				user << "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>"
 			else
-				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
-		return TRUE //no afterattack
+				user << "<span class='info'>You fill the biogenerator to its capacity.</span>"
 
-	else if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
+
+	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
+	else
 		var/i = 0
-		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
+		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
+			user << "<span class='warning'>The biogenerator is full! Activate it.</span>"
 		else
-			if(user.transferItemToLoc(O, src))
-				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
-		return TRUE //no afterattack
-	else if (istype(O, /obj/item/disk/design_disk))
-		user.visible_message("[user] begins to load \the [O] in \the [src]...",
-			"You begin to load a design from \the [O]...",
-			"You hear the chatter of a floppy drive.")
-		processing = TRUE
-		var/obj/item/disk/design_disk/D = O
-		if(do_after(user, 10, target = src))
-			for(var/B in D.blueprints)
-				if(B)
-					stored_research.add_design(B)
-		processing = FALSE
-		return TRUE
-	else
-		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
+			user.unEquip(O)
+			O.loc = src
+			user << "<span class='info'>You put [O.name] in [src.name]</span>"
 
-/obj/machinery/biogenerator/ui_interact(mob/user)
+	if(!processing)
+		if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
+			if(beaker)
+				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				B.loc = loc
+				beaker = null
+
+	if(exchange_parts(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
+
+	update_icon()
+	return
+
+/obj/machinery/biogenerator/interact(mob/user)
 	if(stat & BROKEN || panel_open)
 		return
-	. = ..()
+	user.set_machine(src)
 	var/dat
 	if(processing)
 		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
 	else
 		switch(menustat)
 			if("nopoints")
-				dat += "<div class='statusDisplay'>You do not have enough biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
+				dat += "<div class='statusDisplay'>You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
 				menustat = "menu"
 			if("complete")
 				dat += "<div class='statusDisplay'>Operation complete.</div>"
@@ -169,122 +135,192 @@
 				dat += "<div class='statusDisplay'>Not enough space left in container. Unable to create product.</div>"
 				menustat = "menu"
 		if(beaker)
-			var/categories = show_categories.Copy()
-			for(var/V in categories)
-				categories[V] = list()
-			for(var/V in stored_research.researched_designs)
-				var/datum/design/D = SSresearch.techweb_design_by_id(V)
-				for(var/C in categories)
-					if(C in D.category)
-						categories[C] += D
-
 			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
-			dat += "<A href='?src=[REF(src)];activate=1'>Activate</A><A href='?src=[REF(src)];detach=1'>Detach Container</A>"
-			for(var/cat in categories)
-				dat += "<h3>[cat]:</h3>"
-				dat += "<div class='statusDisplay'>"
-				for(var/V in categories[cat])
-					var/datum/design/D = V
-					dat += "[D.name]: <A href='?src=[REF(src)];create=[D.id];amount=1'>Make</A>"
-					if(cat in timesFiveCategories)
-						dat += "<A href='?src=[REF(src)];create=[D.id];amount=5'>x5</A>"
-					if(ispath(D.build_path, /obj/item/stack))
-						dat += "<A href='?src=[REF(src)];create=[D.id];amount=10'>x10</A>"
-					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
-				dat += "</div>"
+			dat += "<A href='?src=\ref[src];activate=1'>Activate</A><A href='?src=\ref[src];detach=1'>Detach Container</A>"
+			dat += "<h3>Food:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "10 milk: <A href='?src=\ref[src];create=milk;amount=1'>Make</A><A href='?src=\ref[src];create=milk;amount=5'>x5</A> ([20/efficiency])<BR>"
+			dat += "10 cream: <A href='?src=\ref[src];create=cream;amount=1'>Make</A><A href='?src=\ref[src];create=cream;amount=5'>x5</A> ([30/efficiency])<BR>"
+			dat += "Milk Carton: <A href='?src=\ref[src];create=cmilk;amount=1'>Make</A><A href='?src=\ref[src];create=cmilk;amount=5'>x5</A> ([100/efficiency])<BR>"
+			dat += "Cream Carton: <A href='?src=\ref[src];create=ccream;amount=1'>Make</A><A href='?src=\ref[src];create=ccream;amount=5'>x5</A> ([300/efficiency])<BR>"
+			dat += "Monkey cube: <A href='?src=\ref[src];create=meat;amount=1'>Make</A><A href='?src=\ref[src];create=meat;amount=5'>x5</A> ([250/efficiency])"
+			dat += "</div>"
+			dat += "<h3>Botany Chemicals:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "E-Z-Nutrient: <A href='?src=\ref[src];create=ez;amount=1'>Make</A><A href='?src=\ref[src];create=ez;amount=5'>x5</A> ([10/efficiency])<BR>"
+			dat += "Left 4 Zed: <A href='?src=\ref[src];create=l4z;amount=1'>Make</A><A href='?src=\ref[src];create=l4z;amount=5'>x5</A> ([20/efficiency])<BR>"
+			dat += "Robust Harvest: <A href='?src=\ref[src];create=rh;amount=1'>Make</A><A href='?src=\ref[src];create=rh;amount=5'>x5</A> ([25/efficiency])<BR>"
+			dat += "Weed Killer: <A href='?src=\ref[src];create=wk;amount=1'>Make</A><A href='?src=\ref[src];create=wk;amount=5'>x5</A> ([50/efficiency])<BR>"
+			dat += "Pest Killer: <A href='?src=\ref[src];create=pk;amount=1'>Make</A><A href='?src=\ref[src];create=pk;amount=5'>x5</A> ([50/efficiency])<BR>"
+			dat += "</div>"
+			dat += "<h3>Leather and Cloth:</h3>"
+			dat += "<div class='statusDisplay'>"
+			dat += "Wallet: <A href='?src=\ref[src];create=wallet;amount=1'>Make</A> ([100/efficiency])<BR>"
+			dat += "Book bag: <A href='?src=\ref[src];create=bkbag;amount=1'>Make</A> ([200/efficiency])<BR>"
+			dat += "Plant bag: <A href='?src=\ref[src];create=ptbag;amount=1'>Make</A> ([200/efficiency])<BR>"
+			dat += "Rag: <A href='?src=\ref[src];create=rag;amount=1'>Make</A> ([200/efficiency])<BR>"
+			dat += "Mining satchel: <A href='?src=\ref[src];create=mnbag;amount=1'>Make</A> ([200/efficiency])<BR>"
+			dat += "Chemistry bag: <A href='?src=\ref[src];create=chbag;amount=1'>Make</A> ([200/efficiency])<BR>"
+			dat += "Botanical gloves: <A href='?src=\ref[src];create=gloves;amount=1'>Make</A> ([250/efficiency])<BR>"
+			dat += "Utility belt: <A href='?src=\ref[src];create=tbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Security belt: <A href='?src=\ref[src];create=sbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Medical belt: <A href='?src=\ref[src];create=mbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Janitorial belt: <A href='?src=\ref[src];create=jbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Bandolier belt: <A href='?src=\ref[src];create=bbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Shoulder holster: <A href='?src=\ref[src];create=sholster;amount=1'>Make</A> ([400/efficiency])<BR>"
+			dat += "Leather Satchel: <A href='?src=\ref[src];create=satchel;amount=1'>Make</A> ([400/efficiency])<BR>"
+			dat += "Leather Jacket: <A href='?src=\ref[src];create=jacket;amount=1'>Make</A> ([500/efficiency])<BR>"
+			dat += "Leather Overcoat: <A href='?src=\ref[src];create=overcoat;amount=1'>Make</A> ([1000/efficiency])<BR>"
+			dat += "Rice Hat: <A href='?src=\ref[src];create=rice_hat;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
 
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)
 	popup.open()
+	return
+
+/obj/machinery/biogenerator/attack_hand(mob/user)
+	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()
-	if (usr.stat != CONSCIOUS)
+	if (usr.stat != 0)
 		return
-	if (src.stat != NONE) //NOPOWER etc
+	if (src.stat != 0) //NOPOWER etc
 		return
-	if(processing)
-		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
+	if(src.processing)
+		usr << "<span class='warning'>The biogenerator is in the process of working.</span>"
 		return
 	var/S = 0
-	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
-		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
+		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
 			points += 1*productivity
-		else points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)*10*productivity
+		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
 		qdel(I)
 	if(S)
-		processing = TRUE
+		processing = 1
 		update_icon()
 		updateUsrDialog()
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		use_power(S*30)
 		sleep(S+15/productivity)
-		processing = FALSE
+		processing = 0
 		update_icon()
 	else
 		menustat = "void"
+	return
 
-/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = 1)
-	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
-		return FALSE
-	if (materials[MAT_BIOMASS]*multiplier/efficiency > points)
+/obj/machinery/biogenerator/proc/check_cost(cost)
+	if (cost > points)
 		menustat = "nopoints"
-		return FALSE
+		return 1
 	else
-		if(remove_points)
-			points -= materials[MAT_BIOMASS]*multiplier/efficiency
+		points -= cost
+		processing = 1
 		update_icon()
 		updateUsrDialog()
-		return TRUE
+		return 0
 
-/obj/machinery/biogenerator/proc/check_container_volume(list/reagents, multiplier = 1)
-	var/sum_reagents = 0
-	for(var/R in reagents)
-		sum_reagents += reagents[R]
-	sum_reagents *= multiplier
-
-	if(beaker.reagents.total_volume + sum_reagents > beaker.reagents.maximum_volume)
+/obj/machinery/biogenerator/proc/check_container_volume(reagent_amount)
+	if(beaker.reagents.total_volume + reagent_amount > beaker.reagents.maximum_volume)
 		menustat = "nobeakerspace"
-		return FALSE
+		return 1
 
-	return TRUE
-
-/obj/machinery/biogenerator/proc/create_product(datum/design/D, amount)
-	if(!beaker || !loc)
-		return FALSE
-
-	if(ispath(D.build_path, /obj/item/stack))
-		if(!check_container_volume(D.make_reagents, amount))
-			return FALSE
-		if(!check_cost(D.materials, amount))
-			return FALSE
-
-		new D.build_path(drop_location(), amount)
-		for(var/R in D.make_reagents)
-			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
-	else
-		var/i = amount
-		while(i > 0)
-			if(!check_container_volume(D.make_reagents))
-				return .
-			if(!check_cost(D.materials))
-				return .
-			if(D.build_path)
-				new D.build_path(loc)
-			for(var/R in D.make_reagents)
-				beaker.reagents.add_reagent(R, D.make_reagents[R])
-			. = 1
-			--i
-
+/obj/machinery/biogenerator/proc/create_product(create)
+	switch(create)
+		if("milk")
+			if(check_container_volume(10)) return 0
+			else if (check_cost(20/efficiency)) return 0
+			else beaker.reagents.add_reagent("milk",10)
+		if("cream")
+			if(check_container_volume(10)) return 0
+			else if (check_cost(30/efficiency)) return 0
+			else beaker.reagents.add_reagent("cream",10)
+		if("cmilk")
+			if (check_cost(100/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/food/condiment/milk(src.loc)
+		if("ccream")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/food/drinks/bottle/cream(src.loc)
+		if("meat")
+			if (check_cost(250/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+		if("ez")
+			if (check_cost(10/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
+		if("l4z")
+			if (check_cost(20/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
+		if("rh")
+			if (check_cost(25/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
+		if("wk")
+			if (check_cost(50/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/weedkiller(src.loc)
+		if("pk")
+			if (check_cost(50/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/pestkiller(src.loc)
+		if("wallet")
+			if (check_cost(100/efficiency)) return 0
+			else new/obj/item/weapon/storage/wallet(src.loc)
+		if("bkbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/books(src.loc)
+		if("ptbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/plants(src.loc)
+		if("mnbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/ore(src.loc)
+		if("chbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/chemistry(src.loc)
+		if("rag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/rag(src.loc)
+		if("gloves")
+			if (check_cost(250/efficiency)) return 0
+			else new/obj/item/clothing/gloves/botanic_leather(src.loc)
+		if("tbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/utility(src.loc)
+		if("sbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/security(src.loc)
+		if("mbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/medical(src.loc)
+		if("jbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/janitor(src.loc)
+		if("bbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/bandolier(src.loc)
+		if("sholster")
+			if (check_cost(400/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/holster(src.loc)
+		if("satchel")
+			if (check_cost(400/efficiency)) return 0
+			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
+		if("jacket")
+			if (check_cost(500/efficiency)) return 0
+			else new/obj/item/clothing/suit/jacket/leather(src.loc)
+		if("overcoat")
+			if (check_cost(1000/efficiency)) return 0
+			else new/obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
+		if("rice_hat")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/clothing/head/rice_hat(src.loc)
+	processing = 0
 	menustat = "complete"
 	update_icon()
-	return .
+	return 1
 
 /obj/machinery/biogenerator/proc/detach()
 	if(beaker)
-		beaker.forceMove(drop_location())
+		beaker.loc = src.loc
 		beaker = null
 		update_icon()
 
@@ -304,24 +340,16 @@
 
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
-		//Can't be outside these (if you change this keep a sane limit)
-		amount = CLAMP(amount, 1, 50)
-		var/id = href_list["create"]
-		if(!stored_research.researched_designs.Find(id))
-			//naughty naughty
-			stack_trace("ID did not map to a researched datum [id]")
+		var/i = amount
+		var/C = href_list["create"]
+		if(i <= 0)
 			return
-
-		//Get design by id (or may return error design)
-		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		//Valid design datum, amount and the datum is not the error design, lets proceed
-		if(D && amount && !istype(D, /datum/design/error_design))
-			create_product(D, amount)
-		//This shouldnt happen normally but href forgery is real
-		else
-			stack_trace("ID could not be turned into a valid techweb design datum [id]")
+		while(i >= 1)
+			create_product(C)
+			i--
 		updateUsrDialog()
 
 	else if(href_list["menu"])
 		menustat = "menu"
 		updateUsrDialog()
+

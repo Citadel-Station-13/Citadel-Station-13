@@ -1,77 +1,46 @@
-language: generic
-dist: xenial
+#pretending we're C because otherwise ruby will initialize, even with "language: dm".
+language: c
 sudo: false
 
-branches:
-  except:
-  - ___TGS3TempBranch
-  - ___TGSTempBranch
+env:
+    global:
+    - BYOND_MAJOR="508"
+    - BYOND_MINOR="1293"
+    matrix:
+    - DM_MAPFILE="tgstation2"
+    - DM_MAPFILE="metastation"
+    - DM_MAPFILE="ministation"
+    - DM_MAPFILE="DiscStation"
+    - DM_MAPFILE="dreamstation"
+    - DM_MAPFILE="birdstation"
+    - DM_MAPFILE="asteroidstation"
 
-matrix:
-  include:
-    - name: "Run Linters"
-      addons:
-        apt:
-          packages:
-            - python3
-            - python3-pip
-            - python3-setuptools
-      install:
-        - tools/travis/install_build_tools.sh
-        - tools/travis/install_dreamchecker.sh
-      script:
-        - tools/travis/check_filedirs.sh tgstation.dme
-        - tools/travis/check_changelogs.sh
-        - find . -name "*.php" -print0 | xargs -0 -n1 php -l
-        - find . -name "*.json" -not -path "./tgui/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
-        - tools/travis/build_tgui.sh
-        - tools/travis/check_grep.sh
-        - ~/dreamchecker
+cache:
+  directories:
+    - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+  
+addons:
+  apt:
+    packages:
+      - libc6-i386
+      - libgcc1:i386
+      - libstdc++6:i386
+      - python
+      - python-pip
+  
+install:
+  - pip install --user PyYaml -q
+  - pip install --user beautifulsoup4 -q
 
-    - name: "Compile All Maps"
-      addons:
-        apt:
-          packages:
-            - libstdc++6:i386
-      cache:
-        directories:
-          - $HOME/BYOND
-      install:
-        - tools/travis/install_byond.sh
-        - source $HOME/BYOND/byond/bin/byondsetup
-      before_script:
-        - tools/travis/template_dm_generator.py
-      script:
-        - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
+before_script:
+  - chmod +x ./install-byond.sh
+  - ./install-byond.sh
 
-    - name: "Compile and Run Tests"
-      addons:
-        mariadb: '10.2'
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - libstdc++6:i386
-            - gcc-multilib
-            - g++-7
-            - g++-7-multilib
-            - libmariadb-client-lgpl-dev:i386
-            - libmariadbd-dev
-      cache:
-        directories:
-          - $HOME/BYOND
-          - $HOME/libmariadb
-      install:
-        - tools/travis/install_byond.sh
-        - source $HOME/BYOND/byond/bin/byondsetup
-        - tools/travis/install_libmariadb.sh
-        - tools/travis/install_rust_g.sh
-      before_script:
-        - mysql -u root -e 'CREATE DATABASE tg_travis;'
-        - mysql -u root tg_travis < SQL/tgstation_schema.sql
-        - mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'
-        - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
-        - tools/travis/build_bsql.sh
-      script:
-        - tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme || travis_terminate 1
-        - tools/travis/run_server.sh
+script:
+  - shopt -s globstar
+  - (! grep 'step_[xy]' _maps/**/*.dmm)
+  - md5sum -c - <<< "49bc6b1b9ed56c83cceb6674bd97cb34 *html/changelogs/example.yml"
+  - tools/check_filedirs.sh tgstation.dme
+  - python tools/ss13_genchangelog.py html/changelog.html html/changelogs
+  - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+  - bash dm.sh -M${DM_MAPFILE} tgstation.dme

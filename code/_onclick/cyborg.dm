@@ -11,18 +11,16 @@
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params,A))
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
 		return
 
-	if(stat || lockcharge || IsKnockdown() || IsStun() || IsUnconscious())
+	if(stat || lockcharge || weakened || stunned || paralysis)
 		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
-		return
-	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
 		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
@@ -53,48 +51,43 @@
 		aicamera.captureimage(A, usr)
 		return
 
-	var/obj/item/W = get_active_held_item()
+	var/obj/item/W = get_active_hand()
 
-	if(!W && A.Adjacent(src) && (isobj(A) || ismob(A)))
-		var/atom/movable/C = A
-		if(C.can_buckle && C.has_buckled_mobs())
-			if(C.buckled_mobs.len > 1)
-				var/unbuckled = input(src, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in C.buckled_mobs
-				if(C.user_unbuckle_mob(unbuckled,src))
-					return
-			else
-				if(C.user_unbuckle_mob(C.buckled_mobs[1],src))
-					return
-
-	if(!W && get_dist(src,A) <= interaction_range)
+	// Cyborgs have no range-checking unless there is item use
+	if(!W)
 		A.attack_robot(src)
 		return
 
-	if(W)
-		// buckled cannot prevent machine interlinking but stops arm movement
-		if( buckled || incapacitated())
-			return
+	// buckled cannot prevent machine interlinking but stops arm movement
+	if( buckled )
+		return
 
-		if(W == A)
-			W.attack_self(src)
-			return
+	if(W == A)
+		W.attack_self(src)
+		return
 
-		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
-		if(A == loc || (A in loc) || (A in contents))
-			W.melee_attack_chain(src, A, params)
-			return
+	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
+	if(A == loc || (A in loc) || (A in contents))
+		// No adjacency checks
+		var/resolved = A.attackby(W,src, params)
+		if(!resolved && A && W)
+			W.afterattack(A,src,1,params)
+		return
 
-		if(!isturf(loc))
-			return
+	if(!isturf(loc))
+		return
 
-		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
-		if(isturf(A) || isturf(A.loc))
-			if(A.Adjacent(src)) // see adjacent.dm
-				W.melee_attack_chain(src, A, params)
-				return
-			else
-				W.afterattack(A, src, 0, params)
-				return
+	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
+	if(isturf(A) || isturf(A.loc))
+		if(A.Adjacent(src)) // see adjacent.dm
+			var/resolved = A.attackby(W, src, params)
+			if(!resolved && A && W)
+				W.afterattack(A, src, 1, params)
+			return
+		else
+			W.afterattack(A, src, 0, params)
+			return
+	return
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)
@@ -110,62 +103,43 @@
 /mob/living/silicon/robot/CtrlClickOn(atom/A)
 	A.BorgCtrlClick(src)
 /mob/living/silicon/robot/AltClickOn(atom/A)
-	if(!A.BorgAltClick(src))
-		altclick_listed_turf(A)
+	A.BorgAltClick(src)
 
-/atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
+/atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlShiftClick(user)
 
-/obj/machinery/door/airlock/BorgCtrlShiftClick(mob/living/silicon/robot/user) // Sets/Unsets Emergency Access Override Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlShiftClick()
-	else
-		..()
+/obj/machinery/door/airlock/BorgCtrlShiftClick() // Sets/Unsets Emergency Access Override Forwards to AI code.
+	AICtrlShiftClick()
 
 
-/atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
+/atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	ShiftClick(user)
 
-/obj/machinery/door/airlock/BorgShiftClick(mob/living/silicon/robot/user)  // Opens and closes doors! Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AIShiftClick()
-	else
-		..()
+/obj/machinery/door/airlock/BorgShiftClick()  // Opens and closes doors! Forwards to AI code.
+	AIShiftClick()
 
 
-/atom/proc/BorgCtrlClick(mob/living/silicon/robot/user) //forward to human click if not overridden
+/atom/proc/BorgCtrlClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlClick(user)
 
-/obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user) // Bolts doors. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlClick()
-	else
-		..()
+/obj/machinery/door/airlock/BorgCtrlClick() // Bolts doors. Forwards to AI code.
+	AICtrlClick()
 
-/obj/machinery/power/apc/BorgCtrlClick(mob/living/silicon/robot/user) // turns off/on APCs. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlClick()
-	else
-		..()
+/obj/machinery/power/apc/BorgCtrlClick() // turns off/on APCs. Forwards to AI code.
+	AICtrlClick()
 
-/obj/machinery/turretid/BorgCtrlClick(mob/living/silicon/robot/user) //turret control on/off. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlClick()
-	else
-		..()
+/obj/machinery/turretid/BorgCtrlClick() //turret control on/off. Forwards to AI code.
+	AICtrlClick()
 
 /atom/proc/BorgAltClick(mob/living/silicon/robot/user)
-	return AltClick(user)
+	AltClick(user)
+	return
 
-/obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		return AIAltClick()
-	return ..()
+/obj/machinery/door/airlock/BorgAltClick() // Eletrifies doors. Forwards to AI code.
+	AIAltClick()
 
-/obj/machinery/turretid/BorgAltClick(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		return AIAltClick()
-	return ..()
+/obj/machinery/turretid/BorgAltClick() //turret lethal on/off. Forwards to AI code.
+	AIAltClick()
 
 /*
 	As with AI, these are not used in click code,

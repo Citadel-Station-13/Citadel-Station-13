@@ -3,166 +3,88 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
-	circuit = /obj/item/circuitboard/computer/security
+	circuit = /obj/item/weapon/circuitboard/security
+	var/obj/machinery/camera/current = null
 	var/last_pic = 1
-	var/list/network = list("ss13")
-	var/list/watchers = list() //who's using the console, associated with the camera they're on.
-
-	light_color = LIGHT_COLOR_RED
-
-/obj/machinery/computer/security/Initialize()
-	. = ..()
-	for(var/i in network)
-		network -= i
-		network += lowertext(i)
+	var/list/network = list("SS13")
+	var/mapping = 0//For the overview file, interesting bit of code.
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if(!can_interact(user) || !(user in watchers) || !watchers[user])
-		user.unset_machine()
+	if ((get_dist(user, src) > 1 || user.eye_blind || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
+		return null
+	var/list/viewing = viewers(src)
+	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+		return null
+	user.reset_view(current)
+	return 1
+
+
+/obj/machinery/computer/security/attack_hand(mob/user)
+	if(!stat)
+
+		if (!network)
+			throw EXCEPTION("No camera network")
+			return
+		if (!(istype(network,/list)))
+			throw EXCEPTION("Camera network is not a list")
+			return
+
+		if(..())
+			return
+
+		var/list/L = list()
+		for (var/obj/machinery/camera/C in cameranet.cameras)
+			if((z > ZLEVEL_SPACEMAX || C.z > ZLEVEL_SPACEMAX) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+				continue
+			L.Add(C)
+
+		camera_sort(L)
+
+		var/list/D = list()
+		D["Cancel"] = "Cancel"
+		for(var/obj/machinery/camera/C in L)
+			if(!C.network)
+				spawn(0)
+					throw EXCEPTION("Camera in a cameranet has no camera network")
+				continue
+			if(!(istype(C.network,/list)))
+				spawn(0)
+					throw EXCEPTION("Camera in a cameranet has a non-list camera network")
+				continue
+			var/list/tempnetwork = C.network&network
+			if(tempnetwork.len)
+				D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
+
+		var/t = input(user, "Which camera should you change to?") as null|anything in D
+		if(!t)
+			user.unset_machine()
+			return 0
+
+		var/obj/machinery/camera/C = D[t]
+
+		if(t == "Cancel")
+			user.unset_machine()
+			return 0
+
+		if(C)
+			if ((get_dist(user, src) > 1 || user.machine != src || user.eye_blind || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+				if(!C.can_use() && !isAI(user))
+					src.current = null
+				return 0
+			else
+				if(isAI(user))
+					var/mob/living/silicon/ai/A = user
+					A.eyeobj.setLoc(get_turf(C))
+					A.client.eye = A.eyeobj
+				else
+					src.current = C
+					use_power(50)
+
+				spawn(5)
+					attack_hand(user)
 		return
-	var/obj/machinery/camera/C = watchers[user]
-	if(!C.can_use())
-		user.unset_machine()
-		return
 
-/obj/machinery/computer/security/on_unset_machine(mob/user)
-	watchers.Remove(user)
-	user.reset_perspective(null)
 
-/obj/machinery/computer/security/Destroy()
-	if(watchers.len)
-		for(var/mob/M in watchers)
-			M.unset_machine() //to properly reset the view of the users if the console is deleted.
-	return ..()
-
-/obj/machinery/computer/security/can_interact(mob/user)
-	if((!issilicon(user) && !Adjacent(user)) || is_blind(user) || !in_view_range(user, src))
-		return FALSE
-	return ..()
-
-/obj/machinery/computer/security/interact(mob/user, special_state)
-	. = ..()
-	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
-		return
-	if (!network)
-		CRASH("No camera network")
-		user.unset_machine()
-		return FALSE
-	if (!(islist(network)))
-		CRASH("Camera network is not a list")
-		user.unset_machine()
-		return FALSE
-
-	var/list/camera_list = get_available_cameras()
-	if(!(user in watchers))
-		for(var/Num in camera_list)
-			var/obj/machinery/camera/CAM = camera_list[Num]
-			if(istype(CAM) && CAM.can_use())
-				watchers[user] = CAM //let's give the user the first usable camera, and then let him change to the camera he wants.
-				break
-		if(!(user in watchers))
-			user.unset_machine() // no usable camera on the network, we disconnect the user from the computer.
-			return FALSE
-	playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
-	use_camera_console(user)
-
-/obj/machinery/computer/security/proc/use_camera_console(mob/user)
-	var/list/camera_list = get_available_cameras()
-	var/t = input(user, "Which camera should you change to?") as null|anything in camera_list
-	if(!src || user.machine != src) //while we were choosing we got disconnected from our computer or are using another machine.
-		return
-	if(!t || t == "Cancel")
-		user.unset_machine()
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
-		return
-
-	var/obj/machinery/camera/C = camera_list[t]
-
-	if(!C || !C.can_use() || !can_interact(user))
-		user.unset_machine()
-		return FALSE
-
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
-	if(isAI(user))
-		var/mob/living/silicon/ai/A = user
-		A.eyeobj.setLoc(get_turf(C))
-		A.client.eye = A.eyeobj
-	else
-		user.reset_perspective(C)
-		user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
-		user.clear_fullscreen("flash", 5)
-	watchers[user] = C
-	use_power(50)
-	addtimer(CALLBACK(src, .proc/use_camera_console, user), 5)
-
-//returns the list of cameras accessible from this computer
-/obj/machinery/computer/security/proc/get_available_cameras()
-	var/list/L = list()
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only receive feed from same z_level cameras
-			continue
-		L.Add(C)
-
-	camera_sort(L)
-
-	var/list/D = list()
-	D["Cancel"] = "Cancel"
-	for(var/obj/machinery/camera/C in L)
-		if(!C.network)
-			stack_trace("Camera in a cameranet has no camera network")
-			continue
-		if(!(islist(C.network)))
-			stack_trace("Camera in a cameranet has a non-list camera network")
-			continue
-		var/list/tempnetwork = C.network&network
-		if(tempnetwork.len)
-			D["[C.c_tag][(C.status ? null : " (Deactivated)")]"] = C
-	return D
-
-// SECURITY MONITORS
-
-/obj/machinery/computer/security/wooden_tv
-	name = "security camera monitor"
-	desc = "An old TV hooked into the station's camera network."
-	icon_state = "television"
-	icon_keyboard = null
-	icon_screen = "detective_tv"
-	clockwork = TRUE //it'd look weird
-	pass_flags = PASSTABLE
-
-/obj/machinery/computer/security/mining
-	name = "outpost camera console"
-	desc = "Used to access the various cameras on the outpost."
-	icon_screen = "mining"
-	icon_keyboard = "mining_key"
-	network = list("mine", "auxbase")
-	circuit = /obj/item/circuitboard/computer/mining
-
-/obj/machinery/computer/security/research
-	name = "research camera console"
-	desc = "Used to access the various cameras in science."
-	network = list("rd")
-	circuit = /obj/item/circuitboard/computer/research
-
-/obj/machinery/computer/security/hos
-	name = "Head of Security's camera console"
-	desc = "A custom security console with added access to the labor camp network."
-	network = list("ss13", "labor")
-	circuit = null
-
-/obj/machinery/computer/security/labor
-	name = "labor camp monitoring"
-	desc = "Used to access the various cameras on the labor camp."
-	network = list("labor")
-	circuit = null
-
-/obj/machinery/computer/security/qm
-	name = "Quartermaster's camera console"
-	desc = "A console with access to the mining, auxillary base and vault camera networks."
-	network = list("mine", "auxbase", "vault")
-	circuit = null
-
-// TELESCREENS
 
 /obj/machinery/computer/security/telescreen
 	name = "\improper Telescreen"
@@ -170,10 +92,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
 	network = list("thunder")
-	density = FALSE
+	density = 0
 	circuit = null
-	clockwork = TRUE //it'd look very weird
-	light_power = 0
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -187,68 +107,21 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
 	network = list("thunder")
+	density = 0
+	circuit = null
 
-/obj/machinery/computer/security/telescreen/rd
-	name = "Research Director's telescreen"
-	desc = "Used for watching the AI and the RD's goons from the safety of his office."
-	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
+/obj/machinery/computer/security/wooden_tv
+	name = "security camera monitor"
+	desc = "An old TV hooked into the stations camera network."
+	icon_state = "television"
+	icon_keyboard = null
+	icon_screen = "detective_tv"
 
-/obj/machinery/computer/security/telescreen/circuitry
-	name = "circuitry telescreen"
-	desc = "Used for watching the other eggheads from the safety of the circuitry lab."
-	network = list("rd")
 
-/obj/machinery/computer/security/telescreen/ce
-	name = "Chief Engineer's telescreen"
-	desc = "Used for watching the engine, telecommunications and the minisat."
-	network = list("engine", "singularity", "tcomms", "minisat")
-
-/obj/machinery/computer/security/telescreen/cmo
-	name = "Chief Medical Officer's telescreen"
-	desc = "A telescreen with access to the medbay's camera network."
-	network = list("medbay")
-
-/obj/machinery/computer/security/telescreen/vault
-	name = "Vault monitor"
-	desc = "A telescreen that connects to the vault's camera network."
-	network = list("vault")
-
-/obj/machinery/computer/security/telescreen/toxins
-	name = "Bomb test site monitor"
-	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("toxin")
-
-/obj/machinery/computer/security/telescreen/engine
-	name = "engine monitor"
-	desc = "A telescreen that connects to the engine's camera network."
-	network = list("engine")
-
-/obj/machinery/computer/security/telescreen/turbine
-	name = "turbine monitor"
-	desc = "A telescreen that connects to the turbine's camera."
-	network = list("turbine")
-
-/obj/machinery/computer/security/telescreen/interrogation
-	name = "interrogation room monitor"
-	desc = "A telescreen that connects to the interrogation room's camera."
-	network = list("interrogation")
-
-/obj/machinery/computer/security/telescreen/prison
-	name = "prison monitor"
-	desc = "A telescreen that connects to the permabrig's camera network."
-	network = list("prison")
-
-/obj/machinery/computer/security/telescreen/auxbase
-	name = "auxillary base monitor"
-	desc = "A telescreen that connects to the auxillary base's camera."
-	network = list("auxbase")
-
-/obj/machinery/computer/security/telescreen/minisat
-	name = "minisat monitor"
-	desc = "A telescreen that connects to the minisat's camera network."
-	network = list("minisat")
-
-/obj/machinery/computer/security/telescreen/aiupload
-	name = "AI upload monitor"
-	desc = "A telescreen that connects to the AI upload's camera network."
-	network = list("aiupload")
+/obj/machinery/computer/security/mining
+	name = "outpost camera console"
+	desc = "Used to access the various cameras on the outpost."
+	icon_screen = "mining"
+	icon_keyboard = "mining_key"
+	network = list("MINE")
+	circuit = "/obj/item/weapon/circuitboard/mining"

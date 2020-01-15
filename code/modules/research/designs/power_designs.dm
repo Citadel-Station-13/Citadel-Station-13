@@ -4,97 +4,102 @@
 
 /datum/design/basic_cell
 	name = "Basic Power Cell"
-	desc = "A basic power cell that holds 1 MJ of energy."
+	desc = "A basic power cell that holds 1000 units of energy."
 	id = "basic_cell"
+	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 50)
 	construction_time=100
-	build_path = /obj/item/stock_parts/cell/empty
+	build_path = /obj/item/weapon/stock_parts/cell
 	category = list("Misc","Power Designs","Machinery","initial")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
-	desc = "A power cell that holds 10 MJ of energy."
+	desc = "A power cell that holds 10000 units of energy."
 	id = "high_cell"
+	req_tech = list("powerstorage" = 2)
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
 	construction_time=100
-	build_path = /obj/item/stock_parts/cell/high/empty
+	build_path = /obj/item/weapon/stock_parts/cell/high
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
-	desc = "A power cell that holds 20 MJ of energy."
+	desc = "A power cell that holds 20000 units of energy."
 	id = "super_cell"
+	req_tech = list("powerstorage" = 3, "materials" = 2)
+	reliability = 75
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
 	construction_time=100
-	build_path = /obj/item/stock_parts/cell/super/empty
+	build_path = /obj/item/weapon/stock_parts/cell/super
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
-	desc = "A power cell that holds 30 MJ of energy."
+	desc = "A power cell that holds 30000 units of energy."
 	id = "hyper_cell"
+	req_tech = list("powerstorage" = 5, "materials" = 4)
+	reliability = 70
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 700, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
+	materials = list(MAT_METAL = 400, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
 	construction_time=100
-	build_path = /obj/item/stock_parts/cell/hyper/empty
+	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/bluespace_cell
 	name = "Bluespace Power Cell"
-	desc = "A power cell that holds 40 MJ of energy."
+	desc = "A power cell that holds 40000 units of energy."
 	id = "bluespace_cell"
+	req_tech = list("powerstorage" = 6, "materials" = 5)
+	reliability = 70
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 800, MAT_GOLD = 120, MAT_GLASS = 160, MAT_DIAMOND = 160, MAT_TITANIUM = 300, MAT_BLUESPACE = 100)
+	materials = list(MAT_METAL = 800, MAT_GOLD = 300, MAT_SILVER = 300, MAT_GLASS = 160, MAT_DIAMOND = 160)
 	construction_time=100
-	build_path = /obj/item/stock_parts/cell/bluespace/empty
+	build_path = /obj/item/weapon/stock_parts/cell/bluespace
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/inducer
-	name = "Inducer"
-	desc = "The NT-75 Electromagnetic Power Inducer can wirelessly induce electric charge in an object, allowing you to recharge power cells without having to remove them."
-	id = "inducer"
+
+/datum/design/light_replacer
+	name = "Light Replacer"
+	desc = "A device to automatically replace lights. Refill with working lightbulbs."
+	id = "light_replacer"
+	req_tech = list("magnets" = 3, "materials" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
-	build_path = /obj/item/inducer/sci
+	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
+	build_path = /obj/item/device/lightreplacer
 	category = list("Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/inducercombat
-	name = "Combat Ready Inducer"
-	desc = "The improved NT-8475 Electromagnetic Power Inducer can this one has been SCIENCED to allow for combat. It still comes printed with SCIENCED colors!"
-	id = "combatinducer"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 13000, MAT_GLASS = 10000,  MAT_SILVER = 1500,  MAT_GOLD = 1250, MAT_DIAMOND = 500, MAT_TITANIUM = 1200)
-	build_path = /obj/item/inducer/sci/combat/dry
-	category = list("Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/board/pacman
+/datum/design/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"
 	desc = "The circuit board that for a PACMAN-type portable generator."
 	id = "pacman"
-	build_path = /obj/item/circuitboard/machine/pacman
+	req_tech = list("programming" = 3, "plasmatech" = 3, "powerstorage" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	reliability = 79
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pacman
 	category = list("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/board/pacman/super
+/datum/design/superpacman
 	name = "Machine Design (SUPERPACMAN-type Generator Board)"
 	desc = "The circuit board that for a SUPERPACMAN-type portable generator."
 	id = "superpacman"
-	build_path = /obj/item/circuitboard/machine/pacman/super
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	reliability = 76
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pacman/super
+	category = list("Engineering Machinery")
 
-/datum/design/board/pacman/mrs
+/datum/design/mrspacman
 	name = "Machine Design (MRSPACMAN-type Generator Board)"
 	desc = "The circuit board that for a MRSPACMAN-type portable generator."
 	id = "mrspacman"
-	build_path = /obj/item/circuitboard/machine/pacman/mrs
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	req_tech = list("programming" = 3, "powerstorage" = 5, "engineering" = 5)
+	build_type = IMPRINTER
+	reliability = 74
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pacman/mrs
+	category = list("Engineering Machinery")

@@ -1,34 +1,32 @@
-/mob/living/carbon/monkey/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/mob/living/carbon/monkey/can_equip(obj/item/I, slot, disable_warning = 0)
 	switch(slot)
-		if(SLOT_HANDS)
-			if(get_empty_held_indexes())
-				return TRUE
-			return FALSE
-		if(SLOT_WEAR_MASK)
+		if(slot_l_hand)
+			if(l_hand)
+				return 0
+			return 1
+		if(slot_r_hand)
+			if(r_hand)
+				return 0
+			return 1
+		if(slot_wear_mask)
 			if(wear_mask)
-				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_MASK) )
-				return FALSE
-			return TRUE
-		if(SLOT_NECK)
-			if(wear_neck)
-				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_NECK) )
-				return FALSE
-			return TRUE
-		if(SLOT_HEAD)
+				return 0
+			if( !(I.slot_flags & SLOT_MASK) )
+				return 0
+			return 1
+		if(slot_head)
 			if(head)
-				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_HEAD) )
-				return FALSE
-			return TRUE
-		if(SLOT_BACK)
+				return 0
+			if( !(I.slot_flags & SLOT_HEAD) )
+				return 0
+			return 1
+		if(slot_back)
 			if(back)
-				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_BACK) )
-				return FALSE
-			return TRUE
-	return FALSE //Unsupported slot
+				return 0
+			if( !(I.slot_flags & SLOT_BACK) )
+				return 0
+			return 1
+	return 0 //Unsupported slot
 
 
 

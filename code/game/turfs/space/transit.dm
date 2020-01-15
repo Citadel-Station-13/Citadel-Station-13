@@ -1,74 +1,17 @@
-/turf/open/space/transit
-	name = "\proper hyperspace"
+/turf/space/transit
 	icon_state = "black"
 	dir = SOUTH
-	baseturfs = /turf/open/space/transit
-	flags_1 = NOJAUNT_1 //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
-	explosion_block = INFINITY
 
-/turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	. = ..()
-	underlay_appearance.icon_state = "speedspace_ns_[get_transit_state(asking_turf)]"
-	underlay_appearance.transform = turn(matrix(), get_transit_angle(asking_turf))
-
-/turf/open/space/transit/south
-	dir = SOUTH
-
-/turf/open/space/transit/north
-	dir = NORTH
-
-/turf/open/space/transit/horizontal
+/turf/space/transit/horizontal
 	dir = WEST
 
-/turf/open/space/transit/west
-	dir = WEST
-
-/turf/open/space/transit/east
-	dir = EAST
-
-/turf/open/space/transit/border
-	opacity = TRUE
-
-/turf/open/space/transit/border/south
-	dir = SOUTH
-
-/turf/open/space/transit/border/north
-	dir = NORTH
-
-/turf/open/space/transit/border/west
-	dir = WEST
-
-/turf/open/space/transit/border/east
-	dir = EAST
-
-/turf/open/space/transit/centcom
-	dir = SOUTH
-
-/turf/open/space/transit/centcom/Entered(atom/movable/AM, atom/OldLoc)
-	..()
-	if(!locate(/obj/structure/lattice) in src)
-		throw_atom(AM)
-
-/turf/open/space/transit/border/Entered(atom/movable/AM, atom/OldLoc)
-	..()
-	if(!locate(/obj/structure/lattice) in src)
-		throw_atom(AM)
-
-/turf/open/space/transit/proc/throw_atom(atom/movable/AM)
-	set waitfor = FALSE
-	if(!AM || istype(AM, /obj/docking_port))
+/turf/space/transit/Entered(atom/movable/AM, atom/OldLoc)
+	if(!AM)
 		return
-	if(AM.loc != src) 	// Multi-tile objects are "in" multiple locs but its loc is it's true placement.
-		return			// Don't move multi tile objects if their origin isnt in transit
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
-	var/list/possible_transtitons = list()
-	for(var/A in SSmapping.z_list)
-		var/datum/space_level/D = A
-		if (D.linkage == CROSSLINKED)
-			possible_transtitons += D.z_value
-	var/_z = pick(possible_transtitons)
+	var/_z = rand(ZLEVEL_SPACEMIN,ZLEVEL_SPACEMAX)	//select a random space zlevel
 
 	//now select coordinates for a border turf
 	var/_x
@@ -88,51 +31,40 @@
 			_y = min
 
 	var/turf/T = locate(_x, _y, _z)
-	AM.forceMove(T)
-	var/turf/throwturf = get_ranged_target_turf(T, dir, 1)
-	AM.safe_throw_at(throwturf, 1, 4, null, FALSE)
+	AM.loc = T
+	AM.newtonian_move(dir)
 
 
-/turf/open/space/transit/CanBuildHere()
-	return SSshuttle.is_in_shuttle_bounds(src)
 
 
-/turf/open/space/transit/Initialize()
-	. = ..()
+//Overwrite because we dont want people building rods in space.
+/turf/space/transit/attackby()
+	return
+
+/turf/space/transit/New()
 	update_icon()
-	for(var/atom/movable/AM in src)
-		throw_atom(AM)
+	..()
 
-/turf/open/space/transit/update_icon()
-	. = ..()
-	transform = turn(matrix(), get_transit_angle(src))
-
-/turf/open/space/transit/update_icon_state()
-	icon_state = "speedspace_ns_[get_transit_state(src)]"
-
-/proc/get_transit_state(turf/T)
+/turf/space/transit/proc/update_icon()
 	var/p = 9
-	. = 1
-	switch(T.dir)
+	var/angle = 0
+	var/state = 1
+	switch(dir)
 		if(NORTH)
-			. = ((-p*T.x+T.y) % 15) + 1
-			if(. < 1)
-				. += 15
+			angle = 180
+			state = ((-p*x+y) % 15) + 1
+			if(state < 1)
+				state += 15
 		if(EAST)
-			. = ((T.x+p*T.y) % 15) + 1
+			angle = 90
+			state = ((x+p*y) % 15) + 1
 		if(WEST)
-			. = ((T.x-p*T.y) % 15) + 1
-			if(. < 1)
-				. += 15
+			angle = -90
+			state = ((x-p*y) % 15) + 1
+			if(state < 1)
+				state += 15
 		else
-			. = ((p*T.x+T.y) % 15) + 1
+			state =	((p*x+y) % 15) + 1
 
-/proc/get_transit_angle(turf/T)
-	. = 0
-	switch(T.dir)
-		if(NORTH)
-			. = 180
-		if(EAST)
-			. = 90
-		if(WEST)
-			. = -90
+	icon_state = "speedspace_ns_[state]"
+	transform = turn(matrix(), angle)

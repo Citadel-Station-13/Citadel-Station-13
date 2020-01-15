@@ -1,160 +1,128 @@
 //Engineering Mesons
 
-#define MODE_NONE ""
-#define MODE_MESON "meson"
-#define MODE_TRAY "t-ray"
-#define MODE_RAD "radiation"
-#define MODE_SHUTTLE "shuttle"
-
 /obj/item/clothing/glasses/meson/engine
-	name = "engineering scanner goggles"
-	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation."
+	name = "Engineering Scanner Goggles"
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	icon_state = "trayson-meson"
-	item_state = "trayson-meson"
-	actions_types = list(/datum/action/item_action/toggle_mode)
+	action_button_name = "Change Scanning Mode"
 
-	vision_flags = NONE
-	darkness_view = 2
-	invis_view = SEE_INVISIBLE_LIVING
-
-	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_RAD, MODE_RAD = MODE_NONE)
-	var/mode = MODE_NONE
+	var/mode = 0	//0 - regular mesons mode	1 - t-ray mode
+	var/invis_objects = list()
 	var/range = 1
 
-/obj/item/clothing/glasses/meson/engine/prescription
-	name = "prescription engineering scanner goggles"
-	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation. Each lens has been replaced with a corrective lens."
-	vision_correction = 1
+/obj/item/clothing/glasses/meson/engine/attack_self()
+	ui_action_click()
 
-/obj/item/clothing/glasses/meson/engine/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-	update_icon()
+/obj/item/clothing/glasses/meson/engine/ui_action_click()
+	mode = !mode
 
-/obj/item/clothing/glasses/meson/engine/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/clothing/glasses/meson/engine/proc/toggle_mode(mob/user, voluntary)
-	mode = modes[mode]
-	to_chat(user, "<span class='[voluntary ? "notice":"warning"]'>[voluntary ? "You turn the goggles":"The goggles turn"] [mode ? "to [mode] mode":"off"][voluntary ? ".":"!"]</span>")
-
-	switch(mode)
-		if(MODE_MESON)
-			vision_flags = SEE_TURFS
-			darkness_view = 1
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-
-		if(MODE_TRAY) //undoes the last mode, meson
-			vision_flags = NONE
-			darkness_view = 2
-			lighting_alpha = null
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.glasses == src)
-			H.update_sight()
+	if(mode)
+		SSobj.processing |= src
+		vision_flags = 0
+		darkness_view = 2
+		invis_view = SEE_INVISIBLE_LIVING
+		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
+	else
+		SSobj.processing.Remove(src)
+		vision_flags = SEE_TURFS
+		darkness_view = 1
+		invis_view = SEE_INVISIBLE_MINIMUM
+		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>"
+		invis_update()
 
 	update_icon()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-
-/obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
-	toggle_mode(user, TRUE)
 
 /obj/item/clothing/glasses/meson/engine/process()
-	if(!ishuman(loc))
+	if(!mode)
 		return
-	var/mob/living/carbon/human/user = loc
-	if(user.glasses != src || !user.client)
+
+	if(!istype(loc,/mob/living/carbon/human))
+		invis_update()
 		return
-	switch(mode)
-		if(MODE_TRAY)
-			t_ray_scan(user, 8, range)
-		if(MODE_RAD)
-			show_rads()
-		if(MODE_SHUTTLE)
-			show_shuttle()
 
-/obj/item/clothing/glasses/meson/engine/proc/show_rads()
 	var/mob/living/carbon/human/user = loc
-	var/list/rad_places = list()
-	for(var/datum/component/radioactive/thing in SSradiation.processing)
-		var/atom/owner = thing.parent
-		var/turf/place = get_turf(owner)
-		if(rad_places[place])
-			rad_places[place] += thing.strength
-		else
-			rad_places[place] = thing.strength
+	if(user.glasses != src)
+		invis_update()
+		return
 
-	for(var/i in rad_places)
-		var/turf/place = i
-		if(get_dist(user, place) >= range*8)	//Rads are easier to see than wires under the floor
+	scan()
+
+/obj/item/clothing/glasses/meson/engine/proc/scan()
+	for(var/turf/T in range(range, loc))
+
+		if(!T.intact)
 			continue
-		var/strength = round(rad_places[i] / 1000, 0.1)
-		var/image/pic = new(loc = place)
-		var/mutable_appearance/MA = new()
-		MA.alpha = 180
-		MA.maptext = "[strength]k"
-		MA.color = "#64C864"
-		MA.layer = FLY_LAYER
-		pic.appearance = MA
-		flick_overlay(pic, list(user.client), 8)
 
-/obj/item/clothing/glasses/meson/engine/proc/show_shuttle()
-	var/mob/living/carbon/human/user = loc
-	var/obj/docking_port/mobile/port = SSshuttle.get_containing_shuttle(user)
-	if(!port)
-		return
-	var/list/shuttle_areas = port.shuttle_areas
-	for(var/r in shuttle_areas)
-		var/area/region = r
-		for(var/turf/place in region.contents)
-			if(get_dist(user, place) > 7)
+		for(var/obj/O in T.contents)
+			if(O.level != 1)
 				continue
-			var/image/pic
-			if(isshuttleturf(place))
-				pic = new('icons/turf/overlays.dmi', place, "greenOverlay", AREA_LAYER)
-			else
-				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
-			flick_overlay(pic, list(user.client), 8)
+
+			if(O.invisibility == 101)
+				O.invisibility = 0
+				invis_objects += O
+
+	spawn(5)
+		invis_update()
+
+/obj/item/clothing/glasses/meson/engine/proc/invis_update()
+	for(var/obj/O in invis_objects)
+		if(!t_ray_on() || !(O in range(range, loc)))
+			invis_objects -= O
+			var/turf/T = O.loc
+			if(T && T.intact)
+				O.invisibility = 101
+
+/obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
+	if(!istype(loc,/mob/living/carbon/human))
+		return 0
+
+	var/mob/living/carbon/human/user = loc
+	return mode & (user.glasses == src)
 
 /obj/item/clothing/glasses/meson/engine/update_icon()
-	icon_state = "trayson-[mode]"
-	update_mob()
-
-/obj/item/clothing/glasses/meson/engine/proc/update_mob()
-	item_state = icon_state
-	if(isliving(loc))
-		var/mob/living/user = loc
-		if(user.get_item_by_slot(SLOT_GLASSES) == src)
+	icon_state = mode ? "trayson-tray" : "trayson-meson"
+	if(istype(loc,/mob/living/carbon/human/))
+		var/mob/living/carbon/human/user = loc
+		if(user.glasses == src)
 			user.update_inv_glasses()
-		else
-			user.update_inv_hands()
 
 /obj/item/clothing/glasses/meson/engine/tray //atmos techs have lived far too long without tray goggles while those damned engineers get their dual-purpose gogles all to themselves
-	name = "optical t-ray scanner"
-	icon_state = "trayson-t-ray"
-	item_state = "trayson-t-ray"
+	name = "Optical T-Ray Scanner"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
+	icon_state = "trayson-tray_off"
+	action_button_name = "Toggle Scanner Power"
+
+	mode = 1
+	var/on = 0
+	vision_flags = 0
+	darkness_view = 2
+	invis_view = SEE_INVISIBLE_LIVING
 	range = 2
-	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_NONE)
 
-/obj/item/clothing/glasses/meson/engine/tray/prescription
-	name = "prescription optical t-ray scanner"
-	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation. This one has a lens that help correct eye sight."
-	vision_correction = 1
+/obj/item/clothing/glasses/meson/engine/tray/process()
+	if(!on)
+		return
+	..()
 
-/obj/item/clothing/glasses/meson/engine/shuttle
-	name = "shuttle region scanner"
-	icon_state = "trayson-shuttle"
-	item_state = "trayson-shuttle"
-	desc = "Used to see the boundaries of shuttle regions."
-	modes = list(MODE_NONE = MODE_SHUTTLE, MODE_SHUTTLE = MODE_NONE)
+/obj/item/clothing/glasses/meson/engine/tray/update_icon()
+	icon_state = "trayson-tray[on ? "" : "_off"]"
+	if(istype(loc,/mob/living/carbon/human/))
+		var/mob/living/carbon/human/user = loc
+		if(user.glasses == src)
+			user.update_inv_glasses()
 
-#undef MODE_NONE
-#undef MODE_MESON
-#undef MODE_TRAY
-#undef MODE_RAD
-#undef MODE_SHUTTLE
+/obj/item/clothing/glasses/meson/engine/tray/ui_action_click()
+	on = !on
+
+	if(on)
+		SSobj.processing |= src
+		loc << "<span class='notice'>You turn the goggles on.</span>"
+	else
+		SSobj.processing.Remove(src)
+		loc << "<span class='notice'>You turn the goggles off.</span>"
+		invis_update()
+
+	update_icon()
+
+/obj/item/clothing/glasses/meson/engine/tray/t_ray_on()
+	return on && ..()

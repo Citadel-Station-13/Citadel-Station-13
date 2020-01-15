@@ -1,217 +1,150 @@
-// stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
-#define RAD_COLLECTOR_EFFICIENCY 80 	// radiation needs to be over this amount to get power
-#define RAD_COLLECTOR_COEFFICIENT 100
-#define RAD_COLLECTOR_STORED_OUT 0.04	// (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
-#define RAD_COLLECTOR_MINING_CONVERSION_RATE 0.00001 //This is gonna need a lot of tweaking to get right. This is the number used to calculate the conversion of watts to research points per process()
-#define RAD_COLLECTOR_OUTPUT min(stored_power, (stored_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
-	anchored = FALSE
-	density = TRUE
-	req_access = list(ACCESS_ENGINE_EQUIP)
-//	use_power = NO_POWER_USE
-	max_integrity = 350
-	integrity_failure = 80
-	circuit = /obj/item/circuitboard/machine/rad_collector
-	var/obj/item/tank/internals/plasma/loaded_tank = null
-	var/stored_power = 0
-	var/last_push
+	anchored = 0
+	density = 1
+	req_access = list(access_engine_equip)
+//	use_power = 0
+	var/obj/item/weapon/tank/internals/plasma/P = null
+	var/last_power = 0
 	var/active = 0
-	var/locked = FALSE
+	var/locked = 0
 	var/drainratio = 1
-	var/powerproduction_drain = 0.001
 
-	var/bitcoinproduction_drain = 0.15
-	var/bitcoinmining = FALSE
-	rad_insulation = RAD_EXTREME_INSULATION
-
-/obj/machinery/power/rad_collector/anchored
-	anchored = TRUE
+/obj/machinery/power/rad_collector/New()
+	..()
+	rad_collectors += src
 
 /obj/machinery/power/rad_collector/Destroy()
+	rad_collectors -= src
 	return ..()
 
 /obj/machinery/power/rad_collector/process()
-	if(!loaded_tank)
+	if(P)
+		if(P.air_contents.toxins <= 0)
+			investigate_log("<font color='red'>out of fuel</font>.","singulo")
+			P.air_contents.toxins = 0
+			eject()
+		else
+			P.air_contents.toxins -= 0.001*drainratio
+	return
+
+
+/obj/machinery/power/rad_collector/attack_hand(mob/user)
+	if(..())
 		return
-	if(!bitcoinmining)
-		if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
-			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
-			eject()
-		else
-			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma])
-			loaded_tank.air_contents.gases[/datum/gas/plasma] -= 2.7 * gasdrained
-			loaded_tank.air_contents.gases[/datum/gas/tritium] += 	2.7 * gasdrained
-			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
-
-			var/power_produced = RAD_COLLECTOR_OUTPUT
-			add_avail(power_produced)
-			stored_power-=power_produced
-	else if(is_station_level(z) && SSresearch.science_tech)
-		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
-			eject()
-		else
-			var/gasdrained = bitcoinproduction_drain*drainratio
-			loaded_tank.air_contents.gases[/datum/gas/tritium] -= gasdrained
-			loaded_tank.air_contents.gases[/datum/gas/oxygen] -= gasdrained
-			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide] += gasdrained*2
-			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
-			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE)
-			last_push = stored_power
-			stored_power = 0
-
-/obj/machinery/power/rad_collector/interact(mob/user)
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			var/fuel
-			if(loaded_tank)
-				fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
-			to_chat(user, "<span class='warning'>The controls are locked!</span>")
+			user << "<span class='warning'>The controls are locked!</span>"
 			return
+..()
 
-/obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user, silent)
-	if(loaded_tank)
-		if(!silent)
-			to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
-		return FAILED_UNFASTEN
-	return ..()
-
-/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
-	. = ..()
-	if(. == SUCCESSFUL_UNFASTEN)
-		if(anchored)
-			connect_to_network()
-		else
-			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/tank/internals/plasma))
-		if(!anchored)
-			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor first!</span>")
-			return TRUE
-		if(loaded_tank)
-			to_chat(user, "<span class='warning'>There's already a plasma tank loaded!</span>")
-			return TRUE
-		if(panel_open)
-			to_chat(user, "<span class='warning'>Close the maintenance panel first!</span>")
-			return TRUE
-		if(!user.transferItemToLoc(W, src))
-			return
-		loaded_tank = W
-		update_icon()
-	else if(W.GetID())
-		if(allowed(user))
+	if(istype(W, /obj/item/device/multitool))
+		user << "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>"
+		return 1
+	else if(istype(W, /obj/item/device/analyzer) && P)
+		atmosanalyzer_scan(P.air_contents, user)
+	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
+		if(!src.anchored)
+			user << "<span class='warning'>The [src] needs to be secured to the floor first!</span>"
+			return 1
+		if(src.P)
+			user << "<span class='warning'>There's already a plasma tank loaded!</span>"
+			return 1
+		if(!user.drop_item())
+			return 1
+		src.P = W
+		W.loc = src
+		update_icons()
+	else if(istype(W, /obj/item/weapon/crowbar))
+		if(P && !src.locked)
+			eject()
+			return 1
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(P)
+			user << "<span class='warning'>Remove the plasma tank first!</span>"
+			return 1
+		if(!anchored && !isinspace())
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			anchored = 1
+			user.visible_message("[user.name] secures the [src.name].", \
+				"<span class='notice'>You secure the external bolts.</span>", \
+				"<span class='italics'>You hear a ratchet.</span>")
+			connect_to_network()
+		else if(anchored)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			anchored = 0
+			user.visible_message("[user.name] unsecures the [src.name].", \
+				"<span class='notice'>You unsecure the external bolts.</span>", \
+				"<span class='italics'>You hear a ratchet.</span>")
+			disconnect_from_network()
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if (src.allowed(user))
 			if(active)
-				locked = !locked
-				to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
+				src.locked = !src.locked
+				user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
 			else
-				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is active!</span>")
+				src.locked = 0 //just in case it somehow gets locked
+				user << "<span class='warning'>The controls can only be locked when \the [src] is active!</span>"
 		else
-			to_chat(user, "<span class='danger'>Access denied.</span>")
-			return TRUE
+			user << "<span class='danger'>Access denied.</span>"
+			return 1
 	else
-		return ..()
+		..()
+		return 1
 
-/obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I)
-	return TRUE
 
-/obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
-	if(loaded_tank)
-		to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
-	else
-		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
-	return TRUE
+/obj/machinery/power/rad_collector/ex_act(severity, target)
+	switch(severity)
+		if(2, 3)
+			eject()
+	return ..()
 
-/obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/I)
-	if(loaded_tank)
-		if(locked)
-			to_chat(user, "<span class='warning'>The controls are locked!</span>")
-			return TRUE
-		eject()
-		return TRUE
-	if(default_deconstruction_crowbar(I))
-		return TRUE
-	to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
-	return TRUE
-
-/obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/I)
-	if(!is_station_level(z) && !SSresearch.science_tech)
-		to_chat(user, "<span class='warning'>[src] isn't linked to a research system!</span>")
-		return TRUE
-	if(locked)
-		to_chat(user, "<span class='warning'>[src] is locked!</span>")
-		return TRUE
-	if(active)
-		to_chat(user, "<span class='warning'>[src] is currently active, producing [bitcoinmining ? "research points":"power"].</span>")
-		return TRUE
-	bitcoinmining = !bitcoinmining
-	to_chat(user, "<span class='warning'>You [bitcoinmining ? "enable":"disable"] the research point production feature of [src].</span>")
-	return TRUE
-
-/obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
-	if(loaded_tank)
-		loaded_tank.analyzer_act(user, I)
-
-/obj/machinery/power/rad_collector/examine(mob/user)
-	. = ..()
-	if(active)
-		if(!bitcoinmining)
-			. += "<span class='notice'>[src]'s display states that it has stored <b>[DisplayPower(stored_power)]</b>, and is processing <b>[DisplayPower((RAD_COLLECTOR_OUTPUT)*((60 SECONDS)/SSmachines.wait))]</b> per minute. <br>The <b>plasma</b> within it's tank is being irradiated into <b>tritium</b>.</span>"
-		else
-			. += "<span class='notice'>[src]'s display states that it's producing a total of <b>[(last_push*RAD_COLLECTOR_MINING_CONVERSION_RATE)*((60 SECONDS)/SSmachines.wait)]</b> research points per minute. <br>The <b>tritium</b> and <b>oxygen</b> within it's tank is being combusted into <b>carbon dioxide</b>.</span>"
-	else
-		if(!bitcoinmining)
-			. += "<span class='notice'><b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>. Use a multitool to change production modes.\"</span>"
-		else
-			. += "<span class='notice'><b>[src]'s display displays the words:</b> \"Research point production mode. Please insert <b>Tritium</b> and <b>Oxygen</b>. Use a multitool to change production modes.\"</span>"
-
-/obj/machinery/power/rad_collector/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		eject()
-		stat |= BROKEN
 
 /obj/machinery/power/rad_collector/proc/eject()
-	locked = FALSE
-	var/obj/item/tank/internals/plasma/Z = src.loaded_tank
+	locked = 0
+	var/obj/item/weapon/tank/internals/plasma/Z = src.P
 	if (!Z)
 		return
-	Z.forceMove(drop_location())
+	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
-	Z.plane = initial(Z.plane)
-	src.loaded_tank = null
+	src.P = null
 	if(active)
 		toggle_power()
 	else
-		update_icon()
+		update_icons()
 
-/obj/machinery/power/rad_collector/rad_act(pulse_strength)
-	. = ..()
-	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+/obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
+	if(P && active)
+		var/power_produced = 0
+		power_produced = P.air_contents.toxins*pulse_strength*20
+		add_avail(power_produced)
+		last_power = power_produced
+		return
+	return
 
-/obj/machinery/power/rad_collector/update_icon()
-	cut_overlays()
-	if(loaded_tank)
-		add_overlay("ptank")
+
+/obj/machinery/power/rad_collector/proc/update_icons()
+	overlays.Cut()
+	if(P)
+		overlays += image('icons/obj/singularity.dmi', "ptank")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		add_overlay("on")
+		overlays += image('icons/obj/singularity.dmi', "on")
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()
@@ -222,11 +155,6 @@
 	else
 		icon_state = "ca"
 		flick("ca_deactive", src)
-	update_icon()
+	update_icons()
 	return
 
-#undef RAD_COLLECTOR_EFFICIENCY
-#undef RAD_COLLECTOR_COEFFICIENT
-#undef RAD_COLLECTOR_STORED_OUT
-#undef RAD_COLLECTOR_MINING_CONVERSION_RATE
-#undef RAD_COLLECTOR_OUTPUT

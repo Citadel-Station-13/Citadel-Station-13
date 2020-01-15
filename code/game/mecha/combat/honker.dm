@@ -3,31 +3,40 @@
 	name = "\improper H.O.N.K"
 	icon_state = "honker"
 	step_in = 3
-	max_integrity = 140
+	health = 140
 	deflect_chance = 60
 	internal_damage_threshold = 60
-	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	damage_absorption = list("brute"=1.2,"fire"=1.5,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
 	max_temperature = 25000
 	infra_luminosity = 5
-	operation_req_access = list(ACCESS_THEATRE)
-	internals_req_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)
+	operation_req_access = list(access_theatre)
 	wreckage = /obj/structure/mecha_wreckage/honker
 	add_req_access = 0
 	max_equip = 3
 	var/squeak = 0
 
+/*
+/obj/mecha/combat/honker/New()
+	..()
+
+	weapons += new /datum/mecha_weapon/honker(src)
+	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)
+	weapons += new /datum/mecha_weapon/missile_rack/mousetrap_mortar(src)
+	selected_weapon = weapons[1]
+	return
+*/
+
 /obj/mecha/combat/honker/get_stats_part()
-	var/integrity = obj_integrity/max_integrity*100
+	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
-	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
+	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
+	var/tank_temperature = internal_tank ? internal_tank.return_temperature() : "Unknown"
 	var/cabin_pressure = round(return_pressure(),0.01)
 	var/output = {"[report_internal_damage()]
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>CLOWN SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK HONK</b></font><br>":null]
-						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>HONK-A-DOODLE</b></font> - <a href='?src=[REF(src)];repair_int_control_lost=1'>Recalibrate</a><br>":null]
+						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>HONK-A-DOODLE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
 						<b>IntegriHONK: </b> [integrity]%<br>
 						<b>PowerHONK charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
@@ -36,7 +45,7 @@
 						<b>HONK pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
 						<b>HONK temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
-						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=[REF(src)];reset_dna=1'>Reset</a>\]<br>":null]
+						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
 	return output
 
@@ -57,25 +66,25 @@
 						<script language='javascript' type='text/javascript'>
 						[js_byjax]
 						[js_dropdowns]
-						function SSticker() {
-							setInterval(function(){
-								window.location='byond://?src=[REF(src)]&update_content=1';
-								document.body.style.color = get_rand_color_string();
-								document.body.style.background = get_rand_color_string();
-							}, 1000);
+						function ticker() {
+						    setInterval(function(){
+						        window.location='byond://?src=\ref[src]&update_content=1';
+						        document.body.style.color = get_rand_color_string();
+						      document.body.style.background = get_rand_color_string();
+						    }, 1000);
 						}
 
 						function get_rand_color_string() {
-							var color = new Array;
-							for(var i=0;i<3;i++){
-								color.push(Math.floor(Math.random()*255));
-							}
-							return "rgb("+color.toString()+")";
+						    var color = new Array;
+						    for(var i=0;i<3;i++){
+						        color.push(Math.floor(Math.random()*255));
+						    }
+						    return "rgb("+color.toString()+")";
 						}
 
 						window.onload = function() {
 							dropdowns();
-							SSticker();
+							ticker();
 						}
 						</script>
 						</head>
@@ -99,11 +108,7 @@
 	var/output = {"<div class='wr'>
 						<div class='header'>Sounds of HONK:</div>
 						<div class='links'>
-						<a href='?src=[REF(src)];play_sound=sadtrombone'>Sad Trombone</a>
-						<a href='?src=[REF(src)];play_sound=bikehorn'>Bike Horn</a>
-						<a href='?src=[REF(src)];play_sound=airhorn2'>Air Horn</a>
-						<a href='?src=[REF(src)];play_sound=carhorn'>Car Horn</a>
-						<a href='?src=[REF(src)];play_sound=party_horn'>Party Horn</a>
+						<a href='?src=\ref[src];play_sound=sadtrombone'>Sad Trombone</a>
 						</div>
 						</div>
 						"}
@@ -116,7 +121,7 @@
 		return
 	var/output = "<b>Honk-ON-Systems:</b><div style=\"margin-left: 15px;\">"
 	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-		output += "<div id='[REF(MT)]'>[MT.get_equip_info()]</div>"
+		output += "<div id='\ref[MT]'>[MT.get_equip_info()]</div>"
 	output += "</div>"
 	return output
 
@@ -138,14 +143,6 @@
 		switch(href_list["play_sound"])
 			if("sadtrombone")
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
-			if("bikehorn")
-				playsound(src, 'sound/items/bikehorn.ogg', 50)
-			if("airhorn2")
-				playsound(src, 'sound/items/airhorn2.ogg', 40) //soundfile has higher than average volume
-			if("carhorn")
-				playsound(src, 'sound/items/carhorn.ogg', 80) //soundfile has lower than average volume
-			if("party_horn")
-				playsound(src, 'sound/items/party_horn.ogg', 50)
 	return
 
 /proc/rand_hex_color()
@@ -154,3 +151,5 @@
 	for (var/i=0;i<6;i++)
 		color = color+pick(colors)
 	return color
+
+

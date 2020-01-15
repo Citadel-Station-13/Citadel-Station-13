@@ -6,19 +6,18 @@
 /obj/machinery/power/tracker
 	name = "solar tracker"
 	desc = "A solar directional tracker."
-	icon = 'goon/icons/obj/power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
-	density = TRUE
-	use_power = NO_POWER_USE
-	max_integrity = 250
-	integrity_failure = 50
+	anchored = 1
+	density = 1
+	use_power = 0
 
 	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
-	. = ..()
+/obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
+	..(loc)
 	Make(S)
 	connect_to_network()
 
@@ -45,8 +44,8 @@
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.tracker = 1
-		S.anchored = TRUE
-	S.forceMove(src)
+		S.anchored = 1
+	S.loc = src
 	update_icon()
 
 //updates the tracker icon and the facing angle for the control computer
@@ -54,40 +53,28 @@
 	sun_angle = angle
 
 	//set icon dir to show sun illumination
-	setDir(turn(NORTH, -angle - 22.5)	)// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
+	dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
 	if(powernet && (powernet == control.powernet)) //update if we're still in the same powernet
-		control.currentdir = angle
+		control.cdir = angle
 
-/obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-	user.visible_message("[user] begins to take the glass off [src].", "<span class='notice'>You begin to take the glass off [src]...</span>")
-	if(I.use_tool(src, user, 50))
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-		user.visible_message("[user] takes the glass off [src].", "<span class='notice'>You take the glass off [src].</span>")
-		deconstruct(TRUE)
-	return TRUE
+/obj/machinery/power/tracker/attackby(obj/item/weapon/W, mob/user, params)
 
-/obj/machinery/power/tracker/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
-		stat |= BROKEN
-		unset_control()
-
-/obj/machinery/power/solar/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
+	if(istype(W, /obj/item/weapon/crowbar))
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
+		if(do_after(user, 50/W.toolspeed, target = src))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
-				S.forceMove(loc)
+				S.loc = src.loc
 				S.give_glass(stat & BROKEN)
-		else
-			playsound(src, "shatter", 70, 1)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
-	qdel(src)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
+			qdel(src)
+		return
+	..()
 
 // Tracker Electronic
 
-/obj/item/electronics/tracker
+/obj/item/weapon/electronics/tracker
 	name = "tracker electronics"

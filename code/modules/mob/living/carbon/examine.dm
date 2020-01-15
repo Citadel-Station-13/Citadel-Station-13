@@ -1,119 +1,61 @@
 /mob/living/carbon/examine(mob/user)
-	var/t_He = p_they(TRUE)
-	var/t_His = p_their(TRUE)
-	var/t_his = p_their()
-	var/t_him = p_them()
-	var/t_has = p_have()
-	var/t_is = p_are()
-
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 
 	if (handcuffed)
-		. += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>"
+		msg += "It is \icon[src.handcuffed] handcuffed!\n"
 	if (head)
-		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head."
+		msg += "It has \icon[src.head] \a [src.head] on its head. \n"
 	if (wear_mask)
-		. += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face."
-	if (wear_neck)
-		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
-	if(can_be_held)
-		. += "[t_He] looks small enough to be picked up with <b>Alt+Click</b>!\n"
-
-
-
-	for(var/obj/item/I in held_items)
-		if(!(I.item_flags & ABSTRACT))
-			. += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))]."
-
+		msg += "It has \icon[src.wear_mask] \a [src.wear_mask] on its face.\n"
+	if (l_hand)
+		msg += "It has \icon[src.l_hand] \a [src.l_hand] in its left hand.\n"
+	if (r_hand)
+		msg += "It has \icon[src.r_hand] \a [src.r_hand] in its right hand.\n"
 	if (back)
-		. += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back."
-	var/appears_dead = 0
+		msg += "It has \icon[src.back] \a [src.back] on its back.\n"
 	if (stat == DEAD)
-		appears_dead = 1
-		if(getorgan(/obj/item/organ/brain))
-			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>"
-		else if(get_bodypart(BODY_ZONE_HEAD))
-			. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
-
-	var/list/missing = get_missing_limbs()
-	for(var/t in missing)
-		if(t==BODY_ZONE_HEAD)
-			. += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
-			continue
-		. += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
-
-	var/list/msg = list()
-	var/temp = getBruteLoss()
-	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
+		msg += "<span class='deadsay'>It is limp and unresponsive, with no signs of life.</span>\n"
+	else
+		msg += "<span class='warning'>"
+		var/temp = getBruteLoss()
 		if(temp)
-			if (temp < 25)
-				msg += "[t_He] [t_has] minor bruising.\n"
-			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
+			if (temp < 30)
+				msg += "It has minor bruising.\n"
 			else
-				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
+				msg += "<B>It has severe bruising!</B>\n"
 
 		temp = getFireLoss()
 		if(temp)
-			if (temp < 25)
-				msg += "[t_He] [t_has] minor burns.\n"
-			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
+			if (temp < 30)
+				msg += "It has minor burns.\n"
 			else
-				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+				msg += "<B>It has severe burns!</B>\n"
 
 		temp = getCloneLoss()
 		if(temp)
-			if(temp < 25)
-				msg += "[t_He] [t_is] slightly deformed.\n"
-			else if (temp < 50)
-				msg += "[t_He] [t_is] <b>moderately</b> deformed!\n"
+			if(getCloneLoss() < 30)
+				msg += "It is slightly deformed.\n"
 			else
-				msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
+				msg += "<b>It is severely deformed.</b>\n"
 
-	if(HAS_TRAIT(src, TRAIT_DUMB))
-		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
+		if(getBrainLoss() > 60)
+			msg += "It seems to be clumsy and unable to think.\n"
 
-	if(fire_stacks > 0)
-		msg += "[t_He] [t_is] covered in something flammable.\n"
-	if(fire_stacks < 0)
-		msg += "[t_He] look[p_s()] a little soaked.\n"
+		if(fire_stacks > 0)
+			msg += "It's covered in something flammable.\n"
+		if(fire_stacks < 0)
+			msg += "It's soaked in water.\n"
 
-	if(pulledby && pulledby.grab_state)
-		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
-
-	if(msg.len)
-		. += "<span class='warning'>[msg.Join("")]</span>"
-
-	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
-			. += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep."
-		else if(InCritical())
-			. += "[t_His] breathing is shallow and labored."
+			msg += "It isn't responding to anything around it; it seems to be asleep.\n"
+		msg += "</span>"
 
-		if(digitalcamo)
-			. += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner."
+	if(digitalcamo)
+		msg += "It is moving its body in an unnatural and blatantly unsimian manner.\n"
 
-	if(combatmode)
-		. += "[t_He] [t_is] visibly tense[resting ? "." : ", and [t_is] standing in combative stance."]"
+	if(!getorgan(/obj/item/organ/internal/brain))
+		msg += "<span class='deadsay'>It appears that it's brain is missing...</span>\n"
 
-	var/trait_exam = common_trait_examine()
-	if (!isnull(trait_exam))
-		. += trait_exam
+	msg += "*---------*</span>"
 
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
-	if(mood)
-		switch(mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
-				. += "[t_He] look[p_s()] depressed."
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
-				. += "[t_He] look[p_s()] very sad."
-			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
-				. += "[t_He] look[p_s()] a bit down."
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-				. += "[t_He] look[p_s()] quite happy."
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				. += "[t_He] look[p_s()] very happy."
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				. += "[t_He] look[p_s()] ecstatic."
-	. += "*---------*</span>"
+	user << msg

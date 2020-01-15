@@ -8,87 +8,64 @@
 	turns_per_move = 1
 	maxHealth = 10
 	health = 10
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/hugemushroomslice = 1)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
 	harm_intent_damage = 5
-	obj_damage = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_same = 2
 	attacktext = "chomps"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("mushroom")
-	environment_smash = ENVIRONMENT_SMASH_NONE
-	stat_attack = DEAD
-	mouse_opacity = MOUSE_OPACITY_ICON
+	environment_smash = 0
+	stat_attack = 2
+	mouse_opacity = 1
 	speed = 1
-	ventcrawler = VENTCRAWLER_ALWAYS
+	ventcrawler = 2
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
-	deathmessage = "fainted."
-	var/cap_color = "#ffffff"
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
 	var/faint_ticker = 0 //If we hit three, another mushroom's gonna eat us
-	var/static/mutable_appearance/cap_living //Where we store our cap icons so we dont generate them constantly to update our icon
-	var/static/mutable_appearance/cap_dead
+	var/image/cap_living = null //Where we store our cap icons so we dont generate them constantly to update our icon
+	var/image/cap_dead = null
 
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
-	. = ..()
+	..()
 	if(health >= maxHealth)
-		. += "<span class='info'>It looks healthy.</span>"
+		user << "<span class='info'>It looks healthy.</span>"
 	else
-		. += "<span class='info'>It looks like it's been roughed up.</span>"
+		user << "<span class='info'>It looks like it's been roughed up.</span>"
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-2)
 
-/mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
+/mob/living/simple_animal/hostile/mushroom/New()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
 	move_to_delay = rand(3,11)
-	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
-	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
-
-	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	var/cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	cap_living = image('icons/mob/animal.dmi',icon_state = "mushroom_cap")
+	cap_dead = image('icons/mob/animal.dmi',icon_state = "mushroom_cap_dead")
+	cap_living.color = cap_color
+	cap_dead.color = cap_color
 	UpdateMushroomCap()
 	health = maxHealth
-	. = ..()
+	..()
 
-/mob/living/simple_animal/hostile/mushroom/CanAttack(atom/the_target) // Mushroom-specific version of CanAttack to handle stupid attack_same = 2 crap so we don't have to do it for literally every single simple_animal/hostile because this shit never gets spawned
-	if(!the_target || isturf(the_target) || istype(the_target, /atom/movable/lighting_object))
-		return FALSE
-
-	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return FALSE
-
-	if(isliving(the_target))
-		var/mob/living/L = the_target
-
-		if (!faction_check_mob(L) && attack_same == 2)
-			return FALSE
-		if(L.stat > stat_attack)
-			return FALSE
-
-		return TRUE
-
-	return FALSE
-
-/mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		addtimer(CALLBACK(src, .proc/stop_retreat), 30)
-	. = ..()
-
-/mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
-	retreat_distance = null
+		spawn(30)
+			retreat_distance = null
+	..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
@@ -96,7 +73,7 @@
 		if(faint_ticker < 2)
 			M.visible_message("[M] chews a bit on [src].")
 			faint_ticker++
-			return TRUE
+			return
 		M.visible_message("<span class='warning'>[M] devours [src]!</span>")
 		var/level_gain = (powerlevel - M.powerlevel)
 		if(level_gain >= -1 && !bruised && !M.ckey)//Player shrooms can't level up to become robust gods.
@@ -105,38 +82,34 @@
 			M.LevelUp(level_gain)
 		M.adjustBruteLoss(-M.maxHealth)
 		qdel(src)
-		return TRUE
-	return ..()
+	..()
 
-/mob/living/simple_animal/hostile/mushroom/revive(full_heal = 0, admin_revive = 0)
-	if(..())
-		icon_state = "mushroom_color"
-		UpdateMushroomCap()
-		. = 1
+/mob/living/simple_animal/hostile/mushroom/revive()
+	..()
+	icon_state = "mushroom_color"
+	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
+	if(!gibbed)
+		visible_message("[src] fainted.")
 	..(gibbed)
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
-	cut_overlays()
-	cap_living.color = cap_color
-	cap_dead.color = cap_color
+	overlays.Cut()
 	if(health == 0)
-		add_overlay(cap_dead)
+		overlays += cap_dead
 	else
-		add_overlay(cap_living)
+		overlays += cap_living
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("[src] slowly begins to recover.")
 	faint_ticker = 0
-	revive(full_heal = 1)
+	revive()
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)
-
-/mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
-	recovery_cooldown = 0
+	spawn(300)
+		recovery_cooldown = 0
 
 /mob/living/simple_animal/hostile/mushroom/proc/LevelUp(level_gain)
 	if(powerlevel <= 9)
@@ -154,22 +127,20 @@
 		bruised = 1
 
 /mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/mushroom))
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
 			qdel(I)
 		else
-			to_chat(user, "<span class='warning'>[src] won't eat it!</span>")
+			user << "<span class='warning'>[src] won't eat it!</span>"
 		return
 	if(I.force)
 		Bruise()
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	if(.) // the attack was blocked
-		return
-	if(M.a_intent == INTENT_HARM)
+	..()
+	if(M.a_intent == "harm")
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM)
@@ -186,7 +157,8 @@
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
 	for(counter=0, counter<=powerlevel, counter++)
-		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)
-		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
-		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
-		S.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)
+		var/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice(src.loc)
+		S.reagents.add_reagent("mushroomhallucinogen", powerlevel)
+		S.reagents.add_reagent("omnizine", powerlevel)
+		S.reagents.add_reagent("synaptizine", powerlevel)
+	qdel(src)

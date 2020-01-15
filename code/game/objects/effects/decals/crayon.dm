@@ -1,31 +1,59 @@
 /obj/effect/decal/cleanable/crayon
 	name = "rune"
-	desc = "Graffiti. Damn kids."
+	desc = "A rune drawn in crayon."
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
-	plane = GAME_PLANE //makes the graffiti visible over a wall.
-	gender = NEUTER
-	mergeable_decal = FALSE
+	layer = 2.1
+	anchored = 1
 	var/do_icon_rotate = TRUE
-	var/rotation = 0
-	var/paint_colour = "#FFFFFF"
 
-/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
-	. = ..()
+/obj/effect/decal/cleanable/crayon/examine()
+	set src in view(2)
+	..()
+	return
 
-	if(e_name)
-		name = e_name
-	desc = "A [name] vandalizing the station."
-	if(alt_icon)
-		icon = alt_icon
-	if(type)
-		icon_state = type
-	if(graf_rot)
-		rotation = graf_rot
+
+/obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0)
+	..()
+	loc = location
+
+	name = e_name
+	desc = "A [name] drawn in crayon."
+	if(type == "poseur tag")
+		type = pick(gang_name_pool)
+	icon_state = type
+
 	if(rotation && do_icon_rotate)
 		var/matrix/M = matrix()
 		M.Turn(rotation)
 		src.transform = M
-	if(main)
-		paint_colour = main
-	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
+
+	color = main
+
+/obj/effect/decal/cleanable/crayon/gang
+	layer = 3.6 //Harder to hide
+	do_icon_rotate = FALSE //These are designed to always face south, so no rotation please.
+	var/datum/gang/gang
+
+/obj/effect/decal/cleanable/crayon/gang/New(location, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0)
+	if(!type || !G)
+		qdel(src)
+
+	var/area/territory = get_area(location)
+	var/color
+
+	gang = G
+	color = G.color_hex
+	icon_state = G.name
+	G.territory_new |= list(territory.type = territory.name)
+
+	..(location, color, icon_state, e_name, rotation)
+
+/obj/effect/decal/cleanable/crayon/gang/Destroy()
+	var/area/territory = get_area(src)
+
+	if(gang)
+		gang.territory -= territory.type
+		gang.territory_new -= territory.type
+		gang.territory_lost |= list(territory.type = territory.name)
+	return ..()

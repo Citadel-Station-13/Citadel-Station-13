@@ -1,107 +1,69 @@
-/mob/living/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/gib(animation = 1)
 	var/prev_lying = lying
-	if(stat != DEAD)
-		death(1)
-
-	if(!prev_lying)
-		gib_animation()
-
-	spill_organs(no_brain, no_organs, no_bodyparts)
-
-	release_vore_contents(silent = TRUE) // return of the bomb safe internals.
-
-	if(!no_bodyparts)
-		spread_bodyparts(no_brain, no_organs)
-
-	for(var/X in implants)
-		var/obj/item/implant/I = X
-		qdel(I)
-
-	spawn_gibs(no_bodyparts)
-	qdel(src)
-
-/mob/living/proc/gib_animation()
-	return
-
-/mob/living/proc/spawn_gibs(with_bodyparts, atom/loc_override)
-	var/location = loc_override ? loc_override.drop_location() : drop_location()
-	if(MOB_ROBOTIC in mob_biotypes)
-		new /obj/effect/gibspawner/robot(location, src, get_static_viruses())
-	else
-		new /obj/effect/gibspawner/generic(location, src, get_static_viruses())
-
-/mob/living/proc/spill_organs()
-	return
-
-/mob/living/proc/spread_bodyparts()
-	return
-
-/mob/living/dust(just_ash, drop_items, force)
-	death(TRUE)
-
-	if(drop_items)
-		unequip_everything()
+	death(1)
 
 	if(buckled)
-		buckled.unbuckle_mob(src, force = TRUE)
+		buckled.unbuckle_mob() //to update alien nest overlay.
 
-	dust_animation()
-	release_vore_contents(silent = TRUE) //technically grief protection, I guess? if they're SM'd it doesn't matter seconds after anyway.
-	spawn_dust(just_ash)
-	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
+	var/atom/movable/overlay/animate = setup_animation(animation, prev_lying)
+	if(animate)
+		gib_animation(animate)
 
-/mob/living/proc/dust_animation()
-	return
+	spawn_gibs()
 
-/mob/living/proc/spawn_dust(just_ash = FALSE)
+	end_animation(animate) // Will qdel(src)
+
+/mob/living/proc/spawn_gibs()
+	gibs(loc, viruses)
+
+/mob/living/proc/gib_animation(animate, flick_name = "gibbed")
+	flick(flick_name, animate)
+
+/mob/living/dust(animation = 0)
+	death(1)
+	var/atom/movable/overlay/animate = setup_animation(animation, 0)
+	if(animate)
+		dust_animation(animate)
+
+	spawn_dust()
+	end_animation(animate)
+
+/mob/living/proc/spawn_dust()
 	new /obj/effect/decal/cleanable/ash(loc)
 
+/mob/living/proc/dust_animation(animate, flick_name = "")
+	flick(flick_name, animate)
 
 /mob/living/death(gibbed)
-	stat = DEAD
-	unset_machine()
+	eye_blind = max(eye_blind, 1)
 	timeofdeath = world.time
-	tod = STATION_TIME_TIMESTAMP("hh:mm:ss")
-	for(var/obj/item/I in contents)
-		I.on_mob_death(src, gibbed)
-	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
-	GLOB.alive_mob_list -= src
+
+	living_mob_list -= src
 	if(!gibbed)
-		GLOB.dead_mob_list += src
-	set_drugginess(0)
-	set_disgust(0)
-	SetSleeping(0, 0)
-	blind_eyes(1)
-	reset_perspective(null)
-	reload_fullscreen()
-	update_action_buttons_icon()
-	update_damage_hud()
-	update_health_hud()
-	update_canmove()
-	med_hud_set_health()
-	med_hud_set_status()
-	if(!gibbed && !QDELETED(src))
-		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
-	stop_pulling()
+		dead_mob_list += src
+	else if(buckled)
+		buckled.unbuckle_mob()
 
-	var/signal = SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 
-	var/turf/T = get_turf(src)
-	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf) && !(signal & COMPONENT_BLOCK_DEATH_BROADCAST))
-		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
-		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
-	if (client && client.prefs && client.prefs.auto_ooc)
-		if (!(client.prefs.chat_toggles & CHAT_OOC))
-			client.prefs.chat_toggles ^= CHAT_OOC
-	if (client)
-		client.move_delay = initial(client.move_delay)
+/mob/living/proc/setup_animation(animation, prev_lying)
+	var/atom/movable/overlay/animate = null
+	notransform = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	alpha = 0
 
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
-		S.ownerDies(gibbed)
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
-		S.sharerDies(gibbed)
+	if(!prev_lying && animation)
+		animate = new(loc)
+		animate.icon_state = "blank"
+		animate.icon = 'icons/mob/mob.dmi'
+		animate.master = src
+	return animate
 
-	return TRUE
+/mob/living/proc/end_animation(animate)
+	if(!animate)
+		qdel(src)
+	else
+		spawn(15)
+			if(animate)		qdel(animate)
+			if(src)			qdel(src)

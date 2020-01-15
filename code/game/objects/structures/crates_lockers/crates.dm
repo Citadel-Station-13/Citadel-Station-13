@@ -1,223 +1,325 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
 	icon = 'icons/obj/crates.dmi'
+	var/icon_crate = "crate"
 	icon_state = "crate"
 	req_access = null
-	can_weld_shut = FALSE
-	horizontal = TRUE
-	allow_objects = TRUE
-	allow_dense = TRUE
-	dense_when_open = TRUE
-	climbable = TRUE
-	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
-	climb_stun = 0 //climbing onto crates isn't hard, guys
-	delivery_icon = "deliverycrate"
-	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
+	var/rigged = 0
+	var/sound_effect_open = 'sound/machines/click.ogg'
+	var/sound_effect_close = 'sound/machines/click.ogg'
+	var/obj/item/weapon/paper/manifest/manifest
 
 /obj/structure/closet/crate/New()
 	..()
-	if(icon_state == "[initial(icon_state)]open")
-		opened = TRUE
 	update_icon()
 
-/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
-	if(!istype(mover, /obj/structure/closet))
-		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
-		if(locatedcrate) //you can walk on it like tables, if you're not in an open crate trying to move to a closed crate
-			if(opened) //if we're open, allow entering regardless of located crate openness
-				return 1
-			if(!locatedcrate.opened) //otherwise, if the located crate is closed, allow entering
-				return 1
-	return !density
 
 /obj/structure/closet/crate/update_icon()
-	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
-
-	cut_overlays()
+	overlays.Cut()
+	if(opened)
+		icon_state = "[icon_crate]open"
+	else
+		icon_state = icon_crate
 	if(manifest)
-		add_overlay("manifest")
-
-/obj/structure/closet/crate/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(manifest)
-		tear_manifest(user)
-
-/obj/structure/closet/crate/open(mob/living/user)
-	. = ..()
-	if(. && manifest)
-		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
-		playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
-		manifest.forceMove(get_turf(src))
-		manifest = null
-		update_icon()
-
-/obj/structure/closet/crate/handle_lock_addition()
-	return
-
-/obj/structure/closet/crate/handle_lock_removal()
-	return
-
-/obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
-	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
-
-	manifest.forceMove(loc)
-	if(ishuman(user))
-		user.put_in_hands(manifest)
-	manifest = null
-	update_icon()
-
-/obj/structure/closet/crate/coffin
-	name = "coffin"
-	desc = "It's a burial receptacle for the dearly departed."
-	icon_state = "coffin"
-	resistance_flags = FLAMMABLE
-	max_integrity = 70
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 5
-
-/obj/structure/closet/crate/coffin/examine(mob/user)
-	. = ..()
-	if(user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		. += {"<span class='cult'>This is a coffin which you can use to regenerate your burns and other wounds faster.</span>"}
-		. += {"<span class='cult'>You can also thicken your blood if you survive the day, and hide from the sun safely while inside.</span>"}
-	/*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-			. += {"<span class='cult'>This is a coffin which your master can use to shield himself from the unforgiving sun.\n
-			You yourself are still human and dont need it. Yet.</span>"} */
+		overlays += "manifest"
 
 /obj/structure/closet/crate/internals
-	desc = "An internals crate."
+	desc = "A internals crate."
 	name = "internals crate"
+	icon_crate = "o2crate"
 	icon_state = "o2crate"
 
 /obj/structure/closet/crate/trashcart
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
+	icon_crate = "trashcart"
 	icon_state = "trashcart"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "medical crate"
+	icon_crate = "medicalcrate"
 	icon_state = "medicalcrate"
-
-/obj/structure/closet/crate/freezer
-	desc = "A freezer."
-	name = "freezer"
-	icon_state = "freezer"
-
-//Snowflake organ freezer code
-//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
-
-/obj/structure/closet/crate/freezer/open()
-	recursive_organ_check(src)
-	..()
-
-/obj/structure/closet/crate/freezer/close()
-	..()
-	recursive_organ_check(src)
-
-/obj/structure/closet/crate/freezer/Destroy()
-	recursive_organ_check(src)
-	..()
-
-/obj/structure/closet/crate/freezer/Initialize()
-	. = ..()
-	recursive_organ_check(src)
-
-/obj/structure/closet/crate/freezer/blood
-	name = "blood freezer"
-	desc = "A freezer containing packs of blood."
-	icon_state = "surgery"
-
-/obj/structure/closet/crate/freezer/blood/PopulateContents()
-	. = ..()
-	new /obj/item/reagent_containers/blood(src)
-	new /obj/item/reagent_containers/blood(src)
-	new /obj/item/reagent_containers/blood/AMinus(src)
-	new /obj/item/reagent_containers/blood/BMinus(src)
-	new /obj/item/reagent_containers/blood/BPlus(src)
-	new /obj/item/reagent_containers/blood/OMinus(src)
-	new /obj/item/reagent_containers/blood/OPlus(src)
-	new /obj/item/reagent_containers/blood/lizard(src)
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/blood/random(src)
-
-/obj/structure/closet/crate/freezer/surplus_limbs
-	name = "surplus prosthetic limbs"
-	desc = "A crate containing an assortment of cheap prosthetic limbs."
-
-/obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
-	. = ..()
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
-
-/obj/structure/closet/crate/radiation
-	desc = "A crate with a radiation sign on it."
-	name = "radiation crate"
-	icon_state = "radiation"
-
-/obj/structure/closet/crate/hydroponics
-	name = "hydroponics crate"
-	desc = "All you need to destroy those pesky weeds and pests."
-	icon_state = "hydrocrate"
-
-/obj/structure/closet/crate/engineering
-	name = "engineering crate"
-	icon_state = "engi_crate"
-
-/obj/structure/closet/crate/engineering/electrical
-	icon_state = "engi_e_crate"
 
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
-	icon_state = "engi_crate"
 
-/obj/structure/closet/crate/rcd/PopulateContents()
+/obj/structure/closet/crate/rcd/New()
 	..()
-	for(var/i in 1 to 4)
-		new /obj/item/rcd_ammo(src)
-	new /obj/item/construction/rcd(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd(src)
 
-/obj/structure/closet/crate/science
-	name = "science crate"
-	desc = "A science crate."
-	icon_state = "scicrate"
+/obj/structure/closet/crate/freezer
+	desc = "A freezer."
+	name = "freezer"
+	icon_crate = "freezer"
+	icon_state = "freezer"
+	var/target_temp = T0C - 40
+	var/cooling_power = 40
 
-/obj/structure/closet/crate/solarpanel_small
-	name = "budget solar panel crate"
-	icon_state = "engi_e_crate"
+/obj/structure/closet/crate/freezer/return_air()
+	var/datum/gas_mixture/gas = (..())
+	if(!gas)	return null
+	var/datum/gas_mixture/newgas = new/datum/gas_mixture()
+	newgas.oxygen = gas.oxygen
+	newgas.carbon_dioxide = gas.carbon_dioxide
+	newgas.nitrogen = gas.nitrogen
+	newgas.toxins = gas.toxins
+	newgas.volume = gas.volume
+	newgas.temperature = gas.temperature
+	if(newgas.temperature <= target_temp)	return
 
-/obj/structure/closet/crate/solarpanel_small/PopulateContents()
+	if((newgas.temperature - cooling_power) > target_temp)
+		newgas.temperature -= cooling_power
+	else
+		newgas.temperature = target_temp
+	return newgas
+
+
+/obj/structure/closet/crate/radiation
+	desc = "A crate with a radiation sign on it."
+	name = "radioactive gear crate"
+	icon_crate = "radiation"
+	icon_state = "radiation"
+
+/obj/structure/closet/crate/radiation/New()
 	..()
-	for(var/i in 1 to 13)
-		new /obj/item/solar_assembly(src)
-	new /obj/item/circuitboard/computer/solar_control(src)
-	new /obj/item/paper/guides/jobs/engi/solars(src)
-	new /obj/item/electronics/tracker(src)
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
 
-/obj/structure/closet/crate/goldcrate
-	name = "gold crate"
+/obj/structure/closet/crate/hydroponics
+	name = "hydroponics crate"
+	desc = "All you need to destroy those pesky weeds and pests."
+	icon_crate = "hydrocrate"
+	icon_state = "hydrocrate"
 
-/obj/structure/closet/crate/goldcrate/PopulateContents()
+/obj/structure/closet/crate/hydroponics/prespawned
+
+/obj/structure/closet/crate/hydroponics/prespawned/New()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
-	new /obj/item/storage/belt/champion(src)
+	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
+	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
+	new /obj/item/weapon/cultivator(src)
 
-/obj/structure/closet/crate/silvercrate
-	name = "silver crate"
+/obj/structure/closet/crate/secure
+	desc = "A secure crate."
+	name = "secure crate"
+	icon_crate = "securecrate"
+	icon_state = "securecrate"
+	var/redlight = "securecrater"
+	var/greenlight = "securecrateg"
+	var/sparks = "securecratesparks"
+	var/emag = "securecrateemag"
+	locked = 1
+	health = 1000
 
-/obj/structure/closet/crate/silvercrate/PopulateContents()
+/obj/structure/closet/crate/secure/weapon
+	desc = "A secure weapons crate."
+	name = "weapons crate"
+	icon_crate = "weaponcrate"
+	icon_state = "weaponcrate"
+
+/obj/structure/closet/crate/secure/plasma
+	desc = "A secure plasma crate."
+	name = "plasma crate"
+	icon_crate = "plasmacrate"
+	icon_state = "plasmacrate"
+
+/obj/structure/closet/crate/secure/gear
+	desc = "A secure gear crate."
+	name = "gear crate"
+	icon_crate = "secgearcrate"
+	icon_state = "secgearcrate"
+
+/obj/structure/closet/crate/secure/hydrosec
+	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
+	name = "secure hydroponics crate"
+	icon_crate = "hydrosecurecrate"
+	icon_state = "hydrosecurecrate"
+
+/obj/structure/closet/crate/secure/update_icon()
 	..()
-	for(var/i in 1 to 5)
-		new /obj/item/coin/silver(src)
+	if(locked)
+		overlays += redlight
+	else if(broken)
+		overlays += emag
+	else
+		overlays += greenlight
+
+/obj/structure/closet/crate/open()
+	playsound(src.loc, sound_effect_open, 15, 1, -3)
+	dump_contents()
+	src.opened = 1
+	update_icon()
+	return 1
+
+/obj/structure/closet/crate/close()
+	playsound(src.loc, sound_effect_close, 15, 1, -3)
+	take_contents()
+	src.opened = 0
+	update_icon()
+	return 1
+
+/obj/structure/closet/crate/insert(atom/movable/AM, include_mobs = 0)
+
+	if(contents.len >= storage_capacity)
+		return -1
+	if(include_mobs && isliving(AM))
+		var/mob/living/L = AM
+		if(L.buckled)
+			return 0
+	else if(isobj(AM))
+		if(AM.density || AM.anchored || istype(AM,/obj/structure/closet))
+			return 0
+	else
+		return 0
+
+	if(istype(AM, /obj/structure/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+		var/obj/structure/bed/B = AM
+		if(B.buckled_mob)
+			return 0
+
+	AM.loc = src
+	return 1
+
+/obj/structure/closet/crate/proc/tear_manifest(mob/user)
+	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
+	manifest.loc = loc
+	if(ishuman(user))
+		user.put_in_hands(manifest)
+	manifest = null
+	overlays-="manifest"
+
+/obj/structure/closet/crate/attack_hand(mob/user)
+	if(manifest)
+		tear_manifest(user)
+		return
+	if(opened)
+		close()
+	else
+		if(rigged && locate(/obj/item/device/electropack) in src)
+			if(isliving(user))
+				var/mob/living/L = user
+				if(L.electrocute_act(17, src))
+					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+					s.set_up(5, 1, src)
+					s.start()
+					return
+		open()
+	return
+
+/obj/structure/closet/crate/secure/attack_hand(mob/user)
+	if(manifest)
+		tear_manifest(user)
+		return
+	if(locked && !broken)
+		if (allowed(user))
+			user << "<span class='notice'>You unlock [src].</span>"
+			src.locked = 0
+			update_icon()
+			add_fingerprint(user)
+			return
+		else
+			user << "<span class='notice'>[src] is locked.</span>"
+			return
+	else
+		..()
+
+/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
+		user << "<span class='notice'>You lock \the [src].</span>"
+		src.locked = 1
+		update_icon()
+		add_fingerprint(user)
+		return
+
+	return ..()
+
+/obj/structure/closet/crate/secure/emag_act(mob/user)
+	if(locked && !broken)
+		src.locked = 0
+		src.broken = 1
+		update_icon()
+		overlays += sparks
+		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+		playsound(src.loc, "sparks", 60, 1)
+		user << "<span class='notice'>You unlock \the [src].</span>"
+		add_fingerprint(user)
+
+/obj/structure/closet/crate/attack_paw(mob/user)
+	return attack_hand(user)
+
+/obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user, params)
+	if(opened)
+		if(isrobot(user))
+			return
+		if(!user.drop_item()) //couldn't drop the item
+			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			return
+		if(W)
+			W.loc = src.loc
+	else if(istype(W, /obj/item/stack/packageWrap))
+		return
+	else if(istype(W, /obj/item/stack/cable_coil))
+		if(rigged)
+			user << "<span class='warning'>[src] is already rigged!</span>"
+			return
+		var/obj/item/stack/cable_coil/C = W
+		if (C.use(5))
+			user << "<span class='notice'>You rig [src].</span>"
+			rigged = 1
+		else
+			user << "<span class='warning'>You need 5 lengths of cable to rig [src]!</span>"
+		return
+	else if(istype(W, /obj/item/device/electropack))
+		if(rigged)
+			if(!user.drop_item())
+				return
+			user  << "<span class='notice'>You attach [W] to [src].</span>"
+			W.loc = src
+			return
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(rigged)
+			user  << "<span class='notice'>You cut away the wiring.</span>"
+			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			rigged = 0
+			return
+	else if(!place(user, W))
+		return attack_hand(user)
+
+/obj/structure/closet/crate/secure/emp_act(severity)
+	for(var/obj/O in src)
+		O.emp_act(severity)
+	if(!broken && !opened  && prob(50/severity))
+		if(!locked)
+			src.locked = 1
+			update_icon()
+		else
+			src.locked = 0
+			src.broken = 1
+			update_icon()
+			overlays += sparks
+			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+	if(!opened && prob(20/severity))
+		if(!locked)
+			open()
+		else
+			src.req_access = list()
+			src.req_access += pick(get_all_accesses())
+	..()
+

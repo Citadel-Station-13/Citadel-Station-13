@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Virus food dispensers dispense virus food again."
-  - bugfix: "Borg hypos inputs do not display typepaths anymore."
-  - bugfix: "Restored chem dispensers alphabetical order."

@@ -1,36 +1,51 @@
-/datum/hud/larva
-	ui_style = 'icons/mob/screen_alien.dmi'
+/datum/hud/proc/larva_hud()
+	adding = list()
+	other = list()
 
-/datum/hud/larva/New(mob/owner)
-	..()
 	var/obj/screen/using
 
-	action_intent = new /obj/screen/act_intent/alien()
-	action_intent.icon_state = mymob.a_intent
-	action_intent.hud = src
-	static_inventory += action_intent
+	using = new /obj/screen/act_intent()
+	using.icon = 'icons/mob/screen_alien.dmi'
+	using.icon_state = mymob.a_intent
+	using.screen_loc = ui_movi
+	adding += using
+	action_intent = using
 
-	healths = new /obj/screen/healths/alien()
-	healths.hud = src
-	infodisplay += healths
+	mymob.healths = new /obj/screen()
+	mymob.healths.icon = 'icons/mob/screen_alien.dmi'
+	mymob.healths.icon_state = "health0"
+	mymob.healths.name = "health"
+	mymob.healths.screen_loc = ui_alien_health
 
-	alien_queen_finder = new /obj/screen/alien/alien_queen_finder()
-	alien_queen_finder.hud = src
-	infodisplay += alien_queen_finder
+	nightvisionicon = new /obj/screen/alien/nightvision()
+	nightvisionicon.screen_loc = ui_alien_nightvision
 
-	pull_icon = new /obj/screen/pull()
-	pull_icon.icon = 'icons/mob/screen_alien.dmi'
-	pull_icon.hud = src
-	pull_icon.update_icon()
-	pull_icon.screen_loc = ui_pull_resist
-	hotkeybuttons += pull_icon
+	mymob.pullin = new /obj/screen/pull()
+	mymob.pullin.icon = 'icons/mob/screen_alien.dmi'
+	mymob.pullin.update_icon(mymob)
+	mymob.pullin.screen_loc = ui_pull_resist
 
-	using = new/obj/screen/language_menu
-	using.screen_loc = ui_alien_language_menu
-	using.hud = src
-	static_inventory += using
+	mymob.blind = new /obj/screen()
+	mymob.blind.icon = 'icons/mob/screen_full.dmi'
+	mymob.blind.icon_state = "blackimageoverlay"
+	mymob.blind.name = " "
+	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
+	mymob.blind.layer = 0
+	mymob.blind.mouse_opacity = 0
 
-	zone_select = new /obj/screen/zone_sel/alien()
-	zone_select.hud = src
-	zone_select.update_icon()
-	static_inventory += zone_select
+	mymob.flash = new /obj/screen()
+	mymob.flash.icon = 'icons/mob/screen_gen.dmi'
+	mymob.flash.icon_state = "blank"
+	mymob.flash.name = "flash"
+	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	mymob.flash.layer = 17
+
+	mymob.zone_sel = new /obj/screen/zone_sel/alien()
+	mymob.zone_sel.icon = 'icons/mob/screen_alien.dmi'
+	mymob.zone_sel.update_icon()
+
+	mymob.client.screen = list()
+
+	mymob.client.screen += list( mymob.zone_sel, mymob.healths, nightvisionicon, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += adding + other
+	mymob.client.screen += mymob.client.void

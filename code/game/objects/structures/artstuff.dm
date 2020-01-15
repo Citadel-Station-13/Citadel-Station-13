@@ -5,33 +5,35 @@
 
 /obj/structure/easel
 	name = "easel"
-	desc = "Only for the finest of art!"
+	desc = "only for the finest of art!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "easel"
-	density = TRUE
-	resistance_flags = FLAMMABLE
-	max_integrity = 60
-	var/obj/item/canvas/painting = null
+	density = 1
+	burn_state = FLAMMABLE
+	burntime = 15
+	var/obj/item/weapon/canvas/painting = null
+
 
 //Adding canvases
 /obj/structure/easel/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/canvas))
-		var/obj/item/canvas/C = I
-		user.dropItemToGround(C)
+	if(istype(I, /obj/item/weapon/canvas))
+		var/obj/item/weapon/canvas/C = I
+		user.unEquip(C)
 		painting = C
-		C.forceMove(get_turf(src))
+		C.loc = get_turf(src)
 		C.layer = layer+0.1
 		user.visible_message("<span class='notice'>[user] puts \the [C] on \the [src].</span>","<span class='notice'>You place \the [C] on \the [src].</span>")
-	else
-		return ..()
+		return
+
+	..()
 
 
 //Stick to the easel like glue
 /obj/structure/easel/Move()
 	var/turf/T = get_turf(src)
-	. = ..()
+	..()
 	if(painting && painting.loc == T) //Only move if it's near us.
-		painting.forceMove(get_turf(src))
+		painting.loc = get_turf(src)
 	else
 		painting = null
 
@@ -43,52 +45,43 @@
 #define AMT_OF_CANVASES	4 //Keep this up to date or shit will break.
 
 //To safe memory on making /icons we cache the blanks..
-GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
+var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 
-/obj/item/canvas
+/obj/item/weapon/canvas
 	name = "canvas"
-	desc = "Draw out your soul on this canvas!"
+	desc = "draw out your soul on this canvas!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 	var/whichGlobalBackup = 1 //List index
 
-/obj/item/canvas/nineteenXnineteen
+/obj/item/weapon/canvas/nineteenXnineteen
 	icon_state = "19x19"
 	whichGlobalBackup = 2
 
-/obj/item/canvas/twentythreeXnineteen
+/obj/item/weapon/canvas/twentythreeXnineteen
 	icon_state = "23x19"
 	whichGlobalBackup = 3
 
-/obj/item/canvas/twentythreeXtwentythree
+/obj/item/weapon/canvas/twentythreeXtwentythree
 	icon_state = "23x23"
 	whichGlobalBackup = 4
 
-//HEY YOU
-//ARE YOU READING THE CODE FOR CANVASES?
-//ARE YOU AWARE THEY CRASH HALF THE SERVER WHEN SOMEONE DRAWS ON THEM...
-//...AND NOBODY CAN FIGURE OUT WHY?
-//THEN GO ON BRAVE TRAVELER
-//TRY TO FIX THEM AND REMOVE THIS CODE
-/obj/item/canvas/Initialize()
-	..()
-	return INITIALIZE_HINT_QDEL //Delete on creation
 
 //Find the right size blank canvas
-/obj/item/canvas/proc/getGlobalBackup()
+/obj/item/weapon/canvas/proc/getGlobalBackup()
 	. = null
-	if(GLOB.globalBlankCanvases[whichGlobalBackup])
-		. = GLOB.globalBlankCanvases[whichGlobalBackup]
+	if(globalBlankCanvases[whichGlobalBackup])
+		. = globalBlankCanvases[whichGlobalBackup]
 	else
 		var/icon/I = icon(initial(icon),initial(icon_state))
-		GLOB.globalBlankCanvases[whichGlobalBackup] = I
+		globalBlankCanvases[whichGlobalBackup] = I
 		. = I
 
 
 
 //One pixel increments
-/obj/item/canvas/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/canvas/attackby(obj/item/I, mob/user, params)
 	//Click info
 	var/list/click_params = params2list(params)
 	var/pixX = text2num(click_params["icon-x"])
@@ -99,7 +92,7 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 		return
 
 	//Cleaning one pixel with a soap or rag
-	if(istype(I, /obj/item/soap) || istype(I, /obj/item/reagent_containers/rag))
+	if(istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/reagent_containers/glass/rag))
 		//Pixel info created only when needed
 		var/icon/masterpiece = icon(icon,icon_state)
 		var/thePix = masterpiece.GetPixel(pixX,pixY)
@@ -112,17 +105,18 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 		if(thePix != theOriginalPix) //colour changed
 			DrawPixelOn(theOriginalPix,pixX,pixY)
 		qdel(masterpiece)
+		return
 
 	//Drawing one pixel with a crayon
-	else if(istype(I, /obj/item/toy/crayon))
+	if(istype(I, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = I
 		DrawPixelOn(C.paint_color, pixX, pixY)
-	else
-		return ..()
+		return
 
+	..()
 
 //Clean the whole canvas
-/obj/item/canvas/attack_self(mob/user)
+/obj/item/weapon/canvas/attack_self(mob/user)
 	if(!user)
 		return
 	var/icon/blank = getGlobalBackup()
@@ -130,6 +124,7 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 		//it's basically a giant etch-a-sketch
 		icon = blank
 		user.visible_message("<span class='notice'>[user] cleans the canvas.</span>","<span class='notice'>You clean the canvas.</span>")
+
 
 
 #undef AMT_OF_CANVASES

@@ -1,11 +1,9 @@
 /mob/living/simple_animal/hostile/wizard
 	name = "Space Wizard"
 	desc = "EI NATH?"
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 3
 	response_help = "pokes"
@@ -19,35 +17,29 @@
 	melee_damage_upper = 5
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = INTENT_HARM
+	a_intent = "harm"
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
-	faction = list(ROLE_WIZARD)
+	faction = list("wizard")
 	status_flags = CANPUSH
 
 	retreat_distance = 3 //out of fireball range
 	minimum_distance = 3
-	del_on_death = 1
-	loot = list(/obj/effect/mob_spawn/human/corpse/wizard,
-				/obj/item/staff)
 
-	var/obj/effect/proc_holder/spell/aimed/fireball/fireball = null
+	var/obj/effect/proc_holder/spell/dumbfire/fireball/fireball = null
 	var/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/blink = null
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
 
 	var/next_cast = 0
 
-	do_footstep = TRUE
 
-/mob/living/simple_animal/hostile/wizard/Initialize()
-	. = ..()
-	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
+/mob/living/simple_animal/hostile/wizard/New()
+	..()
+	fireball = new /obj/effect/proc_holder/spell/dumbfire/fireball
 	fireball.clothes_req = 0
 	fireball.human_req = 0
 	fireball.player_lock = 0
 	AddSpell(fireball)
-	var/obj/item/implant/exile/I = new
-	I.implant(src, null, TRUE)
 
 	mm = new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	mm.clothes_req = 0
@@ -62,12 +54,19 @@
 	blink.outer_tele_radius = 3
 	AddSpell(blink)
 
+/mob/living/simple_animal/hostile/wizard/death(gibbed)
+	..(gibbed)
+	new /obj/effect/landmark/mobcorpse/wizard(src.loc)
+	new /obj/item/weapon/staff(src.loc)
+	qdel(src)
+	return
+
 /mob/living/simple_animal/hostile/wizard/handle_automated_action()
 	. = ..()
 	if(target && next_cast < world.time)
 		if((get_dir(src,target) in list(SOUTH,EAST,WEST,NORTH)) && fireball.cast_check(0,src)) //Lined up for fireball
-			src.setDir(get_dir(src,target))
-			fireball.perform(list(target), user = src)
+			src.dir = get_dir(src,target)
+			fireball.choose_targets(src)
 			next_cast = world.time + 10 //One spell per second
 			return .
 		if(mm.cast_check(0,src))

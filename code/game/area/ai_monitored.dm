@@ -1,31 +1,26 @@
 /area/ai_monitored
 	name = "AI Monitored Area"
-	clockwork_warp_allowed = FALSE
-	var/list/obj/machinery/camera/motioncameras = list()
-	var/list/datum/weakref/motionTargets = list()
+	var/obj/machinery/camera/motioncamera = null
 
-/area/ai_monitored/Initialize(mapload)
-	. = ..()
-	if(mapload)
+
+/area/ai_monitored/New()
+	..()
+	// locate and store the motioncamera
+	spawn (20) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/M in src)
 			if(M.isMotion())
-				motioncameras.Add(M)
+				motioncamera = M
 				M.area_motion = src
-
-//Only need to use one camera
+				return
+	return
 
 /area/ai_monitored/Entered(atom/movable/O)
 	..()
-	if (ismob(O) && motioncameras.len)
-		for(var/X in motioncameras)
-			var/obj/machinery/camera/cam = X
-			cam.newTarget(O)
-			return
+	if (ismob(O) && motioncamera)
+		motioncamera.newTarget(O)
 
 /area/ai_monitored/Exited(atom/movable/O)
-	..()
-	if (ismob(O) && motioncameras.len)
-		for(var/X in motioncameras)
-			var/obj/machinery/camera/cam = X
-			cam.lostTargetRef(WEAKREF(O))
-			return
+	if (ismob(O) && motioncamera)
+		motioncamera.lostTarget(O)
+
+

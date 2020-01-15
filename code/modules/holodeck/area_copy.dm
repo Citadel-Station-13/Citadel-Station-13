@@ -1,14 +1,7 @@
-//Vars that will not be copied when using /DuplicateObject
-GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
-	"tag", "datum_components", "area", "type", "loc", "locs", "vars", "parent", "parent_type", "verbs", "ckey", "key",
-	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup"
-	))
-
-/proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc = FALSE, atom/newloc = null, nerf = FALSE, holoitem=FALSE)
-	RETURN_TYPE(original.type)
+/proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0, var/atom/newloc = null, var/nerf = 0)
 	if(!original)
-		return
-	var/atom/O
+		return null
+	var/obj/O
 
 	if(sameloc)
 		O = new original.type(original.loc)
@@ -16,31 +9,26 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 		O = new original.type(newloc)
 
 	if(perfectcopy && O && original)
-		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
-			if(islist(original.vars[V]))
+		var/global/list/forbidden_vars = list("type","loc","locs","vars", "parent","parent_type", "verbs","ckey","key","power_supply","contents","reagents","stat","x","y","z","group")
+
+		for(var/V in original.vars - forbidden_vars)
+			if(istype(original.vars[V],/list))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
-			else if(istype(original.vars[V], /datum))
+			else if(istype(original.vars[V],/datum))
 				continue	// this would reference the original's object, that will break when it is used or deleted.
 			else
 				O.vars[V] = original.vars[V]
 
-	if(isobj(O))
-		var/obj/N = O
-		if(holoitem)
-			N.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // holoitems do not burn
-
-		if(nerf && isitem(O))
+	if(istype(O))
+		O.burn_state = FIRE_PROOF // holoitems do not burn
+		if(nerf && istype(O,/obj/item))
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not
-
-		N.update_icon()
-		if(ismachinery(O))
+		if(istype(O,/obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
-
-	if(holoitem)
-		O.flags_1 |= HOLOGRAM_1
+	O.update_icon()
 	return O
 
 
@@ -51,8 +39,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
-	if(!A || !src)
-		return 0
+	if(!A || !src) return 0
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
@@ -82,48 +69,43 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	var/copiedobjs = list()
 
 	for (var/turf/T in refined_src)
+		//var/datum/coords/C_src = refined_src[T]
 		var/coordstring = refined_src[T]
 		var/turf/B = refined_trg[coordstring]
 		if(!istype(B))
 			continue
 
 		if(platingRequired)
-			if(isspaceturf(B))
+			if(istype(B, /turf/space))
 				continue
 
 		var/old_dir1 = T.dir
 		var/old_icon_state1 = T.icon_state
 		var/old_icon1 = T.icon
 
-		B = B.ChangeTurf(T.type)
-		B.setDir(old_dir1)
-		B.icon = old_icon1
-		B.icon_state = old_icon_state1
+		var/turf/X = new T.type(B)
+		X.dir = old_dir1
+		X.icon = old_icon1
+		X.icon_state = old_icon_state1
 
 		for(var/obj/O in T)
-			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = B, nerf=nerf_weapons, holoitem=TRUE)
-			if(!O2)
-				continue
-			copiedobjs += O2.GetAllContents()
+			var/obj/O2 = DuplicateObject(O , 1, newloc = X, nerf=nerf_weapons)
+			if(!O2) continue
+			copiedobjs += O2.GetAllContents() + O2
 
 		for(var/mob/M in T)
-			if(iscameramob(M))
-				continue // If we need to check for more mobs, I'll add a variable
-			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
-			copiedobjs += SM.GetAllContents()
+			if(istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
+			var/mob/SM = DuplicateObject(M , 1, newloc = X)
+			copiedobjs += SM.GetAllContents() + SM
 
-		for(var/V in T.vars - GLOB.duplicate_forbidden_vars)
-			if(V == "air")
-				var/turf/open/O1 = B
-				var/turf/open/O2 = T
-				O1.air.copy_from(O2.return_air())
-				continue
-			B.vars[V] = T.vars[V]
-		toupdate += B
+		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
+		for(var/V in T.vars - forbidden_vars)
+			X.vars[V] = T.vars[V]
+		toupdate += X
 
 	if(toupdate.len)
-		for(var/turf/T1 in toupdate)
-			CALCULATE_ADJACENT_TURFS(T1)
+		for(var/turf/simulated/T1 in toupdate)
+			T1.CalculateAdjacentTurfs()
 			SSair.add_to_active(T1,1)
 
 

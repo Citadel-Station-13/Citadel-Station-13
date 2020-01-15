@@ -1,33 +1,9 @@
-/mob/living/Life(seconds, times_fired)
+/mob/living/Life()
 	set invisibility = 0
+	set background = BACKGROUND_ENABLED
 
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
-
-	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		float(on = TRUE)
-
-	if (client)
-		var/turf/T = get_turf(src)
-		if(!T)
-			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
-				forceMove(E.loc)
-				break
-			var/msg = "[key_name_admin(src)] [ADMIN_JMP(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
-			message_admins(msg)
-			send2irc_adminless_only("Mob", msg, R_ADMIN)
-			log_game("[key_name(src)] was found to have no .loc with an attached client.")
-
-		// This is a temporary error tracker to make sure we've caught everything
-		else if (registered_z != T.z)
-#ifdef TESTING
-			message_admins("[src] [ADMIN_FLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
-#endif
-			log_game("Z-TRACKING: [src] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z].")
-			update_z(T.z)
-	else if (registered_z)
-		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
-		update_z(null)
 
 	if (notransform)
 		return
@@ -36,21 +12,23 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
+
+		//Breathing, if applicable
+		handle_breathing()
+
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-	if(stat != DEAD)
-		//Breathing, if applicable
-		handle_breathing(times_fired)
+		//Chemicals in the body
+		handle_chemicals_in_body()
 
-	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+		//Blud
+		handle_blood()
 
-	if (QDELETED(src)) // diseases can qdel the mob via transformations
-		return
-
-	if(stat != DEAD)
 		//Random events (vomiting etc)
 		handle_random_events()
+
+		. = 1
 
 	//Handle temperature/pressure differences between body and environment
 	if(environment)
@@ -61,36 +39,46 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	handle_gravity()
+	update_gravity(mob_has_gravity())
 
-	if(machine)
-		machine.check_eye(src)
+	update_pulling()
 
-	if(stat != DEAD)
-		handle_traits() // eye, ear, brain damages
-	if(stat != DEAD)
-		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+	for(var/obj/item/weapon/grab/G in src)
+		G.process()
 
-	if(stat != DEAD)
-		return 1
+	if(handle_regular_status_updates()) // Status & health update, are we dead or alive etc.
+		handle_disabilities() // eye, ear, brain damages
+		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
-/mob/living/proc/handle_breathing(times_fired)
+	handle_actions()
+
+	update_canmove()
+
+	if(client)
+		handle_regular_hud_updates()
+
+
+
+/mob/living/proc/handle_breathing()
 	return
 
 /mob/living/proc/handle_mutations_and_radiation()
 	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
-/mob/living/proc/handle_diseases()
+/mob/living/proc/handle_chemicals_in_body()
 	return
 
 /mob/living/proc/handle_diginvis()
 	if(!digitaldisguise)
 		src.digitaldisguise = image(loc = src)
 	src.digitaldisguise.override = 1
-	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
+	for(var/mob/living/silicon/ai/AI in player_list)
 		AI.client.images |= src.digitaldisguise
 
+
+/mob/living/proc/handle_blood()
+	return
 
 /mob/living/proc/handle_random_events()
 	return
@@ -98,71 +86,199 @@
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
 	return
 
-/mob/living/proc/handle_fire()
-	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
-	if(!on_fire)
-		return 1
-	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.1) //the fire is slowly consumed
-	else
-		ExtinguishMob()
-		return
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.gases[/datum/gas/oxygen] < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
-		return
-	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 10, 1)
-
 /mob/living/proc/handle_stomach()
 	return
 
-//this updates all special effects: knockdown, druggy, stuttering, etc..
-/mob/living/proc/handle_status_effects()
-	if(confused)
-		confused = max(0, confused - 1)
+/mob/living/proc/update_pulling()
+	if(pulling)
+		if(incapacitated())
+			stop_pulling()
 
-/mob/living/proc/handle_traits()
-	//Eyes
-	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-			eye_blind = max(eye_blind-1,0)
-			if(client && !eye_blind)
-				clear_alert("blind")
-				clear_fullscreen("blind")
+//This updates the health and status of the mob (conscious, unconscious, dead)
+/mob/living/proc/handle_regular_status_updates()
+
+	updatehealth()
+
+	if(stat != DEAD)
+
+		if(paralysis)
+			stat = UNCONSCIOUS
+
+		else if (status_flags & FAKEDEATH)
+			stat = UNCONSCIOUS
+
 		else
-			eye_blind = max(eye_blind-1,1)
+			stat = CONSCIOUS
+
+		return 1
+
+//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+/mob/living/proc/handle_status_effects()
+	if(paralysis)
+		paralysis = max(paralysis-1,0)
+	if(stunned)
+		stunned = max(stunned-1,0)
+		if(!stunned)
+			update_icons()
+
+	if(weakened)
+		weakened = max(weakened-1,0)
+		if(!weakened)
+			update_icons()
+
+/mob/living/proc/handle_disabilities()
+	//Eyes
+	if(disabilities & BLIND || stat)	//blindness from disability or unconsciousness doesn't get better on its own
+		eye_blind = max(eye_blind, 1)
+	else if(eye_blind)			//blindness, heals slowly over time
+		eye_blind = max(eye_blind-1,0)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
-		if(client)
-			if(!eye_blurry)
-				remove_eyeblur()
-			else
-				update_eyeblur()
 
-/mob/living/proc/update_damage_hud()
+	//Ears
+	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
+		setEarDamage(-1, max(ear_deaf, 1))
+	else
+		// deafness heals slowly over time, unless ear_damage is over 100
+		if(ear_damage < 100)
+			adjustEarDamage(-0.05,-1)
+
+/mob/living/proc/handle_actions()
+	//Pretty bad, i'd use picked/dropped instead but the parent calls in these are nonexistent
+	for(var/datum/action/A in actions)
+		if(A.CheckRemoval(src))
+			A.Remove(src)
+	for(var/obj/item/I in src)
+		give_action_button(I, 1)
 	return
 
-/mob/living/proc/handle_gravity()
-	var/gravity = mob_has_gravity()
-	update_gravity(gravity)
+/mob/living/proc/give_action_button(var/obj/item/I, recursive = 0)
+	if(I.action_button_name)
+		if(!I.action)
+			if(istype(I, /obj/item/organ/internal))
+				I.action = new/datum/action/item_action/organ_action
+			else if(I.action_button_is_hands_free)
+				I.action = new/datum/action/item_action/hands_free
+			else
+				I.action = new/datum/action/item_action
+			I.action.name = I.action_button_name
+			I.action.target = I
+		I.action.Grant(src)
 
-	if(gravity > STANDARD_GRAVITY)
-		gravity_animate()
-		handle_high_gravity(gravity)
+	if(recursive)
+		for(var/obj/item/T in I)
+			give_action_button(I, recursive - 1)
 
-/mob/living/proc/gravity_animate()
-	if(!get_filter("gravity"))
-		add_filter("gravity",1, GRAVITY_MOTION_BLUR)
-	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
 
-/mob/living/proc/gravity_pulse_animation()
-	animate(get_filter("gravity"), y = 1, time = 10)
-	sleep(10)
-	animate(get_filter("gravity"), y = 0, time = 10)
+//this handles hud updates. Calls update_vision() and handle_hud_icons()
+/mob/living/proc/handle_regular_hud_updates()
+	if(!client)	return 0
 
-/mob/living/proc/handle_high_gravity(gravity)
-	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more
-		var/grav_stregth = gravity - GRAVITY_DAMAGE_TRESHOLD
-		adjustBruteLoss(min(grav_stregth,3))
+	handle_vision()
+	handle_hud_icons()
+	update_action_buttons()
+
+	return 1
+
+/mob/living/proc/handle_vision()
+
+	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
+
+	update_sight()
+
+	if(stat != DEAD)
+		if(blind)
+			if(eye_blind)
+				blind.layer = 18
+				throw_alert("blind", /obj/screen/alert/blind)
+			else
+				blind.layer = 0
+				clear_alert("blind")
+
+				if (disabilities & NEARSIGHT)
+					client.screen += global_hud.vimpaired
+
+				if (eye_blurry)
+					client.screen += global_hud.blurry
+
+				if (druggy)
+					client.screen += global_hud.druggy
+					throw_alert("high", /obj/screen/alert/high)
+				else
+					clear_alert("high")
+
+				if(eye_stat > 20)
+					if(eye_stat > 30)
+						client.screen += global_hud.darkMask
+					else
+						client.screen += global_hud.vimpaired
+
+		if(machine)
+			if (!( machine.check_eye(src) ))
+				reset_view(null)
+		else
+			if(!remote_view && !client.adminobs)
+				reset_view(null)
+
+/mob/living/proc/update_sight()
+	return
+
+/mob/living/proc/handle_hud_icons()
+	handle_hud_icons_health()
+	return
+
+/mob/living/proc/handle_hud_icons_health()
+	return
+
+/mob/living/update_action_buttons()
+	if(!hud_used) return
+	if(!client) return
+
+	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
+		return
+
+	client.screen -= hud_used.hide_actions_toggle
+	for(var/datum/action/A in actions)
+		if(A.button)
+			client.screen -= A.button
+
+	if(hud_used.action_buttons_hidden)
+		if(!hud_used.hide_actions_toggle)
+			hud_used.hide_actions_toggle = new(hud_used)
+			hud_used.hide_actions_toggle.UpdateIcon()
+
+		if(!hud_used.hide_actions_toggle.moved)
+			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
+			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
+
+		client.screen += hud_used.hide_actions_toggle
+		return
+
+	var/button_number = 0
+	for(var/datum/action/A in actions)
+		button_number++
+		if(A.button == null)
+			var/obj/screen/movable/action_button/N = new(hud_used)
+			N.owner = A
+			A.button = N
+
+		var/obj/screen/movable/action_button/B = A.button
+
+		B.UpdateIcon()
+
+		B.name = A.UpdateName()
+
+		client.screen += B
+
+		if(!B.moved)
+			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
+			//hud_used.SetButtonCoords(B,button_number)
+
+	if(button_number > 0)
+		if(!hud_used.hide_actions_toggle)
+			hud_used.hide_actions_toggle = new(hud_used)
+			hud_used.hide_actions_toggle.InitialiseIcon(src)
+		if(!hud_used.hide_actions_toggle.moved)
+			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
+			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
+		client.screen += hud_used.hide_actions_toggle

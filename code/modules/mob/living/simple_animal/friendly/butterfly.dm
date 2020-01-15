@@ -8,27 +8,16 @@
 	response_help = "shoos"
 	response_disarm = "brushes aside"
 	response_harm = "squashes"
-	speak_emote = list("flutters")
 	maxHealth = 2
 	health = 2
 	harm_intent_damage = 1
 	friendly = "nudges"
-	density = FALSE
-	movement_type = FLYING
+	density = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = VENTCRAWLER_ALWAYS
+	ventcrawler = 2
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
-	gold_core_spawnable = FRIENDLY_SPAWN
-	verb_say = "flutters"
-	verb_ask = "flutters inquisitively"
-	verb_exclaim = "flutters intensely"
-	verb_yell = "flutters intensely"
+	gold_core_spawnable = 2
 
-/mob/living/simple_animal/butterfly/Initialize()
-	. = ..()
-	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-
-/mob/living/simple_animal/butterfly/bee_friendly()
-	return TRUE //treaty signed at the Beeneeva convention
+/mob/living/simple_animal/butterfly/New()
+	..()
+	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))

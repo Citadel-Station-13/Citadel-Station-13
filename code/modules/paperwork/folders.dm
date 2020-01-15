@@ -1,65 +1,59 @@
-/obj/item/folder
+/obj/item/weapon/folder
 	name = "folder"
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	pressure_resistance = 2
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
-/obj/item/folder/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return OXYLOSS
-
-/obj/item/folder/blue
+/obj/item/weapon/folder/blue
 	desc = "A blue folder."
 	icon_state = "folder_blue"
 
-/obj/item/folder/red
+/obj/item/weapon/folder/red
 	desc = "A red folder."
 	icon_state = "folder_red"
 
-/obj/item/folder/yellow
+/obj/item/weapon/folder/yellow
 	desc = "A yellow folder."
 	icon_state = "folder_yellow"
 
-/obj/item/folder/white
+/obj/item/weapon/folder/white
 	desc = "A white folder."
 	icon_state = "folder_white"
 
 
-/obj/item/folder/update_icon()
-	cut_overlays()
+/obj/item/weapon/folder/update_icon()
+	overlays.Cut()
 	if(contents.len)
-		add_overlay("folder_paper")
+		overlays += "folder_paper"
 
 
-/obj/item/folder/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/paper) || istype(W, /obj/item/photo) || istype(W, /obj/item/documents))
-		if(!user.transferItemToLoc(W, src))
+/obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/documents))
+		if(!user.unEquip(W))
 			return
-		to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
+		W.loc = src
+		user << "<span class='notice'>You put [W] into [src].</span>"
 		update_icon()
-	else if(istype(W, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
-			return
+	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as text), 1, MAX_NAME_LEN)
-		if(user.canUseTopic(src, BE_CLOSE))
-			name = "folder[(n_name ? " - '[n_name]'" : null)]"
+		if((in_range(src,user) && user.stat == CONSCIOUS))
+			name = "folder[(n_name ? "- '[n_name]'" : null)]"
 
 
-/obj/item/folder/attack_self(mob/user)
+/obj/item/weapon/folder/attack_self(mob/user)
 	var/dat = "<title>[name]</title>"
 
 	for(var/obj/item/I in src)
-		dat += "<A href='?src=[REF(src)];remove=[REF(I)]'>Remove</A> - <A href='?src=[REF(src)];read=[REF(I)]'>[I.name]</A><BR>"
+		dat += "<A href='?src=\ref[src];remove=\ref[I]'>Remove</A> - <A href='?src=\ref[src];read=\ref[I]'>[I.name]</A><BR>"
 	user << browse(dat, "window=folder")
 	onclose(user, "folder")
 	add_fingerprint(usr)
 
 
-/obj/item/folder/Topic(href, href_list)
+/obj/item/weapon/folder/Topic(href, href_list)
 	..()
 	if(usr.stat || usr.restrained())
 		return
@@ -69,7 +63,7 @@
 		if(href_list["remove"])
 			var/obj/item/I = locate(href_list["remove"])
 			if(istype(I) && I.loc == src)
-				I.forceMove(usr.loc)
+				I.loc = usr.loc
 				usr.put_in_hands(I)
 
 		if(href_list["read"])
@@ -81,37 +75,31 @@
 		attack_self(usr)
 		update_icon()
 
-/obj/item/folder/documents
+/obj/item/weapon/folder/documents
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of Nanotrasen Corporation. Unauthorized distribution is punishable by death.\""
 
-/obj/item/folder/documents/Initialize()
-	. = ..()
+/obj/item/weapon/folder/documents/New()
+	..()
 	new /obj/item/documents/nanotrasen(src)
 	update_icon()
 
-/obj/item/folder/syndicate
-	icon_state = "folder_syndie"
+/obj/item/weapon/folder/syndicate
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of The Syndicate.\""
 
-/obj/item/folder/syndicate/red
+/obj/item/weapon/folder/syndicate/red
 	icon_state = "folder_sred"
 
-/obj/item/folder/syndicate/red/Initialize()
-	. = ..()
+/obj/item/weapon/folder/syndicate/red/New()
+	..()
 	new /obj/item/documents/syndicate/red(src)
 	update_icon()
 
-/obj/item/folder/syndicate/blue
+/obj/item/weapon/folder/syndicate/blue
 	icon_state = "folder_sblue"
 
-/obj/item/folder/syndicate/blue/Initialize()
-	. = ..()
+/obj/item/weapon/folder/syndicate/blue/New()
+	..()
 	new /obj/item/documents/syndicate/blue(src)
-	update_icon()
-
-/obj/item/folder/syndicate/mining/Initialize()
-	. = ..()
-	new /obj/item/documents/syndicate/mining(src)
 	update_icon()

@@ -3,8 +3,8 @@
 	desc = "Because you really needed another excuse to punch your crewmates."
 	icon_state = "boxing"
 	item_state = "boxing"
-	equip_delay_other = 60
-	species_exception = list(/datum/species/golem) // now you too can be a golem boxing champion
+	put_on_delay = 60
+	species_exception = list(/datum/species/golem, /datum/species/golem/adamantine) // now you too can be a golem boxing champion
 
 /obj/item/clothing/gloves/boxing/green
 	icon_state = "boxinggreen"

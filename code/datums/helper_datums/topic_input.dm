@@ -14,8 +14,6 @@
 	var/t = get(i)
 	if(t)
 		t = locate(t)
-	if (istext(t))
-		t = null
 	return t || null
 
 /datum/topic_input/proc/getNum(i)
@@ -37,7 +35,7 @@
 	return isturf(t) ? t : null
 
 /datum/topic_input/proc/getAtom(i)
-	return getType(i, /atom)
+	return getType(i,/atom)
 
 /datum/topic_input/proc/getArea(i)
 	var/t = getAndLocate(i)

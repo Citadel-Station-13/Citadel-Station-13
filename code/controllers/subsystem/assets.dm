@@ -1,28 +1,23 @@
-SUBSYSTEM_DEF(assets)
+var/datum/subsystem/assets/SSasset
+
+/datum/subsystem/assets
 	name = "Assets"
-	init_order = INIT_ORDER_ASSETS
-	flags = SS_NO_FIRE
+	priority = -3
+
 	var/list/cache = list()
-	var/list/preload = list()
 
-/datum/controller/subsystem/assets/Initialize(timeofday)
+/datum/subsystem/assets/New()
+	NEW_SS_GLOBAL(SSasset)
 
-	var/list/priority_assets = list(
-		/datum/asset/simple/oui_theme_nano,
-		/datum/asset/simple/goonchat
-		)
-
-	for(var/type in priority_assets)
+/datum/subsystem/assets/Initialize(timeofday, zlevel)
+	if (zlevel)
+		return ..()
+	for(var/type in typesof(/datum/asset) - list(/datum/asset, /datum/asset/simple))
 		var/datum/asset/A = new type()
 		A.register()
-	
-	for(var/type in typesof(/datum/asset) - (priority_assets | list(/datum/asset, /datum/asset/simple)))
-		var/datum/asset/A = type
-		if (type != initial(A._abstract))
-			get_asset_datum(type)
 
-	preload = cache.Copy() //don't preload assets generated during the round
-
-	for(var/client/C in GLOB.clients)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, preload, FALSE), 10)
+	for(var/client/C in clients)
+		// Doing this to a client too soon after they've connected can cause issues, also the proc we call sleeps.
+		spawn(10)
+			getFilesSlow(C, cache, FALSE)
 	..()

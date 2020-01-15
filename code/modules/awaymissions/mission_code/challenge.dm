@@ -5,31 +5,30 @@
 	icon_state = "away"
 
 /area/awaymission/challenge/main
-	name = "Danger Room"
+	name = "\improper Danger Room"
 	icon_state = "away1"
-	requires_power = FALSE
+	requires_power = 0
 
 /area/awaymission/challenge/end
 	name = "Administration"
 	icon_state = "away2"
-	requires_power = FALSE
+	requires_power = 0
 
 
 /obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
-	desc = "A heavy duty industrial laser."
+	desc = "A heavy duty industrial laser"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
-	anchored = TRUE
-	density = TRUE
-	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+	anchored = 1
+	density = 1
 
-	use_power = NO_POWER_USE
+	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
 
-	active = TRUE
-	locked = TRUE
+	active = 1
+	locked = 1
 	state = 2
 
 /obj/machinery/power/emitter/energycannon/RefreshParts()

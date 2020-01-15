@@ -1,42 +1,49 @@
-/proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
+/proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor)
 	var/t_amount = 0
-	var/list/seeds = list()
 	if(t_max == -1)
 		if(extractor)
 			t_max = rand(1,4) * extractor.seed_multiplier
 		else
 			t_max = rand(1,4)
 
-	var/seedloc = O.loc
-	if(extractor)
-		seedloc = extractor.loc
-
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/))
-		var/obj/item/reagent_containers/food/snacks/grown/F = O
-		if(F.seed)
-			if(user && !user.temporarilyRemoveItemFromInventory(O)) //couldn't drop the item
-				return
-			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = F.seed.Copy()
-				seeds.Add(t_prod)
-				t_prod.forceMove(seedloc)
-				t_amount++
-			qdel(O)
-			return seeds
-
-	else if(istype(O, /obj/item/grown))
-		var/obj/item/grown/F = O
-		if(F.seed)
-			if(user && !user.temporarilyRemoveItemFromInventory(O))
-				return
-			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.forceMove(seedloc)
-				t_amount++
-			qdel(O)
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
+		while(t_amount < t_max)
+			var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
+			t_prod.lifespan = F.lifespan
+			t_prod.endurance = F.endurance
+			t_prod.maturation = F.maturation
+			t_prod.production = F.production
+			t_prod.yield = F.yield
+			t_prod.potency = F.potency
+			t_amount++
+		qdel(O)
 		return 1
 
-	return 0
+	else if(istype(O, /obj/item/weapon/grown/))
+		var/obj/item/weapon/grown/F = O
+		if(F.seed)
+			while(t_amount < t_max)
+				var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
+				t_prod.lifespan = F.lifespan
+				t_prod.endurance = F.endurance
+				t_prod.maturation = F.maturation
+				t_prod.production = F.production
+				t_prod.yield = F.yield
+				t_prod.potency = F.potency
+				t_amount++
+			qdel(O)
+			return 1
+		else return 0
+
+	/*else if(istype(O, /obj/item/stack/tile/grass))
+		var/obj/item/stack/tile/grass/S = O
+		new /obj/item/seeds/grassseed(O.loc)
+		S.use(1)
+		return 1*/
+
+	else
+		return 0
 
 
 /obj/machinery/seed_extractor
@@ -44,21 +51,32 @@
 	desc = "Extracts and bags seeds from produce."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
-	density = TRUE
-	circuit = /obj/item/circuitboard/machine/seed_extractor
+	density = 1
+	anchored = 1
 	var/piles = list()
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
+/obj/machinery/seed_extractor/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/seed_extractor(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
+
 /obj/machinery/seed_extractor/RefreshParts()
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_seeds = 1000 * B.rating
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		seed_multiplier = M.rating
 
 /obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
+		return
+
+	if(exchange_parts(user, O))
 		return
 
 	if(default_pry_open(O))
@@ -67,35 +85,42 @@
 	if(default_unfasten_wrench(user, O))
 		return
 
-	if(default_deconstruction_crowbar(O))
+	default_deconstruction_crowbar(O)
+
+	if(isrobot(user))
 		return
 
-	if(istype(O, /obj/item/storage/bag/plants))
-		var/obj/item/storage/P = O
+	if (istype(O,/obj/item/weapon/storage/bag/plants))
+		var/obj/item/weapon/storage/P = O
 		var/loaded = 0
 		for(var/obj/item/seeds/G in P.contents)
 			if(contents.len >= max_seeds)
 				break
 			++loaded
-			add_seed(G)
+			add(G)
 		if (loaded)
-			to_chat(user, "<span class='notice'>You put as many seeds from \the [O.name] into [src] as you can.</span>")
+			user << "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>"
 		else
-			to_chat(user, "<span class='notice'>There are no seeds in \the [O.name].</span>")
+			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
 		return
 
-	else if(seedify(O,-1, src, user))
-		to_chat(user, "<span class='notice'>You extract some seeds.</span>")
+	if(!user.drop_item()) //couldn't drop the item
+		user << "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the seed extractor!</span>"
 		return
-	else if (istype(O, /obj/item/seeds))
-		if(add_seed(O))
-			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
-			updateUsrDialog()
+
+	if(O && O.loc)
+		O.loc = src.loc
+
+	if(seedify(O,-1))
+		user << "<span class='notice'>You extract some seeds.</span>"
 		return
-	else if(user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
+	else if (istype(O,/obj/item/seeds))
+		add(O)
+		user << "<span class='notice'>You add [O] to [src.name].</span>"
+		updateUsrDialog()
+		return
 	else
-		return ..()
+		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
 
 /datum/seed_pile
 	var/name = ""
@@ -117,10 +142,13 @@
 	src.potency = poten
 	src.amount = am
 
-/obj/machinery/seed_extractor/ui_interact(mob/user)
-	. = ..()
+/obj/machinery/seed_extractor/attack_hand(mob/user)
+	user.set_machine(src)
+	interact(user)
+
+/obj/machinery/seed_extractor/interact(mob/user)
 	if (stat)
-		return FALSE
+		return 0
 
 	var/dat = "<b>Stored seeds:</b><br>"
 
@@ -131,7 +159,7 @@
 		for (var/datum/seed_pile/O in piles)
 			dat += "<tr><td>[O.name]</td><td>[O.lifespan]</td><td>[O.endurance]</td><td>[O.maturation]</td>"
 			dat += "<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>"
-			dat += "<a href='byond://?src=[REF(src)];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency]'>Vend</a> ([O.amount] left)</td></tr>"
+			dat += "<a href='byond://?src=\ref[src];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency]'>Vend</a> ([O.amount] left)</td></tr>"
 		dat += "</table>"
 	var/datum/browser/popup = new(user, "seed_ext", name, 700, 400)
 	popup.set_content(dat)
@@ -163,30 +191,32 @@
 	for (var/obj/T in contents)//Now we find the seed we need to vend
 		var/obj/item/seeds/O = T
 		if (O.plantname == href_list["name"] && O.lifespan == href_list["li"] && O.endurance == href_list["en"] && O.maturation == href_list["ma"] && O.production == href_list["pr"] && O.yield == href_list["yi"] && O.potency == href_list["pot"])
-			O.forceMove(drop_location())
+			O.loc = src.loc
 			break
 
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
+/obj/machinery/seed_extractor/proc/add(obj/item/seeds/O)
 	if(contents.len >= 999)
-		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
-		return FALSE
+		usr << "<span class='notice'>\The [src] is full.</span>"
+		return 0
 
-	var/datum/component/storage/STR = O.loc.GetComponent(/datum/component/storage)
-	if(STR)
-		if(!STR.remove_from_storage(O,src))
-			return FALSE
-	else if(ismob(O.loc))
+	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		if(!M.transferItemToLoc(O, src))
-			return FALSE
+		if(!M.unEquip(O))
+			usr << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			return
+	else if(istype(O.loc,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = O.loc
+		S.remove_from_storage(O,src)
 
-	. = TRUE
+	O.loc = src
+
 	for (var/datum/seed_pile/N in piles)
 		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency)
 			++N.amount
 			return
 
 	piles += new /datum/seed_pile(O.plantname, O.lifespan, O.endurance, O.maturation, O.production, O.yield, O.potency)
+	return

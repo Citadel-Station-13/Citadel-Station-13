@@ -1,5 +1,7 @@
 /obj/effect/overlay
 	name = "overlay"
+	unacidable = 1
+	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
 /obj/effect/overlay/singularity_act()
 	return
@@ -13,41 +15,86 @@
 	icon_state="b_beam"
 	var/atom/BeamSource
 
-/obj/effect/overlay/beam/Initialize()
-	. = ..()
-	QDEL_IN(src, 10)
+/obj/effect/overlay/beam/New()
+	..()
+	spawn(10) qdel(src)
+
+/obj/effect/overlay/temp
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
+	anchored = 1
+	layer = 4.1
+	mouse_opacity = 0
+	var/duration = 10
+	var/randomdir = 1
+
+/obj/effect/overlay/temp/Destroy()
+	..()
+	return QDEL_HINT_PUTINPOOL
+
+/obj/effect/overlay/temp/New()
+	if(randomdir)
+		dir = pick(cardinal)
+	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
+	spawn(duration)
+		qdel(src)
+
+/obj/effect/overlay/temp/cult
+	randomdir = 0
+	duration = 10
+
+/obj/effect/overlay/temp/cult/sac
+	name = "maw of Nar-Sie"
+	icon_state = "sacconsume"
+
+/obj/effect/overlay/temp/cult/turf
+	name = "unholy glow"
+	icon_state = "wallglow"
+	layer = 2.01
+
+/obj/effect/overlay/temp/cult/turf/floor
+	icon_state = "floorglow"
+	duration = 5
+
+
+/obj/effect/overlay/temp/revenant
+	name = "spooky lights"
+	icon_state = "purplesparkles"
+
+/obj/effect/overlay/temp/revenant/cracks
+	name = "glowing cracks"
+	icon_state = "purplecrack"
+	duration = 6
+
+
+/obj/effect/overlay/temp/emp
+	name = "emp sparks"
+	icon_state = "empdisable"
+
+/obj/effect/overlay/temp/emp/pulse
+	name = "emp pulse"
+	icon_state = "emp pulse"
+	duration = 8
+	randomdir = 0
+
 
 /obj/effect/overlay/palmtree_r
-	name = "palm tree"
+	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm1"
-	density = TRUE
-	layer = WALL_OBJ_LAYER
-	anchored = TRUE
+	density = 1
+	layer = 5
+	anchored = 1
 
 /obj/effect/overlay/palmtree_l
-	name = "palm tree"
+	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm2"
-	density = TRUE
-	layer = WALL_OBJ_LAYER
-	anchored = TRUE
+	density = 1
+	layer = 5
+	anchored = 1
 
 /obj/effect/overlay/coconut
-	gender = PLURAL
-	name = "coconuts"
+	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
-
-/obj/effect/overlay/sparkles
-	gender = PLURAL
-	name = "sparkles"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "shieldsparkles"
-	anchored = TRUE
-
-/obj/effect/overlay/vis
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	anchored = TRUE
-	var/unused = 0 //When detected to be unused it gets set to world.time, after a while it gets removed
-	var/cache_expiration = 2 MINUTES // overlays which go unused for 2 minutes get cleaned up

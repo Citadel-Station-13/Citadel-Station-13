@@ -40,12 +40,12 @@ proc
 	/////////////////////
 	dd_hasprefix(text, prefix)
 		var/start = 1
-		var/end = length(prefix) + 1
+		var/end = lentext(prefix) + 1
 		return findtext(text, prefix, start, end)
 
 	dd_hasPrefix(text, prefix)
 		var/start = 1
-		var/end = length(prefix) + 1
+		var/end = lentext(prefix) + 1
 		return findtextEx(text, prefix, start, end)
 
 
@@ -54,20 +54,18 @@ proc
 	/////////////////////
 	dd_hassuffix(text, suffix)
 		var/start = length(text) - length(suffix)
-		if (start)
-			return findtext(text, suffix, start)
+		if (start) return findtext(text, suffix, start)
 
 	dd_hasSuffix(text, suffix)
 		var/start = length(text) - length(suffix)
-		if (start)
-			return findtextEx(text, suffix, start)
+		if (start) return findtextEx(text, suffix, start)
 
 	/////////////////////////////
 	// Turning text into lists //
 	/////////////////////////////
 	dd_text2list(text, separator)
-		var/textlength      = length(text)
-		var/separatorlength = length(separator)
+		var/textlength      = lentext(text)
+		var/separatorlength = lentext(separator)
 		var/list/textList   = new /list()
 		var/searchPosition  = 1
 		var/findPosition    = 1
@@ -86,8 +84,8 @@ proc
 					return textList
 
 	dd_text2List(text, separator)
-		var/textlength      = length(text)
-		var/separatorlength = length(separator)
+		var/textlength      = lentext(text)
+		var/separatorlength = lentext(separator)
 		var/list/textList   = new /list()
 		var/searchPosition  = 1
 		var/findPosition    = 1
@@ -113,8 +111,7 @@ proc
 		var/newText = "[the_list[1]]"										// Treats any object/number as text also.
 		var/count
 		for (count = 2, count <= total, count++)
-			if (separator)
-				newText += separator
+			if (separator) newText += separator
 			newText += "[the_list[count]]"
 		return newText
 

@@ -3,49 +3,69 @@
 
 //Conspicuously not-recent versions of suspicious cleanables
 
-//This file was made not awful by Xhuis on September 13, 2016
+/obj/effect/decal/cleanable/blood/old
+	name = "dried blood"
+	desc = "Looks like it's been here a while.  Eew."
+	bloodiness = 0
+
+/obj/effect/decal/cleanable/blood/old/New()
+	..()
+	icon_state += "-old"
+	blood_DNA["Non-human DNA"] = "A+"
+
+/obj/effect/decal/cleanable/blood/gibs/old
+	name = "old rotting gibs"
+	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
+	bloodiness = 0
+
+/obj/effect/decal/cleanable/blood/gibs/old/New()
+	..()
+	icon_state += "-old"
+	dir = pick(1,2,4,8)
+	blood_DNA["Non-human DNA"] = "A+"
+
+/obj/effect/decal/cleanable/vomit/old
+	name = "crusty dried vomit"
+	desc = "You try not to look at the chunks, and fail."
+
+/obj/effect/decal/cleanable/vomit/old/New()
+	..()
+	icon_state += "-old"
+
+/obj/effect/decal/cleanable/robot_debris/old
+	name = "dusty robot debris"
+	desc = "Looks like nobody has touched this in a while."
+
 
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
-/turf/open/floor/proc/MakeDirty()
+/turf/simulated/floor/proc/MakeDirty()
 	if(prob(66))	//fastest possible exit 2/3 of the time
 		return
 
-	if(!(flags_1 & CAN_BE_DIRTY_1))
+	// These look weird if you make them dirty
+	if(istype(src, /turf/simulated/floor/carpet) || istype(src, /turf/simulated/floor/grass) || istype(src, /turf/simulated/floor/plating/beach) || istype(src, /turf/simulated/floor/holofloor) || istype(src, /turf/simulated/floor/plating/snow) || istype(src, /turf/simulated/floor/plating/ironsand))
 		return
 
 	if(locate(/obj/structure/grille) in contents)
 		return
 
-	var/area/A = get_area(src)
+	var/area/A = loc
 
-	if(A && !(A.flags_1 & CAN_BE_DIRTY_1))
+				//zero dirt
+	if(!istype(A) || istype(A, /area/centcom) || istype(A, /area/holodeck) || istype(A, /area/library) || istype(A, /area/janitor) || istype(A, /area/chapel) || istype(A, /area/mine/explored) || istype(A, /area/mine/unexplored) || istype(A, /area/solar) || istype(A, /area/atmos) || istype(A, /area/medical/virology))
 		return
 
-	//The code below here isn't exactly optimal, but because of the individual decals that each area uses it's still applicable.
-
-				//high dirt - 1/3 chance.
-	var/static/list/high_dirt_areas = typecacheof(list(/area/science/test_area,
-														/area/mine/production,
-														/area/mine/living_quarters,
-														/area/ruin/space))
-	if(is_type_in_typecache(A, high_dirt_areas))
+				//high dirt - 1/3
+	if(istype(A, /area/toxins/test_area) || istype(A, /area/mine/production) || istype(A, /area/mine/living_quarters) || istype(A, /area/mine/north_outpost) || istype(A, /area/mine/west_outpost) || istype(A, /area/wreck) || istype(A, /area/derelict) || istype(A, /area/djstation))
 		new /obj/effect/decal/cleanable/dirt(src)	//vanilla, but it works
 		return
-
 
 	if(prob(80))	//mid dirt  - 1/15
 		return
 
-		//Construction zones. Blood, sweat, and oil.  Oh, and dirt.
-	var/static/list/engine_dirt_areas = typecacheof(list(/area/engine,			
-														/area/crew_quarters/heads/chief,
-														/area/ruin/space/derelict/assembly_line,
-														/area/science/robotics,
-														/area/maintenance,
-														/area/construction,
-														/area/survivalpod))
-	if(is_type_in_typecache(A, engine_dirt_areas))
+	if(istype(A, /area/engine) || istype(A,/area/assembly) || istype(A,/area/maintenance) || istype(A,/area/construction))
+	 	//Blood, sweat, and oil.  Oh, and dirt.
 		if(prob(3))
 			new /obj/effect/decal/cleanable/blood/old(src)
 		else
@@ -58,10 +78,7 @@
 				new /obj/effect/decal/cleanable/dirt(src)
 		return
 
-		//Bathrooms. Blood, vomit, and shavings in the sinks.
-	var/static/list/bathroom_dirt_areas = typecacheof(list(	/area/crew_quarters/toilet,
-															/area/awaymission/research/interior/bathroom))
-	if(is_type_in_typecache(A, bathroom_dirt_areas))
+	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/locker/locker_toilet))
 		if(prob(40))
 			if(prob(90))
 				new /obj/effect/decal/cleanable/vomit/old(src)
@@ -69,22 +86,15 @@
 				new /obj/effect/decal/cleanable/blood/old(src)
 		return
 
-		//Hangars and pods covered in oil.
-	var/static/list/oily_areas = typecacheof(/area/quartermaster)
-	if(is_type_in_typecache(A, oily_areas))
+	if(istype(A, /area/quartermaster))
 		if(prob(25))
 			new /obj/effect/decal/cleanable/oil(src)
 		return
 
-
 	if(prob(75))	//low dirt  - 1/60
 		return
 
-		//Areas where gibs will be present. Robusting probably happened some time ago.
-	var/static/list/gib_covered_areas = typecacheof(list(/area/ai_monitored/turret_protected,
-														/area/security,
-														/area/crew_quarters/heads/hos))
-	if(is_type_in_typecache(A, gib_covered_areas))
+	if(istype(A, /area/turret_protected) || istype(A, /area/security))	//chance of incident
 		if(prob(20))
 			if(prob(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
@@ -92,10 +102,8 @@
 				new /obj/effect/decal/cleanable/blood/old(src)
 		return
 
-		//Kitchen areas. Broken eggs, flour, spilled milk (no crying allowed.)
-	var/static/list/kitchen_dirt_areas = typecacheof(list(/area/crew_quarters/kitchen,
-														/area/crew_quarters/cafeteria))
-	if(is_type_in_typecache(A, kitchen_dirt_areas))
+
+	if(istype(A, /area/crew_quarters/kitchen))	//Kitchen messes
 		if(prob(60))
 			if(prob(50))
 				new /obj/effect/decal/cleanable/egg_smudge(src)
@@ -103,28 +111,23 @@
 				new /obj/effect/decal/cleanable/flour(src)
 		return
 
-		//Medical areas. Mostly clean by space-OSHA standards, but has some blood and oil spread about.
-	var/static/list/medical_dirt_areas = typecacheof(list(/area/medical,
-														/area/crew_quarters/heads/cmo))
-	if(is_type_in_typecache(A, medical_dirt_areas))
+	if(istype(A, /area/medical))	//Kept clean, but chance of blood
 		if(prob(66))
 			if(prob(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
-		else if(prob(30))
-			if(istype(A, /area/medical/morgue))
-				new /obj/item/ectoplasm(src)
-			else
-				new /obj/effect/decal/cleanable/vomit/old(src)
+		else
+			if(prob(30))
+				if(istype(A, /area/medical/morgue))
+					new /obj/item/weapon/ectoplasm(src)
+				else
+					new /obj/effect/decal/cleanable/vomit/old(src)
 		return
 
-		//Science messes. Mostly green glowy stuff -WHICH YOU SHOULD NOT INJEST-.
-	var/static/list/science_dirt_areas = typecacheof(list(/area/science,
-														/area/crew_quarters/heads/hor))
-	if(is_type_in_typecache(A, medical_dirt_areas))
+	if(istype(A, /area/toxins))
 		if(prob(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return
 
-	return TRUE
+	return

@@ -1,92 +1,194 @@
 /mob/living/carbon/monkey
 	name = "monkey"
+	voice_name = "monkey"
 	verb_say = "chimpers"
-	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
-	icon_state = ""
+	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	ventcrawler = VENTCRAWLER_NUDE
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
+	languages = MONKEY
+	ventcrawler = 1
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
+	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
-	unique_name = TRUE
-	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
-					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
-	hud_type = /datum/hud/monkey
-	can_be_held = "monkey"
+	unique_name = 1
 
-/mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
+/mob/living/carbon/monkey/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	if(unique_name) //used to exclude pun pun
-		gender = pick(MALE, FEMALE)
+	gender = pick(MALE, FEMALE)
 	real_name = name
+	if(good_mutations.len) //genetic mutations have been set up.
+		initialize()
 
-	//initialize limbs
-	create_bodyparts()
-	create_internal_organs()
+	internal_organs += new /obj/item/organ/internal/appendix
+	internal_organs += new /obj/item/organ/internal/heart
+	internal_organs += new /obj/item/organ/internal/brain
 
-	. = ..()
+	for(var/obj/item/organ/internal/I in internal_organs)
+		I.Insert(src)
 
-	if (cubespawned)
-		var/cap = CONFIG_GET(number/monkeycap)
-		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
-			if (spawner)
-				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!</span>")
-			return INITIALIZE_HINT_QDEL
-		SSmobs.cubemonkeys += src
+	..()
 
+/mob/living/carbon/monkey/initialize()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 
-/mob/living/carbon/monkey/Destroy()
-	SSmobs.cubemonkeys -= src
-	return ..()
-
-/mob/living/carbon/monkey/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "monkey", 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi', TRUE)
-	return holder
-
-/mob/living/carbon/monkey/create_internal_organs()
-	internal_organs += new /obj/item/organ/appendix
-	internal_organs += new /obj/item/organ/lungs
-	internal_organs += new /obj/item/organ/heart
-	internal_organs += new /obj/item/organ/brain
-	internal_organs += new /obj/item/organ/tongue
-	internal_organs += new /obj/item/organ/eyes
-	internal_organs += new /obj/item/organ/ears
-	internal_organs += new /obj/item/organ/liver
-	internal_organs += new /obj/item/organ/stomach
+/mob/living/carbon/monkey/prepare_data_huds()
+	//Prepare our med HUD...
 	..()
+	//...and display it.
+	for(var/datum/atom_hud/data/human/medical/hud in huds)
+		hud.add_to_hud(src)
 
-/mob/living/carbon/monkey/on_reagent_change()
-	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
-	var/amount
-	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
-		amount = -1
-	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+/mob/living/carbon/monkey/movement_delay()
+	if(reagents)
+		if(reagents.has_reagent("morphine"))
+			return -1
 
-/mob/living/carbon/monkey/updatehealth()
+		if(reagents.has_reagent("nuka_cola"))
+			return -1
+
 	. = ..()
-	var/slow = 0
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45)
-		slow += (health_deficiency / 25)
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
+		. += (health_deficiency / 25)
 
-/mob/living/carbon/monkey/adjust_bodytemperature(amount)
-	. = ..()
-	var/slow = 0
 	if (bodytemperature < 283.222)
-		slow += (283.222 - bodytemperature) / 10 * 1.75
-	if(slow <= 0)
+		. += (283.222 - bodytemperature) / 10 * 1.75
+	return . + config.monkey_delay
+
+/mob/living/carbon/monkey/attack_paw(mob/living/M)
+	if(..()) //successful monkey bite.
+		var/damage = rand(1, 5)
+		if (stat != DEAD)
+			adjustBruteLoss(damage)
+			updatehealth()
+	return
+
+/mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
+	if(..()) //successful larva bite.
+		var/damage = rand(1, 3)
+		if(stat != DEAD)
+			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+			adjustBruteLoss(damage)
+			updatehealth()
+
+/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
+	if(..())	//To allow surgery to return properly.
 		return
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+
+	switch(M.a_intent)
+		if("help")
+			help_shake_act(M)
+		if("grab")
+			grabbedby(M)
+		if("harm")
+			M.do_attack_animation(src)
+			if (prob(75))
+				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
+						"<span class='userdanger'>[M] has punched [name]!</span>")
+
+				playsound(loc, "punch", 25, 1, -1)
+				var/damage = rand(5, 10)
+				if (prob(40))
+					damage = rand(10, 15)
+					if ( (paralysis < 5)  && (health > 0) )
+						Paralyse(rand(10, 15))
+						spawn( 0 )
+							visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
+									"<span class='userdanger'>[M] has knocked out [name]!</span>")
+							return
+				adjustBruteLoss(damage)
+				add_logs(M, src, "attacked")
+				updatehealth()
+			else
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
+						"<span class='userdanger'>[M] has attempted to punch [name]!</span>")
+
+		if("disarm")
+			if (!( paralysis ))
+				M.do_attack_animation(src)
+				if (prob(25))
+					Paralyse(2)
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					add_logs(M, src, "pushed")
+					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
+							"<span class='userdanger'>[M] has pushed down [src]!</span>")
+				else
+					if(drop_item())
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+								"<span class='userdanger'>[M] has disarmed [src]!</span>")
+	return
+
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(..()) //if harm or disarm intent.
+		if (M.a_intent == "harm")
+			if ((prob(95) && health > 0))
+				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				var/damage = rand(15, 30)
+				if (damage >= 25)
+					damage = rand(20, 40)
+					if (paralysis < 15)
+						Paralyse(rand(10, 15))
+					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
+							"<span class='userdanger'>[M] has wounded [name]!</span>")
+				else
+					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
+							"<span class='userdanger'>[M] has slashed [name]!</span>")
+
+				if (stat != DEAD)
+					adjustBruteLoss(damage)
+					updatehealth()
+				add_logs(M, src, "attacked")
+			else
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
+						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
+
+		if (M.a_intent == "disarm")
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			if(prob(95))
+				Weaken(10)
+				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
+						"<span class='userdanger'>[M] has tackled down [name]!</span>")
+			else
+				if(drop_item())
+					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
+							"<span class='userdanger'>[M] has disarmed [name]!</span>")
+			add_logs(M, src, "disarmed")
+			updatehealth()
+	return
+
+/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		switch(M.melee_damage_type)
+			if(BRUTE)
+				adjustBruteLoss(damage)
+			if(BURN)
+				adjustFireLoss(damage)
+			if(TOX)
+				adjustToxLoss(damage)
+			if(OXY)
+				adjustOxyLoss(damage)
+			if(CLONE)
+				adjustCloneLoss(damage)
+			if(STAMINA)
+				adjustStaminaLoss(damage)
+		updatehealth()
+
+
+/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
+	if(..()) //successful slime attack
+		var/damage = rand(5, 35)
+		if(M.is_adult)
+			damage = rand(20, 40)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -94,10 +196,9 @@
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(client && mind)
-			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-			if(changeling)
-				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
-				stat("Absorbed DNA", changeling.absorbedcount)
+			if(mind.changeling)
+				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+				stat("Absorbed DNA", mind.changeling.absorbedcount)
 	return
 
 
@@ -107,68 +208,98 @@
 	internal = null
 	return
 
+/mob/living/carbon/monkey/ex_act(severity, target)
+	..()
+	switch(severity)
+		if(1)
+			gib()
+			return
+		if(2)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+			adjustEarDamage(30,120)
+		if(3)
+			adjustBruteLoss(30)
+			if (prob(50))
+				Paralyse(10)
+			adjustEarDamage(15,60)
+
+	updatehealth()
+	return
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
-	if(mind && is_monkey(mind))
-		return TRUE
-	return FALSE
+	return 0
 
 /mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
-	return FALSE
+	return 0
 
 /mob/living/carbon/monkey/canBeHandcuffed()
-	return TRUE
+	return 1
 
-/mob/living/carbon/monkey/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
-	if(judgement_criteria & JUDGE_EMAGGED)
+/mob/living/carbon/monkey/assess_threat(mob/living/simple_animal/bot/secbot/judgebot, lasercolor)
+	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
-
 	var/threatcount = 0
 
 	//Securitrons can't identify monkeys
-	if( !(judgement_criteria & JUDGE_IGNOREMONKEYS) && (judgement_criteria & JUDGE_IDCHECK) )
+	if(!lasercolor && judgebot.idcheck )
 		threatcount += 4
 
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			if(is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
+			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
 				threatcount += 4
 
 		if(lasercolor == "r")
-			if(is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
+			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
 				threatcount += 4
 
 		return threatcount
 
 	//Check for weapons
-	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck )
-		for(var/obj/item/I in held_items) //if they're holding a gun
-			if(weaponcheck.Invoke(I))
-				threatcount += 4
-		if(weaponcheck.Invoke(back)) //if a weapon is present in the back slot
-			threatcount += 4 //trigger look_for_perp() since they're nonhuman and very likely hostile
+	if(judgebot.weaponscheck)
+		if(judgebot.check_for_weapons(l_hand))
+			threatcount += 4
+		if(judgebot.check_for_weapons(r_hand))
+			threatcount += 4
 
-	//mindshield implants imply trustworthyness
-	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+	//Loyalty implants imply trustworthyness
+	if(isloyal(src))
 		threatcount -= 1
 
 	return threatcount
 
-/mob/living/carbon/monkey/IsVocal()
-	if(!getorganslot(ORGAN_SLOT_LUNGS))
-		return 0
-	return 1
+/mob/living/carbon/monkey/acid_act(acidpwr, toxpwr, acid_volume)
+	if(wear_mask)
+		if(!wear_mask.unacidable)
+			wear_mask.acid_act(acidpwr)
+			update_inv_wear_mask()
+		else
+			src << "<span class='warning'>Your mask protects you from the acid.</span>"
+		return
 
-/mob/living/carbon/monkey/can_use_guns(obj/item/G)
-	return TRUE
+	take_organ_damage(min(6*toxpwr, acid_volume * acidpwr/10))
 
-/mob/living/carbon/monkey/angry
-	aggressive = TRUE
+/mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
+	if(health < 0 && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.do_cpr(src)
+	else
+		..()
 
-/mob/living/carbon/monkey/angry/Initialize()
-	. = ..()
-	if(prob(10))
-		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,SLOT_HEAD)
-		helmet.attack_self(src) // todo encapsulate toggle
+/mob/living/carbon/monkey/get_permeability_protection()
+	var/protection = 0
+	if(head)
+		protection = 1 - head.permeability_coefficient
+	if(wear_mask)
+		protection = max(1 - wear_mask.permeability_coefficient, protection)
+	protection = protection/7 //the rest of the body isn't covered.
+	return protection
+
+/mob/living/carbon/monkey/check_eye_prot()
+	var/number = ..()
+	if(istype(src.wear_mask, /obj/item/clothing/mask))
+		var/obj/item/clothing/mask/MFP = src.wear_mask
+		number += MFP.flash_protect
+	return number

@@ -1,25 +1,31 @@
 /datum/wires/radio
-	holder_type = /obj/item/radio
-	proper_name = "Radio"
+	holder_type = /obj/item/device/radio
+	wire_count = 3
 
-/datum/wires/radio/New(atom/holder)
-	wires = list(
-		WIRE_SIGNAL,
-		WIRE_RX, WIRE_TX
-	)
-	..()
+var/const/WIRE_SIGNAL = 1
+var/const/WIRE_RECEIVE = 2
+var/const/WIRE_TRANSMIT = 4
 
-/datum/wires/radio/interactable(mob/user)
-	var/obj/item/radio/R = holder
-	return R.unscrewed
+/datum/wires/radio/CanUse(mob/living/L)
+	var/obj/item/device/radio/R = holder
+	if(R.b_stat)
+		return 1
+	return 0
 
-/datum/wires/radio/on_pulse(index)
-	var/obj/item/radio/R = holder
+/datum/wires/radio/Interact(mob/living/user)
+	if(CanUse(user))
+		var/obj/item/device/radio/R = holder
+		R.interact(user)
+
+/datum/wires/radio/UpdatePulsed(index)
+	var/obj/item/device/radio/R = holder
 	switch(index)
 		if(WIRE_SIGNAL)
 			R.listening = !R.listening
 			R.broadcasting = R.listening
-		if(WIRE_RX)
+
+		if(WIRE_RECEIVE)
 			R.listening = !R.listening
-		if(WIRE_TX)
+
+		if(WIRE_TRANSMIT)
 			R.broadcasting = !R.broadcasting

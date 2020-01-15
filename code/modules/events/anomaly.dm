@@ -1,8 +1,6 @@
 /datum/round_event_control/anomaly
 	name = "Anomaly: Energetic Flux"
 	typepath = /datum/round_event/anomaly
-
-	min_players = 1
 	max_occurrences = 0 //This one probably shouldn't occur! It'd work, but it wouldn't be very fun.
 	weight = 15
 
@@ -12,38 +10,32 @@
 	announceWhen	= 1
 
 
-/datum/round_event/anomaly/proc/findEventArea()
-	var/static/list/allowed_areas
-	if(!allowed_areas)
-		//Places that shouldn't explode
-		var/list/safe_area_types = typecacheof(list(
-		/area/ai_monitored/turret_protected/ai,
-		/area/ai_monitored/turret_protected/ai_upload,
-		/area/engine,
-		/area/solar,
-		/area/holodeck,
-		/area/shuttle)
-		)
-
-		//Subtypes from the above that actually should explode.
-		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
-		
-		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
-
-	return safepick(typecache_filter_list(GLOB.sortedAreas,allowed_areas))
-
-/datum/round_event/anomaly/setup()
+/datum/round_event/anomaly/setup(loop=0)
+	var/safety_loop = loop + 1
+	if(safety_loop > 50)
+		kill()
+		end()
 	impact_area = findEventArea()
 	if(!impact_area)
-		CRASH("No valid areas for anomaly found.")
+		setup(safety_loop)
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
-		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
+		setup(safety_loop)
 
-/datum/round_event/anomaly/announce(fake)
+/datum/round_event/anomaly/announce()
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
-	var/turf/T = safepick(get_area_turfs(impact_area))
+	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/flux(T)
+		newAnomaly = new /obj/effect/anomaly/flux(T.loc)
+
+/datum/round_event/anomaly/tick()
+	if(!newAnomaly)
+		kill()
+		return
+	newAnomaly.anomalyEffect()
+
+/datum/round_event/anomaly/end()
+	if(newAnomaly)//Kill the anomaly if it still exists at the end.
+		qdel(newAnomaly)

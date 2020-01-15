@@ -1,13 +1,8 @@
+#define SOLID 1
+#define LIQUID 2
+#define GAS 3
+
 #define REM REAGENTS_EFFECT_MULTIPLIER
-
-GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
-
-/proc/build_name2reagent()
-	. = list()
-	for (var/t in subtypesof(/datum/reagent))
-		var/datum/reagent/R = t
-		if (length(initial(R.name)))
-			.[ckey(initial(R.name))] = t
 
 //Various reagents
 //Toxin & acid reagents
@@ -15,44 +10,21 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /datum/reagent
 	var/name = "Reagent"
+	var/id = "reagent"
 	var/description = ""
-	var/specific_heat = SPECIFIC_HEAT_DEFAULT		//J/(K*mol)
-	var/taste_description = "metaphorical salt"
-	var/taste_mult = 1 //how this taste compares to others. Higher values means it is more noticable
-	var/glass_name = "glass of ...what?" // use for specialty drinks.
-	var/glass_desc = "You can't really tell what this is."
-	var/glass_icon_state = null // Otherwise just sets the icon to a normal glass with the mixture of the reagents in the glass.
-	var/shot_glass_icon_state = null
 	var/datum/reagents/holder = null
 	var/reagent_state = LIQUID
 	var/list/data
 	var/current_cycle = 0
-	var/volume = 0									//pretend this is moles
+	var/volume = 0
 	var/color = "#000000" // rgb: 0, 0, 0
-	var/can_synth = TRUE // can this reagent be synthesized? (for example: odysseus syringe gun)
+	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
-	var/addiction_stage1_end = 10
-	var/addiction_stage2_end = 20
-	var/addiction_stage3_end = 30
-	var/addiction_stage4_end = 40
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
-	var/self_consuming = FALSE  //I think this uhhh, makes weird stuff happen when metabolising, but... doesn't seem to do what I think, so I'm gonna leave it.
-	//Fermichem vars:
-	var/purity 				= 1 		//How pure a chemical is from 0 - 1.
-	var/cached_purity		= 1
-	var/turf/loc = null 				//Should be the creation location!
-	var/pH = 7							//pH of the specific reagent, used for calculating the sum pH of a holder.
-	//var/SplitChem			= FALSE		//If the chem splits on metabolism
-	var/impure_chem						// What chemical is metabolised with an inpure reaction
-	var/inverse_chem_val 		= 0			// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
-	var/inverse_chem					// What chem is metabolised when purity is below inverse_chem_val, this shouldn't be made, but if it does, well, I guess I'll know about it.
-	var/metabolizing = FALSE
-	var/chemical_flags // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
-	var/value = 0 //How much does it sell for in cargo?
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -63,10 +35,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		return 0
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = CLAMP((1 - touch_protection), 0, 1)
+			var/modifier = Clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
-				M.reagents.add_reagent(type, amount)
+				M.reagents.add_reagent(id, amount)
 	return 1
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
@@ -75,65 +47,13 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/reaction_turf(turf/T, volume)
 	return
 
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M)
+/datum/reagent/proc/on_mob_life(mob/living/M)
 	current_cycle++
-	if(holder)
-		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
-
-//called when a mob processes chems when dead.
-/datum/reagent/proc/on_mob_dead(mob/living/carbon/M)
-	if(!(chemical_flags & REAGENT_DEAD_PROCESS)) //justincase
-		return
-	current_cycle++
-	if(holder)
-		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
-
-// Called when this reagent is first added to a mob
-/datum/reagent/proc/on_mob_add(mob/living/L, amount)
-	if(!iscarbon(L))
-		return
-	var/mob/living/carbon/M = L
-	if (purity == 1)
-		log_game("CHEM: [L] ckey: [L.key] has ingested [volume]u of [type]")
-		return
-	if(cached_purity == 1)
-		cached_purity = purity
-	else if(purity < 0)
-		CRASH("Purity below 0 for chem: [type], Please let Fermis Know!")
-	if(chemical_flags & REAGENT_DONOTSPLIT)
-		return
-
-	if ((inverse_chem_val > purity) && (inverse_chem))//Turns all of a added reagent into the inverse chem
-		M.reagents.remove_reagent(type, amount, FALSE)
-		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)
-		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
-		if(R.chemical_flags & REAGENT_SNEAKYNAME)
-			R.name = name//Negative effects are hidden
-			if(R.chemical_flags & REAGENT_INVISIBLE)
-				R.chemical_flags |= (REAGENT_INVISIBLE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [inverse_chem]")
-		return
-	else if (impure_chem)
-		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
-		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
-			M.reagents.remove_reagent(type, (impureVol), FALSE)
-		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [type]")
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [impure_chem]")
+	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
 // Called when this reagent is removed while inside a mob
-/datum/reagent/proc/on_mob_delete(mob/living/L)
-	return
-
-// Called when this reagent first starts being metabolized by a liver
-/datum/reagent/proc/on_mob_metabolize(mob/living/L)
-	return
-
-// Called when this reagent stops being metabolized by a liver
-/datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/proc/on_mob_delete(mob/M)
 	return
 
 /datum/reagent/proc/on_move(mob/M)
@@ -144,38 +64,14 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 // Called when two reagents of the same are mixing.
-/datum/reagent/proc/on_merge(data, amount, mob/living/carbon/M, purity)
-	if(!iscarbon(M))
-		return
-	if (purity == 1)
-		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [type]")
-		return
-	cached_purity = purity //purity SHOULD be precalculated from the add_reagent, update cache.
-	if (purity < 0)
-		CRASH("Purity below 0 for chem: [type], Please let Fermis Know!")
-	if(chemical_flags & REAGENT_DONOTSPLIT)
-		return
-
-	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
-		M.reagents.remove_reagent(type, amount, FALSE)
-		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)
-		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
-		if(R.chemical_flags & REAGENT_SNEAKYNAME)
-			R.name = name//Negative effects are hidden
-			if(R.chemical_flags & REAGENT_INVISIBLE)
-				R.chemical_flags |= (REAGENT_INVISIBLE)
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [inverse_chem]")
-		return
-	else if (impure_chem) //SPLIT
-		var/impureVol = amount * (1 - purity)
-		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
-			M.reagents.remove_reagent(type, impureVol, FALSE)
-		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [type]")
-		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [impure_chem]")
+/datum/reagent/proc/on_merge(data)
 	return
 
 /datum/reagent/proc/on_update(atom/A)
+	return
+
+// Called every time reagent containers process.
+/datum/reagent/proc/on_tick(data)
 	return
 
 // Called when the reagent container is hit by an explosion
@@ -187,38 +83,33 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /datum/reagent/proc/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
+	M << "<span class='userdanger'>You feel like you took too much of [name]!</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_light, name)
 	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
+		M << "<span class='notice'>You feel like some [name] right about now.</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_medium, name)
 	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
+		M << "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_severe, name)
 	if(prob(30))
-		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
+		M << "<span class='danger'>You have an intense craving for [name].</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_critical, name)
 	if(prob(30))
-		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
+		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return
 
-/proc/pretty_string_from_reagent_list(list/reagent_list)
+/proc/pretty_string_from_reagent_list(var/list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
-	var/list/rs = list()
+	var/result = "| "
 	for (var/datum/reagent/R in reagent_list)
-		rs += "[R.name], [R.volume]"
+		result += "[R.name], [R.volume] | "
 
-	return rs.Join(" | ")
+	return result

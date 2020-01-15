@@ -14,7 +14,6 @@
 	name = "collectable slime cap!"
 	desc = "It just latches right in place!"
 	icon_state = "slime"
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
@@ -26,15 +25,11 @@
 	desc = "A rare chef's hat meant for hat collectors!"
 	icon_state = "chef"
 	item_state = "chef"
-	dynamic_hair_suffix = ""
-	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/collectable/paper
 	name = "collectable paper hat"
-	desc = "What looks like an ordinary paper hat is actually a rare and valuable collector's edition paper hat. Keep away from water, fire, and Curators."
+	desc = "What looks like an ordinary paper hat is actually a rare and valuable collector's edition paper hat. Keep away from water, fire, and Librarians."
 	icon_state = "paper"
-
-	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/collectable/tophat
 	name = "collectable top hat"
@@ -48,29 +43,22 @@
 	icon_state = "captain"
 	item_state = "caphat"
 
-	dog_fashion = /datum/dog_fashion/head/captain
-
 /obj/item/clothing/head/collectable/police
 	name = "collectable police officer's hat"
 	desc = "A collectable police officer's Hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
-	dynamic_hair_suffix = ""
-
-	dog_fashion = /datum/dog_fashion/head/warden
 
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
 	desc = "A collectable red beret. It smells faintly of garlic."
 	icon_state = "beret"
 
-	dog_fashion = /datum/dog_fashion/head/beret
-
 /obj/item/clothing/head/collectable/welding
 	name = "collectable welding helmet"
 	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
-	resistance_flags = NONE
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
@@ -90,32 +78,22 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 
-	dog_fashion = /datum/dog_fashion/head/pirate
-
 /obj/item/clothing/head/collectable/kitty
 	name = "collectable kitty ears"
 	desc = "The fur feels... a bit too realistic."
 	icon_state = "kitty"
 	item_state = "kitty"
-	dynamic_hair_suffix = ""
-
-	dog_fashion = /datum/dog_fashion/head/kitty
 
 /obj/item/clothing/head/collectable/rabbitears
 	name = "collectable rabbit ears"
 	desc = "Not as lucky as the feet!"
 	icon_state = "bunny"
 	item_state = "bunny"
-	dynamic_hair_suffix = ""
-
-	dog_fashion = /datum/dog_fashion/head/rabbit
 
 /obj/item/clothing/head/collectable/wizard
 	name = "collectable wizard's hat"
 	desc = "NOTE: Any magical powers gained from wearing this hat are purely coincidental."
 	icon_state = "wizard"
-
-	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
@@ -123,32 +101,21 @@
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
 
-	dog_fashion = /datum/dog_fashion/head
-
 /obj/item/clothing/head/collectable/HoS
 	name = "collectable HoS hat"
 	desc = "Now you too can beat prisoners, set silly sentences, and arrest for no reason!"
 	icon_state = "hoscap"
-	dynamic_hair_suffix = ""
-
-/obj/item/clothing/head/collectable/HoP
-	name = "collectable HoP hat"
-	desc = "It's your turn to demand excessive paperwork, signatures, stamps, and hire more clowns! Papers, please!"
-	icon_state = "hopcap"
-	dog_fashion = /datum/dog_fashion/head/hop
 
 /obj/item/clothing/head/collectable/thunderdome
 	name = "collectable Thunderdome helmet"
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
-	resistance_flags = NONE
-	flags_inv = HIDEHAIR
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
 	icon_state = "swat"
 	item_state = "swat"
-	resistance_flags = NONE
-	flags_inv = HIDEHAIR
+	burn_state = FIRE_PROOF

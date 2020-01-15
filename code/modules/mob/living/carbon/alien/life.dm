@@ -1,6 +1,3 @@
-/mob/living/carbon/alien/Life()
-	findQueen()
-	return..()
 
 /mob/living/carbon/alien/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
@@ -11,27 +8,23 @@
 		return 0
 
 	var/toxins_used = 0
-	var/tox_detect_threshold = 0.02
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
-	var/list/breath_gases = breath.gases
 
 	//Partial pressure of the toxins in our breath
-	var/Toxins_pp = (breath_gases[/datum/gas/plasma]/breath.total_moles())*breath_pressure
+	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
 
-	if(Toxins_pp > tox_detect_threshold) // Detect toxins in air
-		adjustPlasma(breath_gases[/datum/gas/plasma]*250)
+	if(Toxins_pp) // Detect toxins in air
+		adjustPlasma(breath.toxins*250)
 		throw_alert("alien_tox", /obj/screen/alert/alien_tox)
 
-		toxins_used = breath_gases[/datum/gas/plasma]
+		toxins_used = breath.toxins
 
 	else
 		clear_alert("alien_tox")
 
 	//Breathe in toxins and out oxygen
-	breath_gases[/datum/gas/plasma] -= toxins_used
-	breath_gases[/datum/gas/oxygen] += toxins_used
-
-	GAS_GARBAGE_COLLECT(breath.gases)
+	breath.toxins -= toxins_used
+	breath.oxygen += toxins_used
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
@@ -42,11 +35,35 @@
 	if(move_delay_add > 0)
 		move_delay_add = max(0, move_delay_add - rand(1, 2))
 
-/mob/living/carbon/alien/handle_changeling()
+/mob/living/carbon/alien/update_sight()
+	if(stat == DEAD)
+		sight |= SEE_TURFS
+		sight |= SEE_MOBS
+		sight |= SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else
+		sight |= SEE_MOBS
+		sight &= ~SEE_TURFS
+		sight &= ~SEE_OBJS
+		if(nightvision)
+			see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
+		else if(!nightvision)
+			see_in_dark = 4
+			see_invisible = 45
+		if(see_override)
+			see_invisible = see_override
+
+/mob/living/carbon/alien/handle_hud_icons()
+
+	handle_hud_icons_health()
+
+	return 1
+
+/mob/living/carbon/alien/CheckStamina()
+	setStaminaLoss(max((staminaloss - 2), 0))
 	return
 
-/mob/living/carbon/alien/handle_fire()//Aliens on fire code
-	if(..())
-		return
-	adjust_bodytemperature(BODYTEMP_HEATING_MAX) //If you're on fire, you heat up!
+/mob/living/carbon/alien/handle_changeling()
 	return

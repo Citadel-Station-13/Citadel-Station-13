@@ -1,12 +1,8 @@
 // Clickable stat() button.
 /obj/effect/statclick
-	name = "Initializing..."
 	var/target
 
-INITIALIZE_IMMEDIATE(/obj/effect/statclick)
-
-/obj/effect/statclick/Initialize(mapload, text, target) //Don't port this to Initialize it's too critical
-	. = ..()
+/obj/effect/statclick/New(text, target)
 	name = text
 	src.target = target
 
@@ -18,10 +14,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	var/class
 
 /obj/effect/statclick/debug/Click()
-	if(!usr.client.holder || !target)
+	if(!usr.client.holder)
 		return
 	if(!class)
-		if(istype(target, /datum/controller/subsystem))
+		if(istype(target, /datum/subsystem))
 			class = "subsystem"
 		else if(istype(target, /datum/controller))
 			class = "controller"
@@ -44,10 +40,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 		return
 	switch(controller)
 		if("Master")
-			Recreate_MC()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Master Controller")
+			new/datum/controller/master()
+			Master.process()
+			feedback_add_details("admin_verb","RMC")
 		if("Failsafe")
 			new /datum/controller/failsafe()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
+			feedback_add_details("admin_verb","RFailsafe")
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")

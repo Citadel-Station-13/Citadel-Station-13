@@ -2,471 +2,236 @@
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
+
+/datum/design/mass_spectrometer
+	name = "Mass-Spectrometer"
+	desc = "A device for analyzing chemicals in the blood."
+	id = "mass_spectrometer"
+	req_tech = list("biotech" = 2, "magnets" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
+	reliability = 76
+	build_path = /obj/item/device/mass_spectrometer
+	category = list("Medical Designs")
+
+/datum/design/adv_mass_spectrometer
+	name = "Advanced Mass-Spectrometer"
+	desc = "A device for analyzing chemicals in the blood and their quantities."
+	id = "adv_mass_spectrometer"
+	req_tech = list("biotech" = 2, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
+	reliability = 74
+	build_path = /obj/item/device/mass_spectrometer/adv
+	category = list("Medical Designs")
+
 /datum/design/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	id = "mmi"
+	req_tech = list("programming" = 2, "biotech" = 3)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
 	construction_time = 75
-	build_path = /obj/item/mmi
+	reliability = 76
+	build_path = /obj/item/device/mmi
 	category = list("Misc","Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/mmi_radio
+	name = "Radio-enabled Man-Machine Interface"
+	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
+	id = "mmi_radio"
+	req_tech = list("programming" = 2, "biotech" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 500)
+	construction_time = 75
+	reliability = 74
+	build_path = /obj/item/device/mmi/radio_enabled
+	category = list("Misc","Medical Designs")
 
 /datum/design/posibrain
 	name = "Positronic Brain"
 	desc = "The latest in Artificial Intelligences."
 	id = "mmi_posi"
+	req_tech = list("programming" = 5, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1700, MAT_GLASS = 1350, MAT_GOLD = 500) //Gold, because SWAG.
+	reliability = 74
 	construction_time = 75
-	build_path = /obj/item/mmi/posibrain
+	build_path = /obj/item/device/mmi/posibrain
 	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+
+/datum/design/synthetic_flash
+	name = "Flash"
+	desc = "When a problem arises, SCIENCE is the solution."
+	id = "sflash"
+	req_tech = list("magnets" = 3, "combat" = 2)
+	build_type = MECHFAB
+	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
+	construction_time = 100
+	reliability = 76
+	build_path = /obj/item/device/assembly/flash/handheld
+	category = list("Misc")
 
 /datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	id = "bluespacebeaker"
+	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 250, MAT_BLUESPACE = 250)
-	build_path = /obj/item/reagent_containers/glass/beaker/bluespace
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	materials = list(MAT_METAL = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
+	reliability = 76
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
+	category = list("Misc","Medical Designs")
 
 /datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
 	id = "splitbeaker"
+	req_tech = list("materials" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
-	build_path = /obj/item/reagent_containers/glass/beaker/noreact
+	reliability = 76
+	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/xlarge_beaker
-	name = "X-large Beaker"
-	id = "xlarge_beaker"
-	build_type = PROTOLATHE
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 3000)
-	build_path = /obj/item/reagent_containers/glass/beaker/plastic
-	category = list("Medical Designs")
-
-/datum/design/meta_beaker
-	name = "Metamaterial Beaker"
-	id = "meta_beaker"
-	build_type = PROTOLATHE
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 3000, MAT_GOLD = 1000, MAT_TITANIUM = 1000)
-	build_path = /obj/item/reagent_containers/glass/beaker/meta
-	category = list("Medical Designs")
-
-/datum/design/bluespacesyringe
-	name = "Bluespace Syringe"
-	desc = "An advanced syringe that can hold 60 units of chemicals"
-	id = "bluespacesyringe"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 2000, MAT_PLASMA = 1000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 500)
-	build_path = /obj/item/reagent_containers/syringe/bluespace
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/noreactsyringe
-	name = "Cryo Syringe"
-	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
-	id = "noreactsyringe"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 2000, MAT_GOLD = 1000)
-	build_path = /obj/item/reagent_containers/syringe/noreact
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/piercesyringe
-	name = "Piercing Syringe"
-	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
-	id = "piercesyringe"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 1000)
-	build_path = /obj/item/reagent_containers/syringe/piercing
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/medicinalsmartdart
-	name = "Medicinal Smartdart"
-	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
-	id = "medicinalsmartdart"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 100, MAT_PLASTIC = 100, MAT_METAL = 100)
-	build_path = /obj/item/reagent_containers/syringe/dart
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/bluespacesmartdart
-	name = "bluespace smartdart"
-	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented. Has an extended volume capacity thanks to bluespace foam."
-	id = "bluespacesmartdart"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 250, MAT_PLASTIC = 250, MAT_METAL = 250, MAT_BLUESPACE = 250)
-	build_path = /obj/item/reagent_containers/syringe/dart/bluespace
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/smartdartgun
-	name = "dart gun"
-	desc = "A compressed air gun, designed to fit medicinal darts for application of medicine for those patients just out of reach."
-	id = "smartdartgun"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 500, MAT_PLASTIC = 1000, MAT_METAL = 500)
-	build_path = /obj/item/gun/syringe/dart
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bluespacebodybag
-	name = "Bluespace Body Bag"
+	name = "Bluespace body bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	id = "bluespacebodybag"
+	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500, MAT_BLUESPACE = 500)
+	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500)
+	reliability = 76
 	build_path = /obj/item/bodybag/bluespace
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/plasmarefiller
-	name = "Plasma-Man Jumpsuit Refill"
+	name = "Plasma-man jumpsuit refill"
 	desc = "A refill pack for the auto-extinguisher on Plasma-man suits."
-	id = "plasmarefiller" //Why did this have no plasmatech
+	id = "plasmarefiller"
+	req_tech = list("materials" = 2, "combat" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_PLASMA = 1000)
-	build_path = /obj/item/extinguisher_refill
+	reliability = 76
+	build_path = /obj/item/device/extinguisher_refill
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
-
-/datum/design/crewpinpointer
-	name = "Crew Pinpointer"
-	desc = "Allows tracking of someone's location if their suit sensors are turned to tracking beacon."
-	id = "crewpinpointer"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 1500, MAT_GOLD = 200)
-	build_path = /obj/item/pinpointer/crew
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/telescopiciv
-	name = "Telescopic IV Drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down."
-	id = "telescopiciv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 3500, MAT_SILVER = 1000)
-	build_path = /obj/item/tele_iv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/holobarrier_med
-	name = "PENLITE holobarrier projector"
-	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
-	build_type = PROTOLATHE
-	build_path = /obj/item/holosign_creator/medical
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
-	id = "holobarrier_med"
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/healthanalyzer_advanced
-	name = "Advanced Health Analyzer"
-	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
-	id = "healthanalyzer_advanced"
-	build_path = /obj/item/healthanalyzer/advanced
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 2000, MAT_GOLD = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/medicalkit
-	name = "Empty Medkit"
-	desc = "A plastic medical kit for storging medical items."
-	id = "medicalkit"
-	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 5000)
-	build_path = /obj/item/storage/firstaid //So we dont spawn medical items in it
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/blood_bag
-	name = "Empty Blood Bag"
-	desc = "A small sterilized plastic bag for blood."
-	id = "blood_bag"
-	build_path = /obj/item/reagent_containers/blood
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 1500, MAT_PLASTIC = 3500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/bsblood_bag
-	name = "Blue Space Empty Blood Bag"
-	desc = "A large sterilized plastic bag for blood."
-	id = "bsblood_bag"
-	build_path = /obj/item/reagent_containers/blood/bluespace
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 4500, MAT_BLUESPACE = 250)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cloning_disk
-	name = "Cloning Data Disk"
-	desc = "Produce additional disks for storing genetic data."
-	id = "cloning_disk"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
-	build_path = /obj/item/disk/data
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/organbox
-	name = "Empty Organ Box"
-	desc = "A large cool box that can hold large amouts of medical tools or organs."
-	id = "organbox"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_SILVER= 3500, MAT_GOLD = 3500, MAT_PLASTIC = 5000)
-	build_path = /obj/item/storage/belt/organbox
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-////////////////////////////////////////
-//////////Defibrillator Tech////////////
-////////////////////////////////////////
-
-/datum/design/defibrillator
-	name = "Defibrillator"
-	id = "defibrillator"
-	build_type = PROTOLATHE
-	build_path = /obj/item/defibrillator
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 4000, MAT_SILVER = 3000, MAT_GOLD = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/defibrillator_mount
-	name = "Defibrillator Wall Mount"
-	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables."
-	id = "defibmount"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
-	build_path = /obj/item/wallframe/defib_mount
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/defib_heal
-	name = "Defibrillator Healing disk"
-	desc = "An upgrade which increases the healing power of the defibrillator"
-	id = "defib_heal"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
-	build_path = /obj/item/disk/medical/defib_heal
-	construction_time = 10
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/defib_shock
-	name = "Defibrillator Anti-Shock Disk"
-	desc = "A safety upgrade that guarantees only the patient will get shocked"
-	id = "defib_shock"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
-	build_path = /obj/item/disk/medical/defib_shock
-	construction_time = 10
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/defib_decay
-	name = "Defibrillator Body-Decay Extender Disk"
-	desc = "An upgrade allowing the defibrillator to work on more decayed bodies"
-	id = "defib_decay"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
-	build_path = /obj/item/disk/medical/defib_decay
-	construction_time = 10
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/defib_speed
-	name = "Defibrillator Fast Charge Disk"
-	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
-	id = "defib_speed"
-	build_type = PROTOLATHE
-	build_path = /obj/item/disk/medical/defib_speed
-	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
-	construction_time = 10
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
 
 /datum/design/cyberimp_welding
-	name = "Welding Shield Eyes"
+	name = "Welding Shield implant"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	id = "ci-welding"
+	req_tech = list("materials" = 4, "biotech" = 2)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
-	materials = list(MAT_METAL = 600, MAT_GLASS = 400)
-	build_path = /obj/item/organ/eyes/robotic/shield
+	materials = list(MAT_METAL = 200, MAT_GLASS = 400)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/shield
 	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cyberimp_gloweyes
-	name = "Luminescent Eyes"
-	desc = "A pair of cybernetic eyes that can emit multicolored light"
-	id = "ci-gloweyes"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 40
-	materials = list(MAT_METAL = 600, MAT_GLASS = 1000)
-	build_path = /obj/item/organ/eyes/robotic/glow
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cyberimp_breather
-	name = "Breathing Tube Implant"
-	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
-	id = "ci-breather"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 35
-	materials = list(MAT_METAL = 600, MAT_GLASS = 250)
-	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cyberimp_surgical
-	name = "Surgical Arm Implant"
-	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
-	id = "ci-surgery"
-	build_type = PROTOLATHE | MECHFAB
-	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
-	construction_time = 200
-	build_path = /obj/item/organ/cyberimp/arm/surgery
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cyberimp_toolset
-	name = "Toolset Arm Implant"
-	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
-	id = "ci-toolset"
-	build_type = PROTOLATHE | MECHFAB
-	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
-	construction_time = 200
-	build_path = /obj/item/organ/cyberimp/arm/toolset
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_medical_hud
-	name = "Medical HUD Implant"
+	name = "Medical HUD implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
 	id = "ci-medhud"
+	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 500, MAT_GOLD = 500)
-	build_path = /obj/item/organ/cyberimp/eyes/hud/medical
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 500)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_security_hud
-	name = "Security HUD Implant"
+	name = "Security HUD implant"
 	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
 	id = "ci-sechud"
+	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 4, "combat" = 2)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 750, MAT_GOLD = 750)
-	build_path = /obj/item/organ/cyberimp/eyes/hud/security
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 750, MAT_GOLD = 750)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
 	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_xray
-	name = "X-ray Eyes"
+	name = "X-Ray implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6, "magnets" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 1000)
-	build_path = /obj/item/organ/eyes/robotic/xray
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/xray
 	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_thermals
-	name = "Thermal Eyes"
+	name = "Thermals implant"
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
 	id = "ci-thermals"
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 5, "syndicate" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/organ/eyes/robotic/thermals
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/thermals
 	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_antidrop
-	name = "Anti-Drop Implant"
+	name = "Anti-Drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	id = "ci-antidrop"
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 400, MAT_GOLD = 400)
-	build_path = /obj/item/organ/cyberimp/brain/anti_drop
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 400, MAT_GOLD = 400)
+	build_path = /obj/item/organ/internal/cyberimp/brain/anti_drop
+	category = list("Medical Designs")
 
 /datum/design/cyberimp_antistun
-	name = "CNS Rebooter Implant"
+	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	id = "ci-antistun"
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 500, MAT_GOLD = 1000)
-	build_path = /obj/item/organ/cyberimp/brain/anti_stun
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 1000)
+	build_path = /obj/item/organ/internal/cyberimp/brain/anti_stun
+	category = list("Medical Designs")
 
 /datum/design/cyberimp_nutriment
-	name = "Nutriment Pump Implant"
+	name = "Nutriment pump implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	id = "ci-nutriment"
+	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_GOLD = 500)
-	build_path = /obj/item/organ/cyberimp/chest/nutriment
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 500)
+	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
+	category = list("Medical Designs")
 
 /datum/design/cyberimp_nutriment_plus
-	name = "Nutriment Pump Implant PLUS"
+	name = "Nutriment pump implant PLUS"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	id = "ci-nutrimentplus"
+	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_GOLD = 500, MAT_URANIUM = 750)
-	build_path = /obj/item/organ/cyberimp/chest/nutriment/plus
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 750)
+	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
+	category = list("Medical Designs")
 
 /datum/design/cyberimp_reviver
-	name = "Reviver Implant"
+	name = "Reviver implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	id = "ci-reviver"
+	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 7, "syndicate" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
-	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_GOLD = 300, MAT_URANIUM = 500)
-	build_path = /obj/item/organ/cyberimp/chest/reviver
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/organ/internal/cyberimp/chest/reviver
 	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cyberimp_thrusters
-	name = "Thrusters Set Implant"
-	desc = "This implant will allow you to use gas from environment or your internals for propulsion in zero-gravity areas."
-	id = "ci-thrusters"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 80
-	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_SILVER = 1000, MAT_DIAMOND = 1000)
-	build_path = /obj/item/organ/cyberimp/chest/thrusters
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /////////////////////////////////////////
 ////////////Regular Implants/////////////
@@ -476,509 +241,38 @@
 	name = "Implanter"
 	desc = "A sterile automatic implant injector."
 	id = "implanter"
+	req_tech = list("materials" = 1, "programming" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 600, MAT_GLASS = 200)
-	build_path = /obj/item/implanter
+	build_path = /obj/item/weapon/implanter
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/implantcase
 	name = "Implant Case"
-	desc = "A glass case for containing an implant."
+	desc = "A glass case containing an implant."
 	id = "implantcase"
+	req_tech = list("materials" = 1, "biotech" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 500)
-	build_path = /obj/item/implantcase
+	build_path = /obj/item/weapon/implantcase
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/implant_sadtrombone
-	name = "Sad Trombone Implant Case"
-	desc = "Makes death amusing."
-	id = "implant_trombone"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 500, MAT_BANANIUM = 500)
-	build_path = /obj/item/implantcase/sad_trombone
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL		//if you get bananium you get the sad trombones.
-
-/datum/design/implant_chem
-	name = "Chemical Implant Case"
+/datum/design/implant_freedom
+	name = "Freedom Implant Case"
 	desc = "A glass case containing an implant."
-	id = "implant_chem"
+	id = "implant_freedom"
+	req_tech = list("materials" = 2, "biotech" = 3, "magnets" = 3, "syndicate" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 700)
-	build_path = /obj/item/implantcase/chem
+	materials = list(MAT_METAL = 50, MAT_GLASS = 500, MAT_GOLD = 250)
+	build_path = /obj/item/weapon/implantcase/freedom
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/implant_tracking
-	name = "Tracking Implant Case"
+/datum/design/implant_adrenalin
+	name = "Adrenalin Implant Case"
 	desc = "A glass case containing an implant."
-	id = "implant_tracking"
+	id = "implant_adrenalin"
+	req_tech = list("materials" = 2, "biotech" = 5, "combat" = 3, "syndicate" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
-	build_path = /obj/item/implantcase/track
+	materials = list(MAT_METAL = 50, MAT_GLASS = 500, MAT_GOLD = 500, MAT_URANIUM = 100, MAT_DIAMOND = 200)
+	build_path = /obj/item/weapon/implantcase/adrenaline
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
-
-//Cybernetic organs
-
-/datum/design/cybernetic_liver
-	name = "Cybernetic Liver"
-	desc = "A cybernetic liver"
-	id = "cybernetic_liver"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
-	build_path = /obj/item/organ/liver/cybernetic
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_heart
-	name = "Cybernetic Heart"
-	desc = "A cybernetic heart"
-	id = "cybernetic_heart"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
-	build_path = /obj/item/organ/heart/cybernetic
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_heart_u
-	name = "Upgraded Cybernetic Heart"
-	desc = "An upgraded cybernetic heart"
-	id = "cybernetic_heart_u"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 50
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
-	build_path = /obj/item/organ/heart/cybernetic/upgraded
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_liver_u
-	name = "Upgraded Cybernetic Liver"
-	desc = "An upgraded cybernetic liver"
-	id = "cybernetic_liver_u"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
-	build_path = /obj/item/organ/liver/cybernetic/upgraded
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_lungs
-	name = "Cybernetic Lungs"
-	desc = "A pair of cybernetic lungs."
-	id = "cybernetic_lungs"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
-	build_path = /obj/item/organ/lungs/cybernetic
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_lungs_u
-	name = "Upgraded Cybernetic Lungs"
-	desc = "A pair of upgraded cybernetic lungs."
-	id = "cybernetic_lungs_u"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
-	build_path = /obj/item/organ/lungs/cybernetic/upgraded
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_tongue
-	name = "Cybernetic tongue"
-	desc = "A fancy cybernetic tongue."
-	id = "cybernetic_tongue"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
-	build_path = /obj/item/organ/tongue/cybernetic
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/////////////////////
-//Adv Surgery Tools//
-/////////////////////
-
-/datum/design/drapes
-	name = "Plastic Drapes"
-	desc = "A large surgery drape made of plastic."
-	id = "drapes"
-	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 2500)
-	build_path = /obj/item/surgical_drapes
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/retractor_adv
-	name = "Advanced Retractor"
-	desc = "An almagation of rods and gears, able to function as both a surgical clamp and retractor. "
-	id = "retractor_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1500, MAT_GOLD = 1000)
-	build_path = /obj/item/retractor/advanced
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/surgicaldrill_adv
-	name = "Surgical Laser Drill"
-	desc = "It projects a high power laser used for medical applications."
-	id = "surgicaldrill_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2500, MAT_GLASS = 2500, MAT_SILVER = 6000, MAT_GOLD = 5500, MAT_DIAMOND = 3500)
-	build_path = /obj/item/surgicaldrill/advanced
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/scalpel_adv
-	name = "Laser Scalpel"
-	desc = "An advanced scalpel which uses laser technology to cut."
-	id = "scalpel_adv"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 4000, MAT_GOLD = 2500)
-	build_path = /obj/item/scalpel/advanced
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-
-/////////////////////////////////////////
-//////////Alien Surgery Tools////////////
-/////////////////////////////////////////
-
-/datum/design/alienscalpel
-	name = "Alien Scalpel"
-	desc = "An advanced scalpel obtained through Abductor technology."
-	id = "alien_scalpel"
-	build_path = /obj/item/scalpel/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/alienhemostat
-	name = "Alien Hemostat"
-	desc = "An advanced hemostat obtained through Abductor technology."
-	id = "alien_hemostat"
-	build_path = /obj/item/hemostat/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/alienretractor
-	name = "Alien Retractor"
-	desc = "An advanced retractor obtained through Abductor technology."
-	id = "alien_retractor"
-	build_path = /obj/item/retractor/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliensaw
-	name = "Alien Circular Saw"
-	desc = "An advanced surgical saw obtained through Abductor technology."
-	id = "alien_saw"
-	build_path = /obj/item/circular_saw/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliendrill
-	name = "Alien Drill"
-	desc = "An advanced drill obtained through Abductor technology."
-	id = "alien_drill"
-	build_path = /obj/item/surgicaldrill/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliencautery
-	name = "Alien Cautery"
-	desc = "An advanced cautery obtained through Abductor technology."
-	id = "alien_cautery"
-	build_path = /obj/item/cautery/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_ears
-	name = "Cybernetic Ears"
-	desc = "A pair of cybernetic ears."
-	id = "cybernetic_ears"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 30
-	materials = list(MAT_METAL = 250, MAT_GLASS = 400)
-	build_path = /obj/item/organ/ears/cybernetic
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_ears_u
-	name = "Upgraded Cybernetic Ears"
-	desc = "A pair of upgraded cybernetic ears."
-	id = "cybernetic_ears_u"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 40
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 500)
-	build_path = /obj/item/organ/ears/cybernetic/upgraded
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/////////////////////
-///Surgery Designs///
-/////////////////////
-
-/datum/design/surgery
-	name = "Surgery Design"
-	desc = "what"
-	id = "surgery_parent"
-	research_icon = 'icons/obj/surgery.dmi'
-	research_icon_state = "surgery_any"
-	var/surgery
-
-/datum/design/surgery/experimental_dissection
-	name = "Advanced Dissection"
-	desc = "A surgical procedure which analyzes the biology of a corpse, and automatically adds new findings to the research database."
-	id = "surgery_adv_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection/adv
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/experimental_dissection/exp
-	name = "Experimental Dissection"
-	id = "surgery_exp_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection/exp
-
-/datum/design/surgery/experimental_dissection/ext
-	name = "Extraterrestrial Dissection"
-	id = "surgery_ext_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection/alien
-
-/datum/design/surgery/lobotomy
-	name = "Lobotomy"
-	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
-	id = "surgery_lobotomy"
-	surgery = /datum/surgery/advanced/lobotomy
-	research_icon_state = "surgery_head"
-
-/datum/design/surgery/pacify
-	name = "Pacification"
-	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
-	id = "surgery_pacify"
-	surgery = /datum/surgery/advanced/pacify
-	research_icon_state = "surgery_head"
-
-/datum/design/surgery/viral_bonding
-	name = "Viral Bonding"
-	desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. The patient must be dosed with spaceacillin, virus food, and formaldehyde."
-	id = "surgery_viral_bond"
-	surgery = /datum/surgery/advanced/viral_bonding
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/healing
-	name = "Tend Wounds"
-	desc = "An upgraded version of the original surgery."
-	id = "surgery_healing_base" //holder because travis cries otherwise. Not used in techweb unlocks.
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/healing/brute_upgrade
-	name = "Tend Wounds (Brute) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded
-	id = "surgery_heal_brute_upgrade"
-
-/datum/design/surgery/healing/brute_upgrade_2
-	name = "Tend Wounds (Brute) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
-	id = "surgery_heal_brute_upgrade_femto"
-
-/datum/design/surgery/healing/burn_upgrade
-	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/burn/upgraded
-	id = "surgery_heal_burn_upgrade"
-
-/datum/design/surgery/healing/burn_upgrade_2
-	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
-	id = "surgery_heal_burn_upgrade_femto"
-
-/datum/design/surgery/healing/combo
-	name = "Tend Wounds (Mixture)"
-	desc = "A surgical procedure that repairs both bruises and burns. Repair efficiency is not as high as the individual surgeries but it is faster."
-	surgery = /datum/surgery/healing/combo
-	id = "surgery_heal_combo"
-
-/datum/design/surgery/healing/combo_upgrade
-	name = "Tend Wounds (Mixture) Upgrade"
-	surgery = /datum/surgery/healing/combo/upgraded
-	id = "surgery_heal_combo_upgrade"
-
-/datum/design/surgery/healing/combo_upgrade_2
-	name = "Tend Wounds (Mixture) Upgrade"
-	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
-	surgery = /datum/surgery/healing/combo/upgraded/femto
-	id = "surgery_heal_combo_upgrade_femto"
-
-/datum/design/surgery/surgery_toxinhealing
-	name = "Body Rejuvenation"
-	desc = "A surgical procedure that helps deal with oxygen  deprecation, and treat toxic damaged. Works on corpses and alive alike without chemicals."
-	id = "surgery_toxinhealing"
-	surgery = /datum/surgery/advanced/toxichealing
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/revival
-	name = "Revival"
-	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
-	id = "surgery_revival"
-	surgery = /datum/surgery/advanced/revival
-	research_icon_state = "surgery_head"
-
-/datum/design/surgery/brainwashing
-	name = "Brainwashing"
-	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
-	id = "surgery_brainwashing"
-	surgery = /datum/surgery/advanced/brainwashing
-	research_icon_state = "surgery_head"
-
-/datum/design/surgery/nerve_splicing
-	name = "Nerve Splicing"
-	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
-	id = "surgery_nerve_splice"
-	surgery = /datum/surgery/advanced/bioware/nerve_splicing
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/nerve_grounding
-	name = "Nerve Grounding"
-	desc = "A surgical procedure which makes the patient's nerves act as grounding rods, protecting them from electrical shocks."
-	id = "surgery_nerve_ground"
-	surgery = /datum/surgery/advanced/bioware/nerve_grounding
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/vein_threading
-	name = "Vein Threading"
-	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
-	id = "surgery_vein_thread"
-	surgery = /datum/surgery/advanced/bioware/vein_threading
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/muscled_veins
-	name = "Vein Muscle Membrane"
-	desc = "A surgical procedure which adds a muscled membrane to blood vessels, allowing them to pump blood without a heart."
-	id = "surgery_muscled_veins"
-	surgery = /datum/surgery/advanced/bioware/muscled_veins
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/ligament_hook
-	name = "Ligament Hook"
-	desc = "A surgical procedure which reshapes the connections between torso and limbs, making it so limbs can be attached manually if severed. \
-	However this weakens the connection, making them easier to detach as well."
-	id = "surgery_ligament_hook"
-	surgery = /datum/surgery/advanced/bioware/ligament_hook
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/ligament_reinforcement
-	name = "Ligament Reinforcement"
-	desc = "A surgical procedure which adds a protective tissue and bone cage around the connections between the torso and limbs, preventing dismemberment. \
-	However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
-	id = "surgery_ligament_reinforcement"
-	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/necrotic_revival
-	name = "Necrotic Revival"
-	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
-	id = "surgery_zombie"
-	surgery = /datum/surgery/advanced/necrotic_revival
-	research_icon_state = "surgery_head"
-
-/////////////////////////////////////////
-////////////Medical Prosthetics//////////
-/////////////////////////////////////////
-
-/datum/design/basic_l_arm
-	name = "Surplus prosthetic left arm"
-	desc = "Basic outdated and fragile prosthetic left arm."
-	id = "basic_l_arm"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
-	construction_time = 20
-	build_path = /obj/item/bodypart/l_arm/robot/surplus
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/basic_r_arm
-	name = "Surplus prosthetic right arm"
-	desc = "Basic outdated and fragile prosthetic left arm."
-	id = "basic_r_arm"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
-	construction_time = 20
-	build_path = /obj/item/bodypart/r_arm/robot/surplus
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/basic_l_leg
-	name = "Surplus prosthetic left leg"
-	desc = "Basic outdated and fragile prosthetic left leg."
-	id = "basic_l_leg"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
-	construction_time = 20
-	build_path = /obj/item/bodypart/l_leg/robot/surplus
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/basic_r_leg
-	name = "Surplus prosthetic right leg"
-	desc = "Basic outdated and fragile prosthetic right leg."
-	id = "basic_r_leg"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
-	construction_time = 20
-	build_path = /obj/item/bodypart/r_leg/robot/surplus
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/adv_r_leg
-	name = "Advanced prosthetic right leg"
-	desc = "A renforced prosthetic right leg."
-	id = "adv_r_leg"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
-	construction_time = 40
-	build_path = /obj/item/bodypart/r_leg/robot/surplus_upgraded
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/adv_l_leg
-	name = "Advanced prosthetic left leg"
-	desc = "A renforced prosthetic left leg."
-	id = "adv_l_leg"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
-	construction_time = 40
-	build_path = /obj/item/bodypart/l_leg/robot/surplus_upgraded
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/adv_l_arm
-	name = "Advanced prosthetic left arm"
-	desc = "A renforced prosthetic left arm."
-	id = "adv_l_arm"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
-	construction_time = 40
-	build_path = /obj/item/bodypart/l_arm/robot/surplus_upgraded
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/adv_r_arm
-	name = "Advanced prosthetic right arm"
-	desc = "A renforced prosthetic right arm."
-	id = "adv_r_arm"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
-	construction_time = 40
-	build_path = /obj/item/bodypart/r_arm/robot/surplus_upgraded
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
