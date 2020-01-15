@@ -579,7 +579,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		L += "Round ID: [GLOB.round_id || "NULL"]"
 		L += SStime_track.stat_time_text
 		L += SSshuttle.emergency_shuttle_stat_text
-		stat(null, "[L.Join("\n")]")
+		stat(null, "[L.Join("\n\n")]")
 
 	if(client.holder)
 		if(statpanel("MC"))
