@@ -320,11 +320,11 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	for(var/id in combined)
 		us = cached_gases[id]
 		them = sample_gases[id]
-		diff = abs(gas_moles - sample_moles)
-		if(diff > MINIMUM_MOLES_DELTA_TO_MOVE && diff > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
+		diff = abs(us - them)
+		if(diff > MINIMUM_MOLES_DELTA_TO_MOVE && diff > us * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
 		our_moles += us
-	if((our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) && (abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEN))
+	if((our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) && (abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND))
 		return "temp"
 
 /datum/gas_mixture/react(datum/holder)
