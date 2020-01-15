@@ -466,17 +466,18 @@ SLIME SCANNER
 				msg += "<span class='notice'>Subject is not addicted to any reagents.</span>\n"
 
 			var/datum/reagent/impure/fermiTox/F = M.reagents.has_reagent(/datum/reagent/impure/fermiTox)
-			switch(F?.volume)
-				if(5 to 10)
-					msg += "<span class='notice'>Subject contains a low amount of toxic isomers.</span>\n"
-				if(10 to 25)
-					msg += "<span class='danger'>Subject contains toxic isomers.</span>\n"
-				if(25 to 50)
-					msg += "<span class='danger'>Subject contains a substantial amount of toxic isomers.</span>\n"
-				if(50 to 95)
-					msg += "<span class='danger'>Subject contains a high amount of toxic isomers.</span>\n"
-				if(95 to INFINITY)
-					msg += "<span class='danger'>Subject contains a extremely dangerous amount of toxic isomers.</span>\n"
+			if(istype(F,/datum/reagent/impure/fermiTox))
+				switch(F.volume)
+					if(5 to 10)
+						msg += "<span class='notice'>Subject contains a low amount of toxic isomers.</span>\n"
+					if(10 to 25)
+						msg += "<span class='danger'>Subject contains toxic isomers.</span>\n"
+					if(25 to 50)
+						msg += "<span class='danger'>Subject contains a substantial amount of toxic isomers.</span>\n"
+					if(50 to 95)
+						msg += "<span class='danger'>Subject contains a high amount of toxic isomers.</span>\n"
+					if(95 to INFINITY)
+						msg += "<span class='danger'>Subject contains a extremely dangerous amount of toxic isomers.</span>\n"
 
 			msg += "*---------*</span>"
 			to_chat(user, msg)
