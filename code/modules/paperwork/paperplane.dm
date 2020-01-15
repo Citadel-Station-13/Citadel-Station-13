@@ -102,7 +102,7 @@
 /obj/item/paperplane/throw_impact(atom/hit_atom)
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/C = hit_atom
-		if(C.can_catch_item(TRUE))
+		if(!C.get_active_held_item() && !C.restrained())
 			var/datum/action/innate/origami/origami_action = locate() in C.actions
 			if(origami_action?.active) //if they're a master of origami and have the ability turned on, force throwmode on so they'll automatically catch the plane.
 				C.throw_mode_on()
@@ -126,6 +126,7 @@
 	. += "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>"
 
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user), NO_TK))
 		return
 	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
@@ -138,3 +139,4 @@
 
 	I = new plane_type(user, src)
 	user.put_in_hands(I)
+	return TRUE

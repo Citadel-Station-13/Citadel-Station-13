@@ -83,21 +83,23 @@
 	return 1
 
 /obj/item/gun/energy/pumpaction/AltClick(mob/living/user)	//for changing firing modes since attackself is already used for pumping
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
-		return
-	if(user.incapacitated() || !istype(user))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 
 	if(ammo_type.len > 1)
-		select_fire(user)
-		update_icon()
+		if(user.incapacitated() || !istype(user))
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		else
+			select_fire(user)
+			update_icon()
+		return TRUE
 
 /obj/item/gun/energy/pumpaction/examine(mob/user)	//so people don't ask HOW TO CHANGE FIRING MODE
 	. = ..()
 	. += "<span class='notice'>Alt-click to change firing modes.</span>"
 
-/obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file)	//ammo counter for inhands
+/obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file, style_flags = NONE)	//ammo counter for inhands
 	. = ..()
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]

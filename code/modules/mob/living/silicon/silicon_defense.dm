@@ -6,7 +6,10 @@
 	return 2
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent
+	. = ..()
+	if(!.) // the attack was blocked or was help/grab intent
+		return
+	if(M.a_intent == INTENT_HARM)
 		var/damage = 20
 		if (prob(90))
 			log_combat(M, src, "attacked")
@@ -49,34 +52,33 @@
 /mob/living/silicon/attack_paw(mob/living/user)
 	return attack_hand(user)
 
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == INTENT_HELP)
-		visible_message("[L.name] rubs its head against [src].")
-
-/mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	if(user.a_intent == INTENT_HARM)
-		..(user, 1)
+		. = ..(user, TRUE)
+		if(.)
+			return
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
 				"<span class='userdanger'>[user] has punched [src]!</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	if(.) //the attack was blocked
+		return
 	switch(M.a_intent)
-		if ("help")
+		if (INTENT_HELP)
 			M.visible_message("[M] pets [src].", \
 							"<span class='notice'>You pet [src].</span>")
-		if("grab")
+		if(INTENT_GRAB)
 			grabbedby(M)
 		else
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
 				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
@@ -108,19 +110,25 @@
 			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
 
-/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		adjustBruteLoss(Proj.damage)
-		if(prob(Proj.damage*1.5))
+/mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone)
+	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
+		if(reflect_bullet_check(P, def_zone))
+			return -1 // complete projectile permutation
+		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+			P.on_hit(src, 100, def_zone)
+			return 2
+	if((P.damage_type == BRUTE || P.damage_type == BURN))
+		adjustBruteLoss(P.damage)
+		if(prob(P.damage*1.5))
 			for(var/mob/living/M in buckled_mobs)
 				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
 				unbuckle_mob(M)
 				M.Knockdown(40)
-	if(Proj.stun || Proj.knockdown)
+	if(P.stun || P.knockdown)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
-			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [Proj]!</span>")
-	Proj.on_hit(src)
+			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [P]!</span>")
+	P.on_hit(src)
 	return 2
 
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)

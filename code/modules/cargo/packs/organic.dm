@@ -47,6 +47,46 @@
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
 
+/datum/supply_pack/organic/randomized/chef
+	name = "Excellent Meat Crate"
+	desc = "The best cuts in the whole galaxy."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
+					/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+					/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+					/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+					/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+					/obj/item/reagent_containers/food/snacks/meat/rawbacon,
+					/obj/item/reagent_containers/food/snacks/spiderleg,
+					/obj/item/reagent_containers/food/snacks/carpmeat,
+					/obj/item/reagent_containers/food/snacks/meat/slab/human)
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 15)
+		var/item = pick(contains)
+		new item(C)
+
+/datum/supply_pack/organic/exoticseeds
+	name = "Exotic Seeds Crate"
+	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, including three replica-pod seeds and two mystery seeds!"
+	cost = 1500
+	contains = list(/obj/item/seeds/nettle,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/plump,
+					/obj/item/seeds/liberty,
+					/obj/item/seeds/amanita,
+					/obj/item/seeds/reishi,
+					/obj/item/seeds/banana,
+					/obj/item/seeds/bamboo,
+					/obj/item/seeds/eggplant/eggy,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random)
+	crate_name = "exotic seeds crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
+
 /datum/supply_pack/organic/food
 	name = "Food Crate"
 	desc = "Get things cooking with this crate full of useful ingredients! Contains a two dozen eggs, three bananas, and two bags of flour and rice, two cartons of milk, soymilk, as well as salt and pepper shakers, an enzyme and sugar bottle, and three slabs of monkeymeat."
@@ -72,6 +112,26 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
 
+/datum/supply_pack/organic/randomized/chef/fruits
+	name = "Fruit Crate"
+	desc = "Rich in vitamins, may contain oranges."
+	cost = 1500
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+					/obj/item/reagent_containers/food/snacks/grown/banana,
+					/obj/item/reagent_containers/food/snacks/grown/watermelon,
+					/obj/item/reagent_containers/food/snacks/grown/apple,
+					/obj/item/reagent_containers/food/snacks/grown/berries,
+					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+					/obj/item/reagent_containers/food/snacks/grown/pineapple,
+					/obj/item/reagent_containers/food/snacks/grown/cherries,
+					/obj/item/reagent_containers/food/snacks/grown/grapes,
+					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
+					/obj/item/reagent_containers/food/snacks/grown/eggplant,
+					/obj/item/reagent_containers/food/snacks/grown/peach,
+					/obj/item/reagent_containers/food/snacks/grown/strawberry)
+	crate_name = "food crate"
+
 /datum/supply_pack/organic/fiestatortilla
 	name = "Fiesta Crate"
 	desc = "Spice up the kitchen with this fiesta themed food order! Contains 8 tortilla based food items, as well as a sombrero, moustache, and cloak!"
@@ -91,70 +151,22 @@
 					/obj/item/reagent_containers/glass/bottle/capsaicin)
 	crate_name = "fiesta crate"
 
-/datum/supply_pack/organic/fruit_1
-	name = "Fruit Basic Crate"
-	desc = "Getting scurvy on the station? Well heres your fixing! Contains three of each - bananas, watermelons, limes, lemons, oranges and even three pineapple."
-	cost = 2250
-	contains = list(/obj/item/reagent_containers/food/snacks/grown/watermelon,
-					/obj/item/reagent_containers/food/snacks/grown/watermelon,
-					/obj/item/reagent_containers/food/snacks/grown/watermelon,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-					/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana)
-	crate_name = "fruit crate"
+/datum/supply_pack/organic/grill
+	name = "Grilling Starter Kit"
+	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT ONLY 5000 BUX GET NOW! Contains a cooking grill and five fuel coal sheets."
+	cost = 3000
+	crate_type = /obj/structure/closet/crate
+	contains = list(/obj/item/stack/sheet/mineral/coal/five,
+					/obj/machinery/grill/unwrenched)
+	crate_name = "grilling starter kit crate"
 
-/datum/supply_pack/organic/fruit_2
-	name = "Fruit Delux Crate"
-	desc = "Getting tired of the basic fruits and want to have something a bit more decadent! This crate is for you! Contains three of each - bunches of berries, apples, pineapples, cherries, green & red grapes, eggplants, bananas, peaches, and lastly seven strawberry. Includes one serving tray."
-	cost = 3500
-	contains = list(/obj/item/reagent_containers/food/snacks/grown/berries,
-					/obj/item/reagent_containers/food/snacks/grown/berries,
-					/obj/item/reagent_containers/food/snacks/grown/berries,
-					/obj/item/reagent_containers/food/snacks/grown/apple,
-					/obj/item/reagent_containers/food/snacks/grown/apple,
-					/obj/item/reagent_containers/food/snacks/grown/apple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/pineapple,
-					/obj/item/reagent_containers/food/snacks/grown/cherries,
-					/obj/item/reagent_containers/food/snacks/grown/cherries,
-					/obj/item/reagent_containers/food/snacks/grown/cherries,
-					/obj/item/reagent_containers/food/snacks/grown/grapes,
-					/obj/item/reagent_containers/food/snacks/grown/grapes,
-					/obj/item/reagent_containers/food/snacks/grown/grapes,
-					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
-					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
-					/obj/item/reagent_containers/food/snacks/grown/grapes/green,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/banana,
-					/obj/item/reagent_containers/food/snacks/grown/eggplant,
-					/obj/item/reagent_containers/food/snacks/grown/eggplant,
-					/obj/item/reagent_containers/food/snacks/grown/eggplant,
-					/obj/item/reagent_containers/food/snacks/grown/peach,
-					/obj/item/reagent_containers/food/snacks/grown/peach,
-					/obj/item/reagent_containers/food/snacks/grown/peach,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/reagent_containers/food/snacks/grown/strawberry,
-					/obj/item/storage/bag/tray)
-	crate_name = "fruit crate"
+/datum/supply_pack/organic/grillfuel
+	name = "Grilling Fuel Kit"
+	desc = "Contains coal and coal accessories. (Note: only ten coal sheets.)"
+	cost = 1000
+	crate_type = /obj/structure/closet/crate
+	contains = list(/obj/item/stack/sheet/mineral/coal/ten)
+	crate_name = "grilling fuel kit crate"
 
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
@@ -246,6 +258,19 @@
 	considered <b>\[REDACTED\]</b> and returned at your leisure. Note that objects the anomaly produces are specifically attuned exactly to the individual opening the anomaly; regardless \
 	of species, the individual will find the object edible and it will taste great according to their personal definitions, which vary significantly based on person and species.")
 
+/datum/supply_pack/organic/randomized/chef/vegetables
+	name = "Vegetables Crate"
+	desc = "Grown in vats."
+	cost = 1300
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/chili,
+					/obj/item/reagent_containers/food/snacks/grown/corn,
+					/obj/item/reagent_containers/food/snacks/grown/tomato,
+					/obj/item/reagent_containers/food/snacks/grown/potato,
+					/obj/item/reagent_containers/food/snacks/grown/carrot,
+					/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+					/obj/item/reagent_containers/food/snacks/grown/onion,
+					/obj/item/reagent_containers/food/snacks/grown/pumpkin)
+	crate_name = "food crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Hydroponics /////////////////////////////////////
@@ -335,6 +360,8 @@
 					/obj/item/hatchet,
 					/obj/item/cultivator,
 					/obj/item/plant_analyzer,
+					/obj/item/clothing/gloves/botanic_leather,
+					/obj/item/clothing/suit/apron,
 					/obj/item/flashlight,
 					/obj/item/seeds/carrot,
 					/obj/item/seeds/carrot,

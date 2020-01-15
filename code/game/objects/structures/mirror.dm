@@ -20,10 +20,9 @@
 		return
 	if(broken || !Adjacent(user))
 		return
-
+		
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 

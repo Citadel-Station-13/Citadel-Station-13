@@ -133,12 +133,13 @@
 	..()
 
 /obj/structure/frame/computer/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You must unwrench [src] before rotating it!</span>")
-		return
+		return TRUE
 
 	setDir(turn(dir, -90))
+	return TRUE

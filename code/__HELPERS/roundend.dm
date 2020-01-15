@@ -19,6 +19,9 @@
 		var/list/mob_data = list()
 		if(isnewplayer(m))
 			continue
+		if (m.client && m.client.prefs && m.client.prefs.auto_ooc)
+			if (!(m.client.prefs.chat_toggles & CHAT_OOC))
+				m.client.prefs.chat_toggles ^= CHAT_OOC
 		if(m.mind)
 			if(m.stat != DEAD && !isbrain(m) && !iscameramob(m))
 				num_survivors++
@@ -320,6 +323,8 @@
 			parts += "[FOURSPACES][FOURSPACES][str]"
 		for(var/entry in mode.threat_tallies)
 			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat_level,"Final threat level")
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat,"Threat left")
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()

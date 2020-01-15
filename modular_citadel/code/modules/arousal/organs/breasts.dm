@@ -6,7 +6,8 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_BREASTS
 	size = "c" //refer to the breast_values static list below for the cups associated number values
-	fluid_id = "milk"
+	fluid_id = /datum/reagent/consumable/milk
+	fluid_rate = MILK_RATE
 	shape = "pair"
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_FUID_PRODUCTION
 	masturbation_verb = "massage"
@@ -43,7 +44,7 @@
 			desc += " You estimate that they're [uppertext(size)]-cups."
 
 	if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION) && aroused_state)
-		desc += " They're leaking [fluid_id]."
+		desc += " They're leaking [initial(fluid_id.name)]."
 	var/string
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
@@ -63,7 +64,7 @@
 //Allows breasts to grow and change size, with sprite changes too.
 //maximum wah
 //Comical sizes slow you down in movement and actions.
-//Rediculous sizes makes you more cumbersome.
+//Ridiculous sizes makes you more cumbersome.
 //this is far too lewd wah
 
 /obj/item/organ/genital/breasts/modify_size(modifier, min = -INFINITY, max = INFINITY)
@@ -119,7 +120,7 @@
 	shape = D.features["breasts_shape"]
 	fluid_id = D.features["breasts_fluid"]
 	if(!D.features["breasts_producing"])
-		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION)
+		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION|CAN_CLIMAX_WITH|CAN_MASTURBATE_WITH)
 	if(!isnum(size))
 		cached_size = breast_values[size]
 	else
