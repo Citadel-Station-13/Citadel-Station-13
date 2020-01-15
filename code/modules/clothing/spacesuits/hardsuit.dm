@@ -224,7 +224,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/rad
 	resistance_flags = FIRE_PROOF
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	tauric = FALSE		//Citadel Add for tauric hardsuits
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/helmet/space/hardsuit/engine/rad/attack_self()
 	return //Sprites required for flashlight
