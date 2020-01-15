@@ -398,3 +398,6 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 10/20*5 = 2.5
 10 = 2.5/5*20
 */
+
+/datum/gas_mixture/proc/test_garbage_collect()
+	GAS_GARBAGE_COLLECT(gases)
