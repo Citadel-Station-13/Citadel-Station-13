@@ -310,26 +310,22 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture/compare(datum/gas_mixture/sample)
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
-
-	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
-		var/gas_moles = cached_gases[id]
-		var/sample_moles = sample_gases[id]
-		var/delta = abs(gas_moles - sample_moles)
-		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
-			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
-			return id
-
+	var/list/combined = cached_gases | sample_gases
+	// Do not use TOTAL_MOLES, that's an unnecessary iteration.
 	var/our_moles
-	TOTAL_MOLES(cached_gases, our_moles)
-	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/temp = temperature
-		var/sample_temp = sample.temperature
-
-		var/temperature_delta = abs(temp - sample_temp)
-		if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
-			return "temp"
-
-	return ""
+	// Declarations are expensive.
+	var/us
+	var/them
+	var/diff
+	for(var/id in combined)
+		us = cached_gases[id]
+		them = sample_gases[id]
+		diff = abs(gas_moles - sample_moles)
+		if(diff > MINIMUM_MOLES_DELTA_TO_MOVE && diff > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
+			return id
+		our_moles += us
+	if((our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) && (abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEN))
+		return "temp"
 
 /datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION

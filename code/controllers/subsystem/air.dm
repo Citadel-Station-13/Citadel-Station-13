@@ -239,7 +239,6 @@ SUBSYSTEM_DEF(air)
 		if (MC_TICK_CHECK)
 			return
 
-
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
 	active_turfs -= T
 	SSair_turfs.currentrun -= T
@@ -257,7 +256,7 @@ SUBSYSTEM_DEF(air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
 		#endif
-		T.excited = 1
+		T.excited = TRUE
 		active_turfs |= T
 		SSair_turfs.currentrun |= T
 		if(blockchanges && T.excited_group)

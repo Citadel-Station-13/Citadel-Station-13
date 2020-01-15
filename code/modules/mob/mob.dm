@@ -576,7 +576,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		var/list/L = list()
 		L += "Ping: [round(client.lastping,1)]ms (Avg: [round(client.avgping,1)]ms)"
 		L += SSmapping.stat_map_name
-		L += "Round ID: [GLOB.round_id || "NULL"]")
+		L += "Round ID: [GLOB.round_id || "NULL"]"
 		L += SStime_track.stat_time_text
 		L += SSshuttle.emergency_shuttle_stat_text
 		stat(null, "[L.Join("\n")]")
