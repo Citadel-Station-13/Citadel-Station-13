@@ -35,6 +35,9 @@
 		message_admins("Client [ckey] just attempted to send an invalid keypress. Keymessage was over [MAX_KEYPRESS_COMMANDLENGTH] characters, autokicking due to likely abuse.")
 		QDEL_IN(src, 1)
 		return
+
+	if(length(keys_held) > MAX_HELD_KEYS)
+		keys_held.Cut(1,2)
 	keys_held[_key] = TRUE
 	var/movement = SSinput.movement_keys[_key]
 	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
