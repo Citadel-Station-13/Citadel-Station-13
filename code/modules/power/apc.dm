@@ -982,19 +982,19 @@
 					else
 						locked = !locked
 						update_icon()
-						. = TRUE
+				return TRUE
 			if("cover")
 				coverlocked = !coverlocked
-				. = TRUE
+				return TRUE
 			if("breaker")
 				toggle_breaker()
-				. = TRUE
+				return TRUE
 			if("charge")
 				chargemode = !chargemode
 				if(!chargemode)
 					charging = APC_NOT_CHARGING
 					update_icon()
-				. = TRUE
+				return TRUE
 			if("channel")
 				if(params["eqp"])
 					equipment = setsubsystem(text2num(params["eqp"]))
@@ -1008,20 +1008,23 @@
 					environ = setsubsystem(text2num(params["env"]))
 					update_icon()
 					update()
-				. = TRUE
+				return TRUE
 			if("overload")
 				if(usr.has_unlimited_silicon_privilege)
 					overload_lighting()
-					. = TRUE
+				return TRUE
 			if("hack")
 				if(get_malf_status(usr))
 					malfhack(usr)
+				return TRUE
 			if("occupy")
 				if(get_malf_status(usr))
 					malfoccupy(usr)
+				return TRUE
 			if("deoccupy")
 				if(get_malf_status(usr))
 					malfvacate()
+				return TRUE
 			if("emergency_lighting")
 				emergency_lights = !emergency_lights
 				for(var/obj/machinery/light/L in area)
@@ -1029,7 +1032,7 @@
 						L.no_emergency = emergency_lights
 						INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 					CHECK_TICK
-	return 1
+				return TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	if(!is_operational() || failure_timer)
