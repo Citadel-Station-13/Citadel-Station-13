@@ -965,7 +965,7 @@
 		return FALSE
 	if(hallucinating())
 		return TRUE
-	if(IsSleeping())
+	if(_REFACTORING_IsSleeping())
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE

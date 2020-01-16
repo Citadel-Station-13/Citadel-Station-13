@@ -96,9 +96,9 @@
 	// TELEPORT: Move to Coffin & Close it!
 	do_teleport(owner, bloodsuckerdatum.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_QUANTUM) // in teleport.dm?
 	// SLEEP
-	user.resting = TRUE
+	user.set_resting(TRUE, TRUE, FALSE)
 	//user.Unconscious(30,0)
-	user.Stun(30,1)
+	user.Stun(30, TRUE)
 	// CLOSE LID: If fail, force me in.
 	if (!bloodsuckerdatum.coffin.close(owner))
 		bloodsuckerdatum.coffin.insert(owner) // Puts me inside.

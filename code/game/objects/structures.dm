@@ -45,7 +45,8 @@
 	if(!climbable)
 		return
 	if(user == O && iscarbon(O))
-		if(user.canmove)
+		var/mob/living/L = O
+		if(CHECK_MOBILITY(O, MOBILITY_MOVE))
 			climb_structure(user)
 			return
 	if(!istype(O, /obj/item) || user.get_active_held_item() != O)

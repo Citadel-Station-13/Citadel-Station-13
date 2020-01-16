@@ -54,7 +54,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		var/mob/living/M = A
 		var/cachedstam = M.getStaminaLoss()
 		var/totalstuntime = cachedstam * stamtostunconversion * (M.lying ? 2 : 1)
-		if(!M.resting)
+		if(CHECK_MOBILITY(M, MOBILITY_STAND))
 			M.DefaultCombatKnockdown(cachedstam*2) //BORK BORK. GET DOWN.
 		M.Stun(totalstuntime)
 		user.do_attack_animation(A, ATTACK_EFFECT_BITE)

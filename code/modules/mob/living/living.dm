@@ -128,7 +128,7 @@
 					return TRUE
 				attemptingcrawl = TRUE
 				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>", "<span class='notice'>You are now attempting to crawl under [L].</span>")
-				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || !resting)
+				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || CHECK_MOBILITY(src, MOBILITY_STAND))
 					attemptingcrawl = FALSE
 					return TRUE
 			var/src_passmob = (pass_flags & PASSMOB)
