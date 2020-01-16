@@ -969,10 +969,10 @@
 			failure_timer = 0
 			update_icon()
 			update()
-	var/authorized = (!locked || !usr.has_unlimited_silicon_privilege || failure_timer || (integration_cog && (is_servant_of_ratvar(usr))))
+	var/authorized = (!locked || usr.has_unlimited_silicon_privilege || (integration_cog && (is_servant_of_ratvar(usr))))
 	if((action == "toggle_nightshift") && (!nightshift_requires_auth || authorized))
 		toggle_nightshift_lights()
-		. = TRUE
+		return TRUE
 	if(authorized)
 		switch(action)
 			if("lock")
