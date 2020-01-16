@@ -26,7 +26,7 @@ In all, this is a lot like the monkey code. /N
 			AdjustAllImmobility(-60, FALSE)
 			AdjustUnconscious(-60, FALSE)
 			AdjustSleeping(-100, FALSE)
-			update_mobililty()
+			update_mobility()
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
 		if(INTENT_DISARM, INTENT_HARM)
 			if(health > 0)

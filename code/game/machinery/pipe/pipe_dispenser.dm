@@ -34,7 +34,8 @@
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
 		return 1
-	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	var/mob/living/L = usr
+	if(!anchored || !istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)

@@ -38,8 +38,8 @@
 	. = ..()
 	verbs += /mob/living/proc/lay_down
 
-/mob/living/simple_animal/pet/cat/update_canmove()
-	..()
+/mob/living/simple_animal/pet/cat/update_mobility()
+	. = ..()
 	if(client && stat != DEAD)
 		if(!CHECK_BITFIELD(mobility_flags, MOBILITY_STAND))
 			icon_state = "[icon_living]_rest"

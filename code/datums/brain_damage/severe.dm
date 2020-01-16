@@ -132,7 +132,7 @@
 
 /datum/brain_trauma/severe/narcolepsy/on_life()
 	..()
-	if(owner.IsSleeping())
+	if(owner._REFACTORING_IsSleeping())
 		return
 	var/sleep_chance = 1
 	if(owner.m_intent == MOVE_INTENT_RUN)

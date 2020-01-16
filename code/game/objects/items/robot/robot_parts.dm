@@ -356,8 +356,7 @@
 			forceMove(O)
 			O.robot_suit = src
 			if(!locomotion)
-				O.locked_down = TRUE
-				O.update_canmove()
+				O.SetLockdown(TRUE)
 
 	else if(istype(W, /obj/item/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")
