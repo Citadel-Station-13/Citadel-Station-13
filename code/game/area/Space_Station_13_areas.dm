@@ -257,6 +257,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/bar/cafe
 	name = "Abandoned Cafe"
 
+/area/maintenance/drone
+	name = "Drone Satellite"
+	icon_state = "disposal"
+
+/area/maintenance/drone/ship
+	name = "Drone Ship"
+	requires_power = FALSE
+
 //Hallway
 
 /area/hallway
@@ -681,6 +689,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Port Bow Solar Array"
 	icon_state = "panelsFP"
 
+/area/solar/drone
+	name = "Drone Satellite Solar Array"
+	icon_state = "yellow"
 
 //Solar Maint
 
