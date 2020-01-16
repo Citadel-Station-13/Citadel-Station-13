@@ -1894,7 +1894,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if(shove_blocked && !target.buckled)
 			var/directional_blocked = !target.Adjacent(target_shove_turf)
-			var/targetatrest = target.resting
+			var/targetatrest = !CHECK_MOBILITY(target, MOBILITY_STAND)
 			if((directional_blocked || !(target_collateral_human || target_shove_turf.shove_act(target, user))) && !targetatrest)
 				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",

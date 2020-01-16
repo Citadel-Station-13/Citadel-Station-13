@@ -1431,10 +1431,8 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(3 to INFINITY)//Tier 3 only
-					if(L.resting)
-						L.lay_down() //aka get up
-					L._REFACTORING_SetStun(0)
-					L.SetKnockdown(0)
+					L.set_resting(FALSE, TRUE, FALSE)
+					L.SetAllImmobility(0)
 					L.SetUnconscious(0) //i said get up i don't care if you're being tased
 					E.cooldown += 10 //This could be really strong
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You jump to your feet from sheer willpower!</b></span>"), 5)

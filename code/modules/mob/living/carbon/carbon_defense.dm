@@ -77,7 +77,7 @@
 		var/mob/living/carbon/tempcarb = user
 		if(!tempcarb.combatmode)
 			totitemdamage *= 0.5
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	if(!combatmode)
 		totitemdamage *= 1.5

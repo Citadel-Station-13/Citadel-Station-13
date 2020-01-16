@@ -648,10 +648,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 12
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
-	M.AdjustUnconscious(-20, 0)
-	M.adjustStaminaLoss(-4.5*REM, 0)
+	M.AdjustAllImmobility(-20, FALSE)
+	M.AdjustUnconscious(-20, FALSE)
+	M.adjustStaminaLoss(-4.5*REM, FALSE)
 	M.Jitter(10)
 	if(prob(50))
 		M.confused = max(M.confused, 1)
