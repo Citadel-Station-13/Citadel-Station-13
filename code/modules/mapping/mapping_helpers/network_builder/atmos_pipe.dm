@@ -52,7 +52,7 @@
 		if(found)
 			continue
 		for(var/obj/machinery/atmospherics/A in T)
-			if((A.piping_layer == pipe_layer) && (A.initialize_directions & i))
+			if((A.piping_layer == pipe_layer) && (A.initialize_directions & turn(i, 180)))
 				network_directions += i
 				break
 	return network_directions
@@ -65,7 +65,13 @@
 	switch(length(network_directions))
 		if(2)		//straight pipe
 			built = new /obj/machinery/atmospherics/pipe/simple(loc)
-			built.setDir(network_directions[1] | network_directions[2])
+			var/d1 = network_directions[1]
+			var/d2 = network_directions[2]
+			var/combined = d1 | d2
+			if(combined in GLOB.diagonals)
+				built.setDir(combined)
+			else
+				built.setDir(d1)
 		if(3)		//manifold
 			var/list/missing = network_directions ^ GLOB.cardinals
 			missing = missing[1]

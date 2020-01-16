@@ -57,7 +57,7 @@
 		else
 			var/do_knot = (knot == KNOT_FORCED) || ((knot == KNOT_AUTO) && should_auto_knot())
 			var/dirs = length(network_directions)
-			for(var/i in 1 to dirs)
+			for(var/i in 1 to dirs - 1)
 				var/li = (i == 1)? dirs : (i - 1)
 				var/d1 = network_directions[i]
 				var/d2 = network_directions[li]
