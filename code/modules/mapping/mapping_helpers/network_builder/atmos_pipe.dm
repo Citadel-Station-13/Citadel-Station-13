@@ -46,7 +46,7 @@
 		for(var/obj/effect/mapping_helpers/network_builder/atmos_pipe/other in T)
 			if(other.pipe_layer == pipe_layer)
 				network_directions += i
-				LAZYADD(other.network_directions, turn(i, 180))
+				other.network_directions += turn(i, 180)
 				found = TRUE
 				break
 		if(found)

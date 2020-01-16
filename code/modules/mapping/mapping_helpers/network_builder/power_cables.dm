@@ -15,7 +15,6 @@
 	/// cable color as from GLOB.cable_colors
 	var/cable_color = "red"
 
-
 /obj/effect/mapping_helpers/network_builder/power_cable/check_duplicates()
 	var/obj/structure/cable/C = locate() in loc
 	if(C)
@@ -37,7 +36,7 @@
 		var/obj/effect/mapping_helpers/network_builder/power_cable/other = locate() in T
 		if(other)
 			network_directions += i
-			LAZYADD(other.network_directions, turn(i, 180))
+			other.network_directions += turn(i, 180)
 			continue
 		for(var/obj/structure/cable/C in T)
 			if(C.d1 == turn(i, 180) || C.d2 == turn(i, 180))

@@ -7,7 +7,7 @@
 	icon = 'icons/effects/mapping_helpers.dmi'
 
 	/// what directions we know connections are in
-	var/list/network_directions
+	var/list/network_directions = list()
 
 /obj/effect/mapping_helpers/network_builder/Initialize(mapload)
 	. = ..()
