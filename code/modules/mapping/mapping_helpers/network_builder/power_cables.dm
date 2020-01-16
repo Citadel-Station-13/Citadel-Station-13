@@ -22,7 +22,7 @@
 /// Scans directions, sets network_directions to have every direction that we can link to. If there's another power cable builder detected, make sure they know we're here by adding us to their cable directions list before we're deleted.
 /obj/effect/network_builder/power_cable/scan_directions()
 	var/turf/T
-	for(var/i in GLOB.cardinal)
+	for(var/i in GLOB.cardinals)
 		if(i in network_directions)
 			continue				//we're already set, that means another builder set us.
 		T = get_step(loc, i)
@@ -46,7 +46,6 @@
 	else if(length(directions) == 1)
 		var/do_knot = (knot == KNOT_FORCED) || ((knot == KNOT_AUTO) && should_auto_knot())
 		if(do_knot)
-			var/dir = directions[1]
 			new /obj/structure/cable(loc, cable_color, NONE, directions[1])
 	else
 		if(knot == KNOT_FORCED)
@@ -65,9 +64,9 @@
 					do_knot = FALSE
 
 /obj/effect/network_builder/power_cable/proc/should_auto_knot()
-	return (locate(/obj/machinery/terminal) in loc)
+	return (locate(/obj/machinery/power/terminal) in loc)
 
-/obj/effect/network_buidler/power_cable/knot
+/obj/effect/network_builder/power_cable/knot
 	icon_state = "powerlinebuilderknot"
 	knot = KNOT_FORCED
 
