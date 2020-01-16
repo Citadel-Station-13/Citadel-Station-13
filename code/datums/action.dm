@@ -8,6 +8,7 @@
 	var/desc = null
 	var/obj/target = null
 	var/check_flags = 0
+	var/required_mobility_flags = MOBILITY_USE
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
@@ -95,20 +96,22 @@
 
 /datum/action/proc/IsAvailable()
 	if(!owner)
-		return 0
+		return FALSE
+	if(!CHECK_ALL_MOBILITY(owner, required_mobility_flags))
+		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_STUN)
-		if(owner.IsKnockdown() || owner.IsStun())
-			return 0
+		if(!CHECK_MOBILITY(owner, MOBILITY_USE))
+			return FALSE
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
-			return 0
+		if(!CHECK_MOBILITY(owner, MOBILITY_STAND))
+			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)

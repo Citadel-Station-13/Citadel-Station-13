@@ -243,7 +243,7 @@
 	if(user.mind && (user.mind.isholy) && !reskinned)
 		reskin_holy_weapon(user)
 
-/obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
+/obj/item/nullrod/proc/reskin_holy_weapon(mob/living/M)
 	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/holy_weapon
@@ -255,7 +255,7 @@
 			display_names[initial(rodtype.name)] = rodtype
 
 	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+	if(QDELETED(src) || !choice || !in_range(M, src) || !CHECK_MOBILITY(M, MOBILITY_USE) || reskinned)
 		return
 
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new

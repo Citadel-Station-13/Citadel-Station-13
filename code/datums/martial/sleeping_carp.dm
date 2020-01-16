@@ -227,7 +227,7 @@
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 								   "<span class='userdanger'>Your legs give out!</span>")
 			H.DefaultCombatKnockdown(80)
-		if(H.staminaloss && !H.IsSleeping())
+		if(H.staminaloss && !_REFACTORING_H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
 				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!</span>", \
