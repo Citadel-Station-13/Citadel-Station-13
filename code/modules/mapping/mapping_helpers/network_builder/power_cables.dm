@@ -7,13 +7,14 @@
 	name = "power line autobuilder"
 	icon_state = "powerlinebuilder"
 
+	color = "#ff0000"
+
 	/// Whether or not we forcefully make a knot
 	var/knot = NO_KNOT
 
 	/// cable color as from GLOB.cable_colors
 	var/cable_color = "red"
 
-	color = "ff0000"
 
 /obj/effect/network_builder/power_cable/check_duplicates()
 	return (locate(/obj/structure/cable) in loc) || (locate(/obj/effect/network_builder/power_cable) in loc)

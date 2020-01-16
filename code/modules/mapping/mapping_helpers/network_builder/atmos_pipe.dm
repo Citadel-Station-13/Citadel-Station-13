@@ -27,14 +27,14 @@
 	for(var/obj/machinery/atmospherics/A in loc)
 		if(A.pipe_flags & PIPING_ALL_LAYER)
 			return A
-		if(A.pipe_layer == pipe_layer)
+		if(A.piping_layer == pipe_layer)
 			return A
 	return FALSE
 
 /// Scans directions, sets network_directions to have every direction that we can link to. If there's another power cable builder detected, make sure they know we're here by adding us to their cable directions list before we're deleted.
 /obj/effect/network_builder/atmos_pipe/scan_directions()
 	var/turf/T
-	for(var/i in GLOB.cardinal)
+	for(var/i in GLOB.cardinals)
 		if(i in network_directions)
 			continue				//we're already set, that means another builder set us.
 		T = get_step(loc, i)
@@ -50,7 +50,7 @@
 		if(found)
 			continue
 		for(var/obj/machinery/atmospherics/A in T)
-			if((A.pipe_layer == pipe_layer) && (A.initialize_directions & i))
+			if((A.piping_layer == pipe_layer) && (A.initialize_directions & i))
 				network_directions += i
 				break
 	return network_directions
@@ -65,18 +65,18 @@
 			built = new /obj/machinery/atmospherics/simple(loc)
 			built.setDir(directions[1] | directions[2])
 		if(3)		//manifold
-			var/list/missing = directions ^ GLOB.cardinal
+			var/list/missing = directions ^ GLOB.cardinals
 			missing = missing[1]
 			built = new /obj/machinery/atmospherics/pipe/manifold(loc)
 			built.setDir(missing)
 		if(4)		//4 way manifold
 			built = new /obj/machinery/atmospherics/pipe/manifold4w(loc)
-		built.SetInitDirections()
-		built.on_construction(pipe_color, piping_layer)
+	built.SetInitDirections()
+	built.on_construction(pipe_color, piping_layer)
 
 /obj/effect/network_builder/atmos_pipe/distro
 	name = "distro line autobuilder"
-	piping_layer = PIPING_LAYER_MIN
+	pipe_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
 	pixel_y = -PIPING_LAYER_P_Y
 	pipe_color = rgb(130,43,255)
@@ -84,7 +84,7 @@
 
 /obj/effect/network_builder/atmos_pipe/scrubbers
 	name = "scrubbers line autobuilder"
-	piping_layer = PIPING_LAYER_MAX
+	pipe_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
 	pipe_color = rgb(255,0,0)
