@@ -183,3 +183,7 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto
 	icon_state = "powerlinebuilderauto"
 	knot = KNOT_AUTO
+
+#undef NO_KNOT
+#undef KNOT_AUTO
+#undef KNOT_FORCED

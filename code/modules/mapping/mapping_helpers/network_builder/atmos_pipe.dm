@@ -1,7 +1,3 @@
-#define NO_KNOT 0
-#define KNOT_AUTO 1
-#define KNOT_FORCED 2
-
 /* Automatically places pipes on init based on any pipes connecting to it and adjacent helpers. Only supports cardinals.
  * Conflicts with ANY PIPE ON ITS LAYER, as well as atmos network build helpers on the same layer, as well as any pipe on all layers. Do those manually.
 */
