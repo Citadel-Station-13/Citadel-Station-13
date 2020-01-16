@@ -85,13 +85,13 @@
 	color = #hex \
 	cable_color = #enum
 
-AUTODEF_COLOR("#ff0000", "red")
-AUTODEF_COLOR("#ffffff", "white")
-AUTODEF_COLOR("#00ffff", "cyan")
-AUTODEF_COLOR("#ff8000", "orange")
-AUTODEF_COLOR("#ff3cc8", "pink")
-AUTODEF_COLOR("#1919c8", "blue")
-AUTODEF_COLOR("#00aa00", "green")
-AUTODEF_COLOR("#ffff00", "yellow")
+AUTODEF_COLOR("#ff0000", red)
+AUTODEF_COLOR("#ffffff", white)
+AUTODEF_COLOR("#00ffff", cyan)
+AUTODEF_COLOR("#ff8000", orange)
+AUTODEF_COLOR("#ff3cc8", pink)
+AUTODEF_COLOR("#1919c8", blue)
+AUTODEF_COLOR("#00aa00", green)
+AUTODEF_COLOR("#ffff00", yellow)
 
 #undef AUTODEF_COLOR
