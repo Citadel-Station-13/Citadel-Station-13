@@ -34,10 +34,12 @@ GLOBAL_LIST(topic_status_cache)
 #endif
 
 	load_admins()
+	load_mentors()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
+	initialize_global_loadout_items()
 	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
@@ -48,8 +50,6 @@ GLOBAL_LIST(topic_status_cache)
 
 	if(NO_INIT_PARAMETER in params)
 		return
-
-	cit_initialize()
 
 	Master.Initialize(10, FALSE, TRUE)
 

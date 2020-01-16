@@ -98,6 +98,7 @@
 	var/force_update = 0
 	var/emergency_lights = FALSE
 	var/nightshift_lights = FALSE
+	var/nightshift_requires_auth = FALSE
 	var/last_nightshift_switch = 0
 	var/update_state = -1
 	var/update_overlay = -1
@@ -239,6 +240,7 @@
 	update_icon()
 
 	make_terminal()
+	update_nightshift_auth_requirement()
 
 	addtimer(CALLBACK(src, .proc/update), 5)
 
@@ -852,6 +854,7 @@
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
 		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)),
+		"lock_nightshift" = nightshift_requires_auth,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
@@ -959,7 +962,18 @@
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && !(integration_cog && (is_servant_of_ratvar(usr)))))
+	if(..() || !can_use(usr, 1))
+		return
+	if(failure_timer)
+		if(action == "reboot")
+			failure_timer = 0
+			update_icon()
+			update()
+	var/authorized = (!locked || usr.has_unlimited_silicon_privilege || (integration_cog && (is_servant_of_ratvar(usr))))
+	if((action == "toggle_nightshift") && (!nightshift_requires_auth || authorized))
+		toggle_nightshift_lights()
+		return TRUE
+	if(!authorized)
 		return
 	switch(action)
 		if("lock")
@@ -969,22 +983,19 @@
 				else
 					locked = !locked
 					update_icon()
-					. = TRUE
+			return TRUE
 		if("cover")
 			coverlocked = !coverlocked
-			. = TRUE
+			return TRUE
 		if("breaker")
 			toggle_breaker()
-			. = TRUE
-		if("toggle_nightshift")
-			toggle_nightshift_lights()
-			. = TRUE
+			return TRUE
 		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = APC_NOT_CHARGING
 				update_icon()
-			. = TRUE
+			return TRUE
 		if("channel")
 			if(params["eqp"])
 				equipment = setsubsystem(text2num(params["eqp"]))
@@ -998,24 +1009,23 @@
 				environ = setsubsystem(text2num(params["env"]))
 				update_icon()
 				update()
-			. = TRUE
+			return TRUE
 		if("overload")
 			if(usr.has_unlimited_silicon_privilege)
 				overload_lighting()
-				. = TRUE
+			return TRUE
 		if("hack")
 			if(get_malf_status(usr))
 				malfhack(usr)
+			return TRUE
 		if("occupy")
 			if(get_malf_status(usr))
 				malfoccupy(usr)
+			return TRUE
 		if("deoccupy")
 			if(get_malf_status(usr))
 				malfvacate()
-		if("reboot")
-			failure_timer = 0
-			update_icon()
-			update()
+			return TRUE
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
 			for(var/obj/machinery/light/L in area)
@@ -1023,7 +1033,7 @@
 					L.no_emergency = emergency_lights
 					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 				CHECK_TICK
-	return 1
+			return TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	if(!is_operational() || failure_timer)
@@ -1429,12 +1439,26 @@
 
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE
+	if(nightshift_lights == on)
+		return
 	nightshift_lights = on
 	for(var/obj/machinery/light/L in area)
 		if(L.nightshift_allowed)
 			L.nightshift_enabled = nightshift_lights
 			L.update(FALSE)
 		CHECK_TICK
+
+/obj/machinery/power/apc/proc/update_nightshift_auth_requirement()
+	nightshift_requires_auth = nightshift_toggle_requires_auth()
+
+/obj/machinery/power/apc/proc/nightshift_toggle_requires_auth()
+	if(!area)
+		return FALSE
+	var/configured_level = CONFIG_GET(number/night_shift_public_areas_only)
+	var/our_level = area.nightshift_public_area
+	var/public_requires_auth = CONFIG_GET(flag/nightshift_toggle_public_requires_auth)
+	var/normal_requires_auth = CONFIG_GET(flag/nightshift_toggle_requires_auth)
+	return (configured_level && our_level && ((our_level <= configured_level)? public_requires_auth : normal_requires_auth))
 
 #undef UPSTATE_CELL_IN
 #undef UPSTATE_OPENED1
