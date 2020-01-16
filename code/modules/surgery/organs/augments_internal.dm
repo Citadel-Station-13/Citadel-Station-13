@@ -106,7 +106,7 @@
 	if(crit_fail || !(organ_flags & ORGAN_FAILING))
 		return
 	owner.adjustStaminaLoss(-3.5, FALSE) //Citadel edit, makes it more useful in Stamina based combat
-	owner.HealAllImmobilityUpTo, STUN_SET_AMOUNT)
+	owner.HealAllImmobilityUpTo(STUN_SET_AMOUNT)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
