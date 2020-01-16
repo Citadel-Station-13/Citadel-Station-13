@@ -539,6 +539,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
 				all_quirks -= V
 
+	if(features["meat_type"] == "Inesct")
+		features["meat_type"] = "Insect"
 	cit_character_pref_load(S)
 
 	return 1
