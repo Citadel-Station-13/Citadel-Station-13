@@ -33660,22 +33660,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
-"bnN" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bnO" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "bnP" = (
 /obj/machinery/door/airlock/external{
 	name = "Common Mining Dock"
 	},
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bnQ" = (
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "bnR" = (
@@ -34812,9 +34800,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"bqe" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "bqf" = (
 /turf/open/floor/plating,
 /area/hallway/primary/port)
@@ -34828,9 +34813,6 @@
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 7
 	},
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bqh" = (
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "bqi" = (
@@ -36084,23 +36066,6 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
-"bsp" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bsq" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bsr" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bss" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bst" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "bsu" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -36890,23 +36855,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"btU" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"btV" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"btW" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"btX" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "btY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -37758,28 +37706,6 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
-"bvM" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bvN" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bvO" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bvP" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bvQ" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bvR" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bvS" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "bvT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37789,17 +37715,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science/xenobiology)
-"bvU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "bvV" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
@@ -38621,34 +38536,6 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
-"bxE" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
-"bxF" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bxG" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bxH" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bxI" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bxJ" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bxK" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "bxL" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
@@ -38659,19 +38546,6 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"bxM" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "bxN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -39572,14 +39446,6 @@
 "bzx" = (
 /turf/closed/wall,
 /area/security/vacantoffice)
-"bzy" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bzz" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "bzA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
@@ -40267,21 +40133,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"bBe" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "bBf" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -40324,18 +40175,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/starboard)
-"bBk" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "bBl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -94029,9 +93868,9 @@ aaa
 aaa
 aaa
 aaa
-btX
+djz
 bsk
-bxE
+djC
 aVu
 bxu
 aRA
@@ -95828,9 +95667,9 @@ aaa
 aaa
 aaa
 aaa
-btX
+djz
 bsk
-bxE
+djC
 bvH
 bMw
 aRA
@@ -97371,9 +97210,9 @@ bjX
 blU
 baE
 baE
-bzz
-bzz
-bzz
+bnM
+bnM
+bnM
 baE
 baE
 jPu
@@ -97627,11 +97466,11 @@ bix
 bjY
 blV
 bqi
-bxK
-bxK
-bxK
-bxK
-bxK
+bqf
+bqf
+bqf
+bqf
+bqf
 bqi
 djW
 bNd
@@ -97883,14 +97722,14 @@ bgx
 biy
 bjZ
 blW
-bzz
-bxK
-bxK
-bxK
-bxK
-bxK
-bzz
-bBk
+bnM
+bqf
+bqf
+bqf
+bqf
+bqf
+bnM
+bBf
 kQP
 bzx
 bzx
@@ -98140,14 +97979,14 @@ bgy
 biz
 bka
 blX
-bzz
-bxK
-bxK
-bxK
-bxK
-bxK
-bzz
-bBk
+bnM
+bqf
+bqf
+bqf
+bqf
+bqf
+bnM
+bBf
 bCL
 bEq
 did
@@ -98399,11 +98238,11 @@ bnR
 blY
 bnP
 bqg
-bxK
-bxK
-bxK
-bxK
-bzz
+bqf
+bqf
+bqf
+bqf
+bnM
 rNX
 jBe
 bzx
@@ -98654,13 +98493,13 @@ bgA
 biz
 bkb
 blZ
-bzz
-bxK
-bxK
-bxK
-bxK
-bxK
-bzz
+bnM
+bqf
+bqf
+bqf
+bqf
+bqf
+bnM
 bBh
 xmb
 iSt
@@ -98911,14 +98750,14 @@ bpt
 bcW
 bkc
 bma
-bzz
-bxK
-bxK
-bxK
-bxK
-bxK
-bzz
-bBk
+bnM
+bqf
+bqf
+bqf
+bqf
+bqf
+bnM
+bBf
 bCM
 bzx
 bzx
@@ -99169,11 +99008,11 @@ bcW
 dhP
 bqd
 bqi
-bxK
-bxK
-bxK
-bxK
-bxK
+bqf
+bqf
+bqf
+bqf
+bqf
 bqi
 djW
 bsx
@@ -99427,12 +99266,12 @@ bkd
 bmb
 baE
 baE
-bzz
+bnM
 baE
-bzz
+bnM
 baE
 baE
-bBk
+bBf
 bNh
 bNK
 bzx
@@ -99683,11 +99522,11 @@ biC
 bke
 bmc
 bnS
-bvU
-bxM
+bqj
+bsu
 btY
-bvU
-bxM
+bqj
+bsu
 bEt
 nhy
 mcS
