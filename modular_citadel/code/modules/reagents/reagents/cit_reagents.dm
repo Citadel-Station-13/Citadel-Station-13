@@ -135,7 +135,7 @@
 			else
 				aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
 			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
-			REMOVE_TRAIT(M,TRAIT_NEVERBONER,"aphro")
+			REMOVE_TRAIT(M,TRAIT_NEVERBONER,APHRO_TRAIT)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/list/genits = H.adjust_arousal(100, aphro = TRUE) // redundant but should still be here
@@ -163,7 +163,7 @@
 		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.cit_toggles & BIMBOFICATION))
 			if(!HAS_TRAIT(M,TRAIT_PERMABONER))
 				to_chat(M, "<span class='userlove'>Your libido is going haywire!</span>")
-				ADD_TRAIT(M,TRAIT_PERMABONER,"aphro")
+				ADD_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
 	..()
 
 /datum/reagent/drug/anaphrodisiac
@@ -194,7 +194,7 @@
 
 /datum/reagent/drug/anaphrodisiacplus/on_mob_life(mob/living/M)
 	if(M && M.client?.prefs.arousable)
-		REMOVE_TRAIT(M,TRAIT_PERMABONER,"aphro")
+		REMOVE_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/list/genits = H.adjust_arousal(-100, aphro = TRUE)
@@ -206,7 +206,7 @@
 /datum/reagent/drug/anaphrodisiacplus/overdose_process(mob/living/M)
 	if(M && M.client?.prefs.arousable && prob(5))
 		to_chat(M, "<span class='userlove'>You feel like you'll never feel aroused again...</span>")
-		ADD_TRAIT(M,TRAIT_NEVERBONER,"aphro")
+		ADD_TRAIT(M,TRAIT_NEVERBONER,APHRO_TRAIT)
 	..()
 
 //recipes
