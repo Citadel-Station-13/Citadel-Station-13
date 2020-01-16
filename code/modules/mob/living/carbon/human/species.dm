@@ -1839,7 +1839,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return
-		if(!user.resting)
+		if(CHECK_MOBILITY(user, MOBILITY_STAND))
 			to_chat(user, "<span class='notice'>You can only force yourself up if you're on the ground.</span>")
 			return
 		user.visible_message("<span class='notice'>[user] forces [p_them()]self up to [p_their()] feet!</span>", "<span class='notice'>You force yourself up to your feet!</span>")
@@ -1857,7 +1857,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		return FALSE
 	else
 		if(user == target)
@@ -1870,7 +1870,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 
-		if(!target.resting)
+		if(CHECK_MOBILITY(target, MOBILITY_STAND))
 			target.adjustStaminaLoss(5)
 
 		if(target.is_shove_knockdown_blocked())

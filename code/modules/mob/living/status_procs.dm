@@ -330,6 +330,9 @@
 	if(updating)
 		update_mobility()
 
+/mob/living/proc/HighestImmobilityAmount()
+	return max(max(max(max(_REFACTORING_AmountStun(), _REFACTORING_AmountKnockdown()), AmountParalyzed()), AmountImmobilized()), AmountDazed())
+
 //////////////////UNCONSCIOUS
 /mob/living/proc/_REFACTORING_IsUnconscious() //If we're unconscious
 	return has_status_effect(STATUS_EFFECT_UNCONSCIOUS)

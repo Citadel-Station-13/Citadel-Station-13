@@ -239,7 +239,7 @@
 		M.forceMove(get_turf(src))
 		if(isliving(M))
 			var/mob/living/L = M
-			L.update_canmove()
+			L.update_mobility()
 	occupant = null
 	update_icon()
 

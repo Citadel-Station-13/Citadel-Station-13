@@ -99,7 +99,7 @@
 
 	affecting.Remove(AM)
 
-	if(living(AM))
+	if(isliving(AM))
 		var/mob/living/M = AM
 		if(immobilize)
 			REMOVE_TRAIT(M, TRAIT_MOBILITY_NOMOVE, src)

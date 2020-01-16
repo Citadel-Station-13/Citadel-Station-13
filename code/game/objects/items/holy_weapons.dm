@@ -64,7 +64,7 @@
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
 
-/obj/item/holybeacon/proc/beacon_armor(mob/M)
+/obj/item/holybeacon/proc/beacon_armor(mob/living/M)
 	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
 	var/list/display_names = list()
 	for(var/V in holy_armor_list)
