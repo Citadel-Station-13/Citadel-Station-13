@@ -53,7 +53,6 @@ import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreBox } from './interfaces/OreBox';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { Pandemic } from './interfaces/Pandemic';
-import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
@@ -312,10 +311,6 @@ const ROUTES = {
   },
   pandemic: {
     component: () => Pandemic,
-    scrollable: true,
-  },
-  personal_crafting: {
-    component: () => PersonalCrafting,
     scrollable: true,
   },
   portable_generator: {

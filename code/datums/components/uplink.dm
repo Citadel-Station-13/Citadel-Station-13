@@ -25,7 +25,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/unlock_code
 	var/failsafe_code
 	var/datum/ui_state/checkstate
-	var/compact_mode = FALSE
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate)
 	if(!isitem(parent))
@@ -139,25 +138,22 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
-	data["compact_mode"] = compact_mode
-	return data
 
-/datum/component/uplink/ui_static_data(mob/user)
-	var/list/data = list()
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
-			if(I.limited_stock == 0)
-				continue
-			if(I.restricted_roles.len)
-				var/is_inaccessible = TRUE
-				for(var/R in I.restricted_roles)
-					if(R == user.mind.assigned_role)
-						is_inaccessible = FALSE
+		if(category == selected_cat)
+			for(var/item in uplink_items[category])
+				var/datum/uplink_item/I = uplink_items[category][item]
+				if(I.limited_stock == 0)
+					continue
+				if(I.restricted_roles.len)
+					var/is_inaccessible = 1
+					for(var/R in I.restricted_roles)
+						if(R == user.mind.assigned_role)
+							is_inaccessible = 0
 					if(is_inaccessible)
 						continue
 				cat["items"] += list(list(
@@ -192,8 +188,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
-		if("compact_toggle")
-			compact_mode = !compact_mode
 	return TRUE
 
 /datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
