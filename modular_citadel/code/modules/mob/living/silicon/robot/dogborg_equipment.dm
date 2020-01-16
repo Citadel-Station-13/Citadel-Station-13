@@ -446,4 +446,4 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			leaping = 0
 			pixel_y = initial(pixel_y)
 			update_icons()
-			update_canmove()
+			update_mobility()

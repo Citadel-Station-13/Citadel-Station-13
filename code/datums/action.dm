@@ -97,7 +97,8 @@
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
-	if(!CHECK_ALL_MOBILITY(owner, required_mobility_flags))
+	var/mob/living/L = owner
+	if(istype(L) && !CHECK_ALL_MOBILITY(L, required_mobility_flags))
 		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())

@@ -422,7 +422,6 @@
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(400) //Short nap
-	update_canmove()
 
 /mob/proc/get_contents()
 

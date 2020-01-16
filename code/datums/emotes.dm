@@ -117,7 +117,8 @@
 				if(DEAD)
 					to_chat(user, "<span class='notice'>You cannot [key] while dead.</span>")
 			return FALSE
-		if(restraint_check && !CHECK_MOBILITY(user, MOBILITY_MOVE))
+		var/mob/living/L = user
+		if(restraint_check && (istype(L) && !CHECK_MOBILITY(user, MOBILITY_USE)))
 			if(!intentional)
 				return FALSE
 			to_chat(user, "<span class='notice'>You cannot [key] while stunned.</span>")

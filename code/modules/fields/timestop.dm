@@ -135,7 +135,7 @@
 	if(L.anti_magic_check(check_anti_magic, check_holy))
 		immune += L
 		return
-	L.Stun(20, 1, 1)
+	L._REFACTORING_Stun(20, TRUE, TRUE)
 	frozen_mobs[L] = L.anchored
 	L.anchored = TRUE
 	global_frozen_atoms[L] = TRUE
@@ -146,7 +146,7 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
 	escape_the_negative_zone(L)
-	L.AdjustStun(-20, 1, 1)
+	L._REFACTORING_AdjustStun(-20, TRUE, TRUE)
 	L.anchored = frozen_mobs[L]
 	frozen_mobs -= L
 	global_frozen_atoms -= L
