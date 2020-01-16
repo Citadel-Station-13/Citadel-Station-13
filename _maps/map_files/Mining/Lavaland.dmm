@@ -919,15 +919,13 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cw" = (
-/obj/machinery/vending/security{
-	!INVALID_VAR! = 1
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/vending/security,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cx" = (
