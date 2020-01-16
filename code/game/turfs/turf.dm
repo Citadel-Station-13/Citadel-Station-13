@@ -554,12 +554,10 @@
 			clear_reagents_to_vomit_pool(C,V)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
+	for(var/datum/reagent/consumable/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+		if(R.nutriment_factor > 0)
+			M.reagents.del_reagent(R.type)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10)
-	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(istype(R, /datum/reagent/consumable))
-			var/datum/reagent/consumable/nutri_check = R
-			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.id,R.volume)
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
