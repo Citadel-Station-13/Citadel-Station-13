@@ -158,7 +158,9 @@
 		return //No one left.
 	var/mob/living/target = input(src, "With whom?", "Sexual partner", null) as null|anything in partners //pick one, default to null
 	if(target && in_range(src, target))
-		return target
+		var/consenting = input(target, "Do you want [src] to climax with you?","Climax mechanics","No") in list("Yes","No")
+		if(consenting == "Yes")
+			return target
 
 /mob/living/carbon/human/proc/pick_climax_container(silent = FALSE)
 	var/list/containers_list = list()
