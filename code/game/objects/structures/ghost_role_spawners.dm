@@ -270,9 +270,10 @@
 	desc = "A small sleeper typically used to instantly restore minor wounds. This one seems broken, and its occupant is comatose."
 	job_description = "Lavaland Veterinarian"
 	mob_name = "a translocated vet"
-	flavour_text = "<span class='big bold'>What...?</span><b> Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
-	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
-	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
+	short_desc = "You are a animal doctor who just woke up in lavaland"
+	flavour_text = "What...? Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
+	you see them right now. So where is \
+	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they c	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; an tell you what happened."
 	assignedrole = "Translocated Vet"
 
 /obj/effect/mob_spawn/human/doctor/alive/lavaland/Destroy()
@@ -631,7 +632,8 @@
 	density = FALSE
 	death = FALSE
 	assignedrole = "Ghost Cafe Visitor"
-	flavour_text = "Is this what life after death is like?"
+	short_desc = "You are a Ghost Cafe Visitor!"
+	flavour_text = "You know one thing for sure. You arent actually alive. Are you in a simulation?"
 	skip_reentry_check = TRUE
 	banType = "ghostcafe"
 
