@@ -104,10 +104,10 @@
 		if(owner.restrained())
 			return FALSE
 	if(check_flags & AB_CHECK_STUN)
-		if(!CHECK_MOBILITY(owner, MOBILITY_USE))
+		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE))
 			return FALSE
 	if(check_flags & AB_CHECK_LYING)
-		if(!CHECK_MOBILITY(owner, MOBILITY_STAND))
+		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_STAND))
 			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)

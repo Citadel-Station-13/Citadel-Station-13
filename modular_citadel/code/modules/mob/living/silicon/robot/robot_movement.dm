@@ -6,7 +6,7 @@
 
 /mob/living/silicon/robot/movement_delay()
 	. = ..()
-	if(!resting && !sprinting)
+	if(!_REFACTORING_resting && !sprinting)
 		. += 1
 	. += speed
 

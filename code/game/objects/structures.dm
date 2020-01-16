@@ -46,7 +46,7 @@
 		return
 	if(user == O && iscarbon(O))
 		var/mob/living/L = O
-		if(CHECK_MOBILITY(O, MOBILITY_MOVE))
+		if(CHECK_MOBILITY(L, MOBILITY_MOVE))
 			climb_structure(user)
 			return
 	if(!istype(O, /obj/item) || user.get_active_held_item() != O)

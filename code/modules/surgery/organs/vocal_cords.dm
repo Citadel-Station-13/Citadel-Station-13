@@ -491,10 +491,11 @@
 		cooldown = COOLDOWN_DAMAGE //because stun removal
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.resting)
-				L.lay_down() //aka get up
-			L.SetAllImmobility(0)
-			L.SetUnconscious(0) //i said get up i don't care if you're being tased
+			if(L._REFACTORING_resting)
+				L.set_resting(FALSE, FALSE, FALSE)
+			L.SetAllImmobility(0, FALSE)
+			L.SetUnconscious(0, FALSE) //i said get up i don't care if you're being tased
+			L.update_mobility()
 
 	//SIT
 	else if((findtext(message, sit_words)))
