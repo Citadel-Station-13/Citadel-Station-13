@@ -45,27 +45,28 @@
 	return network_directions
 
 /// Directions should only ever have cardinals.
-/obj/effect/mapping_helpers/network_builder/power_cable/build_network(list/directions = network_directions)
-	if(!length(directions))
+/obj/effect/mapping_helpers/network_builder/power_cable/build_network()
+	if(!length(network_directions))
 		return
-	else if(length(directions) == 1)
-		var/do_knot = (knot == KNOT_FORCED) || ((knot == KNOT_AUTO) && should_auto_knot())
-		if(do_knot)
-			new /obj/structure/cable(loc, cable_color, NONE, directions[1])
+	else if(length(network_directions) == 1)
+		new /obj/structure/cable(loc, cable_color, NONE, network_directions[1])
 	else
 		if(knot == KNOT_FORCED)
-			for(var/d in directions)
+			for(var/d in network_directions)
 				new /obj/structure/cable(loc, cable_color, NONE, d)
 		else
 			var/do_knot = (knot == KNOT_FORCED) || ((knot == KNOT_AUTO) && should_auto_knot())
-			var/dirs = length(directions)
-			for(var/i in dirs)
-				var/li = i - 1
-				if(li < 1)
-					li = dirs + li
-				new /obj/structure/cable(loc, cable_color, directions[i], directions[li])
+			var/dirs = length(network_directions)
+			for(var/i in 1 to dirs)
+				var/li = (i == 1)? dirs : (i - 1)
+				var/d1 = network_directions[i]
+				var/d2 = network_directions[li]
+				if(d1 > d2)			//this is ugly please help me
+					d1 = network_directions[li]
+					d2 = network_directions[i]
+				new /obj/structure/cable(loc, cable_color, d1, d2)
 				if(do_knot)
-					new /obj/structure/cable(loc, cable_color, NONE, directions[i])
+					new /obj/structure/cable(loc, cable_color, NONE, network_directions[i])
 					do_knot = FALSE
 
 /obj/effect/mapping_helpers/network_builder/power_cable/proc/should_auto_knot()

@@ -58,16 +58,16 @@
 	return network_directions
 
 /// Directions should only ever have cardinals.
-/obj/effect/mapping_helpers/network_builder/atmos_pipe/build_network(list/directions = network_directions)
-	if(!length(directions) <= 1)
+/obj/effect/mapping_helpers/network_builder/atmos_pipe/build_network()
+	if(length(network_directions) <= 1)
 		return
 	var/obj/machinery/atmospherics/pipe/built
-	switch(length(directions))
+	switch(length(network_directions))
 		if(2)		//straight pipe
 			built = new /obj/machinery/atmospherics/pipe/simple(loc)
-			built.setDir(directions[1] | directions[2])
+			built.setDir(network_directions[1] | network_directions[2])
 		if(3)		//manifold
-			var/list/missing = directions ^ GLOB.cardinals
+			var/list/missing = network_directions ^ GLOB.cardinals
 			missing = missing[1]
 			built = new /obj/machinery/atmospherics/pipe/manifold(loc)
 			built.setDir(missing)
@@ -75,6 +75,7 @@
 			built = new /obj/machinery/atmospherics/pipe/manifold4w(loc)
 	built.SetInitDirections()
 	built.on_construction(pipe_color, pipe_layer)
+	built.hide(!visible_pipes)
 
 /obj/effect/mapping_helpers/network_builder/atmos_pipe/distro
 	name = "distro line autobuilder"
