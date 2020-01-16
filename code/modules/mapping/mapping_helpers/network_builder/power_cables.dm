@@ -74,24 +74,106 @@
 	icon_state = "powerlinebuilderauto"
 	knot = KNOT_AUTO
 
-#define AUTODEF_COLOR(hex, enum) \
-/obj/effect/network_builder/power_cable/##enum \
-	color = #hex \
-	cable_color = #enum \
-/obj/effect/network_builder/power_cable/knot/##enum \
-	color = #hex \
-	cable_color = #enum \
-/obj/effect/network_builder/power_cable/auto/##enum \
-	color = #hex \
-	cable_color = #enum
+// Red
+/obj/effect/network_builder/power_cable/red
+	color = "#ff0000"
+	cable_color = "red"
 
-AUTODEF_COLOR("#ff0000", red)
-AUTODEF_COLOR("#ffffff", white)
-AUTODEF_COLOR("#00ffff", cyan)
-AUTODEF_COLOR("#ff8000", orange)
-AUTODEF_COLOR("#ff3cc8", pink)
-AUTODEF_COLOR("#1919c8", blue)
-AUTODEF_COLOR("#00aa00", green)
-AUTODEF_COLOR("#ffff00", yellow)
+/obj/effect/network_builder/power_cable/red/knot
+	icon_state = "powerlinebuilderknot"
+	knot = KNOT_FORCED
 
-#undef AUTODEF_COLOR
+/obj/effect/network_builder/power_cable/red/auto
+	icon_state = "powerlinebuilderauto"
+	knot = KNOT_AUTO
+
+// White
+/obj/effect/network_builder/power_cable/white
+	color = "#ffffff"
+	cable_color = "white"
+
+/obj/effect/network_builder/power_cable/white/knot
+	icon_state = "powerlinebuilderknot"
+	knot = KNOT_FORCED
+
+/obj/effect/network_builder/power_cable/white/auto
+	icon_state = "powerlinebuilderauto"
+	knot = KNOT_AUTO
+
+// Cyan
+/obj/effect/network_builder/power_cable/cyan
+	color = "#00ffff"
+	cable_color = "cyan"
+
+/obj/effect/network_builder/power_cable/cyan/knot
+	icon_state = "powerlinebuilderknot"
+	knot = KNOT_FORCED
+
+/obj/effect/network_builder/power_cable/cyan/auto
+	icon_state = "powerlinebuilderauto"
+	knot = KNOT_AUTO
+
+// Orange
+/obj/effect/network_builder/power_cable/orange
+	color = "#ff8000"
+	cable_color = "orange"
+
+/obj/effect/network_builder/power_cable/orange/knot
+	icon_state = "powerlinebuilderknot"
+	knot = KNOT_FORCED
+
+/obj/effect/network_builder/power_cable/orange/auto
+	icon_state = "powerlinebuilderauto"
+	knot = KNOT_AUTO
+
+// Pink
+/obj/effect/network_builder/power_cable/pink
+	color = "#ff3cc8"
+	cable_color = "pink"
+
+/obj/effect/network_builder/power_cable/pink/knot
+	icon_state = "powerlinebuilderknot"
+	knot = KNOT_FORCED
+
+/obj/effect/network_builder/power_cable/pink/auto
+	icon_state = "powerlinebuilderauto"
+	knot = KNOT_AUTO
+
+// Blue
+/obj/effect/network_builder/power_cable/blue
+	color = "#1919c8"
+	cable_color = "blue"
+
+/obj/effect/network_builder/power_cable/blue/knot
+	icon_state = "powerlinebuilderknot"
+	knot = KNOT_FORCED
+
+/obj/effect/network_builder/power_cable/blue/auto
+	icon_state = "powerlinebuilderauto"
+	knot = KNOT_AUTO
+
+// Green
+/obj/effect/network_builder/power_cable/green
+	color = "#00aa00"
+	cable_color = "green"
+
+/obj/effect/network_builder/power_cable/green/knot
+	icon_state = "powerlinebuilderknot"
+	knot = KNOT_FORCED
+
+/obj/effect/network_builder/power_cable/green/auto
+	icon_state = "powerlinebuilderauto"
+	knot = KNOT_AUTO
+
+// Yellow
+/obj/effect/network_builder/power_cable/yellow
+	color = "#ffff00"
+	cable_color = "yellow"
+
+/obj/effect/network_builder/power_cable/yellow/knot
+	icon_state = "powerlinebuilderknot"
+	knot = KNOT_FORCED
+
+/obj/effect/network_builder/power_cable/yellow/auto
+	icon_state = "powerlinebuilderauto"
+	knot = KNOT_AUTO
