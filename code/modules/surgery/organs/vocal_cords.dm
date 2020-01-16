@@ -493,8 +493,7 @@
 			var/mob/living/L = V
 			if(L.resting)
 				L.lay_down() //aka get up
-			L.SetStun(0)
-			L.SetKnockdown(0)
+			L.SetAllImmobility(0)
 			L.SetUnconscious(0) //i said get up i don't care if you're being tased
 
 	//SIT
@@ -1114,7 +1113,7 @@
 				if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused && E.lewd) // probably a redundant check but for good measure
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='love'>Your [E.enthrallGender] pushes you over the limit, overwhelming your body with pleasure.</b></span>"), 5)
 					H.mob_climax(forced_climax=TRUE)
-					H.SetStun(20)
+					H._REFACTORING_SetStun(20)
 					H.setArousalLoss(H.min_arousal)
 					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
 					E.enthrallTally += power_multiplier
@@ -1253,8 +1252,8 @@
 					continue
 				else
 					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
-					user.SetStun(1000)//Hands are handy, so you have to stay still
-					H.SetStun(1000)
+					user._REFACTORING_SetStun(1000)//Hands are handy, so you have to stay still
+					H._REFACTORING_SetStun(1000)
 					if (E.mental_capacity >= 5)
 						var/trigger = html_decode(stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN))
 						var/custom_words_words_list = list("Speak", "Echo", "Shock", "Cum", "Kneel", "Strip", "Trance", "Cancel")
@@ -1277,8 +1276,8 @@
 							to_chat(user, "<span class='warning'>Your pet looks at you confused, it seems they don't understand that effect!</b></span>")
 					else
 						to_chat(user, "<span class='warning'>Your pet looks at you with a vacant blase expression, you don't think you can program anything else into them</b></span>")
-					user.SetStun(0)
-					H.SetStun(0)
+					user._REFACTORING_SetStun(0)
+					H._REFACTORING_SetStun(0)
 
 	//CUSTOM ECHO
 	else if((findtext(message, custom_echo)))
@@ -1294,16 +1293,16 @@
 					continue
 				else
 					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
-					user.SetStun(1000)//Hands are handy, so you have to stay still
-					H.SetStun(1000)
+					user._REFACTORING_SetStun(1000)//Hands are handy, so you have to stay still
+					H._REFACTORING_SetStun(1000)
 					var/trigger = stripped_input(user, "Enter the loop phrase", MAX_MESSAGE_LEN)
 					var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love", "Velvet")
 					var/trigger2 = input(user, "Pick the style", "Style") in customSpan
 					trigger2 = lowertext(trigger2)
 					E.customEcho = trigger
 					E.customSpan = trigger2
-					user.SetStun(0)
-					H.SetStun(0)
+					user._REFACTORING_SetStun(0)
+					H._REFACTORING_SetStun(0)
 					to_chat(user, "<span class='notice'><i>You sucessfully set an echoing phrase in [H]</i></span>")
 
 	//CUSTOM OBJECTIVE
@@ -1317,8 +1316,8 @@
 					continue
 				else
 					user.emote("me", EMOTE_VISIBLE, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
-					user.SetStun(1000)//So you can't run away!
-					H.SetStun(1000)
+					user._REFACTORING_SetStun(1000)//So you can't run away!
+					H._REFACTORING_SetStun(1000)
 					if (E.mental_capacity >= 200)
 						var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", MAX_MESSAGE_LEN)
 						if(!LAZYLEN(objective))
@@ -1339,8 +1338,8 @@
 						to_chat(user, "<span class='notice'><i>You sucessfully give an objective to [H]</i></span>")
 					else
 						to_chat(user, "<span class='warning'>Your pet looks at you with a vacant blasé expression, you don't think you can program anything else into them</b></span>")
-					user.SetStun(0)
-					H.SetStun(0)
+					user._REFACTORING_SetStun(0)
+					H._REFACTORING_SetStun(0)
 
 	//INSTILL
 	else if((findtext(message, instill_words)))
@@ -1434,7 +1433,7 @@
 				if(3 to INFINITY)//Tier 3 only
 					if(L.resting)
 						L.lay_down() //aka get up
-					L.SetStun(0)
+					L._REFACTORING_SetStun(0)
 					L.SetKnockdown(0)
 					L.SetUnconscious(0) //i said get up i don't care if you're being tased
 					E.cooldown += 10 //This could be really strong

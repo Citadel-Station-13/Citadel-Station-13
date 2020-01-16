@@ -1898,7 +1898,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/L)
 	..()
-	if(L.IsSleeping())
+	if(L._REFACTORING_IsSleeping())
 		if(L.bruteloss && L.fireloss) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
 			if(prob(50))
 				L.adjustBruteLoss(-0.25)

@@ -104,7 +104,7 @@
 		var/mob/living/carbon/tempcarb = user
 		if(!tempcarb.combatmode)
 			totitemdamage *= 0.5
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
@@ -112,7 +112,7 @@
 	send_item_attack_message(I, user)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW)) 
+		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW))
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
