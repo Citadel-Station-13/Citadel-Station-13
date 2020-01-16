@@ -19,7 +19,7 @@
 //Mob procs
 /mob/living/carbon/human/proc/underwear_toggle()
 	set name = "Toggle undergarments"
-	set category = "Arousal"
+	set category = "IC"
 
 	var/confirm = input(src, "Select what part of your form to alter", "Undergarment Toggling") as null|anything in list("Top", "Bottom", "Socks", "All")
 	if(!confirm)
@@ -282,7 +282,7 @@
 	mb_cd_timer = world.time + mb_cd_length
 
 /mob/living/carbon/human/verb/climax_verb()
-	set category = "Arousal"
+	set category = "IC"
 	set name = "Climax"
 	set desc = "Lets you choose a couple ways to ejaculate."
 	mob_climax()

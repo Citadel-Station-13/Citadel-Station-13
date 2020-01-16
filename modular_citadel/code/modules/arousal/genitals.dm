@@ -91,7 +91,7 @@
 		H.update_genitals()
 
 /mob/living/carbon/verb/toggle_genitals()
-	set category = "Arousal"
+	set category = "IC"
 	set name = "Expose/Hide genitals"
 	set desc = "Allows you to toggle which genitals should show through clothes or not."
 
@@ -110,7 +110,7 @@
 	return
 
 /mob/living/carbon/verb/toggle_arousal_state()
-	set category = "Arousal"
+	set category = "IC"
 	set name = "Toggle genital arousal"
 	set desc = "Allows you to toggle which genitals are showing signs of arousal."
 	var/list/genital_list = list()
