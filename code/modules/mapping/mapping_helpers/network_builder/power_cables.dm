@@ -43,8 +43,8 @@
 	if(!length(directions))
 		return
 	else if(length(directions) == 1)
-		var/knot = (knot == KNOT_FORCED) || ((knot == KNOT_AUTO) && should_auto_knot())
-		if(knot)
+		var/do_knot = (knot == KNOT_FORCED) || ((knot == KNOT_AUTO) && should_auto_knot())
+		if(do_knot)
 			var/dir = directions[1]
 			new /obj/structure/cable(loc, cable_color, NONE, directions[1])
 	else
@@ -52,16 +52,16 @@
 			for(var/d in directions)
 				new /obj/structure/cable(loc, cable_color, NONE, d)
 		else
-			var/knot = (knot == KNOT_FORCED) || ((knot == KNOT_AUTO) && should_auto_knot())
+			var/do_knot = (knot == KNOT_FORCED) || ((knot == KNOT_AUTO) && should_auto_knot())
 			var/dirs = length(directions)
 			for(var/i in dirs)
 				var/li = i - 1
 				if(li < 1)
 					li = dirs + li
 				new /obj/structure/cable(loc, cable_color, directions[i], directions[li])
-				if(knot)
+				if(do_knot)
 					new /obj/structure/cable(loc, cable_color, NONE, directions[i])
-					knot = FALSE
+					do_knot = FALSE
 
 /obj/effect/network_builder/power_cable/proc/should_auto_knot()
 	return (locate(/obj/machinery/terminal) in loc)
