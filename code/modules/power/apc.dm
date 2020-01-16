@@ -973,66 +973,67 @@
 	if((action == "toggle_nightshift") && (!nightshift_requires_auth || authorized))
 		toggle_nightshift_lights()
 		return TRUE
-	if(authorized)
-		switch(action)
-			if("lock")
-				if(usr.has_unlimited_silicon_privilege)
-					if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
-						to_chat(usr, "The APC does not respond to the command.")
-					else
-						locked = !locked
-						update_icon()
-				return TRUE
-			if("cover")
-				coverlocked = !coverlocked
-				return TRUE
-			if("breaker")
-				toggle_breaker()
-				return TRUE
-			if("charge")
-				chargemode = !chargemode
-				if(!chargemode)
-					charging = APC_NOT_CHARGING
+	if(!authorized)
+		return
+	switch(action)
+		if("lock")
+			if(usr.has_unlimited_silicon_privilege)
+				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
+					to_chat(usr, "The APC does not respond to the command.")
+				else
+					locked = !locked
 					update_icon()
-				return TRUE
-			if("channel")
-				if(params["eqp"])
-					equipment = setsubsystem(text2num(params["eqp"]))
-					update_icon()
-					update()
-				else if(params["lgt"])
-					lighting = setsubsystem(text2num(params["lgt"]))
-					update_icon()
-					update()
-				else if(params["env"])
-					environ = setsubsystem(text2num(params["env"]))
-					update_icon()
-					update()
-				return TRUE
-			if("overload")
-				if(usr.has_unlimited_silicon_privilege)
-					overload_lighting()
-				return TRUE
-			if("hack")
-				if(get_malf_status(usr))
-					malfhack(usr)
-				return TRUE
-			if("occupy")
-				if(get_malf_status(usr))
-					malfoccupy(usr)
-				return TRUE
-			if("deoccupy")
-				if(get_malf_status(usr))
-					malfvacate()
-				return TRUE
-			if("emergency_lighting")
-				emergency_lights = !emergency_lights
-				for(var/obj/machinery/light/L in area)
-					if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
-						L.no_emergency = emergency_lights
-						INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
-					CHECK_TICK
-				return TRUE
+			return TRUE
+		if("cover")
+			coverlocked = !coverlocked
+			return TRUE
+		if("breaker")
+			toggle_breaker()
+			return TRUE
+		if("charge")
+			chargemode = !chargemode
+			if(!chargemode)
+				charging = APC_NOT_CHARGING
+				update_icon()
+			return TRUE
+		if("channel")
+			if(params["eqp"])
+				equipment = setsubsystem(text2num(params["eqp"]))
+				update_icon()
+				update()
+			else if(params["lgt"])
+				lighting = setsubsystem(text2num(params["lgt"]))
+				update_icon()
+				update()
+			else if(params["env"])
+				environ = setsubsystem(text2num(params["env"]))
+				update_icon()
+				update()
+			return TRUE
+		if("overload")
+			if(usr.has_unlimited_silicon_privilege)
+				overload_lighting()
+			return TRUE
+		if("hack")
+			if(get_malf_status(usr))
+				malfhack(usr)
+			return TRUE
+		if("occupy")
+			if(get_malf_status(usr))
+				malfoccupy(usr)
+			return TRUE
+		if("deoccupy")
+			if(get_malf_status(usr))
+				malfvacate()
+			return TRUE
+		if("emergency_lighting")
+			emergency_lights = !emergency_lights
+			for(var/obj/machinery/light/L in area)
+				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
+					L.no_emergency = emergency_lights
+					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+				CHECK_TICK
+			return TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	if(!is_operational() || failure_timer)
