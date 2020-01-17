@@ -61,7 +61,8 @@
 
 	walk_towards(owner, T, 0.1, 10) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
 	addtimer(CALLBACK(owner, .proc/_walk, 0), 2 SECONDS)
-	if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && !CHECK_MOBILITY(owner, MOBILITY_STAND))
+	var/mob/living/L = owner
+	if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && !CHECK_MOBILITY(L, MOBILITY_STAND))
 		var/send_dir = get_dir(owner, T)
 		new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
 		owner.spin(10)

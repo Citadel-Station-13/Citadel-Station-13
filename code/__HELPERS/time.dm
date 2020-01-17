@@ -81,6 +81,3 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	if(!wtime)
 		wtime = world.time
 	return time2text(wtime - GLOB.timezoneOffset, format)
-
-/proc/station_time_timestamp(format = "hh:mm:ss", wtime)
-	return time2text(station_time(TRUE, wtime), format)

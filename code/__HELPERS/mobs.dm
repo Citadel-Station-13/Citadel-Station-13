@@ -387,6 +387,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/endtime = world.time + delay
 	var/starttime = world.time
 	. = 1
+	var/mob/living/L = isliving(user) && user			//evals to last thing eval'd
 	while (world.time < endtime)
 		stoplag(1)
 		if (progress)
@@ -396,7 +397,11 @@ GLOBAL_LIST_EMPTY(species_list)
 			drifting = 0
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || !CHECK_ALL_MOBILITY(user, required_mobility_flags) || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(L && !CHECK_ALL_MOBILITY(L, required_mobility_flags))
+			. = 0
+			break
+
+		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 

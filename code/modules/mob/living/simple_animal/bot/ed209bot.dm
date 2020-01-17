@@ -527,7 +527,7 @@ Auto Patrol[]"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.canmove || arrest_type) // CIT CHANGE - makes sentient ed209s check for canmove rather than !isstun.
+		if(CHECK_MOBILITY(C, MOBILITY_STAND|MOBILITY_MOVE|MOBILITY_USE) || arrest_type) // CIT CHANGE - makes sentient ed209s check for canmove rather than !isstun.
 			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)

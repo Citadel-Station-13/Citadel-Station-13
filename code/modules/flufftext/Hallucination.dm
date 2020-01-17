@@ -1136,7 +1136,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	target.set_screwyhud(SCREWYHUD_DEAD)
-	target.DefaultCombatKnockdown(300)
+	target._REFACTORING_Knockdown(300)
 	target.silent += 10
 	to_chat(target, "<span class='deadsay'><b>[target.real_name]</b> has died at <b>[get_area_name(target)]</b>.</span>")
 	if(prob(50))
@@ -1154,7 +1154,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "this round","this","myself","admins","you")]")]\"</span>")
 	sleep(rand(70,90))
 	target.set_screwyhud(SCREWYHUD_NONE)
-	target.SetKnockdown(0)
+	target._REFACTORING_SetKnockdown(0)
 	target.silent = FALSE
 	qdel(src)
 

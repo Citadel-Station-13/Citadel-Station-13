@@ -135,7 +135,7 @@
 	if(L.anti_magic_check(check_anti_magic, check_holy))
 		immune += L
 		return
-	L._REFACTORING_Stun(20, TRUE, TRUE)
+	L.Stun(20, TRUE, TRUE)
 	frozen_mobs[L] = L.anchored
 	L.anchored = TRUE
 	global_frozen_atoms[L] = TRUE

@@ -240,8 +240,8 @@
 	T.dust_animation()
 	QDEL_IN(T, 5)
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
-	S.status_flags |= GODMODE //So they won't die inside the stone somehow
-	S.canmove = FALSE//Can't move out of the soul stone
+	S.status_flags |= GODMODE			//So they won't die inside the stone somehow
+	S.mobility_flags = NONE				//Can't move out of the soul stone
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	T.transfer_ckey(S)
