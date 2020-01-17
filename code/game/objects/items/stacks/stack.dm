@@ -202,6 +202,7 @@
 		if(O)
 			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
+		log_craft("[O] crafted by [usr] at [loc_name(O.loc)]")
 
 		//START: oh fuck i'm so sorry
 		if(istype(O, /obj/structure/windoor_assembly))
@@ -229,7 +230,6 @@
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
-		log_craft("[O] crafted by [usr] at [get_turf(O)]")
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (get_amount() < R.req_amount*multiplier)

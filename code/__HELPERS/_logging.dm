@@ -122,7 +122,7 @@
 
 /proc/log_craft(text)
 	if (CONFIG_GET(flag/log_craft))
-		WRITE_LOG(GLOB.world_game_log, "CRAFT: [text]")
+		WRITE_LOG(GLOB.world_crafting_log, "CRAFT: [text]")
 
 /proc/log_topic(text)
 	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
