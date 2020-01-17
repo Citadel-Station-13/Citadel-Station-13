@@ -76,7 +76,8 @@
 
 /mob/proc/update_eyeblur()
 	remove_eyeblur()
-	add_eyeblur()
+	if(eye_blurry)
+		add_eyeblur()
 
 /mob/proc/add_eyeblur()
 	if(!client)

@@ -1,7 +1,3 @@
-//Here are the procs used to modify status effects of a mob.
-//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
-
 // YEEHAW GAMERS STAMINA REWORK PROC GETS TO BE FIRST
 // amount = strength
 // updating = update mobility etc etc
