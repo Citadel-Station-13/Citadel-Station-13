@@ -2,9 +2,9 @@
 
 //Force-set resting variable, without needing to resist/etc.
 /mob/living/proc/set_resting(new_resting, silent = FALSE, updating = TRUE)
-	_REFACTORING_resting = new_resting
+	resting = new_resting
 	if(!silent)
-		to_chat(src, "<span class='notice'>You are now [_REFACTORING_resting? "resting" : "getting up"].</span>")
+		to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
 	update_resting(updating)
 
 /mob/living/proc/update_resting(update_mobility = TRUE)
@@ -25,20 +25,20 @@
 	set category = "IC"
 	if(client?.prefs?.autostand)
 		intentionalresting = !intentionalresting
-		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!_REFACTORING_resting ? "lay down and ": ""]stay down" : "[_REFACTORING_resting ? "get up and ": ""]stay up"].</span>")
-		if(intentionalresting && !_REFACTORING_resting)
+		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!resting ? "lay down and ": ""]stay down" : "[resting ? "get up and ": ""]stay up"].</span>")
+		if(intentionalresting && !resting)
 			set_resting(TRUE, FALSE)
 		else
 			resist_a_rest()
 	else
-		if(!_REFACTORING_resting)
+		if(!resting)
 			set_resting(TRUE, FALSE)
 			to_chat(src, "<span class='notice'>You are now laying down.</span>")
 		else
 			resist_a_rest()
 
 /mob/living/proc/resist_a_rest(automatic = FALSE, ignoretimer = FALSE) //Lets mobs resist out of resting. Major QOL change with combat reworks.
-	if(!_REFACTORING_resting || stat || attemptingstandup)
+	if(!resting || stat || attemptingstandup)
 		return FALSE
 	if(ignoretimer)
 		set_resting(FALSE, FALSE)
@@ -84,20 +84,20 @@
 	var/stat_softcrit = stat == SOFT_CRIT
 	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
 
-	var/conscious = !_REFACTORING_IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
+	var/conscious = !IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
 
 	var/has_arms = get_num_arms()
 	var/has_legs = get_num_legs()
 	var/ignore_legs = get_leg_ignore()
-	var/stun = _REFACTORING_IsStun()
+	var/stun = IsStun()
 	var/paralyze = IsParalyzed()
-	var/knockdown = _REFACTORING_IsKnockdown()
+	var/knockdown = IsKnockdown()
 	var/daze = IsDazed()
 	var/immobilize = IsImmobilized()
 
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/restrained = restrained()
-	var/pinned = _REFACTORING_resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
+	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
 	var/canmove = !immobilize && !stun && conscious && !paralyze && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && (has_arms || ignore_legs || has_legs) && !pinned && !recoveringstam
 
 	if(canmove)
@@ -105,7 +105,7 @@
 	else
 		mobility_flags &= ~MOBILITY_MOVE
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) || !recoveringstam
-	var/canstand = canstand_involuntary && !_REFACTORING_resting
+	var/canstand = canstand_involuntary && !resting
 
 	var/should_be_lying = !canstand
 	if(buckled)

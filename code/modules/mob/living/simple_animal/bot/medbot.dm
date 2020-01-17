@@ -86,7 +86,7 @@
 	if(!on)
 		icon_state = "medibot0"
 		return
-	if(_REFACTORING_IsStun())
+	if(IsStun())
 		icon_state = "medibota"
 		return
 	if(mode == BOT_HEALING)
@@ -278,7 +278,7 @@
 	if(mode == BOT_HEALING)
 		return
 
-	if(_REFACTORING_IsStun())
+	if(IsStun())
 		oldpatient = patient
 		patient = null
 		mode = BOT_IDLE

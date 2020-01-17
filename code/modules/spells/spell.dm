@@ -377,9 +377,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("oxyloss")
 			target.adjustOxyLoss(amount)
 		if("stun")
-			target._REFACTORING_AdjustStun(amount)
+			target.AdjustStun(amount)
 		if("knockdown")
-			target._REFACTORING_AdjustKnockdown(amount)
+			target.AdjustKnockdown(amount)
 		if("unconscious")
 			target.AdjustUnconscious(amount)
 		else

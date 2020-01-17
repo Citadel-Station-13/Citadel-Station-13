@@ -7,7 +7,7 @@
 		icon = dynamic_chassis_icons[dynamic_chassis]
 		var/list/states = icon_states(icon)
 		icon_state = ""
-		if(_REFACTORING_resting)		//The next line is some bullshit but I can make it worse if you want and make it a single line instead of four.. :)
+		if(resting)		//The next line is some bullshit but I can make it worse if you want and make it a single line instead of four.. :)
 			if(dynamic_chassis_sit && ("sit") in states)
 				icon_state = "sit"
 			else if(dynamic_chassis_bellyup && ("bellyup") in states)
@@ -21,7 +21,7 @@
 		rotate_on_lying = TRUE
 	else
 		icon = initial(icon)
-		icon_state = "[chassis][_REFACTORING_resting? "_rest" : (stat == DEAD? "_dead" : "")]"
+		icon_state = "[chassis][resting? "_rest" : (stat == DEAD? "_dead" : "")]"
 		rotate_on_lying = FALSE
 	pixel_x = ((chassis == "dynamic") && chassis_pixel_offsets_x[dynamic_chassis]) || 0
 	update_transform()

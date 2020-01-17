@@ -465,7 +465,7 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustUnconscious(-60, FALSE)
 		M.AdjustAllImmobility(-30, FALSE)
-		M._REFACTORING_AdjustKnockdown(-40, FALSE)
+		M.AdjustKnockdown(-40, FALSE)
 		M.adjustStaminaLoss(-15, FALSE)
 		M.adjustToxLoss(-5, FALSE, TRUE)
 		M.adjustOxyLoss(-3, FALSE)
@@ -474,7 +474,7 @@
 	if(iscultist(M))
 		M.AdjustUnconscious(1, FALSE)
 		M.AdjustAllImmobility(10, FALSE)
-		M._REFACTORING_AdjustKnockdown(10, FALSE)
+		M.AdjustKnockdown(10, FALSE)
 		M.adjustStaminaLoss(15, FALSE)
 	else
 		M.adjustToxLoss(3, FALSE)

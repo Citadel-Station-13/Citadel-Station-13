@@ -418,7 +418,7 @@
 		..()
 
 /mob/living/simple_animal/update_mobility(value_otherwise = MOBILITY_FLAGS_DEFAULT)
-	if(_REFACTORING_IsUnconscious() || _REFACTORING_IsStun() || IsParalyzed() || stat || _REFACTORING_resting)
+	if(IsUnconscious() || IsStun() || IsParalyzed() || stat || resting)
 		drop_all_held_items()
 		mobility_flags = NONE
 	else if(buckled)

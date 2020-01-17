@@ -71,7 +71,7 @@
 				if (rand(0, 5) < level_current)
 					playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
 					newtarget.DefaultCombatKnockdown(10 + level_current * 5)
-				if(newtarget._REFACTORING_IsStun())
+				if(newtarget.IsStun())
 					newtarget.spin(10,1)
 					if (rand(0,4))
 						newtarget.drop_all_held_items()

@@ -136,7 +136,7 @@
 
 /mob/living/silicon/robot/proc/beep_boop_rogue_bot(mob/user)
 	SetEmagged(1)
-	_REFACTORING_SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
 	connected_ai = null
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")

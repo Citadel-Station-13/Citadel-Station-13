@@ -14,7 +14,7 @@
 	return FALSE
 
 /mob/living/proc/StakeCanKillMe()
-	return _REFACTORING_IsSleeping() || stat >= UNCONSCIOUS || blood_volume <= 0 || HAS_TRAIT(src, TRAIT_DEATHCOMA) // NOTE: You can't go to sleep in a coffin with a stake in you.
+	return IsSleeping() || stat >= UNCONSCIOUS || blood_volume <= 0 || HAS_TRAIT(src, TRAIT_DEATHCOMA) // NOTE: You can't go to sleep in a coffin with a stake in you.
 
 /obj/item/stake
 	name = "wooden stake"

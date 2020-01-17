@@ -675,7 +675,7 @@
 	if(module.cyborg_base_icon == "robot")
 		icon = 'icons/mob/robots.dmi'
 		pixel_x = initial(pixel_x)
-	if(stat != DEAD && !(_REFACTORING_IsUnconscious() ||_REFACTORING_IsStun() || _REFACTORING_IsKnockdown() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(IsUnconscious() ||IsStun() || IsKnockdown() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -699,7 +699,7 @@
 	update_fire()
 
 	if(client && stat != DEAD && module.dogborg == TRUE)
-		if(_REFACTORING_resting)
+		if(resting)
 			if(sitting)
 				icon_state = "[module.cyborg_base_icon]-sit"
 			if(bellyup)
@@ -1020,7 +1020,7 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(_REFACTORING_IsUnconscious() || _REFACTORING_IsStun() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
+		if(IsUnconscious() || IsStun() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -1271,7 +1271,7 @@
 /mob/living/silicon/robot/update_mobility()
 	. = ..()
 	if(client && stat != DEAD && dogborg == FALSE)
-		if(_REFACTORING_resting)
+		if(resting)
 			cut_overlays()
 			icon_state = "[module.cyborg_base_icon]-rest"
 		else

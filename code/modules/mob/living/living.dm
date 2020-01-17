@@ -416,7 +416,7 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(_REFACTORING_IsSleeping())
+	if(IsSleeping())
 		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
 		return
 	else
@@ -674,7 +674,7 @@
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 			return
-		if(_REFACTORING_resting) //cit change - allows resisting out of resting
+		if(resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
 			return
 		if(resist_embedded()) //Citadel Change for embedded removal memes

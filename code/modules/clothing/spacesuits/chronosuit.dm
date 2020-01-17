@@ -87,7 +87,7 @@
 	if(istype(user))
 		if(to_turf)
 			user.forceMove(to_turf)
-		user._REFACTORING_SetStun(0)
+		user.SetStun(0)
 		user.next_move = 1
 		user.alpha = 255
 		user.update_atom_colour()
