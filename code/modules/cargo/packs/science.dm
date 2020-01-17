@@ -82,7 +82,7 @@
 	crate_name = "circuitry starter pack crate"
 
 /datum/supply_pack/science/glasswork
-	name = "GlassBlower Gear Crate"
+	name = "Glass blower kit Crate"
 	desc = "Learn and make glassworks of usefull things for a profit! Contains glassworking tools and blowing rods. Glass not included."
 	cost = 1000
 	contains = list(/obj/item/glasswork/glasskit,
