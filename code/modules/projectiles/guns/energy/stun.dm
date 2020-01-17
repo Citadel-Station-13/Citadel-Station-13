@@ -22,6 +22,7 @@
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	altammo_type = /obj/item/ammo_casing/energy/electrode
+	altfire_delay = 30
 	ammo_x_offset = 2
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg

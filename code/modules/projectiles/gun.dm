@@ -31,8 +31,10 @@
 	var/sawn_off = FALSE
 	var/burst_size = 1					//how large a burst is
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
+	var/altfire_delay = 0
 	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
 	var/semicd = 0						//cooldown handler
+	var/semialtcd = 0
 	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
 	var/spread = 0						//Spread induced by the gun itself.
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
@@ -272,7 +274,7 @@
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, should_altfire = FALSE)
 	add_fingerprint(user)
 
-	if(semicd)
+	if((!should_altfire && semicd) || (should_altfire && semialtcd))
 		return
 
 	var/sprd = 0
@@ -305,10 +307,15 @@
 		else
 			shoot_with_empty_chamber(user)
 			return
-		should_altfire ? process_altchamber() : process_chamber()
+		if(!should_altfire)
+			process_chamber()
+			semicd = TRUE
+			addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
+		else
+			process_altchamber()
+			semialtcd = TRUE
+			addtimer(CALLBACK(src, .proc/reset_semialtcd), altfire_delay)
 		update_icon()
-		semicd = TRUE
-		addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
 
 	if(user)
 		user.update_inv_hands()
@@ -322,6 +329,9 @@
 
 /obj/item/gun/proc/reset_semicd()
 	semicd = FALSE
+
+/obj/item/gun/proc/reset_semialtcd()
+	semialtcd = FALSE
 
 /obj/item/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == INTENT_HARM) //Flogging
