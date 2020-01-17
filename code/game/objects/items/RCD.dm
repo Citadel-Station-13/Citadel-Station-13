@@ -46,8 +46,12 @@ RLD
 	spark_system.attach(src)
 
 /obj/item/construction/examine(mob/user)
-	..()
-	to_chat(user, "\A [src]. It currently holds [matter]/[max_matter] matter-units." )
+	. = ..()
+	. += "It currently holds [matter]/[max_matter] matter-units."
+	if(upgrade & RCD_UPGRADE_FRAMES)
+		. += "It contains the design for machine frames, computer frames and deconstruction."
+	if(upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
+		. += "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -85,9 +89,11 @@ RLD
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else if(istype(W, /obj/item/rcd_upgrade))
 		to_chat(user, "<span class='notice'>You upgrade the RCD with the [W]!</span>")
-		upgrade = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		qdel(W)
+		var/obj/item/rcd_upgrade/rcd_up = W
+		if(!(upgrade & rcd_up.upgrade))
+			upgrade |= rcd_up.upgrade
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			qdel(W)
 	else
 		return ..()
 	update_icon()	//ensures that ammo counters (if present) get updated
@@ -116,10 +122,10 @@ RLD
 	if(matter < amount)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	matter -= amount
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	. = matter >= amount
@@ -133,15 +139,14 @@ RLD
 	if(!(A in range(custom_range, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
 		return FALSE
-	else
-		return TRUE
-
-/obj/item/construction/proc/prox_check(proximity)
-	if(proximity)
-		return TRUE
-	else
+	var/view_range = user.client ? user.client.view : world.view
+	//if user can't be seen from A (only checks surroundings' opaqueness) and can't see A.
+	//jarring, but it should stop people from targetting atoms they can't see...
+	//excluding darkness, to allow RLD to be used to light pitch black dark areas.
+	if(!((user in view(view_range, A)) || (user in viewers(view_range, A))))
+		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in the given direction... to no avail.</span>")
 		return FALSE
-
+	return TRUE
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -163,8 +168,6 @@ RLD
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
-	var/adjacency_check = TRUE //Wheter it checks if the tool has to be in our hands or not. Wsed for the aux base construction drone's internal RCD
-
 
 /obj/item/construction/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
@@ -227,11 +230,10 @@ RLD
 
 	t1 += "<p><a href='?src=[REF(src)];close=1'>Close</a></p>\n"
 
-	var/datum/browser/popup = new(user, "rcd_access", "Access Control", 900, 500)
+	var/datum/browser/popup = new(user, "rcd_access", "Access Control", 900, 500, src)
 	popup.set_content(t1)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	onclose(user, "rcd_access")
 
 /obj/item/construction/rcd/Topic(href, href_list)
 	..()
@@ -275,7 +277,7 @@ RLD
 /obj/item/construction/rcd/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || (adjacency_check && !user.Adjacent(src)))
+	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -288,7 +290,7 @@ RLD
 		"SOUTH" = image(icon = 'icons/mob/radial.dmi', icon_state = "csouth"),
 		"WEST" = image(icon = 'icons/mob/radial.dmi', icon_state = "cwest")
 		)
-	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = adjacency_check, tooltips = TRUE)
+	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(computerdirs)
@@ -347,13 +349,13 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = adjacency_check)
+	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 	if(!check_menu(user))
 		return
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = adjacency_check)
+				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
@@ -398,7 +400,7 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = adjacency_check)
+				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
@@ -443,18 +445,22 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
+	var/delay = rcd_results["delay"] * delay_mod
+	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
 	var/turf/the_turf = get_turf(A)
 	var/turf_coords = "[COORD(the_turf)]"
 	investigate_log("[user] is attempting to use [src] on [A] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
-	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+	if(do_after(user, delay, target = A))
 		if(checkResource(rcd_results["cost"], user))
 			var/atom/cached = A
 			if(A.rcd_act(user, src, rcd_results["mode"]))
+				rcd_effect.end_animation()
 				useResource(rcd_results["cost"], user)
 				activate()
 				investigate_log("[user] used [src] on [cached] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
 				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
+	qdel(rcd_effect)
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
@@ -471,7 +477,7 @@ RLD
 		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
 		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
 	)
-	if(upgrade)
+	if(upgrade & RCD_UPGRADE_FRAMES)
 		choices += list(
 		"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
 		"Machine Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "machine"),
@@ -526,7 +532,12 @@ RLD
 
 /obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
 	. = ..()
-	if(!prox_check(proximity))
+	if(!proximity)
+		if(!ranged || !range_check(A,user)) //early return not-in-range sanity.
+			return
+		if(target_check(A,user))
+			user.Beam(A,icon_state="rped_upgrade",time=30)
+		rcd_create(A,user)
 		return
 	rcd_create(A, user)
 
@@ -557,6 +568,7 @@ RLD
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = TRUE
 	upgrade = TRUE
+	var/energyfactor = 72
 
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
@@ -567,7 +579,7 @@ RLD
 		if(user)
 			to_chat(user, no_ammo_message)
 		return 0
-	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
+	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 	return .
@@ -580,12 +592,18 @@ RLD
 		if(user)
 			to_chat(user, no_ammo_message)
 		return 0
-	. = borgy.cell.charge >= (amount * 72)
+	. = borgy.cell.charge >= (amount * energyfactor)
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 	return .
 
+/obj/item/construction/rcd/borg/syndicate
+	icon_state = "ircd"
+	item_state = "ircd"
+	energyfactor = 66
+
 /obj/item/construction/rcd/loaded
+	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	matter = 160
 
 /obj/item/construction/rcd/loaded/upgraded
@@ -632,6 +650,7 @@ RLD
 	max_matter = INFINITY
 	matter = INFINITY
 	upgrade = TRUE
+	ranged = TRUE
 
 // Ranged RCD
 
@@ -647,18 +666,8 @@ RLD
 	item_state = "oldrcd"
 	has_ammobar = FALSE
 
-/obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
-	. = ..()
-	if(!range_check(A,user))
-		return
-	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade",time=30)
-	rcd_create(A,user)
-
-
 
 // RAPID LIGHTING DEVICE
-
 
 
 /obj/item/construction/rld
@@ -827,9 +836,18 @@ RLD
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"
-	desc = "It contains the design for machine frames, computer frames, and deconstruction."
+	desc = "It seems to be empty."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
+	var/upgrade
+
+/obj/item/rcd_upgrade/frames
+	desc = "It contains the design for machine frames, computer frames and deconstruction."
+	upgrade = RCD_UPGRADE_FRAMES
+
+/obj/item/rcd_upgrade/simple_circuits
+	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
+	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

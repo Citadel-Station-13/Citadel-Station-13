@@ -9,10 +9,12 @@
 	src.allowed_slot = allowed_slot
 
 /datum/component/tactical/RegisterWithParent()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/modify)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/unmodify)
 
 /datum/component/tactical/UnregisterFromParent()
+	. = ..()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	unmodify()
 

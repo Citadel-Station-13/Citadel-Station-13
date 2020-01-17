@@ -36,9 +36,9 @@
 					continue // Dead players cannot count as opponents
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
-
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
 	return ..()
 
@@ -69,6 +69,14 @@
 	high_population_requirement = 15
 	repeatable = TRUE
 	flags = TRAITOR_RULESET
+	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1)
+	always_max_weight = TRUE
+
+/datum/dynamic_ruleset/latejoin/infiltrator/execute()
+	. = ..()
+	for(var/datum/mind/M in assigned)
+		log_admin("[M.name] was made into a traitor by dynamic.")
+		message_admins("[M.name] was made into a traitor by dynamic.")
 
 //////////////////////////////////////////////
 //                                          //
@@ -93,6 +101,7 @@
 	requirements = list(101,101,70,40,40,40,40,40,40,40)
 	high_population_requirement = 40
 	flags = HIGHLANDER_RULESET
+	property_weights = list("trust" = -2, "chaos" = 2, "extended" = -2, "valid" = 2, "conversion" = 1)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
 	var/datum/team/revolution/revolution
@@ -122,6 +131,8 @@
 		revolution.update_objectives()
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(src)
+		log_admin("[M.name] was made into a revolutionary by dynamic.")
+		message_admins("[M.name] was made into a revolutionary by dynamic.")
 		return TRUE
 	else
 		log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
@@ -186,30 +197,31 @@
 
 //////////////////////////////////////////////
 //                                          //
-//                 VAMPIRE                  //
+//               BLOODSUCKERS               //
 //                                          //
 //////////////////////////////////////////////
 
-/*
-/datum/dynamic_ruleset/latejoin/vampire
-	name = "vampire"
-	config_tag = "vampire_latejoin"
-	antag_flag = ROLE_VAMPIRE
-	antag_datum = ANTAG_DATUM_VAMPIRE
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+/datum/dynamic_ruleset/latejoin/bloodsucker
+	name = "Bloodsucker Infiltrator"
+	config_tag = "latejoin_bloodsucker"
+	antag_datum = ANTAG_DATUM_BLOODSUCKER
+	antag_flag = ROLE_TRAITOR
 	restricted_roles = list("AI", "Cyborg")
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_candidates = 1
-	weight = 5
-	cost = 15
-	requirements = list(80,70,60,50,40,20,20,15,15,15)
+	weight = 3
+	cost = 10
+	property_weights = list("story_potential" = 2, "extended" = 2, "trust" = -2, "valid" = 1)
+	requirements = list(70,65,60,55,50,45,40,35,30,30)
+	high_population_requirement = 30
 	repeatable = TRUE
-	high_population_requirement = 15
 
-/datum/dynamic_ruleset/latejoin/vampire/pre_execute()
+/datum/dynamic_ruleset/latejoin/bloodsucker/execute()
 	var/mob/M = pick(candidates)
-	candidates -= M
 	assigned += M.mind
-	M.mind.restricted_roles = restricted_roles
-	M.mind.special_role = ROLE_VAMPIRE
+	M.mind.special_role = antag_flag
+	if(mode.make_bloodsucker(M.mind))
+		mode.bloodsuckers += M
+		log_admin("[M.name] was made into a bloodsucker by dynamic.")
+		message_admins("[M.name] was made into a bloodsucker by dynamic.")
 	return TRUE
-*/

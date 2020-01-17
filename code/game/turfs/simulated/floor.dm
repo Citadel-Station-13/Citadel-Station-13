@@ -62,29 +62,29 @@
 	if(severity != 1 && shielded && target != src)
 		return
 	if(target == src)
-		ScrapeAway()
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return
 	if(target != null)
 		severity = 3
 
 	switch(severity)
 		if(1)
-			ScrapeAway(2)
+			ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 		if(2)
 			switch(pick(1,2;75,3))
 				if(1)
 					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
-						ScrapeAway()
+						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 						ReplaceWithLattice()
 					else
-						ScrapeAway(2)
+						ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 					if(prob(33))
 						new /obj/item/stack/sheet/metal(src)
 				if(2)
-					ScrapeAway(2)
+					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 				if(3)
 					if(prob(80))
-						ScrapeAway()
+						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					else
 						break_tile()
 					hotspot_expose(1000,CELL_VOLUME)
@@ -103,9 +103,9 @@
 /turf/open/floor/blob_act(obj/structure/blob/B)
 	return
 
-/turf/open/floor/proc/update_icon()
+/turf/open/floor/update_icon()
+	. = ..()
 	update_visuals()
-	return 1
 
 /turf/open/floor/attack_paw(mob/user)
 	return attack_hand(user)
@@ -135,7 +135,7 @@
 	burnt = 1
 
 /turf/open/floor/proc/make_plating()
-	return ScrapeAway()
+	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/ChangeTurf(path, new_baseturf, flags)
 	if(!isfloorturf(src))
@@ -177,7 +177,7 @@
 	I.play_tool_sound(src, 80)
 	return remove_tile(user, silent)
 
-/turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
+/turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE, forced = FALSE)
 	if(broken || burnt)
 		broken = 0
 		burnt = 0
@@ -191,37 +191,33 @@
 	return make_plating()
 
 /turf/open/floor/singularity_pull(S, current_size)
-	..()
-	if(current_size == STAGE_THREE)
-		if(prob(30))
+	. = ..()
+	switch(current_size)
+		if(STAGE_THREE)
+			if(floor_tile && prob(30))
+				remove_tile()
+		if(STAGE_FOUR)
+			if(floor_tile && prob(50))
+				remove_tile()
+		if(STAGE_FIVE to INFINITY)
 			if(floor_tile)
-				new floor_tile(src)
-				make_plating()
-	else if(current_size == STAGE_FOUR)
-		if(prob(50))
-			if(floor_tile)
-				new floor_tile(src)
-				make_plating()
-	else if(current_size >= STAGE_FIVE)
-		if(floor_tile)
-			if(prob(70))
-				new floor_tile(src)
-				make_plating()
-		else if(prob(50))
-			ReplaceWithLattice()
+				if(prob(70))
+					remove_tile()
+			else if(prob(50))
+				ReplaceWithLattice()
 
 /turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
 	. = ..()
 	if(.)
-		ChangeTurf(/turf/open/floor/engine/cult)
+		ChangeTurf(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/ratvar_act(force, ignore_mobs)
 	. = ..()
 	if(.)
-		ChangeTurf(/turf/open/floor/clockwork)
+		ChangeTurf(/turf/open/floor/clockwork, flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/acid_melt()
-	ScrapeAway()
+	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -267,7 +263,7 @@
 			A.autoclose = TRUE
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			if(ScrapeAway() == src)
+			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
 				return FALSE
 			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 			return TRUE

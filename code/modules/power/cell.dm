@@ -14,7 +14,7 @@
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
-	grind_results = list("lithium" = 15, "iron" = 5, "silicon" = 5)
+	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/rigged = FALSE	// true if rigged to explode
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
@@ -94,11 +94,11 @@
 	return power_used
 
 /obj/item/stock_parts/cell/examine(mob/user)
-	..()
+	. = ..()
 	if(rigged)
-		to_chat(user, "<span class='danger'>This power cell seems to be faulty!</span>")
+		. += "<span class='danger'>This power cell seems to be faulty!</span>"
 	else
-		to_chat(user, "The charge meter reads [round(src.percent() )]%.")
+		. += "The charge meter reads [round(src.percent() )]%."
 
 /obj/item/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -106,7 +106,7 @@
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
 	..()
-	rigged = reagents?.has_reagent("plasma", 5) ? TRUE : FALSE //has_reagent returns the reagent datum
+	rigged = reagents?.has_reagent(/datum/reagent/toxin/plasma, 5) ? TRUE : FALSE //has_reagent returns the reagent datum
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
@@ -360,3 +360,7 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+//found inside the inducers ordered from cargo.
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000

@@ -15,6 +15,7 @@
 	verb_exclaim = "beeps"
 	var/listening = FALSE
 	var/recorded = "" //the activation message
+	var/languages // The Message's language
 	var/mode = 1
 	var/static/list/modes = list("inclusive",
 								 "exclusive",
@@ -22,10 +23,10 @@
 								 "voice sensor")
 
 /obj/item/assembly/voice/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>")
+	. = ..()
+	. += "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>"
 
-/obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
 	if(speaker == src)
 		return
@@ -33,23 +34,26 @@
 	if(listening && !radio_freq)
 		record_speech(speaker, raw_message, message_language)
 	else
-		if(check_activation(speaker, raw_message))
-			addtimer(CALLBACK(src, .proc/pulse, 0), 10)
+		if(!istype(speaker, /obj/item/assembly/playback)) // Check if it isn't a playback device to prevent spam and lag
+			if(message_language == languages) // If it isn't in the same language as the message, don't try to find the message
+				if(check_activation(speaker, raw_message)) // Is it the message?
+					addtimer(CALLBACK(src, .proc/pulse, 0), 10)
 
 /obj/item/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message, datum/language/message_language)
+	languages = message_language // Assign the message's language to a variable to use it elsewhere
 	switch(mode)
 		if(INCLUSIVE_MODE)
 			recorded = raw_message
 			listening = FALSE
-			say("Activation message is '[recorded]'.", message_language)
+			say("Activation message is '[recorded]'.", language = languages) // Say the message in the language it was said in
 		if(EXCLUSIVE_MODE)
 			recorded = raw_message
 			listening = FALSE
-			say("Activation message is '[recorded]'.", message_language)
+			say("Activation message is '[recorded]'.", language = languages)
 		if(RECOGNIZER_MODE)
 			recorded = speaker.GetVoice()
 			listening = FALSE
-			say("Your voice pattern is saved.", message_language)
+			say("Your voice pattern is saved.", language = languages)
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
 				addtimer(CALLBACK(src, .proc/pulse, 0), 10)

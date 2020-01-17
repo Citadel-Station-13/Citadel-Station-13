@@ -161,7 +161,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	else
 		msg = "[dead_message]"
 
-	to_chat(user, msg)
+	. += msg
 
 /obj/item/mmi/posibrain/Initialize()
 	. = ..()

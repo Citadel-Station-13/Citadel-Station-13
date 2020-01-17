@@ -4,6 +4,7 @@
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder
+	blood_volume = 550   //How much blud it has for bloodsucking
 
 	status_flags = CANPUSH
 
@@ -185,16 +186,16 @@
 					say(pick(speak), forced = "poly")
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote("me", 1, pick(emote_see))
+					emote("me", EMOTE_VISIBLE, pick(emote_see))
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote("me", 2, pick(emote_hear))
+					emote("me", EMOTE_AUDIBLE, pick(emote_hear))
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
-						emote("me", 1, pick(emote_see))
+						emote("me", EMOTE_VISIBLE, pick(emote_see))
 					else
-						emote("me", 2, pick(emote_hear))
+						emote("me", EMOTE_AUDIBLE, pick(emote_hear))
 
 
 /mob/living/simple_animal/proc/environment_is_safe(datum/gas_mixture/environment, check_temp = FALSE)

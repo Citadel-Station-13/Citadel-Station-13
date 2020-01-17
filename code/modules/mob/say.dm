@@ -8,6 +8,13 @@
 	if(message)
 		say(message)
 
+/mob/say_mod(input, message_mode)
+	var/customsayverb = findtext(input, "*")
+	if(customsayverb && message_mode != MODE_WHISPER_CRIT)
+		message_mode = MODE_CUSTOM_SAY
+		return lowertext(copytext(input, 1, customsayverb))
+	else
+		return ..()
 
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"

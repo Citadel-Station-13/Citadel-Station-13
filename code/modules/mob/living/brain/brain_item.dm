@@ -102,16 +102,16 @@
 	if(istype(O, /obj/item/organ_storage)) //BUG_PROBABLE_CAUSE
 		return //Borg organ bags shouldn't be killing brains
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent("neurine")) //Neurine fixes dead brains
+	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/neurine)) //Neurine fixes dead brains
 		. = TRUE //don't do attack animation.
 		var/cached_Bdamage = brainmob?.health
-		var/datum/reagent/medicine/neurine/N = reagents.has_reagent("neurine")
-		var/datum/reagent/medicine/mannitol/M1 = reagents.has_reagent("mannitol")
+		var/datum/reagent/medicine/neurine/N = reagents.has_reagent(/datum/reagent/medicine/neurine)
+		var/datum/reagent/medicine/mannitol/M1 = reagents.has_reagent(/datum/reagent/medicine/mannitol)
 
-		if(O.reagents.has_reagent("mannitol"))//Just a quick way to bolster the effects if someone mixes up a batch.
+		if(O.reagents.has_reagent(/datum/reagent/medicine/mannitol))//Just a quick way to bolster the effects if someone mixes up a batch.
 			N.volume *= (M1.volume*0.5)
 
-		if(!O.reagents.has_reagent("neurine", 10))
+		if(!O.reagents.has_reagent(/datum/reagent/medicine/neurine, 10))
 			to_chat(user, "<span class='warning'>There's not enough neurine in [O] to restore [src]!</span>")
 			return
 
@@ -134,14 +134,14 @@
 					gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 		return
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
+	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
-		var/datum/reagent/medicine/mannitol/M = reagents.has_reagent("mannitol")
+		var/datum/reagent/medicine/mannitol/M = reagents.has_reagent(/datum/reagent/medicine/mannitol)
 		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, "<span class='warning'>[src] is far too damaged, you'll have to use neurine on it!</span>")
 			return
 
-		if(!O.reagents.has_reagent("mannitol", 10))
+		if(!O.reagents.has_reagent(/datum/reagent/medicine/mannitol, 10))
 			to_chat(user, "<span class='warning'>There's not enough mannitol in [O] to restore [src]!</span>")
 			return
 
@@ -157,7 +157,7 @@
 
 
 
-/obj/item/organ/brain/examine(mob/user)//BUG_PROBABLE_CAUSE to_chats changed to . +=
+/obj/item/organ/brain/examine(mob/user)
 	. = ..()
 
 	if(user.suiciding)

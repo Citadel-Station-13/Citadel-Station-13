@@ -53,20 +53,20 @@
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
 	if(!operating)
-		to_chat(user, "<span class='notice'>Alt-click [src] to turn it on.</span>")
+		. += "<span class='notice'>Alt-click [src] to turn it on.</span>"
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
+		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
 		return
 	if(operating)
-		to_chat(user, "<span class='notice'>\The [src] is operating.</span>")
+		. += "<span class='notice'>\The [src] is operating.</span>"
 		return
 
 	if(length(ingredients))
 		if(issilicon(user))
-			to_chat(user, "<span class='notice'>\The [src] camera shows:</span>")
+			. += "<span class='notice'>\The [src] camera shows:</span>"
 		else
-			to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+			. += "<span class='notice'>\The [src] contains:</span>"
 		var/list/items_counts = new
 		for(var/i in ingredients)
 			if(istype(i, /obj/item/stack))
@@ -76,14 +76,14 @@
 				var/atom/movable/AM = i
 				items_counts[AM.name]++
 		for(var/O in items_counts)
-			to_chat(user, "<span class='notice'>- [items_counts[O]]x [O].</span>")
+			. += "<span class='notice'>- [items_counts[O]]x [O].</span>"
 	else
-		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
+		. += "<span class='notice'>\The [src] is empty.</span>"
 
 	if(!(stat & (NOPOWER|BROKEN)))
-		to_chat(user, "<span class='notice'>The status display reads:</span>")
-		to_chat(user, "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>")
-		to_chat(user, "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>")
+		. += "<span class='notice'>The status display reads:</span>"
+		. += "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>"
+		. += "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>"
 
 /obj/machinery/microwave/update_icon()
 	if(broken)
@@ -134,8 +134,8 @@
 
 	if(istype(O, /obj/item/reagent_containers/spray))
 		var/obj/item/reagent_containers/spray/clean_spray = O
-		if(clean_spray.reagents.has_reagent("cleaner", clean_spray.amount_per_transfer_from_this))
-			clean_spray.reagents.remove_reagent("cleaner", clean_spray.amount_per_transfer_from_this,1)
+		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
+			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message("[user] has cleaned \the [src].", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
@@ -186,8 +186,10 @@
 	..()
 
 /obj/machinery/microwave/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, !issilicon(usr)))
 		cook()
+		return TRUE
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()

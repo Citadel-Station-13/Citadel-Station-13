@@ -678,7 +678,7 @@
 	var/prev_dynamic_voting = CONFIG_GET(flag/dynamic_voting)
 	CONFIG_SET(flag/dynamic_voting,!prev_dynamic_voting)
 	if (!prev_dynamic_voting)
-		to_chat(world, "<B>Vote is now between extended and dynamic chaos.</B>")
+		to_chat(world, "<B>Vote is now a ranked choice of dynamic storytellers.</B>")
 	else
 		to_chat(world, "<B>Vote is now between extended and secret.</B>")
 	log_admin("[key_name(usr)] [prev_dynamic_voting ? "disabled" : "enabled"] dynamic voting.")
@@ -705,19 +705,43 @@
 
 	if(!check_rights(R_SPAWN))
 		return
+	var/turf/T = get_turf(usr)
 
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
 	if(ispath(chosen, /turf))
-		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		var/atom/A = new chosen(usr.loc)
+		var/atom/A = new chosen(T)
 		A.flags_1 |= ADMIN_SPAWNED_1
 
 	log_admin("[key_name(usr)] spawned [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/podspawn_atom(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn an atom via supply drop"
+	set name = "Podspawn"
+
+	if(!check_rights(R_SPAWN))
+		return
+
+	var/chosen = pick_closest_path(object)
+	if(!chosen)
+		return
+	var/turf/T = get_turf(usr)
+
+	if(ispath(chosen, /turf))
+		T.ChangeTurf(chosen)
+	else
+		var/obj/structure/closet/supplypod/centcompod/pod = new()
+		var/atom/A = new chosen(pod)
+		A.flags_1 |= ADMIN_SPAWNED_1
+		new /obj/effect/abstract/DPtarget(T, pod)
+
+	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/spawn_cargo(object as text)
 	set category = "Debug"

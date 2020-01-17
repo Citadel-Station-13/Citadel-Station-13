@@ -17,10 +17,10 @@
 	var/list/living_antags = list()
 	var/list/dead_players = list()
 	var/list/list_observers = list()
+	var/list/ghost_eligible = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
-	required_type = /mob/dead/observer
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 
@@ -34,11 +34,16 @@
 	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
 	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
+	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+	ghost_eligible = trim_list(eligibility.get_all_ghost_role_eligible())
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
 	for(var/mob/M in trimmed_list)
 		if (!istype(M, required_type))
+			trimmed_list.Remove(M)
+			continue
+		if (M.GetComponent(/datum/component/virtual_reality))
 			trimmed_list.Remove(M)
 			continue
 		if (!M.client) // Are they connected?
@@ -67,6 +72,25 @@
 				continue
 	return trimmed_list
 
+/datum/dynamic_ruleset/midround/from_ghosts/trim_list(list/L = list())
+	var/list/trimmed_list = L.Copy()
+	for(var/mob/M in trimmed_list)
+		if (!M.client) // Are they connected?
+			trimmed_list.Remove(M)
+			continue
+		if(!mode.check_age(M.client, minimum_required_age))
+			trimmed_list.Remove(M)
+			continue
+		if(antag_flag_override)
+			if(!(antag_flag_override in M.client.prefs.be_special) || is_banned_from(M.ckey, antag_flag_override))
+				trimmed_list.Remove(M)
+				continue
+		else
+			if(!(antag_flag in M.client.prefs.be_special) || is_banned_from(M.ckey, antag_flag))
+				trimmed_list.Remove(M)
+				continue
+	return trimmed_list
+
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
 // Or autotator someone
 
@@ -84,18 +108,20 @@
 
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
+			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
 	return TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/execute()
-	var/list/possible_candidates = list()
-	possible_candidates.Add(dead_players)
-	possible_candidates.Add(list_observers)
-	send_applications(possible_candidates)
-	if(assigned.len > 0)
-		return TRUE
-	else
+/datum/dynamic_ruleset/midround/from_ghosts/ready(forced = FALSE)
+	if (required_candidates > ghost_eligible.len)
+		SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough ghosts")
 		return FALSE
+	return ..()
+
+
+/datum/dynamic_ruleset/midround/from_ghosts/execute()
+	var/application_successful = send_applications(ghost_eligible)
+	return assigned.len > 0 && application_successful
 
 /// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/send_applications(list/possible_volunteers = list())
@@ -107,28 +133,25 @@
 
 	candidates = pollGhostCandidates("The mode is looking for volunteers to become a [name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 
-	if(!candidates || candidates.len <= 0)
-		message_admins("The ruleset [name] received no applications.")
-		log_game("DYNAMIC: The ruleset [name] received no applications.")
-		mode.refund_threat(cost)
-		mode.log_threat("Rule [name] refunded [cost] (no applications)",verbose=TRUE)
-		mode.executed_rules -= src
-		return
+	if(!candidates || candidates.len < required_candidates)
+		message_admins("The ruleset [name] did not receive enough applications.")
+		if(candidates)
+			message_admins("Only received [candidates.len], needed [required_candidates].")
+		else
+			message_admins("There were no candidates.")
+		log_game("DYNAMIC: The ruleset [name] did not receive enough applications.")
+		return FALSE
 
 	message_admins("[candidates.len] players volunteered for the ruleset [name].")
 	log_game("DYNAMIC: [candidates.len] players volunteered for [name].")
 	review_applications()
+	return TRUE
 
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
 /// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	for (var/i = 1, i <= required_candidates, i++)
 		if(candidates.len <= 0)
-			if(i == 1)
-				// We have found no candidates so far and we are out of applicants.
-				mode.refund_threat(cost)
-				mode.log_threat("Rule [name] refunded [cost] (all applications invalid)",verbose=TRUE)
-				mode.executed_rules -= src
 			break
 		var/mob/applicant = pick(candidates)
 		candidates -= applicant
@@ -150,7 +173,7 @@
 
 		finish_setup(new_character, i)
 		assigned += applicant
-		notify_ghosts("[new_character] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
+		notify_ghosts("[new_character] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT)
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = makeBody(applicant)
@@ -186,6 +209,8 @@
 	repeatable = TRUE
 	high_population_requirement = 15
 	flags = TRAITOR_RULESET
+	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1)
+	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
@@ -219,6 +244,8 @@
 	living_players -= M
 	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
+	log_admin("[M] was made into a traitor by dynamic.")
+	message_admins("[M] was made into a traitor by dynamic.")
 	return TRUE
 
 
@@ -242,6 +269,7 @@
 	requirements = list(101,101,70,50,50,50,40,30,30,30)
 	high_population_requirement = 30
 	required_type = /mob/living/silicon/ai
+	property_weights = list("story_potential" = 2, "trust" = 1, "chaos" = 2)
 	var/ion_announce = 33
 	var/removeDontImproveChance = 10
 
@@ -266,6 +294,8 @@
 	var/datum/antagonist/traitor/AI = new
 	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(AI)
+	log_admin("[M] was made into a malf AI by dynamic.")
+	message_admins("[M] was made into a malf AI by dynamic.")
 	if(prob(ion_announce))
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", "ionstorm")
 		if(prob(removeDontImproveChance))
@@ -283,6 +313,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	config_tag = "midround_wizard"
+	persistent = TRUE
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
@@ -293,10 +324,10 @@
 	requirements = list(90,90,70,50,50,50,50,40,30,30)
 	high_population_requirement = 30
 	repeatable = TRUE
+	property_weights = list("story_potential" = 2, "trust" = 1, "chaos" = 2, "extended" = -2)
+	var/datum/mind/wizard
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
 	if(GLOB.wizardstart.len == 0)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
@@ -306,6 +337,20 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
 	..()
 	new_character.forceMove(pick(GLOB.wizardstart))
+
+/datum/dynamic_ruleset/midround/from_ghosts/wizard/rule_process() // i can literally copy this from are_special_antags_dead it's great
+	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+		return FALSE
+
+	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
+		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
+			return FALSE
+
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
+
+	return RULESET_STOP_PROCESSING
 
 //////////////////////////////////////////////
 //                                          //
@@ -325,6 +370,7 @@
 	cost = 35
 	requirements = list(90,90,90,80,70,60,50,40,40,40)
 	high_population_requirement = 40
+	property_weights = list("story_potential" = 2, "trust" = 2, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGHLANDER_RULESET
@@ -340,11 +386,6 @@
 		we may change it back, but until this day comes, we must make it simply 10.
 	*/
 	required_candidates = operative_cap[indice_pop]
-	return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
@@ -377,11 +418,7 @@
 	requirements = list(101,101,101,80,60,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/from_ghosts/blob/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
-	return ..()
+	property_weights = list("story_potential" = -1, "trust" = 2, "chaos" = 2, "extended" = -2, "valid" = 2)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
 	var/body = applicant.become_overmind()
@@ -407,12 +444,8 @@
 	high_population_requirement = 50
 	repeatable_weight_decrease = 2
 	repeatable = TRUE
+	property_weights = list("story_potential" = -1, "trust" = 1, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/list/vents = list()
-
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
-	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
 	// 50% chance of being incremented by one
@@ -461,6 +494,7 @@
 	high_population_requirement = 50
 	repeatable_weight_decrease = 2
 	repeatable = TRUE
+	property_weights = list("story_potential" = 1, "trust" = 1, "extended" = 1, "valid" = 2, "integrity" = 2)
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
@@ -506,12 +540,8 @@
 	weight = 4
 	cost = 5
 	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
+	property_weights = list("story_potential" = 1, "extended" = 1, "valid" = -2)
 	high_population_requirement = 5
-
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
-	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
@@ -539,16 +569,18 @@
 	cost = 5
 	requirements = list(30,30,30,30,20,15,15,15,15,15)
 	high_population_requirement = 15
+	property_weights = list("story_potential" = -2, "extended" = -1)
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/ready(forced = FALSE)
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population = 0,threat = 0)
 	var/deadMobs = 0
 	for(var/mob/M in GLOB.dead_mob_list)
 		deadMobs++
 	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
 		return FALSE
-	if(required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/ready(forced = FALSE)
 	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
 		var/turf/T = get_turf(L)
 		if(T && is_station_level(T.z))
@@ -590,12 +622,11 @@
 	weight = 4
 	cost = 15
 	requirements = list(101,101,101,90,80,70,60,50,40,30)
+	property_weights = list("story_potential" = -2, "extended" = -2, "integrity" = 2, "valid" = 2, "trust" = 2)
 	high_population_requirement = 30
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/ready(forced = FALSE)
-	if(required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
 	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
 			spawn_locs += L.loc
@@ -641,12 +672,11 @@
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	high_population_requirement = 15
 	var/datum/team/abductor_team/team
+	property_weights = list("story_potential" = 1, "extended" = -2, "valid" = 1, "trust" = -1, "chaos" = 2)
 	repeatable_weight_decrease = 4
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
-	if(required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
 	team = new /datum/team/abductor_team
 	if(team.team_number > ABDUCTOR_MAX_TEAMS)
 		return FALSE
@@ -680,12 +710,11 @@
 	cost = 15
 	requirements = list(101,101,101,90,80,70,60,50,40,30)
 	high_population_requirement = 30
+	property_weights = list("story_potential" = 1, "extended" = -2, "valid" = 2)
 	var/list/spawn_locs = list()
 	var/spawn_loc
 
 /datum/dynamic_ruleset/midround/from_ghosts/ninja/ready(forced = FALSE)
-	if(required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
 		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)

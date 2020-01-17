@@ -379,7 +379,7 @@ Auto Patrol[]"},
 	var/atom/Tsec = drop_location()
 
 	var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
-	Sa.build_step = 1
+	Sa.build_step = ASSEMBLY_SECOND_STEP
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/assembly/prox_sensor(Tsec)

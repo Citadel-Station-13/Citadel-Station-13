@@ -61,12 +61,12 @@
 		cut_overlays()
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
-	..()
+	. = ..()
 	if(max_mod_capacity)
-		to_chat(user, "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining.")
+		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		for(var/A in get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
-			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
+			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /obj/item/gun/energy/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -112,7 +112,10 @@
 /obj/item/gun/energy/kinetic_accelerator/cyborg
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	max_mod_capacity = 80
+
+/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg
+	holds_charge = TRUE
+	unique_frequency = TRUE
 
 /obj/item/gun/energy/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -276,11 +279,11 @@
 	var/minebot_exclusive = FALSE
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>")
+	. = ..()
+	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/gun/energy/kinetic_accelerator) && !issilicon(user))
+	if(istype(A, /obj/item/gun/energy/kinetic_accelerator))
 		install(A, user)
 	else
 		..()

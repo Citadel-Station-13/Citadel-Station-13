@@ -51,11 +51,11 @@
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
 /obj/item/multitool/examine(mob/user)
-	..()
+	. = ..()
 	if(selected_io)
-		to_chat(user, "<span class='notice'>Activate [src] to detach the data wire.</span>")
+		. += "<span class='notice'>Activate [src] to detach the data wire.</span>"
 	if(buffer)
-		to_chat(user, "<span class='notice'>Its buffer contains [buffer].</span>")
+		. += "<span class='notice'>Its buffer contains [buffer].</span>"
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
@@ -247,6 +247,8 @@
 /obj/item/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "multitool_cyborg"
 	toolspeed = 0.5
 
 /obj/item/multitool/abductor

@@ -18,11 +18,11 @@
 	//	flags = CONDUCT_1
 
 /obj/structure/lattice/examine(mob/user)
-	..()
-	deconstruction_hints(user)
+	. = ..()
+	. += deconstruction_hints(user)
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
-	to_chat(user, "<span class='notice'>The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.</span>")
+	return "<span class='notice'>The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.</span>"
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
@@ -60,7 +60,7 @@
 		to_chat(user, "<span class='notice'>You build a floor.</span>")
 		var/turf/T = src.loc
 		if(isspaceturf(T))
-			T.PlaceOnTop(/turf/open/floor/plating)
+			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			qdel(src)
 			return TRUE
 	return FALSE

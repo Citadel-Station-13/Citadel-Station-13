@@ -91,6 +91,8 @@
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
 			return
+	if (istype(glasses) && glasses.ranged_attack(src,A,mouseparams))
+		return
 
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_ranged_attack(src, A, mouseparams)

@@ -187,9 +187,11 @@
 	return time2text(world.time + 432000, ":ss")
 
 /obj/item/detective_scanner/AltClick(mob/living/user)
+	. = ..()
 	// Best way for checking if a player can use while not incapacitated, etc
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return
+	. = TRUE
 	if(!LAZYLEN(log))
 		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
 		return
@@ -200,9 +202,9 @@
 	log = list()
 
 /obj/item/detective_scanner/examine(mob/user)
-	..()
+	. = ..()
 	if(LAZYLEN(log) && !scanning)
-		to_chat(user, "<span class='notice'>Alt-click to clear scanner logs.</span>")
+		. += "<span class='notice'>Alt-click to clear scanner logs.</span>"
 
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks

@@ -10,6 +10,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	var/list/alternate_screams = list() //REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
 	//eg: 32x32 sprite, 64x64 sprite, etc.
@@ -52,7 +53,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
 	//Citadel Edit for digitigrade stuff
-	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
+	var/mutantrace_variation = NONE //Are there special sprites for specific situations? Don't use this unless you need to.
 
 	var/item_color = null //this needs deprecating, soonish
 
@@ -81,6 +82,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
+	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
 	var/sharpness = IS_BLUNT
 
 	var/tool_behaviour = NONE
@@ -139,6 +141,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else if (!istype(embedding, /datum/embedding_behavior))
 		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
 
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
@@ -183,14 +188,24 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	src.loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
-	..()
-	var/pronoun
-	if(src.gender == PLURAL)
-		pronoun = "They are"
+	. = ..()
+
+	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
+
+	if(resistance_flags & INDESTRUCTIBLE)
+		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
-		pronoun = "It is"
-	var/size = weightclass2text(src.w_class)
-	to_chat(user, "[pronoun] a [size] item." )
+		if(resistance_flags & LAVA_PROOF)
+			. += "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+			. += "[src] looks pretty robust! It'd probably be able to withstand acid!"
+		if(resistance_flags & FREEZE_PROOF)
+			. += "[src] is made of cold-resistant materials."
+		if(resistance_flags & FIRE_PROOF)
+			. += "[src] is made of fire-retardant materials."
+
+
+
 
 	if(!user.research_scanner)
 		return
@@ -227,7 +242,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		research_msg += "None"
 	research_msg += "."
-	to_chat(user, research_msg.Join())
+	. += research_msg.Join()
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -383,13 +398,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(over == src)
 		return usr.client.Click(src, src_location, src_control, params)
-	var/list/directaccess = usr.DirectAccess()
+	var/list/directaccess = usr.DirectAccess()	//This, specifically, is what requires the copypaste. If this were after the adjacency check, then it'd be impossible to use items in your inventory, among other things.
+												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
 	if((usr.CanReach(src) || (src in directaccess)) && (usr.CanReach(over) || (over in directaccess)))
 		if(!usr.get_active_held_item())
 			usr.UnarmedAttack(src, TRUE)
 			if(usr.get_active_held_item() == src)
 				melee_attack_chain(usr, over)
-			return
+			return TRUE //returning TRUE as a "is this overridden?" flag
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
@@ -563,21 +579,22 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			itempush = 0 //too light to push anything
 		return A.hitby(src, 0, itempush)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, messy_throw = TRUE)
 	thrownby = thrower
-	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
+	callback = CALLBACK(src, .proc/after_throw, callback, (spin && messy_throw)) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
-/obj/item/proc/after_throw(datum/callback/callback)
+/obj/item/proc/after_throw(datum/callback/callback, messy_throw)
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	throw_speed = initial(throw_speed) //explosions change this.
 	item_flags &= ~IN_INVENTORY
-	var/matrix/M = matrix(transform)
-	M.Turn(rand(-170, 170))
-	transform = M
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 8)
+	if(messy_throw)
+		var/matrix/M = matrix(transform)
+		M.Turn(rand(-170, 170))
+		transform = M
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
