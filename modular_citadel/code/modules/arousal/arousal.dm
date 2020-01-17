@@ -158,9 +158,13 @@
 		return //No one left.
 	var/mob/living/target = input(src, "With whom?", "Sexual partner", null) as null|anything in partners //pick one, default to null
 	if(target && in_range(src, target))
+		to_chat(src,"<span class='notice'>Waiting for consent...</span>")
 		var/consenting = input(target, "Do you want [src] to climax with you?","Climax mechanics","No") in list("Yes","No")
 		if(consenting == "Yes")
 			return target
+		else
+			message_admins("[src] tried to climax with [target], but [target] did not consent.")
+			consent_log("[src] tried to climax with [target], but [target] did not consent.")
 
 /mob/living/carbon/human/proc/pick_climax_container(silent = FALSE)
 	var/list/containers_list = list()
