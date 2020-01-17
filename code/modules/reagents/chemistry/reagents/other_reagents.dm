@@ -459,17 +459,10 @@
 		M.AdjustKnockdown(10, FALSE)
 		M.adjustStaminaLoss(15, FALSE)
 	else
-<<<<<<< HEAD
 		M.adjustToxLoss(3, FALSE)
 		M.adjustOxyLoss(2, FALSE)
 		M.adjustStaminaLoss(10, FALSE)
-		holder.remove_reagent(id, 1)
-=======
-		M.adjustToxLoss(3, 0)
-		M.adjustOxyLoss(2, 0)
-		M.adjustStaminaLoss(10, 0)
 		holder.remove_reagent(type, 1)
->>>>>>> citadel/master
 	return TRUE
 
 //We only get 30u to start with...
