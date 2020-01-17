@@ -222,7 +222,7 @@
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
 	id = "mixvirus"
-	results = list(/datum/reagent/blood = 1)
+	results = list()
 	required_reagents = list(/datum/reagent/consumable/virus_food = 1)
 	required_catalysts = list(/datum/reagent/blood = 1)
 	var/level_min = 1
@@ -234,8 +234,8 @@
 	if(B && B.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
-			D.Evolve(level_min, level_max)
-
+			for(var/i in 1 to min(created_volume, 5))
+				D.Evolve(level_min, level_max)
 
 /datum/chemical_reaction/mix_virus/mix_virus_2
 
