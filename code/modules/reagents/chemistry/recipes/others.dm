@@ -335,7 +335,7 @@
 	if(B && B.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
-			for(var/i in 1 to min(createdvolume, 5))
+			for(var/i in 1 to min(created_volume, 5))
 				D.Devolve()
 
 /datum/chemical_reaction/mix_virus/neuter_virus
