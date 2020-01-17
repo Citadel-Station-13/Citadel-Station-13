@@ -8,6 +8,7 @@
 	var/cell_type = /obj/item/stock_parts/cell
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
+	var/altammo_type = null
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/can_charge = 1 //Can it be charged in a recharger?
 	var/automatic_charge_overlays = TRUE	//Do we handle overlays with base update_icon()?
@@ -27,6 +28,8 @@
 		cell.use(round(cell.charge / severity))
 		chambered = null //we empty the chamber
 		recharge_newshot() //and try to charge a new shot
+		altchambered = null
+		recharge_newaltshot()
 		update_icon()
 
 /obj/item/gun/energy/get_cell()
@@ -42,6 +45,7 @@
 		cell.give(cell.maxcharge)
 	update_ammo_types()
 	recharge_newshot(TRUE)
+	recharge_newaltshot(TRUE)
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_icon()
@@ -79,6 +83,8 @@
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
+		if(altammo_type && !altchambered)
+			recharge_newaltshot(TRUE)
 		update_icon()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
@@ -107,6 +113,23 @@
 			if(!chambered.BB)
 				chambered.newshot()
 
+/obj/item/gun/energy/recharge_newaltshot(no_cyborg_drain)
+	if (!altammo_type || !cell)
+		return
+	if(use_cyborg_cell && !no_cyborg_drain)
+		if(iscyborg(loc))
+			var/mob/living/silicon/robot/R = loc
+			if(R.cell)
+				var/obj/item/ammo_casing/energy/shot = altammo_type
+				if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+					cell.give(shot.e_cost)	//... to recharge the shot
+	if(!altchambered)
+		var/obj/item/ammo_casing/energy/AC = altammo_type
+		if(cell.charge >= initial(AC.e_cost)) //if there's enough power in the cell cell...
+			altchambered = new AC() //...prepare a new shot based on the current ammo type selected
+			if(!altchambered.BB)
+				altchambered.newshot()
+
 /obj/item/gun/energy/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
@@ -114,9 +137,20 @@
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
 
-/obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(!chambered && can_shoot())
-		process_chamber()	// If the gun was drained and then recharged, load a new shot.
+/obj/item/gun/energy/process_altchamber()
+	if(altchambered && !altchambered.BB)
+		var/obj/item/ammo_casing/energy/shot = altchambered
+		cell.use(shot.e_cost)
+	altchambered = null
+	recharge_newaltshot()
+
+/obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, should_altfire = FALSE)
+	if(!should_altfire)
+		if(!chambered && can_shoot())
+			process_chamber()	// If the gun was drained and then recharged, load a new shot.
+	else
+		if(!altchambered && can_shoot())
+			process_altchamber()
 	return ..()
 
 /obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)

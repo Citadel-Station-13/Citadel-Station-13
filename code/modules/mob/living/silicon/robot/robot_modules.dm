@@ -195,6 +195,8 @@
 				EG.cell.give(S.e_cost * coeff)
 				if(!EG.chambered)
 					EG.recharge_newshot(TRUE)
+				if(EG.altammo_type && !EG.altchambered)
+					EG.recharge_newaltshot(TRUE)
 				EG.update_icon()
 			else
 				EG.charge_tick = 0

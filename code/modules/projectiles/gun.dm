@@ -25,6 +25,7 @@
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
+	var/obj/item/ammo_casing/altchambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_off = FALSE
@@ -91,6 +92,8 @@
 		. += "It has \a [pin] installed."
 	else
 		. += "It doesn't have a firing pin installed, and won't fire."
+	if(altchambered)
+		. += "It has an alternate firing function, which can be used by <b>right-clicking</b> a target while in combat mode."
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
@@ -99,6 +102,9 @@
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber()
+	return FALSE
+
+/obj/item/gun/proc/process_altchamber()
 	return FALSE
 
 //check if there's enough ammo/energy/whatever to shoot one time
@@ -181,6 +187,9 @@
 	var/bonus_spread = 0
 	var/loop_counter = 0
 
+	var/list/modifiers = params2list(params)
+	var/should_altfire = (modifiers["right"] ? TRUE : FALSE)
+
 	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
@@ -190,9 +199,9 @@
 			else if(G.can_trigger_gun(user))
 				bonus_spread += 24 * G.weapon_weight * G.dualwield_spread_mult
 				loop_counter++
-				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
+				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread, should_altfire), loop_counter)
 
-	process_fire(target, user, TRUE, params, null, bonus_spread)
+	process_fire(target, user, TRUE, params, null, bonus_spread, should_altfire)
 
 
 
@@ -218,6 +227,9 @@
 	return FALSE
 
 /obj/item/gun/proc/recharge_newshot()
+	return
+
+/obj/item/gun/proc/recharge_newaltshot()
 	return
 
 /obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
@@ -257,7 +269,7 @@
 	update_icon()
 	return TRUE
 
-/obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, should_altfire = FALSE)
 	add_fingerprint(user)
 
 	if(semicd)
@@ -279,9 +291,10 @@
 		for(var/i = 1 to burst_size)
 			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), fire_delay * (i - 1))
 	else
-		if(chambered)
+		var/obj/item/ammo_casing/targetchamber = (should_altfire ? altchambered : chambered)
+		if(targetchamber)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
-			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, src))
+			if(!targetchamber.fire_casing(target, user, params, , suppressed, zone_override, sprd, src))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -292,7 +305,7 @@
 		else
 			shoot_with_empty_chamber(user)
 			return
-		process_chamber()
+		should_altfire ? process_altchamber() : process_chamber()
 		update_icon()
 		semicd = TRUE
 		addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
@@ -521,6 +534,9 @@
 /obj/item/gun/handle_atom_del(atom/A)
 	if(A == chambered)
 		chambered = null
+		update_icon()
+	if(A == altchambered)
+		altchambered = null
 		update_icon()
 
 /obj/item/gun/proc/getinaccuracy(mob/living/user)

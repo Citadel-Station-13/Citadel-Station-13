@@ -113,30 +113,30 @@
 	icon = 'icons/mob/actions/bloodsucker.dmi'
 	icon_state = "power_mez"
 
-/datum/status_effect/no_combat_mode/electrode
+/datum/status_effect/electrode
 	id = "tased"
+	alert_type = null
+	status_type = STATUS_EFFECT_REPLACE
 
-/datum/status_effect/no_combat_mode/electrode/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration)) //TODO, figure out how to grab from subtype
 		duration = set_duration
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		if(C.combatmode)
-			C.toggle_combat_mode(TRUE)
-		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
+		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 2)
 
-/datum/status_effect/no_combat_mode/electrode/on_remove()
+/datum/status_effect/electrode/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_movespeed_modifier(MOVESPEED_ID_TASED_STATUS)
 	. = ..()
 
-/datum/status_effect/no_combat_mode/electrode/tick()
+/datum/status_effect/electrode/tick()
 	if(owner)
 		owner.adjustStaminaLoss(5) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 
-/datum/status_effect/no_combat_mode/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
+/datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
 	return 2
 
 //OTHER DEBUFFS
