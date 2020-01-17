@@ -153,8 +153,9 @@
 	if(!(mobility_flags & MOBILITY_UI))
 		unset_machine()
 
-	if(pulledby)
-		pulledby.update_pull_movespeed()
+	if(isliving(pulledby))
+		var/mob/living/L = pulledby
+		L.update_pull_movespeed()
 
 	//Handle lying down, voluntary or involuntary
 	density = !lying
