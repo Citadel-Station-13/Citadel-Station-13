@@ -96,7 +96,6 @@
 					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[M.getCloneLoss()]</a>
 					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getOrganLoss(ORGAN_SLOT_BRAIN)]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[M.getStaminaLoss()]</a>
-					AROUSAL:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=arousal' id='arousal'>[M.getArousalLoss()]</a>
 					"}
 			if(GLOB.Debug2)
 				atomsnowflake += {"
@@ -947,21 +946,25 @@
 
 			if(A.reagents)
 				var/chosen_id
-				var/list/reagent_options = sortList(GLOB.chemical_reagents_list)
-				switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
-					if("Enter ID")
+				switch(alert(usr, "Choose a method.", "Add Reagents", "Search", "Choose from a list", "I'm feeling lucky"))
+					if("Search")
 						var/valid_id
 						while(!valid_id)
-							chosen_id = stripped_input(usr, "Enter the ID of the reagent you want to add.")
-							if(!chosen_id) //Get me out of here!
+							chosen_id = input(usr, "Enter the ID of the reagent you want to add.", "Search reagents") as null|text
+							if(isnull(chosen_id)) //Get me out of here!
 								break
-							for(var/ID in reagent_options)
-								if(ID == chosen_id)
-									valid_id = 1
+							if(!ispath(text2path(chosen_id)))
+								chosen_id = pick_closest_path(chosen_id, make_types_fancy(subtypesof(/datum/reagent)))
+								if(ispath(chosen_id))
+									valid_id = TRUE
+							else
+								valid_id = TRUE
 							if(!valid_id)
 								to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
-					if("Choose ID")
-						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in reagent_options
+					if("Choose from a list")
+						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in subtypesof(/datum/reagent)
+					if("I'm feeling lucky")
+						chosen_id = pick(subtypesof(/datum/reagent))
 				if(chosen_id)
 					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
 					if(amount)
@@ -1355,9 +1358,6 @@
 				if("stamina")
 					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
-				if("arousal")
-					L.adjustArousalLoss(amount)
-					newamt = L.getArousalLoss()
 				if("heart")
 					L.adjustOrganLoss(ORGAN_SLOT_HEART, amount)
 					newamt = L.getOrganLoss(ORGAN_SLOT_HEART)
