@@ -95,7 +95,7 @@
 	else
 		. += "It doesn't have a firing pin installed, and won't fire."
 	if(altchambered)
-		. += "It has an alternate firing function, which can be used by <b>right-clicking</b> a target while in combat mode."
+		. += "<span class='notice'>It has an alternate firing function, which can be used by <b>right-clicking</b> a target while in combat mode.</span>"
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
