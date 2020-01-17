@@ -1,4 +1,0 @@
-author: "r4d6"
-delete-after: True
-changes: 
-  - bugfix: "fixed being able to use a playback device and a voice analyzer to activate each others"

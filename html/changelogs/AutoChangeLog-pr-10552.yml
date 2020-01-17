@@ -1,5 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - tweak: "Replaces new fire alarms with a slightly updated version of the old ones."
-  - bugfix: "Fixed bug where Amber alert had no proper alert lights, and red alert had amber lights."
