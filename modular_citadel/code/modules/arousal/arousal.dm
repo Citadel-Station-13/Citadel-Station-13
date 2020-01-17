@@ -164,7 +164,7 @@
 			return target
 		else
 			message_admins("[src] tried to climax with [target], but [target] did not consent.")
-			consent_log("[src] tried to climax with [target], but [target] did not consent.")
+			log_consent("[src] tried to climax with [target], but [target] did not consent.")
 
 /mob/living/carbon/human/proc/pick_climax_container(silent = FALSE)
 	var/list/containers_list = list()
