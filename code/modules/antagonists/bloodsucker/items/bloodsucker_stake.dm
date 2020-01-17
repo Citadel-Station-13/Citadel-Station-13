@@ -72,7 +72,7 @@
 	var/mob/living/carbon/C = target
 	// Needs to be Down/Slipped in some way to Stake.
 	if(!C.can_be_staked() || target == user)
-		to_chat(user, "<span class='danger'>You cant stake [target] when they are moving moving about! They have to be laying down!</span>")
+		to_chat(user, "<span class='danger'>You can't stake [target] when they are moving about! They have to be laying down or grabbed by the neck!</span>")
 		return
 			// Oops! Can't.
 	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
@@ -106,7 +106,6 @@
 
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.
 /mob/living/carbon/proc/can_be_staked()
-	//return resting || IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH)) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
 	return !CHECK_MOBILITY(src, MOBILITY_STAND)
 	// ABOVE:  Taken from update_mobility() in living.dm
 

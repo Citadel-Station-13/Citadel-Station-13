@@ -123,18 +123,28 @@
 					/obj/item/clothing/ears/headphones = 10,
 					/obj/item/clothing/suit/apron/purple_bartender = 4,
 					/obj/item/clothing/under/rank/bartender/purple = 4,
+					/* Commenting out until next Christmas or made automatic
 					/obj/item/clothing/under/christmas/christmasmaler = 3,
 					/obj/item/clothing/under/christmas/christmasmaleg = 3,
 					/obj/item/clothing/under/christmas/christmasfemaler = 3,
 					/obj/item/clothing/under/christmas/christmasfemaleg = 3,
+					*/
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatr = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatg = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg = 3,
+					/*Commenting out until next Christmas or made automatic
 					/obj/item/clothing/head/christmashat = 3,
 					/obj/item/clothing/head/christmashatg = 3,
+					*/
 					/obj/item/clothing/shoes/winterboots/christmasbootsr = 3,
 					/obj/item/clothing/shoes/winterboots/christmasbootsg = 3,
-					/obj/item/clothing/shoes/winterboots/santaboots = 3)
+					/obj/item/clothing/shoes/winterboots/santaboots = 3,
+					/obj/item/clothing/head/cowboyhat = 3,
+					/obj/item/clothing/head/cowboyhat/black = 3,
+					/obj/item/clothing/head/cowboyhat/white = 3,
+					/obj/item/clothing/head/cowboyhat/pink = 3,
+					/obj/item/clothing/shoes/cowboyboots = 3,
+					/obj/item/clothing/shoes/cowboyboots/black = 3)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 3,
 					/obj/item/clothing/under/syndicate/tacticool/skirt = 3,
 					/obj/item/clothing/mask/balaclava = 3,
@@ -144,8 +154,9 @@
 					/obj/item/clothing/suit/jacket/letterman_syndie = 5,
 					/obj/item/clothing/under/jabroni = 2,
 					/obj/item/clothing/suit/vapeshirt = 2,
-					/obj/item/clothing/under/geisha = 4,,
-					/obj/item/clothing/under/keyholesweater = 3)
+					/obj/item/clothing/under/geisha = 4,
+					/obj/item/clothing/under/keyholesweater = 3,
+					/obj/item/clothing/under/staffassistant = 5)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered = 4,
 					/obj/item/clothing/head/mailman = 2,
 					/obj/item/clothing/under/rank/mailman = 2,

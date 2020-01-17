@@ -103,7 +103,7 @@
 		if (!open)
 			return
 		var/obj/item/reagent_containers/RG = I
-		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+		RG.reagents.add_reagent(/datum/reagent/water, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
 	else
 		return ..()
@@ -201,7 +201,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
-	list_reagents = list("chlorine" = 3, "ammonia" = 1)
+	list_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
 
 /obj/item/reagent_containers/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
@@ -463,7 +463,7 @@
 	desc = "A sink used for washing one's hands and face."
 	anchored = TRUE
 	var/busy = FALSE 	//Something's being washed at the moment
-	var/dispensedreagent = "water" // for whenever plumbing happens
+	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
 
 
 /obj/structure/sink/attack_hand(mob/living/user)
@@ -538,7 +538,7 @@
 				return
 
 	if(istype(O, /obj/item/mop))
-		O.reagents.add_reagent("[dispensedreagent]", 5)
+		O.reagents.add_reagent(dispensedreagent, 5)
 		to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return

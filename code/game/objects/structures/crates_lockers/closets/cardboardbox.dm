@@ -22,7 +22,9 @@
 	if(opened || move_delay || !CHECK_BITFIELD(user.mobility_flags, MOBILITY_MOVE) || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
-	if(step(src, direction))
+	var/oldloc = loc
+	step(src, direction)
+	if(oldloc != loc)
 		addtimer(CALLBACK(src, .proc/ResetMoveDelay), (use_mob_movespeed ? user.movement_delay() : CONFIG_GET(number/movedelay/walk_delay)) * move_speed_multiplier)
 	else
 		ResetMoveDelay()

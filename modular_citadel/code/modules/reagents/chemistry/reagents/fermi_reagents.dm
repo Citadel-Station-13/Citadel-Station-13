@@ -3,13 +3,12 @@
 
 /datum/reagent/fermi
 	name = "Fermi" //This should never exist, but it does so that it can exist in the case of errors..
-	id = "fermi"
 	taste_description	= "affection and love!"
 	can_synth = FALSE
 	value = 20
-	impure_chem 			= "fermiTox"// What chemical is metabolised with an inpure reaction
+	impure_chem 			= /datum/reagent/impure/fermiTox // What chemical is metabolised with an inpure reaction
 	inverse_chem_val 		= 0.25		// If the impurity is below 0.5, replace ALL of the chem with inverse_chemupon metabolising
-	inverse_chem			= "fermiTox"
+	inverse_chem			= /datum/reagent/impure/fermiTox
 
 
 //This should process fermichems to find out how pure they are and what effect to do.
@@ -32,7 +31,6 @@
 
 /datum/reagent/fermi/hatmium //for hatterhat
 	name = "Hat growth serium"
-	id = "hatmium"
 	description = "A strange substance that draws in a hat from the hat dimention."
 	color = "#7c311a" // rgb: , 0, 255
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
@@ -80,7 +78,6 @@
 
 /datum/reagent/fermi/furranium
 	name = "Furranium"
-	id = "furranium"
 	description = "OwO whats this?"
 	color = "#f9b9bc" // rgb: , 0, 255
 	taste_description = "dewicious degenyewacy"
@@ -170,13 +167,12 @@
 
 /datum/reagent/fermi/nanite_b_gone
 	name = "Nanite bane"
-	id = "nanite_b_gone"
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"
 	overdose_threshold = 15
-	impure_chem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
+	impure_chem 			= /datum/reagent/fermi/nanite_b_goneTox //If you make an inpure chem, it stalls growth
 	inverse_chem_val 		= 0.25
-	inverse_chem		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
+	inverse_chem		= /datum/reagent/fermi/nanite_b_goneTox //At really impure vols, it just becomes 100% inverse
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
 	value = 90
@@ -214,7 +210,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Electromagnetic crystals"
-	id = "nanite_b_goneTox"
 	description = "Causes items upon the patient to sometimes short out, as well as causing a shock in the patient, if the residual charge between the crystals builds up to sufficient quantities"
 	metabolization_rate = 0.5
 	chemical_flags = REAGENT_INVISIBLE
@@ -237,7 +232,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/fermiAcid
 	name = "Acid vapour"
-	id = "fermiAcid"
 	description = "Someone didn't do like an otter, and add acid to water."
 	taste_description = "acid burns, ow"
 	color = "#FFFFFF"
@@ -280,7 +274,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/fermiTest
 	name = "Fermis Test Reagent"
-	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
 	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = FALSE
@@ -290,7 +283,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	else
-		holder.remove_reagent("fermiTest", volume)//Avoiding recurrsion
+		holder.del_reagent(type)//Avoiding recurrsion
 	var/location = get_turf(holder.my_atom)
 	if(cached_purity < 0.34 || cached_purity == 1)
 		var/datum/effect_system/foam_spread/s = new()
@@ -303,10 +296,10 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	if(cached_purity >= 0.67)
 		for (var/datum/reagent/reagent in holder.reagent_list)
 			if (istype(reagent, /datum/reagent/fermi))
-				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.type]
 				Ferm.FermiExplode(src, holder.my_atom, holder, holder.total_volume, holder.chem_temp, holder.pH)
 			else
-				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.type]
 				Ferm.on_reaction(holder, reagent.volume)
 	for(var/mob/M in viewers(8, location))
 		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
@@ -315,7 +308,6 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/acidic_buffer
 	name = "Acidic buffer"
-	id = "acidic_buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	pH = 0
@@ -323,7 +315,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
@@ -333,19 +325,18 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(id, volume, ignore_pH = TRUE)
+	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	..()
 
 /datum/reagent/fermi/basic_buffer
 	name = "Basic buffer"
-	id = "basic_buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	pH = 14
 	can_synth = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
@@ -355,14 +346,13 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(id, volume, ignore_pH = TRUE)
+	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	..()
 
 //Turns you into a cute catto while it's in your system.
 //If you manage to gamble perfectly, makes you have cat ears after you transform back. But really, you shouldn't end up with that with how random it is.
 /datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
 	name = "secretcatchem" //an attempt at hiding it
-	id = "secretcatchem"
 	description = "An illegal and hidden chem that turns people into cats. It's said that it's so rare and unstable that having it means you've been blessed. If used on someone in crit, it will turn them into a cat permanently, until the cat is killed."
 	taste_description = "hairballs and cream"
 	color = "#ffc224"
