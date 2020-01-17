@@ -223,8 +223,7 @@
 	name = "Mix Virus"
 	id = "mixvirus"
 	results = list("blood" = 1)
-	required_reagents = list("virusfood" = 1)
-	required_catalysts = list("blood" = 1)
+	required_reagents = list("virusfood" = 1, "blood" = 1)
 	var/level_min = 1
 	var/level_max = 2
 
