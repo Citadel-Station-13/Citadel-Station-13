@@ -121,8 +121,8 @@
 			var/mob/living/silicon/robot/R = loc
 			if(R.cell)
 				var/obj/item/ammo_casing/energy/shot = altammo_type
-				if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-					cell.give(shot.e_cost)	//... to recharge the shot
+				if(R.cell.use(initial(shot.e_cost))) 		//Take power from the borg...
+					cell.give(initial(shot.e_cost))	//... to recharge the shot
 	if(!altchambered)
 		var/obj/item/ammo_casing/energy/AC = altammo_type
 		if(cell.charge >= initial(AC.e_cost)) //if there's enough power in the cell cell...
