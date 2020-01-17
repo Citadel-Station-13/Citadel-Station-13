@@ -229,6 +229,7 @@
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
+		log_craft("[O] crafted by [usr] at [get_turf(O)]")
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (get_amount() < R.req_amount*multiplier)
