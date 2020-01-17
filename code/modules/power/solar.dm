@@ -231,7 +231,7 @@
 			W.play_tool_sound(src, 75)
 		return 1
 
-	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/plasmaglass) || istype(W, /obj/item/stack/sheet/plasmarglass) || istype(W, /obj/item/stack/sheet/titaniumglass) || istype(W, /obj/item/stack/sheet/plastitaniumglass))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
