@@ -47,9 +47,9 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/passive_vent/layer1
-	piping_layer = PIPING_LAYER_MIN
+	piping_layer = 1
 	icon_state = "passive_vent_map-1"
 
 /obj/machinery/atmospherics/components/unary/passive_vent/layer3
-	piping_layer = PIPING_LAYER_MAX
+	piping_layer = 3
 	icon_state = "passive_vent_map-3"
