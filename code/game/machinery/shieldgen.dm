@@ -121,7 +121,7 @@
 	. = ..()
 	if(.)
 		return
-	if(locked && !issilicon(user))
+	if(locked && !hasSiliconAccessInArea(user,get_area(src)))
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
 	if(panel_open)
@@ -367,7 +367,7 @@
 	if(!anchored)
 		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
 		return
-	if(locked && !issilicon(user))
+	if(locked && !hasSiliconAccessInArea(user,get_area(src)))
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return
 	if(!power)

@@ -148,4 +148,18 @@
 		{{/if}}
 	  </ui-section>
 	</ui-notice>
+	{{#if data.hijackable}}
+		<ui-display title='Hijacking'>
+			{{#if !data.hijacker}}
+		  		<ui-button icon='unlock' action='hijack'>Hijack APC</ui-button>
+			{{else}}
+				{{#if data.drainavail}}
+					<ui-button icon='lightbulb-o' action='drain'>Drain APC</ui-button>
+				{{/if}}
+				{{#if data.lockdownavail}}
+					<ui-button icon='lock' action='lockdown'>Lockdown Room</ui-button>
+				{{/if}}
+			{{/if}}
+	 	</ui-display>
+	{{/if}}
 {{/if}}

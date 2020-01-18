@@ -812,7 +812,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 //Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
-	return IsAdminGhost(src) || Adjacent(A)
+	return IsAdminGhost(src) || Adjacent(A) || hasSiliconAccessInArea(src,get_area(A))
 
 //Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)

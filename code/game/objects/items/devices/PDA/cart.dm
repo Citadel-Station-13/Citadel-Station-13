@@ -587,7 +587,7 @@ Code:
 /obj/item/cartridge/Topic(href, href_list)
 	..()
 
-	if(!usr.canUseTopic(src, !issilicon(usr)))
+	if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr,get_area(src))))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return

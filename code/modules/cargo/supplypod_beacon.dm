@@ -77,7 +77,7 @@
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
 	. = ..()
-	if (!user.canUseTopic(src, !issilicon(user)))
+	if (!user.canUseTopic(src, !hasSiliconAccessInArea(user,get_area(src))))
 		return
 	if (express_console)
 		unlink_console()

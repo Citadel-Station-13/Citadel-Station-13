@@ -140,7 +140,7 @@
 /obj/item/valentine/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
+		if( !(ishuman(user) || isobserver(user) || hasSiliconAccessInArea(user,get_area(src))) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(message)]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 		else

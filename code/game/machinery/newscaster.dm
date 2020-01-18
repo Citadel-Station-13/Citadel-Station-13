@@ -509,7 +509,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || issilicon(usr))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || hasSiliconAccessInArea(usr,get_area(src)))
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])

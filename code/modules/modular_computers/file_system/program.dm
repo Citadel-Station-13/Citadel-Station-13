@@ -87,7 +87,7 @@
 	if(IsAdminGhost(user))
 		return 1
 
-	if(issilicon(user))
+	if(hasSiliconAccessInArea(user,get_area(computer)))
 		return 1
 
 	if(ishuman(user))

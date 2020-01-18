@@ -165,7 +165,7 @@
 
 /obj/machinery/dna_scannernew/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user,get_area(src))))
 		return
 	interact(user)
 	return TRUE

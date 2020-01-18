@@ -544,6 +544,46 @@
 		cooldown = world.time
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
+/datum/action/item_action/removeAPCs
+	name = "Relinquish APC"
+	desc = "Let go of an APC, relinquish control back to the station."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijackx"
+
+/datum/action/item_action/removeAPCs/Trigger()
+	var/list/areas = list()
+	for (var/area/a in owner.siliconaccessareas)
+		areas += a.name
+	areas += "None"
+	var/removeAPC = input("Select an APC to remove:","Remove APC Control",1) in areas
+	if (removeAPC == "None")
+		return
+	var/area/area = owner.siliconaccessareas[areas.Find(removeAPC)]
+	var/obj/machinery/power/apc/apc = area.get_apc()
+	apc.hijacker = 0
+	apc.update_icon()
+	apc.set_hijacked_lighting()
+	owner.toggleSiliconAccessArea(area)
+
+/datum/action/item_action/accessAPCs
+	name = "Access APC Interface"
+	desc = "Open the APC's interface."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijacky"
+
+/datum/action/item_action/accessAPCs/Trigger()
+	var/list/areas = list()
+	for (var/area/a in owner.siliconaccessareas)
+		areas += a.name
+	areas += "None"
+	var/accessAPC = input("Select an APC to access:","Access APC Interface",1) in areas
+	if (accessAPC == "None")
+		return
+	var/area/area = owner.siliconaccessareas[areas.Find(accessAPC)]
+	var/obj/machinery/power/apc/apc = area.get_apc()
+	apc.ui_interact(owner)
+
+
 //Preset for spells
 /datum/action/spell_action
 	check_flags = 0

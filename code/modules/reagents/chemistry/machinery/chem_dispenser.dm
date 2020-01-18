@@ -310,7 +310,7 @@
 				return
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
 			var/recipe = stripped_input(usr,"Recipe","Insert recipe with chem IDs")
-			if(!usr.canUseTopic(src, !issilicon(usr)))
+			if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr,get_area(src))))
 				return
 			if(name && recipe)
 				var/list/first_process = splittext(recipe, ";")

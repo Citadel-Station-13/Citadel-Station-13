@@ -260,7 +260,7 @@
 	if(..())
 		return
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr,get_area(src)))
 		//Authenticate
 		if (href_list["auth"])
 			if(LINKED_SERVER_NONRESPONSIVE)
