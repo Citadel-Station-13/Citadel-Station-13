@@ -6672,12 +6672,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"aoZ" = (
-/obj/machinery/atmospherics/components/binary/valve/digital{
-	name = "Waste Release"
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "apa" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -6916,7 +6910,7 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "apI" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/machinery/atmospherics/components/unary/relief_valve/atmos/atmos_waste{
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
@@ -91644,7 +91638,7 @@ bMK
 cbB
 alk
 alX
-aoZ
+cbA
 bQt
 apa
 cgX
