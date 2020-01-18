@@ -326,7 +326,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 
 /obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
-	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
+	var/turf/T = get_turf(A)
+	if(!user.IsAdvancedToolUser() || !A || istype(T, /turf/open/space/transit) || isindestructiblewall(T))
 		return ..()
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
