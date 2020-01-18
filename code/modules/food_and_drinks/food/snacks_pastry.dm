@@ -240,7 +240,7 @@
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jelly"
-	extra_reagent = "slimejelly"
+	extra_reagent = /datum/reagent/toxin/slimejelly
 	foodtype = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain
