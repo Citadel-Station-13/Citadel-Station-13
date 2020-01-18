@@ -7891,6 +7891,10 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"sa" = (
+/obj/item/hilbertshotel/ghostdojo,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "sc" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership/control;
@@ -47751,7 +47755,7 @@ Of
 QF
 Nd
 Sd
-Sd
+sa
 Nd
 WN
 Ur
