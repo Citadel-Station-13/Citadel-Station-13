@@ -268,10 +268,6 @@
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist) //Do resistance calc if resist is pressed#
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	mental_capacity = 500 - M.getOrganLoss(ORGAN_SLOT_BRAIN)//It's their brain!
-	var/mob/living/carbon/human/H = owner
-	if(H)//Prefs
-		if(!H.canbearoused)
-			H.client?.prefs.cit_toggles &= ~HYPNO
 	lewd = (owner.client?.prefs.cit_toggles & HYPNO) && (master.client?.prefs.cit_toggles & HYPNO)
 	var/message = "[(lewd ? "I am a good pet for [enthrallGender]." : "[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
@@ -625,8 +621,6 @@
 			//Speak (Forces player to talk)
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
 				var/saytext = "Your mouth moves on it's own before you can even catch it."
-				if(HAS_TRAIT(C, TRAIT_NYMPHO))
-					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'><i>[saytext]</i></span>"), 5)
 				addtimer(CALLBACK(C, /atom/movable/proc/say, "[customTriggers[trigger][2]]"), 5)
 				log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.")
@@ -639,8 +633,9 @@
 
 			//Shocking truth!
 			else if (lowertext(customTriggers[trigger]) == "shock")
-				if (C.canbearoused && lewd)
-					C.adjustArousalLoss(5)
+				if (lewd && ishuman(C))
+					var/mob/living/carbon/human/H = C
+					H.adjust_arousal(5)
 				C.jitteriness += 100
 				C.stuttering += 25
 				C.Knockdown(60)
@@ -649,13 +644,11 @@
 
 			//wah intensifies wah-rks
 			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				if (HAS_TRAIT(C, TRAIT_NYMPHO) && lewd)
-					if (C.getArousalLoss() > 80)
-						C.mob_climax(forced_climax=TRUE)
-						C.SetStun(10)//We got your stun effects in somewhere, Kev.
-					else
-						C.adjustArousalLoss(10)
-						to_chat(C, "<span class='love'><i>You feel a surge of arousal!</i></span>")
+				if (lewd)
+					if(ishuman(C))
+						var/mob/living/carbon/human/H = C
+						H.mob_climax(forced_climax=TRUE)
+					C.SetStun(10)//We got your stun effects in somewhere, Kev.
 				else
 					C.throw_at(get_step_towards(hearing_args[HEARING_SPEAKER],C), 3, 1) //cut this if it's too hard to get working
 
@@ -734,16 +727,13 @@
 	if(prob(5))
 		M.emote("me",1,"squints, shaking their head for a moment.")//shows that you're trying to resist sometimes
 		deltaResist *= 1.5
-	//nymphomania
-	if (M.canbearoused && HAS_TRAIT(M, TRAIT_NYMPHO))//I'm okay with this being removed.
-		deltaResist*= 0.5-(((2/200)*M.arousalloss)/1)//more aroused you are, the weaker resistance you can give, the less you are, the more you gain. (+/- 0.5)
 
 	//chemical resistance, brain and annaphros are the key to undoing, but the subject has to to be willing to resist.
 	if (owner.reagents.has_reagent(/datum/reagent/medicine/mannitol))
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent(/datum/reagent/medicine/neurine))
 		deltaResist *= 1.5
-	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && M.canbearoused && lewd)
+	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && lewd)
 		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiac))
 			deltaResist *= 1.5
 		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiacplus))

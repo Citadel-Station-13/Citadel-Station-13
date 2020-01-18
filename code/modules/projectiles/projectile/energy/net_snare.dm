@@ -15,7 +15,7 @@
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			new /obj/effect/nettingportal(Tloc)
-	..()
+	return ..()
 
 /obj/item/projectile/energy/net/on_range()
 	do_sparks(1, TRUE, src)
@@ -69,7 +69,7 @@
 	else if(iscarbon(target))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(target))
 		B.Crossed(target)
-	..()
+	return ..()
 
 /obj/item/projectile/energy/trap/on_range()
 	new /obj/item/restraints/legcuffs/beartrap/energy(loc)
@@ -91,7 +91,7 @@
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
 		B.Crossed(target)
 	QDEL_IN(src, 10)
-	..()
+	return ..()
 
 /obj/item/projectile/energy/trap/cyborg/on_range()
 	do_sparks(1, TRUE, src)
