@@ -34,7 +34,7 @@
 	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
-	return
+	return BULLET_ACT_HIT
 
 /mob/living/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
@@ -76,16 +76,16 @@
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		if(reflect_bullet_check(P, def_zone))
-			return -1 // complete projectile permutation
+			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
-			return 2
+			return BULLET_ACT_BLOCK
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor)
+	return P.on_hit(src, armor) ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0

@@ -42,7 +42,8 @@
 	impact_type = /obj/effect/projectile/xray/impact
 
 /obj/item/projectile/beam/shrinklaser/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living))
+	. = ..()
+	if(isliving(target))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
 			if(SIZESCALE_HUGE to INFINITY)
@@ -54,7 +55,7 @@
 			if((0 - INFINITY) to SIZESCALE_NORMAL)
 				M.sizescale(SIZESCALE_TINY)
 		M.update_transform()
-	return 1
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/beam/growlaser
 	name = "growth beam"
@@ -68,7 +69,8 @@
 	impact_type = /obj/effect/projectile/laser_blue/impact
 
 /obj/item/projectile/beam/growlaser/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living))
+	. = ..()
+	if(isliving(target))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
 			if(SIZESCALE_BIG to SIZESCALE_HUGE)
@@ -80,7 +82,7 @@
 			if((0 - INFINITY) to SIZESCALE_TINY)
 				M.sizescale(SIZESCALE_SMALL)
 		M.update_transform()
-	return 1
+	return BULLET_ACT_HIT
 */
 
 datum/design/sizeray
@@ -108,7 +110,8 @@ datum/design/sizeray
 	icon_state="laser"
 
 /obj/item/projectile/sizeray/shrinkray/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living))
+	. = ..()
+	if(isliving(target))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
 			if(SIZESCALE_HUGE to INFINITY)
@@ -120,10 +123,11 @@ datum/design/sizeray
 			if((0 - INFINITY) to SIZESCALE_NORMAL)
 				M.sizescale(SIZESCALE_TINY)
 		M.update_transform()
-	return 1
+	return BULLET_ACT_
 
 /obj/item/projectile/sizeray/growthray/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living))
+	. = ..()
+	if(isliving(target))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
 			if(SIZESCALE_BIG to SIZESCALE_HUGE)
@@ -135,7 +139,7 @@ datum/design/sizeray
 			if((0 - INFINITY) to SIZESCALE_TINY)
 				M.sizescale(SIZESCALE_SMALL)
 		M.update_transform()
-	return 1
+	return BULLET_ACT_HIT
 
 /obj/item/ammo_casing/energy/laser/growthray
 	projectile_type = /obj/item/projectile/sizeray/growthray

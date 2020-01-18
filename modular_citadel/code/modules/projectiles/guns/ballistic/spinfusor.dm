@@ -9,7 +9,7 @@
 /obj/item/projectile/bullet/spinfusor/on_hit(atom/target, blocked = FALSE) //explosion to emulate the spinfusor's AOE
 	..()
 	explosion(target, -1, -1, 2, 0, -1)
-	return 1
+	return BULLET_ACT_HIT
 
 /obj/item/ammo_casing/caseless/spinfusor
 	name = "spinfusor disk"

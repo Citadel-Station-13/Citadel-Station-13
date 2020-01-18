@@ -90,6 +90,7 @@
 		return ..()
 	if(istype(Proj , /obj/item/projectile/energy/floramut))
 		mutate()
+		return BULLET_ACT_HIT
 	else if(istype(Proj , /obj/item/projectile/energy/florayield))
 		return myseed.bullet_act(Proj)
 	else
