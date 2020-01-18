@@ -54,7 +54,7 @@
 	var/atom/Tsec = drop_location()
 	new /obj/item/stock_parts/cell/potato(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
-	S.reagents.add_reagent("whiskey", 15)
+	S.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
 	S.on_reagent_change(ADD_REAGENT)
 	..()
 
@@ -205,7 +205,7 @@ Auto Patrol: []"},
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A)
@@ -250,7 +250,7 @@ Auto Patrol: []"},
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "secbot-c"
-	addtimer(CALLBACK(src, .proc/update_icon), 2)
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
 	var/threat = 5
 	if(ishuman(C))
 		C.stuttering = 5

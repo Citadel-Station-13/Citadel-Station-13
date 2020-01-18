@@ -151,3 +151,17 @@
 		max_syringes = 1
 		desc = "[initial(desc)] It has a [B] strapped to it, but it doesn't seem to be doing anything."
 	..()
+
+/obj/item/gun/syringe/blowgun
+	name = "blowgun"
+	desc = "Fire syringes at a short distance."
+	icon_state = "blowgun"
+	item_state = "blowgun"
+	fire_sound = 'sound/items/syringeproj.ogg'
+
+/obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	visible_message("<span class='danger'>[user] starts aiming with a blowgun!</span>")
+	if(do_after(user, 25, target = src))
+		user.adjustStaminaLoss(20)
+		user.adjustOxyLoss(20)
+		..()

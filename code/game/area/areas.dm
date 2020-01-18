@@ -63,6 +63,8 @@
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
+	var/nightshift_public_area = NIGHTSHIFT_AREA_NONE		//considered a public area for nightshift
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 GLOBAL_LIST_EMPTY(teleportlocs)
@@ -326,8 +328,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		F.update_fire_light(fire)
 	for(var/obj/machinery/light/L in src)
 		L.update()
-
-/area/proc/updateicon()
+/**
+  * Update the icon state of the area
+  *
+  * Im not sure what the heck this does, somethign to do with weather being able to set icon
+  * states on areas?? where the heck would that even display?
+  */
+/area/update_icon_state()
 	var/weather_icon
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -337,7 +344,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!weather_icon)
 		icon_state = null
 
-/area/space/updateicon()
+/**
+  * Update the icon of the area (overridden to always be null for space
+  */
+/area/space/update_icon_state()
 	icon_state = null
 
 /*
@@ -370,7 +380,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/power_change()
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
-	updateicon()
+	update_icon()
 
 /area/proc/usage(chan)
 	var/used = 0

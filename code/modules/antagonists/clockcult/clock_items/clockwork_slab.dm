@@ -103,7 +103,7 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
-/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file)
+/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(isinhands && item_state && inhand_overlay)
 		var/mutable_appearance/M = mutable_appearance(icon_file, "slab_[inhand_overlay]")
@@ -162,9 +162,11 @@
 	access_display(user)
 
 /obj/item/clockwork/slab/AltClick(mob/living/user)
+	. = ..()
 	if(is_servant_of_ratvar(user) && linking && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		linking = null
 		to_chat(user, "<span class='notice'>Object link canceled.</span>")
+		return TRUE
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))

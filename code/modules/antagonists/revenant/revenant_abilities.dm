@@ -5,7 +5,7 @@
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"])
-		AltClickNoInteract(src, A)
+		altclick_listed_turf(A)
 		return
 
 	if(ishuman(A))
@@ -353,7 +353,7 @@
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)
-					mob.reagents.add_reagent("plasma", 5)
+					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)
 		else
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.

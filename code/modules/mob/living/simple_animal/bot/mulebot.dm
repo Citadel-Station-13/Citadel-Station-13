@@ -151,7 +151,8 @@
 	return
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/item/projectile/Proj)
-	if(..())
+	. = ..()
+	if(. == BULLET_ACT_HIT && !QDELETED(src)) //Got hit and not blown up yet.)
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))

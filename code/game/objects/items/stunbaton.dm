@@ -36,7 +36,7 @@
 	. = ..()
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
-			log_world("### MAP WARNING, [src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
+			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
 	update_icon()
@@ -168,11 +168,9 @@
 
 
 /obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
-			return FALSE
+	if(L.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
+		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
+		return FALSE
 	var/stunpwr = stunforce
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	if(!our_cell)
@@ -225,6 +223,46 @@
 		if(!iscyborg(loc))
 			deductcharge(1000 / severity, TRUE, FALSE)
 
+/obj/item/melee/baton/stunsword
+	name = "stunsword"
+	desc = "not actually sharp, this sword is functionally identical to a stunbaton"
+	icon = 'modular_citadel/icons/obj/stunsword.dmi'
+	icon_state = "stunsword"
+	item_state = "sword"
+	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
+	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
+
+/obj/item/melee/baton/stunsword/get_belt_overlay()
+	if(istype(loc, /obj/item/storage/belt/sabre))
+		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "stunsword")
+	return ..()
+
+/obj/item/melee/baton/stunsword/get_worn_belt_overlay(icon_file)
+	return mutable_appearance(icon_file, "-stunsword")
+
+/obj/item/ssword_kit
+	name = "stunsword kit"
+	desc = "a modkit for making a stunbaton into a stunsword"
+	icon = 'icons/obj/vending_restock.dmi'
+	icon_state = "refill_donksoft"
+	var/product = /obj/item/melee/baton/stunsword //what it makes
+	var/list/fromitem = list(/obj/item/melee/baton, /obj/item/melee/baton/loaded) //what it needs
+	afterattack(obj/O, mob/user as mob)
+		if(istype(O, product))
+			to_chat(user,"<span class='warning'>[O] is already modified!")
+		else if(O.type in fromitem) //makes sure O is the right thing
+			var/obj/item/melee/baton/B = O
+			if(!B.cell) //checks for a powercell in the baton. If there isn't one, continue. If there is, warn the user to take it out
+				new product(usr.loc) //spawns the product
+				user.visible_message("<span class='warning'>[user] modifies [O]!","<span class='warning'>You modify the [O]!")
+				qdel(O) //Gets rid of the baton
+				qdel(src) //gets rid of the kit
+
+			else
+				to_chat(user,"<span class='warning'>Remove the powercell first!</span>") //We make this check because the stunsword starts without a battery.
+		else
+			to_chat(user, "<span class='warning'> You can't modify [O] with this kit!</span>")
+
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
@@ -250,6 +288,7 @@
 /obj/item/melee/baton/cattleprod/baton_stun()
 	sparkler?.activate()
 	. = ..()
+
 
 #undef STUNBATON_CHARGE_LENIENCY
 #undef STUNBATON_DEPLETION_RATE

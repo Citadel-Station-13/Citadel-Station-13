@@ -1,15 +1,3 @@
-/mob/CanPass(atom/movable/mover, turf/target)
-	if((mover.pass_flags & PASSMOB))
-		return TRUE
-	if(istype(mover, /obj/item/projectile) || mover.throwing)
-		return (!density || lying)
-	if(buckled == mover)
-		return TRUE
-	if(ismob(mover))
-		if (mover in buckled_mobs)
-			return TRUE
-	return (!mover.density || !density || lying || (mover.throwing && mover.throwing.thrower == src && !ismob(mover)))
-
 //DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
 //See mob_movespeed.dm
 /mob/proc/movement_delay()	//update /living/movement_delay() if you change this
@@ -366,10 +354,13 @@
 	if(m_intent == MOVE_INTENT_RUN)
 		m_intent = MOVE_INTENT_WALK
 	else
+		if (HAS_TRAIT(src,TRAIT_NORUNNING))	// FULPSTATION 7/10/19 So you can't run during fortitude.
+			to_chat(src, "You find yourself unable to run.")
+			return FALSE
 		m_intent = MOVE_INTENT_RUN
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.update_icon(src)
+			selector.update_icon()
 
 /mob/verb/up()
 	set name = "Move Upwards"

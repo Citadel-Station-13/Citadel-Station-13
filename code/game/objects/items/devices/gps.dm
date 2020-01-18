@@ -45,9 +45,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	add_overlay("working")
 
 /obj/item/gps/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	toggletracking(user)
+	return TRUE
 
 /obj/item/gps/proc/toggletracking(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE))

@@ -165,7 +165,7 @@
 		/obj/item/organ/heart/gland/chem = 5,
 		/obj/item/organ/heart/gland/mindshock = 5,
 		/obj/item/organ/heart/gland/plasma = 7,
-		/obj/item/organ/heart/gland/pop = 5,
+		/obj/item/organ/heart/gland/transform = 5,
 		/obj/item/organ/heart/gland/slime = 4,
 		/obj/item/organ/heart/gland/spiderman = 5,
 		/obj/item/organ/heart/gland/ventcrawling = 1,
@@ -378,3 +378,11 @@
 				/obj/item/circuitboard/computer/apc_control,
 				/obj/item/circuitboard/computer/robotics
 				)
+
+/obj/effect/spawner/lootdrop/keg
+	name = "random keg spawner"
+	lootcount = 1
+	loot = list(/obj/structure/reagent_dispensers/keg/mead = 5,
+		/obj/structure/reagent_dispensers/keg/aphro = 2,
+		/obj/structure/reagent_dispensers/keg/aphro/strong = 2,
+		/obj/structure/reagent_dispensers/keg/gargle = 1)

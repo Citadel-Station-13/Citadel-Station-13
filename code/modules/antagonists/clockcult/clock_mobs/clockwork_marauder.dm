@@ -1,5 +1,7 @@
 #define MARAUDER_SLOWDOWN_PERCENTAGE 0.40 //Below this percentage of health, marauders will become slower
 #define MARAUDER_SHIELD_REGEN_TIME 200 //In deciseconds, how long it takes for shields to regenerate after breaking
+#define MARAUDER_SPACE_FULL_DAMAGE 6		//amount of damage per life tick while inside space
+#define MARAUDER_SPACE_NEAR_DAMAGE 4			//amount of damage taking per Life() tick from being next to space.
 
 //Clockwork marauder: A well-rounded frontline construct. Only one can exist for every two human servants.
 /mob/living/simple_animal/hostile/clockwork/marauder
@@ -20,12 +22,14 @@
 	movement_type = FLYING
 	a_intent = INTENT_HARM
 	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
-	light_range = 2
-	light_power = 1.1
+	light_range = 3
+	light_power = 1.7
 	playstyle_string = "<span class='big bold'><span class='neovgre'>You are a clockwork marauder,</span></span><b> a well-rounded frontline construct of Ratvar. Although you have no \
 	unique abilities, you're a fearsome fighter in one-on-one combat, and your shield protects from projectiles!<br><br>Obey the Servants and do as they \
-	tell you. Your primary goal is to defend the Ark from destruction; they are your allies in this, and should be protected from harm.</b>"
+	tell you. Your primary goal is to defend the Ark from destruction; they are your allies in this, and should be protected from harm.</b> \
+	<span class='danger big'>Be warned, however, that you will rapidly decay near the void of space.</span>"
 	empower_string = "<span class='neovgre'>The Anima Bulwark's power flows through you! Your weapon will strike harder, your armor is sturdier, and your shield is more durable.</span>"
+	var/default_speed = 0
 	var/max_shield_health = 3
 	var/shield_health = 3 //Amount of projectiles that can be deflected within
 	var/shield_health_regen = 0 //When world.time equals this, shield health will regenerate
@@ -36,10 +40,21 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
+	var/turf/T = get_turf(src)
+	var/turf/open/space/S = isspaceturf(T)? T : null
+	var/less_space_damage
+	if(!istype(S))
+		var/turf/open/space/nearS = locate() in oview(1)
+		if(nearS)
+			S = nearS
+			less_space_damage = TRUE
+	if(S)
+		to_chat(src, "<span class='userdanger'>The void of space drains Ratvar's Light from you! You feel yourself rapidly decaying. It would be wise to get back inside!</span>")
+		adjustBruteLoss(less_space_damage? MARAUDER_SPACE_NEAR_DAMAGE : MARAUDER_SPACE_FULL_DAMAGE)
 	if(!GLOB.ratvar_awakens && health / maxHealth <= MARAUDER_SLOWDOWN_PERCENTAGE)
-		speed = initial(speed) + 1 //Yes, this slows them down
+		speed = default_speed + 1 //Yes, this slows them down
 	else
-		speed = initial(speed)
+		speed = default_speed
 	if(shield_health < max_shield_health && world.time >= shield_health_regen)
 		shield_health_regen = world.time + MARAUDER_SHIELD_REGEN_TIME
 		to_chat(src, "<span class='neovgre'>Your shield has recovered, <b>[shield_health]</b> blocks remaining!</span>")
@@ -82,7 +97,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/P)
 	if(deflect_projectile(P))
-		return
+		return BULLET_ACT_BLOCK
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)

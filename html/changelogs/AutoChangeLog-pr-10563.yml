@@ -1,0 +1,4 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - bugfix: "Fixed fragile space suits breaking from weak and non-damaging \"weapons\" (such as the Sord, toys and foam darts)."

@@ -143,7 +143,7 @@
 		stat("Held Item", held_item)
 		stat("Mode",a_intent)
 
-/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
 	if(speaker != src && prob(50)) //Dont imitate ourselves
 		if(!radio_freq || prob(10))
@@ -337,7 +337,7 @@
 
 //Bullets
 /mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
-	..()
+	. = ..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -347,7 +347,6 @@
 		//parrot_been_shot += 5
 		icon_state = icon_living
 		drop_held_item(0)
-	return
 
 
 /*
