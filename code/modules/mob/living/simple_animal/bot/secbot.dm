@@ -205,7 +205,7 @@ Auto Patrol: []"},
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A)

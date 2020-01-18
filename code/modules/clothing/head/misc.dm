@@ -178,6 +178,7 @@
 	icon_state = "xenos"
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
+	alternate_screams = list('sound/voice/hiss6.ogg')
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/fedora
@@ -392,3 +393,33 @@
 	desc = "A green Christmas Hat! How festive!"
 	icon_state = "christmashatg"
 	item_state = "christmashatg"
+
+/obj/item/clothing/head/cowboyhat
+	name = "cowboy hat"
+	desc = "A standard brown cowboy hat, yeehaw."
+	icon_state = "cowboyhat"
+	item_state= "cowboyhat"
+
+/obj/item/clothing/head/cowboyhat/black
+	name = "black cowboy hat"
+	desc = "A a black cowboy hat, perfect for any outlaw"
+	icon_state = "cowboyhat_black"
+	item_state= "cowboyhat_black"
+
+/obj/item/clothing/head/cowboyhat/white
+	name = "white cowboy hat"
+	desc = "A white cowboy hat, perfect for your every day rancher"
+	icon_state = "cowboyhat_white"
+	item_state= "cowboyhat_white"
+
+/obj/item/clothing/head/cowboyhat/pink
+	name = "pink cowboy hat"
+	desc = "A pink cowboy? more like cowgirl hat, just don't be a buckle bunny."
+	icon_state = "cowboyhat_pink"
+	item_state= "cowboyhat_pink"
+
+/obj/item/clothing/head/cowboyhat/sec
+	name = "security cowboy hat"
+	desc = "A security cowboy hat, perfect for any true lawman"
+	icon_state = "cowboyhat_sec"
+	item_state= "cowboyhat_sec"

@@ -362,6 +362,15 @@
 
 /datum/config_entry/flag/enable_night_shifts
 
+/datum/config_entry/number/night_shift_public_areas_only
+	config_entry_value = NIGHTSHIFT_AREA_PUBLIC
+
+/datum/config_entry/flag/nightshift_toggle_requires_auth
+	config_entry_value = FALSE
+
+/datum/config_entry/flag/nightshift_toggle_public_requires_auth
+	config_entry_value = TRUE
+
 /datum/config_entry/flag/randomize_shift_time
 
 /datum/config_entry/flag/shift_time_realtime
@@ -396,7 +405,6 @@
 	config_entry_value = TRUE
 
 /datum/config_entry/flag/modetier_voting
-	config_entry_value = TRUE
 
 /datum/config_entry/number/dropped_modes
 	config_entry_value = 3
