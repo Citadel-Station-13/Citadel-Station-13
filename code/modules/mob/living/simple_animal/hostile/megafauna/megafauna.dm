@@ -25,6 +25,7 @@
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	var/list/crusher_loot
 	var/medal_type
 	var/score_type = BOSS_SCORE
@@ -40,9 +41,6 @@
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
 	. = ..()
-
-/mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
-	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
@@ -105,21 +103,23 @@
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			adjustBruteLoss(250)
 
-		if (2)
+		if (EXPLODE_HEAVY)
 			adjustBruteLoss(100)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
-	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
+	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1)) //Don't award medals if the medal type isn't set
 		return FALSE
+	if(!SSmedals.hub_enabled) // This allows subtypes to carry on other special rewards not tied with medals. (such as bubblegum's arena shuttle)
+		return TRUE
 
 	for(var/mob/living/L in view(7,src))
 		if(L.stat || !L.client)

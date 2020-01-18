@@ -118,7 +118,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
-	
+
 	var/list/f_types = list()
 	for(var/path in GLOB.meta_gas_ids)
 		f_types += list(list("gas_id" = GLOB.meta_gas_ids[path], "gas_name" = GLOB.meta_gas_names[path], "enabled" = (path in filter_types)))
@@ -205,7 +205,7 @@
 			air_contents.merge(filtered_out)
 			tile.assume_air(removed)
 			tile.air_update_turf()
-	
+
 	else //Just siphoning all air
 
 		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
@@ -303,11 +303,11 @@
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-		
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/examine(mob/user)
-	..()
+	. = ..()
 	if(welded)
-		to_chat(user, "It seems welded shut.")
+		. += "It seems welded shut."
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded

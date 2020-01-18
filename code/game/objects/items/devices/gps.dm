@@ -14,8 +14,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 
 /obj/item/gps/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
+	. = ..()
+	var/turf/curr = get_turf(src)
+	. += "The screen says: [get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])"
+	. += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
 
 /obj/item/gps/Initialize()
 	. = ..()
@@ -43,9 +45,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	add_overlay("working")
 
 /obj/item/gps/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	toggletracking(user)
+	return TRUE
 
 /obj/item/gps/proc/toggletracking(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE))

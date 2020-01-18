@@ -210,7 +210,7 @@ Auto Patrol[]"},
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/ed209/handle_automated_action()
 	if(!..())
@@ -379,7 +379,7 @@ Auto Patrol[]"},
 	var/atom/Tsec = drop_location()
 
 	var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
-	Sa.build_step = 1
+	Sa.build_step = ASSEMBLY_SECOND_STEP
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/assembly/prox_sensor(Tsec)
@@ -510,11 +510,9 @@ Auto Patrol[]"},
 			spawn(100)
 				disabled = 0
 				icon_state = "[lasercolor]ed2091"
-			return 1
-		else
-			..(Proj)
-	else
-		..(Proj)
+			return BULLET_ACT_HIT
+		return ..()
+	return ..()
 
 /mob/living/simple_animal/bot/ed209/bluetag
 	lasercolor = "b"

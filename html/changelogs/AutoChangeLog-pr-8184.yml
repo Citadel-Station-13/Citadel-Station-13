@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - code_imp: "Goonchat's JS no longer contains checks related to a completely unused message filtering function, which should improve clientside performance quite a bit"

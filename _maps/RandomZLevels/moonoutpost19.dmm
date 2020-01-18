@@ -16,6 +16,13 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
+"ae" = (
+/obj/machinery/computer/arcade{
+	icon_state = "arcade";
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/moonoutpost19/arrivals)
 "ag" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
@@ -6408,10 +6415,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"mB" = (
-/obj/machinery/computer/arcade,
-/turf/open/floor/plasteel/dark,
-/area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/contraband/smoke{
@@ -7212,10 +7215,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"oV" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/open/space,
-/area/space)
 "vV" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -7509,7 +7508,7 @@ aa
 aa
 aa
 aa
-oV
+aa
 "}
 (2,1,1) = {"
 aa
@@ -43385,7 +43384,7 @@ la
 lq
 jk
 mj
-mB
+ae
 hJ
 ba
 ba
@@ -43642,7 +43641,7 @@ jN
 lr
 jj
 mj
-mB
+ae
 hI
 ba
 ba

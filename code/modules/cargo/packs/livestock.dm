@@ -10,6 +10,35 @@
 	group = "Livestock"
 	crate_type = /obj/structure/closet/crate/critter
 
+/datum/supply_pack/critter/animal_feed
+	name = "Animal Feed Crate"
+	desc = "Feed for livestock, like cows and hens. Contains fifty Wheat bundles and fifty Oat bundles."
+	cost = 1500
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/wheat,
+					/obj/item/reagent_containers/food/snacks/grown/oat)
+	crate_name = "animal feed crate"
+	crate_type = /obj/structure/closet/crate/freezer
+
+/datum/supply_pack/critter/animal_feed/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /obj/item/reagent_containers/food/snacks/grown/wheat(.)
+
+
+/datum/supply_pack/critter/parrot
+	name = "Bird Crate"
+	desc = "Contains five expert telecommunication birds."
+	cost = 4000
+	contains = list(/mob/living/simple_animal/parrot)
+	crate_name = "parrot crate"
+
+/datum/supply_pack/critter/parrot/generate()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /mob/living/simple_animal/parrot(.)
+	if(prob(1))
+		new /mob/living/simple_animal/parrot/clock_hawk(.)
+
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference
@@ -29,7 +58,7 @@
 	cost = 5000 //Cats are worth as much as corgis.
 	contains = list(/mob/living/simple_animal/pet/cat,
 					/obj/item/clothing/neck/petcollar,
-                    /obj/item/toy/cattoy)
+					/obj/item/toy/cattoy)
 	crate_name = "cat crate"
 
 /datum/supply_pack/critter/cat/generate()
@@ -43,7 +72,7 @@
 	name = "Chicken Crate"
 	desc = "The chicken goes bwaak!"
 	cost = 2000
-	contains = list( /mob/living/simple_animal/chick)
+	contains = list(/mob/living/simple_animal/chick)
 	crate_name = "chicken crate"
 
 /datum/supply_pack/critter/crab
@@ -112,13 +141,6 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goose)
 	crate_name = "goose crate"
 
-/datum/supply_pack/critter/monkey
-	name = "Monkey Cube Crate"
-	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
-	cost = 2000
-	contains = list (/obj/item/storage/box/monkeycubes)
-	crate_name = "monkey cube crate"
-
 /datum/supply_pack/critter/pug
 	name = "Pug Crate"
 	desc = "Like a normal dog, but... squished. Comes with a nice collar!"
@@ -127,7 +149,7 @@
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
-/datum/supply_pack/organic/critter/kiwi
+/datum/supply_pack/critter/kiwi
 	name = "Space kiwi Crate"
 	cost = 2000
 	contains = list( /mob/living/simple_animal/kiwi)
@@ -141,6 +163,18 @@
 					/mob/living/simple_animal/hostile/retaliate/poison/snake,
 					/mob/living/simple_animal/hostile/retaliate/poison/snake)
 	crate_name = "snake crate"
+
+/datum/supply_pack/critter/mouse
+	name = "Mouse Crate"
+	desc = "Good for snakes and lizards of all ages. Contains ~12 feeder mice."
+	cost = 2000
+	contains = list(/mob/living/simple_animal/mouse,)
+	crate_name = "mouse crate"
+
+/datum/supply_pack/critter/mouse/generate()
+	. = ..()
+	for(var/i in 1 to 11)
+		new /mob/living/simple_animal/mouse(.)
 
 /datum/supply_pack/critter/secbat
 	name = "Security Bat Crate"

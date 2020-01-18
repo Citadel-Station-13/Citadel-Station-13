@@ -29,7 +29,7 @@
 /obj/structure/ore_box/examine(mob/living/user)
 	if(Adjacent(user) && istype(user))
 		show_contents(user)
-	. = ..()
+	return ..()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	. = ..()

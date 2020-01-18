@@ -27,6 +27,7 @@ other types of metals and chemistry for reagents).
 */
 
 //DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING! //why are you yelling?
+//DO NOT REFERENCE OUTSIDE OF SSRESEARCH. USE THE PROCS IN SSRESEARCH TO OBTAIN A REFERENCE.
 
 /datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
@@ -36,9 +37,9 @@ other types of metals and chemistry for reagents).
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
 	var/build_path = null				//The file path of the object that gets created
-	var/list/make_reagents = list()			//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
+	var/list/make_reagents = list()			//Reagents produced. Format: type = amount. Currently only supported by the biogenerator.
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
-	var/list/reagents_list = list()			//List of reagents. Format: "id" = amount.
+	var/list/reagents_list = list()			//List of reagents. Format: type = amount.
 	var/maxstack = 1
 	var/lathe_time_factor = 1			//How many times faster than normal is this to build on the protolathe
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
@@ -48,8 +49,12 @@ other types of metals and chemistry for reagents).
 	var/research_icon_state
 	var/icon_cache
 
+/datum/design/error_design
+	name = "ERROR"
+	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Command so their techs can fix this ASAP(tm)"
+
 /datum/design/Destroy()
-	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
+	SSresearch.techweb_designs -= id
 	return ..()
 
 /datum/design/proc/icon_html(client/user)

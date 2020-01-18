@@ -77,13 +77,16 @@
 	for(var/mob/living/M in viewers(5, src))
 		if(!is_servant_of_ratvar(M) && M != L)
 			M.flash_act()
-	if(iscultist(L))
+	if(iscultist(L)) //No longer stuns cultists, instead sets them on fire and burns them
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
-		L.adjustBruteLoss(10)
-		L.Knockdown(80, FALSE)
+		L.adjustFireLoss(10)
+		L.Knockdown(20, FALSE)
+		L.adjust_fire_stacks(5) //Burn!
+		L.IgniteMob()
+	else
+		L.Stun(40)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
-	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(40)
+	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] [iscultist(L) ? "painfully bursts into flames!" : "holds you in place!"]</span>")
 	L.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)
@@ -147,6 +150,11 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()
+		var/brutedamage = L.getBruteLoss()
+		var/burndamage = L.getFireLoss()
+		if(brutedamage || burndamage)
+			L.adjustBruteLoss(-(brutedamage * 0.25))
+			L.adjustFireLoss(-(burndamage * 0.25))
 	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
@@ -191,15 +199,15 @@
 		..()
 
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/structure_number = 0
 		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
 			structure_number++
-		to_chat(user, "<span class='[get_clockwork_power() ? "brass":"alloy"]'>It is storing <b>[DisplayPower(get_clockwork_power())]</b> of shared power, \
-		and <b>[structure_number]</b> clockwork structure[structure_number == 1 ? " is":"s are"] in range.</span>")
+		. += "<span class='[get_clockwork_power() ? "brass":"alloy"]'>It is storing <b>[DisplayPower(get_clockwork_power())]</b> of shared power, \
+		and <b>[structure_number]</b> clockwork structure[structure_number == 1 ? " is":"s are"] in range.</span>"
 		if(iscyborg(user))
-			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
+			. += "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>"
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(is_servant_of_ratvar(L))
@@ -262,7 +270,7 @@
 	clockwork_desc = "A sigil that will drain non-Servants that remain on it. Servants that remain on it will be healed if it has any vitality drained."
 	icon_state = "sigilvitality"
 	layer = SIGIL_LAYER
-	alpha = 75
+	alpha = 125
 	color = "#123456"
 	affects_servants = TRUE
 	stat_affected = DEAD
@@ -274,13 +282,13 @@
 	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='[GLOB.clockwork_vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":GLOB.clockwork_vitality]</b> units of vitality.</span>")
+		. += "<span class='[GLOB.clockwork_vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":GLOB.clockwork_vitality]</b> units of vitality.</span>"
 		if(GLOB.ratvar_awakens)
-			to_chat(user, "<span class='inathneq_small'>It can revive Servants at no cost!</span>")
+			. += "<span class='inathneq_small'>It can revive Servants at no cost!</span>"
 		else
-			to_chat(user, "<span class='inathneq_small'>It can revive Servants at a cost of <b>[revive_cost]</b> vitality.</span>")
+			. += "<span class='inathneq_small'>It can revive Servants at a cost of <b>[revive_cost]</b> vitality.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
@@ -311,9 +319,9 @@
 				L.dust()
 			else
 				if(!GLOB.ratvar_awakens && L.stat == CONSCIOUS)
-					vitality_drained = L.adjustToxLoss(1)
+					vitality_drained = L.adjustToxLoss(1, forced = TRUE)
 				else
-					vitality_drained = L.adjustToxLoss(1.5)
+					vitality_drained = L.adjustToxLoss(1.5, forced = TRUE)
 			if(vitality_drained)
 				GLOB.clockwork_vitality += vitality_drained
 			else

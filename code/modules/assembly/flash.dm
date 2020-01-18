@@ -39,7 +39,7 @@
 	if(flash)
 		add_overlay(flashing_overlay)
 		attached_overlays += flashing_overlay
-		addtimer(CALLBACK(src, .proc/update_icon), 5)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 	if(holder)
 		holder.update_icon()
 
@@ -201,8 +201,10 @@
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdown) && iscarbon(M) && !M.resting && !M.get_eye_protection())
+		M.Knockdown(80)
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
 	..()
@@ -306,7 +308,7 @@
 	else if(flash)
 		icon_state = "flashshield_flash"
 		item_state = "flashshield_flash"
-		addtimer(CALLBACK(src, .proc/update_icon), 5)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 
 	if(holder)
 		holder.update_icon()

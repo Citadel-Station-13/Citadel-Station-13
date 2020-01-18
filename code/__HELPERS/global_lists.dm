@@ -72,6 +72,10 @@
 		var/datum/sprite_accessory/testicles/value = GLOB.balls_shapes_list[K]
 		GLOB.balls_shapes_icons[K] = value.icon_state
 
+	for(var/gpath in subtypesof(/obj/item/organ/genital))
+		var/obj/item/organ/genital/G = gpath
+		if(!CHECK_BITFIELD(initial(G.genital_flags), GENITAL_BLACKLISTED))
+			GLOB.genitals_list[initial(G.name)] = gpath
 //END OF CIT CHANGES
 
 	//Species
@@ -92,6 +96,16 @@
 	for(var/path in subtypesof(/datum/emote))
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
+
+	//Uplink Items
+	for(var/path in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/I = path
+		if(!initial(I.item)) //We add categories to a separate list.
+			GLOB.uplink_categories |= initial(I.category)
+			continue
+		GLOB.uplink_items += path
+	//(sub)typesof entries are listed by the order they are loaded in the code, so we'll have to rearrange them here.
+	GLOB.uplink_items = sortList(GLOB.uplink_items, /proc/cmp_uplink_items_dsc)
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 

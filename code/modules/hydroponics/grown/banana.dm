@@ -11,8 +11,8 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
-	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
+	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace, /obj/item/seeds/banana/exotic_banana)
+	reagents_add = list(/datum/reagent/consumable/banana = 0.1, /datum/reagent/potassium = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 
 /obj/item/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
@@ -24,8 +24,8 @@
 	filling_color = "#FFFF00"
 	bitesize = 5
 	foodtype = FRUIT
-	juice_results = list("banana" = 0)
-	distill_reagent = "bananahonk"
+	juice_results = list(/datum/reagent/consumable/banana = 0)
+	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -70,7 +70,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
 	mutatelist = list()
-	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
+	reagents_add = list(/datum/reagent/consumable/nothing = 0.1, /datum/reagent/toxin/mutetoxin = 0.1, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/banana/mime
@@ -80,7 +80,7 @@
 	icon_state = "mimana"
 	trash = /obj/item/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
-	distill_reagent = "silencer"
+	distill_reagent = /datum/reagent/consumable/ethanol/silencer
 
 /obj/item/grown/bananapeel/mimanapeel
 	seed = /obj/item/seeds/banana/mime
@@ -100,7 +100,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("bluespace" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
+	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/banana/bluespace
@@ -119,6 +119,41 @@
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
 	icon_state = "banana_peel_blue"
+
+//Banana Spider.
+/obj/item/seeds/banana/exotic_banana
+	name = "pack of exotic banana seeds"
+	desc = "They're seeds that grow into banana trees. However, those bananas might be alive."
+	icon_state = "seed_exoticbanana"
+	species = "exoticbanana"
+	icon_grow = "banana-grow"
+	plantname = "Exotic Banana Tree"
+	product = /obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable
+	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/slip)
+
+/obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable
+	seed = /obj/item/seeds/banana/exotic_banana
+	name = "banana spider"
+	desc = "You do not know what it is, but you can bet the clown would love it."
+	icon_state = "exoticbanana"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	foodtype = GROSS | MEAT | RAW | FRUIT
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+	var/awakening = 0
+
+/obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable/attack_self(mob/user)
+	if(awakening || isspaceturf(user.loc))
+		return
+	to_chat(user, "<span class='notice'>You decide to wake up the banana spider...</span>")
+	awakening = 1
+
+	spawn(30)
+		if(!QDELETED(src))
+			var/mob/living/simple_animal/banana_spider/S = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
+			S.speed += round(10 / seed.potency)
+			S.visible_message("<span class='notice'>The banana spider chitters as it stretches its legs.</span>")
+			qdel(src)
 
 // Other
 /obj/item/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes

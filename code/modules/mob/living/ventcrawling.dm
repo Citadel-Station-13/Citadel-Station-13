@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 /mob/living/proc/handle_ventcrawl(atom/A)
 	if(!ventcrawler || !Adjacent(A))
 		return
+	. = TRUE //return value to stop the client from being shown the turf contents stat tab on alt-click.
 	if(stat)
 		to_chat(src, "You must be conscious to do this!")
 		return
@@ -100,7 +101,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 					A.pipe_vision_img.plane = ABOVE_HUD_PLANE
 				client.images += A.pipe_vision_img
 				pipes_shown += A.pipe_vision_img
-		movement_type |= VENTCRAWLING
+		setMovetype(movement_type | VENTCRAWLING)
 
 
 /mob/living/proc/remove_ventcrawl()
@@ -108,7 +109,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 	pipes_shown.len = 0
-	movement_type &= ~VENTCRAWLING
+	setMovetype(movement_type & ~VENTCRAWLING)
 
 
 

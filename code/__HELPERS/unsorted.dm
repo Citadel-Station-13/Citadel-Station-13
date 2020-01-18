@@ -451,10 +451,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-/proc/arctan(x)
-	var/y=arcsin(x/sqrt(1+x*x))
-	return y
-
 /*
 	Gets all contents of contents and returns them all in a list.
 */
@@ -761,16 +757,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	/obj/item/stack/rods,
 	/obj/item/pipe)))
-
-/proc/can_embed(obj/item/W)
-	if(W.is_sharp())
-		return 1
-	if(is_pointed(W))
-		return 1
-
-	if(is_type_in_typecache(W, GLOB.can_embed_types))
-		return 1
-
 
 /*
 Checks if that loc and dir has an item on the wall
@@ -1466,6 +1452,37 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		D.vars[var_name] = var_value
 
+#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
+#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
+
+///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
+/proc/___TraitAdd(target,trait,source)
+	if(!target || !trait || !source)
+		return
+	if(islist(target))
+		for(var/i in target)
+			if(!isatom(i))
+				continue
+			var/atom/the_atom = i
+			ADD_TRAIT(the_atom,trait,source)
+	else if(isatom(target))
+		var/atom/the_atom2 = target
+		ADD_TRAIT(the_atom2,trait,source)
+
+///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
+/proc/___TraitRemove(target,trait,source)
+	if(!target || !trait || !source)
+		return
+	if(islist(target))
+		for(var/i in target)
+			if(!isatom(i))
+				continue
+			var/atom/the_atom = i
+			REMOVE_TRAIT(the_atom,trait,source)
+	else if(isatom(target))
+		var/atom/the_atom2 = target
+		REMOVE_TRAIT(the_atom2,trait,source)
+
 /proc/get_random_food()
 	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
 		/obj/item/reagent_containers/food/snacks/store/bread,
@@ -1553,3 +1570,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/CallAsync(datum/source, proctype, list/arguments)
 	set waitfor = FALSE
 	return call(source, proctype)(arglist(arguments))
+
+/proc/num2sign(numeric)
+	if(numeric > 0)
+		return 1
+	else if(numeric < 0)
+		return -1
+	else
+		return 0

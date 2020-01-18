@@ -191,27 +191,27 @@
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
+		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
 		return
 
 	if(operating)
-		to_chat(user, "<span class='warning'>\The [src] is operating.</span>")
+		. += "<span class='warning'>\The [src] is operating.</span>"
 		return
 
 	if(beaker || length(holdingitems))
-		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+		. += "<span class='notice'>\The [src] contains:</span>"
 		if(beaker)
-			to_chat(user, "<span class='notice'>- \A [beaker].</span>")
+			. += "<span class='notice'>- \A [beaker].</span>"
 		for(var/i in holdingitems)
 			var/obj/item/O = i
-			to_chat(user, "<span class='notice'>- \A [O.name].</span>")
+			. += "<span class='notice'>- \A [O.name].</span>"
 
 	if(!(stat & (NOPOWER|BROKEN)))
-		to_chat(user, "<span class='notice'>The status display reads:</span>")
-		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads:</span>"
+		. += "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>"
 		if(beaker)
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
-				to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
+				. += "<span class='notice'>- [R.volume] units of [R.name].</span>"
 
 /obj/machinery/reagentgrinder/proc/eject(mob/user)
 	for(var/i in holdingitems)
@@ -299,18 +299,18 @@
 /obj/machinery/reagentgrinder/proc/mix_complete()
 	if(beaker?.reagents.total_volume)
 		//Recipe to make Butter
-		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF, 1)
-		beaker.reagents.remove_reagent("milk", MILK_TO_BUTTER_COEFF * butter_amt)
+		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
+		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
 			new /obj/item/reagent_containers/food/snacks/butter(drop_location())
 		//Recipe to make Mayonnaise
-		if (beaker.reagents.has_reagent("eggyolk"))
-			var/amount = beaker.reagents.get_reagent_amount("eggyolk")
-			beaker.reagents.remove_reagent("eggyolk", amount)
-			beaker.reagents.add_reagent("mayonnaise", amount)
+		if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
+			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
+			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)
 		//Moonsugar for skooma
-		if(beaker.reagents.has_reagent("sugar") && beaker.reagents.has_reagent("moonshine"))
-			var/amount = min(beaker.reagents.get_reagent_amount("sugar"), beaker.reagents.get_reagent_amount("moonshine"))
-			beaker.reagents.remove_reagent("sugar", amount)
-			beaker.reagents.remove_reagent("moonshine", amount)
-			beaker.reagents.add_reagent("moonsugar", amount*2)
+		if(beaker.reagents.has_reagent(/datum/reagent/consumable/sugar) && beaker.reagents.has_reagent(/datum/reagent/consumable/ethanol/moonshine))
+			var/amount = min(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/sugar), beaker.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/moonshine))
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/sugar, amount)
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/ethanol/moonshine, amount)
+			beaker.reagents.add_reagent(/datum/reagent/moonsugar, amount*2)

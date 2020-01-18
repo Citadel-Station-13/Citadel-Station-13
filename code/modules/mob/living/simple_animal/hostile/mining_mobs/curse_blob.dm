@@ -22,6 +22,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	sentience_type = SENTIENCE_BOSS
 	layer = LARGE_MOB_LAYER
+	blood_volume = 0
 	var/doing_move_loop = FALSE
 	var/mob/living/set_target
 	var/timerid
@@ -97,7 +98,7 @@ IGNORE_PROC_IF_NOT_TARGET(attack_slime)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/bullet_act(obj/item/projectile/Proj)
 	if(Proj.firer != set_target)
-		return
+		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L)

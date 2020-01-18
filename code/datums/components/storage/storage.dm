@@ -58,6 +58,10 @@
 	var/screen_start_y = 2
 	//End
 
+	var/limited_random_access = FALSE					//Quick if statement in accessible_items to determine if we care at all about what people can access at once.
+	var/limited_random_access_stack_position = 0					//If >0, can only access top <x> items
+	var/limited_random_access_stack_bottom_up = FALSE				//If TRUE, above becomes bottom <x> items
+
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -145,6 +149,19 @@
 /datum/component/storage/proc/real_location()
 	var/datum/component/storage/concrete/master = master()
 	return master? master.real_location() : null
+
+//What players can access
+//this proc can probably eat a refactor at some point.
+/datum/component/storage/proc/accessible_items(random_access = TRUE)
+	var/list/contents = contents()
+	if(contents)
+		if(limited_random_access && random_access)
+			if(limited_random_access_stack_position && (length(contents) > limited_random_access_stack_position))
+				if(limited_random_access_stack_bottom_up)
+					contents.Cut(1, limited_random_access_stack_position + 1)
+				else
+					contents.Cut(1, length(contents) - limited_random_access_stack_position + 1)
+	return contents
 
 /datum/component/storage/proc/canreach_react(datum/source, list/next)
 	var/datum/component/storage/concrete/master = master()
@@ -284,8 +301,7 @@
 
 /datum/component/storage/proc/_process_numerical_display()
 	. = list()
-	var/atom/real_location = real_location()
-	for(var/obj/item/I in real_location.contents)
+	for(var/obj/item/I in accessible_items())
 		if(QDELETED(I))
 			continue
 		if(!.[I.type])
@@ -293,11 +309,12 @@
 		else
 			var/datum/numbered_display/ND = .[I.type]
 			ND.number++
+	. = sortTim(., /proc/cmp_numbered_displays_name_asc, associative = TRUE)
 
 //This proc determines the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /datum/component/storage/proc/orient2hud(mob/user, maxcolumns)
-	var/atom/real_location = real_location()
-	var/adjusted_contents = real_location.contents.len
+	var/list/accessible_contents = accessible_items()
+	var/adjusted_contents = length(accessible_contents)
 
 	//Numbered contents display
 	var/list/datum/numbered_display/numbered_contents
@@ -329,8 +346,7 @@
 				if(cy - screen_start_y >= rows)
 					break
 	else
-		var/atom/real_location = real_location()
-		for(var/obj/O in real_location)
+		for(var/obj/O in accessible_items())
 			if(QDELETED(O))
 				continue
 			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
@@ -351,9 +367,8 @@
 		return FALSE
 	var/list/cview = getviewsize(M.client.view)
 	var/maxallowedscreensize = cview[1]-8
-	var/atom/real_location = real_location()
 	if(M.active_storage != src && (M.stat == CONSCIOUS))
-		for(var/obj/item/I in real_location)
+		for(var/obj/item/I in accessible_items())
 			if(I.on_found(M))
 				return FALSE
 	if(M.active_storage)
@@ -361,7 +376,7 @@
 	orient2hud(M, (isliving(M) ? maxallowedscreensize : 7))
 	M.client.screen |= boxes
 	M.client.screen |= closer
-	M.client.screen |= real_location.contents
+	M.client.screen |= accessible_items()
 	M.active_storage = src
 	LAZYOR(is_using, M)
 	return TRUE
@@ -632,9 +647,9 @@
 		if(M == viewing)
 			to_chat(usr, "<span class='notice'>You put [I] [insert_preposition]to [parent].</span>")
 		else if(in_range(M, viewing)) //If someone is standing close enough, they can tell what it is...
-			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", 1)
+			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
 		else if(I && I.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
-			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", 1)
+			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
 
 /datum/component/storage/proc/update_icon()
 	if(isobj(parent))
@@ -747,7 +762,7 @@
 	if(!isliving(user) || !user.CanReach(parent))
 		return
 	if(check_locked(source, user, TRUE))
-		return
+		return TRUE
 
 	var/atom/A = parent
 	if(!quickdraw)
@@ -755,19 +770,20 @@
 		user_show_to_mob(user)
 		if(rustle_sound)
 			playsound(A, "rustle", 50, 1, -5)
-		return
+		return TRUE
 
-	if(!user.incapacitated())
+	if(user.can_hold_items() && !user.incapacitated())
 		var/obj/item/I = locate() in real_location()
 		if(!I)
 			return
 		A.add_fingerprint(user)
 		remove_from_storage(I, get_turf(user))
 		if(!user.put_in_hands(I))
-			to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
-			return
+			user.visible_message("<span class='warning'>[user] fumbles with the [parent], letting [I] fall on the floor.</span>", \
+								"<span class='notice'>You fumble with [parent], letting [I] fall on the floor.</span>")
+			return TRUE
 		user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
-		return
+		return TRUE
 
 /datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
 	gather_mode_switch(source.owner)

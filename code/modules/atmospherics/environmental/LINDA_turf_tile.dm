@@ -15,7 +15,7 @@
 
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
-	var/initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	//approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
 	// If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
 
@@ -42,8 +42,7 @@
 
 /turf/open/Destroy()
 	if(active_hotspot)
-		qdel(active_hotspot)
-		active_hotspot = null
+		QDEL_NULL(active_hotspot)
 	// Adds the adjacent turfs to the current atmos processing
 	for(var/T in atmos_adjacent_turfs)
 		SSair.add_to_active(T)
@@ -73,11 +72,13 @@
 		air.copy_from(copy)
 
 /turf/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	var/datum/gas_mixture/GM = new
 	GM.copy_from_turf(src)
 	return GM
 
 /turf/open/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	return air
 
 /turf/temperature_expose()
@@ -357,6 +358,9 @@
 	SSair.excited_groups -= src
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
+/atom/movable/proc/blocksTemperature()
+	return FALSE
+
 /turf/proc/conductivity_directions()
 	if(archived_cycle < SSair.times_fired)
 		archive()
@@ -371,6 +375,9 @@
 			. |= direction
 
 /turf/proc/neighbor_conduct_with_src(turf/open/other)
+	for (var/atom/movable/G in src)
+		if (G.blocksTemperature())
+			return
 	if(!other.blocks_air) //Open but neighbor is solid
 		other.temperature_share_open_to_solid(src)
 	else //Both tiles are solid
@@ -381,7 +388,9 @@
 	if(blocks_air)
 		..()
 		return
-
+	for (var/atom/movable/G in src)
+		if (G.blocksTemperature())
+			return
 	if(!other.blocks_air) //Both tiles are open
 		var/turf/open/T = other
 		T.air.temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
@@ -400,10 +409,8 @@
 
 				if(!neighbor.thermal_conductivity)
 					continue
-
 				if(neighbor.archived_cycle < SSair.times_fired)
 					neighbor.archive()
-
 				neighbor.neighbor_conduct_with_src(src)
 
 				neighbor.consider_superconductivity()

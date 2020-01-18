@@ -30,7 +30,8 @@
 #define LIMBGROWER		(1<<6) 	//Uses synthetic flesh
 #define SMELTER			(1<<7) 	//uses various minerals
 #define AUTOYLATHE		(1<<8)  // CITADEL ADD
-#define NANITE_COMPILER  (1<<9) //Prints nanite disks
+#define NANITE_COMPILER (1<<9) //Prints nanite disks
+#define AUTOBOTTLER  	(1<<10) //Uses booze, for printing
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -99,3 +100,8 @@
 #define NUKE_OFF_UNLOCKED	1
 #define NUKE_ON_TIMING		2
 #define NUKE_ON_EXPLODING	3
+
+
+//these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
+#define PLANT_GENE_REMOVABLE	(1<<0)
+#define PLANT_GENE_EXTRACTABLE	(1<<1)

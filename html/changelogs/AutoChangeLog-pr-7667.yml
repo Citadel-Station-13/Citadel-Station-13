@@ -1,8 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "fixed vtech, but it still doesn't work because of overriding jog/sprint mechanics from combat reworks."
-  - bugfix: "Puppy jaws properly store if you're emagged, they are also toggle-able for stealth like the tongue."
-  - bugfix: "Digitigrade legs should properly fucking update for the last fucking time. Fucking snowflake code.
-refractor: Got rid of snowflake sechound cuffs, gave them normal zipties like regular secborgs."
-  - bugfix: "dogborg sleepers actually extinguish people who are on fire, in case you don't have time to lick them out."

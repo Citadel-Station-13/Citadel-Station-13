@@ -15,9 +15,9 @@
 	. = ..()
 	if(key_type)
 		if(!inserted_key)
-			to_chat(user, "<span class='notice'>Put a key inside it by clicking it with the key.</span>")
+			. += "<span class='notice'>Put a key inside it by clicking it with the key.</span>"
 		else
-			to_chat(user, "<span class='notice'>Alt-click [src] to remove the key.</span>")
+			. += "<span class='notice'>Alt-click [src] to remove the key.</span>"
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -49,6 +49,7 @@
 	return ..()
 
 /obj/vehicle/ridden/AltClick(mob/user)
+	. = ..()
 	if(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(!is_occupant(user))
 			to_chat(user, "<span class='notice'>You must be riding the [src] to remove [src]'s key!</span>")
@@ -57,7 +58,7 @@
 		inserted_key.forceMove(drop_location())
 		user.put_in_hands(inserted_key)
 		inserted_key = null
-	return ..()
+		return TRUE
 
 /obj/vehicle/ridden/driver_move(mob/user, direction)
 	if(key_type && !is_key(inserted_key))

@@ -16,7 +16,7 @@
 /obj/item/soapstone/examine(mob/user)
 	. = ..()
 	if(remaining_uses != -1)
-		to_chat(user, "It has [remaining_uses] uses left.")
+		. += "It has [remaining_uses] uses left."
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -117,6 +117,7 @@
 	anchored = TRUE
 	max_integrity = 30
 	layer = LATTICE_LAYER
+	light_power = 0.3
 
 	var/hidden_message
 	var/creator_key
@@ -193,7 +194,7 @@
 	update_icon()
 
 /obj/structure/chisel_message/examine(mob/user)
-	..()
+	. = ..()
 	ui_interact(user)
 
 /obj/structure/chisel_message/Destroy()

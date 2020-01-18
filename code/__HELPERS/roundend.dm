@@ -19,6 +19,9 @@
 		var/list/mob_data = list()
 		if(isnewplayer(m))
 			continue
+		if (m.client && m.client.prefs && m.client.prefs.auto_ooc)
+			if (!(m.client.prefs.chat_toggles & CHAT_OOC))
+				m.client.prefs.chat_toggles ^= CHAT_OOC
 		if(m.mind)
 			if(m.stat != DEAD && !isbrain(m) && !iscameramob(m))
 				num_survivors++
@@ -314,7 +317,14 @@
 		parts += "[FOURSPACES]Threat left: [mode.threat]"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
-			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost] threat"
+			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+		parts += "[FOURSPACES]Other threat changes:"
+		for(var/str in mode.threat_log)
+			parts += "[FOURSPACES][FOURSPACES][str]"
+		for(var/entry in mode.threat_tallies)
+			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat_level,"Final threat level")
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat,"Threat left")
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
@@ -534,10 +544,12 @@
 	return parts.Join()
 
 
-/proc/printobjectives(datum/mind/ply)
+/proc/printobjectives(list/objectives)
+	if(!objectives || !objectives.len)
+		return
 	var/list/objective_parts = list()
 	var/count = 1
-	for(var/datum/objective/objective in ply.objectives)
+	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
 			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else

@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/anomaly/anomaly_bluespace
 	max_occurrences = 1
 	weight = 5
+	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/anomaly/anomaly_bluespace
 	startWhen = 3
@@ -13,13 +14,7 @@
 	if(prob(90))
 		priority_announce("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-		for(var/obj/machinery/computer/communications/C in GLOB.machines)
-			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-				var/obj/item/paper/P = new(C.loc)
-				P.name = "Unstable bluespace anomaly"
-				P.info = "Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name]."
-				P.update_icon()
+		print_command_report("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Unstable bluespace anomaly")
 
 /datum/round_event/anomaly/anomaly_bluespace/start()
 	var/turf/T = safepick(get_area_turfs(impact_area))

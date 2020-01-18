@@ -5,6 +5,7 @@
 	min_players = 20
 	max_occurrences = 2
 	weight = 5
+	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/anomaly/anomaly_vortex
 	startWhen = 10
@@ -14,13 +15,7 @@
 	if(prob(90))
 		priority_announce("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-		for(var/obj/machinery/computer/communications/C in GLOB.machines)
-			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-				var/obj/item/paper/P = new(C.loc)
-				P.name = "Vortex anomaly"
-				P.info = "Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]."
-				P.update_icon()
+		print_command_report("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name].","Vortex anomaly")
 
 /datum/round_event/anomaly/anomaly_vortex/start()
 	var/turf/T = safepick(get_area_turfs(impact_area))

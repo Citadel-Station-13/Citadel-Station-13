@@ -34,10 +34,12 @@
 	last_process = world.time
 
 /datum/component/wet_floor/RegisterWithParent()
+	. = ..()
 	RegisterSignal(parent, COMSIG_TURF_IS_WET, .proc/is_wet)
 	RegisterSignal(parent, COMSIG_TURF_MAKE_DRY, .proc/dry)
 
 /datum/component/wet_floor/UnregisterFromParent()
+	. = ..()
 	UnregisterSignal(parent, list(COMSIG_TURF_IS_WET, COMSIG_TURF_MAKE_DRY))
 
 /datum/component/wet_floor/Destroy()
@@ -88,6 +90,9 @@
 		if(TURF_WET_PERMAFROST)
 			intensity = 120
 			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
+		if(TURF_WET_SUPERLUBE)
+			intensity = 120
+			lube_flags = SLIDE | GALOSHES_DONT_HELP | SLIP_WHEN_CRAWLING
 		else
 			qdel(parent.GetComponent(/datum/component/slippery))
 			return
@@ -159,7 +164,7 @@
 	//NB it's possible we get deleted after this, due to inherit
 
 /datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME, _permanent = FALSE)
-	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST)
+	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST, TURF_WET_SUPERLUBE)
 	if(duration_minimum <= 0 || !type)
 		return FALSE
 	if(type in allowed_types)

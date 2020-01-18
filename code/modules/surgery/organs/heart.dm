@@ -6,7 +6,7 @@
 	slot = ORGAN_SLOT_HEART
 
 	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = 3 * STANDARD_ORGAN_DECAY		//designed to fail about 5 minutes after death
+	decay_factor = 2.5 * STANDARD_ORGAN_DECAY		//designed to fail about 5 minutes after death
 
 	low_threshold_passed = "<span class='info'>Prickles of pain appear then die out from within your chest...</span>"
 	high_threshold_passed = "<span class='warning'>Something inside your chest hurts, and the pain isn't subsiding. You notice yourself breathing far faster than before.</span>"
@@ -54,6 +54,11 @@
 	beating = 1
 	update_icon()
 	return 1
+
+/obj/item/organ/heart/proc/HeartStrengthMessage()
+	if(beating)
+		return "a healthy"
+	return "<span class='danger'>an unstable</span>"
 
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
@@ -135,7 +140,7 @@ obj/item/organ/heart/slime
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(owner)
 		to_chat(owner, "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
@@ -212,7 +217,6 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 		ramount += regen_amount
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
-	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 	ramount = 0
 
@@ -243,5 +247,5 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 		min_next_adrenaline = world.time + rand(250, 600) //anywhere from 4.5 to 10 minutes
 		to_chat(owner, "<span class='userdanger'>You feel yourself dying, but you refuse to give up!</span>")
 		owner.heal_overall_damage(15, 15)
-		if(owner.reagents.get_reagent_amount("ephedrine") < 20)
-			owner.reagents.add_reagent("ephedrine", 10)
+		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
+			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)

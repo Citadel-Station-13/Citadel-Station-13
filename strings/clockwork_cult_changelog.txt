@@ -2,3 +2,7 @@ Stargazers have been removed. Integration cogs are now the primary way of creati
 Brass Skewers now deal damage to mechs.
 Mech Sensors are now available. They're similar to pressure sensors, but trigger if a mech steps on them, and can be built the same way.
 Power nullifiers are now available. Upon triggering, they send out a small 3x3 EMP, affecting cultists and enemies alike.
+Zelus oil: A new reagent. It can be used to heal the faithful to Ratvar, kill heretics and moreso stun blood cultists, or splashed onto metal sheets to make brass. 
+This chemical can be found in minimal quantities by grinding brass sheets.
+Brass Flasks: Intended to store Zelus Oil in, but can also be used as fragile single use throwing weapons in a pinch!
+These are crafted with a single sheet of brass and fit in the Clockwork Cuirass' suit storage.

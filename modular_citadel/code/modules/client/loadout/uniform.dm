@@ -73,6 +73,11 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/skirt/purple
 
+/datum/gear/skirtplaid
+	name = "Plaid skirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/plaid_skirt
+
 /datum/gear/schoolgirlblue
 	name = "Blue Schoolgirl Uniform"
 	category = SLOT_W_UNIFORM
@@ -98,6 +103,45 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripeddress
 
+/datum/gear/sundresswhite
+	name = "White Sundress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/sundresswhite
+
+/datum/gear/sundress
+	name = "Sundress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/sundress
+
+/datum/gear/greendress
+	name = "Green Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/greendress
+
+/datum/gear/pinkdress
+	name = "Pink Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pinkdress
+/datum/gear/flowerdress
+	name = "Flower Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/flowerdress
+
+/datum/gear/sweptskirt
+	name = "Swept skirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/sweptskirt
+
+/datum/gear/croptop
+	name = "Croptop"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/croptop
+
+/datum/gear/yoga
+	name = "Yoga Pants"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/yoga
+
 /datum/gear/kilt
 	name = "Kilt"
 	category = SLOT_W_UNIFORM
@@ -107,6 +151,11 @@
 	name = "Camo Pants"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/pants/camo
+
+/datum/gear/athleticshorts
+	name = "Athletic Shorts"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/shorts/red
 
 /datum/gear/bjeans
 	name = "Black Jeans"
@@ -142,6 +191,26 @@
 	name = "Track Pants"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/pants/track
+
+/datum/gear/rippedjeans
+	name = "Ripped Jeans"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/jeanripped
+
+/datum/gear/jeanshort
+	name = "Jean Shorts"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/jeanshort
+
+/datum/gear/denimskirt
+	name = "Denim Skirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/denimskirt
+
+/datum/gear/yoga
+	name = "Yoga Pants"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/yoga
 
 // Pantsless Sweaters
 
@@ -179,6 +248,11 @@
 	name =  "Navy Commando Sweater"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/bb_sweater/blue
+
+/datum/gear/keyholesweater
+	name =  "Keyhole Sweater"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/keyholesweater
 
 /datum/gear/polykilt
 	name = "Polychromic Kilt"
@@ -314,3 +388,39 @@
 	name = "Gear Harness"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/gear_harness
+
+//Christmas
+/*Commenting out Until next Christmas or made automatic
+/datum/gear/christmasmaler
+	name = "Red Masculine Christmas Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/christmas/christmasmaler
+
+/datum/gear/christmasmaleg
+	name = "Green Masculine Christmas Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/christmas/christmasmaleg
+
+/datum/gear/christmasfemaler
+	name = "Red Feminine Christmas Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/christmas/christmasfemaler
+
+/datum/gear/christmasfemaleg
+	name = "Green Feminine Christmas Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/christmas/christmasfemaleg
+
+/datum/gear/pinkstripper
+	name = "Pink stripper outfit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/stripper_pink
+	cost = 3
+*/
+
+/datum/gear/greenstripper
+	name = "Green stripper outfit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/stripper_green
+	cost = 3
+

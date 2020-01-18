@@ -43,17 +43,17 @@
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute_avoid = "tricordrazine"
-	var/treatment_brute = "bicaridine"
+	var/treatment_brute_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_brute = /datum/reagent/medicine/bicaridine
 	var/treatment_oxy_avoid = null
-	var/treatment_oxy = "dexalin"
-	var/treatment_fire_avoid = "tricordrazine"
-	var/treatment_fire = "kelotane"
-	var/treatment_tox_avoid = "tricordrazine"
-	var/treatment_tox = "charcoal"
-	var/treatment_tox_toxlover = "toxin"
+	var/treatment_oxy = /datum/reagent/medicine/dexalin
+	var/treatment_fire_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_fire = /datum/reagent/medicine/kelotane
+	var/treatment_tox_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_tox = /datum/reagent/medicine/charcoal
+	var/treatment_tox_toxlover = /datum/reagent/toxin
 	var/treatment_virus_avoid = null
-	var/treatment_virus = "spaceacillin"
+	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 
@@ -61,9 +61,9 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_brute = "tricordrazine"
-	treatment_fire = "tricordrazine"
-	treatment_tox = "tricordrazine"
+	treatment_brute = /datum/reagent/medicine/tricordrazine
+	treatment_fire = /datum/reagent/medicine/tricordrazine
+	treatment_tox = /datum/reagent/medicine/tricordrazine
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
@@ -71,13 +71,13 @@
 	skin = "bezerk"
 	heal_threshold = 0
 	declare_crit = 0
-	treatment_oxy = "pancuronium"
+	treatment_oxy = /datum/reagent/toxin/pancuronium
 	treatment_brute_avoid = null
-	treatment_brute = "pancuronium"
+	treatment_brute = /datum/reagent/toxin/pancuronium
 	treatment_fire_avoid = null
-	treatment_fire = "sodium_thiopental"
+	treatment_fire = /datum/reagent/toxin/sodium_thiopental
 	treatment_tox_avoid = null
-	treatment_tox = "sodium_thiopental"
+	treatment_tox = /datum/reagent/toxin/sodium_thiopental
 
 /mob/living/simple_animal/bot/medbot/update_icon()
 	cut_overlays()
@@ -369,8 +369,9 @@
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
-		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R.id))
+		for(var/A in reagent_glass.reagents.reagent_list)
+			var/datum/reagent/R = A
+			if(!C.reagents.has_reagent(R.type))
 				return TRUE
 
 	//They're injured enough for it!
@@ -383,7 +384,7 @@
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return TRUE
 	var/treatment_toxavoid = get_avoidchem_toxin(C)
-	if(((treatment_toxavoid && !C.reagents.has_reagent(treatment_toxavoid))) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(get_healchem_toxin(C))))
+	if(((isnull(treatment_toxavoid) || !C.reagents.has_reagent(treatment_toxavoid))) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(get_healchem_toxin(C))))
 		return TRUE
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
@@ -440,7 +441,7 @@
 	var/reagent_id = null
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
-		reagent_id = "toxin"
+		reagent_id = HAS_TRAIT(C, TRAIT_TOXINLOVER)? "charcoal" : "toxin"
 
 	else
 		if(treat_virus)
@@ -472,13 +473,14 @@
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
 			var/toxin_heal_avoid = get_avoidchem_toxin(C)
 			var/toxin_healchem = get_healchem_toxin(C)
-			if(!C.reagents.has_reagent(toxin_healchem) && (toxin_heal_avoid && !C.reagents.has_reagent(toxin_heal_avoid)))
+			if(!C.reagents.has_reagent(toxin_healchem) && (isnull(toxin_heal_avoid) || !C.reagents.has_reagent(toxin_heal_avoid)))
 				reagent_id = toxin_healchem
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
-			for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-				if(!C.reagents.has_reagent(R.id))
+			for(var/A in reagent_glass.reagents.reagent_list)
+				var/datum/reagent/R = A
+				if(!C.reagents.has_reagent(R.type))
 					reagent_id = "internal_beaker"
 					break
 

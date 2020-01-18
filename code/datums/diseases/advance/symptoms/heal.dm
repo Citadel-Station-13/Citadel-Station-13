@@ -79,7 +79,7 @@
 	if(M.getToxLoss() && prob(5))
 		to_chat(M, "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>")
 
-	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
+	M.adjustToxLoss(-(4 * heal_amt), forced = TRUE) //most effective on toxins
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 
@@ -117,8 +117,9 @@
 		power = 2
 
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
-	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
-		M.reagents.remove_reagent(R.id, actual_power)
+	for(var/E in M.reagents.reagent_list) //Not just toxins!
+		var/datum/reagent/R = E
+		M.reagents.remove_reagent(R.type, actual_power)
 		if(food_conversion)
 			M.nutrition += 0.3
 		if(prob(2))
@@ -329,11 +330,11 @@
 	if(M.fire_stacks < 0)
 		M.fire_stacks = min(M.fire_stacks + 1 * absorption_coeff, 0)
 		. += power
-	if(M.reagents.has_reagent("holywater"))
-		M.reagents.remove_reagent("holywater", 0.5 * absorption_coeff)
+	if(M.reagents.has_reagent(/datum/reagent/water/holywater))
+		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
 		. += power * 0.75
-	else if(M.reagents.has_reagent("water"))
-		M.reagents.remove_reagent("water", 0.5 * absorption_coeff)
+	else if(M.reagents.has_reagent(/datum/reagent/water))
+		M.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
 		. += power * 0.5
 
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -368,7 +369,7 @@
 	level = 8
 	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
 	var/temp_rate = 1
-	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate.<br>\
+	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate and heals toxin lovers.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
@@ -392,7 +393,7 @@
 		plasmamount = environment.gases[/datum/gas/plasma]
 		if(plasmamount && plasmamount > GLOB.meta_gas_visibility[/datum/gas/plasma]) //if there's enough plasma in the air to see
 			. += power * 0.5
-	if(M.reagents.has_reagent("plasma"))
+	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		. +=  power * 0.75
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -410,7 +411,7 @@
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 
-	M.adjustToxLoss(-heal_amt)
+	M.adjustToxLoss(-heal_amt, forced = (temp_rate == 4))
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 	if(!parts.len)
@@ -435,7 +436,7 @@
 	symptom_delay_max = 1
 	passive_message = "<span class='notice'>Your skin glows faintly for a moment.</span>"
 	var/cellular_damage = FALSE
-	threshold_desc = "<b>Transmission 6:</b> Additionally heals cellular damage.<br>\
+	threshold_desc = "<b>Transmission 6:</b> Additionally heals cellular damage and toxin lovers.<br>\
 					  <b>Resistance 7:</b> Increases healing speed."
 
 /datum/symptom/heal/radiation/Start(datum/disease/advance/A)
@@ -468,7 +469,7 @@
 	if(cellular_damage)
 		M.adjustCloneLoss(-heal_amt * 0.5)
 
-	M.adjustToxLoss(-(2 * heal_amt))
+	M.adjustToxLoss(-(2 * heal_amt), forced = cellular_damage)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 

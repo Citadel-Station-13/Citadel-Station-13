@@ -14,12 +14,9 @@
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)
 
+	mind_traits = list(TRAIT_CLOWN_MENTALITY)
+
 	display_order = JOB_DISPLAY_ORDER_CLOWN
-
-
-/datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
-	. = ..()
-	H.apply_pref_name("clown", M.client)
 
 /datum/outfit/job/clown
 	name = "Clown"
@@ -48,11 +45,15 @@
 
 	chameleon_extras = /obj/item/stamp/clown
 
-/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	if(visualsOnly)
 		return
 
-	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
+	var/client/C = H.client || preference_source
+	if(C)
+		H.apply_pref_name("clown", C) //rename the mob AFTER they're equipped so their ID gets updated properly.
+	else
+		H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names))
 	H.dna.add_mutation(CLOWNMUT)
 	H.dna.add_mutation(SMILE)

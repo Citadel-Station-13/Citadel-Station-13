@@ -20,126 +20,107 @@
 
 /datum/reagent/fermi/breast_enlarger
 	name = "Succubus milk"
-	id = "breast_enlarger"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 17
 	metabolization_rate = 0.25
-	impure_chem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
+	impure_chem 			= /datum/reagent/fermi/BEsmaller //If you make an inpure chem, it stalls growth
 	inverse_chem_val 		= 0.35
-	inverse_chem		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
+	inverse_chem		= /datum/reagent/fermi/BEsmaller //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
+	var/message_spam = FALSE
 
-/datum/reagent/fermi/breast_enlarger/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/breast_enlarger/on_mob_metabolize(mob/living/M)
 	. = ..()
 	if(!ishuman(M)) //The monkey clause
 		if(volume >= 15) //To prevent monkey breast farms
 			var/turf/T = get_turf(M)
 			var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(T)
-			var/list/seen = viewers(8, T)
-			for(var/mob/S in seen)
-				to_chat(S, "<span class='warning'>A pair of breasts suddenly fly out of the [M]!</b></span>")
-			//var/turf/T2 = pick(turf in view(5, M))
+			M.visible_message("<span class='warning'>A pair of breasts suddenly fly out of the [M]!</b></span>")
 			var/T2 = get_random_station_turf()
 			M.adjustBruteLoss(25)
 			M.Knockdown(50)
 			M.Stun(50)
 			B.throw_at(T2, 8, 1)
-		M.reagents.remove_reagent(id, volume)
+		M.reagents.del_reagent(type)
 		return
-	log_game("FERMICHEM: [M] ckey: [M.key] has ingested Sucubus milk")
 	var/mob/living/carbon/human/H = M
-	H.genital_override = TRUE
-	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
-	if(!B)
-		H.emergent_genital_call()
-		return
-	if(!B.size == "huge")
-		var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
-		B.prev_size = B.size
-		B.cached_size = sizeConv[B.size]
+	if(!H.getorganslot(ORGAN_SLOT_BREASTS) && H.emergent_genital_call())
+		H.genital_override = TRUE
 
 /datum/reagent/fermi/breast_enlarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	if(!ishuman(M))//Just in case
 		return..()
 
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
+	//If they've opted out, then route processing though liver.
+	if(!(H.client?.prefs.cit_toggles & BREAST_ENLARGEMENT))
+		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			L.swelling += 0.05
+		else
+			H.adjustToxLoss(1)
+		return..()
+	//otherwise proceed as normal
 	if(!B) //If they don't have breasts, give them breasts.
 
-		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
-		if(HAS_TRAIT(M, TRAIT_PHARMA))
-			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			if(L)
-				L.swelling+= 0.05
-				return..()
-			else
-				M.adjustToxLoss(1)
-				return..()
+		B = new
+		if(H.dna.species.use_skintones && H.dna.features["genitals_use_skintone"])
+			B.color = skintone2hex(H.skin_tone)
+		else if(M.dna.features["breasts_color"])
+			B.color = "#[M.dna.features["breasts_color"]]"
+		else
+			B.color = skintone2hex(H.skin_tone)
+		B.size = "flat"
+		B.cached_size = 0
+		B.prev_size = 0
+		to_chat(H, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
+		H.reagents.remove_reagent(type, 5)
+		B.Insert(H)
 
-		//otherwise proceed as normal
-		var/obj/item/organ/genital/breasts/nB = new
-		nB.Insert(M)
-		if(nB)
-			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
-				nB.color = skintone2hex(H.skin_tone)
-			else if(M.dna.features["breasts_color"])
-				nB.color = "#[M.dna.features["breasts_color"]]"
-			else
-				nB.color = skintone2hex(H.skin_tone)
-			nB.size = "flat"
-			nB.cached_size = 0
-			nB.prev_size = 0
-			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
-			M.reagents.remove_reagent(id, 5)
-			B = nB
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
-	B.cached_size = B.cached_size + 0.05
-	if (B.cached_size >= 8.5 && B.cached_size < 9)
-		if(H.w_uniform || H.wear_suit)
-			var/target = M.get_bodypart(BODY_ZONE_CHEST)
-			to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
-			M.adjustOxyLoss(5, 0)
-			M.apply_damage(1, BRUTE, target)
-	B.update()
-	..()
+	B.modify_size(0.05)
+
+	if (ISINRANGE_EX(B.cached_size, 8.5, 9) && (H.w_uniform || H.wear_suit))
+		var/target = H.get_bodypart(BODY_ZONE_CHEST)
+		if(!message_spam)
+			to_chat(H, "<span class='danger'>Your breasts begin to strain against your clothes tightly!</b></span>")
+			message_spam = TRUE
+		H.adjustOxyLoss(5, 0)
+		H.apply_damage(1, BRUTE, target)
+	return ..()
 
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
-
-	//Acute hepatic pharmacokinesis.
-	if(HAS_TRAIT(M, TRAIT_PHARMA))
-		var/obj/item/organ/liver/L = M.getorganslot("liver")
+	if(!(M.client?.prefs.cit_toggles & FORCED_FEM))
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 		L.swelling+= 0.05
 		return ..()
 
-	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
-	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
-	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
-	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
+	var/obj/item/organ/genital/penis/P = M.getorganslot(ORGAN_SLOT_PENIS)
+	var/obj/item/organ/genital/testicles/T = M.getorganslot(ORGAN_SLOT_TESTICLES)
+	var/obj/item/organ/genital/vagina/V = M.getorganslot(ORGAN_SLOT_VAGINA)
+	var/obj/item/organ/genital/womb/W = M.getorganslot(ORGAN_SLOT_WOMB)
 
 	if(M.gender == MALE)
 		M.gender = FEMALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	if(P)
-		P.cached_length = P.cached_length - 0.05
-		P.update()
+		P.modify_size(-0.05)
 	if(T)
-		T.Remove(M)
+		qdel(T)
 	if(!V)
-		var/obj/item/organ/genital/vagina/nV = new
-		nV.Insert(M)
-		V = nV
+		V = new
+		V.Insert(M)
 	if(!W)
-		var/obj/item/organ/genital/womb/nW = new
-		nW.Insert(M)
-		W = nW
-	..()
+		W = new
+		W.Insert(M)
+	return ..()
 
 /datum/reagent/fermi/BEsmaller
 	name = "Modesty milk"
-	id = "BEsmaller"
 	description = "A volatile collodial mixture derived from milk that encourages mammary reduction via a potent estrogen mix. Produced by reacting impure Succubus milk."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
@@ -147,23 +128,16 @@
 	can_synth = FALSE
 
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
-	if(!B)
-		//Acute hepatic pharmacokinesis.
-		if(HAS_TRAIT(M, TRAIT_PHARMA))
-			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			L.swelling-= 0.05
-			return ..()
-
-		//otherwise proceed as normal
-		return..()
-	B.cached_size = B.cached_size - 0.05
-	B.update()
-	..()
+	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
+	if(!(M.client?.prefs.cit_toggles & BREAST_ENLARGEMENT) || !B)
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		L.swelling-= 0.05
+		return ..()
+	B.modify_size(-0.05)
+	return ..()
 
 /datum/reagent/fermi/BEsmaller_hypo
 	name = "Rectify milk" //Rectify
-	id = "BEsmaller_hypo"
 	color = "#E60584"
 	taste_description = "a milky ice cream like flavour."
 	metabolization_rate = 0.25
@@ -171,31 +145,28 @@
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	can_synth = TRUE
 
-/datum/reagent/fermi/BEsmaller_hypo/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/BEsmaller_hypo/on_mob_metabolize(mob/living/M)
 	. = ..()
-	if(!M.getorganslot("vagina"))
-		if(M.dna.features["has_vag"])
-			var/obj/item/organ/genital/vagina/nV = new
-			nV.Insert(M)
-	if(!M.getorganslot("womb"))
-		if(M.dna.features["has_womb"])
-			var/obj/item/organ/genital/womb/nW = new
-			nW.Insert(M)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!H.getorganslot(ORGAN_SLOT_VAGINA) && H.dna.features["has_vag"])
+		H.give_genital(/obj/item/organ/genital/vagina)
+	if(!H.getorganslot(ORGAN_SLOT_WOMB) && H.dna.features["has_womb"])
+		H.give_genital(/obj/item/organ/genital/womb)
 
 /datum/reagent/fermi/BEsmaller_hypo/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!B)
 		return..()
-	if(!M.dna.features["has_breasts"])//Fast fix for those who don't want it.
-		B.cached_size = B.cached_size - 0.1
-		B.update()
-	else if(B.cached_size > (sizeConv[M.dna.features["breasts_size"]]+0.1))
-		B.cached_size = B.cached_size - 0.05
-		B.update()
-	else if(B.cached_size < (sizeConv[M.dna.features["breasts_size"]])+0.1)
-		B.cached_size = B.cached_size + 0.05
-		B.update()
-	..()
+	var/optimal_size = B.breast_values[M.dna.features["breasts_size"]]
+	if(!optimal_size)//Fast fix for those who don't want it.
+		B.modify_size(-0.1)
+	else if(B.cached_size > optimal_size)
+		B.modify_size(-0.05, optimal_size)
+	else if(B.cached_size < optimal_size)
+		B.modify_size(0.05, 0, optimal_size)
+	return ..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										PENIS ENLARGE
@@ -205,112 +176,97 @@
 //Since someone else made this in the time it took me to PR it, I merged them.
 /datum/reagent/fermi/penis_enlarger // Due to popular demand...!
 	name = "Incubus draft"
-	id = "penis_enlarger"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 17 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
-	impure_chem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
+	impure_chem 			= /datum/reagent/fermi/PEsmaller //If you make an inpure chem, it stalls growth
 	inverse_chem_val 		= 0.35
-	inverse_chem		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
+	inverse_chem		= /datum/reagent/fermi/PEsmaller //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
+	var/message_spam = FALSE
 
-/datum/reagent/fermi/penis_enlarger/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/penis_enlarger/on_mob_metabolize(mob/living/M)
 	. = ..()
 	if(!ishuman(M)) //Just monkeying around.
 		if(volume >= 15) //to prevent monkey penis farms
 			var/turf/T = get_turf(M)
 			var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(T)
-			var/list/seen = viewers(8, T)
-			for(var/mob/S in seen)
-				to_chat(S, "<span class='warning'>A penis suddenly flies out of the [M]!</b></span>")
+			M.visible_message("<span class='warning'>A penis suddenly flies out of the [M]!</b></span>")
 			var/T2 = get_random_station_turf()
 			M.adjustBruteLoss(25)
 			M.Knockdown(50)
 			M.Stun(50)
 			P.throw_at(T2, 8, 1)
-		M.reagents.remove_reagent(id, volume)
+		M.reagents.del_reagent(type)
 		return
 	var/mob/living/carbon/human/H = M
-	H.genital_override = TRUE
-	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
-	if(!P)
-		H.emergent_genital_call()
-		return
-	P.prev_length = P.length
-	P.cached_length = P.length
+	if(!H.getorganslot(ORGAN_SLOT_PENIS) && H.emergent_genital_call())
+		H.genital_override = TRUE
 
 /datum/reagent/fermi/penis_enlarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
 	if(!ishuman(M))
-		return
+		return ..()
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
+	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT))
+		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			L.swelling += 0.05
+		else
+			H.adjustToxLoss(1)
+		return ..()
+	//otherwise proceed as normal
 	if(!P)//They do have a preponderance for escapism, or so I've heard.
 
-		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
-		if(HAS_TRAIT(M, TRAIT_PHARMA))
-			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			if(L)
-				L.swelling+= 0.05
-				return..()
-			else
-				M.adjustToxLoss(1)
-				return..()
+		P = new
+		P.length = 1
+		to_chat(H, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")
+		P.prev_length = 1
+		H.reagents.remove_reagent(type, 5)
+		P.Insert(H)
 
-		//otherwise proceed as normal
-		var/obj/item/organ/genital/penis/nP = new
-		nP.Insert(M)
-		if(nP)
-			nP.length = 1
-			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")
-			nP.cached_length = 1
-			nP.prev_length = 1
-			M.reagents.remove_reagent(id, 5)
-			P = nP
+	P.modify_size(0.1)
+	if (ISINRANGE_EX(P.length, 20.5, 21) && (H.w_uniform || H.wear_suit))
+		var/target = H.get_bodypart(BODY_ZONE_CHEST)
+		if(!message_spam)
+			to_chat(H, "<span class='danger'>Your cock begin to strain against your clothes tightly!</b></span>")
+			message_spam = TRUE
+		H.apply_damage(2.5, BRUTE, target)
 
-	P.cached_length = P.cached_length + 0.1
-	if (P.cached_length >= 20.5 && P.cached_length < 21)
-		if(H.w_uniform || H.wear_suit)
-			var/target = M.get_bodypart(BODY_ZONE_CHEST)
-			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
-			M.apply_damage(2.5, BRUTE, target)
+	return ..()
 
-	P.update()
-	..()
-
-/datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
-	//Acute hepatic pharmacokinesis.
-	if(HAS_TRAIT(M, TRAIT_PHARMA))
-		var/obj/item/organ/liver/L = M.getorganslot("liver")
+/datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/human/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
+	if(!istype(M))
+		return ..()
+	if(!(M.client?.prefs.cit_toggles & FORCED_MASC))
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
 		L.swelling+= 0.05
 		return..()
 
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
-	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
-	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
-	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
+	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
+	var/obj/item/organ/genital/testicles/T = M.getorganslot(ORGAN_SLOT_TESTICLES)
+	var/obj/item/organ/genital/vagina/V = M.getorganslot(ORGAN_SLOT_VAGINA)
+	var/obj/item/organ/genital/womb/W = M.getorganslot(ORGAN_SLOT_WOMB)
 
 	if(M.gender == FEMALE)
 		M.gender = MALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 
 	if(B)
-		B.cached_size = B.cached_size - 0.05
-		B.update()
-	if(V)
-		V.Remove(M)
+		B.modify_size(-0.05)
+	if(M.getorganslot(ORGAN_SLOT_VAGINA))
+		qdel(V)
 	if(W)
-		W.Remove(M)
+		qdel(W)
 	if(!T)
-		var/obj/item/organ/genital/testicles/nT = new
-		nT.Insert(M)
-		T = nT
-	..()
+		T = new
+		T.Insert(M)
+	return ..()
 
 /datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
 	name = "Chastity draft"
-	id = "PEsmaller"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a smaller gentleman's package via a potent testosterone mix. Produced by reacting impure Incubus draft."
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
@@ -318,48 +274,45 @@
 	can_synth = FALSE
 
 /datum/reagent/fermi/PEsmaller/on_mob_life(mob/living/carbon/M)
+	if(!ishuman(M))
+		return ..()
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
-	if(!P)
-		//Acute hepatic pharmacokinesis.
-		if(HAS_TRAIT(M, TRAIT_PHARMA))
-			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			L.swelling-= 0.05
-			return..()
-
-		//otherwise proceed as normal
+	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
+	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT) || !P)
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		L.swelling-= 0.05
 		return..()
-	P.cached_length = P.cached_length - 0.1
-	P.update()
+
+	P.modify_size(-0.1)
 	..()
 
 /datum/reagent/fermi/PEsmaller_hypo
 	name = "Rectify draft"
-	id = "PEsmaller_hypo"
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	description = "A medicine used to treat organomegaly in a patient's penis."
 	metabolization_rate = 0.5
 	can_synth = TRUE
 
-/datum/reagent/fermi/PEsmaller_hypo/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/PEsmaller_hypo/on_mob_metabolize(mob/living/M)
 	. = ..()
-	if(!M.getorganslot("testicles"))
-		if(M.dna.features["has_balls"])
-			var/obj/item/organ/genital/testicles/nT = new
-			nT.Insert(M)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!H.getorganslot(ORGAN_SLOT_PENIS) && H.dna.features["has_cock"])
+		H.give_genital(/obj/item/organ/genital/penis)
+	if(!H.getorganslot(ORGAN_SLOT_TESTICLES) && H.dna.features["has_balls"])
+		H.give_genital(/obj/item/organ/genital/testicles)
 
 /datum/reagent/fermi/PEsmaller_hypo/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+	var/obj/item/organ/genital/penis/P = M.getorganslot(ORGAN_SLOT_PENIS)
 	if(!P)
 		return ..()
-	if(!M.dna.features["has_cock"])//Fast fix for those who don't want it.
-		P.cached_length = P.cached_length - 0.2
-		P.update()
-	else if(P.cached_length > (M.dna.features["cock_length"]+0.1))
-		P.cached_length = P.cached_length - 0.1
-		P.update()
-	else if(P.cached_length < (M.dna.features["cock_length"]+0.1))
-		P.cached_length = P.cached_length + 0.1
-		P.update()
-	..()
+	var/optimal_size = M.dna.features["cock_length"]
+	if(!optimal_size)//Fast fix for those who don't want it.
+		P.modify_size(-0.2)
+	else if(P.length > optimal_size)
+		P.modify_size(-0.1, optimal_size)
+	else if(P.length < optimal_size)
+		P.modify_size(0.1, 0, optimal_size)
+	return ..()

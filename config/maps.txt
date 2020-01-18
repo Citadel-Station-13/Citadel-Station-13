@@ -10,6 +10,8 @@ Format:
 	maxplayers [number] (0 or less disables this requirement)
 	default (The last map with this defined will get all votes of players who have not explicitly voted for a map)
 	voteweight [number] (How much to count each player vote as, defaults to 1, setting to 0.5 counts each vote as half a vote, 2 as double, etc, Setting to 0 disables the map but allows players to still pick it)
+	max_round_search_span [number] (If this is nonzero, then if this map has been played more than a specified amount of times within this number of rounds, the map won't show up in votes. Max for this value determined by a define in persistence.dm)
+	max_rounds_played [number] (This determines how many times a map can be played within the above number of rounds before it's forbidden from votes.)
 	disabled (disables the map)
 endmap
 
@@ -35,4 +37,7 @@ map deltastation
 endmap
 
 map runtimestation
+endmap
+
+map multiz_debug
 endmap

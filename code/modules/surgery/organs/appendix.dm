@@ -34,7 +34,7 @@
 	update_icon()
 	..()
 
-/obj/item/organ/appendix/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/appendix/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(inflamed)
 		M.ForceContractDisease(new /datum/disease/appendicitis(), FALSE, TRUE)
@@ -42,5 +42,5 @@
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
-		S.reagents.add_reagent("bad_food", 5)
+		S.reagents.add_reagent(/datum/reagent/toxin/bad_food, 5)
 	return S

@@ -27,8 +27,10 @@
 	max_temperature = 35000
 	leg_overload_coeff = 100
 	operation_req_access = list(ACCESS_SYNDICATE)
+	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
+	spawn_tracked = FALSE
 
 /obj/mecha/combat/gygax/dark/loaded/Initialize()
 	. = ..()
@@ -48,7 +50,6 @@
 		return
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
-
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Grant(user, src)
@@ -65,7 +66,3 @@
 /obj/mecha/combat/gygax/dark/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Remove(user)
-
-/obj/mecha/combat/Initialize()
-	. = ..()
-	trackers += new /obj/item/mecha_parts/mecha_tracking(src)

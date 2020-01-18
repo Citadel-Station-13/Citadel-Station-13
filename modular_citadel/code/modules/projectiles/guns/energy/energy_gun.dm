@@ -1,13 +1,6 @@
 /obj/item/gun/energy/e_gun
 	name = "blaster carbine"
 	desc = "A high powered particle blaster carbine with varitable setting for stunning or lethal applications."
-	icon = 'modular_citadel/icons/obj/guns/OVERRIDE_energy.dmi'
-	lefthand_file = 'modular_citadel/icons/mob/inhands/OVERRIDE_guns_lefthand.dmi'
-	righthand_file = 'modular_citadel/icons/mob/inhands/OVERRIDE_guns_righthand.dmi'
-	ammo_x_offset = 2
-	flight_x_offset = 17
-	flight_y_offset = 11
-	
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////
 							The Recolourable Energy Gun
@@ -37,8 +30,10 @@ obj/item/gun/energy/e_gun/cx/update_icon()
 		M.update_inv_hands()
 
 obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
+	. = TRUE
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
@@ -48,7 +43,7 @@ obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 
-obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
+obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(isinhands)
 		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "cxe_body")

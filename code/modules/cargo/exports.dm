@@ -21,9 +21,11 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 // Simple holder datum to pass export results around
 /datum/export_report
-	var/list/exported_atoms = list()	//names of atoms sold/deleted by export
-	var/list/total_amount = list()		//export instance => total count of sold objects of its type, only exists if any were sold
-	var/list/total_value = list()		//export instance => total value of sold objects
+	var/list/exported_atoms = list()//names of atoms sold/deleted by export
+	var/list/total_amount = list()  //export instance => total count of sold objects of its type, only exists if any were sold
+	var/list/total_value = list()   //export instance => total value of sold objects
+	var/list/reagents_volume = list()//export reagents => into the total volume of the object sold
+	var/list/reagents_value = list()//export reagents => into the reagent type total value.
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
 /proc/export_item_and_contents(atom/movable/AM, allowed_categories = EXPORT_CARGO, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
@@ -47,6 +49,13 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic)
 				report.exported_atoms += " [thing.name]"
 				break
+		if(thing.reagents)
+			for(var/A in thing.reagents.reagent_list)
+				var/datum/reagent/R = A
+				if(!R.value)
+					continue
+				report.reagents_volume[R.name] += R.volume
+				report.reagents_value[R.name] += R.volume * R.value
 		if(!dry_run && (sold || delete_unsold))
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)
@@ -58,7 +67,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
 	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
-	var/k_elasticity = 1/20			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity" - CIT EDIT 30 - > 20
+	var/k_elasticity = 1/300			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity" - CIT EDIT 1/30 - > 0
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types = list()	// Types excluded from export
