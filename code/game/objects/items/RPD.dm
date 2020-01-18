@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(!can_make_pipe)
 					return ..()
 				A = T
-				if(is_type_in_typecache(recipe, ventcrawl_machinery) && isclosedturf(A)) //wall escapism sanity check.
+				if(is_type_in_typecache(recipe, GLOB.ventcrawl_machinery) && isclosedturf(A)) //wall escapism sanity check.
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 					return
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
