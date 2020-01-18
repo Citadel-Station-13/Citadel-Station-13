@@ -4139,6 +4139,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"IY" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "Ki" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -10101,7 +10107,7 @@ ap
 ar
 ar
 aq
-az
+IY
 az
 az
 az
