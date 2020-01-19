@@ -23,21 +23,21 @@
 
 /datum/uplink_item/suits/padding
 	name = "Soft Padding"
-	desc = "Padding to add to a jumpsuit to help against melee and bullets."
+	desc = "An inconspicious soft padding meant to be worn underneath jumpsuits, will cushion the user from melee harm."
 	item = /obj/item/clothing/accessory/padding
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/kevlar
-	name = "Kevlar sheets"
-	desc = "Kevlar sheets to add to jumpsuit to help against bullets and melee."
+	name = "Kevlar Padding"
+	desc = "An inconspicious kevlar padding meant to be worn underneath jumpsuits, will cushion the wearer from ballistic harm."
 	item = /obj/item/clothing/accessory/kevlar
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/plastic
-	name = "Plastic sheet"
-	desc = "Plastic body sheet to add to a jumpsuit to help against laser and energy harm."
+	name = "Ablative Padding"
+	desc = "An inconspicious ablative padding meant to be worn underneath jumpsuits, will cushion the wearer from energy lasers harm."
 	item = /obj/item/clothing/accessory/plastics
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
