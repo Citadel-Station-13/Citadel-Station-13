@@ -16,29 +16,17 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 /obj/item/toy/poolnoodle/attack(target as mob, mob/living/user as mob)
-	..()
-	if(prob(80))
-		user.emote("spin")
-	if(prob(5))
-		user.emote("spin")
+	. = ..()
+	user.spin(prob(20)? 16 : 8, 1)
 
 /obj/item/toy/poolnoodle/red
 	item_state = "noodlered"
+	color = "#ff4c4c"
 
 /obj/item/toy/poolnoodle/blue
 	item_state = "noodleblue"
+	color = "#3232ff"
 
 /obj/item/toy/poolnoodle/yellow
 	item_state = "noodleyellow"
-
-/obj/item/toy/poolnoodle/red/Initialize()
-	. = ..()
-	color = "#ff4c4c"
-
-/obj/item/toy/poolnoodle/blue/Initialize()
-	. = ..()
-	color = "#3232ff"
-
-/obj/item/toy/poolnoodle/yellow/Initialize()
-	. = ..()
 	color = "#ffff66"

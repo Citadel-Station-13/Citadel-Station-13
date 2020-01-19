@@ -326,6 +326,12 @@
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
+/*******Element signals*******/
+
+// /datum/element/swimming
+#define COMSIG_IS_SWIMMING "has_swimming_element"
+	#define IS_SWIMMING 1
+
 /*******Non-Signal Component Related Defines*******/
 
 //Redirection component init flags

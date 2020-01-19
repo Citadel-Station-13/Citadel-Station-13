@@ -11,13 +11,18 @@
 	layer = ABOVE_MOB_LAYER
 	dir = EAST
 
-/obj/structure/pool/ladder/attack_hand(mob/living/user as mob)
-	if(Adjacent(user) && user.y == y && user.swimming == 0)
-		user.swimming = TRUE
-		user.forceMove(get_step(user, get_dir(user, src))) //Either way, you're getting IN or OUT of the pool.
-	else if(user.loc == loc && user.swimming == TRUE)
-		user.swimming = FALSE
-		user.forceMove(get_step(user, turn(dir, 180)))
+/obj/structure/pool/ladder/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	var/is_swimming = SEND_SIGNAL(user, COMSIG_IS_SWIMMING)
+	if(!is_swimming)
+		if(user.CanReach(src))
+			user.AddElement(/datum/element/swimming)
+			user.forceMove(get_step(src, dir))
+	else
+		if(user.loc == loc)
+			user.forceMove(get_step(src, turn(dir, 180)))		//If this moves them out the element cleans up after itself.
 
 /obj/structure/pool/Rboard
 	name = "JumpBoard"

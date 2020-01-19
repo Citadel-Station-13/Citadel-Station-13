@@ -5,20 +5,10 @@
 	icon_state = "pool_tile"
 	heat_capacity = INFINITY
 	var/filled = TRUE
-	var/next_splash = 1
-	var/obj/effect/overlay/water/watereffect
-	var/obj/effect/overlay/water/top/watertop
+	var/next_splash = 0
 	var/obj/machinery/pool/controller/controller
 
-
-/turf/open/pool/Initialize()
-	watereffect = new /obj/effect/overlay/water(src)
-	watertop = new /obj/effect/overlay/water/top(src)
-	. = ..()
-
 /turf/open/pool/Destroy()
-	QDEL_NULL(watereffect)
-	QDEL_NULL(watertop)
 	controller = null
 	return ..()
 
@@ -26,13 +16,13 @@
 	if(!filled)
 		name = "drained pool"
 		desc = "No diving!"
-		QDEL_NULL(watereffect)
-		QDEL_NULL(watertop)
+		cut_overlay(/obj/effect/overlay/water)
+		cut_overlay(/obj/effect/overlay/water/top)
 	else
 		name = "poolwater"
 		desc = "You're safer here than in the deep."
-		watereffect = new /obj/effect/overlay/water(src)
-		watertop = new /obj/effect/overlay/water/top(src)
+		add_overlay(/obj/effect/overlay/water)
+		add_overlay(/obj/effect/overlay/water/top)
 
 /obj/effect/overlay/water
 	name = "water"
@@ -47,8 +37,22 @@
 	icon_state = "top"
 	layer = BELOW_MOB_LAYER
 
-/mob/living
-	var/swimming = FALSE
+/turf/open/MouseDrop_T(atom/from, mob/user)
+	if(SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && CHECK_MOBILITY(user, MOBILITY_USE))
+		var/mob/living/L = from
+		//The element only exists if you're on water and a living mob, so let's skip those checks.
+		if(user == from)
+			from.visible_message("<span class='notice'>[from] is getting out of the pool.</span>")
+			if(do_mob(user, from, 20))
+				from.forceMove(src)
+				from.visible_message("<span class='notice'>[from] gets out of the pool.</span>")
+		else
+			from.visible_message("<span class='notice'>[from] is being pulled out of the pool by [user].</span>")
+			if(do_mob(user, from, 20))
+				from.forceMove(src)
+				from.visible_message("<span class='notice'>[user] pulls [from] out of the pool.</span>")
+	else
+		return ..()
 
 //Put people out of the water
 /turf/open/floor/MouseDrop_T(mob/living/M, mob/living/user)
