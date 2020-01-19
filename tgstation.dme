@@ -471,6 +471,7 @@
 #include "code\datums\diseases\advance\symptoms\youth.dm"
 #include "code\datums\elements\_element.dm"
 #include "code\datums\elements\cleaning.dm"
+#include "code\datums\elements\dusts_on_catatonia.dm"
 #include "code\datums\elements\earhealing.dm"
 #include "code\datums\elements\ghost_role_eligibility.dm"
 #include "code\datums\elements\wuv.dm"
