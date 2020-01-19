@@ -847,7 +847,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	send_message(U,list(P))
 
 /obj/item/pda/proc/block_pda(mob/user, obj/item/pda/P)
-	to_chat(user, "<span class='notice'>[icon2html(src, user)] [P.owner] blocked from messages. Use "Messenger" function PDA list to unblock.</span>")
+	to_chat(user, "<span class='notice'>[icon2html(src, user)] [P.owner] blocked from messages. Use the messenger PDA list to unblock.</span>")
 	LAZYOR(blocked_pdas, P.owner)
 
 /obj/item/pda/proc/unblock_pda(mob/user, unblock_target)
