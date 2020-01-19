@@ -273,7 +273,6 @@
 						"Maple" = "dshotgun-l",
 						"Rosewood" = "dshotgun-p"
 						)
-	pb_knockback = 3 // it's a super shotgun!
 
 /obj/item/gun/ballistic/revolver/doublebarrel/attackby(obj/item/A, mob/user, params)
 	..()
