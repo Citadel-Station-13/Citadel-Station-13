@@ -787,40 +787,10 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/destroy/internal
 	var/stolen = FALSE 		//Have we already eliminated this target?
 
-/datum/objective/steal_five_of_type
-	name = "steal five of"
-	explanation_text = "Steal at least five items!"
-	var/list/wanted_items = list(/obj/item)
-
-/datum/objective/steal_five_of_type/New()
-	..()
-	wanted_items = typecacheof(wanted_items)
-
-/datum/objective/steal_five_of_type/summon_guns
-	name = "steal guns"
-	explanation_text = "Steal at least five guns!"
-	wanted_items = list(/obj/item/gun)
-
-/datum/objective/steal_five_of_type/summon_magic
-	name = "steal magic"
-	explanation_text = "Steal at least five magical artefacts!"
-	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/necromantic_stone)
-
-/datum/objective/steal_five_of_type/check_completion()
-	var/list/datum/mind/owners = get_owners()
-	var/stolen_count = 0
-	for(var/datum/mind/M in owners)
-		if(!isliving(M.current))
-			continue
-		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
-		for(var/obj/I in all_items) //Check for wanted items
-			if(is_type_in_typecache(I, wanted_items))
-				stolen_count++
-	return stolen_count >= 5
-
 //Created by admin tools
 /datum/objective/custom
 	name = "custom"
+	completable = FALSE
 
 /datum/objective/custom/admin_edit(mob/admin)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
@@ -998,4 +968,33 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	command_staff_only = TRUE
 
 
+/datum/objective/horde
+	name = "horde"
+	var/obj/item/horded_item = null
 
+/datum/objective/horde/get_target()
+	return horded_item
+
+/datum/objective/horde/proc/set_target(obj/item/I)
+	if(item)
+		horded_item = I
+		explanation_text = "Keep [I] on your person at all costs."
+		return horded_item
+	else
+		explanation_text = "Free objective"
+		return
+
+/datum/objective/horde/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	if(!horded_item)
+		return TRUE
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
+
+		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+
+		for(var/obj/I in all_items) //Check for items
+			if(I == horded_item)
+				return TRUE
+	return FALSE

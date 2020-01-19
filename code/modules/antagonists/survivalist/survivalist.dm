@@ -2,6 +2,7 @@
 	name = "Survivalist"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	blacklisted_quirks = list("Pacifist") // mutes are allowed
 	var/greet_message = ""
 
 /datum/antagonist/survivalist/proc/forge_objectives()
@@ -19,7 +20,7 @@
 	owner.announce_objectives()
 
 /datum/antagonist/survivalist/guns
-	greet_message = "Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way."
+	greet_message = "Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, and don't let anyone take them!"
 
 /datum/antagonist/survivalist/guns/forge_objectives()
 	var/datum/objective/steal_five_of_type/summon_guns/guns = new
@@ -29,7 +30,7 @@
 
 /datum/antagonist/survivalist/magic
 	name = "Amateur Magician"
-	greet_message = "Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way."
+	greet_message = "This magic stuff is... so powerful. You want more. More! They want your power. They can't have it! Don't let them have it!"
 
 /datum/antagonist/survivalist/magic/forge_objectives()
 	var/datum/objective/steal_five_of_type/summon_magic/magic = new
