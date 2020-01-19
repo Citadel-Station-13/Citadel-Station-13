@@ -57,7 +57,7 @@
 	name = "Coconut Bong"
 	description = "Duuuude, what if we like, carved out a coconut, and smoked some stuff in it. It'd be like, coconut flavored maaaaaan."
 	reward = 2750
-	wanted_types = list(obj/item/bong/coconut)
+	wanted_types = list(/obj/item/bong/coconut)
 
 /datum/bounty/item/silly/toy_swords
 	name = "Toy Swords"
