@@ -560,6 +560,15 @@ ROUNDSTART_TRAITS
 ## Enable night shifts ##
 #ENABLE_NIGHT_SHIFTS
 
+## Makes night shifts only affect in-code public-flagged areas. Nightshifts hit the level as defined in __DEFINES/misc.dm that this is set to and anything below. ##
+NIGHT_SHIFT_PUBLIC_AREAS_ONLY 1
+
+## Nightshift toggles REQUIRE APC authorization ##
+#NIGHTSHIFT_TOGGLE_REQUIRES_AUTH
+
+## Nightshift toggles in public areas REQUIRE APC authorization ##
+NIGHTSHIFT_TOGGLE_PUBLIC_REQUIRES_AUTH
+
 ## Enable randomized shift start times##
 #RANDOMIZE_SHIFT_TIME
 

@@ -7,18 +7,20 @@
 /datum/design/bucket
 	name = "Bucket"
 	id = "bucket"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/reagent_containers/glass/bucket
-	category = list("initial","Tools")
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/crowbar
 	name = "Pocket Crowbar"
 	id = "crowbar"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 50)
 	build_path = /obj/item/crowbar
-	category = list("initial","Tools")
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/flashlight
 	name = "Flashlight"
@@ -63,10 +65,11 @@
 /datum/design/tscanner
 	name = "T-Ray Scanner"
 	id = "tscanner"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 150)
 	build_path = /obj/item/t_scanner
-	category = list("initial","Tools")
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/weldingtool
 	name = "Welding Tool"
@@ -74,7 +77,8 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 70, MAT_GLASS = 20)
 	build_path = /obj/item/weldingtool
-	category = list("initial","Tools")
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/mini_weldingtool
 	name = "Emergency Welding Tool"
@@ -87,26 +91,28 @@
 /datum/design/screwdriver
 	name = "Screwdriver"
 	id = "screwdriver"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 75)
 	build_path = /obj/item/screwdriver
-	category = list("initial","Tools")
-
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 /datum/design/wirecutters
 	name = "Wirecutters"
 	id = "wirecutters"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 80)
 	build_path = /obj/item/wirecutters
-	category = list("initial","Tools")
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/wrench
 	name = "Wrench"
 	id = "wrench"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 150)
 	build_path = /obj/item/wrench
-	category = list("initial","Tools")
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/welding_helmet
 	name = "Welding Helmet"
@@ -122,8 +128,9 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
 	build_path = /obj/item/stack/cable_coil/random
-	category = list("initial","Tools")
+	category = list("initial","Tools","Tool Designs")
 	maxstack = 30
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/toolbox
 	name = "Toolbox"

@@ -12,7 +12,7 @@
 	knockdown = 20
 	speed = 2
 	range = 16
-	forcedodge = TRUE
+	movement_type = FLYING | UNSTOPPABLE
 	var/datum/beam/arm
 	var/handedness = 0
 
@@ -28,7 +28,7 @@
 
 /obj/item/projectile/curse_hand/prehit(atom/target)
 	if(target == original)
-		forcedodge = FALSE
+		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
 	else if(!isturf(target))
 		return FALSE
 	return ..()
@@ -37,7 +37,7 @@
 	if(arm)
 		arm.End()
 		arm = null
-	if(forcedodge)
+	if(CHECK_BITFIELD(movement_type, UNSTOPPABLE))
 		playsound(src, 'sound/effects/curse3.ogg', 25, 1, -1)
 	var/turf/T = get_step(src, dir)
 	new/obj/effect/temp_visual/dir_setting/curse/hand(T, dir, handedness)
