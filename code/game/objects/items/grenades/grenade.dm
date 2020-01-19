@@ -1,4 +1,4 @@
- /obj/item/grenade
+/obj/item/grenade
 	name = "grenade"
 	desc = "It has an adjustable timer."
 	w_class = WEIGHT_CLASS_SMALL
