@@ -21,6 +21,7 @@
 	range = 2
 
 /obj/item/projectile/sickshot/on_hit(var/atom/movable/target, var/blocked = 0)
+	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
 		if(prob(5))
@@ -28,14 +29,13 @@
 				H.release_vore_contents()
 				H.visible_message("<span class='danger'>[H] contracts strangely, spewing out contents on the floor!</span>", \
  						"<span class='userdanger'>You spew out everything inside you on the floor!</span>")
-		return
+		return BULLET_ACT_HIT
 
 
 ////////////////////////// Anti-Noms Drugs //////////////////////////
 /*
 /datum/reagent/medicine/ickypak
 	name = "Ickypak"
-	id = "ickypak"
 	description = "A foul-smelling green liquid, for inducing muscle contractions to expel accidentally ingested things."
 	reagent_state = LIQUID
 	color = "#0E900E"
@@ -57,6 +57,6 @@
 
 /datum/chemical_reaction/ickypak
 	name = "Ickypak"
-	id = "ickypak"
-	results = list("ickypak" = 2)
-	required_reagents = list("chlorine" = 2 , "oil" = 1) */
+	id = /datum/reagent/medicine/ickypak
+	results = list(/datum/reagent/medicine/ickypak = 2)
+	required_reagents = list(/datum/reagent/chlorine = 2 , /datum/reagent/oil = 1) */

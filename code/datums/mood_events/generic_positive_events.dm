@@ -23,10 +23,13 @@
 	mood_change = 3
 	timeout = 3000
 
-/datum/mood_event/pet_corgi
-	description = "<span class='nicegreen'>Corgis are adorable! I can't stop petting them!</span>\n"
-	mood_change = 3
-	timeout = 3000
+/datum/mood_event/pet_animal
+	description = "<span class='nicegreen'>Animals are adorable! I can't stop petting them!</span>\n"
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/pet_animal/add_effects(mob/animal)
+	description = "<span class='nicegreen'>\The [animal.name] is adorable! I can't stop petting [animal.p_them()]!</span>\n"
 
 /datum/mood_event/honk
 	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
@@ -139,6 +142,16 @@
 	mood_change = 2
 	timeout = 15 MINUTES
 
+/datum/mood_event/nanite_happiness
+	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
+	mood_change = 7
+
+/datum/mood_event/nanite_happiness/add_effects(message)
+	description = "<span class='nicegreen robot'>+++++++[message]+++++++</span>\n"
+
+/datum/mood_event/area
+	description = "" //Fill this out in the area
+	mood_change = 0
 //Power gamer stuff below
 /datum/mood_event/drankblood
 	description = "<span class='nicegreen'>I have fed greedly from that which nourishes me.</span>\n"
