@@ -11,8 +11,6 @@
 	density = FALSE
 	stat = DEAD
 
-	anchored = TRUE	//  don't get pushed around
-
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
 	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles

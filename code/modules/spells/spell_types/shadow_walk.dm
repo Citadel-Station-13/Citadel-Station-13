@@ -90,7 +90,7 @@
 	return
 
 /obj/effect/dummy/phased_mob/shadow/bullet_act()
-	return
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/shadow/singularity_act()
 	return

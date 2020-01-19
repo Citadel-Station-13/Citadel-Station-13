@@ -182,6 +182,7 @@
 #define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
+#define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 #define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
 
 // common trait sources
@@ -243,4 +244,5 @@
 #define NUKEOP_ANTAGONIST "nukeop-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define NUKEOP_TRAIT "nuke-op"
+#define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
