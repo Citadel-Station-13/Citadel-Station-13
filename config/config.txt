@@ -110,6 +110,9 @@ LOG_GAME
 ## log player votes
 LOG_VOTE
 
+## log player crafting
+LOG_CRAFT
+
 ## log client Whisper
 LOG_WHISPER
 
