@@ -402,7 +402,7 @@
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
 
 	var/results = 0
-	if(last_update_state == update_state && last_update_overlay == update_overlay && (hijacker ? hijackerlast : !hijackerlast)
+	if(last_update_state == update_state && last_update_overlay == update_overlay && hijacker ? hijackerlast : !hijackerlast)
 		return 0
 	if(last_update_state != update_state)
 		results += 1
