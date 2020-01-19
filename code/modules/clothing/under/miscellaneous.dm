@@ -467,6 +467,34 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
+/obj/item/clothing/under/sundresswhite
+	name = "white sundress"
+	desc = "Makes you want to frolic in a field of lillies."
+	icon_state = "sundress_white"
+	item_state = "sundress"
+	item_color = "sundress_white"
+	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/greendress
+	name = "green dress"
+	desc = "A tight green dress"
+	icon_state = "dress_green"
+	item_color = "dress_green"
+	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/pinkdress
+	name = "pink dress"
+	desc = "A tight pink dress"
+	icon_state = "dress_pink"
+	item_color = "dress_pink"
+	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
 /obj/item/clothing/under/captainparade
 	name = "captain's parade uniform"
 	desc = "A captain's luxury-wear, for special occasions."
@@ -500,12 +528,40 @@
 	item_color = "assistant_formal"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/staffassistant
+	name = "staff assistant's jumpsuit"
+	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
+	icon = 'goon/icons/obj/item_js_rank.dmi'
+	alternate_worn_icon = 'goon/icons/mob/worn_js_rank.dmi'
+	icon_state = "assistant"
+	item_state = "gy_suit"
+	item_color = "assistant"
+	mutantrace_variation = NONE
+
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
 	desc = "Filled with Latin fire."
 	icon_state = "black_tango"
 	item_state = "wcoat"
 	item_color = "black_tango"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/westernbustle
+	name = "western bustle dress"
+	desc = "Filled with Western fire."
+	icon_state = "western_bustle"
+	item_state = "wcoat"
+	item_color = "western_bustle"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/flamenco
+	name = "flamenco dress"
+	desc = "Filled with Latin fire."
+	icon_state = "flamenco"
+	item_state = "wcoat"
+	item_color = "flamenco"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -525,6 +581,43 @@
 	icon_state = "sailor_dress"
 	item_state = "sailordress"
 	item_color = "sailor_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/flowerdress
+	name = "flower dress"
+	desc = "Lovely dress"
+	icon_state = "flower_dress"
+	item_state = "sailordress"
+	item_color = "flower_dress"
+	body_parts_covered = CHEST|GROIN|LEGS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/sweptskirt
+	name = "swept skirt"
+	desc = "Formal skirt"
+	icon_state = "skirt_swept"
+	item_color = "skirt_swept"
+	body_parts_covered = GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/corset
+	name = "black corset"
+	desc = "Nanotrasen is not resposible for any organ damage"
+	icon_state = "corset"
+	item_color = "corset"
+	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/croptop
+	name = "crop top"
+	desc = "We've saved money by giving you half a shirt!"
+	icon_state = "croptop"
+	item_color = "croptop"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -667,7 +760,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
 	slowdown = 1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 	can_adjust = FALSE
 	strip_delay = 80
 	var/next_extinguish = 0

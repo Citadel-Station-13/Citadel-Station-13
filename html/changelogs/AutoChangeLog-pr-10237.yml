@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Stops humanoids whose skin_tone variable is set to \"albino\" from showing up as pale when examined should their species not use skintones anyway."

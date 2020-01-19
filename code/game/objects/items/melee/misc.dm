@@ -216,10 +216,11 @@
 			return
 	else
 		if(last_hit < world.time)
+			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
+				return
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-					return
 				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
@@ -357,7 +358,8 @@
 /obj/item/melee/supermatter_sword/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[P] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-	consume_everything()
+	consume_everything(P)
+	return BULLET_ACT_HIT
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")

@@ -22,6 +22,7 @@
 	muzzle_ignore = TRUE
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
+	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/carbon/clap/run_emote(mob/living/user, params)
 	. = ..()

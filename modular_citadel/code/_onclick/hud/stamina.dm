@@ -11,7 +11,7 @@
 /obj/screen/staminas/Click(location,control,params)
 	if(isliving(usr))
 		var/mob/living/L = usr
-		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss()]</b> stamina loss.<br>Your stamina buffer can take <b>[L.stambuffer]</b> stamina loss, and will use <b>50%</b> of that stamina loss when recharging.<br>Your stamina buffer is <b>[(L.stambuffer*(100/L.stambuffer))-(L.bufferedstam*(100/L.stambuffer))]%</b> full.</span>")
+		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss()]</b> stamina loss.<br>Your stamina buffer can take <b>[L.stambuffer]</b> stamina loss, and recharges at no cost.<br>Your stamina buffer is <b>[(L.stambuffer*(100/L.stambuffer))-(L.bufferedstam*(100/L.stambuffer))]%</b> full.</span>")
 
 /obj/screen/staminas/update_icon_state()
 	var/mob/living/carbon/user = hud?.mymob
@@ -22,7 +22,7 @@
 	else if(user.hal_screwyhud == 5)
 		icon_state = "stamina0"
 	else
-		icon_state = "stamina[max(FLOOR(user.getStaminaLoss() /20, 1), 0, 6)]"
+		icon_state = "stamina[CLAMP(FLOOR(user.getStaminaLoss() /20, 1), 0, 6)]"
 
 //stam buffer
 /obj/screen/staminabuffer
