@@ -360,8 +360,8 @@
 			playsound(H, 'sound/effects/shovel_dig.ogg', 70, 1)
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
-			return 2
-	return 0
+			return BULLET_ACT_BLOCK
+	return ..()
 
 //Reflects lasers and resistant to burn damage, but very vulnerable to brute damage. Shatters on death.
 /datum/species/golem/glass
@@ -397,8 +397,8 @@
 				var/turf/target = get_turf(P.starting)
 				// redirect the projectile
 				P.preparePixelProjectile(locate(CLAMP(target.x + new_x, 1, world.maxx), CLAMP(target.y + new_y, 1, world.maxy), H.z), H)
-			return -1
-	return 0
+			return BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 //Teleports when hit or when it wants to
 /datum/species/golem/bluespace

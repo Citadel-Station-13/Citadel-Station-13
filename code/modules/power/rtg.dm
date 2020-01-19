@@ -74,7 +74,7 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, get_turf(src), 2, 3, 4, 8), 100) // Not a normal explosion.
 
 /obj/machinery/power/rtg/abductor/bullet_act(obj/item/projectile/Proj)
-	..()
+	. = ..()
 	if(!going_kaboom && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
 		message_admins("[ADMIN_LOOKUPFLW(Proj.firer)] triggered an Abductor Core explosion at [AREACOORD(src)] via projectile.")
 		log_game("[key_name(Proj.firer)] triggered an Abductor Core explosion at [AREACOORD(src)] via projectile.")
