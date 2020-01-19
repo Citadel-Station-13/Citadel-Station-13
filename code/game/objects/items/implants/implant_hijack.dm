@@ -48,7 +48,7 @@
 		return TRUE
 
 /obj/item/implant/hijack/proc/InterceptClickOn(mob/living/user,params,atom/object)
-	if (user.get_active_held_item() || isitem(object || !toggled || user.incapacitated())
+	if (user.get_active_held_item() || isitem(object) || !toggled || user.incapacitated())
 		return
 	var/area/a = get_area(object)
 	if (!hasSiliconAccessInArea(imp_in,a))
