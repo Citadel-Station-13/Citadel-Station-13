@@ -652,10 +652,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 				send_to_all(U)
 			
 			if("block")
-				block(usr, locate(href_list["block"]))
+				block_pda(usr, locate(href_list["block"]))
 			
 			if("unblock")
-				unblock(usr, href_list["unblock"])
+				unblock_pda(usr, href_list["unblock"])
 
 			if("cart")
 				if(cartridge)
@@ -755,7 +755,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		message += "\nSent from my PDA"
 	// Send the signal
 	var/list/string_targets = list()
-	var/blocked = 0
 	var/list/string_blocked
 	for(var/obj/item/pda/P in targets)
 		if(owner in P.blocked_pdas)
@@ -847,11 +846,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/create_message(mob/living/U, obj/item/pda/P)
 	send_message(U,list(P))
 
-/obj/item/pda/proc/block(mob/user, obj/item/pda/P)
+/obj/item/pda/proc/block_pda(mob/user, obj/item/pda/P)
 	to_chat(user, "<span class='notice'>[icon2html(src, user)] [P.owner] blocked from messages.</span>")
 	LAZYOR(blocked_pdas, P.owner)
 
-/obj/item/pda/proc/unblock(mob/user, unblock_target)
+/obj/item/pda/proc/unblock_pda(mob/user, unblock_target)
 	to_chat(user, "<span class='notice'>[icon2html(src, user)] [unblock_target] unblocked from messages.</span>")
 	LAZYREMOVE(blocked_pdas, unblock_target)
 
