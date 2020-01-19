@@ -107,10 +107,3 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 /obj/machinery/atmospherics/components/binary/valve/digital/on/layer3
 	piping_layer = 3
 	icon_state = "dvalve_map-3"
-
-/obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
-	if(!is_operational())
-		normalize_dir()
-		icon_state = "dvalve_nopower"
-		return
-	..()
