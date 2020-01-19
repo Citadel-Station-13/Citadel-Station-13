@@ -1,4 +1,4 @@
-/obj/item/grenade
+ /obj/item/grenade
 	name = "grenade"
 	desc = "It has an adjustable timer."
 	w_class = WEIGHT_CLASS_SMALL
@@ -93,9 +93,8 @@
 		var/obj/item/I = loc
 		I.grenade_prime_react(src)
 
-
-/obj/item/grenade/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+/obj/item/grenade/tool_act(mob/living/user, obj/item/I, tool_behaviour)
+	if(tool_behaviour == TOOL_SCREWDRIVER)
 		switch(det_time)
 			if ("1")
 				det_time = 10
