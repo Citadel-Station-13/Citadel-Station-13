@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	slot_flags = ITEM_SLOT_EARS
 	var/obj/item/encryptionkey/keyslot2 = null
 	dog_fashion = null
+	var/bowman = FALSE
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!</span>")
@@ -51,6 +52,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			. += "<span class='info'>Alt-click to toggle the high-volume mode.</span>"
 	else
 		. += "<span class='notice'>A small screen on the headset flashes, it's too small to read without holding or wearing the headset.</span>"
+
+/obj/item/radio/headset/ComponentInitialize()
+	. = ..()
+	if (bowman)
+		AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/Initialize()
 	. = ..()
@@ -81,10 +87,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs."
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
-
-/obj/item/radio/headset/syndicate/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	bowman = TRUE
 
 /obj/item/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -112,10 +115,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "This is used by your elite security force. Protects ears from flashbangs."
 	icon_state = "sec_headset_alt"
 	item_state = "sec_headset_alt"
-
-/obj/item/radio/headset/headset_sec/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	bowman = TRUE
 
 /obj/item/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -161,10 +161,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "The headset of the boss. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
-
-/obj/item/radio/headset/heads/captain/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	bowman = TRUE
 
 /obj/item/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -183,10 +180,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
-
-/obj/item/radio/headset/heads/hos/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	bowman = TRUE
 
 /obj/item/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -258,10 +252,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null
-
-/obj/item/radio/headset/headset_cent/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	bowman = TRUE
 
 /obj/item/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
@@ -274,7 +265,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
 	if (istype(W,/obj/item/headsetupgrader))
-		if (!("bowman" in name) && !("syndicate" in name) && !("alien" in name))
+		if (!bowman)
 			to_chat(user,"<span class='notice'>You upgrade [src].</span>")
 			bowmanize()
 			qdel(W)
@@ -364,4 +355,5 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	add_overlay(centerpixel)
 	name = replacetext(name,"headset", "bowman headset")
 	desc = "[desc] Protects ears from flashbangs."
+	bowman = TRUE
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
