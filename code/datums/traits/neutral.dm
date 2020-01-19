@@ -92,18 +92,9 @@
 	name = "Nymphomania"
 	desc = "You're always feeling a bit in heat. Also, you get aroused faster than usual."
 	value = 0
-	mob_trait = TRAIT_NYMPHO
+	mob_trait = TRAIT_PERMABONER
 	gain_text = "<span class='notice'>You are feeling extra wild.</span>"
 	lose_text = "<span class='notice'>You don't feel that burning sensation anymore.</span>"
-
-/datum/quirk/libido/add()
-	quirk_holder.min_arousal = 16
-	quirk_holder.arousal_rate = 3
-
-/datum/quirk/libido/remove()
-	if(quirk_holder)
-		quirk_holder.min_arousal = initial(quirk_holder.min_arousal)
-		quirk_holder.arousal_rate = initial(quirk_holder.arousal_rate)
 
 /datum/quirk/maso
 	name = "Masochism"
@@ -112,15 +103,6 @@
 	mob_trait = TRAIT_MASO
 	gain_text = "<span class='notice'>You desire to be hurt.</span>"
 	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
-
-/datum/quirk/exhibitionism
-	name = "Exhibitionism"
-	desc = "You don't mind showing off your bare body to strangers, in fact you find it quite satistying."
-	value = 0
-	medical_record_text = "Patient has been diagnosed with exhibitionistic disorder."
-	mob_trait = TRAIT_EXHIBITIONIST
-	gain_text = "<span class='notice'>You feel like exposing yourself to the world.</span>"
-	lose_text = "<span class='notice'>Indecent exposure doesn't sound as charming to you anymore.</span>"
 
 /datum/quirk/coldblooded
 	name = "Cold-blooded"

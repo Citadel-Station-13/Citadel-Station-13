@@ -677,18 +677,18 @@ RLD
 	icon_state = "rld"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	matter = 500
-	max_matter = 500
-	sheetmultiplier = 16
+	matter = 200
+	max_matter = 200
+	sheetmultiplier = 5
 	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
 	ammo_sections = 5
 	has_ammobar = TRUE
 
-	var/wallcost = 10
-	var/floorcost = 15
-	var/launchcost = 5
-	var/deconcost = 10
+	var/wallcost = 20
+	var/floorcost = 25
+	var/launchcost = 10
+	var/deconcost = 20
 
 	var/walldelay = 10
 	var/floordelay = 10

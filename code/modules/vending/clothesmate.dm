@@ -154,8 +154,9 @@
 					/obj/item/clothing/suit/jacket/letterman_syndie = 5,
 					/obj/item/clothing/under/jabroni = 2,
 					/obj/item/clothing/suit/vapeshirt = 2,
-					/obj/item/clothing/under/geisha = 4,,
-					/obj/item/clothing/under/keyholesweater = 3)
+					/obj/item/clothing/under/geisha = 4,
+					/obj/item/clothing/under/keyholesweater = 3,
+					/obj/item/clothing/under/staffassistant = 5)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered = 4,
 					/obj/item/clothing/head/mailman = 2,
 					/obj/item/clothing/under/rank/mailman = 2,

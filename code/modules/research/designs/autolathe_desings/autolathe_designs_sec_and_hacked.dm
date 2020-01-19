@@ -117,7 +117,7 @@
 	name = "Foam Riot Dart"
 	id = "riot_dart"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 1000) //Discount for making individually - no box = less metal!
+	materials = list(MAT_METAL = 1125) //Discount for making individually - no box = less metal!
 	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
 	category = list("hacked", "Security")
 

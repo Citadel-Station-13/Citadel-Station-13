@@ -153,7 +153,7 @@ SLIME SCANNER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(advanced && H.has_dna())
-			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
+			msg += "\n\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>"
 
 	to_chat(user, msg)
 	msg = ""
