@@ -208,7 +208,7 @@
 	wanted_types = list(/obj/item/shield/makeshift)
 
 /datum/bounty/item/assistant/toolbelts
-	name = "Tool Belts" //Made it 4 so you can't just buy one set of toolbelts to finish the bounty.
+	name = "Tool Belts" //Made it 5 so you can't just buy one set of toolbelts to finish the bounty.
 	description = "These things always seem to go missing. Ship us a few to help us restock."
 	reward = 1350
 	required_count = 5
