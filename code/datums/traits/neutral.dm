@@ -104,15 +104,6 @@
 	gain_text = "<span class='notice'>You desire to be hurt.</span>"
 	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
 
-/datum/quirk/coldblooded
-	name = "Cold-blooded"
-	desc = "Your body doesn't create its own internal heat, requiring external heat regulation."
-	value = 0
-	medical_record_text = "Patient is ectothermic."
-	mob_trait = TRAIT_COLDBLOODED
-	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
-	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"
-
 /datum/quirk/alcohol_intolerance
 	name = "Alcohol Intolerance"
 	desc = "You take toxin damage from alcohol rather than getting drunk."
