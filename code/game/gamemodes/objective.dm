@@ -9,9 +9,10 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
-	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
-	var/completed = 0					//currently only used for custom objectives.
-	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/target_amount = FALSE			//If they are focused on a particular number. Steal objectives have their own counter.
+	var/completed = FALSE				//currently only used for custom objectives.
+	var/completable = TRUE				//Whether this objective shows greentext when completed
+	var/martyr_compatible = FALSE		//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(var/text)
 	GLOB.objectives += src // CITADEL EDIT FOR CRYOPODS

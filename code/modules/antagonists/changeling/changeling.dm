@@ -552,11 +552,14 @@
 	if(objectives.len)
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+			if(objective.completable)
+				if(objective.check_completion())
+					report += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+				else
+					report += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+					win = FALSE
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				changelingwin = 0
+				report += "<B>Objective #[count]</B>: [objective.explanation_text]"
 			count++
 
 	if(changelingwin)

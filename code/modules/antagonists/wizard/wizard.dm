@@ -62,7 +62,7 @@
 
 /datum/antagonist/wizard/proc/create_objectives()
 	var/datum/objective/new_objective = new("Cause as much creative mayhem as you can aboard the station! The more outlandish your methods of achieving this, the better! Make sure there's a decent amount of crew alive to tell of your tale.")
-	new_objective.completed = TRUE //So they can greentext without admin intervention.
+	new_objective.completable = FALSE
 	new_objective.owner = owner
 	objectives += new_objective
 
