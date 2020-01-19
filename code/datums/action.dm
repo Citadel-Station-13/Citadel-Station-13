@@ -553,14 +553,15 @@
 /datum/action/item_action/removeAPCs/Trigger()
 	var/list/areas = list()
 	for (var/area/a in owner.siliconaccessareas)
-		areas += a.name
-	areas += "None"
-	var/removeAPC = input("Select an APC to remove:","Remove APC Control",1) in areas
-	if (removeAPC == "None")
+		areas[a.name] = a
+	var/removeAPC = input("Select an APC to remove:","Remove APC Control",1) as null|anything in areas
+	if (!removeAPC)
 		return
-	var/area/area = owner.siliconaccessareas[areas.Find(removeAPC)]
+	var/area/area = areas[removeAPC]
 	var/obj/machinery/power/apc/apc = area.get_apc()
-	apc.hijacker = 0
+	if (!apc)
+		return
+	apc.hijacker = null
 	apc.update_icon()
 	apc.set_hijacked_lighting()
 	owner.toggleSiliconAccessArea(area)
@@ -574,13 +575,14 @@
 /datum/action/item_action/accessAPCs/Trigger()
 	var/list/areas = list()
 	for (var/area/a in owner.siliconaccessareas)
-		areas += a.name
-	areas += "None"
-	var/accessAPC = input("Select an APC to access:","Access APC Interface",1) in areas
-	if (accessAPC == "None")
+		areas[a.name] = a
+	var/accessAPC = input("Select an APC to access:","Access APC Interface",1) as null|anything in areas
+	if (!accessAPC)
 		return
-	var/area/area = owner.siliconaccessareas[areas.Find(accessAPC)]
+	var/area/area = areas[accessAPC]
 	var/obj/machinery/power/apc/apc = area.get_apc()
+	if (!apc)
+		return
 	apc.ui_interact(owner)
 
 

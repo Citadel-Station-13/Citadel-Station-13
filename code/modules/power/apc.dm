@@ -104,7 +104,7 @@
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
 	var/obj/machinery/computer/apc_control/remote_control = null
-	var/mob/living/carbon/hijacker = 0
+	var/mob/living/carbon/hijacker
 	var/hijackerlast = FALSE
 
 /obj/machinery/power/apc/unlocked
@@ -402,14 +402,14 @@
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
 
 	var/results = 0
-	if(last_update_state == update_state && last_update_overlay == update_overlay && (hijacker == 0 ? 0 : 1) == hijackerlast)
+	if(last_update_state == update_state && last_update_overlay == update_overlay && (hijacker ? hijackerlast : !hijackerlast)
 		return 0
 	if(last_update_state != update_state)
 		results += 1
-	if(last_update_overlay != update_overlay || (hijacker == 0 ? 0 : 1) != hijackerlast)
+	if(last_update_overlay != update_overlay || (hijacker ? !hijackerlast : hijackerlast)
 		results += 2
-	if (hijacker ? TRUE : FALSE != hijackerlast)
-		hijackerlast = hijacker == 0 ? 0 : 1
+	if (hijacker ? !hijackerlast : hijackerlast)
+		hijackerlast = hijacker ? TRUE : FALSE
 	return results
 
 // Used in process so it doesn't update the icon too much
@@ -948,9 +948,7 @@
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
 		return TRUE
-	if (user == hijacker || hasSiliconAccessInArea(user,area))
-		return TRUE
-	if (!aidisabled && issilicon(user))
+	if (user == hijacker || (hasSiliconAccessInArea(user,area) && !aidisabled))
 		return TRUE
 	if(user.has_unlimited_silicon_privilege)
 		var/mob/living/silicon/ai/AI = user
