@@ -406,7 +406,7 @@
 		return 0
 	if(last_update_state != update_state)
 		results += 1
-	if(last_update_overlay != update_overlay || (hijacker ? !hijackerlast : hijackerlast)
+	if(last_update_overlay != update_overlay || hijacker ? !hijackerlast : hijackerlast)
 		results += 2
 	if (hijacker ? !hijackerlast : hijackerlast)
 		hijackerlast = hijacker ? TRUE : FALSE
