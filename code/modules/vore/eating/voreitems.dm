@@ -21,6 +21,7 @@
 	range = 2
 
 /obj/item/projectile/sickshot/on_hit(var/atom/movable/target, var/blocked = 0)
+	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
 		if(prob(5))
@@ -28,7 +29,7 @@
 				H.release_vore_contents()
 				H.visible_message("<span class='danger'>[H] contracts strangely, spewing out contents on the floor!</span>", \
  						"<span class='userdanger'>You spew out everything inside you on the floor!</span>")
-		return
+		return BULLET_ACT_HIT
 
 
 ////////////////////////// Anti-Noms Drugs //////////////////////////
