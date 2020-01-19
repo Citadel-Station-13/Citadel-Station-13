@@ -758,7 +758,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/string_blocked
 	for(var/obj/item/pda/P in targets)
 		if(owner in P.blocked_pdas)
-			blocked++
 			LAZYADD(string_blocked, P.owner)
 			continue
 		if(P.owner && P.ownjob)  // != src is checked by the UI
