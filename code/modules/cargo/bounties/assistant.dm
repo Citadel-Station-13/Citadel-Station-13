@@ -224,6 +224,6 @@
 /datum/bounty/item/assistant/pneumatic_cannon
 	name = "Pneumatic Cannons"
 	description = "Have you ever launched a tennis ball, newspaper, or ***** at someones head from across the room? No? We haven't either. Help us rectify this."
-	reward = "2000"
+	reward = 2000
 	required_count = 2
 	wanted_types = list(/obj/item/pneumatic_cannon/ghetto)
