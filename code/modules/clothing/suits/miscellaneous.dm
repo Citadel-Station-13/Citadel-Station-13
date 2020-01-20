@@ -826,6 +826,22 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	real = FALSE
 
+/obj/item/clothing/suit/hooded/wintercoat/durathread
+	name = "durathread winter coat"
+	desc = "The one coat to rule them all. Extremely durable while providing the utmost comfort."
+	icon_state = "coatdurathread"
+	item_state = "coatdurathread"
+	armor = list("melee" = 15, "bullet" = 8, "laser" = 25, "energy" = 5, "bomb" = 12, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/durathread
+
+/obj/item/clothing/suit/hooded/wintercoat/durathread/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed
+
+/obj/item/clothing/head/hooded/winterhood/durathread
+	icon_state = "winterhood_durathread"
+	armor = list("melee" = 20, "bullet" = 8, "laser" = 15, "energy" = 8, "bomb" = 25, "bio" = 10, "rad" = 15, "fire" = 75, "acid" = 37)
+
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"

@@ -1,0 +1,5 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Ports the special nanite remote, mood programs, and research generating nanites"
+  - balance: "rebalances some nanites"
