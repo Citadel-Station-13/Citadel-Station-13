@@ -6,6 +6,8 @@
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
 
+#define VISUALIZE_ACTIVE_TURFS "bepis"
+
 SUBSYSTEM_DEF(air)
 	name = "Atmospherics"
 	init_order = INIT_ORDER_AIR

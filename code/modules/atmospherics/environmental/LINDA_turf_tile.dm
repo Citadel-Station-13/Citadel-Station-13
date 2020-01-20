@@ -13,6 +13,9 @@
 	var/archived_cycle = 0
 	var/current_cycle = 0
 
+	//used to artificially slow down equalization
+	var/last_equalize = 0
+
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
 	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
@@ -154,6 +157,9 @@
 
 	current_cycle = fire_count
 
+	if(fire_count - last_equalize < 4)
+		return
+
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
@@ -161,21 +167,25 @@
 	var/cached_atmos_cooldown = atmos_cooldown + 1
 
 	var/planet_atmos = planetary_atmos
+	var/datum/gas_mixture/our_air = air
 	if (planet_atmos)
+		var/datum/gas_mixture/G = new
+		G.copy_from_turf(src)
+		ARCHIVE_TEMPERATURE(G)
+		if(!(our_air.compare(G)))
+			SSair.remove_from_active(src)
+			return // stop this early so it doesn't get *too* excited
 		adjacent_turfs_length++
 
-	var/datum/gas_mixture/our_air = air
-
+	var/should_share_air = FALSE
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
 
 		if(fire_count <= enemy_tile.current_cycle)
 			continue
-		enemy_tile.archive()
 
 	/******************* GROUP HANDLING START *****************************************************************/
 
-		var/should_share_air = FALSE
 		var/datum/gas_mixture/enemy_air = enemy_tile.air
 
 		//cache for sanic speed
@@ -199,30 +209,43 @@
 			our_excited_group = excited_group
 			should_share_air = TRUE
 
-		//air sharing
-		if(should_share_air)
-			var/difference = our_air.share(enemy_air, adjacent_turfs_length)
-			if(difference)
-				if(difference > 0)
-					consider_pressure_difference(enemy_tile, difference)
-				else
-					enemy_tile.consider_pressure_difference(src, -difference)
-			LAST_SHARE_CHECK
+	if(should_share_air)
+		var/datum/gas_mixture/final_air = new()
+		final_air.merge(our_air.copy())
+		for(var/t in adjacent_turfs)
+			var/turf/open/enemy_tile = t
+			final_air.merge(enemy_tile.air.copy())
+		if (planet_atmos) //share our air with the "atmosphere" "above" the turf
+			var/datum/gas_mixture/G = new
+			G.copy_from_turf(src)
+			ARCHIVE_TEMPERATURE(G)
+			if(!(our_air.compare(G)))
+				return // stop this early so it doesn't get *too* excited
+			final_air.merge(G)
+		var/datum/gas_mixture/new_air = (final_air.remove(final_air.total_moles() / (adjacent_turfs_length + 1)))
+		if(!istype(new_air)) // this can happen if this runs in space
+			return
+		GAS_GARBAGE_COLLECT(new_air)
+		our_air.last_share = new_air.total_moles() - our_air.total_moles()
+		our_air.copy_from(new_air)
+		update_visuals()
+		last_equalize = fire_count
+		var/new_air_pressure = new_air.return_pressure()
+		for(var/t in adjacent_turfs)
+			var/turf/open/enemy_tile = t
+			var/difference = enemy_tile.air.return_pressure() - new_air_pressure
+			enemy_tile.air.copy_from(new_air)
+			enemy_tile.last_equalize = max(enemy_tile.last_equalize,fire_count-3)
+			enemy_tile.update_visuals()
+			if(difference < 0)
+				consider_pressure_difference(enemy_tile, difference)
+			else
+				enemy_tile.consider_pressure_difference(src, -difference)
+		LAST_SHARE_CHECK
 
 
 	/******************* GROUP HANDLING FINISH *********************************************************************/
 
-	if (planet_atmos) //share our air with the "atmosphere" "above" the turf
-		var/datum/gas_mixture/G = new
-		G.copy_from_turf(src)
-		ARCHIVE_TEMPERATURE(G)
-		if(our_air.compare(G))
-			if(!our_excited_group)
-				var/datum/excited_group/EG = new
-				EG.add_turf(src)
-				our_excited_group = excited_group
-			our_air.share(G, adjacent_turfs_length)
-			LAST_SHARE_CHECK
 
 	SSair.add_to_react_queue(src)
 

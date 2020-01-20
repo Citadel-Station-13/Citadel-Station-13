@@ -149,9 +149,9 @@
 
 //OPEN TURF ATMOS
 #define OPENTURF_DEFAULT_ATMOS		"o2=22;n2=82;TEMP=293.15" //the default air mix that open turfs spawn
-#define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15°C telecommunications. also used for xenobiology slime killrooms
+#define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15ï¿½C telecommunications. also used for xenobiology slime killrooms
 #define AIRLESS_ATMOS				"TEMP=2.7" //space
-#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15°C snow and ice turfs
+#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15ï¿½C snow and ice turfs
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370" //used in the holodeck burn test program
 
 //ATMOSPHERICS DEPARTMENT GAS TANK TURFS
@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define GAS_GARBAGE_COLLECT(GASGASGAS)\
 	var/list/CACHE_GAS = GASGASGAS;\
 	for(var/id in CACHE_GAS){\
-		if(QUANTIZE(CACHE_GAS[id]) <= 0)\
+		if(CACHE_GAS[id] < 0.0000001)\
 			CACHE_GAS -= id;\
 	}
 
