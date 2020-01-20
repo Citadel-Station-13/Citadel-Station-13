@@ -408,3 +408,5 @@
 
 /datum/config_entry/number/dropped_modes
 	config_entry_value = 3
+
+/datum/config_entry/flag/suicide_allowed

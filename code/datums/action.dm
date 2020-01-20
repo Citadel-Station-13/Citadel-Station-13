@@ -585,6 +585,8 @@
 		return
 	apc.ui_interact(owner)
 
+/datum/action/item_action/flash
+	name = "Flash"
 
 //Preset for spells
 /datum/action/spell_action

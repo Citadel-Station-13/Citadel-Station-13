@@ -107,7 +107,7 @@
 /mob/living/proc/can_embed(obj/item/I)
 	return FALSE
 
-/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
+/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	var/obj/item/I
 	var/throwpower = 30
 	if(isitem(AM))
@@ -189,7 +189,7 @@
 	adjust_fire_stacks(3)
 	IgniteMob()
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
+/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user == anchored || !isturf(user.loc))
 		return FALSE
 
@@ -215,7 +215,7 @@
 		return FALSE
 
 	if(!user.pulling || user.pulling != src)
-		user.start_pulling(src, supress_message)
+		user.start_pulling(src, supress_message = supress_message)
 		return
 
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
