@@ -30,10 +30,10 @@
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)
-		var/ooga_chance = (radiation - RAD_MOB_MUTATE) / 25
-		if(ooga_chance > 0 && prob(ooga_chance))
-			gorillize() 
-			return
+		if(radiation > RAD_MOB_MUTATE)
+			if(prob((radiation - RAD_MOB_MUTATE) / 25))
+				gorillize() 
+				return
 		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 			if(!IsKnockdown())
 				emote("collapse")
