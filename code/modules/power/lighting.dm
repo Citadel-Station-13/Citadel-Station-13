@@ -333,7 +333,7 @@
 		else if (hijacked)
 			BR = BR * 1.5
 			PO = PO * 1.5
-			CO = color ? color : LIGHT_COLOR_YELLOW
+			CO = color || LIGHT_COLOR_YELLOW
 		else if (nightshift_enabled)
 			BR = nightshift_brightness
 			PO = nightshift_light_power

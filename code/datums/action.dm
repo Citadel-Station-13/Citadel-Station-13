@@ -559,7 +559,7 @@
 		return
 	var/area/area = areas[removeAPC]
 	var/obj/machinery/power/apc/apc = area.get_apc()
-	if (!apc)
+	if (!apc || !(apc in owner.siliconaccessareas))
 		return
 	apc.hijacker = null
 	apc.update_icon()
@@ -581,7 +581,7 @@
 		return
 	var/area/area = areas[accessAPC]
 	var/obj/machinery/power/apc/apc = area.get_apc()
-	if (!apc)
+	if (!apc || !(apc in owner.siliconaccessareas))
 		return
 	apc.ui_interact(owner)
 

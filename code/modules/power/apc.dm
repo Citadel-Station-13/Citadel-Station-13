@@ -970,7 +970,7 @@
 	. = ..()
 	if (!QDELETED(remote_control) && user == remote_control.operator)
 		. = UI_INTERACTIVE
-	if (hasSiliconAccessInArea(user,area))
+	if (user == hijacker && hasSiliconAccessInArea(user,area))
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)

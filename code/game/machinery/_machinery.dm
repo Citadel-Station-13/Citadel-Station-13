@@ -224,7 +224,7 @@ Class Procs:
 	return !(stat & (NOPOWER|BROKEN|MAINT))
 
 /obj/machinery/can_interact(mob/user)
-	var/silicon = issiliconoradminghost(user) || hasSiliconAccessInArea(user,get_area(src))
+	var/silicon = hasSiliconAccessInArea(user,get_area(src)) || IsAdminGhost(user)
 	if((stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE))
 		return FALSE
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
