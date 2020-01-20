@@ -280,8 +280,8 @@
 	if(.) //the attack was blocked
 		return
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
-		L.reagents.add_reagent("nutriment", 0.4)
-		L.reagents.add_reagent("vitamin", 0.4)
+		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
+		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
 
 //Cat made
 /mob/living/simple_animal/pet/cat/custom_cat

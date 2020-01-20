@@ -18,6 +18,28 @@
 	. = ..()
 	update_icon()
 
+/obj/machinery/recharge_station/upgraded
+
+/obj/machinery/recharge_station/upgraded/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/cyborgrecharger(null)
+	component_parts += new /obj/item/stock_parts/capacitor/super(null)
+	component_parts += new /obj/item/stock_parts/manipulator/pico(null)
+	component_parts += new /obj/item/stock_parts/cell/hyper(null)
+	RefreshParts()
+
+/obj/machinery/recharge_station/fullupgrade
+
+/obj/machinery/recharge_station/fullupgrade/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/cyborgrecharger(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()
+
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
 	repairs = 0
@@ -27,6 +49,13 @@
 		repairs += M.rating - 1
 	for(var/obj/item/stock_parts/cell/C in component_parts)
 		recharge_speed *= C.maxcharge / 10000
+
+/obj/machinery/recharge_station/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.</span>"
+		if(repairs)
+			to_chat(user, "<span class='notice'>[src] has been upgraded to support automatic repairs.<span>")
 
 /obj/machinery/recharge_station/process()
 	if(!is_operational())

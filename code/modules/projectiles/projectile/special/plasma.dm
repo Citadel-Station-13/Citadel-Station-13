@@ -29,7 +29,7 @@
 			mine_range--
 			range++
 		if(range > 0)
-			return -1
+			return BULLET_ACT_FORCE_PIERCE
 
 /obj/item/projectile/plasma/adv
 	damage = 28
@@ -47,3 +47,9 @@
 	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
+/obj/item/projectile/plasma/weak
+	dismemberment = 0
+	damage = 10
+	range = 4
+	mine_range = 0

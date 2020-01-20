@@ -34,7 +34,7 @@
 	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
-	return
+	return BULLET_ACT_HIT
 
 /mob/living/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
@@ -76,16 +76,16 @@
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		if(reflect_bullet_check(P, def_zone))
-			return -1 // complete projectile permutation
+			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
-			return 2
+			return BULLET_ACT_BLOCK
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor)
+	return P.on_hit(src, armor) ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0
@@ -107,7 +107,7 @@
 /mob/living/proc/can_embed(obj/item/I)
 	return FALSE
 
-/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
+/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	var/obj/item/I
 	var/throwpower = 30
 	if(isitem(AM))
@@ -189,7 +189,7 @@
 	adjust_fire_stacks(3)
 	IgniteMob()
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
+/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user == anchored || !isturf(user.loc))
 		return FALSE
 
@@ -215,7 +215,7 @@
 		return FALSE
 
 	if(!user.pulling || user.pulling != src)
-		user.start_pulling(src, supress_message)
+		user.start_pulling(src, supress_message = supress_message)
 		return
 
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
@@ -464,7 +464,7 @@
 		to_chat(src, "<span class='userdanger'>You resist Nar'Sie's influence... but not all of it. <i>Run!</i></span>")
 		adjustBruteLoss(35)
 		if(src && reagents)
-			reagents.add_reagent("heparin", 5)
+			reagents.add_reagent(/datum/reagent/toxin/heparin, 5)
 		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
 		GLOB.cult_narsie.souls_needed -= src

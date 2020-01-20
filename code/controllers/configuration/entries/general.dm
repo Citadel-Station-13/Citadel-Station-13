@@ -43,6 +43,8 @@
 
 /datum/config_entry/flag/log_vote	// log voting
 
+/datum/config_entry/flag/log_craft	// log crafting
+
 /datum/config_entry/flag/log_whisper	// log client whisper
 
 /datum/config_entry/flag/log_attack	// log attack messages
