@@ -104,7 +104,7 @@
 		mobility_flags |= MOBILITY_MOVE
 	else
 		mobility_flags &= ~MOBILITY_MOVE
-	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) || !recoveringstam
+	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !recoveringstam
 	var/canstand = canstand_involuntary && !resting
 
 	var/should_be_lying = !canstand
