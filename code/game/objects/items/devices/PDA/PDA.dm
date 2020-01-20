@@ -800,12 +800,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	tnote += "<i><b>&rarr; To [target_text]:</b></i><br>[signal.format_message()]<br>"
 	// Show it to ghosts
 	var/ghost_message = "<span class='name'>[owner] </span><span class='game say'>PDA Message</span> --> <span class='name'>[target_text]</span>: <span class='message'>[signal.format_message(TRUE)]</span>"
-	if(length(string_targets))
-		for(var/i in GLOB.dead_mob_list)
-			var/mob/M = i
-			if(M?.client.prefs.chat_toggles & CHAT_GHOSTPDA)
-				to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
-		to_chat(user, "<span class='info'>Message sent to [target_text]: \"[emoji_message]\"</span>")
+	for(var/i in GLOB.dead_mob_list)
+		var/mob/M = i
+		if(M?.client.prefs.chat_toggles & CHAT_GHOSTPDA)
+			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
+	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[emoji_message]\"</span>")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text] (BLOCKED:[string_blocked])")
 	if (!silent)
