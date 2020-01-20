@@ -117,17 +117,17 @@
 /datum/export/glasswork_spouty
 	cost = 1200
 	unit_name = "flask with spout"
-	export_types = list(/obj/item/reagent_containers/glass/beaker/flaskspouty)
+	export_types = list(/obj/item/reagent_containers/glass/beaker/flask/spouty)
 	include_subtypes = FALSE
 
 /datum/export/glasswork_smallflask
 	cost = 600
 	unit_name = "small flask"
-	export_types = list(/obj/item/reagent_containers/glass/beaker/flask_small)
+	export_types = list(/obj/item/reagent_containers/glass/beaker/flask)
 	include_subtypes = FALSE
 
 /datum/export/glasswork_largeflask
 	cost = 1000
 	unit_name = "large flask"
-	export_types = list(/obj/item/reagent_containers/glass/beaker/flask_small/flask_large)
+	export_types = list(/obj/item/reagent_containers/glass/beaker/flask/large)
 	include_subtypes = FALSE
