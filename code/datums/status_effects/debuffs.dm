@@ -99,12 +99,10 @@
 	id = "Mesmerize"
 	alert_type = /obj/screen/alert/status_effect/mesmerized
 
-/datum/status_effect/no_combat_mode/mesmerize/on_creation(mob/living/new_owner, set_duration)
-	. = ..()
+/datum/status_effect/no_combat_mode/mesmerize/on_apply()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
 
 /datum/status_effect/no_combat_mode/mesmerize/on_remove()
-	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
 
 /obj/screen/alert/status_effect/mesmerized

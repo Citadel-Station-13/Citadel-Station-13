@@ -108781,7 +108781,6 @@
 "dCs" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dCt" = (
@@ -108801,7 +108800,6 @@
 "dCu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dCv" = (
@@ -110237,7 +110235,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dEL" = (
@@ -110256,7 +110253,6 @@
 /area/science/robotics/lab)
 "dEM" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dEN" = (

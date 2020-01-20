@@ -31,7 +31,7 @@
 	if(auto_reflect(P, P.dir, get_turf(P), P.Angle) != -1)
 		return ..()
 
-	return BULLET_ACT_FORCE_PIERCE
+	return -1
 
 /obj/structure/destructible/clockwork/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 

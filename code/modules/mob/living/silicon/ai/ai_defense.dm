@@ -42,8 +42,9 @@
 
 
 /mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
-	. = ..()
+	..(Proj)
 	updatehealth()
+	return 2
 
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing

@@ -139,9 +139,9 @@
 
 /datum/world_topic/status/Run(list/input, addr)
 	if(!key_valid) //If we have a key, then it's safe to trust that this isn't a malicious packet. Also prevents the extra info from leaking
-		if(GLOB.topic_status_lastcache >= world.time)
+		if(GLOB.topic_status_lastcache <= world.time + 5)
 			return GLOB.topic_status_cache
-		GLOB.topic_status_lastcache = world.time + 5
+		GLOB.topic_status_lastcache = world.time
 	. = list()
 	.["version"] = GLOB.game_version
 	.["mode"] = "hidden"	//CIT CHANGE - hides the gamemode in topic() calls to prevent meta'ing the gamemode

@@ -833,8 +833,8 @@ Nothing else in the console has ID requirements.
 	for(var/i in 1 to length(ui))
 		if(!findtextEx(ui[i], RDSCREEN_NOBREAK))
 			ui[i] += "<br>"
-	. = ui.Join("")
-	return replacetextEx(., RDSCREEN_NOBREAK, "")
+		ui[i] = replacetextEx(ui[i], RDSCREEN_NOBREAK, "")
+	return ui.Join("")
 
 /obj/machinery/computer/rdconsole/Topic(raw, ls)
 	if(..())

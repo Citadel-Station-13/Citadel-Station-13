@@ -25394,7 +25394,6 @@
 /obj/structure/sign/poster/official/state_laws{
 	pixel_y = -32
 	},
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "blu" = (
@@ -25551,7 +25550,7 @@
 /area/science/lab)
 "blM" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "blO" = (
@@ -26060,7 +26059,6 @@
 /area/maintenance/aft)
 "bnb" = (
 /obj/machinery/recharge_station,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bnc" = (
@@ -49660,7 +49658,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "cum" = (
 /obj/machinery/recharge_station,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/service)
 "cun" = (
@@ -52365,7 +52362,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/landmark/start/roboticist,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cHT" = (
@@ -52442,7 +52438,7 @@
 "cIc" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cId" = (
@@ -55378,10 +55374,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"kRw" = (
-/obj/effect/landmark/start/roboticist,
-/turf/open/floor/plasteel/white,
-/area/science/robotics/lab)
 "kSb" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -102913,7 +102905,7 @@ aYV
 bfV
 bhw
 cHM
-kRw
+biL
 blB
 blF
 cHS

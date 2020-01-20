@@ -107,8 +107,8 @@
 /obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
 	life -= 10
 	if(life > 0)
-		. = BULLET_ACT_FORCE_PIERCE
-	return ..()
+		. = -1
+	..()
 
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"

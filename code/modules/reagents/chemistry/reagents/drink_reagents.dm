@@ -901,12 +901,7 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/list/adjusted = H.adjust_arousal(5,aphro = TRUE)
-		for(var/g in adjusted)
-			var/obj/item/organ/genital/G = g
-			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
+	M.adjustArousalLoss(5)
 	..()
 
 /datum/reagent/consumable/monkey_energy

@@ -222,6 +222,7 @@
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
 	id = "mixvirus"
+	results = list(/datum/reagent/blood = 1)
 	required_reagents = list(/datum/reagent/consumable/virus_food = 1)
 	required_catalysts = list(/datum/reagent/blood = 1)
 	var/level_min = 1
@@ -233,8 +234,8 @@
 	if(B && B.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
-			for(var/i in 1 to min(created_volume, 5))
-				D.Evolve(level_min, level_max)
+			D.Evolve(level_min, level_max)
+
 
 /datum/chemical_reaction/mix_virus/mix_virus_2
 
@@ -325,18 +326,19 @@
 	level_max = 8
 
 /datum/chemical_reaction/mix_virus/rem_virus
+
 	name = "Devolve Virus"
 	id = "remvirus"
 	required_reagents = list(/datum/reagent/medicine/synaptizine = 1)
 	required_catalysts = list(/datum/reagent/blood = 1)
 
 /datum/chemical_reaction/mix_virus/rem_virus/on_reaction(datum/reagents/holder, created_volume)
+
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
-			for(var/i in 1 to min(created_volume, 5))
-				D.Devolve()
+			D.Devolve()
 
 /datum/chemical_reaction/mix_virus/neuter_virus
 	name = "Neuter Virus"
@@ -345,12 +347,14 @@
 	required_catalysts = list(/datum/reagent/blood = 1)
 
 /datum/chemical_reaction/mix_virus/neuter_virus/on_reaction(datum/reagents/holder, created_volume)
+
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
-			for(var/i in 1 to min(created_volume, 5))
-				D.Neuter()
+			D.Neuter()
+
+
 
 ////////////////////////////////// foam and foam precursor ///////////////////////////////////////////////////
 

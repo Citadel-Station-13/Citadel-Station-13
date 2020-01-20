@@ -29,7 +29,7 @@
 			mine_range--
 			range++
 		if(range > 0)
-			return BULLET_ACT_FORCE_PIERCE
+			return -1
 
 /obj/item/projectile/plasma/adv
 	damage = 28

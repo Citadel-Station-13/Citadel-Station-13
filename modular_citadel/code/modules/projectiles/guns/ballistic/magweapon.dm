@@ -355,7 +355,7 @@
 	damage = 10
 	armour_penetration = 10
 	stamina = 10
-	movement_type = FLYING | UNSTOPPABLE
+	forcedodge = TRUE
 	range = 6
 	light_range = 1
 	light_color = LIGHT_COLOR_RED
@@ -363,14 +363,14 @@
 /obj/item/projectile/bullet/mags/hyper/inferno
 	icon_state = "magjectile-large"
 	stamina = 0
-	movement_type = FLYING | UNSTOPPABLE
+	forcedodge = FALSE
 	range = 25
 	light_range = 4
 
 /obj/item/projectile/bullet/mags/hyper/inferno/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 1, 2, 4, 5)
-	return BULLET_ACT_HIT
+	return 1
 
 ///ammo casings///
 
@@ -436,7 +436,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-toy"
 	name = "lasertag magbolt"
-	movement_type = FLYING | UNSTOPPABLE		//for penetration memes
+	forcedodge = TRUE		//for penetration memes
 	range = 5		//so it isn't super annoying
 	light_range = 2
 	light_color = LIGHT_COLOR_YELLOW

@@ -71,5 +71,6 @@
 
 /obj/structure/target_stake/bullet_act(obj/item/projectile/P)
 	if(pinned_target)
-		return pinned_target.bullet_act(P)
-	return ..()
+		pinned_target.bullet_act(P)
+	else
+		..()

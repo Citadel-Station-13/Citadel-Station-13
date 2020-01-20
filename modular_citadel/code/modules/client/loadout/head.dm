@@ -93,7 +93,6 @@
 	restricted_desc = "Engineering, Security, and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
-/*Commenting out Until next Christmas or made automatic
 /datum/gear/santahatr
 	name = "Red Santa Hat"
 	category = SLOT_HEAD
@@ -103,7 +102,6 @@
 	name = "Green Santa Hat"
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/christmashatg
-*/
 
 /datum/gear/cowboyhat
 	name = "Cowboy Hat, Brown"
@@ -131,3 +129,6 @@
 	path = /obj/item/clothing/head/cowboyhat/sec
 	restricted_desc = "Security"
 	restricted_roles = list("Warden","Detective","Security Officer","Head of Security")
+
+
+

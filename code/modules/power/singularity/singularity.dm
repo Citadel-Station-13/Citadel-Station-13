@@ -113,8 +113,7 @@
 
 
 /obj/singularity/bullet_act(obj/item/projectile/P)
-	qdel(P)
-	return BULLET_ACT_HIT //Will there be an impact? Who knows.  Will we see it? No.
+	return 0 //Will there be an impact? Who knows.  Will we see it? No.
 
 
 /obj/singularity/Bump(atom/A)

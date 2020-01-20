@@ -25468,7 +25468,6 @@
 "biw" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bix" = (
@@ -26659,7 +26658,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/landmark/start/roboticist,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "blJ" = (
@@ -27581,7 +27579,6 @@
 /area/science/robotics/lab)
 "bnQ" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "bnR" = (
@@ -28098,8 +28095,8 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "boY" = (
+/obj/effect/landmark/start/roboticist,
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "boZ" = (
@@ -98811,8 +98808,8 @@ beI
 bkt
 blH
 bmO
-boY
-boY
+bnQ
+bnQ
 bqi
 bry
 bsZ
@@ -99068,7 +99065,7 @@ bju
 bkt
 blI
 bmO
-boY
+bnQ
 boY
 bqi
 brz

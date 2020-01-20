@@ -74,7 +74,6 @@
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))
 		push_over()
-	return BULLET_ACT_HIT
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
 	if(!crayon || !user)

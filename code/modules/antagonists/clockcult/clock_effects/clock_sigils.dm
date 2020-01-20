@@ -319,9 +319,9 @@
 				L.dust()
 			else
 				if(!GLOB.ratvar_awakens && L.stat == CONSCIOUS)
-					vitality_drained = L.adjustToxLoss(1, forced = TRUE)
+					vitality_drained = L.adjustToxLoss(1)
 				else
-					vitality_drained = L.adjustToxLoss(1.5, forced = TRUE)
+					vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
 				GLOB.clockwork_vitality += vitality_drained
 			else
