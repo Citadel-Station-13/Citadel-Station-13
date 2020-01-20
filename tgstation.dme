@@ -3106,7 +3106,6 @@
 #include "modular_citadel\code\modules\admin\chat_commands.dm"
 #include "modular_citadel\code\modules\admin\holder2.dm"
 #include "modular_citadel\code\modules\admin\secrets.dm"
-#include "modular_citadel\code\modules\admin\topic.dm"
 #include "modular_citadel\code\modules\arousal\arousal.dm"
 #include "modular_citadel\code\modules\arousal\genitals.dm"
 #include "modular_citadel\code\modules\arousal\genitals_sprite_accessories.dm"
