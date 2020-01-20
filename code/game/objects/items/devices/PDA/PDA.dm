@@ -764,7 +764,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			string_targets += "[P.owner] ([P.ownjob])"
 	if(string_blocked)
 		string_blocked = english_list(string_blocked)
-		to_chat(user, "<span class='warning'>[icon2html(src, user)] The following PDAs have blocked your message: [string_blocked].</span>")
+		to_chat(user, "<span class='warning'>[icon2html(src, user)] The following recipients have blocked your message: [string_blocked].</span>")
 	for (var/obj/machinery/computer/message_monitor/M in targets)
 		// In case of "Reply" to a message from a console, this will make the
 		// message be logged successfully. If the console is impersonating
