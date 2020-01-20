@@ -1601,7 +1601,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"<span class='danger'>\The [user] slaps \the [target]'s ass!</span>",\
 			"<span class='notice'>You slap [user == target ? "your" : "\the [target]'s"] ass!</span>",\
 			"You hear a slap."
-		)			
+		)
 		return FALSE
 	else if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
@@ -1830,6 +1830,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(user == target && istype(user))
 		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
+			return
+		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
+			to_chat(user, "<span class='warning'>You can't seem to force yourself up right now!</span>")
 			return
 		if(CHECK_MOBILITY(user, MOBILITY_STAND))
 			to_chat(user, "<span class='notice'>You can only force yourself up if you're on the ground.</span>")
