@@ -67,7 +67,7 @@
 				standupwarning = "[src] struggles to stand up."
 		var/usernotice = automatic ? "<span class='notice'>You are now getting up. (Auto)</span>" : "<span class='notice'>You are now getting up.</span>"
 		visible_message("<span class='notice'>[standupwarning]</span>", usernotice, vision_distance = 5)
-		if(do_after(src, totaldelay, target = src))
+		if(do_after(src, totaldelay, target = src, required_mobility_flags = MOBILITY_MOVE))
 			set_resting(FALSE, FALSE)
 			attemptingstandup = FALSE
 			return TRUE

@@ -1075,7 +1075,7 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/user)
+/obj/item/toy/cards/singlecard/attack_self(mob/living/user)
 	. = ..()
 	if(.)
 		return

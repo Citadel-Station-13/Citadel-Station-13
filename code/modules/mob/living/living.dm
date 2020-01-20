@@ -368,14 +368,9 @@
 		death()
 
 
-/mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat)
+/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
+	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || recoveringstam || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
 		return TRUE
-	if(!CHECK_BITFIELD(mobility_flags, MOBILITY_FLAGS_ANY_INTERACTION))
-		return TRUE
-	if(!ignore_restraints && restrained(ignore_grab))
-		return TRUE
-	return FALSE
 
 /mob/living/canUseStorage()
 	if (get_num_arms() <= 0)

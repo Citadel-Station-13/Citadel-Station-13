@@ -433,7 +433,8 @@
 	name = "Shift Nerves"
 
 /datum/action/item_action/explosive_implant
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	name = "Activate Explosive Implant"
 
 /datum/action/item_action/toggle_research_scanner
