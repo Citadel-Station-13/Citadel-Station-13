@@ -158,6 +158,7 @@
 				I.CheckParts(parts, R)
 				if(send_feedback)
 					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
+				log_craft("[I] crafted by [user] at [loc_name(I.loc)]")
 				return 0
 			return "."
 		return ", missing tool."
