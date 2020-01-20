@@ -121,6 +121,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = "A toolbox painted black with a red stripe. It looks more heavier than normal toolboxes."
 	force = 15
 	throwforce = 18
+	can_rubberify = FALSE
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
