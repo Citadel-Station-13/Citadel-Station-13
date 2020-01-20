@@ -6,15 +6,15 @@
 // override_stam = If this is set, does this amount of stamina damage.
 /mob/living/proc/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
 	if(!iscarbon(src))
-		return Paralyze(amount, updating, ignore_canstun)
+		return Paralyze(amount, updating, ignore_canknockdown)
 	if(istype(buckled, /obj/vehicle/ridden))
 		buckled.unbuckle_mob(src)
 	var/drop_items = amount > 80		//80 is cutoff for old item dropping behavior
-	var/stamdmg = isnull(override_stam)? (amount * 0.25) : override_stam
+	var/stamdmg = isnull(override_stamdmg)? (amount * 0.25) : override_stamdmg
 	KnockToFloor(drop_items, TRUE, updating)
 	adjustStaminaLoss(stamdmg)
-	if(!isnull(override_duration))
-		Paralyze(override_duration)
+	if(!isnull(override_hardstun))
+		Paralyze(override_hardstun)
 
 ////////////////////////////// STUN ////////////////////////////////////
 
