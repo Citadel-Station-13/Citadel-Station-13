@@ -264,7 +264,6 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 			continue
 
 		delta = QUANTIZE(us - them)/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
-		our_moles += cached
 
 		if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 			gas_heat_capacity = delta * cached_gasheats[id]
