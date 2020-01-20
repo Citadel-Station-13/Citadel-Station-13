@@ -208,6 +208,7 @@
 
 /mob/living/proc/canSuicide()
 	if(!CONFIG_GET(flag/suicide_allowed))
+		to_chat(src, "Suicide is not enabled in the config.")
 		return FALSE
 	switch(stat)
 		if(CONSCIOUS)
