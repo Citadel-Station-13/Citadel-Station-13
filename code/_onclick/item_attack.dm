@@ -100,10 +100,6 @@
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(iscarbon(user))
-		var/mob/living/carbon/tempcarb = user
-		if(!tempcarb.combatmode)
-			totitemdamage *= 0.5
 	if(user.resting)
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE

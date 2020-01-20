@@ -73,14 +73,8 @@
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(iscarbon(user))
-		var/mob/living/carbon/tempcarb = user
-		if(!tempcarb.combatmode)
-			totitemdamage *= 0.5
 	if(user.resting)
 		totitemdamage *= 0.5
-	if(!combatmode)
-		totitemdamage *= 1.5
 	//CIT CHANGES END HERE
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 		return FALSE

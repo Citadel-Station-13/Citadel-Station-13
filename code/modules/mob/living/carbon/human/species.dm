@@ -1512,12 +1512,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
-		if(!target.combatmode && damage < user.dna.species.punchstunthreshold)
-			damage = user.dna.species.punchstunthreshold - 1
 		if(user.resting)
 			damage *= 0.5
-		if(!user.combatmode)
-			damage *= 0.25
 		//END OF CITADEL CHANGES
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
