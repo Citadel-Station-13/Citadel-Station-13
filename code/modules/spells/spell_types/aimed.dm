@@ -94,11 +94,11 @@
 	name = "Lightning Bolt"
 	desc = "Fire a high powered lightning bolt at your foes!"
 	school = "evocation"
-	charge_max = 200
+	charge_max = 150
 	clothes_req = 1
 	invocation = "ZAP MUTHA'FUCKA"
 	invocation_type = "shout"
-	cooldown_min = 40
+	cooldown_min = 30
 	active_icon_state = "lightning"
 	base_icon_state = "lightning"
 	sound = 'sound/magic/lightningbolt.ogg'
