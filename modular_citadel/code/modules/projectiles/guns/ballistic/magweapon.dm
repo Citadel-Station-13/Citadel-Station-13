@@ -111,6 +111,7 @@
 	casing_ejector = FALSE
 	fire_delay = 2
 	recoil = 0.1
+	inaccuracy_modifier = 0.25
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -273,6 +274,7 @@
 	spread = 0
 	recoil = 0.1
 	casing_ejector = FALSE
+	inaccuracy_modifier = 0.5
 	weapon_weight = WEAPON_MEDIUM
 	dualwield_spread_mult = 1.4
 
@@ -353,7 +355,7 @@
 	damage = 10
 	armour_penetration = 10
 	stamina = 10
-	forcedodge = TRUE
+	movement_type = FLYING | UNSTOPPABLE
 	range = 6
 	light_range = 1
 	light_color = LIGHT_COLOR_RED
@@ -361,14 +363,14 @@
 /obj/item/projectile/bullet/mags/hyper/inferno
 	icon_state = "magjectile-large"
 	stamina = 0
-	forcedodge = FALSE
+	movement_type = FLYING | UNSTOPPABLE
 	range = 25
 	light_range = 4
 
 /obj/item/projectile/bullet/mags/hyper/inferno/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 1, 2, 4, 5)
-	return 1
+	return BULLET_ACT_HIT
 
 ///ammo casings///
 
@@ -434,7 +436,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-toy"
 	name = "lasertag magbolt"
-	forcedodge = TRUE		//for penetration memes
+	movement_type = FLYING | UNSTOPPABLE		//for penetration memes
 	range = 5		//so it isn't super annoying
 	light_range = 2
 	light_color = LIGHT_COLOR_YELLOW

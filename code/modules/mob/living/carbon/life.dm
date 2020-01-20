@@ -80,7 +80,7 @@
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-	if(reagents.has_reagent("lexorin"))
+	if(reagents.has_reagent(/datum/reagent/toxin/lexorin))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
@@ -156,7 +156,7 @@
 
 	//CRIT
 	if(!breath || (breath.total_moles() == 0) || !lungs)
-		if(reagents.has_reagent("epinephrine") && lungs)
+		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine) && lungs)
 			return
 		adjustOxyLoss(1)
 
@@ -357,7 +357,7 @@
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(reagents.has_reagent("formaldehyde", 15) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss())//CIT CHANGE
+	if(getStaminaLoss() && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
 		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
 	if(!recoveringstam && incomingstammult != 1)
@@ -516,7 +516,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(bufferedstam && world.time > stambufferregentime)
 		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
 		bufferedstam = max(bufferedstam - drainrate, 0)
-		adjustStaminaLoss(drainrate*0.5)
 	//END OF CIT CHANGES
 
 	var/restingpwr = 1 + 4 * resting

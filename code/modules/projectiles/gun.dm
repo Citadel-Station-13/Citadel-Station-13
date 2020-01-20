@@ -36,7 +36,7 @@
 	var/spread = 0						//Spread induced by the gun itself.
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
-	var/pb_knockback = 0
+	var/inaccuracy_modifier = 1
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -125,10 +125,6 @@
 		if(message)
 			if(pointblank)
 				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-				if(pb_knockback > 0)
-					var/atom/throw_target = get_edge_target_turf(pbtarget, user.dir)
-					pbtarget.throw_at(throw_target, pb_knockback, 2)
-
 			else
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
@@ -185,6 +181,7 @@
 	var/bonus_spread = 0
 	var/loop_counter = 0
 
+	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
@@ -525,3 +522,13 @@
 	if(A == chambered)
 		chambered = null
 		update_icon()
+
+/obj/item/gun/proc/getinaccuracy(mob/living/user)
+	if(!iscarbon(user))
+		return FALSE
+	else
+		var/mob/living/carbon/holdingdude = user
+		if(istype(holdingdude) && holdingdude.combatmode)
+			return (max((holdingdude.lastdirchange + weapon_weight * 25) - world.time,0) * inaccuracy_modifier)
+		else
+			return ((weapon_weight * 25) * inaccuracy_modifier)

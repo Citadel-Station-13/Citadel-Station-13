@@ -71,10 +71,16 @@
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	//CIT CHANGES START HERE - resting check
+	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
+	if(iscarbon(user))
+		var/mob/living/carbon/tempcarb = user
+		if(!tempcarb.combatmode)
+			totitemdamage *= 0.5
 	if(user.resting)
 		totitemdamage *= 0.5
+	if(!combatmode)
+		totitemdamage *= 1.5
 	//CIT CHANGES END HERE
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 		return FALSE
@@ -237,7 +243,7 @@
 		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
-	if(reagents.has_reagent("teslium"))
+	if(reagents.has_reagent(/datum/reagent/teslium))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	if(illusion)
 		adjustStaminaLoss(shock_damage)
