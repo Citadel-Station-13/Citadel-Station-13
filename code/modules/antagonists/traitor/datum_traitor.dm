@@ -215,7 +215,6 @@
 		else
 			var/datum/objective/flavor/traitor/flavor_objective = new
 			flavor_objective.owner = owner
-			flavor_objective.forge_objective()
 			add_objective(flavor_objective)
 
 /datum/antagonist/traitor/proc/forge_single_AI_objective()

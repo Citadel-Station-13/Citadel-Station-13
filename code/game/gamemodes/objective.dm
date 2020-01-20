@@ -989,25 +989,25 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	command_staff_only = TRUE
 
 
-/datum/objective/horde
-	name = "horde"
-	var/obj/item/horded_item = null
+/datum/objective/hoard
+	name = "hoard"
+	var/obj/item/hoarded_item = null
 
-/datum/objective/horde/get_target()
-	return horded_item
+/datum/objective/hoard/get_target()
+	return hoarded_item
 
-/datum/objective/horde/proc/set_target(obj/item/I)
+/datum/objective/hoard/proc/set_target(obj/item/I)
 	if(I)
-		horded_item = I
+		hoarded_item = I
 		explanation_text = "Keep [I] on your person at all costs."
-		return horded_item
+		return hoarded_item
 	else
 		explanation_text = "Free objective"
 		return
 
-/datum/objective/horde/check_completion()
+/datum/objective/hoard/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	if(!horded_item)
+	if(!hoarded_item)
 		return TRUE
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
@@ -1016,14 +1016,14 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 
 		for(var/obj/I in all_items) //Check for items
-			if(I == horded_item)
+			if(I == hoarded_item)
 				return TRUE
 	return FALSE
 
-/datum/objective/horde/heirloom
+/datum/objective/hoard/heirloom
 	name = "steal heirloom"
 
-/datum/objective/horde/heirloom/find_target()
+/datum/objective/hoard/heirloom/find_target()
 	set_target(pick(GLOB.family_heirlooms))
 
 GLOBAL_LIST_EMPTY(possible_sabotages)
@@ -1068,21 +1068,17 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	return targetinfo.check_conditions()
 
 /datum/objective/flavor
-	name = "Flavor"
+	name = "flavor"
 	completable = FALSE
+
+/datum/objective/flavor/New()
+	..()
+	forge_objective()
 
 /datum/objective/flavor/proc/forge_objective()
 
+/datum/objective/flavor/traitor
+	name = "traitor flavor"
+
 /datum/objective/flavor/traitor/forge_objective()
-	explanation_text = pickweight(
-		"Teach the heads of staff a lesson they will never forget." = 1,
-		"Show Nanotrasen the utility of a pure oxygen atmosphere." = 2,
-		"Waffle Co. wants you! That’s right, YOU! To cause as much humorous terrorism against Nanotrasen as possible! How? We don’t care as long as it’s entertaining! Be as creative and exciting as possible when carrying out your dirty deeds. Have fun!" = 1,
-		"Kill one of the station's beloved pets. Make a show of it, though you don't have to reveal yourself." = 3,
-		"Get illegal technology spread through the station." = 3,
-		"Slow down the process of research as much as possible." = (owner.assigned_role in list("Research Director", "Scientist", "Roboticist") ? 6 : 0),
-		"Channel your inner rat. Cut wires throughout the station." = (owner.assigned_role in list("Station Engineer", "Atmos Technician", "Assistant") ? 6 : 0),
-		"The Animal Rights Consortium needs you to save the innocent non-humanoid creatures aboard Citadel Station by any means necessary. Use your best judgement to decide whether an animal or xenobiological is abused, but if they are, ensure the abuser is punished. Avoid killing too many people if possible, and if you do harm any creatures, you will be terminated upon extraction." = 2,
-		"Donk Co. wants ransom money, and you are going to get it. Your goal is to kidnap and crewmember you can get your hands on and hold them hostage until you get something of significant value. Try to work out the best deal you can. Remember that Higher Value Targets are generally going to get a better deal so try to prioritize heads of staff if possible. We do not approve of mindless killing of Nanotrasen employees, so don’t do it." = 1,
-		"Steal as many shoes as possible. Lay broken glass everywhere." = 2
-	)
+	explanation_text = pickweight(CONFIG_GET(keyed_list/flavor_objective_traitor))

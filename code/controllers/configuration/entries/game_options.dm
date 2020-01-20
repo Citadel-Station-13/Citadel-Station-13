@@ -408,3 +408,9 @@
 
 /datum/config_entry/number/dropped_modes
 	config_entry_value = 3
+
+/datum/config_entry/keyed_list/flavor_objective_traitor
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+	splitter = "="
+	lowercase = FALSE

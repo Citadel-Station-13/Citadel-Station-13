@@ -104,7 +104,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	G.unlock()
 	var/datum/antagonist/survivalist/guns/our_antag_datum = H.mind.has_antag_datum(/datum/antagonist/survivalist/guns)
 	if(our_antag_datum)
-		var/datum/objective/horde/O = new()
+		var/datum/objective/hoard/O = new()
 		O.owner = H
 		O.set_target(G)
 		our_antag_datum.objectives += O
@@ -136,7 +136,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	var/datum/antagonist/survivalist/magic/our_antag_datum = H.mind.has_antag_datum(/datum/antagonist/survivalist/magic)
 	if(istype(our_antag_datum))
-		var/datum/objective/horde/O = new()
+		var/datum/objective/hoard/O = new()
 		O.owner = H
 		O.set_target(M)
 		our_antag_datum.objectives += O
