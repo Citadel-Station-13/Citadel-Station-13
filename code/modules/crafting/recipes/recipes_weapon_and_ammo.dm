@@ -111,7 +111,7 @@
 
 /datum/crafting_recipe/switchblade_ms
 	name = "Switchblade"
-	result = /obj/item/switchblade_makeshift
+	result = /obj/item/switchblade/makeshift
 	reqs = list(/obj/item/weaponcrafting/stock = 1,
 				/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/kitchen/knife = 1,
