@@ -111,7 +111,6 @@
 	casing_ejector = FALSE
 	fire_delay = 2
 	recoil = 0.1
-	inaccuracy_modifier = 0.25
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -274,7 +273,6 @@
 	spread = 0
 	recoil = 0.1
 	casing_ejector = FALSE
-	inaccuracy_modifier = 0.5
 	weapon_weight = WEAPON_MEDIUM
 	dualwield_spread_mult = 1.4
 

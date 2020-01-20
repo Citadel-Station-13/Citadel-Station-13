@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss() && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
+	if(getStaminaLoss())//CIT CHANGE
 		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
 	if(!recoveringstam && incomingstammult != 1)
