@@ -325,6 +325,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if((dir == NORTH) || (dir == WEST))
 		invert_icon = TRUE
 
+/obj/item/conveyor_switch_construct
+	name = "conveyor switch assembly"
+	desc = "A conveyor control switch assembly."
+	icon = 'icons/obj/recycling.dmi'
+	icon_state = "switch-off"
+	w_class = WEIGHT_CLASS_BULKY
+	var/id = "" //inherited by the switch
+
 /obj/item/conveyor_switch_construct/Initialize()
 	. = ..()
 	id = "[rand()]" //this couldn't possibly go wrong
