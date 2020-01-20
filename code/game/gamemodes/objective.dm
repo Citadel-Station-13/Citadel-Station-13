@@ -997,7 +997,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return horded_item
 
 /datum/objective/horde/proc/set_target(obj/item/I)
-	if(item)
+	if(I)
 		horded_item = I
 		explanation_text = "Keep [I] on your person at all costs."
 		return horded_item
@@ -1023,7 +1023,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/horde/heirloom
 	name = "steal heirloom"
 
-/datum/objective/horde/heirloom/proc/find_target()
+/datum/objective/horde/heirloom/find_target()
 	set_target(pick(GLOB.family_heirlooms))
 
 GLOBAL_LIST_EMPTY(possible_sabotages)

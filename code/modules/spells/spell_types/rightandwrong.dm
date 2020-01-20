@@ -102,9 +102,9 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
 	G.unlock()
-	var/datum/antagonist/survalist/guns/our_antag_datum = has_antag_datum(/datum/antagonist/survivalist/guns)
+	var/datum/antagonist/survivalist/guns/our_antag_datum = H.mind.has_antag_datum(/datum/antagonist/survivalist/guns)
 	if(our_antag_datum)
-		var/datum/objective/horde_item/O = new()
+		var/datum/objective/horde/O = new()
 		O.owner = H
 		O.set_target(G)
 		our_antag_datum.objectives += O
@@ -134,9 +134,9 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	var/obj/item/M = new magic_type(get_turf(H))
 	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
 
-	var/datum/antagonist/survalist/magic/our_antag_datum = has_antag_datum(/datum/antagonist/survivalist/magic)
-	if(our_antag_datum)
-		var/datum/objective/horde_item/O = new()
+	var/datum/antagonist/survivalist/magic/our_antag_datum = H.mind.has_antag_datum(/datum/antagonist/survivalist/magic)
+	if(istype(our_antag_datum))
+		var/datum/objective/horde/O = new()
 		O.owner = H
 		O.set_target(M)
 		our_antag_datum.objectives += O
