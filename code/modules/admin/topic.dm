@@ -1721,7 +1721,7 @@
 	else if(href_list["makeeligible"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/mob/M = locate(href_list["eligible"])
+		var/mob/M = locate(href_list["makeeligible"])
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.")
 		var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
