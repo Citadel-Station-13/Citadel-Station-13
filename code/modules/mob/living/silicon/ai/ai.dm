@@ -18,7 +18,7 @@
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
-	mobility_flags = NONE
+	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
@@ -326,8 +326,8 @@
 
 // AIs are immobile
 /mob/living/silicon/ai/update_mobility()
-	mobility_flags = NONE
-	return NONE
+	mobility_flags = ALL
+	return ALL
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
