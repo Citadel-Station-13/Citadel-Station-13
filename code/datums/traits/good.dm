@@ -8,12 +8,14 @@
 	mob_trait = TRAIT_ALCOHOL_TOLERANCE
 	gain_text = "<span class='notice'>You feel like you could drink a whole keg!</span>"
 	lose_text = "<span class='danger'>You don't feel as resistant to alcohol anymore. Somehow.</span>"
+	medical_record_text = "Patient demonstrates a high tolerance for alcohol."
 
 /datum/quirk/apathetic
 	name = "Apathetic"
 	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
 	value = 1
 	mood_quirk = TRUE
+	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
 
 /datum/quirk/apathetic/add()
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
@@ -42,6 +44,7 @@
 	mob_trait = TRAIT_EMPATH
 	gain_text = "<span class='notice'>You feel in tune with those around you.</span>"
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
+	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
 
 /datum/quirk/freerunning
 	name = "Freerunning"
@@ -50,6 +53,7 @@
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
+	medical_record_text = "Patient scored highly on cardio tests."
 
 /datum/quirk/friendly
 	name = "Friendly"
@@ -59,6 +63,7 @@
 	gain_text = "<span class='notice'>You want to hug someone.</span>"
 	lose_text = "<span class='danger'>You no longer feel compelled to hug others.</span>"
 	mood_quirk = TRUE
+	medical_record_text = "Patient demonstrates low-inhibitions for physical contact and well-developed arms. Requesting another doctor take over this case."
 
 /datum/quirk/jolly
 	name = "Jolly"
@@ -66,6 +71,11 @@
 	value = 1
 	mob_trait = TRAIT_JOLLY
 	mood_quirk = TRUE
+	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
+
+/datum/quirk/jolly/on_process()
+	if(prob(0.05))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
 
 /datum/quirk/light_step
 	name = "Light Step"
@@ -74,6 +84,7 @@
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
+	medical_record_text = "Patient's dexterity belies a strong capacity for stealth."
 
 /datum/quirk/quick_step
 	name = "Quick Step"
@@ -82,6 +93,7 @@
 	mob_trait = TRAIT_SPEEDY_STEP
 	gain_text = "<span class='notice'>You feel determined. No time to lose.</span>"
 	lose_text = "<span class='danger'>You feel less determined. What's the rush, man?</span>"
+	medical_record_text = "Patient scored highly on racewalking tests."
 
 /datum/quirk/musician
 	name = "Musician"
@@ -90,6 +102,7 @@
 	mob_trait = TRAIT_MUSICIAN
 	gain_text = "<span class='notice'>You know everything about musical instruments.</span>"
 	lose_text = "<span class='danger'>You forget how musical instruments work.</span>"
+	medical_record_text = "Patient brain scans show a highly-developed auditory pathway."
 
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -108,6 +121,7 @@
 	mob_trait = TRAIT_PHOTOGRAPHER
 	gain_text = "<span class='notice'>You know everything about photography.</span>"
 	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
+	medical_record_text = "Patient mentions photography as a stress-relieving hobby."
 
 /datum/quirk/photographer/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -121,12 +135,14 @@
 	desc = "You know your body well, and can accurately assess the extent of your wounds."
 	value = 2
 	mob_trait = TRAIT_SELF_AWARE
+	medical_record_text = "Patient demonstrates an uncanny knack for self-diagnosis."
 
 /datum/quirk/skittish
 	name = "Skittish"
 	desc = "You can conceal yourself in danger. Ctrl-shift-click a closed locker to jump into it, as long as you have access."
 	value = 2
 	mob_trait = TRAIT_SKITTISH
+	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
 
 /datum/quirk/spiritual
 	name = "Spiritual"
@@ -135,6 +151,7 @@
 	mob_trait = TRAIT_SPIRITUAL
 	gain_text = "<span class='notice'>You feel a little more faithful to the gods today.</span>"
 	lose_text = "<span class='danger'>You feel less faithful in the gods.</span>"
+	medical_record_text = "Patient reports a belief in a higher power."
 
 /datum/quirk/tagger
 	name = "Tagger"
@@ -143,6 +160,7 @@
 	mob_trait = TRAIT_TAGGER
 	gain_text = "<span class='notice'>You know how to tag walls efficiently.</span>"
 	lose_text = "<span class='danger'>You forget how to tag walls properly.</span>"
+	medical_record_text = "Patient was recently seen for possible paint huffing incident."
 
 /datum/quirk/tagger/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -158,6 +176,7 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+	medical_record_text = "Patient demonstrates a disturbing capacity for eating."
 
 /datum/quirk/trandening
 	name = "High Luminosity Eyes"
@@ -179,6 +198,7 @@
 	mob_trait = TRAIT_HIGH_BLOOD
 	gain_text = "<span class='notice'>You feel full of blood!</span>"
 	lose_text = "<span class='notice'>You feel like your blood pressure went down.</span>"
+	medical_record_text = "Patient's blood tests report an abnormal concentration of red blood cells in their bloodstream."
 
 /datum/quirk/bloodpressure/add()
 	var/mob/living/M = quirk_holder
@@ -188,3 +208,15 @@
 /datum/quirk/bloodpressure/remove()
 	var/mob/living/M = quirk_holder
 	M.blood_ratio = 1
+
+/datum/quirk/night_vision
+	name = "Night Vision"
+	desc = "You can see slightly more clearly in full darkness than most people."
+	value = 1
+	mob_trait = TRAIT_NIGHT_VISION
+	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
+	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
+
+/datum/quirk/night_vision/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.update_sight()

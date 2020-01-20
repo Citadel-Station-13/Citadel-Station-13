@@ -4,9 +4,15 @@
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
 "ab" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/indestructible/rock/snow,
-/area/awaymission/snowdin/cave/mountain)
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/netherworld/migo,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/post/mining_dock)
 "ac" = (
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -3669,7 +3675,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "im" = (
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 5
 	},
 /turf/open/floor/engine/cult{
@@ -8272,7 +8278,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "sb" = (
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 4;
 	name = "weak netherworld link"
 	},
@@ -10173,7 +10179,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 4;
 	name = "weak netherworld link"
 	},
@@ -10266,16 +10272,6 @@
 /obj/structure/grille/broken,
 /obj/item/shard,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/post/mining_dock)
-"xA" = (
-/mob/living/simple_animal/hostile/netherworld/migo,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_dock)
 "xB" = (
 /obj/effect/turf_decal/stripes/line{
@@ -16013,7 +16009,7 @@ ac
 ac
 "}
 (2,1,1) = {"
-ab
+ac
 ac
 ac
 ac
@@ -66518,7 +66514,7 @@ wD
 wT
 xe
 xs
-xA
+ab
 xI
 xN
 wL

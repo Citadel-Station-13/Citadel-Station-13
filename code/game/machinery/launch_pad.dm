@@ -23,6 +23,11 @@
 		E += M.rating*15
 	range = E
 
+/obj/machinery/launchpad/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Maximum range: <b>[range]</b> units.</span>"
+
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
 		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))

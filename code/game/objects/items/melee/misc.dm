@@ -79,17 +79,17 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/melee/sabre/on_exit_storage(obj/item/storage/S)
-	..()
-	var/obj/item/storage/belt/sabre/B = S
+/obj/item/melee/sabre/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/B = S.parent
 	if(istype(B))
 		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
-
-/obj/item/melee/sabre/on_enter_storage(obj/item/storage/S)
 	..()
-	var/obj/item/storage/belt/sabre/B = S
+
+/obj/item/melee/sabre/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/B = S.parent
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
 
 /obj/item/melee/sabre/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "sabre")
@@ -216,10 +216,11 @@
 			return
 	else
 		if(last_hit < world.time)
+			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
+				return
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-					return
 				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
@@ -332,13 +333,13 @@
 	if(proximity_flag)
 		consume_everything(target)
 
-/obj/item/melee/supermatter_sword/throw_impact(target)
+/obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
-	if(ismob(target))
-		var/mob/M
+	if(ismob(hit_atom))
+		var/mob/M = hit_atom
 		if(src.loc == M)
 			M.dropItemToGround(src)
-	consume_everything(target)
+	consume_everything(hit_atom)
 
 /obj/item/melee/supermatter_sword/pickup(user)
 	..()
@@ -357,7 +358,8 @@
 /obj/item/melee/supermatter_sword/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[P] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-	consume_everything()
+	consume_everything(P)
+	return BULLET_ACT_HIT
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")

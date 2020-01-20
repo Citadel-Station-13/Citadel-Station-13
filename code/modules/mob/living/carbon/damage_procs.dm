@@ -41,9 +41,6 @@
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
-		//citadel code
-		if(AROUSAL)
-			adjustArousalLoss(damage_amount)
 	return TRUE
 
 
@@ -65,6 +62,8 @@
 
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
+		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
@@ -74,6 +73,8 @@
 	return amount
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
+		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)

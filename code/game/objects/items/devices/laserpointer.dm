@@ -56,6 +56,14 @@
 	else
 		return ..()
 
+/obj/item/laser_pointer/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		if(!diode)
+			. += "<span class='notice'>The diode is missing.<span>"
+		else
+			. += "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.<span>"
+
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
 	laser_act(target, user, params)
@@ -69,14 +77,9 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(HAS_TRAIT(user, TRAIT_NOGUNS))
+	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
 		to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK))
-			to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
-			return
 
 	add_fingerprint(user)
 

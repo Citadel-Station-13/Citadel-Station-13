@@ -123,12 +123,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "eng_headset"
 	keyslot = new /obj/item/encryptionkey/headset_eng
 
-/obj/item/radio/headset/headset_rob
-	name = "robotics radio headset"
-	desc = "Made specifically for the roboticists, who cannot decide between departments."
-	icon_state = "rob_headset"
-	keyslot = new /obj/item/encryptionkey/headset_rob
-
 /obj/item/radio/headset/headset_med
 	name = "medical radio headset"
 	desc = "A headset for the trained staff of the medbay."
@@ -212,6 +206,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/heads/hop
 
+/obj/item/radio/headset/heads/qm
+	name = "\proper the quartermaster's headset"
+	desc = "The headset of the king (or queen) of paperwork."
+	icon_state = "com_headset"
+	keyslot = new /obj/item/encryptionkey/heads/qm
+
 /obj/item/radio/headset/headset_cargo
 	name = "supply radio headset"
 	desc = "A headset used by the QM and his slaves."
@@ -229,6 +229,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "Headset used by the service staff, tasked with keeping the station full, happy and clean."
 	icon_state = "srv_headset"
 	keyslot = new /obj/item/encryptionkey/headset_service
+
+/obj/item/radio/headset/headset_clown
+	name = "clown's headset"
+	desc = "A headset for the clown. Finally. A megaphone you can't take away."
+	icon_state = "srv_headset"
+	keyslot = new /obj/item/encryptionkey/headset_service
+	command = TRUE
+	commandspan = SPAN_CLOWN
 
 /obj/item/radio/headset/headset_cent
 	name = "\improper CentCom headset"

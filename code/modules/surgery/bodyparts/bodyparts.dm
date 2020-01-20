@@ -115,7 +115,7 @@
 	else
 		return ..()
 
-/obj/item/bodypart/throw_impact(atom/hit_atom)
+/obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(status != BODYPART_ROBOTIC)
 		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
@@ -172,9 +172,8 @@
 	var/total_damage = brute + burn
 
 	if(total_damage > can_inflict)
-		var/excess = total_damage - can_inflict
-		brute = round(brute * (excess / total_damage),DAMAGE_PRECISION)
-		burn = round(burn * (excess / total_damage),DAMAGE_PRECISION)
+		brute = round(brute * (max_damage / total_damage),DAMAGE_PRECISION)
+		burn = round(burn * (max_damage / total_damage),DAMAGE_PRECISION)
 
 	brute_dam += brute
 	burn_dam += burn

@@ -3,13 +3,18 @@
  * Metal
  * Plasteel
  * Wood
+ * Bamboo
  * Cloth
- * Plastic
+ * Silk
+ * Durathread
  * Cardboard
- * Paper Frames
  * Runed Metal (cult)
  * Brass (clockwork cult)
  * Bronze (bake brass)
+ * Gems
+ * Bones
+ * Plastic
+ * Paper Frames
  * Cotton/Duracotton
  */
 
@@ -106,7 +111,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/metal
-	grind_results = list("iron" = 20)
+	grind_results = list(/datum/reagent/iron = 20)
 	point_value = 2
 	tableVariant = /obj/structure/table
 
@@ -168,7 +173,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-	grind_results = list("iron" = 20, "plasma" = 20)
+	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 23
 	tableVariant = /obj/structure/table/reinforced
 
@@ -228,7 +233,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/wood
 	name = "wooden plank"
-	desc = "One can only guess that this is a bunch of wood."
+	desc = "One can only guess that this is a bunch of wood. You might be able to make a stake with this if you use something sharp on it"
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	item_state = "sheet-wood"
@@ -238,7 +243,35 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
-	grind_results = list("carbon" = 20)
+	grind_results = list(/datum/reagent/carbon = 20)
+
+/obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
+	// Taken from /obj/item/stack/rods/attackby in [rods.dm]
+	if(W.get_sharpness())
+		user.visible_message("[user] begins whittling [src] into a pointy object.", \
+				 "<span class='notice'>You begin whittling [src] into a sharp point at one end.</span>", \
+				 "<span class='italics'>You hear wood carving.</span>")
+		// 8 Second Timer
+		if(!do_after(user, 80, TRUE, src))
+			return
+		// Make Stake
+		var/obj/item/stake/basic/new_item = new(user.loc)
+		user.visible_message("[user] finishes carving a stake out of [src].", \
+				 "<span class='notice'>You finish carving a stake out of [src].</span>")
+		// Prepare to Put in Hands (if holding wood)
+		var/obj/item/stack/sheet/mineral/wood/N = src
+		var/replace = (user.get_inactive_held_item() == N)
+		// Use Wood
+		N.use(1)
+		// If stack depleted, put item in that hand (if it had one)
+		if (!N && replace)
+			user.put_in_hands(new_item)
+	if(istype(W, merge_type))
+		var/obj/item/stack/S = W
+		if(merge(S))
+			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+	else
+		. = ..()
 
 /obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.wood_recipes
@@ -246,6 +279,32 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
+
+/*
+ * Bamboo
+ */
+
+GLOBAL_LIST_INIT(bamboo_recipes, list ( \
+	new/datum/stack_recipe("punji sticks trap", /obj/structure/punji_sticks, 5, time = 30, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("blow gun", /obj/item/gun/syringe/blowgun, 10, time = 70), \
+	))
+
+/obj/item/stack/sheet/mineral/bamboo
+	name = "bamboo cuttings"
+	desc = "Finely cut bamboo sticks."
+	singular_name = "cut bamboo"
+	icon_state = "sheet-bamboo"
+	item_state = "sheet-bamboo"
+	icon = 'icons/obj/stack_objects.dmi'
+	throwforce = 15
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/mineral/bamboo
+	grind_results = list(/datum/reagent/carbon = 5)
+
+/obj/item/stack/sheet/mineral/bamboo/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.bamboo_recipes
+	return ..()
 
 /*
  * Cloth
@@ -300,6 +359,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/cloth/thirty
 	amount = 30
 
+/*
+ * Silk
+ */
 /obj/item/stack/sheet/silk
 	name = "silk"
 	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
@@ -313,7 +375,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 //	recipes = GLOB.silk_recipes
 //	return ..()
 
-//Durathread fuck slash-asterisk comments
+/*
+ * Durathread
+ */
 	GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/durathread, 4, time = 40),
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
@@ -336,45 +400,68 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	recipes = GLOB.durathread_recipes
 	return ..()
 
-
-
 /*
  * Cardboard
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
-	new/datum/stack_recipe("box", /obj/item/storage/box), \
-	new/datum/stack_recipe("sec box", /obj/item/storage/box/seclooking), \
-	new/datum/stack_recipe("light tubes", /obj/item/storage/box/lights/tubes), \
-	new/datum/stack_recipe("light bulbs", /obj/item/storage/box/lights/bulbs), \
-	new/datum/stack_recipe("mouse traps", /obj/item/storage/box/mousetraps), \
-	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
-	new/datum/stack_recipe("power cell", /obj/item/storage/box/cells), \
-	new/datum/stack_recipe("02", /obj/item/storage/box/otwo), \
-	null, \
-	new/datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot), \
-	new/datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot), \
-	new/datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag), \
-	new/datum/stack_recipe("12g ammo box", /obj/item/storage/box/lethalslugs), \
-	new/datum/stack_recipe("stun slug ammo box", /obj/item/storage/box/stunslug), \
-	new/datum/stack_recipe("tech shell ammo box", /obj/item/storage/box/techsslug), \
-	new/datum/stack_recipe("incendiary ammo box", /obj/item/storage/box/fireshot), \
-	new/datum/stack_recipe("firing pins", /obj/item/storage/box/firingpins), \
-	new/datum/stack_recipe("loose ammo", /obj/item/storage/box/ammoshells), \
-	null, \
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
-	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
-	new/datum/stack_recipe("folder", /obj/item/folder), \
-	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
-	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
-	null, \
-	new/datum/stack_recipe("colored brown", /obj/item/storage/box/brown), \
-	new/datum/stack_recipe("colored green", /obj/item/storage/box/green), \
-	new/datum/stack_recipe("colored red", /obj/item/storage/box/blue), \
-	new/datum/stack_recipe("colored blue", /obj/item/storage/box/red), \
-	new/datum/stack_recipe("colored yellow", /obj/item/storage/box/yellow), \
-	new/datum/stack_recipe("colored pink", /obj/item/storage/box/pink), \
-	new/datum/stack_recipe("colored purple", /obj/item/storage/box/purple), \
-	))
+	new/datum/stack_recipe("box", /obj/item/storage/box),										\
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3),				\
+	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg),				\
+	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4),					\
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5),					\
+	new/datum/stack_recipe("pizza box", /obj/item/pizzabox),									\
+	new/datum/stack_recipe("folder", /obj/item/folder),											\
+	// holy fuck why are there so many boxes
+	new/datum/stack_recipe_list("fancy boxes", list ( \
+		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), 				\
+		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), 					\
+		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets), 		\
+		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes), 			\
+		new /datum/stack_recipe("box (internals)", /obj/item/storage/box/otwo), 				\
+		null, 																					\
+		new /datum/stack_recipe("security-styled box", /obj/item/storage/box/seclooking), 		\
+		new /datum/stack_recipe("buckshot shell box", /obj/item/storage/box/lethalshot),		\
+		new /datum/stack_recipe("rubber shot shell box", /obj/item/storage/box/rubbershot),		\
+		new /datum/stack_recipe("beanbag shell box", /obj/item/storage/box/beanbag),			\
+		new /datum/stack_recipe("slug shell box", /obj/item/storage/box/lethalslugs), 			\
+		new /datum/stack_recipe("stunslug shell box", /obj/item/storage/box/stunslug), 			\
+		new /datum/stack_recipe("tech shell box", /obj/item/storage/box/techsslug), 			\
+		new /datum/stack_recipe("incendiary ammo box", /obj/item/storage/box/fireshot), 		\
+		new /datum/stack_recipe("loose ammo box", /obj/item/storage/box/ammoshells), 			\
+		new /datum/stack_recipe("firing pins box", /obj/item/storage/box/firingpins), 			\
+		null,																					\
+		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs),				\
+		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes),					\
+		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs),				\
+		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids),						\
+		new /datum/stack_recipe("PDA box", /obj/item/storage/box/PDAs),							\
+		null,																					\
+		new /datum/stack_recipe("pill bottle box", /obj/item/storage/box/pillbottles),			\
+		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers),					\
+		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes),					\
+		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves),				\
+		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
+		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
+		new /datum/stack_recipe("prescription glasses box", /obj/item/storage/box/rxglasses),	\
+		null,																					\
+		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
+		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
+		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
+		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed),		\
+		new /datum/stack_recipe("power cell box", /obj/item/storage/box/cells), 				\
+		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps),			\
+		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box),				\
+		null,																					\
+		new /datum/stack_recipe("box (brown)", /obj/item/storage/box/brown), 					\
+		new /datum/stack_recipe("box (green)", /obj/item/storage/box/green), 					\
+		new /datum/stack_recipe("box (blue)", /obj/item/storage/box/blue), 						\
+		new /datum/stack_recipe("box (red)", /obj/item/storage/box/red), 						\
+		new /datum/stack_recipe("box (yellow)", /obj/item/storage/box/yellow), 					\
+		new /datum/stack_recipe("box (pink)", /obj/item/storage/box/pink), 						\
+		new /datum/stack_recipe("box (purple)", /obj/item/storage/box/purple), 					\
+		)),
+	null,																						\
+))
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
@@ -400,12 +487,11 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		var/atom/droploc = drop_location()
 		if(use(1))
 			playsound(I, 'sound/items/bikehorn.ogg', 50, 1, -1)
-			to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
+			to_chat(user, "<span class='notice'>You stamp the cardboard! It's a clown box! Honk!</span>")
 			if (amount >= 0)
 				new/obj/item/storage/box/clown(droploc) //bugfix
 	else
 		. = ..()
-
 
 /*
  * Runed Metal
@@ -430,7 +516,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	novariants = TRUE
-	grind_results = list("iron" = 5, "blood" = 15)
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
 
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -465,31 +551,30 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
  */
 GLOBAL_LIST_INIT(brass_recipes, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass pinion airlock - windowed", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, on_floor = TRUE, window_checks = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("brass reflector", /obj/structure/destructible/clockwork/reflector, 10, time = 100, one_per_turf = TRUE, on_floor = TRUE, window_checks = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("brass window - directional", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("brass window - fulltile", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("brass chair", /obj/structure/chair/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass bar stool",  /obj/structure/chair/stool/bar/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass stool", /obj/structure/chair/stool/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("sender - pressure sensor", /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("sender - mech sensor", /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/mech, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("sender - lever", /obj/structure/destructible/clockwork/trap/trigger/lever, 1, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("sender - repeater", /obj/structure/destructible/clockwork/trap/trigger/repeater, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
-	null,
+	null, \
 	new/datum/stack_recipe("receiver - brass skewer", /obj/structure/destructible/clockwork/trap/brass_skewer, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_ADJACENT), \
 	new/datum/stack_recipe("receiver - steam vent", /obj/structure/destructible/clockwork/trap/steam_vent, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_CARDINALS), \
 	new/datum/stack_recipe("receiver - power nullifier", /obj/structure/destructible/clockwork/trap/power_nullifier, 5, time = 20, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_CARDINALS), \
-	null,
+	null, \
 	new/datum/stack_recipe("brass flask", /obj/item/reagent_containers/food/drinks/bottle/holyoil/empty), \
-
 ))
 
 /obj/item/stack/tile/brass
@@ -506,7 +591,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
-	grind_results = list("iron" = 5, "teslium" = 15, "holyoil" = 1)
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/teslium = 15, /datum/reagent/fuel/holyoil = 1)
 	merge_type = /obj/item/stack/tile/brass
 	tableVariant = /obj/structure/table/reinforced/brass
 
@@ -559,7 +644,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/bronze
 	novariants = FALSE
-	grind_results = list("iron" = 5, "copper" = 3) //we have no "tin" reagent so this is the closest thing
+	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/copper = 3) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/tile/bronze
 	tableVariant = /obj/structure/table/bronze
 
@@ -613,11 +698,12 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
-	grind_results = list("carbon" = 10)
+	grind_results = list(/datum/reagent/carbon = 10)
 	merge_type = /obj/item/stack/sheet/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
-	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
+	new /datum/stack_recipe("see-through plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
+	new /datum/stack_recipe("opaque plastic flaps", /obj/structure/plasticflaps/opaque, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/empty), \
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
 	new /datum/stack_recipe("large trash cart", /obj/structure/closet/crate/bin,50),\
@@ -631,6 +717,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	item_state = "sheet-plastic"
 	materials = list(MAT_PLASTIC=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
+	grind_results = list(/datum/reagent/glitter/white = 60)
 	merge_type = /obj/item/stack/sheet/plastic
 
 /obj/item/stack/sheet/plastic/fifty
@@ -667,7 +754,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
 
-
 //durathread and cotton raw
 /obj/item/stack/sheet/cotton
 	name = "raw cotton bundle"
@@ -696,5 +782,3 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
-
-

@@ -54,6 +54,9 @@
 		H.blur_eyes(5)
 		eyes.applyOrganDamage(5)
 
+/obj/item/clothing/glasses/proc/ranged_attack(mob/living/carbon/human/user,atom/A, params)
+	return FALSE
+
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
@@ -99,7 +102,7 @@
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	item_state = "glasses"
-	scan_reagents = TRUE //You can see reagents while wearing science goggles
+	clothing_flags = SCAN_REAGENTS //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
@@ -203,7 +206,7 @@
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
-	scan_reagents = TRUE
+	clothing_flags = SCAN_REAGENTS
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -246,6 +249,36 @@
 	force = 12
 	throwforce = 12
 	glass_colour_type = /datum/client_colour/glass_colour/red
+
+/obj/item/clothing/glasses/sunglasses/stunglasses
+	name = "stunglasses"
+	desc = "Sunglasses with inbuilt flashes. Made for those who prefer to walk around in style, who needs clumsy flashes anyway?"
+	actions_types = list(/datum/action/item_action/flash)
+	var/obj/item/assembly/flash/installed
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/Initialize()
+	. = ..()
+	if (!installed)
+		installed = new(src)
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/ui_action_click(mob/user)
+	if (installed && !installed.crit_fail)
+		installed.attack_self(user)
+	else
+		to_chat(user, "<span class = 'danger'>Install a new flash in [src]!</span>")
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/attackby(obj/item/W,mob/user)
+	if (istype(W,/obj/item/screwdriver))
+		if (installed)
+			installed.forceMove(get_turf(src))
+			to_chat(user, "<span class = 'notice'>You remove [installed] from [src].</span>")
+			installed = null
+	if (istype(W,/obj/item/assembly/flash))
+		if (!installed)
+			W.forceMove(src)
+			to_chat(user, "<span class = 'notice'>You install [W] into [src].</span>")
+			installed = W
+	. = ..()
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -300,7 +333,7 @@
 		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands && ishuman(loc) && !colored_before)
 		var/mob/living/carbon/human/H = loc
@@ -405,7 +438,7 @@
 	item_state = "godeye"
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
-	scan_reagents = TRUE
+	clothing_flags = SCAN_REAGENTS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 

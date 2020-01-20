@@ -259,6 +259,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Hallway
 
+/area/hallway
+	nightshift_public_area = NIGHTSHIFT_AREA_PUBLIC
+
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
@@ -403,6 +406,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/dorms
 	name = "Dormitories"
 	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/dorms/Initialize()
 	sub_areas = typesof(/area/crew_quarters/dorms_cabin)
@@ -411,10 +415,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/dorms/male
 	name = "Male Dorm"
 	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/crew_quarters/dorms/female
 	name = "Female Dorm"
 	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/crew_quarters/dorms_cabin
 	name = "Dorms Cabin One"
@@ -474,26 +480,32 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/locker
 	name = "Locker Room"
 	icon_state = "locker"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/lounge
 	name = "Lounge"
 	icon_state = "yellow"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/fitness/recreation
 	name = "Recreation Area"
 	icon_state = "fitness"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/cafeteria
 	name = "Cafeteria"
 	icon_state = "cafeteria"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/cafeteria/lunchroom
 	name = "Lunchroom"
 	icon_state = "cafeteria"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
@@ -506,6 +518,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
@@ -544,6 +557,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Library"
 	icon_state = "library"
 	flags_1 = NONE
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/library/lounge
 	name = "Library Lounge"
@@ -553,6 +567,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Abandoned Library"
 	icon_state = "library"
 	flags_1 = NONE
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/chapel
 	icon_state = "chapel"
@@ -560,12 +575,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	flags_1 = NONE
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "The consecration here prevents you from warping in."
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/chapel/main
 	name = "Chapel"
 
 /area/chapel/main/monastery
 	name = "Monastery"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/chapel/main/monastery/Initialize()
 	sub_areas = typesof(/area/chapel/main/monastery_cabin)

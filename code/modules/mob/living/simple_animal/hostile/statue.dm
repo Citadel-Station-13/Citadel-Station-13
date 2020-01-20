@@ -18,6 +18,7 @@
 	maxHealth = 50000
 	health = 50000
 	healable = 0
+	blood_volume = 0
 
 	harm_intent_damage = 10
 	obj_damage = 100
@@ -43,7 +44,10 @@
 	search_objects = 1 // So that it can see through walls
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
-	anchored = TRUE
+
+	move_force = MOVE_FORCE_EXTREMELY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null

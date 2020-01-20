@@ -117,7 +117,7 @@ Difficulty: Very Hard
 
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
@@ -395,7 +395,7 @@ Difficulty: Very Hard
 	..()
 
 /obj/machinery/anomalous_crystal/bullet_act(obj/item/projectile/P, def_zone)
-	..()
+	. = ..()
 	if(istype(P, /obj/item/projectile/magic))
 		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
 		return
@@ -492,10 +492,7 @@ Difficulty: Very Hard
 			if(isturf(target))
 				var/turf/T = target
 				if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-					var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
-					if(O.air)
-						var/datum/gas_mixture/G = O.air
-						G.copy_from_turf(O)
+					var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
 					if(NewFlora.len && prob(florachance) && !is_blocked_turf(O, TRUE))
 						var/atom/Picked = pick(NewFlora)
 						new Picked(O)
