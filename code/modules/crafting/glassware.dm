@@ -203,7 +203,7 @@
 	name = "Glass fodder sheet"
 	desc = "Cut glass that has been heated into a blob of hot glass. Needs to be cut off onto a blow tube."
 	icon_state = "blowing_rods_inuse"
-	next_step = /obj/item/reagent_containers/glass/beaker/flaskspouty
+	next_step = /obj/item/reagent_containers/glass/beaker/flask/spouty
 
 /obj/item/glasswork/glass_base/spouty_part4/attackby(obj/item/I, mob/user, params)
 	..()
@@ -246,7 +246,7 @@
 	name = "Metled glass"
 	desc = "A blob of metled glass on the end of a blowing rod. Needs to be cut off with some tools."
 	icon_state = "blowing_rods_inuse"
-	next_step = /obj/item/reagent_containers/glass/beaker/flask_small
+	next_step = /obj/item/reagent_containers/glass/beaker/flask
 
 /obj/item/glasswork/glass_base/flask_small_part2/attackby(obj/item/I, mob/user, params)
 	..()
@@ -289,7 +289,7 @@
 	name = "Metled glass"
 	desc = "A blob of metled glass on the end of a blowing rod. Needs to be cut off with some tools."
 	icon_state = "blowing_rods_inuse"
-	next_step = /obj/item/reagent_containers/glass/beaker/flask_small/flask_large
+	next_step = /obj/item/reagent_containers/glass/beaker/flask/large
 
 /obj/item/glasswork/glass_base/flask_large_part2/attackby(obj/item/I, mob/user, params)
 	..()
