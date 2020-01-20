@@ -167,21 +167,21 @@
 	possible_transfer_amounts = list(0.1,0.5,0.75,1,2,3)
 	volume = 3
 
-/obj/item/reagent_containers/glass/beaker/flask_small/flask_large
+/obj/item/reagent_containers/glass/beaker/flask/large
 	name = "large flask"
 	desc = "A large flask. It can hold up to 80 units. Unable to withstand reagents of an extreme pH."
 	materials = list(MAT_GLASS=2500)
 	icon_state = "flasklarge"
 	volume = 80
 
-/obj/item/reagent_containers/glass/beaker/flask_small
+/obj/item/reagent_containers/glass/beaker/flask
 	name = "small flask"
 	desc = "A small flask. It can hold up to 40 units. Unable to withstand reagents of an extreme pH."
 	materials = list(MAT_GLASS=1000)
 	icon_state = "flasksmall"
 	volume = 40
 
-/obj/item/reagent_containers/glass/beaker/flaskspouty
+/obj/item/reagent_containers/glass/beaker/flask/spouty
 	name = "flask with spout"
 	desc = "A flask with a spout! It can hold up to 120 units. Unable to withstand reagents of an extreme pH."
 	materials = list(MAT_GLASS=2500)
