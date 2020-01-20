@@ -1081,7 +1081,7 @@
 		return
 	if(!ishuman(user))
 		return
-	if(!CHECK_BITFIELD(user, MOBILITY_USE))
+	if(!CHECK_MOBILITY(user, MOBILITY_USE))
 		return
 	Flip()
 
