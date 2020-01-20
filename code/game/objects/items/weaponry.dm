@@ -337,6 +337,48 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
+/obj/item/switchblade_makeshift
+	name = "switchblade"
+	icon_state = "switchblade"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "A concealable spring-loaded knife."
+	flags_1 = CONDUCT_1
+	force = 3
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 6
+	materials = list(MAT_METAL=12000)
+	hitsound = 'sound/weapons/genhit.ogg'
+	attack_verb = list("stubbed", "poked")
+	resistance_flags = FIRE_PROOF
+	var/extended = 0
+
+/obj/item/switchblade_makeshift/attack_self(mob/user)
+	extended = !extended
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	if(extended)
+		force = 12
+		w_class = WEIGHT_CLASS_NORMAL
+		throwforce = 12
+		icon_state = "switchblade_ext_ms"
+		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+		hitsound = 'sound/weapons/bladeslice.ogg'
+		sharpness = IS_SHARP
+	else
+		force = 1
+		w_class = WEIGHT_CLASS_SMALL
+		throwforce = 2
+		icon_state = "switchblade_ms"
+		attack_verb = list("stubbed", "poked")
+		hitsound = 'sound/weapons/genhit.ogg'
+		sharpness = IS_BLUNT
+
+/obj/item/switchblade_makeshift/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
+
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
