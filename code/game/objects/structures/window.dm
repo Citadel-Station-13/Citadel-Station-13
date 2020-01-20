@@ -15,7 +15,8 @@
 	var/decon_speed = 30
 	var/wtype = "glass"
 	var/fulltile = FALSE
-	var/glass_type = /obj/item/stack/sheet/glass
+	var/obj/item/stack/sheet/glass_type = /obj/item/stack/sheet/glass
+	var/cleanable_type = /obj/effect/decal/cleanable/glass
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
 	can_be_unanchored = TRUE
@@ -277,12 +278,15 @@
 
 /obj/structure/window/proc/spawnDebris(location)
 	. = list()
-	. += new /obj/item/shard(location)
-	. += new /obj/effect/decal/cleanable/glass(location)
+	var/shard = initial(glass_type.shard_type)
+	if(shard)
+		. += new shard(location)
+		if (fulltile)
+			. += new shard(location)
+	if(cleanable_type)
+		. += new cleanable_type(location)
 	if (reinf)
 		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
-	if (fulltile)
-		. += new /obj/item/shard(location)
 
 /obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
 	if (get_dist(src,user) > 1)
@@ -416,16 +420,8 @@
 	max_integrity = 150
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
+	cleanable_type = /obj/effect/decal/cleanable/glass/plasma
 	rad_insulation = RAD_NO_INSULATION
-
-/obj/structure/window/plasma/spawnDebris(location)
-	. = list()
-	. += new /obj/item/shard/plasma(location)
-	. += new /obj/effect/decal/cleanable/glass/plasma(location)
-	if (reinf)
-		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
-	if (fulltile)
-		. += new /obj/item/shard/plasma(location)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -661,11 +657,6 @@
 	max_integrity = 120
 	level = 3
 	glass_amount = 2
-
-/obj/structure/window/reinforced/clockwork/spawnDebris(location)
-	. = list()
-	for(var/i in 1 to 4)
-		. += new /obj/item/clockwork/alloy_shards/medium/gear_bit(location)
 
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	made_glow = TRUE
