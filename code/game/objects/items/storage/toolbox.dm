@@ -293,7 +293,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = replacetext(desc, "robust", "safe")
 	desc = replacetext(desc, "heavier", "bouncier")
 	DISABLE_BITFIELD(flags_1, CONDUCT_1)
-	materials = null
+	materials = typelist("materials", null)
 	damtype = STAMINA
 	force += 3 //to compensate the higher stamina K.O. threshold compared to actual health.
 	throwforce += 3
@@ -317,8 +317,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	flags_1 = null
 	materials = null
 	damtype = STAMINA
-	force = 17
-	throwforce = 17
+	force = 15
+	throwforce = 15
 	attack_verb = list("robusted", "bounced")
 	can_rubberify = FALSE //we are already the future.
 
