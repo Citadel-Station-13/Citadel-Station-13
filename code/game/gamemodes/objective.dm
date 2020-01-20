@@ -366,6 +366,28 @@ GLOBAL_LIST_EMPTY(objectives)
 			return FALSE
 	return TRUE
 
+/datum/objective/breakout
+	name = "breakout"
+	martyr_compatible = 1
+	var/target_role_type = 0
+	var/human_check = TRUE
+
+/datum/objective/breakout/check_completion()
+	return !target || considered_escaped(target, enforce_human = human_check)
+
+/datum/objective/breakout/find_target_by_role(role, role_type=0, invert=0)
+	if(!invert)
+		target_role_type = role_type
+	..()
+	return target
+
+/datum/objective/breakout/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Make sure [target.name], the [!target_role_type ? target.assigned_role : target.special_role] escapes on the shuttle or an escape pod alive and without being in custody."
+	else
+		explanation_text = "Free Objective"
+
 /datum/objective/escape/escape_with_identity
 	name = "escape with identity"
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
@@ -582,7 +604,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	explanation_text = "Do not give up or lose [targetinfo.name]."
 	steal_target = targetinfo.targetitem
-
 
 /datum/objective/download
 	name = "download"
@@ -998,3 +1019,68 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			if(I == horded_item)
 				return TRUE
 	return FALSE
+
+/datum/objective/horde/heirloom
+	name = "steal heirloom"
+
+/datum/objective/horde/heirloom/proc/find_target()
+	set_target(pick(GLOB.family_heirlooms))
+
+GLOBAL_LIST_EMPTY(possible_sabotages)
+// For saboteurs. Go in and cause some trouble somewhere. Not necessarily breaking things, just sufficiently troublemaking.
+/datum/objective/sabotage
+	name = "sabotage"
+	var/datum/sabotage_objective/targetinfo = null //composition > inheritance.
+
+/datum/objective/sabotage/get_target()
+	return targetinfo.sabotage_type
+
+/datum/objective/sabotage/New()
+	..()
+	if(!GLOB.possible_sabotages.len)//Only need to fill the list when it's needed.
+		for(var/I in subtypesof(/datum/sabotage_objective))
+			new I
+			
+/datum/objective/sabotage/find_target()
+	var/list/datum/mind/owners = get_owners()
+	var/approved_targets = list()
+	check_sabotages:
+		for(var/datum/sabotage_objective/possible_sabotage in GLOB.possible_sabotages)
+			if(!is_unique_objective(possible_sabotage.sabotage_type) || possible_sabotage.check_conditions())
+				continue
+			for(var/datum/mind/M in owners)
+				if(M.current.mind.assigned_role in possible_sabotage.excludefromjob)
+					continue check_sabotages
+			approved_targets += possible_sabotage
+	return set_target(safepick(approved_targets))
+
+/datum/objective/sabotage/proc/set_target(datum/sabotage_objective/sabo)
+	if(sabo)
+		targetinfo = sabo
+		explanation_text = "[targetinfo.name]"
+		give_special_equipment(targetinfo.special_equipment)
+		return sabo
+	else
+		explanation_text = "Free objective"
+		return
+
+/datum/objective/sabotage/check_completion()
+	return targetinfo.check_conditions()
+
+/datum/objective/flavor
+	name = "Flavor"
+	completable = FALSE
+
+/datum/objective/flavor/proc/forge_objective()
+
+/datum/objective/flavor/traitor/forge_objective()
+	explanation_text = pickweight(
+		"Teach the heads of staff a lesson they will never forget." = 1,
+		"Show Nanotrasen the utility of a pure oxygen atmosphere." = 2,
+		"The Donk Corporation has hired you with the task to maim the crew in whatever way you can. Strain the resources of medical staff, and create a hostile working enviroment for human resources." = 3,
+		"The Waffle Corporation has given you the task to create the biggest prank the station's security force has seen! Harass security, and don't stop while you can still honk!" = 4,
+		"Kill one of the station's beloved pets. Make a show of it." = 3,
+		"Get illegal technology spread through the station." = 3,
+		"Slow down the process of research as much as possible." = (owner.assigned_role in list("Research Director", "Scientist", "Roboticist") ? 6 : 0),
+		"Channel your inner rat. Cut wires throughout the station" = (owner.assigned_role in list("Station Engineer", "Atmos Technician", "Assistant") ? 6 : 0),
+	)
