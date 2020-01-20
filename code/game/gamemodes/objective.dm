@@ -1077,10 +1077,11 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	explanation_text = pickweight(
 		"Teach the heads of staff a lesson they will never forget." = 1,
 		"Show Nanotrasen the utility of a pure oxygen atmosphere." = 2,
-		"The Donk Corporation has hired you with the task to maim the crew in whatever way you can. Strain the resources of medical staff, and create a hostile working enviroment for human resources." = 3,
-		"The Waffle Corporation has given you the task to create the biggest prank the station's security force has seen! Harass security, and don't stop while you can still honk!" = 4,
-		"Kill one of the station's beloved pets. Make a show of it." = 3,
+		"Waffle Co. wants you! That’s right, YOU! To cause as much humerous terrorism against Nanotrasen as possible! How? We don’t care as long as it’s entertaining! Be as creative and exciting as possible when carrying out your dirty deeds. Have fun!" = 2,
+		"Kill one of the station's beloved pets. Make a show of it, though you don't have to reveal yourself." = 3,
 		"Get illegal technology spread through the station." = 3,
 		"Slow down the process of research as much as possible." = (owner.assigned_role in list("Research Director", "Scientist", "Roboticist") ? 6 : 0),
-		"Channel your inner rat. Cut wires throughout the station" = (owner.assigned_role in list("Station Engineer", "Atmos Technician", "Assistant") ? 6 : 0),
+		"Channel your inner rat. Cut wires throughout the station." = (owner.assigned_role in list("Station Engineer", "Atmos Technician", "Assistant") ? 6 : 0),
+		"The Animal Rights Consortium needs you to save the innocent non-humanoid creatures aboard Citadel Station by any means necessary. Use your best judgement to decide whether an animal or xenobiological is abused, but if they are, ensure the abuser is punished. Avoid killing too many people if possible, and if you do harm any creatures, you will be terminated upon extraction." = 2,
+		"Donk Co. wants ransom money, and you are going to get it. Your goal is to kidnap and crewmember you can get your hands on and hold them hostage until you get something of significant value. Try to work out the best deal you can. Remember that Higher Value Targets are generally going to get a better deal so try to prioritize heads of staff if possible. We do not approve of mindless killing of Nanotrasen employees, so don’t do it." = 2
 	)
