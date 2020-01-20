@@ -597,3 +597,6 @@ MODETIER_VOTING
 
 ## Number of modes dropped by the modetier vote during mode selection, after vote.
 DROPPED_MODES 3
+
+## Whether the suicide verb is allowed.
+# SUICIDE_ALLOWED
