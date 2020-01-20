@@ -2,9 +2,9 @@
 	name = "Tesla Blast"
 	desc = "Blast lightning at your foes!"
 	charge_type = "recharge"
-	charge_max	= 300
+	charge_max	= 270
 	clothes_req = 1
-	invocation = "UN'LTD P'WAH!"
+	invocation = "TSL'A L'OOSE!"
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 30
