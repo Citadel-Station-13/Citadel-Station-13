@@ -41,48 +41,19 @@
 	if(SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && CHECK_MOBILITY(user, MOBILITY_USE))
 		var/mob/living/L = from
 		//The element only exists if you're on water and a living mob, so let's skip those checks.
+		var/pre_msg
+		var/post_msg
 		if(user == from)
-			from.visible_message("<span class='notice'>[from] is getting out of the pool.</span>")
-			if(do_mob(user, from, 20))
-				from.forceMove(src)
-				from.visible_message("<span class='notice'>[from] gets out of the pool.</span>")
+			pre_msg = "<span class='notice'>[from] is getting out of the pool.</span>"
+			post_msg = "<span class='notice'>[from] gets out of the pool.</span>"
 		else
-			from.visible_message("<span class='notice'>[from] is being pulled out of the pool by [user].</span>")
-			if(do_mob(user, from, 20))
-				from.forceMove(src)
-				from.visible_message("<span class='notice'>[user] pulls [from] out of the pool.</span>")
+			pre_msg = "<span class='notice'>[from] is being pulled out of the pool by [user].</span>"
+			post_msg = "<span class='notice'>[user] pulls [from] out of the pool.</span>"
+		from.visible_message(pre_msg)
+		if(do_mob(user, from, 20))
+			from.visible_message(post_msg)
 	else
 		return ..()
-
-//Put people out of the water
-/turf/open/floor/MouseDrop_T(mob/living/M, mob/living/user)
-	if(user.stat || user.lying || !Adjacent(user) || !M.Adjacent(user)|| !iscarbon(M))
-		if(issilicon(M))
-			var/turf/T = get_turf(M)
-			if(istype(T, /turf/open/pool))
-				M.visible_message("<span class='notice'>[M] begins to float.", \
-					"<span class='notice'>You start your emergency floaters.</span>")
-				if(do_mob(user, M, 20))
-					M.forceMove(src)
-					to_chat(user, "<span class='notice'>You get out of the pool.</span>")
-		return ..()
-	if(!M.swimming) //can't put yourself up if you are not swimming
-		return ..()
-	if(user == M)
-		M.visible_message("<span class='notice'>[user] is getting out the pool", \
-						"<span class='notice'>You start getting out of the pool.</span>")
-		if(do_mob(user, M, 20))
-			M.swimming = FALSE
-			M.forceMove(src)
-			to_chat(user, "<span class='notice'>You get out of the pool.</span>")
-	else
-		user.visible_message("<span class='notice'>[M] is being pulled to the poolborder by [user].</span>", \
-						"<span class='notice'>You start getting [M] out of the pool.")
-		if(do_mob(user, M, 20))
-			M.swimming = FALSE
-			M.forceMove(src)
-			to_chat(user, "<span class='notice'>You get [M] out of the pool.</span>")
-			return
 
 /turf/open/floor/CanPass(atom/movable/A, turf/T)
 	if(!has_gravity(src))
@@ -123,13 +94,12 @@
 				to_chat(user, "<span class='notice'>You lower [M] in the pool.</span>")
 				return
 
-//What happens if you don't drop in it like a good person would, you fool.
-/turf/open/pool/Exited(atom/A, turf/NL)
-	..()
-	if(!istype(NL, /turf/open/pool) && isliving(A))
-		var/mob/living/M = A
-		M.swimming = FALSE
-		controller.mobs_in_pool.Remove(M)
+/turf/open/pool/Exited(atom/A, atom/newLoc)
+	. = ..()
+	if(isliving(A))
+		controller?.mobs_in_pool -= A
+
+
 
 /turf/open/pool/Entered(atom/A, turf/OL)
 	..()
@@ -182,24 +152,25 @@
 			playsound(src, "water_wade", 20, TRUE)
 			return
 
-/turf/open/pool/attack_hand(mob/living/user)
-	if(user.stat == CONSCIOUS && !(user.lying || user.resting) && Adjacent(user) && user.swimming && filled && next_splash < world.time) //not drained, user alive and close, and user in water.
-		if(user.x == x && user.y == y)
-			return
-		else
-			playsound(src, 'sound/effects/watersplash.ogg', 8, TRUE, 1)
-			next_splash = world.time + 25
-			var/obj/effect/splash/S = new /obj/effect/splash(user.loc)
-			animate(S, alpha = 0,  time = 8)
-			S.Move(src)
-			QDEL_IN(S, 20)
-			for(var/mob/living/carbon/human/L in src)
-				if(!L.wear_mask && !user.stat) //Do not affect those underwater or dying.
-					L.emote("cough")
-				L.adjustStaminaLoss(4) //You need to give em a break!
-
 /turf/open/pool/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/mop) && filled)
 		W.reagents.add_reagent("water", 5)
 		to_chat(user, "<span class='notice'>You wet [W] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+	else
+		return ..()
+
+/turf/open/pool/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if((user.loc != src) && CHECK_MOBILITY(user, MOBILITY_USE) && Adjacent(user) && SEND_SIGNAL(user, COMSIG_IS_SWIMMING) && filled && (next_splash < world.time))
+		playsound(src, 'sound/effects/watersplash.ogg', 8, TRUE, 1)
+		next_splash = world.time + 25
+		var/obj/effect/splash/S = new(src)
+		animate(S, alpha = 0, time = 8)
+		QDEL_IN(S, 10)
+		for(var/mob/living/carbon/human/H in src)
+			if(!H.wear_mask && (H.stat == CONSCIOUS))
+				H.emote("cough")
+			H.adjustStaminaLoss(4)

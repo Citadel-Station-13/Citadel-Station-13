@@ -44,7 +44,7 @@
 	for(var/obj/machinery/pool/drain/pooldrain in range(srange,src))
 		linked_drain = pooldrain
 		linked_drain.pool_controller = src
-	for(var/obj/machinery/pool/filter/F in range(srange, src))			
+	for(var/obj/machinery/pool/filter/F in range(srange, src))
 		linked_filter = F
 		linked_filter.pool_controller = src
 
