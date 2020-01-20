@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/overlays_y_offset = 0
 
 	var/underline_flag = TRUE //flag for underline
-	
+
 	var/list/blocked_pdas
 
 /obj/item/pda/suicide_act(mob/living/carbon/user)
@@ -390,7 +390,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						if (P == src)
 							continue
 						if(P.owner in blocked_pdas)
-							dat += "<li><a href='byond://?src=[REF(src)];unblock=[P.owner]'>(BLOCKED - CLICK TO UNBLOCK) [P.owner]</a>"
+							dat += "<li><a href='byond://?src=[REF(src)];choice=unblock_pda;target=[P.owner]'>(BLOCKED - CLICK TO UNBLOCK) [P.owner]</a>"
 						else
 							dat += "<li><a href='byond://?src=[REF(src)];choice=Message;target=[REF(P)]'>[P]</a>"
 						if(cartridge)
@@ -650,12 +650,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			if("MessageAll")
 				send_to_all(U)
-			
-			if("block")
-				block_pda(usr, locate(href_list["block"]))
-			
-			if("unblock")
-				unblock_pda(usr, href_list["unblock"])
+
+			if("toggle_block")
+				toggle_blocking(usr, href_list["target"])
+
+			if("block_pda")
+				block_pda(usr, href_list["target"])
+
+			if("unblock_pda")
+				unblock_pda(usr, href_list["target"])
 
 			if("cart")
 				if(cartridge)
@@ -813,7 +816,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		last_everyone = world.time
 
 /obj/item/pda/proc/receive_message(datum/signal/subspace/pda/signal)
-	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i> <a href='byond://?src=[REF(src)];block=[REF(signal.source)]'>(BLOCK)</a><br>[signal.format_message()]<br>"
+	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i> <a href='byond://?src=[REF(src)];choice=toggle_block;target=[signal.data["name"]]'>(BLOCK/UNBLOCK)</a><br>[signal.format_message()]<br>"
 	if (!silent)
 		playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 		audible_message("[icon2html(src, hearers(src))] *[ttone]*", null, 3)
@@ -845,13 +848,19 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/create_message(mob/living/U, obj/item/pda/P)
 	send_message(U,list(P))
 
-/obj/item/pda/proc/block_pda(mob/user, obj/item/pda/P)
-	to_chat(user, "<span class='notice'>[icon2html(src, user)] [P.owner] blocked from messages. Use the messenger PDA list to unblock.</span>")
-	LAZYOR(blocked_pdas, P.owner)
+/obj/item/pda/proc/toggle_blocking(mob/user, target)
+	if(target in blocked_pdas)
+		unblock_pda(user, target)
+	else
+		block_pda(user, target)
 
-/obj/item/pda/proc/unblock_pda(mob/user, unblock_target)
-	to_chat(user, "<span class='notice'>[icon2html(src, user)] [unblock_target] unblocked from messages.</span>")
-	LAZYREMOVE(blocked_pdas, unblock_target)
+/obj/item/pda/proc/block_pda(mob/user, target)
+	to_chat(user, "<span class='notice'>[icon2html(src, user)] [target] blocked from messages. Use the messenger PDA list to unblock.</span>")
+	LAZYOR(blocked_pdas, target)
+
+/obj/item/pda/proc/unblock_pda(mob/user, target)
+	to_chat(user, "<span class='notice'>[icon2html(src, user)] [target] unblocked from messages.</span>")
+	LAZYREMOVE(blocked_pdas, target)
 
 /obj/item/pda/AltClick(mob/user)
 	. = ..()
