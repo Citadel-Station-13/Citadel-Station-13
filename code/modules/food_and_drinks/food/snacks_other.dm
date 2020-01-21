@@ -443,8 +443,8 @@
 	head.color = C
 	add_overlay(head)
 
-/obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/A)
-	..(A)
+/obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	..(hit_atom)
 	throw_speed = 1
 	throwforce = 0
 
@@ -615,7 +615,7 @@
 	name = "marshmallow"
 	desc = "A marshmallow filled with fluffy marshmallow fluff."
 	icon_state = "marshmallow"
-	list_reagents = list("sugar" = 5, "nutriment" = 2)
+	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/nutriment = 2)
 	filling_color = "#fafafa"
 	w_class = WEIGHT_CLASS_TINY
 	tastes = list("marshmallow" = 2)

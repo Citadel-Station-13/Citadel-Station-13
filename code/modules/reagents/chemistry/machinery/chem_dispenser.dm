@@ -92,8 +92,15 @@
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
-	for(var/list/L in list(dispensable_reagents, emagged_reagents, upgrade_reagents, upgrade_reagents2, upgrade_reagents3))
-		L = sortList(L, /proc/cmp_reagents_asc)
+	if(emagged_reagents)
+		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
+	if(upgrade_reagents)
+		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
+	if(upgrade_reagents2)
+		upgrade_reagents2 = sortList(upgrade_reagents2, /proc/cmp_reagents_asc)
+	if(upgrade_reagents3)
+		upgrade_reagents3 = sortList(upgrade_reagents3, /proc/cmp_reagents_asc)
+	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
@@ -106,7 +113,9 @@
 	if(panel_open)
 		. += "<span class='notice'>[src]'s maintenance hatch is open!</span>"
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[(powerefficiency*1000)-100]%</b>.<span>"
+		. += "<span class='notice'>The status display reads:\n\
+		Recharging <b>[recharge_amount]</b> power units per interval.\n\
+		Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.</span>"
 		switch(macrotier)
 			if(1)
 				. += "<span class='notice'>Macro granularity at <b>5u</b>.<span>"
