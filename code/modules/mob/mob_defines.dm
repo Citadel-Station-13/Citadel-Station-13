@@ -120,5 +120,8 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
 	var/siliconaccessareas = list()
 	var/siliconaccesstoggle = FALSE
+
+	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.

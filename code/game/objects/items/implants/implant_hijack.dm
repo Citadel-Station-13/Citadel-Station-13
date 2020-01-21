@@ -8,8 +8,6 @@
 	var/toggled = FALSE
 	icon_state = "hijack"
 	var/eye_color
-	//var/stealthmode = FALSE
-	//var/stealthcooldown = 0
 
 /obj/item/implant/hijack/activate()
 	. = ..()
@@ -18,13 +16,13 @@
 		imp_in.click_intercept = src
 		imp_in.siliconaccesstoggle = TRUE
 		to_chat(imp_in,"<span class='notice'>You turn on [src]'s silicon interactions.</span>")
-		if (ishuman(imp_in)/* && !stealthmode*/)
+		if (ishuman(imp_in))
 			toggle_eyes(TRUE)
 	else
 		imp_in.click_intercept = null
 		imp_in.siliconaccesstoggle = FALSE
 		to_chat(imp_in,"<span class='notice'>You turn off [src]'s silicon interactions.</span>")
-		if (ishuman(imp_in)/* && !stealthmode*/)
+		if (ishuman(imp_in))
 			toggle_eyes(FALSE)
 
 /obj/item/implant/hijack/proc/toggle_eyes(on)
@@ -58,8 +56,6 @@
 /obj/item/implant/hijack/proc/InterceptClickOn(mob/living/user,params,atom/object)
 	if (user.get_active_held_item() || isitem(object) || !toggled || user.incapacitated())
 		return
-	//if (stealthmode == FALSE && istype(object,/obj/machinery/power/apc))
-	//	hijack_remotely()
 	var/area/a = get_area(object)
 	if (!hasSiliconAccessInArea(imp_in,a))
 		return
@@ -79,17 +75,3 @@
 		return TRUE
 	object.attack_ai(imp_in)
 	return TRUE
-
-/* for later
-/obj/item/implant/hijack/proc/hijack_remotely(/obj/machinery/power/apc/apc)
-	if (apc.hijacker)
-		return //can't remotely hijack an already hijacked APC
-	if (do_after(imp_in,25 SECONDS,target=apc))
-		apc.hijacker = imp_in
-		imp_in.toggleSiliconAccessArea(apc.area)
-		apc.update_icon()
-		cooldown = world.time + 2 MINUTES
-		toggle_eyes(TRUE)
-		stealthmode = FALSE
-
-*/

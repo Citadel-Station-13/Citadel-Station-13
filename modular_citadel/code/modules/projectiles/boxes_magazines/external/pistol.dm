@@ -78,3 +78,13 @@
 	build_path = /obj/item/ammo_box/a357
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/sl357ap
+	name = "revolver speedloader (.357 AP)"
+	desc = "A revolver speedloader. Cuts through like a hot knife through butter."
+	id = "sl357ap"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 30000, MAT_TITANIUM = 45000)
+	build_path = /obj/item/ammo_box/a357/ap
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
