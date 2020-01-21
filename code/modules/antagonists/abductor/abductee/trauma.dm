@@ -8,8 +8,11 @@
 	clonable = TRUE
 
 /datum/brain_trauma/abductee/on_gain()
-	if(!owner.has_antag_datum(/datum/antagonist/abductee))
-		owner.add_antag_datum(/datum/antagonist/abductee)
+	. = ..()
+	if(owner.mind)
+		if(!owner.mind.has_antag_datum(/datum/antagonist/abductee))
+			owner.mind.add_antag_datum(/datum/antagonist/abductee)
 
 /datum/brain_trauma/abductee/on_lose()
-	owner.remove_antag_datum(/datum/antagonist/abductee)
+	. = ..()
+	owner.mind?.remove_antag_datum(/datum/antagonist/abductee)

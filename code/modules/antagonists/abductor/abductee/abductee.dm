@@ -2,6 +2,7 @@
 	name = "Abductee"
 	roundend_category = "abductees"
 	antagpanel_category = "Abductee"
+	var/datum/brain_trauma/abductee/brain_trauma
 
 /datum/antagonist/abductee/on_gain()
 	give_objective()
@@ -24,7 +25,10 @@
 	update_abductor_icons_added(mob_override ? mob_override.mind : owner,"abductee")
 	var/mob/living/carbon/C = mob_override || owner?.current
 	if(istype(C))
-		C.gain_trauma_type(/datum/brain_trauma/abductee, TRAUMA_RESILIENCE_SURGERY)
+		if(brain_trauma)
+			qdel(brain_trauma)			//make sure there's no lingering trauma
+		brain_trauma = C.gain_trauma(/datum/brain_trauma/abductee, TRAUMA_RESILIENCE_SURGERY)
 
 /datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
 	update_abductor_icons_removed(mob_override ? mob_override.mind : owner)
+	qdel(brain_trauma)
