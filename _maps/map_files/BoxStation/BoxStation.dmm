@@ -53620,10 +53620,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-"eZP" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/hallway/secondary/entry)
 "fbm" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -67472,9 +67468,9 @@ aaa
 aaa
 aaa
 aaf
-eZP
+awW
 auP
-eZP
+awW
 aaf
 vZs
 aaa
