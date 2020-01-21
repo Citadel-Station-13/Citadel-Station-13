@@ -29,6 +29,7 @@ SUBSYSTEM_DEF(air)
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
+	var/list/airs_always_update = list()
 
 	//atmos singletons
 	var/list/gas_reactions = list()
@@ -241,6 +242,8 @@ SUBSYSTEM_DEF(air)
 
 
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
+	if(T in airs_always_update)
+		return // this one should always be active
 	active_turfs -= T
 	SSair_turfs.currentrun -= T
 	#ifdef VISUALIZE_ACTIVE_TURFS

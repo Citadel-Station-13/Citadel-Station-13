@@ -13,9 +13,6 @@
 	var/archived_cycle = 0
 	var/current_cycle = 0
 
-	//used to artificially slow down equalization
-	var/last_equalize = 0
-
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
 	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
@@ -31,6 +28,8 @@
 	var/excited = FALSE
 	var/datum/gas_mixture/turf/air
 
+	//used to artificially slow down equalization
+	var/last_equalize = 0
 	var/obj/effect/hotspot/active_hotspot
 	var/atmos_cooldown  = 0
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
@@ -157,9 +156,6 @@
 
 	current_cycle = fire_count
 
-	if(fire_count - last_equalize < 4)
-		return
-
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
@@ -209,7 +205,7 @@
 			our_excited_group = excited_group
 			should_share_air = TRUE
 
-	if(should_share_air)
+	if(should_share_air && ((fire_count - last_equalize >= 4) || (src in SSair.airs_always_update)))
 		var/datum/gas_mixture/final_air = new()
 		final_air.merge(our_air.copy())
 		for(var/t in adjacent_turfs)
@@ -241,6 +237,8 @@
 				consider_pressure_difference(enemy_tile, difference)
 			else
 				enemy_tile.consider_pressure_difference(src, -difference)
+			SSair.add_to_react_queue(enemy_tile)
+
 		LAST_SHARE_CHECK
 
 

@@ -163,6 +163,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. = ..()
 	uid = gl_uid++
 	SSair.atmos_machinery += src
+	if(isopenturf(loc))
+		SSair.airs_always_update |= loc
 	countdown = new(src)
 	countdown.start()
 	GLOB.poi_list |= src
@@ -320,6 +322,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return  //Yeah just stop.
 	if(istype(T, /turf/closed))
 		consume_turf(T)
+		SSair.airs_always_update |= T
 
 	if(power)
 		soundloop.volume = min(40, (round(power/100)/50)+1) // 5 +1 volume per 20 power. 2500 power is max
@@ -327,6 +330,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(isclosedturf(T))
 		var/turf/did_it_melt = T.Melt()
 		if(!isclosedturf(did_it_melt)) //In case some joker finds way to place these on indestructible walls
+			SSair.airs_always_update |= T
 			visible_message("<span class='warning'>[src] melts through [T]!</span>")
 		return
 
@@ -437,6 +441,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		removed.gases[/datum/gas/oxygen] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 		if(produces_gas)
+			if(T.atmos_adjacent_turfs.len < 8)
+				T.atmos_adjacent_turfs = T.GetAtmosAdjacentTurfs(TRUE) // makes supermatter share with ALL its neighbors
 			env.merge(removed)
 			air_update_turf()
 
