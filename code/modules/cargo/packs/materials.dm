@@ -108,7 +108,7 @@
 	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/materials/rcdammo
-	name = "Spare RDC ammo"
+	name = "Spare RCD ammo"
 	desc = "This crate contains sixteen RCD compressed matter packs, to help with any holes or projects people might be working on."
 	cost = 3750
 	contains = list(/obj/item/rcd_ammo,
