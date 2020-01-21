@@ -47,7 +47,8 @@
 	return ..()
 
 
-/turf/closed/mineral/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/attackby(obj/item/pickaxe/I, mob/user, params)
+	var/stored_dir = user.dir
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -63,9 +64,17 @@
 		to_chat(user, "<span class='notice'>You start picking...</span>")
 
 		if(I.use_tool(src, user, 40, volume=50))
+			var/range = I.digrange //Store the current digrange so people don't cheese digspeed swapping for faster mining
+			var/list/dug_tiles = list()
 			if(ismineralturf(src))
+				if(I.digrange > 0)
+					for(var/turf/closed/mineral/M in range(user,range))
+						if(get_dir(user,M)&stored_dir)
+							M.gets_drilled(user)
+							dug_tiles += M
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
-				gets_drilled(user)
+				if(!(src in dug_tiles))
+					gets_drilled(user)
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
 		return attack_hand(user)

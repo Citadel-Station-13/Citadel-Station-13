@@ -7,7 +7,7 @@
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/mask/balaclava/attack_self(mob/user)
 	adjustmask(user)
@@ -19,7 +19,7 @@
 	item_state = "luchag"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/luchador/handle_speech(datum/source, list/speech_args)
@@ -57,3 +57,12 @@
 	desc = "Worn by robust fighters who are willing to do anything to win."
 	icon_state = "luchar"
 	item_state = "luchar"
+
+/obj/item/clothing/mask/russian_balaclava
+	name = "russian balaclava"
+	desc = "Protects your face from snow."
+	icon_state = "rus_balaclava"
+	item_state = "rus_balaclava"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL

@@ -87,3 +87,12 @@
 /datum/component/storage/concrete/pockets/pocketprotector/real_location()
 	// if the component is reparented to a jumpsuit, the items still go in the protector
 	return original_parent
+
+/datum/component/storage/concrete/pockets/small/rushelmet
+	max_items = 1
+	quickdraw = TRUE
+
+/datum/component/storage/concrete/pockets/small/rushelmet/Initialize()
+	. = ..()
+	can_hold = typecacheof(list(/obj/item/reagent_containers/glass/bottle,
+								/obj/item/ammo_box/a762))

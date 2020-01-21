@@ -41,7 +41,7 @@
 		var/accessory_msg
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
-			if(U.attached_accessory)
+			if(U.attached_accessory && !(U.attached_accessory.flags_inv & HIDEACCESSORY) && !(U.flags_inv & HIDEACCESSORY))
 				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
 
 		. += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_msg]."
@@ -255,7 +255,7 @@
 		else
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
 
-	if(reagents.has_reagent("teslium"))
+	if(reagents.has_reagent(/datum/reagent/teslium))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
 	if(islist(stun_absorption))
@@ -278,7 +278,7 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
-	if(reagents.has_reagent("astral"))
+	if(reagents.has_reagent(/datum/reagent/fermi/astral))
 		if(mind)
 			msg += "[t_He] has wild, spacey eyes and they have a strange, abnormal look to them.\n"
 		else
@@ -392,6 +392,13 @@
 			. += "...?"
 		else
 			. += "[print_flavor_text()]"
+	if(print_flavor_text_2())
+		if(get_visible_name() == "Unknown")	//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
+			. += "...?"
+		else if(skipface) //Sometimes we're not unknown, but impersonating someone in a hardsuit, let's not reveal our flavor text then either.
+			. += "...?"
+		else
+			. += "[print_flavor_text_2()]"
 	. += "*---------*</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
