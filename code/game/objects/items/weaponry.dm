@@ -355,10 +355,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		sharpness = IS_SHARP
 	else
-		force = 1
+		force = initial(force)
 		w_class = WEIGHT_CLASS_SMALL
-		throwforce = 2
-		icon_state = "switchblade_ms"
+		throwforce = initial(throwforce)
+		icon_state = initial(icon_state)
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = IS_BLUNT
