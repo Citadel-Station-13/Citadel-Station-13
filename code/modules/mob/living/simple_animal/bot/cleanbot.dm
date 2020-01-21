@@ -17,6 +17,7 @@
 	window_name = "Automatic Station Cleaner v1.2"
 	pass_flags = PASSMOB
 	path_image_color = "#993299"
+	weather_immunities = list("lava","ash")
 
 	var/blood = 1
 	var/trash = 0
