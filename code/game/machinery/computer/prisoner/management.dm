@@ -87,7 +87,7 @@
 /obj/machinery/computer/prisoner/management/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr,get_area(src)))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr))
 		usr.set_machine(src)
 
 		if(href_list["id"])

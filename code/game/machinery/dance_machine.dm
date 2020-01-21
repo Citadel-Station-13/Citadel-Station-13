@@ -53,7 +53,7 @@
 
 /obj/machinery/jukebox/ui_interact(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user,get_area(src))))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if (!anchored)
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")

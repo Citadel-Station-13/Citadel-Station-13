@@ -272,7 +272,7 @@
 
 	. += "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>"
 
-	if(hasSiliconAccessInArea(user,area))
+	if(area.hasSiliconAccessInArea(user))
 		. += "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>"
 
 // update the APC icon to show the three base states
@@ -549,7 +549,7 @@
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
 
-	if(hasSiliconAccessInArea(user,area) && get_dist(src,user)>1)
+	if(area.hasSiliconAccessInArea(user) && get_dist(src,user)>1)
 		return attack_hand(user)
 
 	if	(istype(W, /obj/item/stock_parts/cell) && opened)
@@ -756,7 +756,7 @@
 
 /obj/machinery/power/apc/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user,area)) || !isturf(loc))
+	if(!user.canUseTopic(src, !area.hasSiliconAccessInArea(user)) || !isturf(loc))
 		return
 	togglelock(user)
 	return TRUE
@@ -771,7 +771,7 @@
 	else if(stat & (BROKEN|MAINT))
 		to_chat(user, "<span class='warning'>Nothing happens!</span>")
 	else
-		if((allowed(usr) || hasSiliconAccessInArea(usr,area)) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
+		if((allowed(usr) || area.hasSiliconAccessInArea(usr)) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
 			update_icon()
@@ -849,7 +849,7 @@
 		return
 
 /obj/machinery/power/apc/oui_canview(mob/user)
-	if(user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user,area))
+	if(user.has_unlimited_silicon_privilege || area.hasSiliconAccessInArea(user))
 		return TRUE
 	return ..()
 
@@ -863,7 +863,7 @@
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
-		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !hasSiliconAccessInArea(user,area),
+		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user),
 		"lock_nightshift" = nightshift_requires_auth,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
@@ -873,7 +873,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = DisplayPower(lastused_total),
 		"coverLocked" = coverlocked,
-		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console() || hasSiliconAccessInArea(user,area),
+		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console() || area.hasSiliconAccessInArea(user),
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
@@ -948,7 +948,7 @@
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
 		return TRUE
-	if (user == hijacker || (hasSiliconAccessInArea(user,area) && !aidisabled))
+	if (user == hijacker || (area.hasSiliconAccessInArea(user) && !aidisabled))
 		return TRUE
 	if(user.has_unlimited_silicon_privilege)
 		var/mob/living/silicon/ai/AI = user
@@ -963,14 +963,14 @@
 	. = ..()
 	if (!. && !QDELETED(remote_control))
 		. = remote_control.can_interact(user)
-	if (hasSiliconAccessInArea(user,area))
+	if (area.hasSiliconAccessInArea(user))
 		return TRUE
 
 /obj/machinery/power/apc/ui_status(mob/user)
 	. = ..()
 	if (!QDELETED(remote_control) && user == remote_control.operator)
 		. = UI_INTERACTIVE
-	if (user == hijacker && hasSiliconAccessInArea(user,area))
+	if (user == hijacker && area.hasSiliconAccessInArea(user))
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
@@ -984,7 +984,7 @@
 	if (action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
 		hijack(usr)
 		return
-	var/authorized = (!locked || usr.has_unlimited_silicon_privilege || hasSiliconAccessInArea(usr,area) || (integration_cog && (is_servant_of_ratvar(usr))))
+	var/authorized = (!locked || usr.has_unlimited_silicon_privilege || area.hasSiliconAccessInArea(usr) || (integration_cog && (is_servant_of_ratvar(usr))))
 	if((action == "toggle_nightshift") && (!nightshift_requires_auth || authorized))
 		toggle_nightshift_lights()
 		return TRUE
@@ -992,7 +992,7 @@
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege || hasSiliconAccessInArea(usr,area))
+			if(usr.has_unlimited_silicon_privilege || area.hasSiliconAccessInArea(usr))
 				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
 					to_chat(usr, "The APC does not respond to the command.")
 				else
@@ -1026,7 +1026,7 @@
 				update()
 			return TRUE
 		if("overload")
-			if(usr.has_unlimited_silicon_privilege || hasSiliconAccessInArea(usr,area))
+			if(usr.has_unlimited_silicon_privilege || area.hasSiliconAccessInArea(usr))
 				overload_lighting()
 			return TRUE
 		if("hack")

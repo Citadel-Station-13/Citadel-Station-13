@@ -839,7 +839,7 @@
 
 /obj/machinery/turretid/examine(mob/user)
 	. = ..()
-	if(hasSiliconAccessInArea(user,get_area(src)) && (!stat & BROKEN))
+	if(hasSiliconAccessInArea(user) && (!stat & BROKEN))
 		. += "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>"
 		. += "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>"
 
@@ -854,7 +854,7 @@
 			to_chat(user, "You link \the [M.buffer] with \the [src]")
 			return
 
-	if (hasSiliconAccessInArea(user,get_area(src)))
+	if (hasSiliconAccessInArea(user))
 		return attack_hand(user)
 
 	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
@@ -895,7 +895,7 @@
 /obj/machinery/turretid/ui_interact(mob/user)
 	. = ..()
 	if ( get_dist(src, user) > 0 )
-		if ( !(hasSiliconAccessInArea(user,get_area(src)) || IsAdminGhost(user)) )
+		if ( !(hasSiliconAccessInArea(user) || IsAdminGhost(user)) )
 			to_chat(user, "<span class='notice'>You are too far away.</span>")
 			user.unset_machine()
 			user << browse(null, "window=turretid")
@@ -903,10 +903,10 @@
 
 	var/t = ""
 
-	if(locked && !(hasSiliconAccessInArea(user,get_area(src)) || IsAdminGhost(user)))
+	if(locked && !(hasSiliconAccessInArea(user) || IsAdminGhost(user)))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
-		if(!hasSiliconAccessInArea(user,get_area(src)) && !IsAdminGhost(user))
+		if(!hasSiliconAccessInArea(user) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=[REF(src)];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
 		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=[REF(src)];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
@@ -920,7 +920,7 @@
 	if(..())
 		return
 	if (locked)
-		if(!(hasSiliconAccessInArea(usr,get_area(src)) || IsAdminGhost(usr)))
+		if(!(hasSiliconAccessInArea(usr) || IsAdminGhost(usr)))
 			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])

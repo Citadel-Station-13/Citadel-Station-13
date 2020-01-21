@@ -35,7 +35,7 @@
 	return ..()
 
 /obj/machinery/oui_canview(mob/user)
-	if(user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user,get_area(src)))
+	if(user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user))
 		return TRUE
 	if(!can_interact(user))
 		return FALSE

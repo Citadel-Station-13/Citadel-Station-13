@@ -98,7 +98,7 @@
 
 /obj/machinery/dish_drive/AltClick(mob/living/user)
 	. = ..()
-	if(user.canUseTopic(src, !hasSiliconAccessInArea(user,get_area(src))))
+	if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		do_the_dishes(TRUE)
 		return TRUE
 

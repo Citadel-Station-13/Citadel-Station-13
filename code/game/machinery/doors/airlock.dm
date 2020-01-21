@@ -676,7 +676,7 @@
 		else
 			. += "It looks very robust."
 
-	if(hasSiliconAccessInArea(user,get_area(src)) && (!stat & BROKEN))
+	if(hasSiliconAccessInArea(user) && (!stat & BROKEN))
 		. += "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>"
 		. += "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>"
 		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"
@@ -1587,7 +1587,7 @@
 			. = TRUE
 
 /obj/machinery/door/airlock/proc/user_allowed(mob/user)
-	return (hasSiliconAccessInArea(user,get_area(src)) && canAIControl(user)) || IsAdminGhost(user)
+	return (hasSiliconAccessInArea(user) && canAIControl(user)) || IsAdminGhost(user)
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	if(!user_allowed(user))

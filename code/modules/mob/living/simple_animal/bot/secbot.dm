@@ -110,7 +110,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || hasSiliconAccessInArea(user,get_area(src)) || IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user) || IsAdminGhost(user))
 		dat += text({"<BR>
 Arrest Unidentifiable Persons: []<BR>
 Arrest for Unauthorized Weapons: []<BR>
@@ -131,7 +131,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
 	if(..())
 		return 1
-	if(!hasSiliconAccessInArea(usr,get_area(src)) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+	if(!hasSiliconAccessInArea(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
 		return TRUE
 	switch(href_list["operation"])
 		if("idcheck")
