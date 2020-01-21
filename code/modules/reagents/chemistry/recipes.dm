@@ -36,7 +36,7 @@
 	var/PurityMin 				= 0.15 		//If purity is below 0.15, it explodes too. Set to 0 to disable this.
 
 
-/datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume, specialreact)
+/datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, multiplier, specialreact)
 	return
 	//I recommend you set the result amount to the total volume of all components.
 

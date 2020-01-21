@@ -290,7 +290,7 @@
 	required_container = /obj/item/slime_extract/yellow
 	required_other = TRUE
 
-/datum/chemical_reaction/slime/slimeoverload/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/slime/slimeoverload/on_reaction(datum/reagents/holder, multiplier)
 	empulse(get_turf(holder.my_atom), 3, 7)
 	..()
 
@@ -301,7 +301,7 @@
 	required_container = /obj/item/slime_extract/yellow
 	required_other = TRUE
 
-/datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, multiplier)
 	new /obj/item/stock_parts/cell/high/slime(get_turf(holder.my_atom))
 	..()
 
@@ -505,7 +505,7 @@
 	required_container = /obj/item/slime_extract/bluespace
 	required_other = TRUE
 
-/datum/chemical_reaction/slime/slimefloor2/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/slime/slimefloor2/on_reaction(datum/reagents/holder, multiplier)
 	new /obj/item/stack/tile/bluespace(get_turf(holder.my_atom), 25)
 	..()
 
@@ -517,7 +517,7 @@
 	required_container = /obj/item/slime_extract/bluespace
 	required_other = TRUE
 
-/datum/chemical_reaction/slime/slimecrystal/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/slime/slimecrystal/on_reaction(datum/reagents/holder, multiplier)
 	var/obj/item/stack/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
 	BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
 	..()
@@ -529,7 +529,7 @@
 	required_container = /obj/item/slime_extract/bluespace
 	required_other = TRUE
 
-/datum/chemical_reaction/slime/slimeradio/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/slime/slimeradio/on_reaction(datum/reagents/holder, multiplier)
 	new /obj/item/slimepotion/slime/slimeradio(get_turf(holder.my_atom))
 	..()
 
@@ -626,8 +626,8 @@
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 
-/datum/chemical_reaction/slime/slimeRNG/on_reaction(datum/reagents/holder, created_volume)
-	if(created_volume >= 5)
+/datum/chemical_reaction/slime/slimeRNG/on_reaction(datum/reagents/holder, multiplier)
+	if(multiplier >= 5)
 		var/obj/item/grenade/clusterbuster/slime/S = new (get_turf(holder.my_atom))
 		S.visible_message("<span class='danger'>Infused with plasma, the core begins to expand uncontrollably!</span>")
 		S.icon_state = "[S.base_state]_active"
@@ -646,7 +646,7 @@
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 
-/datum/chemical_reaction/slime/slimebomb/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/slime/slimebomb/on_reaction(datum/reagents/holder, multiplier)
 	var/obj/item/grenade/clusterbuster/slime/volatile/S = new (holder.my_atom.loc)
 	S.visible_message("<span class='danger'>Infused with slime jelly, the core begins to expand uncontrollably!</span>")
 	S.icon_state = "[S.base_state]_active"
