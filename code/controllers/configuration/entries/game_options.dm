@@ -60,50 +60,7 @@
 
 /datum/config_entry/flag/humans_need_surnames
 
-/datum/config_entry/flag/allow_ai	// allow ai job
-
-/datum/config_entry/flag/allow_ai_multicam //whether the AI can use their multicam
-
 /datum/config_entry/flag/disable_human_mood
-
-/datum/config_entry/flag/disable_borg_flash_knockdown //Should borg flashes be capable of knocking humanoid entities down?
-
-/datum/config_entry/flag/weaken_secborg //Brings secborgs and k9s back in-line with the other borg modules
-
-/datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
-
-/datum/config_entry/flag/disable_peaceborg
-
-/datum/config_entry/number/minimum_secborg_alert	//Minimum alert level for secborgs to be chosen.
-	config_entry_value = 3
-
-/datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
-	config_entry_value = 6
-	min_val = 1
-
-/datum/config_entry/number/brother_scaling_coeff	//how many players per brother team
-	config_entry_value = 25
-	min_val = 1
-
-/datum/config_entry/number/changeling_scaling_coeff	//how much does the amount of players get divided by to determine changelings
-	config_entry_value = 6
-	min_val = 1
-
-/datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
-	config_entry_value = 8
-	min_val = 1
-
-/datum/config_entry/number/abductor_scaling_coeff	//how many players per abductor team
-	config_entry_value = 15
-	min_val = 1
-
-/datum/config_entry/number/traitor_objectives_amount
-	config_entry_value = 2
-	min_val = 0
-
-/datum/config_entry/number/brother_objectives_amount
-	config_entry_value = 2
-	min_val = 0
 
 /datum/config_entry/flag/reactionary_explosions	//If we use reactionary explosions, explosions that react to walls and doors
 
@@ -112,32 +69,6 @@
 /datum/config_entry/flag/protect_assistant_from_antagonist	//If assistants can be traitor/cult/other
 
 /datum/config_entry/flag/enforce_human_authority	//If non-human species are barred from joining as a head of staff
-
-/datum/config_entry/flag/allow_latejoin_antagonists	// If late-joining players can be traitor/changeling
-
-/datum/config_entry/flag/use_antag_rep // see game_options.txt for details
-
-/datum/config_entry/number/antag_rep_maximum
-	config_entry_value = 200
-	min_val = 0
-
-/datum/config_entry/number/default_antag_tickets
-	config_entry_value = 100
-	min_val = 0
-
-/datum/config_entry/number/max_tickets_per_roll
-	config_entry_value = 100
-	min_val = 0
-
-/datum/config_entry/number/midround_antag_time_check	// How late (in minutes you want the midround antag system to stay on, setting this to 0 will disable the system)
-	config_entry_value = 60
-	min_val = 0
-
-/datum/config_entry/number/midround_antag_life_check	// A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
-	config_entry_value = 0.7
-	integer = FALSE
-	min_val = 0
-	max_val = 1
 
 /datum/config_entry/number/suicide_reenter_round_timer
 	config_entry_value = 30
@@ -150,8 +81,6 @@
 /datum/config_entry/number/shuttle_refuel_delay
 	config_entry_value = 12000
 	min_val = 0
-
-/datum/config_entry/flag/show_game_type_odds	//if set this allows players to see the odds of each roundtype on the get revision screen
 
 /datum/config_entry/keyed_list/roundstart_races	//races you can play as from the get go.
 	key_mode = KEY_MODE_TEXT
@@ -211,67 +140,7 @@
 
 /datum/config_entry/flag/emojis
 
-/datum/config_entry/keyed_list/multiplicative_movespeed
-	key_mode = KEY_MODE_TYPE
-	value_mode = VALUE_MODE_NUM
-	config_entry_value = list(			//DEFAULTS
-	/mob/living/simple_animal = 1,
-	/mob/living/silicon/pai = 1,
-	/mob/living/carbon/alien/humanoid/hunter = -1,
-	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
-	/mob/living/carbon/alien/humanoid/royal/queen = 3
-	)
 
-/datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
-	. = ..()
-	if(.)
-		update_config_movespeed_type_lookup(TRUE)
-
-/datum/config_entry/keyed_list/multiplicative_movespeed/vv_edit_var(var_name, var_value)
-	. = ..()
-	if(. && (var_name == NAMEOF(src, config_entry_value)))
-		update_config_movespeed_type_lookup(TRUE)
-
-/datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
-	abstract_type = /datum/config_entry/number/movedelay
-
-/datum/config_entry/number/movedelay/ValidateAndSet()
-	. = ..()
-	if(.)
-		update_mob_config_movespeeds()
-
-/datum/config_entry/number/movedelay/vv_edit_var(var_name, var_value)
-	. = ..()
-	if(. && (var_name == NAMEOF(src, config_entry_value)))
-		update_mob_config_movespeeds()
-
-/datum/config_entry/number/movedelay/run_delay
-
-/datum/config_entry/number/movedelay/walk_delay
-
-/////////////////////////////////////////////////Outdated move delay
-/datum/config_entry/number/outdated_movedelay
-	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
-	abstract_type = /datum/config_entry/number/outdated_movedelay
-
-	var/movedelay_type
-
-/datum/config_entry/number/outdated_movedelay/DeprecationUpdate(value)
-	return "[movedelay_type] [value]"
-
-/datum/config_entry/number/outdated_movedelay/human_delay
-	movedelay_type = /mob/living/carbon/human
-/datum/config_entry/number/outdated_movedelay/robot_delay
-	movedelay_type = /mob/living/silicon/robot
-/datum/config_entry/number/outdated_movedelay/monkey_delay
-	movedelay_type = /mob/living/carbon/monkey
-/datum/config_entry/number/outdated_movedelay/alien_delay
-	movedelay_type = /mob/living/carbon/alien
-/datum/config_entry/number/outdated_movedelay/slime_delay
-	movedelay_type = /mob/living/simple_animal/slime
-/datum/config_entry/number/outdated_movedelay/animal_delay
-	movedelay_type = /mob/living/simple_animal
-/////////////////////////////////////////////////
 
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
 
@@ -281,28 +150,7 @@
 
 /datum/config_entry/flag/ghost_interaction
 
-/datum/config_entry/flag/silent_ai
-/datum/config_entry/flag/silent_borg
-
 /datum/config_entry/flag/sandbox_autoclose	// close the sandbox panel after spawning an item, potentially reducing griff
-
-/datum/config_entry/number/default_laws //Controls what laws the AI spawns with.
-	config_entry_value = 0
-	min_val = 0
-	max_val = 3
-
-/datum/config_entry/number/silicon_max_law_amount
-	config_entry_value = 12
-	min_val = 0
-
-/datum/config_entry/keyed_list/random_laws
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_FLAG
-
-/datum/config_entry/keyed_list/law_weight
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
-	splitter = ","
 
 /datum/config_entry/number/overflow_cap
 	config_entry_value = -1

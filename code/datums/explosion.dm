@@ -7,6 +7,22 @@ GLOBAL_LIST_EMPTY(explosions)
 /proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
 	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 
+/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = 0, silent = FALSE, smoke = TRUE)
+	if(!power)
+		return
+	var/range = 0
+	range = round((2 * power)**GLOB.DYN_EX_SCALE)
+	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
+
+// Using default dyn_ex scale:
+// 100 explosion power is a (5, 10, 20) explosion.
+// 75 explosion power is a (4, 8, 17) explosion.
+// 50 explosion power is a (3, 7, 14) explosion.
+// 25 explosion power is a (2, 5, 10) explosion.
+// 10 explosion power is a (1, 3, 6) explosion.
+// 5 explosion power is a (0, 1, 3) explosion.
+// 1 explosion power is a (0, 0, 1) explosion.
+
 //This datum creates 3 async tasks
 //1 GatherSpiralTurfsProc runs spiral_range_turfs(tick_checked = TRUE) to populate the affected_turfs list
 //2 CaculateExplosionBlock adds the blockings to the cached_exp_block list
@@ -401,19 +417,3 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/atom/A = i
 		A.color = null
 		A.maptext = ""
-
-/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = 0, silent = FALSE, smoke = TRUE)
-	if(!power)
-		return
-	var/range = 0
-	range = round((2 * power)**GLOB.DYN_EX_SCALE)
-	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
-
-// Using default dyn_ex scale:
-// 100 explosion power is a (5, 10, 20) explosion.
-// 75 explosion power is a (4, 8, 17) explosion.
-// 50 explosion power is a (3, 7, 14) explosion.
-// 25 explosion power is a (2, 5, 10) explosion.
-// 10 explosion power is a (1, 3, 6) explosion.
-// 5 explosion power is a (0, 1, 3) explosion.
-// 1 explosion power is a (0, 0, 1) explosion.

@@ -74,7 +74,7 @@
 
 /datum/config_entry/number/dynamic_hijack_cost
 	config_entry_value = 5
-	
+
 /datum/config_entry/number/dynamic_glorious_death_cost
 	config_entry_value = 5
 

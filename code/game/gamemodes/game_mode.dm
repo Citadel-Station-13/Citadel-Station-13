@@ -123,8 +123,6 @@
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	if(replacementmode && round_converted == 2)
 		replacementmode.make_antag_chance(character)
-	return
-
 
 ///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
 /datum/game_mode/proc/convert_roundtype()
@@ -619,11 +617,11 @@
 	return
 
 /// Called by a hook when someone latejoins
-/datum/gamemode/proc/on_latejoin(datum/mind/latejoin)
+/datum/game_mode/proc/on_latejoin(datum/mind/latejoin)
 	AAA
 
 /// Does the actual scaling. Immediate
-/datum/gamemode/proc/do_latejoin_scaling(list/datum/mind/latejoins, immediate)
+/datum/game_mode/proc/do_latejoin_scaling(list/datum/mind/latejoins, immediate)
 
 	//LATEJOIN SCALING
 	/// Whether or not we scale with latejoins
