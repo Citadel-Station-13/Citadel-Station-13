@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(meat_types, list(
 	"Mammalian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal,
 	"Aquatic" = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic,
 	"Avian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/avian,
-	"Inesct" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect))
+	"Insect" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect))
 
 //Crew objective and miscreants stuff
 GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
@@ -120,6 +120,17 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	if(!isnull(new_flavor))
 		flavor_text = sanitize(new_flavor)
 		to_chat(src, "Your flavor text has been updated.")
+
+//Flavor Text
+/mob/living/carbon/human/verb/set_flavor_2()
+	set name = "Set Temporary Flavor Text"
+	set desc = "Sets a description of your character's current appearance. Use this for emotions, poses etc."
+	set category = "IC"
+
+	var/new_flavor = input(src, "Enter your new temporary flavor text:", "Temporary flavor text", null) as message|null
+	if(!isnull(new_flavor))
+		flavor_text_2 = sanitize(new_flavor)
+		to_chat(src, "Your temporary flavor text has been updated.")
 
 //LOOC toggles
 /client/verb/listen_looc()

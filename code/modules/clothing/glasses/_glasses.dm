@@ -250,6 +250,36 @@
 	throwforce = 12
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+/obj/item/clothing/glasses/sunglasses/stunglasses
+	name = "stunglasses"
+	desc = "Sunglasses with inbuilt flashes. Made for those who prefer to walk around in style, who needs clumsy flashes anyway?"
+	actions_types = list(/datum/action/item_action/flash)
+	var/obj/item/assembly/flash/installed
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/Initialize()
+	. = ..()
+	if (!installed)
+		installed = new(src)
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/ui_action_click(mob/user)
+	if (installed && !installed.crit_fail)
+		installed.attack_self(user)
+	else
+		to_chat(user, "<span class = 'danger'>Install a new flash in [src]!</span>")
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/attackby(obj/item/W,mob/user)
+	if (istype(W,/obj/item/screwdriver))
+		if (installed)
+			installed.forceMove(get_turf(src))
+			to_chat(user, "<span class = 'notice'>You remove [installed] from [src].</span>")
+			installed = null
+	if (istype(W,/obj/item/assembly/flash))
+		if (!installed)
+			W.forceMove(src)
+			to_chat(user, "<span class = 'notice'>You install [W] into [src].</span>")
+			installed = W
+	. = ..()
+
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
 	desc = "Protects the eyes from welders; approved by the mad scientist association."
@@ -303,7 +333,7 @@
 		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands && ishuman(loc) && !colored_before)
 		var/mob/living/carbon/human/H = loc

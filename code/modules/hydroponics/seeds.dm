@@ -145,6 +145,7 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 			adjust_yield(1 * rating)
 		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjust_yield(1 * rating)
+		return BULLET_ACT_HIT
 	else
 		return ..()
 
@@ -200,7 +201,7 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 		var/list/data = null
 		if(rid == "blood") // Hack to make blood in plants always O-
 			data = list("blood_type" = "O-")
-		if(rid == "nutriment" || rid == "vitamin")
+		if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
 			// apple tastes of apple.
 			data = T.tastes
 

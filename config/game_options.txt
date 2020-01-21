@@ -560,6 +560,15 @@ ROUNDSTART_TRAITS
 ## Enable night shifts ##
 #ENABLE_NIGHT_SHIFTS
 
+## Makes night shifts only affect in-code public-flagged areas. Nightshifts hit the level as defined in __DEFINES/misc.dm that this is set to and anything below. ##
+NIGHT_SHIFT_PUBLIC_AREAS_ONLY 1
+
+## Nightshift toggles REQUIRE APC authorization ##
+#NIGHTSHIFT_TOGGLE_REQUIRES_AUTH
+
+## Nightshift toggles in public areas REQUIRE APC authorization ##
+NIGHTSHIFT_TOGGLE_PUBLIC_REQUIRES_AUTH
+
 ## Enable randomized shift start times##
 #RANDOMIZE_SHIFT_TIME
 
@@ -575,7 +584,19 @@ MONKEYCAP 64
 #Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
 DYNAMIC_VOTING
 
-## Choose which Engine to start the round with, comment to remove an Engine from the rotation
-BOX_RANDOM_ENGINE Engine SM
-BOX_RANDOM_ENGINE Engine Tesla
-BOX_RANDOM_ENGINE Engine Singulo
+## Choose which Engine to start the round with. Weight is after the comma. Setting the weight to 0 removes the engine from rotation.
+BOX_RANDOM_ENGINE Box SM,3
+BOX_RANDOM_ENGINE Box Tesla,3
+BOX_RANDOM_ENGINE Box Singulo,3
+BOX_RANDOM_ENGINE Box SM 1x3,1
+BOX_RANDOM_ENGINE Box SM 5x5,1
+BOX_RANDOM_ENGINE Box SM 3x,0
+
+## Whether or not there's a mode tier list vote after the secret/extended vote.
+MODETIER_VOTING
+
+## Number of modes dropped by the modetier vote during mode selection, after vote.
+DROPPED_MODES 3
+
+## Whether the suicide verb is allowed.
+# SUICIDE_ALLOWED

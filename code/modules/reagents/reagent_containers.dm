@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
+	var/APTFT_altclick = TRUE //will the set amount_per_transfer_from_this proc be called on AltClick() ?
 	var/volume = 30
 	var/reagent_flags
 	var/list/list_reagents = null
@@ -19,37 +20,40 @@
 	var/container_HP = 2
 	var/cached_icon
 
-/obj/item/reagent_containers/verb/set_APTFT(mob/user) //set amount_per_transfer_from_this
-	set name = "Set Transfer Amount"
-	set category = "Object"
-	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
-	if(N)
-		amount_per_transfer_from_this = N
-		to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
-
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
 	if(isnum(vol) && vol > 0)
 		volume = vol
-	if(!possible_transfer_amounts)
-		src.verbs -= /obj/item/reagent_containers/verb/set_APTFT
+	if(length(possible_transfer_amounts))
+		verbs += /obj/item/reagent_containers/proc/set_APTFT
 	create_reagents(volume, reagent_flags)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY","viruses"= list(F))
-		reagents.add_reagent("blood", disease_amount, data)
+		reagents.add_reagent(/datum/reagent/blood, disease_amount, data)
 	add_initial_reagents()
 
 /obj/item/reagent_containers/examine(mob/user)
 	. = ..()
-	. += "Currently transferring [amount_per_transfer_from_this] units per use."
-	if(possible_transfer_amounts && user.Adjacent(src))
-		. += "<span class='notice'>Alt-click it to set its transfer amount.</span>"
+	if(length(possible_transfer_amounts) > 1)
+		. += "Currently transferring [amount_per_transfer_from_this] units per use."
+		if(APTFT_altclick && user.Adjacent(src))
+			. += "<span class='notice'>Alt-click it to set its transfer amount.</span>"
 
 /obj/item/reagent_containers/AltClick(mob/user)
 	. = ..()
-	if(possible_transfer_amounts && user.Adjacent(src))
+	if(APTFT_altclick && length(possible_transfer_amounts) > 1 && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		set_APTFT()
+		return TRUE
+
+/obj/item/reagent_containers/proc/set_APTFT(mob/user) //set amount_per_transfer_from_this
+	set name = "Set Transfer Amount"
+	set category = "Object"
+	set waitfor = FALSE
+	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
+	if(N)
+		amount_per_transfer_from_this = N
+		to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
@@ -98,9 +102,9 @@
 	reagents.expose_temperature(exposed_temperature)
 	..()
 
-/obj/item/reagent_containers/throw_impact(atom/target)
+/obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	SplashReagents(target, TRUE)
+	SplashReagents(hit_atom, TRUE)
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
@@ -124,8 +128,7 @@
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
 		for(var/datum/reagent/A in reagents.reagent_list)
-			R += A.id + " ("
-			R += num2text(A.volume) + "),"
+			R += "[A.type] ([A.volume]),"
 
 		if(thrownby)
 			log_combat(thrownby, M, "splashed", R)

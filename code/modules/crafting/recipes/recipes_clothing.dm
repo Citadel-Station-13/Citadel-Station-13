@@ -86,7 +86,17 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/sunglasses/reagent = 1)
 	category = CAT_CLOTHING
-
+/* //Kevinz doesn't want it as a recipe for now, leaving it in if anything ever changes to let it in
+/datum/crafting_recipe/stunglasses
+	name = "Stunglasses"
+	result = /obj/item/clothing/glasses/sunglasses/stunglasses
+	time = 60
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/assembly/flash = 1,
+				  /obj/item/clothing/glasses/sunglasses = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+*/
 /datum/crafting_recipe/ghostsheet
 	name = "Ghost Sheet"
 	result = /obj/item/clothing/suit/ghost_sheet
@@ -157,6 +167,14 @@
 				/obj/item/stack/sheet/leather = 3)
 	time = 50
 	always_availible = TRUE
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_wintercoat
+	name = "Durathread Winter Coat"
+	result = /obj/item/clothing/suit/hooded/wintercoat/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 12,
+				/obj/item/stack/sheet/leather = 10)
+	time = 70
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/wintercoat_cosmic
