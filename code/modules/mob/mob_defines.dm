@@ -120,3 +120,5 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
+	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.

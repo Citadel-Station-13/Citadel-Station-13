@@ -174,7 +174,7 @@
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
-	if(H.mind != null && H.ckey != null)
+	if(H.mind != null && (H.voluntary_ghosted || (H.ckey != null)))
 		LAZYINITLIST(abductee_minds)
 		LAZYADD(history, H)
 		LAZYADD(abductee_minds, H.mind)
