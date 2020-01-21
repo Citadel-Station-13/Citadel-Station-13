@@ -151,6 +151,8 @@
 	SSair.remove_from_active(src)
 
 /turf/open/process_cell(fire_count)
+	var/atmos_mix_tick_delay = GLOB.atmos_mix_tick_delay
+	var/atmos_mixed_tick_delay = (atmos_mix_tick_delay-GLOB.atmos_mixed_tick_delay)
 	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
 
@@ -205,7 +207,7 @@
 			our_excited_group = excited_group
 			should_share_air = TRUE
 
-	if(should_share_air && ((fire_count - last_equalize >= 4) || (src in SSair.airs_always_update)))
+	if(should_share_air && ((fire_count - last_equalize >= atmos_mix_tick_delay) || (src in SSair.airs_always_update)))
 		var/datum/gas_mixture/final_air = new()
 		final_air.merge(our_air.copy())
 		for(var/t in adjacent_turfs)
@@ -231,7 +233,7 @@
 			var/turf/open/enemy_tile = t
 			var/difference = enemy_tile.air.return_pressure() - new_air_pressure
 			enemy_tile.air.copy_from(new_air)
-			enemy_tile.last_equalize = max(enemy_tile.last_equalize,fire_count-3)
+			enemy_tile.last_equalize = max(enemy_tile.last_equalize,fire_count-atmos_mixed_tick_delay)
 			enemy_tile.update_visuals()
 			if(difference < 0)
 				consider_pressure_difference(enemy_tile, difference)

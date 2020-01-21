@@ -45,6 +45,12 @@ SUBSYSTEM_DEF(air)
 	var/map_loading = TRUE
 	var/list/queued_for_activation
 
+	// VORELINDA config options (am I really calling it that?)
+	// The below two refer to how many SSair_turf ticks will go by before a turf will run again.
+	// The first is how many ticks it'll delay after the turf itself runs, second is after the turf is an adjacent mixed turf.
+	var/atmos_mix_tick_delay = 4
+	var/atmos_mixed_tick_delay = 1
+
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "RQ:[round(cost_turf_reactions,1)]|"
@@ -71,6 +77,8 @@ SUBSYSTEM_DEF(air)
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
+	atmos_mix_tick_delay = CONFIG_GET(number/atmos_mix_tick_delay)
+	atmos_mixed_tick_delay = CONFIG_GET(number/atmos_mixed_tick_delay)
 	gas_reactions = init_gas_reactions()
 	return ..()
 

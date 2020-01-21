@@ -429,3 +429,10 @@
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
+
+/datum/config_entry/number/atmos_mix_tick_delay
+	config_entry_value = 4
+
+/datum/config_entry/number/atmos_mixed_tick_delay
+	config_entry_value = 1
+
