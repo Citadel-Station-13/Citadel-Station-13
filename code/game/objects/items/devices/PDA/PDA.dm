@@ -1,4 +1,3 @@
-
 //The advanced pea-green monochrome lcd of tomorrow.
 
 GLOBAL_LIST_EMPTY(PDAs)
