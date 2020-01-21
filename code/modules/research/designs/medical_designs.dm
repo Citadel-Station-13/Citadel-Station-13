@@ -307,6 +307,8 @@
 	build_type = PROTOLATHE
 	build_path = /obj/item/defibrillator/compact
 	materials = list(MAT_METAL = 16000, MAT_GLASS = 8000, MAT_SILVER = 6000, MAT_GOLD = 3000)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
