@@ -16,7 +16,7 @@
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
 	canmove = FALSE
 	status_flags = CANSTUN|CANPUSH
@@ -101,6 +101,7 @@
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
@@ -311,9 +312,16 @@
 		return // stop
 	if(incapacitated())
 		return
-	anchored = !anchored // Toggles the anchor
+	var/is_anchored = FALSE
+	if(move_resist == MOVE_FORCE_OVERPOWERING)
+		move_resist = MOVE_FORCE_NORMAL
+	else
+		is_anchored = TRUE
+		move_resist = MOVE_FORCE_OVERPOWERING
+		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
+		ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 
-	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
