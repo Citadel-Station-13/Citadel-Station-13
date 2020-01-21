@@ -31,8 +31,8 @@
 	var/normal_desc
 	//--end of love :'(--
 
-	var/snowflake_id				//if we set from a config snowflake plushie.
-	var/abstract_type = /obj/item/toy/plush		//to prevent us from spawning "base" plushies. set this to a plush's own type. only use this if a plush is not meant to be standalone/spawned, ever.
+	var/snowflake_id					//if we set from a config snowflake plushie.
+	var/can_random_spawn = TRUE			//if this is FALSE, don't spawn this for random plushies.
 
 /obj/item/toy/plush/random_snowflake/Initialize(mapload, set_snowflake_id)
 	. = ..()
@@ -422,14 +422,14 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	. = list()
 	for(var/i in subtypesof(/obj/item/toy/plush))
 		var/obj/item/toy/plush/abstract = i
-		if(initial(abstract.abstract_type) == i)
+		if(!initial(abstract.can_random_spawn))
 			continue
 		. += i
 
 /obj/item/toy/plush/random
 	name = "Illegal plushie"
 	desc = "Something fucked up"
-	var/blacklisted_plushes = list(/obj/item/toy/plush/carpplushie/dehy_carp, /obj/item/toy/plush/awakenedplushie, /obj/item/toy/plush/random)
+	can_random_spawn = FALSE
 
 /obj/item/toy/plush/random/Initialize()
 	var/newtype = prob(CONFIG_GET(number/snowflake_plushie_prob))? /obj/item/toy/plush/random_snowflake : pick(GLOB.valid_plushie_paths)
@@ -591,6 +591,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
 	icon_state = "plushie_awake"
 	item_state = "plushie_awake"
+	can_random_spawn = FALSE
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
@@ -687,7 +688,6 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 /obj/item/toy/plush/mammal
 	name = "mammal plushie"
 	desc = "An adorable stuffed toy resembling some sort of crew member."
-	abstract_type = /obj/item/toy/plush/mammal
 
 /obj/item/toy/plush/catgirl/fermis
 	name = "medcat plushie"
@@ -701,20 +701,17 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	name = "xenohybrid plushie"
 	desc = "An adorable stuffed toy that resmembles a xenomorphic crewmember."
 	squeak_override = list('sound/voice/hiss2.ogg' = 1)
-	abstract_type = /obj/item/toy/plush/xeno
 
 /obj/item/toy/plush/bird
 	name = "bird plushie"
 	desc = "An adorable stuffed plushie that resembles an avian."
 	attack_verb = list("peeped", "beeped", "poofed")
 	squeak_override = list('modular_citadel/sound/voice/peep.ogg' = 1)
-	abstract_type = /obj/item/toy/plush/bird
 
 /obj/item/toy/plush/sergal
 	name = "sergal plushie"
 	desc = "An adorable stuffed plushie that resembles a sagaru."
 	squeak_override = list('modular_citadel/sound/voice/merp.ogg' = 1)
-	abstract_type = /obj/item/toy/plush/sergal
 
 /obj/item/toy/plush/mammal/dog
 	desc = "An adorable stuffed toy that resembles a canine."
@@ -723,11 +720,9 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	'modular_citadel/sound/voice/bark1.ogg' = 1,
 	'modular_citadel/sound/voice/bark2.ogg' = 1
 	)
-	abstract_type = /obj/item/toy/plush/mammal/dog
 
 /obj/item/toy/plush/catgirl
 	name = "feline plushie"
 	desc = "An adorable stuffed toy that resembles a feline."
 	attack_verb = list("headbutt", "scritched", "bit")
 	squeak_override = list('modular_citadel/sound/voice/nya.ogg' = 1)
-	abstract_type = /obj/item/toy/plush/catgirl
