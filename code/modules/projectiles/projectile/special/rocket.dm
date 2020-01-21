@@ -31,16 +31,16 @@
 	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/a84mm_he
-	name ="\improper HE missile"
-	desc = "Boom."
+	name ="HE missile"
+	desc = "A powerful high-explosive rocket."
 	icon_state = "missile"
-	damage = 30
+	damage = 40
 	ricochets_max = 0 //it's a MISSILE
 
 /obj/item/projectile/bullet/a84mm_he/on_hit(atom/target, blocked=0)
 	..()
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
-		explosion(target, 0, 1, 2, 4)
+		explosion(target, 0, 2, 3, 5)
 	else
-		explosion(target, 0, 0, 2, 4)
-	return BULLET_ACT_HIT
+		explosion(target, 0, 1, 3, 5)
+	return TRUE

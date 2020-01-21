@@ -7,6 +7,23 @@
 
 // Pointless (Badassery)
 
+/datum/uplink_item/badass/cxneb
+	name = "Dragon's Tooth Non-Eutactic Blade"
+	desc = "An illegal modification of a weapon that is functionally identical to the energy sword, \
+			the Non-Eutactic Blade (NEB) forges a hardlight blade on-demand, \
+	 		generating an extremely sharp, unbreakable edge that is guaranteed to satisfy your every need. \
+	 		This particular model has a polychromic hardlight generator, allowing you to murder in style! \
+	 		The illegal modifications bring this weapon up to par with the classic energy sword, and also gives it the energy sword's distinctive sounds."
+	item = /obj/item/melee/transforming/energy/sword/cx/traitor
+	cost = 7
+
+/datum/uplink_item/badass/claymore
+	name = "Claymore"
+	cost = 8
+	player_minimum = 25
+	desc = "A claymore. We don't know why you'd do this."
+	item = /obj/item/claymore
+
 /datum/uplink_item/badass/costumes/obvious_chameleon
 	name = "Broken Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
@@ -24,23 +41,10 @@
 			Radio headset does not include encryption key. No gun included."
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
 
-/datum/uplink_item/badass/claymore
-	name = "Claymore"
-	cost = 8
-	player_minimum = 25
-	desc = "A claymore. We don't know why you'd do this."
-	item = /obj/item/claymore
-
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
 	item = /obj/item/storage/backpack/duffelbag/clown/syndie
-
-/datum/uplink_item/badass/plastitanium_toolbox
-	name = "Plastitanium Toolbox"
-	desc = "A very high impact toolbox. Excels at destroying stationary structures."
-	item = /obj/item/storage/toolbox/plastitanium
-	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
 
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"
@@ -49,7 +53,6 @@
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 	cant_discount = TRUE
-	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
@@ -67,11 +70,9 @@
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	surplus = 40
-	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
-	illegal_tech = FALSE

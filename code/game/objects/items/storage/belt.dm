@@ -350,6 +350,19 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/storage/belt/military/engineer
+	name = "engineering chest rig"
+	desc = "A set of tactical webbing worn by combat engineers."
+
+/obj/item/storage/belt/military/engineer/PopulateContents()
+	new /obj/item/screwdriver/power(src)
+	new /obj/item/crowbar/power(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/multitool(src)
+	new /obj/item/stack/cable_coil(src,30,"red")
+	new /obj/item/extinguisher/mini(src)
+	new /obj/item/clothing/glasses/hud/diagnostic/night(src)
+
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
 

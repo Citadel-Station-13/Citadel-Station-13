@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/revolver
 	name = "\improper .357 revolver"
-	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
+	desc = "A sleek revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	casing_ejector = FALSE
@@ -298,6 +298,15 @@
 		to_chat(user, "<span class='notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>")
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+
+/obj/item/gun/ballistic/revolver/doublebarrel/sawn
+	name = "sawn-off double-barrel shotgun"
+	desc = "A sawn off classic"
+	icon_state = "dshotgun"
+	item_state = "shotgun"
+	w_class = WEIGHT_CLASS_NORMAL
+	sawn_off = TRUE
+	slot_flags = ITEM_SLOT_BELT
 
 // IMPROVISED SHOTGUN //
 

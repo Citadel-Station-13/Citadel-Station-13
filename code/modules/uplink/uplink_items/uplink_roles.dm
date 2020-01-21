@@ -28,16 +28,16 @@
 			blast wave \"projectile\". Aspiring scientists may find this highly useful, as forcing the pressure shockwave into a narrow angle seems to be able to bypass whatever quirk of physics \
 			disallows explosive ranges above a certain distance, allowing for the device to use the theoretical yield of a transfer valve bomb, instead of the factual yield."
 	item = /obj/item/gun/blastcannon
-	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled gas masked scientist.
+	cost = 13							//High cost because of the potential for extreme damage in the hands of a skilled gas masked scientist.
 	restricted_roles = list("Research Director", "Scientist")
 
-/datum/uplink_item/role_restricted/alientech
-	name = "Alien Research Disk"
-	desc = "A technology disk holding a terabyte of highly confidential abductor technology. \
-			Simply insert into research console of choice and import the files from the disk. Because of its foreign nature, it may require multiple uploads to work properly."
-	item = /obj/item/disk/tech_disk/abductor
-	cost = 12
-	restricted_roles = list("Research Director", "Scientist", "Roboticist")
+/datum/uplink_item/role_restricted/brainwash_disk
+	name = "Brainwashing Surgery Program"
+	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	restricted_roles = list("Medical Doctor")
+	cost = 3
 
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
@@ -48,7 +48,7 @@
 			be defused, and some crew may attempt to do so. \
 			The bomb core can be pried out and manually detonated with other explosives."
 	item = /obj/item/sbeacondrop/clownbomb
-	cost = 15
+	cost = 11
 	restricted_roles = list("Clown")
 
 /*
@@ -100,21 +100,6 @@
 	cost = 4
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
-/datum/uplink_item/role_restricted/strange_seeds
-	name = "Pack of strange seeds"
-	desc = "Mysterious seeds as strange as their name implies. Spooky."
-	item = /obj/item/seeds/random
-	cost = 2
-	restricted_roles = list("Botanist")
-	illegal_tech = FALSE
-
-/datum/uplink_item/role_restricted/strange_seeds_10pack
-	name = "Pack of strange seeds x10"
-	desc = "Mysterious seeds as strange as their name implies. Spooky. These come in bulk"
-	item = /obj/item/storage/box/strange_seeds_10pack
-	cost = 20
-	restricted_roles = list("Botanist")
-
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \
@@ -126,7 +111,7 @@
 
 /datum/uplink_item/role_restricted/goldenbox
 	name = "Gold Toolbox"
-	desc = "A gold planted plastitanium toolbox loaded with tools. Comes with a set of AI detection multi-tool and a pare of combat gloves."
+	desc = "A gold planted plastitanium toolbox loaded with tools. Comes with a set of AI detection multi-tool and a pair of combat gloves."
 	item = /obj/item/storage/toolbox/gold_real
 	cost = 3 // Has syndie tools + gloves + a robust weapon
 	restricted_roles = list("Assistant", "Curator") //Curator due to this being made of gold - It fits the theme
@@ -135,7 +120,7 @@
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. \
 			Obviously only works for Mimes."
-	cost = 12
+	cost = 10
 	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list("Mime")
 
@@ -152,7 +137,7 @@
 	desc = "A modification kit which allows Kinetic Accelerators to do greatly increased damage while indoors. \
 			Occupies 35% mod capacity."
 	item = /obj/item/borg/upgrade/modkit/indoors
-	cost = 5 //you need two for full damage, so total of 10 for maximum damage
+	cost = 4 //you need two for full damage, so total of 8 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
 
@@ -160,7 +145,7 @@
 	name = "Kitchen Gun (TM)"
 	desc = "A revolutionary .45 caliber cleaning solution! Say goodbye to daily stains and dirty surfaces with Kitchen Gun (TM)! \
 	Just five shots from Kitchen Gun (TM), and it'll sparkle like new! Includes two extra ammunition clips!"
-	cost = 10
+	cost = 8
 	surplus = 40
 	restricted_roles = list("Cook", "Janitor")
 	item = /obj/item/storage/box/syndie_kit/kitchen_gun
@@ -184,7 +169,7 @@
 	name = "Modified Syringe Gun"
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
-	cost = 14
+	cost = 12
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/chemical_gun
@@ -207,7 +192,7 @@
 	name = "Reverse Revolver"
 	desc = "A revolver that always fires at its user. \"Accidentally\" drop your weapon, then watch as the greedy corporate pigs blow their own brains all over the wall. \
 	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Comes in a box of hugs. Honk."
-	cost = 14
+	cost = 11
 	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
@@ -220,7 +205,7 @@
 
 /datum/uplink_item/role_restricted/emitter_cannon
 	name = "Emitter Cannon"
-	desc = "A small emitter fitted into a gun case, do to size constraints and safety it can only shoot about ten times when fully charged."
-	cost = 5 //Low ammo, and deals same as 10mm but emp-able
+	desc = "A small emitter fitted into a gun case, due to size constraints and previous recalls it can only shoot fire ten shots before needing to be recharged."
+	cost = 4 //Low ammo, and deals same as 10mm but emp-able
 	item = /obj/item/gun/energy/emitter
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")

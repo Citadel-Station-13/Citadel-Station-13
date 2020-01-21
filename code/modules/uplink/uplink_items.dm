@@ -121,33 +121,39 @@
 	surplus = 0
 	cant_discount = TRUE
 
-/datum/uplink_item/dangerous
-	category = "Conspicuous and Dangerous Weapons"
-
-/datum/uplink_item/stealthy_weapons
-	category = "Stealthy and Inconspicuous Weapons"
+/datum/uplink_item/munitions
+	category = "Firearms and Projectile Weaponry"
 
 /datum/uplink_item/ammo
 	category = "Ammunition"
 	surplus = 40
 
+/datum/uplink_item/cqc
+	category = "Close-Quarters Combat Equipment"
+
+/datum/uplink_item/toxins
+	category = "Toxins and Biohazardous Chemicals"
+
 /datum/uplink_item/explosives
 	category = "Grenades and Explosives"
 
 /datum/uplink_item/support
-	category = "Support and Mechanized Exosuits"
+	category = "Reinforcements, Cyborgs, and Mechanized Exosuits"
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/suits
-	category = "Space Suits, Hardsuits and Clothing"
+	category = "Uniforms, Armor, and Space Suits"
 	surplus = 40
 
-/datum/uplink_item/stealthy_tools
-	category = "Stealth and Camouflage Items"
+/datum/uplink_item/tools
+	category = "Mil-Spec Tools"
 
-/datum/uplink_item/device_tools
-	category = "Devices and Tools"
+/datum/uplink_item/stealthy_tools
+	category = "Infiltration and Disruption Tools"
+
+/datum/uplink_item/devices
+	category = "Electronic Devices"
 
 /datum/uplink_item/implants
 	category = "Implants"

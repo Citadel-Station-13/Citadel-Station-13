@@ -314,7 +314,7 @@
 /datum/export/weapon/l6sawammo
 	cost = 60
 	unit_name = "law 6 saw ammo box"
-	export_types = list(/obj/item/ammo_box/magazine/mm195x129)
+	export_types = list(/obj/item/ammo_box/magazine/mm556x45)
 	include_subtypes = TRUE
 
 /datum/export/weapon/rocket

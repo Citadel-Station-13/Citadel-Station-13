@@ -21,6 +21,16 @@
 	var/obj/item/suppressor/S = new(src)
 	install_suppressor(S)
 
+/obj/item/gun/ballistic/automatic/pistol/machinepistol
+	name = "M92 machine pistol"
+	desc = "A light weight 9mm machine pistol. Has a threaded barrel for suppressors."
+	icon_state = "vp78"
+	w_class = WEIGHT_CLASS_NORMAL
+	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
+	burst_size = 2
+	fire_delay = 2
+	actions_types = list(/datum/action/item_action/toggle_firemode)
+
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."
@@ -72,8 +82,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
 	can_suppress = FALSE
-	burst_size = 3
-	fire_delay = 2
+	burst_size = 1
+	fire_delay = 1
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 
 /obj/item/gun/ballistic/automatic/pistol/stickman

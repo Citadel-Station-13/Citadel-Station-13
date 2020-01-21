@@ -2,7 +2,7 @@
 
 /obj/item/storage/box/syndicate/PopulateContents()
 	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "baseball" = 1, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
-		if("bloodyspai") // 30 tc now this is more right
+		if("bloodyspai") // None of these TC costs are accurate anymore but I am too lazy to remove them.
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/card/id/syndicate(src) // 2 tc
@@ -91,6 +91,7 @@
 			new /obj/item/multitool/ai_detect(src)
 			new /obj/item/flashlight/emp(src)
 			new /obj/item/emagrecharge(src)
+			new /obj/item/emagrecharge(src)
 
 		if("lordsingulo") // "36" tc aka 23 tc
 			new /obj/item/sbeacondrop(src) // 14 kinda useless
@@ -108,6 +109,7 @@
 			new /obj/item/grenade/plastic/c4 (src)
 			new /obj/item/grenade/plastic/x4 (src)
 			new /obj/item/grenade/plastic/x4 (src)
+			new /obj/item/card/emag(src)
 			new /obj/item/doorCharge(src)
 			new /obj/item/doorCharge(src)
 			new /obj/item/camera_bug(src)
@@ -134,10 +136,8 @@
 
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
-			new /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
-			new /obj/item/implanter/explosive(src) // 2 tc
-			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
-			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
+			new /obj/item/storage/box/syndie_kit/shotgun(src) // 8 tc
+			new /obj/item/implanter/explosive(src) // 2 tc // 2 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 6 tc
@@ -215,6 +215,12 @@
 /obj/item/storage/box/syndie_kit/imp_storage/PopulateContents()
 	new /obj/item/implanter/storage(src)
 
+/obj/item/storage/box/syndie_kit/imp_emp
+	name = "boxed EMP kit"
+
+/obj/item/storage/box/syndie_kit/imp_emp/PopulateContents()
+	new /obj/item/implanter/emp(src)
+
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 
@@ -229,15 +235,18 @@
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 
 /obj/item/storage/box/syndie_kit/emp
-	name = "boxed EMP kit"
+	name = "box"
 
 /obj/item/storage/box/syndie_kit/emp/PopulateContents()
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/implanter/emp(src)
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/empgrenade(src)
+
+/obj/item/storage/box/syndie_kit/flashbang
+	name = "box"
+
+/obj/item/storage/box/syndie_kit/flashbag/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/grenade/flashbang(src)
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
@@ -392,8 +401,53 @@
 	if(prob(50))
 		new /obj/item/seeds/random(src) //oops, an additional packet might have slipped its way into the box
 
+/obj/item/storage/box/syndie_kit/pistol
+
+/obj/item/storage/box/syndie_kit/pistol/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+
+/obj/item/storage/box/syndie_kit/pistolammo
+
+/obj/item/storage/box/syndie_kit/pistolammo/PopulateContents()
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+
 /obj/item/storage/box/syndie_kit/revolver
 
 /obj/item/storage/box/syndie_kit/revolver/PopulateContents()
 	new /obj/item/gun/ballistic/revolver(src)
 	new /obj/item/ammo_box/a357(src)
+	new /obj/item/ammo_box/a357(src)
+	new /obj/item/ammo_box/a357/ap(src)
+	new /obj/item/ammo_box/a357/ap(src)
+	new /obj/item/ammo_box/a357/rubber(src)
+	new /obj/item/ammo_box/a357/rubber(src)
+
+/obj/item/storage/box/syndie_kit/machinepistol
+
+/obj/item/storage/box/syndie_kit/machinepistol/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol/machinepistol(src)
+	new /obj/item/ammo_box/magazine/pistolm9mm(src)
+
+/obj/item/storage/box/syndie_kit/doublebarrel
+
+/obj/item/storage/box/syndie_kit/doublebarrel/PopulateContents()
+	new /obj/item/gun/ballistic/revolver/doublebarrel/sawn(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+	new /obj/item/ammo_casing/shotgun/buckshot(src)
+
+/obj/item/storage/box/syndie_kit/shotgun
+
+/obj/item/storage/box/syndie_kit/shotgun/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g/slug(src)
+	new /obj/item/ammo_box/magazine/m12g/slug(src)
+	new /obj/item/ammo_box/magazine/m12g/meteor(src)
+	new /obj/item/ammo_box/magazine/m12g/stun(src)
