@@ -227,6 +227,11 @@
 				if(V.on)
 					PL |= V.parents[1]
 					PL |= V.parents[2]
+			else if (istype(atmosmch,/obj/machinery/atmospherics/components/binary/relief_valve))
+				var/obj/machinery/atmospherics/components/binary/relief_valve/V = atmosmch
+				if(V.opened)
+					PL |= V.parents[1]
+					PL |= V.parents[2]
 			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
 				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
 				if(C.connected_device)

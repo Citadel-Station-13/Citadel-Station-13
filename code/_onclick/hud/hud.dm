@@ -61,9 +61,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
-	//Citadel stuff
-	var/obj/screen/arousal
-
 /datum/hud/New(mob/owner)
 	mymob = owner
 

@@ -29,6 +29,7 @@
 	var/obj/machinery/machine = null
 
 	var/next_move = null
+	var/create_area_cooldown
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
@@ -119,3 +120,5 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
+	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.

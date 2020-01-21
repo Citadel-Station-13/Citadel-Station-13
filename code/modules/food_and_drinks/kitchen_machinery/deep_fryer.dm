@@ -52,7 +52,7 @@ God bless America.
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
-	reagents.add_reagent("cooking_oil", 25)
+	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
 	component_parts += new /obj/item/stock_parts/micro_laser(null)
@@ -66,10 +66,12 @@ God bless America.
 	oil_use = initial(oil_use) - (oil_efficiency * 0.0095)
 	fry_speed = oil_efficiency
 
-/obj/machinery/deepfryer/examine()
+/obj/machinery/deepfryer/examine(mob/user)
 	. = ..()
 	if(frying)
 		. += "You can make out \a [frying] in the oil."
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.</span>"
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -81,9 +83,9 @@ God bless America.
 		qdel(I)
 		return
 	if(istype(I,/obj/item/clothing/head/mob_holder))
-		to_chat(user, "<span class='warning'>This does not fit in the fryer.</span>") // TODO: Deepfrying instakills mobs, spawns a whole deep-fried mob. 
+		to_chat(user, "<span class='warning'>This does not fit in the fryer.</span>") // TODO: Deepfrying instakills mobs, spawns a whole deep-fried mob.
 		return
-	if(!reagents.has_reagent("cooking_oil"))
+	if(!reagents.has_reagent(/datum/reagent/consumable/cooking_oil))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
@@ -107,7 +109,7 @@ God bless America.
 
 /obj/machinery/deepfryer/process()
 	..()
-	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent("cooking_oil")
+	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
 	if(!C)
 		return
 	reagents.chem_temp = C.fry_temperature
