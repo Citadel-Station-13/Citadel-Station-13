@@ -65,7 +65,7 @@
 	reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/reagent_containers/food/snacks/donut/meat
-	name = "Meat Donut"
+	name = "meat donut"
 	desc = "Tastes as gross as it looks."
 	icon_state = "donut_meat"
 	bonus_reagents = list(/datum/reagent/consumable/ketchup = 1)
@@ -152,7 +152,7 @@
 	icon_state = "jelly"
 	decorated_icon = "jelly_homer"
 	bonus_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	extra_reagent = "berryjuice"
+	extra_reagent = /datum/reagent/consumable/berryjuice
 	tastes = list("jelly" = 1, "donut" = 3)
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR | BREAKFAST
 
@@ -240,7 +240,7 @@
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jelly"
-	extra_reagent = "slimejelly"
+	extra_reagent = /datum/reagent/toxin/slimejelly
 	foodtype = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain

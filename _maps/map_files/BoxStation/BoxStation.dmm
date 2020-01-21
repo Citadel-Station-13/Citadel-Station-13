@@ -6672,12 +6672,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"aoZ" = (
-/obj/machinery/atmospherics/components/binary/valve/digital{
-	name = "Waste Release"
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "apa" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -6916,7 +6910,7 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "apI" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/machinery/atmospherics/components/unary/relief_valve/atmos/atmos_waste{
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
@@ -25394,6 +25388,7 @@
 /obj/structure/sign/poster/official/state_laws{
 	pixel_y = -32
 	},
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "blu" = (
@@ -25550,7 +25545,7 @@
 /area/science/lab)
 "blM" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/roboticist,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "blO" = (
@@ -26059,6 +26054,7 @@
 /area/maintenance/aft)
 "bnb" = (
 /obj/machinery/recharge_station,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bnc" = (
@@ -49658,6 +49654,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "cum" = (
 /obj/machinery/recharge_station,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/service)
 "cun" = (
@@ -52362,6 +52359,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cHT" = (
@@ -52438,7 +52436,7 @@
 "cIc" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/roboticist,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cId" = (
@@ -53471,14 +53469,11 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "est" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-03"
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
@@ -53625,6 +53620,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"eZP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/space/basic,
+/area/hallway/secondary/entry)
 "fbm" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -54818,6 +54817,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"jnX" = (
+/obj/machinery/door/airlock/external{
+	name = "Common Mining Shuttle Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "job" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -55374,6 +55382,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"kRw" = (
+/obj/effect/landmark/start/roboticist,
+/turf/open/floor/plasteel/white,
+/area/science/robotics/lab)
 "kSb" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -56831,6 +56843,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
+"rHa" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "rKc" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -58110,6 +58134,11 @@
 "vYa" = (
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"vZs" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "wcy" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/structure/cable{
@@ -58551,6 +58580,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"ycF" = (
+/obj/machinery/door/airlock/external{
+	name = "Common Mining Shuttle Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "ydD" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/suit_storage_unit/rd,
@@ -66662,7 +66700,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aoV
 aaa
 aaa
 aaa
@@ -66919,12 +66957,12 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aoV
+aaa
+rHa
 aaa
 aaa
-aaa
-aaa
-aaf
+aoV
 aaa
 aaa
 aaa
@@ -67176,12 +67214,12 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaa
-aaa
-aaa
-aaf
-aaf
+asE
+asE
+ycF
+asE
+asE
+aoV
 aaa
 aaa
 aaa
@@ -67434,11 +67472,11 @@ aaa
 aaa
 aaa
 aaf
-aaa
+eZP
+auP
+eZP
 aaf
-aaa
-aAC
-aaf
+vZs
 aaa
 aaa
 aaa
@@ -67691,10 +67729,10 @@ aaa
 aaa
 aaa
 arB
-awW
-awW
-asE
 arB
+jnX
+asE
+aAC
 aaf
 aaa
 aaa
@@ -91636,7 +91674,7 @@ bMK
 cbB
 alk
 alX
-aoZ
+cbA
 bQt
 apa
 cgX
@@ -102905,7 +102943,7 @@ aYV
 bfV
 bhw
 cHM
-biL
+kRw
 blB
 blF
 cHS

@@ -120,7 +120,7 @@
 		PlasmaBurn(2500)
 	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
-	..()
+	return ..()
 
 
 /turf/closed/wall/mineral/wood

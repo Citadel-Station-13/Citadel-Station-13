@@ -32,7 +32,7 @@
 	CalculateAffectingAreas()
 
 /obj/machinery/door/firedoor/examine(mob/user)
-	..()
+	. = ..()
 	if(!density)
 		. += "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>"
 	else if(!welded)
