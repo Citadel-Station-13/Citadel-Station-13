@@ -49,10 +49,9 @@
 			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)
 				return TRUE
 
-datum/preferences/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	..()
 	character.give_genitals(TRUE)
 	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
-	character.canbearoused = arousable
 	if(icon_updates)
 		character.update_genitals()

@@ -97,7 +97,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/P)
 	if(deflect_projectile(P))
-		return
+		return BULLET_ACT_BLOCK
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)

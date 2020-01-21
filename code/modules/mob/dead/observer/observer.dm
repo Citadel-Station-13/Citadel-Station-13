@@ -12,7 +12,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	stat = DEAD
 	density = FALSE
 	canmove = 0
-	anchored = TRUE	//  don't get pushed around
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
@@ -261,8 +260,9 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
 	penalize = suiciding || penalize // suicide squad.
+	voluntary_ghosted = voluntary
 	if(!key || cmptext(copytext(key,1,2),"@") || (SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special, penalize) & COMPONENT_BLOCK_GHOSTING))
 		return //mob has no key, is an aghost or some component hijacked.
 	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
@@ -286,15 +286,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
-		return
-
 	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
 	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
 	if(world.time < roundstart_quit_limit)
 		penalty += roundstart_quit_limit - world.time
 	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 		penalty = CANT_REENTER_ROUND
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE, (stat == DEAD)? penalty : 0, (stat == DEAD)? TRUE : FALSE) & COMPONENT_BLOCK_GHOSTING)
+		return
 
 	if(stat != DEAD)
 		succumb()
@@ -308,7 +308,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/obj/machinery/cryopod/C = loc
 			C.despawn_occupant()
 		else
-			ghostize(0, penalize = TRUE) //0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+			ghostize(0, penalize = TRUE, voluntary = TRUE) //0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 			suicide_log(TRUE)
 
 /mob/camera/verb/ghost()
@@ -662,10 +662,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(ismegafauna(target))
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
-		return 0
-
-	if(istype (target, /mob/living/simple_animal/hostile/spawner))
-		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
 		return 0
 
 	if(can_reenter_corpse && mind && mind.current)

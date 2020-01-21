@@ -15,7 +15,7 @@
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
 				if(skip == TRUE)
-					return
+					return BULLET_ACT_HIT
 				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 				return TRUE
@@ -27,7 +27,7 @@
 	..(target, blocked)
 	DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 	reagents.handle_reactions()
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	. = ..()
@@ -70,11 +70,11 @@
 
 				target.visible_message("<span class='notice'>\The [src] beeps!</span>")
 				to_chat("<span class='notice'><i>You feel a tiny prick as a smartdart embeds itself in you with a beep.</i></span>")
-				return TRUE
+				return BULLET_ACT_HIT
 			else
 				blocked = 100
 				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
 									   "<span class='userdanger'>You see a [src] bounce off you, booping sadly!</span>")
 
 	target.visible_message("<span class='danger'>\The [src] fails to land on target!</span>")
-	return TRUE
+	return BULLET_ACT_BLOCK
