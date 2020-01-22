@@ -30,7 +30,7 @@
 	. = ..()
 	if(hijack_announce)
 		. += "<span class='danger'>Security systems present on console. Any unauthorized tampering will result in an emergency announcement.</span>"
-	if(user?.mind.hijack_speed)
+	if(user?.mind?.hijack_speed)
 		. += "<span class='danger'>Alt click on this to attempt to hijack the shuttle. This will take multiple tries (current: stage [SSshuttle.emergency.hijack_status]/[HIJACKED]).</span>"
 		. += "<span class='notice'>It will take you [(hijack_stage_time * user.mind.hijack_speed) / 10] seconds to reprogram a stage of the shuttle's navigational firmware, and the console will undergo automated timed lockout for [hijack_stage_cooldown/10] seconds after each stage.</span>"
 		if(hijack_announce)
@@ -161,7 +161,8 @@
 /obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()
 	var/obj/docking_port/mobile/emergency/shuttle = SSshuttle.emergency
 	shuttle.hijack_status++
-	announce_hijack_stage()
+	if(hijack_announce)
+		announce_hijack_stage()
 	hijack_last_stage_increase = world.time
 	say("Navigational protocol error! Rebooting systems.")
 	if(shuttle.mode == SHUTTLE_ESCAPE)
@@ -177,10 +178,13 @@
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))
 		return
-	if(!user?.mind?,hijack_speed)
+	if(!user?.mind?.hijack_speed)
 		to_chat(user, "<span class='warning'>You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone.</span.")
 		return
-	if(hijack_hacking = TRUE)
+	if(hijack_hacking == TRUE)
+		return
+	if(SSshuttle.emergency.hijack_status >= HIJACKED)
+		to_chat(user, "<span class='warning'>The emergency shuttle is already loaded with a corrupt navigational payload. What more do you want from it?</span>")
 		return
 	if(hijack_last_stage_increase <= world.time + hijack_stage_cooldown)
 		say("Error - Catastrophic software error detected. Input is currently on timeout.")
