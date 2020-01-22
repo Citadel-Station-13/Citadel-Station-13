@@ -62,6 +62,8 @@
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
+	var/hijack_speed = 0			//whether or not we can hackerman the shuttle and hijack it. 0 means you can't, 1 is normal speed hack, 2 is double, 0.5 is half, etc.
+
 	var/list/learned_recipes //List of learned recipe TYPES.
 
 /datum/mind/New(var/key)
@@ -714,6 +716,12 @@
 	if(G)
 		G.reenter_corpse()
 
+/// Sets our can_hijack to the fastest speed our antag datums allow.
+/datum/mind/proc/update_can_hijack()
+	can_hijack = 0
+	for(var/datum/antagonist/A in antag_datums)
+		can_hijack = max(can_hijack, A.hijack_speed())
+	return can_hijack
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)

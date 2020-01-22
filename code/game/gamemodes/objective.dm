@@ -293,9 +293,11 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/hijack
 	name = "hijack"
-	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
-	team_explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody. Leave no team member behind."
+	explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console."
+	team_explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console. Leave no team member behind."
 	martyr_compatible = 0 //Technically you won't get both anyway.
+	/// Overrides the hijack speed of any antagonist datum it is on ONLY, no other datums are impacted.
+	var/hijack_speed_override = 1
 
 /datum/objective/hijack/check_completion() // Requires all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
