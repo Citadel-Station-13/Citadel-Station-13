@@ -151,8 +151,8 @@
 	SSair.remove_from_active(src)
 
 /turf/open/process_cell(fire_count)
-	var/atmos_mix_tick_delay = GLOB.atmos_mix_tick_delay
-	var/atmos_mixed_tick_delay = (atmos_mix_tick_delay-GLOB.atmos_mixed_tick_delay)
+	var/atmos_mix_tick_delay = SSair.atmos_mix_tick_delay
+	var/atmos_mixed_tick_delay = (atmos_mix_tick_delay-SSair.atmos_mixed_tick_delay)
 	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
 
