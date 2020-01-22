@@ -344,6 +344,7 @@
 /obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
 	if(!(content in src) || !istype(target))
 		return
+	if(isliving(content))
 		var/mob/living/M = content
 		M.cure_blind("belly_[REF(src)]")
 	content.forceMove(target)
