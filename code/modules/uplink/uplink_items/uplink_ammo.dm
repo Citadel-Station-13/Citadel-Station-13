@@ -261,30 +261,30 @@
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/lmg/basic
-	name = "5.56x45mm Box Magazine"
+	name = "1.95x129mm Box Magazine"
 	desc = "An additional 100-round box magazine for the L6 SAW. Suppressive fire in, \
 			suppressive fire out, we do the hokey pokey and that's what it's all about."
-	item = /obj/item/ammo_box/magazine/mm556x45
+	item = /obj/item/ammo_box/magazine/mm195x129
 
 /datum/uplink_item/ammo/lmg/ap
-	name = "5.56x45mm (Armor Piercing) Box Magazine"
+	name = "1.95x129mm (Armor Piercing) Box Magazine"
 	desc = "An alternative 100-round box magazine of armor piercing rounds for the L6 SAW. \
 			Is much more effective against armored targers, but generally has a reduced impact on target."
-	item = /obj/item/ammo_box/magazine/mm556x45/ap
+	item = /obj/item/ammo_box/magazine/mm195x129/ap
 	cost = 5
 
 /datum/uplink_item/ammo/lmg/hollow
-	name = "5.56x45mm (Hollow-Point) Box Magazine"
+	name = "1.95x129mm (Hollow-Point) Box Magazine"
 	desc = "An unethical 80-round box magazine of shredding hollow-point rounds for the L6 SAW. \
 			Is incredibly effective at mowing down the unarmored masses of the crew."
-	item = /obj/item/ammo_box/magazine/mm556x45/hollow
+	item = /obj/item/ammo_box/magazine/mm195x129/hollow
 	cost = 5
 
 /datum/uplink_item/ammo/lmg/incen
-	name = "5.56x45mm (Incendiary) Box Magazine"
+	name = "1.95x129mm (Incendiary) Box Magazine"
 	desc = "An alternative 80-round box magazine of incendiary rounds for the L6 Saw. \
 			Sets targets alight with every bullet, just be careful not to set your squad mates on fire."
-	item = /obj/item/ammo_box/magazine/mm556x45/incen
+	item = /obj/item/ammo_box/magazine/mm195x129/incen
 	cost = 6
 
 datum/uplink_item/ammo/rocket

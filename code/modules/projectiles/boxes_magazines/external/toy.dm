@@ -45,15 +45,15 @@
 
 /obj/item/ammo_box/magazine/toy/m762
 	name = "donksoft box magazine"
-	icon_state = "mm55645-toy"
+	icon_state = "a762-toy"
 	caliber = "foam_force"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 80
 
 /obj/item/ammo_box/magazine/toy/m762/update_icon()
 	..()
-	icon_state = "mm55645-[round(ammo_count(),20)]"
+	icon_state = "a762-[round(ammo_count(),20)]"
 
 /obj/item/ammo_box/magazine/toy/m762/riot
-	icon_state = "mm55645-riot"
+	icon_state = "a762-riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot

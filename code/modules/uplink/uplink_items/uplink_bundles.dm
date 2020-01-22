@@ -9,22 +9,23 @@
 
 /datum/uplink_item/bundles_TC/assault
 	name = "Assault Trooper Kit"
-	desc = "Be the man on the front lines with this robust kit. Includes a c-20r with two spare magazines and an energy shield."
+	desc = "A brutally simple kit that is useful in every operation. Includes a c-20r with five spare magazines, two AP, two fragmentation grenades \
+			two flashbangs, and two C4 charges."
 	item = /obj/item/storage/backpack/duffelbag/syndie/assault
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/shredder
 	name = "Shredder Kit"
-	desc = "A truly horrific weapon designed simply to maim its victim, the CX Shredder is banned by several intergalactic treaties. \
-			This kit contains one CX Shredder with an assortment of four spare magazines, two fragmentation grenades, and a bar of soap to clean up the mess."
+	desc = "An unquestionably unethical shredder of internal organs, the CX Shredder is banned by several intergalactic treaties. \
+			This kit contains one CX Shredder with an assortment of five assorted spare magazines, a stimpack, and a bar of soap to clean up the mess."
 	item = /obj/item/storage/backpack/duffelbag/syndie/shredder
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/donk
 	name = "Donksoft Kit"
-	desc = "A kit chalk full of harmless fun! Includes a toy riot submachine gun, with two extra boxes of riot darts, \
+	desc = "A kit chalk full of harmless fun! Includes a toy riot submachine gun, with five extra boxes of riot darts, \
 			soap, a fake nuke disk, a syndicate sentience potion, playing cards, a broken chameleon kit, a cluster soap bomb, and the exclusive tearstache grenade!"
 	item = /obj/item/storage/backpack/duffelbag/syndie/donk
 	cost = 25
@@ -32,30 +33,31 @@
 
 /datum/uplink_item/bundles_TC/knight
 	name = "Energy Knight Kit"
-	desc = "Hack and slash with close quarters energy weaponry. Includes an energy sword, an energy shield, and an adrenals implanter."
+	desc = "Hack and slash with close quarters energy weaponry. Includes an energy sword, an energy shield, no slips, an adrenals implanter, a CNS rebooter implant, \
+			and a thermal vision autosurgeon."
 	item = /obj/item/storage/backpack/duffelbag/syndie/knight
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/cqc
 	name = "Close Quarters Combat Kit"
-	desc = "Reign supreme in hand to hand combat with this kit. Includes a CQC manual, gloves of the north star \
-			an adrenal mask, throwing weapons, and an emag."
+	desc = "Reign supreme in hand to hand combat with this kit. Includes a CQC manual, gloves of the north star, \
+			an adrenaline mask, throwing weapons, an emag, and a bar of soap."
 	item = /obj/item/storage/backpack/duffelbag/syndie/cqc
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/sniper
 	name = "Sniper Kit"
-	desc = "A specialist kit for long ranged assassinations. Includes a syndicate .50 caliber sniper rifle, with an assortment of three magazines, \
-			a sharp-looking tactical turtleneck suit and tie, a suppressor, and an energy dagger"
+	desc = "A specialist kit for long ranged assassinations. Includes a syndicate .50 caliber sniper rifle, with an assortment of five magazines, \
+			six smoke grenades, and a sharp-looking tactical turtleneck suit and tie,"
 	item = /obj/item/storage/briefcase/sniperbundle
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/infiltrator
 	name = "Infiltration Kit"
-	desc = "Sneak behind enemy lines and complete key objectives for your team. Includes an additional stechkin pistol, two suppressors, four 10mm magazines, \
+	desc = "Sneak behind enemy lines and get your hands dirty when you need to. Includes a stechkin pistol, suppressor, five soporific 10mm magazines, \
 			a switchblade, two smoke grenades, a cryptographic sequencer, a camera bug, an AI detector, and a stealth implanter."
 	item = /obj/item/storage/backpack/duffelbag/syndie/infiltrator
 	cost = 25
@@ -64,16 +66,15 @@
 /datum/uplink_item/bundles_TC/medic
 	name = "Combat Medic Kit"
 	desc = "Keep your allies in the fight with this medical kit. Includes a medibeam gun, an advanced health analyzer, \
-			a bulldog with three spare drums, omnizine laced cigarettes, and a tactical medkit."
+			a bulldog with five spare slug drums, omnizine laced cigarettes, a tactical medkit, and a light weight medical space suit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/combatmedic
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/engineer
 	name = "Combat Engineer Kit"
-	desc = "Break into places, and keep your silicon allies alive with this engineering kit. Includes a chest rig full of engineering goodies, \
-			magboots, a binary encryption key, an advanced combat RCD capable of deconstructing r-walls, \
-			a grenade full of manhacks, two C-4 charges, and two X-4 charges."
+	desc = "Keep yourself and your silicon allies alive with this specialized engineering kit. Includes a chest rig full of engineering goodies, \
+			a Bulldog with four additional buckshot drums, an high performance industrial RCD, a grenade full of manhacks, and a specialized hazard suit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/engineer
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
@@ -84,12 +85,13 @@
 			two flashbangs, two emp grenades, two incendiary grenades, four smoke grenades, four gluon grenades, an acid grenades, and a screwdriver and multitool \
 			for modifying them. An EXCEPTIONAL value."
 	item = /obj/item/storage/belt/grenade/full
-	cost = 25 //Worth ~90. Sounds like a lot but hasn't been a balance issue thus far.
+	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/heavy
 	name = "Heavy Weapons Specialist Kit"
-	desc = "Provide your allies with covering fire with this specialist kit. Includes the L6 SAW along with two magazines, and two flashbangs for crowd control."
+	desc = "Provide your allies with covering fire with this specialist kit. Includes the L6 SAW along with two box magazines, a box of flashbangs for crowd control \
+			and an elite syndicate hardsuit for soaking up damage."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/heavy
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
@@ -97,15 +99,15 @@
 /datum/uplink_item/bundles_TC/bioterror
 	name = "Bioterrorist Kit"
 	desc = "An incredibly dangerous kit for biological warfare. Handle with care. Includes a handheld bioterror chem sprayer, a bioterror kit, \
-			and the terrifying Fungal Tuberculosis kit. Seal suit and internals before use."
+			the terrifying Fungal Tuberculosis kit, and a light weight medical space suit. Seal suit and internals before use."
 	item = /obj/item/storage/backpack/duffelbag/syndie/bioterror
 	cost = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/pyro
 	name = "Pyromaniac Kit"
-	desc = "Set the station on fire with this dangerous kit. Includes a plasma flamethrower with a spare tank, \
-			a VP78 machine pistol with three spare magazines, two of them incendiary, two incendiary grenades, \
+	desc = "Set the station on fire with this dangerous kit. Includes a plasma flamethrower with two spare tanks, \
+			six incendiary grenades for setting the world on fire, the legendary fire axe, \
 			and a fireproof elite syndicate hardsuit to keep you safe from the flames. We are not responsible for any friendly fire that results from the purchase of this kit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/pyro
 	cost = 25

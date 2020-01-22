@@ -78,6 +78,14 @@
 	item = /obj/item/aiModule/syndicate
 	cost = 5
 
+
+/datum/uplink_item/role_restricted/brainwash_disk
+	name = "Brainwashing Surgery Program"
+	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	cost = 3
+
 /datum/uplink_item/devices/compressionkit
 	name = "Bluespace Compression Kit"
 	desc = "A modified version of a BSRPED that can be used to reduce the size of most items while retaining their original functions! \

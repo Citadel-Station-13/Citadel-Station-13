@@ -118,7 +118,7 @@ datum/uplink_item/munitions/rocketlauncher
 
 /datum/uplink_item/munitions/machinegun
 	name = "L6 Squad Automatic Weapon"
-	desc = "A heavy duty Aussec Armoury belt-fed machine gun that carries a massive 100-round magazine of armor piercing 5.56×45mm ammunition that \
+	desc = "A heavy duty Aussec Armoury belt-fed machine gun that carries a massive 100-round magazine of armor piercing 1.95x129mm ammunition that \
 			is fired in 5 round bursts. Requires two hands to fire. The L6 is ideal for suppressive fire and support roles."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18

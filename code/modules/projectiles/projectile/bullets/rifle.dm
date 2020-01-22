@@ -19,7 +19,7 @@
 /obj/item/projectile/bullet/a57x28
 	name = "5.7x28mm bullet"
 	damage = 30 //Getting hit with a full burst is lethal assuming no armor
-	armour_penetration = 10 //Let's not go overboard here
+	armour_penetration = 15 //Let's not go overboard here
 
 /obj/item/projectile/bullet/a57x28/hp
 	name = "5.7x28mm bullet"

@@ -21,24 +21,24 @@
 /obj/item/projectile/bullet/syndicate_turret
 	damage = 20
 
-// 5.56x45mm (SAW)
+// 1.95x129mm (SAW)
 
-/obj/item/projectile/bullet/mm556x45
-	name = "5.56x45mm bullet"
+/obj/item/projectile/bullet/mm195x129
+	name = "1.95x129mm bullet"
 	damage = 25
 	armour_penetration = 5
 
-/obj/item/projectile/bullet/mm556x45/ap
-	name = "5.56x45mmm armor-piercing bullet"
+/obj/item/projectile/bullet/mm195x129/ap
+	name = "1.95x129mm armor-piercing bullet"
 	damage = 21
 	armour_penetration = 75
 
-/obj/item/projectile/bullet/mm556x45/hp
-	name = "5.56x45mm hollow-point bullet"
+/obj/item/projectile/bullet/mm195x129/hp
+	name = "1.95x129mm hollow-point bullet"
 	damage = 35
 	armour_penetration = -60
 
-/obj/item/projectile/bullet/incendiary/mm556x45
-	name = "5.56x45mm incendiary bullet"
+/obj/item/projectile/bullet/incendiary/mm195x129
+	name = "1.95x129mm incendiary bullet"
 	damage = 10
 	fire_stacks = 2

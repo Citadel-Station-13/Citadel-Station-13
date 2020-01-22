@@ -355,12 +355,12 @@
 	desc = "A set of tactical webbing worn by combat engineers."
 
 /obj/item/storage/belt/military/engineer/PopulateContents()
-	new /obj/item/screwdriver/power(src)
-	new /obj/item/crowbar/power(src)
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench(src)
 	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/crowbar/red(src)
+	new /obj/item/wirecutters(src, "red")
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src,30,"red")
-	new /obj/item/extinguisher/mini(src)
 	new /obj/item/clothing/glasses/hud/diagnostic/night(src)
 
 /obj/item/storage/belt/military/snack

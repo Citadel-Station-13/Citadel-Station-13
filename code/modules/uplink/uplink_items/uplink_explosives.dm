@@ -33,13 +33,6 @@
 	cost = 5
 	restricted = TRUE
 
-/datum/uplink_item/explosives/doorcharge
-	name = "Airlock Charge"
-	desc = "A small explosive charged that can be placed into the wiring of any airlock. \
-			The moment someone attempts to open the airlock, the charge will detonate, destroying the airlock and injuring anyone nearby."
-	item = /obj/item/doorCharge
-	cost = 3
-
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"
 	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \
