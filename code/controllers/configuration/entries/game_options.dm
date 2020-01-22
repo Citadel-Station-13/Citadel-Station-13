@@ -249,6 +249,9 @@
 
 /datum/config_entry/number/movedelay/walk_delay
 
+/datum/config_entry/number/movedelay/sprint_speed_increase
+	config_entry_value = 1
+
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
 	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
