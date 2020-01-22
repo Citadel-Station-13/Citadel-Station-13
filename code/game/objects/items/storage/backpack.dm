@@ -622,13 +622,13 @@
 	desc = "A large duffel bag for holding a lot of engineering supplies"
 
 /obj/item/storage/backpack/duffelbag/syndie/engineer/PopulateContents()
+	new /obj/item/construction/rcd/combat(src)
 	new /obj/item/storage/belt/military/engineer(src)
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/encryptionkey/binary(src)
-	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
-	new /obj/item/ammo_box/magazine/m12g/slug(src)
-	new /obj/item/ammo_box/magazine/m12g/dragon(src)
 	new /obj/item/grenade/plastic/c4(src)
+	new /obj/item/grenade/plastic/c4(src)
+	new /obj/item/grenade/plastic/x4(src)
 	new /obj/item/grenade/plastic/x4(src)
 	new /obj/item/grenade/spawnergrenade/manhacks(src)
 
