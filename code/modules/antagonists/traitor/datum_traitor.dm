@@ -60,11 +60,14 @@
 	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
 	hearing_args[HEARING_RAW_MESSAGE] = message
 
+// needs to be refactored to base /datum/antagonist sometime..
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
+	owner?.update_hijack_speed()
 
 /datum/antagonist/traitor/proc/remove_objective(datum/objective/O)
 	objectives -= O
+	owner?.update_hijack_speed()
 
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	switch(traitor_kind)
