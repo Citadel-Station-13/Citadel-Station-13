@@ -485,7 +485,7 @@ FAIL2TOPIC_MAX_FAILS 5
 ## Firewall rule name used on physical server
 FAIL2TOPIC_RULE_NAME _dd_fail2topic
 
-### ATMOSPHERICS (VORELINDA):
+### ATMOSPHERICS (AVDA):
 ## Amount of SSair_turf ticks will go by before a turf will run again, once run
 ATMOS_MIX_TICK_DELAY 4
 

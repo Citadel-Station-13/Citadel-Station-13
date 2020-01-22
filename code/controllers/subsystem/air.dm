@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(air)
 	var/map_loading = TRUE
 	var/list/queued_for_activation
 
-	// VORELINDA config options (am I really calling it that?)
+	// AVDA (Average-of-Volume Distributed Atmospherics) config options (trust me it's better than the previous)
 	// The below two refer to how many SSair_turf ticks will go by before a turf will run again.
 	// The first is how many ticks it'll delay after the turf itself runs, second is after the turf is an adjacent mixed turf.
 	var/atmos_mix_tick_delay = 4
