@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/delete_on_mind_deletion = TRUE
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
-	var/list/_objectives = list()
+	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
 	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		give_antag_moodies()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
-	owner.update_can_hijack()
+	owner.update_hijack_speed()
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
-	owner.update_can_hijack()
+	owner.update_hijack_speed()
 	qdel(src)
 
 /datum/antagonist/proc/greet()

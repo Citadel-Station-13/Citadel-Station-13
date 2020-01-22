@@ -717,7 +717,7 @@
 		G.reenter_corpse()
 
 /// Sets our can_hijack to the fastest speed our antag datums allow.
-/datum/mind/proc/update_can_hijack()
+/datum/mind/proc/update_hijack_speed()
 	can_hijack = 0
 	for(var/datum/antagonist/A in antag_datums)
 		can_hijack = max(can_hijack, A.hijack_speed())
