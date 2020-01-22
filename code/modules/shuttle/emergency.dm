@@ -21,7 +21,7 @@
 	var/hijack_last_stage_increase = 0
 	var/hijack_stage_time = 50
 	var/hijack_stage_cooldown = 50
-	var/hijack_flight_time_incrase = 300
+	var/hijack_flight_time_increase = 300
 	var/hijack_completion_flight_time_set = 100		//How long in deciseconds to set shuttle's timer after hijack is done.
 	var/hijack_hacking = FALSE
 	var/hijack_announce = TRUE
