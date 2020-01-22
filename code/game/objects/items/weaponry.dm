@@ -312,14 +312,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
 	var/extended = 0
+	var/extended_force = 20
+	var/extended_throwforce = 23
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
-		force = 20
+		force = extended_force
 		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 23
+		throwforce = extended_throwforce
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
@@ -342,27 +344,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A concealable spring-loaded knife."
 	force = 2
 	throwforce = 3
+	extended_force = 15
+	extended_throwforce = 18
 	
-/obj/item/switchblade/makeshift/attack_self(mob/user)
-	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
-	if(extended)
-		force = 15
-		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 15
-		icon_state = "switchblade_ext_ms"
-		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = IS_SHARP
-	else
-		force = initial(force)
-		w_class = WEIGHT_CLASS_SMALL
-		throwforce = initial(throwforce)
-		icon_state = initial(icon_state)
-		attack_verb = list("stubbed", "poked")
-		hitsound = 'sound/weapons/genhit.ogg'
-		sharpness = IS_BLUNT
-
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
