@@ -334,10 +334,7 @@ Contains:
 	resistance_flags = FIRE_PROOF
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	mutantrace_variation = NONE
-/*
-/obj/item/clothing/head/helmet/space/hardsuit/engine/rad/attack_self()
-	return //Sprites required for flashlight
-*/
+
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
