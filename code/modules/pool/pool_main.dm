@@ -37,8 +37,10 @@
 	icon_state = "top"
 	layer = BELOW_MOB_LAYER
 
+// Mousedrop hook to normal turfs to get out of pools.
 /turf/open/MouseDrop_T(atom/from, mob/user)
-	if(SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && CHECK_MOBILITY(user, MOBILITY_USE))
+	// I could make this /open/floor and not have the !istype but ehh - kev
+	if(SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && CHECK_MOBILITY(user, MOBILITY_USE) && !istype(src, /turf/open/pool))
 		var/mob/living/L = from
 		//The element only exists if you're on water and a living mob, so let's skip those checks.
 		var/pre_msg
@@ -52,53 +54,34 @@
 		from.visible_message(pre_msg)
 		if(do_mob(user, from, 20))
 			from.visible_message(post_msg)
+			from.forceMove(src)
 	else
 		return ..()
 
-/turf/open/floor/CanPass(atom/movable/A, turf/T)
-	if(!has_gravity(src))
+// Exit check
+/turf/open/pool/Exit(atom/movable/AM, atom/newloc)
+	if(!AM.has_gravity(src))
 		return ..()
-	else if(istype(A, /mob/living) || istype(A, /obj/structure)) //This check ensures that only specific types of objects cannot pass into the water. Items will be able to get tossed out.
-		if(istype(A, /mob/living/simple_animal) || istype(A, /mob/living/carbon/monkey))
-			return ..()
-		if (istype(A, /obj/structure) && istype(A.pulledby, /mob/living/carbon/human))
-			return ..()
-		if(istype(get_turf(A), /turf/open/pool) && !istype(T, /turf/open/pool)) //!(locate(/obj/structure/pool/ladder) in get_turf(A).loc)
-			return FALSE
+	if(isliving(AM) || istype(AM, /obj/structure))
+		if(AM.throwing)
+			return ..()			//WHEEEEEEEEEEE
+		if(istype(AM, /obj/structure) && isliving(AM.pulledby))
+			return ..()			//people pulling stuff out of pool
+		if(!ishuman(AM))
+			return ..()			//human weak, monkey (and anyone else) ook ook eek eek strong
+		return istype(newloc, type)
 	return ..()
 
-//put people in water, including you
-/turf/open/pool/MouseDrop_T(mob/living/M, mob/living/user)
-	if(!has_gravity(src))
-		return
-	if(user.stat || user.lying || !Adjacent(user) || !M.Adjacent(user)|| !iscarbon(M))
-		return
-	if(!iscarbon(user)) // no silicons or drones in mechas.
-		return
-	if(M.swimming) //can't lower yourself again
-		return
-	else
-		if(user == M)
-			M.visible_message("<span class='notice'>[user] is descending in the pool", \
-							"<span class='notice'>You start lowering yourself in the pool.</span>")
-			if(do_mob(user, M, 20))
-				M.swimming = TRUE
-				M.forceMove(src)
-				to_chat(user, "<span class='notice'>You lower yourself in the pool.</span>")
-		else
-			user.visible_message("<span class='notice'>[M] is being put in the pool by [user].</span>", \
-							"<span class='notice'>You start lowering [M] in the pool.")
-			if(do_mob(user, M, 20))
-				M.swimming = TRUE
-				M.forceMove(src)
-				to_chat(user, "<span class='notice'>You lower [M] in the pool.</span>")
-				return
-
+// Exited logic
 /turf/open/pool/Exited(atom/A, atom/newLoc)
 	. = ..()
 	if(isliving(A))
 		controller?.mobs_in_pool -= A
 
+// Entered logic
+/turf/open/pool/Entered(atom/movable/AM, atom/oldloc)
+	if(!AM.has_gravity(src))
+		return ..()
 
 
 /turf/open/pool/Entered(atom/A, turf/OL)
@@ -151,6 +134,23 @@
 			M.adjustStaminaLoss(1)
 			playsound(src, "water_wade", 20, TRUE)
 			return
+
+
+
+/turf/open/pool/MouseDrop_T(atom/from, mob/user)
+	. = ..()
+	if(!isliving(from))
+		return
+	if(user.stat || user.lying || !Adjacent(user) || !from.Adjacent(user) || !iscarbon(user) || !victim.has_gravity(src) || SEND_SIGNAL(victim, COMSIG_IS_SWIMMING))
+		return
+	var/mob/living/victim = from
+	var/victimname = victim == user? "themselves" : "[victim]"
+	var/starttext = victim == user? "[user] is descending into [src]." : "[user] is lowering [victim] into [src]."
+	user.visible_message("<span class='notice'>[starttext]</span>")
+	if(do_mob(user, victim, 20))
+		user.visible_message("<span class='notice'>[user] lowers [victimname] into [src].</span>")
+		victim.AddElement(/datum/element/swimming)		//make sure they have it so they don't fall/whatever
+		victim.forceMove(src)
 
 /turf/open/pool/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/mop) && filled)

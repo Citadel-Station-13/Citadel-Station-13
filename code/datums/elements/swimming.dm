@@ -13,6 +13,7 @@
 /datum/element/swimming/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_IS_SWIMMING)
+	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
 /datum/element/swimming/proc/is_swimming()
 	return IS_SWIMMING
