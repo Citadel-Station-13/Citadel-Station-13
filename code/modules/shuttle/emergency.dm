@@ -199,7 +199,7 @@
 		to_chat(user, "<span class='notice'>You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds.</span>")
 	hijack_hacking = FALSE
 
-/obj/machinery/computer/emergency_shuttle/announce_hijack_stage()
+/obj/machinery/computer/emergency_shuttle/proc/announce_hijack_stage()
 	var/msg
 	var/replaceprob
 	switch(SSshuttle.emergency.hijack_status)

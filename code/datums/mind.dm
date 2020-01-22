@@ -718,10 +718,10 @@
 
 /// Sets our can_hijack to the fastest speed our antag datums allow.
 /datum/mind/proc/update_hijack_speed()
-	can_hijack = 0
+	hijack_speed = 0
 	for(var/datum/antagonist/A in antag_datums)
-		can_hijack = max(can_hijack, A.hijack_speed())
-	return can_hijack
+		hijack_speed = max(hijack_speed, A.hijack_speed())
+	return hijack_speed
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)
