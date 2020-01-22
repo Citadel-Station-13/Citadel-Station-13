@@ -12,6 +12,7 @@
 	density = TRUE
 	use_power = TRUE
 	idle_power_usage = 75
+	resistance_flags = INDESTRUCTIBLE
 	var/list/linkedturfs //List contains all of the linked pool turfs to this controller, assignment happens on initialize
 	var/list/mobs_in_pool = list()//List contains all the mobs currently in the pool.
 	var/temperature = POOL_NORMAL //1-5 Frigid Cool Normal Warm Scalding

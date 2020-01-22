@@ -82,21 +82,15 @@
 /turf/open/pool/Entered(atom/movable/AM, atom/oldloc)
 	if(!AM.has_gravity(src))
 		return ..()
-
-
-/turf/open/pool/Entered(atom/A, turf/OL)
-	..()
-	if(isliving(A))
-		var/mob/living/M = A
-		if(!M.mob_has_gravity())
-			return
-		if(!M.swimming)
-			M.swimming = TRUE
-			controller.mobs_in_pool.Add(M)
-			if(locate(/obj/structure/pool/ladder) in M.loc)
+	if(isliving(AM))
+		var/mob/living/victim = AM
+		if(!SEND_SIGNAL(victim, COMSIG_IS_SWIMMING))		//poor guy not swimming time to dunk them!
+			victim.AddElement(/datum/element/swimming)
+			controller.mobs_in_pool += victim
+			if(locate(/obj/structure/pool/ladder) in victim.loc)		//safe climbing
 				return
-			if(iscarbon(M))
-				var/mob/living/carbon/H = M
+			if(iscarbon(AM))		//FUN TIME!
+				var/mob/living/carbon/H = victim
 				if(filled)
 					if (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSMOUTH)
 						H.visible_message("<span class='danger'>[H] falls in the water!</span>",
@@ -131,11 +125,8 @@
 					H.Knockdown(40)
 					playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 		else if(filled)
-			M.adjustStaminaLoss(1)
+			AM.adjustStaminaLoss(1)
 			playsound(src, "water_wade", 20, TRUE)
-			return
-
-
 
 /turf/open/pool/MouseDrop_T(atom/from, mob/user)
 	. = ..()

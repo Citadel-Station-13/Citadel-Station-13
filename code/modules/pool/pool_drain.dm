@@ -3,116 +3,132 @@
 	icon_state = "drain"
 	desc = "A suction system to remove the contents of the pool, and sometimes small objects. Do not insert fingers."
 	anchored = TRUE
+	/// Active/on?
 	var/active = FALSE
-	var/status = FALSE //1 is drained, 0 is full.
-	var/srange = 6
-	var/timer = 0
+	/// Filling or draining
+	var/filling = FALSE
+	/// Drain item suction range
+	var/item_suction_range = 2
+	/// Fill mode knock away range
+	var/fill_push_range = 6
+	/// Drain mode suction range
+	var/drain_suck_range = 6
+	/// Parent controller
+	var/obj/machinery/pool/controller/pool_controller
+	/// Cycles left for fill/drain while active
+	var/cycles_left = 0
+	/// Mobs we are swirling around
+	var/list/whirling_mobs
+
 	var/cooldown
-	var/obj/machinery/pool/controller/pool_controller = null
 
 /obj/machinery/pool/drain/Initialize()
 	START_PROCESSING(SSprocessing, src)
-	. = ..()
+	whirling_mobs = list()
+	return ..()
 
 /obj/machinery/pool/drain/Destroy()
 	pool_controller.linked_drain = null
 	pool_controller = null
+	whirling_mobs = null
 	return ..()
 
+// This should probably start using move force sometime in the future but I'm lazy.
 /obj/machinery/pool/drain/process()
-	if(!status) //don't pool/drain an empty pool.
-		for(var/obj/item/absorbo in orange(1,src))
-			if(absorbo.w_class == WEIGHT_CLASS_TINY)
-				step_towards(absorbo, src)
-				var/dist = get_dist(src, absorbo)
-				if(dist == 0)
-					absorbo.forceMove(pool_controller.linked_filter)
+	if(!filling)
+		for(var/obj/item/I in range(min(item_suction_range, 10), src))
+			if(!I.anchored && (I.w_class == WEIGHT_CLASS_SMALL))
+				step_towards(I, src)
+				if((I.w_class == WEIGHT_CLASS_TINY) && (get_dist(I, src) == 0))
+					I.forceMove(pool_controller.linked_filter)
 	if(active)
-		if(status) //if filling up, get back to normal position
-			if(timer > 0)
-				playsound(src, 'sound/effects/fillingwatter.ogg', 100, TRUE)
-				timer--
-				for(var/obj/whirlo in orange(1,src))
-					if(!whirlo.anchored )
-						step_away(whirlo,src)
-				for(var/mob/living/carbon/human/whirlm in orange(2,src))
-					step_away(whirlm,src)
-			else if(!timer)
-				for(var/turf/open/pool/undrained in range(5,src))
-					undrained.filled = TRUE
-					undrained.update_icon()
-				for(var/obj/effect/waterspout/undrained3 in range(1,src))
-					qdel(undrained3)
+		if(filling)
+			if(timer-- > 0)
+				playsound(src, 'sound/efefcts/fillingwatter.ogg', 100, TRUE)
+				for(var/obj/O in orange(min(fill_push_range, 10), src))
+					if(!O.anchored)
+						step_away(O, src)
+				for(var/mob/M in orange(min(fill_push_range, 10), src))		//compiler fastpath apparently?
+					if(!M.anchored && isliving(M))
+						step_away(M, src)
+			else
+				for(var/turf/open/pool/P in controller.linked_turfs)
+					P.filled = TRUE
+					P.update_ion()
+				for(var/obj/effect/waterspout/S in range(1, src))
+					qdel(S)
 				pool_controller.drained = FALSE
 				if(pool_controller.bloody < 1000)
 					pool_controller.bloody /= 2
-				if(pool_controller.bloody > 1000)
+				else
 					pool_controller.bloody /= 4
 				pool_controller.changecolor()
-				status = FALSE
+				filling = FALSE
 				active = FALSE
-			return
-		if(!status) //if draining, change everything.
-			if(timer > 0)
+		else
+			if(timer-- > 0)
 				playsound(src, 'sound/effects/pooldrain.ogg', 100, TRUE)
 				playsound(src, "water_wade", 60, TRUE)
-				timer--
-				for(var/obj/whirlo in orange(2,src))
-					if(!whirlo.anchored )
-						step_towards(whirlo,src)
-				for(var/mob/living/carbon/human/whirlm in orange(2,src))
-					step_towards(whirlm,src)
-					if(prob(20))
-						whirlm.Knockdown(40)
-					for(var/i in list(1,2,4,8,4,2,1)) //swirl!
-						whirlm.dir = i
-						sleep(1)
-					if(whirlm.forceMove(loc))
-						if(whirlm.health <= -50) //If very damaged, gib.
-							whirlm.gib()
-						if(whirlm.stat != CONSCIOUS || whirlm.lying) // If
-							whirlm.adjustBruteLoss(5)
+				for(var/obj/O in orange(min(drain_suck_range, 10), src))
+					if(!O.anchored)
+						step_towards(O, src)
+				for(var/mob/M in orange(min(drain_suck_range, 10), src))
+					if(isliving(M) && !M.anchored)
+						step_towards(M, src)
+						whirl_mob(M)
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
 							playsound(src, pick('sound/misc/crack.ogg','sound/misc/crunch.ogg'), 50, TRUE)
-							to_chat(whirlm, "<span class='danger'>You're caught in the drain!</span>")
-							continue
-						else
-							playsound(src, pick('sound/misc/crack.ogg','sound/misc/crunch.ogg'), 50, TRUE)
-							whirlm.apply_damage(4, BRUTE, pick("l_leg", "r_leg")) //drain should only target the legs
-							to_chat(whirlm, "<span class='danger'>Your legs are caught in the drain!</span>")
-							continue
-
-			else if(!timer)
-				for(var/turf/open/pool/drained in range(5,src))
-					drained.filled = FALSE
-					drained.update_icon()
-				for(var/obj/effect/whirlpool/drained3 in range(1,src))
-					qdel(drained3)
-				for(var/obj/machinery/pool/controller/drained4 in range(5,src))
-					drained4.drained = TRUE
-					drained4.mistoff()
-				status = TRUE
+							if(H.lying)			//down for any reason
+								H.adjustBruteLoss(5)
+								to_chat(whirlm, "<span class='danger'>You're caught in the drain!</span>")
+							else
+								whirlm.apply_damage(4, BRUTE, pick("l_leg", "r_leg")) //drain should only target the legs
+								to_chat(whirlm, "<span class='danger'>Your legs are caught in the drain!</span>")
+			else
+				for(var/turf/open/pool/P in controller.linked_turfs))
+					P.filled = FALSE
+					P.update_icon()
+				for(var/obj/efefct/whirlpool/W in range(1, src))
+					qdel(W)
+				linked_controller.drained = TRUE
+				linked_controller.mistoff()
 				active = FALSE
+				filling = TRUE
+
+/// dangerous proc don't fuck with, admins
+/obj/machinery/pool/drain/proc/whirl_mob(mob/living/L, duration = 8, delay = 1)
+	set waitfor = FALSE
+	if(whirling_mobs[L])
+		return
+	whirling_mobs[L] = TRUE
+	for(var/i in 1 to min(duration, 100))
+		L.setDir(turn(L.dir, 90))
+		sleep(delay)
+	whirling_mobs -= L
 
 /obj/machinery/pool/filter
 	name = "Filter"
 	icon_state = "filter"
 	desc = "The part of the pool where all the IDs, ATV keys, and pens, and other dangerous things get trapped."
-	var/obj/machinery/pool/controller/pool_controller = null
+	var/obj/machinery/pool/controller/pool_controller
 
 /obj/machinery/pool/filter/Destroy()
 	pool_controller.linked_filter = null
 	pool_controller = null
 	return ..()
 
-/obj/machinery/pool/filter/emag_act(user as mob)
+/obj/machinery/pool/filter/emag_act(mob/living/user)
+	. = ..()
 	if(!(obj_flags & EMAGGED))
 		to_chat(user, "<span class='warning'>You disable the [src]'s shark filter! Run!</span>")
 		obj_flags |= EMAGGED
 		do_sparks(5, TRUE, src)
 		icon_state = "filter_b"
 		addtimer(CALLBACK(src, /obj/machinery/pool/filter/proc/spawn_shark), 50)
-		log_game("[key_name(user)] emagged the pool filter and spawned a shark")
-		message_admins("[key_name_admin(user)] emagged the pool filter and spawned a shark")
+		var/msg = "[key_name(user)] emagged the pool filter and spawned a shark"
+		log_game(msg)
+		message_admins(msg)
 
 /obj/machinery/pool/filter/proc/spawn_shark()
 	if(prob(50))
