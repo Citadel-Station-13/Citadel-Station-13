@@ -71,7 +71,7 @@
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
 // User has to wear their ID for ID Scan to work.
 // Can also be called manually, with optional parameter being access_to_check to scan the user's ID
-/datum/computer_file/program/proc/can_run(mob/user, loud = 0, access_to_check, transfer = 0)
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE)
 	// Defaults to required_access
 	if(!access_to_check)
 		if(transfer && transfer_access)
@@ -79,16 +79,16 @@
 		else
 			access_to_check = required_access
 	if(!access_to_check) // No required_access, allow it.
-		return 1
+		return TRUE
 
 	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
-		return 1
+		return TRUE
 
 	if(IsAdminGhost(user))
-		return 1
+		return TRUE
 
 	if(issilicon(user))
-		return 1
+		return TRUE
 
 	if(ishuman(user))
 		var/obj/item/card/id/D
@@ -101,17 +101,17 @@
 		if(!I && !D)
 			if(loud)
 				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
-			return 0
+			return FALSE
 
 		if(I)
 			if(access_to_check in I.GetAccess())
-				return 1
+				return TRUE
 		else if(D)
 			if(access_to_check in D.GetAccess())
-				return 1
+				return TRUE
 		if(loud)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
-	return 0
+	return FALSE
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
@@ -127,15 +127,15 @@
 		if(requires_ntnet && network_destination)
 			generate_network_log("Connection opened to [network_destination].")
 		program_state = PROGRAM_STATE_ACTIVE
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")
-	return 1
+	return TRUE
 
 
 /datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -158,17 +158,17 @@
 // ALWAYS INCLUDE PARENT CALL ..() OR DIE IN FIRE.
 /datum/computer_file/program/ui_act(action,params,datum/tgui/ui)
 	if(..())
-		return 1
+		return TRUE
 	if(computer)
 		switch(action)
 			if("PC_exit")
 				computer.kill_program()
 				ui.close()
-				return 1
+				return TRUE
 			if("PC_shutdown")
 				computer.shutdown_computer()
 				ui.close()
-				return 1
+				return TRUE
 			if("PC_minimize")
 				var/mob/user = usr
 				if(!computer.active_program || !computer.all_components[MC_CPU])

@@ -10,27 +10,6 @@ export const Cargo = props => {
   const { ref } = config;
   const supplies = data.supplies || {};
   const requests = data.requests || [];
-  const cart = data.cart || [];
-
-  const cartTotalAmount = cart
-    .reduce((total, entry) => total + entry.cost, 0);
-
-  const cartButtons = !data.requestonly && (
-    <Fragment>
-      <Box inline mx={1}>
-        {cart.length === 0 && 'Cart is empty'}
-        {cart.length === 1 && '1 item'}
-        {cart.length >= 2 && cart.length + ' items'}
-        {' '}
-        {cartTotalAmount > 0 && `(${cartTotalAmount} cr)`}
-      </Box>
-      <Button
-        icon="times"
-        color="transparent"
-        content="Clear"
-        onClick={() => act(ref, 'clear')} />
-    </Fragment>
-  );
 
   return (
     <Fragment>
@@ -240,61 +219,6 @@ const Requests = props => {
         </Fragment>
       ))}
     </table>
-  );
-};
-
-const Cart = props => {
-  const { state, cart } = props;
-  const { config, data } = state;
-  const { ref } = config;
-  return (
-    <Fragment>
-      {cart.length === 0 && 'Nothing in cart'}
-      {cart.length > 0 && (
-        <LabeledList>
-          {cart.map(entry => (
-            <LabeledList.Item
-              key={entry.id}
-              className="candystripe"
-              label={'#' + entry.id}
-              buttons={(
-                <Fragment>
-                  <Box inline mx={2}>
-                    {!!entry.paid && (<b>[Paid Privately]</b>)}
-                    {' '}
-                    {entry.cost} credits
-                  </Box>
-                  <Button
-                    icon="minus"
-                    onClick={() => act(ref, 'remove', {
-                      id: entry.id,
-                    })} />
-                </Fragment>
-              )}>
-              {entry.object}
-            </LabeledList.Item>
-          ))}
-        </LabeledList>
-      )}
-      {cart.length > 0 && !data.requestonly && (
-        <Box mt={2}>
-          {data.away === 1 && data.docked === 1 && (
-            <Button
-              color="green"
-              style={{
-                'line-height': '28px',
-                'padding': '0 12px',
-              }}
-              content="Confirm the order"
-              onClick={() => act(ref, 'send')} />
-          ) || (
-            <Box opacity={0.5}>
-              Shuttle in {data.location}.
-            </Box>
-          )}
-        </Box>
-      )}
-    </Fragment>
   );
 };
 

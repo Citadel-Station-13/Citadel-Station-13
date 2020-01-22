@@ -108,6 +108,9 @@
 #define NUKE_ON_TIMING		2
 #define NUKE_ON_EXPLODING	3
 
+#define MACHINE_NOT_ELECTRIFIED 0
+#define MACHINE_ELECTRIFIED_PERMANENT -1
+#define MACHINE_DEFAULT_ELECTRIFY_TIME 30
 
 //these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
 #define PLANT_GENE_REMOVABLE	(1<<0)

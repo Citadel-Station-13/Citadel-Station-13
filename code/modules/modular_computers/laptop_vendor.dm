@@ -27,6 +27,9 @@
 	var/dev_printer = 0						// 0: None, 1: Standard
 	var/dev_card = 0						// 0: None, 1: Standard
 
+	ui_x = 500
+	ui_y = 400
+
 // Removes all traces of old order and allows you to begin configuration from scratch.
 /obj/machinery/lapvend/proc/reset_order()
 	state = 0
@@ -173,7 +176,7 @@
 	switch(action)
 		if("pick_device")
 			if(state) // We've already picked a device type
-				return TRUE
+				return FALSE
 			devtype = text2num(params["pick"])
 			state = 1
 			fabricate_and_recalc_price(FALSE)
@@ -185,7 +188,7 @@
 			try_purchase()
 			return TRUE
 	if((state != 1) && devtype) // Following IFs should only be usable when in the Select Loadout mode
-		return TRUE
+		return FALSE
 	switch(action)
 		if("confirm_order")
 			state = 2 // Wait for ID swipe for payment processing
@@ -219,36 +222,53 @@
 			dev_card = text2num(params["card"])
 			fabricate_and_recalc_price(FALSE)
 			return TRUE
-	return TRUE
+	return FALSE
 
 /obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()
-		return TRUE
+		return FALSE
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "computer_fabricator", "Personal Computer Vendor", 500, 400, state = state)
+		ui = new(user, src, ui_key, "computer_fabricator", "Personal Computer Vendor", ui_x, ui_y, state = state)
 		ui.open()
 
 /obj/machinery/lapvend/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/c = I
-
 		if(!user.temporarilyRemoveItemFromInventory(c))
 			return
 		credits += c.value
 		visible_message("<span class='info'><span class='name'>[user]</span> inserts [c.value] credits into [src].</span>")
 		qdel(c)
 		return
+	/*else if(istype(I, /obj/item/holochip))
+		var/obj/item/holochip/HC = I
+		credits += HC.credits
+		visible_message("<span class='info'>[user] inserts a $[HC.credits] holocredit chip into [src].</span>")
+		qdel(HC)
+		return		
+	else if(istype(I, /obj/item/card/id))
+		if(state != 2)
+			return
+		var/obj/item/card/id/ID = I
+		var/datum/bank_account/account = ID.registered_account
+		var/target_credits = total_price - credits
+		if(!account.adjust_money(-target_credits))
+			say("Insufficient money on card to purchase!")
+			return
+		credits += target_credits
+		say("$[target_credits] has been desposited from your account.")
+		return */ //Goonconomy when
 	return ..()
 
 // Simplified payment processing, returns 1 on success.
 /obj/machinery/lapvend/proc/process_payment()
 	if(total_price > credits)
 		say("Insufficient credits.")
-		return TRUE
+		return FALSE
 	else
 		return TRUE
 
@@ -288,4 +308,4 @@
 			state = 3
 			addtimer(CALLBACK(src, .proc/reset_order), 100)
 			return TRUE
-		return TRUE
+		return FALSE
