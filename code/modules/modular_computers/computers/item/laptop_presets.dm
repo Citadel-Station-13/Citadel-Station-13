@@ -13,7 +13,7 @@
 
 
 
-/obj/item/modular_computer/laptop/preset/civillian
+/obj/item/modular_computer/laptop/preset/civilian
 	desc = "A low-end laptop often used for personal recreation."
 
 
