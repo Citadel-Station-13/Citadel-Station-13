@@ -344,10 +344,10 @@
 /obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
 	if(!(content in src) || !istype(target))
 		return
-	content.forceMove(target)
-	for(var/mob/living/M in contents)
+		var/mob/living/M = content
 		M.cure_blind("belly_[REF(src)]")
-//	target.nom_mob(content, target.owner)
+	content.forceMove(target)
+
 	if(vore_sound && !recent_sound && !silent)
 		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 			LAZYCLEARLIST(hearing_mobs)
@@ -368,6 +368,7 @@
 	owner.updateVRPanel()
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
+		M.become_blind("belly_[REF(src)]")
 
 // Get the line that should show up in Examine message if the owner of this belly
 // is examined.   By making this a proc, we not only take advantage of polymorphism,
