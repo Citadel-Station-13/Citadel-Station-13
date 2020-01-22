@@ -1,4 +1,5 @@
-//#define VORE_SOUND_FALLOFF 0.05
+#define VORE_SOUND_FALLOFF 0.1
+#define VORE_SOUND_RANGE 3
 
 //
 //  Belly system 2.0, now using objects instead of datums because EH at datums.
@@ -175,7 +176,7 @@
 	if(vore_sound && !recent_sound)
 		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 			LAZYCLEARLIST(hearing_mobs)
-			for(var/mob/living/H in get_hearers_in_view(3, owner))
+			for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
 				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
 					continue
 				LAZYADD(hearing_mobs, H)
@@ -229,7 +230,7 @@
 		if(release_sound && !recent_sound)
 			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 				LAZYCLEARLIST(hearing_mobs)
-				for(var/mob/living/H in get_hearers_in_view(3, owner))
+				for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
 					if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
 						continue
 					LAZYADD(hearing_mobs, H)
@@ -237,7 +238,7 @@
 			for(var/mob/living/H in hearing_mobs)
 				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
-					SEND_SOUND(H,releasement)
+					H.playsound_local(owner.loc, releasement, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 				else if(H && H in contents && H.client)
 					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
 					SEND_SOUND(H,releasement)
@@ -294,7 +295,7 @@
 			for(var/mob/living/H in hearing_mobs)
 				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
-					SEND_SOUND(H,releasement)
+					H.playsound_local(owner.loc, releasement, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 				else if(H && H in contents && H.client)
 					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
 					SEND_SOUND(H,releasement)
@@ -352,7 +353,7 @@
 	if(vore_sound && !recent_sound && !silent)
 		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 			LAZYCLEARLIST(hearing_mobs)
-			for(var/mob/living/H in get_hearers_in_view(3, owner))
+			for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
 				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
 					continue
 				LAZYADD(hearing_mobs, H)
@@ -360,7 +361,7 @@
 		for(var/mob/living/H in hearing_mobs)
 			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 				var/sound/eating = GLOB.pred_vore_sounds[vore_sound]
-				SEND_SOUND(H,eating)
+				H.playsound_local(owner.loc, eating, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 			else if(H && H in contents && H.client)
 				var/sound/eating = GLOB.prey_vore_sounds[vore_sound]
 				SEND_SOUND(H,eating)
@@ -578,7 +579,7 @@
 	var/sound/struggle_rustle = sound(get_sfx("rustle"))
 
 	LAZYCLEARLIST(hearing_mobs)
-	for(var/mob/living/H in get_hearers_in_view(3, owner))
+	for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
 		if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
 			continue
 		LAZYADD(hearing_mobs, H)
@@ -586,14 +587,14 @@
 	if(is_wet)
 		for(var/mob/living/H in hearing_mobs)
 			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
-				SEND_SOUND(H,pred_struggle_snuggle)
+				H.playsound_local(owner.loc, pred_struggle_snuggle, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 			else if(H && H in contents && H.client)
 				SEND_SOUND(H,prey_struggle_snuggle)
 
 	else
 		for(var/mob/living/H in hearing_mobs)
 			if(H && H.client)
-				SEND_SOUND(H, struggle_rustle)
+				H.playsound_local(owner.loc, struggle_rustle, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 
 	for(var/mob/living/H in hearing_mobs)
 		if(H && H.client && (isturf(H.loc)))
