@@ -126,6 +126,6 @@
 /datum/gear/modular_laptop
 	name = "A modular laptop"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/modular_computer/laptop/preset/civillian
+	path = /obj/item/modular_computer/laptop/preset/cheap
 	cost = 7
 	
