@@ -136,6 +136,11 @@
 #define ORGAN_SLOT_TESTICLES "testicles"
 #define ORGAN_SLOT_BREASTS "breasts"
 
+#define G_MALE 1
+#define G_FEMALE 2
+#define G_PLURAL 3
+#define G_NEUTER 4
+
 
 ////organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
