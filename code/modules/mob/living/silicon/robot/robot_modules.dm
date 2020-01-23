@@ -121,7 +121,7 @@
 		else if(istype(S, /obj/item/stack/marker_beacon))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/beacon)
-		
+
 		else if(istype(S, /obj/item/stack/packageWrap))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wrapping_paper)
@@ -342,7 +342,7 @@
 	var/medmodels = list("Default", "Heavy", "Sleek", "Marina", "Droid", "Eyebot", "Medihound", "Medihound Dark", "Vale")
 	if(R.client && R.client.ckey in list("nezuli"))
 		medmodels += "Alina"
-  var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in medmodels
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in medmodels
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
