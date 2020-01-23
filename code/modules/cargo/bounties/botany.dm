@@ -204,21 +204,21 @@
 	name = "Cannabis Leaves"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis)
 	exclude_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/white, /obj/item/reagent_containers/food/snacks/grown/cannabis/death, /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate)
-	multiplier = 4 //hush money
+	multiplier = 3 //hush money
 	bonus_desc = "Do not mention this shipment to security."
 	foodtype = "\"meal\""
 
 /datum/bounty/item/botany/cannabis_white
 	name = "Lifeweed Leaves"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/white)
-	multiplier = 6
+	multiplier = 5
 	bonus_desc = "Do not mention this shipment to security."
 	foodtype = "\"meal\""
 
 /datum/bounty/item/botany/cannabis_death
 	name = "Deathweed Leaves"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/death)
-	multiplier = 6
+	multiplier = 5
 	bonus_desc = "Do not mention this shipment to security."
 	foodtype = "\"meal\""
 

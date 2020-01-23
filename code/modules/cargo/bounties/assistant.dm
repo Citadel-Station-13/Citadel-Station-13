@@ -148,14 +148,14 @@
 	reward = 1000
 	required_count = 5
 	wanted_types = list(/obj/item/restraints/handcuffs)
-
+/* I don't like that you can just buy a box of monkey cubes and finish this for -half- of them.
 /datum/bounty/item/assistant/monkey_cubes
 	name = "Monkey Cubes"
 	description = "Due to a recent genetics accident, Central Command is in serious need of monkeys. Your mission is to ship monkey cubes."
 	reward = 2000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/monkeycube)
-
+*/
 /datum/bounty/item/assistant/chainsaw
 	name = "Chainsaw"
 	description = "The chef at CentCom is having trouble butchering her animals. She requests one chainsaw, please."
