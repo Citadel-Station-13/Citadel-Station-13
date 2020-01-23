@@ -331,30 +331,6 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	recipes = GLOB.plastitanium_recipes
 	. = ..()
 
-
-/*
- * Snow
- */
-/obj/item/stack/sheet/mineral/snow
-	name = "snow"
-	icon_state = "sheet-snow"
-	item_state = "sheet-snow"
-	singular_name = "snow block"
-	force = 1
-	throwforce = 2
-	grind_results = list(/datum/reagent/consumable/ice = 20)
-	merge_type = /obj/item/stack/sheet/mineral/snow
-
-GLOBAL_LIST_INIT(snow_recipes, list ( \
-	new/datum/stack_recipe("Snow Wall", /turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
-	))
-
-/obj/item/stack/sheet/mineral/snow/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.snow_recipes
-	. = ..()
-
 /****************************** Others ****************************/
 
 /*
@@ -385,6 +361,29 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	singular_name = "mythril sheet"
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/mineral/mythril
+
+/*
+ * Snow
+ */
+/obj/item/stack/sheet/mineral/snow
+	name = "snow"
+	icon_state = "sheet-snow"
+	item_state = "sheet-snow"
+	singular_name = "snow block"
+	force = 1
+	throwforce = 2
+	grind_results = list(/datum/reagent/consumable/ice = 20)
+	merge_type = /obj/item/stack/sheet/mineral/snow
+
+GLOBAL_LIST_INIT(snow_recipes, list ( \
+	new/datum/stack_recipe("Snow Wall", /turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
+	))
+
+/obj/item/stack/sheet/mineral/snow/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.snow_recipes
+	. = ..()
 
 /*
  * Alien Alloy

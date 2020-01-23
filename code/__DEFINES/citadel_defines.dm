@@ -72,18 +72,12 @@
 #define MILK_RATE_MULT		1
 #define MILK_EFFICIENCY		1
 
-#define AROUSAL_MINIMUM_DEFAULT 	0
-#define AROUSAL_MAXIMUM_DEFAULT 	100
-#define AROUSAL_START_VALUE			1
 //Individual logging define
 #define INDIVIDUAL_LOOC_LOG "LOOC log"
 
 #define ADMIN_MARKREAD(client) "(<a href='?_src_=holder;markedread=\ref[client]'>MARK READ</a>)"//marks an adminhelp as read and under investigation
 #define ADMIN_IC(client) "(<a href='?_src_=holder;icissue=\ref[client]'>IC</a>)"//marks and adminhelp as an IC issue
 #define ADMIN_REJECT(client) "(<a href='?_src_=holder;rejectadminhelp=\ref[client]'>REJT</a>)"//Rejects an adminhelp for being unclear or otherwise unhelpful. resets their adminhelp timer
-
-//Damage stuffs
-#define AROUSAL "arousal"
 
 //Citadel istypes
 #define isgenital(A) (istype(A, /obj/item/organ/genital))
@@ -117,6 +111,7 @@
 #define NEVER_HYPNO			(1<<8)
 #define NO_APHRO			(1<<9)
 #define NO_ASS_SLAP			(1<<10)
+#define BIMBOFICATION		(1<<11)
 
 #define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES|BREAST_ENLARGEMENT|PENIS_ENLARGEMENT)
 

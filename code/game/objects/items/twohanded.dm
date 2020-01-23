@@ -781,6 +781,11 @@
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
+	var/clonechance = 50
+	var/clonedamage = 12
+	var/clonespeed = 0
+	var/clone_replication_chance = 30
+	var/clone_lifespan = 100
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
@@ -791,10 +796,11 @@
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))
 			return
-		if(!L.stat && prob(50))
+		if(!L.stat && prob(clonechance))
 			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
 			M.faction = user.faction.Copy()
-			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+			M.set_varspeed(clonespeed)
+			M.Copy_Parent(user, clone_lifespan, user.health/2.5, clonedamage, clone_replication_chance)
 			M.GiveTarget(L)
 
 /obj/item/twohanded/pitchfork

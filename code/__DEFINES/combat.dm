@@ -159,6 +159,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EXPLODE_DEVASTATE 1
 #define EXPLODE_HEAVY 2
 #define EXPLODE_LIGHT 3
+#define EXPLODE_GIB_THRESHOLD 50
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
@@ -196,3 +197,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
 #define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
 #define TOTAL_MASS_TOY_SWORD 1.5
+
+//bullet_act() return values
+#define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
+#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.

@@ -110,6 +110,7 @@
 #define HIDENECK		(1<<10)
 #define HIDETAUR		(1<<11) //gotta hide that snowflake
 #define HIDESNOUT		(1<<12) //or do we actually hide our snoots
+#define HIDEACCESSORY	(1<<13) //hides the jumpsuit accessory.
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD		(1<<0)

@@ -46,6 +46,7 @@
 	roundstart = FALSE
 	death = FALSE
 	anchored = FALSE
+	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. You would never leave its beautiful expanse. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
@@ -120,6 +121,7 @@
 	roundstart = FALSE
 	death = FALSE
 	anchored = FALSE
+	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	var/has_owner = FALSE
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
@@ -619,6 +621,24 @@
 	skip_reentry_check = TRUE
 	banType = "ghostcafe"
 
+/datum/action/toggle_dead_chat_mob
+	icon_icon = 'icons/mob/mob.dmi'
+	button_icon_state = "ghost"
+	name = "Toggle deadchat"
+	desc = "Turn off or on your ability to hear ghosts."
+
+/datum/action/toggle_dead_chat_mob/Trigger()
+	if(!..())
+		return 0
+	var/mob/M = target
+	if(HAS_TRAIT_FROM(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT))
+		REMOVE_TRAIT(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT)
+		to_chat(M,"<span class='notice'>You're no longer hearing deadchat.</span>")
+	else
+		ADD_TRAIT(M,TRAIT_SIXTHSENSE,GHOSTROLE_TRAIT)
+		to_chat(M,"<span class='notice'>You're once again longer hearing deadchat.</span>")
+
+
 /obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
 	if(new_spawn.client)
 		new_spawn.client.prefs.copy_to(new_spawn)
@@ -627,12 +647,16 @@
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
 		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
+		new_spawn.AddElement(/datum/element/dusts_on_catatonia)
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
-		to_chat(new_spawn,"<span class='boldwarning'>You maybe sharing your cafe with some ninja-captured individuals, so make sure to only interact with the ghosts you hear as a ghost!</span>")
+		ADD_TRAIT(new_spawn,TRAIT_PACIFISM,GHOSTROLE_TRAIT)
+		to_chat(new_spawn,"<span class='boldwarning'>You may be sharing your cafe with some ninja-captured individuals, so make sure to only interact with the ghosts you hear as a ghost!</span>")
 		to_chat(new_spawn,"<span class='boldwarning'>You can turn yourself into a ghost and freely reenter your body with the ghost action.</span>")
 		var/datum/action/ghost/G = new(new_spawn)
 		G.Grant(new_spawn)
+		var/datum/action/toggle_dead_chat_mob/D = new(new_spawn)
+		D.Grant(new_spawn)
 
 /datum/outfit/ghostcafe
 	name = "ID, jumpsuit and shoes"

@@ -20,15 +20,9 @@
 
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
-	desc = "Keep production moving along with six conveyor belts. Conveyor switch included. If you have any questions, check out the enclosed instruction book."
+	desc = "Keep production moving along with fifteen conveyor belts. Conveyor switch included. If you have any questions, check out the enclosed instruction book."
 	cost = 750
-	contains = list(/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_construct,
-					/obj/item/conveyor_switch_construct,
+	contains = list(/obj/item/stack/conveyor/fifteen,
 					/obj/item/paper/guides/conveyor)
 	crate_name = "conveyor assembly crate"
 
@@ -71,6 +65,17 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine/atmos)
 	crate_name = "atmospherics hardsuit"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+
+/datum/supply_pack/engineering/radhardsuit
+	name = "Radiation Hardsuit"
+	desc = "The Singulo is loose? Do you need to do a few changes to its containment and don't want to spent the rest of the shift under the shower? Get this Radiation Hardsuit! It protect from radiations and space only."
+	cost = 3500
+	access = ACCESS_ENGINE
+	contains = list(/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/suit/space/hardsuit/engine/rad)
+	crate_name = "radiation hardsuit"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/industrialrcd

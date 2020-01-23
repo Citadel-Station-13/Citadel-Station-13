@@ -308,8 +308,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have bonded")
 	else
 		if(get_dist(M, love) < 8)
-			if(HAS_TRAIT(M, TRAIT_NYMPHO)) //Add this back when merged/updated.
-				M.adjustArousalLoss(5)
 			var/message = "[(lewd?"I'm next to my crush..! Eee!":"I'm making friends with [love]!")]"
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "InLove", /datum/mood_event/InLove, message)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")

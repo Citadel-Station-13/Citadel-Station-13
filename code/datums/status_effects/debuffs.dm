@@ -99,10 +99,12 @@
 	id = "Mesmerize"
 	alert_type = /obj/screen/alert/status_effect/mesmerized
 
-/datum/status_effect/no_combat_mode/mesmerize/on_apply()
+/datum/status_effect/no_combat_mode/mesmerize/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
 
 /datum/status_effect/no_combat_mode/mesmerize/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
 
 /obj/screen/alert/status_effect/mesmerized
@@ -613,7 +615,7 @@
 	if(do_after(mob_viewer, 35, null, mob_viewer))
 		if(isliving(mob_viewer))
 			var/mob/living/L = mob_viewer
-			to_chat(mob_viewer, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			to_chat(mob_viewer, "<span class='notice'>You successfully remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 

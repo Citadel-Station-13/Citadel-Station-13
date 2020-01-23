@@ -450,7 +450,7 @@
 	reagents.add_reagent(R, 30)
 	name = "[R] Potion"
 
-/obj/item/reagent_containers/potion_container/throw_impact(atom/target)
+/obj/item/reagent_containers/potion_container/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	sleep(20)
 	var/datum/effect_system/smoke_spread/chem/s = new()

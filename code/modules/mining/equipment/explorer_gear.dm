@@ -29,6 +29,7 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/hooded/explorer/standard
+	hoodtype = /obj/item/clothing/head/hooded/explorer/standard
 
 /obj/item/clothing/head/hooded/explorer/standard
 

@@ -234,8 +234,8 @@
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract && G.mutability_flags & PLANT_GENE_EXTRACTABLE)
 						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-						if(G.mutability_flags & PLANT_GENE_REMOVABLE)
-							dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+					if(G.mutability_flags & PLANT_GENE_REMOVABLE)
+						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else

@@ -202,6 +202,7 @@
 		if(O)
 			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
+		log_craft("[O] crafted by [usr] at [loc_name(O.loc)]")
 
 		//START: oh fuck i'm so sorry
 		if(istype(O, /obj/structure/windoor_assembly))
@@ -341,7 +342,7 @@
 		merge(o)
 	. = ..()
 
-/obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
+/obj/item/stack/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(istype(AM, merge_type))
 		merge(AM)
 	. = ..()
