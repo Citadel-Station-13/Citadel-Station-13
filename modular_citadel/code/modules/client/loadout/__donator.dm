@@ -305,7 +305,7 @@ datum/gear/darksabresheath
 /datum/gear/flagcape
 	name = "US Flag Cape"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/bedsheet/custom/flagcape
+	path = /obj/item/clothing/neck/flagcape
 	ckeywhitelist = list("darnchacha")
 
 /datum/gear/luckyjack
