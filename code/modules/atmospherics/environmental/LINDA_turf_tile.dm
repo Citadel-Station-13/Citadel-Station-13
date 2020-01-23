@@ -7,7 +7,7 @@
 	//list of open turfs adjacent to us
 	var/list/atmos_adjacent_turfs
 	//bitfield of dirs in which we are superconducitng
-	var/atmos_supeconductivity = NONE
+	var/atmos_superconductivity = NONE
 
 	//used to determine whether we should archive
 	var/archived_cycle = 0
@@ -395,9 +395,6 @@
 	SSair.excited_groups -= src
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
-/atom/movable/proc/blocksTemperature()
-	return FALSE
-
 /turf/proc/conductivity_directions()
 	if(archived_cycle < SSair.times_fired)
 		archive()
@@ -408,13 +405,10 @@
 		return ..()
 	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(src, direction)
-		if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
+		if(!(T in atmos_adjacent_turfs) && !(atmos_superconductivity & direction))
 			. |= direction
 
 /turf/proc/neighbor_conduct_with_src(turf/open/other)
-	for (var/atom/movable/G in src)
-		if (G.blocksTemperature())
-			return
 	if(!other.blocks_air) //Open but neighbor is solid
 		other.temperature_share_open_to_solid(src)
 	else //Both tiles are solid
@@ -425,9 +419,6 @@
 	if(blocks_air)
 		..()
 		return
-	for (var/atom/movable/G in src)
-		if (G.blocksTemperature())
-			return
 	if(!other.blocks_air) //Both tiles are open
 		var/turf/open/T = other
 		T.air.temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT)

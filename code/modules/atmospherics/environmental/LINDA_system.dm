@@ -31,12 +31,12 @@
 		if(!(vertical? (CANVERTICALATMOSPASS(O, other)) : (CANATMOSPASS(O, other))))
 			R = TRUE
 			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
-				atmos_supeconductivity |= dir
-				T.atmos_supeconductivity |= opp
+				atmos_superconductivity |= dir
+				T.atmos_superconductivity |= opp
 				return FALSE						//no need to keep going, we got all we asked
 
-	atmos_supeconductivity &= ~dir
-	T.atmos_supeconductivity &= ~opp
+	atmos_superconductivity &= ~dir
+	T.atmos_superconductivity &= ~opp
 
 	return !R
 
