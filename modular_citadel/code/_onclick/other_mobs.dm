@@ -43,7 +43,7 @@
 		var/mob/M = B
 		if(!M.eye_blind)
 			var/message = (M in target_viewers) ? the_action : what_action
-			to_chat(M, "[src] [message].", MSG_VISUAL)
+			to_chat(M, "[src] [message].")
 	return TRUE
 
 /atom/proc/alt_attack_hand(mob/user)
