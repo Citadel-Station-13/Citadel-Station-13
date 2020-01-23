@@ -11,6 +11,7 @@
 /mob/living/carbon/human/AltRangedAttack(atom/A, params)
 	if(isturf(A) || incapacitated()) // pretty annoying to wave your fist at floors and walls. And useless.
 		return TRUE
+	changeNext_move(CLICK_CD_RANGE)
 	var/list/target_viewers = viewers(11, A) //Byond proc, doesn't check for blindness.
 	if(!(src in target_viewers)) //click catcher issuing calls for out of view objects.
 		return TRUE
