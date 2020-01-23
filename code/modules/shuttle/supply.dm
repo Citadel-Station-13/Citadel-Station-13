@@ -166,13 +166,12 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 		msg += export_text + "\n"
 		SSshuttle.points += ex.total_value[E]
 
-	for(var/datum/reagent/R in ex.total_reagents)
-		var/amount = ex.total_reagents[R]
-		var/value = amount*R.value
-		if(!value)
-			continue
-		msg += "[value] credits: received [amount]u of [R.name].\n"
+	for(var/chem in ex.reagents_value)
+		var/value = ex.reagents_value[chem]
+		msg += "[value] credits: received [ex.reagents_volume[chem]]u of [chem].\n"
 		SSshuttle.points += value
+
+	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	SSshuttle.centcom_message = msg
 	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [ex.exported_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

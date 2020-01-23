@@ -102,8 +102,13 @@
 /obj/machinery/clonepod/examine(mob/user)
 	. = ..()
 	var/mob/living/mob_occupant = occupant
+	. += "<span class='notice'>The <i>linking</i> device can be <i>scanned<i> with a multitool.</span>"
 	if(mess)
 		. += "It's filled with blood and viscera. You swear you can see it moving..."
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Cloning speed at <b>[speed_coeff*50]%</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.</span>"
+		if(efficiency > 5)
+			to_chat(user, "<span class='notice'>Pod has been upgraded to support autoprocessing.<span>")
 	if(is_operational() && mob_occupant)
 		if(mob_occupant.stat != DEAD)
 			. += "Current clone cycle is [round(get_completion())]% complete."

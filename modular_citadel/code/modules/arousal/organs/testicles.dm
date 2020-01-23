@@ -6,6 +6,8 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_TESTICLES
 	size = BALLS_SIZE_MIN
+	arousal_verb = "Your balls ache a little"
+	unarousal_verb = "Your balls finally stop aching, again"
 	linked_organ_slot = ORGAN_SLOT_PENIS
 	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION
 	var/size_name = "average"

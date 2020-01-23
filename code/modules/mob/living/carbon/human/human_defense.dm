@@ -51,7 +51,7 @@
 				if(prob(mind.martial_art.dodge_chance))
 					var/dodgemessage = pick("dodges under the projectile!","dodges to the right of the projectile!","jumps over the projectile!")
 					visible_message("<span class='danger'>[src] [dodgemessage]</span>", "<span class='userdanger'>You dodge the projectile!</span>")
-					return -1
+					return BULLET_ACT_BLOCK
 		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
@@ -60,12 +60,10 @@
 					else
 						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-					if(!mind.martial_art.reroute_deflection)
-						return FALSE
-					else
+					if(mind.martial_art.reroute_deflection)
 						P.firer = src
 						P.setAngle(rand(0, 360))//SHING
-						return FALSE
+					return BULLET_ACT_FORCE_PIERCE
 
 	return ..()
 
@@ -104,7 +102,7 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	return dna?.species?.spec_hitby(AM, src) || ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)

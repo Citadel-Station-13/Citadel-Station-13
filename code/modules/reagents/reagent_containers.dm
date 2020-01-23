@@ -102,9 +102,9 @@
 	reagents.expose_temperature(exposed_temperature)
 	..()
 
-/obj/item/reagent_containers/throw_impact(atom/target)
+/obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	SplashReagents(target, TRUE)
+	SplashReagents(hit_atom, TRUE)
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
@@ -128,8 +128,7 @@
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
 		for(var/datum/reagent/A in reagents.reagent_list)
-			R += A.type + " ("
-			R += num2text(A.volume) + "),"
+			R += "[A.type] ([A.volume]),"
 
 		if(thrownby)
 			log_combat(thrownby, M, "splashed", R)
