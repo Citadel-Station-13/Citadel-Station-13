@@ -314,6 +314,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/extended = 0
 	var/extended_force = 20
 	var/extended_throwforce = 23
+	var/extended_icon_state = "switchblade_ext"
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
@@ -322,15 +323,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		force = extended_force
 		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = extended_throwforce
-		icon_state = "switchblade_ext"
+		icon_state = extended_icon_state
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		sharpness = IS_SHARP
 	else
-		force = 3
+		force = initial(force)
 		w_class = WEIGHT_CLASS_SMALL
-		throwforce = 5
-		icon_state = "switchblade"
+		throwforce = initial(throwforce)
+		icon_state = initial(icon_state)
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = IS_BLUNT
@@ -346,6 +347,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 3
 	extended_force = 15
 	extended_throwforce = 18
+	extended_icon_state = "switchblade_ext_ms"
 	
 /obj/item/phone
 	name = "red phone"
