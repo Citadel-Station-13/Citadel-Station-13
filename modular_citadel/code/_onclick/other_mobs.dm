@@ -12,7 +12,7 @@
 	if(isturf(A) || incapacitated()) // pretty annoying to wave your fist at floors and walls. And useless.
 		return TRUE
 	var/list/target_viewers = viewers(11, A) //Byond proc, doesn't check for blindness.
-	if(!(src in target_viewers)) //click catcher issuing calls for out of view turfs.
+	if(!(src in target_viewers)) //click catcher issuing calls for out of view objects.
 		return TRUE
 	if(!has_active_hand())
 		to_chat(src, "<span class='notice'>You ponder your life choices and sigh.</span>")
