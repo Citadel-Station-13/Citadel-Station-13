@@ -339,7 +339,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/switchblade/makeshift //It took me so fucking long to make this not shitcode holy FUCK. GODDAMN IT. SHIT. FUCK. NI-
+/obj/item/switchblade/makeshift //It took me so fucking long to make this not shitcode holy FUCK.
 	icon_state = "switchblade_ms"
 	desc = "A concealable spring-loaded knife."
 	force = 2
