@@ -869,6 +869,10 @@
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
+	var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
+	var/abilitiesavail = FALSE
+	if (H && H.stealthmode)
+		abilitiesavail = TRUE
 	var/list/data = list(
 		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user),
 		"lock_nightshift" = nightshift_requires_auth,
@@ -886,8 +890,8 @@
 		"nightshiftLights" = nightshift_lights,
 		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
 		"hijacker" = hijacker == user ? TRUE : FALSE,
-		"drainavail" = cell.percent() > 85 && user.getImplant(/obj/item/implant/hijack) && !user.getImplant(/obj/item/implant/hijack).stealthmode,
-		"lockdownavail" = cell.percent() > 35 && user.getImplant(/obj/item/implant/hijack) && !user.getImplant(/obj/item/implant/hijack).stealthmode,
+		"drainavail" = cell.percent() > 85 && abilitiesavail,
+		"lockdownavail" = cell.percent() > 35 && abilitiesavail,
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
