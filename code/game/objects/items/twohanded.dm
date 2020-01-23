@@ -25,8 +25,8 @@
  */
 /obj/item/twohanded
 	var/wielded = 0
-	var/force_unwielded = 0
-	var/force_wielded = 0
+	var/force_unwielded // default to null, the number force will be set to on unwield()
+	var/force_wielded // same as above but for wield()
 	var/wieldsound = null
 	var/unwieldsound = null
 	var/slowdown_wielded = 0
@@ -73,7 +73,7 @@
 		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
 		return
 	wielded = 1
-	if(force_wielded)
+	if(!isnull(force_wielded))
 		force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
@@ -738,7 +738,7 @@
 	on = !on
 	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
 	force = on ? force_on : initial(force)
-	throwforce = on ? force_on : initial(force)
+	throwforce = on ? force_on : force
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
