@@ -209,10 +209,23 @@
 
 	if(should_share_air && ((fire_count - last_equalize >= atmos_mix_tick_delay) || (src in SSair.airs_always_update)))
 		var/datum/gas_mixture/final_air = new()
+		var/lowest_pressure = -1
+		var/turf/open/lowest_pressure_tile
 		final_air.merge(our_air.copy())
+		var/are_we_spaced = FALSE
 		for(var/t in adjacent_turfs)
 			var/turf/open/enemy_tile = t
-			final_air.merge(enemy_tile.air.copy())
+			var/datum/gas_mixture/enemy_air = enemy_tile.air
+			if(istype(enemy_air, /datum/gas_mixture/immutable/space))
+				are_we_spaced = enemy_air
+				lowest_pressure_tile = enemy_tile
+				break
+			else
+				var/pressure = enemy_air.return_pressure()
+				if(pressure < lowest_pressure || lowest_pressure == -1)
+					lowest_pressure = pressure
+					lowest_pressure_tile = enemy_tile
+				final_air.merge(enemy_air.copy())
 		if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 			var/datum/gas_mixture/G = new
 			G.copy_from_turf(src)
@@ -220,26 +233,27 @@
 			if(!(our_air.compare(G)))
 				return // stop this early so it doesn't get *too* excited
 			final_air.merge(G)
-		var/datum/gas_mixture/new_air = (final_air.remove(final_air.total_moles() / (adjacent_turfs_length + 1)))
+		var/datum/gas_mixture/new_air
+		if(are_we_spaced)
+			new_air = are_we_spaced
+		else
+			new_air = (final_air.remove(final_air.total_moles() / (adjacent_turfs_length + 1)))
 		if(!istype(new_air)) // this can happen if this runs in space
 			return
 		GAS_GARBAGE_COLLECT(new_air)
 		our_air.last_share = new_air.total_moles() - our_air.total_moles()
+		consider_pressure_difference(lowest_pressure_tile,air.return_pressure()-lowest_pressure)
 		our_air.copy_from(new_air)
 		update_visuals()
-		last_equalize = fire_count
-		var/new_air_pressure = new_air.return_pressure()
 		for(var/t in adjacent_turfs)
 			var/turf/open/enemy_tile = t
-			var/difference = enemy_tile.air.return_pressure() - new_air_pressure
+			var/difference = enemy_tile.air.return_pressure() - lowest_pressure
 			enemy_tile.air.copy_from(new_air)
 			enemy_tile.last_equalize = max(enemy_tile.last_equalize,fire_count-atmos_mixed_tick_delay)
 			enemy_tile.update_visuals()
-			if(difference < 0)
-				consider_pressure_difference(enemy_tile, difference)
-			else
-				enemy_tile.consider_pressure_difference(src, -difference)
+			enemy_tile.consider_pressure_difference(lowest_pressure_tile, -difference)
 			SSair.add_to_react_queue(enemy_tile)
+		last_equalize = fire_count
 
 		LAST_SHARE_CHECK
 
