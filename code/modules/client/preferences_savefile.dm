@@ -185,7 +185,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
 	S["preferred_chaos"]	>> preferred_chaos
-	S["auto_ooc"]	>> auto_ooc
+	S["auto_ooc"]			>> auto_ooc
+	S["eorg_tele"]			>> eorg_tele
 
 
 	//try to fix any outdated data if necessary
@@ -225,6 +226,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
 	cit_toggles			= sanitize_integer(cit_toggles, 0, 65535, initial(cit_toggles))
 	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
+	eorg_tele			= sanitize_integer(eorg_tele, 0, 1, initial(eorg_tele))
 
 	return 1
 
@@ -287,6 +289,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
 	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 	WRITE_FILE(S["auto_ooc"], auto_ooc)
+	WRITE_FILE(S["eorg_tele"], eorg_tele)
 
 	return 1
 

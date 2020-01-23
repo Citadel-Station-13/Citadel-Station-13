@@ -191,7 +191,20 @@
 			H.add_hud_to(M)
 
 	CHECK_TICK
-
+	for(var/mob/m in GLOB.mob_list)
+		if (m.client)
+			m.client.verbs += /client/proc/tele_to_ghost_cafe
+		if (m.client && m.client.prefs && m.client.prefs.eorg_tele)
+			ADD_TRAIT(m,TRAIT_PACIFISM,ROUNDSTART_TRAIT)
+			if (ishuman(m))
+				var/mob/living/carbon/human/H = m
+				H.revive(full_heal=TRUE,admin_revive=TRUE)
+				m.status_flags |= GODMODE
+				for (var/obj/item/W in H)
+					if (W == H.w_uniform || W == H.shoes)
+						continue
+					H.dropItemToGround(W)
+			m.forceMove(pick(GLOB.holdingfacility))
 	//Set news report and mode result
 	mode.set_round_result()
 

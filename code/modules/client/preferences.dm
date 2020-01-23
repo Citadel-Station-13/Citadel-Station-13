@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/auto_fit_viewport = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
-	
+
 	var/sprint_spacebar = FALSE
 	var/sprint_toggle = FALSE
 
@@ -845,6 +845,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Auto OOC:</b> <a href='?_src_=prefs;preference=auto_ooc'>[auto_ooc ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Teleport to Ghost Cafe before EORG:</b> <a href='?_src_=prefs;preference=eorg_tele'>[eorg_tele ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 			if (user && user.client && !user.client.prefs.screenshake==0)
 				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
@@ -2097,6 +2098,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					autostand = !autostand
 				if("auto_ooc")
 					auto_ooc = !auto_ooc
+				if("eorg_tele")
+					eorg_tele = !eorg_tele
 				if ("screenshake")
 					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
 					if (!isnull(desiredshake))
@@ -2230,7 +2233,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("never_hypno")
 					cit_toggles ^= NEVER_HYPNO
-				
+
 				if("aphro")
 					cit_toggles ^= NO_APHRO
 
@@ -2239,7 +2242,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("bimbo")
 					cit_toggles ^= BIMBOFICATION
-					
+
 				//END CITADEL EDIT
 
 				if("ambientocclusion")

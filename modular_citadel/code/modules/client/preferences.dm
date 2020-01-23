@@ -16,6 +16,7 @@
 	var/widescreenpref = TRUE
 	var/autostand = TRUE
 	var/auto_ooc = FALSE
+	var/eorg_tele = FALSE
 
 	//vore prefs
 	var/toggleeatingnoise = TRUE

@@ -317,6 +317,21 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	SSticker.show_roundend_report(src, TRUE)
 
+/client/proc/tele_to_ghost_cafe()
+	set name = "Teleport to Ghost Cafe"
+	set category = "OOC"
+	set desc = "Teleport to the ghost cafe."
+	ADD_TRAIT(mob,TRAIT_PACIFISM,ROUNDSTART_TRAIT)
+	if (ishuman(mob))
+		var/mob/living/carbon/human/H = mob
+		H.revive(full_heal=TRUE,admin_revive=TRUE)
+		mob.status_flags |= GODMODE
+		for (var/obj/item/W in H)
+			if (W == H.w_uniform || W == H.shoes)
+				continue
+			H.dropItemToGround(W)
+	mob.forceMove(pick(GLOB.holdingfacility))
+
 /client/verb/fit_viewport()
 	set name = "Fit Viewport"
 	set category = "OOC"
