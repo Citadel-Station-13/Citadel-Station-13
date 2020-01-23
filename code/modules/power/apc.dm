@@ -311,12 +311,15 @@
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-
+	var/hijackerreturn
+	if (hijacker)
+		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
+		hijackerreturn = H && !H.stealthmode
 	if(update & 2)
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
 			SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[hijacker ? "3" : charging]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[hijackerreturn ? "3" : charging]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 			if(operating)
 				SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 				SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
@@ -331,7 +334,7 @@
 				light_color = LIGHT_COLOR_BLUE
 			if(APC_FULLY_CHARGED)
 				light_color = LIGHT_COLOR_GREEN
-		if (hijacker)
+		if (hijackerreturn)
 			light_color = LIGHT_COLOR_YELLOW
 		set_light(lon_range)
 	else if(update_state & UPSTATE_BLUESCREEN)
@@ -402,14 +405,18 @@
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
 
 	var/results = 0
-	if(last_update_state == update_state && last_update_overlay == update_overlay && hijacker ? hijackerlast : !hijackerlast)
+	var/hijackerreturn
+	if (hijacker)
+		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
+		hijackerreturn = H && !H.stealthmode
+	if(last_update_state == update_state && last_update_overlay == update_overlay && hijackerreturn ? hijackerlast : !hijackerlast)
 		return 0
 	if(last_update_state != update_state)
 		results += 1
-	if(last_update_overlay != update_overlay || hijacker ? !hijackerlast : hijackerlast)
+	if(last_update_overlay != update_overlay || hijackerreturn ? !hijackerlast : hijackerlast)
 		results += 2
-	if (hijacker ? !hijackerlast : hijackerlast)
-		hijackerlast = hijacker ? TRUE : FALSE
+	if (hijackerreturn ? !hijackerlast : hijackerlast)
+		hijackerlast = hijackerreturn ? TRUE : FALSE
 	return results
 
 // Used in process so it doesn't update the icon too much
@@ -879,8 +886,8 @@
 		"nightshiftLights" = nightshift_lights,
 		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
 		"hijacker" = hijacker == user ? TRUE : FALSE,
-		"drainavail" = cell.percent() > 85,
-		"lockdownavail" = cell.percent() > 35,
+		"drainavail" = cell.percent() > 85 && user.getImplant(/obj/item/implant/hijack) && !user.getImplant(/obj/item/implant/hijack).stealthmode,
+		"lockdownavail" = cell.percent() > 35 && user.getImplant(/obj/item/implant/hijack) && !user.getImplant(/obj/item/implant/hijack).stealthmode,
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
@@ -963,7 +970,8 @@
 	. = ..()
 	if (!. && !QDELETED(remote_control))
 		. = remote_control.can_interact(user)
-	if (area.hasSiliconAccessInArea(user))
+	message_admins("[area.hasSiliconAccessInArea(user)] & [hijacker == user && area.hasSiliconAccessInArea(user)]")
+	if (hijacker == user && area.hasSiliconAccessInArea(user))
 		return TRUE
 
 /obj/machinery/power/apc/ui_status(mob/user)
@@ -1054,6 +1062,8 @@
 			hijacker = null
 			set_hijacked_lighting()
 			update_icon()
+			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
+			H.stealthcooldown = world.time + 2 MINUTES
 			energy_fail(30 SECONDS * (cell.charge / cell.maxcharge))
 		if("lockdown")
 			var/celluse = rand(20,35)
@@ -1063,6 +1073,8 @@
 					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
 					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
 			cell.charge -= cell.maxcharge*celluse
+			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
+			H.stealthcooldown = world.time + 3 MINUTES
 	return TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker()
@@ -1088,7 +1100,8 @@
 			to_chat(L, "<span class='warning'>Aborting.</span>")
 			return
 	to_chat(L, "<span class='notice'>Beginning hijack of APC.</span>")
-	if (do_after(L,5 SECONDS,target=src))
+	var/obj/item/implant/hijack/H = L.getImplant(/obj/item/implant/hijack)
+	if (do_after(L,H.stealthmode ? 12 SECONDS : 5 SECONDS,target=src))
 		if (L.toggleSiliconAccessArea(area))
 			hijacker = L
 			update_icon()
@@ -1505,8 +1518,12 @@
 
 /obj/machinery/power/apc/proc/set_hijacked_lighting()
 	set waitfor = FALSE
+	var/hijackerreturn
+	if (hijacker)
+		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
+		hijackerreturn = H && !H.stealthmode
 	for(var/obj/machinery/light/L in area)
-		L.hijacked = hijacker ? TRUE : FALSE
+		L.hijacked = hijackerreturn
 		L.update(FALSE)
 		CHECK_TICK
 

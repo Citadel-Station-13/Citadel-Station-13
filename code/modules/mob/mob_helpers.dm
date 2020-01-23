@@ -412,9 +412,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /atom/proc/hasSiliconAccessInArea(mob/user)
 	return user && (issilicon(user) || (user.siliconaccesstoggle && (get_area(src) in user.siliconaccessareas)))
 
-/area/proc/hasSiliconAccessInArea(mob/user)
-	return user && (issilicon(user) || (user.siliconaccesstoggle && (src in user.siliconaccessareas)))
-
 /mob/proc/toggleSiliconAccessArea(area/area)
 	if (area in siliconaccessareas)
 		siliconaccessareas -= area
@@ -428,6 +425,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			to_chat(src,"<span class='warning'>You are connected to too many APCs! Too many more will fry your brain.</span>")
 			return FALSE
 		return TRUE
+
+/mob/proc/getImplant(type)
+	if (!istype(src,/mob/living))
+		return
+	var/mob/living/L = src
+	for (var/I in L.implants)
+		if (istype(I,type))
+			return I
+	return null
 
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")

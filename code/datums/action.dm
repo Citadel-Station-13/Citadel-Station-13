@@ -559,7 +559,7 @@
 		return
 	var/area/area = areas[removeAPC]
 	var/obj/machinery/power/apc/apc = area.get_apc()
-	if (!apc || !(apc in owner.siliconaccessareas))
+	if (!apc || !(area in owner.siliconaccessareas))
 		return
 	apc.hijacker = null
 	apc.update_icon()
@@ -581,9 +581,32 @@
 		return
 	var/area/area = areas[accessAPC]
 	var/obj/machinery/power/apc/apc = area.get_apc()
-	if (!apc || !(apc in owner.siliconaccessareas))
+	if (!apc || !(area in owner.siliconaccessareas))
 		return
 	apc.ui_interact(owner)
+
+/datum/action/item_action/stealthmodetoggle
+	name = "Toggle Stealth Mode"
+	desc = "Toggles the stealth mode on the hijack implant."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijackz"
+
+/datum/action/item_action/stealthmodetoggle/Trigger()
+	var/obj/item/implant/hijack/H = target
+	if (!istype(H))
+		return
+	if (H.stealthcooldown > world.time)
+		to_chat(owner,"<span class='warning'>The hijack implant's stealth mode toggle is still rebooting!</span>")
+		return
+	H.stealthmode = !H.stealthmode
+	for (var/area/area in H.imp_in.siliconaccessareas)
+		var/obj/machinery/power/apc/apc = area.get_apc()
+		if (apc)
+			apc.set_hijacked_lighting()
+			apc.update_icon()
+	H.stealthcooldown = world.time + 30 SECONDS
+	H.toggle_eyes(H.toggled && !H.stealthmode)
+	to_chat(owner,"<span class='notice'>You toggle the hijack implant's stealthmode [H.stealthmode ? "on" : "off"].</span>")
 
 /datum/action/item_action/flash
 	name = "Flash"
