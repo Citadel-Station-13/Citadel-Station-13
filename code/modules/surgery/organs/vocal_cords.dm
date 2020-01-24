@@ -578,7 +578,8 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
-			if(H.canbearoused && H.has_dna() && HAS_TRAIT(H, TRAIT_NYMPHO)) // probably a redundant check but for good measure
+			
+			if(H.client && H.client.prefs && H.client.prefs.cit_toggles & HYPNO) // probably a redundant check but for good measure
 				H.mob_climax(forced_climax=TRUE)
 
 	//DAB
@@ -807,7 +808,7 @@
 				E.enthrallTally += (power_multiplier*(((length(message))/200) + 1)) //encourage players to say more than one word.
 			else
 				E.enthrallTally += power_multiplier*1.25 //thinking about it, I don't know how this can proc
-			if(L.canbearoused && E.lewd)
+			if(E.lewd)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'><i><b>[E.enthrallGender] is so nice to listen to.</b></i></span>"), 5)
 			E.cooldown += 1
 
@@ -821,8 +822,6 @@
 				continue
 			if (E.lewd)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>[E.enthrallGender] has praised me!!</span>"), 5)
-				if(HAS_TRAIT(L, TRAIT_NYMPHO))
-					L.adjustArousalLoss(2*power_multiplier)
 				if(HAS_TRAIT(L, TRAIT_MASO))
 					E.enthrallTally -= power_multiplier
 					E.resistanceTally += power_multiplier
@@ -845,7 +844,9 @@
 				continue
 			if (E.lewd)
 				if(HAS_TRAIT(L, TRAIT_MASO))
-					L.adjustArousalLoss(3*power_multiplier)
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						H.adjust_arousal(3*power_multiplier,maso = TRUE)
 					descmessage += "And yet, it feels so good..!</span>" //I don't really understand masco, is this the right sort of thing they like?
 					E.enthrallTally += power_multiplier
 					E.resistanceTally -= power_multiplier
@@ -1001,16 +1002,6 @@
 				if(160 to INFINITY)
 					speaktrigger += "I feel like I'm on the brink of losing my mind, "
 
-			//horny
-			if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused && E.lewd)
-				switch(H.getArousalLoss())
-					if(40 to 60)
-						speaktrigger += "I'm feeling a little horny, "
-					if(60 to 80)
-						speaktrigger += "I'm feeling horny, "
-					if(80 to INFINITY)
-						speaktrigger += "I'm really, really horny, "
-
 			//collar
 			if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar) && E.lewd)
 				speaktrigger += "I love the collar you gave me, "
@@ -1111,11 +1102,10 @@
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase > 1)
-				if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused && E.lewd) // probably a redundant check but for good measure
+				if(E.lewd) // probably a redundant check but for good measure
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='love'>Your [E.enthrallGender] pushes you over the limit, overwhelming your body with pleasure.</b></span>"), 5)
 					H.mob_climax(forced_climax=TRUE)
 					H.SetStun(20)
-					H.setArousalLoss(H.min_arousal)
 					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
 					E.enthrallTally += power_multiplier
 					E.cooldown += 6

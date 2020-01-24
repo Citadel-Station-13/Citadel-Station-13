@@ -11,6 +11,8 @@
 	shape = "pair"
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_FUID_PRODUCTION
 	masturbation_verb = "massage"
+	arousal_verb = "Your breasts start feeling sensitive"
+	unarousal_verb = "Your breasts no longer feel sensitive"
 	orgasm_verb = "leaking"
 	fluid_transfer_factor = 0.5
 	var/static/list/breast_values = list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)

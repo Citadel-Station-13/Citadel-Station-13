@@ -416,14 +416,14 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		playsound(src, 'sound/effects/stealthoff.ogg', 25, TRUE, -1)
 		weather_immunities -= "lava"
 
-/mob/living/silicon/robot/throw_impact(atom/A)
+/mob/living/silicon/robot/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 
 	if(!leaping)
 		return ..()
 
-	if(A)
-		if(isliving(A))
-			var/mob/living/L = A
+	if(hit_atom)
+		if(isliving(hit_atom))
+			var/mob/living/L = hit_atom
 			if(!L.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
 				L.Knockdown(iscarbon(L) ? 60 : 45, override_stamdmg = CLAMP(pounce_stamloss, 0, pounce_stamloss_cap-L.getStaminaLoss())) // Temporary. If someone could rework how dogborg pounces work to accomodate for combat changes, that'd be nice.
@@ -437,8 +437,8 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
-		else if(A.density && !A.CanPass(src))
-			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
+		else if(hit_atom.density && !hit_atom.CanPass(src))
+			visible_message("<span class ='danger'>[src] smashes into [hit_atom]!</span>", "<span class ='userdanger'>You smash into [hit_atom]!</span>")
 			playsound(src, 'sound/items/trayhit1.ogg', 50, 1)
 			Knockdown(15, 1, 1)
 

@@ -1,0 +1,5 @@
+author: "r4d6"
+delete-after: True
+changes: 
+  - rscadd: "Added a Radiation Hardsuit"
+  - rscadd: "Added a Radiation Hardsuit crate"

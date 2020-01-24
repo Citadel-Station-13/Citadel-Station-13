@@ -37,6 +37,7 @@
 /datum/component/nanites/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HAS_NANITES, .proc/confirm_nanites)
+	RegisterSignal(parent, COMSIG_NANITE_IS_STEALTHY, .proc/check_stealth)
 	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
 	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
 	RegisterSignal(parent, COMSIG_NANITE_SET_VOLUME, .proc/set_volume)
@@ -57,10 +58,12 @@
 		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
 		RegisterSignal(parent, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
 		RegisterSignal(parent, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
+		RegisterSignal(parent, COMSIG_NANITE_COMM_SIGNAL, .proc/receive_comm_signal)
 
 /datum/component/nanites/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
+								COMSIG_NANITE_IS_STEALTHY,
 								COMSIG_NANITE_UI_DATA,
 								COMSIG_NANITE_GET_PROGRAMS,
 								COMSIG_NANITE_SET_VOLUME,
@@ -79,7 +82,8 @@
 								COMSIG_LIVING_MINOR_SHOCK,
 								COMSIG_MOVABLE_HEAR,
 								COMSIG_SPECIES_GAIN,
-								COMSIG_NANITE_SIGNAL))
+								COMSIG_NANITE_SIGNAL,
+								COMSIG_NANITE_COMM_SIGNAL))
 
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
@@ -188,6 +192,9 @@
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
 
+/datum/component/nanites/proc/check_stealth(datum/source)
+	return stealth
+
 /datum/component/nanites/proc/on_death(datum/source, gibbed)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
@@ -197,6 +204,12 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.receive_signal(code, source)
+
+/datum/component/nanites/proc/receive_comm_signal(datum/source, comm_code, comm_message, comm_source = "an unidentified source")
+	for(var/X in programs)
+		if(istype(X, /datum/nanite_program/triggered/comm))
+			var/datum/nanite_program/triggered/comm/NP = X
+			NP.receive_comm_signal(comm_code, comm_message, comm_source)
 
 /datum/component/nanites/proc/check_viable_biotype()
 	if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes))

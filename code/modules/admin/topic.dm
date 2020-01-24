@@ -22,7 +22,10 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
-	citaTopic(href, href_list) //CITADEL EDIT, MENTORS
+	if(href_list["makementor"])
+		makeMentor(href_list["makementor"])
+	else if(href_list["removementor"])
+		removeMentor(href_list["removementor"])
 
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
@@ -907,12 +910,16 @@
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'><font color=red>Alien</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'>Alien</a></td>"
-
 		//Gang
 		if(jobban_isbanned(M, ROLE_GANG) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=gang;jobban4=[REF(M)]'><font color=red>Gang</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=gang;jobban4=[REF(M)]'>Gang</a></td>"
+		//Bloodsucker
+		if(jobban_isbanned(M, ROLE_BLOODSUCKER) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=bloodsucker;jobban4=[REF(M)]'><font color=red>Bloodsucker</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=bloodsucker;jobban4=[REF(M)]'>Bloodsucker</a></td>"
 
 
 	//Other Roles (black)
@@ -1714,6 +1721,16 @@
 		speech = sanitize(speech) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]</span>")
+
+	else if(href_list["makeeligible"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = locate(href_list["makeeligible"])
+		if(!ismob(M))
+			to_chat(usr, "this can only be used on instances of type /mob.")
+		var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+		if(M.ckey in eli.timeouts)
+			eli.timeouts -= M.ckey
 
 	else if(href_list["sendtoprison"])
 		if(!check_rights(R_ADMIN))
@@ -2846,3 +2863,57 @@
 	dat += {"<A href='?src=[REF(src)];[HrefToken()];f_secret2=secret'>Random (default)</A><br>"}
 	dat += {"Now: [GLOB.secret_force_mode]"}
 	usr << browse(dat, "window=f_secret")
+
+/datum/admins/proc/makeMentor(ckey)
+	if(!usr.client)
+		return
+	if (!check_rights(0))
+		return
+	if(!ckey)
+		return
+	var/client/C = GLOB.directory[ckey]
+	if(C)
+		if(check_rights_for(C, R_ADMIN,0))
+			to_chat(usr, "<span class='danger'>The client chosen is an admin! Cannot mentorize.</span>")
+			return
+	if(SSdbcore.Connect())
+		var/datum/DBQuery/query_get_mentor = SSdbcore.NewQuery("SELECT id FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
+		if(query_get_mentor.NextRow())
+			to_chat(usr, "<span class='danger'>[ckey] is already a mentor.</span>")
+			return
+		var/datum/DBQuery/query_add_mentor = SSdbcore.NewQuery("INSERT INTO `[format_table_name("mentor")]` (`id`, `ckey`) VALUES (null, '[ckey]')")
+		if(!query_add_mentor.warn_execute())
+			return
+		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new mentor [ckey]');")
+		if(!query_add_admin_log.warn_execute())
+			return
+	else
+		to_chat(usr, "<span class='danger'>Failed to establish database connection. The changes will last only for the current round.</span>")
+	new /datum/mentors(ckey)
+	to_chat(usr, "<span class='adminnotice'>New mentor added.</span>")
+
+/datum/admins/proc/removeMentor(ckey)
+	if(!usr.client)
+		return
+	if (!check_rights(0))
+		return
+	if(!ckey)
+		return
+	var/client/C = GLOB.directory[ckey]
+	if(C)
+		if(check_rights_for(C, R_ADMIN,0))
+			to_chat(usr, "<span class='danger'>The client chosen is an admin, not a mentor! Cannot de-mentorize.</span>")
+			return
+		C.remove_mentor_verbs()
+		C.mentor_datum = null
+		GLOB.mentors -= C
+	if(SSdbcore.Connect())
+		var/datum/DBQuery/query_remove_mentor = SSdbcore.NewQuery("DELETE FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
+		if(!query_remove_mentor.warn_execute())
+			return
+		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed mentor [ckey]');")
+		if(!query_add_admin_log.warn_execute())
+			return
+	else
+		to_chat(usr, "<span class='danger'>Failed to establish database connection. The changes will last only for the current round.</span>")
+	to_chat(usr, "<span class='adminnotice'>Mentor removed.</span>")

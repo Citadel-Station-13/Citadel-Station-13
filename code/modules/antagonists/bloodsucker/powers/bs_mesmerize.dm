@@ -91,7 +91,7 @@
 		target.Stun(40) //Utterly useless without this, its okay since there are so many checks to go through
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 45) //So you cant rotate with combat mode, plus fancy status alert
 
-	if(do_mob(user, target, 40, 0, TRUE, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
+	if(do_mob(user, target, 40, 0, TRUE, extra_checks = CALLBACK(src, .proc/ContinueActive, user, target)))
 		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
 		var/power_time = 90 + level_current * 12
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time + 80)

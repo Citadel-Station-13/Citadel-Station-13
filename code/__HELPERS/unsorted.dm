@@ -1276,7 +1276,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	invisibility = 101
 	density = FALSE
 	see_in_dark = 1e6
-	anchored = TRUE
+	move_resist = INFINITY
 	var/ready_to_die = FALSE
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
@@ -1451,6 +1451,37 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
+
+#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
+#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
+
+///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
+/proc/___TraitAdd(target,trait,source)
+	if(!target || !trait || !source)
+		return
+	if(islist(target))
+		for(var/i in target)
+			if(!isatom(i))
+				continue
+			var/atom/the_atom = i
+			ADD_TRAIT(the_atom,trait,source)
+	else if(isatom(target))
+		var/atom/the_atom2 = target
+		ADD_TRAIT(the_atom2,trait,source)
+
+///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
+/proc/___TraitRemove(target,trait,source)
+	if(!target || !trait || !source)
+		return
+	if(islist(target))
+		for(var/i in target)
+			if(!isatom(i))
+				continue
+			var/atom/the_atom = i
+			REMOVE_TRAIT(the_atom,trait,source)
+	else if(isatom(target))
+		var/atom/the_atom2 = target
+		REMOVE_TRAIT(the_atom2,trait,source)
 
 /proc/get_random_food()
 	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,

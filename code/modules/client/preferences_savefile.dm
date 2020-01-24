@@ -109,10 +109,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else if(current_version < 23) // we are fixing a gamebreaking bug.
 		job_preferences = list() //It loaded null from nonexistant savefile field.
 
-	if(current_version < 24 && S["feature_exhibitionist"])
-		var/datum/quirk/exhibitionism/E
-		var/quirk_name = initial(E.name)
-		all_quirks += quirk_name
 	if(current_version < 25)
 		var/digi
 		S["feature_lizard_legs"] >> digi
@@ -543,6 +539,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
 				all_quirks -= V
 
+	if(features["meat_type"] == "Inesct")
+		features["meat_type"] = "Insect"
 	cit_character_pref_load(S)
 
 	return 1
