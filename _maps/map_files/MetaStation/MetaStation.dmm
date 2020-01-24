@@ -47211,6 +47211,7 @@
 	dir = 4
 	},
 /obj/item/storage/box/lights/mixed,
+/obj/structure/closet/firecloset,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -96215,7 +96216,7 @@ bMA
 alK
 bPD
 asa
-pHS
+alK
 aaa
 aaa
 aaf

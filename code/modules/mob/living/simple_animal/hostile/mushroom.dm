@@ -172,7 +172,7 @@
 	if(M.a_intent == INTENT_HARM)
 		Bruise()
 
-/mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM)
+/mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	..()
 	if(istype(AM, /obj/item))
 		var/obj/item/T = AM
