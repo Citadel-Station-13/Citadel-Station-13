@@ -1703,6 +1703,7 @@
 #include "code\modules\clothing\under\jobs\Plasmaman\medsci.dm"
 #include "code\modules\clothing\under\jobs\Plasmaman\security.dm"
 #include "code\modules\crafting\craft.dm"
+#include "code\modules\crafting\glassware.dm"
 #include "code\modules\crafting\guncrafting.dm"
 #include "code\modules\crafting\recipes.dm"
 #include "code\modules\crafting\recipes\recipes_clothing.dm"
