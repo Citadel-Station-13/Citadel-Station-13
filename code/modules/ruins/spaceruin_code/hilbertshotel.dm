@@ -54,7 +54,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 		to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
 		return
 	if(!isturf(loc))
-		if((loc == user) || (loc.loc == user) || (loc.loc in user.contents) || (loc in user.GetAllContents(type))		//short circuit, first three checks are cheaper and covers almost all cases (loc.loc covers hotel in box in backpack).
+		if((loc == user) || (loc.loc == user) || (loc.loc in user.contents) || (loc in user.GetAllContents(type)))		//short circuit, first three checks are cheaper and covers almost all cases (loc.loc covers hotel in box in backpack).
 			forceMove(get_turf(user))
 	if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
 		if(!GLOB.hhStorageTurf)
