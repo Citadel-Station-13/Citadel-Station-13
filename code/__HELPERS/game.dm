@@ -240,6 +240,12 @@
 
 
 /proc/get_hearers_in_view(R, atom/source)
+	. = get_hearers_in_view_old(R, source)
+	. = get_hearers_in_view_new(R, source)
+	. = get_hearers_in_view_new_new(R, source)
+	. = get_hearers_in_view_new_new_new(R, source)
+
+/proc/get_hearers_in_view_old(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	. = list()
@@ -266,6 +272,76 @@
 			. += A
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
 		processing_list.Cut(1, 2)
+		processing_list += A.contents
+
+/proc/get_hearers_in_view_new(R, atom/source)
+	var/turf/T = get_turf(source)
+	if(!T)
+		return
+	. = list()
+	var/list/processing = list()
+	if(R == 0)
+		processing += T.contents
+	else
+		var/lum = T.luminosity
+		T.luminosity = 6
+		var/list/cachedview = view(R, T)
+		for(var/mob/M in cachedview)
+			processing_list += M
+		for(var/obj/O in cachedview)
+			processing_list += O
+		T.luminosity = lum
+	var/i = 1
+	while(i < length(processing_list))
+		var/atom/A = processing_list[i]
+		if(A.flags_1 & HEAR_1)
+			. += A
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
+		processing_list += A.contents
+
+/proc/get_hearers_in_view_new_new(R, atom/source)
+	var/turf/T = get_turf(source)
+	if(!T)
+		return
+	. = list()
+	var/list/processing = list()
+	if(R == 0)
+		processing += T.contents
+	else
+		var/lum = T.luminosity
+		T.luminosity = 6
+		for(var/mob/M in view(R, T))
+			processing_list += M
+		for(var/obj/O in view(R, T))
+			processing_list += O
+		T.luminosity = lum
+	var/i = 1
+	while(i < length(processing_list))
+		var/atom/A = processing_list[i]
+		if(A.flags_1 & HEAR_1)
+			. += A
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
+		processing_list += A.contents
+
+/proc/get_hearers_in_view_new_new_new(R, atom/source)
+	var/turf/T = get_turf(source)
+	if(!T)
+		return
+	. = list()
+	var/list/processing = list()
+	if(R == 0)
+		processing += T.contents
+	else
+		var/lum = T.luminosity
+		T.luminosity = 6
+		processing_list = view(R, T)
+		T.luminosity = lum
+	var/i = 1
+	while(i < length(processing_list))
+		var/atom/A = processing_list[i]
+		if(A.flags_1 & HEAR_1)
+			. += A
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
 		processing_list += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
