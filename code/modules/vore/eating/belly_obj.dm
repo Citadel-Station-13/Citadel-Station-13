@@ -165,7 +165,12 @@
 	. = ..()
 
 // Called whenever an atom enters this belly
-/obj/belly/Entered(var/atom/movable/thing,var/atom/OldLoc)
+/obj/belly/Entered(atom/movable/thing, atom/OldLoc)
+	. = ..()
+	var/mob/living/L //for chat messages and blindness
+	if(isliving(thing))
+		L = thing
+		L.become_blind("belly_[REF(src)]")
 	if(OldLoc in contents)
 		return //Someone dropping something (or being stripdigested)
 
@@ -190,11 +195,14 @@
 				SEND_SOUND(H,eating)
 			recent_sound = TRUE
 
-	//Messages if it's a mob
-	if(isliving(thing))
-		var/mob/living/M = thing
-		if(desc)
-			to_chat(M, "<span class='notice'><B>[desc]</B></span>")
+	if(L && desc)
+		to_chat(L, "<span class='notice'><B>[desc]</B></span>")
+
+/obj/belly/Entered(atom/movable/AM, atom/newloc)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.cure_blind("belly_[REF(src)]")
 
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
@@ -215,7 +223,6 @@
 				continue
 			L.absorbed = FALSE
 			L.stop_sound_channel(CHANNEL_PREYLOOP)
-			L.cure_blind("belly_[REF(src)]")
 			SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
 			SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 			SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
@@ -263,7 +270,6 @@
 		var/mob/living/OW = owner
 		if(ML.client)
 			ML.stop_sound_channel(CHANNEL_PREYLOOP) //Stop the internal loop, it'll restart if the isbelly check on next tick anyway
-		ML.cure_blind("belly_[REF(src)]")
 		SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
 		SEND_SIGNAL(ML, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
@@ -326,7 +332,6 @@
 
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
-		M.become_blind("belly_[REF(src)]")
 
 	// Setup the autotransfer checks if needed
 	if(transferlocation != null && autotransferchance > 0)
@@ -345,9 +350,6 @@
 /obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
 	if(!(content in src) || !istype(target))
 		return
-	if(isliving(content))
-		var/mob/living/M = content
-		M.cure_blind("belly_[REF(src)]")
 	content.forceMove(target)
 
 	if(vore_sound && !recent_sound && !silent)
@@ -370,7 +372,6 @@
 	owner.updateVRPanel()
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
-		M.become_blind("belly_[REF(src)]")
 
 // Get the line that should show up in Examine message if the owner of this belly
 // is examined.   By making this a proc, we not only take advantage of polymorphism,
