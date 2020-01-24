@@ -3,7 +3,7 @@
 #define ENGINES_STARTED (SSshuttle.emergency.mode == SHUTTLE_IGNITING)
 #define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED || (ENGINES_STARTED))
 
-#define INTACT 0
+#define NOT_BEGUN 0
 #define STAGE_1 1
 #define STAGE_2 2
 #define STAGE_3 3
@@ -190,7 +190,7 @@
 		say("Error - Catastrophic software error detected. Input is currently on timeout.")
 		return
 	hijack_hacking = TRUE
-	to_chat(user, "<span class='boldwarning'>You [SSshuttle.emergency.hijack_status == INTACT? "begin" : "continue"] to override [src]'s navigational protocols.</span>")
+	to_chat(user, "<span class='boldwarning'>You [SSshuttle.emergency.hijack_status == NOT_BEGUN? "begin" : "continue"] to override [src]'s navigational protocols.</span>")
 	say("Software override initiated.")
 	. = FALSE
 	if(do_after(user, hijack_stage_time * (1 / user.mind.get_hijack_speed()), target = src))
@@ -202,7 +202,7 @@
 /obj/machinery/computer/emergency_shuttle/proc/announce_hijack_stage()
 	var/msg
 	switch(SSshuttle.emergency.hijack_status)
-		if(INTACT)
+		if(NOT_BEGUN)
 			return
 		if(STAGE_1)
 			var/datum/species/S = new
@@ -275,7 +275,7 @@
 	dir = EAST
 	port_direction = WEST
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
-	var/hijack_status = INTACT
+	var/hijack_status = NOT_BEGUN
 
 /obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
 	return SHUTTLE_CAN_DOCK //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
@@ -629,7 +629,7 @@
 #undef ENGINES_STARTED
 #undef IS_DOCKED
 
-#undef INTACT
+#undef NOT_BEGUN
 #undef STAGE_1
 #undef STAGE_2
 #undef STAGE_3
