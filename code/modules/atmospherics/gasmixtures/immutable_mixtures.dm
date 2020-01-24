@@ -3,6 +3,7 @@
 
 /datum/gas_mixture/immutable
 	var/initial_temperature
+	gc_share = TRUE
 
 /datum/gas_mixture/immutable/New()
 	..()

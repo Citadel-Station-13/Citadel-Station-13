@@ -90,7 +90,6 @@
 
 /turf/open/archive()
 	ARCHIVE_TEMPERATURE(air)
-	air.gases_archived = air.gases.Copy()
 	archived_cycle = SSair.times_fired
 	temperature_archived = temperature
 

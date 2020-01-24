@@ -15,16 +15,15 @@ GLOBAL_LIST_INIT(meta_gas_overlays, meta_gas_overlay_list())
 GLOBAL_LIST_INIT(meta_gas_dangers, meta_gas_danger_list())
 GLOBAL_LIST_INIT(meta_gas_ids, meta_gas_id_list())
 GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
-
 /datum/gas_mixture
 	var/list/gases = list()
-	var/tmp/list/gases_archived = list()
 	var/temperature = 0 //kelvins
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results = list()
 	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
+	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
 
 /datum/gas_mixture/New(volume)
 	if (!isnull(volume))
@@ -220,7 +219,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 
-	var/list/cached_gases = gases_archived
+	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
 
 	var/temperature_delta = temperature_archived - sharer.temperature_archived
@@ -243,27 +242,10 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	var/gas_heat_capacity
 	//and also cache this shit rq because that results in sanic speed for reasons byond explanation
 	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
-
-	//Do this early and save doing TWO MORE (probable) LIST ACCESSES!!
-	var/our_moles
-	var/their_moles
-
-	//decs are expensive
-	var/us
-	var/them
-
 	//GAS TRANSFER
 	for(var/id in cached_gases | sharer_gases) // transfer gases
-		us = cached_gases[id]
-		them = sharer_gases[id]
 
-		//buitl in garbage collect
-		if(max(us, them) <= ATMOS_QUANTIZATION_ACCURACY)
-			cached_gases -= id
-			sharer_gases -= id
-			continue
-
-		delta = QUANTIZE(us - them)/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
+		delta = QUANTIZE(cached_gases[id] - sharer_gases[id])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
 
 		if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 			gas_heat_capacity = delta * cached_gasheats[id]
@@ -276,9 +258,6 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 		sharer_gases[id]			+= delta
 		moved_moles			+= delta
 		abs_moved_moles		+= abs(delta)
-
-		our_moles += cached_gases[id]
-		their_moles += sharer_gases[id]
 
 	last_share = abs_moved_moles
 
@@ -299,7 +278,13 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
+	if (initial(sharer.gc_share))
+		GAS_GARBAGE_COLLECT(sharer.gases)
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
+		var/our_moles
+		TOTAL_MOLES(cached_gases,our_moles)
+		var/their_moles
+		TOTAL_MOLES(sharer_gases,their_moles)
 		return (temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)) * R_IDEAL_GAS_EQUATION / volume
 
 /datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
@@ -325,22 +310,26 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture/compare(datum/gas_mixture/sample)
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
-	var/list/combined = cached_gases | sample_gases
-	// Do not use TOTAL_MOLES, that's an unnecessary iteration.
-	var/our_moles
-	// Declarations are expensive.
-	var/us
-	var/them
-	var/diff
-	for(var/id in combined)
-		us = cached_gases[id]
-		them = sample_gases[id]
-		diff = abs(us - them)
-		if(diff > MINIMUM_MOLES_DELTA_TO_MOVE && diff > us * MINIMUM_AIR_RATIO_TO_MOVE)
+
+	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
+		var/gas_moles = cached_gases[id]
+		var/sample_moles = sample_gases[id]
+		var/delta = abs(gas_moles - sample_moles)
+		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
+			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
-		our_moles += us
-	if((our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) && (abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND))
-		return "temp"
+
+	var/our_moles
+	TOTAL_MOLES(cached_gases, our_moles)
+	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE)
+		var/temp = temperature
+		var/sample_temp = sample.temperature
+
+		var/temperature_delta = abs(temp - sample_temp)
+		if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+			return "temp"
+
+	return ""
 
 /datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
@@ -413,6 +402,3 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 10/20*5 = 2.5
 10 = 2.5/5*20
 */
-
-/datum/gas_mixture/proc/test_garbage_collect()
-	GAS_GARBAGE_COLLECT(gases)
