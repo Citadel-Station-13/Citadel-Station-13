@@ -31,6 +31,8 @@
 		update_icon()
 	return ..()
 
+	//node 3 is the outlet, nodes 1 & 2 are intakes
+
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	cut_overlays()
 	for(var/direction in GLOB.cardinals)

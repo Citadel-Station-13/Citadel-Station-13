@@ -234,6 +234,7 @@
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define NUKEOP_ANTAGONIST "nukeop-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
+#define TIMESTOP_TRAIT "timestop"
 #define NUKEOP_TRAIT "nuke-op"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
