@@ -117,7 +117,7 @@ Difficulty: Very Hard
 
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
@@ -395,7 +395,7 @@ Difficulty: Very Hard
 	..()
 
 /obj/machinery/anomalous_crystal/bullet_act(obj/item/projectile/P, def_zone)
-	..()
+	. = ..()
 	if(istype(P, /obj/item/projectile/magic))
 		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
 		return
@@ -648,7 +648,7 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
+/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
 	. = ..()
 	if(.)
 		death()

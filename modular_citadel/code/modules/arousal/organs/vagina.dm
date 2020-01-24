@@ -8,6 +8,8 @@
 	size = 1 //There is only 1 size right now
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH
 	masturbation_verb = "finger"
+	arousal_verb = "You feel wetness on your crotch."
+	unarousal_verb = "You no longer feel wet."
 	fluid_transfer_factor = 0.1 //Yes, some amount is exposed to you, go get your AIDS
 	layer_index = VAGINA_LAYER_INDEX
 	var/cap_length = 8//D   E   P   T   H (cap = capacity)

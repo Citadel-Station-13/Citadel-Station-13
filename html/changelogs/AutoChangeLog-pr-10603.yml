@@ -1,0 +1,4 @@
+author: "KeRSedChaplain"
+delete-after: True
+changes: 
+  - imageadd: "The clockwork cuirass can now support slithering taur bodies."

@@ -13,8 +13,8 @@
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
 	density = TRUE
-	anchored = TRUE
-	animate_movement=1
+	move_resist = MOVE_FORCE_STRONG
+	animate_movement = 1
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -152,7 +152,7 @@
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/item/projectile/Proj)
 	. = ..()
-	if(. && !QDELETED(src)) //Got hit and not blown up yet.
+	if(. == BULLET_ACT_HIT && !QDELETED(src)) //Got hit and not blown up yet.)
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))

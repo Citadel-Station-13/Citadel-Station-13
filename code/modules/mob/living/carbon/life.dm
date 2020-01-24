@@ -516,7 +516,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(bufferedstam && world.time > stambufferregentime)
 		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
 		bufferedstam = max(bufferedstam - drainrate, 0)
-		adjustStaminaLoss(drainrate*0.5)
 	//END OF CIT CHANGES
 
 	var/restingpwr = 1 + 4 * resting

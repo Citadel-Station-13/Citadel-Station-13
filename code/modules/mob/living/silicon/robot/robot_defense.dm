@@ -184,8 +184,7 @@
 				adjustBruteLoss(30)
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/P, def_zone)
-	..()
+	. = ..()
 	updatehealth()
 	if(prob(75) && P.damage > 0)
 		spark_system.start()
-	return 2

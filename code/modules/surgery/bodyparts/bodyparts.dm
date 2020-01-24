@@ -29,6 +29,7 @@
 	var/burn_dam = 0
 	var/stamina_dam = 0
 	var/max_stamina_damage = 0
+	var/incoming_stam_mult = 1 //Multiplier for incoming staminaloss, decreases when taking staminaloss when the limb is disabled, resets back to 1 when limb is no longer disabled.
 	var/max_damage = 0
 	var/stam_heal_tick = 0		//per Life(). Defaults to 0 due to citadel changes
 
@@ -115,7 +116,7 @@
 	else
 		return ..()
 
-/obj/item/bodypart/throw_impact(atom/hit_atom)
+/obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(status != BODYPART_ROBOTIC)
 		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
@@ -141,7 +142,7 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life()
 	if(stam_heal_tick && stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
-		if(heal_damage(brute = 0, burn = 0, stamina = stam_heal_tick, only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
+		if(heal_damage(brute = 0, burn = 0, stamina = (stam_heal_tick * (disabled ? 2 : 1)), only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
 			. |= BODYPART_LIFE_UPDATE_HEALTH
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
@@ -153,7 +154,7 @@
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
 	brute = round(max(brute * dmg_mlt, 0),DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_mlt, 0),DAMAGE_PRECISION)
-	stamina = round(max(stamina * dmg_mlt, 0),DAMAGE_PRECISION)
+	stamina = round(max((stamina * dmg_mlt) * incoming_stam_mult, 0),DAMAGE_PRECISION)
 	brute = max(0, brute - brute_reduction)
 	burn = max(0, burn - burn_reduction)
 	//No stamina scaling.. for now..
@@ -182,6 +183,9 @@
 	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
 	var/available_damage = max_damage - current_damage
 	stamina_dam += round(CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
+
+	if(disabled && stamina > 10)
+		incoming_stam_mult = max(0.01, incoming_stam_mult/(stamina*0.1))
 
 	if(owner && updating_health)
 		owner.updatehealth()
@@ -252,6 +256,8 @@
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
 	owner.update_canmove()
+	if(!disabled)
+		incoming_stam_mult = 1
 	return TRUE
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
@@ -645,7 +651,7 @@
 	held_index = 1
 	px_x = -6
 	px_y = 0
-	stam_heal_tick = 2
+	stam_heal_tick = 4
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
@@ -705,7 +711,7 @@
 	held_index = 2
 	px_x = 6
 	px_y = 0
-	stam_heal_tick = 2
+	stam_heal_tick = 4
 	max_stamina_damage = 50
 
 /obj/item/bodypart/r_arm/is_disabled()
@@ -765,7 +771,7 @@
 	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
-	stam_heal_tick = 2
+	stam_heal_tick = 4
 	max_stamina_damage = 50
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_legs = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
@@ -826,7 +832,7 @@
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
-	stam_heal_tick = 2
+	stam_heal_tick = 4
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_legs = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 

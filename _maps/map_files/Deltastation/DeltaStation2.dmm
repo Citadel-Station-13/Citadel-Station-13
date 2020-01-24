@@ -159,7 +159,9 @@
 /area/construction/mining/aux_base)
 "abe" = (
 /obj/effect/turf_decal/delivery,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "abf" = (
@@ -182,7 +184,7 @@
 	pixel_x = -23
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 9
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -108781,6 +108783,7 @@
 "dCs" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dCt" = (
@@ -108800,6 +108803,7 @@
 "dCu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dCv" = (
@@ -110235,6 +110239,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dEL" = (
@@ -110253,6 +110258,7 @@
 /area/science/robotics/lab)
 "dEM" = (
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dEN" = (
@@ -125760,6 +125766,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"eYg" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "faI" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -125918,6 +125935,15 @@
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
+"gdb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "giN" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -125929,6 +125955,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/science/circuit)
+"gmn" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "gut" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -126063,6 +126102,11 @@
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/chapel/office)
+"hlu" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/computer/shuttle/mining/common,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "hrP" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -127466,6 +127510,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"xDY" = (
+/obj/docking_port/stationary{
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "xDZ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -159473,8 +159528,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+rqh
+rqh
 aad
 aad
 aaa
@@ -159729,8 +159784,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aaO
+aaO
 aaO
 aaO
 abf
@@ -159985,10 +160040,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaO
+xDY
+eYg
+gdb
+gmn
 abe
 abp
 abC
@@ -160243,10 +160298,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aaO
-abe
+aaO
+aaO
+hlu
 abq
 abD
 abD
@@ -160501,7 +160556,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+rqh
 aaO
 aaO
 abf
@@ -160758,8 +160813,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+rqh
+rqh
 aad
 aad
 aaa

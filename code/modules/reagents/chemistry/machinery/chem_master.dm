@@ -434,11 +434,11 @@
 					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.type)
+				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R)
 				if(Rcr && Rcr.FermiChem)
 					fermianalyze = TRUE
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					var/datum/reagent/targetReagent = beaker.reagents.has_reagent(R.type)
+					var/datum/reagent/targetReagent = beaker.reagents.has_reagent(R)
 
 					if(!targetReagent)
 						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
@@ -463,9 +463,9 @@
 				var/T = initial(R.metabolization_rate) * (60 / P)
 				if(istype(R, /datum/reagent/fermi))
 					fermianalyze = TRUE
-					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.type)
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R)
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					var/datum/reagent/targetReagent = reagents.has_reagent(R.type)
+					var/datum/reagent/targetReagent = reagents.has_reagent(R)
 
 					if(!targetReagent)
 						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
@@ -483,7 +483,7 @@
 
 
 /obj/machinery/chem_master/proc/end_fermi_reaction()//Ends any reactions upon moving.
-	if(beaker.reagents.fermiIsReacting)
+	if(beaker && beaker.reagents.fermiIsReacting)
 		beaker.reagents.fermiEnd()
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)

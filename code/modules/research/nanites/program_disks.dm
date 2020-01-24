@@ -143,3 +143,9 @@
 
 /obj/item/disk/nanite_program/reduced_diagnostics
 	program_type = /datum/nanite_program/reduced_diagnostics
+
+/obj/item/disk/nanite_program/good_mood
+	program_type = /datum/nanite_program/good_mood
+
+/obj/item/disk/nanite_program/bad_mood
+	program_type = /datum/nanite_program/bad_mood
