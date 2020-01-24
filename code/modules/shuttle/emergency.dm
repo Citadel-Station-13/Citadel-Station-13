@@ -186,14 +186,14 @@
 	if(SSshuttle.emergency.hijack_status >= HIJACKED)
 		to_chat(user, "<span class='warning'>The emergency shuttle is already loaded with a corrupt navigational payload. What more do you want from it?</span>")
 		return
-	if(hijack_last_stage_increase <= world.time + hijack_stage_cooldown)
+	if(hijack_last_stage_increase >= world.time + hijack_stage_cooldown)
 		say("Error - Catastrophic software error detected. Input is currently on timeout.")
 		return
 	hijack_hacking = TRUE
 	to_chat(user, "<span class='boldwarning'>You [SSshuttle.emergency.hijack_status == INTACT? "begin" : "continue"] to override [src]'s navigational protocols.</span>")
 	say("Software override initiated.")
 	. = FALSE
-	if(do_after(user, hijack_stage_time * user.mind.get_hijack_speed(), target = src))
+	if(do_after(user, hijack_stage_time * (1 / user.mind.get_hijack_speed()), target = src))
 		increase_hijack_stage()
 		. = TRUE
 		to_chat(user, "<span class='notice'>You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds.</span>")
@@ -201,33 +201,27 @@
 
 /obj/machinery/computer/emergency_shuttle/proc/announce_hijack_stage()
 	var/msg
-	var/replaceprob
 	switch(SSshuttle.emergency.hijack_status)
 		if(INTACT)
 			return
 		if(STAGE_1)
 			var/datum/species/S = new
 			msg = "AUTHENTICATING - FAIL. AUTHENTICATING - FAIL. AUTHENTICATING - FAI###### Welcome, technician [S.random_name(pick(MALE, FEMALE))]."
-			replaceprob = 10
 			qdel(S)
 		if(STAGE_2)
 			msg = "Warning: Navigational route fails \"IS_AUTHORIZED\". Please try againNN[scramble_message_replace_chars("againagainagainagainagain", 70)]."
-			replaceprob = 20
 		if(STAGE_3)
 			var/hex = ""
 			for(var/i in 1 to 8)
 				hex += num2hex(rand(1,16))
 			msg = "CRC mismatch at 0x[hex] in calculated route buffer. Full reset initiated of FTL_NAVIGATION_SERVICES. Memory decrypted for automatic repair."
-			replaceprob = 30
 		if(STAGE_4)
 			msg = "~ACS_directive module_load(cyberdyne.exploit.nanotrasen.shuttlenav)... NT key mismatch. Confirm load? Y...###Reboot complete. $SET transponder_state = 0; System link initiated with connected engines..."
-			replaceprob = 35
 		if(HIJACKED)
 			msg = "<font color='red'>SYSTEM OVERRIDE - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
 			([scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]) \
 			{AUTH - ROOT (uid: 0)}.</font>[SSshuttle.emergency.mode == SHUTTLE_ESCAPE? "Diverting from existing route - Bluespace exit in [hijack_completion_flight_time_set/10] seconds." : ""]"
-			replaceprob = 25
-	minor_announce(scramble_message_replace_chars(msg, replaceprob = replaceprob), "Emergency Shuttle", TRUE)
+	minor_announce(scramble_message_replace_chars(msg, replaceprob = 10), "Emergency Shuttle", TRUE)
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
 	. = ..()
