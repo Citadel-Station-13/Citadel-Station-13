@@ -30,9 +30,9 @@
 	. = ..()
 	if(hijack_announce)
 		. += "<span class='danger'>Security systems present on console. Any unauthorized tampering will result in an emergency announcement.</span>"
-	if(user?.mind?.hijack_speed)
+	if(user?.mind?.get_hijack_speed())
 		. += "<span class='danger'>Alt click on this to attempt to hijack the shuttle. This will take multiple tries (current: stage [SSshuttle.emergency.hijack_status]/[HIJACKED]).</span>"
-		. += "<span class='notice'>It will take you [(hijack_stage_time * user.mind.hijack_speed) / 10] seconds to reprogram a stage of the shuttle's navigational firmware, and the console will undergo automated timed lockout for [hijack_stage_cooldown/10] seconds after each stage.</span>"
+		. += "<span class='notice'>It will take you [(hijack_stage_time * user.mind.get_hijack_speed()) / 10] seconds to reprogram a stage of the shuttle's navigational firmware, and the console will undergo automated timed lockout for [hijack_stage_cooldown/10] seconds after each stage.</span>"
 		if(hijack_announce)
 			. += "<span class='warning'>It is probably best to fortify your position as to be uninterrupted during the attempt, given the automatic announcements..</span>"
 
@@ -178,7 +178,7 @@
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))
 		return
-	if(!user?.mind?.hijack_speed)
+	if(!user?.mind?.get_hijack_speed())
 		to_chat(user, "<span class='warning'>You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone.</span.")
 		return
 	if(hijack_hacking == TRUE)
@@ -193,7 +193,7 @@
 	to_chat(user, "<span class='boldwarning'>You [SSshuttle.emergency.hijack_status == INTACT? "begin" : "continue"] to override [src]'s navigational protocols.</span>")
 	say("Software override initiated.")
 	. = FALSE
-	if(do_after(user, hijack_stage_time * user.mind.hijack_speed, target = src))
+	if(do_after(user, hijack_stage_time * user.mind.get_hijack_speed(), target = src))
 		increase_hijack_stage()
 		. = TRUE
 		to_chat(user, "<span class='notice'>You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds.</span>")
