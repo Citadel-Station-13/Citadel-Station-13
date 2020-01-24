@@ -327,10 +327,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 	var/mob/living/carbon/human/H = mob
 	H.revive(full_heal=TRUE,admin_revive=TRUE)
-	for (var/I in H)
+	for (var/I in H.get_equipped_items(TRUE))
 		var/obj/item/W = I
-		if (!istype(W))
-			continue
 		if (W == H.w_uniform || W == H.shoes)
 			continue
 		H.dropItemToGround(W)
