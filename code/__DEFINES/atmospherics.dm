@@ -16,9 +16,6 @@
 #define T0C						273.15	// 0degC
 #define T20C					293.15	// 20degC
 
-//Quantization
-#define ATMOS_QUANTIZATION_ACCURACY 0.0000001	//gases below this in mols are GC'd
-
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
 #define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005) //compared against for superconductivity
 #define O2STANDARD				0.21	//percentage of oxygen in a normal mixture of air
@@ -270,7 +267,7 @@
 	T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;
 
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
-#define QUANTIZE(variable)		(round(variable,ATMOS_QUANTIZATION_ACCURACY))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
+#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 
 //prefer this to gas_mixture/total_moles in performance critical areas
