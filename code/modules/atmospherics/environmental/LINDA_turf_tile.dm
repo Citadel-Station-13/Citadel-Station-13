@@ -31,7 +31,6 @@
 	//used to artificially slow down equalization
 	var/last_equalize = 0
 	var/obj/effect/hotspot/active_hotspot
-	var/atmos_cooldown  = 0
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
@@ -137,22 +136,14 @@
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
-#define LAST_SHARE_CHECK \
-	var/last_share = our_air.last_share;\
-	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
-		our_excited_group.reset_cooldowns();\
-		cached_atmos_cooldown = 0;\
-	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
-		our_excited_group.dismantle_cooldown = 0;\
-		cached_atmos_cooldown = 0;\
-	}
-
 /turf/proc/process_cell(fire_count)
 	SSair.remove_from_active(src)
 
-/turf/open/process_cell(fire_count)
+/turf/open/process_cell(fire_count,forced = FALSE)
 	var/atmos_mix_tick_delay = SSair.atmos_mix_tick_delay
 	var/atmos_mixed_tick_delay = (atmos_mix_tick_delay-SSair.atmos_mixed_tick_delay)
+	if(fire_count - last_equalize < atmos_mix_tick_delay || forced)
+		return
 	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
 
@@ -162,7 +153,6 @@
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
 	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
-	var/cached_atmos_cooldown = atmos_cooldown + 1
 
 	var/planet_atmos = planetary_atmos
 	var/datum/gas_mixture/our_air = air
@@ -207,9 +197,11 @@
 			our_excited_group = excited_group
 			should_share_air = TRUE
 
-	if(should_share_air && ((fire_count - last_equalize >= atmos_mix_tick_delay) || (src in SSair.airs_always_update)))
+	if(should_share_air)
 		var/datum/gas_mixture/final_air = new()
 		var/lowest_pressure = -1
+		var/highest_moles = -1
+		var/lowest_moles = 2**64
 		var/turf/open/lowest_pressure_tile
 		final_air.merge(our_air.copy())
 		var/are_we_spaced = FALSE
@@ -222,9 +214,12 @@
 				break
 			else
 				var/pressure = enemy_air.return_pressure()
+				var/molage = enemy_air.total_moles()
 				if(pressure < lowest_pressure || lowest_pressure == -1)
 					lowest_pressure = pressure
 					lowest_pressure_tile = enemy_tile
+				highest_moles = max(molage,highest_moles)
+				lowest_moles = min(molage,lowest_moles)
 				final_air.merge(enemy_air.copy())
 		if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 			var/datum/gas_mixture/G = new
@@ -241,7 +236,11 @@
 		if(!istype(new_air)) // this can happen if this runs in space
 			return
 		GAS_GARBAGE_COLLECT(new_air)
-		our_air.last_share = new_air.total_moles() - our_air.total_moles()
+		var/last_share = highest_moles-lowest_moles
+		if(last_share > MINIMUM_AIR_TO_SUSPEND)
+			our_excited_group.reset_cooldowns()
+		else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
+			our_excited_group.dismantle_cooldown = 0
 		consider_pressure_difference(lowest_pressure_tile,air.return_pressure()-lowest_pressure)
 		our_air.copy_from(new_air)
 		update_visuals()
@@ -255,19 +254,14 @@
 			SSair.add_to_react_queue(enemy_tile)
 		last_equalize = fire_count
 
-		LAST_SHARE_CHECK
-
 
 	/******************* GROUP HANDLING FINISH *********************************************************************/
 
 
 	SSair.add_to_react_queue(src)
 
-	if((!our_excited_group && !(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) \
-	  || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
+	if((!our_excited_group && !(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))))
 		SSair.remove_from_active(src)
-
-	atmos_cooldown = cached_atmos_cooldown
 
 /turf/open/space/process_cell(fire_count) //dumb hack to prevent space pollution
 	. = ..()
@@ -374,7 +368,6 @@
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.air.copy_from(A)
-		T.atmos_cooldown = 0
 		T.update_visuals()
 
 	breakdown_cooldown = 0

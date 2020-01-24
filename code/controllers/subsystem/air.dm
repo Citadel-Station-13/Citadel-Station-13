@@ -250,8 +250,6 @@ SUBSYSTEM_DEF(air)
 
 
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
-	if(T in airs_always_update)
-		return // this one should always be active
 	active_turfs -= T
 	SSair_turfs.currentrun -= T
 	#ifdef VISUALIZE_ACTIVE_TURFS

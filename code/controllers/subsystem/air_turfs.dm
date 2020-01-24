@@ -15,6 +15,11 @@ SUBSYSTEM_DEF(air_turfs)
 	if (!resumed)
 		src.currentrun = SSair.active_turfs.Copy()
 	//cache for sanic speed (lists are references anyways)
+	var/list/always_do = SSair.airs_always_update
+	for(var/t in always_do)
+		var/turf/open/T = t
+		if(T)
+			T.process_cell(fire_count,TRUE)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
 		var/turf/open/T = currentrun[currentrun.len]
