@@ -191,7 +191,8 @@
 			H.add_hud_to(M)
 
 	CHECK_TICK
-	for(var/mob/m in GLOB.mob_list)
+	for(var/M in GLOB.player_list)
+		var/mob/m = M
 		if (!m.client)
 			continue
 		m.client.verbs += /client/proc/tele_to_ghost_cafe
