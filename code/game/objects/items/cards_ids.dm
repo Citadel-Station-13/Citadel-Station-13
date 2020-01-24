@@ -128,6 +128,9 @@
 		return
 	. = ..()
 
+/obj/item/card/emag/empty
+	uses = 0
+
 /obj/item/emagrecharge
 	name = "electromagnet charging device"
 	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices, sadly this can't be recharged like a normal cell."

@@ -999,7 +999,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/hoard/proc/set_target(obj/item/I)
 	if(I)
 		hoarded_item = I
-		explanation_text = "Keep [I] on your person at all costs."
+		explanation_text = "Keep [I] on your person at all times."
 		return hoarded_item
 	else
 		explanation_text = "Free objective"
@@ -1025,6 +1025,34 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/hoard/heirloom/find_target()
 	set_target(pick(GLOB.family_heirlooms))
+
+GLOBAL_LIST_EMPTY(traitor_contraband)
+
+GLOBAL_LIST_EMPTY(cult_contraband)
+
+/datum/objective/hoard/collector
+	name = "Hoard contraband"
+
+/datum/objective/collector/New()
+	..()
+	if(!GLOB.traitor_contraband.len)//Only need to fill the list when it's needed.
+		GLOB.traitor_contraband = list(/obj/item/card/emag/empty,/obj/item/clothing/glasses/phantomthief,/obj/item/storage/book/bible/syndicate/empty,/obj/item/clothing/gloves/chameleon/broken)
+	if(!GLOB.cult_contraband.len)
+		GLOB.cult_contraband = list(/obj/item/clockwork/slab,/obj/item/clockwork/component/belligerent_eye,/obj/item/clockwork/component/belligerent_eye/lens_gem,/obj/item/restraints/legcuffs/bola/cult,/obj/item/shuttle_curse,/obj/item/cult_shift)
+
+/datum/objective/hoard/collector/find_target()
+	var/obj/item/I
+	if(prob(50))
+		I = new pick_and_take(GLOB.traitor_contraband)
+	else
+		I = new pick_and_take(GLOB.cult_contraband)
+	I.forceMove(get_turf(owner))
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK))
+		hoarded_item = I
+	
+
 
 GLOBAL_LIST_EMPTY(possible_sabotages)
 // For saboteurs. Go in and cause some trouble somewhere. Not necessarily breaking things, just sufficiently troublemaking.
