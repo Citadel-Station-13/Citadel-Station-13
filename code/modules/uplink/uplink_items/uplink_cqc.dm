@@ -21,9 +21,9 @@
 /datum/uplink_item/cqc/switchblade
 	name = "Switchblade"
 	desc = "A small, retractable blade that can easily be concealed in one's pocket.  \
-			It is a lot quieter than the edagger but for a greater cost, while being much more likely to be noticed in a search."
+			It is a quieter than the switchblade, but much more difficult to keep hidden."
 	item = /obj/item/switchblade
-	cost = 3
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/cqc/sword
@@ -61,7 +61,7 @@
 			The rapier comes with its own jet black sheath, however this will generally alert hostiles to your allegience. \
 			The rapier itself can be used to deflect melee strikes to some degree, and it can be used as a powerful projectile in a pinch."
 	item = /obj/item/storage/belt/sabre/rapier
-	cost = 7
+	cost = 6
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/cqc/powerfist
@@ -71,7 +71,7 @@
 		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/melee/powerfist
-	cost = 6
+	cost = 7
 
 /datum/uplink_item/cqc/plastitanium_toolbox
 	name = "Plastitanium Toolbox"

@@ -19,7 +19,7 @@
 
 /datum/uplink_item/badass/claymore
 	name = "Claymore"
-	cost = 8
+	cost = 7
 	player_minimum = 25
 	desc = "A claymore. We don't know why you'd do this."
 	item = /obj/item/claymore

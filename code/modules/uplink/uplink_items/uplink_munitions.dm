@@ -56,7 +56,7 @@
 			quarter anti-personnel engagements. Incredibly loud and obvious. The Bulldog is preloaded with a buckshot drum, \
 			and contains six additional drums of various types. Additional ammunition is not available so try to make it count."
 	item = /obj/item/storage/box/syndie_kit/shotgun
-	cost = 14
+	cost = 15
 	surplus = 40
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 

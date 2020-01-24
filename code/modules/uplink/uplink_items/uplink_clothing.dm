@@ -11,35 +11,37 @@
 	name = "Tactical Turtleneck"
 	desc = "A weakly armored suit that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
 	item = /obj/item/clothing/under/syndicate
-	cost = 1
+	cost = 0
+	limited_stock = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
 
 /datum/uplink_item/suits/turtlenck_skirt
 	name = "Tactical Skirtleneck"
 	desc = "A weakly armored skirt that does not have sensors attatched. Be warned that most crewmembers are quick to call out such clothing."
 	item = /obj/item/clothing/under/syndicate/skirt
-	cost = 1
+	cost = 0
+	limited_stock = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
 
 /datum/uplink_item/suits/padding
 	name = "Soft Padding"
 	desc = "Padding that can be stuffed into a jumpsuit to help protect against melee attacks."
 	item = /obj/item/clothing/accessory/padding
-	cost = 1
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/kevlar
 	name = "Kevlar Padding"
 	desc = "Kevlar Padding that can be stuffed into a jumpsuit to help protect against bullet impacts."
 	item = /obj/item/clothing/accessory/kevlar
-	cost = 1
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/plastic
 	name = "Plastic Padding"
 	desc = "Plastic Padding that can be stuffed into a jumpsuit to help protect against energy and laser impacts."
 	item = /obj/item/clothing/accessory/plastics
-	cost = 1
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/space_suit
@@ -57,7 +59,7 @@
 			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
 			Nanotrasen crew who spot these suits are known to panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
-	cost = 6
+	cost = 5
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/suits/hardsuit/elite
