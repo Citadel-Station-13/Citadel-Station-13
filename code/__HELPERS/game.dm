@@ -240,9 +240,9 @@
 
 /proc/get_hearers_in_view(R, atom/source)
 	var/turf/T = get_turf(source)
+	. = list()
 	if(!T)
 		return
-	. = list()
 	var/list/processing = list()
 	if(R == 0)
 		processing += T.contents
