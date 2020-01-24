@@ -241,6 +241,8 @@
 
 /proc/get_hearers_in_view(R, atom/source)
 	. = get_hearers_in_view_old(R, source)
+	. = get_hearers_in_view_old_new(R, source)
+	. = get_hearers_in_view_old_new_new(R, source)
 	. = get_hearers_in_view_new(R, source)
 	. = get_hearers_in_view_new_new(R, source)
 	. = get_hearers_in_view_new_new_new(R, source)
@@ -316,7 +318,8 @@
 	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
 		var/lum = T.luminosity
 		T.luminosity = 6 // This is the maximum luminosity
-		processing = view(R, T)
+		for(var/turf/T2 in view(R, T))
+			processing += T2
 		T.luminosity = lum
 
 	while(processing.len) // recursive_hear_check inlined here
@@ -346,7 +349,7 @@
 		T.luminosity = lum
 	var/i = 1
 	while(i < length(processing))
-		var/atom/A = processing[i]
+		var/atom/A = processing[i++]
 		if(A.flags_1 & HEAR_1)
 			. += A
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
@@ -370,7 +373,7 @@
 		T.luminosity = lum
 	var/i = 1
 	while(i < length(processing))
-		var/atom/A = processing[i]
+		var/atom/A = processing[i++]
 		if(A.flags_1 & HEAR_1)
 			. += A
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
@@ -387,11 +390,12 @@
 	else
 		var/lum = T.luminosity
 		T.luminosity = 6
-		processing = view(R, T)
+		for(var/turf/T2 in view(R, T))
+			processing += T2
 		T.luminosity = lum
 	var/i = 1
 	while(i < length(processing))
-		var/atom/A = processing[i]
+		var/atom/A = processing[i++]
 		if(A.flags_1 & HEAR_1)
 			. += A
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
