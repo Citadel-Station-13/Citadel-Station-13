@@ -322,14 +322,25 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "OOC"
 	set desc = "Teleport to the ghost cafe."
 	ADD_TRAIT(mob,TRAIT_PACIFISM,ROUNDSTART_TRAIT)
-	if (ishuman(mob))
-		var/mob/living/carbon/human/H = mob
-		H.revive(full_heal=TRUE,admin_revive=TRUE)
-		mob.status_flags |= GODMODE
-		for (var/obj/item/W in H)
-			if (W == H.w_uniform || W == H.shoes)
-				continue
-			H.dropItemToGround(W)
+	mob.status_flags |= GODMODE
+	if (!ishuman(mob))
+		return
+	var/mob/living/carbon/human/H = mob
+	H.revive(full_heal=TRUE,admin_revive=TRUE)
+	for (var/I in H)
+		var/obj/item/W = I
+		if (!istype(W))
+			continue
+		if (W == H.w_uniform || W == H.shoes)
+			continue
+		H.dropItemToGround(W)
+	if (istype(H.dna.species,/datum/species/plasmaman))
+		qdel(H.w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/plasmaman(H),SLOT_W_UNIFORM)
+		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/plasmaman(H),SLOT_HEAD)
+		H.equip_to_slot_or_del(new /obj/item/tank/internals/plasmaman/belt/full(H),SLOT_R_STORE)
+		H.internal = H.get_item_for_held_index(2)
+		H.update_internals_hud_icon(1)
 	mob.forceMove(pick(GLOB.holdingfacility))
 
 /client/verb/fit_viewport()
