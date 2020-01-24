@@ -152,11 +152,11 @@
 /proc/recursive_hear_check(O)
 	var/list/processing_list = list(O)
 	. = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
+	var/i = 1
+	while(i < length(processing_list))
+		var/atom/A = processing_list[i++]
 		if(A.flags_1 & HEAR_1)
 			. += A
-		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
 /** recursive_organ_check
@@ -238,124 +238,7 @@
 
 	return found_mobs
 
-
 /proc/get_hearers_in_view(R, atom/source)
-	. = get_hearers_in_view_old(R, source)
-	. = get_hearers_in_view_old_new(R, source)
-	. = get_hearers_in_view_old_new_new(R, source)
-	. = get_hearers_in_view_new(R, source)
-	. = get_hearers_in_view_new_new(R, source)
-	. = get_hearers_in_view_new_new_new(R, source)
-
-/proc/get_hearers_in_view_old(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
-	var/turf/T = get_turf(source)
-	. = list()
-
-	if(!T)
-		return
-
-	var/list/processing = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing += T.contents // We can shave off one iteration by assuming turfs cannot hear
-	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
-		var/lum = T.luminosity
-		T.luminosity = 6 // This is the maximum luminosity
-		var/list/cachedview = view(R, T)
-		for(var/mob/M in cachedview)
-			processing += M
-		for(var/obj/O in cachedview)
-			processing += O
-		T.luminosity = lum
-
-	while(processing.len) // recursive_hear_check inlined here
-		var/atom/A = processing[1]
-		if(A.flags_1 & HEAR_1)
-			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
-		processing.Cut(1, 2)
-		processing += A.contents
-
-/proc/get_hearers_in_view_old_new(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
-	var/turf/T = get_turf(source)
-	. = list()
-
-	if(!T)
-		return
-
-	var/list/processing = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing += T.contents // We can shave off one iteration by assuming turfs cannot hear
-	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
-		var/lum = T.luminosity
-		T.luminosity = 6 // This is the maximum luminosity
-		for(var/mob/M in view(R, T))
-			processing += M
-		for(var/obj/O in view(R, T))
-			processing += O
-		T.luminosity = lum
-
-	while(processing.len) // recursive_hear_check inlined here
-		var/atom/A = processing[1]
-		if(A.flags_1 & HEAR_1)
-			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
-		processing.Cut(1, 2)
-		processing += A.contents
-
-/proc/get_hearers_in_view_old_new_new(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
-	var/turf/T = get_turf(source)
-	. = list()
-
-	if(!T)
-		return
-
-	var/list/processing = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing += T.contents // We can shave off one iteration by assuming turfs cannot hear
-	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
-		var/lum = T.luminosity
-		T.luminosity = 6 // This is the maximum luminosity
-		for(var/turf/T2 in view(R, T))
-			processing += T2
-		T.luminosity = lum
-
-	while(processing.len) // recursive_hear_check inlined here
-		var/atom/A = processing[1]
-		if(A.flags_1 & HEAR_1)
-			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
-		processing.Cut(1, 2)
-		processing += A.contents
-
-/proc/get_hearers_in_view_new(R, atom/source)
-	var/turf/T = get_turf(source)
-	if(!T)
-		return
-	. = list()
-	var/list/processing = list()
-	if(R == 0)
-		processing += T.contents
-	else
-		var/lum = T.luminosity
-		T.luminosity = 6
-		var/list/cachedview = view(R, T)
-		for(var/mob/M in cachedview)
-			processing += M
-		for(var/obj/O in cachedview)
-			processing += O
-		T.luminosity = lum
-	var/i = 1
-	while(i < length(processing))
-		var/atom/A = processing[i++]
-		if(A.flags_1 & HEAR_1)
-			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
-		processing += A.contents
-
-/proc/get_hearers_in_view_new_new(R, atom/source)
 	var/turf/T = get_turf(source)
 	if(!T)
 		return
@@ -370,28 +253,6 @@
 			processing += M
 		for(var/obj/O in view(R, T))
 			processing += O
-		T.luminosity = lum
-	var/i = 1
-	while(i < length(processing))
-		var/atom/A = processing[i++]
-		if(A.flags_1 & HEAR_1)
-			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
-		processing += A.contents
-
-/proc/get_hearers_in_view_new_new_new(R, atom/source)
-	var/turf/T = get_turf(source)
-	if(!T)
-		return
-	. = list()
-	var/list/processing = list()
-	if(R == 0)
-		processing += T.contents
-	else
-		var/lum = T.luminosity
-		T.luminosity = 6
-		for(var/turf/T2 in view(R, T))
-			processing += T2
 		T.luminosity = lum
 	var/i = 1
 	while(i < length(processing))
