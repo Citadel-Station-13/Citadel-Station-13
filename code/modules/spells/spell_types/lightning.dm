@@ -4,7 +4,7 @@
 	charge_type = "recharge"
 	charge_max	= 270
 	clothes_req = 1
-	invocation = "TSL'A L'OOSE!"
+	invocation = "UN'LTD P'WAH!"
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 30
