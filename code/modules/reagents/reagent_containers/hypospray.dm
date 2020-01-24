@@ -409,10 +409,8 @@
 	var/fraction = min(vial.amount_per_transfer_from_this/vial.reagents.total_volume, 1)
 	vial.reagents.reaction(L, method, fraction)
 	vial.reagents.trans_to(target, vial.amount_per_transfer_from_this)
-	if(vial.amount_per_transfer_from_this >= 15)
-		playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
-	if(vial.amount_per_transfer_from_this < 15)
-		playsound(loc,  pick('sound/items/hypospray.ogg','sound/items/hypospray2.ogg'), 50, 1, -1)
+	var/long_sound = vial.amount_per_transfer_from_this >= 15
+	playsound(loc, long_sound ? 'sound/items/hypospray_long.ogg' : pick('sound/items/hypospray.ogg','sound/items/hypospray2.ogg'), 50, 1, -1)
 	to_chat(user, "<span class='notice'>You [fp_verb] [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units.</span>")
 
 /obj/item/hypospray/mkii/attack_self(mob/living/user)
