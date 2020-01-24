@@ -395,7 +395,7 @@
 	if(L != user)
 		L.visible_message("<span class='danger'>[user] is trying to [fp_verb] [L] with [src]!</span>", \
 						"<span class='userdanger'>[user] is trying to [fp_verb] you with [src]!</span>")
-	if(!do_mob(user, L, inject_wait, extra_checks = CALLBACK(L, /mob/living/proc/can_inject, user, FALSE, user.zone_selected, penetrates))
+	if(!do_mob(user, L, inject_wait, extra_checks = CALLBACK(L, /mob/living/proc/can_inject, user, FALSE, user.zone_selected, penetrates)))
 		return
 	if(!vial.reagents.total_volume)
 		return
