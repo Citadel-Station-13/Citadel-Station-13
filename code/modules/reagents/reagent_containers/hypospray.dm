@@ -385,7 +385,7 @@
 	if(!vial)
 		to_chat(user, "<span class='notice'>[src] doesn't have any vial installed!</span>")
 		return
-	if(vial.reagents.total_volume)
+	if(!vial.reagents.total_volume)
 		to_chat(user, "<span class='notice'>[src]'s vial is empty!</span>")
 		return
 
