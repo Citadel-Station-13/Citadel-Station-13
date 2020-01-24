@@ -432,6 +432,7 @@ Difficulty: Very Hard
 			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)
+		C.after_spawn(H, H, TRUE)
 		qdel(C)
 		affected_targets.Add(H)
 
