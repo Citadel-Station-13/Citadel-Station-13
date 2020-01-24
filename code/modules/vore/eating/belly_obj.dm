@@ -198,7 +198,7 @@
 	if(L && desc)
 		to_chat(L, "<span class='notice'><B>[desc]</B></span>")
 
-/obj/belly/Entered(atom/movable/AM, atom/newloc)
+/obj/belly/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
