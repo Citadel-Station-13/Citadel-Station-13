@@ -200,7 +200,7 @@
 		remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
 
 	var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
-	log_reagent_transfer("TRANSFER - [location_string] - [key_name(usr)]: trans_to with arguments [target] [amount] [multiplier] [preserve_data] [no_react] and reagents [english_list(trasnferred)]")
+	log_reagent_transfer("[location_string] - [key_name(usr)]: trans_to with arguments [target] [amount] [multiplier] [preserve_data] [no_react] and reagents [english_list(trasnferred)]")
 
 	update_total()
 	R.update_total()
@@ -264,7 +264,7 @@
 			var/atom/us = my_atom
 			var/atom/them = their_atom
 			var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
-			log_reagent_transfer("TRANSFER - [location_string] - [key_name(usr)]: trans_id_to with arguments [target] [reagent] [amount] [preserve_data]")
+			log_reagent_transfer("[location_string] - [key_name(usr)]: trans_id_to with arguments [target] [reagent] [amount] [preserve_data]")
 			break
 
 	src.update_total()
