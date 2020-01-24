@@ -1,6 +1,6 @@
 /datum/element/dusts_on_leaving_area
 	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
-	id_arg_index = 1
+	id_arg_index = 2
 	var/list/attached_mobs = list()
 	var/list/area_types = list()
 
