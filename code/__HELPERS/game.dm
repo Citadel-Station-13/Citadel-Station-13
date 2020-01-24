@@ -235,9 +235,10 @@
 	else
 		var/lum = T.luminosity
 		T.luminosity = 6
-		for(var/mob/M in view(R, T))
+		var/list/cached_view = view(R, T)
+		for(var/mob/M in cached_view)
 			processing += M
-		for(var/obj/O in view(R, T))
+		for(var/obj/O in cached_view)
 			processing += O
 		T.luminosity = lum
 	var/i = 0
