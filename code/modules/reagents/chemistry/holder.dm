@@ -194,14 +194,14 @@
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
-		transferred += "[T] - [trasnfer_amount]"
+		transferred += "[T] - [transfer_amount]"
 
 		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
 		remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
 
 	if(log && amount > 0)
 		var/atom/us = my_atom
-		var/atom/them = their_atom
+		var/atom/them = R.my_atom
 		var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
 		log_reagent_transfer("[location_string] - [key_name(usr)][istext(log) ? " - [log]" : ""]: trans_to with arguments [target] [amount] [multiplier] [preserve_data] [no_react] and reagents [english_list(trasnferred)]")
 
@@ -266,7 +266,7 @@
 			remove_reagent(current_reagent.type, amount, 1)
 			if(log && amount > 0)
 				var/atom/us = my_atom
-				var/atom/them = their_atom
+				var/atom/them = R.my_atom
 				var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
 				log_reagent_transfer("[location_string] - [key_name(usr)][istext(log) ? " - [log]" : ""]: trans_id_to with arguments [target] [reagent] [amount] [preserve_data]")
 			break
