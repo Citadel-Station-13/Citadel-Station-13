@@ -135,6 +135,12 @@
 	item = /obj/item/aiModule/syndicate
 	cost = 9
 
+/datum/uplink_item/device_tools/headsetupgrade
+	name = "Headset Upgrader"
+	desc = "A device that can be used to make one headset immune to flashbangs."
+	item = /obj/item/headsetupgrader
+	cost = 3
+
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
