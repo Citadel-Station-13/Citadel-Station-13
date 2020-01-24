@@ -203,7 +203,7 @@
 		var/atom/us = my_atom
 		var/atom/them = R.my_atom
 		var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
-		log_reagent_transfer("[location_string] - [key_name(usr)][istext(log) ? " - [log]" : ""]: trans_to with arguments [target] [amount] [multiplier] [preserve_data] [no_react] and reagents [english_list(trasnferred)]")
+		log_reagent_transfer("[location_string] - [key_name(usr)][istext(log) ? " - [log]" : ""]: trans_to with arguments [target] [amount] [multiplier] [preserve_data] [no_react] and reagents [english_list(transferred)]")
 
 	update_total()
 	R.update_total()
