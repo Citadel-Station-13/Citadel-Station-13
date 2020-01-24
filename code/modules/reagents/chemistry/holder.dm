@@ -171,7 +171,7 @@
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = 1, no_react = 0, log = FALSE)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -199,8 +199,11 @@
 		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
 		remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
 
-	var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
-	log_reagent_transfer("[location_string] - [key_name(usr)]: trans_to with arguments [target] [amount] [multiplier] [preserve_data] [no_react] and reagents [english_list(trasnferred)]")
+	if(log && amount > 0)
+		var/atom/us = my_atom
+		var/atom/them = their_atom
+		var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
+		log_reagent_transfer("[location_string] - [key_name(usr)][istext(log) && [" - [log]"]]: trans_to with arguments [target] [amount] [multiplier] [preserve_data] [no_react] and reagents [english_list(trasnferred)]")
 
 	update_total()
 	R.update_total()
@@ -240,7 +243,7 @@
 	src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount = 1, preserve_data = TRUE, log = FALSE)//Not sure why this proc didn't exist before. It does now! /N
 	var/list/cached_reagents = reagent_list
 	if (!target)
 		return
@@ -261,10 +264,11 @@
 				trans_data = current_reagent.data
 			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, pH, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
-			var/atom/us = my_atom
-			var/atom/them = their_atom
-			var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
-			log_reagent_transfer("[location_string] - [key_name(usr)]: trans_id_to with arguments [target] [reagent] [amount] [preserve_data]")
+			if(log && amount > 0)
+				var/atom/us = my_atom
+				var/atom/them = their_atom
+				var/location_string = "FROM [(us && "[us] [COORD(us)]") || "NULL"] TO [(them && "[them] [COORD(them)]") || "NULL"]"
+				log_reagent_transfer("[location_string] - [key_name(usr)][istext(log) && [" - [log]"]: trans_id_to with arguments [target] [reagent] [amount] [preserve_data]")
 			break
 
 	src.update_total()
