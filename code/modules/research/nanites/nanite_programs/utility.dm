@@ -220,7 +220,7 @@
 	if(!iscarbon(host_mob))
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.nutrition <= NUTRITION_LEVEL_STARVING)
+	if(C.nutrition <= NUTRITION_LEVEL_FED)
 		return FALSE
 	return ..()
 
