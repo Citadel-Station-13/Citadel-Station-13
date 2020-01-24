@@ -1070,15 +1070,36 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 /datum/objective/flavor
 	name = "flavor"
 	completable = FALSE
+	var/flavor_file
 
-/datum/objective/flavor/New()
-	..()
-	forge_objective()
+/datum/objective/flavor/proc/get_flavor_list()
+	return world.file2list(flavor_file)
 
 /datum/objective/flavor/proc/forge_objective()
+	var/flavor_list = get_flavor_list()
+	explanation_text = pick(flavor_list)
 
 /datum/objective/flavor/traitor
 	name = "traitor flavor"
+	flavor_file = "strings/flavor_objectives/traitor.txt"
 
-/datum/objective/flavor/traitor/forge_objective()
-	explanation_text = pickweight(CONFIG_GET(keyed_list/flavor_objective_traitor))
+/datum/objective/flavor/traitor/get_flavor_list()
+	. = ..()
+	switch(owner.assigned_role)
+		if("Station Engineer", "Atmospheric Technician")
+			. += world.file2list("strings/flavor_objectives/traitor/engineering.txt")
+		if("Medical Doctor","Chemist","Virologist","Geneticist")
+			. += world.file2list("strings/flavor_objectives/traitor/medical.txt")
+		if("Scientist","Roboticist","Geneticist")
+			. += world.file2list("strings/flavor_objectives/traitor/science.txt")
+		if("Assistant")
+			. += world.file2list("strings/flavor_objectives/traitor/assistant.txt")
+
+/datum/objective/flavor/ninja_helping
+	flavor_file = "strings/flavor_objectives/ninja_helping.txt"
+
+/datum/objective/flavor/ninja_syndie
+	flavor_file = "strings/flavor_objectives/ninja_syndie.txt"
+
+/datum/objective/flavor/wizard
+	flavor_file = "strings/flavor_objectives/wizard.txt"

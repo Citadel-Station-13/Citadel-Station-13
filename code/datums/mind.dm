@@ -471,8 +471,7 @@
 				/datum/objective/nuclear,
 				/datum/objective/capture,
 				/datum/objective/absorb,
-				/datum/objective/custom,
-				/datum/objective/flavor/traitor
+				/datum/objective/custom
 			)
 
 			for(var/T in allowed_types)

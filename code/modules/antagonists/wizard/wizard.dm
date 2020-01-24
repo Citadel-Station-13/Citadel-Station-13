@@ -61,9 +61,9 @@
 		owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
-	var/datum/objective/new_objective = new("Cause as much creative mayhem as you can aboard the station! The more outlandish your methods of achieving this, the better! Make sure there's a decent amount of crew alive to tell of your tale.")
-	new_objective.completable = FALSE
+	var/datum/objective/flavor/wizard/new_objective = new
 	new_objective.owner = owner
+	new_objective.forge_objective()
 	objectives += new_objective
 
 	if (!(locate(/datum/objective/escape) in objectives))
@@ -94,6 +94,7 @@
 	to_chat(owner, "<span class='boldannounce'>You are the Space Wizard!</span>")
 	to_chat(owner, "<B>The Space Wizards Federation has given you the following tasks:</B>")
 	owner.announce_objectives()
+	to_chat(owner, "<B>These are merely guidelines! The federation are your masters, but you forge your own path!</B>")
 	to_chat(owner, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
 	to_chat(owner, "The spellbook is bound to you, and others cannot use it.")
 	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
