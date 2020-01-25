@@ -43,7 +43,7 @@
 		else
 			eye_color = H.eye_color
 		if(!special)
-			H.dna?.species?.handle_body() //regenerate eyeballs overlays.
+			H.dna?.species?.handle_body(H) //regenerate eyeballs overlays.
 	M.update_tint()
 	owner.update_sight()
 
