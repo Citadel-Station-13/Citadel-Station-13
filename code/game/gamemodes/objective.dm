@@ -1043,7 +1043,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 /datum/objective/hoard/collector/find_target()
 	var/obj/item/I
 	if(prob(50))
-		I = new pick_and_take(GLOB.traitor_contraband)
+		I = new pick_and_take(GLOB.traitor_contraband) // always unique unless it's run out, in which case we refill it anyway
 	else
 		I = new pick_and_take(GLOB.cult_contraband)
 	I.forceMove(get_turf(owner))
