@@ -70,6 +70,14 @@
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimemammal
+	name = "Mammal Mutation Toxin"
+	id = /datum/reagent/mutationtoxin/mammal
+	results = list(/datum/reagent/mutationtoxin/mammal = 1)
+	required_reagents = list(/datum/reagent/water = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	name = "Slime Metal"
