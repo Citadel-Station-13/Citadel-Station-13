@@ -1475,10 +1475,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		target.grabbedby(user)
 		return 1
 
-
-
-
-
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
@@ -1507,7 +1503,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		user.adjustStaminaLossBuffered(5) //CITADEL CHANGE - makes punching cause staminaloss
+		user.adjustStaminaLossBuffered(3.5) //CITADEL CHANGE - makes punching cause staminaloss
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
@@ -1837,7 +1833,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		user.visible_message("<span class='notice'>[user] forces [p_them()]self up to [p_their()] feet!</span>", "<span class='notice'>You force yourself up to your feet!</span>")
 		user.resting = 0
 		user.update_canmove()
-		user.adjustStaminaLossBuffered(user.stambuffer) //Rewards good stamina management by making it easier to instantly get up from resting
+		user.adjustStaminaLossBuffered(20) //Rewards good stamina management by making it easier to instantly get up from resting
 		playsound(user, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 /datum/species/proc/altdisarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
@@ -1850,6 +1846,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
 	if(user.resting)
+		var/obj/item/target_disarm = target.get_active_held_item()
+		if(target_disarm)
+			target.dropItemToGround(target_disarm)
+			target.visible_message("<span class='warning'>[user] wrestles [target_disarm] out of [target]'s hand!</span>",
+			"<span class='userdanger'>[user] wrestles [target_disarm] out of your hand!</span>")
+			return TRUE
 		return FALSE
 	else
 		if(user == target)
