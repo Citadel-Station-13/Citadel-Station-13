@@ -44,6 +44,7 @@
 	var/list/diseases = list()
 	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, diseases)
 	var/direction = pick(directions)
+	var/dist = 0
 	if(prob(50))		//yes this and the one below are different for a reason.
 		if(prob(25))
 			dist = 2
