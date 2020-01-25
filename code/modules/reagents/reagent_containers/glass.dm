@@ -21,13 +21,9 @@
 
 	if(istype(M))
 		if(user.a_intent == INTENT_HARM)
-			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
-			if(reagents)
-				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.type + " ("
-					R += num2text(A.volume) + "),"
+			var/R = reagents?.log_list()
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
