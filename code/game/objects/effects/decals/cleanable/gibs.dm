@@ -20,7 +20,6 @@
 		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype, diseases))
 	update_icon()
 
-
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
 	add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
 	cut_overlays()
