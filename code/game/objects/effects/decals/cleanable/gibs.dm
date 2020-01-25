@@ -5,6 +5,7 @@
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
+	bloodiness = 0				//This isn't supposed to be bloody.
 	var/body_colors = "#e3ba84"	//a default color just in case.
 	var/gibs_reagent_id = /datum/reagent/liquidgibs
 	var/gibs_bloodtype = "A+"
