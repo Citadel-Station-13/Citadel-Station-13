@@ -1051,31 +1051,19 @@
 	reagent_state = SOLID
 	taste_description = "iron"
 	pH = 6
-	overdose_threshold = 30
 	color = "#c2391d"
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
 	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
 		return
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
-		C.blood_volume += 0.01 //we'll have synthetics from medbay.
+		C.blood_volume += 0.5
 	..()
 
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
 		if(holder && holder.chem_temp < 100) // COLD iron.
 			M.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
-	..()
-
-/datum/reagent/iron/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You start feeling your guts twisting painfully!</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
-
-/datum/reagent/iron/overdose_process(mob/living/carbon/C)
-	if(prob(20))
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		if (istype(L))
-			C.applyLiverDamage(2) //mild until the fabled med rework comes out. the organ damage galore
 	..()
 
 /datum/reagent/gold
