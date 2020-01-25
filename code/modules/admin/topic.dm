@@ -845,7 +845,11 @@
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'>Lavaland</a></td>"
-
+		// Ghost cafe
+		if(jobban_isbanned(M,ROLE_GHOSTCAFE))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_GHOSTCAFE];jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_GHOSTCAFE];jobban4=[REF(M)]'>Lavaland</a></td>"
 		dat += "</tr></table>"
 
 	//Antagonist (Orange)
