@@ -64,7 +64,6 @@
 	else
 		return FALSE
 
-
 //Limb numbers
 /mob/proc/get_num_arms(check_disabled = TRUE)
 	return 2
