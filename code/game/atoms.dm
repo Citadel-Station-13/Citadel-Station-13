@@ -505,9 +505,8 @@
 	return final_rgb
 
 /atom/proc/clean_blood()
-	if(islist(blood_DNA))
-		blood_DNA = null
-		return TRUE
+	. = blood_DNA? TRUE : FALSE
+	blood_dna = null
 
 /atom/proc/wash_cream()
 	return TRUE

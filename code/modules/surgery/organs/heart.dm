@@ -220,20 +220,11 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 	ramount = 0
 
-
-
 /obj/item/organ/heart/ipc
 	name = "IPC heart"
 	desc = "An electronic pump that regulates hydraulic functions, they have an auto-restart after EMPs."
 	icon_state = "heart-c"
 	organ_flags = ORGAN_SYNTHETIC
-
-/obj/item/organ/heart/ipc/emp_act()
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 10)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
