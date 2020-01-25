@@ -408,7 +408,7 @@ SLIME SCANNER
 	if(M.has_dna())
 		var/mob/living/carbon/C = M
 		var/blood_typepath = C.get_blood_id()
-		if(blood_id)
+		if(blood_typepath)
 			if(ishuman(C))
 				if(H.bleed_rate)
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"

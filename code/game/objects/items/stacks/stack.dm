@@ -406,7 +406,7 @@
 	if(from.fingerprintshidden)
 		fingerprintshidden = from.fingerprintshidden.Copy()
 	if(from.fingerprintslast)
-		fingerprintslast = from.fingerprintslast.Copy()
+		fingerprintslast = from.fingerprintslast
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(istype(M) && M.dirty < 100)
