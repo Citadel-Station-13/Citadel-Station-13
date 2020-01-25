@@ -107,7 +107,7 @@
 // Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = 1 + (potency * rate)
 /datum/plant_gene/reagent
 	name = "Nutriment"
-	var/reagent_id = "nutriment"
+	var/reagent_id = /datum/reagent/nutriment
 	var/rate = 0.04
 
 /datum/plant_gene/reagent/get_name()
