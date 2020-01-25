@@ -1021,6 +1021,11 @@
 	build_path = /obj/machinery/vending/kink
 	req_components = list(/obj/item/vending_refill/kink = 1)
 
+/obj/item/circuitboard/machine/pet
+	name = "Bark Box (Machine Board)"
+	build_path = /obj/machinery/vending/pet
+	req_components = list(/obj/item/vending_refill/pet = 1)
+
 /obj/item/circuitboard/machine/autoylathe
 	name = "Autoylathe (Machine Board)"
 	build_path = /obj/machinery/autoylathe

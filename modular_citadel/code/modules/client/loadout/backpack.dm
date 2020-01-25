@@ -26,37 +26,107 @@
 /datum/gear/tennis
 	name = "Classic Tennis Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis
+	path = /obj/item/ammo_casing/caseless/tennis
 
 /datum/gear/tennisred
 	name = "Red Tennis Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/red
+	path = /obj/item/ammo_casing/caseless/tennis/red
 
 /datum/gear/tennisyellow
 	name = "Yellow Tennis Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/yellow
+	path = /obj/item/ammo_casing/caseless/tennis/yellow
 
 /datum/gear/tennisgreen
 	name = "Green Tennis Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/green
+	path = /obj/item/ammo_casing/caseless/tennis/green
 
 /datum/gear/tenniscyan
 	name = "Cyan Tennis Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/cyan
+	path = /obj/item/ammo_casing/caseless/tennis/cyan
 
 /datum/gear/tennisblue
 	name = "Blue Tennis Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/blue
+	path = /obj/item/ammo_casing/caseless/tennis/blue
 
 /datum/gear/tennispurple
 	name = "Purple Tennis Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/purple
+	path = /obj/item/ammo_casing/caseless/tennis/purple
+
+/datum/gear/bone
+	name = "Classic Rubber Bone"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/bone
+
+/datum/gear/bonered
+	name = "Red Rubber Bone"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/bone/red
+
+/datum/gear/boneyellow
+	name = "Yellow Rubber Bone"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/bone/yellow
+
+/datum/gear/bonegreen
+	name = "Green Rubber Bone"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/bone/green
+
+/datum/gear/bonecyan
+	name = "Cyan Rubber Bone"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/bone/cyan
+
+/datum/gear/boneblue
+	name = "Blue Rubber Bone"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/bone/blue
+
+/datum/gear/bonepurple
+	name = "Purple Rubber Bone"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/bone/purple
+
+/datum/gear/frisbee
+	name = "Classic Frisbee"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/ammo_casing/caseless//frisbee
+
+/datum/gear/frisbeered
+	name = "Red frisbee"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/ammo_casing/caseless/frisbee/red
+
+/datum/gear/frisbeeyellow
+	name = "Yellow frisbee"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/ammo_casing/caseless/frisbee/yellow
+
+/datum/gear/frisbeegreen
+	name = "Green frisbee"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/ammo_casing/caseless/frisbee/green
+
+/datum/gear/frisbeecyan
+	name = "Cyan frisbee"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/ammo_casing/caseless/frisbee/cyan
+
+/datum/gear/frisbeeblue
+	name = "Blue frisbee"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/ammo_casing/caseless/frisbee/blue
+
+/datum/gear/frisbeepurple
+	name = "Purple frisbee"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/ammo_casing/caseless/frisbee/purple
 
 /datum/gear/dildo
 	name = "Customizable dildo"

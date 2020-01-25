@@ -238,13 +238,13 @@ datum/gear/darksabresheath
 /datum/gear/toriball
 	name = "Rainbow Tennis Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/rainbow
+	path = /obj/item/ammo_casing/caseless/tennis/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/izzyball
 	name = "Katlin's Ball"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/rainbow/izzy
+	path = /obj/item/ammo_casing/caseless/tennis/rainbow/izzy
 	ckeywhitelist = list("izzyinbox")
 
 /datum/gear/cloak
