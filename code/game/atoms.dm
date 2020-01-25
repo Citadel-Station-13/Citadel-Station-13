@@ -506,7 +506,7 @@
 
 /atom/proc/clean_blood()
 	. = blood_DNA? TRUE : FALSE
-	blood_dna = null
+	blood_DNA = null
 
 /atom/proc/wash_cream()
 	return TRUE
