@@ -15,11 +15,14 @@
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
+	var/obj/machinery/computer/operating/op_computer
 
 /obj/machinery/stasis/examine(mob/user)
 	..()
 	var/turn_on_or_off = stasis_enabled ? "turn off" : "turn on"
 	to_chat(user, "<span class='notice'>Alt-click to [turn_on_or_off] the machine.</span>")
+	to_chat(user, "<span class='notice'>[src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to an operating computer.</span>")
+
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
