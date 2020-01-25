@@ -4,7 +4,7 @@
 //Potential replacement for genetics revives or something I dunno (?)
 
 #define CLONE_INITIAL_DAMAGE     150    //Clones in clonepods start with 150 cloneloss damage and 150 brainloss damage, thats just logical
-#define MINIMUM_HEAL_LEVEL 40
+#define MINIMUM_HEAL_LEVEL 20
 
 #define SPEAK(message) radio.talk_into(src, message, radio_channel)
 
@@ -61,18 +61,15 @@
 	QDEL_LIST(unattached_flesh)
 	. = ..()
 
-/obj/machinery/clonepod/RefreshParts()
+/obj/machinery/clonepod/RefreshParts()	
 	speed_coeff = 0
 	efficiency = 0
 	for(var/obj/item/stock_parts/scanning_module/S in component_parts)
 		efficiency += S.rating
 	for(var/obj/item/stock_parts/manipulator/P in component_parts)
-		speed_coeff += P.rating
-	heal_level = (efficiency * 15) + 10
-	if(heal_level < MINIMUM_HEAL_LEVEL)
-		heal_level = MINIMUM_HEAL_LEVEL
-	if(heal_level > 100)
-		heal_level = 100
+		speed_coeff += (P.rating / 2)
+	speed_coeff = max(1, speed_coeff)
+	heal_level = CLAMP((efficiency * 10) + 10, MINIMUM_HEAL_LEVEL, 100)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -102,8 +99,13 @@
 /obj/machinery/clonepod/examine(mob/user)
 	. = ..()
 	var/mob/living/mob_occupant = occupant
+	. += "<span class='notice'>The <i>linking</i> device can be <i>scanned<i> with a multitool.</span>"
 	if(mess)
 		. += "It's filled with blood and viscera. You swear you can see it moving..."
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Cloning speed at <b>[speed_coeff*50]%</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.</span>"
+		if(efficiency > 5)
+			to_chat(user, "<span class='notice'>Pod has been upgraded to support autoprocessing.<span>")
 	if(is_operational() && mob_occupant)
 		if(mob_occupant.stat != DEAD)
 			. += "Current clone cycle is [round(get_completion())]% complete."
@@ -164,9 +166,7 @@
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
-
-	if(prob(50 - efficiency*10)) //Chance to give a bad mutation.
-		H.randmutb() //100% bad mutation. Can be cured with mutadone.
+	H.randmutb() //100% bad mutation. Can be cured with mutadone.
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H

@@ -46,6 +46,7 @@
 	roundstart = FALSE
 	death = FALSE
 	anchored = FALSE
+	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. You would never leave its beautiful expanse. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
@@ -120,6 +121,7 @@
 	roundstart = FALSE
 	death = FALSE
 	anchored = FALSE
+	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	var/has_owner = FALSE
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
@@ -617,7 +619,7 @@
 	assignedrole = "Ghost Cafe Visitor"
 	flavour_text = "Is this what life after death is like?"
 	skip_reentry_check = TRUE
-	banType = "ghostcafe"
+	banType = ROLE_GHOSTCAFE
 
 /datum/action/toggle_dead_chat_mob
 	icon_icon = 'icons/mob/mob.dmi'
@@ -640,11 +642,14 @@
 /obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
 	if(new_spawn.client)
 		new_spawn.client.prefs.copy_to(new_spawn)
+		var/area/A = get_area(src)
 		var/datum/outfit/O = new /datum/outfit/ghostcafe()
 		O.equip(new_spawn, FALSE, new_spawn.client)
 		SSjob.equip_loadout(null, new_spawn, FALSE)
 		SSquirks.AssignQuirks(new_spawn, new_spawn.client, TRUE, TRUE, null, FALSE, new_spawn)
 		new_spawn.AddElement(/datum/element/ghost_role_eligibility)
+		new_spawn.AddElement(/datum/element/dusts_on_catatonia)
+		new_spawn.AddElement(/datum/element/dusts_on_leaving_area,list(A.type,/area/hilbertshotel))
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn,TRAIT_PACIFISM,GHOSTROLE_TRAIT)

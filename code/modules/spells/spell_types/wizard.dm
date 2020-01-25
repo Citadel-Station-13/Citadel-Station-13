@@ -152,19 +152,21 @@
 	sound1 = 'sound/magic/teleport_diss.ogg'
 	sound2 = 'sound/magic/teleport_app.ogg'
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+/obj/effect/proc_holder/spell/aoe_turf/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
 	clothes_req = 1
-	invocation = "TOKI WO TOMARE"
+	invocation = "TOKI YO TOMARE"
 	invocation_type = "shout"
 	range = 0
 	cooldown_min = 100
-	summon_amt = 1
 	action_icon_state = "time"
+	var/timestop_range = 2
+	var/timestop_duration = 100
 
-	summon_type = list(/obj/effect/timestop/wizard)
+/obj/effect/proc_holder/spell/aoe_turf/timestop/cast(list/targets, mob/user = usr)
+	new /obj/effect/timestop/magic(get_turf(user), timestop_range, timestop_duration, list(user))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -363,7 +365,7 @@
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
+/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom

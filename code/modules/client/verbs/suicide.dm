@@ -207,6 +207,9 @@
 	message_admins("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) [is_special_character(src) ? "(ANTAG!) " : ""][ghosting ? "ghosted" : "committed suicide"] at [AREACOORD(src)].")
 
 /mob/living/proc/canSuicide()
+	if(!CONFIG_GET(flag/suicide_allowed))
+		to_chat(src, "Suicide is not enabled in the config.")
+		return FALSE
 	switch(stat)
 		if(CONSCIOUS)
 			return TRUE

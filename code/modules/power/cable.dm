@@ -79,13 +79,17 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = "#ffffff"
 
 // the power cable object
-/obj/structure/cable/Initialize(mapload, param_color)
+/obj/structure/cable/Initialize(mapload, param_color, _d1, _d2)
 	. = ..()
 
-	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
-	var/dash = findtext(icon_state, "-")
-	d1 = text2num( copytext( icon_state, 1, dash ) )
-	d2 = text2num( copytext( icon_state, dash+1 ) )
+	if(isnull(_d1) || isnull(_d2))
+		// ensure d1 & d2 reflect the icon_state for entering and exiting cable
+		var/dash = findtext(icon_state, "-")
+		d1 = text2num( copytext( icon_state, 1, dash ) )
+		d2 = text2num( copytext( icon_state, dash+1 ) )
+	else
+		d1 = _d1
+		d2 = _d2
 
 	var/turf/T = get_turf(src)			// hide if turf is not intact
 	if(level==1)

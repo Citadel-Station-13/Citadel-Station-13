@@ -66,7 +66,7 @@
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = NO_SPAWN //If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood
 
-	var/mob/living/simple_animal/hostile/spawner/nest
+	var/datum/component/spawner/nest
 
 	var/sentience_type = SENTIENCE_ORGANIC // Sentience type, for slime potions
 
@@ -84,6 +84,7 @@
 	var/datum/personal_crafting/handcrafting
 
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players)
+	var/can_have_ai = TRUE //once we have become sentient, we can never go back
 
 	var/shouldwakeup = FALSE //convenience var for forcibly waking up an idling AI on next check.
 
@@ -425,6 +426,9 @@
 		canmove = FALSE
 	else
 		canmove = value_otherwise
+	if(!canmove) // !(mobility_flags & MOBILITY_MOVE)
+		walk(src, 0) //stop mid walk
+
 	update_transform()
 	update_action_buttons_icon()
 	return canmove
@@ -443,6 +447,7 @@
 
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
 	toggle_ai(AI_OFF) // To prevent any weirdness.
+	can_have_ai = FALSE
 
 /mob/living/simple_animal/update_sight()
 	if(!client)
@@ -557,6 +562,8 @@
 	LoadComponent(/datum/component/riding)
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
+	if(!can_have_ai && (togglestatus != AI_OFF))
+		return
 	if (AIStatus != togglestatus)
 		if (togglestatus > 0 && togglestatus < 5)
 			if (togglestatus == AI_Z_OFF || AIStatus == AI_Z_OFF)

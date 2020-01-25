@@ -362,30 +362,14 @@
 	return
 
 /obj/item/hypospray/mkii/afterattack(atom/target, mob/user, proximity)
-	if(!vial)
+	if(!vial || !proximity || !isliving(target))
+		return
+	var/mob/living/L = target
+
+	if(!L.reagents || !L.can_inject(user, TRUE, user.zone_selected, penetrates))
 		return
 
-	if(!proximity)
-		return
-
-	if(!ismob(target))
-		return
-
-	var/mob/living/L
-	if(isliving(target))
-		L = target
-		if(!penetrates && !L.can_inject(user, 1)) //This check appears another four times, since otherwise the penetrating sprays will break in do_mob.
-			return
-
-	if(!L && !target.is_injectable()) //only checks on non-living mobs, due to how can_inject() handles
-		to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
-		return
-
-	if(target.reagents.total_volume >= target.reagents.maximum_volume)
-		to_chat(user, "<span class='notice'>[target] is full.</span>")
-		return
-
-	if(ishuman(L))
+	if(iscarbon(L))
 		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting)
 			to_chat(user, "<span class='warning'>The limb is missing!</span>")
@@ -394,84 +378,40 @@
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 			return
 
+	//Always log attemped injections for admins
 	var/contained = vial.reagents.log_list()
 	log_combat(user, L, "attemped to inject", src, addition="which had [contained]")
-//Always log attemped injections for admins
-	if(vial != null)
-		switch(mode)
-			if(HYPO_INJECT)
-				if(L) //living mob
-					if(L != user)
-						L.visible_message("<span class='danger'>[user] is trying to inject [L] with [src]!</span>", \
-										"<span class='userdanger'>[user] is trying to inject [L] with [src]!</span>")
-						if(!do_mob(user, L, inject_wait))
-							return
-						if(!penetrates && !L.can_inject(user, 1))
-							return
-						if(!vial.reagents.total_volume)
-							return
-						if(L.reagents.total_volume >= L.reagents.maximum_volume)
-							return
-						L.visible_message("<span class='danger'>[user] uses the [src] on [L]!</span>", \
-										"<span class='userdanger'>[user] uses the [src] on [L]!</span>")
-					else
-						if(!do_mob(user, L, inject_self))
-							return
-						if(!penetrates && !L.can_inject(user, 1))
-							return
-						if(!vial.reagents.total_volume)
-							return
-						if(L.reagents.total_volume >= L.reagents.maximum_volume)
-							return
-						log_attack("<font color='red'>[user.name] ([user.ckey]) applied [src] to [L.name] ([L.ckey]), which had [contained] (INTENT: [uppertext(user.a_intent)]) (MODE: [src.mode])</font>")
-						L.log_message("<font color='orange'>applied [src] to  themselves ([contained]).</font>", INDIVIDUAL_ATTACK_LOG)
 
-				var/fraction = min(vial.amount_per_transfer_from_this/vial.reagents.total_volume, 1)
-				vial.reagents.reaction(L, INJECT, fraction)
-				vial.reagents.trans_to(target, vial.amount_per_transfer_from_this)
-				if(vial.amount_per_transfer_from_this >= 15)
-					playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
-				if(vial.amount_per_transfer_from_this < 15)
-					playsound(loc,  pick('sound/items/hypospray.ogg','sound/items/hypospray2.ogg'), 50, 1, -1)
-				to_chat(user, "<span class='notice'>You inject [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units.</span>")
-
-			if(HYPO_SPRAY)
-				if(L) //living mob
-					if(L != user)
-						L.visible_message("<span class='danger'>[user] is trying to spray [L] with [src]!</span>", \
-										"<span class='userdanger'>[user] is trying to spray [L] with [src]!</span>")
-						if(!do_mob(user, L, spray_wait))
-							return
-						if(!penetrates && !L.can_inject(user, 1))
-							return
-						if(!vial.reagents.total_volume)
-							return
-						if(L.reagents.total_volume >= L.reagents.maximum_volume)
-							return
-						L.visible_message("<span class='danger'>[user] uses the [src] on [L]!</span>", \
-										"<span class='userdanger'>[user] uses the [src] on [L]!</span>")
-					else
-						if(!do_mob(user, L, spray_self))
-							return
-						if(!penetrates && !L.can_inject(user, 1))
-							return
-						if(!vial.reagents.total_volume)
-							return
-						if(L.reagents.total_volume >= L.reagents.maximum_volume)
-							return
-						log_attack("<font color='red'>[user.name] ([user.ckey]) applied [src] to [L.name] ([L.ckey]), which had [contained] (INTENT: [uppertext(user.a_intent)]) (MODE: [src.mode])</font>")
-						L.log_message("<font color='orange'>applied [src] to  themselves ([contained]).</font>", INDIVIDUAL_ATTACK_LOG)
-				var/fraction = min(vial.amount_per_transfer_from_this/vial.reagents.total_volume, 1)
-				vial.reagents.reaction(L, PATCH, fraction)
-				vial.reagents.trans_to(target, vial.amount_per_transfer_from_this)
-				if(vial.amount_per_transfer_from_this >= 15)
-					playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
-				if(vial.amount_per_transfer_from_this < 15)
-					playsound(loc,  pick('sound/items/hypospray.ogg','sound/items/hypospray2.ogg'), 50, 1, -1)
-				to_chat(user, "<span class='notice'>You spray [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units.</span>")
-	else
-		to_chat(user, "<span class='notice'>[src] doesn't work here!</span>")
+	if(!vial)
+		to_chat(user, "<span class='notice'>[src] doesn't have any vial installed!</span>")
 		return
+	if(!vial.reagents.total_volume)
+		to_chat(user, "<span class='notice'>[src]'s vial is empty!</span>")
+		return
+
+	var/fp_verb = mode == HYPO_SPRAY ? "spray" : "inject"
+	var/method = mode == HYPO_SPRAY ? TOUCH : INJECT
+
+	if(L != user)
+		L.visible_message("<span class='danger'>[user] is trying to [fp_verb] [L] with [src]!</span>", \
+						"<span class='userdanger'>[user] is trying to [fp_verb] you with [src]!</span>")
+	if(!do_mob(user, L, inject_wait, extra_checks = CALLBACK(L, /mob/living/proc/can_inject, user, FALSE, user.zone_selected, penetrates)))
+		return
+	if(!vial.reagents.total_volume)
+		return
+	log_attack("<font color='red'>[user.name] ([user.ckey]) applied [src] to [L.name] ([L.ckey]), which had [contained] (INTENT: [uppertext(user.a_intent)]) (MODE: [mode])</font>")
+	if(L != user)
+		L.visible_message("<span class='danger'>[user] uses the [src] on [L]!</span>", \
+						"<span class='userdanger'>[user] uses the [src] on you!</span>")
+	else
+		L.log_message("<font color='orange'>applied [src] to themselves ([contained]).</font>", INDIVIDUAL_ATTACK_LOG)
+
+	var/fraction = min(vial.amount_per_transfer_from_this/vial.reagents.total_volume, 1)
+	vial.reagents.reaction(L, method, fraction)
+	vial.reagents.trans_to(target, vial.amount_per_transfer_from_this)
+	var/long_sound = vial.amount_per_transfer_from_this >= 15
+	playsound(loc, long_sound ? 'sound/items/hypospray_long.ogg' : pick('sound/items/hypospray.ogg','sound/items/hypospray2.ogg'), 50, 1, -1)
+	to_chat(user, "<span class='notice'>You [fp_verb] [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units.</span>")
 
 /obj/item/hypospray/mkii/attack_self(mob/living/user)
 	if(user)

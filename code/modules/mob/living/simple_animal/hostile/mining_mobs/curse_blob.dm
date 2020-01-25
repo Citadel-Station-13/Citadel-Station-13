@@ -98,7 +98,7 @@ IGNORE_PROC_IF_NOT_TARGET(attack_slime)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/bullet_act(obj/item/projectile/Proj)
 	if(Proj.firer != set_target)
-		return
+		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L)

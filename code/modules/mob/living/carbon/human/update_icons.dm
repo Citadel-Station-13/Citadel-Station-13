@@ -382,9 +382,6 @@ There are several things that need to be remembered:
 
 	if(wear_suit)
 		var/obj/item/clothing/suit/S = wear_suit
-		var/item_level_support = FALSE // LISTEN! If you must degrade the code with further snowflake checks, at least keep it compatible with worn non-clothing items!
-		if(!istype(S))
-			item_level_support = TRUE
 		wear_suit.screen_loc = ui_oclothing
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)
@@ -400,7 +397,7 @@ There are several things that need to be remembered:
 		if("taur" in dna.species.mutant_bodyparts)
 			T = GLOB.taur_list[dna.features["taur"]]
 
-		if(!item_level_support && S.mutantrace_variation)
+		if(S.mutantrace_variation)
 			if(T?.taur_mode)
 				var/init_worn_icon = worn_icon
 				variation_flag |= S.mutantrace_variation & T.taur_mode || S.mutantrace_variation & T.alt_taur_mode

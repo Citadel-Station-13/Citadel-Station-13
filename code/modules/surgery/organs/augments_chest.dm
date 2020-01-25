@@ -84,6 +84,8 @@
 	to_chat(owner, "<span class='notice'>You feel a faint buzzing as your reviver implant starts patching your wounds...</span>")
 
 /obj/item/organ/cyberimp/chest/reviver/proc/heal()
+	if(!owner)
+		return
 	if(owner.getOxyLoss())
 		owner.adjustOxyLoss(-5)
 		revive_cost += 0.5 SECONDS

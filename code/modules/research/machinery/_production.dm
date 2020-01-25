@@ -73,6 +73,12 @@
 	total_rating = max(1, total_rating)
 	efficiency_coeff = total_rating
 
+/obj/machinery/rnd/production/examine(mob/user)
+	. = ..()
+	var/datum/component/remote_materials/materials = GetComponent(/datum/component/remote_materials)
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.local_size]</b> material units locally.<br>Material usage efficiency at <b>[efficiency_coeff*100]%</b>.</span>"
+
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()
 	for(var/obj/item/reagent_containers/glass/G in component_parts)

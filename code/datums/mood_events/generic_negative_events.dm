@@ -239,7 +239,14 @@
 	mood_change = -3
 	timeout = 1000
 
+/datum/mood_event/nanite_sadness
+	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"
+	mood_change = -7
 /datum/mood_event/daylight_2
 	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
 	mood_change = -6
 	timeout = 1200
+
+/datum/mood_event/nanite_sadness/add_effects(message)
+	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
+
