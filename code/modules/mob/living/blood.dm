@@ -29,12 +29,9 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
 
-	if(NOBLOOD in dna.species.species_traits)
+	if((NOBLOOD in dna.species.species_traits) || (bleed_rate < 0))
 		bleed_rate = 0
 		return
-
-	if(bleed_rate <= 0)
-		bleed_rate = 0
 
 	if(HAS_TRAIT(src, TRAIT_NOMARROW)) //Bloodsuckers don't need to be here.
 		return
@@ -94,12 +91,12 @@
 
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
-			temp_bleed += 0.5*BP.embedded_objects.len
+			temp_bleed += 0.5 * BP.embedded_objects.len
 
 			if(brutedamage >= 20)
 				temp_bleed += (brutedamage * 0.013)
 
-		bleed_rate = max(bleed_rate - 0.50, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
+		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
 		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 			bleed(bleed_rate)
@@ -289,8 +286,7 @@
 				drop.update_icon()
 				return
 			else
-				temp_blood_DNA = list()
-				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
+				temp_blood_DNA = drop.blood_DNA.Copy()		//transfer dna from drip to splatter.
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())
