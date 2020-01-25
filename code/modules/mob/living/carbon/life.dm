@@ -8,35 +8,39 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	//Reagent processing needs to come before breathing, to prevent edge cases.
-	handle_organs()
 
-	. = ..()
+	if(!IsInStasis())
 
-	if (QDELETED(src))
-		return
+		//Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
 
-	if(.) //not dead
-		handle_blood()
+		. = ..()
 
-	if(stat != DEAD)
-		var/bprv = handle_bodyparts()
-		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
-			updatehealth()
-	update_stamina()
+		if (QDELETED(src))
+			return
 
-	if(stat != DEAD)
-		handle_brain_damage()
+		if(.) //not dead
+			handle_blood()
 
-	/* BUG_PROBABLE_CAUSE
-	if(stat != DEAD)
-		handle_liver()
-	*/
+		if(stat != DEAD)
+			var/bprv = handle_bodyparts()
+			if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
+				updatehealth()
+		update_stamina()
+
+		if(stat != DEAD)
+			handle_brain_damage()
+
+		/* BUG_PROBABLE_CAUSE
+		if(stat != DEAD)
+			handle_liver()
+		*/
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
-		handle_death()
 		rot()
+		handle_death()
+
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
