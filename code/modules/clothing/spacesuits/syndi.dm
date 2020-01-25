@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 80, "acid" = 85)
-
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 //Green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/green
@@ -50,6 +50,7 @@
 	name = "orange space suit"
 	icon_state = "syndicate-orange"
 	item_state = "syndicate-orange"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
 //Blue syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/blue
@@ -109,7 +110,6 @@
 	name = "green space suit"
 	icon_state = "syndicate-black-med"
 	item_state = "syndicate-black"
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 
 //Black-orange syndicate space suit
@@ -134,6 +134,7 @@
 	name = "black and red space suit"
 	icon_state = "syndicate-black-red"
 	item_state = "syndicate-black-red"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
 
 //Black with yellow/red engineering syndicate space suit

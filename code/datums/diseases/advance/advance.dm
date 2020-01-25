@@ -36,37 +36,41 @@
 	// The order goes from easy to cure to hard to cure. Keep in mind that sentient diseases pick two cures from tier 6 and up, ensure they wont react away in bodies.
 	var/static/list/advance_cures = 	list(
 									list(	// level 1
-										"copper", "silver", "iodine", "iron", "carbon"
+										/datum/reagent/copper, /datum/reagent/silver, /datum/reagent/iodine, /datum/reagent/iron, /datum/reagent/carbon
 									),
 									list(	// level 2
-										"potassium", "ethanol", "lithium", "silicon", "bromine"
+										/datum/reagent/potassium, /datum/reagent/consumable/ethanol, /datum/reagent/lithium,
+										/datum/reagent/silicon, /datum/reagent/bromine
 									),
 									list(	// level 3
-										"sodiumchloride", "sugar", "orangejuice", "tomatojuice", "milk"
+										/datum/reagent/consumable/sodiumchloride, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice,
+										/datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/milk
 									),
 									list(	//level 4
-										"spaceacillin", "salglu_solution", "epinephrine", "charcoal"
+										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution,
+										/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/charcoal
 									),
 									list(	//level 5
-										"oil", "synaptizine", "mannitol", "space_drugs", "cryptobiolin"
+										/datum/reagent/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol,
+										/datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
 									),
 									list(	// level 6
-										"phenol", "inacusiate", "oculine", "antihol"
+										/datum/reagent/phenol, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/oculine, /datum/reagent/medicine/antihol
 									),
 									list(	// level 7
-										"leporazine", "mindbreaker", "corazone"
+										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/corazone
 									),
 									list(	// level 8
-										"pax", "happiness", "ephedrine"
+										/datum/reagent/pax, /datum/reagent/drug/happiness, /datum/reagent/medicine/ephedrine
 									),
 									list(	// level 9
-										"lipolicide", "sal_acid"
+										/datum/reagent/toxin/lipolicide, /datum/reagent/medicine/sal_acid
 									),
 									list(	// level 10
-										"haloperidol", "aranesp", "diphenhydramine"
+										/datum/reagent/medicine/haloperidol, /datum/reagent/drug/aranesp, /datum/reagent/medicine/diphenhydramine
 									),
 									list(	//level 11
-										"modafinil", "anacea"
+										/datum/reagent/medicine/modafinil, /datum/reagent/toxin/anacea
 									)
 								)
 

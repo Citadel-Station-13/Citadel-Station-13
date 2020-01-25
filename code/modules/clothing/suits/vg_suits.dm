@@ -9,7 +9,7 @@
 	siemens_coefficient = 0.5
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/armor/xcomsquaddie/dredd
 	name = "Judge Armor"
@@ -18,7 +18,7 @@
 	item_state = "dredd-suit"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 
 /obj/item/clothing/suit/armor/xcomarmor
@@ -32,7 +32,7 @@
 	siemens_coefficient = 0.5
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/armor/vest/neorussian
 	name = "neo-Russian vest"
@@ -41,7 +41,7 @@
 	item_state = "nr_vest"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/armor/doomguy
 	name = "Doomguy's armor"
@@ -53,7 +53,7 @@
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 30, bio = 0, rad = 0)
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 
 /obj/item/clothing/suit/kaminacape
@@ -63,7 +63,7 @@
 	body_parts_covered = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/officercoat
 	name = "Officer's Coat"
@@ -71,7 +71,7 @@
 	icon_state = "officersuit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/soldiercoat
 	name = "Soldier's Coat"
@@ -79,7 +79,7 @@
 	icon_state = "soldiersuit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/russofurcoat
 	name = "russian fur coat"
@@ -89,7 +89,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/doshjacket
 	name = "Plasterer's Jacket"
@@ -98,7 +98,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/maidapron
 	name = "Apron"
@@ -107,7 +107,7 @@
 	body_parts_covered = CHEST|GROIN
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/clownpiece
 	name = "small fairy wings"
@@ -116,7 +116,7 @@
 	body_parts_covered = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/clownpiece/flying
 	name = "small fairy wings"
@@ -124,7 +124,7 @@
 	icon_state = "clownpiece-fly"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/raincoat
 	name = "Raincoat"
@@ -133,6 +133,6 @@
 	body_parts_covered =CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 

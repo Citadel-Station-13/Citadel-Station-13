@@ -103,7 +103,7 @@
 
 /datum/supply_pack/service/cutlery
 	name = "Kitchen Cutlery Deluxe Set"
-	desc = "Need to slice and dice away those ''Tomatoes''? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	desc = "Need to slice and dice away those \"Tomatoes\"? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
 	cost = 10000
 	contraband = TRUE
 	contains = list(/obj/item/sharpener, //Deluxe for a reason
@@ -115,7 +115,7 @@
 					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/rollingpin, 
+					/obj/item/kitchen/rollingpin,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
@@ -126,6 +126,16 @@
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "kitchen cutlery deluxe set"
+
+/datum/supply_pack/service/replacementdb
+	name = "Replacement Defensive Bar Shotgun"
+	desc = "Someone stole the Bartender's twin-barreled possession? Give them another one at a significant markup. Comes with one unused double-barrel shotgun, shells not included. Requires bartender access to open."
+	cost = 2200
+	access = ACCESS_BAR
+	contraband = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/doublebarrel)
+	crate_name = "replacement double-barrel crate"
+	crate_type = /obj/structure/closet/crate/secure
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Janitor //////////////////////////////////////
@@ -233,7 +243,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Vendor Refills //////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-	
+
 /datum/supply_pack/service/vending/bartending
 	name = "Bartending Supply Crate"
 	desc = "Bring on the booze with vending machine refills, as well as a free book containing the well-kept secrets to the bartending trade!"

@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - balance: "ore redemption machines actually get affected by lasers again kthx"

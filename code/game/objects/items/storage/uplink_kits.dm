@@ -391,3 +391,9 @@
 
 	if(prob(50))
 		new /obj/item/seeds/random(src) //oops, an additional packet might have slipped its way into the box
+
+/obj/item/storage/box/syndie_kit/revolver
+
+/obj/item/storage/box/syndie_kit/revolver/PopulateContents()
+	new /obj/item/gun/ballistic/revolver(src)
+	new /obj/item/ammo_box/a357(src)

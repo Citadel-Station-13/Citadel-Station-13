@@ -37,6 +37,7 @@ GLOBAL_LIST_EMPTY(deco_wings_list)
 GLOBAL_LIST_EMPTY(r_wings_list)
 GLOBAL_LIST_EMPTY(insect_wings_list)
 GLOBAL_LIST_EMPTY(insect_fluffs_list)
+GLOBAL_LIST_EMPTY(insect_markings_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites

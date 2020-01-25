@@ -225,16 +225,31 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	STR.max_items = 10
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
-	new/obj/item/storage/crayons(src)
-	new/obj/item/crowbar(src)
-	new/obj/item/stack/cable_coil/red(src)
-	new/obj/item/stack/cable_coil/yellow(src)
-	new/obj/item/stack/cable_coil/blue(src)
-	new/obj/item/stack/cable_coil/green(src)
-	new/obj/item/stack/cable_coil/pink(src)
-	new/obj/item/stack/cable_coil/orange(src)
-	new/obj/item/stack/cable_coil/cyan(src)
-	new/obj/item/stack/cable_coil/white(src)
+	new /obj/item/storage/crayons(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/stack/cable_coil/red(src)
+	new /obj/item/stack/cable_coil/yellow(src)
+	new /obj/item/stack/cable_coil/blue(src)
+	new /obj/item/stack/cable_coil/green(src)
+	new /obj/item/stack/cable_coil/pink(src)
+	new /obj/item/stack/cable_coil/orange(src)
+	new /obj/item/stack/cable_coil/cyan(src)
+	new /obj/item/stack/cable_coil/white(src)
+
+/obj/item/storage/toolbox/ammo
+	name = "ammo box"
+	desc = "It contains a few clips."
+	icon_state = "ammobox"
+	item_state = "ammobox"
+
+/obj/item/storage/toolbox/ammo/PopulateContents()
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/a762(src)
 
 /obj/item/storage/toolbox/gold_real
 	name = "golden toolbox"
@@ -278,7 +293,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = replacetext(desc, "robust", "safe")
 	desc = replacetext(desc, "heavier", "bouncier")
 	DISABLE_BITFIELD(flags_1, CONDUCT_1)
-	materials = null
+	materials = typelist("materials", null)
 	damtype = STAMINA
 	force += 3 //to compensate the higher stamina K.O. threshold compared to actual health.
 	throwforce += 3
@@ -302,8 +317,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	flags_1 = null
 	materials = null
 	damtype = STAMINA
-	force = 17
-	throwforce = 17
+	force = 15
+	throwforce = 15
 	attack_verb = list("robusted", "bounced")
 	can_rubberify = FALSE //we are already the future.
 

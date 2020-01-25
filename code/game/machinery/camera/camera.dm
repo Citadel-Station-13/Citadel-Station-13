@@ -292,7 +292,7 @@
 			new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 
-/obj/machinery/camera/update_icon()
+/obj/machinery/camera/update_icon_state()
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
 	else if (stat & EMPED)

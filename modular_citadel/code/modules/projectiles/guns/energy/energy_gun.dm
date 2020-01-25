@@ -43,7 +43,7 @@ obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 
-obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
+obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(isinhands)
 		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "cxe_body")

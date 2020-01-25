@@ -57,6 +57,27 @@
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
+/datum/supply_pack/medical/chemical
+	name = "Chemical Starter Kit Crate"
+	desc = "Contains twelve different chemicals, for all the fun experiments you can make."
+	cost = 1700
+	contains = list(/obj/item/reagent_containers/glass/bottle/hydrogen,
+					/obj/item/reagent_containers/glass/bottle/carbon,
+					/obj/item/reagent_containers/glass/bottle/nitrogen,
+					/obj/item/reagent_containers/glass/bottle/oxygen,
+					/obj/item/reagent_containers/glass/bottle/fluorine,
+					/obj/item/reagent_containers/glass/bottle/phosphorus,
+					/obj/item/reagent_containers/glass/bottle/silicon,
+					/obj/item/reagent_containers/glass/bottle/chlorine,
+					/obj/item/reagent_containers/glass/bottle/radium,
+					/obj/item/reagent_containers/glass/bottle/sacid,
+					/obj/item/reagent_containers/glass/bottle/ethanol,
+					/obj/item/reagent_containers/glass/bottle/potassium,
+					/obj/item/clothing/glasses/science,
+					/obj/item/reagent_containers/dropper,
+					/obj/item/storage/box/beakers)
+	crate_name = "chemical crate"
+
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
 	desc = "Contains two defibrillators for bringing the recently deceased back to life."
@@ -81,17 +102,6 @@
 	cost = 800
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
-
-/datum/supply_pack/science/adv_surgery_tools
-	name = "Med-Co Advanced surgery tools"
-	desc = "A full set of Med-Co advanced surgery tools! In addition to that it contains both a can of synthflesh and a can of sterilizine. Requires Surgery access to open."
-	cost = 5500
-	access = ACCESS_SURGERY
-	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
-					/obj/item/reagent_containers/medspray/synthflesh,
-					/obj/item/reagent_containers/medspray/sterilizine)
-	crate_name = "medco newest surgery tools"
-	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/medicalhardsuit
 	name = "Medical Hardsuit"
@@ -229,7 +239,7 @@
 
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"
-	desc = "Viro let out a death plague Mk II again? Someone didnt wash their hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it breaks out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
+	desc = "Viro let out a death plague Mk II again? Someone didn't wash their hands? Old plagues born anew? Well, this crate is for you! Hope you cure it before it breaks out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
 	cost = 3000
 	access = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/bot/medbot,

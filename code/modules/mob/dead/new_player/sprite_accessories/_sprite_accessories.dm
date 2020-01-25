@@ -75,3 +75,4 @@
 /datum/sprite_accessory/underwear
 	icon = 'icons/mob/underwear.dmi'
 	var/has_color = FALSE
+	var/has_digitigrade = FALSE

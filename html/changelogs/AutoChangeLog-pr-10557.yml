@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - bugfix: "fixed not being able to remove trait genes without a disk being inserted into the dna manipulator"

@@ -532,3 +532,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!held_item)
 		return
 	return held_item.GetID()
+
+//Can the mob see reagents inside of containers?
+/mob/proc/can_see_reagents()
+	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents

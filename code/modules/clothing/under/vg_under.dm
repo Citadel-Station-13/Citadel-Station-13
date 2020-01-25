@@ -9,7 +9,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/stripper_green
 	name = "green stripper outfit"
@@ -19,7 +19,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/wedding/bride_orange
 	name = "orange wedding dress"
@@ -30,7 +30,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/wedding/bride_purple
 	name = "purple wedding dress"
@@ -41,7 +41,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/wedding/bride_blue
 	name = "blue wedding dress"
@@ -52,7 +52,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/wedding/bride_red
 	name = "red wedding dress"
@@ -63,7 +63,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/wedding/bride_white
 	name = "white wedding dress"
@@ -74,7 +74,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/mankini
 	name = "pink mankini"
@@ -84,7 +84,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 /*
 
 /obj/item/clothing/under/psysuit
@@ -129,7 +129,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/russobluecamooutfit
 	name = "russian blue camo"
@@ -140,7 +140,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/stilsuit
 	name = "stillsuit"
@@ -151,7 +151,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/aviatoruniform
 	name = "aviator uniform"
@@ -162,7 +162,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/bikersuit
 	name = "biker's outfit"
@@ -172,7 +172,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/jacketsuit
 	name = "richard's outfit"
@@ -183,7 +183,7 @@
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 obj/item/clothing/under/mega
 	name = "\improper DRN-001 suit"
@@ -194,7 +194,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/proto
 	name = "The Prototype Suit"
@@ -205,7 +205,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/megax
 	name = "\improper Maverick Hunter regalia"
@@ -216,7 +216,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/joe
 	name = "The Sniper Suit"
@@ -227,7 +227,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/roll
 	name = "\improper DRN-002 Dress"
@@ -238,7 +238,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/gokugidown
 	name = "turtle hermit undershirt"
@@ -249,7 +249,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/gokugi
 	name = "turtle hermit outfit"
@@ -260,7 +260,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/doomguy
 	name = "\improper Doomguy's pants"
@@ -271,7 +271,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/vault13
 	name = "vault 13 Jumpsuit"
@@ -282,7 +282,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/vault
 	name = "vault jumpsuit"
@@ -293,7 +293,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/clownpiece
 	name = "Clownpiece's Pierrot suit"
@@ -304,7 +304,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/cia
 	name = "casual IAA outfit"
@@ -315,7 +315,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/greaser
 	name = "greaser outfit"
@@ -325,7 +325,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/greaser/New()
 	var/greaser_colour = "default"
@@ -344,7 +344,7 @@ obj/item/clothing/under/mega
 	item_color = "greaser_[greaser_colour]"
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 
 /obj/item/clothing/under/wintercasualwear
@@ -356,7 +356,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/casualwear
 	name = "spring casualwear"
@@ -367,7 +367,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/keyholesweater
 	name = "keyhole sweater"
@@ -378,7 +378,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/casualhoodie
 	name = "casual hoodie"
@@ -389,7 +389,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/casualhoodie/skirt
 	icon_state = "hoodieskirt"
@@ -397,7 +397,7 @@ obj/item/clothing/under/mega
 	item_color = "hoodieskirt"
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /*
 /obj/item/clothing/under/mummy_rags
@@ -432,5 +432,5 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 

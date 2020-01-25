@@ -96,10 +96,10 @@
 	icon_state = "bananaspider"
 	bitesize = 3
 	eatverb = "devours"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
-	juice_results = list("banana" = 0)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+	juice_results = list(/datum/reagent/consumable/banana = 0)
 
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider/Initialize()

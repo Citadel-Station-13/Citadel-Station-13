@@ -484,11 +484,9 @@
 
 	user.do_attack_animation(L)
 
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-			playsound(H, 'sound/weapons/genhit.ogg', 50, TRUE)
-			return FALSE
+	if(L.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+		playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
+		return FALSE
 
 	switch (mode)
 		if(BATON_STUN)
@@ -631,14 +629,11 @@
 	icon_state = "abductor_headset"
 	item_state = "abductor_headset"
 	keyslot2 = new /obj/item/encryptionkey/heads/captain
+	bowman = TRUE
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
 	make_syndie()
-
-/obj/item/radio/headset/abductor/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
@@ -797,7 +792,7 @@
 	icon_state = "bed"
 	can_buckle = 1
 
-	var/static/list/injected_reagents = list("corazone")
+	var/static/list/injected_reagents = list(/datum/reagent/medicine/corazone)
 
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()
