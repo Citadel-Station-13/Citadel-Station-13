@@ -7,8 +7,6 @@
 #define AMMO_DROP_LIFETIME 300
 #define CTF_REQUIRED_PLAYERS 4
 
-
-
 /obj/item/twohanded/ctf
 	name = "banner"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -209,7 +207,6 @@
 			if(response == "Yes")
 				toggle_all_ctf(user)
 			return
-
 
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
@@ -440,7 +437,7 @@
 		. = TRUE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
+		if((RED_TEAM in H.faction) || (BLUE_TEAM in H.faction))
 			. = TRUE
 
 // RED TEAM GUNS
