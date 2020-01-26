@@ -277,6 +277,35 @@
 		out_var += cached_gases[total_moles_id];\
 	}
 
+// Prefer this to heat_capacity() except in certain turf operations, e.g. heat exchange pipes
+#define HEAT_CAPACITY(cached_gases,out_var)\
+	if(cached_gases){\
+		out_var = 0;\
+		var/list/cached_gasheats = GLOB.meta_gas_specific_heats;\
+		for(var/id in cached_gases){\
+			out_var += cached_gases[id] * cached_gasheats[id];\
+		}\
+	}
+// probably use merge() over this, but it's not a proc so less overhead
+#define MERGE_GASES(taker,giver)\
+	if(giver && taker){\
+		var/total_thermal_energy;\
+		var/temporary;\
+		var/list/cached_gases = taker.gases;\
+		var/list/giver_gases = giver.gases;\
+		HEAT_CAPACITY(cached_gases,temporary);\
+		total_thermal_energy += taker.temperature * temporary;\
+		HEAT_CAPACITY(giver_gases,temporary);\
+		total_thermal_energy += giver.temperature * temporary;\
+		for(var/giver_id in giver_gases){\
+			cached_gases[giver_id] += giver_gases[giver_id];\
+		}\
+		HEAT_CAPACITY(cached_gases,temporary)\
+		if(temporary) {\
+			taker.temperature = total_thermal_energy / temporary;\
+		}\
+	}
+
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }

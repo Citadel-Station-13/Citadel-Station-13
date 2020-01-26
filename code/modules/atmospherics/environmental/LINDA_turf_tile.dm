@@ -203,7 +203,8 @@
 		var/highest_moles = -1
 		var/lowest_moles = 2**64
 		var/turf/open/lowest_pressure_tile
-		final_air.merge(our_air.copy())
+		var/datum/gas_mixture/our_copy = our_air.copy()
+		MERGE_GASES(final_air,our_copy)
 		var/are_we_spaced = FALSE
 		for(var/t in adjacent_turfs)
 			var/turf/open/enemy_tile = t
@@ -221,21 +222,20 @@
 					lowest_pressure_tile = enemy_tile
 				highest_moles = max(molage,highest_moles)
 				lowest_moles = min(molage,lowest_moles)
-				final_air.merge(enemy_air.copy())
+				var/datum/gas_mixture/enemy_copy = enemy_air.copy()
+				MERGE_GASES(final_air,enemy_copy)
 		if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 			var/datum/gas_mixture/G = new
 			G.copy_from_turf(src)
 			ARCHIVE_TEMPERATURE(G)
 			if(!(our_air.compare(G)))
 				return // stop this early so it doesn't get *too* excited
-			final_air.merge(G)
+			MERGE_GASES(final_air,G)
 		var/datum/gas_mixture/new_air
 		if(are_we_spaced)
 			new_air = are_we_spaced
 		else
-			var/molage
-			TOTAL_MOLES(final_air,molage)
-			new_air = (final_air.remove(molage / (adjacent_turfs_length + 1)))
+			new_air = (final_air.remove_ratio(1 / (adjacent_turfs_length + 1)))
 		if(!istype(new_air)) // this can happen if this runs in space
 			return
 		GAS_GARBAGE_COLLECT(new_air)

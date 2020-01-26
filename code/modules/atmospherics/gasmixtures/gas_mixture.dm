@@ -32,17 +32,12 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//PV = nRT
 
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
-	var/list/cached_gases = gases
-	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
-	. = 0
-	for(var/id in cached_gases)
-		. += cached_gases[id] * cached_gasheats[id]
+	var/cached_gases = gases
+	HEAT_CAPACITY(cached_gases,.)
 
 /datum/gas_mixture/turf/heat_capacity() // Same as above except vacuums return HEAT_CAPACITY_VACUUM
-	var/list/cached_gases = gases
-	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
-	for(var/id in cached_gases)
-		. += cached_gases[id] * cached_gasheats[id]
+	var/cached_gases = gases
+	HEAT_CAPACITY(cached_gases,.)
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
@@ -110,7 +105,6 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture/proc/react(turf/open/dump_location)
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
-
 
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
