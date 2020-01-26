@@ -178,7 +178,7 @@
 				for(var/datum/reagent/R in reagents.reagent_list)
 					if(R.reagent_state == SOLID)
 						R.reagent_state = LIQUID
-					swimee.reagents.add_reagent(R.name, 0.5) //osmosis
+					swimee.reagents.add_reagent(R.type, 0.5) //osmosis
 				reagents.reaction(swimee, VAPOR, 0.03) //3 percent
 			for(var/obj/objects in W)
 				if(W.reagents)
