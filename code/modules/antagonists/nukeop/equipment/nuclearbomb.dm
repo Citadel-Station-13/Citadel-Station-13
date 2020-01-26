@@ -368,7 +368,7 @@
 		return
 	timing = !timing
 	if(timing)
-		if(nuclear_cooldown < world.time)
+		if(nuclear_cooldown > world.time)
 			to_chat(usr, "<span class='danger'>[src]'s timer protocols are currently on cooldown, please stand by.</span>")
 			return
 		previous_level = get_security_level()

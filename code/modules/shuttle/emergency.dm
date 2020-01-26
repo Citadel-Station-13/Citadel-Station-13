@@ -2,6 +2,8 @@
 #define ENGINES_START_TIME 100
 #define ENGINES_STARTED (SSshuttle.emergency.mode == SHUTTLE_IGNITING)
 #define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED || (ENGINES_STARTED))
+#define MAX_AUTH_INPUTS 6
+
 
 /obj/machinery/computer/emergency_shuttle
 	name = "emergency shuttle console"
@@ -10,6 +12,8 @@
 	icon_keyboard = "tech_key"
 	var/auth_need = 3
 	var/list/authorized = list()
+	var/auth_cooldown //these two vars are used to quell spam.
+	var/auth_combo = 0
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/card/id))
@@ -67,6 +71,13 @@
 		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
+	if(auth_cooldown <= world.time)
+		auth_combo = 0
+
+	else if(auth_combo >= MAX_AUTH_INPUTS)
+		to_chat(user, "<span class='warning'>Authorizations controller lockdown engaged, please wait [CEILING(auth_coodown - world.time)] before trying again.</span>")
+		return
+
 	var/old_len = authorized.len
 
 	switch(action)
@@ -91,6 +102,10 @@
 			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
 		if(repeal)
 			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
+		auth_cooldown = world.time + 15 SECONDS
+		if(++auth_combo = MAX_AUTH_INPUTS) //C-c-combo breaker!
+			say("Authorization controller abuse detected, lockdown engaged.")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
@@ -567,3 +582,4 @@
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED
 #undef IS_DOCKED
+#undef MAX_AUTH_INPUTS

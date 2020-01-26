@@ -95,7 +95,7 @@
 				I = pda.id
 			if (I && istype(I))
 				if(ACCESS_CAPTAIN in I.access)
-					if(security_level_cd < world.time)
+					if(security_level_cd > world.time)
 						to_chat(usr, "<span class='warning'>Security level protocols are currently on cooldown. Please stand by.</span>")
 						return
 					var/old_level = GLOB.security_level
@@ -379,7 +379,7 @@
 		if("ai-announce")
 			make_announcement(usr, 1)
 		if("ai-securitylevel")
-			if(security_level_cd < world.time)
+			if(security_level_cd > world.time)
 				to_chat(usr, "<span class='warning'>Security level protocols are currently on cooldown. Please stand by.</span>")
 				return
 			tmp_alertlevel = text2num( href_list["newalertlevel"] )
