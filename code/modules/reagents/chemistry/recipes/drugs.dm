@@ -3,6 +3,7 @@
 	id = /datum/reagent/drug/space_drugs
 	results = list(/datum/reagent/drug/space_drugs = 3)
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/lithium = 1)
+	mix_message = "The liquid becomes runny and psychedelic."
 
 /datum/chemical_reaction/crank
 	name = "Crank"
@@ -11,7 +12,6 @@
 	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/ammonia = 1, /datum/reagent/lithium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/fuel = 1)
 	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
 	required_temp = 390
-
 
 /datum/chemical_reaction/krokodil
 	name = "Krokodil"
@@ -26,6 +26,7 @@
 	id = /datum/reagent/drug/methamphetamine
 	results = list(/datum/reagent/drug/methamphetamine = 4)
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
+	mix_message = "<span class='danger'>Large crystalline shards form.</span>"
 	required_temp = 374
 
 /datum/chemical_reaction/bath_salts
@@ -33,6 +34,7 @@
 	id = /datum/reagent/drug/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)
 	required_reagents = list(/datum/reagent/toxin/bad_food = 1, /datum/reagent/saltpetre = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/consumable/enzyme = 1, /datum/reagent/consumable/tea = 1, /datum/reagent/mercury = 1)
+	mix_message = "Hard chunks fall out of solution."
 	required_temp = 374
 
 /datum/chemical_reaction/aranesp
@@ -40,6 +42,7 @@
 	id = /datum/reagent/drug/aranesp
 	results = list(/datum/reagent/drug/aranesp = 3)
 	required_reagents = list(/datum/reagent/medicine/epinephrine = 1, /datum/reagent/medicine/atropine = 1, /datum/reagent/medicine/morphine = 1)
+	mix_message = "The colour turns into a neon blue as it mixes."
 
 /datum/chemical_reaction/happiness
 	name = "Happiness"
@@ -47,6 +50,7 @@
 	results = list(/datum/reagent/drug/happiness = 4)
 	required_reagents = list(/datum/reagent/nitrous_oxide = 2, /datum/reagent/medicine/epinephrine = 1, /datum/reagent/consumable/ethanol = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
+	mix_message = "The colour turns into a dark blue as it mixes."
 
 /datum/chemical_reaction/skooma
 	name = "skooma"
@@ -55,6 +59,7 @@
 	required_temp = 280
 	is_cold_recipe = TRUE
 	required_reagents = list(/datum/reagent/moonsugar = 10, /datum/reagent/medicine/morphine = 5)
+	mix_message = "Many layers form as the solution cools."
 
 /datum/chemical_reaction/skoomarevert
 	name = "skoomarevert"
@@ -62,3 +67,4 @@
 	results = list(/datum/reagent/moonsugar = 1, /datum/reagent/medicine/morphine = 2.5)
 	required_temp = 315 //a little above normal body temperature
 	required_reagents = list(/datum/reagent/drug/skooma = 1)
+	mix_message = "Layers form as the solution heats."
