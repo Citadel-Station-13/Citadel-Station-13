@@ -12,7 +12,10 @@
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
+	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
 
+/datum/antagonist/cult/neutered
+	neutered = TRUE
 
 /datum/antagonist/cult/get_team()
 	return cult_team

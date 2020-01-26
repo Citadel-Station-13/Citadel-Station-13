@@ -45,8 +45,11 @@ Credit where due:
 // PROCS //
 ///////////
 
-/proc/is_servant_of_ratvar(mob/M)
-	return istype(M) && !isobserver(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
+/proc/is_servant_of_ratvar(mob/M, require_full_power = FALSE)
+	if(!istype(M) || isobserver(M))
+		return FALSE
+	var/datum/antagonist/clockcult/D = M?.mind?.has_antag_datum(/datum/antagonist/clockcult)
+	return D && (!require_full_power || !D.neutered)
 
 /proc/is_eligible_servant(mob/M)
 	if(!istype(M))
