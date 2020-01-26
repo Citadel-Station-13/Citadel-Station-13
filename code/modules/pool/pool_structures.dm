@@ -55,7 +55,7 @@
 			jumpee.pixel_x = 0
 			jumpee.pixel_y = 0
 			jumpee.Stun(2)
-			jumpee.swimming = TRUE
+			jumpee.AddElement(/datum/element/swimming)
 
 /obj/structure/pool/Lboard/attack_hand(mob/living/user)
 	if(iscarbon(user))
@@ -64,13 +64,9 @@
 			to_chat(user, "<span class='notice'>Someone else is already making a jump!</span>")
 			return
 		var/turf/T = get_turf(src)
-		if(user.swimming)
+		if(SEND_SIGNAL(user, COMSIG_IS_SWIMMING))
 			return
 		else
-			for(var/obj/machinery/pool/controller/pc in range(4,src)) //Clunky as fuck I know.
-				if(pc.drained)
-					to_chat(user, "<span class='notice'>That would be suicide</span>") //TODO: make this a suicide action.
-					return
 			if(Adjacent(jumper))
 				jumper.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
 									 "<span class='notice'>You climb up \the [src] and prepares to jump!</span>")
@@ -79,7 +75,7 @@
 				jumper.layer = RIPPLE_LAYER
 				jumper.pixel_x = 3
 				jumper.pixel_y = 7
-				jumper.dir=8
+				jumper.dir = 8
 				sleep(1)
 				jumper.loc = T
 				addtimer(CALLBACK(src, .proc/dive, jumper), 10)
@@ -92,7 +88,7 @@
 			sleep(15)
 			backswim()
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 1, 1)
+			jumper.throw_at(throw_target, 1, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 
 		if(21 to 40)
 			jumper.visible_message("<span class='notice'>[jumper] goes for a dive!</span>", \
@@ -100,7 +96,7 @@
 			sleep(20)
 			backswim()
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 2, 1)
+			jumper.throw_at(throw_target, 2, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 
 		if(41 to 60)
 			jumper.visible_message("<span class='notice'>[jumper] goes for a long dive! Stay far away!</span>", \
@@ -108,7 +104,7 @@
 			sleep(25)
 			backswim()
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 3, 1)
+			jumper.throw_at(throw_target, 3, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 
 		if(61 to 80)
 			jumper.visible_message("<span class='notice'>[jumper] goes for an awesome dive! Don't stand in [jumper.p_their()] way!</span>", \
@@ -116,14 +112,14 @@
 			sleep(30)
 			backswim()
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 4, 1)
+			jumper.throw_at(throw_target, 4, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 		if(81 to 91)
 			sleep(20)
 			backswim()
 			jumper.visible_message("<span class='danger'>[jumper] misses [jumper.p_their()] step!</span>", \
 							 "<span class='userdanger'>You misstep!</span>")
 			var/atom/throw_target = get_edge_target_turf(src, dir)
-			jumper.throw_at(throw_target, 0, 1)
+			jumper.throw_at(throw_target, 0, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 			jumper.Knockdown(100)
 			jumper.adjustBruteLoss(10)
 
@@ -138,7 +134,7 @@
 				jumper.visible_message("<span class='notice'>[jumper] fails!</span>", \
 						 "<span class='userdanger'>You can't quite do it!</span>")
 				var/atom/throw_target = get_edge_target_turf(src, dir)
-				jumper.throw_at(throw_target, 1, 1)
+				jumper.throw_at(throw_target, 1, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 			else
 				jumper.fire_stacks = min(1,jumper.fire_stacks + 1)
 				jumper.IgniteMob()
@@ -147,8 +143,17 @@
 				jumper.visible_message("<span class='danger'>[jumper] bursts into flames of pure awesomness!</span>", \
 					 "<span class='userdanger'>No one can stop you now!</span>")
 				var/atom/throw_target = get_edge_target_turf(src, dir)
-				jumper.throw_at(throw_target, 6, 1)
+				jumper.throw_at(throw_target, 6, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 	addtimer(CALLBACK(src, .proc/togglejumping), 35)
 
 /obj/structure/pool/Lboard/proc/togglejumping()
 	jumping = FALSE
+
+/obj/structure/pool/Lboard/proc/on_finish_jump(mob/living/victim)
+	if(istype(victim.loc, /turf/open/pool))
+		var/turf/open/pool/P = victim.loc
+		if(!P.filled)		//you dun fucked up now
+			to_chat(victim, "<span class='warning'>That was stupid of you..</span>")
+			victim.visible_message("<span class='danger'>[victim] smashes into the ground!</span>")
+			victim.apply_damage(50)
+			victim.Knockdown(200)

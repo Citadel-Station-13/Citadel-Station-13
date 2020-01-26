@@ -21,4 +21,4 @@
 /datum/element/swimming/proc/check_valid(datum/source)
 	var/mob/living/L = source
 	if(!istype(L.loc, /turf/open/pool))
-		source.RemoveElement(/datum/elemtn/swimming)
+		source.RemoveElement(/datum/element/swimming)

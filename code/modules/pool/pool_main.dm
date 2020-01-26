@@ -49,21 +49,21 @@
 // Mousedrop hook to normal turfs to get out of pools.
 /turf/open/MouseDrop_T(atom/from, mob/user)
 	// I could make this /open/floor and not have the !istype but ehh - kev
-	if(SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && !user.IsStunned() && !user.IsKnockdown() && !user.incapacitated() && !istype(src, /turf/open/pool))
+	if(isliving(from) && SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated() && !istype(src, /turf/open/pool))
 		var/mob/living/L = from
 		//The element only exists if you're on water and a living mob, so let's skip those checks.
 		var/pre_msg
 		var/post_msg
 		if(user == from)
-			pre_msg = "<span class='notice'>[from] is getting out of the pool.</span>"
-			post_msg = "<span class='notice'>[from] gets out of the pool.</span>"
+			pre_msg = "<span class='notice'>[L] is getting out of the pool.</span>"
+			post_msg = "<span class='notice'>[L] gets out of the pool.</span>"
 		else
-			pre_msg = "<span class='notice'>[from] is being pulled out of the pool by [user].</span>"
-			post_msg = "<span class='notice'>[user] pulls [from] out of the pool.</span>"
-		from.visible_message(pre_msg)
-		if(do_mob(user, from, 20))
-			from.visible_message(post_msg)
-			from.forceMove(src)
+			pre_msg = "<span class='notice'>[L] is being pulled out of the pool by [user].</span>"
+			post_msg = "<span class='notice'>[user] pulls [L] out of the pool.</span>"
+		L.visible_message(pre_msg)
+		if(do_mob(user, L, 20))
+			L.visible_message(post_msg)
+			L.forceMove(src)
 	else
 		return ..()
 
@@ -141,7 +141,7 @@
 					H.Knockdown(40)
 					playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 		else if(filled)
-			AM.adjustStaminaLoss(1)
+			victim.adjustStaminaLoss(1)
 			playsound(src, "water_wade", 20, TRUE)
 	return ..()
 
@@ -172,7 +172,7 @@
 	. = ..()
 	if(.)
 		return
-	if((user.loc != src) && !user.IsStunned() && !user.IsKnockdown() && !user.incapacitated() && Adjacent(user) && SEND_SIGNAL(user, COMSIG_IS_SWIMMING) && filled && (next_splash < world.time))
+	if((user.loc != src) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated() && Adjacent(user) && SEND_SIGNAL(user, COMSIG_IS_SWIMMING) && filled && (next_splash < world.time))
 		playsound(src, 'sound/effects/watersplash.ogg', 8, TRUE, 1)
 		next_splash = world.time + 25
 		var/obj/effect/splash/S = new(src)

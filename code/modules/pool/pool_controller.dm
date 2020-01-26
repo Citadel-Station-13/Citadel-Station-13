@@ -59,7 +59,7 @@
 	START_PROCESSING(SSfastprocess, src)
 	create_reagents(1000)
 	if(noreact_reagents)
-		reagents.reagent_holder_flags |= NO_REACTION
+		reagents.reagents_holder_flags |= NO_REACTION
 	wires = new /datum/wires/poolcontroller(src)
 	scan_things()
 
@@ -189,8 +189,7 @@
 		return
 	if (!drained)
 		process_pool()
-		if(reagent_delay <= world.time)
-			process_reagents()
+		process_reagents()
 
 /obj/machinery/pool/controller/proc/process_pool()
 	if(!drained)
@@ -251,7 +250,7 @@
 			color1.watertop.color = null
 
 /obj/machinery/pool/controller/proc/update_temp()
-	if(mist_status)
+	if(mist_state)
 		if(temperature < POOL_SCALDING)
 			mist_off()
 	else
@@ -290,11 +289,11 @@
 			interact_delay = world.time + 15
 	if(href_list["Activate Drain"])
 		if((drainable || issilicon(usr) || IsAdminGhost(usr)) && !linked_drain.active)
-			mistoff()
+			mist_off()
 			interact_delay = world.time + 60
 			linked_drain.active = TRUE
-			linked_drain.timer = 15
-			if(!linked_drain.status)
+			linked_drain.cycles_left = 15
+			if(!linked_drain.filling)
 				new /obj/effect/whirlpool(linked_drain.loc)
 				temperature = POOL_NORMAL
 			else
