@@ -116,3 +116,16 @@
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/pen/fountain
 	cost = 2
+
+/datum/gear/modular_tablet
+	name = "A modular tablet"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/modular_computer/tablet/preset/cheap/
+	cost = 4
+
+/datum/gear/modular_laptop
+	name = "A modular laptop"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/modular_computer/laptop/preset/civilian
+	cost = 7
+	

@@ -845,7 +845,11 @@
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'>Lavaland</a></td>"
-
+		// Ghost cafe
+		if(jobban_isbanned(M,ROLE_GHOSTCAFE))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_GHOSTCAFE];jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_GHOSTCAFE];jobban4=[REF(M)]'>Lavaland</a></td>"
 		dat += "</tr></table>"
 
 	//Antagonist (Orange)
@@ -2878,6 +2882,8 @@
 			return
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_get_mentor = SSdbcore.NewQuery("SELECT id FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
+		if(!query_get_mentor.warn_execute())
+			return
 		if(query_get_mentor.NextRow())
 			to_chat(usr, "<span class='danger'>[ckey] is already a mentor.</span>")
 			return

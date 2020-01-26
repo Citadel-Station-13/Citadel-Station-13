@@ -401,7 +401,7 @@ datum/gang_item/equipment/gangsheild
 		return "This device requires a 5x5 area clear of walls to FUNCTION. (Estimated Takeover Time: [round(gang.determine_domination_time()/60,0.1)] minutes)"
 
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/team/gang/gang, obj/item/device/gangtool/gangtool)
-	var/area/userarea = get_area(user)
+	var/area/userarea = get_base_area(user)
 	if(!(userarea.type in gang.territories|gang.new_territories))
 		to_chat(user,"<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
 		return FALSE
