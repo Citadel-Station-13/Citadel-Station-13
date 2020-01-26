@@ -4,6 +4,7 @@
 /obj/machinery/pool
 	icon = 'icons/obj/machines/pool.dmi'
 	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/machinery/pool/controller
 	name = "\improper Pool Controller"
@@ -12,7 +13,6 @@
 	density = TRUE
 	use_power = TRUE
 	idle_power_usage = 75
-	resistance_flags = INDESTRUCTIBLE
 	/// How far it scans for pool objects
 	var/scan_range = 6
 	/// Is pool mist currently on?
