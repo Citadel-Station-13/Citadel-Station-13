@@ -220,3 +220,9 @@
 /datum/quirk/night_vision/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.update_sight()
+
+/datum/quirk/hardsoles
+	name = "Hardened Soles"
+	desc = "The soles of your feet are hardened from walking barefoot for so long. You no longer have to worry about stepping on anything, sharp or otherwise."
+	value = 2
+	mob_trait = TRAIT_HARDSOLES
