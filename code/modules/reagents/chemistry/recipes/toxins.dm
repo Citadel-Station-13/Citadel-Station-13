@@ -4,7 +4,7 @@
 	id = /datum/reagent/toxin/formaldehyde
 	results = list(/datum/reagent/toxin/formaldehyde = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1, /datum/reagent/silver = 1)
-	mix_message = "<span class='danger'>A horrable smell emites from the beaker.</span>"
+	mix_message = "A horrable smell emites from the beaker."
 	required_temp = 420
 
 /datum/chemical_reaction/fentanyl
@@ -12,7 +12,7 @@
 	id = /datum/reagent/toxin/fentanyl
 	results = list(/datum/reagent/toxin/fentanyl = 1)
 	required_reagents = list(/datum/reagent/drug/space_drugs = 1)
-	mix_message = "<span class='danger'>A sickly sweet smell emites from the beaker.</span>"
+	mix_message = "A sickly sweet smell emites from the beaker."
 	required_temp = 674
 
 /datum/chemical_reaction/cyanide
@@ -43,7 +43,7 @@
 	id = /datum/reagent/toxin/sulfonal
 	results = list(/datum/reagent/toxin/sulfonal = 3)
 	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/diethylamine = 1, /datum/reagent/sulfur = 1)
-	mix_message = "<span class='danger'>The liquid evenly mixes.</span>"
+	mix_message = "The liquid evenly mixes."
 
 /datum/chemical_reaction/lipolicide
 	name = "lipolicide"
@@ -56,27 +56,28 @@
 	id = /datum/reagent/toxin/mutagen
 	results = list(/datum/reagent/toxin/mutagen = 3)
 	required_reagents = list(/datum/reagent/radium = 1, /datum/reagent/phosphorus = 1, /datum/reagent/chlorine = 1)
-	mix_message = "<span class='danger'>The liquid becomes runny.</span>"
+	mix_message = "The liquid becomes runny"
 
 /datum/chemical_reaction/lexorin
 	name = "Lexorin"
 	id = /datum/reagent/toxin/lexorin
 	results = list(/datum/reagent/toxin/lexorin = 3)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
+	mix_message = "The liquid becomes thick"
 
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
 	id = /datum/reagent/toxin/chloralhydrate
 	results = list(/datum/reagent/toxin/chloralhydrate = 1)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/chlorine = 3, /datum/reagent/water = 1)
-	mix_message = "<span class='danger'>A fruity smell emits from the beaker.</span>"
+	mix_message = "A fruity smell emits from the beaker."
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
 	name = "Mute Toxin"
 	id = /datum/reagent/toxin/mutetoxin
 	results = list(/datum/reagent/toxin/mutetoxin = 2)
 	required_reagents = list(/datum/reagent/uranium = 2, /datum/reagent/water = 1, /datum/reagent/carbon = 1)
-	mix_message = "<span class='danger'>The liquid is silent as it bubbles.</span>"
+	mix_message = "The liquid is silent as it bubbles."
 
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
@@ -97,14 +98,14 @@
 	id = /datum/reagent/toxin/mindbreaker
 	results = list(/datum/reagent/toxin/mindbreaker = 5)
 	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/charcoal = 1)
-	mix_message = "<span class='danger'>The liquid fluffs up quickly.</span>"
+	mix_message = "The liquid fluffs up quickly."
 
 /datum/chemical_reaction/heparin
 	name = "Heparin"
 	id = /datum/reagent/toxin/heparin
 	results = list(/datum/reagent/toxin/heparin = 4)
 	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1, /datum/reagent/lithium = 1)
-	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
+	mix_message = "The mixture thins and loses all color."
 
 /datum/chemical_reaction/rotatium
 	name = "Rotatium"
@@ -125,14 +126,14 @@
 	id = /datum/reagent/toxin/anacea
 	results = list(/datum/reagent/toxin/anacea = 3)
 	required_reagents = list(/datum/reagent/medicine/haloperidol = 1, /datum/reagent/impedrezene = 1, /datum/reagent/radium = 1)
-	mix_message = "<span class='danger'>The liquid mixes effortlessly.</span>"
+	mix_message = "The liquid mixes effortlessly."
 
 /datum/chemical_reaction/mimesbane
 	name = "Mime's Bane"
 	id = /datum/reagent/toxin/mimesbane
 	results = list(/datum/reagent/toxin/mimesbane = 3)
 	required_reagents = list(/datum/reagent/radium = 1, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/consumable/nothing = 1)
-	mix_message = "<span class='danger'>The liquid bubbles stop moving.</span>"
+	mix_message = "The liquid bubbles stop moving."
 
 /datum/chemical_reaction/bonehurtingjuice
 	name = "Bone Hurting Juice"
