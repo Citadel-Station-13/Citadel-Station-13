@@ -4,7 +4,7 @@
 	id = /datum/reagent/toxin/formaldehyde
 	results = list(/datum/reagent/toxin/formaldehyde = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1, /datum/reagent/silver = 1)
-	mix_message = "A horrable smell emites from the beaker."
+	mix_message = "A horrible smell emits from the beaker."
 	required_temp = 420
 
 /datum/chemical_reaction/fentanyl
@@ -12,7 +12,7 @@
 	id = /datum/reagent/toxin/fentanyl
 	results = list(/datum/reagent/toxin/fentanyl = 1)
 	required_reagents = list(/datum/reagent/drug/space_drugs = 1)
-	mix_message = "A sickly sweet smell emites from the beaker."
+	mix_message = "A sickly sweet smell emits from the beaker."
 	required_temp = 674
 
 /datum/chemical_reaction/cyanide
@@ -20,7 +20,7 @@
 	id = /datum/reagent/toxin/cyanide
 	results = list(/datum/reagent/toxin/cyanide = 3)
 	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/ammonia = 1, /datum/reagent/oxygen = 1)
-	mix_message = "<span class='danger'>A bitter smell emites from the beaker.</span>"
+	mix_message = "<span class='danger'>A bitter smell emits from the beaker.</span>"
 	required_temp = 380
 
 /datum/chemical_reaction/itching_powder
@@ -91,7 +91,7 @@
 	id = /datum/reagent/toxin/ghoulpowder
 	results = list(/datum/reagent/toxin/ghoulpowder = 2)
 	required_reagents = list(/datum/reagent/toxin/zombiepowder = 1, /datum/reagent/medicine/epinephrine = 1)
-	mix_message = "<span class='danger'>A horrable smell emits out of the beaker.</span>"
+	mix_message = "<span class='danger'>A horrible smell emits out of the beaker.</span>"
 
 /datum/chemical_reaction/mindbreaker
 	name = "Mindbreaker Toxin"
