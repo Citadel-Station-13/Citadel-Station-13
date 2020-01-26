@@ -8,7 +8,7 @@
 #define REAGENT_PURITY_ACCURACY 0.001
 #define DEFAULT_SPECIFIC_HEAT 200
 
-// container_type defines
+//reagents_holder_flags defines
 #define INJECTABLE		(1<<0)	// Makes it possible to add reagents through droppers and syringes.
 #define DRAWABLE		(1<<1)	// Makes it possible to remove reagents through syringes.
 
@@ -29,6 +29,11 @@
 #define PATCH			4	// patches
 #define INJECT			5	// injection
 
+//container_flags
+#define PH_WEAK 		(1 << 0)
+#define TEMP_WEAK 		(1 << 1)
+#define APTFT_VERB		(1 << 2) //APTFT stands for "amount per transfer from this"
+#define APTFT_ALTCLICK	(1 << 3)
 
 //defines passed through to the on_reagent_change proc
 #define DEL_REAGENT		1	// reagent deleted (fully cleared)
