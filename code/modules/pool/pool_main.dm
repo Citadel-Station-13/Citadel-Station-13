@@ -86,7 +86,9 @@
 /turf/open/pool/Exited(atom/A, atom/newLoc)
 	. = ..()
 	if(isliving(A))
-		controller?.mobs_in_pool -= A
+		var/turf/open/pool/P = newLoc
+		if(!istype(P) || (P.controller != controller))
+			controller?.mobs_in_pool -= A
 
 // Entered logic
 /turf/open/pool/Entered(atom/movable/AM, atom/oldloc)
