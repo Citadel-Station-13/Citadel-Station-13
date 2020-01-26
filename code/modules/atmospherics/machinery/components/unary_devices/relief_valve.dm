@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/relief_valve.dmi'
 	icon_state = "relief_valve-e-map"
 	can_unwrench = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
 	var/opened = FALSE
 	var/open_pressure = ONE_ATMOSPHERE * 3
 	var/close_pressure = ONE_ATMOSPHERE
