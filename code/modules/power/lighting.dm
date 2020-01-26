@@ -294,7 +294,7 @@
 	cut_overlays()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
-			var/area/A = get_area(src)
+			var/area/A = get_base_area(src)
 			if(emergency_mode || (A && A.fire))
 				icon_state = "[base_state]_emergency"
 			else
@@ -323,7 +323,7 @@
 		var/CO = bulb_colour
 		if(color)
 			CO = color
-		var/area/A = get_area(src)
+		var/area/A = get_base_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
 		else if (nightshift_enabled)

@@ -136,8 +136,12 @@
 #define ORGAN_SLOT_TESTICLES "testicles"
 #define ORGAN_SLOT_BREASTS "breasts"
 
-
 ////organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
 #define STANDARD_ORGAN_HEALING 		0.001
 #define STANDARD_ORGAN_DECAY		0.00222		//designed to fail organs when left to decay for ~15 minutes
+
+#define G_MALE 1
+#define G_FEMALE 2
+#define G_PLURAL 3
+#define G_NEUTER 4

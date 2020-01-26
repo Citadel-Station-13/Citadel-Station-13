@@ -44934,7 +44934,7 @@
 /area/maintenance/port)
 "bKY" = (
 /obj/machinery/power/apc{
-	areastring = "/area/vacant_room/office";
+	areastring = "/area/security/vacantoffice";
 	dir = 8;
 	name = "Vacant Office APC";
 	pixel_x = -25

@@ -41,7 +41,7 @@ Bonus
 		suppress_warning = TRUE
 
 /datum/symptom/choking/Activate(datum/disease/advance/A)
-	if(!..())
+	if(!..() || HAS_TRAIT(A.affected_mob,TRAIT_NOBREATH))
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -112,7 +112,7 @@ Bonus
 		power = 2
 
 /datum/symptom/asphyxiation/Activate(datum/disease/advance/A)
-	if(!..())
+	if(!..() || HAS_TRAIT(A.affected_mob,TRAIT_NOBREATH))
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
