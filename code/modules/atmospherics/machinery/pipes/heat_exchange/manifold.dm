@@ -1,6 +1,6 @@
 //3-Way Manifold
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold
-	icon_state = "manifold"
+	icon_state = "manifold-2"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."

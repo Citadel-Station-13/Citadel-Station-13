@@ -374,14 +374,18 @@
 	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
 	modifier = 2.5
 	minebot_upgrade = FALSE
+	var/decreased
 
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
-		KA.overheat_time -= modifier
+		var/old = KA.overheat_time
+		KA.overheat_time = max(0, KA.overheat_time - modifier)
+		decreased = old - KA.overheat_time
+		
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
-	KA.overheat_time += modifier
+	KA.overheat_time += decreased
 	..()
 
 /obj/item/borg/upgrade/modkit/cooldown/minebot
