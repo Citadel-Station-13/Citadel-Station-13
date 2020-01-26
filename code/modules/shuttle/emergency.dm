@@ -75,7 +75,7 @@
 		auth_combo = 0
 
 	else if(auth_combo >= MAX_AUTH_INPUTS)
-		to_chat(user, "<span class='warning'>Authorizations controller lockdown engaged, please wait [CEILING(auth_coodown - world.time, 1)] before trying again.</span>")
+		to_chat(user, "<span class='warning'>Authorizations controller lockdown engaged, please wait [CEILING(auth_cooldown - world.time, 1)] before trying again.</span>")
 		return
 
 	var/old_len = authorized.len
