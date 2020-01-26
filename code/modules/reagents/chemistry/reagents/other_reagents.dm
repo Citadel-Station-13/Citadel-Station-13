@@ -60,7 +60,7 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
-	if(!B.reagents)
+	if(B.reagents)
 		B.reagents.add_reagent(type, reac_volume)
 	B.update_icon()
 
@@ -2127,5 +2127,11 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
-	M.adjustArousalLoss(2)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/list/adjusted = H.adjust_arousal(2,aphro = TRUE)
+		for(var/g in adjusted)
+			var/obj/item/organ/genital/G = g
+			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
+
 	..()

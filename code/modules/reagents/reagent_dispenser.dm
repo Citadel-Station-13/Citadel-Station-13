@@ -125,7 +125,7 @@
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
-	..()
+	. = ..()
 	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
 		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
 			var/boom_message = "[ADMIN_LOOKUPFLW(P.firer)] triggered a fueltank explosion via projectile."
@@ -184,7 +184,7 @@
 	icon_state = "virus_food"
 	anchored = TRUE
 	density = FALSE
-	reagent_id = /datum/reagent/toxin/mutagen/mutagenvirusfood
+	reagent_id = /datum/reagent/consumable/virus_food
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"

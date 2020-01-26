@@ -508,6 +508,10 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
 
+	if(href_list["flavor2_more"])
+		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text_2, "\n", "<BR>")), text("window=[];size=500x200", name))
+		onclose(usr, "[name]")
+		
 	if(href_list["flavor_change"])
 		update_flavor_text()
 

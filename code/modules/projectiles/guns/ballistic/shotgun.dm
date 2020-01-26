@@ -12,8 +12,6 @@
 	var/recentpump = 0 // to prevent spammage
 	weapon_weight = WEAPON_MEDIUM
 
-	pb_knockback = 2
-
 /obj/item/gun/ballistic/shotgun/attackby(obj/item/A, mob/user, params)
 	. = ..()
 	if(.)

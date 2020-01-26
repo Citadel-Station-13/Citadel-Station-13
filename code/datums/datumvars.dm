@@ -96,7 +96,6 @@
 					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[M.getCloneLoss()]</a>
 					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getOrganLoss(ORGAN_SLOT_BRAIN)]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[M.getStaminaLoss()]</a>
-					AROUSAL:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=arousal' id='arousal'>[M.getArousalLoss()]</a>
 					"}
 			if(GLOB.Debug2)
 				atomsnowflake += {"
@@ -1359,9 +1358,6 @@
 				if("stamina")
 					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
-				if("arousal")
-					L.adjustArousalLoss(amount)
-					newamt = L.getArousalLoss()
 				if("heart")
 					L.adjustOrganLoss(ORGAN_SLOT_HEART, amount)
 					newamt = L.getOrganLoss(ORGAN_SLOT_HEART)

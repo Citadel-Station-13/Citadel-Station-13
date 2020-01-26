@@ -29,7 +29,6 @@
 	new /obj/item/radio/headset/heads/captain(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
-	new /obj/item/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/storage/belt/sabre(src)
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
@@ -291,3 +290,17 @@
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/lethalshot(src)
+
+/obj/structure/closet/secure_closet/labor_camp_security
+	name = "labor camp security locker"
+	req_access = list(ACCESS_SECURITY)
+	icon_state = "sec"
+
+/obj/structure/closet/secure_closet/labor_camp_security/PopulateContents()
+	..()
+	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/clothing/head/helmet/sec(src)
+	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security/skirt(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/flashlight/seclite(src)

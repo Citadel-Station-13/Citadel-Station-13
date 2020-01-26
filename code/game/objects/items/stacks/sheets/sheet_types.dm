@@ -3,13 +3,18 @@
  * Metal
  * Plasteel
  * Wood
+ * Bamboo
  * Cloth
- * Plastic
+ * Silk
+ * Durathread
  * Cardboard
- * Paper Frames
  * Runed Metal (cult)
  * Brass (clockwork cult)
  * Bronze (bake brass)
+ * Gems
+ * Bones
+ * Plastic
+ * Paper Frames
  * Cotton/Duracotton
  */
 
@@ -240,7 +245,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	novariants = TRUE
 	grind_results = list(/datum/reagent/carbon = 20)
 
-
 /obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
 	// Taken from /obj/item/stack/rods/attackby in [rods.dm]
 	if(W.get_sharpness())
@@ -273,6 +277,9 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	recipes = GLOB.wood_recipes
 	return ..()
 
+/obj/item/stack/sheet/mineral/wood/twenty
+	amount = 20
+
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
 
@@ -301,7 +308,6 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 /obj/item/stack/sheet/mineral/bamboo/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.bamboo_recipes
 	return ..()
-
 
 /*
  * Cloth
@@ -356,6 +362,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/cloth/thirty
 	amount = 30
 
+/*
+ * Silk
+ */
 /obj/item/stack/sheet/silk
 	name = "silk"
 	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
@@ -369,7 +378,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 //	recipes = GLOB.silk_recipes
 //	return ..()
 
-//Durathread fuck slash-asterisk comments
+/*
+ * Durathread
+ */
 	GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/durathread, 4, time = 40),
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
@@ -391,8 +402,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/durathread/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.durathread_recipes
 	return ..()
-
-
 
 /*
  * Cardboard
@@ -486,7 +495,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 				new/obj/item/storage/box/clown(droploc) //bugfix
 	else
 		. = ..()
-
 
 /*
  * Runed Metal
@@ -712,6 +720,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	item_state = "sheet-plastic"
 	materials = list(MAT_PLASTIC=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
+	grind_results = list(/datum/reagent/glitter/white = 60)
 	merge_type = /obj/item/stack/sheet/plastic
 
 /obj/item/stack/sheet/plastic/fifty
@@ -748,7 +757,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
 
-
 //durathread and cotton raw
 /obj/item/stack/sheet/cotton
 	name = "raw cotton bundle"
@@ -777,3 +785,4 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
+

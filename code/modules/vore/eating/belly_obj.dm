@@ -1,4 +1,5 @@
-//#define VORE_SOUND_FALLOFF 0.05
+#define VORE_SOUND_FALLOFF 0.1
+#define VORE_SOUND_RANGE 3
 
 //
 //  Belly system 2.0, now using objects instead of datums because EH at datums.
@@ -164,7 +165,12 @@
 	. = ..()
 
 // Called whenever an atom enters this belly
-/obj/belly/Entered(var/atom/movable/thing,var/atom/OldLoc)
+/obj/belly/Entered(atom/movable/thing, atom/OldLoc)
+	. = ..()
+	var/mob/living/L //for chat messages and blindness
+	if(isliving(thing))
+		L = thing
+		L.become_blind("belly_[REF(src)]")
 	if(OldLoc in contents)
 		return //Someone dropping something (or being stripdigested)
 
@@ -175,7 +181,7 @@
 	if(vore_sound && !recent_sound)
 		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 			LAZYCLEARLIST(hearing_mobs)
-			for(var/mob/living/H in get_hearers_in_view(3, owner))
+			for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
 				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
 					continue
 				LAZYADD(hearing_mobs, H)
@@ -189,11 +195,14 @@
 				SEND_SOUND(H,eating)
 			recent_sound = TRUE
 
-	//Messages if it's a mob
-	if(isliving(thing))
-		var/mob/living/M = thing
-		if(desc)
-			to_chat(M, "<span class='notice'><B>[desc]</B></span>")
+	if(L && desc)
+		to_chat(L, "<span class='notice'><B>[desc]</B></span>")
+
+/obj/belly/Exited(atom/movable/AM, atom/newloc)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.cure_blind("belly_[REF(src)]")
 
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
@@ -214,7 +223,6 @@
 				continue
 			L.absorbed = FALSE
 			L.stop_sound_channel(CHANNEL_PREYLOOP)
-			L.cure_blind("belly_[REF(src)]")
 			SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
 			SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 			SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
@@ -229,7 +237,7 @@
 		if(release_sound && !recent_sound)
 			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 				LAZYCLEARLIST(hearing_mobs)
-				for(var/mob/living/H in get_hearers_in_view(3, owner))
+				for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
 					if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
 						continue
 					LAZYADD(hearing_mobs, H)
@@ -237,7 +245,7 @@
 			for(var/mob/living/H in hearing_mobs)
 				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
-					SEND_SOUND(H,releasement)
+					H.playsound_local(owner.loc, releasement, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 				else if(H && H in contents && H.client)
 					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
 					SEND_SOUND(H,releasement)
@@ -262,7 +270,6 @@
 		var/mob/living/OW = owner
 		if(ML.client)
 			ML.stop_sound_channel(CHANNEL_PREYLOOP) //Stop the internal loop, it'll restart if the isbelly check on next tick anyway
-		ML.cure_blind("belly_[REF(src)]")
 		SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
 		SEND_SIGNAL(ML, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
@@ -294,7 +301,7 @@
 			for(var/mob/living/H in hearing_mobs)
 				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
-					SEND_SOUND(H,releasement)
+					H.playsound_local(owner.loc, releasement, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 				else if(H && H in contents && H.client)
 					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
 					SEND_SOUND(H,releasement)
@@ -325,7 +332,6 @@
 
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
-		M.become_blind("belly_[REF(src)]")
 
 	// Setup the autotransfer checks if needed
 	if(transferlocation != null && autotransferchance > 0)
@@ -345,13 +351,11 @@
 	if(!(content in src) || !istype(target))
 		return
 	content.forceMove(target)
-	for(var/mob/living/M in contents)
-		M.cure_blind("belly_[REF(src)]")
-//	target.nom_mob(content, target.owner)
+
 	if(vore_sound && !recent_sound && !silent)
 		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
 			LAZYCLEARLIST(hearing_mobs)
-			for(var/mob/living/H in get_hearers_in_view(3, owner))
+			for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
 				if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
 					continue
 				LAZYADD(hearing_mobs, H)
@@ -359,7 +363,7 @@
 		for(var/mob/living/H in hearing_mobs)
 			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 				var/sound/eating = GLOB.pred_vore_sounds[vore_sound]
-				SEND_SOUND(H,eating)
+				H.playsound_local(owner.loc, eating, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 			else if(H && H in contents && H.client)
 				var/sound/eating = GLOB.prey_vore_sounds[vore_sound]
 				SEND_SOUND(H,eating)
@@ -576,7 +580,7 @@
 	var/sound/struggle_rustle = sound(get_sfx("rustle"))
 
 	LAZYCLEARLIST(hearing_mobs)
-	for(var/mob/living/H in get_hearers_in_view(3, owner))
+	for(var/mob/living/H in get_hearers_in_view(VORE_SOUND_RANGE, owner))
 		if(!H.client || !(H.client.prefs.cit_toggles & EATING_NOISES))
 			continue
 		LAZYADD(hearing_mobs, H)
@@ -584,14 +588,14 @@
 	if(is_wet)
 		for(var/mob/living/H in hearing_mobs)
 			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
-				SEND_SOUND(H,pred_struggle_snuggle)
+				H.playsound_local(owner.loc, pred_struggle_snuggle, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 			else if(H && H in contents && H.client)
 				SEND_SOUND(H,prey_struggle_snuggle)
 
 	else
 		for(var/mob/living/H in hearing_mobs)
 			if(H && H.client)
-				SEND_SOUND(H, struggle_rustle)
+				H.playsound_local(owner.loc, struggle_rustle, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
 
 	for(var/mob/living/H in hearing_mobs)
 		if(H && H.client && (isturf(H.loc)))

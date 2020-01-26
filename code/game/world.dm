@@ -2,6 +2,9 @@
 
 GLOBAL_VAR(restart_counter)
 
+GLOBAL_VAR(topic_status_lastcache)
+GLOBAL_LIST(topic_status_cache)
+
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
@@ -31,10 +34,12 @@ GLOBAL_VAR(restart_counter)
 #endif
 
 	load_admins()
+	load_mentors()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
+	initialize_global_loadout_items()
 	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
@@ -45,8 +50,6 @@ GLOBAL_VAR(restart_counter)
 
 	if(NO_INIT_PARAMETER in params)
 		return
-
-	cit_initialize()
 
 	Master.Initialize(10, FALSE, TRUE)
 
@@ -113,6 +116,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
 	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
+	GLOB.world_crafting_log = "[GLOB.log_directory]/crafting.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
@@ -128,6 +132,7 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_runtime_log)
 	start_log(GLOB.world_job_debug_log)
 	start_log(GLOB.subsystem_log)
+	start_log(GLOB.world_crafting_log)
 
 	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))

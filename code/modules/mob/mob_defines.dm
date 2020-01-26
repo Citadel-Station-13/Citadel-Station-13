@@ -26,7 +26,7 @@
 
 	var/computer_id = null
 	var/list/logging = list()
-	var/obj/machinery/machine = null
+	var/atom/machine = null
 
 	var/next_move = null
 	var/create_area_cooldown
@@ -120,3 +120,5 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
+	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.

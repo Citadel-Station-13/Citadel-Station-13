@@ -471,6 +471,7 @@
 	name = "white sundress"
 	desc = "Makes you want to frolic in a field of lillies."
 	icon_state = "sundress_white"
+	item_state = "sundress"
 	item_color = "sundress_white"
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
@@ -527,6 +528,16 @@
 	item_color = "assistant_formal"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/staffassistant
+	name = "staff assistant's jumpsuit"
+	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
+	icon = 'goon/icons/obj/item_js_rank.dmi'
+	alternate_worn_icon = 'goon/icons/mob/worn_js_rank.dmi'
+	icon_state = "assistant"
+	item_state = "gy_suit"
+	item_color = "assistant"
+	mutantrace_variation = NONE
+
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
 	desc = "Filled with Latin fire."
@@ -580,7 +591,7 @@
 	icon_state = "flower_dress"
 	item_state = "sailordress"
 	item_color = "flower_dress"
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|GROIN|LEGS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -605,9 +616,8 @@
 /obj/item/clothing/under/croptop
 	name = "crop top"
 	desc = "We've saved money by giving you half a shirt!"
-	icon_state = "sailor_dress"
-	item_state = "sailordress"
-	item_color = "sailor_dress"
+	icon_state = "croptop"
+	item_color = "croptop"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -936,3 +946,58 @@
 	item_state = "christmasfemaleg"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
+
+// Lunar Clothes
+/obj/item/clothing/under/lunar/qipao
+	name = "Black Qipao"
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is black."
+	icon_state = "qipao"
+	item_state = "qipao"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/qipao/white
+	name = "White Qipao"
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is white."
+	icon_state = "qipao_white"
+	item_state = "qipao_white"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/qipao/red
+	name = "Red Qipao"
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is red."
+	icon_state = "qipao_red"
+	item_state = "qipao_red"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/cheongsam
+	name = "Black Cheongsam"
+	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is black."
+	icon_state = "cheong"
+	item_state = "cheong"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/cheongsam/white
+	name = "White Cheongsam"
+	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is white."
+	icon_state = "cheongw"
+	item_state = "cheongw"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/cheongsam/red
+	name = "Red Cheongsam"
+	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is red.."
+	icon_state = "cheongr"
+	item_state = "cheongr"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
