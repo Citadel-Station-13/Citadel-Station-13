@@ -349,7 +349,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	extended_throwforce = 18
 	extended_icon_state = "switchblade_ext_ms"
 
-/obj/item/switchblade/makeshift/attackby(/obj/item/I) //Theres no way in hell I did this proc right. Special thanks to Hatterhat and Putnam. They pretty much made this proc for me because im a fucking dentskull haha.
+/obj/item/switchblade/makeshift/attackby(obj/item/I) //Theres no way in hell I did this proc right. Special thanks to Hatterhat and Putnam. They pretty much made this proc for me because im a fucking dentskull haha.
   if(istype(I,/obj/item/stack/sheet/mineral/silver))
     icon_state = "switchblade_msf"
     extended_icon_state = "switchblade_ext_msf"
