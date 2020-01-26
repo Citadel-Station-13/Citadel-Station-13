@@ -6,10 +6,10 @@
 /datum/round_event_control/meteor_wave
 	name = "Meteor Wave: Normal"
 	typepath = /datum/round_event/meteor_wave
-	weight = 4
-	min_players = 15
-	max_occurrences = 3
-	earliest_start = 25 MINUTES
+	weight = 5
+	min_players = 25
+	max_occurrences = 1
+	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/meteor_wave
@@ -68,10 +68,10 @@
 /datum/round_event_control/meteor_wave/threatening
 	name = "Meteor Wave: Threatening"
 	typepath = /datum/round_event/meteor_wave/threatening
-	weight = 5
-	min_players = 20
-	max_occurrences = 3
-	earliest_start = 35 MINUTES
+	weight = 7
+	min_players = 40
+	max_occurrences = 1
+	earliest_start = 45 MINUTES
 
 /datum/round_event/meteor_wave/threatening
 	wave_name = "threatening"
@@ -79,10 +79,10 @@
 /datum/round_event_control/meteor_wave/catastrophic
 	name = "Meteor Wave: Catastrophic"
 	typepath = /datum/round_event/meteor_wave/catastrophic
-	weight = 7
-	min_players = 25
-	max_occurrences = 3
-	earliest_start = 45 MINUTES
+	weight = 10
+	min_players = 50
+	max_occurrences = 1
+	earliest_start = 60 MINUTES
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
