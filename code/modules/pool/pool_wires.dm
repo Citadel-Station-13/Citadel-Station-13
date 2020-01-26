@@ -22,7 +22,7 @@
 	var/obj/machinery/pool/controller/P = holder
 	var/list/status = list()
 	status += "The blue light is [P.drainable ? "on" : "off"]."
-	status += "The red light is [P.tempunlocked ? "on" : "off"]."
+	status += "The red light is [P.temperature_unlocked ? "on" : "off"]."
 	status += "The yellow light is [P.shocked ? "on" : "off"]."
 	return status
 
@@ -32,7 +32,7 @@
 		if(POOL_WIRE_DRAIN)
 			P.drainable = FALSE
 		if(POOL_WIRE_TEMP)
-			P.tempunlocked = FALSE
+			P.temperature_unlocked = FALSE
 		if(WIRE_SHOCK)
 			P.shocked = !P.shocked
 			addtimer(CALLBACK(P, /obj/machinery/autolathe.proc/reset, wire), 60)
@@ -47,9 +47,9 @@
 				P.drainable = TRUE
 		if(POOL_WIRE_TEMP)
 			if(mend)
-				P.tempunlocked = FALSE
+				P.temperature_unlocked = FALSE
 			else
-				P.tempunlocked = TRUE
+				P.temperature_unlocked = TRUE
 		if(WIRE_ZAP)
 			P.shock(usr, 50)
 		if(WIRE_SHOCK)

@@ -281,12 +281,12 @@
 	if(href_list["IncreaseTemp"])
 		if(CanUpTemp(usr))
 			temperature++
-			handle_temp()
+			update_temp()
 			interact_delay = world.time + 15
 	if(href_list["DecreaseTemp"])
 		if(CanDownTemp(usr))
 			temperature--
-			handle_temp()
+			update_temp()
 			interact_delay = world.time + 15
 	if(href_list["Activate Drain"])
 		if((drainable || issilicon(usr) || IsAdminGhost(usr)) && !linked_drain.active)
@@ -369,7 +369,7 @@
 			var/M = new /obj/effect/mist(W)
 			linked_mist += M
 
-/obj/machinery/pool/controller/proc/mistoff() //Delete all /obj/effect/mist from all linked pool tiles.
+/obj/machinery/pool/controller/proc/mist_off() //Delete all /obj/effect/mist from all linked pool tiles.
 	for(var/M in linked_mist)
 		qdel(M)
 	mist_state = FALSE

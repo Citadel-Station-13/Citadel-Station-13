@@ -62,7 +62,7 @@
 					pool_controller.bloody /= 2
 				else
 					pool_controller.bloody /= 4
-				pool_controller.changecolor()
+				pool_controller.update_color()
 				filling = FALSE
 				active = FALSE
 		else
