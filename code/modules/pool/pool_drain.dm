@@ -84,7 +84,7 @@
 					if(isliving(M) && !M.anchored && is_in_our_pool(M))
 						step_towards(M, src)
 						whirl_mob(M)
-						if(ishuman(M))
+						if(ishuman(M) && (get_dist(M, src) <= 1))
 							var/mob/living/carbon/human/H = M
 							playsound(src, pick('sound/misc/crack.ogg','sound/misc/crunch.ogg'), 50, TRUE)
 							if(H.lying)			//down for any reason
