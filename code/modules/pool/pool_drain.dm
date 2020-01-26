@@ -23,15 +23,23 @@
 	var/cooldown
 
 /obj/machinery/pool/drain/Initialize()
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSfastprocess, src)
 	whirling_mobs = list()
 	return ..()
 
 /obj/machinery/pool/drain/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
 	controller.linked_drain = null
 	controller = null
 	whirling_mobs = null
 	return ..()
+
+/obj/machinery/pool/drain/proc/is_in_our_pool(atom/A)
+	. = FALSE
+	if(istype(A.loc, /turf/open/pool))
+		var/turf/open/pool/P = A.loc
+		if(P.controller == controller)
+			. = TRUE
 
 // This should probably start using move force sometime in the future but I'm lazy.
 /obj/machinery/pool/drain/process()
@@ -46,10 +54,10 @@
 			if(cycles_left-- > 0)
 				playsound(src, 'sound/effects/fillingwatter.ogg', 100, TRUE)
 				for(var/obj/O in orange(min(fill_push_range, 10), src))
-					if(!O.anchored)
+					if(!O.anchored && is_in_our_pool(O))
 						step_away(O, src)
 				for(var/mob/M in orange(min(fill_push_range, 10), src))		//compiler fastpath apparently?
-					if(!M.anchored && isliving(M))
+					if(!M.anchored && isliving(M) && is_in_our_pool(M))
 						step_away(M, src)
 			else
 				for(var/turf/open/pool/P in controller.linked_turfs)
@@ -70,20 +78,20 @@
 				playsound(src, 'sound/effects/pooldrain.ogg', 100, TRUE)
 				playsound(src, "water_wade", 60, TRUE)
 				for(var/obj/O in orange(min(drain_suck_range, 10), src))
-					if(!O.anchored)
+					if(!O.anchored && is_in_our_pool(O))
 						step_towards(O, src)
 				for(var/mob/M in orange(min(drain_suck_range, 10), src))
-					if(isliving(M) && !M.anchored)
+					if(isliving(M) && !M.anchored && is_in_our_pool(M))
 						step_towards(M, src)
 						whirl_mob(M)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
 							playsound(src, pick('sound/misc/crack.ogg','sound/misc/crunch.ogg'), 50, TRUE)
 							if(H.lying)			//down for any reason
-								H.adjustBruteLoss(5)
+								H.adjustBruteLoss(2.5)
 								to_chat(H, "<span class='danger'>You're caught in the drain!</span>")
 							else
-								H.apply_damage(4, BRUTE, pick("l_leg", "r_leg")) //drain should only target the legs
+								H.apply_damage(2.5, BRUTE, pick("l_leg", "r_leg")) //drain should only target the legs
 								to_chat(H, "<span class='danger'>Your legs are caught in the drain!</span>")
 			else
 				for(var/turf/open/pool/P in controller.linked_turfs)

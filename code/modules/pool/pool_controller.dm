@@ -294,7 +294,7 @@
 			mist_off()
 			interact_delay = world.time + 60
 			linked_drain.active = TRUE
-			linked_drain.cycles_left = 15
+			linked_drain.cycles_left = 75
 			if(!linked_drain.filling)
 				new /obj/effect/whirlpool(linked_drain.loc)
 				temperature = POOL_NORMAL
