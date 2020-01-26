@@ -6,7 +6,7 @@
 /datum/round_event_control/meteor_wave
 	name = "Meteor Wave: Normal"
 	typepath = /datum/round_event/meteor_wave
-	weight = 5
+	weight = 4
 	min_players = 25
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
@@ -68,7 +68,7 @@
 /datum/round_event_control/meteor_wave/threatening
 	name = "Meteor Wave: Threatening"
 	typepath = /datum/round_event/meteor_wave/threatening
-	weight = 7
+	weight = 5
 	min_players = 40
 	max_occurrences = 1
 	earliest_start = 45 MINUTES
@@ -79,7 +79,7 @@
 /datum/round_event_control/meteor_wave/catastrophic
 	name = "Meteor Wave: Catastrophic"
 	typepath = /datum/round_event/meteor_wave/catastrophic
-	weight = 10
+	weight = 7
 	min_players = 50
 	max_occurrences = 1
 	earliest_start = 60 MINUTES
