@@ -106,7 +106,7 @@
 		return
 	if(istype(W,/obj/item/reagent_containers))
 		if(W.reagents.total_volume) //check if there's reagent
-			user.visible_message("<span class='boldwarning'>[user] is feeding [src] some chemicals from [w].</span>")
+			user.visible_message("<span class='boldwarning'>[user] is feeding [src] some chemicals from [W].</span>")
 			if(do_after(user, 50, target = src))
 				for(var/datum/reagent/R in W.reagents.reagent_list)
 					if(R.type in GLOB.blacklisted_pool_reagents)
