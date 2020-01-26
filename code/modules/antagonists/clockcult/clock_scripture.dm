@@ -79,6 +79,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	if(!invoker || !slab || invoker.get_active_held_item() != slab)
 		return FALSE
 	if(!is_servant_of_ratvar(invoker, require_full_power))
+		to_chat(invoker, "<span class='warning'>You aren't strongly connected enough to Ratvar to invoke this!</span>")
 		return FALSE
 	if(!invoker.can_speak_vocal())
 		to_chat(invoker, "<span class='warning'>You are unable to speak the words of the scripture!</span>")
