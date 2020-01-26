@@ -214,7 +214,8 @@
 				break
 			else
 				var/pressure = enemy_air.return_pressure()
-				var/molage = enemy_air.total_moles()
+				var/molage
+				TOTAL_MOLES(enemy_air,molage)
 				if(pressure < lowest_pressure || lowest_pressure == -1)
 					lowest_pressure = pressure
 					lowest_pressure_tile = enemy_tile
@@ -232,7 +233,9 @@
 		if(are_we_spaced)
 			new_air = are_we_spaced
 		else
-			new_air = (final_air.remove(final_air.total_moles() / (adjacent_turfs_length + 1)))
+			var/molage
+			TOTAL_MOLES(final_air,molage)
+			new_air = (final_air.remove(molage / (adjacent_turfs_length + 1)))
 		if(!istype(new_air)) // this can happen if this runs in space
 			return
 		GAS_GARBAGE_COLLECT(new_air)
