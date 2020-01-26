@@ -7,22 +7,31 @@
 	var/filled = TRUE
 	var/next_splash = 0
 	var/obj/machinery/pool/controller/controller
+	var/obj/effect/overlay/water/watereffect
+	var/obj/effect/overlay/water/top/watertop
+
+/turf/open/pool/Initialize(mapload)
+	. = ..()
+	update_icon()
 
 /turf/open/pool/Destroy()
 	controller = null
+	QDEL_NULL(watereffect)
+	QDEL_NULL(watertop)
 	return ..()
 
-/turf/open/pool/proc/update_icon_pool()
+/turf/open/pool/update_icon()
+	. = ..()
 	if(!filled)
 		name = "drained pool"
 		desc = "No diving!"
-		cut_overlay(/obj/effect/overlay/water)
-		cut_overlay(/obj/effect/overlay/water/top)
+		QDEL_NULL(watereffect)
+		QDEL_NULL(watertop)
 	else
 		name = "poolwater"
 		desc = "You're safer here than in the deep."
-		add_overlay(/obj/effect/overlay/water)
-		add_overlay(/obj/effect/overlay/water/top)
+		watereffect = new /obj/effect/overlay/water(src)
+		watertop = new /obj/effect/overlay/water/top(src)
 
 /obj/effect/overlay/water
 	name = "water"
@@ -40,7 +49,7 @@
 // Mousedrop hook to normal turfs to get out of pools.
 /turf/open/MouseDrop_T(atom/from, mob/user)
 	// I could make this /open/floor and not have the !istype but ehh - kev
-	if(SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && CHECK_MOBILITY(user, MOBILITY_USE) && !istype(src, /turf/open/pool))
+	if(SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && !user.IsStunned() && !user.IsKnockdown() && !user.incapacitated() && !istype(src, /turf/open/pool))
 		var/mob/living/L = from
 		//The element only exists if you're on water and a living mob, so let's skip those checks.
 		var/pre_msg
@@ -140,9 +149,9 @@
 	. = ..()
 	if(!isliving(from))
 		return
+	var/mob/living/victim = from
 	if(user.stat || user.lying || !Adjacent(user) || !from.Adjacent(user) || !iscarbon(user) || !victim.has_gravity(src) || SEND_SIGNAL(victim, COMSIG_IS_SWIMMING))
 		return
-	var/mob/living/victim = from
 	var/victimname = victim == user? "themselves" : "[victim]"
 	var/starttext = victim == user? "[user] is descending into [src]." : "[user] is lowering [victim] into [src]."
 	user.visible_message("<span class='notice'>[starttext]</span>")
@@ -163,7 +172,7 @@
 	. = ..()
 	if(.)
 		return
-	if((user.loc != src) && CHECK_MOBILITY(user, MOBILITY_USE) && Adjacent(user) && SEND_SIGNAL(user, COMSIG_IS_SWIMMING) && filled && (next_splash < world.time))
+	if((user.loc != src) && !user.IsStunned() && !user.IsKnockdown() && !user.incapacitated() && Adjacent(user) && SEND_SIGNAL(user, COMSIG_IS_SWIMMING) && filled && (next_splash < world.time))
 		playsound(src, 'sound/effects/watersplash.ogg', 8, TRUE, 1)
 		next_splash = world.time + 25
 		var/obj/effect/splash/S = new(src)
