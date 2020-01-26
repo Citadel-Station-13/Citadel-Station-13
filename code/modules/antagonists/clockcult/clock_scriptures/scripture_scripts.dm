@@ -76,7 +76,7 @@
 		return FALSE
 	return ..()
 
-/datum/clockwork_Scripture/create_object/vitality_matrix/get_spawn_path(mob/user)
+/datum/clockwork_scripture/create_object/vitality_matrix/get_spawn_path(mob/user)
 	if(!is_servant_of_ratvar(user, TRUE))
 		return /obj/effect/clockwork/sigil/vitality/neutered
 	return ..()

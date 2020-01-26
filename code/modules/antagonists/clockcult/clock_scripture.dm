@@ -30,7 +30,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/primary_component
 	var/important = FALSE //important scripture will be italicized in the slab's interface
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
-	var/require_full_power = FALSE		//requires the user to be a full, non neutered servant of ratvar
+	var/requires_full_power = FALSE		//requires the user to be a full, non neutered servant of ratvar
 
 //messages for offstation scripture recital, courtesy ratvar's generals(and neovgre)
 	var/static/list/neovgre_penalty = list("Go to the station.", "Useless.", "Don't waste time.", "Pathetic.", "Wasteful.")
@@ -78,7 +78,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 /datum/clockwork_scripture/proc/can_recite() //If the words can be spoken
 	if(!invoker || !slab || invoker.get_active_held_item() != slab)
 		return FALSE
-	if(!is_servant_of_ratvar(invoker, require_full_power))
+	if(!is_servant_of_ratvar(invoker, requires_full_power))
 		to_chat(invoker, "<span class='warning'>You aren't strongly connected enough to Ratvar to invoke this!</span>")
 		return FALSE
 	if(!invoker.can_speak_vocal())
