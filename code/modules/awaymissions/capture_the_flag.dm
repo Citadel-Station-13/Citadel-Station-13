@@ -435,8 +435,8 @@
 	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
+	if(isliving(target))
+		var/mob/living/H = target
 		if((RED_TEAM in H.faction) || (BLUE_TEAM in H.faction))
 			. = TRUE
 
