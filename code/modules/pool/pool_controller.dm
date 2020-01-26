@@ -105,34 +105,36 @@
 	if(stat & (BROKEN))
 		return
 	if(istype(W,/obj/item/reagent_containers))
-		if(!W.reagents.total_volume) //check if there's reagent
-			for(var/datum/reagent/R in W.reagents.reagent_list)
-				if(R.type in GLOB.blacklisted_pool_reagents)
-					to_chat(user, "[src] cannot accept [R.name].")
-					return
-				if(R.reagent_state == SOLID)
-					to_chat(user, "The pool cannot accept reagents in solid form!.")
-					return
-			reagents.clear_reagents()
-			// This also reacts them. No nitroglycerin deathpools, sorry gamers :(
-			W.reagents.trans_to(reagents, max_beaker_transfer)
-			user.visible_message("<span class='notice'>[src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of [W] are quickly suctioned out by the machine!</span")
-			updateUsrDialog()
-			var/list/reagent_names = list()
-			var/list/rejected = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				if(R.volume >= min_reagent_amount)
-					reagent_names += R.name
-				else
-					reagents.remove_reagent(R.type, INFINITY)
-					rejected += R.name
-			if(length(reagent_names))
-				reagent_names = english_list(reagent_names)
-				log_game("[key_name(user)] has changed the [src] chems to [reagent_names]")
-				message_admins("[key_name_admin(user)] has changed the [src] chems to [reagent_names].")
-			if(length(rejected))
-				rejected = english_list(rejected)
-				to_chat(user, "<span class='warning'>[src] rejects the following chemicals as they do not have at least [min_reagent_amount] units of volume: [rejected]</span>")
+		if(W.reagents.total_volume) //check if there's reagent
+			user.visible_message("<span class='boldwarning'>[user] is feeding [src] some chemicals from [w].</span>")
+			if(do_after(user, 50, target = src))
+				for(var/datum/reagent/R in W.reagents.reagent_list)
+					if(R.type in GLOB.blacklisted_pool_reagents)
+						to_chat(user, "[src] cannot accept [R.name].")
+						return
+					if(R.reagent_state == SOLID)
+						to_chat(user, "The pool cannot accept reagents in solid form!.")
+						return
+				reagents.clear_reagents()
+				// This also reacts them. No nitroglycerin deathpools, sorry gamers :(
+				W.reagents.trans_to(reagents, max_beaker_transfer)
+				user.visible_message("<span class='notice'>[src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of [W] are quickly suctioned out by the machine!</span")
+				updateUsrDialog()
+				var/list/reagent_names = list()
+				var/list/rejected = list()
+				for(var/datum/reagent/R in reagents.reagent_list)
+					if(R.volume >= min_reagent_amount)
+						reagent_names += R.name
+					else
+						reagents.remove_reagent(R.type, INFINITY)
+						rejected += R.name
+				if(length(reagent_names))
+					reagent_names = english_list(reagent_names)
+					log_game("[key_name(user)] has changed the [src] chems to [reagent_names]")
+					message_admins("[key_name_admin(user)] has changed the [src] chems to [reagent_names].")
+				if(length(rejected))
+					rejected = english_list(rejected)
+					to_chat(user, "<span class='warning'>[src] rejects the following chemicals as they do not have at least [min_reagent_amount] units of volume: [rejected]</span>")
 		else
 			to_chat(user, "<span class='notice'>[src] beeps unpleasantly as it rejects the beaker. Why are you trying to feed it an empty beaker?</span>")
 			return
