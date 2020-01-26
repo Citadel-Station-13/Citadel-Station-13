@@ -50,7 +50,7 @@ BONUS
 		symptom_delay_max = 10
 
 /datum/symptom/cough/Activate(datum/disease/advance/A)
-	if(!..())
+	if(!..() || HAS_TRAIT(A.affected_mob,TRAIT_NOBREATH))
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)

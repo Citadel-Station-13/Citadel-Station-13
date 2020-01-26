@@ -201,6 +201,22 @@
 		var/item = pick(contains)
 		new item(C)
 
+/datum/supply_pack/security/armory/spinfusor
+	name = "Stormhammer Spinfusor Crate"
+	cost = 14000
+	desc = "Got yourself a code red? Blob, nukies or even worst knocking on your door? Well with the Stormhammer Spinfusor you can stop crime in one shot, dont miss! Contains two Stormhammer Spinfusors (Note, guns may or may not be loaded). Requires Armory access to open."
+	contains = list(/obj/item/gun/ballistic/automatic/spinfusor,
+					/obj/item/gun/ballistic/automatic/spinfusor)
+	crate_name = "spinfusor crate"
+
+/datum/supply_pack/security/armory/spinfusorammo
+	name = "Spinfusor Disk Crate"
+	cost = 7000
+	desc = "Need more ammo for a Stormhammer? Well we got some for a price! Contains two boxes of Spinfusor disks. Requires Armory access to open."
+	contains = list(/obj/item/ammo_box/aspinfusor,
+					/obj/item/ammo_box/aspinfusor)
+	crate_name = "spinfusor disk crate"
+
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
 	desc = "Contains two fullbody sets of tough, fireproof, pressurized suits designed in a joint effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, and combat gloves. Requires Armory access to open."
@@ -226,7 +242,7 @@
 	crate_name = "swat taser crate"
 
 /datum/supply_pack/security/armory/woodstock
-	name = "Classic WoodStock Shotguns Crate"
+	name = "WoodStock Classic Shotguns Crate"
 	desc = "Contains three rustic, pumpaction shotguns. Requires Armory access to open."
 	cost = 3000
 	contains = list(/obj/item/gun/ballistic/shotgun,
