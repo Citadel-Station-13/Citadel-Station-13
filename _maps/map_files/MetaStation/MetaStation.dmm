@@ -2,7 +2,6 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
-	icon_state = "1-8"
 "aac" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
