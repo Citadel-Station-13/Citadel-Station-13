@@ -99,6 +99,15 @@
 		to_chat(user, "<span class='warning'>The interface on [src] is already too damaged to short it again.</span>")
 		return
 
+/obj/machinery/pool/controller/AltClick(mob/user)
+	. = ..()
+	if(isliving(user) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated())
+		visible_message("<span class='boldwarning'>[user] starts to drain [src]!</span>")
+		if(do_after(user, 50, target = src))
+			reagents.remove_all(INFINITY)
+			visible_message("<span class='boldnotice'>[user] drains [src].</span>")
+			say("Reagents cleared.")
+
 /obj/machinery/pool/controller/attackby(obj/item/W, mob/user)
 	if(shocked && !(stat & NOPOWER))
 		shock(user,50)
