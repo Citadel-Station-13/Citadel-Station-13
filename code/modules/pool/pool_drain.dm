@@ -54,7 +54,7 @@
 			else
 				for(var/turf/open/pool/P in controller.linked_turfs)
 					P.filled = TRUE
-					P.update_ion()
+					P.update_icon()
 				for(var/obj/effect/waterspout/S in range(1, src))
 					qdel(S)
 				controller.drained = FALSE
@@ -91,8 +91,8 @@
 					P.update_icon()
 				for(var/obj/effect/whirlpool/W in range(1, src))
 					qdel(W)
-				linked_controller.drained = TRUE
-				linked_controller.mist_off()
+				controller.drained = TRUE
+				controller.mist_off()
 				active = FALSE
 				filling = TRUE
 

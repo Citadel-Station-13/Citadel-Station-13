@@ -78,11 +78,11 @@
 		W.controller = src
 	for(var/obj/machinery/pool/drain/pooldrain in cached)
 		linked_drain = pooldrain
-		linked_drain.pool_controller = src
+		linked_drain.controller = src
 		break
 	for(var/obj/machinery/pool/filter/F in cached)
 		linked_filter = F
-		linked_filter.pool_controller = src
+		linked_filter.controller = src
 		break
 
 /obj/machinery/pool/controller/emag_act(mob/user)
