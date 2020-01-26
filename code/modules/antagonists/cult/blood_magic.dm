@@ -570,7 +570,9 @@
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/candidate = target
-			if(candidate.use(50))
+			if(!iscultist(user, TRUE))
+				to_chat(user, "<span class='warning'>You are not strongly connected enough to Nar'sie to use make constructs...</span>")
+			else if(candidate.use(50))
 				uses--
 				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
@@ -593,7 +595,9 @@
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
-			if(candidate.mmi)
+			if(!iscultist(user, TRUE))
+				to_chat(user, "<span class='warning'>You are not strongly connected enough to Nar'sie to use make constructs...</span>")
+			else if(candidate.mmi)
 				user.visible_message("<span class='danger'>A dark cloud emanates from [user]'s hand and swirls around [candidate]!</span>")
 				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, 1)
 				var/prev_color = candidate.color
@@ -812,6 +816,8 @@
 			if("Blood Beam (500)")
 				if(uses < 500)
 					to_chat(user, "<span class='cultitalic'>You need 500 charges to perform this rite.</span>")
+				else if(!iscultist(user, TRUE))
+					to_chat(user, "<span class='warning'>You are not strongly connected to Nar'sie enough to use something of this power.</span>")
 				else
 					var/obj/rite = new /obj/item/blood_beam()
 					uses -= 500

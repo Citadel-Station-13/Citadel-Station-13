@@ -524,7 +524,7 @@
 	var/static/curselimit = 0
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
-	if(!iscultist(user))
+	if(!iscultist(user, TRUE))
 		user.dropItemToGround(src, TRUE)
 		user.Knockdown(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
