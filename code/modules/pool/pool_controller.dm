@@ -281,16 +281,19 @@
 		return
 	if(href_list["IncreaseTemp"])
 		if(CanUpTemp(usr))
+			visible_message("<span class='warning'>[usr] presses a button on [src].</span>")
 			temperature++
 			update_temp()
 			interact_delay = world.time + 15
 	if(href_list["DecreaseTemp"])
 		if(CanDownTemp(usr))
+			visible_message("<span class='warning'>[usr] presses a button on [src].</span>")
 			temperature--
 			update_temp()
 			interact_delay = world.time + 15
 	if(href_list["Activate Drain"])
 		if((drainable || issilicon(usr) || IsAdminGhost(usr)) && !linked_drain.active)
+			visible_message("<span class='warning'>[usr] presses a button on [src].</span>")
 			mist_off()
 			interact_delay = world.time + 60
 			linked_drain.active = TRUE
