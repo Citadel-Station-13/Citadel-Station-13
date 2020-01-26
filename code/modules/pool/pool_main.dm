@@ -80,6 +80,13 @@
 
 // Entered logic
 /turf/open/pool/Entered(atom/movable/AM, atom/oldloc)
+	if(istype(AM, /obj/effect/decal/cleanable))
+		var/obj/effect/decal/cleanable/C = AM
+		if(prob(C.bloodiness))
+			controller.set_bloody(TRUE)
+		QDEL_IN(AM, 25)
+		animate(AM, alpha = 10, time = 20)
+		return ..()
 	if(!AM.has_gravity(src))
 		return ..()
 	if(isliving(AM))
@@ -127,6 +134,7 @@
 		else if(filled)
 			AM.adjustStaminaLoss(1)
 			playsound(src, "water_wade", 20, TRUE)
+	return ..()
 
 /turf/open/pool/MouseDrop_T(atom/from, mob/user)
 	. = ..()

@@ -86,7 +86,7 @@
 								whirlm.apply_damage(4, BRUTE, pick("l_leg", "r_leg")) //drain should only target the legs
 								to_chat(whirlm, "<span class='danger'>Your legs are caught in the drain!</span>")
 			else
-				for(var/turf/open/pool/P in controller.linked_turfs))
+				for(var/turf/open/pool/P in controller.linked_turfs)
 					P.filled = FALSE
 					P.update_icon()
 				for(var/obj/efefct/whirlpool/W in range(1, src))

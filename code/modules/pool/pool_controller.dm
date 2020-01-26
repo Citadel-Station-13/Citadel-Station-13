@@ -13,56 +13,85 @@
 	use_power = TRUE
 	idle_power_usage = 75
 	resistance_flags = INDESTRUCTIBLE
-	var/list/linkedturfs //List contains all of the linked pool turfs to this controller, assignment happens on initialize
-	var/list/mobs_in_pool = list()//List contains all the mobs currently in the pool.
-	var/temperature = POOL_NORMAL //1-5 Frigid Cool Normal Warm Scalding
-	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
-	var/list/linkedmist = list() //Used to keep track of created mist
-	var/misted = FALSE //Used to check for mist.
-	var/cur_reagent = "water"
-	var/drainable = FALSE
-	var/drained = FALSE
+	/// How far it scans for pool objects
+	var/scan_range = 6
+	/// Is pool mist currently on?
+	var/mist_state = FALSE
+	/// Linked mist effects
+	var/list/obj/effect/mist/linked_mist = list()
+	/// Pool turfs
+	var/list/turf/open/pool/linked_turfs = list()
+	/// All mobs in pool
+	var/list/mob/living/mobs_in_pool = list()
+	/// Is the pool bloody?
 	var/bloody = 0
-	var/obj/machinery/pool/drain/linked_drain = null
-	var/obj/machinery/pool/filter/linked_filter = null
-	var/interact_delay = 0 //cooldown on messing with settings
-	var/reagent_delay = 0 //cooldown on reagent ticking
-	var/shocked = FALSE//Shocks morons, like an airlock.
-	var/tempunlocked = FALSE
+	/// Last time we process_reagents()'d
+	var/last_reagent_process = 0
+	/// Maximum amount we will take from a beaker
+	var/max_beaker_transfer = 100
+	/// Minimum amount of a reagent for it to work on us
+	var/min_reagent_amount = 10
+	/// ADMINBUS ONLY - WHETHER OR NOT WE HAVE NOREACT ;)
+	var/noreact_reagents = FALSE
+	/// how fast in deciseconds between reagent processes
+	var/reagent_tick_interval = 5
+	/// Can we use unsafe temperatures
+	var/temperature_unlocked = FALSE
+	/// See __DEFINES/pool.dm, temperature defines
+	var/temperature = POOL_NORMAL
+	/// Whether or not the pool can be drained
+	var/drainable = FALSE
+	// Whether or not the pool is drained
+	var/drained = FALSE
+	/// Pool drain
+	var/obj/machinery/pool/drain/linked_drain
+	/// Pool filter
+	var/obj/machinery/pool/filter/linked_filter
+	/// Next world.time you can interact with settings
+	var/interact_delay = 0
+	/// Airlock style shocks
+	var/shocked = FALSE
+	/// Old reagent color, used to determine if update_color needs to reset colors.
 	var/old_rcolor
 
 /obj/machinery/pool/controller/Initialize()
 	. = ..()
-	START_PROCESSING(SSprocessing, src)
-	create_reagents(100)
+	START_PROCESSING(SSfastprocess, src)
+	create_reagents(1000)
+	if(noreact_reagents)
+		reagents.reagent_holder_flags |= NO_REACTION
 	wires = new /datum/wires/poolcontroller(src)
 	scan_things()
-
-/obj/machinery/pool/controller/proc/scan_things()
-	for(var/turf/open/pool/W in range(srange,src))
-		LAZYADD(linkedturfs, W)
-		W.controller = src
-	for(var/obj/machinery/pool/drain/pooldrain in range(srange,src))
-		linked_drain = pooldrain
-		linked_drain.pool_controller = src
-	for(var/obj/machinery/pool/filter/F in range(srange, src))
-		linked_filter = F
-		linked_filter.pool_controller = src
 
 /obj/machinery/pool/controller/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	linked_drain = null
 	linked_filter = null
-	linkedturfs.Cut()
+	linked_turfs.Cut()
 	mobs_in_pool.Cut()
 	return ..()
 
-/obj/machinery/pool/controller/emag_act(user as mob) //Emag_act, this is called when it is hit with a cryptographic sequencer.
+/obj/machinery/pool/controller/proc/scan_things()
+	var/list/cached = range(scan_range, src)
+	for(var/turf/open/pool/W in cached)
+		linked_turfs += W
+		W.controller = src
+	for(var/obj/machinery/pool/drain/pooldrain in cached)
+		linked_drain = pooldrain
+		linked_drain.pool_controller = src
+		break
+	for(var/obj/machinery/pool/filter/F in cached)
+		linked_filter = F
+		linked_filter.pool_controller = src
+		break
+
+/obj/machinery/pool/controller/emag_act(mob/user)
+	. = ..()
 	if(!(obj_flags & EMAGGED)) //If it is not already emagged, emag it.
 		to_chat(user, "<span class='warning'>You disable the [src]'s safety features.</span>")
 		do_sparks(5, TRUE, src)
 		obj_flags |= EMAGGED
-		tempunlocked = TRUE
+		temperature_unlocked = TRUE
 		drainable = TRUE
 		log_game("[key_name(user)] emagged [src]")
 		message_admins("[key_name_admin(user)] emagged [src]")
@@ -75,31 +104,37 @@
 		shock(user,50)
 	if(stat & (BROKEN))
 		return
-
 	if(istype(W,/obj/item/reagent_containers))
-		if(W.reagents.total_volume >= 100) //check if there's enough reagent
+		if(!W.reagents.total_volume) //check if there's reagent
 			for(var/datum/reagent/R in W.reagents.reagent_list)
-				if(R.name in GLOB.blacklisted_pool_reagents)
-					to_chat(user, "\The [src] cannot accept [R.name].")
-					reagents.clear_reagents()
+				if(R.type in GLOB.blacklisted_pool_reagents)
+					to_chat(user, "[src] cannot accept [R.name].")
 					return
 				if(R.reagent_state == SOLID)
 					to_chat(user, "The pool cannot accept reagents in solid form!.")
-					reagents.clear_reagents()
 					return
 			reagents.clear_reagents()
-			W.reagents.copy_to(reagents, 100)
-			W.reagents.clear_reagents()
-			user.visible_message("<span class='notice'>\The [src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of \the [W] are quickly suctioned out by the machine!</span")
+			// This also reacts them. No nitroglycerin deathpools, sorry gamers :(
+			W.reagents.trans_to(reagents, max_beaker_transfer)
+			user.visible_message("<span class='notice'>[src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of [W] are quickly suctioned out by the machine!</span")
 			updateUsrDialog()
-			var/reagent_names = ""
+			var/list/reagent_names = list()
+			var/list/rejected = list()
 			for(var/datum/reagent/R in reagents.reagent_list)
-				reagent_names += "[R.name], "
-			log_game("[key_name(user)] has changed the [src] chems to [reagent_names]")
-			message_admins("[key_name_admin(user)] has changed the [src] chems to [reagent_names].")
-			interact_delay = world.time + 15
+				if(R.volume >= min_reagent_amount)
+					reagent_names += R.name
+				else
+					reagents.remove_reagent(R.type, INFINITY)
+					rejected += R.name
+			if(length(reagent_names))
+				reagent_names = english_list(reagent_names)
+				log_game("[key_name(user)] has changed the [src] chems to [reagent_names]")
+				message_admins("[key_name_admin(user)] has changed the [src] chems to [reagent_names].")
+			if(length(rejected))
+				rejected = english_list(rejected)
+				to_chat(user, "<span class='warning'>[src] rejects the following chemicals as they do not have at least [min_reagent_amount] units of volume: [rejected]</span>")
 		else
-			to_chat(user, "<span class='notice'>\The [src] beeps unpleasantly as it rejects the beaker. It must not have enough in it.</span>")
+			to_chat(user, "<span class='notice'>[src] beeps unpleasantly as it rejects the beaker. Why are you trying to feed it an empty beaker?</span>")
 			return
 	else if(panel_open && is_wire_tool(W))
 		wires.interact(user)
@@ -132,9 +167,11 @@
 	else
 		return FALSE
 
-/obj/machinery/pool/controller/proc/poolreagent()
-	if(reagents.reagent_list.len > 0)
-		for(var/turf/open/pool/W in linkedturfs)
+/obj/machinery/pool/controller/proc/process_reagents()
+	if(last_reagent_process > world.time + reagent_tick_interval)
+		return
+	if(length(reagents.reagent_list) > 0)
+		for(var/turf/open/pool/W in linked_turfs)
 			for(var/mob/living/carbon/human/swimee in W)
 				for(var/datum/reagent/R in reagents.reagent_list)
 					if(R.reagent_state == SOLID)
@@ -144,20 +181,18 @@
 			for(var/obj/objects in W)
 				if(W.reagents)
 					W.reagents.reaction(objects, VAPOR, 1)
-	reagent_delay = world.time + POOL_REAGENT_TICK_INTERVAL
-	changecolor()
-
+	last_reagent_process = world.time
 
 /obj/machinery/pool/controller/process()
 	updateUsrDialog()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!drained)
-		updatePool()
+		process_pool()
 		if(reagent_delay <= world.time)
-			poolreagent()
+			process_reagents()
 
-/obj/machinery/pool/controller/proc/updatePool()
+/obj/machinery/pool/controller/proc/process_pool()
 	if(!drained)
 		for(var/mob/living/M in mobs_in_pool)
 			switch(temperature) //Apply different effects based on what the temperature is set to.
@@ -165,7 +200,7 @@
 					M.adjust_bodytemperature(50,0,500)
 				if(POOL_WARM) //Warm
 					M.adjust_bodytemperature(20,0,360) //Heats up mobs till the termometer shows up
-				if(POOL_NORMAL) //Normal temp does nothing, because it's just room temperature water.
+				//Normal temp does nothing, because it's just room temperature water.
 				if(POOL_COOL)
 					M.adjust_bodytemperature(-20,250) //Cools mobs till the termometer shows up
 				if(POOL_FRIGID) //Freezing
@@ -184,17 +219,13 @@
 						if(prob(35))
 							to_chat(drownee, "<span class='danger'>You're drowning!</span>")
 
-/* not sure what to do about this part
-			for(var/obj/effect/decal/cleanable/decal in W)
-				CHECK_TICK
-				animate(decal, alpha = 10, time = 20)
-				QDEL_IN(decal, 25)
-				if(istype(decal,/obj/effect/decal/cleanable/blood) || istype(decal, /obj/effect/decal/cleanable/trail_holder))
-					bloody = TRUE
-					*/
-	changecolor()
+/obj/machinery/pool/controller/proc/set_bloody(state)
+	if(bloody == state)
+		return
+	bloody = state
+	update_color()
 
-/obj/machinery/pool/controller/proc/changecolor()
+/obj/machinery/pool/controller/proc/update_color()
 	if(drained)
 		return
 	var/rcolor
@@ -203,7 +234,7 @@
 	if(rcolor == old_rcolor)
 		return // small performance upgrade hopefully?
 	old_rcolor = rcolor
-	for(var/X in linkedturfs)
+	for(var/X in linked_turfs)
 		var/turf/open/pool/color1 = X
 		if(bloody)
 			if(rcolor)
@@ -219,36 +250,26 @@
 			color1.watereffect.color = null
 			color1.watertop.color = null
 
-/obj/machinery/pool/controller/proc/miston() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
-	for(var/X in linkedturfs)
-		var/turf/open/pool/W = X
-		if(W.filled)
-			var/M = new /obj/effect/mist(W)
-			if(misted)
-				return
-			linkedmist += M
-	misted = TRUE //var just to keep track of when the mist on proc has been called.
-
-/obj/machinery/pool/controller/proc/mistoff() //Delete all /obj/effect/mist from all linked pool tiles.
-	for(var/M in linkedmist)
-		qdel(M)
-	misted = FALSE //no mist left, turn off the tracking var
-
-/obj/machinery/pool/controller/proc/handle_temp()
-	interact_delay = world.time + 10
-	mistoff()
-	icon_state = "poolc_[temperature]"
-	if(temperature == POOL_SCALDING)
-		miston()
+/obj/machinery/pool/controller/proc/update_temp()
+	if(mist_status)
+		if(temperature < POOL_SCALDING)
+			mist_off()
+	else
+		if(temperature == POOL_SCALDING)
+			mist_on()
 	update_icon()
 
+/obj/machinery/pool/controller/update_icon()
+	. = ..()
+	icon_state = "poolc_[temperature]"
+
 /obj/machinery/pool/controller/proc/CanUpTemp(mob/user)
-	if(temperature == POOL_WARM && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature < POOL_WARM)
+	if(temperature == POOL_WARM && (temperature_unlocked || issilicon(user) || IsAdminGhost(user)) || temperature < POOL_WARM)
 		return TRUE
 	return FALSE
 
 /obj/machinery/pool/controller/proc/CanDownTemp(mob/user)
-	if(temperature == POOL_COOL && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature > POOL_COOL)
+	if(temperature == POOL_COOL && (temperature_unlocked || issilicon(user) || IsAdminGhost(user)) || temperature > POOL_COOL)
 		return TRUE
 	return FALSE
 
@@ -261,10 +282,12 @@
 		if(CanUpTemp(usr))
 			temperature++
 			handle_temp()
+			interact_delay = world.time + 15
 	if(href_list["DecreaseTemp"])
 		if(CanDownTemp(usr))
 			temperature--
 			handle_temp()
+			interact_delay = world.time + 15
 	if(href_list["Activate Drain"])
 		if((drainable || issilicon(usr) || IsAdminGhost(usr)) && !linked_drain.active)
 			mistoff()
@@ -277,7 +300,7 @@
 			else
 				new /obj/effect/waterspout(linked_drain.loc)
 				temperature = POOL_NORMAL
-			handle_temp()
+			update_temp()
 			bloody = FALSE
 	updateUsrDialog()
 
@@ -335,3 +358,18 @@
 		if(WIRE_SHOCK)
 			if(!wires.is_cut(wire))
 				shocked = FALSE
+
+/obj/machinery/pool/controller/proc/mist_on() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
+	if(mist_state)
+		return
+	mist_state = TRUE
+	for(var/X in linked_turfs)
+		var/turf/open/pool/W = X
+		if(W.filled)
+			var/M = new /obj/effect/mist(W)
+			linked_mist += M
+
+/obj/machinery/pool/controller/proc/mistoff() //Delete all /obj/effect/mist from all linked pool tiles.
+	for(var/M in linked_mist)
+		qdel(M)
+	mist_state = FALSE
