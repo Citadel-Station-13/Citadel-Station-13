@@ -75,7 +75,7 @@
 		auth_combo = 0
 
 	else if(auth_combo >= MAX_AUTH_INPUTS)
-		to_chat(user, "<span class='warning'>Authorizations controller lockdown engaged, please wait [CEILING(auth_coodown - world.time)] before trying again.</span>")
+		to_chat(user, "<span class='warning'>Authorizations controller lockdown engaged, please wait [CEILING(auth_coodown - world.time, 1)] before trying again.</span>")
 		return
 
 	var/old_len = authorized.len
@@ -103,7 +103,7 @@
 		if(repeal)
 			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 		auth_cooldown = world.time + 15 SECONDS
-		if(++auth_combo = MAX_AUTH_INPUTS) //C-c-combo breaker!
+		if(++auth_combo == MAX_AUTH_INPUTS) //C-c-combo breaker!
 			say("Authorization controller abuse detected, lockdown engaged.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
