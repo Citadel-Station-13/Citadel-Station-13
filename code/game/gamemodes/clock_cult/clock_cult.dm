@@ -73,7 +73,7 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE, neutered = FALSE)
+/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE, neutered = FALSE, ignore_eligibility = FALSE)
 	if(!L || !L.mind)
 		return
 	var/update_type = /datum/antagonist/clockcult
@@ -84,6 +84,7 @@ Credit where due:
 	var/datum/antagonist/clockcult/C = new update_type(L.mind)
 	C.make_team = create_team
 	C.show_in_roundend = create_team //tutorial scarabs begone
+	C.ignore_eligibility_check = ignore_eligibility
 
 	if(iscyborg(L))
 		var/mob/living/silicon/robot/R = L

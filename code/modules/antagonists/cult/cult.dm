@@ -13,9 +13,13 @@
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
 	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
+	var/ignore_eligibility_checks = FALSE
 
 /datum/antagonist/cult/neutered
 	neutered = TRUE
+
+/datum/antagonist/cult/neutered/traitor
+	ignore_eligibility_checks = TRUE
 
 /datum/antagonist/cult/get_team()
 	return cult_team
@@ -46,7 +50,7 @@
 
 /datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
 	. = ..()
-	if(. && !ignore_implant)
+	if(. && !ignore_implant && !ignore_eligibility_checks)
 		. = is_convertable_to_cult(new_owner.current,cult_team)
 
 /datum/antagonist/cult/greet()

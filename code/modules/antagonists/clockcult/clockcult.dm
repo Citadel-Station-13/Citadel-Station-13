@@ -9,6 +9,7 @@
 	var/datum/team/clockcult/clock_team
 	var/make_team = TRUE //This should be only false for tutorial scarabs
 	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
+	var/ignore_eligibility_check = FALSE
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
@@ -41,7 +42,7 @@
 
 /datum/antagonist/clockcult/can_be_owned(datum/mind/new_owner)
 	. = ..()
-	if(.)
+	if(. && !ignore_eligibility_check)
 		. = is_eligible_servant(new_owner.current)
 
 /datum/antagonist/clockcult/greet()

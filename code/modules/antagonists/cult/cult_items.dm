@@ -15,22 +15,10 @@
 /obj/item/tome/traitor/attack_self(mob/living/user)
 	if(!iscultist(user) && !spent)
 		to_chat(user, "<span class='userdanger'>You press your hand onto [src], sinister tendrils of corrupted magic swirling around you. Was this the best of ideas?</span>")
-		if(user.mind.add_antag_datum(/datum/antagonist/cult/neutered))
+		if(user.mind.add_antag_datum(/datum/antagonist/cult/neutered/traitor))
 			spent = TRUE
 		else
-			var/has_mindshield = locate(/obj/item/implant/mindshield) in user
-			var/str = "It looks like your mind is protected. You can probably refund this with your uplink."
-			if(has_mindshield)
-				str = "It looks like your mind is shielded, offering you a choice."
-			to_chat(user, "<span class='userdanger'>[src] pulses, the tendrils wrapping around your head. [str]</span>")
-			if(alert(user, "Would you like to attempt to force the shielding influence from your mind? This will destroy your mindshield implant.", "Destroy mindshield?", "Yes", "No") == "Yes")
-				if(spent || !user.CanReach(src) || user.incapacitated() || user.IsKnockdown() || user.IsStun())
-					return
-				qdel(has_mindshield)
-				if(user.mind.add_antag_datum(/datum/antagonist/cult/neutered))
-					spent = TRUE
-				else
-					to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
+			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
 	return ..()
 
 /obj/item/melee/cultblade/dagger

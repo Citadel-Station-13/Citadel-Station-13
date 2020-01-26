@@ -45,22 +45,10 @@
 /obj/item/clockwork/slab/traitor/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user) && !spent)
 		to_chat(user, "<span class='userdanger'>You press your hand onto [src], golden tendrils of light latching onto you. Was this the best of ideas?</span>")
-		if(add_servant_of_ratvar(user, FALSE, FALSE, TRUE))
+		if(add_servant_of_ratvar(user, FALSE, FALSE, TRUE, TRUE))
 			spent = TRUE
 		else
-			var/has_mindshield = locate(/obj/item/implant/mindshield) in user
-			var/str = "It looks like your mind is protected. You can probably refund this with your uplink."
-			if(has_mindshield)
-				str = "It looks like your mind is shielded, offering you a choice."
-			to_chat(user, "<span class='userdanger'>[src] pulses, the tendrils wrapping around your head. [str]</span>")
-			if(alert(user, "Would you like to attempt to force the shielding influence from your mind? This will destroy your mindshield implant.", "Destroy mindshield?", "Yes", "No") == "Yes")
-				if(spent || !user.CanReach(src) || user.incapacitated() || user.IsKnockdown() || user.IsStun())
-					return
-				qdel(has_mindshield)
-				if(add_servant_of_ratvar(user, FALSE, FALSE, TRUE))
-					spent = TRUE
-				else
-					to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
+			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
