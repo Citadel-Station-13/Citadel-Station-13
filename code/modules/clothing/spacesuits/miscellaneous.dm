@@ -11,6 +11,7 @@ Contains:
  - ERT hardsuit: Command, Sec, Engi, Med
  - ERT High Alarm - Command, Sec, Engi, Med
  - EVA spacesuit
+ - Radiation Spacesuit
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
 */
@@ -311,6 +312,28 @@ Contains:
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
+
+//Radiation
+/obj/item/clothing/head/helmet/space/rad
+	name = "radiation voidsuit helmet"
+	desc = "A special helmet that protects against radiation and space. Not much else unfortunately."
+	icon_state = "cespace_helmet"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	item_color = "engineering"
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	actions_types = list()
+
+/obj/item/clothing/suit/space/rad
+	name = "radiation voidsuit"
+	desc = "A special suit that protects against radiation and space. Not much else unfortunately."
+	icon_state = "hardsuit-rad"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"

@@ -251,3 +251,9 @@ effective or pretty fucking useless.
 	else
 		GLOB.active_jammers -= src
 	update_icon()
+
+/obj/item/headsetupgrader
+	name = "headset upgrader"
+	desc = "A tool that can be used to upgrade a normal headset to be able to protect from flashbangs."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "headset_upgrade"

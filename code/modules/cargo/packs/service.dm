@@ -115,7 +115,7 @@
 					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/rollingpin, 
+					/obj/item/kitchen/rollingpin,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
@@ -243,7 +243,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Vendor Refills //////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-	
+
 /datum/supply_pack/service/vending/bartending
 	name = "Bartending Supply Crate"
 	desc = "Bring on the booze with vending machine refills, as well as a free book containing the well-kept secrets to the bartending trade!"

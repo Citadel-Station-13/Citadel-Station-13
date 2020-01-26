@@ -1,6 +1,6 @@
 /obj/item/forcefield_projector
 	name = "forcefield projector"
-	desc = "An experimental device that can create several forcefields at a distance."
+	desc = "An experimental device that can create several forcefields at a short distance."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker_forcefield"
 	slot_flags = ITEM_SLOT_BELT
@@ -14,7 +14,7 @@
 	var/shield_integrity = 250
 	var/max_fields = 3
 	var/list/current_fields
-	var/field_distance_limit = 7
+	var/field_distance_limit = 2
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()

@@ -329,7 +329,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 
 /obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
-	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
+	var/turf/T = get_turf(A)
+	if(!user.IsAdvancedToolUser() || !T || istype(T, /turf/open/space/transit) || isindestructiblewall(T))
 		return ..()
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
@@ -376,12 +377,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(ATMOS_CATEGORY) //Making pipes
 				if(!can_make_pipe)
 					return ..()
+				A = T
+				if(is_type_in_typecache(recipe, GLOB.ventcrawl_machinery) && isclosedturf(A)) //wall escapism sanity check.
+					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+					return
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if (recipe.type == /datum/pipe_info/meter)
 					to_chat(user, "<span class='notice'>You start building a meter...</span>")
 					if(do_after(user, atmos_build_speed, target = A))
 						activate()
-						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
+						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(A)
 						PM.setAttachLayer(piping_layer)
 						if(mode&WRENCH_MODE)
 							PM.wrench_act(user, src)
@@ -391,7 +396,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
-						var/obj/item/pipe/P = new pipe_item_type(get_turf(A), queued_p_type, queued_p_dir)
+						var/obj/item/pipe/P = new pipe_item_type(A, queued_p_type, queued_p_dir)
 
 						if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
 							var/obj/item/pipe/trinary/flippable/F = P
@@ -408,7 +413,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
 					return ..()
-				A = get_turf(A)
+				A = T
 				if(isclosedturf(A))
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 					return
@@ -433,7 +438,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(TRANSIT_CATEGORY) //Making transit tubes
 				if(!can_make_pipe)
 					return ..()
-				A = get_turf(A)
+				A = T
 				if(isclosedturf(A))
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 					return
