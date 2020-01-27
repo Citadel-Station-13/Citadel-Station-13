@@ -37,7 +37,7 @@
 		if(O.status == BODYPART_ROBOTIC)
 			return
 
-		var/feetCover = HAS_TRAIT(H,TRAIT_HARDSOLES) || (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET) || (H.shoes && (H.shoes.body_parts_covered & FEET)))
+		var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET) || (H.shoes && (H.shoes.body_parts_covered & FEET)))
 
 		if(!(flags & CALTROP_BYPASS_SHOES) && feetCover)
 			return
@@ -46,7 +46,9 @@
 			return
 
 		var/damage = rand(min_damage, max_damage)
-		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
+		if (HAS_TRAIT(H,TRAIT_HARDSOLES))
+			damage *= 0.5
+		else if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
 			damage *= 0.75
 		H.apply_damage(damage, BRUTE, picked_def_zone)
 
@@ -59,4 +61,5 @@
 						"<span class='userdanger'>You slide on [A]!</span>")
 
 			cooldown = world.time
-		H.Knockdown(60)
+		if (!HAS_TRAIT(H,TRAIT_HARDSOLES))
+			H.Knockdown(60)
