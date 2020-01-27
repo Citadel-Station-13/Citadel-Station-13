@@ -225,16 +225,16 @@
 	/obj/item/storage/lockbox/dueling/hugbox/stamina)
 	crate_name = "dueling pistols"
 
-/datum/supply_pack/misc/dueling_stam
+/datum/supply_pack/misc/dueling_lethal
 	name = "Lethal Dueling Pistols"
 	desc = "Resolve all your quarrels with some nonlethal fun."
 	cost = 3000
 	contains = list(/obj/item/storage/lockbox/dueling/hugbox,
 	/obj/item/storage/lockbox/dueling/hugbox,
-	/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox)
 	crate_name = "dueling pistols"
 
-/datum/supply_pack/misc/dueling_stam
+/datum/supply_pack/misc/dueling_death
 	name = "Elimination Dueling Pistols"
 	desc = "It's high noon."
 	cost = 5000
