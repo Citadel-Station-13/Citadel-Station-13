@@ -214,6 +214,34 @@
 	for(var/i in 1 to 9)
 		new /obj/item/coin/silver(.)
 
+/datum/supply_pack/misc/dueling_stam
+	name = "Dueling Pistols"
+	desc = "Resolve all your quarrels with some nonlethal fun."
+	cost = 2000
+	contains = list(/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina)
+	crate_name = "dueling pistols"
+
+/datum/supply_pack/misc/dueling_stam
+	name = "Lethal Dueling Pistols"
+	desc = "Resolve all your quarrels with some nonlethal fun."
+	cost = 3000
+	contains = list(/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox,
+	crate_name = "dueling pistols"
+
+/datum/supply_pack/misc/dueling_stam
+	name = "Elimination Dueling Pistols"
+	desc = "It's high noon."
+	cost = 5000
+	hidden = TRUE
+	contains = list(/obj/item/storage/lockbox/dueling)
+	crate_name = "dueling pistols"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Misc Supplies ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
