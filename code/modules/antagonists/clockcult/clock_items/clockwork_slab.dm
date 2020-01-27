@@ -45,7 +45,7 @@
 /obj/item/clockwork/slab/traitor/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user) && !spent)
 		to_chat(user, "<span class='userdanger'>You press your hand onto [src], golden tendrils of light latching onto you. Was this the best of ideas?</span>")
-		if(add_servant_of_ratvar(user, FALSE, FALSE, TRUE, TRUE))
+		if(add_servant_of_ratvar(user, FALSE, FALSE, /datum/antagonist/clockcult/neutered/traitor))
 			spent = TRUE
 		else
 			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")

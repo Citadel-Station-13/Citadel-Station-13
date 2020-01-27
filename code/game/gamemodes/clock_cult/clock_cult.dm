@@ -45,11 +45,11 @@ Credit where due:
 // PROCS //
 ///////////
 
-/proc/is_servant_of_ratvar(mob/M, require_full_power = FALSE)
+/proc/is_servant_of_ratvar(mob/M, require_full_power = FALSE, holy_water_check = FALSE)
 	if(!istype(M) || isobserver(M))
 		return FALSE
 	var/datum/antagonist/clockcult/D = M?.mind?.has_antag_datum(/datum/antagonist/clockcult)
-	return D && (!require_full_power || !D.neutered)
+	return D && (!require_full_power || !D.neutered) && (!holy_water_check || !D.ignore_holy_water)
 
 /proc/is_eligible_servant(mob/M)
 	if(!istype(M))
@@ -73,18 +73,17 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE, neutered = FALSE, ignore_eligibility = FALSE)
+/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE, override_type)
 	if(!L || !L.mind)
 		return
 	var/update_type = /datum/antagonist/clockcult
 	if(silent)
 		update_type = /datum/antagonist/clockcult/silent
-	if(neutered)		//prioritizes
-		update_type = /datum/antagonist/clockcult/neutered
+	if(override_type)		//prioritizes
+		update_type = override_type
 	var/datum/antagonist/clockcult/C = new update_type(L.mind)
 	C.make_team = create_team
 	C.show_in_roundend = create_team //tutorial scarabs begone
-	C.ignore_eligibility_check = ignore_eligibility
 
 	if(iscyborg(L))
 		var/mob/living/silicon/robot/R = L

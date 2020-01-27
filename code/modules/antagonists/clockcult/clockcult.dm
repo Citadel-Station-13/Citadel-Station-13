@@ -10,6 +10,7 @@
 	var/make_team = TRUE //This should be only false for tutorial scarabs
 	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
 	var/ignore_eligibility_check = FALSE
+	var/ignore_holy_water = FALSE
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
@@ -17,6 +18,10 @@
 
 /datum/antagonist/clockcult/neutered
 	neutered = TRUE
+
+/datum/antagonist/clockcult/neutered/traitor
+	ignore_eligibility_check = TRUE
+	ignore_holy_water = TRUE
 
 /datum/antagonist/clockcult/Destroy()
 	qdel(hierophant_network)

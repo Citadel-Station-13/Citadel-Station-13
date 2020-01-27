@@ -14,12 +14,14 @@
 	var/datum/team/cult/cult_team
 	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
 	var/ignore_eligibility_checks = FALSE
+	var/ignore_holy_water = FALSE
 
 /datum/antagonist/cult/neutered
 	neutered = TRUE
 
 /datum/antagonist/cult/neutered/traitor
 	ignore_eligibility_checks = TRUE
+	ignore_holy_water = TRUE
 
 /datum/antagonist/cult/get_team()
 	return cult_team
