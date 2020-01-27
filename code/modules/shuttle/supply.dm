@@ -117,7 +117,10 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 		if(SO.pack.cost > SSshuttle.points)
 			continue
 
-		SSshuttle.points -= SO.pack.cost
+		var/cost = SO.pack.cost
+		SSshuttle.points -= cost
+		for(var/group in SO.pack.expenses_groups)
+			SSshuttle.expenses_by_group[group] += cost
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO

@@ -7,7 +7,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/critter
-	group = "Livestock"
+	group = CARGO_GROUP_CRITTER
 	crate_type = /obj/structure/closet/crate/critter
 
 /datum/supply_pack/critter/animal_feed

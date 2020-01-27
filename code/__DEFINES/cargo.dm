@@ -33,3 +33,24 @@
     list("gondolapod", "gondola", "The silent walker. This one seems to be part of a delivery agency."),\
     list("", "", "")\
 )
+
+//cargo groups defines
+//Keep in mind they are displayed in the UI, thus shouldn't have underscores and be properly capitalized.
+#define CARGO_GROUP_ARMORY "Armory"
+#define CARGO_GROUP_TOYS "Costumes & Toys"
+#define CARGO_GROUP_EMERGENCY "Emergency"
+#define CARGO_GROUP_ENGINE "Engine Construction"
+#define CARGO_GROUP_ENGINEERING "Engineering"
+#define CARGO_GROUP_CRITTER "Livestock"
+#define CARGO_GROUP_MATERIALS "Canisters & Materials"
+#define CARGO_GROUP_MEDICAL "Medical"
+#define CARGO_GROUP_MISC "Miscellaneous Supplies"
+#define CARGO_GROUP_ORGANIC "Food & Hydroponics"
+#define CARGO_GROUP_SCIENCE "Science"
+#define CARGO_GROUP_SECURITY "Security"
+#define CARGO_GROUP_SERVICE "Service"
+
+//Defines for extra cargo groups. These can have underscores and the like.
+#define CARGO_GROUP_DISCO_INFERNO "disco_inferno" //spend lot of credits in this group (or science) to unlock that shuttle.
+#define CARGO_GROUP_CONTRABAND "contraband"
+#define CARGO_GROUP_EMAG "emag"

@@ -368,6 +368,9 @@
 	max_val = 1
 	integer = FALSE
 
+/datum/config_entry/number/discoinferno_expenses_requirements
+	config_entry_value = 15000 //base price is 5k
+
 /datum/config_entry/flag/ic_printing
 
 /datum/config_entry/flag/roundstart_traits

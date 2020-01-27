@@ -7,7 +7,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/science
-	group = "Science"
+	group = CARGO_GROUP_SCIENCE
 	crate_type = /obj/structure/closet/crate/science
 
 /* For later

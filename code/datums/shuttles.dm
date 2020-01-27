@@ -233,9 +233,22 @@
 /datum/map_template/shuttle/emergency/discoinferno
 	suffix = "discoinferno"
 	name = "Disco Inferno"
-	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
+	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. \
+					LOADSAMONEY credits worth of science and party supplies must be bought to unlock it. \
+					This is the reason why you are here. \
+					Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
-	credit_cost = 10000
+	credit_cost = 5000
+
+/datum/map_template/shuttle/emergency/discoinferno/New()
+	. = ..()
+	description = replacetext(description, "LOADSAMONEY", CONFIG_GET(number/discoinferno_expenses_requirements))
+
+/datum/map_template/shuttle/emergency/discoinferno/prerequisites_met()
+	var/total = SSshuttle.expenses_by_group[CARGO_GROUP_DISCO_INFERNO] + SSshuttle.expenses_by_group[CARGO_GROUP_SCIENCE]
+	if(total < CONFIG_GET(number/discoinferno_expenses_requirements))
+		return FALSE
+	return TRUE
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"

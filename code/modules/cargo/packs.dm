@@ -1,6 +1,7 @@
 /datum/supply_pack
 	var/name = "Crate"
 	var/group = ""
+	var/expenses_groups = list() //for SSshuttle.expenses_by_group
 	var/hidden = FALSE //Aka emag only
 	var/contraband = FALSE //Hacking the console with a multitool
 	var/cost = 700 // Minimum cost, or infinite points are possible.
@@ -15,6 +16,15 @@
 	var/special_enabled = FALSE
 	var/DropPodOnly = FALSE //only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE //Can only an admin spawn this crate?
+
+/datum/supply_pack/New()
+	..()
+	if(group)
+		expenses_groups += group
+	if(contraband)
+		expenses_groups += CARGO_GROUP_CONTRABAND
+	if(hidden)
+		expenses_groups += CARGO_GROUP_EMAG
 
 /datum/supply_pack/proc/generate(atom/A)
 	var/obj/structure/closet/crate/C = new crate_type(A)
