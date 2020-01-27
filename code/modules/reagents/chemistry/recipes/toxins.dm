@@ -35,7 +35,7 @@
 	id = /datum/reagent/toxin/acid/fluacid
 	results = list(/datum/reagent/toxin/acid/fluacid = 4)
 	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/fluorine = 1, /datum/reagent/hydrogen = 1, /datum/reagent/potassium = 1)
-	mix_message = "<span class='danger'>A colourless liquid froms.</span>"
+	mix_message = "<span class='danger'>A colourless liquid forms.</span>"
 	required_temp = 380
 
 /datum/chemical_reaction/sulfonal

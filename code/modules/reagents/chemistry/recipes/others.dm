@@ -53,13 +53,13 @@
 	id = "sodiumchloride"
 	results = list(/datum/reagent/consumable/sodiumchloride = 3)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1)
-	mix_message = "The mix drys rapidly forming chunks."
+	mix_message = "The mix dries, rapidly forming chunks."
 
 /datum/chemical_reaction/plasmasolidification
 	name = "Solid Plasma"
 	id = "solidplasma"
 	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
-	mix_message = "The mix drys rapidly forming large crystals of plasma."
+	mix_message = "The mix dries, rapidly forming large crystals of plasma."
 	mob_react = FALSE
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, multiplier)
@@ -71,7 +71,7 @@
 	name = "Solid Gold"
 	id = "solidgold"
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
-	mix_message = "The mix drys rapidly forming large crystals of gold."
+	mix_message = "The mix dries, rapidly forming large crystals of gold."
 	mob_react = FALSE
 
 /datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, multiplier)
@@ -90,7 +90,7 @@
 	id = "soapification"
 	required_reagents = list(/datum/reagent/liquidgibs = 10, /datum/reagent/lye  = 10) // requires two scooped gib tiles
 	required_temp = 374
-	mix_message = "The mix drys rapidly forming large chunks of soap."
+	mix_message = "The mix dries, rapidly forming large chunks of soap."
 	mob_react = FALSE
 
 /datum/chemical_reaction/mustard
@@ -109,7 +109,7 @@
 	id = "candlefication"
 	required_reagents = list(/datum/reagent/liquidgibs = 5, /datum/reagent/oxygen  = 5)
 	required_temp = 374
-	mix_message = "The mix drys rapidly forming large chunks of wax."
+	mix_message = "The mix dries, rapidly forming large chunks of wax."
 	mob_react = FALSE
 
 /datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, multiplier)
@@ -121,7 +121,7 @@
 	name = "Meatification"
 	id = "meatification"
 	required_reagents = list(/datum/reagent/liquidgibs = 10, /datum/reagent/consumable/nutriment = 10, /datum/reagent/carbon = 10)
-	mix_message = "The mix thickens rapidly forming large chunks of meat."
+	mix_message = "The mix thickens, rapidly forming large chunks of meat."
 	mob_react = FALSE
 
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, multiplier)
@@ -136,14 +136,14 @@
 	results = list(/datum/reagent/carbondioxide = 3)
 	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/oxygen = 2)
 	required_temp = 777 // pure carbon isn't especially reactive.
-	mix_message = "The mix burns up into forming something unknown."
+	mix_message = "The mix burns up, forming into something unknown."
 
 /datum/chemical_reaction/nitrous_oxide
 	name = "Nitrous Oxide"
 	id = /datum/reagent/nitrous_oxide
 	results = list(/datum/reagent/nitrous_oxide = 5)
 	required_reagents = list(/datum/reagent/ammonia = 2, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 2)
-	mix_message = "The mix slowly burns gasifying."
+	mix_message = "The mix slowly burns, turning into a gas."
 	required_temp = 525
 
 //Technically a mutation toxin
@@ -480,7 +480,7 @@
 	id = /datum/reagent/space_cleaner
 	results = list(/datum/reagent/space_cleaner = 2)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/water = 1)
-	mix_message = "The liquid starts to emit lemony smell." //Joke on lemony sented cleaners
+	mix_message = "The liquid starts to emit a lemony smell." //Joke on lemony sented cleaners
 
 /datum/chemical_reaction/plantbgone
 	name = "Plant-B-Gone"
@@ -538,7 +538,7 @@
 	id = /datum/reagent/ash
 	results = list(/datum/reagent/ash = 1)
 	required_reagents = list(/datum/reagent/oil = 1)
-	mix_message = "The liquid burns up making a dust."
+	mix_message = "The liquid burns up into dust."
 	required_temp = 480
 
 /datum/chemical_reaction/colorful_reagent
@@ -546,7 +546,7 @@
 	id = /datum/reagent/colorful_reagent
 	results = list(/datum/reagent/colorful_reagent = 5)
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/radium = 1, /datum/reagent/drug/space_drugs = 1, /datum/reagent/medicine/cryoxadone = 1, /datum/reagent/consumable/triple_citrus = 1)
-	mix_message = "The mix colourful staining the container."
+	mix_message = "The mix becomes colourful, staining the container."
 
 /datum/chemical_reaction/life
 	name = "Life"
@@ -584,21 +584,21 @@
 	id = /datum/reagent/hair_dye
 	results = list(/datum/reagent/hair_dye = 5)
 	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/radium = 1, /datum/reagent/drug/space_drugs = 1)
-	mix_message = "The mix starts to leave long strands along the container walls."
+	mix_message = "The mix starts to leave long strands along the container's walls."
 
 /datum/chemical_reaction/barbers_aid
 	name = "barbers_aid"
 	id = /datum/reagent/barbers_aid
 	results = list(/datum/reagent/barbers_aid = 5)
 	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/radium = 1, /datum/reagent/drug/space_drugs = 1)
-	mix_message = "The mix starts to leave long strands along the container walls."
+	mix_message = "The mix starts to leave long strands along the container's walls."
 
 /datum/chemical_reaction/concentrated_barbers_aid
 	name = "concentrated_barbers_aid"
 	id = /datum/reagent/concentrated_barbers_aid
 	results = list(/datum/reagent/concentrated_barbers_aid = 2)
 	required_reagents = list(/datum/reagent/barbers_aid = 1, /datum/reagent/toxin/mutagen = 1)
-	mix_message = "The mix starts to leave long strands along the container walls."
+	mix_message = "The mix starts to leave long strands along the container's walls."
 
 /datum/chemical_reaction/saltpetre
 	name = "saltpetre"
@@ -626,7 +626,7 @@
 	id = /datum/reagent/royal_bee_jelly
 	results = list(/datum/reagent/royal_bee_jelly = 5)
 	required_reagents = list(/datum/reagent/toxin/mutagen = 10, /datum/reagent/consumable/honey = 40)
-	mix_message = "The liquid starts to stick to the container walls."
+	mix_message = "The liquid starts to stick to the container's walls."
 
 /datum/chemical_reaction/laughter
 	name = "laughter"
@@ -652,7 +652,7 @@
 	id = /datum/reagent/pax
 	results = list(/datum/reagent/pax = 3)
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
-	mix_message = "The liquid starts to look peacefull."
+	mix_message = "The liquid starts to look peaceful."
 
 /datum/chemical_reaction/cat
 	name = "felined mutation toxic"
@@ -671,7 +671,7 @@
 	mix_message = "The liquid starts to look dusty."
 
 /datum/chemical_reaction/notlight //Harder to make do to it being a hard race to play
-	name = "shadow muatatuin toxic"
+	name = "shadow mutation toxic"
 	id = /datum/reagent/mutationtoxin/shadow
 	results = list(/datum/reagent/mutationtoxin/shadow = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 5, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/oculine = 10, /datum/reagent/mutationtoxin = 1)

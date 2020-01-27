@@ -5,21 +5,21 @@
 	results = list(/datum/reagent/medicine/leporazine = 2)
 	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/copper = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
-	mix_message = "The liquid becomes a light pink"
+	mix_message = "The liquid becomes a light pink colour."
 
 /datum/chemical_reaction/rezadone
 	name = "Rezadone"
 	id = /datum/reagent/medicine/rezadone
 	results = list(/datum/reagent/medicine/rezadone = 3)
 	required_reagents = list(/datum/reagent/toxin/carpotoxin = 1, /datum/reagent/cryptobiolin = 1, /datum/reagent/copper = 1)
-	mix_message = "The liquid starts to harden and become dry"
+	mix_message = "The liquid starts to harden and become dry."
 
 /datum/chemical_reaction/spaceacillin
 	name = "Spaceacillin"
 	id = /datum/reagent/medicine/spaceacillin
 	results = list(/datum/reagent/medicine/spaceacillin = 2)
 	required_reagents = list(/datum/reagent/cryptobiolin = 1, /datum/reagent/medicine/epinephrine = 1)
-	mix_message = "The liquid mixes smoothly"
+	mix_message = "The liquid mixes smoothly."
 
 /datum/chemical_reaction/inacusiate
 	name = "inacusiate"
@@ -206,7 +206,7 @@
 	id = /datum/reagent/medicine/atropine
 	results = list(/datum/reagent/medicine/atropine = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/acetone = 1, /datum/reagent/diethylamine = 1, /datum/reagent/phenol = 1, /datum/reagent/toxin/acid = 1)
-	mix_message = "The liquid starts to blacken quickly."
+	mix_message = "The liquid quickly blackens."
 
 /datum/chemical_reaction/epinephrine
 	name = "Epinephrine"
@@ -220,7 +220,7 @@
 	id = /datum/reagent/medicine/strange_reagent
 	results = list(/datum/reagent/medicine/strange_reagent = 3)
 	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/water/holywater = 1, /datum/reagent/toxin/mutagen = 1)
-	mix_message = "The mixture sputters loudly and smells sickly."
+	mix_message = "The mixture sputters loudly and emits a sickly smell."
 
 /datum/chemical_reaction/mannitol
 	name = "Mannitol"
@@ -333,7 +333,7 @@
 	id = /datum/reagent/medicine/morphine
 	results = list(/datum/reagent/medicine/morphine = 2)
 	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1)
-	mix_message = "The liquid densifies as its heated."
+	mix_message = "The liquid densifies as it's heated."
 	required_temp = 480
 
 /datum/chemical_reaction/modafinil
@@ -342,7 +342,7 @@
 	results = list(/datum/reagent/medicine/modafinil = 5)
 	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/ammonia = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list(/datum/reagent/bromine = 1) // as close to the real world synthesis as possible
-	mix_message = "The liquid densifies as its heated."
+	mix_message = "The liquid densifies as it's heated."
 
 /datum/chemical_reaction/psicodine
 	name = "Psicodine"
