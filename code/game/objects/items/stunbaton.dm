@@ -187,9 +187,8 @@
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
 
-
-	L.Knockdown(stunpwr)
-	L.adjustStaminaLoss(stunpwr*0.2)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+	L.Knockdown(stunpwr, override_stamdmg = 0)
+	L.apply_damage(stunpwr*0.45, STAMINA, user.zone_selected)
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
