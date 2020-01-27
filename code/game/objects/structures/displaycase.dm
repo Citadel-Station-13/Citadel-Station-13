@@ -80,7 +80,7 @@
 /obj/structure/displaycase/proc/trigger_alarm()
 	//Activate Anti-theft
 	if(alert)
-		var/area/alarmed = get_area(src)
+		var/area/alarmed = get_base_area(src)
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 

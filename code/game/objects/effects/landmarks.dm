@@ -456,7 +456,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 			if(!SSmapping.station_room_templates[t])
 				log_world("Station room spawner placed at ([T.x], [T.y], [T.z]) has invalid ruin name of \"[t]\" in its list")
 				templates -= t
-		template_name = pickweight(templates)
+		template_name = pickweightAllowZero(templates)
 	if(!template_name)
 		GLOB.stationroom_landmarks -= src
 		qdel(src)
@@ -481,3 +481,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/box/engine/New()
 	. = ..()
 	templates = CONFIG_GET(keyed_list/box_random_engine)
+
+// Landmark for the mining station
+/obj/effect/landmark/stationroom/lavaland/station
+	templates = list("Public Mining Base" = 3)
+	icon = 'icons/rooms/Lavaland/Mining.dmi'
