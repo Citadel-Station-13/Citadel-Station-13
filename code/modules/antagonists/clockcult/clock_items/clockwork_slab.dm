@@ -47,6 +47,9 @@
 		to_chat(user, "<span class='userdanger'>You press your hand onto [src], golden tendrils of light latching onto you. Was this the best of ideas?</span>")
 		if(add_servant_of_ratvar(user, FALSE, FALSE, /datum/antagonist/clockcult/neutered/traitor))
 			spent = TRUE
+			// Add some (5 KW) power so they don't suffer for 100 ticks
+			GLOB.clockwork_power += 5000
+			// This intentionally does not use adjust_clockwork_power.
 		else
 			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
 	return ..()
