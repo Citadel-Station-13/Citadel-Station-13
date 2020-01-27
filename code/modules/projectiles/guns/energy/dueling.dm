@@ -255,13 +255,13 @@
 
 /obj/item/ammo_casing/energy/duel
 	e_cost = 0
-	projectile_type = /obj/projectile/energy/duel
+	projectile_type = /obj/item/projectile/energy/duel
 	var/setting
 	var/hugbox = DUEL_HUGBOX_NONE
 
 /obj/item/ammo_casing/energy/duel/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	. = ..()
-	var/obj/projectile/energy/duel/D = BB
+	var/obj/item/projectile/energy/duel/D = BB
 	D.setting = setting
 	D.hugbox = hugbox
 	D.update_icon()
@@ -275,15 +275,15 @@
 
 //Projectile
 
-/obj/projectile/energy/duel
+/obj/item/projectile/energy/duel
 	name = "dueling beam"
 	icon_state = "declone"
-	reflectable = FALSE
+	is_reflectable = FALSE
 	homing = TRUE
 	var/setting
 	var/hugbox = DUEL_HUGBOX_NONE
 
-/obj/projectile/energy/duel/update_icon()
+/obj/item/projectile/energy/duel/update_icon()
 	. = ..()
 	switch(setting)
 		if(DUEL_SETTING_A)
@@ -293,7 +293,7 @@
 		if(DUEL_SETTING_C)
 			color = "blue"
 
-/obj/projectile/energy/duel/on_hit(atom/target, blocked)
+/obj/item/projectile/energy/duel/on_hit(atom/target, blocked)
 	. = ..()
 	var/turf/T = get_turf(target)
 	var/obj/effect/temp_visual/dueling_chaff/C = locate() in T
@@ -345,7 +345,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 2
-	STR.set_holdable(list(/obj/item/gun/energy/dueling))
+	STR.can_hold = typecacheof(/obj/item/gun/energy/dueling)
 
 /obj/item/storage/lockbox/dueling/update_icon()
 	cut_overlays()
