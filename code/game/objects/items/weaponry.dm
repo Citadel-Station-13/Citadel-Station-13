@@ -354,7 +354,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
     icon_state = "switchblade_msf"
     extended_icon_state = "switchblade_ext_msf"
     icon_state = "switchblade_msf"
-	to_chat(usr,"<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
+	  to_chat(usr,"<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
 	
 /obj/item/phone
 	name = "red phone"
