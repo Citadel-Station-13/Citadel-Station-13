@@ -15,7 +15,8 @@
 /obj/item/clothing/mask/gas/glass
 	name = "glass gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. This one doesn't obscure your face however." //More accurate
-	icon_state = "gas_clear"
+	icon_state = "gas_mask"
+	icon_state = "gas_mask"
 	flags_inv = HIDEEYES
 
 
