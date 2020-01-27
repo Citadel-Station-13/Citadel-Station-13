@@ -64,13 +64,13 @@
 	var/directionstring
 	switch(direction)
 		if(NORTH)
-			directionstring = " from the north."
+			directionstring = " towards the fore"
 		if(SOUTH)
-			directionstring = " from the south."
+			directionstring = " towards the aft"
 		if(EAST)
-			directionstring = " from the east."
+			directionstring = " towards starboard"
 		if(WEST)
-			directionstring = " from the west."
+			directionstring = " towards port"
 	priority_announce("Meteors have been detected on collision course with the station[directionstring]. Estimated time until impact: [round(startWhen/60)] minutes.[GLOB.singularity_counter ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]", "Meteor Alert", "meteors")
 
 /datum/round_event/meteor_wave/tick()
