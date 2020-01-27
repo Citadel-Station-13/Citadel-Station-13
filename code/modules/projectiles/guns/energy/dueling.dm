@@ -270,7 +270,6 @@
 	. = ..()
 	var/obj/effect/temp_visual/dueling_chaff/C = new(get_turf(user))
 	C.setting = setting
-	D.hugbox = hugbox
 	C.update_icon()
 
 //Projectile
