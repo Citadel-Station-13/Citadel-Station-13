@@ -9,19 +9,15 @@
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"
 
+/datum/supply_pack/misc/randomised/dirtymags/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-
-/datum/supply_pack/misc/abandonedcrate
-	name = "Loot Box"
-	desc = "Try your luck with these highly secure loot boxes! Solve the lock, win great prizes! WARNING: EXPLOSIVE FAILURE."
-	contraband = TRUE
-	cost = 15000
-	contains = list(/obj/structure/closet/crate/secure/loot)
-	crate_name = "abandoned crate"
-	crate_type = /obj/structure/closet/crate/large
-	dangerous = TRUE
 
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
@@ -129,6 +125,37 @@
 //////////////////////////////// Entertainment ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+/datum/supply_pack/misc/candlelitdinner
+	name = "Candlelit Dinner Crate" //This is meant for greenshifts Ghommie, reeeee.
+	desc = "Need to organise a date night? Set up a fancy room for it with this luxurious crate filled with romance! Contains 40 tiles of classic, blue, black, and green carpeting, materials to build chairs, several boxes of candles, eight bottles of wine, two boxes of drinking glasses, ten metal rods, twenty wood, and twenty metal."
+	cost = 3200 // 200 for each wine bottle, 450 for metal/wood, 800 + 700 + 450 = 2750.
+	contains = list(/obj/item/storage/fancy/candle_box,
+				/obj/item/storage/fancy/candle_box,
+				/obj/item/storage/fancy/candle_box,
+				/obj/item/storage/fancy/candle_box,
+				/obj/item/stack/tile/carpet/twenty,
+				/obj/item/stack/tile/carpet/twenty,
+				/obj/item/stack/tile/carpet/blue/twenty,
+				/obj/item/stack/tile/carpet/blue/twenty,
+				/obj/item/stack/tile/carpet/royalblack/twenty,
+				/obj/item/stack/tile/carpet/royalblack/twenty,
+				/obj/item/stack/tile/carpet/green/twenty,
+				/obj/item/stack/tile/carpet/green/twenty,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/reagent_containers/food/drinks/bottle/wine,
+				/obj/item/stack/rods/ten,
+				/obj/item/stack/sheet/metal/twenty,
+				/obj/item/stack/sheet/mineral/wood/twenty,
+				/obj/item/storage/box/drinkingglasses,
+				/obj/item/storage/box/drinkingglasses)
+	crate_name = "romance crate"
+
 /datum/supply_pack/misc/randombedsheets
 	name = "Bedsheet Crate (R)"
 	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with eight random bedsheets for your slumbering pleasure!"
@@ -214,9 +241,47 @@
 	for(var/i in 1 to 9)
 		new /obj/item/coin/silver(.)
 
+/datum/supply_pack/misc/randomised/dirtymags
+	name = "Dirty Magazines"
+	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
+	hidden = TRUE
+	cost = 12000
+	var/num_contained = 3 
+	contains = list(/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/m45/kitchengun,
+					/obj/item/ammo_box/magazine/m45/kitchengun)
+	crate_name = "crate"
+
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////// Misc Supplies ///////////////////////////////
+///////////////////////////////// Misc Supplies //////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/misc/candles
+	name = "Candle Crate"
+	desc = "Set up a romantic dinner or host a séance with these extra candles and crayons."
+	cost = 850
+	contains = list(/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/crayons)
+	crate_name = "candle crate"
+
+/datum/supply_pack/misc/interrogation
+	name = "CBT Interrogation Crate"
+	desc = "CBT is a special term used to describe an intricate form of information extraction. We can't tell you how to use this, but we can give you the tools required to get what you need."
+	contraband = TRUE
+	cost = 2400
+	contains = list(/mob/living/simple_animal/chicken,
+					/obj/item/toy/beach_ball/holoball,
+					/obj/item/melee/baton/cattleprod,
+					/obj/item/soap/deluxe,
+					/obj/item/stock_parts/cell/high)
+	crate_name = "interrogation crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/exoticfootwear
 	name = "Exotic Footwear Crate"
@@ -233,14 +298,6 @@
 					/obj/item/clothing/shoes/clown_shoes,
 					/obj/item/clothing/shoes/kindleKicks)
 	crate_name = "footie crate"
-
-/datum/supply_pack/misc/wrapping_paper
-	name = "Festive Wrapping Paper Crate"
-	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, or the Clown's severed head? You can do all that, with this crate full of wrapping paper."
-	cost = 1000
-	contains = list(/obj/item/stack/wrapping_paper)
-	crate_type = /obj/structure/closet/crate/wooden
-	crate_name = "festive wrapping paper crate"
 
 /datum/supply_pack/misc/funeral
 	name = "Funeral Supplies"
@@ -266,6 +323,16 @@
 	cost = 10000
 	contains = list(/obj/machinery/jukebox)
 	crate_name = "Jukebox"
+
+/datum/supply_pack/misc/abandonedcrate
+	name = "Loot Box"
+	desc = "Try your luck with these highly secure loot boxes! Solve the lock, win great prizes! WARNING: EXPLOSIVE FAILURE."
+	contraband = TRUE
+	cost = 15000
+	contains = list(/obj/structure/closet/crate/secure/loot)
+	crate_name = "abandoned crate"
+	crate_type = /obj/structure/closet/crate/large
+	dangerous = TRUE
 
 /datum/supply_pack/misc/potted_plants
 	name = "Potted Plants Crate"

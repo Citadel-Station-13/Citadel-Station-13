@@ -309,6 +309,15 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	recipes = GLOB.bamboo_recipes
 	return ..()
 
+/obj/item/stack/sheet/mineral/bamboo/ten
+	amount = 10
+
+/obj/item/stack/sheet/mineral/bamboo/twenty
+	amount = 20
+
+/obj/item/stack/sheet/mineral/bamboo/fifty
+	amount = 50
+
 /*
  * Cloth
  */
