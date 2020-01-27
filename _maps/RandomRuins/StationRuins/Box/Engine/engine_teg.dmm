@@ -607,7 +607,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "sN" = (
-/obj/machinery/atmospherics/pipe/manifold/dark{
+/obj/machinery/atmospherics/pipe/manifold/dark/visible{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -1219,12 +1219,12 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Jd" = (
-/obj/machinery/atmospherics/pipe/manifold/orange,
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/pipe/manifold/orange/visible,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Jj" = (
