@@ -264,8 +264,8 @@
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(ctf_gear)
-	M.dna.species.melee_damage_upper = 25
-	M.dna.species.melee_damage_lower = 25
+	M.dna.species.punchdamagehigh = 25
+	M.dna.species.punchdamagelow = 25
 	spawned_mobs += M
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
@@ -381,7 +381,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/floor_vanish, src), 1)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/m50/ctf
 	ammo_type = /obj/item/ammo_casing/a50/ctf
@@ -404,14 +404,14 @@
 
 /obj/item/gun/ballistic/automatic/laser/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/floor_vanish, src), 1)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
 /obj/item/ammo_box/magazine/recharge/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/floor_vanish, src), 1)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_casing/caseless/laser/ctf
 	projectile_type = /obj/item/projectile/beam/ctf
@@ -475,7 +475,7 @@
 
 /obj/item/claymore/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/floor_vanish, src), 1)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /datum/outfit/ctf
 	name = "CTF"
