@@ -38,7 +38,7 @@
 /datum/map_template/ruin/station/box/engine/teg
 	id = "engine_teg"
 	suffix = "Box/Engine/engine_tesla.dmm"
-	name = "Box Thermo-Eletric"
+	name = "Box TEG"
 
 /datum/map_template/ruin/station/box/engine/empty
 	id = "engine_empty"
