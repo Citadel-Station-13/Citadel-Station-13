@@ -107,10 +107,11 @@
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+	weapon_weight = WEAPON_HEAVY
 	pin = null
 
 /obj/item/gun/energy/plasmacutter

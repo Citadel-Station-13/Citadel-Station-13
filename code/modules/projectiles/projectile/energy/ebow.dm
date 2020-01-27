@@ -1,7 +1,7 @@
 /obj/item/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
-	damage = 8
+	damage = 15
 	damage_type = TOX
 	nodamage = 0
 	stamina = 60
