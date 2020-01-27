@@ -866,6 +866,11 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/engineering)
+"As" = (
+/obj/structure/sign/warning/fire,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "At" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8
@@ -2610,7 +2615,7 @@ Dv
 Dv
 bO
 YP
-fO
+As
 yN
 yN
 yN
