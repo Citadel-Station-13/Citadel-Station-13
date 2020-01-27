@@ -1,7 +1,7 @@
 /datum/supply_pack
 	var/name = "Crate"
 	var/group = ""
-	var/expenses_groups = list() //for SSshuttle.expenses_by_group
+	var/list/expenses_groups = list() //for SSshuttle.expenses_by_group
 	var/hidden = FALSE //Aka emag only
 	var/contraband = FALSE //Hacking the console with a multitool
 	var/cost = 700 // Minimum cost, or infinite points are possible.
