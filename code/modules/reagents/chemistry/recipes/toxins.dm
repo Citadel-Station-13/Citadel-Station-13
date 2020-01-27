@@ -105,7 +105,7 @@
 	id = /datum/reagent/toxin/heparin
 	results = list(/datum/reagent/toxin/heparin = 4)
 	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1, /datum/reagent/lithium = 1)
-	mix_message = "The mixture thins and loses all color."
+	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
 
 /datum/chemical_reaction/rotatium
 	name = "Rotatium"
