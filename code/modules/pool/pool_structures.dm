@@ -70,7 +70,7 @@
 				jumper.pixel_y = 7
 				jumper.dir = 8
 				sleep(1)
-				jumper.loc = T
+				jumper.forceMove(T)
 				addtimer(CALLBACK(src, .proc/dive, jumper), 10)
 
 /obj/structure/pool/Lboard/proc/dive(mob/living/carbon/jumper)
