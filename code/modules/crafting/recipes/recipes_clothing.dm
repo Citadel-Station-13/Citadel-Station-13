@@ -69,9 +69,9 @@
 	reqs = list(/obj/item/clothing/glasses/hud/health/sunglasses = 1)
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/beergoggles
-	name = "Beer Goggles"
-	result = /obj/item/clothing/glasses/sunglasses/reagent
+/datum/crafting_recipe/scienceglasses
+	name = "Science Glasses"
+	result = /obj/item/clothing/glasses/sunglasses/chemical
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/science = 1,
@@ -79,13 +79,14 @@
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/beergogglesremoval
-	name = "Beer Goggles removal"
+/datum/crafting_recipe/scienceglassesremoval
+	name = "Science Glasses removal"
 	result = /obj/item/clothing/glasses/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/sunglasses/reagent = 1)
 	category = CAT_CLOTHING
+
 /* //Kevinz doesn't want it as a recipe for now, leaving it in if anything ever changes to let it in
 /datum/crafting_recipe/stunglasses
 	name = "Stunglasses"
