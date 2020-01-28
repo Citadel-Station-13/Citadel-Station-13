@@ -10,6 +10,14 @@
 	group = "Food & Hydroponics"
 	crate_type = /obj/structure/closet/crate/freezer
 
+/datum/supply_pack/organic/randomized
+	var/num_contained = 15
+
+/datum/supply_pack/organic/randomized/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to num_contained)
+		var/item = pick(contains)
+		new item(C)
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Meals ///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -31,11 +39,11 @@
 	crate_name = "combo meal w/toy"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/organic/candy/randomised
+/datum/supply_pack/organic/randomized/candy
 	name = "Candy Crate"
 	desc = "For people that have an insatiable sweet tooth! Has ten candies to be eaten up.."
 	cost = 2500
-	var/num_contained = 10 //number of items picked to be contained in a randomised crate
+	num_contained = 10
 	contains = list(/obj/item/reagent_containers/food/snacks/candy,
 					/obj/item/reagent_containers/food/snacks/lollipop,
 					/obj/item/reagent_containers/food/snacks/gumball,
@@ -63,12 +71,6 @@
 					/obj/item/storage/fancy/heart_box,
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
-
-/datum/supply_pack/organic/candy/randomised/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
 
 /datum/supply_pack/organic/fiestatortilla
 	name = "Fiesta Crate"
@@ -152,7 +154,7 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
 
-/datum/supply_pack/organic/randomized/chef/fruits
+/datum/supply_pack/organic/randomized/fruits
 	name = "Fruit Crate"
 	desc = "Rich in vitamins and possibly sugar. Contains 15 assorted fruits."
 	cost = 1500
@@ -182,7 +184,7 @@
 	access = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/organic/randomized/chef/
+/datum/supply_pack/organic/randomized
 	name = "Meat Crate (Exotic)"
 	desc = "The best cuts in the whole galaxy. Contains 15 assorted exotic meats."
 	cost = 2000
@@ -243,7 +245,7 @@
 	crate_name = "wildcard food crate"
 	crate_type = /obj/structure/closet/crate/freezer
 
-/datum/supply_pack/organic/randomized/chef/vegetables
+/datum/supply_pack/organic/randomized/vegetables
 	name = "Vegetable Crate"
 	desc = "Grown in vats. Contains 15 assorted vegetables."
 	cost = 1300
@@ -256,11 +258,6 @@
 					/obj/item/reagent_containers/food/snacks/grown/onion,
 					/obj/item/reagent_containers/food/snacks/grown/pumpkin)
 	crate_name = "veggie crate"
-
-/datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 15)
-		var/item = pick(contains)
-		new item(C)
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Hydroponics /////////////////////////////////////
