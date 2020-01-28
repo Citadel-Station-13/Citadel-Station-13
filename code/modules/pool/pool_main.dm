@@ -79,6 +79,8 @@
 			return ..()			//people pulling stuff out of pool
 		if(!ishuman(AM))
 			return ..()			//human weak, monkey (and anyone else) ook ook eek eek strong
+		if(isliving(AM) && (locate(/obj/structure/pool/ladder) in src))
+			return ..()			//climbing out
 		return istype(newloc, type)
 	return ..()
 
