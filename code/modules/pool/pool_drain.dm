@@ -19,6 +19,8 @@
 	var/cycles_left = 0
 	/// Mobs we are swirling around
 	var/list/whirling_mobs
+	/// Suck in once per x ticks
+	var/suck_in_once_per = 3
 
 	var/cooldown
 
@@ -82,7 +84,8 @@
 						step_towards(O, src)
 				for(var/mob/M in orange(min(drain_suck_range, 10), src))
 					if(isliving(M) && !M.anchored && is_in_our_pool(M))
-						step_towards(M, src)
+						if(!(cycles_left % suck_in_once_per))
+							step_towards(M, src)
 						whirl_mob(M)
 						if(ishuman(M) && (get_dist(M, src) <= 1))
 							var/mob/living/carbon/human/H = M
