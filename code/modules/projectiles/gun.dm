@@ -33,7 +33,7 @@
 	var/burst_size = 1
 	/// The time between shots in burst.
 	var/burst_shot_delay = 3
-	/// The time between firing actions, this means between bursts if this is burst weapon.
+	/// The time between firing actions, this means between bursts if this is burst weapon. The reason this is 0 is because you are still, by default, limited by clickdelay.
 	var/fire_delay = 0
 	/// Last world.time this was fired
 	var/last_fire = 0

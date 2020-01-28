@@ -162,10 +162,10 @@
 		recharge_newshot(TRUE)
 
 /obj/item/gun/energy/proc/set_firemode_to_next(mob/user_for_feedback)
-	return set_firemode_index(current_firemode_index++, user_for_feedback)
+	return set_firemode_index(++current_firemode_index, user_for_feedback)
 
 /obj/item/gun/energy/proc/set_firemode_to_prev(mob/user_for_feedback)
-	return set_firemode_index(current_firemode_index--, user_for_feedback)
+	return set_firemode_index(--current_firemode_index, user_for_feedback)
 
 /obj/item/gun/energy/proc/get_firemode_index(casing_type)
 	var/obj/item/ammo_casing/energy/E = locate(casing_type) in ammo_type
