@@ -272,17 +272,3 @@
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/service/janitor/pestcontrol
-	name = "Pest Control Crate"
-	desc = "Show those dirty rats, and space bears who's boss with morally ambiguous pest control kit. Contains mouse traps, pest killer, unfinished grenades, bamboo cuttings, cable coil, and a bear trap."
-	cost = 5000
-	contraband = TRUE
-	contains = list(/obj/item/reagent_containers/glass/bottle/killer/pestkiller,
-					/obj/item/grenade/chem_grenade,
-					/obj/item/grenade/chem_grenade,
-					/obj/item/grenade/chem_grenade,
-					/obj/item/grenade/chem_grenade,
-					/obj/item/stack/sheet/mineral/bamboo/twenty,
-					/obj/item/storage/box/mousetraps,
-					/obj/item/stack/cable_coil/random,
-					/obj/item/restraints/legcuffs/beartrap)

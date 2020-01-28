@@ -119,37 +119,6 @@
 //////////////////////////////// Entertainment ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/misc/candlelitdinner
-	name = "Candlelit Dinner Crate" //This is meant for greenshifts Ghommie, reeeee.
-	desc = "Need to organise a date night? Set up a fancy room for it with this luxurious crate filled with romance! Contains 40 tiles of classic, blue, black, and green carpeting, materials to build chairs, several boxes of candles, eight bottles of wine, two boxes of drinking glasses, ten metal rods, twenty wood, and twenty metal."
-	cost = 3200 // 200 for each wine bottle, 450 for metal/wood, 800 + 700 + 450 = 2750.
-	contains = list(/obj/item/storage/fancy/candle_box,
-				/obj/item/storage/fancy/candle_box,
-				/obj/item/storage/fancy/candle_box,
-				/obj/item/storage/fancy/candle_box,
-				/obj/item/stack/tile/carpet/twenty,
-				/obj/item/stack/tile/carpet/twenty,
-				/obj/item/stack/tile/carpet/blue/twenty,
-				/obj/item/stack/tile/carpet/blue/twenty,
-				/obj/item/stack/tile/carpet/royalblack/twenty,
-				/obj/item/stack/tile/carpet/royalblack/twenty,
-				/obj/item/stack/tile/carpet/green/twenty,
-				/obj/item/stack/tile/carpet/green/twenty,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/reagent_containers/food/drinks/bottle/wine,
-				/obj/item/stack/rods/ten,
-				/obj/item/stack/sheet/metal/twenty,
-				/obj/item/stack/sheet/mineral/wood/twenty,
-				/obj/item/storage/box/drinkingglasses,
-				/obj/item/storage/box/drinkingglasses)
-	crate_name = "romance crate"
-
 /datum/supply_pack/misc/randombedsheets
 	name = "Bedsheet Crate (R)"
 	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with eight random bedsheets for your slumbering pleasure!"
@@ -269,19 +238,6 @@
 					/obj/item/storage/fancy/candle_box,
 					/obj/item/storage/box/matches)
 	crate_name = "candle crate"
-
-/datum/supply_pack/misc/interrogation
-	name = "CBT Interrogation Crate"
-	desc = "CBT is a special term used to describe an intricate form of information extraction. We can't tell you how to use this, but we can give you the tools required to get what you need."
-	contraband = TRUE
-	cost = 2400
-	contains = list(/mob/living/simple_animal/chicken,
-					/obj/item/toy/beach_ball/holoball,
-					/obj/item/melee/baton/cattleprod,
-					/obj/item/soap/deluxe,
-					/obj/item/stock_parts/cell/high)
-	crate_name = "interrogation crate"
-	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/exoticfootwear
 	name = "Exotic Footwear Crate"

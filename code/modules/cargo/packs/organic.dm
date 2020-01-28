@@ -89,21 +89,6 @@
 					/obj/item/reagent_containers/glass/bottle/capsaicin)
 	crate_name = "fiesta crate"
 
-/datum/supply_pack/organic/pastry
-	name = "Pastry Crate"
-	desc = "Cupcakes, Cake, and Donuts! What a sweet deal! Contains two cakes, six cupcakes, and one box of donuts."
-	cost = 5000
-	contains = list(/obj/item/reagent_containers/food/snacks/store/cake/plain,
-					/obj/item/reagent_containers/food/snacks/store/cake/plain,
-					/obj/item/reagent_containers/food/snacks/cherrycupcake,
-					/obj/item/reagent_containers/food/snacks/cherrycupcake,
-					/obj/item/reagent_containers/food/snacks/bluecherrycupcake,
-					/obj/item/reagent_containers/food/snacks/bluecherrycupcake,
-					/obj/item/reagent_containers/food/snacks/strawberrycupcake,
-					/obj/item/reagent_containers/food/snacks/strawberrycupcake,
-					/obj/item/storage/fancy/donut_box)
-	crate_name = "pastry crate"
-
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
 	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
