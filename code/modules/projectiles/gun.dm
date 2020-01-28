@@ -241,6 +241,10 @@
 	firing = FALSE
 	last_fire = world.time
 
+	if(user)
+		user.update_inv_hands()
+		SEND_SIGNAL(user, COMSIG_LIVING_GUN_PROCESS_FIRE, target, params, zone_override)
+
 /obj/item/gun/proc/do_fire(atom/target, mob/living/user, message = TRUE, params, zone_override = "", bonus_spread = 0)
 	set waitfor = FALSE
 	var/sprd = 0
@@ -278,9 +282,6 @@
 		process_chamber()
 		update_icon()
 
-	if(user)
-		user.update_inv_hands()
-		SEND_SIGNAL(user, COMSIG_LIVING_GUN_PROCESS_FIRE, target, params, zone_override)
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	return TRUE
 
