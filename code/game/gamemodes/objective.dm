@@ -1042,10 +1042,12 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 
 /datum/objective/hoard/collector/find_target()
 	var/obj/item/I
+	var/I_type
 	if(prob(50))
-		I = new pick_and_take(GLOB.traitor_contraband) // always unique unless it's run out, in which case we refill it anyway
+		I_type = pick_n_take(GLOB.traitor_contraband) // always unique unless it's run out, in which case we refill it anyway
 	else
-		I = new pick_and_take(GLOB.cult_contraband)
+		I_type = pick_n_take(GLOB.cult_contraband)
+	I = new I_type
 	I.forceMove(get_turf(owner))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
