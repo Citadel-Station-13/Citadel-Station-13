@@ -125,6 +125,7 @@
 	if(isnum(set_duration)) //TODO, figure out how to grab from subtype
 		duration = set_duration
 	. = ..()
+	last_tick = world.time
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		if(C.combatmode)

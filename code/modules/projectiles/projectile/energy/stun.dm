@@ -2,7 +2,7 @@
 	name = "electrode"
 	icon_state = "spark"
 	color = "#FFFF00"
-	nodamage = 1
+	nodamage = TRUE
 	knockdown = 60
 	knockdown_stamoverride = 36
 	knockdown_stam_max = 50
@@ -38,8 +38,9 @@
 /obj/item/projectile/energy/electrode/security
 	tase_duration = 20
 	knockdown = 0
-	knockdown_stamoverride = 5
-	knockdown_stam_max = 15
+	stamina = 5
+	knockdown_stamoverride = 0
+	knockdown_stam_max = 0
 	strong_tase = FALSE
 
 /obj/item/projectile/energy/electrode/security/hos
