@@ -233,7 +233,7 @@
 	contains = list(/obj/item/storage/lockbox/dueling/hugbox,
 	/obj/item/storage/lockbox/dueling/hugbox,
 	/obj/item/storage/lockbox/dueling/hugbox)
-	crate_name = "dueling pistols"
+	crate_name = "dueling pistols (lethal)"
 
 /datum/supply_pack/misc/dueling_death
 	name = "Elimination Dueling Pistols"
@@ -241,7 +241,7 @@
 	cost = 5000
 	hidden = TRUE
 	contains = list(/obj/item/storage/lockbox/dueling)
-	crate_name = "dueling pistols"
+	crate_name = "dueling pistols (elimination)"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Misc Supplies ///////////////////////////////
