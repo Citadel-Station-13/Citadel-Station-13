@@ -15,7 +15,6 @@
 	if(target.attackby(src,user, params))
 		return
 	if(QDELETED(src) || QDELETED(target))
-		attack_qdeleted(target, user, TRUE, params)
 		return
 	afterattack(target, user, TRUE, params)
 
