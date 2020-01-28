@@ -9,12 +9,6 @@
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"
 
-/datum/supply_pack/misc/randomised/dirtymags/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
-
 //////////////////////////////////////////////////////////////////////////////
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -241,7 +235,7 @@
 	for(var/i in 1 to 9)
 		new /obj/item/coin/silver(.)
 
-/datum/supply_pack/misc/randomised/dirtymags
+/datum/supply_pack/misc/dirtymags
 	name = "Dirty Magazines"
 	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
 	hidden = TRUE
@@ -257,6 +251,12 @@
 					/obj/item/ammo_box/magazine/m45/kitchengun)
 	crate_name = "crate"
 
+/datum/supply_pack/misc/dirtymags/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// Misc Supplies //////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -267,7 +267,7 @@
 	cost = 850
 	contains = list(/obj/item/storage/fancy/candle_box,
 					/obj/item/storage/fancy/candle_box,
-					/obj/item/storage/crayons)
+					/obj/item/storage/box/matches)
 	crate_name = "candle crate"
 
 /datum/supply_pack/misc/interrogation
