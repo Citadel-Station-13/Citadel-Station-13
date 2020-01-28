@@ -31,7 +31,7 @@
 	crate_name = "combo meal w/toy"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/organic/randomizedcandy
+/datum/supply_pack/organic/candy/randomised
 	name = "Candy Crate"
 	desc = "For people that have an insatiable sweet tooth! Has ten candies to be eaten up.."
 	cost = 2500
@@ -63,6 +63,12 @@
 					/obj/item/storage/fancy/heart_box,
 					/obj/item/storage/fancy/donut_box)
 	crate_name = "candy crate"
+
+/datum/supply_pack/organic/candy/randomised/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
 
 /datum/supply_pack/organic/fiestatortilla
 	name = "Fiesta Crate"
@@ -161,7 +167,7 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
 
-/datum/supply_pack/organic/randomized/fruits
+/datum/supply_pack/organic/randomized/chef/fruits
 	name = "Fruit Crate"
 	desc = "Rich in vitamins and possibly sugar. Contains 15 assorted fruits."
 	cost = 1500
@@ -191,7 +197,7 @@
 	access = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/organic/randomized/exoticmeat
+/datum/supply_pack/organic/randomized/chef/
 	name = "Meat Crate (Exotic)"
 	desc = "The best cuts in the whole galaxy. Contains 15 assorted exotic meats."
 	cost = 2000
@@ -252,7 +258,7 @@
 	crate_name = "wildcard food crate"
 	crate_type = /obj/structure/closet/crate/freezer
 
-/datum/supply_pack/organic/randomized/vegetables
+/datum/supply_pack/organic/randomized/chef/vegetables
 	name = "Vegetable Crate"
 	desc = "Grown in vats. Contains 15 assorted vegetables."
 	cost = 1300
@@ -266,7 +272,7 @@
 					/obj/item/reagent_containers/food/snacks/grown/pumpkin)
 	crate_name = "veggie crate"
 
-/datum/supply_pack/organic/randomized/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 15)
 		var/item = pick(contains)
 		new item(C)
@@ -440,11 +446,3 @@
 					/obj/item/valentine)
 	crate_name = "valentine crate"
 	crate_type = /obj/structure/closet/crate/secure
-
-//////////////Special Code for Special Crates//////////////
-
-/datum/supply_pack/organic/randomizedcandy/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
