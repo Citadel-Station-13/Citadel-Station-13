@@ -56,7 +56,7 @@
 
 /obj/machinery/pool/controller/examine(mob/user)
 	. = ..()
-	. += "<span class='boldnotice'>Alt click to drain reagents.</span>")
+	. += "<span class='boldnotice'>Alt click to drain reagents.</span>"
 
 /obj/machinery/pool/controller/Initialize()
 	. = ..()
