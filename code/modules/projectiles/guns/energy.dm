@@ -208,7 +208,7 @@
 			new_index = INCREMENT_OR_WRAP(new_index)
 	set_firemode_index(new_index, user_for_feedback)
 
-/obj/item/gun/energy/proc/user_set_firemode_to_next(mob/user_for_feedback)
+/obj/item/gun/energy/proc/user_set_firemode_to_prev(mob/user_for_feedback)
 	var/current_index = current_firemode_index
 	var/new_index = current_index
 	DECREMENT_OR_WRAP(new_index)

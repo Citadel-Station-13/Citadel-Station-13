@@ -129,7 +129,7 @@
 		var/mob/living/carbon/C = owner
 		if(C.combatmode)
 			C.toggle_combat_mode(TRUE)
-		C.add_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]", TRUE, priority = slowdown_priority, override = TRUE, multiplicative_slowdown = slowdown, blacklisted_movetypes = affected_crawl? NONE : CRAWLING)
+		C.add_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]", TRUE, priority = slowdown_priority, override = TRUE, multiplicative_slowdown = slowdown, blacklisted_movetypes = affect_crawl? NONE : CRAWLING)
 
 /datum/status_effect/electrode/on_remove()
 	if(iscarbon(owner))
