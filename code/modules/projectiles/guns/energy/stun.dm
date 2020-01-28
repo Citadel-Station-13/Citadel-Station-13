@@ -28,7 +28,7 @@
 
 /obj/item/gun/energy/e_gun/advtaser/altafterattack(atom/target, mob/user, proximity_flag, params)
 	. = TRUE
-	if(last_altfire > world.time + altfire_delay)
+	if(last_altfire + altfire_delay > world.time)
 		return
 	var/current_index = current_firemode_index
 	set_firemode_to_type(/obj/item/ammo_casing/energy/electrode)

@@ -229,7 +229,7 @@
 	return
 
 /obj/item/gun/proc/on_cooldown()
-	return busy_action || firing || (last_fire > world.time + fire_delay)
+	return busy_action || firing || (last_fire + fire_delay > world.time)
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)
@@ -246,7 +246,6 @@
 		SEND_SIGNAL(user, COMSIG_LIVING_GUN_PROCESS_FIRE, target, params, zone_override)
 
 /obj/item/gun/proc/do_fire(atom/target, mob/living/user, message = TRUE, params, zone_override = "", bonus_spread = 0)
-	set waitfor = FALSE
 	var/sprd = 0
 	var/randomized_gun_spread = 0
 	var/rand_spr = rand()
