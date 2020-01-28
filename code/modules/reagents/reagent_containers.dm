@@ -105,7 +105,7 @@
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
 	var/turf/T = get_turf(src)
-	if(T && target.CanPass(src, T) && thrownby &&  && HAS_TRAIT(thrownby, TRAIT_BOOZE_SLIDER))
+	if(T && target.CanPass(src, T) && thrownby && HAS_TRAIT(thrownby, TRAIT_BOOZE_SLIDER))
 		. = TRUE
 
 /obj/item/reagent_containers/proc/ForceResetRotation()
