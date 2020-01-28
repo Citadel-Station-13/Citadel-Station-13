@@ -91,7 +91,7 @@
 							var/mob/living/carbon/human/H = M
 							playsound(src, pick('sound/misc/crack.ogg','sound/misc/crunch.ogg'), 50, TRUE)
 							if(H.lying)			//down for any reason
-								H.adjustBruteLoss(2.5)
+								H.adjustBruteLoss(2)
 								to_chat(H, "<span class='danger'>You're caught in the drain!</span>")
 							else
 								H.apply_damage(2.5, BRUTE, pick("l_leg", "r_leg")) //drain should only target the legs
