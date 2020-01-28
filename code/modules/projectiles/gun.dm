@@ -37,8 +37,8 @@
 	var/fire_delay = 0
 	/// Last world.time this was fired
 	var/last_fire = 0
-	/// don't fire two bursts at the same time
-	var/firing_burst = FALSE
+	/// Currently firing, whether or not it's a burst or not.
+	var/firing = FALSE
 	/// Used in gun-in-mouth execution/suicide and similar, while TRUE nothing should work on this like firing or modification and so on and so forth.
 	var/busy_action = FALSE
 	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
@@ -124,7 +124,7 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(isliving(user)) //CIT CHANGE - makes gun recoil cause staminaloss
-		user.adjustStaminaLossBuffered(getstamcost(user)*(firing_burst && burst_size >= 2 ? 1/burst_size : 1)) //CIT CHANGE - ditto
+		user.adjustStaminaLossBuffered(getstamcost(user)*(firing && burst_size >= 2 ? 1/burst_size : 1)) //CIT CHANGE - ditto
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
@@ -149,7 +149,7 @@
 /obj/item/gun/proc/process_afterattack(atom/target, mob/living/user, flag, params)
 	if(!target)
 		return
-	if(firing_burst)
+	if(firing)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
@@ -229,51 +229,20 @@
 	return
 
 /obj/item/gun/proc/on_cooldown()
-	return busy_action || firing_burst || (last_fire > world.time + fire_delay)
-
-/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
-	if(!user || !firing_burst)
-		firing_burst = FALSE
-		return FALSE
-	if(!issilicon(user))
-		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
-			firing_burst = FALSE
-			return FALSE
-	if(chambered && chambered.BB)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
-			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
-				return
-		if(randomspread)
-			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread), 1)
-		else //Smart spread
-			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread), 1)
-
-		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd, src))
-			shoot_with_empty_chamber(user)
-			firing_burst = FALSE
-			return FALSE
-		else
-			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, 1, target, message)
-			else
-				shoot_live_shot(user, 0, target, message)
-			if (iteration >= burst_size)
-				firing_burst = FALSE
-	else
-		shoot_with_empty_chamber(user)
-		firing_burst = FALSE
-		return FALSE
-	process_chamber()
-	update_icon()
-	return TRUE
+	return busy_action || firing || (last_fire > world.time + fire_delay)
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)
 
 	if(on_cooldown())
 		return
+	firing = TRUE
+	. = do_fire(target, user, message, params, zone_override, bonus_spread)
+	firing = FALSE
+	last_fire = world.time
 
+/obj/item/gun/proc/do_fire(atom/target, mob/living/user, message = TRUE, params, zone_override = "", bonus_spread = 0)
+	set waitfor = FALSE
 	var/sprd = 0
 	var/randomized_gun_spread = 0
 	var/rand_spr = rand()
@@ -286,13 +255,12 @@
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
-		firing_burst = TRUE
-		process_burst(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, 1)
+		do_burst_shot(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, 1)
 		for(var/i in 2 to burst_size)
 			sleep(burst_shot_delay)
 			if(QDELETED(src))
 				break
-			process_burst(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i)
+			do_burst_shot(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i)
 	else
 		if(chambered)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -310,12 +278,47 @@
 		process_chamber()
 		update_icon()
 
-	last_fire = world.time
-
 	if(user)
 		user.update_inv_hands()
 		SEND_SIGNAL(user, COMSIG_LIVING_GUN_PROCESS_FIRE, target, params, zone_override)
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
+	return TRUE
+
+/obj/item/gun/proc/do_burst_shot(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+	if(!user || !firing)
+		firing = FALSE
+		return FALSE
+	if(!issilicon(user))
+		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
+			firing = FALSE
+			return FALSE
+	if(chambered && chambered.BB)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+			if(chambered.harmful) // Is the bullet chambered harmful?
+				to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+				return
+		if(randomspread)
+			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread), 1)
+		else //Smart spread
+			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread), 1)
+
+		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd, src))
+			shoot_with_empty_chamber(user)
+			firing = FALSE
+			return FALSE
+		else
+			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+				shoot_live_shot(user, 1, target, message)
+			else
+				shoot_live_shot(user, 0, target, message)
+			if (iteration >= burst_size)
+				firing = FALSE
+	else
+		shoot_with_empty_chamber(user)
+		firing = FALSE
+		return FALSE
+	process_chamber()
+	update_icon()
 	return TRUE
 
 /obj/item/gun/attack(mob/M as mob, mob/user)

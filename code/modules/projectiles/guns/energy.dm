@@ -206,6 +206,9 @@
 		var/initial_index = new_index
 		while(!IS_VALID_INDEX(new_index) && (new_index != initial_index))
 			new_index = INCREMENT_OR_WRAP(new_index)
+		if(initial_index == new_index)		//cycled through without finding another
+			new_index = current_index
+
 	set_firemode_index(new_index, user_for_feedback)
 
 /obj/item/gun/energy/proc/user_set_firemode_to_prev(mob/user_for_feedback)
@@ -216,6 +219,9 @@
 		var/initial_index = new_index
 		while(!IS_VALID_INDEX(new_index) && (new_index != initial_index))
 			new_index = DECREMENT_OR_WRAP(new_index)
+		if(initial_index == new_index)		//cycled through without finding another
+			new_index = current_index
+
 	set_firemode_index(new_index, user_for_feedback)
 #undef INCREMENT_OR_WRAP
 #undef DECREMENT_OR_WRAP

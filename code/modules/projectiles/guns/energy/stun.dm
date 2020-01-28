@@ -27,14 +27,14 @@
 	var/altfire_delay = 40
 
 /obj/item/gun/energy/e_gun/advtaser/altafterattack(atom/target, mob/user, proximity_flag, params)
+	. = TRUE
 	if(last_altfire > world.time + altfire_delay)
-		return FALSE
+		return
 	var/current_index = current_firemode_index
 	set_firemode_to_type(/obj/item/ammo_casing/energy/electrode)
 	process_afterattack(target, user, proximity_flag, params)
 	set_firemode_index(current_index)
 	last_altfire = world.time
-	return TRUE
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"
