@@ -227,8 +227,9 @@
 
 /datum/supply_pack/misc/dueling_lethal
 	name = "Lethal Dueling Pistols"
-	desc = "Resolve all your quarrels with some nonlethal fun."
+	desc = "Settle your differences the true spaceman way."
 	cost = 3000
+	contraband = TRUE
 	contains = list(/obj/item/storage/lockbox/dueling/hugbox,
 	/obj/item/storage/lockbox/dueling/hugbox,
 	/obj/item/storage/lockbox/dueling/hugbox)
