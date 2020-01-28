@@ -485,7 +485,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
 	if (damage - damage_archived > 0)
 		min_damage += ((damage - damage_archived) / 9) * SUPERMATTER_INTEGRITY_MULT
-	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
+	if(damage > (min_damage < 200 ? min_damage : 0) + warning_point) // while the core is still damaged and it's still worth noting its status
 		if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_DELAY)
 			alarm()
 
