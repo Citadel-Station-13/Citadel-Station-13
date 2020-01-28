@@ -1,3 +1,16 @@
+/*
+ * Energy guns that draw from a cell to fire.
+ *
+ * This is a bit weird but this is how it currently works:
+ * When switching shots, it clears the chamber, and loads the correct energy ammo casing if there is enough energy to fire it.
+ * If there's no projectile in the casing, it creates it now.
+ * Otherwise the chamber stays null.
+ * After firing, it actually deducts the energy and then clears the chamber and does the above again.
+ * It detects if a successful fire is done by checking if the chambered energy ammo casing still has its projectile intact.
+ *
+ * It might be good in the future to move away from ammo casinsgs and instead use a datum-firemode system, but that would make handling firing,
+ * which the casing does as of now, a little interesting to implement.
+ */
 /obj/item/gun/energy
 	icon_state = "energy"
 	name = "energy gun"
@@ -8,7 +21,8 @@
 	var/cell_type = /obj/item/stock_parts/cell
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
-	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
+	/// The index of the ammo_types/firemodes which we're using right now
+	var/current_firemode_index = 1
 	var/can_charge = 1 //Can it be charged in a recharger?
 	var/automatic_charge_overlays = TRUE	//Do we handle overlays with base update_icon()?
 	var/charge_sections = 4
@@ -46,16 +60,6 @@
 		START_PROCESSING(SSobj, src)
 	update_icon()
 
-/obj/item/gun/energy/proc/update_ammo_types()
-	var/obj/item/ammo_casing/energy/shot
-	for (var/i = 1, i <= ammo_type.len, i++)
-		var/shottype = ammo_type[i]
-		shot = new shottype(src)
-		ammo_type[i] = shot
-	shot = ammo_type[select]
-	fire_sound = shot.fire_sound
-	fire_delay = shot.delay
-
 /obj/item/gun/energy/Destroy()
 	QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
@@ -81,13 +85,14 @@
 			recharge_newshot(TRUE)
 		update_icon()
 
-/obj/item/gun/energy/attack_self(mob/living/user as mob)
-	if(ammo_type.len > 1)
+// ATTACK SELF IGNORING PARENT RETURN VALUE
+/obj/item/gun/energy/attack_self(mob/living/user)
+	. = ..()
+	if(can_select_fire(user))
 		select_fire(user)
-		update_icon()
 
 /obj/item/gun/energy/can_shoot()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
@@ -97,11 +102,11 @@
 		if(iscyborg(loc))
 			var/mob/living/silicon/robot/R = loc
 			if(R.cell)
-				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+				var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index] //Necessary to find cost of shot
 				if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
 					cell.give(shot.e_cost)	//... to recharge the shot
 	if(!chambered)
-		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
+		var/obj/item/ammo_casing/energy/AC = ammo_type[current_firemode_index]
 		if(cell.charge >= AC.e_cost) //if there's enough power in the cell cell...
 			chambered = AC //...prepare a new shot based on the current ammo type selected
 			if(!chambered.BB)
@@ -124,19 +129,60 @@
 		process_chamber()	// Ditto.
 	return ..()
 
-/obj/item/gun/energy/proc/select_fire(mob/living/user)
-	select++
-	if (select > ammo_type.len)
-		select = 1
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	fire_sound = shot.fire_sound
-	fire_delay = shot.delay
-	if (shot.select_name)
-		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
-	chambered = null
-	recharge_newshot(TRUE)
+// Firemodes/Ammotypes
+
+/obj/item/gun/energy/proc/update_ammo_types()
+	var/obj/item/ammo_casing/energy/C
+	for(var/i in 1 to length(ammo_type))
+		var/v = ammo_type[i]
+		if(istype(v, /obj/item/ammo_casing/energy))		//already set
+			continue
+		else
+			C = new v			//if you put non energycasing/type stuff in here you deserve the runtime
+			ammo_type[i] = C
+	set_firemode_index(initial(current_firemode_index))
+
+/obj/item/gun/energy/proc/set_firemode_index(index, mob/user_for_feedback)
+	chambered = null		//unchamber whatever we have chambered
+	if(index > length(ammo_type))
+		index = 1
+	else if(index < 1)
+		index = length(ammo_type)
+	var/obj/item/ammo_casing/energy/C = ammo_type[index]		//energy weapons should not have no casings, if it does you deserve the runtime.
+	current_firemode_index = index
+	fire_sound = C.fire_sound
+	fire_delay = C.delay
+	if(user_for_feedback)
+		to_chat(user_for_feedback, "<span class='notice'>[src] is now set to [C.select_name || C].</span>")
+	post_set_firemode()
 	update_icon(TRUE)
-	return
+
+/obj/item/gun/energy/proc/post_set_firemode(recharge_newshot = TRUE)
+	if(recharge_newshot)
+		recharge_newshot(TRUE)
+
+/obj/item/gun/energy/proc/set_firemode_to_next(mob/user_for_feedback)
+	return set_firemode_index(current_firemode_index++, user_for_feedback)
+
+/obj/item/gun/energy/proc/set_firemode_to_prev(mob/user_for_feedback)
+	return set_firemode_index(current_firemode_index--, user_for_feedback)
+
+/obj/item/gun/energy/proc/get_firemode_index(casing_type)
+	var/obj/item/ammo_casing/energy/E = locate(casing_type) in ammo_type
+	if(E)
+		return ammo_type.Find(E)
+
+/obj/item/gun/energy/proc/set_firemode_to_type(casing_type)
+	var/index = get_firemode_index(casing_type)
+	if(index)
+		set_firemode_index(index)
+
+/// This is the proc used in general for when a user switches firemodes. Just goes to next firemode by default.
+/obj/item/gun/energy/proc/select_fire(mob/living/user)
+	return set_firemode_to_next(user)
+
+/obj/item/gun/energy/proc/can_select_fire(mob/living/user)
+	return TRUE
 
 /obj/item/gun/energy/update_icon(force_update)
 	if(QDELETED(src))
@@ -156,7 +202,7 @@
 	if(!initial(item_state))
 		itemState = icon_state
 	if (modifystate)
-		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 		add_overlay("[icon_state]_[shot.select_name]")
 		iconState += "_[shot.select_name]"
 		if(itemState)
@@ -175,6 +221,9 @@
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
+	if(ismob(loc))		//forces inhands to update
+		var/mob/M = loc
+		M.update_inv_hands()
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
@@ -184,7 +233,7 @@
 			user.visible_message("<span class='suicide'>[user] melts [user.p_their()] face off with [src]!</span>")
 			playsound(loc, fire_sound, 50, 1, -1)
 			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+			var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 			cell.use(shot.e_cost)
 			update_icon()
 			return(FIRELOSS)
@@ -208,11 +257,11 @@
 
 
 /obj/item/gun/energy/ignition_effect(atom/A, mob/living/user)
-	if(!can_shoot() || !ammo_type[select])
+	if(!can_shoot() || !ammo_type[current_firemode_index])
 		shoot_with_empty_chamber()
 		. = ""
 	else
-		var/obj/item/ammo_casing/energy/E = ammo_type[select]
+		var/obj/item/ammo_casing/energy/E = ammo_type[current_firemode_index]
 		var/obj/item/projectile/energy/BB = E.BB
 		if(!BB)
 			. = ""

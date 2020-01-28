@@ -28,10 +28,19 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_off = FALSE
-	var/burst_size = 1					//how large a burst is
-	var/fire_delay = 0					//rate of fire for burst firing and semi auto
-	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
-	var/semicd = 0						//cooldown handler
+
+	/// Weapon is burst fire if this is above 1
+	var/burst_size = 1
+	/// The time between shots in burst.
+	var/burst_shot_delay = 3
+	/// The time between firing actions, this means between bursts if this is burst weapon.
+	var/fire_delay = 0
+	/// Last world.time this was fired
+	var/last_fire = 0
+	/// don't fire two bursts at the same time
+	var/firing_burst = FALSE
+	/// Used in gun-in-mouth execution/suicide and similar, while TRUE nothing should work on this like firing or modification and so on and so forth.
+	var/busy_action = FALSE
 	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
 	var/spread = 0						//Spread induced by the gun itself.
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
@@ -110,7 +119,6 @@
 	to_chat(user, "<span class='danger'>*click*</span>")
 	playsound(src, "gun_dry_fire", 30, 1)
 
-
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
@@ -136,6 +144,9 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
+	process_afterattack(target, user, flag, params)
+
+/obj/item/gun/proc/process_afterattack(atom/target, mob/living/user, flag, params)
 	if(!target)
 		return
 	if(firing_burst)
@@ -161,7 +172,6 @@
 		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 			handle_suicide(user, target, params)
 			return
-
 
 	//Exclude lasertag guns from the TRAIT_CLUMSY check.
 	if(clumsy_check)
@@ -194,8 +204,6 @@
 
 	process_fire(target, user, TRUE, params, null, bonus_spread)
 
-
-
 /obj/item/gun/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!.)
@@ -219,6 +227,9 @@
 
 /obj/item/gun/proc/recharge_newshot()
 	return
+
+/obj/item/gun/proc/on_cooldown()
+	return busy_action || firing_burst || (last_fire > world.time + fire_delay)
 
 /obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
 	if(!user || !firing_burst)
@@ -260,14 +271,14 @@
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)
 
-	if(semicd)
+	if(on_cooldown())
 		return
 
 	var/sprd = 0
 	var/randomized_gun_spread = 0
 	var/rand_spr = rand()
 	if(spread)
-		randomized_gun_spread =	rand(0, spread)
+		randomized_gun_spread = rand(0, spread)
 	else if(burst_size > 1 && burst_spread)
 		randomized_gun_spread = rand(0, burst_spread)
 	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
@@ -276,8 +287,12 @@
 
 	if(burst_size > 1)
 		firing_burst = TRUE
-		for(var/i = 1 to burst_size)
-			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), fire_delay * (i - 1))
+		process_burst(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, 1)
+		for(var/i in 2 to burst_size)
+			sleep(burst_shot_delay)
+			if(QDELETED(src))
+				break
+			process_burst(user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i)
 	else
 		if(chambered)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -294,21 +309,14 @@
 			return
 		process_chamber()
 		update_icon()
-		semicd = TRUE
-		addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
+
+	last_fire = world.time
 
 	if(user)
 		user.update_inv_hands()
 		SEND_SIGNAL(user, COMSIG_LIVING_GUN_PROCESS_FIRE, target, params, zone_override)
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	return TRUE
-
-/obj/item/gun/update_icon()
-	..()
-
-
-/obj/item/gun/proc/reset_semicd()
-	semicd = FALSE
 
 /obj/item/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == INTENT_HARM) //Flogging
@@ -429,7 +437,7 @@
 	if(!ishuman(user) || !ishuman(target))
 		return
 
-	if(semicd)
+	if(on_cooldown())
 		return
 
 	if(user == target)
@@ -439,7 +447,7 @@
 		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
 			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
 
-	semicd = TRUE
+	busy_action = TRUE
 
 	if(!bypass_timer && (!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
@@ -447,10 +455,10 @@
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
 			else if(target && target.Adjacent(user))
 				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
-		semicd = FALSE
+		busy_action = FALSE
 		return
 
-	semicd = FALSE
+	busy_action = FALSE
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 
