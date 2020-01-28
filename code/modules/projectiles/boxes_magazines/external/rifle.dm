@@ -19,3 +19,11 @@
 	caliber = "a556"
 	max_ammo = 30
 	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/a762
+	name = "rifle magazine (7.62mm)"
+	desc = "A well-worn magazine fitted for a rifle."
+	icon_state = "762"
+	ammo_type = /obj/item/ammo_casing/a762
+	max_ammo = 5
+	multiple_sprites = 1

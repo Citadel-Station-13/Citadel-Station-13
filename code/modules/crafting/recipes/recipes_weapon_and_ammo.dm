@@ -231,27 +231,15 @@
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/weaponcrafting/receiver = 1,
+	reqs = list(/obj/item/gunmodule/receiver/improv = 1,
 				/obj/item/pipe = 1,
-				/obj/item/weaponcrafting/stock = 1,
+				/obj/item/gunmodule/stock/crude = 1,
+				/obj/item/gunmodule/grip/crude = 1,
 				/obj/item/stack/packageWrap = 5)
 	tools = list(TOOL_SCREWDRIVER)
 	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
-
-/datum/crafting_recipe/irifle
-	name = "Improvised Rifle(7.62mm)"
-	result = /obj/item/gun/ballistic/shotgun/boltaction/improvised
-	reqs = list(/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/pipe = 2,
-				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/packageWrap = 5)
-	tools = list(TOOL_SCREWDRIVER)
-	time = 100
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 //////////////////
 ///AMMO CRAFTING//
 //////////////////

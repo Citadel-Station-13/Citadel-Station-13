@@ -74,11 +74,27 @@
 	category = list("hacked", "Security")
 
 /datum/design/receiver
-	name = "Modular Receiver"
+	name = "Improvised Receiver"
 	id = "receiver"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 15000)
-	build_path = /obj/item/weaponcrafting/receiver
+	build_path = /obj/item/gunmodule/receiver/improv
+	category = list("hacked", "Security")
+
+/datum/design/trigger
+	name = "Improvised Trigger Assembly"
+	id = "trigger"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/gunmodule/trigassembly/improv
+	category = list("hacked", "Security")
+
+/datum/design/receiver
+	name = "Lathed Barrel"
+	id = "lathebarrel"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 10000)
+	build_path = /obj/item/gunmodule/barrel/lathed
 	category = list("hacked", "Security")
 
 /datum/design/shotgun_slug
