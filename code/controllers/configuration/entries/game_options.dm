@@ -249,6 +249,18 @@
 
 /datum/config_entry/number/movedelay/walk_delay
 
+/datum/config_entry/number/movedelay/sprint_speed_increase
+	config_entry_value = 1
+
+/datum/config_entry/number/movedelay/sprint_buffer_max
+	config_entry_value = 42
+
+/datum/config_entry/number/movedelay/sprint_stamina_cost
+	config_entry_value = 0.7
+
+/datum/config_entry/number/movedelay/sprint_buffer_regen_per_ds
+	config_entry_value = 0.3
+
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
 	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
