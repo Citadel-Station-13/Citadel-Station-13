@@ -257,13 +257,13 @@
 				var/thecolor = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
 				color1.watereffect.add_atom_colour(thecolor, FIXED_COLOUR_PRIORITY)
 				color1.watertop.add_atom_colour(thecolor, FIXED_COLOUR_PRIORITY)
-
+			else
 				var/thecolor = rgb(150, 20, 20)
 				color1.watereffect.add_atom_colour(thecolor, FIXED_COLOUR_PRIORITY)
 				color1.watertop.add_atom_colour(thecolor, FIXED_COLOUR_PRIORITY)
 		else if(!bloody && rcolor)
-				color1.watereffect.add_atom_colour(rcolor, FIXED_COLOUR_PRIORITY)
-				color1.watertop.add_atom_colour(rcolor, FIXED_COLOUR_PRIORITY)
+			color1.watereffect.add_atom_colour(rcolor, FIXED_COLOUR_PRIORITY)
+			color1.watertop.add_atom_colour(rcolor, FIXED_COLOUR_PRIORITY)
 		else
 			color1.watereffect.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 			color1.watertop.remove_atom_colour(FIXED_COLOUR_PRIORITY)
