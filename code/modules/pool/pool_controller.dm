@@ -54,6 +54,10 @@
 	/// Old reagent color, used to determine if update_color needs to reset colors.
 	var/old_rcolor
 
+/obj/machinery/pool/controller/examine(mob/user)
+	. = ..()
+	. += "<span class='boldnotice'>Alt click to drain reagents.</span>")
+
 /obj/machinery/pool/controller/Initialize()
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
