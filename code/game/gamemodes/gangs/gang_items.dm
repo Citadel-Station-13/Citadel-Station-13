@@ -290,12 +290,6 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 	cost = 5
 	item_path = /obj/item/grenade/syndieminibomb/concussion/frag
 
-/datum/gang_item/equipment/stimpack
-	name = "Black Market Stimulants"
-	id = "stimpack"
-	cost = 12
-	item_path = /obj/item/reagent_containers/syringe/stimulants
-
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
 	id = "implant_breaker"
