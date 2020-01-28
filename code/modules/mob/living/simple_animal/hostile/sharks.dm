@@ -85,7 +85,7 @@
 	vision_range = 0
 
 /mob/living/simple_animal/hostile/shark/kawaii/death()
-	visible_message("<span class='name'>[src]</span> says : Senpai, you noticed~!")
+	say("Senpai, you noticed~!")
 	LoseAggro()
 	..()
 	walk(src, 0)
