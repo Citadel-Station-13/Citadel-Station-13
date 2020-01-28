@@ -193,6 +193,13 @@
 	stat("[name]:", statclick)
 
 /datum/controller/configuration/proc/Get(entry_type)
+	var/datum/config_entry/E = GetEntryDatum(entry_type)
+	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
+		return
+	return E.config_entry_value
+
+/datum/controller/configuration/proc/GetEntryDatum(entry_type)
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
 	if(entry_is_abstract)
@@ -200,10 +207,7 @@
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
-	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
-		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
-		return
-	return E.config_entry_value
+	return E
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
 	var/datum/config_entry/E = entry_type
@@ -341,7 +345,7 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
-		if(M.config_tag in SSvote.stored_modetier_results && SSvote.stored_modetier_results[M.config_tag] < Get(/datum/config_entry/number/dropped_modes))
+		if(CONFIG_GET(flag/modetier_voting) && !(M.config_tag in SSvote.stored_modetier_results))
 			qdel(M)
 			continue
 		if(min_pop[M.config_tag])

@@ -1,0 +1,12 @@
+author: "Putnam"
+delete-after: True
+changes: 
+  - rscdel: "Arousal damage is gone, and with it the arousal damage heart on the UI."
+  - rscdel: "As exhibitionist relied on arousal damage, that's gone too."
+  - rscdel: "Bonermeter and electronic stimulation circuit modules are gone."
+  - rscdel: "Masturbation is no longer an option in the climax menu. It was identical to climax alone in every way but text. Emote it out."
+  - rscadd: "Arousal on genitals can now be displayed manually, on a case-by-case basis."
+  - rscadd: "\"Climax alone\" and \"climax with partner\" now only display to the people directly involved in the interaction.
+rework: Catnip tea, catnip, crocin, hexacrocin, camphor, hexacamphor all had functions or bits of functions reworked."
+  - tweak: "\"Climax with partner\" now requires consent from both parties--it can no longer be used on mindless mobs, and it asks the mob getting climaxed with if they consent first."
+  - tweak: "A lot of MKUltra behaviors have been moved to hypno checks or removed due to reliance on maso/nympho/exhib."

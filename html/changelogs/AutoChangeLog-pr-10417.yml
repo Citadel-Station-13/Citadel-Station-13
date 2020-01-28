@@ -1,0 +1,7 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - config: "Added a few more nightshift config entries"
+  - rscadd: "nightshift_public_area variable in areas to determine how public an area is."
+  - rscadd: "NIGHT_SHIFT_PUBLIC_AREAS_ONLY config entry allows the server to be configured to only nightshift areas of that level and below (so areas that are more public)"
+  - rscadd: "Config entries added for requiring authorizations to toggle nightshift. Defaults to only requiring on public areas as determined by above"

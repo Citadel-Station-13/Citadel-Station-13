@@ -23,6 +23,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	container_flags = NONE //APTFT is alternated between the initial value and stream_amount and shouldn't be exploited.
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
 	. = ..()
@@ -198,6 +199,9 @@
 	spray_delay = 1
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 40)
+
+/obj/item/reagent_containers/spray/pepper/empty // for techfab printing
+	list_reagents = null
 
 /obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!</span>")

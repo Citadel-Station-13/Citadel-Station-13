@@ -128,13 +128,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
 	if(prob(25))
 		return ..()
-	else
-		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-		return 0
+	visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space
 	icon_state = "syndicate_space_sword"
