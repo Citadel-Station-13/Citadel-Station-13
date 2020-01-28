@@ -1,6 +1,8 @@
 /obj/effect/proc_holder/spell/targeted/emplosion
 	name = "Emplosion"
 	desc = "This spell emplodes an area."
+	charge_max	= 250
+	cooldown_min = 50
 
 	var/emp_heavy = 2
 	var/emp_light = 3

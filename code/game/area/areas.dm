@@ -63,6 +63,15 @@
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
+/**
+  * These two vars allow for multiple unique areas to be linked to a master area
+  * and share some functionalities such as APC powernet nodes, fire alarms etc, without sacrificing
+  * their own flags, statuses, variables and more snowflakes.
+  * Friendly reminder: no map edited areas.
+  */
+	var/list/area/sub_areas //list of typepaths of the areas you wish to link here, will be replaced with a list of references on mapload.
+	var/area/base_area //The area we wish to use in place of src for certain actions such as APC area linking.
+
 	var/nightshift_public_area = NIGHTSHIFT_AREA_NONE		//considered a public area for nightshift
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
@@ -123,10 +132,35 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	reg_in_areas_in_z()
 
+	//so far I'm only implementing it on mapped unique areas, it's easier this way.
+	if(unique && sub_areas)
+		if(type in sub_areas)
+			WARNING("\"[src]\" typepath found inside its own sub-areas list, please make sure it doesn't share its parent type initial sub-areas value.")
+			sub_areas = null
+		else
+			var/paths = sub_areas.Copy()
+			sub_areas = null
+			for(var/type in paths)
+				var/area/A = GLOB.areas_by_type[type]
+				if(!A) //By chance an area not loaded in the current world, no warning report.
+					continue
+				if(A == src)
+					WARNING("\"[src]\" area a attempted to link with itself.")
+					continue
+				if(A.base_area)
+					WARNING("[src] attempted to link with [A] while the latter is already linked to another area ([A.base_area]).")
+					continue
+				LAZYADD(sub_areas, A)
+				A.base_area = src
+	else if(LAZYLEN(sub_areas))
+		WARNING("sub-areas are currently not supported for non-unique areas such as [src].")
+		sub_areas = null
+
 	return INITIALIZE_HINT_LATELOAD
 
 /area/LateInitialize()
-	power_change()		// all machines set to current power level, also updates icon
+	if(!base_area) //we don't want to run it twice.
+		power_change()		// all machines set to current power level, also updates icon
 
 /area/proc/reg_in_areas_in_z()
 	if(contents.len)
@@ -149,6 +183,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Destroy()
 	if(GLOB.areas_by_type[type] == src)
 		GLOB.areas_by_type[type] = null
+	if(base_area)
+		LAZYREMOVE(base_area, src)
+		base_area = null
+	if(sub_areas)
+		for(var/i in sub_areas)
+			var/area/A = i
+			A.base_area = null
+			sub_areas -= A
+			if(A.requires_power)
+				A.power_light = FALSE
+				A.power_equip = FALSE
+				A.power_environ = FALSE
+			INVOKE_ASYNC(A, .proc/power_change)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -214,9 +261,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				var/datum/computer_file/program/alarm_monitor/p = item
 				p.cancelAlarm("Atmosphere", src, source)
 
-		src.atmosalm = danger_level
-		return 1
-	return 0
+		atmosalm = danger_level
+		for(var/i in sub_areas)
+			var/area/A = i
+			A.atmosalm = danger_level
+		return TRUE
+	return FALSE
 
 /area/proc/ModifyFiredoors(opening)
 	if(firedoors)
@@ -241,11 +291,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 
 	if (!fire)
-		set_fire_alarm_effect()
+		set_fire_alarm_effects(TRUE)
 		ModifyFiredoors(FALSE)
-		for(var/item in firealarms)
-			var/obj/machinery/firealarm/F = item
-			F.update_icon()
 
 	for (var/item in GLOB.alert_consoles)
 		var/obj/machinery/computer/station_alert/a = item
@@ -264,11 +311,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/firereset(obj/source)
 	if (fire)
-		unset_fire_alarm_effects()
+		set_fire_alarm_effects(FALSE)
 		ModifyFiredoors(TRUE)
-		for(var/item in firealarms)
-			var/obj/machinery/firealarm/F = item
-			F.update_icon()
 
 	for (var/item in GLOB.silicon_mobs)
 		var/mob/living/silicon/aiPlayer = item
@@ -300,9 +344,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 
 	//Trigger alarm effect
-	set_fire_alarm_effect()
+	set_fire_alarm_effects(TRUE)
 	//Lockdown airlocks
-	for(var/obj/machinery/door/DOOR in src)
+	for(var/obj/machinery/door/DOOR in get_sub_areas_contents(src))
 		close_and_lock_door(DOOR)
 
 	for (var/i in GLOB.silicon_mobs)
@@ -311,23 +355,20 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			//Cancel silicon alert after 1 minute
 			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
 
-/area/proc/set_fire_alarm_effect()
-	fire = TRUE
+/area/proc/set_fire_alarm_effects(boolean)
+	fire = boolean
+	for(var/i in sub_areas)
+		var/area/A = i
+		A.fire = boolean
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	for(var/alarm in firealarms)
 		var/obj/machinery/firealarm/F = alarm
 		F.update_fire_light(fire)
-	for(var/obj/machinery/light/L in src)
+		F.update_icon()
+	for(var/obj/machinery/light/L in get_sub_areas_contents(src))
 		L.update()
 
-/area/proc/unset_fire_alarm_effects()
-	fire = FALSE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/alarm in firealarms)
-		var/obj/machinery/firealarm/F = alarm
-		F.update_fire_light(fire)
-	for(var/obj/machinery/light/L in src)
-		L.update()
+/area/proc/updateicon()
 /**
   * Update the icon state of the area
   *
@@ -380,26 +421,35 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/power_change()
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
+	if(sub_areas)
+		for(var/i in sub_areas)
+			var/area/A = i
+			A.power_light = power_light
+			A.power_equip = power_equip
+			A.power_environ = power_environ
+			INVOKE_ASYNC(A, .proc/power_change)
 	update_icon()
 
 /area/proc/usage(chan)
-	var/used = 0
 	switch(chan)
 		if(LIGHT)
-			used += used_light
+			. += used_light
 		if(EQUIP)
-			used += used_equip
+			. += used_equip
 		if(ENVIRON)
-			used += used_environ
+			. += used_environ
 		if(TOTAL)
-			used += used_light + used_equip + used_environ
+			. += used_light + used_equip + used_environ
 		if(STATIC_EQUIP)
-			used += static_equip
+			. += static_equip
 		if(STATIC_LIGHT)
-			used += static_light
+			. += static_light
 		if(STATIC_ENVIRON)
-			used += static_environ
-	return used
+			. += static_environ
+	if(sub_areas)
+		for(var/i in sub_areas)
+			var/area/A = i
+			. += A.usage(chan)
 
 /area/proc/addStaticPower(value, powerchannel)
 	switch(powerchannel)
@@ -414,6 +464,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	used_equip = 0
 	used_light = 0
 	used_environ = 0
+	if(sub_areas)
+		for(var/i in sub_areas)
+			var/area/A = i
+			A.clear_usage()
 
 /area/proc/use_power(amount, chan)
 

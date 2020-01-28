@@ -80,7 +80,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "detective_scanner", "defibrillator_compact", "smartdartgun", "medicinalsmartdart", "pHmeter")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "defibrillator_compact", "smartdartgun", "medicinalsmartdart", "pHmeter")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -976,7 +976,7 @@
 	display_name = "Basic Nanite Programming"
 	description = "The basics of nanite construction and programming."
 	prereq_ids = list("datatheory","robotics")
-	design_ids = list("nanite_disk","nanite_remote","nanite_scanner",\
+	design_ids = list("nanite_disk","nanite_remote","nanite_comm_remote","nanite_scanner",\
 						"nanite_chamber","public_nanite_chamber","nanite_chamber_control","nanite_programmer","nanite_program_hub","nanite_cloud_control",\
 						"relay_nanites", "monitoring_nanites", "access_nanites", "repairing_nanites","sensor_nanite_volume", "repeater_nanites", "relay_repeater_nanites","red_diag_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -1015,7 +1015,7 @@
 	display_name = "Neural Nanite Programming"
 	description = "Nanite programs affecting nerves and brain matter."
 	prereq_ids = list("nanite_bio")
-	design_ids = list("nervous_nanites", "brainheal_nanites", "paralyzing_nanites", "stun_nanites", "selfscan_nanites")
+	design_ids = list("nervous_nanites", "brainheal_nanites", "paralyzing_nanites", "stun_nanites", "selfscan_nanites","good_mood_nanites","bad_mood_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -1117,7 +1117,7 @@
 	id = "advanced_illegal_ballistics"
 	display_name = "Advanced Non-Standard Ballistics"
 	description = "Ballistic ammunition for non-standard firearms. Usually the ones you don't have nor want to be involved with."
-	design_ids = list("10mm","10mmap","10mminc","10mmhp","sl357","pistolm9mm","m45","bolt_clip")
+	design_ids = list("10mm","10mmap","10mminc","10mmhp","sl357","sl357ap","pistolm9mm","m45","bolt_clip")
 	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000) //This gives sec lethal mags/clips for guns from traitors, space, or anything in between.
 	export_price = 7000

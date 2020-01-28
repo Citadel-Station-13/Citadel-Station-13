@@ -16,6 +16,7 @@
 	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/power/solar_control/control = null
+	var/obj/item/solar_assembly/assembly
 
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
@@ -42,11 +43,12 @@
 
 /obj/machinery/power/tracker/proc/Make(obj/item/solar_assembly/S)
 	if(!S)
-		S = new /obj/item/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/glass
-		S.tracker = 1
+		S = new /obj/item/solar_assembly
+		S.glass_type = new /obj/item/stack/sheet/glass(null, 2)
+		S.tracker = TRUE
 		S.anchored = TRUE
-	S.forceMove(src)
+	else
+		S.moveToNullspace()
 	update_icon()
 
 //updates the tracker icon and the facing angle for the control computer
@@ -77,14 +79,14 @@
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.forceMove(loc)
-				S.give_glass(stat & BROKEN)
+			if(assembly)
+				assembly.forceMove(loc)
+				assembly.give_glass(stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, 1)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
+			var/shard = assembly?.glass_type ? assembly.glass_type.shard_type : /obj/item/shard
+			new shard(loc)
+			new shard(loc)
 	qdel(src)
 
 // Tracker Electronic

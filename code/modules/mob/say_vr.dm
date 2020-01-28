@@ -51,7 +51,7 @@
 		if(length(msg) <= 40)
 			return "<span class='notice'>[html_encode(msg)]</span>"
 		else
-			return "<span class='notice'>[html_encode(copytext(msg, 1, 37))]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
+			return "<span class='notice'>[html_encode(copytext(msg, 1, 37))]... <a href='?src=[REF(src)];flavor2_more=1'>More...</span></a>"
 
 
 /mob/proc/get_top_level_mob()

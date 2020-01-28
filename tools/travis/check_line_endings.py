@@ -7,8 +7,8 @@ import glob
 WINDOWS_NEWLINE = b'\r\n'
 
 FILES_TO_READ = []
-FILES_TO_READ.extend(glob.glob(r"**\*.dm", recursive=True))
-FILES_TO_READ.extend(glob.glob(r"**\*.dmm", recursive=True))
+FILES_TO_READ.extend(glob.glob(r"**/*.dm", recursive=True))
+FILES_TO_READ.extend(glob.glob(r"**/*.dmm", recursive=True))
 FILES_TO_READ.extend(glob.glob(r"*.dme"))
 #for i in FILES_TO_READ:
 #	if os.path.isdir(i):

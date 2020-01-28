@@ -82,6 +82,11 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
 
+/obj/machinery/rnd/experimentor/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Malfunction probability reduced by <b>[badThingCoeff]%</b>.<br>Cooldown interval between experiments at <b>[resetTime*0.1]</b> seconds.</span>"
+
 /obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
 	if(istype(O, /obj/item/transfer_valve))
@@ -568,7 +573,8 @@
 		else if(loc == user)
 			cooldown = TRUE
 			call(src,realProc)(user)
-			addtimer(CALLBACK(src, .proc/cd), cooldownMax)
+			if(!QDELETED(src))
+				addtimer(CALLBACK(src, .proc/cd), cooldownMax)
 	else
 		to_chat(user, "<span class='notice'>You aren't quite sure what to do with this yet.</span>")
 

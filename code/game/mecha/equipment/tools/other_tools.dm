@@ -84,7 +84,7 @@
 	switch(mode)
 		if(1)
 			if(!locked)
-				if(!istype(target) || target.anchored)
+				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					occupant_message("Unable to lock on [target]")
 					return
 				locked = target
@@ -110,7 +110,7 @@
 			else
 				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
-				if(A.anchored)
+				if(A.anchored || A.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					continue
 				spawn(0)
 					var/iter = 5-get_dist(A,target)
@@ -283,7 +283,7 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_charge()
 	if(equip_ready) //disabled
 		return
-	var/area/A = get_area(chassis)
+	var/area/A = get_base_area(chassis)
 	var/pow_chan = get_power_channel(A)
 	if(pow_chan)
 		return 1000 //making magic
@@ -328,7 +328,7 @@
 		occupant_message("No powercell detected.")
 		return
 	if(cur_charge < chassis.cell.maxcharge)
-		var/area/A = get_area(chassis)
+		var/area/A = get_base_area(chassis)
 		if(A)
 			var/pow_chan
 			for(var/c in list(EQUIP,ENVIRON,LIGHT))

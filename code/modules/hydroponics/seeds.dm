@@ -145,6 +145,7 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 			adjust_yield(1 * rating)
 		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjust_yield(1 * rating)
+		return BULLET_ACT_HIT
 	else
 		return ..()
 
