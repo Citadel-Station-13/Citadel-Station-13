@@ -111,6 +111,7 @@
 			reagents.remove_all(INFINITY)
 			visible_message("<span class='boldnotice'>[user] drains [src].</span>")
 			say("Reagents cleared.")
+			update_color()
 
 /obj/machinery/pool/controller/attackby(obj/item/W, mob/user)
 	if(shocked && !(stat & NOPOWER))
@@ -148,6 +149,7 @@
 				if(length(rejected))
 					rejected = english_list(rejected)
 					to_chat(user, "<span class='warning'>[src] rejects the following chemicals as they do not have at least [min_reagent_amount] units of volume: [rejected]</span>")
+				update_color()
 		else
 			to_chat(user, "<span class='notice'>[src] beeps unpleasantly as it rejects the beaker. Why are you trying to feed it an empty beaker?</span>")
 			return
@@ -252,17 +254,19 @@
 		var/turf/open/pool/color1 = X
 		if(bloody)
 			if(rcolor)
-				color1.watereffect.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
-				color1.watertop.color = color1.watereffect.color
-			else
-				color1.watereffect.color = rgb(150, 20, 20)
-				color1.watertop.color = color1.watereffect.color
+				var/thecolor = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
+				color1.watereffect.add_atom_colour(thecolor, FIXED_COLOUR_PRIORITY)
+				color1.watertop.add_atom_colour(thecolor, FIXED_COLOUR_PRIORITY)
+
+				var/thecolor = rgb(150, 20, 20)
+				color1.watereffect.add_atom_colour(thecolor, FIXED_COLOUR_PRIORITY)
+				color1.watertop.add_atom_colour(thecolor, FIXED_COLOUR_PRIORITY)
 		else if(!bloody && rcolor)
-			color1.watereffect.color = rcolor
-			color1.watertop.color = color1.watereffect.color
+				color1.watereffect.add_atom_colour(rcolor, FIXED_COLOUR_PRIORITY)
+				color1.watertop.add_atom_colour(rcolor, FIXED_COLOUR_PRIORITY)
 		else
-			color1.watereffect.color = null
-			color1.watertop.color = null
+			color1.watereffect.remove_atom_colour(FIXED_COLOUR_PRIORITY)
+			color1.watertop.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/pool/controller/proc/update_temp()
 	if(mist_state)

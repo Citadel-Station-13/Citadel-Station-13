@@ -40,15 +40,17 @@
 	var/jumping = FALSE
 	var/timer
 
-/obj/structure/pool/Lboard/proc/backswim(obj/O, mob/living/user) //Puts the sprite back to it's maiden condition after a jump.
+/obj/structure/pool/Lboard/proc/backswim()
 	if(jumping)
 		for(var/mob/living/jumpee in loc) //hackzors.
 			playsound(jumpee, 'sound/effects/splash.ogg', 60, TRUE, 1)
-			jumpee.layer = 4
-			jumpee.pixel_x = 0
-			jumpee.pixel_y = 0
-			jumpee.Stun(2)
 			jumpee.AddElement(/datum/element/swimming)
+			jumpee.Stun(2)
+
+/obj/structure/pool/Lboard/proc/reset_position(mob/user, initial_layer, initial_px, initial_py)
+	user.layer = initial_layer
+	user.pixel_x = initial_px
+	user.pixel_y = initial_py
 
 /obj/structure/pool/Lboard/attack_hand(mob/living/user)
 	if(iscarbon(user))
@@ -65,15 +67,18 @@
 									 "<span class='notice'>You climb up \the [src] and prepares to jump!</span>")
 				jumper.Stun(40)
 				jumping = TRUE
+				var/original_layer = jumper.layer
+				var/original_px = jumper.pixel_x
+				var/original_py = jumper.pixel_y
 				jumper.layer = RIPPLE_LAYER
 				jumper.pixel_x = 3
 				jumper.pixel_y = 7
 				jumper.dir = 8
 				sleep(1)
 				jumper.forceMove(T)
-				addtimer(CALLBACK(src, .proc/dive, jumper), 10)
+				addtimer(CALLBACK(src, .proc/dive, jumper, original_layer, original_px, original_py), 10)
 
-/obj/structure/pool/Lboard/proc/dive(mob/living/carbon/jumper)
+/obj/structure/pool/Lboard/proc/dive(mob/living/carbon/jumper, original_layer, original_px, original_py)
 	switch(rand(1, 100))
 		if(1 to 20)
 			jumper.visible_message("<span class='notice'>[jumper] goes for a small dive!</span>", \
@@ -138,6 +143,7 @@
 				var/atom/throw_target = get_edge_target_turf(src, dir)
 				jumper.throw_at(throw_target, 6, 1, callback = CALLBACK(src, .proc/on_finish_jump, jumper))
 	addtimer(CALLBACK(src, .proc/togglejumping), 35)
+	reset_position(jumper, original_layer, original_px, original_py)
 
 /obj/structure/pool/Lboard/proc/togglejumping()
 	jumping = FALSE
