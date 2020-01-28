@@ -427,7 +427,7 @@
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
 	// Check area validity.
 	// Reject space, player-created areas, and non-station z-levels.
-	var/area/A = get_area(target)
+	var/area/A = get_base_area(target)
 	if(!A || (!is_station_level(A.z)) || !A.valid_territory)
 		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
 		return FALSE
@@ -461,7 +461,7 @@
 		qdel(old_marking)
 
 	var/datum/antagonist/gang/G = user.mind.has_antag_datum(/datum/antagonist/gang)
-	var/area/territory = get_area(target)
+	var/area/territory = get_base_area(target)
 
 	new /obj/effect/decal/cleanable/crayon/gang(target,G.gang,"graffiti",0,user) // Heres the gang tag.
 	to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")

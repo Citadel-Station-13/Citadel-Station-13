@@ -41,7 +41,7 @@
 	AIproc = 1
 
 	while(AIproc && stat != DEAD && (attacked || hungry || rabid || buckled))
-		if(buckled) // can't eat AND have this little process at the same time
+		if(!canmove) // !(mobility_flags & MOBILITY_MOVE) //also covers buckling. Not sure why buckled is in the while condition if we're going to immediately break, honestly
 			break
 
 		if(!Target || client)

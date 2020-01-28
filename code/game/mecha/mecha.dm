@@ -49,6 +49,7 @@
 	var/lights = FALSE
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
+	var/completely_disabled = FALSE //stops the mech from doing anything
 	var/breach_time = 0
 	var/recharge_rate = 0
 
@@ -431,6 +432,8 @@
 		return
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
 		return
+	if(completely_disabled)
+		return
 	if(phasing)
 		occupant_message("Unable to interact with objects while phasing")
 		return
@@ -508,6 +511,8 @@
 		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
+	if(completely_disabled)
+		return
 	if(!direction)
 		return
 	if(user != occupant) //While not "realistic", this piece is player friendly.

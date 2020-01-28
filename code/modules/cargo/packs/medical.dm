@@ -103,17 +103,6 @@
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
 
-/datum/supply_pack/science/adv_surgery_tools
-	name = "Med-Co Advanced surgery tools"
-	desc = "A full set of Med-Co advanced surgery tools! In addition to that it contains both a can of synthflesh and a can of sterilizine. Requires Surgery access to open."
-	cost = 5500
-	access = ACCESS_SURGERY
-	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
-					/obj/item/reagent_containers/medspray/synthflesh,
-					/obj/item/reagent_containers/medspray/sterilizine)
-	crate_name = "medco newest surgery tools"
-	crate_type = /obj/structure/closet/crate/medical
-
 /datum/supply_pack/medical/medicalhardsuit
 	name = "Medical Hardsuit"
 	desc = "Got people being spaced left and right? Hole in the same room as the dead body of Hos or cap? Fear not, now you can buy one medical hardsuit with a mask and air tank to save your fellow crewmembers. Requires medical access to open."

@@ -12,6 +12,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	var/datum/map_template/hilbertshotel/lore/hotelRoomTempLore
 	var/list/activeRooms = list()
 	var/list/storedRooms = list()
+	var/list/checked_in_ckeys = list()
 	var/storageTurf
 	//Lore Stuff
 	var/ruinSpawned = FALSE
@@ -44,7 +45,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user)
 	var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
-	if(!chosenRoomNumber)
+	if(!chosenRoomNumber || !user.CanReach(src))
 		return
 	if(chosenRoomNumber > SHORT_REAL_LIMIT)
 		to_chat(user, "<span class='warning'>You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!</span>")
@@ -52,8 +53,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)))
 		to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
 		return
-	if(ismob(loc))
-		if(user == loc) //Not always the same as user
+	if(!isturf(loc))
+		if((loc == user) || (loc.loc == user) || (loc.loc in user.contents) || (loc in user.GetAllContents(type)))		//short circuit, first three checks are cheaper and covers almost all cases (loc.loc covers hotel in box in backpack).
 			forceMove(get_turf(user))
 	if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
 		if(!GLOB.hhStorageTurf)
@@ -63,12 +64,12 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 			GLOB.hhStorageTurf = locate(storageReservation.bottom_left_coords[1]+1, storageReservation.bottom_left_coords[2]+1, storageReservation.bottom_left_coords[3])
 		else
 			storageTurf = GLOB.hhStorageTurf
+	checked_in_ckeys |= user.ckey		//if anything below runtimes, guess you're outta luck!
 	if(tryActiveRoom(chosenRoomNumber, user))
 		return
 	if(tryStoredRoom(chosenRoomNumber, user))
 		return
 	sendToNewRoom(chosenRoomNumber, user)
-
 
 /obj/item/hilbertshotel/proc/tryActiveRoom(var/roomNumber, var/mob/user)
 	if(activeRooms["[roomNumber]"])
@@ -102,6 +103,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	else
 		return FALSE
 
+/// This is a BLOCKING OPERATION. Note the room load call, and the block reservation calls.
 /obj/item/hilbertshotel/proc/sendToNewRoom(var/roomNumber, var/mob/user)
 	var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
 	if(ruinSpawned)
@@ -199,7 +201,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /datum/map_template/hilbertshotelstorage
 	name = "Hilbert's Hotel Storage"
 	mappath = '_maps/templates/hilbertshotelstorage.dmm'
-
 
 //Turfs and Areas
 /turf/closed/indestructible/hotelwall
@@ -359,6 +360,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	. = ..()
 	if(ismob(AM))
 		var/mob/M = AM
+		parentSphere?.checked_in_ckeys -= M.ckey
 		if(M.mind)
 			var/stillPopulated = FALSE
 			var/list/currentLivingMobs = GetAllContents(/mob/living) //Got to catch anyone hiding in anything

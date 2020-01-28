@@ -452,14 +452,15 @@
 	return TRUE
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(req_defib)
-		if(defib.pullshocksafely && isliving(H.pulledby))
-			H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
-	else
-		var/mob/living/M = H.pulledby
-		if(M.electrocute_act(30, src))
-			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
-			M.emote("scream")
+	if(!H.pulledby || !isliving(H.pulledby))
+		return
+	if(req_defib && defib.pullshocksafely)
+		H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
+		return
+	var/mob/living/M = H.pulledby
+	if(M.electrocute_act(30, src))
+		M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
+		M.emote("scream")
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)

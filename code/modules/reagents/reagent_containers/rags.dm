@@ -118,6 +118,7 @@
 	item_flags = NOBLUDGEON | NO_UNIFORM_REQUIRED //so it can be worn on the belt slot even with no uniform.
 	force = 1
 	w_class = WEIGHT_CLASS_NORMAL
+	mutantrace_variation = STYLE_DIGITIGRADE
 	attack_verb = list("whipped")
 	hitsound = 'sound/items/towelwhip.ogg'
 	volume = 10
