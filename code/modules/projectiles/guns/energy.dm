@@ -20,7 +20,8 @@
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
 	var/cell_type = /obj/item/stock_parts/cell
 	var/modifystate = 0
-	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
+	/// = TRUE/FALSE decides if the user can switch to it of their own accord
+	var/list/ammo_type = list(/obj/item/ammo_casing/energy = TRUE)
 	/// The index of the ammo_types/firemodes which we're using right now
 	var/current_firemode_index = 1
 	var/can_charge = 1 //Can it be charged in a recharger?
@@ -34,6 +35,9 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = FALSE //whether the gun drains the cyborg user's cell instead, not to be confused with EGUN_SELFCHARGE_BORG
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
+
+	/// SET THIS TO TRUE IF YOU OVERRIDE altafterattack() or ANY right click action! If this is FALSE, the gun will show in examine its default right click behavior, which is to switch modes.
+	var/right_click_overridden = FALSE
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
@@ -64,6 +68,11 @@
 	QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/item/gun/energy/examine(mob/user)
+	. = ..()
+	if(!right_click_overridden)
+		. += "<span class='notice'>Right click in combat mode to switch modes.</span>"
 
 /obj/item/gun/energy/process()
 	if(selfcharge && cell?.charge < cell.maxcharge)
@@ -135,11 +144,13 @@
 	var/obj/item/ammo_casing/energy/C
 	for(var/i in 1 to length(ammo_type))
 		var/v = ammo_type[i]
+		var/user_can_select = ammo_type[v]
 		if(istype(v, /obj/item/ammo_casing/energy))		//already set
-			continue
+			ammo_type[v] = isnull(user_can_select)? TRUE : user_can_select
 		else
 			C = new v			//if you put non energycasing/type stuff in here you deserve the runtime
 			ammo_type[i] = C
+			ammo_type[C] = isnull(user_can_select)? TRUE : user_can_select
 	set_firemode_index(initial(current_firemode_index))
 
 /obj/item/gun/energy/proc/set_firemode_index(index, mob/user_for_feedback)
@@ -179,10 +190,36 @@
 
 /// This is the proc used in general for when a user switches firemodes. Just goes to next firemode by default.
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
-	return set_firemode_to_next(user)
+	return user_set_firemode_to_next(user)
 
 /obj/item/gun/energy/proc/can_select_fire(mob/living/user)
 	return TRUE
+
+#define INCREMENT_OR_WRAP(i) i = (i >= length(ammo_type))? 1 : (i + 1)
+#define DECREMENT_OR_WRAP(i) i = (i <= 1)? length(ammo_type) : (i - 1)
+#define IS_VALID_INDEX(i) (ammo_type[ammo_type[i]])
+/obj/item/gun/energy/proc/user_set_firemode_to_next(mob/user_for_feedback)
+	var/current_index = current_firemode_index
+	var/new_index = current_index
+	INCREMENT_OR_WRAP(new_index)
+	if(!IS_VALID_INDEX(new_index))
+		var/initial_index = new_index
+		while(!IS_VALID_INDEX(new_index) && (new_index != initial_index))
+			new_index = INCREMENT_OR_WRAP(new_index)
+	set_firemode_index(new_index, user_for_feedback)
+
+/obj/item/gun/energy/proc/user_set_firemode_to_next(mob/user_for_feedback)
+	var/current_index = current_firemode_index
+	var/new_index = current_index
+	DECREMENT_OR_WRAP(new_index)
+	if(!IS_VALID_INDEX(new_index))
+		var/initial_index = new_index
+		while(!IS_VALID_INDEX(new_index) && (new_index != initial_index))
+			new_index = DECREMENT_OR_WRAP(new_index)
+	set_firemode_index(new_index, user_for_feedback)
+#undef INCREMENT_OR_WRAP
+#undef DECREMENT_OR_WRAP
+#undef IS_VALID_INDEX
 
 /obj/item/gun/energy/update_icon(force_update)
 	if(QDELETED(src))
@@ -255,7 +292,6 @@
 				STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-
 /obj/item/gun/energy/ignition_effect(atom/A, mob/living/user)
 	if(!can_shoot() || !ammo_type[current_firemode_index])
 		shoot_with_empty_chamber()
@@ -283,3 +319,9 @@
 			playsound(user, BB.hitsound, 50, 1)
 			cell.use(E.e_cost)
 			. = "<span class='danger'>[user] casually lights their [A.name] with [src]. Damn.</span>"
+
+/obj/item/gun/energy/altafterattack(atom/target, mob/user, proximity_flags, params)
+	if(!right_click_overridden)
+		select_fire(user)
+		return TRUE
+	return ..()
