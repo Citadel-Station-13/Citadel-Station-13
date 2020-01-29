@@ -93,7 +93,6 @@
 					/obj/item/stack/cable_coil/random,
 					/obj/item/reagent_containers/rag,
 					/obj/item/book/manual/wiki/barman_recipes,
-					/obj/item/book/granter/action/drink_fling,
 					/obj/item/reagent_containers/food/drinks/shaker,
 					/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
 					/obj/item/circuitboard/machine/chem_dispenser/drinks,
