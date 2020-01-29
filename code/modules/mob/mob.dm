@@ -456,8 +456,10 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	return
 
 /mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
-	if(!ckey || !new_mob)
-		CRASH("transfer_ckey() called [ckey ? "" : "on a ckey-less mob[new_mob ? "" : " and "]"][new_mob ? "" : "without a valid mob target"]!")
+	if(!new_mob || (!ckey && new_mob.ckey))
+		CRASH("transfer_ckey() called [new_mob ? "on ckey-less mob with a player mob as target" : "without a valid mob target"]!")
+	if(!ckey)
+		return
 	SEND_SIGNAL(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, new_mob, src)
 	if (client && client.prefs && client.prefs.auto_ooc)
 		if (client.prefs.chat_toggles & CHAT_OOC && isliving(new_mob))

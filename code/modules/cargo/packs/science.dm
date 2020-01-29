@@ -29,7 +29,7 @@
 	crate_name = "alien bro alloy crate"
 
 /datum/supply_pack/science/beakers
-	name = "Chemistry Beackers Crate"
+	name = "Chemistry Beakers Crate"
 	desc = "Glassware for any chemistry lab! Contains four small beakers, three large, two plastic, and one metamaterial. As well as three droppers and two pairs of latex gloves."
 	cost = 1500
 	contains = list(/obj/item/reagent_containers/glass/beaker,
@@ -82,7 +82,7 @@
 	crate_name = "circuitry starter pack crate"
 
 /datum/supply_pack/science/glasswork
-	name = "Glass blower kit Crate"
+	name = "Glass Blower Kit Crate"
 	desc = "Learn and make glassworks of usefull things for a profit! Contains glassworking tools and blowing rods. Glass not included."
 	cost = 1000
 	contains = list(/obj/item/glasswork/glasskit,
@@ -90,17 +90,6 @@
 					/obj/item/glasswork/blowing_rod,
 					/obj/item/glasswork/blowing_rod)
 	crate_name = "glassblower gear crate"
-
-/datum/supply_pack/science/adv_surgery_tools
-	name = "Med-Co Advanced surgery tools"
-	desc = "A full set of Med-Co advanced surgery tools, this crate also comes with a spay of synth flesh as well as a can of . Requires Surgery access to open."
-	cost = 5500
-	access = ACCESS_SURGERY
-	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
-					/obj/item/reagent_containers/medspray/synthflesh,
-					/obj/item/reagent_containers/medspray/sterilizine)
-	crate_name = "medco newest surgery tools"
-	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/science/monkey
 	name = "Monkey Cube Crate"
