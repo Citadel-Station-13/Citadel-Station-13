@@ -8,7 +8,6 @@
 	resistance_flags = ACID_PROOF
 	container_HP = 2
 
-
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
 		return
@@ -22,13 +21,9 @@
 
 	if(istype(M))
 		if(user.a_intent == INTENT_HARM)
-			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
-			if(reagents)
-				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
+			var/R = reagents?.log_list()
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
@@ -106,15 +101,16 @@
 			return
 	..()
 
-
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
-	desc = "A beaker. It can hold up to 50 units. Unable to withstand extreme pHes"
+	desc = "A beaker. It can hold up to 60 units. Unable to withstand extreme pHes."
 	icon = 'icons/obj/chemical.dmi'
+	volume = 60
 	icon_state = "beaker"
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
-	beaker_weakness_bitflag = PH_WEAK
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
+	container_flags = PH_WEAK|APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -156,33 +152,58 @@
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
-	desc = "A jar for honey. It can hold up to 50 units of sweet delight. Unable to withstand reagents of an extreme pH."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "vapour"
+	desc = "A jar for honey. It can hold up to 60 units of sweet delight. Unable to withstand reagents of an extreme pH."
+	icon_state = "honey"
+
+/obj/item/reagent_containers/glass/beaker/glass_dish
+	name = "glass dish"
+	desc = "A tiny glass dish. It can hold up to 3 units. Unable to withstand reagents of an extreme pH."
+	materials = list(MAT_GLASS=500)
+	icon_state = "glass_disk"
+	possible_transfer_amounts = list(0.1,0.5,0.75,1,2,3)
+	volume = 3
+
+/obj/item/reagent_containers/glass/beaker/flask/large
+	name = "large flask"
+	desc = "A large flask. It can hold up to 80 units. Unable to withstand reagents of an extreme pH."
+	materials = list(MAT_GLASS=2500)
+	icon_state = "flasklarge"
+	volume = 80
+
+/obj/item/reagent_containers/glass/beaker/flask
+	name = "small flask"
+	desc = "A small flask. It can hold up to 40 units. Unable to withstand reagents of an extreme pH."
+	materials = list(MAT_GLASS=1000)
+	icon_state = "flasksmall"
+	volume = 40
+
+/obj/item/reagent_containers/glass/beaker/flask/spouty
+	name = "flask with spout"
+	desc = "A flask with a spout! It can hold up to 120 units. Unable to withstand reagents of an extreme pH."
+	materials = list(MAT_GLASS=2500)
+	icon_state = "flaskspouty"
+	possible_transfer_amounts = list(1,2,3,4,5,10,15,20,25,30,50,100,120)
+	volume = 120
 
 /obj/item/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker. Can hold up to 100 units. Unable to withstand reagents of an extreme pH."
+	desc = "A large beaker. Can hold up to 120 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerlarge"
 	materials = list(MAT_GLASS=2500)
-	volume = 100
+	volume = 120
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120)
 	container_HP = 3
 
 /obj/item/reagent_containers/glass/beaker/plastic
 	name = "x-large beaker"
-	desc = "An extra-large beaker. Can hold up to 150 units. Is able to resist acid and alkaline solutions, but melts at 444K"
+	desc = "An extra-large beaker. Can hold up to 180 units. Is able to resist acid and alkaline solutions, but melts at 444 K."
 	icon_state = "beakerwhite"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
-	volume = 150
+	volume = 180
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150)
-
-/obj/item/reagent_containers/glass/beaker/plastic/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
+	container_flags = TEMP_WEAK|APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -191,16 +212,13 @@
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
-	desc = "A large beaker. Can hold up to 200 units. Is able to withstand all chemical situations."
+	desc = "A large beaker. Can hold up to 240 units, and is able to withstand all chemical situations."
 	icon_state = "beakergold"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
-	volume = 200
+	volume = 240
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,200)
-
-/obj/item/reagent_containers/glass/beaker/meta/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
-	. = ..()
+	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,200,240)
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -211,12 +229,8 @@
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 10//shouldn't be needed
-
-/obj/item/reagent_containers/glass/beaker/noreact/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
-	. = ..()
-	//reagents.set_reacting(FALSE) was this removed in a recent pr?
 
 /obj/item/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -228,35 +242,35 @@
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
-	container_HP = 4
+	container_HP = 5
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
-	list_reagents = list("cryoxadone" = 30)
+	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
 /obj/item/reagent_containers/glass/beaker/sulphuric
-	list_reagents = list("sacid" = 50)
+	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
 /obj/item/reagent_containers/glass/beaker/slime
-	list_reagents = list("slimejelly" = 50)
+	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/styptic
 	name = "styptic reserve tank"
-	list_reagents = list("styptic_powder" = 50)
+	list_reagents = list(/datum/reagent/medicine/styptic_powder = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/silver_sulfadiazine
 	name = "silver sulfadiazine reserve tank"
-	list_reagents = list("silver_sulfadiazine" = 50)
+	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/charcoal
 	name = "charcoal reserve tank"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
-	list_reagents = list("epinephrine" = 50)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
 /obj/item/reagent_containers/glass/beaker/synthflesh
-	list_reagents = list("synthflesh" = 50)
+	list_reagents = list(/datum/reagent/medicine/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
@@ -285,11 +299,8 @@
 		SLOT_L_STORE, SLOT_R_STORE,\
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 1
-
-/obj/item/reagent_containers/glass/bucket/Initialize()
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
@@ -335,15 +346,13 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"
-	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
+	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50)
+	container_flags = TEMP_WEAK|APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 1
-
-/obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()
@@ -352,9 +361,10 @@
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
 	materials = list(MAT_GLASS=0)
-	list_reagents = list("water" = 100)
+	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty

@@ -12,6 +12,7 @@
 #define APPRENTICE_BLUESPACE "bluespace"
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
+#define APPRENTICE_MARTIAL "martial"
 
 
 //ERT Types

@@ -8,7 +8,7 @@
 	spray_range = 1
 	stream_range = 1
 	volume = 30
-	list_reagents = list("lube" = 30)
+	list_reagents = list(/datum/reagent/lube = 30)
 
 //COMBAT CLOWN SHOES
 //Clown shoes with combat stats and noslip. Of course they still squeak.
@@ -145,9 +145,9 @@
 			C.throw_mode_on() //so they can catch it on the return.
 	return ..()
 
-/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom)
+/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(active)
-		var/caught = hit_atom.hitby(src, 0, 0)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
 			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 			slipper.Slip(hit_atom)
@@ -165,7 +165,7 @@
 	customfoodfilling = FALSE
 	seed = null
 	tastes = list("explosives" = 10)
-	list_reagents = list("vitamin" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 
 /obj/item/grown/bananapeel/bombanana
 	desc = "A peel from a banana. Why is it beeping?"

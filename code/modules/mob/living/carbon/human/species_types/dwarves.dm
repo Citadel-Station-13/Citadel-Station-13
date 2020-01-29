@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 
 /obj/item/organ/dwarfgland/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("ethanol", stored_alcohol/10)
+	S.reagents.add_reagent(/datum/reagent/consumable/ethanol, stored_alcohol/10)
 	return S
 
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..

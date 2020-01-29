@@ -3,18 +3,6 @@
 		if("R", "Southwest") // Southwest is End
 			toggle_throw_mode()
 			return
-		if("1")
-			a_intent_change("help")
-			return
-		if("2")
-			a_intent_change("disarm")
-			return
-		if("3")
-			a_intent_change("grab")
-			return
-		if("4")
-			a_intent_change("harm")
-			return
 		if("C")
 			toggle_combat_mode()
 			return

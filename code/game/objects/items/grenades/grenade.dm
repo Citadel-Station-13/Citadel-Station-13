@@ -93,9 +93,8 @@
 		var/obj/item/I = loc
 		I.grenade_prime_react(src)
 
-
-/obj/item/grenade/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+/obj/item/grenade/tool_act(mob/living/user, obj/item/I, tool_behaviour)
+	if(tool_behaviour == TOOL_SCREWDRIVER)
 		switch(det_time)
 			if ("1")
 				det_time = 10
@@ -122,3 +121,6 @@
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
 		return TRUE //It hit the grenade, not them
+
+/obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
+	return

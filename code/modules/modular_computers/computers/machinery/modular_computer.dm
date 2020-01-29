@@ -158,4 +158,5 @@
 // "Brute" damage mostly damages the casing.
 /obj/machinery/modular_computer/bullet_act(obj/item/projectile/Proj)
 	if(cpu)
-		cpu.bullet_act(Proj)
+		return cpu.bullet_act(Proj)
+	return ..()

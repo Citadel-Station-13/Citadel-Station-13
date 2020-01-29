@@ -31,6 +31,7 @@
 	GLOB.mutant_features_list[FEAT_CAPS] = init_sprite_accessory_subtypes(/datum/sprite_accessory/caps)
 	GLOB.mutant_features_list[FEAT_INSECT_WINGS] = init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings)
 	GLOB.mutant_features_list[FEAT_INSECT_FLUFF] = init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_fluff)
+	GLOB.mutant_features_list[FEAT_INSECT_MARKINGS] = init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_markings)
 	GLOB.mutant_features_list[FEAT_DECO_WINGS] = init_sprite_accessory_subtypes(/datum/sprite_accessory/deco_wings)
 
 //CIT CHANGES START HERE, ADDS SNOWFLAKE BODYPARTS AND MORE

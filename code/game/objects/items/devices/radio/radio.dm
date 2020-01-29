@@ -29,6 +29,7 @@
 	var/freqlock = FALSE  // Frequency lock to stop the user from untuning specialist radios.
 	var/use_command = FALSE  // If true, broadcasts will be large and BOLD.
 	var/command = FALSE  // If true, use_command can be toggled at will.
+	var/commandspan = SPAN_COMMAND //allow us to set what the fuck we want for headsets
 
 	// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
@@ -206,7 +207,7 @@
 		return
 
 	if(use_command)
-		spans |= SPAN_COMMAND
+		spans |= commandspan
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which

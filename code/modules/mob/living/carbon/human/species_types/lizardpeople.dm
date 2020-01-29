@@ -74,19 +74,6 @@
 		mutant_bodyparts |= FEAT_SPINES
 	H.update_body()
 
-/datum/species/lizard/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
-	if((FEAT_LEGS in C.dna.species.mutant_bodyparts) && (C.dna.features[FEAT_LEGS] == "Digitigrade" || C.dna.features[FEAT_LEGS] == "Avian"))
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
-	return ..()
-
-/datum/species/lizard/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
-	if((FEAT_LEGS in C.dna.species.mutant_bodyparts) && C.dna.features[FEAT_LEGS] == "Plantigrade")
-		species_traits -= DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
-
 /*
  Lizard subspecies: ASHWALKERS
 */

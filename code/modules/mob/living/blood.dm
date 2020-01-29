@@ -155,7 +155,7 @@
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
-			if(blood_id == "blood" || blood_id == "jellyblood") //normal blood
+			if(blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood) //normal blood
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
 						var/datum/disease/D = thing
@@ -175,7 +175,7 @@
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == "blood" || blood_id == "jellyblood") //actual blood reagent
+	if(blood_id == /datum/reagent/blood || /datum/reagent/blood/jellyblood) //actual blood reagent
 		var/blood_data = list()
 		//set the blood data
 		blood_data["donor"] = src
@@ -191,7 +191,7 @@
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
-			temp_chem[R.id] = R.volume
+			temp_chem[R.type] = R.volume
 		blood_data["trace_chem"] = list2params(temp_chem)
 		if(mind)
 			blood_data["mind"] = mind
@@ -226,21 +226,21 @@
 
 /mob/living/simple_animal/get_blood_id()
 	if(blood_volume)
-		return "blood"
+		return /datum/reagent/blood
 
 /mob/living/carbon/monkey/get_blood_id()
 	if(!(HAS_TRAIT(src, TRAIT_NOCLONE)))
-		return "blood"
+		return /datum/reagent/blood
 
 /mob/living/carbon/get_blood_id()
 	if(isjellyperson(src))
-		return "jellyblood"
+		return /datum/reagent/blood/jellyblood
 	if(dna?.species?.exotic_blood)
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits) || (HAS_TRAIT(src, TRAIT_NOCLONE)))
 		return
 	else
-		return "blood"
+		return /datum/reagent/blood
 
 // This is has more potential uses, and is probably faster than the old proc.
 /proc/get_safe_blood(bloodtype)

@@ -120,7 +120,7 @@
 #define FEAT_XENO_TAIL			"xenotail"
 #define FEAT_LEGS				"legs"
 #define FEAT_SNOUT				"snout"
-#define FEAT_MAM_SNOUT			"mam_snout"
+#define FEAT_MAM_SNOUT			"mam_snouts"
 #define FEAT_XENO_HEAD			"xenohead"
 #define FEAT_EARS				"ears"
 #define FEAT_MAM_EARS			"mam_ears"
@@ -131,11 +131,12 @@
 #define FEAT_MARKINGS			"body_markings"
 #define FEAT_MAM_MARKINGS		"mam_body_markings"
 #define FEAT_XENO_DORSAL		"xenodorsal"
-#define FEAT_INSECT_WINGS		"insect_wings"
 #define FEAT_WINGS				"wings"
 #define FEAT_WINGS_OPEN			"wingsopen"
 #define FEAT_DECO_WINGS			"deco_wings"
+#define FEAT_INSECT_WINGS		"insect_wings"
 #define FEAT_INSECT_FLUFF 		"insect_fluff"
+#define FEAT_INSECT_MARKINGS	"insect_markings"
 #define FEAT_TAUR				"taur"
 #define FEAT_CAPS				"caps"
 #define FEAT_IPC_SCREEN			"ipc_screen"
@@ -170,8 +171,12 @@
 #define ORGAN_SLOT_TESTICLES "testicles"
 #define ORGAN_SLOT_BREASTS "breasts"
 
-
 ////organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
 #define STANDARD_ORGAN_HEALING 		0.001
 #define STANDARD_ORGAN_DECAY		0.00222		//designed to fail organs when left to decay for ~15 minutes
+
+#define G_MALE 1
+#define G_FEMALE 2
+#define G_PLURAL 3
+#define G_NEUTER 4

@@ -1,0 +1,4 @@
+author: "AffectedArc07"
+delete-after: True
+changes: 
+  - code_imp: "All code files are now in the LF line format, please stick to it"

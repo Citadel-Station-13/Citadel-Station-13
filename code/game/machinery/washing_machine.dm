@@ -219,6 +219,10 @@
 		update_icon()
 		return
 
+	if(istype(W, /obj/item/clothing/head/mob_holder))
+		to_chat(user, "<span class='warning'>It's too unwieldly to put in this way.</span>")
+		return 1
+
 	else if(user.a_intent != INTENT_HARM)
 
 		if (!state_open)

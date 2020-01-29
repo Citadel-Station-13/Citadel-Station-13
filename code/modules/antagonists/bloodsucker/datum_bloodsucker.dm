@@ -35,8 +35,8 @@
 	var/warn_sun_burn = FALSE			// So we only get the sun burn message once per day.
 	var/had_toxlover = FALSE
 	// LISTS
-	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, \
-										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_NOCLONE)
+	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_NIGHT_VISION, \
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE)
 	// NOTES: TRAIT_AGEUSIA <-- Doesn't like flavors.
 	// REMOVED: TRAIT_NODEATH
 	// TO ADD:
@@ -183,7 +183,7 @@
 	BuyPower(new /datum/action/bloodsucker/masquerade)
 	BuyPower(new /datum/action/bloodsucker/veil)
 	// Traits
-	for (var/T in defaultTraits)
+	for(var/T in defaultTraits)
 		ADD_TRAIT(owner.current, T, "bloodsucker")
 	if(HAS_TRAIT(owner.current, TRAIT_TOXINLOVER)) //No slime bonuses here, no thank you
 		had_toxlover = TRUE
@@ -200,10 +200,10 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
-		S.brutemod *= 0.5											//  <--------------------  Start small, but burn mod increases based on rank!
-		S.coldmod = 0
-		S.stunmod *= 0.25
-		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
+		H.physiology.brute_mod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
+		H.physiology.cold_mod = 0
+		H.physiology.stun_mod *= 0.35
+		H.physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
 		S.punchdamagelow += 1       //lowest possible punch damage   0
@@ -319,12 +319,10 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
-		S.burnmod *= 0.025 			// Slightly more burn damage
-		S.stunmod *= 0.95			// Slightly less stun time.
 		S.punchdamagelow += 0.5
 		S.punchdamagehigh += 0.5    // NOTE: This affects the hitting power of Brawn.
 	// More Health
-	owner.current.setMaxHealth(owner.current.maxHealth + 5)
+	owner.current.setMaxHealth(owner.current.maxHealth + 10)
 	// Vamp Stats
 	regenRate += 0.05			// Points of brute healed (starts at 0.3)
 	feedAmount += 2				// Increase how quickly I munch down vics (15)
@@ -336,7 +334,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	// Assign True Reputation
 	if(vamplevel == 4)
 		SelectReputation(am_fledgling = FALSE, forced = TRUE)
-	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, resistence, health, feed rate, regen rate, and maximum blood have all increased!</span>")
+	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, health, feed rate, regen rate, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
 	update_hud(TRUE)
 	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.

@@ -24,7 +24,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/list/exported_atoms = list()//names of atoms sold/deleted by export
 	var/list/total_amount = list()  //export instance => total count of sold objects of its type, only exists if any were sold
 	var/list/total_value = list()   //export instance => total value of sold objects
-	var/list/total_reagents = list()//export reagents => into the total vaule of the object sold
+	var/list/reagents_volume = list()//export reagents => into the total volume of the object sold
+	var/list/reagents_value = list()//export reagents => into the reagent type total value.
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
 /proc/export_item_and_contents(atom/movable/AM, allowed_categories = EXPORT_CARGO, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
@@ -49,8 +50,12 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 				report.exported_atoms += " [thing.name]"
 				break
 		if(thing.reagents)
-			for(var/datum/reagent/R in thing.reagents.reagent_list)
-				report.total_reagents[R] += R.volume
+			for(var/A in thing.reagents.reagent_list)
+				var/datum/reagent/R = A
+				if(!R.value)
+					continue
+				report.reagents_volume[R.name] += R.volume
+				report.reagents_value[R.name] += R.volume * R.value
 		if(!dry_run && (sold || delete_unsold))
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)

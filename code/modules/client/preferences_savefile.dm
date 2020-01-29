@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	24
+#define SAVEFILE_VERSION_MAX	25
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -109,10 +109,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else if(current_version < 23) // we are fixing a gamebreaking bug.
 		job_preferences = list() //It loaded null from nonexistant savefile field.
 
-	if(current_version < 24 && S["feature_exhibitionist"])
-		var/datum/quirk/exhibitionism/E
-		var/quirk_name = initial(E.name)
-		all_quirks += quirk_name
+	if(current_version < 25)
+		var/digi
+		S["feature_lizard_legs"] >> digi
+		if(digi == "Digitigrade Legs")
+			WRITE_FILE(S["feature_lizard_legs"], "Digitigrade")
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -167,6 +168,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["ambientocclusion"]	>> ambientocclusion
 	S["auto_fit_viewport"]	>> auto_fit_viewport
+	S["sprint_spacebar"]	>> sprint_spacebar
+	S["sprint_toggle"]		>> sprint_toggle
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
@@ -181,8 +184,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["widescreenpref"]		>> widescreenpref
 	S["autostand"]			>> autostand
 	S["cit_toggles"]		>> cit_toggles
-	S["lewdchem"]			>> lewdchem
 	S["preferred_chaos"]	>> preferred_chaos
+	S["auto_ooc"]	>> auto_ooc
 
 
 	//try to fix any outdated data if necessary
@@ -204,6 +207,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
+	sprint_spacebar	= sanitize_integer(sprint_spacebar, 0, 1, initial(sprint_spacebar))
+	sprint_toggle	= sanitize_integer(sprint_toggle, 0, 1, initial(sprint_toggle))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -219,7 +224,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	widescreenpref			= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
 	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
 	cit_toggles			= sanitize_integer(cit_toggles, 0, 65535, initial(cit_toggles))
-
+	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 
 	return 1
 
@@ -264,6 +269,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["parallax"], parallax)
 	WRITE_FILE(S["ambientocclusion"], ambientocclusion)
 	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
+	WRITE_FILE(S["sprint_spacebar"], sprint_spacebar)
+	WRITE_FILE(S["sprint_toggle"], sprint_toggle)
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
@@ -278,8 +285,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["autostand"], autostand)
 	WRITE_FILE(S["cit_toggles"], cit_toggles)
-	WRITE_FILE(S["lewdchem"], lewdchem)
 	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
+	WRITE_FILE(S["auto_ooc"], auto_ooc)
 
 	return 1
 
@@ -366,9 +373,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_legs"]			>> features[FEAT_LEGS]
 	S["feature_human_tail"]				>> features[FEAT_TAIL_HUMAN]
 	S["feature_human_ears"]				>> features[FEAT_EARS]
+	S["feature_deco_wings"]				>> features[FEAT_DECO_WINGS]
 	S["feature_insect_wings"]			>> features[FEAT_INSECT_WINGS]
-	S["feature_deco_wings"]			>> features[FEAT_DECO_WINGS]
 	S["feature_insect_fluff"]			>> features[FEAT_INSECT_FLUFF]
+	S["feature_insect_markings"]		>> features["insect_markings"]
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -474,12 +482,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(gender == MALE)
 		hair_style					= sanitize_inlist(hair_style, GLOB.hair_styles_male_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_male_list)
-	else
+		undershirt					= sanitize_inlist(undershirt, GLOB.undershirt_m)
+		underwear					= sanitize_inlist(underwear, GLOB.underwear_m)
+	else if(gender == FEMALE)
 		hair_style					= sanitize_inlist(hair_style, GLOB.hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_female_list)
-	underwear						= sanitize_inlist(underwear, GLOB.underwear_list)
+		undershirt					= sanitize_inlist(undershirt, GLOB.undershirt_f)
+		underwear					= sanitize_inlist(underwear, GLOB.underwear_f)
+	else
+		hair_style					= sanitize_inlist(hair_style, GLOB.hair_styles_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_list)
+		underwear					= sanitize_inlist(underwear, GLOB.underwear_list)
+		undershirt 					= sanitize_inlist(undershirt, GLOB.undershirt_list)
+
 	undie_color						= sanitize_hexcolor(undie_color, 3, FALSE, initial(undie_color))
-	undershirt						= sanitize_inlist(undershirt, GLOB.undershirt_list)
 	shirt_color						= sanitize_hexcolor(shirt_color, 3, FALSE, initial(shirt_color))
 	socks							= sanitize_inlist(socks, GLOB.socks_list)
 	socks_color						= sanitize_hexcolor(socks_color, 3, FALSE, initial(socks_color))
@@ -503,9 +519,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features[FEAT_SPINES]			= sanitize_inlist(features[FEAT_SPINES], GLOB.mutant_features_list[FEAT_SPINES])
 	features[FEAT_MARKINGS]			= sanitize_inlist(features[FEAT_MARKINGS], GLOB.mutant_features_list[FEAT_MARKINGS])
 	features[FEAT_LEGS]				= sanitize_inlist(features[FEAT_LEGS], GLOB.mutant_features_list[FEAT_LEGS])
-	features[FEAT_INSECT_WINGS] 	= sanitize_inlist(features[FEAT_INSECT_WINGS], GLOB.mutant_features_list[FEAT_INSECT_WINGS])
 	features[FEAT_DECO_WINGS] 		= sanitize_inlist(features[FEAT_DECO_WINGS], GLOB.mutant_features_list[FEAT_DECO_WINGS], "None")
 	features[FEAT_INSECT_FLUFF]		= sanitize_inlist(features[FEAT_INSECT_FLUFF], GLOB.mutant_features_list[FEAT_INSECT_FLUFF])
+	features[FEAT_INSECT_MARKINGS] 	= sanitize_inlist(features[FEAT_INSECT_MARKINGS], GLOB.mutant_features_list[FEAT_INSECT_MARKINGS], "None")
+	features[FEAT_INSECT_WINGS] 	= sanitize_inlist(features[FEAT_INSECT_WINGS], GLOB.mutant_features_list[FEAT_INSECT_WINGS])
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -515,6 +532,23 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 
+	for(var/V in all_quirks) // quirk migration
+		switch(V)
+			if("Acute hepatic pharmacokinesis")
+				DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
+				DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
+				ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
+				ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
+				all_quirks -= V
+			if("Crocin Immunity")
+				ENABLE_BITFIELD(cit_toggles,NO_APHRO)
+				all_quirks -= V
+			if("Buns of Steel")
+				ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
+				all_quirks -= V
+
+	if(features["meat_type"] == "Inesct")
+		features["meat_type"] = "Insect"
 	cit_character_pref_load(S)
 
 	return 1
@@ -570,10 +604,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_spines"]			, features[FEAT_SPINES])
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features[FEAT_MARKINGS])
 	WRITE_FILE(S["feature_lizard_legs"]				, features[FEAT_LEGS])
-	WRITE_FILE(S["feature_insect_wings"]			, features[FEAT_INSECT_WINGS])
 	WRITE_FILE(S["feature_deco_wings"]				, features[FEAT_DECO_WINGS])
+	WRITE_FILE(S["feature_insect_wings"]			, features[FEAT_INSECT_WINGS])
 	WRITE_FILE(S["feature_insect_fluff"]			, features[FEAT_INSECT_FLUFF])
+	WRITE_FILE(S["feature_insect_markings"]			, features[FEAT_INSECT_MARKINGS])
 	WRITE_FILE(S["feature_meat"]					, features["meat_type"])
+
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

@@ -80,7 +80,7 @@
 /obj/structure/displaycase/proc/trigger_alarm()
 	//Activate Anti-theft
 	if(alert)
-		var/area/alarmed = get_area(src)
+		var/area/alarmed = get_base_area(src)
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
@@ -236,6 +236,12 @@
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(ACCESS_RD)
+
+/obj/structure/displaycase/clown
+	desc = "In the event of clown, honk glass."
+	alert = TRUE
+	start_showpiece_type = /obj/item/bikehorn
+	req_access = list(ACCESS_CENT_GENERAL)
 
 /obj/structure/displaycase/trophy
 	name = "trophy display case"

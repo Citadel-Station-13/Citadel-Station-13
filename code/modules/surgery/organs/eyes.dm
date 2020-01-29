@@ -43,13 +43,9 @@
 		else
 			eye_color = H.eye_color
 		if(!special)
-			H.dna?.species?.handle_body() //regenerate eyeballs overlays.
-		if(HAS_TRAIT(H, TRAIT_NIGHT_VISION) && !lighting_alpha)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
-			see_in_dark = 8
+			H.dna?.species?.handle_body(H) //regenerate eyeballs overlays.
 	M.update_tint()
 	owner.update_sight()
-
 
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
 	clear_eye_trauma()

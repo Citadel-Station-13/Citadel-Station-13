@@ -126,8 +126,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
 
-/proc/attach_spans(input, list/spans)
-	return "[message_spans_start(spans)][input]</span>"
+/atom/movable/proc/attach_spans(input, list/spans)
+	var/customsayverb = findtext(input, "*")
+	if(customsayverb)
+		input = capitalize(copytext(input, customsayverb+1))
+	if(input)
+		return "[message_spans_start(spans)][input]</span>"
+	else
+		return
 
 /proc/message_spans_start(list/spans)
 	var/output = "<span class='"

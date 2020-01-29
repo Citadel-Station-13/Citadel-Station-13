@@ -117,6 +117,7 @@
 	anchored = TRUE
 	max_integrity = 30
 	layer = LATTICE_LAYER
+	light_power = 0.3
 
 	var/hidden_message
 	var/creator_key

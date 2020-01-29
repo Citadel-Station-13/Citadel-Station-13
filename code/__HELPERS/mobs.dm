@@ -20,8 +20,6 @@
 		else
 			return "000"
 
-#define UNDIE_COLORABLE(U) (U?.has_color)
-
 /proc/random_underwear(gender)
 	if(!GLOB.underwear_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/bottom, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
@@ -50,7 +48,6 @@
 	return pick(GLOB.socks_list)
 
 /proc/random_features(list/to_randomize)
-
 	. = list(
 		FEAT_MUTCOLOR = "FFF",
 		FEAT_TAIL_LIZARD = "Smooth",
@@ -66,6 +63,7 @@
 		FEAT_LEGS = "Plantigrade",
 		FEAT_INSECT_WINGS = "Plain",
 		FEAT_INSECT_FLUFF = "None",
+		FEAT_INSECT_MARKINGS = "None",
 		FEAT_MUTCOLOR2 = "FFF",
 		FEAT_MUTCOLOR3 = "FFF",
 		FEAT_MAM_MARKINGS = "Plain",

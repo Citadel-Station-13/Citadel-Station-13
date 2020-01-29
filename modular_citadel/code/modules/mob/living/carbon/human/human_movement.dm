@@ -1,6 +1,3 @@
-/mob/living/carbon/human
-	var/sprinting = FALSE
-
 /mob/living/carbon/human/Move(NewLoc, direct)
 	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
@@ -15,8 +12,11 @@
 
 /mob/living/carbon/human/movement_delay()
 	. = 0
-	if(!resting && m_intent == MOVE_INTENT_RUN && !sprinting)
-		. += 1
+	if(!resting && m_intent == MOVE_INTENT_RUN && sprinting)
+		var/static/datum/config_entry/number/movedelay/sprint_speed_increase/SSI
+		if(!SSI)
+			SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
+		. -= SSI.config_entry_value
 	if(wrongdirmovedelay)
 		. += 1
 	. += ..()
@@ -28,9 +28,8 @@
 			playsound_local(src, 'sound/misc/sprintactivate.ogg', 50, FALSE, pressure_affected = FALSE)
 		else
 			playsound_local(src, 'sound/misc/sprintdeactivate.ogg', 50, FALSE, pressure_affected = FALSE)
-	if(hud_used && hud_used.static_inventory)
-		for(var/obj/screen/sprintbutton/selector in hud_used.static_inventory)
-			selector.insert_witty_toggle_joke_here(src)
+	var/obj/screen/sprintbutton/S = locate() in hud_used?.static_inventory
+	S?.update_icon_state()
 	return TRUE
 
 /mob/living/carbon/human/proc/sprint_hotkey(targetstatus)
