@@ -22,7 +22,7 @@ Contents:
 /obj/item/clothing/mask/gas/space_ninja/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
-		var/list/temp_message = text2list(message, " ")
+		var/list/temp_message = splittext(message, " ")
 		var/list/pick_list = list()
 		for(var/i in 1 to temp_message.len)
 			pick_list += i
@@ -32,7 +32,7 @@ Contents:
 				continue
 			temp_message[H] = ninjaspeak(temp_message[H])
 			pick_list -= H
-		message = list2text(temp_message, " ")
+		message = temp_message.Join(" ")
 
 		//The Alternate speech mod is now the main one.
 		message = replacetext(message, "l", "r")
