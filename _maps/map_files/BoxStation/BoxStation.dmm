@@ -56522,7 +56522,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/command{
-	name = "Command Access To Vault"
+	name = "Command Access To Vault";
+	req_access = "19"
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge/meeting_room)
