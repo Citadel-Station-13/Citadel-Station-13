@@ -23,6 +23,13 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/wrench/citadel
+	name = "rusty wrench"
+	desc = "A wrench with common uses. It seems unusually robust..."
+	toolspeed = 0.5
+	force = 20
+	throwforce = 24
+
 /obj/item/wrench/cyborg
 	name = "automatic wrench"
 	desc = "An advanced robotic wrench. Can be found in construction cyborgs."

@@ -23,7 +23,7 @@
 	desc = "A small, retractable blade that can easily be concealed in one's pocket.  \
 			It is a quieter than the switchblade, but much more difficult to keep hidden."
 	item = /obj/item/switchblade
-	cost = 2
+	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/cqc/sword
@@ -31,7 +31,7 @@
 	desc = "A small, pocketable device that can produce a deadly blade of energy when activated. Can block some attacks, but don't rely on it. \
 			Activating it or attacking with it produces a loud, distinctive noise."
 	item = /obj/item/melee/transforming/energy/sword/saber
-	cost = 6
+	cost = 7
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/cqc/clownsword
@@ -61,7 +61,7 @@
 			The rapier comes with its own jet black sheath, however this will generally alert hostiles to your allegience. \
 			The rapier itself can be used to deflect melee strikes to some degree, and it can be used as a powerful projectile in a pinch."
 	item = /obj/item/storage/belt/sabre/rapier
-	cost = 6
+	cost = 7
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/cqc/powerfist
