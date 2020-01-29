@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(sounds)
 	name = "sounds"
 	flags = SS_NO_FIRE
-	var/static/sound_channels_max = 1024		//BYOND max channels
+	var/static/sound_channels_max = CHANNEL_HIGHEST_AVAILABLE		//BYOND max channels
 	var/list/sound_channels						//Assoc list of sound channels. "[channel]" = datum_using_or_TRUE
 	var/list/sound_channels_by_datum			//assoc list : datum = list(channel1, channel2)
 	var/datum/stack/channel_stack				//Uses a stack for super-fast channel allocation.
