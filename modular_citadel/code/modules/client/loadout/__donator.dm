@@ -488,3 +488,9 @@ datum/gear/darksabresheath
 	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/sneakers/mikuleggings
 	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/cosmos
+	name = "cosmic space bedsheet"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/bedsheet/cosmos
+	ckeywhitelist = list("grunnyyy")
