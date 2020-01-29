@@ -14,15 +14,21 @@
 	spawnwithmagazine = FALSE
 
 	recoil = 0
-	var/charge_left = 0
-	var/max_charge = 0
+
 	var/charge_sections = 7
+
+/obj/item/gun/ballistic/revolver/mws/afterattack(atom/target, mob/living/user, flag, params)
+	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
+		var/obj/item/ammo_casing/mws_batt/shot = chambered
+		if(shot.shots_left >= 1)
+			shot.newshot() //Create a new shot
+			update_charge()
+	.=..()
 
 /obj/item/gun/ballistic/revolver/mws/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/mws_batt/shot = chambered
-		if(shot.cell.charge >= 100)
-			shot.cell.use(shot.e_cost)//... drain the cell
+		if(shot.shots_left >= 1)
 			shot.newshot() //Create a new shot
 			update_charge()
 		else
@@ -33,41 +39,21 @@
 	else
 		return
 
-/*
-/obj/item/gun/ballistic/revolver/mws/chamber_round()
-	if(chambered && magazine)
-		var/obj/item/ammo_casing/mws_batt/batt = chambered
-		if(batt.shots_left)
-			return new chambered.projectile_type()
-		else
-			for(var/B in magazine.stored_ammo)
-				var/obj/item/ammo_casing/mws_batt/other_batt = B
-				if(istype(other_batt,chambered.type) && other_batt.shots_left)
-					switch_to(other_batt)
-					return new chambered.projectile_type()
-					break
-
-	return null
-*/
 /obj/item/gun/ballistic/revolver/mws/proc/update_charge()
-	charge_left = 0
-	max_charge = 0
 
 	if(!chambered)
 		return
 
 	var/obj/item/ammo_casing/mws_batt/batt = chambered
+	if(batt.cell.charge >= batt.e_cost)
+		batt.cell.use(batt.e_cost)
 
-	batt.shots_left = batt.cell.charge / 6
+	if(batt.cell.charge > 0)
+		batt.shots_left = (batt.cell.charge / batt.cell.maxcharge) * 7
+	else
+		batt.shots_left = 0
+	update_icon()
 
-/*
-	if(magazine) //Crawl to find more
-		for(var/B in magazine.stored_ammo)
-			var/obj/item/ammo_casing/mws_batt/bullet = B
-			if(istype(bullet,batt.type))
-				charge_left += bullet.shots_left
-				max_charge += initial(bullet.shots_left)
-*/
 /obj/item/gun/ballistic/revolver/mws/proc/switch_to(obj/item/ammo_casing/mws_batt/new_batt)
 	if(ishuman(loc))
 		if(chambered && new_batt.type == chambered.type)
@@ -96,17 +82,6 @@
 		if(chambered != next_batt && !istype(next_batt, chambered.type) && next_batt.shots_left >= 1)
 			switch_to(next_batt)
 			break
-/*
-/obj/item/weapon/gun/projectile/mws/special_check(mob/user)
-	if(!chambered)
-		return
-
-	var/obj/item/ammo_casing/mws_batt/batt = chambered
-	if(!batt.shots_left)
-		return FALSE
-
-	return TRUE
-*/
 
 /obj/item/gun/ballistic/revolver/mws/AltClick(mob/living/user)
 	if(magazine)
@@ -124,7 +99,6 @@
 		update_icon()
 
 /obj/item/gun/ballistic/revolver/mws/update_icon()
-	update_charge()
 
 	cut_overlays()
 	if(!chambered)
@@ -179,7 +153,10 @@
 		cap.color = batt.type_color
 		cap.pixel_x = current * x_offset //Caps don't need a pixel_y offset
 		add_overlay(cap)
-
+		if(batt.cell.charge > 0)
+			batt.shots_left = (batt.cell.charge / batt.cell.maxcharge) * 7
+		else
+			batt.shots_left = 0
 		if(batt.shots_left)
 			var/ratio = CEILING((batt.shots_left / initial(batt.shots_left)) * 4, 1) //4 is how many lights we have a sprite for
 			var/image/charge = image(icon, icon_state = "[initial(icon_state)]_charge-[ratio]")

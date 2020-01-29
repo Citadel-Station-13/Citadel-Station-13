@@ -145,8 +145,9 @@
 			if(R.cell.charge < R.cell.maxcharge)
 				R.cell.give(R.cell.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
+				using_power = 1
 			update_icon(using_power)
-			return
+
 	else
 		return PROCESS_KILL
 
