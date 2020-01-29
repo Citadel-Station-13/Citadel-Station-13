@@ -15,7 +15,7 @@
 
 	recoil = 0
 
-	var/charge_sections = 7
+	var/charge_sections = 1
 
 /obj/item/gun/ballistic/revolver/mws/afterattack(atom/target, mob/living/user, flag, params)
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
@@ -119,7 +119,7 @@
 	add_overlay(barrel_color)
 
 	//Charge bar
-	var/ratio = CEILING((batt.shots_left / batt.max_shots) * charge_sections, 1)
+	var/ratio = CEILING((batt.shots_left) * charge_sections, 1)
 	for(var/i = 0, i < ratio, i++)
 		var/image/charge_bar = image(icon, icon_state = "[initial(icon_state)]_charge")
 		charge_bar.pixel_x = i
@@ -150,15 +150,15 @@
 	for(var/B in stored_ammo)
 		var/obj/item/ammo_casing/mws_batt/batt = B
 		var/image/cap = image(icon, icon_state = "[initial(icon_state)]_cap")
-		cap.color = batt.type_color
-		cap.pixel_x = current * x_offset //Caps don't need a pixel_y offset
-		add_overlay(cap)
 		if(batt.cell.charge > 0)
 			batt.shots_left = (batt.cell.charge / batt.cell.maxcharge) * 7
 		else
 			batt.shots_left = 0
+		cap.color = batt.type_color
+		cap.pixel_x = current * x_offset //Caps don't need a pixel_y offset
+		add_overlay(cap)
 		if(batt.shots_left)
-			var/ratio = CEILING((batt.shots_left / initial(batt.shots_left)) * 4, 1) //4 is how many lights we have a sprite for
+			var/ratio = CEILING((batt.shots_left) * 4, 1) //4 is how many lights we have a sprite for
 			var/image/charge = image(icon, icon_state = "[initial(icon_state)]_charge-[ratio]")
 			charge.color = "#29EAF4" //Could use battery color but eh.
 			charge.pixel_x = current * x_offset
@@ -193,6 +193,7 @@
 	pixel_y = rand(-10, 10)
 	cell = new cell_type(src)
 	cell.give(cell.maxcharge)
+	BB = null
 	update_icon()
 
 /obj/item/ammo_casing/mws_batt/update_icon()
