@@ -6,7 +6,7 @@
 	knockdown = 60
 	knockdown_stamoverride = 36
 	knockdown_stam_max = 50
-	stutter = 5
+	stutter = 10
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
