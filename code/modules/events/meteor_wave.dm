@@ -26,7 +26,6 @@
 		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
 	endWhen = startWhen + 60
 
-
 /datum/round_event/meteor_wave/New()
 	..()
 	if(!wave_type)
@@ -59,7 +58,7 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)
-	priority_announce("Meteors have been detected on collision course with the station. Estimated time until impact: [round(startWhen/60)] minutes.[GLOB.singularity_counter ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]", "Meteor Alert", "meteors")
+	priority_announce("Meteors have been detected on collision course with the station. Estimated time until impact: [round((startWhen * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]", "Meteor Alert", "meteors")
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))
