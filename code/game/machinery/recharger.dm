@@ -17,7 +17,8 @@
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
 		/obj/item/gun/ballistic/automatic/magrifle_e,
-		/obj/item/gun/ballistic/automatic/pistol/mag_e))
+		/obj/item/gun/ballistic/automatic/pistol/mag_e,
+		/obj/item/ammo_casing/mws_batt))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -136,6 +137,14 @@
 				R.stored_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
 				using_power = 1
+			update_icon(using_power)
+			return
+
+		if(istype(charging, /obj/item/ammo_casing/mws_batt))
+			var/obj/item/ammo_casing/mws_batt/R = charging
+			if(R.cell.charge < R.cell.maxcharge)
+				R.cell.give(R.cell.chargerate * recharge_coeff)
+				use_power(250 * recharge_coeff)
 			update_icon(using_power)
 			return
 	else
