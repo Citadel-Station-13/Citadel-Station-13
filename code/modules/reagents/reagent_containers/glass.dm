@@ -110,7 +110,7 @@
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
-	beaker_weakness_bitflag = PH_WEAK
+	container_flags = PH_WEAK|APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -203,11 +203,7 @@
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
-
-/obj/item/reagent_containers/glass/beaker/plastic/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
+	container_flags = TEMP_WEAK|APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -222,10 +218,7 @@
 	volume = 240
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,200,240)
-
-/obj/item/reagent_containers/glass/beaker/meta/Initialize() // why the fuck can't you just set the beaker weakness bitflags to nothing? fuck you
-	beaker_weakness_bitflag &= ~PH_WEAK
-	. = ..()
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -236,12 +229,8 @@
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 10//shouldn't be needed
-
-/obj/item/reagent_containers/glass/beaker/noreact/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
-	. = ..()
-	//reagents.set_reacting(FALSE) was this removed in a recent pr?
 
 /obj/item/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -310,11 +299,8 @@
 		SLOT_L_STORE, SLOT_R_STORE,\
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 1
-
-/obj/item/reagent_containers/glass/bucket/Initialize()
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
@@ -365,11 +351,8 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
+	container_flags = TEMP_WEAK|APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 1
-
-/obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()
