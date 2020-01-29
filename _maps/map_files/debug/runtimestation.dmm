@@ -3097,7 +3097,7 @@
 /obj/structure/table,
 /obj/item/book_of_babel,
 /obj/item/book/granter/action/origami,
-/obj/item/book/granter/action/drink_fling,
+/obj/item/clothing/glasses/sunglasses/reagent,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "MH" = (
