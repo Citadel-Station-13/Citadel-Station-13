@@ -141,6 +141,24 @@
 		var/obj/item/gunmodule/part = A
 		partAdd(part, user)
 
+/obj/item/gunwip/attack_hand(mob/user)
+	if(loc != user)
+		..()
+		return	//let them pick it up
+	else
+		if(receiver)
+			user.transferItemToLoc(receiver, user)
+		if(barrel)
+			user.transferItemToLoc(barrel, user)
+		if(stock)
+			user.transferItemToLoc(stock, user)
+		if(grip)
+			user.transferItemToLoc(grip, user)
+		if(trigassembly)
+			user.transferItemToLoc(trigassembly, user)
+		to_chat(user, "You disassemble the [name].")
+		qdel(src)
+
 //
 // PARTS
 //
