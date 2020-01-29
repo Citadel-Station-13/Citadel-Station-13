@@ -50,11 +50,11 @@
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/munitions/tatorshotgun
-	name = "Bulldog Shotgun Kit"
-	desc = "A box containing a semi-automatic shotgun fed by 8-round drums. Compatible with all 12g rounds. Designed for close \
-			quarter anti-personnel engagements. Incredibly loud and obvious. The Bulldog is preloaded with a buckshot drum, \
-			and contains six additional drums of various types. Additional ammunition is not available so try to make it count."
+/datum/uplink_item/munitions/tatorshotgun //This was originally going to be a bulldog hahah maybe that's a bit much.
+	name = "Combat Shotgun Kit"
+	desc = "A box containing a semi-automatic combat shotgun. Compatible with all shells. Designed for close \
+			quarter anti-personnel engagements. Incredibly loud and obvious. The shotgun is preloaded with a buckshot shells, \
+			and contains six additional boxes of various ammo types. How did we fit all these shells into a small box? Very carefully."
 	item = /obj/item/storage/box/syndie_kit/shotgun
 	cost = 15
 	surplus = 40

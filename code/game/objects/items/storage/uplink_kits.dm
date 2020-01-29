@@ -444,10 +444,10 @@
 /obj/item/storage/box/syndie_kit/shotgun
 
 /obj/item/storage/box/syndie_kit/shotgun/PopulateContents()
-	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
-	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/ammo_box/magazine/m12g/slug(src)
-	new /obj/item/ammo_box/magazine/m12g/slug(src)
-	new /obj/item/ammo_box/magazine/m12g/meteor(src)
-	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/gun/ballistic/shotgun/automatic/combat/traitor(src)
+	new /obj/item/storage/box/lethalshot(src)
+	new /obj/item/storage/box/lethalslugs(src)
+	new /obj/item/storage/box/lethalslugs(src)
+	new /obj/item/storage/box/rubber(src)
+	new /obj/item/storage/box/rubber(src)
+	new /obj/item/storage/box/lasershot(src)
