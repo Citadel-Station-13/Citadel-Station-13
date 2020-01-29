@@ -373,7 +373,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/human_check = TRUE
 
 /datum/objective/breakout/check_completion()
-	return !target || considered_escaped(target, enforce_human = human_check)
+	return !target || considered_escaped(target)
 
 /datum/objective/breakout/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
