@@ -11,15 +11,15 @@
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	pin = null
 	spread = 0
-	basespread = 0
-	burstspread = 0
+	var/basespread = 0
+	var/burstspread = 0
 	var/failchance = 0
 	//All modular gunparts affect reliability if so desired. Intended for Science/improvised weapons.
-	receiever = /obj/item/gunmodule/receiever //The modular gunpart that's the receiever. Affects calibre, magazine, and fire delay.
-	barrel = /obj/item/gunmodule/barrel //The modular gunpart that's the barrel. Affects accuracy and size, alongside suppress/bayonetabilty.
-	stock = /obj/item/gunmodule/stock //The modular gunpart that's the stock. Affects accuracy and size and the sprite.
-	grip = /obj/item/gunmodule/grip //The modular gunpart that's the grip. Affects accuracy and size alongside the sprite.
-	trigassembly = /obj/item/gunmodule/trigassembly //The modular gunpart that's the trigger asssembly. Affects the weapon's max burst and can allow automatic fire.
+	var/receiver = /obj/item/gunmodule/receiver //The modular gunpart that's the receiver. Affects calibre, magazine, and fire delay.
+	var/barrel = /obj/item/gunmodule/barrel //The modular gunpart that's the barrel. Affects accuracy and size, alongside suppress/bayonetabilty.
+	var/stock = /obj/item/gunmodule/stock //The modular gunpart that's the stock. Affects accuracy and size and the sprite.
+	var/grip = /obj/item/gunmodule/grip //The modular gunpart that's the grip. Affects accuracy and size alongside the sprite.
+	var/trigassembly = /obj/item/gunmodule/trigassembly //The modular gunpart that's the trigger asssembly. Affects the weapon's max burst and can allow automatic fire.
 
 /obj/item/gun/ballistic/automatic/modular/disable_burst()
 	. = ..()
@@ -47,37 +47,40 @@
 	desc = "A modular gun. It appears to use a [receiver.name] receiver, a [stock.name] stock, a [barrel.name] barrel, a [grip.name] grip, and a [trigassembly.name] trigger assembly. Use a screwdriver to dissassemble. You can hot-swap barrels."
 	update_icon()
 
-/obj/item/gun/ballistic/automatic/modular/initialize()
+/obj/item/gun/ballistic/automatic/modular/Initialize()
 	. = ..()
 	partRefresh()
 
 /obj/item/gun/ballistic/automatic/modular/attackby(obj/item/A, mob/user, params)
 	..()
+	var/oldpart
 	if(istype(A, /obj/item/gunmodule))
 		var/obj/item/gunmodule/part = A
 		if(!istype(part, /obj/item/gunmodule/barrel))
 			to_chat(user, "You can't swap that part without disassembling the weapon!")
-		else if(istype(part, /obj/item/gunmodule/barrel) && if(user.transferItemToLoc(part, src)))
-			oldpart = barrel
-			oldpart.dropped()
-			to_chat(user, "You replace the [oldpart.name] with the [part.name].")
-			oldpart.forceMove(get_turf(src.loc))
-			barrel = part
-	else if(istype(A, /obj/item/screwdriver) && if(user.transferItemToLoc(src, user))
-		to_chat(user, "You dissassemble the gun.")
-		receiver.dropped()
-		receiver.forceMove(get_turf(user.loc))
-		barrel.dropped()
-		barrel.forceMove(get_turf(user.loc))
-		stock.dropped()
-		stock.forceMove(get_turf(user.loc))
-		grip.dropped()
-		grip.forceMove(get_turf(user.loc))
-		trigassembly.dropped()
-		trigassembly.forceMove(get_turf(user.loc))
-		qdel(src)
+		else
+			if(istype(part, /obj/item/gunmodule/barrel) && if(user.transferItemToLoc(part, src)))
+				oldpart = barrel
+				oldpart.dropped()
+				to_chat(user, "You replace the [oldpart.name] with the [part.name].")
+				oldpart.forceMove(get_turf(src.loc))
+				barrel = part
+	else
+		if(istype(A, /obj/item/screwdriver) && if(user.transferItemToLoc(src, user)))
+			to_chat(user, "You dissassemble the gun.")
+			receiver.dropped()
+			receiver.forceMove(get_turf(user.loc))
+			barrel.dropped()
+			barrel.forceMove(get_turf(user.loc))
+			stock.dropped()
+			stock.forceMove(get_turf(user.loc))
+			grip.dropped()
+			grip.forceMove(get_turf(user.loc))
+			trigassembly.dropped()
+			trigassembly.forceMove(get_turf(user.loc))
+			qdel(src)
 
-/obj/item/gun/ballistic/automatic/modular/process_fire()
+/obj/item/gun/ballistic/automatic/modular/process_fire(mob/user)
 	if(prob(failchance))
 		to_chat(user, "The gun misfires!")
 		playsound(src, "gun_dry_fire", 30, 1)
@@ -88,7 +91,7 @@
 	name = "unfinished gun"
 	desc = "You shouldn't see this description. It's a bug. Please report it."
 	icon_state = "saber"
-	var/receiever
+	var/receiver
 	var/barrel
 	var/stock
 	var/grip
@@ -98,36 +101,37 @@
 	desc = "An unfinished gun. It appears to be built on a [receiver]."
 
 /obj/item/gunwip/proc/partAdd(/obj/item/gunmodule/G, mob/user)
-	switch(G)
-		if(istype(G, /obj/item/gunmodule/receiver) && if(user.transferItemToLoc(G, src))
+	var/oldpart
+	switch(G.type)
+		if(/obj/item/gunmodule/receiver)
 			oldpart = receiver
 			newpart = G
 			oldpart.dropped()
 			to_chat(user, "You replace the [oldpart.name] with the [newpart.name].")
 			oldpart.forceMove(get_turf(src.loc))
 			receiver = newpart
-		if(istype(G, /obj/item/gunmodule/barrel) && if(user.transferItemToLoc(G, src))
+		if(/obj/item/gunmodule/barrel)
 			oldpart = barrel
 			newpart = G
 			oldpart.dropped()
 			to_chat(user, "You replace the [oldpart.name] with the [newpart.name].")
 			oldpart.forceMove(get_turf(src.loc))
 			barrel = newpart
-		if(istype(G, /obj/item/gunmodule/stock) && if(user.transferItemToLoc(G, src))
+		if(/obj/item/gunmodule/stock)
 			oldpart = stock
 			newpart = G
 			oldpart.dropped()
 			to_chat(user, "You replace the [oldpart.name] with the [newpart.name].")
 			oldpart.forceMove(get_turf(src.loc))
 			stock = newpart
-		if(istype(G, /obj/item/gunmodule/grip) && if(user.transferItemToLoc(G, src))
+		if(/obj/item/gunmodule/grip)
 			oldpart = grip
 			newpart = G
 			oldpart.dropped()
 			to_chat(user, "You replace the [oldpart.name] with the [newpart.name].")
 			oldpart.forceMove(get_turf(src.loc))
 			grip = newpart
-		if(istype(G, /obj/item/gunmodule/trigassembly) && if(user.transferItemToLoc(G, src))
+		if(istype(/obj/item/gunmodule/trigassembly))
 			oldpart = trigassembly
 			newpart = G
 			oldpart.dropped()
@@ -167,24 +171,24 @@
 	name = "modular weapon part"
 	desc = "If you see this there's a really big problem. Please report the issue on github."
 	var/failchancemod = 0
-	var/finalweptype =
 
-/obj/item/gunmodule/receiever
+
+/obj/item/gunmodule/receiver
 	name = "debug modular reciever"
-	desc = "No, not that modular receiever. Debug item. Report it on github if you see it."
+	desc = "No, not that modular receiver. Debug item. Report it on github if you see it."
 	w_class = WEIGHT_CLASS_SMALL
 	var/gunname = "/improper 9mm modular SMG"
 	var/calibre = "9mm"
 	var/magazine = /obj/item/ammo_box/magazine/wt550m9
 	var/firerate = 300 //firerate in RPM, converted to decisecond fire delay.
 
-/obj/item/gunmodule/receiever/examine(mob/user)
+/obj/item/gunmodule/receiver/examine(mob/user)
 	. = ..()
-	to_chat(user, "The modular receiever is designed for [calibre] ammunition.")
+	to_chat(user, "The modular receiver is designed for [calibre] ammunition.")
 	to_chat(user, "The average rate of fire of the weapon is [firerate] RPM.")
 	to_chat(user, "The receiver accepts [magazine.name] magazines.")
 
-/obj/item/gunmodule/receiever/attack_hand(mob/user)
+/obj/item/gunmodule/receiver/attack_hand(mob/user)
 	if(loc != user)
 		..()
 		return	//let them pick it up
