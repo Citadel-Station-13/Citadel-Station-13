@@ -108,12 +108,6 @@
 			var/mob/M = m
 			M.playsound_local(M, null, volume, vary, frequency, falloff, channel, pressure_affected, S)
 
-/proc/open_sound_channel()
-	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
-	. = ++next_channel
-	if(next_channel > CHANNEL_HIGHEST_AVAILABLE)
-		next_channel = 1
-
 /mob/proc/stop_sound_channel(chan)
 	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))
 
