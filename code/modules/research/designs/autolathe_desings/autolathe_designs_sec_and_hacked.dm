@@ -78,7 +78,7 @@
 	id = "receiver"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 15000)
-	build_path = /obj/item/gunmodule/receiver/improv
+	build_path = /obj/item/gunmodule/receiverpart/improv
 	category = list("hacked", "Security")
 
 /datum/design/trigger
@@ -86,7 +86,7 @@
 	id = "trigger"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 1000)
-	build_path = /obj/item/gunmodule/trigassembly/improv
+	build_path = /obj/item/gunmodule/triggerassembly/improv
 	category = list("hacked", "Security")
 
 /datum/design/receiver
@@ -94,7 +94,7 @@
 	id = "lathebarrel"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10000)
-	build_path = /obj/item/gunmodule/barrel/lathed
+	build_path = /obj/item/gunmodule/barrelpart/lathed
 	category = list("hacked", "Security")
 
 /datum/design/shotgun_slug

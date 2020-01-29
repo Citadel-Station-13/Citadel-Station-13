@@ -202,8 +202,8 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 		new /datum/stack_recipe("pew (right)", /obj/structure/chair/pew/right, 3, one_per_turf = TRUE, on_floor = TRUE),\
 		)),
 	null, \
-	new/datum/stack_recipe("crude rifle stock", /obj/item/gunmodule/stock/crude, 5, time = 40), \
-	new/datum/stack_recipe("crude rifle grip", /obj/item/gunmodule/grip/crude, 5, time = 40), \
+	new/datum/stack_recipe("crude rifle stock", /obj/item/gunmodule/stockpart/crude, 5, time = 40), \
+	new/datum/stack_recipe("crude rifle grip", /obj/item/gunmodule/grippart/crude, 5, time = 40), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\

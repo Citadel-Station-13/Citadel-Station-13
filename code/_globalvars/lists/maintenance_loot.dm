@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/wirecutters = 1,
 	/obj/item/wrench = 4,
 	/obj/item/relic = 3,
-	/obj/item/gunmodule/receiver/improv = 2,
+	/obj/item/gunmodule/receiverpart/improv = 2,
 	/obj/item/clothing/head/cone = 2,
 	/obj/item/grenade/smokebomb = 2,
 	/obj/item/geiger_counter = 3,
