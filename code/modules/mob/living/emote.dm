@@ -245,7 +245,7 @@
 	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
 		var/mob/living/carbon/C = user
 		if(ismoth(C))
-			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
+			playsound(C, 'sound/voice/moth/mothchitter.ogg', 50, 1)
 
 /datum/emote/living/look
 	key = "look"
