@@ -154,7 +154,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
-	new /obj/item/camera/timefreeze(get_turf(user))
+	new /obj/item/camera/rewind(get_turf(user))
 	..()
 
 /obj/item/slimecross/burning/cerulean
@@ -289,25 +289,88 @@ Burning extracts:
 
 //Misc. things added
 
+//Rewind camera - I'm already Burning Sepia
+/obj/item/camera/rewind
+	name = "sepia-tinted camera"
+	desc = "They say a picture is like a moment stopped in time."
+	pictures_left = 1
+	pictures_max = 1
+	can_customise = FALSE
+	default_picture_name = "A nostalgic picture"
+	var/used = FALSE
+
+/datum/saved_bodypart
+	var/obj/item/bodypart/old_part
+	var/bodypart_type
+	var/brute_dam
+	var/burn_dam
+	var/stamina_dam
+
+/datum/saved_bodypart/New(obj/item/bodypart/part)
+	old_part = part
+	bodypart_type = part.type
+	brute_dam = part.brute_dam
+	burn_dam = part.burn_dam
+	stamina_dam = part.stamina_dam
+
+/mob/living/carbon/proc/apply_saved_bodyparts(list/datum/saved_bodypart/parts)
+	var/list/dont_chop = list()
+	for(var/zone in parts)
+		var/datum/saved_bodypart/saved_part = parts[zone]
+		var/obj/item/bodypart/already = get_bodypart(zone)
+		if(QDELETED(saved_part.old_part))
+			saved_part.old_part = new saved_part.bodypart_type
+		if(!already || already != saved_part.old_part)
+			saved_part.old_part.replace_limb(src, TRUE)
+		saved_part.old_part.heal_damage(INFINITY, INFINITY, INFINITY, null, FALSE)
+		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
+		dont_chop[zone] = TRUE
+	for(var/_part in bodyparts)
+		var/obj/item/bodypart/part = _part
+		if(dont_chop[part.body_zone])
+			continue
+		part.drop_limb(TRUE)
+
+/mob/living/carbon/proc/save_bodyparts()
+	var/list/datum/saved_bodypart/ret = list()
+	for(var/_part in bodyparts)
+		var/obj/item/bodypart/part = _part
+		var/datum/saved_bodypart/saved_part = new(part)
+
+		ret[part.body_zone] = saved_part
+	return ret
+
+/obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
+	if(!on || !pictures_left || !isturf(target.loc))
+		return
+	if(!used)//selfie time
+		if(user == target)
+			to_chat(user, "<span class=notice>You take a selfie!</span>")
+		else
+			to_chat(user, "<span class=notice>You take a photo with [target]!</span>")
+			to_chat(target, "<span class=notice>[user] takes a photo with you!</span>")
+		to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
+
+		used = TRUE
+		target.AddComponent(/datum/component/dejavu, 2)
+	.=..()
+
+//Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
 /obj/item/camera/timefreeze
 	name = "sepia-tinted camera"
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
+	var/used = FALSE
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	. = ..()
-	var/text = "The camera fades away"
-	if(disk)
-		text += ", leaving the disk behind!"
-		user.put_in_hands(disk)
-	else
-		text += "!"
-	to_chat(user,"<span class='notice'>[text]</span>")
-	qdel(src)
+	if(!used) //refilling the film does not refill the timestop
+		new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
+		used = TRUE
+		desc = "This camera has seen better days."
+	return ..()
 
 /obj/item/slimepotion/extract_cloner
 	name = "extract cloning potion"

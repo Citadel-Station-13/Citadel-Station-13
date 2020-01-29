@@ -277,6 +277,9 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	recipes = GLOB.wood_recipes
 	return ..()
 
+/obj/item/stack/sheet/mineral/wood/twenty
+	amount = 20
+
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
 
@@ -305,6 +308,15 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 /obj/item/stack/sheet/mineral/bamboo/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.bamboo_recipes
 	return ..()
+
+/obj/item/stack/sheet/mineral/bamboo/ten
+	amount = 10
+
+/obj/item/stack/sheet/mineral/bamboo/twenty
+	amount = 20
+
+/obj/item/stack/sheet/mineral/bamboo/fifty
+	amount = 50
 
 /*
  * Cloth
@@ -782,3 +794,4 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
+

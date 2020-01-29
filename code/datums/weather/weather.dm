@@ -50,7 +50,10 @@
 	stage = STARTUP_STAGE
 	var/list/affectareas = list()
 	for(var/V in get_areas(area_type))
-		affectareas += V
+		var/area/A = V
+		affectareas |= A
+		if(A.sub_areas)
+			affectareas |= A.sub_areas
 	for(var/V in protected_areas)
 		affectareas -= get_areas(V)
 	for(var/V in affectareas)

@@ -7,7 +7,7 @@
 	spillable = FALSE
 	volume = 10
 	possible_transfer_amounts = list(1,2,5,10)
-	APTFT_altclick = FALSE
+	container_flags = APTFT_VERB
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("hypovial" = "hypovial",
 						"red hypovial" = "hypovial-b",
@@ -25,9 +25,6 @@
 	if(!icon_state)
 		icon_state = "hypovial"
 	update_icon()
-//	beaker_weakness_bitflag |= PH_WEAK // fuck you if you're using these like beakers
-//	beaker_weakness_bitflag |= TEMP_WEAK
-
 
 /obj/item/reagent_containers/glass/bottle/vial/on_reagent_change()
 	update_icon()
