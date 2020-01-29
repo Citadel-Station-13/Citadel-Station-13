@@ -70,6 +70,14 @@
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimemammal
+	name = "Mammal Mutation Toxin"
+	id = /datum/reagent/mutationtoxin/mammal
+	results = list(/datum/reagent/mutationtoxin/mammal = 1)
+	required_reagents = list(/datum/reagent/water = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	name = "Slime Metal"
@@ -565,9 +573,16 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimestop/on_reaction(datum/reagents/holder)
+	sleep(50)
+	var/obj/item/slime_extract/sepia/extract = holder.my_atom
 	var/turf/T = get_turf(holder.my_atom)
-	var/list/M = list(get_mob_by_key(holder.my_atom.fingerprintslast))
-	new /obj/effect/timestop(T, null, null, M)
+	new /obj/effect/timestop(T, null, null, null)
+	if(istype(extract))
+		if(extract.Uses > 0)
+			var/mob/lastheld = get_mob_by_key(holder.my_atom.fingerprintslast)
+			if(lastheld && !lastheld.equip_to_slot_if_possible(extract, SLOT_HANDS, disable_warning = TRUE))
+				extract.forceMove(get_turf(lastheld))
+
 	..()
 
 /datum/chemical_reaction/slime/slimecamera

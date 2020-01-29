@@ -19,6 +19,8 @@
 	var/ndir = SOUTH // target dir
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
+	var/obj/item/solar_assembly/assembly
+	var/efficiency = 1
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
@@ -45,14 +47,13 @@
 
 /obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/S)
 	if(!S)
-		S = new /obj/item/solar_assembly(src)
-		S.glass_type = /obj/item/stack/sheet/glass
+		S = new /obj/item/solar_assembly
+		S.glass_type = new /obj/item/stack/sheet/glass(null, 2)
 		S.anchored = TRUE
 	else
-		S.forceMove(src)
-	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
-		max_integrity *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
-		obj_integrity = max_integrity
+		S.moveToNullspace()
+	S.glass_type.on_solar_construction(src)
+	obj_integrity = max_integrity
 	update_icon()
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
@@ -85,14 +86,14 @@
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.forceMove(loc)
-				S.give_glass(stat & BROKEN)
+			if(assembly)
+				assembly.forceMove(loc)
+				assembly.give_glass(stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, 1)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
+			var/shard = assembly?.glass_type ? assembly.glass_type.shard_type : /obj/item/shard
+			new shard(loc)
+			new shard(loc)
 	qdel(src)
 
 
@@ -131,7 +132,7 @@
 		if(powernet == control.powernet)//check if the panel is still connected to the computer
 			if(obscured) //get no light from the sun, so don't generate power
 				return
-			var/sgen = SOLARGENRATE * sunfrac
+			var/sgen = SOLARGENRATE * sunfrac * efficiency
 			add_avail(sgen)
 			control.gen += sgen
 		else //if we're no longer on the same powernet, remove from control computer
@@ -186,18 +187,22 @@
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = FALSE
 	var/tracker = 0
-	var/glass_type = null
+	var/obj/item/stack/sheet/glass_type
+	var/static/list/allowed_sheets = typecacheof(list(/obj/item/stack/sheet/glass, /obj/item/stack/sheet/rglass,
+													/obj/item/stack/sheet/plasmaglass, /obj/item/stack/sheet/plasmarglass,
+													/obj/item/stack/sheet/titaniumglass, /obj/item/stack/sheet/plastitaniumglass))
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
 	var/atom/Tsec = drop_location()
 	if(device_broken)
-		new /obj/item/shard(Tsec)
-		new /obj/item/shard(Tsec)
+		var/shard = glass_type ? glass_type.shard_type : /obj/item/shard
+		if(shard)
+			new shard(Tsec)
+			new shard(Tsec)
 	else if(glass_type)
-		new glass_type(Tsec, 2)
+		forceMove(glass_type, Tsec)
 	glass_type = null
-
 
 /obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench) && isturf(loc))
@@ -213,13 +218,14 @@
 			W.play_tool_sound(src, 75)
 		return 1
 
-	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+	if(is_type_in_typecache(W, allowed_sheets))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
 		var/obj/item/stack/sheet/S = W
-		if(S.use(2))
-			glass_type = W.type
+		var/obj/item/stack/sheet/G = S.change_stack(null, 2)
+		if(G)
+			glass_type = G
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)

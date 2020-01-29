@@ -111,6 +111,12 @@
 	cost = 1
 	surplus = 1
 
+/datum/uplink_item/device_tools/headsetupgrade
+	name = "Headset Upgrader"
+	desc = "A device that can be used to make one headset immune to flashbangs."
+	item = /obj/item/headsetupgrader
+	cost = 2
+
 /datum/uplink_item/devices/singularity_beacon
 	name = "Power Beacon"
 	desc = "When screwed to wiring attached to an electric grid and activated, this large device pulls any \

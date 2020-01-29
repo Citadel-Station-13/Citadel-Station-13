@@ -8,7 +8,7 @@
 	reagent_flags = REFILLABLE | DRAINABLE
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
-	APTFT_altclick = FALSE
+	container_flags = APTFT_VERB
 	volume = 5
 	spillable = FALSE
 	var/wipe_sound
@@ -118,6 +118,7 @@
 	item_flags = NOBLUDGEON | NO_UNIFORM_REQUIRED //so it can be worn on the belt slot even with no uniform.
 	force = 1
 	w_class = WEIGHT_CLASS_NORMAL
+	mutantrace_variation = STYLE_DIGITIGRADE
 	attack_verb = list("whipped")
 	hitsound = 'sound/items/towelwhip.ogg'
 	volume = 10
