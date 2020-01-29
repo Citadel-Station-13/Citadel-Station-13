@@ -227,6 +227,8 @@
 /proc/get_sub_areas_contents(area/A, include_base = TRUE)
 	if(ispath(A))
 		A = GLOB.areas_by_type[A]
+	else
+		A = get_area(A) //in case it's called on other atoms.
 	if(!A)
 		return
 	if(A.base_area)

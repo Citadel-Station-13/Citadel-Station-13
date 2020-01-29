@@ -31,7 +31,8 @@
 			log_combat(user, M, "splashed", R)
 			reagents.clear_reagents()
 		else
-			if(M != user)
+			var/self_fed = M == user
+			if(!self_fed)
 				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
 							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
 				if(!do_mob(user, M))
@@ -44,7 +45,7 @@
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 			var/fraction = min(5/reagents.total_volume, 1)
 			reagents.reaction(M, INGEST, fraction)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5), 5)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, null, null, null, self_fed? "self swallowed" : "fed by [user]"), 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
@@ -61,7 +62,7 @@
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, log = "reagentcontainer-glass afterattack transfer to")
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
@@ -73,7 +74,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, log = "reagentcontainer-glass afterattack fill from")
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 	else if(reagents.total_volume)
@@ -96,7 +97,7 @@
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
 				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-				E.reagents.trans_to(src, E.reagents.total_volume)
+				E.reagents.trans_to(src, E.reagents.total_volume, log = "reagentcontainer-glass break egg in")
 				qdel(E)
 			return
 	..()
@@ -110,7 +111,7 @@
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
-	beaker_weakness_bitflag = PH_WEAK
+	container_flags = PH_WEAK|APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -203,11 +204,7 @@
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
-
-/obj/item/reagent_containers/glass/beaker/plastic/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
+	container_flags = TEMP_WEAK|APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -222,10 +219,7 @@
 	volume = 240
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,200,240)
-
-/obj/item/reagent_containers/glass/beaker/meta/Initialize() // why the fuck can't you just set the beaker weakness bitflags to nothing? fuck you
-	beaker_weakness_bitflag &= ~PH_WEAK
-	. = ..()
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -236,12 +230,8 @@
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 10//shouldn't be needed
-
-/obj/item/reagent_containers/glass/beaker/noreact/Initialize()
-	beaker_weakness_bitflag &= ~PH_WEAK
-	. = ..()
-	//reagents.set_reacting(FALSE) was this removed in a recent pr?
 
 /obj/item/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -310,18 +300,15 @@
 		SLOT_L_STORE, SLOT_R_STORE,\
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
+	container_flags = APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 1
-
-/obj/item/reagent_containers/glass/bucket/Initialize()
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='warning'>[src] is out of water!</span>")
 		else
-			reagents.trans_to(O, 5)
+			reagents.trans_to(O, 5, log = "reagentcontainer-bucket fill mop")
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 	else if(isprox(O))
@@ -365,11 +352,8 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
+	container_flags = TEMP_WEAK|APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 1
-
-/obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
-	beaker_weakness_bitflag |= TEMP_WEAK
-	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()
