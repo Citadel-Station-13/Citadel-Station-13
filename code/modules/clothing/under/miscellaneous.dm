@@ -134,7 +134,6 @@
 /obj/item/clothing/under/rank/centcom_officer/syndicate
 	has_sensor = NO_SENSORS
 
-
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
 	name = "\improper CentCom officer's jumpsuit"
