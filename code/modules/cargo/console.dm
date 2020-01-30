@@ -76,6 +76,7 @@
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
+	data["points"] = SSshuttle.points
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	var/message = "Remember to stamp and send back the supply manifests."
