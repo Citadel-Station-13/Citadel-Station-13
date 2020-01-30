@@ -221,8 +221,6 @@
 	if(usr.incapacitated())
 		return
 
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
-
 	if(in_range(src, usr))
 		var/obj/item/card/id/id_card
 		if (href_list["id_card"])
