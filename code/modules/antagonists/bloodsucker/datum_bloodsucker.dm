@@ -99,7 +99,7 @@
 
 /datum/antagonist/bloodsucker/proc/SelectFirstName()
 	// Names (EVERYONE gets one))
-	if (owner.current.gender == MALE)
+	if(owner.current.gender == MALE)
 		vampname = pick("Desmond","Rudolph","Dracul","Vlad","Pyotr","Gregor","Cristian","Christoff","Marcu","Andrei","Constantin","Gheorghe","Grigore","Ilie","Iacob","Luca","Mihail","Pavel","Vasile","Octavian","Sorin", \
 						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel", // Romanian/Ancient
 						"Lucius","Gaius","Otho","Balbinus","Arcadius","Romanos","Alexios","Vitellius",  // Latin
@@ -120,7 +120,7 @@
 		return
 	// Titles [Master]
 	if (!am_fledgling)
-		if (owner.current.gender == MALE)
+		if(owner.current.gender == MALE)
 			vamptitle = pick ("Count","Baron","Viscount","Prince","Duke","Tzar","Dreadlord","Lord","Master")
 		else
 			vamptitle = pick ("Countess","Baroness","Viscountess","Princess","Duchess","Tzarina","Dreadlady","Lady","Mistress")
@@ -131,18 +131,18 @@
 
 /datum/antagonist/bloodsucker/proc/SelectReputation(am_fledgling = 0, forced=FALSE)
 	// Already have Reputation
-	if (!forced && vampreputation != null)
+	if(!forced && vampreputation != null)
 		return
 	// Reputations [Master]
-	if (!am_fledgling)
+	if(!am_fledgling)
 		vampreputation = pick("Butcher","Blood Fiend","Crimson","Red","Black","Terror","Nightman","Feared","Ravenous","Fiend","Malevolent","Wicked","Ancient","Plaguebringer","Sinister","Forgotten","Wretched","Baleful", \
 							"Inqisitor","Harvester","Reviled","Robust","Betrayer","Destructor","Damned","Accursed","Terrible","Vicious","Profane","Vile","Depraved","Foul","Slayer","Manslayer","Sovereign","Slaughterer", \
 							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible","Immortal","Undying","Overlord","Corrupt","Hellspawn","Tyrant","Sanguineous")
-		if (owner.current.gender == MALE)
-			if (prob(10)) // Gender override
+		if(owner.current.gender == MALE)
+			if(prob(10)) // Gender override
 				vampreputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
 		else
-			if (prob(10)) // Gender override
+			if(prob(10)) // Gender override
 				vampreputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
 
 		to_chat(owner, "<span class='announce'>You have earned a reputation! You are now known as <i>[ReturnFullName(TRUE)]</i>!</span>")
@@ -203,7 +203,7 @@
 		// Make Changes
 		H.physiology.brute_mod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
 		H.physiology.cold_mod = 0
-		H.physiology.stun_mod *= 0.35
+		H.physiology.stun_mod *= 0.6
 		H.physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
