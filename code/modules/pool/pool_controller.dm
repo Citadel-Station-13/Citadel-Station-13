@@ -1,3 +1,5 @@
+#define POOL_NO_OVERDOSE_MEDICINE_MAX 5		//max units of no-overdose medicine to allow mobs to have through duplication
+
 //Originally stolen from paradise. Credits to tigercat2000.
 //Modified a lot by Kokojo and Tortellini Tony for hippiestation.
 //Heavily refactored by tgstation
@@ -53,6 +55,10 @@
 	var/shocked = FALSE
 	/// Old reagent color, used to determine if update_color needs to reset colors.
 	var/old_rcolor
+	/// Just to prevent spam
+	var/draining = FALSE
+	/// Reagent blacklisting
+	var/respect_reagent_blacklist = TRUE
 
 /obj/machinery/pool/controller/examine(mob/user)
 	. = ..()
@@ -105,13 +111,15 @@
 
 /obj/machinery/pool/controller/AltClick(mob/user)
 	. = ..()
-	if(isliving(user) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated())
+	if(isliving(user) && user.Adjacent(src) && user.CanReach(src) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated())
 		visible_message("<span class='boldwarning'>[user] starts to drain [src]!</span>")
+		draining = TRUE
 		if(do_after(user, 50, target = src))
 			reagents.remove_all(INFINITY)
 			visible_message("<span class='boldnotice'>[user] drains [src].</span>")
 			say("Reagents cleared.")
 			update_color()
+		draining = FALSE
 
 /obj/machinery/pool/controller/attackby(obj/item/W, mob/user)
 	if(shocked && !(stat & NOPOWER))
@@ -137,15 +145,16 @@
 				var/list/reagent_names = list()
 				var/list/rejected = list()
 				for(var/datum/reagent/R in reagents.reagent_list)
-					if(R.volume >= min_reagent_amount)
+					if((R.volume >= min_reagent_amount) && (!respect_reagent_blacklist || !R.blacklisted))
 						reagent_names += R.name
 					else
 						reagents.remove_reagent(R.type, INFINITY)
 						rejected += R.name
 				if(length(reagent_names))
 					reagent_names = english_list(reagent_names)
-					log_game("[key_name(user)] has changed the [src] chems to [reagent_names]")
-					message_admins("[key_name_admin(user)] has changed the [src] chems to [reagent_names].")
+					var/msg = "POOL: [key_name(user)] has changed [src]'s chems to [reagent_names]"
+					log_game(msg)
+					message_admins(msg)
 				if(length(rejected))
 					rejected = english_list(rejected)
 					to_chat(user, "<span class='warning'>[src] rejects the following chemicals as they do not have at least [min_reagent_amount] units of volume: [rejected]</span>")
@@ -193,8 +202,9 @@
 				for(var/datum/reagent/R in reagents.reagent_list)
 					if(R.reagent_state == SOLID)
 						R.reagent_state = LIQUID
-					swimee.reagents.add_reagent(R.type, 0.5) //osmosis
-				reagents.reaction(swimee, VAPOR, 0.03) //3 percent
+					if(!swimee.has_reagent(POOL_NO_OVERDOSE_MEDICINE_MAX))
+						swimee.reagents.add_reagent(R.type, 0.5) //osmosis
+				reagents.reaction(swimee, VAPOR, 0.03) //3 percent. Need to find a way to prevent this from stacking chems at some point like the above.
 			for(var/obj/objects in W)
 				if(W.reagents)
 					W.reagents.reaction(objects, VAPOR, 1)
@@ -301,15 +311,24 @@
 			visible_message("<span class='warning'>[usr] presses a button on [src].</span>")
 			temperature++
 			update_temp()
+			var/msg = "POOL: [key_name(usr)] increased [src]'s pool temperature at [COORD(src)] to [temperature]"
+			log_game(msg)
+			message_admins(msg)
 			interact_delay = world.time + 15
 	if(href_list["DecreaseTemp"])
 		if(CanDownTemp(usr))
 			visible_message("<span class='warning'>[usr] presses a button on [src].</span>")
 			temperature--
 			update_temp()
+			var/msg = "POOL: [key_name(usr)] decreased [src]'s pool temperature at [COORD(src)] to [temperature]"
+			log_game(msg)
+			message_admins(msg)
 			interact_delay = world.time + 15
 	if(href_list["Activate Drain"])
 		if((drainable || issilicon(usr) || IsAdminGhost(usr)) && !linked_drain.active)
+			var/msg = "POOL: [key_name(usr)] activated [src]'s pool drain in [linked_drain.filling? "FILLING" : "DRAINING"] mode at [COORD(src)]"
+			log_game(msg)
+			message_admins(msg)
 			visible_message("<span class='warning'>[usr] presses a button on [src].</span>")
 			mist_off()
 			interact_delay = world.time + 60
