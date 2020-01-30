@@ -290,12 +290,6 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 	cost = 5
 	item_path = /obj/item/grenade/syndieminibomb/concussion/frag
 
-/datum/gang_item/equipment/stimpack
-	name = "Black Market Stimulants"
-	id = "stimpack"
-	cost = 12
-	item_path = /obj/item/reagent_containers/syringe/stimulants
-
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
 	id = "implant_breaker"
@@ -401,7 +395,7 @@ datum/gang_item/equipment/gangsheild
 		return "This device requires a 5x5 area clear of walls to FUNCTION. (Estimated Takeover Time: [round(gang.determine_domination_time()/60,0.1)] minutes)"
 
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/team/gang/gang, obj/item/device/gangtool/gangtool)
-	var/area/userarea = get_area(user)
+	var/area/userarea = get_base_area(user)
 	if(!(userarea.type in gang.territories|gang.new_territories))
 		to_chat(user,"<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
 		return FALSE

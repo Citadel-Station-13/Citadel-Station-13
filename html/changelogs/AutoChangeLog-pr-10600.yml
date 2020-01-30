@@ -1,6 +1,0 @@
-author: "Kraseo"
-delete-after: True
-changes: 
-  - bugfix: "Jelly donuts and pink jelly donuts will now properly display sprinkled icon state."
-  - bugfix: "Jelly donuts and its variants will properly spawn with berry juice."
-  - bugfix: "Slime jelly donuts have slime jelly in them now. (thanks ghommie)"

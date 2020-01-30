@@ -138,7 +138,8 @@
 		var/duration = (48/W.force) * 2 //In seconds, for now.
 		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
 			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration*10, target=src)) //Into deciseconds.
+		var/src_type = type
+		if(do_after(user, duration*10, target=src) && type == src_type) //Into deciseconds.
 			dismantle_wall(FALSE,FALSE)
 			return
 	return ..()

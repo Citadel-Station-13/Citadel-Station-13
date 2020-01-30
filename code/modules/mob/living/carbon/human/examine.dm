@@ -385,20 +385,17 @@
 	else if(isobserver(user) && traitstring)
 		. += "<span class='info'><b>Traits:</b> [traitstring]</span>"
 
-	if(print_flavor_text())
-		if(get_visible_name() == "Unknown")	//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
-			. += "...?"
-		else if(skipface) //Sometimes we're not unknown, but impersonating someone in a hardsuit, let's not reveal our flavor text then either.
-			. += "...?"
-		else
-			. += "[print_flavor_text()]"
-	if(print_flavor_text_2())
-		if(get_visible_name() == "Unknown")	//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
-			. += "...?"
-		else if(skipface) //Sometimes we're not unknown, but impersonating someone in a hardsuit, let's not reveal our flavor text then either.
-			. += "...?"
-		else
-			. += "[print_flavor_text_2()]"
+	//No flavor text unless the face can be seen. Prevents certain metagaming with impersonation.
+	var/invisible_man = skipface || get_visible_name() == "Unknown"
+	if(invisible_man)
+		. += "...?"
+	else
+		var/flavor = print_flavor_text()
+		if(flavor)
+			. += flavor
+		var/temp_flavor = print_flavor_text_2()
+		if(temp_flavor)
+			. += temp_flavor
 	. += "*---------*</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!

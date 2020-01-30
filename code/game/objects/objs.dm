@@ -178,7 +178,7 @@
 		machine = null
 
 //called when the user unsets the machine.
-/atom/movable/proc/on_unset_machine(mob/user)
+/atom/proc/on_unset_machine(mob/user)
 	return
 
 /mob/proc/set_machine(obj/O)
