@@ -74,7 +74,8 @@ export const Cargo = props => {
           lineHeight="23px">
           {() => (
             <Section
-              title="Catalog">
+              title="Catalog"
+              buttons={cartButtons}>
               <Catalog state={state} supplies={supplies} />
             </Section>
           )}

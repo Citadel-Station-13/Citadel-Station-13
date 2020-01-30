@@ -21,6 +21,8 @@
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
 	var/obj/structure/disposalconstruct/stored
+	ui_x = 300
+	ui_y = 180
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
 
