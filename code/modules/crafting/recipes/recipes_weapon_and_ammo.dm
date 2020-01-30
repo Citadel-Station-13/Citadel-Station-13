@@ -119,7 +119,7 @@
 	tools = list(TOOL_WELDER)
 	time = 45
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
 
 //////////////////
 ///BOMB CRAFTING//
