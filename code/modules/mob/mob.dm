@@ -511,7 +511,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	if(href_list["flavor2_more"])
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text_2, "\n", "<BR>")), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
-		
+
 	if(href_list["flavor_change"])
 		update_flavor_text()
 
@@ -584,7 +584,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		stat(null, "Round Time: [WORLDTIME2TEXT("hh:mm:ss")]")
-		stat(null, "Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]")
+		stat(null, "Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]")
 		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
 		if(SSshuttle.emergency)
 			var/ETA = SSshuttle.emergency.getModeStr()

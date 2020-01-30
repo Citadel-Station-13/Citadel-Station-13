@@ -19,12 +19,12 @@
 	return ..()
 
 /datum/ntnet_conversation/proc/add_message(message, username)
-	message = "[STATION_TIME_TIMESTAMP("hh:mm:ss")] [username]: [message]"
+	message = "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)] [username]: [message]"
 	messages.Add(message)
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/add_status_message(message)
-	messages.Add("[STATION_TIME_TIMESTAMP("hh:mm:ss")] -!- [message]")
+	messages.Add("[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)] -!- [message]")
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/trim_message_list()

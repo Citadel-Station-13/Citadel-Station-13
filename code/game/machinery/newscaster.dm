@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
 	newMsg.body = msg
-	newMsg.time_stamp = "[STATION_TIME_TIMESTAMP("hh:mm:ss")]"
+	newMsg.time_stamp = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	newMsg.is_admin_message = adminMessage
 	newMsg.locked = !allow_comments
 	if(picture)
@@ -696,7 +696,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				var/datum/newscaster/feed_comment/FC = new/datum/newscaster/feed_comment
 				FC.author = scanned_user
 				FC.body = cominput
-				FC.time_stamp = STATION_TIME_TIMESTAMP("hh:mm:ss")
+				FC.time_stamp = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 				FM.comments += FC
 				usr.log_message("(as [scanned_user]) commented on message [FM.returnBody(-1)] -- [FC.body]", LOG_COMMENT)
 			updateUsrDialog()
