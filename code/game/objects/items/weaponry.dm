@@ -352,7 +352,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/switchblade/makeshift/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(istype(I, /obj/item/stack/sheet/mineral/silver))
-		icon_state = extended : "switchblade_ext_msf" : "switchblade_msf"
+		icon_state = extended ? "switchblade_ext_msf" : "switchblade_msf"
 		extended_icon_state = "switchblade_ext_msf"
 		icon_state = "switchblade_msf"
 		to_chat(user, "<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
