@@ -1,5 +1,6 @@
 //3-Way Manifold
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold
+	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
 	icon_state = "manifold-2"
 
 	name = "pipe manifold"
@@ -15,7 +16,7 @@
 
 	var/mutable_appearance/center
 
-/obj/machinery/atmospherics/pipe/manifold/Initialize()
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/Initialize()
 	icon_state = ""
 	center = mutable_appearance(icon, "manifold_center")
 	return ..()

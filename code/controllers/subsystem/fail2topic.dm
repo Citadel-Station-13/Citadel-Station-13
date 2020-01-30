@@ -34,7 +34,6 @@ SUBSYSTEM_DEF(fail2topic)
 	for(var/i in 1 to length(rate_limiting))
 		var/ip = rate_limiting[i]
 		var/last_attempt = rate_limiting[ip]
-
 		if (world.time - last_attempt > rate_limit)
 			rate_limiting -= ip
 			fail_counts -= ip
