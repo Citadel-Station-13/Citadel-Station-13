@@ -513,7 +513,6 @@
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90)
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
@@ -537,7 +536,6 @@
 	item_state = "coatcaptain"
 	armor = list("melee" = 45, "bullet" = 35, "laser" = 45, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 35, "acid" = 85)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
-	allowed = null
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
 	. = ..()
@@ -553,10 +551,14 @@
 	item_state = "coathop"
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
-	allowed = null
 
 /obj/item/clothing/head/hooded/winterhood/hop
 	icon_state = "winterhood_hop"
+
+/obj/item/clothing/head/hooded/winterhood/hop/Initialize()
+	. = ..()
+	if(!allowed)
+		allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/hooded/wintercoat/security
 	name = "security armored winter coat"
@@ -565,7 +567,6 @@
 	item_state = "coatsecurity"
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
-	allowed = null
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
 	. = ..()
@@ -584,7 +585,6 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hos
-	allowed = null
 
 /obj/item/clothing/suit/hooded/wintercoat/hos/Initialize()
 	. = ..()
