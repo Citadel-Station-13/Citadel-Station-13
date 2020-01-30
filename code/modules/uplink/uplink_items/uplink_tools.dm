@@ -98,7 +98,7 @@
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
 	item = /obj/item/reagent_containers/syringe/stimulants
-	cost = 4
+	cost = 5
 	surplus = 90
 
 /datum/uplink_item/tools/phantomthief
