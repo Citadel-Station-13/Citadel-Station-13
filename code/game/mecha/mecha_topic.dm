@@ -241,7 +241,7 @@
 			output_maintenance_dialog(id_card, usr)
 
 		if(href_list["set_internal_tank_valve"] && state >=1)
-			var/new_pressure = input(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
+			var/new_pressure = input(usr,"Input new output pressure","Pressure setting",internal_tank_valve) as num
 			if(new_pressure)
 				internal_tank_valve = new_pressure
 				to_chat(usr, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
@@ -250,7 +250,7 @@
 			operation_req_access += text2num(href_list["add_req_access"])
 			output_access_dialog(id_card, usr)
 
-		if(href_list["del_req_access"] && add_req_access && afilter.getObj("id_card"))
+		if(href_list["del_req_access"] && add_req_access)
 			operation_req_access -= text2num(href_list["add_req_access"])
 			output_access_dialog(id_card, usr)
 
