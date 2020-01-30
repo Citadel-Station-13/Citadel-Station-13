@@ -57,3 +57,27 @@
 	name = "blood-red magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
+
+/obj/item/clothing/shoes/magboots/crushing
+	desc = "Normal looking magboots that are altered to increase magnetic pull to crush anything underfoot."
+
+/obj/item/clothing/shoes/magboots/crushing/proc/crush(mob/living/user)
+	if (!isturf(user.loc) || !magpulse)
+		return
+	var/turf/T = user.loc
+	for (var/mob/living/A in T)
+		if (A != user && A.lying)
+			A.adjustBruteLoss(rand(10,13))
+			to_chat(A,"<span class='userdanger'>[user]'s magboots press down on you, crushing you!</span>")
+			A.emote("scream")
+
+/obj/item/clothing/shoes/magboots/crushing/equipped(mob/user,slot)
+	. = ..()
+	if (slot == SLOT_SHOES)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED,.proc/crush)
+	else
+		UnregisterSignal(user,COMSIG_MOVABLE_MOVED)
+
+/obj/item/clothing/shoes/magboots/crushing/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user,COMSIG_MOVABLE_MOVED)

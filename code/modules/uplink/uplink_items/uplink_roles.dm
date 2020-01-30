@@ -224,3 +224,10 @@
 	cost = 5 //Low ammo, and deals same as 10mm but emp-able
 	item = /obj/item/gun/energy/emitter
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+
+/datum/uplink_item/role_restricted/crushmagboots
+	name = "Crushing Magboots"
+	desc = "A pair of extra-strength magboots that crush anyone you walk over."
+	cost = 2
+	item = /obj/item/clothing/shoes/magboots/crushing
+	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
