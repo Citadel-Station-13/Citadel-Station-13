@@ -90,11 +90,11 @@
 	name = "unfinished gun"
 	desc = "You shouldn't see this description. It's a bug. Please report it."
 	icon_state = "saber"
-	var/receiver
-	var/barrel
-	var/stock
-	var/grip
-	var/trigassembly
+	var/obj/item/gunmodule/receiverpart/receiver
+	var/obj/item/gunmodule/barrelpart/barrel
+	var/obj/item/gunmodule/stockpart/stock
+	var/obj/item/gunmodule/grippart/grip
+	var/obj/item/gunmodule/triggerassembly/trigassembly
 
 /obj/item/gunwip/Initialize()
 	desc = "An unfinished gun. It appears to be built on a [receiver]."
@@ -146,12 +146,25 @@
 	if(istype(A, /obj/item/gunmodule))
 		var/obj/item/gunmodule/part = A
 		partAdd(part, user)
+	if(istype(A, /obj/item/screwdriver))
+		if(receiver && barrel && stock && grip && trigassembly)
+			var/obj/item/gun/ballistic/automatic/modular/cookedgun = new(get_turf(src))
+			user.put_in_hands(cookedgun)
+			user.transferItemToLoc(receiver, cookedgun)
+			cookedgun.receiver = receiver
+			user.transferItemToLoc(barrel, cookedgun)
+			cookedgun.barrel = barrel
+			user.transferItemToLoc(stock, cookedgun)
+			cookedgun.stock = stock
+			user.transferItemToLoc(grip, cookedgun)
+			cookedgun.grip = grip
+			user.transferItemToLoc(trigassembly, cookedgun)
+			cookedgun.trigassembly = trigassembly
+			qdel(src)
+		else
+			return
 
-/obj/item/gunwip/attack_hand(mob/user)
-	if(loc != user)
-		..()
-		return	//let them pick it up
-	else
+/obj/item/gunwip/attack_self(mob/user)
 		if(receiver)
 			user.transferItemToLoc(receiver, user)
 		if(barrel)
@@ -173,7 +186,8 @@
 	name = "modular weapon part"
 	desc = "If you see this there's a really big problem. Please report the issue on github."
 	var/failchancemod = 0
-
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = null
 
 /obj/item/gunmodule/receiverpart
 	name = "debug modular reciever"
@@ -183,23 +197,21 @@
 	var/calibre = "9mm"
 	var/obj/item/ammo_box/magazine = /obj/item/ammo_box/magazine/wt550m9
 	var/firerate = 300 //firerate in RPM, converted to decisecond fire delay.
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "receiver"
 
 /obj/item/gunmodule/receiverpart/examine(mob/user)
 	. = ..()
-	to_chat(user, "The modular receiver is designed for [calibre] ammunition.")
-	to_chat(user, "The average rate of fire of the weapon is [firerate] RPM.")
-	to_chat(user, "The receiver accepts [magazine.name] magazines.")
+	. += "The modular receiver is designed for [calibre] ammunition."
+	. += "The average rate of fire of the weapon is [firerate] RPM."
+	. += "The receiver accepts [magazine.name] magazines."
 
-/obj/item/gunmodule/receiverpart/attack_hand(mob/user)
-	if(loc != user)
-		..()
-		return	//let them pick it up
-	else
-		var/obj/item/gunwip/rawgun = new(src)
-		if(user.transferItemToLoc(src, rawgun))
-			rawgun.receiver = src
-		else
-			return
+/obj/item/gunmodule/receiverpart/attack_self(mob/user)
+	var/obj/item/gunwip/rawgun = new(get_turf(src))
+	user.put_in_hands(rawgun)
+	user.transferItemToLoc(src, rawgun)
+	rawgun.receiver = src
+
 
 /obj/item/gunmodule/barrelpart
 	name = "debug modular barrel"
@@ -244,6 +256,7 @@
 	magazine = /obj/item/ammo_box/magazine/a762
 	calibre = "7.62mm"
 	failchancemod = 2.5
+	firerate = 60
 
 /obj/item/gunmodule/barrelpart/lathed
 	name = "lathed barrel"
