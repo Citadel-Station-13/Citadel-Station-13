@@ -370,6 +370,8 @@
 
 /obj/item/storage/lockbox/dueling/hugbox
 	gun_type = /obj/item/gun/energy/dueling/hugbox
+	req_access = list(ACCESS_ARMORY)
 
 /obj/item/storage/lockbox/dueling/hugbox/stamina
 	gun_type = /obj/item/gun/energy/dueling/hugbox/stamina
+	req_access = null
