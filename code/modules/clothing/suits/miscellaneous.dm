@@ -932,6 +932,9 @@
 	hasprimary = TRUE
 	hassecondary = TRUE
 	hastertiary = TRUE
+	primary_color = "#6A6964"
+	secondary_color = "#C4B8A6"
+	tertiary_color = "#0000FF"
 
 /obj/item/clothing/head/hooded/winterhood/polychromic
 	icon_state = "winterhood_poly"
