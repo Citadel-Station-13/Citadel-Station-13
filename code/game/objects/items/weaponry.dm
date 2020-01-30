@@ -349,13 +349,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	extended_throwforce = 18
 	extended_icon_state = "switchblade_ext_ms"
 
-/obj/item/switchblade/makeshift/attackby(obj/item/I) //Theres no way in hell I did this proc right. Special thanks to Hatterhat and Putnam. They pretty much made this proc for me because im a fucking dentskull haha.
+/obj/item/switchblade/makeshift/attackby(obj/item/I, mob/user, params))
 	. = ..()
 	if(istype(I, /obj/item/stack/sheet/mineral/silver))
 		icon_state = extended : "switchblade_ext_msf" : "switchblade_msf"
 		extended_icon_state = "switchblade_ext_msf"
 		icon_state = "switchblade_msf"
-		to_chat(usr,"<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
+		to_chat(user, "<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
 
 /obj/item/phone
 	name = "red phone"
