@@ -13,16 +13,6 @@
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/misc/abandonedcrate
-	name = "Loot Box"
-	desc = "Try your luck with these highly secure loot boxes! Solve the lock, win great prizes! WARNING: EXPLOSIVE FAILURE."
-	contraband = TRUE
-	cost = 15000
-	contains = list(/obj/structure/closet/crate/secure/loot)
-	crate_name = "abandoned crate"
-	crate_type = /obj/structure/closet/crate/large
-	dangerous = TRUE
-
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with six canvasses, two easels, two boxes of crayons, and a rainbow crayon!"
@@ -214,9 +204,69 @@
 	for(var/i in 1 to 9)
 		new /obj/item/coin/silver(.)
 
+/datum/supply_pack/misc/dueling_stam
+	name = "Dueling Pistols"
+	desc = "Resolve all your quarrels with some nonlethal fun."
+	cost = 2000
+	contains = list(/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina)
+	crate_name = "dueling pistols"
+
+/datum/supply_pack/misc/dueling_lethal
+	name = "Lethal Dueling Pistols"
+	desc = "Settle your differences the true spaceman way."
+	cost = 3000
+	contraband = TRUE
+	contains = list(/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox)
+	crate_name = "dueling pistols (lethal)"
+
+/datum/supply_pack/misc/dueling_death
+	name = "Elimination Dueling Pistols"
+	desc = "It's high noon."
+	cost = 5000
+	hidden = TRUE
+	contains = list(/obj/item/storage/lockbox/dueling)
+	crate_name = "dueling pistols (elimination)"
+
+/datum/supply_pack/misc/dirtymags
+	name = "Dirty Magazines"
+	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
+	hidden = TRUE
+	cost = 12000
+	var/num_contained = 3 
+	contains = list(/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/m45/kitchengun,
+					/obj/item/ammo_box/magazine/m45/kitchengun)
+	crate_name = "crate"
+
+/datum/supply_pack/misc/dirtymags/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////// Misc Supplies ///////////////////////////////
+///////////////////////////////// Misc Supplies //////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/misc/candles
+	name = "Candle Crate"
+	desc = "Set up a romantic dinner or host a séance with these extra candles and crayons."
+	cost = 850
+	contains = list(/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/box/matches)
+	crate_name = "candle crate"
 
 /datum/supply_pack/misc/exoticfootwear
 	name = "Exotic Footwear Crate"
@@ -233,14 +283,6 @@
 					/obj/item/clothing/shoes/clown_shoes,
 					/obj/item/clothing/shoes/kindleKicks)
 	crate_name = "footie crate"
-
-/datum/supply_pack/misc/wrapping_paper
-	name = "Festive Wrapping Paper Crate"
-	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, or the Clown's severed head? You can do all that, with this crate full of wrapping paper."
-	cost = 1000
-	contains = list(/obj/item/stack/wrapping_paper)
-	crate_type = /obj/structure/closet/crate/wooden
-	crate_name = "festive wrapping paper crate"
 
 /datum/supply_pack/misc/funeral
 	name = "Funeral Supplies"
@@ -266,6 +308,16 @@
 	cost = 10000
 	contains = list(/obj/machinery/jukebox)
 	crate_name = "Jukebox"
+
+/datum/supply_pack/misc/abandonedcrate
+	name = "Loot Box"
+	desc = "Try your luck with these highly secure loot boxes! Solve the lock, win great prizes! WARNING: EXPLOSIVE FAILURE."
+	contraband = TRUE
+	cost = 15000
+	contains = list(/obj/structure/closet/crate/secure/loot)
+	crate_name = "abandoned crate"
+	crate_type = /obj/structure/closet/crate/large
+	dangerous = TRUE
 
 /datum/supply_pack/misc/potted_plants
 	name = "Potted Plants Crate"

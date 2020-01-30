@@ -23,6 +23,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	container_flags = NONE //APTFT is alternated between the initial value and stream_amount and shouldn't be exploited.
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
 	. = ..()

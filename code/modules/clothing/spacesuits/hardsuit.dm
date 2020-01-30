@@ -693,6 +693,29 @@
 	listeningTo = null
 	return ..()
 
+/obj/item/clothing/head/helmet/space/hardsuit/soviet
+	name = "soviet hardhelmet"
+	desc = "Crafted with the pride of the proletariat. The vengeful gaze of the visor roots out all fascists and capitalists."
+	item_state = "rig0-soviet"
+	item_color = "soviet"
+	icon_state = "rig0-soviet"
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 75)
+	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/space/hardsuit/soviet
+	name = "soviet hardsuit"
+	desc = "Crafted with the pride of the proletariat. The last thing the enemy sees is the bottom of this armor's boot."
+	item_state = "rig-soviet"
+	icon_state = "rig-soviet"
+	slowdown = 0.8
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 75)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/soviet
+	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/space/hardsuit/soviet/Initialize()
+	. = ..()
+	allowed = GLOB.security_hardsuit_allowed
+
 /////////////SHIELDED//////////////////////////////////
 
 /obj/item/clothing/suit/space/hardsuit/shielded
