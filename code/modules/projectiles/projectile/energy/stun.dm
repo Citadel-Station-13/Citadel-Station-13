@@ -38,7 +38,7 @@
 /obj/item/projectile/energy/electrode/security
 	tase_duration = 20
 	knockdown = 0
-	stamina = 5
+	stamina = 10
 	knockdown_stamoverride = 0
 	knockdown_stam_max = 0
 	strong_tase = FALSE
