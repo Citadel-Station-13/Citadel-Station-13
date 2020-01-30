@@ -22,6 +22,11 @@
 	var/list/fired = list()
 	var/countdown_length = 10
 	var/countdown_step = 0
+	var/static/next_id = 1
+	var/id
+
+/datum/duel/New()
+	id = next_id++
 
 /datum/duel/proc/try_begin()
 	//Check if both guns are held and if so begin.
@@ -156,6 +161,13 @@
 	. = ..()
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)
+
+/obj/item/gun/energy/dueling/examine(mob/user)
+	. = ..()
+	if(duel)
+		. += "Its linking number is [duel.id]."
+	else
+		. += "ERROR: No linking number on gun."
 
 /obj/item/gun/energy/dueling/proc/setting_iconstate()
 	switch(setting)
