@@ -145,7 +145,7 @@
 				var/list/reagent_names = list()
 				var/list/rejected = list()
 				for(var/datum/reagent/R in reagents.reagent_list)
-					if((R.volume >= min_reagent_amount) && (!respect_reagent_blacklist || !R.blacklisted))
+					if((R.volume >= min_reagent_amount) && (!respect_reagent_blacklist || R.can_synth))
 						reagent_names += R.name
 					else
 						reagents.remove_reagent(R.type, INFINITY)
@@ -202,7 +202,7 @@
 				for(var/datum/reagent/R in reagents.reagent_list)
 					if(R.reagent_state == SOLID)
 						R.reagent_state = LIQUID
-					if(!swimee.has_reagent(POOL_NO_OVERDOSE_MEDICINE_MAX))
+					if(!swimee.reagents.has_reagent(POOL_NO_OVERDOSE_MEDICINE_MAX))
 						swimee.reagents.add_reagent(R.type, 0.5) //osmosis
 				reagents.reaction(swimee, VAPOR, 0.03) //3 percent. Need to find a way to prevent this from stacking chems at some point like the above.
 			for(var/obj/objects in W)
