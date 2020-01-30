@@ -15,7 +15,7 @@
 
 	recoil = 0
 
-	var/charge_sections = 1
+	var/charge_sections = 6
 
 /obj/item/gun/ballistic/revolver/mws/afterattack(atom/target, mob/living/user, flag, params)
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
@@ -119,7 +119,7 @@
 	add_overlay(barrel_color)
 
 	//Charge bar
-	var/ratio = CEILING((batt.shots_left) * charge_sections, 1)
+	var/ratio = can_shoot() ? CEILING(CLAMP(batt.cell.charge / batt.cell.maxcharge, 0, 1) * charge_sections, 1) : 0
 	for(var/i = 0, i < ratio, i++)
 		var/image/charge_bar = image(icon, icon_state = "[initial(icon_state)]_charge")
 		charge_bar.pixel_x = i
@@ -158,7 +158,7 @@
 		cap.pixel_x = current * x_offset //Caps don't need a pixel_y offset
 		add_overlay(cap)
 		if(batt.shots_left)
-			var/ratio = CEILING((batt.shots_left) * 4, 1) //4 is how many lights we have a sprite for
+			var/ratio = CEILING(CLAMP(batt.cell.charge / batt.cell.maxcharge, 0, 1) * 4, 1) //4 is how many lights we have a sprite for
 			var/image/charge = image(icon, icon_state = "[initial(icon_state)]_charge-[ratio]")
 			charge.color = "#29EAF4" //Could use battery color but eh.
 			charge.pixel_x = current * x_offset
