@@ -165,18 +165,18 @@
 			return
 
 /obj/item/gunwip/attack_self(mob/user)
-		if(receiver)
-			user.transferItemToLoc(receiver, user)
-		if(barrel)
-			user.transferItemToLoc(barrel, user)
-		if(stock)
-			user.transferItemToLoc(stock, user)
-		if(grip)
-			user.transferItemToLoc(grip, user)
-		if(trigassembly)
-			user.transferItemToLoc(trigassembly, user)
-		to_chat(user, "You disassemble the [name].")
-		qdel(src)
+	if(receiver)
+		user.transferItemToLoc(receiver, user)
+	if(barrel)
+		user.transferItemToLoc(barrel, user)
+	if(stock)
+		user.transferItemToLoc(stock, user)
+	if(grip)
+		user.transferItemToLoc(grip, user)
+	if(trigassembly)
+		user.transferItemToLoc(trigassembly, user)
+	to_chat(user, "You disassemble the [name].")
+	qdel(src)
 
 //
 // PARTS
