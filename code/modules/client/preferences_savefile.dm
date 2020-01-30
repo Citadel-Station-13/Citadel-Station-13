@@ -460,7 +460,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!real_name)
 		real_name	= random_unique_name(gender)
 	custom_species	= reject_bad_name(custom_species)
-	for(var/custom_name_id in GLOB.preferences_custom_names),
+	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/namedata = GLOB.preferences_custom_names[custom_name_id]
 		custom_names[custom_name_id] = reject_bad_name(custom_names[custom_name_id],namedata["allow_numbers"])
 		if(!custom_names[custom_name_id])
