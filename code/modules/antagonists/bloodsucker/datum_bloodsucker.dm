@@ -21,7 +21,7 @@
 	var/poweron_masquerade = FALSE
 	// STATS
 	var/vamplevel = 0
-	var/vamplevel_unspent = 1
+	var/vamplevel_unspent = 0
 	var/regenRate = 0.3					// How many points of Brute do I heal per tick?
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
@@ -34,6 +34,7 @@
 	var/warn_sun_locker = FALSE			// So we only get the locker burn message once per day.
 	var/warn_sun_burn = FALSE			// So we only get the sun burn message once per day.
 	var/had_toxlover = FALSE
+	var/level_bloodcost
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_NIGHT_VISION, \
 										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE)
@@ -261,7 +262,7 @@
 		owner.hasSoul = TRUE
 //owner.current.hellbound = FALSE
 
-datum/antagonist/bloodsucker/proc/RankUp()
+/datum/antagonist/bloodsucker/proc/RankUp()
 	set waitfor = FALSE
 	if(!owner || !owner.current)
 		return
@@ -272,21 +273,23 @@ datum/antagonist/bloodsucker/proc/RankUp()
 	else
 		to_chat(owner, "<EM><span class='notice'>You have grown more ancient! Sleep in a coffin that you have claimed to thicken your blood and become more powerful.</span></EM>")
 		if(vamplevel_unspent >= 2)
-			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, they can be built from wooden planks.</span><br>")
+			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, you can build one from wooden planks.</span><br>")
 
-datum/antagonist/bloodsucker/proc/LevelUpPowers()
+/datum/antagonist/bloodsucker/proc/LevelUpPowers()
 	for(var/datum/action/bloodsucker/power in powers)
 		power.level_current ++
 
-datum/antagonist/bloodsucker/proc/SpendRank()
+/datum/antagonist/bloodsucker/proc/SpendRank()
 	set waitfor = FALSE
-	if (vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client)
+	if(vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client || !isliving(owner.current))
 		return
-	/////////
-	// Powers
-	//TODO: Make this into a radial
+	var/mob/living/L = owner.current
+	level_bloodcost = maxBloodVolume * 0.3
+	//If the blood volume of the bloodsucker is lower than the cost to level up, return and inform the bloodsucker
+	
+	//TODO: Make this into a radial, or perhaps a tgui next UI
 		// Purchase Power Prompt
-	var/list/options = list() // Taken from gasmask.dm, for Clown Masks.
+	var/list/options = list() 
 	for(var/pickedpower in typesof(/datum/action/bloodsucker))
 		var/datum/action/bloodsucker/power = pickedpower
 		// If I don't own it, and I'm allowed to buy it.
@@ -295,7 +298,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	options["\[ Not Now \]"] = null
 	// Abort?
 	if(options.len > 1)
-		var/choice = input(owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...") in options
+		var/choice = input(owner.current, "You have the opportunity to grow more ancient at the cost of [level_bloodcost] units of blood. Select a power to advance your Rank.", "Your Blood Thickens...") in options
 		// Cheat-Safety: Can't keep opening/closing coffin to spam levels
 		if(vamplevel_unspent <= 0) // Already spent all your points, and tried opening/closing your coffin, pal.
 			return
@@ -305,10 +308,14 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 		if(!choice || !options[choice] || (locate(options[choice]) in powers)) // ADDED: Check to see if you already have this power, due to window stacking.
 			to_chat(owner.current, "<span class='notice'>You prevent your blood from thickening just yet, but you may try again later.</span>")
 			return
+		if(L.blood_volume < level_bloodcost)
+			to_chat(owner.current, "<span class='warning'>You dont have enough blood to thicken your blood, you need [level_bloodcost - L.blood_volume] units more!</span>")
+			return
 		// Buy New Powers
 		var/datum/action/bloodsucker/P = options[choice]
+		AddBloodVolume(-level_bloodcost)
 		BuyPower(new P)
-		to_chat(owner.current, "<span class='notice'>You have learned [initial(P.name)]!</span>")
+		to_chat(owner.current, "<span class='notice'>You have used [level_bloodcost] units of blood and learned [initial(P.name)]!</span>")
 	else
 		to_chat(owner.current, "<span class='notice'>You grow more ancient by the night!</span>")
 	/////////
@@ -326,7 +333,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	// Vamp Stats
 	regenRate += 0.05			// Points of brute healed (starts at 0.3)
 	feedAmount += 2				// Increase how quickly I munch down vics (15)
-	maxBloodVolume += 50		// Increase my max blood (600)
+	maxBloodVolume += 100		// Increase my max blood (600)
 	/////////
 	vamplevel ++
 	vamplevel_unspent --

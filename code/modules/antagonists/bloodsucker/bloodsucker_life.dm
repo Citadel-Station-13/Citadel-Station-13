@@ -125,7 +125,7 @@
 			C.adjustFireLoss(-fireheal * mult, forced = TRUE)
 			C.adjustToxLoss(-toxinheal * mult * 2, forced = TRUE) //Toxin healing because vamps arent immune
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
-			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
+			AddBloodVolume((bruteheal * -0.5 + fireheal * -1 + toxinheal * -0.2) / mult * costMult)	// Costs blood to heal
 			return TRUE // Healed! Done for this tick.
 		if(amInCoffinWhileTorpor) 	// Limbs? (And I have no other healing)
 			var/list/missing = owner.current.get_missing_limbs() 	// Heal Missing
@@ -189,7 +189,7 @@
 /datum/antagonist/bloodsucker/proc/HandleDeath()
 	// 	FINAL DEATH
 	// Fire Damage? (above double health)
-	if(owner.current.getFireLoss_nonProsthetic() >= owner.current.getMaxHealth() * 1.5)
+	if(owner.current.getFireLoss_nonProsthetic() >= owner.current.maxHealth * 3)
 		FinalDeath()
 		return
 	// Staked while "Temp Death" or Asleep

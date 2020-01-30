@@ -6,7 +6,7 @@
 	desc = "Spring at your target and aggressively grapple them without warning. Attacks from concealment or the rear may even knock them down."
 	button_icon_state = "power_lunge"
 	bloodcost = 10
-	cooldown = 100
+	cooldown = 120
 	target_range = 3
 	power_activates_immediately = TRUE
 	message_Trigger = ""//"Whom will you subvert to your will?"
@@ -45,6 +45,8 @@
 	// Check: Turf
 	var/mob/living/L = A
 	if(!isturf(L.loc))
+		return FALSE
+	if(!ishuman(target))
 		return FALSE
 	return TRUE
 
