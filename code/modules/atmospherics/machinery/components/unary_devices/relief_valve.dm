@@ -50,15 +50,22 @@
 		opened = TRUE
 		update_icon_nopipes()
 	if(opened && air_contents.temperature > 0)
-		var/datum/gas_mixture/environment = loc.return_air()
-		var/pressure_delta = our_pressure - environment.return_pressure()
-		var/transfer_moles = pressure_delta*200/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-		if(transfer_moles > 0)
-			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+		var/active = FALSE
 
-			loc.assume_air(removed)
+		var/datum/gas_mixture/external = loc.return_air()
+		var/datum/gas_mixture/internal = airs[1]
+		var/external_pressure = external.return_pressure()
+		var/internal_pressure = internal.return_pressure()
+		var/pressure_delta = abs(external_pressure - internal_pressure)
+		if(pressure_delta > 0.5)
+			var/datum/gas_mixture/new_air = new
+			new_air.merge(internal.copy())
+			new_air.merge(external.copy())
+			internal.copy_from(new_air.remove_ratio(internal.volume/(internal.volume+external.volume)))
+			external.copy_from(new_air)
+			active = TRUE
+		if(active)
 			air_update_turf()
-
 			update_parents()
 
 /obj/machinery/atmospherics/components/unary/relief_valve/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
