@@ -181,3 +181,24 @@
 /obj/item/kitchen/knife/scimiar/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 90 - force, 100, force - 60) //bonus chance increases depending on force
+
+/obj/item/kitchen/knife/poison
+	name = "razor knife"
+	icon_state = "poisonknife"
+	desc = "A knife actually made of two razor sharp blades, with a tiny slit in between them to inject anything stored in the handle."
+	materials = null
+
+/obj/item/kitchen/knife/poison/Initialize()
+	. = ..()
+	create_reagents(50,OPENCONTAINER)
+
+/obj/item/kitchen/knife/poison/attack(mob/living/M, mob/user)
+	if (!istype(M))
+		return
+	. = ..()
+	if (!reagents.total_volume || !M.reagents)
+		return
+	var/randvar = pick(4,5,7,10)
+	var/amount = min(randvar/reagents.total_volume,1)
+	reagents.reaction(M,INJECT,amount)
+	reagents.trans_to(M,randvar)
