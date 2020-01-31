@@ -580,6 +580,23 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/grenade/chem_grenade/jarate
+	name = "jarate"
+	desc = "Jar-Based Karate."
+	stage = READY
+
+/obj/item/grenade/chem_grenade/holy/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+
+	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 60) //S P R E A D
+	B2.reagents.add_reagent(/datum/reagent/urine, 60)
+
+	beakers += B1
+	beakers += B2
+
+
 /obj/item/grenade/chem_grenade/holy
 	name = "holy hand grenade"
 	desc = "A vessel of concentrated religious might."

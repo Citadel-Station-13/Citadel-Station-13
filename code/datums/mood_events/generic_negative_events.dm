@@ -247,6 +247,11 @@
 	mood_change = -6
 	timeout = 1200
 
+/datum/mood_event/jarate
+	description = "<span class='boldwarning'>JARATE? NOOOOOOOOOOOOOOOOOO!!!.</span>\n"
+	mood_change = -20 //A terrible thing, truly the worst!
+	timeout = 3 MINUTES
+
 /datum/mood_event/nanite_sadness/add_effects(message)
 	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
 

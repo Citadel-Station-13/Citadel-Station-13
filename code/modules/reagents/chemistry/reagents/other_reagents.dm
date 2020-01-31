@@ -2116,6 +2116,19 @@
 	color = "#BCC740" //RGB: 188, 199, 64
 	taste_description = "plant dust"
 
+/datum/reagent/urine
+	name = "Urine"
+	description = "A disgusting, foul smelling bodily fluid that belongs in a septic system."
+	color = "#EDE16F"
+	taste_description = "piss"
+
+/datum/reagent/urine/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //urine trouble
+	var/mob/living/carbon/victim = M
+	if(method == TOUCH || method == VAPOR)
+		if(prob(50))
+			victim.emote("scream")
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "jarate", /datum/mood_event/jarate)
+
 /datum/reagent/pax/catnip
 	name = "catnip"
 	taste_description = "grass"
