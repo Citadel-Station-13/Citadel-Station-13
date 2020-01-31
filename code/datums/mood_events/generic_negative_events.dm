@@ -248,7 +248,7 @@
 	timeout = 1200
 
 /datum/mood_event/jarate
-	description = "<span class='boldwarning'>JARATE? NOOOOOOOOOOOOOOOOOO!!!.</span>\n"
+	description = "<span class='boldwarning'>JARATE? NOOOOOOOOOOOOOOOOOO!!!</span>\n"
 	mood_change = -20 //A terrible thing, truly the worst!
 	timeout = 3 MINUTES
 
