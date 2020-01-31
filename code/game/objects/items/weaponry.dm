@@ -340,7 +340,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/switchblade/crafted //It took me so fucking long to make this not shitcode holy FUCK.
+/obj/item/switchblade/crafted
 	icon_state = "switchblade_ms"
 	desc = "A concealable spring-loaded knife."
 	force = 2
@@ -349,7 +349,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	extended_throwforce = 18
 	extended_icon_state = "switchblade_ext_ms"
 
-/obj/item/switchblade/makeshift/attackby(obj/item/I, mob/user, params)
+/obj/item/switchblade/crafted/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(istype(I, /obj/item/stack/sheet/mineral/silver))
 		icon_state = extended ? "switchblade_ext_msf" : "switchblade_msf"
