@@ -585,7 +585,7 @@
 	desc = "Jar-Based Karate."
 	stage = READY
 
-/obj/item/grenade/chem_grenade/holy/Initialize()
+/obj/item/grenade/chem_grenade/jarate/Initialize()
 	. = ..()
 	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
