@@ -217,7 +217,7 @@
 		data["beakerTransferAmounts"] = null
 		data["beakerCurrentpH"] = null
 
-	var/chemicals[0]
+	var/list/chemicals = list()
 	var/is_hallucinating = FALSE
 	if(user.hallucinating())
 		is_hallucinating = TRUE
@@ -421,9 +421,10 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
-	..()
+	. = ..()
 	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		replace_beaker(user)
+		return TRUE
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
