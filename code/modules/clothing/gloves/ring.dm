@@ -23,5 +23,3 @@
 	name = "silver ring"
 	desc = "A tiny silver ring, sized to wrap around a finger."
 	icon_state = "ringsilver"
-
-
