@@ -239,7 +239,6 @@ SUBSYSTEM_DEF(air)
 		if (MC_TICK_CHECK)
 			return
 
-
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
 	active_turfs -= T
 	SSair_turfs.currentrun -= T
@@ -257,7 +256,7 @@ SUBSYSTEM_DEF(air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
 		#endif
-		T.excited = 1
+		T.excited = TRUE
 		active_turfs |= T
 		SSair_turfs.currentrun |= T
 		if(blockchanges && T.excited_group)
@@ -315,7 +314,7 @@ SUBSYSTEM_DEF(air)
 		var/starting_ats = active_turfs.len
 		sleep(world.tick_lag)
 		var/timer = world.timeofday
-		warning("There are [starting_ats] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
+		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required).")
 		for(var/turf/T in active_turfs)
 			GLOB.active_turfs_startlist += T
 
@@ -382,6 +381,9 @@ SUBSYSTEM_DEF(air)
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+	if(!initialized)
+		return
+
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.atmosinit()

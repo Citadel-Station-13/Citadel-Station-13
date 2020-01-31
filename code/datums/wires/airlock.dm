@@ -85,6 +85,8 @@
 					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/open)
 				else
 					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/close)
+			else
+				holder.visible_message("<span class='notice'>You hear a a grinding noise coming from the airlock.</span>")
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
 			if(!A.locked)
 				A.bolt()

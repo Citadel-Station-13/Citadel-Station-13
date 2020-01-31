@@ -89,17 +89,14 @@
 
 	if(istype(target))
 		target.Stun(40) //Utterly useless without this, its okay since there are so many checks to go through
-		target.silent = 45 //Shhhh little lamb
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 45) //So you cant rotate with combat mode, plus fancy status alert
 
-	if(do_mob(user, target, 40, 0, TRUE, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
+	if(do_mob(user, target, 40, 0, TRUE, extra_checks = CALLBACK(src, .proc/ContinueActive, user, target)))
 		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
 		var/power_time = 90 + level_current * 12
-		target.silent = power_time + 20
-		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 100 + level_current * 15)
+		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time + 80)
 		to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
 		target.Stun(power_time)
-		//target.silent += power_time / 10 // Silent isn't based on ticks.
 		target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
 		target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
 		spawn(power_time)

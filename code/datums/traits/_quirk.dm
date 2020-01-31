@@ -15,6 +15,7 @@
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
 		qdel(src)
+		return
 	quirk_holder = quirk_mob
 	SSquirks.quirk_objects += src
 	to_chat(quirk_holder, gain_text)

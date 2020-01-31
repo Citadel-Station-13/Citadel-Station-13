@@ -1,6 +1,0 @@
-author: "Ghommie, Skogol"
-delete-after: True
-changes: 
-  - refactor: "refactored altclick interaction to allow alt-click interactable objects to parent call without forcing the turf contents stat menu open."
-  - tweak: "Alt clicking will no longer show turf contents for items inside bags etc."
-  - tweak: "Alt clicking the source of your turf contents stat menu will now close said menu."

@@ -21,7 +21,7 @@
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind && H.mind.assigned_role == "Clown") //Ensures only clowns can drive the car. (Including more at once)
+		if(H.mind && HAS_TRAIT(H.mind, TRAIT_CLOWN_MENTALITY)) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
@@ -107,7 +107,7 @@
 			visible_message("<span class='danger'>[user] has pressed one of the colorful buttons on [src] and the clown car spews out a cloud of laughing gas.</span>")
 			var/datum/reagents/R = new/datum/reagents(300)
 			R.my_atom = src
-			R.add_reagent("superlaughter", 50)
+			R.add_reagent(/datum/reagent/consumable/superlaughter, 50)
 			var/datum/effect_system/smoke_spread/chem/smoke = new()
 			smoke.set_up(R, 4)
 			smoke.attach(src)

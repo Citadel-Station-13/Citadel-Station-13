@@ -438,6 +438,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Admin"
 	set name = "Stealth Mode"
 	if(holder)
+		if(!check_rights(R_STEALTH, 0))
+			return
 		if(holder.fakekey)
 			holder.fakekey = null
 			if(isobserver(mob))

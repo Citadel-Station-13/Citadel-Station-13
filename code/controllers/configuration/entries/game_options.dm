@@ -249,6 +249,18 @@
 
 /datum/config_entry/number/movedelay/walk_delay
 
+/datum/config_entry/number/movedelay/sprint_speed_increase
+	config_entry_value = 1
+
+/datum/config_entry/number/movedelay/sprint_buffer_max
+	config_entry_value = 42
+
+/datum/config_entry/number/movedelay/sprint_stamina_cost
+	config_entry_value = 0.7
+
+/datum/config_entry/number/movedelay/sprint_buffer_regen_per_ds
+	config_entry_value = 0.3
+
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
 	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
@@ -362,6 +374,15 @@
 
 /datum/config_entry/flag/enable_night_shifts
 
+/datum/config_entry/number/night_shift_public_areas_only
+	config_entry_value = NIGHTSHIFT_AREA_PUBLIC
+
+/datum/config_entry/flag/nightshift_toggle_requires_auth
+	config_entry_value = FALSE
+
+/datum/config_entry/flag/nightshift_toggle_public_requires_auth
+	config_entry_value = TRUE
+
 /datum/config_entry/flag/randomize_shift_time
 
 /datum/config_entry/flag/shift_time_realtime
@@ -376,9 +397,17 @@
 
 /datum/config_entry/flag/disable_stambuffer
 
+/datum/config_entry/keyed_list/box_random_engine
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+	lowercase = FALSE
+	splitter = ","
+
 /datum/config_entry/number/auto_transfer_delay
 	config_entry_value = 72000
 	min_val = 0
+
+/datum/config_entry/flag/pai_custom_holoforms
 
 /datum/config_entry/number/marauder_delay_non_reebe
 	config_entry_value = 1800
@@ -386,3 +415,10 @@
 
 /datum/config_entry/flag/allow_clockwork_marauder_on_station
 	config_entry_value = TRUE
+
+/datum/config_entry/flag/modetier_voting
+
+/datum/config_entry/number/dropped_modes
+	config_entry_value = 3
+
+/datum/config_entry/flag/suicide_allowed

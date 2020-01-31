@@ -166,25 +166,28 @@
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
-	..()
+	. = ..()
+	if(.) // the attack was blocked
+		return
 	if(M.a_intent == INTENT_HARM)
 		Bruise()
 
-/mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM)
+/mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	..()
 	if(istype(AM, /obj/item))
 		var/obj/item/T = AM
 		if(T.throwforce)
 			Bruise()
 
-/mob/living/simple_animal/hostile/mushroom/bullet_act()
-	..()
-	Bruise()
+/mob/living/simple_animal/hostile/mushroom/bullet_act(obj/item/projectile/P)
+	. = ..()
+	if(!P.nodamage)
+		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
 	for(counter=0, counter<=powerlevel, counter++)
 		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)
-		S.reagents.add_reagent("mushroomhallucinogen", powerlevel)
-		S.reagents.add_reagent("omnizine", powerlevel)
-		S.reagents.add_reagent("synaptizine", powerlevel)
+		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
+		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
+		S.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)

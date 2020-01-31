@@ -80,12 +80,11 @@
 	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
 	anchored = anchorvalue
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
-	..()
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, messy_throw = TRUE)
+	. = ..()
 	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
-
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -173,16 +172,13 @@
 /obj/proc/container_resist(mob/living/user)
 	return
 
-/obj/proc/update_icon()
-	return
-
 /mob/proc/unset_machine()
 	if(machine)
 		machine.on_unset_machine(src)
 		machine = null
 
 //called when the user unsets the machine.
-/atom/movable/proc/on_unset_machine(mob/user)
+/atom/proc/on_unset_machine(mob/user)
 	return
 
 /mob/proc/set_machine(obj/O)

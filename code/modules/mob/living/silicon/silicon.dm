@@ -151,7 +151,7 @@
 			for(var/key in alarm_types_clear)
 				alarm_types_clear[key] = 0
 
-/mob/living/silicon/can_inject(mob/user, error_msg)
+/mob/living/silicon/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
 	return FALSE
@@ -388,6 +388,15 @@
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
 		return aicamera.selectpicture(user)
+
+/mob/living/silicon/proc/ai_roster()
+	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
+
+	dat += GLOB.data_core.get_manifest()
+	dat += "</body></html>"
+
+	src << browse(dat, "window=airoster")
+	onclose(src, "airoster")
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

@@ -68,9 +68,18 @@
 	item_color = "syndicate_combat"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/syndicate/rus_army
+	name = "advanced military tracksuit"
+	desc = "Military grade tracksuits for frontline squatting."
+	icon_state = "rus_under"
+	item_color = "rus_under"
+	can_adjust = FALSE
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	resistance_flags = NONE 
+
 /obj/item/clothing/under/syndicate/baseball
 	name = "major league, number unknown"
-	desc = "A major league outfit with the number faded number on the back. Seems rather robust for just a game"
+	desc = "A major league outfit with the number faded number on the back. Seems rather robust for just a game..."
 	icon_state = "syndicatebaseball"
 	item_state = "syndicatebaseball"
 	item_color = "syndicatebaseball"

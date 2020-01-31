@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 500)
 	var/fire_sound = null						//What sound should play when this ammo is fired
-	var/caliber = null							//Which kind of guns it can be loaded into
+	var/caliber = list()							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
 	var/pellets = 1								//Pellets for spreadshot
@@ -65,7 +65,7 @@
 	else
 		return ..()
 
-/obj/item/ammo_casing/throw_impact(atom/A)
+/obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(heavy_metal)
 		bounce_away(FALSE, NONE)
 	. = ..()

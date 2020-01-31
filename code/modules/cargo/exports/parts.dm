@@ -92,11 +92,42 @@
 	export_types = list(/obj/item/stock_parts/cell/bluespace)
 
 /datum/export/cellyellow
-	cost = 40
+	cost = 200
 	unit_name = "slime power cell"
 	export_types = list(/obj/item/stock_parts/cell/high/slime)
 
 /datum/export/cellyellowhyper
-	cost = 120 //Takes a lot to make and is really good
+	cost = 1200 //Takes a lot to make and is really good
 	unit_name = "hyper slime power cell"
 	export_types = list(/obj/item/stock_parts/cell/high/slime/hypercharged)
+
+//Glass working stuff
+
+/datum/export/glasswork_dish
+	cost = 300
+	unit_name = "small glass dish"
+	export_types = list(/obj/item/reagent_containers/glass/beaker/glass_dish)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_lens
+	cost = 1800
+	unit_name = "small glass lens"
+	export_types = list(/obj/item/lens)
+
+/datum/export/glasswork_spouty
+	cost = 1200
+	unit_name = "flask with spout"
+	export_types = list(/obj/item/reagent_containers/glass/beaker/flask/spouty)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_smallflask
+	cost = 600
+	unit_name = "small flask"
+	export_types = list(/obj/item/reagent_containers/glass/beaker/flask)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_largeflask
+	cost = 1000
+	unit_name = "large flask"
+	export_types = list(/obj/item/reagent_containers/glass/beaker/flask/large)
+	include_subtypes = FALSE

@@ -108,8 +108,8 @@
 /obj/mecha/attack_tk()
 	return
 
-/obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
-	log_message("Hit by [A].", color="red")
+/obj/mecha/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //wrapper
+	log_message("Hit by [AM].", color="red")
 	. = ..()
 
 
@@ -286,10 +286,10 @@
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)
 	if(target.reagents)
-		if(target.reagents.get_reagent_amount("cryptobiolin") + force < force*2)
-			target.reagents.add_reagent("cryptobiolin", force/2)
-		if(target.reagents.get_reagent_amount("toxin") + force < force*2)
-			target.reagents.add_reagent("toxin", force/2.5)
+		if(target.reagents.get_reagent_amount(/datum/reagent/cryptobiolin) + force < force*2)
+			target.reagents.add_reagent(/datum/reagent/cryptobiolin, force/2)
+		if(target.reagents.get_reagent_amount(/datum/reagent/toxin) + force < force*2)
+			target.reagents.add_reagent(/datum/reagent/toxin, force/2.5)
 
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)

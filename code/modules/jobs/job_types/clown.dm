@@ -14,6 +14,8 @@
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)
 
+	mind_traits = list(TRAIT_CLOWN_MENTALITY)
+
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 
 /datum/outfit/job/clown

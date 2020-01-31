@@ -26,9 +26,7 @@
 /area/lavaland/surface/outdoors)
 "af" = (
 /obj/structure/necropolis_gate/legion_gate,
-/obj/structure/necropolis_arch{
-	pixel_y = -40
-	},
+/obj/structure/necropolis_arch,
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
@@ -76,808 +74,9 @@
 "an" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
-"ap" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"aq" = (
-/turf/closed/wall,
-/area/mine/laborcamp)
-"ar" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"as" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"at" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
-/obj/machinery/camera{
-	c_tag = "Labor Camp Medical";
-	dir = 8;
-	network = list("labor")
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"au" = (
-/obj/structure/rack,
-/obj/item/storage/bag/ore,
-/obj/item/pickaxe,
-/obj/item/flashlight,
-/obj/item/clothing/glasses/meson,
-/obj/item/mining_scanner,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"av" = (
-/obj/structure/rack,
-/obj/item/storage/bag/ore,
-/obj/item/flashlight,
-/obj/item/pickaxe,
-/obj/item/clothing/glasses/meson,
-/obj/item/mining_scanner,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aw" = (
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
-"ax" = (
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"ay" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"az" = (
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
 "aA" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aB" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Infirmary"
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"aC" = (
-/obj/structure/closet/crate/internals,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aD" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
-"aE" = (
-/obj/item/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_y = 24;
-	prison_radio = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aF" = (
-/obj/machinery/door/airlock{
-	name = "Labor Camp Storage"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aG" = (
-/obj/structure/table,
-/obj/item/trash/plate,
-/obj/item/kitchen/fork,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aH" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aI" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock{
-	name = "Labor Camp External Access"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aJ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aK" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aL" = (
-/obj/machinery/door/airlock{
-	name = "Vending"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aM" = (
-/obj/machinery/light/small,
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aN" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aO" = (
-/obj/machinery/camera{
-	c_tag = "Labor Camp External";
-	dir = 4;
-	network = list("labor")
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"aP" = (
-/obj/machinery/vending/sustenance,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aQ" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aR" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"aS" = (
-/obj/machinery/mineral/unloading_machine{
-	dir = 1;
-	icon_state = "unloader-corner";
-	input_dir = 1;
-	output_dir = 2
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"aT" = (
-/obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
-"aU" = (
-/obj/machinery/flasher{
-	id = "labor"
-	},
-/turf/closed/wall,
-/area/mine/laborcamp)
-"aW" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "gulag"
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"aX" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
-"aY" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Security Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aZ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/button/door{
-	id = "labor";
-	name = "Labor Camp Lockdown";
-	pixel_y = 28;
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"ba" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "labor";
-	name = "labor camp blast door"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bb" = (
-/obj/machinery/camera{
-	c_tag = "Labor Camp Central";
-	network = list("labor")
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bc" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "gulag"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bd" = (
-/obj/machinery/mineral/processing_unit_console{
-	dir = 2;
-	machinedir = 4
-	},
-/turf/closed/wall,
-/area/mine/laborcamp)
-"be" = (
-/obj/machinery/mineral/processing_unit{
-	dir = 1;
-	output_dir = 2
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"bf" = (
-/turf/closed/wall,
-/area/mine/eva)
-"bg" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/eva)
-"bh" = (
-/obj/machinery/computer/shuttle/labor/one_way,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bi" = (
-/obj/structure/gulag_beacon,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bj" = (
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bk" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bl" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "gulag"
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"bm" = (
-/obj/machinery/conveyor{
-	dir = 10;
-	id = "gulag"
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"bn" = (
-/obj/structure/table,
-/obj/item/pickaxe,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bo" = (
-/obj/machinery/suit_storage_unit/mining,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bp" = (
-/obj/machinery/suit_storage_unit/mining,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bq" = (
-/turf/closed/wall,
-/area/mine/production)
-"br" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/production)
-"bs" = (
-/obj/machinery/camera{
-	c_tag = "EVA";
-	dir = 4;
-	network = list("mine")
-	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bt" = (
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bu" = (
-/obj/machinery/light_switch{
-	pixel_x = 27
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bv" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/mine/eva)
-"bx" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"by" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bz" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bA" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Backroom";
-	req_access_txt = "2"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bB" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Labor Camp APC";
-	pixel_y = 24
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bC" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/machinery/computer/shuttle/mining{
-	req_access = null
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"bD" = (
-/obj/structure/closet/crate,
-/obj/item/dice/d4,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"bE" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"bF" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/mine/eva)
-"bG" = (
-/obj/structure/table,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/hand_labeler,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bI" = (
-/obj/structure/tank_dispenser/oxygen,
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bJ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bK" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/obj/machinery/shower{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bL" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Monitoring";
-	req_access_txt = "2"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bM" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Labor Camp Maintenance";
-	req_access_txt = "2"
-	},
-/obj/structure/cable{
-	icon_state = "1-10"
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"bN" = (
-/obj/structure/sign/warning/docking,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/production)
-"bO" = (
-/obj/item/beacon,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"bP" = (
-/turf/open/floor/plasteel,
-/area/mine/production)
-"bQ" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"bR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"bS" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Station EVA";
-	req_access_txt = "54"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bT" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bW" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bX" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Mining External Airlock";
-	opacity = 0;
-	req_access_txt = "54"
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bY" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"bZ" = (
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors/explored)
-"ca" = (
-/turf/closed/wall,
-/area/mine/laborcamp/security)
-"cb" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cc" = (
-/obj/structure/chair/office/dark,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/mob/living/simple_animal/bot/secbot/beepsky{
-	desc = "Powered by the tears and sweat of laborers.";
-	name = "Prison Ofitser"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cd" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Labor Camp Security APC";
-	pixel_x = 24
-	},
-/obj/machinery/camera{
-	c_tag = "Labor Camp Monitoring";
-	network = list("labor")
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"ce" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "5-6"
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"cf" = (
-/obj/machinery/power/terminal,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"cg" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"ch" = (
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"cj" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Mining Shuttle Airlock";
-	opacity = 0
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"ck" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cl" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cm" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cn" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"co" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Mining EVA APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
-/obj/structure/cable,
-/obj/machinery/recharge_station,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"cp" = (
-/obj/machinery/mech_bay_recharge_port,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/mine/eva)
-"cq" = (
-/turf/open/floor/mech_bay_recharge_floor,
-/area/mine/eva)
-"cr" = (
-/obj/machinery/computer/mech_bay_power_console,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"cs" = (
-/obj/structure/closet/emcloset,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"ct" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
+/turf/template_noop,
+/area/template_noop)
 "cu" = (
 /obj/item/pickaxe,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -886,1548 +85,6 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"cw" = (
-/obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cx" = (
-/obj/machinery/computer/security{
-	name = "Labor Camp Monitoring";
-	network = list("labor")
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cy" = (
-/obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cz" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"cA" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-9"
-	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"cB" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"cC" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"cD" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cF" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cG" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/laborcamp/security)
-"cH" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cI" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cJ" = (
-/obj/machinery/door/airlock{
-	name = "Closet"
-	},
-/turf/open/floor/plating,
-/area/mine/production)
-"cK" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/mine/production)
-"cL" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/mine/production)
-"cM" = (
-/turf/closed/wall,
-/area/mine/living_quarters)
-"cN" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall,
-/area/mine/living_quarters)
-"cO" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cP" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 30
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cQ" = (
-/turf/closed/wall/r_wall,
-/area/mine/maintenance)
-"cR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"cS" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"cT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/closet/crate/secure/loot,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"cU" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"cV" = (
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"cW" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"cX" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mining Station Starboard Wing APC";
-	pixel_x = -27;
-	pixel_y = 2
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cY" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"cZ" = (
-/obj/machinery/mineral/equipment_vendor,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"da" = (
-/obj/machinery/mineral/mint{
-	input_dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"db" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dc" = (
-/obj/structure/closet/crate,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dd" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/obj/structure/table,
-/obj/item/paper/fluff/stations/lavaland/orm_notice,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"de" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"df" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dg" = (
-/turf/open/floor/circuit,
-/area/mine/maintenance)
-"dh" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Communications APC";
-	pixel_x = 1;
-	pixel_y = 25
-	},
-/turf/open/floor/plasteel/dark,
-/area/mine/maintenance)
-"di" = (
-/obj/machinery/telecomms/relay/preset/mining,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/mine/maintenance)
-"dj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/dark,
-/area/mine/maintenance)
-"dk" = (
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
-/turf/open/floor/circuit,
-/area/mine/maintenance)
-"dl" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/machinery/iv_drip,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"dm" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"dn" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"do" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dp" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dq" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dr" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"ds" = (
-/obj/machinery/mineral/equipment_vendor,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"du" = (
-/obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dv" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dw" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dx" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/circuit,
-/area/mine/maintenance)
-"dy" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel/dark,
-/area/mine/maintenance)
-"dz" = (
-/obj/machinery/light_switch{
-	pixel_y = -25
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/open/floor/circuit,
-/area/mine/maintenance)
-"dA" = (
-/obj/machinery/camera{
-	c_tag = "Communications Relay";
-	dir = 8;
-	network = list("mine")
-	},
-/turf/open/floor/circuit,
-/area/mine/maintenance)
-"dB" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/blood/AMinus,
-/obj/item/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/machinery/camera{
-	c_tag = "Sleeper Room";
-	dir = 1;
-	network = list("mine")
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"dC" = (
-/turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"dD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"dE" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"dF" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dG" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dH" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dI" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dJ" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dK" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Shuttle Docking Foyer";
-	dir = 8;
-	network = list("mine")
-	},
-/obj/machinery/newscaster{
-	pixel_x = 30;
-	pixel_y = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dL" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dN" = (
-/obj/machinery/camera{
-	c_tag = "Processing Area Room";
-	dir = 8;
-	network = list("mine")
-	},
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = 28
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dO" = (
-/obj/machinery/mineral/unloading_machine{
-	dir = 1;
-	icon_state = "unloader-corner";
-	input_dir = 1;
-	output_dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/mine/production)
-"dP" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Mining Station Communications";
-	req_access_txt = "48"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/mine/maintenance)
-"dQ" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dR" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Infirmary"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"dS" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Mining Station Maintenance";
-	req_access_txt = "48"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"dT" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dU" = (
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dV" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/mine/production)
-"dW" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dX" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "mining_internal";
-	name = "mining conveyor"
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dY" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "mining_internal"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/mine/production)
-"dZ" = (
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ea" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ec" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ed" = (
-/obj/machinery/camera{
-	c_tag = "Crew Area Hallway West";
-	network = list("mine")
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ee" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ef" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eg" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station Port Wing APC";
-	pixel_x = 1;
-	pixel_y = 25
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eh" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ei" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ej" = (
-/obj/machinery/camera{
-	c_tag = "Crew Area Hallway East";
-	network = list("mine")
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ek" = (
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"el" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Processing Area";
-	req_access_txt = "48"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"em" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"en" = (
-/obj/machinery/mineral/processing_unit_console,
-/turf/closed/wall,
-/area/mine/production)
-"eo" = (
-/obj/machinery/mineral/processing_unit{
-	dir = 1;
-	output_dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/mine/production)
-"ep" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eq" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"er" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"es" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"et" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eu" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ev" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ew" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ex" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Station Bridge";
-	req_access_txt = "48"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ey" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ez" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eA" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Station Bridge";
-	req_access_txt = "48"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eB" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eC" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eD" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eF" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Processing Area";
-	req_access_txt = "48"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eG" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eI" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eJ" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eK" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eL" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eM" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eN" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eO" = (
-/obj/machinery/light/small,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eQ" = (
-/obj/machinery/door/airlock/mining{
-	name = "Mining Station Storage";
-	req_access_txt = "48"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/glass{
-	name = "Break Room"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"eS" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eT" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/machinery/light,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eU" = (
-/obj/structure/closet/crate,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eV" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eW" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"eX" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining_internal"
-	},
-/obj/structure/plasticflaps,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/mine/production)
-"eY" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining_internal"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/mine/production)
-"eZ" = (
-/obj/machinery/conveyor{
-	dir = 10;
-	id = "mining_internal"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/mine/production)
-"fa" = (
-/obj/machinery/mineral/equipment_vendor,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fb" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fc" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fd" = (
-/obj/machinery/camera{
-	c_tag = "Storage";
-	dir = 2;
-	network = list("mine")
-	},
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fe" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
-"ff" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
-"fg" = (
-/obj/machinery/door/airlock{
-	id_tag = "miningdorm1";
-	name = "Room 1"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fi" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fj" = (
-/obj/machinery/vending/snack,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fk" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fl" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fm" = (
-/obj/machinery/vending/cigarette,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fn" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_y = 6
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fo" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fp" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fq" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = 28
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fr" = (
-/obj/structure/table,
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
-"fs" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "miningdorm1";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
-"ft" = (
-/obj/machinery/camera{
-	c_tag = "Dormitories";
-	dir = 4;
-	network = list("mine")
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fu" = (
-/obj/structure/chair,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fv" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fx" = (
-/obj/structure/ore_box,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fy" = (
-/obj/machinery/recharge_station,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fz" = (
-/obj/structure/closet/secure_closet/miner,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fA" = (
-/obj/structure/closet/secure_closet/miner,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fB" = (
-/obj/structure/closet/secure_closet/miner,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fC" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fD" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -1;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -8
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fE" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fF" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fG" = (
-/obj/structure/table,
-/obj/item/storage/box/donkpockets,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fH" = (
-/obj/machinery/door/airlock{
-	id_tag = "miningdorm2";
-	name = "Room 2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fI" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fJ" = (
-/obj/machinery/camera{
-	c_tag = "Crew Area";
-	dir = 1;
-	network = list("mine")
-	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
-/obj/machinery/light,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fK" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fL" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 11
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fM" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "miningdorm2";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
-"fN" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fO" = (
-/obj/machinery/door/airlock{
-	id_tag = "miningdorm3";
-	name = "Room 3"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"fP" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "miningdorm3";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
 "fQ" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored/danger)
@@ -2582,18 +239,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"gY" = (
-/obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_away";
-	name = "labor camp";
-	width = 9
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
 "hg" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center/cracked,
@@ -2639,13 +284,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"il" = (
-/obj/machinery/computer/cryopod{
-	dir = 4;
-	pixel_x = -26
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
 "ir" = (
 /obj/structure/stone_tile/slab/cracked{
 	dir = 5
@@ -3541,12 +1179,10 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"Po" = (
-/obj/machinery/cryopod{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
+"ol" = (
+/obj/effect/landmark/stationroom/lavaland/station,
+/turf/template_noop,
+/area/template_noop)
 "Uq" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -3559,97 +1195,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"Wp" = (
-/obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_away";
-	name = "lavaland mine";
-	width = 7
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Wt" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/laborcamp/security)
-"Wz" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"WA" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock{
-	name = "Labor Camp External Access"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"WB" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Security Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"WC" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"WD" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Mining External Airlock";
-	opacity = 0;
-	req_access_txt = "54"
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"WE" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Mining Shuttle Airlock";
-	opacity = 0
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"WF" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/laborcamp)
-"WH" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/eva)
-"WI" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/production)
-"WJ" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/r_wall,
-/area/mine/maintenance)
-"WK" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/living_quarters)
 
 (1,1,1) = {"
 aa
@@ -3852,61 +1397,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-Wz
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+ol
 "}
 (2,1,1) = {"
 aa
@@ -4109,61 +1654,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (3,1,1) = {"
 aa
@@ -4366,61 +1911,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (4,1,1) = {"
 aa
@@ -4623,61 +2168,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ai
-ai
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (5,1,1) = {"
 aa
@@ -4880,61 +2425,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ai
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (6,1,1) = {"
 aa
@@ -5137,61 +2682,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ai
-aD
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (7,1,1) = {"
 aa
@@ -5394,61 +2939,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aw
-aw
-ab
-aD
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (8,1,1) = {"
 aa
@@ -5651,61 +3196,61 @@ aj
 aj
 aj
 aj
-aj
-ab
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aw
-aw
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (9,1,1) = {"
 aa
@@ -5908,61 +3453,61 @@ aj
 aj
 aj
 aj
-ab
-ab
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aw
-aw
-aj
-aj
-aw
-aw
-aj
-aj
-aw
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (10,1,1) = {"
 aa
@@ -6165,61 +3710,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (11,1,1) = {"
 aa
@@ -6422,61 +3967,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aw
-aw
-aD
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (12,1,1) = {"
 aa
@@ -6679,61 +4224,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aw
-aw
-aw
-aD
-aw
-aw
-aw
-aw
-aw
-aD
-aw
-aw
-aD
-aw
-aw
-aw
-aj
-aw
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (13,1,1) = {"
 aa
@@ -6936,61 +4481,61 @@ aj
 aj
 aj
 ab
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aw
-aw
-aw
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aw
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (14,1,1) = {"
 aa
@@ -7193,61 +4738,61 @@ aj
 aj
 ab
 ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aw
-aw
-aw
-aw
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aw
-aw
-ab
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (15,1,1) = {"
 aa
@@ -7450,61 +4995,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aw
-aw
-aw
-aw
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aw
-aw
-aw
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (16,1,1) = {"
 aa
@@ -7707,61 +5252,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aw
-aw
-aw
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aw
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (17,1,1) = {"
 aa
@@ -7964,61 +5509,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aw
-aw
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-gY
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-ab
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (18,1,1) = {"
 aa
@@ -8221,61 +5766,61 @@ aj
 aj
 ab
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aq
-aq
-aq
-aq
-aq
-aY
-aq
-aq
-aq
-bx
-aq
-aw
-aw
-aj
-aj
-aj
-aj
-aj
-ai
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (19,1,1) = {"
 aa
@@ -8478,61 +6023,61 @@ an
 an
 ab
 ab
-an
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-aq
-aG
-aK
-aP
-aq
-aZ
-aq
-bh
-aq
-aJ
-aq
-aD
-bZ
-aj
-aj
-aD
-aj
-ab
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (20,1,1) = {"
 aa
@@ -8735,61 +6280,61 @@ an
 an
 an
 an
-an
-an
-ab
-aj
-aj
-aj
-ab
-ab
-aq
-aH
-az
-aQ
-aq
-WB
-aq
-bi
-WF
-WC
-aq
-bZ
-bZ
-bZ
-aj
-aj
-aj
-ai
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (21,1,1) = {"
 aa
@@ -8992,61 +6537,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-ap
-ap
-ap
-aq
-aq
-aq
-aL
-aq
-aq
-ba
-aq
-bj
-az
-az
-aq
-ca
-Wt
-ca
-aj
-aj
-aj
-ai
-ad
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (22,1,1) = {"
 aa
@@ -9249,61 +6794,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-ap
-ar
-ar
-aq
-Po
-il
-az
-az
-az
-az
-az
-az
-az
-az
-aq
-cb
-cw
-cG
-aj
-aj
-aj
-aj
-ai
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (23,1,1) = {"
 aa
@@ -9506,61 +7051,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-aq
-as
-ax
-aB
-az
-az
-az
-az
-aU
-bb
-az
-az
-az
-by
-bL
-cc
-cx
-cG
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (24,1,1) = {"
 aa
@@ -9763,61 +7308,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-aq
-at
-ay
-aq
-aE
-az
-az
-az
-az
-az
-aQ
-bk
-az
-bz
-aq
-cd
-cy
-cG
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (25,1,1) = {"
 aa
@@ -10020,61 +7565,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-aq
-aq
-aq
-aq
-aq
-az
-az
-aR
-az
-bc
-aq
-bl
-aq
-bA
-aq
-aq
-aq
-aq
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (26,1,1) = {"
 aa
@@ -10277,61 +7822,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-aq
-au
-au
-au
-aq
-az
-aM
-aq
-aq
-bd
-aq
-bl
-aq
-bz
-aq
-ce
-cz
-aq
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (27,1,1) = {"
 aa
@@ -10534,61 +8079,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-aq
-av
-az
-az
-aF
-az
-aN
-aS
-aW
-be
-aW
-bm
-aq
-bB
-bM
-cf
-cA
-aq
-aj
-aj
-ab
-ad
-ai
-ab
-ab
-ab
-ai
-ab
-ab
-ab
-ad
-ai
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (28,1,1) = {"
 aa
@@ -10791,61 +8336,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-aq
-aq
 aA
-aC
-aq
-aI
-aq
-aq
-aq
-aq
-aq
-aq
-aq
-aq
-aq
-cg
-cB
-aq
-aj
-cQ
-cQ
-cQ
-cQ
-cR
-cR
-cR
-cM
-cR
-cR
-cR
-cM
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (29,1,1) = {"
 aa
@@ -11048,61 +8593,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-aq
-aq
-aq
-aq
-az
-aq
-aT
-aX
-aX
-aD
-aD
-aD
-aD
-aq
-ch
-cC
-aq
-aj
-cQ
-dg
-dg
-cQ
-dZ
-dZ
-dZ
-cM
-fa
-fo
-fx
-cM
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (30,1,1) = {"
 aa
@@ -11305,61 +8850,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-aq
-aJ
-aq
-aT
-aD
-aD
-aD
-aD
-aD
-aD
-aq
-aq
-aq
-aq
-aj
-cQ
-dh
-dx
-cQ
-ea
-ep
-ek
-cM
-fb
-dZ
-fy
-cR
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (31,1,1) = {"
 aa
@@ -11562,61 +9107,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-aD
-aq
-WA
-aq
-aT
-aD
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-aj
-ab
-cQ
-di
-dy
-dP
-eb
-eq
-eK
-eQ
-ef
-fp
-fz
-cR
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (32,1,1) = {"
 aa
@@ -11819,61 +9364,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aO
-aD
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-aj
-ab
-ad
-cQ
-dj
-dz
-cQ
-ec
-er
-eL
-cM
-fc
-dZ
-fA
-cR
-ab
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (33,1,1) = {"
 aa
@@ -12076,61 +9621,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-ab
-ai
-cQ
-dk
-dA
-WJ
-ed
-er
-eM
-cM
-fd
-fq
-fB
-cM
-ai
-ad
-ai
-ai
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (34,1,1) = {"
 aa
@@ -12333,61 +9878,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-ab
-ab
-cQ
-cQ
-cQ
-cQ
-ee
-er
-dZ
-cM
-cM
-cM
-cM
-cM
-cM
-cM
-cM
-cM
-cM
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (35,1,1) = {"
 aa
@@ -12590,61 +10135,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-aj
-ab
-cM
-dl
-dB
-cM
-dZ
-er
-dZ
-cM
-fe
-fr
-cM
-fe
-fr
-cM
-fe
-fr
-cM
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (36,1,1) = {"
 aa
@@ -12847,61 +10392,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-ab
-cR
-dm
-dC
-dQ
-ea
-er
-dZ
-cM
-ff
-fs
-cM
-ff
-fM
-cM
-ff
-fP
-cM
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (37,1,1) = {"
 aa
@@ -13104,61 +10649,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aT
-an
-aD
-aD
-aj
-aj
-aj
-aj
-ab
-cR
-dm
-dD
-dR
-ef
-es
-dZ
-WK
-fg
-cM
-cM
-fH
-cM
-cM
-fO
-cM
-cM
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (38,1,1) = {"
 aa
@@ -13361,61 +10906,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aD
-aj
-aj
-ai
-ad
-cM
-dn
-dE
-dQ
-ec
-er
-dZ
-eL
-fh
-ft
-eL
-fh
-ec
-eL
-fh
-ec
-cR
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (39,1,1) = {"
 aa
@@ -13618,61 +11163,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aj
-aj
-ai
-cM
-cM
-cM
-cM
-cM
-eg
-et
-eN
-eN
-fi
-eN
-eN
-fi
-fN
-eN
-fi
-fp
-cR
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (40,1,1) = {"
 aa
@@ -13875,61 +11420,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aj
-aj
-cM
-cS
-do
-dF
-cM
-eh
-er
-dZ
-cM
-cM
-dQ
-dQ
-cM
-cM
-cM
-cR
-cR
-cM
-ai
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (41,1,1) = {"
 aa
@@ -14132,61 +11677,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aj
-aj
-cN
-cT
-cV
-dG
-cM
-ea
-er
-eM
-cM
-fj
-fk
-fk
-fI
-cM
-ab
-ab
-ab
-ai
-ad
-ai
-ai
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (42,1,1) = {"
 aa
@@ -14389,61 +11934,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aj
-aj
-cM
-cU
-dp
-dH
-dS
-ei
-eu
-ek
-dQ
-fk
-fk
-fC
-fk
-cM
-ab
-aj
-ab
-ab
-ai
-ai
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (43,1,1) = {"
 aa
@@ -14646,61 +12191,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aj
-ab
-cM
-cV
-dq
-dI
-cM
-ej
-ev
-eK
-eR
-fl
-fu
-fD
-fJ
-cM
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (44,1,1) = {"
 aa
@@ -14903,61 +12448,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-aD
-aD
-aj
-aj
-ab
-cM
-cW
-dr
-dr
-cM
-dZ
-er
-eL
-dQ
-fk
-fk
-fE
-fK
-cM
-ad
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (45,1,1) = {"
 aa
@@ -15160,61 +12705,61 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-ab
-aj
-aj
-an
-an
-an
-an
-an
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-cM
-cM
-cM
-cM
-cM
-dZ
-er
-dZ
-cM
-fm
-fk
-fF
-fk
-cM
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (46,1,1) = {"
 aa
@@ -15417,61 +12962,61 @@ aj
 aj
 aj
 aj
-an
-an
-an
-an
-an
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aD
-aD
-aD
-aD
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-cR
-dZ
-er
-dZ
-cM
-fn
-fv
-fG
-fL
-cM
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (47,1,1) = {"
 aa
@@ -15674,61 +13219,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-cR
-ek
-ew
-eO
-cM
-cR
-cR
-cR
-cR
-cM
-ai
-ai
-ai
-aj
-ab
-aj
-aj
-ab
-ab
-aj
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (48,1,1) = {"
 aa
@@ -15931,61 +13476,61 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-cR
-cR
-ex
-cR
-cR
-ab
-ab
-ab
-ab
-ai
-ai
-ai
-ab
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ai
-ad
-ad
-ab
-ab
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (49,1,1) = {"
 aa
@@ -16188,61 +13733,61 @@ aj
 aj
 ai
 ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ai
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-cR
-ey
-cR
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ad
-ad
-ad
-ad
-ad
-ai
-ai
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (50,1,1) = {"
 aa
@@ -16445,61 +13990,61 @@ ab
 ab
 ai
 am
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-am
-ai
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-cR
-er
-cR
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-ab
-ab
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ab
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (51,1,1) = {"
 aa
@@ -16702,61 +14247,61 @@ ai
 ai
 am
 am
-am
-am
-am
-am
-am
-am
-am
-ai
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-cR
-er
-cR
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ab
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (52,1,1) = {"
 aa
@@ -16959,61 +14504,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-ai
-ab
-aj
-aj
-ab
-ab
-aj
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-cR
-er
-cR
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ab
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (53,1,1) = {"
 aa
@@ -17216,61 +14761,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-ai
-ab
-aj
-ab
-ab
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-ab
-br
-ez
-br
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ad
-ad
-ai
-ad
-ab
-ab
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (54,1,1) = {"
 aa
@@ -17473,61 +15018,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-Wp
-ab
-ab
-ab
-ab
-aj
-aj
-ab
-br
-ez
-br
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (55,1,1) = {"
 aa
@@ -17730,61 +15275,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-bN
-cj
-br
-ab
-ab
-aj
-aj
-aj
-ab
-br
-ez
-br
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (56,1,1) = {"
 aa
@@ -17987,61 +15532,61 @@ ak
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-br
-bP
-br
-ab
-aj
-aj
-aj
-aj
-ab
-br
-bR
-br
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (57,1,1) = {"
 aa
@@ -18244,61 +15789,61 @@ ak
 ak
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-br
-br
-WE
-br
-br
-ab
-aj
-aj
-ab
-br
-br
-eA
-br
-br
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (58,1,1) = {"
 aa
@@ -18501,61 +16046,61 @@ ak
 ak
 ak
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-ai
-ai
-aj
-aj
-aj
-bq
-br
-bO
-ck
-cD
-br
-bq
-bq
-bq
-bq
-br
-cH
-eB
-cD
-br
-bq
-am
-am
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (59,1,1) = {"
 aa
@@ -18758,61 +16303,61 @@ ak
 ak
 ak
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-aj
-ab
-bq
-bC
-bP
-cl
-bP
-cH
-cO
-cX
-ck
-dJ
-dT
-bP
-ez
-bP
-eS
-bq
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (60,1,1) = {"
 aa
@@ -19015,61 +16560,61 @@ ak
 ak
 ak
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-aj
-aj
-ab
-br
-bD
-bQ
-cm
-cE
-cE
-cE
-cY
-cE
-cE
-cE
-cE
-eC
-eP
-eT
-bq
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (61,1,1) = {"
 aa
@@ -19272,61 +16817,61 @@ ak
 ak
 ak
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-aj
-aj
-ab
-ab
-br
-bE
-bR
-cn
-cF
-cI
-cP
-cn
-bP
-bP
-bP
-bP
-eD
-bP
-eU
-br
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (62,1,1) = {"
 aa
@@ -19529,61 +17074,61 @@ ak
 ak
 ak
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-ai
-ab
-bf
-bf
-bf
-bF
-bS
-bF
-bf
-cJ
-bq
-cZ
-ds
-dK
-dU
-cF
-eE
-cn
-eV
-br
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (63,1,1) = {"
 aa
@@ -19786,61 +17331,61 @@ ak
 ak
 ak
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-ai
-ai
-ab
-bf
-bn
-bs
-bG
-bT
-co
-bf
-cK
-bq
-bq
-br
-bq
-dV
-el
-eF
-dV
-bq
-bq
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (64,1,1) = {"
 aa
@@ -20043,61 +17588,61 @@ ak
 ak
 ak
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-ab
-ab
-bg
-bo
-bt
-bt
-bU
-cp
-bf
-cL
-bq
-da
-du
-dL
-cH
-ck
-eG
-cD
-bP
-br
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (65,1,1) = {"
 aa
@@ -20300,61 +17845,61 @@ ak
 ak
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-ab
-bg
-bo
-bt
-bH
-bV
-cq
-WH
-bq
-WI
-db
-bP
-bP
-bP
-bP
-eH
-cF
-eW
-bq
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (66,1,1) = {"
 aa
@@ -20557,61 +18102,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-ab
-bf
-bp
-bu
-bI
-bW
-cr
-bf
-ad
-bq
-dc
-bP
-dM
-dW
-dW
-eI
-bq
-eX
-bq
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (67,1,1) = {"
 aa
@@ -20814,61 +18359,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-ab
-bf
-bf
-bf
-bg
-bX
-bg
-bf
-ai
-bq
-dd
-bP
-dN
-dX
-em
-eJ
-dV
-eY
-bq
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (68,1,1) = {"
 aa
@@ -21071,61 +18616,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-ab
-ab
-ab
-bf
-bJ
-bY
-cs
-bf
-ai
-bq
-de
-dv
-bq
-dV
-en
-dV
-dV
-eY
-bq
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (69,1,1) = {"
 aa
@@ -21328,61 +18873,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-ai
-aj
-aj
-ab
-ab
-bf
-bK
-bW
-ct
-bf
-ai
-bq
-df
-dw
-dO
-dY
-eo
-dY
-dY
-eZ
-bq
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (70,1,1) = {"
 aa
@@ -21585,61 +19130,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-ab
-ai
-ai
-aj
-aj
-ab
-bf
-bg
-WD
-bg
-bf
-ai
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (71,1,1) = {"
 aa
@@ -21842,61 +19387,61 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-bv
-ab
-ab
-ab
-bv
-ai
-ai
-ab
-ab
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (72,1,1) = {"
 aa
@@ -22099,61 +19644,61 @@ am
 am
 am
 am
-am
-am
-ai
-ai
-am
-am
-am
-ai
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (73,1,1) = {"
 aa
@@ -22356,61 +19901,61 @@ am
 am
 am
 am
-am
-ai
-ab
-ab
-ai
-ai
-am
-ai
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (74,1,1) = {"
 aa
@@ -22613,61 +20158,61 @@ am
 am
 am
 am
-ai
-ab
-ab
-ab
-ai
-ab
-ai
-am
-ai
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-aj
-aj
-aj
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
 "}
 (75,1,1) = {"
 aa
@@ -22905,7 +20450,7 @@ ai
 ab
 ab
 ab
-aj
+ab
 ab
 ab
 ab

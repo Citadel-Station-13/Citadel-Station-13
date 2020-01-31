@@ -19,6 +19,9 @@
 		var/list/mob_data = list()
 		if(isnewplayer(m))
 			continue
+		if (m.client && m.client.prefs && m.client.prefs.auto_ooc)
+			if (!(m.client.prefs.chat_toggles & CHAT_OOC))
+				m.client.prefs.chat_toggles ^= CHAT_OOC
 		if(m.mind)
 			if(m.stat != DEAD && !isbrain(m) && !iscameramob(m))
 				num_survivors++
@@ -175,7 +178,7 @@
 		if(!C.credits)
 			C.RollCredits()
 		C.playtitlemusic(40)
-
+	CONFIG_SET(flag/suicide_allowed,TRUE) // EORG suicides allowed
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
 
