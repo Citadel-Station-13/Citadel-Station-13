@@ -56,3 +56,5 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define TIME_STAMP(format, showds) showds ? "[WORLDTIMEOFDAY2TEXT(format)]:[world.timeofday % 10]" : WORLDTIMEOFDAY2TEXT(format)
 #define STATION_TIME(display_only) ((((world.time - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
 #define STATION_TIME_TIMESTAMP(format) time2text(STATION_TIME(TRUE), format)
+#define WTIME_TO_STATION_TIME(display_only, wtime) ((((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
+#define WTIME_TO_STATION_TIME_TIMESTAMP(format, wtime) time2text(WTIME_TO_STATION_TIME(TRUE, wtime), format)
