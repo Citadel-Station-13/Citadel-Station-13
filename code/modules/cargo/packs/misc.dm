@@ -360,7 +360,6 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie)
 	crate_name = "religious supplies crate"
 
-
 /datum/supply_pack/misc/shower
 	name = "Shower Supplies"
 	desc = "Everyone needs a bit of R&R. Make sure you get can get yours by ordering this crate filled with towels, rubber duckies, and some soap!"
