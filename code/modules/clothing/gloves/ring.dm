@@ -11,7 +11,7 @@
 	strip_delay = 40
 
 /obj/item/clothing/gloves/ring/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is putting the ring in [user.p_their()] mouth! It looks like [user] is trying to choke on the [src]!</span>")
+	user.visible_message("<span class='suicide'>\[user] is putting the [src] in [user.p_their()] mouth! It looks like [user] is trying to choke on the [src]!</span>")
 	return OXYLOSS
 
 /obj/item/clothing/gloves/ring/diamond
