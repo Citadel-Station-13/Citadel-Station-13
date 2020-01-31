@@ -20,3 +20,4 @@
 	category = SLOT_GLOVES
 	path = /obj/item/clothing/gloves/ring/diamond
 	cost = 4
+	
