@@ -106,11 +106,10 @@
 		return "Everyone"
 	return data["targets"][1]
 
-/datum/signal/subspace/pda/proc/format_message(emojify = FALSE)
-	var/message = emojify ? data["emoji_message"] : data["message"]
+/datum/signal/subspace/pda/proc/format_message()
 	if (logged && data["photo"])
-		return "\"[message]\" (<a href='byond://?src=[REF(logged)];photo=1'>Photo</a>)"
-	return "\"[message]\""
+		return "\"[data["message"]]\" (<a href='byond://?src=[REF(logged)];photo=1'>Photo</a>)"
+	return "\"[data["message"]]\""
 
 /datum/signal/subspace/pda/broadcast()
 	if (!logged)  // Can only go through if a message server logs it

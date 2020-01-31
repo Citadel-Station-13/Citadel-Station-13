@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/space_level/empty_space
 	var/num_of_res_levels = 1
 
+	var/stat_map_name = "Loading..."
+
 //dlete dis once #39770 is resolved
 /datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
 	if(!config)
@@ -45,6 +47,7 @@ SUBSYSTEM_DEF(mapping)
 #else
 		config = load_map_config(error_if_missing = FALSE)
 #endif
+	stat_map_name = config.map_name
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	HACK_LoadMapConfig()
@@ -330,7 +333,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		return
 
 	next_map_config = VM
-	return TRUE
+
+	. = TRUE
+
+	stat_map_name = "[config.map_name] (Next: [next_map_config.map_name])"
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)

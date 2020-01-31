@@ -909,12 +909,15 @@
 		to_chat(user, "<span class='warning'>The potion can only be used on gendered things!</span>")
 		return
 
-	if(L.gender == MALE)
+	if(L.gender == MALE && (L.client?.prefs.cit_toggles & FORCED_FEM))
 		L.gender = FEMALE
 		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
-	else
+	else if(L.gender == FEMALE && (L.client?.prefs.cit_toggles & FORCED_MASC))
 		L.gender = MALE
 		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+	else
+		to_chat(user,"<span class='warning'>It won't work on [L]!</span>")
+		return
 	L.regenerate_icons()
 	qdel(src)
 
