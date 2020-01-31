@@ -50,10 +50,12 @@
 	var/mob/living/carbon/human/H = owner
 	if (H.mind.martial_art.streak == "[movestreak]")
 		H.mind.martial_art.streak = ""
+		to_chat(H,"<span class='danger'>You relax your muscles and return to a neutral position.</span>")
 	else
 		if(HAS_TRAIT(H, TRAIT_PACIFISM))
 			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
 			return
+		to_chat(H,"<span class='danger'>You get ready to use the [name] maneuver!</span>")
 		H.mind.martial_art.streak = "[movestreak]"
 
 /datum/action/risingbassmove/repulsepunch
