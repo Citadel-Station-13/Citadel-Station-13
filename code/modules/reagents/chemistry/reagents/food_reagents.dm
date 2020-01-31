@@ -300,9 +300,9 @@
 				victim.emote("scream")
 			victim.blur_eyes(5)
 			victim.blind_eyes(3)
-			victim.confused = max(M.confused, 5)
+			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
-			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 6, 30)) //30 Stamina, slightly less than a baton but has CC and disarm. Yum yum.
+			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 5, 25)) //25 Stamina, less than a baton but has CC and disarm. Yum yum.
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
