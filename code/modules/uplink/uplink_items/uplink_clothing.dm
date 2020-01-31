@@ -80,7 +80,7 @@
 	exclude_modes = list()
 
 /datum/uplink_item/suits/thiefgloves
-	name = "Thief's Gloves"
+	name = "Thieving Gloves"
 	desc = "A pair of gloves that are insulated and frictionless, allowing you to steal easily from anyone you see."
 	item = /obj/item/clothing/gloves/thief
 	cost = 4

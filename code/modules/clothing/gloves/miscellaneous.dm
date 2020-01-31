@@ -108,7 +108,7 @@
 	return FALSE
 
 /obj/item/clothing/gloves/thief
-	name = "thief's gloves"
+	name = "black gloves"
 	desc = "Gloves made with completely frictionless, insulated cloth, easier to steal from people with."
 	icon_state = "thief"
 	item_state = "blackgloves"
