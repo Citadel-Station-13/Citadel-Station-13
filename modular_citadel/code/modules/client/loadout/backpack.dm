@@ -146,3 +146,4 @@
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/storage/fancy/ringbox/diamond
 	cost = 5
+	
