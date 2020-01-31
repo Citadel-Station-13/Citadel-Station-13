@@ -382,3 +382,4 @@
 	icon_state = "silver ringbox"
 	icon_type = "silver ring"
 	spawn_type = /obj/item/clothing/gloves/ring/silver
+	
