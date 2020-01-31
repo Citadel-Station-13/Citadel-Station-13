@@ -20,12 +20,15 @@
 	START_PROCESSING(SSprocessing, src)
 
 /datum/sabotage_objective/processing/proc/check_condition_processing()
-	return TRUE
+	return 100
 
 /datum/sabotage_objective/processing/process()
-	won = check_condition_processing()
-	if(won)
+	check_condition_processing()
+	if(won >= 100)
 		STOP_PROCESSING(SSprocessing,src)
+
+/datum/sabotage_objective/processing/check_conditions()
+	return won
 
 /datum/sabotage_objective/processing/power_sink
 	name = "Drain at least 1 gigajoule of power using a power sink."
@@ -41,8 +44,7 @@
 		for(var/datum/powernet/PN in GLOB.powernets)
 			for(var/obj/item/powersink/sink in PN.nodes)
 				sink_found_this_time = TRUE
-				if(sink.power_drained>1e9)
-					return TRUE
+				won = max(won,sink.power_drained/1e9)
 		sink_found = sink_found_this_time
 		count = 0
 	return FALSE
@@ -59,7 +61,7 @@
 	</ul>"
 
 /datum/sabotage_objective/processing/supermatter
-	name = "Sabotage the supermatter so that it goes under 50% integrity."
+	name = "Sabotage the supermatter so that it goes under 50% integrity. If it is delaminated, you will fail."
 	sabotage_type = "supermatter"
 	special_equipment = list(/obj/item/paper/guides/antag/supermatter_sabotage)
 	var/list/supermatters = list()
@@ -73,9 +75,8 @@
 			if (!isturf(S.loc) || !(is_station_level(S.z) || is_mining_level(S.z)))
 				continue
 			supermatters.Add(S)
-	for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
-		if(S.get_integrity() < 50)
-			return TRUE
+	for(var/obj/machinery/power/supermatter_crystal/S in supermatters) // you can win this with a wishgranter... lol.
+		won = max(1-((S.get_integrity()-50)/50),won)
 	return FALSE
 
 /datum/sabotage_objective/station_integrity
@@ -83,7 +84,7 @@
 	sabotage_type = "integrity"
 
 /datum/sabotage_objective/station_integrity/check_conditions()
-	return SSticker.station_integrity < 80
+	return 100/(100-max(SSticker.station_integrity,80))
 
 /datum/sabotage_objective/cloner
 	name = "Destroy all Nanotrasen cloning machines."

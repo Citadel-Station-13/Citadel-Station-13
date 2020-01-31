@@ -109,11 +109,14 @@
 	var/objective_count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.completable)
-			if(objective.check_completion())
+			var/completion = objective.check_completion()
+			if(completion >= 1)
 				parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
-			else
+			else if(completion <= 0)
 				parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 				win = FALSE
+			else
+				parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
 			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text]"
 		objective_count++

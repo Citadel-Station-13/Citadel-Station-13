@@ -54,8 +54,10 @@
 	var/honorific
 	if(owner.current.gender == FEMALE)
 		honorific = "Ms."
-	else
+	else if(owner.current.gender == MALE)
 		honorific = "Mr."
+	else
+		honorific = "Mx."
 	if(GLOB.possible_changeling_IDs.len)
 		changelingID = pick(GLOB.possible_changeling_IDs)
 		GLOB.possible_changeling_IDs -= changelingID
@@ -553,11 +555,14 @@
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.completable)
-				if(objective.check_completion())
+				var/completion = objective.check_completion()
+				if(completion >= 1)
 					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
-				else
+				else if(completion <= 0)
 					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 					changelingwin = FALSE
+				else
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
 				parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 			count++
