@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	else
 		explanation_text = "Free Objective"
 
-/datum/objective/assassinate/once/find_target_by_role()
+/datum/objective/assassinate/once/find_target_by_role(role, role_type=0, invert=0)
 	. = ..()
 	if(.)
 		START_PROCESSING(SSprocessing,src)
