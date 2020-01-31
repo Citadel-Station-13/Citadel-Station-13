@@ -14,7 +14,6 @@
 	user.visible_message("<span class='suicide'>\ [user] is putting the ring in [user.p_their()] mouth! It looks like [user] is trying to choke on the [src]!</span>")
 	return OXYLOSS
 
-
 /obj/item/clothing/gloves/ring/diamond
 	name = "diamond ring"
 	desc = "A tiny gold ring, studded with a diamond. Cultures have used these rings in courtship for a millenia."
@@ -24,3 +23,5 @@
 	name = "silver ring"
 	desc = "A tiny silver ring, sized to wrap around a finger."
 	icon_state = "ringsilver"
+
+
