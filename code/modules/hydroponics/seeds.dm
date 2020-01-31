@@ -186,8 +186,8 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 		product_name = parent.myseed.plantname
 	if(getYield() >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
+	parent.investigate_log("[user] harvested [getYield()] of [src], with seed traits [english_list(genes)] and reagents_add [english_list(reagents_add)] and potency [potency].", INVESTIGATE_BOTANY)
 	parent.update_tray(user)
-
 	return result
 
 

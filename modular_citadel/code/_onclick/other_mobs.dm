@@ -18,7 +18,7 @@
 	if(!has_active_hand())
 		to_chat(src, "<span class='notice'>You ponder your life choices and sigh.</span>")
 		return TRUE
-	var/list/src_viewers = get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src) - src // src has a different message.
+	var/list/src_viewers = viewers(DEFAULT_MESSAGE_RANGE, src) - src // src has a different message.
 	var/the_action = "waves to [A]"
 	var/what_action = "waves to something you can't see"
 	var/self_action = "wave to [A]"
