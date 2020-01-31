@@ -411,17 +411,10 @@
 	message = null
 
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
-	. = TRUE
-	if(copytext(input,1,5) == "says")
+	if(stop_bad_mime.Find(input, 1, 1))
 		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,9) == "exclaims")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,6) == "yells")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,5) == "asks")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else
-		. = FALSE
+		return TRUE
+	return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
 	if(jobban_isbanned(user, "emote"))
@@ -433,7 +426,7 @@
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
-		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as message|null), 1, MAX_MESSAGE_LEN) //CIT CHANGE - expands emote textbox
+		var/custom_emote = stripped_multiline_input("Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
