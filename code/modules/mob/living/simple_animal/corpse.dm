@@ -143,7 +143,7 @@
 /datum/outfit/russiancorpse/officer
 	name = "Russian Officer Corpse"
 	uniform = /obj/item/clothing/under/rank/security/navyblue/russian
-	suit = /obj/item/clothing/suit/security/officer/russian
+	suit = /obj/item/clothing/suit/armor/navyblue/russian
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/ushanka
@@ -207,7 +207,7 @@
 /obj/effect/mob_spawn/human/corpse/bee_terrorist
 	name = "BLF Operative"
 	outfit = /datum/outfit/bee_terrorist
-	
+
 /datum/outfit/bee_terrorist
 	name = "BLF Operative"
 	uniform = /obj/item/clothing/under/color/yellow
