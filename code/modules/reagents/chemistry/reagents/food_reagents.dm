@@ -285,58 +285,24 @@
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
 		//check for protection
-		var/mouth_covered = 0
-		var/eyes_covered = 0
-		var/obj/item/safe_thing = null
+		var/face_covered = 0
 
-		//monkeys and humans can have masks
+		//gas masks are one example of protection. standard issue to security and operatives.
 		if( victim.wear_mask )
-			if ( victim.wear_mask.flags_cover & MASKCOVERSEYES )
-				eyes_covered = 1
-				safe_thing = victim.wear_mask
-			if ( victim.wear_mask.flags_cover & MASKCOVERSMOUTH )
-				mouth_covered = 1
-				safe_thing = victim.wear_mask
-
-		//only humans can have helmets and glasses
-		if(ishuman(victim))
-			var/mob/living/carbon/human/H = victim
-			if( H.head )
-				if ( H.head.flags_cover & HEADCOVERSEYES )
-					eyes_covered = 1
-					safe_thing = H.head
-				if ( H.head.flags_cover & HEADCOVERSMOUTH )
-					mouth_covered = 1
-					safe_thing = H.head
-			if(H.glasses)
-				eyes_covered = 1
-				if ( !safe_thing )
-					safe_thing = H.glasses
+			if ( victim.wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT )
+				face_covered = 1
 
 		//actually handle the pepperspray effects
-		if ( eyes_covered && mouth_covered )
-			return
-		else if ( mouth_covered )	// Reduced effects if partially protected
-			if(prob(5))
-				victim.emote("scream")
-			victim.blur_eyes(3)
-			victim.blind_eyes(2)
-			victim.confused = max(M.confused, 3)
-			victim.damageoverlaytemp = 60
-			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 3, 15))
-			return
-		else if ( eyes_covered ) // Eye cover is better than mouth cover
-			victim.blur_eyes(3)
-			victim.damageoverlaytemp = 30
+		if (face_covered)
 			return
 		else // Oh dear :D
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(5)
 			victim.blind_eyes(3)
-			victim.confused = max(M.confused, 6)
+			victim.confused = max(M.confused, 5)
 			victim.damageoverlaytemp = 75
-			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 5, 25))
+			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 6, 30)) //30 Stamina, slightly less than a baton but has CC and disarm. Yum yum.
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
