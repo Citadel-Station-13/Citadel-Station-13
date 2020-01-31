@@ -189,14 +189,14 @@
 
 	L.Knockdown(stunpwr, override_stamdmg = 0)
 	L.apply_damage(stunpwr*0.55, STAMINA, user.zone_selected)
-	L.apply_effect(EFFECT_STUTTER, stunforce)
+	L.apply_effect(EFFECT_STUTTER)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-		log_combat(user, L, "stunned")
+		L.visible_message("<span class='danger'>[user] has bapped [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] has bapped you with [src]!</span>")
+		log_combat(user, L, "whacked")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
