@@ -71,12 +71,17 @@
 			to_chat(A,"<span class='userdanger'>[user]'s magboots press down on you, crushing you!</span>")
 			A.emote("scream")
 
+/obj/item/clothing/shoes/magboots/crushing/attack_self(mob/user)
+	. = ..()
+	if (magpulse)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED,.proc/crush)
+	else
+		UnregisterSignal(user,COMSIG_MOVABLE_MOVED)
+
 /obj/item/clothing/shoes/magboots/crushing/equipped(mob/user,slot)
 	. = ..()
 	if (slot == SLOT_SHOES)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED,.proc/crush)
-	else
-		UnregisterSignal(user,COMSIG_MOVABLE_MOVED)
 
 /obj/item/clothing/shoes/magboots/crushing/dropped(mob/user)
 	. = ..()
