@@ -191,8 +191,13 @@
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
 			add_objective(maroon_objective)
-		else
+		else if(prob(30))
 			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = owner
+			kill_objective.find_target()
+			add_objective(kill_objective)
+		else
+			var/datum/objective/assassinate/once/kill_objective = new
 			kill_objective.owner = owner
 			kill_objective.find_target()
 			add_objective(kill_objective)
@@ -202,17 +207,17 @@
 			download_objective.owner = owner
 			download_objective.gen_amount_goal()
 			add_objective(download_objective)
-		else if(prob(40))
+		else if(prob(33)) // cum. not counting download: 33%. yes, i do know 33/33 won't be equal and that i want 33/50 for that
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner
 			steal_objective.find_target()
 			add_objective(steal_objective)
-		else if(prob(40))
+		else if(prob(33)) // cum. not counting download: 22.11%
 			var/datum/objective/sabotage/sabotage_objective = new
 			sabotage_objective.owner = owner
 			sabotage_objective.find_target()
 			add_objective(sabotage_objective)
-		else
+		else  // cum. not counting download: 44.89%
 			var/datum/objective/flavor/traitor/flavor_objective = new
 			flavor_objective.owner = owner
 			flavor_objective.forge_objective()

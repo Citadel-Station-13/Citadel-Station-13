@@ -62,10 +62,10 @@
 				possible_targets.Cut(index,index+1)
 
 				if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
+					var/datum/objective/assassinate/once/O = new /datum/objective/assassinate()
 					O.owner = owner
 					O.target = M
-					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
+					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]. You may let [M.p_they()] live, if they come back from death."
 					objectives += O
 				else										//protect
 					var/datum/objective/protect/O = new /datum/objective/protect()
