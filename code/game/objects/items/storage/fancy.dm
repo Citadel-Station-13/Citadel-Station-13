@@ -363,7 +363,6 @@
 	desc = "A tiny box covered in soft red felt made for holding rings."
 	icon = 'icons/obj/ring.dmi'
 	icon_state = "ringboxg"
-	item_state = "ringbox"
 	w_class = WEIGHT_CLASS_TINY
 	spawn_type = /obj/item/clothing/gloves/ring
 
