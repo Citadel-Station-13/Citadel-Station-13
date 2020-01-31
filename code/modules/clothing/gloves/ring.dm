@@ -1,7 +1,7 @@
 /obj/item/clothing/gloves/ring
 	name = "gold ring"
 	desc = "A tiny gold ring, sized to wrap around a finger."
-	gender = 0
+	gender = NEUTER
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/ring.dmi'
 	icon_state = "ringgold"
