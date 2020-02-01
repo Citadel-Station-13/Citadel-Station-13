@@ -274,7 +274,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/start/nuclear_equipment
-	name "bomb or clown beacon spawner"
+	name = "bomb or clown beacon spawner"
 	var/nukie_path = /obj/item/sbeacondrop/bomb
 	var/clown_path = /obj/item/sbeacondrop/clownbomb
 
