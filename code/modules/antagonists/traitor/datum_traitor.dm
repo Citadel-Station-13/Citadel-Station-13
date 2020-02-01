@@ -207,17 +207,17 @@
 			download_objective.owner = owner
 			download_objective.gen_amount_goal()
 			add_objective(download_objective)
-		else if(prob(33)) // cum. not counting download: 33%. yes, i do know 33/33 won't be equal and that i want 33/50 for that
+		else if(prob(40)) // cum. not counting download: 40%.
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner
 			steal_objective.find_target()
 			add_objective(steal_objective)
-		else if(prob(33)) // cum. not counting download: 22.11%
+		else if(prob(100/3)) // cum. not counting download: 20%.
 			var/datum/objective/sabotage/sabotage_objective = new
 			sabotage_objective.owner = owner
 			sabotage_objective.find_target()
 			add_objective(sabotage_objective)
-		else  // cum. not counting download: 44.89%
+		else  // cum. not counting download: 40%
 			var/datum/objective/flavor/traitor/flavor_objective = new
 			flavor_objective.owner = owner
 			flavor_objective.forge_objective()
@@ -391,12 +391,12 @@
 			if(objective.completable)
 				var/completion = objective.check_completion()
 				if(completion >= 1)
-					result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+					objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
 				else if(completion <= 0)
-					result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+					objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 					traitorwin = FALSE
 				else
-					result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
+					objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
 				objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text]"
 			count++
