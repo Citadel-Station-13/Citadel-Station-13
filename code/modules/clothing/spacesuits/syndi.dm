@@ -102,14 +102,19 @@
 
 //Black medical syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/med
-	name = "black space helmet"
+	name = "black medical space helmet"
+	desc = "A specialized space suit designed for use in biohazardous conditions. Lightweight and fully sealed."
 	icon_state = "syndicate-helm-black-med"
 	item_state = "syndicate-helm-black"
+	armor = list("melee" = 35, "bullet" = 40, "laser" = 30,"energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 60, "fire" = 50, "acid" = 100)
 
 /obj/item/clothing/suit/space/syndicate/black/med
-	name = "green space suit"
+	name = "black medical space suit"
+	desc = "A specialized space suit designed for use in biohazardous conditions. Lightweight and fully sealed."
 	icon_state = "syndicate-black-med"
 	item_state = "syndicate-black"
+	slowdown = 0
+	armor = list("melee" = 35, "bullet" = 40, "laser" = 30,"energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 60, "fire" = 50, "acid" = 100)
 
 
 //Black-orange syndicate space suit
@@ -140,10 +145,14 @@
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
 	name = "black space helmet"
+	desc = "A specialized engineering space suit designed for use in hazardous environments. Resistant to explosives and fire."
 	icon_state = "syndicate-helm-black-engie"
 	item_state = "syndicate-helm-black"
+	armor = list("melee" = 40, "bullet" = 50, "laser" = 30,"energy" = 25, "bomb" = 90, "bio" = 100, "rad" = 50, "fire" = 90, "acid" = 85)
 
 /obj/item/clothing/suit/space/syndicate/black/engie
 	name = "black engineering space suit"
+	desc = "A specialized engineering space suit designed for use in hazardous environments. Resistant to explosives and fire."
 	icon_state = "syndicate-black-engie"
 	item_state = "syndicate-black"
+	armor = list("melee" = 40, "bullet" = 60, "laser" = 30,"energy" = 25, "bomb" = 90, "bio" = 100, "rad" = 50, "fire" = 90, "acid" = 85)
