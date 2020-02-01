@@ -7,8 +7,8 @@
 	eyeblur = 10
 	slur = 5
 	knockdown = 160
-	stamina = 0
-	knockdown_stamoverride = 60
+	stamina = 60
+	knockdown_stamoverride = 0
 
 /obj/item/projectile/energy/bolt/halloween
 	name = "candy corn"
