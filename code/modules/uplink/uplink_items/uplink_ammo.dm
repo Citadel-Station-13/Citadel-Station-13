@@ -100,7 +100,7 @@
 	name = "Box of 12g Rubber Shells"
 	desc = "An alternative seven shells of rubber in a box. \
 			Highly effective at taking down targets non-lethally."
-	item = /obj/item/storage/box/rubber
+	item = /obj/item/storage/box/rubbershot
 
 /datum/uplink_item/ammo/shell/incendiary
 	name = "Box of 12g Incendiary Shells"
