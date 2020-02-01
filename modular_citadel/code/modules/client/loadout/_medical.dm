@@ -5,20 +5,6 @@
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
 	restricted_desc = "MD, CMO"
 
-/datum/gear/nursehat
-	name = "Nurse Hat"
-	category = SLOT_HEAD
-	path = /obj/item/clothing/head/nursehat
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
-	restricted_desc = "Medical"
-
-/datum/gear/nursesuit
-	name = "Nurse Suit"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/nursesuit
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
-	restricted_desc = "Medical"
-
 /datum/gear/stethoscope
 	name = "Stethoscope"
 	category = SLOT_NECK
@@ -43,5 +29,19 @@
 	name = "Purple Scrubs"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/rank/medical/purple
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
+	restricted_desc = "Medical"
+
+/datum/gear/nursehat
+	name = "Nurse Hat"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/nursehat
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
+	restricted_desc = "Medical"
+
+/datum/gear/nursesuit
+	name = "Nurse Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/rank/nursesuit
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
 	restricted_desc = "Medical"
