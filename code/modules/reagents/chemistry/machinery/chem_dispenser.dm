@@ -32,7 +32,6 @@
 	var/nopower_state = "dispenser_nopower"
 	var/has_panel_overlay = TRUE
 	var/obj/item/reagent_containers/beaker = null
-	var/macrotier = 1
 	//dispensable_reagents is copypasted in plumbing synthesizers. Please update accordingly. (I didn't make it global because that would limit custom chem dispensers)
 	var/list/dispensable_reagents = list(
 		/datum/reagent/hydrogen,
@@ -397,8 +396,6 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if(M.rating > macrotier)
-			macrotier = M.rating
 		if(M.rating > 1)
 			dispensable_reagents |= upgrade_reagents
 		if(M.rating > 2)
