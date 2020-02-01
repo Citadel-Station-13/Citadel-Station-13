@@ -106,4 +106,5 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
 	build_path = /obj/item/rcd_ammo
-	category = list("initial","Construction")
+	category = list("initial","Construction","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
