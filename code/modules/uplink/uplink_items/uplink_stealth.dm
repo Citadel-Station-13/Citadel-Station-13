@@ -117,7 +117,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/suppressor
 	cost = 1
 	surplus = 10
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
