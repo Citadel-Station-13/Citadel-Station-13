@@ -4,18 +4,18 @@
 	name = "1.95x129mm bullet casing"
 	desc = "A 1.95x129mm bullet casing."
 	icon_state = "762-casing"
-	caliber = "mm195129"
+	caliber = "mm55645"
 	projectile_type = /obj/item/projectile/bullet/mm195x129
 
 /obj/item/ammo_casing/mm195x129/ap
 	name = "1.95x129mm armor-piercing bullet casing"
-	desc = "A 1.95x129mm bullet casing designed with a hardened-tipped core to help penetrate armored targets."
-	projectile_type = /obj/item/projectile/bullet/mm195x129_ap
+	desc = "A 5.56×45mm bullet casing designed with a hardened-tipped core to help penetrate armored targets."
+	projectile_type = /obj/item/projectile/bullet/mm195x129/ap
 
 /obj/item/ammo_casing/mm195x129/hollow
 	name = "1.95x129mm hollow-point bullet casing"
 	desc = "A 1.95x129mm bullet casing designed to cause more damage to unarmored targets."
-	projectile_type = /obj/item/projectile/bullet/mm195x129_hp
+	projectile_type = /obj/item/projectile/bullet/mm195x129/hp
 
 /obj/item/ammo_casing/mm195x129/incen
 	name = "1.95x129mm incendiary bullet casing"

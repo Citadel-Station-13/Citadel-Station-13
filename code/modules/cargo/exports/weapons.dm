@@ -309,7 +309,7 @@
 /datum/export/weapon/smg_mag
 	cost = 45
 	unit_name = "smg magazine"
-	export_types = list(/obj/item/ammo_box/magazine/smgm45, /obj/item/ammo_box/magazine/m556)
+	export_types = list(/obj/item/ammo_box/magazine/smgm10mm, /obj/item/ammo_box/magazine/m556)
 
 /datum/export/weapon/l6sawammo
 	cost = 60
