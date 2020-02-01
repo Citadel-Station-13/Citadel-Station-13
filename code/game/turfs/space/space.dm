@@ -89,7 +89,8 @@
 	return TRUE
 
 /turf/open/space/handle_slip()
-	return
+	if(lube & FLYING_DOESNT_HELP)
+		return ..()
 
 /turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()

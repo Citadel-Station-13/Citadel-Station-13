@@ -200,9 +200,11 @@
 #define NO_SLIP_WHEN_WALKING	(1<<0)
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
-#define SLIDE_ICE				(1<<3)
-#define SLIP_WHEN_CRAWLING		(1<<4) //clown planet ruin
-#define SLIP_WHEN_JOGGING		(1<<5) //slips prevented by walking are also dodged if the mob is not sprinting or fatigued... unless this flag is on.
+#define FLYING_DOESNT_HELP		(1<<3)
+#define SLIDE_ICE				(1<<4)
+#define SLIP_WHEN_CRAWLING		(1<<5) //clown planet ruin amongst others
+#define SLIP_WHEN_JOGGING		(1<<6) //slips prevented by walking are also dodged if the mob is nor sprinting or fatigued... unless this flag is on.
+
 
 #define MAX_CHICKENS 50
 
