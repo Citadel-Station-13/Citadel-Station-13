@@ -24,6 +24,7 @@
 	var/list/modkits = list()
 
 	var/recharge_timerid
+	var/yeetdelay = 0 //exploit fix
 
 /obj/item/gun/energy/kinetic_accelerator/premiumka
 	name = "premium accelerator"
@@ -85,9 +86,10 @@
 		M.uninstall(src, FALSE)
 
 /obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/borg/upgrade/modkit))
+	if(istype(I, /obj/item/borg/upgrade/modkit) && yeetdelay < world.time)
 		var/obj/item/borg/upgrade/modkit/MK = I
 		MK.install(src, user)
+		yeetdelay = world.time + 20
 	else
 		..()
 
@@ -283,7 +285,8 @@
 	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/gun/energy/kinetic_accelerator))
+	var/obj/item/gun/energy/kinetic_accelerator/K = A
+	if(istype(K) && K.yeetdelay < world.time)
 		install(A, user)
 	else
 		..()
@@ -296,7 +299,7 @@
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
-	if(src in KA.modkits) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
+	if(src in KA.modkits || KA.yeetdelay < world.time) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
 		return
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
@@ -382,7 +385,7 @@
 		var/old = KA.overheat_time
 		KA.overheat_time = max(0, KA.overheat_time - modifier)
 		decreased = old - KA.overheat_time
-		
+
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
 	KA.overheat_time += decreased
