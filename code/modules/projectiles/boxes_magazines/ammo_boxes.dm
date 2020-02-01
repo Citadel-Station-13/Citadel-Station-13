@@ -11,6 +11,10 @@
 	name = "speed loader (.357 AP)"
 	ammo_type = /obj/item/ammo_casing/a357/ap
 
+/obj/item/ammo_box/a357/rubber
+	name = "speed loader (.357 rubber)"
+	ammo_type = /obj/item/ammo_casing/a357rubber
+
 /obj/item/ammo_box/c38
 	name = "speed loader (.38 rubber)"
 	desc = "Designed to quickly reload revolvers."

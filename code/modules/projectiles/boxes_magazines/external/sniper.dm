@@ -2,7 +2,7 @@
 	name = "sniper rounds (.50)"
 	icon_state = ".50mag"
 	ammo_type = /obj/item/ammo_casing/p50
-	max_ammo = 6
+	max_ammo = 5
 	caliber = ".50"
 
 /obj/item/ammo_box/magazine/sniper_rounds/update_icon()

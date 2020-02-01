@@ -214,6 +214,14 @@
 						"Slick" = "cshotgun_slick"
 						)
 
+/obj/item/gun/ballistic/shotgun/automatic/combat/traitor
+	name = "compact combat shotgun"
+	desc = "A lightweight semi automatic shotgun with tactical furniture and a six-shell capacity. For close encounters."
+	icon_state = "cshotgunc"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
+	w_class = WEIGHT_CLASS_NORMAL //Fundamental Difference
+	recoil = 1
+
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "warden's combat shotgun"
 	desc = "A modified version of the semi automatic combat shotgun with a collapsible stock. For close encounters."
