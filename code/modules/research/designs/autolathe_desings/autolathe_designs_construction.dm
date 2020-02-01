@@ -103,7 +103,7 @@
 /datum/design/rcd_ammo
 	name = "Compressed Matter Cartridge"
 	id = "rcd_ammo"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
 	build_path = /obj/item/rcd_ammo
 	category = list("initial","Construction","Tool Designs")
