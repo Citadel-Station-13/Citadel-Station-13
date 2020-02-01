@@ -28,7 +28,7 @@
 	return TRUE
 
 /datum/action/bloodsucker/targeted/lunge/CheckValidTarget(atom/A)
-	return isliving(A)
+	return iscarbon(A)
 
 /datum/action/bloodsucker/targeted/lunge/CheckCanTarget(atom/A, display_error)
 	// Check: Self
@@ -45,8 +45,6 @@
 	// Check: Turf
 	var/mob/living/L = A
 	if(!isturf(L.loc))
-		return FALSE
-	if(!ishuman(target))
 		return FALSE
 	return TRUE
 

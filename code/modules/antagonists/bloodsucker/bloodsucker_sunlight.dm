@@ -81,7 +81,7 @@
 				  	  "<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>")
 		amDay = FALSE
 		day_end()   // Remove VANISHING ACT power from all vamps who have it! Clear Warnings (sunlight, locker protection)
-		nightime_duration += 200 //Each day makes the night last 2 or so minutes longer.
+		nightime_duration += 100 //Each day makes the night a minute longer.
 		message_admins("BLOODSUCKER NOTICE: Daylight Ended. Resetting to Night (Lasts for [nightime_duration / 60] minutes.)")
 
 
