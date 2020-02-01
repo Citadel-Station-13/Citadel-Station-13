@@ -86,10 +86,9 @@
 		M.uninstall(src, FALSE)
 
 /obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/borg/upgrade/modkit) && yeetdelay < world.time)
+	if(istype(I, /obj/item/borg/upgrade/modkit))
 		var/obj/item/borg/upgrade/modkit/MK = I
 		MK.install(src, user)
-		yeetdelay = world.time + 20
 	else
 		..()
 
@@ -285,8 +284,7 @@
 	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
-	var/obj/item/gun/energy/kinetic_accelerator/K = A
-	if(istype(K) && K.yeetdelay < world.time)
+	if(istype(A, /obj/item/gun/energy/kinetic_accelerator))
 		install(A, user)
 	else
 		..()
@@ -299,7 +297,7 @@
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
-	if(src in KA.modkits || KA.yeetdelay < world.time) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
+	if(src in KA.modkits && KA.yeetdelay < world.time) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
 		return
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
@@ -324,6 +322,7 @@
 			to_chat(user, "<span class='notice'>You install the modkit.</span>")
 			playsound(loc, 'sound/items/screwdriver.ogg', 100, 1)
 			KA.modkits += src
+			KA.yeetdelay = world.time + 20
 		else
 			to_chat(user, "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>")
 	else
