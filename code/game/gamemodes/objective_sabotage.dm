@@ -84,7 +84,7 @@
 	sabotage_type = "integrity"
 
 /datum/sabotage_objective/station_integrity/check_conditions()
-	return 100/(100-max(SSticker.station_integrity,80))
+	return 5-(max(SSticker.station_integrity*4,320)/80)
 
 /datum/sabotage_objective/cloner
 	name = "Destroy all Nanotrasen cloning machines."
