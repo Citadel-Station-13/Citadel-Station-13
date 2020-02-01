@@ -51,7 +51,8 @@
 	return 1
 
 /datum/martial_art/boxing/teach(mob/living/carbon/human/H, make_temporary = TRUE)
-	if(..())
+	. = ..()
+	if(.)
 		if(H.pulling && ismob(H.pulling))
 			H.stop_pulling()
 
