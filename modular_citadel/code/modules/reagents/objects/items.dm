@@ -107,7 +107,7 @@
 		if(-INFINITY to 1)
 			color = "#c6040c"
 	desc += " The paper looks to be around a pH of [round(cont.reagents.pH, 1)]"
-	name = "used " + name
+	name = "used [name]"
 	used = TRUE
 
 /obj/item/fermichem/pHmeter
