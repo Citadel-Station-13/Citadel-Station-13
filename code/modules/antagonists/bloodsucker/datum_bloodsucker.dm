@@ -372,7 +372,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	protege_objective.generate_objective()
 	add_objective(protege_objective)
 
-	if (rand(0,1) == 0)
+	if (prob(50))
 		// Heart Thief Objective
 		var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
 		heartthief_objective.owner = owner

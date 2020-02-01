@@ -46,7 +46,7 @@
 				else
 					report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
-				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text]"
+				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text]</span>"
 			objective_count++
 		if(win)
 			report += "<span class='greentext'>The [name] was successful!</span>"

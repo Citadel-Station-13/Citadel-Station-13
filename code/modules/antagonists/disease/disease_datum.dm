@@ -54,7 +54,7 @@
 			else
 				result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
-			result += "<B>Objective #[count]</B>: [objective.explanation_text]"
+			result += "<B>Objective #[count]</B>: [objective.explanation_text]</span>"
 		count++
 
 	result += objectives_text

@@ -398,7 +398,7 @@
 				else
 					objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
-				objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text]"
+				objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text]</span>"
 			count++
 
 	if(uplink_true)
