@@ -526,6 +526,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if(!account_join_date)
 			account_join_date = "Error"
 			account_age = -1
+		else if(ckey in GLOB.bunker_passthrough)
+			GLOB.bunker_passthrough -= ckey
 	qdel(query_client_in_db)
 	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())

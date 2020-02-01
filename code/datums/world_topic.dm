@@ -187,3 +187,6 @@
 
 	if(!key_valid)
 		GLOB.topic_status_cache = .
+
+/datum/world_topic/panic_bunker
+	
