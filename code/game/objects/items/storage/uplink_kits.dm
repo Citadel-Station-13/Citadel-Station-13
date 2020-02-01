@@ -491,6 +491,6 @@
 	new /obj/item/storage/box/lethalshot(src)
 	new /obj/item/storage/box/lethalslugs(src)
 	new /obj/item/storage/box/lethalslugs(src)
-	new /obj/item/storage/box/rubber(src)
-	new /obj/item/storage/box/rubber(src)
+	new /obj/item/storage/box/rubbershot(src)
+	new /obj/item/storage/box/rubbershot(src)
 	new /obj/item/storage/box/lasershot(src)
