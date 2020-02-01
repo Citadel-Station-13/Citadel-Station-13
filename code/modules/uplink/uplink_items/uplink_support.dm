@@ -7,6 +7,15 @@
 
 //Support and Mechs
 
+/datum/uplink_item/support/reinforcement
+	name = "Reinforcements"
+	desc = "Call in an additional operative. They won't be equipped with any telecrystals, so it is up to you to arm them."
+	item = /obj/item/antag_spawner/nuke_ops
+	cost = 25
+	refundable = TRUE
+	include_modes = list(/datum/game_mode/nuclear)
+	restricted = TRUE
+
 /datum/uplink_item/support/clown_reinforcement
 	name = "Clown Reinforcements"
 	desc = "Call in an additional clown to share the fun, equipped with full starting gear, but no telecrystals."
@@ -15,20 +24,10 @@
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
 
-/datum/uplink_item/support/reinforcement
-	name = "Reinforcements"
-	desc = "Call in an additional team member. They won't come with any gear, so you'll have to save some telecrystals \
-			to arm them as well."
-	item = /obj/item/antag_spawner/nuke_ops
-	cost = 25
-	refundable = TRUE
-	include_modes = list(/datum/game_mode/nuclear)
-	restricted = TRUE
-
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
-	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
-			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
+	desc = "A cyborg designed and programmed for the systematic extermination of non-Syndicate personnel. \
+			Comes equipped with an ammo printing machine gun, grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	refundable = TRUE
 	cost = 65
@@ -74,3 +73,12 @@
 			and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, an antiprojectile armor booster and a Tesla energy array."
 	item = /obj/mecha/combat/marauder/mauler/loaded
 	cost = 140
+
+/datum/uplink_item/support/assault_pod
+	name = "Assault Pod Targeting Device"
+	desc = "Use this to select the landing zone of your assault pod."
+	item = /obj/item/assault_pod
+	cost = 30
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	restricted = TRUE
