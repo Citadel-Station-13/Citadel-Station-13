@@ -930,6 +930,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/nuclear_equipment,
+/obj/effect/landmark/start/nuclear_equipment,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "cf" = (
