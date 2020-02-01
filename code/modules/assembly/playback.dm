@@ -25,7 +25,7 @@
 	listening = FALSE
 	languages = message_language
 	say("The recorded message is '[recorded]'.", language = message_language)
-	next_activate = max(round(length(recorded) * 0.5), 3 SECONDS)
+	activate_cooldown = max(round(length(recorded) * 0.5), 3 SECONDS)
 
 /obj/item/assembly/playback/activate()
 	. = ..()
