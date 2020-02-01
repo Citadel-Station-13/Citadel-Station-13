@@ -716,14 +716,13 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "mN" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/mine/production)
 "nm" = (
 /obj/effect/turf_decal/tile/red{
@@ -1301,6 +1300,16 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/kinetic_accelerator,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "wj" = (
@@ -1569,11 +1578,10 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Bc" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/mine/production)
 "Be" = (
 /obj/machinery/light/small{
@@ -2111,6 +2119,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"JI" = (
+/turf/closed/wall/r_wall,
+/area/mine/production)
 "JJ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -2296,11 +2307,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Lc" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/mine/production)
 "Le" = (
 /obj/structure/closet/crate/internals,
@@ -2380,6 +2390,10 @@
 	},
 /obj/structure/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/highsecurity{
+	name = "Miner's Side, Shitters not allowed";
+	req_access_txt = "48"
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
@@ -3008,14 +3022,13 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "Vo" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/mine/production)
 "Vs" = (
 /obj/effect/turf_decal/tile/purple,
@@ -6887,10 +6900,10 @@ vJ
 JW
 bg
 VP
-Cd
-Cd
+JI
+JI
 Bc
-Cd
+JI
 Bc
 es
 XN
@@ -6944,7 +6957,7 @@ Ex
 xv
 bg
 mI
-Cd
+JI
 OI
 sz
 gk
@@ -7000,8 +7013,8 @@ CV
 al
 lj
 bg
-Cd
-Cd
+JI
+JI
 mw
 es
 es
