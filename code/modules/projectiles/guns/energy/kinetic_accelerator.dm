@@ -24,7 +24,6 @@
 	var/list/modkits = list()
 
 	var/recharge_timerid
-	var/yeetdelay = 0 //exploit fix
 
 /obj/item/gun/energy/kinetic_accelerator/premiumka
 	name = "premium accelerator"
@@ -297,8 +296,8 @@
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
-	if(src in KA.modkits && KA.yeetdelay < world.time) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
-		return
+	if(src in KA.modkits) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
+		return FALSE
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
 			to_chat(user, "<span class='notice'>The modkit you're trying to install is only rated for minebot use.</span>")
@@ -318,11 +317,10 @@
 	if(KA.get_remaining_mod_capacity() >= cost)
 		if(.)
 			if(!user.transferItemToLoc(src, KA))
-				return
+				return FALSE
 			to_chat(user, "<span class='notice'>You install the modkit.</span>")
 			playsound(loc, 'sound/items/screwdriver.ogg', 100, 1)
 			KA.modkits += src
-			KA.yeetdelay = world.time + 20
 		else
 			to_chat(user, "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>")
 	else
