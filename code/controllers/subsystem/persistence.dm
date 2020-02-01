@@ -266,6 +266,10 @@ SUBSYSTEM_DEF(persistence)
 	var/bunker_path = file("data/bunker_passthrough.json")
 	if(fexists(bunker_path))
 		GLOB.bunker_passthrough = json_decode(file2text(bunker_path))
+		var/round_id = GLOB.round_id
+		for(var/ckey in GLOB.bunker_passthrough)
+			if(round_id - GLOB.bunker_passthrough[ckey] > 30)
+				GLOB.bunker_passthrough -= ckey
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
