@@ -141,6 +141,12 @@
 	item = /obj/item/headsetupgrader
 	cost = 3
 
+/datum/uplink_item/device_tools/nodropgloves
+	name = "Electric Gloves"
+	desc = "Gloves that send electricity into your hands, stopping you from dropping anything you're holding. Can be toggled on and off."
+	item = /obj/item/clothing/gloves/nodrop
+	cost = 6
+
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \

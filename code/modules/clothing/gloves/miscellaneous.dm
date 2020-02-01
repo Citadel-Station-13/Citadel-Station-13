@@ -103,3 +103,10 @@
 
 /obj/item/clothing/gloves/rapid/hug/attack_self(mob/user)
 	return FALSE
+
+/obj/item/clothing/gloves/nodrop
+	name = "electric gloves"
+	desc = "Not the kind of electric gloves you might think of. These gloves send electricity into your hands, keeping you from dropping anything you might be holding or picking anything else up."
+	icon_state = "nodrop"
+	item_state = "blackgloves"
+	actions_types = list(/datum/action/item_action/electrify)

@@ -19,3 +19,10 @@
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("skubbed")
+
+/obj/item/offhand
+	name = "offhand"
+	desc = "An offhand."
+	w_class = WEIGHT_CLASS_HUGE
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "offhand"

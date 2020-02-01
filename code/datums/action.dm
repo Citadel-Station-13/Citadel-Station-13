@@ -544,6 +544,59 @@
 		cooldown = world.time
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
+/datum/action/item_action/electrify
+	name = "Electrify Gloves"
+	desc = "Stop anyone from taking what is yours. At least in your hands, anyway."
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	var/toggled = FALSE
+
+/datum/action/item_action/electrify/Trigger()
+	. = ..()
+	if(!.)
+		return FALSE
+	if (toggled)
+		REMOVE_TRAIT(target, TRAIT_NODROP, "elecgloves")
+		var/obj/item/I = owner.get_active_held_item()
+		var/obj/item/J = owner.get_inactive_held_item()
+		if (I)
+			var/obj/item/offhand/O = I
+			if (istype(O))
+				qdel(O)
+			else
+				REMOVE_TRAIT(I, TRAIT_NODROP, "elecgloves")
+		if (J)
+			var/obj/item/offhand/O = J
+			if (istype(O))
+				qdel(O)
+			else
+				REMOVE_TRAIT(J, TRAIT_NODROP, "elecgloves")
+		toggled = !toggled
+		target.icon_state = initial(target.icon_state)
+		to_chat(owner,"<span class='notice'>You deactivate the electricity flowing through the gloves.</span>")
+		update_icon()
+		return
+	ADD_TRAIT(target, TRAIT_NODROP, "elecgloves")
+	var/obj/item/I = owner.get_active_held_item()
+	if (I)
+		ADD_TRAIT(I, TRAIT_NODROP, "elecgloves")
+	else
+		var/obj/item/offhand/O = new(owner)
+		O.name = "electrified offhand"
+		ADD_TRAIT(O, TRAIT_NODROP, "elecgloves")
+		owner.put_in_active_hand(O)
+	var/obj/item/J = owner.get_inactive_held_item()
+	if (J)
+		ADD_TRAIT(J, TRAIT_NODROP, "elecgloves")
+	else
+		var/obj/item/offhand/O = new(owner)
+		O.name = "electrified offhand"
+		ADD_TRAIT(O, TRAIT_NODROP, "elecgloves")
+		owner.put_in_inactive_hand(O)
+	toggled = !toggled
+	target.icon_state = "[initial(target.icon_state)]1"
+	to_chat(owner,"<span class='warning'>You activate the gloves, locking your hands in their current position!</span>")
+	update_icon()
+
 /datum/action/item_action/flash
 	name = "Flash"
 
