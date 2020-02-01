@@ -88,7 +88,7 @@
 /turf/open/space/proc/CanBuildHere()
 	return TRUE
 
-/turf/open/space/handle_slip()
+/turf/open/space/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	if(lube & FLYING_DOESNT_HELP)
 		return ..()
 
