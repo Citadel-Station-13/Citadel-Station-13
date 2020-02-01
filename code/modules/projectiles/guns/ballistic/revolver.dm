@@ -305,10 +305,10 @@
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 /obj/item/gun/ballistic/revolver/doublebarrel/sawn
-	name = "sawn-off double-barrel shotgun"
-	desc = "A sawn off classic"
+	name = "sawn-off double-barreled shotgun"
+	desc = "Omar's coming!"
 	icon_state = "dshotgun"
-	item_state = "shotgun"
+	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT

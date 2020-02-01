@@ -70,7 +70,7 @@
 	damage = 45
 	armour_penetration = 45
 
-/obj/item/projectile/bullet/a357rubber
+/obj/item/projectile/bullet/a357/rubber
 	name = ".357 rubber bullet"
 	damage = 18
 	stamina = 48 //It's a det rubber bullet but slightly more brute.

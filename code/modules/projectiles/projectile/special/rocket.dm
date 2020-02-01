@@ -31,7 +31,7 @@
 	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/a84mm_he
-	name ="HE missile"
+	name ="\improper HE missile"
 	desc = "A powerful high-explosive rocket."
 	icon_state = "missile"
 	damage = 40

@@ -9,14 +9,12 @@
 /obj/item/ammo_casing/a357/ap
 	name = ".357 armor-piercing bullet casing"
 	desc = "A .357 armor-piercing bullet casing."
-	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/a357/ap
 
-/obj/item/ammo_casing/a357rubber
+/obj/item/ammo_casing/a357/rubber
 	name = ".357 rubber bullet casing"
 	desc = "A .357 rubber bullet casing."
-	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet/a357rubber
+	projectile_type = /obj/item/projectile/bullet/a357/rubber
 
 // 7.62x38mmR (Nagant Revolver)
 

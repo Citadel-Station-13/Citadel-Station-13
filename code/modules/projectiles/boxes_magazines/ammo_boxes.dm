@@ -13,7 +13,7 @@
 
 /obj/item/ammo_box/a357/rubber
 	name = "speed loader (.357 rubber)"
-	ammo_type = /obj/item/ammo_casing/a357rubber
+	ammo_type = /obj/item/ammo_casing/a357/rubber
 
 /obj/item/ammo_box/c38
 	name = "speed loader (.38 rubber)"
