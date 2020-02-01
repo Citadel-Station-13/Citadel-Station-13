@@ -573,7 +573,6 @@
 		toggled = !toggled
 		target.icon_state = initial(target.icon_state)
 		to_chat(owner,"<span class='notice'>You deactivate the electricity flowing through the gloves.</span>")
-		update_icon()
 		return
 	ADD_TRAIT(target, TRAIT_NODROP, "elecgloves")
 	var/obj/item/I = owner.get_active_held_item()
@@ -595,7 +594,6 @@
 	toggled = !toggled
 	target.icon_state = "[initial(target.icon_state)]1"
 	to_chat(owner,"<span class='warning'>You activate the gloves, locking your hands in their current position!</span>")
-	update_icon()
 
 /datum/action/item_action/flash
 	name = "Flash"
