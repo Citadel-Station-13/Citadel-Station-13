@@ -347,7 +347,6 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-
 	clean_blood()
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)

@@ -1062,7 +1062,7 @@
 	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
 		return
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
-		C.blood_volume += 0.01 //we'll have synthetics from medbay.
+		C.blood_volume += 0.25
 	..()
 
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
