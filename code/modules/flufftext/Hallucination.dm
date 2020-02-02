@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/items = 4,
 	/datum/hallucination/fire = 3,
 	/datum/hallucination/self_delusion = 2,
+	/datum/hallucination/naked = 2,
 	/datum/hallucination/delusion = 2,
 	/datum/hallucination/shock = 1,
 	/datum/hallucination/death = 1,
@@ -1318,3 +1319,33 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	else
 		to_chat(C,"<span class='userdanger'>[G] violently grabs you!</span>")
 	qdel(src)
+
+/datum/hallucination/naked
+	var/image/image
+
+/datum/hallucination/naked/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	..()
+	if (C.client && C.client.prefs)
+		var/datum/preferences/prefs = C.client.prefs
+		var/mob/living/carbon/human/dummy/M = generate_or_wait_for_human_dummy("hallucination")
+		prefs.copy_to(M)
+		var/icon/combined = new
+		for (var/d in GLOB.cardinals)
+			M.setDir(d)
+			COMPILE_OVERLAYS(M)
+			CHECK_TICK
+			var/icon/capture = getFlatIcon(M)
+			CHECK_TICK
+			combined.Insert(capture,"hallucination",dir=d)
+			CHECK_TICK
+		unset_busy_human_dummy("hallucination")
+		image = image(combined,C,"hallucination")
+		image.override = TRUE
+		target.client.images |= image
+		QDEL_IN(src, duration)
+
+/datum/hallucination/naked/Destroy()
+	if(target.client)
+		target.client.images.Remove(image)
+	return ..()
