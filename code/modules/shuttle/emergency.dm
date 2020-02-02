@@ -15,7 +15,7 @@
 	desc = "For shuttle control."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
-	obj_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE
 	var/auth_need = 3
 	var/list/authorized = list()
 	var/hijack_last_stage_increase = 0
