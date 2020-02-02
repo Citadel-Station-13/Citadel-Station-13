@@ -107,11 +107,9 @@
 		smash(hit_atom, throwingdatum?.thrower, TRUE)
 
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
-	if(!isGlass)
+	if(!isGlass && !istype(src, /obj/item/reagent_containers/food/drinks/bottle)) //I don't like this but I also don't want to rework drink container hierarchy
 		return
-	if(QDELING(src) || !target)		//Invalid loc
-		return
-	if(bartender_check(target) && ranged)
+	if(QDELING(src) || (ranged && !target))
 		return
 	var/obj/item/broken_bottle/B = new (loc)
 	B.icon_state = icon_state
@@ -126,11 +124,73 @@
 		B.transform = M
 		B.pixel_x = rand(-12, 12)
 		B.pixel_y = rand(-12, 12)
-	if(prob(33))
-		new/obj/item/shard(drop_location())
+	if(isGlass)
+		if(prob(33))
+			new/obj/item/shard(drop_location())
+	else
+		B.force = 0
+		B.throwforce = 0
+		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
 	playsound(src, "shatter", 70, 1)
 	transfer_fingerprints_to(B)
 	qdel(src)
+
+/obj/item/reagent_containers/food/drinks/MouseDrop(atom/over, atom/src_location, atom/over_location, src_control, over_control, params)
+	var/mob/user = usr
+	if (!istype(src_location))
+		return
+	if (!user || user.incapacitated())
+		return
+	// Attempted drink sliding
+	if (locate(/obj/structure/table) in src_location)
+		//Are we an expert slider?
+		var/datum/action/innate/A = get_action_of_type(user, /datum/action/innate/drink_fling)
+		if(A?.active)
+			if (!user.Adjacent(src))
+				return
+			var/distance = MANHATTAN_DISTANCE(over_location, src)
+			if (distance >= 8 || distance == 0) // More than a full screen to go, or trying to slide to the same tile
+				return ..()
+
+			// Geometrically checking if we're on a straight line.
+			var/vector/V = atoms2vector(src, over_location)
+			var/vector/V_norm = V.duplicate()
+			V_norm.normalize()
+			if (!V_norm.is_integer())
+				return ..() // Only a cardinal vector (north, south, east, west) can pass this test
+
+			// Checks if there's tables on the path.
+			var/turf/dest = get_translated_turf(V)
+			var/turf/temp_turf = src_location
+
+			do
+				temp_turf = temp_turf.get_translated_turf(V_norm)
+				if (!locate(/obj/structure/table) in temp_turf)
+					var/vector/V2 = atoms2vector(src, temp_turf)
+					vector_translate(V2, 0.1 SECONDS)
+					user.visible_message("<span class='warning'>\The [user] slides \the [src] down the table... and straight into the ground!</span>", "<span class='warning'>You slide \the [src] down the table, and straight into the ground!</span>")
+					smash(over_location, user, FALSE)
+					return
+			while (temp_turf != dest)
+
+			vector_translate(V, 0.1 SECONDS)
+			user.visible_message("<span class='notice'>\The [user] expertly slides \the [src] down the table.</span>", "<span class='notice'>You slide \the [src] down the table. What a pro.</span>")
+			return
+		else
+			if (!(locate(/obj/structure/table) in over_location))
+				return ..()
+			if (!user.Adjacent(src) || !src_location.Adjacent(over_location)) // Regular users can only do short slides.
+				return ..()
+			if (prob(10))
+				user.visible_message("<span class='warning'>\The [user] tries to slide \the [src] down the table, but fails miserably.</span>", "<span class='warning'>You <b>fail</b> to slide \the [src] down the table!</span>")
+				smash(over_location, user, FALSE)
+				return
+			user.visible_message("<span class='notice'>\The [user] slides \the [src] down the table.</span>", "<span class='notice'>You slide \the [src] down the table!</span>")
+			forceMove(over_location)
+			return
+	return ..()
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
@@ -290,8 +350,6 @@
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
-	if(bartender_check(target) && ranged)
-		return
 	var/obj/item/broken_bottle/B = new (loc)
 	B.icon_state = icon_state
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
