@@ -152,6 +152,7 @@
 
 /obj/machinery/power/apc/Initialize(mapload, ndir, building = FALSE)
 	. = ..()
+	tdir = ndir || dir
 	var/area/A = get_base_area(src)
 	if(!building)
 		has_electronics = APC_ELECTRONICS_SECURED
@@ -189,9 +190,6 @@
 	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
-	if (building)
-		setDir(ndir)
-	src.tdir = dir		// to fix Vars bug
 	setDir(SOUTH)
 
 	switch(tdir)
