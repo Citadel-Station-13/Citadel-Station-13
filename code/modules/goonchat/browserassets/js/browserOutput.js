@@ -228,7 +228,7 @@ function highlightTerms(el) {
 							console.log(newWord)
 					}
 					newText += newWord || words[w].replace("<", "&lt;");
-					newText += w >= words.length ? '' : ' ';
+					newText += w >= words.length - 1 ? '' : ' ';
 				}
 			} else { //Every other type of element
 				newText += outerHTML(el.childNodes[c]);
