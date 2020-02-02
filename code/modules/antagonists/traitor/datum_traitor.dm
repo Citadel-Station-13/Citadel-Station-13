@@ -391,14 +391,14 @@
 			if(objective.completable)
 				var/completion = objective.check_completion()
 				if(completion >= 1)
-					objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
 				else if(completion <= 0)
-					objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 					traitorwin = FALSE
 				else
-					objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
+					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
-				objectives_text += "<B>Objective #[count]</B>: [objective.explanation_text]"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text]"
 			count++
 
 	if(uplink_true)
