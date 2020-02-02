@@ -1,8 +1,9 @@
-/datum/gear/stethoscope
+/datum/gear/medicbriefcase
 	name = "Medical Briefcase"
 	category = SLOT_HANDS
 	path = /obj/item/storage/briefcase/medical
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
+	restricted_desc = "MD, CMO"
 
 /datum/gear/stethoscope
 	name = "Stethoscope"
@@ -28,5 +29,19 @@
 	name = "Purple Scrubs"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/rank/medical/purple
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
+	restricted_desc = "Medical"
+
+/datum/gear/nursehat
+	name = "Nurse Hat"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/nursehat
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
+	restricted_desc = "Medical"
+
+/datum/gear/nursesuit
+	name = "Nurse Suit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/rank/nursesuit
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
 	restricted_desc = "Medical"

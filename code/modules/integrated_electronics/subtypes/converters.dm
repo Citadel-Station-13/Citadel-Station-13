@@ -224,8 +224,8 @@
 
 	var/split = min(index+1, length(text))
 
-	var/before_text = copytext(text, 1, split)
-	var/after_text = copytext(text, split, 0)
+	var/before_text = copytext_char(text, 1, split)
+	var/after_text = copytext_char(text, split)
 
 	set_pin_data(IC_OUTPUT, 1, before_text)
 	set_pin_data(IC_OUTPUT, 2, after_text)
@@ -331,7 +331,7 @@
 	var/strin = get_pin_data(IC_INPUT, 1)
 	var/delimiter = get_pin_data(IC_INPUT, 2)
 	if(delimiter == null)
-		set_pin_data(IC_OUTPUT, 1, string2charlist(strin))
+		set_pin_data(IC_OUTPUT, 1, text2charlist(strin))
 	else
 		set_pin_data(IC_OUTPUT, 1, splittext(strin, delimiter))
 	push_data()

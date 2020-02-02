@@ -238,7 +238,7 @@
 	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
 	hidden = TRUE
 	cost = 12000
-	var/num_contained = 3 
+	var/num_contained = 3
 	contains = list(/obj/item/ammo_box/a357,
 					/obj/item/ammo_box/a357,
 					/obj/item/ammo_box/a357,
@@ -267,6 +267,13 @@
 					/obj/item/storage/fancy/candle_box,
 					/obj/item/storage/box/matches)
 	crate_name = "candle crate"
+
+/datum/supply_pack/misc/diamondring
+	name = "Diamond Ring"
+	desc = "Show them your love is like a diamond: unbreakable and forever lasting. Shipped straight from child slave cartels in the space african mines."
+	cost = 10000
+	contains = list(/obj/item/storage/fancy/ringbox/diamond)
+	crate_name = "diamond ring crate"
 
 /datum/supply_pack/misc/exoticfootwear
 	name = "Exotic Footwear Crate"
@@ -302,6 +309,16 @@
 					)
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
+
+/datum/supply_pack/misc/jewelry
+	name = "Jewelry Crate"
+	desc = "Bling out with this crate of jewelry. Includes gold necklace and a set of two rings."
+	cost = 5000
+	contains = list(/obj/item/clothing/neck/necklace/dope,
+					/obj/item/storage/fancy/ringbox,
+					/obj/item/storage/fancy/ringbox/silver
+					)
+	crate_name = "jewelry crate"
 
 /datum/supply_pack/misc/jukebox
 	name = "Jukebox"
