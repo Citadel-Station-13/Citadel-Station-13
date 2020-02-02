@@ -1,6 +1,5 @@
-
-##Citadel Station 13 <BR>
-Based and maintained from /tg/station.<BR>
+## Citadel Station 13
+Based and maintained from /tg/station.
 
 [![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/pretty-risque.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](http://forthebadge.com)
 
@@ -10,18 +9,19 @@ Based and maintained from /tg/station.<BR>
 
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Average time to resolve an issue")
 
-**Upstream Information** <BR>
-**Website:** http://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/tgstation <BR>
-**Wiki** http://tgstation13.org/wiki/Main_Page <BR>
-**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
-
-**Citadel Station Information** <BR>
-**Forums:** http://citadel-station.net/forum/ <BR>
-**Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8 <BR>
-**Code:** https://github.com/Citadel-Station-13/Citadel-Station-13 <BR>
-**Discord:**  [Here](https://discord.gg/E6SQuhz). <BR>
-
+**Upstream Information**  
+**Website:** https://tgstation13.org  
+**Code:** https://github.com/tgstation/tgstation  
+**Wiki** https://tgstation13.org/wiki/Main_Page  
+**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).  
+  
+**Citadel Station Information**  
+**Website:** http://citadel-station.net  
+**Forums:** http://citadel-station.net/forum  
+**Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8  
+**Code:** https://github.com/Citadel-Station-13/Citadel-Station-13  
+**Discord:**  [Here](https://discord.gg/E6SQuhz)  
+  
 ## DOWNLOADING
 
 There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/Downloading_the_source_code

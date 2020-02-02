@@ -229,7 +229,7 @@
 			UnregisterSignal(mastermind, COMSIG_PRE_MIND_TRANSFER)
 			mastermind = null
 	if(cleanup)
-		var/obj/effect/vr_clean_master/cleanbot = locate() in get_area(M)
+		var/obj/effect/vr_clean_master/cleanbot = locate() in get_base_area(M)
 		if(cleanbot)
 			LAZYOR(cleanbot.corpse_party, M)
 		qdel(src)

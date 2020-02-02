@@ -39,7 +39,7 @@ WALK_DELAY 4
 ## Entries completely override all subtypes. Later entries have precedence over earlier entries.
 ## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and
 ## /mob/living/carbon/human on the last entry, the last entry will override the first.
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
+MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 1
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
@@ -591,6 +591,10 @@ BOX_RANDOM_ENGINE Box Singulo,3
 BOX_RANDOM_ENGINE Box SM 1x3,1
 BOX_RANDOM_ENGINE Box SM 5x5,1
 BOX_RANDOM_ENGINE Box SM 3x,0
+BOX_RANDOM_ENGINE Box TEG,3
+BOX_RANDOM_ENGINE Box Empty,0
+BOX_RANDOM_ENGINE Box Antimatter,1
+BOX_RANDOM_ENGINE Box P.A.C.M.A.N,1
 
 ## Whether or not there's a mode tier list vote after the secret/extended vote.
 MODETIER_VOTING

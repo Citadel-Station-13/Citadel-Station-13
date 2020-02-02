@@ -74,7 +74,7 @@
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
@@ -101,7 +101,7 @@
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	name = "Tae-clown-do Shoes"
@@ -117,7 +117,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/suppressor
 	cost = 1
 	surplus = 10
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"

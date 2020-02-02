@@ -461,6 +461,8 @@ There are several things that need to be remembered:
 		var/alt_icon = M.alternate_worn_icon || 'icons/mob/mask.dmi'
 		var/muzzled = FALSE
 		var/variation_flag = NONE
+		if(head && (head.flags_inv & HIDEMASK))
+			return
 		if(("mam_snouts" in dna.species.default_features) && dna.features["mam_snouts"] != "None")
 			muzzled = TRUE
 		if(!muzzled && ("snout" in dna.species.default_features) && dna.features["snout"] != "None")

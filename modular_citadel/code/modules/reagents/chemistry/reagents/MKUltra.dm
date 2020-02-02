@@ -333,6 +333,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	..()
 
 /datum/reagent/fermi/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
+	if(Lover.client?.prefs.cit_toggles & NEVER_HYPNO)
+		return // doesn't even give a message, it's just ignored
 	if(Lover.has_status_effect(STATUS_EFFECT_INLOVE))
 		to_chat(Lover, "<span class='warning'>You are already fully devoted to someone else!</span>")
 		return
