@@ -126,6 +126,7 @@
 	 		The illegal modifications bring this weapon up to par with the classic energy sword, and also gives it the energy sword's distinctive sounds."
 	item = /obj/item/melee/transforming/energy/sword/cx/traitor
 	cost = 8
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
