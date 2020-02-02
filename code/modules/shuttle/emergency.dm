@@ -524,7 +524,7 @@
 	anchored = TRUE
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
-	integrity_failure = 100
+	integrity_failure = 0.2
 	component_type = /datum/component/storage/concrete/emergency
 
 /obj/item/storage/pod/PopulateContents()

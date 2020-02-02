@@ -85,12 +85,12 @@
 	return BULLET_ACT_HIT
 */
 
-datum/design/sizeray
+/datum/design/sizeray
 	name = "Size Ray"
 	desc = "Abuse bluespace tech to alter living matter scale."
 	id = "sizeray"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_DIAMOND = 2500, MAT_URANIUM = 2500, MAT_TITANIUM = 1000)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/diamond = 2500, /datum/material/uranium = 2500, /datum/material/titanium = 1000)
 	build_path = /obj/item/gun/energy/laser/sizeray
 	category = list("Weapons")
 
