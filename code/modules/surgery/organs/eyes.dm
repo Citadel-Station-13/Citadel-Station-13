@@ -255,6 +255,8 @@
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
+	if(!isnum(range))
+		return
 
 	set_distance(CLAMP(range, 0, max_light_beam_distance))
 	assume_rgb(C)
