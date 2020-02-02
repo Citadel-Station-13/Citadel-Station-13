@@ -32,7 +32,7 @@
 	if(NOBLOOD in dna.species.species_traits)
 		bleed_rate = 0
 		return
-	
+
 	if(bleed_rate < 0)
 		bleed_rate = 0
 
