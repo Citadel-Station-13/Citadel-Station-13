@@ -644,7 +644,7 @@
 	id = "exp_tools"
 	display_name = "Experimental Tools"
 	description = "Highly advanced construction tools."
-	design_ids = list("exwelder", "jawsoflife", "handdrill")
+	design_ids = list("exwelder", "jawsoflife", "handdrill", "holosigncombifan")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
 	export_price = 5000
