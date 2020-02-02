@@ -65,7 +65,7 @@
 	blood_state = null
 	bloodiness = null
 
-/obj/effect/decal/cleanable/semen/Initialize(mapload)
+/obj/effect/decal/cleanable/femcum/Initialize(mapload)
 	. = ..()
 	dir = GLOB.cardinals
 	add_blood_DNA(list("Non-human DNA" = "A+"))
