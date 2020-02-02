@@ -374,7 +374,7 @@
 		output += "<B>Objectives:</B>"
 		var/obj_count = 1
 		for(var/datum/objective/objective in all_objectives)
-			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]</span>"
+			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
 			var/list/datum/mind/other_owners = objective.get_owners() - src
 			if(other_owners.len)
 				output += "<ul>"
@@ -523,8 +523,8 @@
 			to_chat(usr,"Invalid objective.")
 			return
 		qdel(objective) //TODO: Needs cleaning objective destroys (whatever that means)
-		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]</span>")
-		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]</span>")
+		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
+		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
 
 	else if(href_list["obj_completed"])
 		var/datum/objective/objective
@@ -537,7 +537,7 @@
 			to_chat(usr,"Invalid objective.")
 			return
 		objective.completed = !objective.completed
-		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]</span>")
+		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
 
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])

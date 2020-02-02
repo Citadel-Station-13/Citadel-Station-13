@@ -566,7 +566,7 @@
 			else
 				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
-			objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text]</span>"
+			objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 	return objective_parts.Join("<br>")
 

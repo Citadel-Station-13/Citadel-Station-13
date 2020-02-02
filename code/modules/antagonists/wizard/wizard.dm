@@ -276,7 +276,7 @@
 			else
 				parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text]</span>"
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 
 	if(wizardwin)

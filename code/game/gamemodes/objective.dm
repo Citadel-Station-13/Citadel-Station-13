@@ -1157,6 +1157,3 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 
 /datum/objective/flavor/wizard
 	flavor_file = "strings/flavor_objectives/wizard.txt"
-
-/datum/objective/flavor/bloodsucker
-	flavor_file = "strings/flavor_objectives/bloodsucker.txt"
