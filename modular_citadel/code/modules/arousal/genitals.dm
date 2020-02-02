@@ -35,8 +35,6 @@
 /obj/item/organ/genital/Destroy()
 	if(linked_organ)
 		update_link(TRUE)//this should remove any other links it has
-	if(owner)
-		Remove(owner, TRUE)//this should remove references to it, so it can be GCd correctly
 	return ..()
 
 /obj/item/organ/genital/proc/set_aroused_state(new_state)
@@ -203,10 +201,9 @@
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 
 /obj/item/organ/genital/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	if(.)
-		update(TRUE)
-		UnregisterSignal(M, COMSIG_MOB_DEATH)
+	update(TRUE)
+	if(!QDELETED(owner))
+		UnregisterSignal(owner, COMSIG_MOB_DEATH)
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA

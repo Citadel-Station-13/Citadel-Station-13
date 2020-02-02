@@ -90,7 +90,7 @@
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
 			var/obj/item/organ/I = X
-			I.Remove(O, 1)
+			I.Remove(TRUE)
 
 		if(mind)
 			mind.transfer_to(O)
@@ -103,7 +103,7 @@
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
 			int_organs += I
-			I.Remove(src, 1)
+			I.Remove(TRUE)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
@@ -250,7 +250,7 @@
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
 			var/obj/item/organ/I = X
-			I.Remove(O, 1)
+			I.Remove(TRUE)
 
 		if(mind)
 			mind.transfer_to(O)
@@ -262,7 +262,7 @@
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
 			int_organs += I
-			I.Remove(src, 1)
+			I.Remove(TRUE)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
