@@ -257,10 +257,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	icon_state = "gold"
 	item_state = "toolbox_gold"
 	has_latches = FALSE
-	force = 16 // Less then a spear
-	throwforce = 14
-	throw_speed = 5
-	throw_range = 10
 
 /obj/item/storage/toolbox/gold_real/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
