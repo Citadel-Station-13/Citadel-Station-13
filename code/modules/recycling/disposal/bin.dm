@@ -142,7 +142,7 @@
 
 /obj/machinery/disposal/proc/can_stuff_mob_in(mob/living/target, mob/living/user, pushing = FALSE)
 	if(!pushing && !iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
-		if (iscyborg(user))
+		if(iscyborg(user))
 			var/mob/living/silicon/robot/borg = user
 			if (!borg.module || !borg.module.canDispose)
 				return
@@ -401,7 +401,6 @@
 	full_pressure = FALSE
 	pressure_charging = TRUE
 	update_icon()
-	ui.soft_update_fields()
 
 /obj/machinery/disposal/bin/update_icon()
 	cut_overlays()
