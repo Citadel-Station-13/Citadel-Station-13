@@ -848,7 +848,7 @@
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
-		"powerCellStatus" = cell ? cell.percent() : null,
+		"powerCellStatus" = (cell?.percent() || null),
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
 		"totalLoad" = DisplayPower(lastused_total),
