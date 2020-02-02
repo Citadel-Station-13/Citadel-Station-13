@@ -251,16 +251,12 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
 
-/obj/item/storage/toolbox/gold_real
+/obj/item/storage/toolbox/plastitanium/gold_real
 	name = "golden toolbox"
 	desc = "A larger then normal toolbox made of gold plated plastitanium."
 	icon_state = "gold"
 	item_state = "toolbox_gold"
 	has_latches = FALSE
-	force = 16 // Less then a spear
-	throwforce = 14
-	throw_speed = 5
-	throw_range = 10
 
 /obj/item/storage/toolbox/gold_real/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
