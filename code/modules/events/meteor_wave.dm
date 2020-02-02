@@ -74,7 +74,7 @@
 			directionstring = " towards starboard"
 		if(WEST)
 			directionstring = " towards port"
-	return "[wave_name == "catastrophic" ? "An entire asteroid field has" : wave_type == "threatening" ? "An abundance of meteors have" : "Meteors have"] been detected on a collision course with the station[directionstring]. Estimated time until impact: [round((startWhen * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
+	return "[wave_name == "catastrophic" ? "An entire asteroid field has" : wave_name == "threatening" ? "An abundance of meteors have" : "Meteors have"] been detected on a collision course with the station[directionstring]. Estimated time until impact: [round((startWhen * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))
