@@ -21,8 +21,8 @@
 	var/poweron_masquerade = FALSE
 	// STATS
 	var/vamplevel = 0
-	var/vamplevel_unspent = 0
-	var/regenRate = 0.3					// How many points of Brute do I heal per tick?
+	var/vamplevel_unspent = 1
+	var/regenRate = 0.4					// How many points of Brute do I heal per tick?
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
 	// OBJECTIVES
@@ -203,7 +203,7 @@
 		// Make Changes
 		H.physiology.brute_mod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
 		H.physiology.cold_mod = 0
-		H.physiology.stun_mod *= 0.6
+		H.physiology.stun_mod *= 0.5
 		H.physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
 		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
@@ -284,7 +284,7 @@
 	if(vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client || !isliving(owner.current))
 		return
 	var/mob/living/L = owner.current
-	level_bloodcost = maxBloodVolume * 0.3
+	level_bloodcost = maxBloodVolume * 0.2
 	//If the blood volume of the bloodsucker is lower than the cost to level up, return and inform the bloodsucker
 	
 	//TODO: Make this into a radial, or perhaps a tgui next UI
