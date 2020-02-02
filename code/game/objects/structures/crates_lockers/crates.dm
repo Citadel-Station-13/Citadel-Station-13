@@ -144,6 +144,9 @@
 	new /obj/item/reagent_containers/blood/OMinus(src)
 	new /obj/item/reagent_containers/blood/OPlus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/jellyblood(src)
+	new /obj/item/reagent_containers/blood/insect(src)
+	new /obj/item/reagent_containers/blood/synthetics(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 

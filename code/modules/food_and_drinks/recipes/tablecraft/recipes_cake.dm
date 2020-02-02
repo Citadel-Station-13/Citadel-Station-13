@@ -69,9 +69,9 @@
 /datum/crafting_recipe/food/birthdaycake
 	name = "Birthday cake"
 	reqs = list(
-		/datum/reagent/consumable/sugar = 10,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/caramel =2,
 		/obj/item/candle = 1,
-		/obj/item/reagent_containers/food/snacks/grown/vanillapod = 2,
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday
