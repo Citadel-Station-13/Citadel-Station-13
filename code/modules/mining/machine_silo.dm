@@ -197,7 +197,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/materials
 
 /datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list())
-	timestamp = STATION_TIME_TIMESTAMP("hh:mm:ss")
+	timestamp = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	machine_name = M.name
 	area_name = get_area_name(M, TRUE)
 	action = _action
