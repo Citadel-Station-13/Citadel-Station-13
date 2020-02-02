@@ -1343,7 +1343,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		image = image(combined,C,"hallucination")
 		image.override = TRUE
 		target.client.images |= image
-		QDEL_IN(src, duration)
+		QDEL_IN(src, 20 SECONDS)
 
 /datum/hallucination/naked/Destroy()
 	if(target.client)
