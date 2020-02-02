@@ -200,25 +200,25 @@
 	message_param = "blows a kiss to %t."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh
+/datum/emote/living/audio_emote
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/audio_emote/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent && (!C.mind || !C.mind.miming)
+
+/datum/emote/living/audio_emote/laugh
 	key = "laugh"
 	key_third_person = "laughs"
 	message = "laughs."
 	message_mime = "laughs silently!"
-	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
-	. = ..()
-	if(. && iscarbon(user))
-		var/mob/living/carbon/C = user
-		return !C.silent
-
-/datum/emote/living/laugh/run_emote(mob/user, params)
+/datum/emote/living/audio_emote/laugh/run_emote(mob/user, params)
 	. = ..()
 	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
 		var/mob/living/carbon/C = user
-		if(!C.mind || C.mind.miming)
-			return
 		if(iscatperson(C))	//we ask for is cat first because they're a subtype that tests true for ishumanbasic because HERESY
 			playsound(C, pick('sound/voice/catpeople/nyahaha1.ogg',
 			'sound/voice/catpeople/nyahaha2.ogg',
@@ -226,11 +226,26 @@
 			'sound/voice/catpeople/nyahehe.ogg'),
 			50, 1)
 			return
-		if(ishumanbasic(C))
+		else if(ismoth(C))
+			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
+		else if(ishumanbasic(C))
 			if(user.gender == FEMALE)
 				playsound(C, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
 				playsound(C, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+
+/datum/emote/living/audio_emote/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters."
+	message_mime = "chitters silently!"
+
+/datum/emote/living/audio_emote/chitter/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
+		var/mob/living/carbon/C = user
+		if(ismoth(C))
+			playsound(C, 'sound/voice/moth/mothchitter.ogg', 50, 1)
 
 /datum/emote/living/look
 	key = "look"

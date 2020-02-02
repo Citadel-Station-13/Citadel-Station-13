@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - tweak: "Forcefield projectors now fit on toolbelts."
-  - imageadd: "New sprites for ATMOS holofan and forcefield projectors!"

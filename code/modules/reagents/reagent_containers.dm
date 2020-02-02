@@ -1,6 +1,3 @@
-#define PH_WEAK 		(1 << 0)
-#define TEMP_WEAK 		(1 << 1)
-
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -9,14 +6,13 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
-	var/APTFT_altclick = TRUE //will the set amount_per_transfer_from_this proc be called on AltClick() ?
 	var/volume = 30
-	var/reagent_flags
+	var/reagent_flags //used to determine the reagent holder flags on add_initial_reagents()
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
-	var/beaker_weakness_bitflag = NONE//Bitflag!
+	var/container_flags = APTFT_ALTCLICK|APTFT_VERB //the container item flags
 	var/container_HP = 2
 	var/cached_icon
 
@@ -24,7 +20,7 @@
 	. = ..()
 	if(isnum(vol) && vol > 0)
 		volume = vol
-	if(length(possible_transfer_amounts))
+	if(container_flags & APTFT_VERB && length(possible_transfer_amounts))
 		verbs += /obj/item/reagent_containers/proc/set_APTFT
 	create_reagents(volume, reagent_flags)
 	if(spawned_disease)
@@ -37,12 +33,12 @@
 	. = ..()
 	if(length(possible_transfer_amounts) > 1)
 		. += "Currently transferring [amount_per_transfer_from_this] units per use."
-		if(APTFT_altclick && user.Adjacent(src))
+		if(container_flags & APTFT_ALTCLICK && user.Adjacent(src))
 			. += "<span class='notice'>Alt-click it to set its transfer amount.</span>"
 
 /obj/item/reagent_containers/AltClick(mob/user)
 	. = ..()
-	if(APTFT_altclick && length(possible_transfer_amounts) > 1 && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(container_flags & APTFT_ALTCLICK && length(possible_transfer_amounts) > 1 && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		set_APTFT()
 		return TRUE
 
@@ -157,7 +153,7 @@
 //melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
-	if(beaker_weakness_bitflag & TEMP_WEAK)
+	if(container_flags & TEMP_WEAK)
 		var/list/seen = viewers(5, get_turf(src))
 		var/iconhtml = icon2html(src, seen)
 		for(var/mob/H in seen)
@@ -172,13 +168,13 @@
 	temp_check()
 
 /obj/item/reagent_containers/proc/temp_check()
-	if(beaker_weakness_bitflag & TEMP_WEAK)
+	if(container_flags & TEMP_WEAK)
 		if(reagents.chem_temp >= 444)//assuming polypropylene
 			START_PROCESSING(SSobj, src)
 
 //melts glass beakers
 /obj/item/reagent_containers/proc/pH_check()
-	if(beaker_weakness_bitflag & PH_WEAK)
+	if(container_flags & PH_WEAK)
 		if((reagents.pH < 1.5) || (reagents.pH > 12.5))
 			START_PROCESSING(SSobj, src)
 	else if((reagents.pH < -3) || (reagents.pH > 17))
@@ -192,7 +188,7 @@
 		cached_icon = icon_state
 	var/damage
 	var/cause
-	if(beaker_weakness_bitflag & PH_WEAK)
+	if(container_flags & PH_WEAK)
 		if(reagents.pH < 2)
 			damage = (2 - reagents.pH)/20
 			cause = "from the extreme pH"
@@ -203,7 +199,7 @@
 			cause = "from the extreme pH"
 			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 
-	if(beaker_weakness_bitflag & TEMP_WEAK)
+	if(container_flags & TEMP_WEAK)
 		if(reagents.chem_temp >= 444)
 			if(damage)
 				damage += (reagents.chem_temp/444)/5
