@@ -31,6 +31,11 @@
 				return 1
 	return !density
 
+/obj/structure/closet/crate/crowbar_act(mob/user,obj/item/tool)
+	if (manifest)
+		tear_manifest(user)
+	return ..()
+
 /obj/structure/closet/crate/update_icon()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
