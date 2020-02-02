@@ -966,7 +966,6 @@
 	. = ..()
 	if (!. && !QDELETED(remote_control))
 		. = remote_control.can_interact(user)
-	message_admins("[area.hasSiliconAccessInArea(user)] & [hijacker == user && area.hasSiliconAccessInArea(user)]")
 	if (hijacker == user && area.hasSiliconAccessInArea(user))
 		return TRUE
 
