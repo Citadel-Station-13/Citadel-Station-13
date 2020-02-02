@@ -29,9 +29,12 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
 
-	if((NOBLOOD in dna.species.species_traits) || (bleed_rate < 0))
+	if(NOBLOOD in dna.species.species_traits)
 		bleed_rate = 0
 		return
+	
+	if(bleed_rate < 0)
+		bleed_rate = 0
 
 	if(HAS_TRAIT(src, TRAIT_NOMARROW)) //Bloodsuckers don't need to be here.
 		return
