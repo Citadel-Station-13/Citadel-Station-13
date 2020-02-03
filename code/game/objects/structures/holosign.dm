@@ -76,6 +76,7 @@
 	icon_state = "holo_fan"
 	density = FALSE
 	anchored = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
 	CanAtmosPass = ATMOS_PASS_NO
 	alpha = 150
 	init_vis_overlay = FALSE
@@ -103,6 +104,7 @@
 	max_integrity = 30
 	density = FALSE
 	anchored = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
 	alpha = 150
 	init_vis_overlay = FALSE
 	CanAtmosPass = ATMOS_PASS_NO
