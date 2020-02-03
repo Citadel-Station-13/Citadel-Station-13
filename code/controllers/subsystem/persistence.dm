@@ -266,7 +266,6 @@ SUBSYSTEM_DEF(persistence)
 	var/bunker_path = file("data/bunker_passthrough.json")
 	if(fexists(bunker_path))
 		GLOB.bunker_passthrough = json_decode(file2text(bunker_path))
-		var/round_id = GLOB.round_id
 		for(var/ckey in GLOB.bunker_passthrough)
 			if(daysSince(GLOB.bunker_passthrough[ckey]) >= CONFIG_GET(number/max_bunker_days))
 				GLOB.bunker_passthrough -= ckey
