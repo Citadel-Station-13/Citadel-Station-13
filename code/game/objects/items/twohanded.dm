@@ -1041,6 +1041,7 @@
 	attack_verb = list("suppresed", "struck", "beaten", "thwacked", "pulped", "shocked")
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors.
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/on = FALSE
 	var/lethal_cost = 400			//10000/333*15 = 450. decent enough?? kinda?
 	var/lethal_damage = 15
 	var/lethal_stam_cost = 3.5
@@ -1159,7 +1160,7 @@
 	if(C.charge < min_hit_cost())
 		turn_off()
 
-/obj/item/twohanded/required/electrostaff/attack(mob/living/target, mob/living/user)
+/obj/item/melee/twohanded/required/electrostaff/attack(mob/living/target, mob/living/user)
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
@@ -1186,7 +1187,7 @@
 		user.do_attack_animation(M)
 		user.adjustStaminaLossBuffered(harm_stam_cost)
 
-/obj/item/twohanded/required/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
+/obj/item/melee/twohanded/required/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
 	var/stunforce = stun_stamdmg
 	if(!no_charge_and_force)
 		if(!on)
@@ -1217,7 +1218,7 @@
 		H.forcesay(GLOB.hit_appends)
 	return TRUE
 
-/obj/item/twohanded/required/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
+/obj/item/melee/twohanded/required/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
 	var/lethal_force = lethal_damage
 	if(!no_charge_and_force)
 		if(!on)
@@ -1240,7 +1241,7 @@
 	playsound(src, 'sound/weapons/sear.ogg', 50, 1, -1)
 	return TRUE
 
-/obj/item/twohanded/required/electrostaff/proc/clowning_around(mob/living/user)
+/obj/item/melee/twohanded/required/electrostaff/proc/clowning_around(mob/living/user)
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
@@ -1248,7 +1249,7 @@
 	stun_act(user, user, TRUE)
 	deductcharge(lethal_cost)
 
-/obj/item/twohanded/required/electrostaff/emp_act(severity)
+/obj/item/melee/twohanded/required/electrostaff/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		turn_off()

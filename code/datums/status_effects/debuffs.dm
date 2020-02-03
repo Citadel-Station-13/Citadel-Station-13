@@ -596,7 +596,7 @@
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
-	owner.add_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF, multiplicative_slowdown = 1, movetypes = GROUND, blacklisted_movetypes = CRAWLING)
+	owner.add_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF, multiplicative_slowdown = 1, movetypes = GROUND)
 
 /datum/status_effect/electrostaff/on_remove()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF)
