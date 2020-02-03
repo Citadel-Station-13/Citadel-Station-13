@@ -224,7 +224,7 @@
 
 /obj/item/clothing/mask/fakemoustache/sticky/equipped(mob/user, slot)
 	. = ..()
-	if(slot = SLOT_WEAR_MASK)
+	if(slot == SLOT_WEAR_MASK)
 		ADD_TRAIT(user, TRAIT_NO_INTERNALS, STICKY_MOUSTACHE_TRAIT)
 
 /obj/item/clothing/mask/fakemoustache/sticky/dropped(mob/user)
