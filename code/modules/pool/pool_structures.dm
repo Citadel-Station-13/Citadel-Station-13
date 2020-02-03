@@ -122,7 +122,7 @@
 			jumper.adjustBruteLoss(10)
 
 		if(91 to 100)
-			jumper.visible_message("<span class='notice'>[jumper] is preparing for the legendary dive! Can he make it?</span>", \
+			jumper.visible_message("<span class='notice'>[jumper] is preparing for the legendary dive! Can [jumper.p_they()] make it?</span>", \
 								 "<span class='userdanger'>You start preparing for a legendary dive!</span>")
 			jumper.SpinAnimation(7,1)
 
