@@ -33,7 +33,7 @@
 		H.update_internals_hud_icon(0)
 	else
 		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			if(HAS_TRAIT(src, TRAIT_NO_INTERNALS))
+			if(HAS_TRAIT(H, TRAIT_NO_INTERNALS))
 				to_chat(H, "<span class='warning'>Due to cumbersome equipment or anatomy, you are currently unable to use internals!</span>")
 				return
 			var/obj/item/clothing/check
