@@ -150,18 +150,14 @@
 		chassis.occupant_message("[icon2html(src, chassis.occupant)] [message]")
 	return
 
-/obj/item/mecha_parts/mecha_equipment/mecha_log_message(message, message_type=LOG_GAME, color=null, log_globally)
+/obj/item/mecha_parts/mecha_equipment/proc/mecha_log_message(message, color)
+	log_message(message, LOG_GAME, color)			//pass to default admin logging too
 	if(chassis)
-		chassis.mecha_log_message("([src]) [message]", message_type, color)
-	else
-		..()
-	return
-
+		chassis.mecha_log_message(message, color)		//and pass to our chassis
 
 //Used for reloading weapons/tools etc. that use some form of resource
 /obj/item/mecha_parts/mecha_equipment/proc/rearm()
 	return 0
-
 
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
 	return 0
