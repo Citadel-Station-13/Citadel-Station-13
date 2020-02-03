@@ -1029,7 +1029,7 @@
 	force = 10
 	damtype = BRUTE
 	w_class = WEIGHT_CLASS_GIGANTIC
-	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_OCLOTHING
+	slot_flags = ITEM_SLOT_BACK
 	sharpness = FALSE
 	force_unwielded = 5
 	force_wielded = 10
