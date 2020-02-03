@@ -9,7 +9,7 @@
 #define META_GAS_FUSION_POWER   7
 //ATMOS
 //stuff you should probably leave well alone!
-#define R_IDEAL_GAS_EQUATION	8.3144626	//kPa*L/(K*mol)
+#define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
 #define ONE_ATMOSPHERE			101.325	//kPa
 #define TCMB					2.7		// -270.3degC
 #define TCRYO					225		// -48.15degC
