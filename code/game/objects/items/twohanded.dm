@@ -1143,7 +1143,7 @@
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
 		else
-			if(C.maxcharge < hitcost)
+			if(C.maxcharge < min_hit_cost())
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
 				return
 			if(!user.transferItemToLoc(W, src))
@@ -1182,12 +1182,9 @@
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
-	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		if(on)
-			clowning_around(user)			//ouch!
-			return
-		else
-			return ..(user, user)			//beat yourself
+	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+		clowning_around(user)			//ouch!
+		return
 	if(iscyborg(target))
 		..()
 		return
@@ -1263,7 +1260,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	lethal_act(user, user, TRUE)
+	harm_act(user, user, TRUE)
 	stun_act(user, user, TRUE)
 	deductcharge(lethal_cost)
 
