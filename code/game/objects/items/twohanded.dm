@@ -1029,7 +1029,7 @@
 	force = 10
 	damtype = BRUTE
 	w_class = WEIGHT_CLASS_GIGANTIC
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_OCLOTHING
 	sharpness = FALSE
 	force_unwielded = 5
 	force_wielded = 10
@@ -1043,10 +1043,10 @@
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	var/on = FALSE
 	var/can_block_projectiles = FALSE		//can't block guns
-	var/lethal_cost = 400			//10000/333*15 = 450. decent enough?? kinda?
-	var/lethal_damage = 15
-	var/lethal_stam_cost = 3.5
-	var/stun_cost = 333				//10000/500*25 = 500. stunbatons are at time of writing 10000/1000*49 = 490. This doesn't stun as fast but has block. Also, this does..
+	var/lethal_cost = 400			//10000/400*20 = 500. decent enough?
+	var/lethal_damage = 20
+	var/lethal_stam_cost = 4
+	var/stun_cost = 333				//10000/333*25 = 750. stunbatons are at time of writing 10000/1000*49 = 490.
 	var/stun_status_effect = STATUS_EFFECT_ELECTROSTAFF			//a small slowdown effect
 	var/stun_stamdmg = 25
 	var/stun_status_duration = 25
