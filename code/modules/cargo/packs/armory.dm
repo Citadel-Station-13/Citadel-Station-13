@@ -226,7 +226,7 @@
 	crate_name = "swat taser crate"
 
 /datum/supply_pack/security/armory/woodstock
-	name = "Classic WoodStock Shotguns Crate"
+	name = "WoodStock Classic Shotguns Crate"
 	desc = "Contains three rustic, pumpaction shotguns. Requires Armory access to open."
 	cost = 3000
 	contains = list(/obj/item/gun/ballistic/shotgun,

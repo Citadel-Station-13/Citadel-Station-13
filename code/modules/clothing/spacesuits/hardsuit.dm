@@ -203,32 +203,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 
-	//Radiation
-/obj/item/clothing/head/helmet/space/hardsuit/engine/rad
-	name = "radiation hardsuit helmet"
-	desc = "A special helmet that protects against radiation and space. Not much else unfortunately."
-	icon_state = "cespace_helmet"
-	item_state = "nothing"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
-	item_color = "engineering"
-	resistance_flags = FIRE_PROOF
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	actions_types = list()
-
-/obj/item/clothing/suit/space/hardsuit/engine/rad
-	name = "radiation hardsuit"
-	desc = "A special suit that protects against radiation and space. Not much else unfortunately."
-	icon_state = "hardsuit-rad"
-	item_state = "nothing"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/rad
-	resistance_flags = FIRE_PROOF
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	mutantrace_variation = NONE
-
-/obj/item/clothing/head/helmet/space/hardsuit/engine/rad/attack_self()
-	return //Sprites required for flashlight
-
 	//Chief Engineer's hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	name = "advanced hardsuit helmet"
@@ -718,6 +692,29 @@
 /obj/item/clothing/suit/space/hardsuit/ancient/Destroy()
 	listeningTo = null
 	return ..()
+
+/obj/item/clothing/head/helmet/space/hardsuit/soviet
+	name = "soviet hardhelmet"
+	desc = "Crafted with the pride of the proletariat. The vengeful gaze of the visor roots out all fascists and capitalists."
+	item_state = "rig0-soviet"
+	item_color = "soviet"
+	icon_state = "rig0-soviet"
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 75)
+	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/space/hardsuit/soviet
+	name = "soviet hardsuit"
+	desc = "Crafted with the pride of the proletariat. The last thing the enemy sees is the bottom of this armor's boot."
+	item_state = "rig-soviet"
+	icon_state = "rig-soviet"
+	slowdown = 0.8
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 75)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/soviet
+	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/space/hardsuit/soviet/Initialize()
+	. = ..()
+	allowed = GLOB.security_hardsuit_allowed
 
 /////////////SHIELDED//////////////////////////////////
 

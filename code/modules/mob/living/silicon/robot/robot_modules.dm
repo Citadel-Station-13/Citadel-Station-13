@@ -121,7 +121,7 @@
 		else if(istype(S, /obj/item/stack/marker_beacon))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/beacon)
-		
+
 		else if(istype(S, /obj/item/stack/packageWrap))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wrapping_paper)
@@ -339,9 +339,10 @@
 
 /obj/item/robot_module/medical/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Heavy", "Sleek", "Marina", "Droid", "Eyebot", "Medihound", "Medihound Dark", "Vale")
+	var/medmodels = list("Default", "Heavy", "Sleek", "Marina", "Droid", "Eyebot", "Medihound", "Medihound Dark", "Vale")
 	if(R.client && R.client.ckey in list("nezuli"))
-		borg_icon += "Alina"
+		medmodels += "Alina"
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in medmodels
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)

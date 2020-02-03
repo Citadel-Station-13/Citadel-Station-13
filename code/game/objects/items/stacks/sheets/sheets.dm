@@ -16,3 +16,14 @@
 	var/is_fabric = FALSE //is this  a valid material for the loom?
 	var/loom_result //result from pulling on the loom
 	var/pull_effort = 0 //amount of delay when pulling on the loom
+	var/shard_type // the shard debris typepath left over by solar panels and windows etc.
+
+/**
+  * Called on the glass sheet upon solar construction (duh):
+  * Different glass sheets can modify different stas/vars, such as obj_integrity or efficiency
+  * and possibly extra effects if you wish to code them.
+  * Keep in mind the solars' max_integrity is set equal to the obj_integrity later,
+  * so you won't have to do so here.
+  */
+/obj/item/stack/sheet/proc/on_solar_construction(/obj/machinery/power/solar/S)
+	return

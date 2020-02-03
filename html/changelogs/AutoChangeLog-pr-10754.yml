@@ -1,0 +1,5 @@
+author: "MalricB"
+delete-after: True
+changes: 
+  - rscadd: "\"Shaggy\" sprite from virgo"
+  - rscadd: "\"shaggy\" option in the character customization"

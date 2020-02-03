@@ -360,7 +360,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
-/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
+/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
 		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
 
@@ -505,9 +505,8 @@
 	return final_rgb
 
 /atom/proc/clean_blood()
-	if(islist(blood_DNA))
-		blood_DNA = null
-		return TRUE
+	. = blood_DNA? TRUE : FALSE
+	blood_DNA = null
 
 /atom/proc/wash_cream()
 	return TRUE
@@ -727,6 +726,13 @@
 
 /atom/proc/multitool_act(mob/living/user, obj/item/I)
 	return
+
+/atom/proc/multitool_check_buffer(user, obj/item/I, silent = FALSE)
+	if(!istype(I, /obj/item/multitool))
+		if(user && !silent)
+			to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
+		return FALSE
+	return TRUE
 
 /atom/proc/screwdriver_act(mob/living/user, obj/item/I)
 	SEND_SIGNAL(src, COMSIG_ATOM_SCREWDRIVER_ACT, user, I)

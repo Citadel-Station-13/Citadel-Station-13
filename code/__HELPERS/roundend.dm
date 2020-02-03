@@ -185,7 +185,7 @@
 		if(!C.credits)
 			C.RollCredits()
 		C.playtitlemusic(40)
-
+	CONFIG_SET(flag/suicide_allowed,TRUE) // EORG suicides allowed
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
 
