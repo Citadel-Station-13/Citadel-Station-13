@@ -188,24 +188,19 @@ SUBSYSTEM_DEF(vote)
 			choices[score_name]++
 
 /datum/controller/subsystem/vote/proc/calculate_scores(var/blackbox_text)
-	var/list/scores_by_choice = list()
 	for(var/choice in choices)
-		scores_by_choice += "[choice]"
-		scores_by_choice["[choice]"] = list()
+		scores += "[choice]"
+		scores["[choice]"] = 0
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
-		for(var/choice in choices)
-			if("[choice]" in this_vote && "[choice]" in scores_by_choice)
-				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],/proc/cmp_numeric_asc)
+		for(var/choice in this_vote)
+			scores["[choice]"] += this_vote["[choice]"]
 	var/min_score = 100
 	var/max_score = -100
-	for(var/score_name in scores_by_choice)
-		var/list/score = scores_by_choice[score_name]
-		for(var/S in score)
-			scores[score_name] += S
+	for(var/score_name in scores) // normalize the scores from 0-1
 		max_score=max(max_score,scores[score_name])
 		min_score=min(min_score,scores[score_name])
-	for(var/score_name in scores) // normalize the scores from 0-1
+	for(var/score_name in scores)
 		scores[score_name] = (scores[score_name]-min_score)/(max_score-min_score)
 		SSblackbox.record_feedback("nested tally","voting",scores[score_name],list(blackbox_text,"Total scores",score_name))
 
@@ -235,12 +230,6 @@ SUBSYSTEM_DEF(vote)
 				text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
 			if(vote_system == MAJORITY_JUDGEMENT_VOTING)
 				text += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
-		if(vote_system == SCORE_VOTING)
-			for(var/score_name in scores)
-				var/score = scores[score_name]
-				if(!score)
-					score = 0
-				text = "\n<b>[score_name]:</b> [obfuscated ? "???" : score]"
 		else
 			for(var/i=1,i<=choices.len,i++)
 				var/votes = choices[choices[i]]
@@ -258,6 +247,15 @@ SUBSYSTEM_DEF(vote)
 			text += "\n<b>Vote Result: [obfuscated ? "???" : .]</b>" //CIT CHANGE - adds obfuscated votes
 		else
 			text += "\n<b>Did not vote:</b> [GLOB.clients.len-voted.len]"
+	else if(vote_system == SCORE_VOTING)
+		for(var/score_name in scores)
+			var/score = scores[score_name]
+			if(!score)
+				score = 0
+			if(was_roundtype_vote)
+				stored_gamemode_votes[score_name] = score
+			text = "\n<b>[score_name]:</b> [obfuscated ? "???" : score]"
+			. = 1
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
@@ -330,19 +328,13 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				if(. == "Secret")
-					GLOB.master_mode = "secret"
-					SSticker.save_mode(.)
-					message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
-					log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
-				else
-					GLOB.master_mode = "dynamic"
-					var/list/runnable_storytellers = config.get_runnable_storytellers()
-					for(var/T in runnable_storytellers)
-						var/datum/dynamic_storyteller/S = T
-						runnable_storytellers[S] *= scores[initial(S.name)]
-					var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
-					GLOB.dynamic_storyteller_type = S
+				GLOB.master_mode = "dynamic"
+				var/list/runnable_storytellers = config.get_runnable_storytellers()
+				for(var/T in runnable_storytellers)
+					var/datum/dynamic_storyteller/S = T
+					runnable_storytellers[S] *= scores[initial(S.name)]
+				var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
+				GLOB.dynamic_storyteller_type = S
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -466,8 +458,6 @@ SUBSYSTEM_DEF(vote)
 					if(probabilities[initial(S.config_tag)] > 0)
 						choices.Add(initial(S.name))
 						choice_descs.Add(initial(S.desc))
-				choices.Add("Secret")
-				choice_descs.Add("Standard secret. Switches mode if it wins.")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
