@@ -128,6 +128,8 @@
 		if(!GLOB.taur_list.len)
 			init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, GLOB.taur_list)
 		L[DNA_TAUR_BLOCK] = construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
+		L[DNA_WING_COLOR_BLOCK] = sanitize_hexcolor(H.wing_color)
+		L[DNA_HORN_COLOR_BLOCK] = sanitize_hexcolor(H.horn_color)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
@@ -200,6 +202,10 @@
 			construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
 		if(DNA_TAUR_BLOCK)
 			construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
+		if(DNA_WING_COLOR_BLOCK)
+			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.wing_color))
+		if(DNA_HORN_COLOR_BLOCK)
+			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.horn_color))
 
 /datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name && nameless == D.nameless && custom_species == D.custom_species)
@@ -343,6 +349,8 @@
 	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
 	facial_hair_style = GLOB.facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), GLOB.facial_hair_styles_list.len)]
 	hair_style = GLOB.hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), GLOB.hair_styles_list.len)]
+	wing_color = sanitize_hexcolor(getblock(structure, DNA_WING_COLOR_BLOCK))
+	horn_color = sanitize_hexcolor(getblock(structure, DNA_HORN_COLOR_BLOCK))
 	if(icon_update)
 		update_body()
 		update_hair()
