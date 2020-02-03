@@ -1391,6 +1391,7 @@
 #include "code\modules\antagonists\clockcult\clock_structures\traps\brass_skewer.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\traps\power_null.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\traps\steam_vent.dm"
+#include "code\modules\antagonists\collector\collector.dm"
 #include "code\modules\antagonists\cult\blood_magic.dm"
 #include "code\modules\antagonists\cult\cult.dm"
 #include "code\modules\antagonists\cult\cult_comms.dm"
