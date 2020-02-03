@@ -18,7 +18,7 @@
 		/obj/item/modular_computer,
 		/obj/item/gun/ballistic/automatic/magrifle_e,
 		/obj/item/gun/ballistic/automatic/pistol/mag_e,
-		/obj/item/twohanded/required/electrostaff))
+		/obj/item/twohanded/electrostaff))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)

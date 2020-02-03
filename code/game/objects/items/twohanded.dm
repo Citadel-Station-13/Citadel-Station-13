@@ -1155,14 +1155,17 @@
 		if(cell)
 			cell.update_icon()
 			cell.forceMove(get_turf(src))
-			cell= null
+			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			depower(user)
+			turn_off(user, TRUE)
 	else
 		return ..()
 
 /obj/item/twohanded/electrostaff/process()
 	deductcharge(50)			//Wasteful!
+
+/obj/item/twohanded/electrostaff/proc/min_hit_cost()
+	return min(lethal_cost, stun_cost)
 
 /obj/item/twohanded/electrostaff/proc/deductcharge(amount)
 	var/obj/item/stock_parts/cell/C = get_cell()
@@ -1193,14 +1196,14 @@
 		return FALSE
 	if(user.a_intent != INTENT_HARM)
 		if(stun_act(target, user))
-			user.do_attack_animation(M)
+			user.do_attack_animation(target)
 			user.adjustStaminaLossBuffered(stun_stam_cost)
 		return
 	else if(!harm_act(target, user))
 		return ..()		//if you can't fry them just beat them with it
 	else		//we did harm act them
-		user.do_attack_animation(M)
-		user.adjustStaminaLossBuffered(harm_stam_cost)
+		user.do_attack_animation(target)
+		user.adjustStaminaLossBuffered(lethal_stam_cost)
 
 /obj/item/twohanded/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
 	var/stunforce = stun_stamdmg
@@ -1245,7 +1248,7 @@
 			return FALSE
 		if(chargeleft < stun_cost)
 			lethal_force *= round(chargeleft/lethal_cost, 0.1)
-	target.adjustBurnLoss(lethal_force)		//good against ointment spam
+	target.adjustFireLoss(lethal_force)		//good against ointment spam
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
 		target.lastattacker = user.real_name
