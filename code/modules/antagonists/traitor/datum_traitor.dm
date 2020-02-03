@@ -191,7 +191,7 @@
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
 			add_objective(maroon_objective)
-		else if(prob(30))
+		else if(prob(max(0,assassin_prob-20)))
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
 			kill_objective.find_target()
