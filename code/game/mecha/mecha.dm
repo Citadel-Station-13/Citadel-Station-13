@@ -1028,9 +1028,10 @@
 			to_chat(occupant, "[icon2html(src, occupant)] [message]")
 	return
 
-/obj/mecha/proc/mecha_log_message(message as text, message_type=LOG_GAME, color=null, log_globally)
+/obj/mecha/proc/mecha_log_message(message, color)
 	log.len++
 	log[log.len] = list("time"="[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]","date","year"="[GLOB.year_integer]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
+	log_message(message, LOG_GAME, color)			//also do the normal admin logs I guess.
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
