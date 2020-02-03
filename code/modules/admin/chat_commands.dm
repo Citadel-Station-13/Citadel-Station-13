@@ -137,7 +137,7 @@ GLOBAL_LIST(round_end_notifiees)
 		return "The Database is not enabled!"
 
 	GLOB.bunker_passthrough |= ckey(params)
-	GLOB.bunker_passthrough[ckey(params)] = GLOB.round_id
+	GLOB.bunker_passthrough[ckey(params)] = world.realtime
 	SSpersistence.SavePanicBunker() //we can do this every time, it's okay
 	log_admin("[sender.friendly_name] has added [params] to the current round's bunker bypass list.")
 	message_admins("[sender.friendly_name] has added [params] to the current round's bunker bypass list.")

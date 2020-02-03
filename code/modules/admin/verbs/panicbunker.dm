@@ -24,7 +24,7 @@
 		return
 
 	GLOB.bunker_passthrough |= ckey(ckeytobypass)
-	GLOB.bunker_passthrough[ckey(ckeytobypass)] = GLOB.round_id
+	GLOB.bunker_passthrough[ckey(ckeytobypass)] = world.realtime
 	SSpersistence.SavePanicBunker() //we can do this every time, it's okay
 	log_admin("[key_name(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
 	message_admins("[key_name_admin(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
