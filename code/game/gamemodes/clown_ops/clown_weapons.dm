@@ -201,9 +201,13 @@
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
 /obj/item/grenade/chem_grenade/teargas/moustache/prime()
-	var/myloc = get_turf(src)
+	var/list/check_later = list()
+	for(var/mob/living/carbon/M in get_turf(src))
+		check_later += M
 	. = ..()
-	for(var/mob/living/carbon/M in view(6, myloc))
+	if(!.) //grenade did not properly prime.
+		return
+	for(var/M in check_later)
 		if(!istype(M.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(M.wear_mask, /obj/item/clothing/mask/gas/mime) )
 			if(!M.wear_mask || M.dropItemToGround(M.wear_mask))
 				var/obj/item/clothing/mask/fakemoustache/sticky/the_stash = new /obj/item/clothing/mask/fakemoustache/sticky()
@@ -215,10 +219,16 @@
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
-	addtimer(CALLBACK(src, .proc/unstick), unstick_time)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT), unstick_time)
 
-/obj/item/clothing/mask/fakemoustache/sticky/proc/unstick()
-	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
+/obj/item/clothing/mask/fakemoustache/sticky/equipped(mob/user, slot)
+	. = ..()
+	if(slot = SLOT_WEAR_MASK)
+		ADD_TRAIT(user, TRAIT_NO_INTERNALS, STICKY_MOUSTACHE_TRAIT)
+
+/obj/item/clothing/mask/fakemoustache/sticky/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_NO_INTERNALS, STICKY_MOUSTACHE_TRAIT)
 
 //DARK H.O.N.K. AND CLOWN MECH WEAPONS
 
