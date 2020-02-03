@@ -181,13 +181,9 @@ GLOBAL_LIST_EMPTY(objectives)
 	..()
 	if(target && target.current)
 		explanation_text = "Kill [target.name], the [!target_role_type ? target.assigned_role : target.special_role]. You only need to kill them once; if they come back, you've still succeeded."
+		START_PROCESSING(SSprocessing,src)
 	else
 		explanation_text = "Free Objective"
-
-/datum/objective/assassinate/once/find_target_by_role(role, role_type=0, invert=0)
-	. = ..()
-	if(.)
-		START_PROCESSING(SSprocessing,src)
 
 /datum/objective/assassinate/once/check_completion()
 	return won || ..()
