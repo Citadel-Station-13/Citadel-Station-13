@@ -8,14 +8,16 @@
 	max_integrity = 1
 	armor = list("melee" = 0, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 	var/obj/item/holosign_creator/projector
+	var/init_vis_overlay = TRUE
 
 /obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
 	if(source_projector)
 		projector = source_projector
 		projector.signs += src
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, alpha, RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
-	alpha = 0
+	if(init_vis_overlay)
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, alpha, RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+		alpha = 0
 
 /obj/structure/holosign/Destroy()
 	if(projector)
@@ -76,6 +78,7 @@
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
 	alpha = 150
+	init_vis_overlay = FALSE
 
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
@@ -101,6 +104,7 @@
 	density = FALSE
 	anchored = TRUE
 	alpha = 150
+	init_vis_overlay = FALSE
 	CanAtmosPass = ATMOS_PASS_NO
 	resistance_flags = FIRE_PROOF
 
