@@ -1189,7 +1189,7 @@
 		..()
 		return
 	if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
-		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
+		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)
 		if(stun_act(target, user))
