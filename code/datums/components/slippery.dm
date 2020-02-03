@@ -11,5 +11,5 @@
 
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
 	var/mob/victim = AM
-	if(istype(victim) && victim.slip(intensity, parent, lube) && callback)
+	if(istype(victim) && victim.slip(intensity, parent, lube_flags) && callback)
 		callback.Invoke(victim)
