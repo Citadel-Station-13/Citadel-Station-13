@@ -237,7 +237,7 @@
 				var/mob/living/carbon/human/drownee = M
 				if(!drownee || drownee.stat == DEAD)
 					return
-				if(drownee.lying && !drownee.internal)
+				if(drownee.resting && !drownee.internal)
 					if(drownee.stat != CONSCIOUS)
 						drownee.adjustOxyLoss(9)
 					else
@@ -372,7 +372,7 @@
 	var/datum/browser/popup = new(user, "Pool Controller", name, 300, 450)
 	var/dat = ""
 	if(interact_delay > world.time)
-		dat += "<span class='notice'>[(interact_delay - world.time)] seconds left until [src] can operate again.</span><BR>"
+		dat += "<span class='notice'>[round((interact_delay - world.time)/10, 0.1)] seconds left until [src] can operate again.</span><BR>"
 	dat += text({"
 		<h3>Temperature</h3>
 		<div class='statusDisplay'>
