@@ -128,6 +128,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			var/datum/quirk/Q = q
 			if(Q.antag_removal_text)
 				to_chat(L, "<span class='boldannounce'>[Q.antag_removal_text]</span>")
+			L.remove_quirk(Q.type)
 
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
