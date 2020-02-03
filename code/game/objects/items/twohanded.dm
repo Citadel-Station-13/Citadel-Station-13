@@ -24,7 +24,7 @@
  * Twohanded
  */
 /obj/item/twohanded
-	var/wielded = 0
+	var/wielded = FALSE
 	var/force_unwielded // default to null, the number force will be set to on unwield()
 	var/force_wielded // same as above but for wield()
 	var/wieldsound = null
@@ -1018,7 +1018,7 @@
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 
-/obj/item/twohanded/required/electrostaff
+/obj/item/twohanded/electrostaff
 	icon = 'icons/obj/estaff.dmi'
 	icon_state = "electrostaff_3"
 	item_state = "electrostaff_3"
@@ -1031,7 +1031,7 @@
 	w_class = WEIGHT_CLASS_GIGANTIC
 	slot_flags = ITEM_SLOT_BACK
 	sharpness = FALSE
-	force_unwielded = 0
+	force_unwielded = 5
 	force_wielded = 10
 	throwforce = 1
 	throw_speed = 1
@@ -1042,6 +1042,7 @@
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors.
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	var/on = FALSE
+	var/can_block_projectiles = FALSE		//can't block guns
 	var/lethal_cost = 400			//10000/333*15 = 450. decent enough?? kinda?
 	var/lethal_damage = 15
 	var/lethal_stam_cost = 3.5
@@ -1051,21 +1052,30 @@
 	var/stun_status_duration = 25
 	var/stun_stam_cost = 3.5
 
-/obj/item/twohanded/required/electrostaff/Initialize(mapload)
+/obj/item/twohanded/electrostaff/Initialize(mapload)
 	. = ..()
 	if(ispath(cell))
 		cell = new cell
 
-/obj/item/twohanded/required/electrostaff/get_cell()
+/obj/item/twohanded/electrostaff/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/twohanded/electrostaff/get_cell()
 	. = cell
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		. = R.get_cell()
 
-/obj/item/twohanded/required/electrostaff/proc/min_hitcost()
+/obj/item/twohanded/electrostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if((attack_type == PROJECTILE_ATTACK) && !can_block_projectiles)
+		return FALSE
+	return ..()
+
+/obj/item/twohanded/electrostaff/proc/min_hitcost()
 	return min(stun_cost, lethal_cost)
 
-/obj/item/twohanded/required/electrostaff/proc/turn_on(mob/user, silent = FALSE)
+/obj/item/twohanded/electrostaff/proc/turn_on(mob/user, silent = FALSE)
 	if(on)
 		return
 	if(!cell)
@@ -1084,7 +1094,7 @@
 	if(!silent)
 		playsound(src, "sparks", 75, 1, -1)
 
-/obj/item/twohanded/required/electrostaff/proc/turn_off(mob/user, silent = FALSE)
+/obj/item/twohanded/electrostaff/proc/turn_off(mob/user, silent = FALSE)
 	if(!on)
 		return
 	if(user)
@@ -1095,34 +1105,39 @@
 	if(!silent)
 		playsound(src, "sparks", 75, 1, -1)
 
-/obj/item/twohanded/required/electrostaff/proc/toggle(mob/user, silent = FALSE)
+/obj/item/twohanded/electrostaff/proc/toggle(mob/user, silent = FALSE)
 	if(on)
 		turn_off(user, silent)
 	else
 		turn_on(user, silent)
 
-/obj/item/twohanded/required/electrostaff/attack_self(mob/user)
+/obj/item/twohanded/electrostaff/attack_self(mob/user)
+	var/oldwielded = wielded
 	. = ..()
 	if(.)
 		return
-	toggle(user)
+	if(oldwielded != wielded)
+		if(wielded)
+			turn_on(user)
+		else
+			turn_off(user)
 	add_fingerprint(user)
 
-/obj/item/twohanded/required/electrostaff/update_icon()
+/obj/item/twohanded/electrostaff/update_icon()
 	. = ..()
 	var/final = on? "electrostaff_1" : "electrostaff_3"
 	icon_state = final
 	item_state = final
 	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
 
-/obj/item/twohanded/required/electrostaff/examine(mob/living/user)
+/obj/item/twohanded/electrostaff/examine(mob/living/user)
 	. = ..()
 	if(cell)
 		. += "<span class='notice'>The cell charge is [round(cell.percent())]%.</span>"
 	else
 		. += "<span class='warning'>There is no cell installed!</span>"
 
-/obj/item/twohanded/required/electrostaff/attackby(obj/item/W, mob/user, params)
+/obj/item/twohanded/electrostaff/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = W
 		if(cell)
@@ -1146,10 +1161,10 @@
 	else
 		return ..()
 
-/obj/item/melee/twohanded/required/electrostaff/process()
+/obj/item/twohanded/electrostaff/process()
 	deductcharge(50)			//Wasteful!
 
-/obj/item/melee/twohanded/required/electrostaff/proc/deductcharge(amount)
+/obj/item/twohanded/electrostaff/proc/deductcharge(amount)
 	var/obj/item/stock_parts/cell/C = get_cell()
 	if(!C)
 		turn_off()
@@ -1160,7 +1175,7 @@
 	if(C.charge < min_hit_cost())
 		turn_off()
 
-/obj/item/melee/twohanded/required/electrostaff/attack(mob/living/target, mob/living/user)
+/obj/item/twohanded/electrostaff/attack(mob/living/target, mob/living/user)
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
@@ -1187,7 +1202,7 @@
 		user.do_attack_animation(M)
 		user.adjustStaminaLossBuffered(harm_stam_cost)
 
-/obj/item/melee/twohanded/required/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
+/obj/item/twohanded/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
 	var/stunforce = stun_stamdmg
 	if(!no_charge_and_force)
 		if(!on)
@@ -1218,7 +1233,7 @@
 		H.forcesay(GLOB.hit_appends)
 	return TRUE
 
-/obj/item/melee/twohanded/required/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
+/obj/item/twohanded/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
 	var/lethal_force = lethal_damage
 	if(!no_charge_and_force)
 		if(!on)
@@ -1241,7 +1256,7 @@
 	playsound(src, 'sound/weapons/sear.ogg', 50, 1, -1)
 	return TRUE
 
-/obj/item/melee/twohanded/required/electrostaff/proc/clowning_around(mob/living/user)
+/obj/item/twohanded/electrostaff/proc/clowning_around(mob/living/user)
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
@@ -1249,7 +1264,7 @@
 	stun_act(user, user, TRUE)
 	deductcharge(lethal_cost)
 
-/obj/item/melee/twohanded/required/electrostaff/emp_act(severity)
+/obj/item/twohanded/electrostaff/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		turn_off()
