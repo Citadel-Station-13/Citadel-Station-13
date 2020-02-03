@@ -584,7 +584,7 @@
 	id = "foam_magrifle"
 	build_type = AUTOYLATHE
 	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
-	build_path = /obj/item/gun/ballistic/automatic/magrifle/toy
+	build_path = /obj/item/gun/ballistic/automatic/toy/magrifle
 	category = list("initial", "Rifles")
 
 /datum/design/foam_hyperburst

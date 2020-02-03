@@ -695,6 +695,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/magnetic_weapons
+	id = "magnetic_weapons"
+	display_name = "Magnetic Weapons"
+	description = "Weapons using magnetic technology"
+	prereq_ids = list("weaponry", "adv_weaponry", "emp_adv")
+	design_ids = list("magrifle", "magpistol", "mag_magrifle", "mag_magrifle_nl", "mag_magpistol", "mag_magpistol_nl")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
 /datum/techweb_node/medical_weapons
 	id = "medical_weapons"
 	display_name = "Medical Weaponry"
