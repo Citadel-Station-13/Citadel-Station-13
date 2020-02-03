@@ -45,10 +45,9 @@
 
 	filtered.temperature = filtering.temperature
 	for(var/gas in filtering.gases & scrubbing)
-		filtered.add_gas(gas)
-		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
-		filtering.gases[gas][MOLES] = 0
-	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
+		filtered.gases[gas] = filtering.gases[gas] // Shuffle the "bad" gasses to the filtered mixture.
+		filtering.gases[gas] = 0
+	GAS_GARBAGE_COLLECT(filtering.gases)
 
 	air_contents.merge(filtered) // Store filtered out gasses.
 	mixture.merge(filtering) // Returned the cleaned gas.
@@ -68,7 +67,7 @@
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_scrubber", name, 420, 435, master_ui, state)
+		ui = new(user, src, ui_key, "portable_scrubber", name, 320, 335, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_data()
@@ -79,14 +78,15 @@
 
 	data["id_tag"] = -1 //must be defined in order to reuse code between portable and vent scrubbers
 	data["filter_types"] = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
+	for(var/path in GLOB.meta_gas_ids)
+		data["filter_types"] += list(list("gas_id" = GLOB.meta_gas_ids[path], "gas_name" = GLOB.meta_gas_names[path], "enabled" = (path in scrubbing)))
 
 	if(holding)
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
 		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+	else
+		data["holding"] = null
 	return data
 
 /obj/machinery/portable_atmospherics/scrubber/ui_act(action, params)

@@ -6,6 +6,7 @@
  *		Spears
  *		CHAINSAWS
  *		Bone Axe and Spear
+ *		And more
  */
 
 /*##################################################################
@@ -24,20 +25,22 @@
  */
 /obj/item/twohanded
 	var/wielded = 0
-	var/force_unwielded = 0
-	var/force_wielded = 0
+	var/force_unwielded // default to null, the number force will be set to on unwield()
+	var/force_wielded // same as above but for wield()
 	var/wieldsound = null
 	var/unwieldsound = null
+	var/slowdown_wielded = 0
+	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded || !user)
 		return
 	wielded = 0
-	if(force_unwielded)
+	if(!isnull(force_unwielded))
 		force = force_unwielded
-	var/sf = findtext(name," (Wielded)")
+	var/sf = findtext(name, " (Wielded)", -10)//10 == length(" (Wielded)")
 	if(sf)
-		name = copytext(name,1,sf)
+		name = copytext(name, 1, sf)
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
@@ -55,7 +58,7 @@
 	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
-	return
+	slowdown -= slowdown_wielded
 
 /obj/item/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -67,10 +70,10 @@
 		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
 	if(user.get_num_arms() < 2)
-		to_chat(user, "<span class='warning'>You don't have enough hands.</span>")
+		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
 		return
 	wielded = 1
-	if(force_wielded)
+	if(!isnull(force_wielded))
 		force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
@@ -85,7 +88,7 @@
 	O.desc = "Your second grip on [src]."
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
-	return
+	slowdown += slowdown_wielded
 
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()
@@ -121,7 +124,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/twohanded/offhand/Destroy()
@@ -247,6 +250,7 @@
 	return (BRUTELOSS)
 
 /obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(wielded) //destroys windows and grilles in one hit
@@ -278,6 +282,7 @@
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
+	var/hitsound_on = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
 	item_color = "green"
 	light_color = "#00ff00"//green
@@ -289,6 +294,10 @@
 	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
+	var/list/rainbow_colors = list(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+	var/spinnable = TRUE
+	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
+	var/total_mass_on = 3.4
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
@@ -296,7 +305,7 @@
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
-		B.vital = FALSE//this cant possibly be a good idea
+		B.organ_flags &= ~ORGAN_VITAL	//this cant possibly be a good idea
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
 			if(user.is_holding(src))
@@ -338,7 +347,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+	clean_blood()
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -347,10 +356,10 @@
 			unwield()
 			return
 	..()
-	if(user.has_trait(TRAIT_CLUMSY) && (wielded) && prob(40))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
-	if((wielded) && prob(50))
+	if(spinnable && (wielded) && prob(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
@@ -386,6 +395,7 @@
 	if(wielded)
 		sharpness = IS_SHARP
 		w_class = w_class_on
+		total_mass = total_mass_on
 		hitsound = 'sound/weapons/blade1.ogg'
 		START_PROCESSING(SSobj, src)
 		set_light(brightness_on)
@@ -393,6 +403,7 @@
 /obj/item/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
+	total_mass = initial(total_mass)
 	..()
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
@@ -401,10 +412,13 @@
 /obj/item/twohanded/dualsaber/process()
 	if(wielded)
 		if(hacked)
-			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+			rainbow_process()
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
+
+/obj/item/twohanded/dualsaber/proc/rainbow_process()
+	light_color = pick(rainbow_colors)
 
 /obj/item/twohanded/dualsaber/IsReflect()
 	if(wielded)
@@ -423,7 +437,8 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	INVOKE_ASYNC(src, .proc/jedi_spin, user)
+	if(spinnable)
+		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/green
 	possible_colors = list("green")
@@ -449,6 +464,118 @@
 	else
 		return ..()
 
+/////////////////////////////////////////////////////
+//	HYPEREUTACTIC Blades	/////////////////////////
+/////////////////////////////////////////////////////
+
+/obj/item/twohanded/dualsaber/hypereutactic
+	icon = 'icons/obj/1x2.dmi'
+	icon_state = "hypereutactic"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	item_state = "hypereutactic"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	name = "hypereutactic blade"
+	desc = "A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter."
+	force = 7
+	force_unwielded = 7
+	force_wielded = 40
+	wieldsound = 'sound/weapons/nebon.ogg'
+	unwieldsound = 'sound/weapons/neboff.ogg'
+	hitsound_on = 'sound/weapons/nebhit.ogg'
+	slowdown_wielded = 1
+	armour_penetration = 60
+	light_color = "#37FFF7"
+	rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
+	spinnable = FALSE
+	total_mass_on = 4
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain
+	name = "\improper divine lightblade"
+	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
+	force = 5
+	force_unwielded = 5
+	force_wielded = 20
+	block_chance = 50
+	armour_penetration = 0
+	var/chaplain_spawnable = TRUE
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/update_icon()
+	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "hypereutactic_blade")
+	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "hypereutactic_gem")
+
+	if(light_color)
+		blade_overlay.color = light_color
+		gem_overlay.color = light_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(gem_overlay)
+
+	if(wielded)
+		add_overlay(blade_overlay)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+	clean_blood()
+
+/obj/item/twohanded/dualsaber/hypereutactic/AltClick(mob/living/user)
+	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
+		if(!energy_color_input || !user.canUseTopic(src, BE_CLOSE, FALSE) || hacked)
+			return
+		light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
+	return TRUE
+
+/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file, style_flags = NONE)
+	. = ..()
+	if(isinhands)
+		var/mutable_appearance/gem_inhand = mutable_appearance(icon_file, "hypereutactic_gem")
+		gem_inhand.color = light_color
+		. += gem_inhand
+		if(wielded)
+			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "hypereutactic_blade")
+			blade_inhand.color = light_color
+			. += blade_inhand
+
+/obj/item/twohanded/dualsaber/hypereutactic/examine(mob/user)
+	. = ..()
+	if(!hacked)
+		. += "<span class='notice'>Alt-click to recolor it.</span>"
+
+/obj/item/twohanded/dualsaber/hypereutactic/rainbow_process()
+	. = ..()
+	update_icon()
+	update_light()
+
 //spears
 /obj/item/twohanded/spear
 	icon_state = "spearglass0"
@@ -463,7 +590,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
+	embedding = list("embedded_impact_pain_multiplier" = 3, "embed_chance" = 90)
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -473,19 +600,33 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
+	var/icon_prefix = "spearglass"
 
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 
+/obj/item/twohanded/spear/attack_self(mob/user)
+	if(explosive)
+		explosive.attack_self(user)
+		return
+	. = ..()
+
+//Citadel additions : attack_self and rightclick_attack_self
+
+/obj/item/twohanded/rightclick_attack_self(mob/user)
+	if(wielded) //Trying to unwield it
+		unwield(user)
+	else //Trying to wield it
+		wield(user)
+	return TRUE
+
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(explosive)
-		user.say("[war_cry]")
-		explosive.forceMove(user)
+	if(explosive) //Citadel Edit removes qdel and explosive.forcemove(AM)
+		user.say("[war_cry]", forced="spear warcry")
 		explosive.prime()
 		user.gib()
-		qdel(src)
 		return BRUTELOSS
 	return BRUTELOSS
 
@@ -494,36 +635,32 @@
 	AddComponent(/datum/component/jousting)
 
 /obj/item/twohanded/spear/examine(mob/user)
-	..()
+	. = ..()
 	if(explosive)
-		to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
+		. += "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>"
 
 /obj/item/twohanded/spear/update_icon()
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
 	else
-		icon_state = "spearglass[wielded]"
+		icon_state = "[icon_prefix][wielded]"
 
 /obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
-	if(explosive && wielded)
-		user.say("[war_cry]")
-		explosive.forceMove(AM)
+	if(explosive && wielded) //Citadel edit removes qdel and explosive.forcemove(AM)
+		user.say("[war_cry]", forced="spear warcry")
 		explosive.prime()
-		qdel(src)
 
- //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/twohanded/spear/throw_impact(atom/target)
-	. = ..()
-	if(!.) //not caught
-		if(explosive)
-			explosive.prime()
-			qdel(src)
+/obj/item/twohanded/spear/grenade_prime_react(obj/item/grenade/nade) //Citadel edit, removes throw_impact because memes
+	nade.forceMove(get_turf(src))
+	qdel(src)
 
 /obj/item/twohanded/spear/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE))
 		..()
 		if(!explosive)
@@ -532,8 +669,16 @@
 			var/input = stripped_input(user,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
 			if(input)
 				src.war_cry = input
+		return TRUE
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
+	var/obj/item/shard/tip = locate() in parts_list
+	if (istype(tip, /obj/item/shard/plasma))
+		force_wielded = 19
+		force_unwielded = 11
+		throwforce = 21
+		icon_prefix = "spearplasma"
+	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
 	if(S)
 		if(S.explosive)
@@ -569,6 +714,8 @@
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5
 
 /obj/item/twohanded/required/chainsaw/Initialize()
 	. = ..()
@@ -590,9 +737,9 @@
 	on = !on
 	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
 	force = on ? force_on : initial(force)
-	throwforce = on ? force_on : initial(force)
+	throwforce = on ? force_on : force
 	icon_state = "chainsaw_[on ? "on" : "off"]"
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 
 	if(on)
@@ -633,9 +780,14 @@
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
+	var/clonechance = 50
+	var/clonedamage = 12
+	var/clonespeed = 0
+	var/clone_replication_chance = 30
+	var/clone_lifespan = 100
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
-	..()
+	. = ..()
 	if(!proximity)
 		return
 	user.faction |= "greytide([REF(user)])"
@@ -643,10 +795,11 @@
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))
 			return
-		if(!L.stat && prob(50))
+		if(!L.stat && prob(clonechance))
 			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
 			M.faction = user.faction.Copy()
-			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+			M.set_varspeed(clonespeed)
+			M.Copy_Parent(user, clone_lifespan, user.health/2.5, clonedamage, clone_replication_chance)
 			M.GiveTarget(L)
 
 /obj/item/twohanded/pitchfork
@@ -716,6 +869,7 @@
 	..()
 
 /obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity || !wielded)
 		return
 	if(iswallturf(target))
@@ -723,9 +877,8 @@
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
 		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
-		W.ScrapeAway()
+		W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return
-	..()
 
 //HF blade
 
@@ -794,6 +947,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 11
 	force_wielded = 20					//I have no idea how to balance
+	reach = 2
 	throwforce = 22
 	throw_speed = 4
 	embedding = list("embedded_impact_pain_multiplier" = 3)
@@ -804,3 +958,61 @@
 
 /obj/item/twohanded/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
+
+/obj/item/twohanded/binoculars
+	name = "binoculars"
+	desc = "Used for long-distance surveillance."
+	item_state = "binoculars"
+	icon_state = "binoculars"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	var/mob/listeningTo
+	var/zoom_out_amt = 6
+	var/zoom_amt = 10
+
+/obj/item/twohanded/binoculars/Destroy()
+	listeningTo = null
+	return ..()
+
+/obj/item/twohanded/binoculars/wield(mob/user)
+	. = ..()
+	if(!wielded)
+		return
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
+	listeningTo = user
+	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
+	item_state = "binoculars_wielded"
+	user.regenerate_icons()
+	if(!user?.client)
+		return
+	var/client/C = user.client
+	var/_x = 0
+	var/_y = 0
+	switch(user.dir)
+		if(NORTH)
+			_y = zoom_amt
+		if(EAST)
+			_x = zoom_amt
+		if(SOUTH)
+			_y = -zoom_amt
+		if(WEST)
+			_x = -zoom_amt
+	C.change_view(world.view + zoom_out_amt)
+	C.pixel_x = world.icon_size*_x
+	C.pixel_y = world.icon_size*_y
+
+/obj/item/twohanded/binoculars/unwield(mob/user)
+	. = ..()
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
+	user.visible_message("[user] lowers [src].","You lower [src].")
+	item_state = "binoculars"
+	user.regenerate_icons()
+	if(user && user.client)
+		user.regenerate_icons()
+		var/client/C = user.client
+		C.change_view(CONFIG_GET(string/default_view))
+		user.client.pixel_x = 0
+		user.client.pixel_y = 0

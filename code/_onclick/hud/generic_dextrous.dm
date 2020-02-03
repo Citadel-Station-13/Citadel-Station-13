@@ -1,31 +1,35 @@
 //Used for normal mobs that have hands.
-/datum/hud/dextrous/New(mob/living/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/dextrous/New(mob/living/owner)
 	..()
 	var/obj/screen/using
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drone_drop
+	using.hud = src
 	static_inventory += using
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_icon(mymob)
+	pull_icon.hud = src
+	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_drone_pull
 	static_inventory += pull_icon
 
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_1_m"
 	using.screen_loc = ui_swaphand_position(owner,1)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
+	using.hud = src
 	static_inventory += using
 
 	if(mymob.possible_a_intents)
@@ -36,20 +40,19 @@
 			action_intent = new /obj/screen/act_intent
 			action_intent.icon = ui_style
 		action_intent.icon_state = mymob.a_intent
+		action_intent.hud = src
 		static_inventory += action_intent
 
 
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
-	zone_select.update_icon(mymob)
+	zone_select.hud = src
+	zone_select.update_icon()
 	static_inventory += zone_select
-
-	using = new /obj/screen/craft
-	using.icon = ui_style
-	static_inventory += using
 
 	using = new /obj/screen/area_creator
 	using.icon = ui_style
+	using.hud = src
 	static_inventory += using
 
 	mymob.client.screen = list()
@@ -76,8 +79,6 @@
 
 //Dextrous simple mobs can use hands!
 /mob/living/simple_animal/create_mob_hud()
-	if(client && !hud_used)
-		if(dextrous)
-			hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
-		else
-			..()
+	if(dextrous)
+		hud_type = dextrous_hud_type
+	return ..()

@@ -40,6 +40,8 @@
 
 	var/stun_projectile = null		//stun mode projectile type
 	var/stun_projectile_sound
+	var/nonlethal_projectile		//projectile to use in stun mode when the target is resting, if any
+	var/nonlethal_projectile_sound
 	var/lethal_projectile = null	//lethal mode projectile type
 	var/lethal_projectile_sound
 
@@ -261,7 +263,7 @@
 
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
-			anchored = TRUE
+			setAnchored(TRUE)
 			invisibility = INVISIBILITY_MAXIMUM
 			update_icon()
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
@@ -269,7 +271,7 @@
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
-			anchored = FALSE
+			setAnchored(FALSE)
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			power_change()
 			invisibility = 0
@@ -290,6 +292,7 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
@@ -300,6 +303,7 @@
 	update_icon()
 	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	return TRUE
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -485,7 +489,7 @@
 			threatcount += 4
 
 	if(shoot_unloyal)
-		if (!perp.isloyal())
+		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
 			threatcount += 4
 
 	return threatcount
@@ -533,13 +537,22 @@
 					T = closer
 					break
 
+	var/mob/living/carbon/C
+	if(iscarbon(target))
+		C = target
+
 	update_icon()
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		use_power(reqpower)
-		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, 1)
+		if(nonlethal_projectile && C && C.resting)
+			use_power(reqpower*0.5)
+			A = new nonlethal_projectile(T)
+			playsound(loc, nonlethal_projectile_sound, 75, 1)
+		else
+			use_power(reqpower)
+			A = new stun_projectile(T)
+			playsound(loc, stun_projectile_sound, 75, 1)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
@@ -548,12 +561,10 @@
 
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
+	A.firer = src
+	A.fired_from = src
 	A.fire()
 	return A
-
-/obj/machinery/porta_turret/shuttleRotate(rotation)
-	if(wall_turret_direction)
-		wall_turret_direction = turn(wall_turret_direction,rotation)
 
 /obj/machinery/porta_turret/proc/setState(on, mode)
 	if(controllock)
@@ -625,7 +636,7 @@
 	if(!can_interact(caller))
 		remove_control()
 		return FALSE
-	add_logs(caller,A,"fired with manual turret control at")
+	log_combat(caller,A,"fired with manual turret control at")
 	target(A)
 	return TRUE
 
@@ -636,6 +647,7 @@
 	has_cover = 0
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
+	mode = TURRET_LETHAL
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
@@ -654,6 +666,8 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
@@ -663,6 +677,8 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
@@ -680,8 +696,28 @@
 	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
+/obj/machinery/porta_turret/syndicate/shuttle
+	scan_range = 9
+	shot_delay = 3
+	stun_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+
+/obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
+	if(target)
+		setDir(get_dir(base, target))//even if you can't shoot, follow the target
+		shootAt(target)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 5)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
+		return TRUE
+
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
+	nonlethal_projectile = /obj/item/projectile/beam/disabler
+	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
@@ -740,9 +776,17 @@
 	integrity_failure = 60
 	name = "Old Laser Turret"
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
-	stun_projectile = /obj/item/projectile/beam/weak
-	lethal_projectile = /obj/item/projectile/beam/weak
+	stun_projectile = /obj/item/projectile/beam/weak/penetrator
+	lethal_projectile = /obj/item/projectile/beam/weak/penetrator
 	faction = list("neutral","silicon","turret")
+
+/obj/machinery/porta_turret/centcom_shuttle/ballistic
+	stun_projectile = /obj/item/projectile/bullet
+	lethal_projectile = /obj/item/projectile/bullet
+	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
+	desc = "A ballistic machine gun auto-turret."
+
 
 ////////////////////////
 //Turret Control Panel//
@@ -793,6 +837,12 @@
 		turrets |= T
 		T.cp = src
 
+/obj/machinery/turretid/examine(mob/user)
+	. = ..()
+	if(issilicon(user) && (!stat & BROKEN))
+		. += "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>"
+		. += "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>"
+
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
 		return
@@ -826,6 +876,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
@@ -833,6 +884,7 @@
 	locked = FALSE
 	if(user && user.machine == src)
 		attack_hand(user)
+	return TRUE
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || IsAdminGhost(user))

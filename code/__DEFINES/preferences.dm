@@ -68,3 +68,17 @@
 
 //Flags in the players table in the db
 #define DB_FLAG_EXEMPT 1
+
+#define DEFAULT_CYBORG_NAME "Default Cyborg Name"
+
+//Job preferences levels
+#define JP_LOW 1
+#define JP_MEDIUM 2
+#define JP_HIGH 3
+
+//Chaos levels for dynamic voting
+#define CHAOS_NONE "None (Extended)"
+#define CHAOS_LOW "Low"
+#define CHAOS_MED "Medium"
+#define CHAOS_HIGH "High"
+#define CHAOS_MAX "Maximum"

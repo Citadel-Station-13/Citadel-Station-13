@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, language)
+/mob/living/silicon/ai/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message, language)
 		return
@@ -26,7 +26,8 @@
 	..()
 
 /mob/living/silicon/ai/get_message_mode(message)
-	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))
+	var/static/regex/holopad_finder = regex(@"[:.#][hH]")
+	if(holopad_finder.Find(message, 1, 1))
 		return MODE_HOLOPAD
 	else
 		return ..()
@@ -48,8 +49,8 @@
 			padloc = AREACOORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
-		log_talk(src,"HOLOPAD in [padloc]: [key_name(src)] : [message]", LOGSAY)
-		send_speech(message, 7, T, "robot", get_spans(), language)
+		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
+		send_speech(message, 7, T, "robot", message_language = language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
@@ -100,6 +101,8 @@
 
 	last_announcement = message
 
+	var/voxType = input(src, "Male or female VOX?", "VOX-gender") in list("male", "female")
+
 	if(!message || announcing_vox > world.time)
 		return
 
@@ -121,7 +124,9 @@
 		if(!word)
 			words -= word
 			continue
-		if(!GLOB.vox_sounds[word])
+		if(!GLOB.vox_sounds[word] && voxType == "female")
+			incorrect_words += word
+		if(!GLOB.vox_sounds_male[word] && voxType == "male")
 			incorrect_words += word
 
 	if(incorrect_words.len)
@@ -133,16 +138,21 @@
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
 
 	for(var/word in words)
-		play_vox_word(word, src.z, null)
+		play_vox_word(word, src.z, null, voxType)
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener)
+/proc/play_vox_word(word, z_level, mob/only_listener, voxType = "female")
 
 	word = lowertext(word)
 
-	if(GLOB.vox_sounds[word])
+	if( (GLOB.vox_sounds[word] && voxType == "female") || (GLOB.vox_sounds_male[word] && voxType == "male") )
 
-		var/sound_file = GLOB.vox_sounds[word]
+		var/sound_file
+
+		if(voxType == "female")
+			sound_file = GLOB.vox_sounds[word]
+		else
+			sound_file = GLOB.vox_sounds_male[word]
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 

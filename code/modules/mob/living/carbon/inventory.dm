@@ -72,7 +72,7 @@
 			put_in_hands(I)
 			update_inv_hands()
 		if(SLOT_IN_BACKPACK)
-			if(!back.SendSignal(COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
+			if(!SEND_SIGNAL(back, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
 				not_handled = TRUE
 		else
 			not_handled = TRUE
@@ -85,7 +85,7 @@
 
 	return not_handled
 
-/mob/living/carbon/doUnEquip(obj/item/I)
+/mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
 	. = ..() //Sets the default return value to what the parent returns.
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
@@ -137,3 +137,6 @@
 		update_inv_wear_mask()
 	update_inv_head()
 
+/mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
+	var/index = get_held_index_of_item(I)
+	return index && hand_bodyparts[index]

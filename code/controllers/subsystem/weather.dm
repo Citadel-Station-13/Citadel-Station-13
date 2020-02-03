@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(weather)
 			for(var/z in SSmapping.levels_by_trait(target_trait))
 				LAZYINITLIST(eligible_zlevels["[z]"])
 				eligible_zlevels["[z]"][W] = probability
-	..()
+	return ..()
 
 /datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels)
 	if (istext(weather_datum_type))
@@ -74,10 +74,10 @@ SUBSYSTEM_DEF(weather)
 	next_hit_by_zlevel["[z]"] = null
 
 /datum/controller/subsystem/weather/proc/get_weather(z, area/active_area)
-    var/datum/weather/A
-    for(var/V in processing)
-        var/datum/weather/W = V
-        if((z in W.impacted_z_levels) && W.area_type == active_area.type)
-            A = W
-            break
-    return A
+	var/datum/weather/A
+	for(var/V in processing)
+		var/datum/weather/W = V
+		if((z in W.impacted_z_levels) && W.area_type == active_area.type)
+			A = W
+			break
+	return A

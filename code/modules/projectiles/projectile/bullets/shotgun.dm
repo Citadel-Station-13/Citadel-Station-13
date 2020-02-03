@@ -2,14 +2,10 @@
 	name = "12g shotgun slug"
 	damage = 60
 
-/obj/item/projectile/bullet/shotgun_slug/tengauge
-	name = "10g shotgun slug"
-	damage = 72.5
-
 /obj/item/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
 	damage = 5
-	stamina = 80
+	stamina = 70
 
 /obj/item/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
@@ -22,6 +18,7 @@
 /obj/item/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
 	damage = 5
+	stamina = 20
 	knockdown = 100
 	stutter = 5
 	jitter = 20
@@ -56,7 +53,7 @@
 /obj/item/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 1)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/pellet
 	var/tile_dropoff = 0.75
@@ -64,12 +61,12 @@
 
 /obj/item/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 12.5
+	damage = 10
 
 /obj/item/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"
-	damage = 3
-	stamina = 25
+	damage = 2
+	stamina = 15
 
 /obj/item/projectile/bullet/pellet/Range()
 	..()
@@ -92,8 +89,12 @@
 	do_sparks(1, TRUE, src)
 	..()
 
-// Mech Scattershot
+// Mech Scattershots
 
 /obj/item/projectile/bullet/scattershot
 	damage = 20
 	stamina = 65
+
+/obj/item/projectile/bullet/seed
+	damage = 4
+	stamina = 1

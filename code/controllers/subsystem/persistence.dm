@@ -1,4 +1,5 @@
 #define FILE_ANTAG_REP "data/AntagReputation.json"
+#define MAX_RECENT_MAP_RECORD 10
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -11,10 +12,17 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
+	var/list/saved_dynamic_rules = list(list(),list(),list())
+	var/list/saved_storytellers = list("foo","bar","baz","foo again","bar again")
+	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
+	var/list/picture_logging_information = list()
+	var/list/saved_votes = list()
+	var/list/obj/structure/sign/picture_frame/photo_frames
+	var/list/obj/item/storage/photo_album/photo_albums
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -22,9 +30,16 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
+	LoadRecentStorytellers()
+	LoadRecentRulesets()
+	LoadRecentMaps()
+	LoadPhotoPersistence()
+	for(var/client/C in GLOB.clients)
+		LoadSavedVote(C.ckey)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
-	..()
+	LoadRandomizedRecipes()
+	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
 	var/placed_satchel = 0
@@ -158,6 +173,33 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
+/datum/controller/subsystem/persistence/proc/LoadRecentRulesets()
+	var/json_file = file("data/RecentRulesets.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_dynamic_rules = json["data"]
+
+/datum/controller/subsystem/persistence/proc/LoadRecentStorytellers()
+	var/json_file = file("data/RecentStorytellers.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_storytellers = json["data"]
+
+/datum/controller/subsystem/persistence/proc/LoadRecentMaps()
+	var/json_file = file("data/RecentMaps.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_maps = json["maps"]
+
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
 	var/json = file2text(FILE_ANTAG_REP)
 	if(!json)
@@ -167,6 +209,15 @@ SUBSYSTEM_DEF(persistence)
 			return
 		return
 	antag_rep = json_decode(json)
+
+/datum/controller/subsystem/persistence/proc/LoadSavedVote(var/ckey)
+	var/json_file = file("data/player_saves/[copytext(ckey,1,2)]/[ckey]/SavedVotes.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_votes[ckey] = json["data"]
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -194,14 +245,89 @@ SUBSYSTEM_DEF(persistence)
 		T.placer_key = chosen_trophy["placer_key"]
 		T.update_icon()
 
-
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectSecretSatchels()
 	CollectTrophies()
 	CollectRoundtype()
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		CollectStoryteller(mode)
+		CollectRulesets(mode)
+	RecordMaps()
+	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
+	SaveRandomizedRecipes()
+
+/datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
+	var/album_path = file("data/photo_albums.json")
+	if(fexists(album_path))
+		return json_decode(file2text(album_path))
+
+/datum/controller/subsystem/persistence/proc/GetPhotoFrames()
+	var/frame_path = file("data/photo_frames.json")
+	if(fexists(frame_path))
+		return json_decode(file2text(frame_path))
+
+/datum/controller/subsystem/persistence/proc/LoadPhotoPersistence()
+	var/album_path = file("data/photo_albums.json")
+	var/frame_path = file("data/photo_frames.json")
+	if(fexists(album_path))
+		var/list/json = json_decode(file2text(album_path))
+		if(json.len)
+			for(var/i in photo_albums)
+				var/obj/item/storage/photo_album/A = i
+				if(!A.persistence_id)
+					continue
+				if(json[A.persistence_id])
+					A.populate_from_id_list(json[A.persistence_id])
+
+	if(fexists(frame_path))
+		var/list/json = json_decode(file2text(frame_path))
+		if(json.len)
+			for(var/i in photo_frames)
+				var/obj/structure/sign/picture_frame/PF = i
+				if(!PF.persistence_id)
+					continue
+				if(json[PF.persistence_id])
+					PF.load_from_id(json[PF.persistence_id])
+
+/datum/controller/subsystem/persistence/proc/SavePhotoPersistence()
+	var/album_path = file("data/photo_albums.json")
+	var/frame_path = file("data/photo_frames.json")
+
+	var/list/frame_json = list()
+	var/list/album_json = list()
+
+	if(fexists(album_path))
+		album_json = json_decode(file2text(album_path))
+		fdel(album_path)
+
+	for(var/i in photo_albums)
+		var/obj/item/storage/photo_album/A = i
+		if(!istype(A) || !A.persistence_id)
+			continue
+		var/list/L = A.get_picture_id_list()
+		album_json[A.persistence_id] = L
+
+	album_json = json_encode(album_json)
+
+	WRITE_FILE(album_path, album_json)
+
+	if(fexists(frame_path))
+		frame_json = json_decode(file2text(frame_path))
+		fdel(frame_path)
+
+	for(var/i in photo_frames)
+		var/obj/structure/sign/picture_frame/F = i
+		if(!istype(F) || !F.persistence_id)
+			continue
+		frame_json[F.persistence_id] = F.get_photo_id()
+
+	frame_json = json_encode(frame_json)
+
+	WRITE_FILE(frame_path, frame_json)
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
@@ -284,6 +410,41 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+/datum/controller/subsystem/persistence/proc/CollectStoryteller(var/datum/game_mode/dynamic/mode)
+	saved_storytellers.len = 5
+	saved_storytellers[5] = saved_storytellers[4]
+	saved_storytellers[4] = saved_storytellers[3]
+	saved_storytellers[3] = saved_storytellers[2]
+	saved_storytellers[2] = saved_storytellers[1]
+	saved_storytellers[1] = mode.storyteller.name
+	var/json_file = file("data/RecentStorytellers.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_storytellers
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/CollectRulesets(var/datum/game_mode/dynamic/mode)
+	saved_dynamic_rules[3] = saved_dynamic_rules[2]
+	saved_dynamic_rules[2] = saved_dynamic_rules[1]
+	saved_dynamic_rules[1] = list()
+	for(var/r in mode.executed_rules)
+		var/datum/dynamic_ruleset/rule = r
+		saved_dynamic_rules[1] += rule.config_tag
+	var/json_file = file("data/RecentRulesets.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_dynamic_rules
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/RecordMaps()
+	saved_maps = saved_maps?.len ? list("[SSmapping.config.map_name]") | saved_maps : list("[SSmapping.config.map_name]")
+	var/json_file = file("data/RecentMaps.json")
+	var/list/file_data = list()
+	file_data["maps"] = saved_maps
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+
 /datum/controller/subsystem/persistence/proc/CollectAntagReputation()
 	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
 
@@ -298,3 +459,51 @@ SUBSYSTEM_DEF(persistence)
 	fdel(FILE_ANTAG_REP)
 	text2file(json_encode(antag_rep), FILE_ANTAG_REP)
 
+/datum/controller/subsystem/persistence/proc/LoadRandomizedRecipes()
+	var/json_file = file("data/RandomizedChemRecipes.json")
+	var/json
+	if(fexists(json_file))
+		json = json_decode(file2text(json_file))
+
+	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
+		var/datum/chemical_reaction/randomized/R = new randomized_type
+		var/loaded = FALSE
+		if(R.persistent && json)
+			var/list/recipe_data = json[R.id]
+			if(recipe_data && R.LoadOldRecipe(recipe_data) && (daysSince(R.created) <= R.persistence_period))
+				loaded = TRUE
+		if(!loaded) //We do not have information for whatever reason, just generate new one
+			R.GenerateRecipe()
+
+		if(!R.HasConflicts()) //Might want to try again if conflicts happened in the future.
+			add_chemical_reaction(R)
+
+/datum/controller/subsystem/persistence/proc/SaveRandomizedRecipes()
+	var/json_file = file("data/RandomizedChemRecipes.json")
+	var/list/file_data = list()
+
+	//asert globchems done
+	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
+		var/datum/chemical_reaction/randomized/R = randomized_type
+		R = get_chemical_reaction(initial(R.id)) //ew, would be nice to add some simple tracking
+		if(R && R.persistent && R.id)
+			var/recipe_data = list()
+			recipe_data["timestamp"] = R.created
+			recipe_data["required_reagents"] = R.required_reagents
+			recipe_data["required_catalysts"] = R.required_catalysts
+			recipe_data["required_temp"] = R.required_temp
+			recipe_data["is_cold_recipe"] = R.is_cold_recipe
+			recipe_data["results"] = R.results
+			recipe_data["required_container"] = "[R.required_container]"
+			file_data["[R.id]"] = recipe_data
+
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/SaveSavedVotes()
+	for(var/ckey in saved_votes)
+		var/json_file = file("data/player_saves/[copytext(ckey,1,2)]/[ckey]/SavedVotes.json")
+		var/list/file_data = list()
+		file_data["data"] = saved_votes[ckey]
+		fdel(json_file)
+		WRITE_FILE(json_file, json_encode(file_data))

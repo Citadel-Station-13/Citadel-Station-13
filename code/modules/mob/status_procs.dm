@@ -28,7 +28,7 @@
 	return 0
 
 /mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Can't go below remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE))  || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))  || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(U)
 			U.duration = max(world.time + amount, U.duration)
@@ -37,7 +37,7 @@
 		return U
 
 /mob/living/proc/SetUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Sets remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(amount <= 0)
 			if(U)
@@ -49,7 +49,7 @@
 		return U
 
 /mob/living/proc/AdjustUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Adds to remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(U)
 			U.duration += amount
@@ -72,7 +72,7 @@
 	return 0
 
 /mob/living/proc/Sleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Can't go below remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(S)
 			S.duration = max(world.time + amount, S.duration)
@@ -81,7 +81,7 @@
 		return S
 
 /mob/living/proc/SetSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Sets remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(amount <= 0)
 			if(S)
@@ -93,7 +93,7 @@
 		return S
 
 /mob/living/proc/AdjustSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Adds to remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(S)
 			S.duration += amount
@@ -134,17 +134,6 @@
 /mob/proc/Dizzy(amount)
 	dizziness = max(dizziness,amount,0)
 
-/////////////////////////////////// EYE DAMAGE ////////////////////////////////////
-
-/mob/proc/damage_eyes(amount)
-	return
-
-/mob/proc/adjust_eye_damage(amount)
-	return
-
-/mob/proc/set_eye_damage(amount)
-	return
-
 /////////////////////////////////// EYE_BLIND ////////////////////////////////////
 
 /mob/proc/blind_eyes(amount)
@@ -170,7 +159,7 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
+			if(HAS_TRAIT(L, TRAIT_BLIND))
 				blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
@@ -191,7 +180,7 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
+			if(HAS_TRAIT(L, TRAIT_BLIND))
 				blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)
@@ -205,25 +194,51 @@
 		var/old_eye_blurry = eye_blurry
 		eye_blurry = max(amount, eye_blurry)
 		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			add_eyeblur() //Citadel edit blurry eye memes entailed. syncs beware
+		else if(eye_blurry > 0)
+			update_eyeblur()
 
 /mob/proc/adjust_blurriness(amount)
 	var/old_eye_blurry = eye_blurry
 	eye_blurry = max(eye_blurry+amount, 0)
 	if(amount>0)
 		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			add_eyeblur()
+	else if(eye_blurry > 0)
+		update_eyeblur()
 	else if(old_eye_blurry && !eye_blurry)
-		clear_fullscreen("blurry")
+		remove_eyeblur()
 
 /mob/proc/set_blurriness(amount)
 	var/old_eye_blurry = eye_blurry
 	eye_blurry = max(amount, 0)
 	if(amount>0)
 		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			add_eyeblur()
+	else if(eye_blurry > 0)
+		update_eyeblur()
 	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
+		remove_eyeblur()
+
+/mob/proc/add_eyeblur()
+	if(!client)
+		return
+	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
+	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
+	GW.add_filter("blurry_eyes", 2, EYE_BLUR(CLAMP(eye_blurry*0.1,0.6,3)))
+	F.add_filter("blurry_eyes", 2, EYE_BLUR(CLAMP(eye_blurry*0.1,0.6,3)))
+
+/mob/proc/update_eyeblur()
+	remove_eyeblur()
+	add_eyeblur()
+
+/mob/proc/remove_eyeblur()
+	if(!client)
+		return
+	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
+	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
+	GW.remove_filter("blurry_eyes")
+	F.remove_filter("blurry_eyes")
 
 /////////////////////////////////// DRUGGY ////////////////////////////////////
 
@@ -244,5 +259,5 @@
 /////////////////////////////////// TEMPERATURE ////////////////////////////////////
 
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
-	if(bodytemperature > min_temp && bodytemperature < max_temp)
+	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)

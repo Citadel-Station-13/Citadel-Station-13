@@ -37,6 +37,7 @@
 	gender = NEUTER
 	mob_biotypes = list(MOB_ROBOTIC)
 	speak_emote = list("chirps")
+	speech_span = SPAN_ROBOT
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
@@ -49,6 +50,7 @@
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	see_in_dark = 7
+	blood_volume = 0
 	can_be_held = TRUE
 	held_items = list(null, null)
 	var/staticChoice = "static"
@@ -59,7 +61,7 @@
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-	"3. Your goals are to build, maintain, repair, improve, and provide power to the best of your abilities, You must never actively work against these goals."
+	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
@@ -92,7 +94,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, SLOT_HEAD)
 
-	access_card.flags_1 |= NODROP_1
+	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -159,49 +161,48 @@
 	if(mind)
 		mind.transfer_to(R, 1)
 	else
-		R.key = key
+		transfer_ckey(R)
 	qdel(src)
 
 
 /mob/living/simple_animal/drone/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!")
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & ABSTRACT_1))
-			msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+		if(!(I.item_flags & ABSTRACT))
+			. += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 
 	//Internal storage
-	if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
-		msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
+	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
+		. += "It is holding [internal_storage.get_examine_string(user)] in its internal storage."
 
 	//Cosmetic hat - provides no function other than looks
-	if(head && !(head.flags_1&ABSTRACT_1))
-		msg += "It is wearing [head.get_examine_string(user)] on its head.\n"
+	if(head && !(head.item_flags & ABSTRACT))
+		. += "It is wearing [head.get_examine_string(user)] on its head."
 
 	//Braindead
 	if(!client && stat != DEAD)
-		msg += "Its status LED is blinking at a steady rate.\n"
+		. += "Its status LED is blinking at a steady rate."
 
 	//Hacked
 	if(hacked)
-		msg += "<span class='warning'>Its display is glowing red!</span>\n"
+		. += "<span class='warning'>Its display is glowing red!</span>"
 
 	//Damaged
 	if(health != maxHealth)
 		if(health > maxHealth * 0.33) //Between maxHealth and about a third of maxHealth, between 30 and 10 for normal drones
-			msg += "<span class='warning'>Its screws are slightly loose.</span>\n"
+			. += "<span class='warning'>Its screws are slightly loose.</span>"
 		else //otherwise, below about 33%
-			msg += "<span class='boldwarning'>Its screws are very loose!</span>\n"
+			. += "<span class='boldwarning'>Its screws are very loose!</span>"
 
 	//Dead
 	if(stat == DEAD)
 		if(client)
-			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".</span>\n"
+			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".</span>"
 		else
-			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>\n"
-	msg += "*---------*</span>"
-	to_chat(user, msg)
+			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>"
+	. += "*---------*</span>"
 
 
 /mob/living/simple_animal/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
@@ -273,3 +274,16 @@
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring
+
+/mob/living/simple_animal/drone/can_see_reagents()
+	. = ..()
+	if(.)
+		return
+	if(isclothing(head))
+		var/obj/item/clothing/H = head
+		if(H.clothing_flags & SCAN_REAGENTS)
+			return TRUE
+
+/mob/living/simple_animal/drone/generate_mob_holder()
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "[visualAppearence]_hat", null, null, null, TRUE)
+	return holder

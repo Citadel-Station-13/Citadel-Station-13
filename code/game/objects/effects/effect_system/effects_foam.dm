@@ -40,12 +40,12 @@
 	if(hotspot && istype(T) && T.air)
 		qdel(hotspot)
 		var/datum/gas_mixture/G = T.air
-		var/plas_amt = min(30,G.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
-		G.gases[/datum/gas/plasma][MOLES] -= plas_amt
+		var/plas_amt = min(30,G.gases[/datum/gas/plasma]) //Absorb some plasma
+		G.gases[/datum/gas/plasma] -= plas_amt
 		absorbed_plasma += plas_amt
 		if(G.temperature > T20C)
 			G.temperature = max(G.temperature/2,T20C)
-		G.garbage_collect()
+		GAS_GARBAGE_COLLECT(G.gases)
 		T.air_update_turf()
 
 /obj/effect/particle_effect/foam/firefighting/kill_foam()
@@ -55,7 +55,7 @@
 		var/obj/effect/decal/cleanable/plasma/P = (locate(/obj/effect/decal/cleanable/plasma) in get_turf(src))
 		if(!P)
 			P = new(loc)
-		P.reagents.add_reagent("stable_plasma", absorbed_plasma)
+		P.reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
 
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
@@ -123,10 +123,10 @@
 	if(metal)
 		var/turf/T = get_turf(src)
 		if(isspaceturf(T)) //Block up any exposed space
-			T.PlaceOnTop(/turf/open/floor/plating/foam)
+			T.PlaceOnTop(/turf/open/floor/plating/foam, flags = CHANGETURF_INHERIT_AIR)
 		for(var/direction in GLOB.cardinals)
 			var/turf/cardinal_turf = get_step(T, direction)
-			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
+			if(get_base_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
 				new/obj/structure/foamedmetal(T)
 				break
 	flick("[icon_state]-disolve", src)
@@ -270,15 +270,9 @@
 	max_integrity = 20
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/foamedmetal/New()
-	..()
+/obj/structure/foamedmetal/Initialize()
+	. = ..()
 	air_update_turf(1)
-
-
-/obj/structure/foamedmetal/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
@@ -330,8 +324,8 @@
 			for(var/I in G_gases)
 				if(I == /datum/gas/oxygen || I == /datum/gas/nitrogen)
 					continue
-				G_gases[I][MOLES] = 0
-			G.garbage_collect()
+				G_gases[I] = 0
+			GAS_GARBAGE_COLLECT(G.gases)
 			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)
 			if(!U.welded)

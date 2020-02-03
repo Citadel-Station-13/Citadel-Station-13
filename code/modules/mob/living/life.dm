@@ -4,7 +4,7 @@
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
 
-	if((movement_type & FLYING) && !floating)	//TODO: Better floating
+	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
 
 	if (client)
@@ -43,7 +43,10 @@
 		//Breathing, if applicable
 		handle_breathing(times_fired)
 
-	handle_diseases() // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+	if (QDELETED(src)) // diseases can qdel the mob via transformations
+		return
 
 	if(stat != DEAD)
 		//Random events (vomiting etc)
@@ -58,7 +61,7 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	update_gravity(mob_has_gravity())
+	handle_gravity()
 
 	if(machine)
 		machine.check_eye(src)
@@ -106,11 +109,11 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
+	if(G.gases[/datum/gas/oxygen] < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
+	location.hotspot_expose(700, 10, 1)
 
 /mob/living/proc/handle_stomach()
 	return
@@ -123,7 +126,7 @@
 /mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(has_trait(TRAIT_BLIND)))
+		if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")
@@ -132,8 +135,34 @@
 			eye_blind = max(eye_blind-1,1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
-		if(client && !eye_blurry)
-			clear_fullscreen("blurry")
+		if(client)
+			if(!eye_blurry)
+				remove_eyeblur()
+			else
+				update_eyeblur()
 
 /mob/living/proc/update_damage_hud()
 	return
+
+/mob/living/proc/handle_gravity()
+	var/gravity = mob_has_gravity()
+	update_gravity(gravity)
+
+	if(gravity > STANDARD_GRAVITY)
+		gravity_animate()
+		handle_high_gravity(gravity)
+
+/mob/living/proc/gravity_animate()
+	if(!get_filter("gravity"))
+		add_filter("gravity",1, GRAVITY_MOTION_BLUR)
+	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
+
+/mob/living/proc/gravity_pulse_animation()
+	animate(get_filter("gravity"), y = 1, time = 10)
+	sleep(10)
+	animate(get_filter("gravity"), y = 0, time = 10)
+
+/mob/living/proc/handle_high_gravity(gravity)
+	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more
+		var/grav_stregth = gravity - GRAVITY_DAMAGE_TRESHOLD
+		adjustBruteLoss(min(grav_stregth,3))

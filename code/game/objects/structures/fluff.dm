@@ -70,6 +70,13 @@
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
 	icon_state = "drake_statue_falling"
 
+/obj/structure/fluff/lightpost
+	name = "lightpost"
+	desc = "A homely lightpost adorned with festive decor."
+	icon = 'icons/obj/2x2.dmi'
+	icon_state = "lightpost"
+	deconstructible = FALSE
+	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/bus
 	name = "bus"
@@ -167,3 +174,67 @@
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
+
+/obj/structure/fluff/snowlegion
+	name = "snowlegion"
+	desc = "Looks like that weird kid with the tiger plushie has been round here again."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "snowlegion"
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/big_chain
+	name = "giant chain"
+	desc = "A towering link of chains leading up to the ceiling."
+	icon = 'icons/effects/32x96.dmi'
+	icon_state = "chain"
+	layer = ABOVE_OBJ_LAYER
+	anchored = TRUE
+	density = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/railing
+	name = "railing"
+	desc = "Basic railing meant to protect idiots like you from falling."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "railing"
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/railing/corner
+	icon_state = "railing_corner"
+	density = FALSE
+
+/obj/structure/fluff/beach_towel
+	name = "beach towel"
+	desc = "A towel decorated in various beach-themed designs."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "railing"
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_umbrella
+	name = "beach umbrella"
+	desc = "A fancy umbrella designed to keep the sun off beach-goers."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "brella"
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_umbrella/security
+	icon_state = "hos_brella"
+
+/obj/structure/fluff/beach_umbrella/science
+	icon_state = "rd_brella"
+
+/obj/structure/fluff/beach_umbrella/engine
+	icon_state = "ce_brella"
+
+/obj/structure/fluff/beach_umbrella/cap
+	icon_state = "cap_brella"
+
+/obj/structure/fluff/beach_umbrella/syndi
+	icon_state = "syndi_brella"

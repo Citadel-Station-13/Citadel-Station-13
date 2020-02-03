@@ -2,54 +2,16 @@
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, TRAIT_NEARSIGHT trait, and TRAIT_HUSK trait.
 
-/mob/living/carbon/damage_eyes(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return
-	if(amount>0)
-		eyes.eye_damage = amount
-		if(eyes.eye_damage > 20)
-			if(eyes.eye_damage > 30)
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-			else
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-
-/mob/living/carbon/set_eye_damage(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return
-	eyes.eye_damage = max(amount,0)
-	if(eyes.eye_damage > 20)
-		if(eyes.eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-/mob/living/carbon/adjust_eye_damage(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return
-	eyes.eye_damage = max(eyes.eye_damage+amount, 0)
-	if(eyes.eye_damage > 20)
-		if(eyes.eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
 /mob/living/carbon/adjust_drugginess(amount)
 	druggy = max(druggy+amount, 0)
 	if(druggy)
 		overlay_fullscreen("high", /obj/screen/fullscreen/high)
 		throw_alert("high", /obj/screen/alert/high)
-		SendSignal(COMSIG_ADD_MOOD_EVENT, "high", /datum/mood_event/drugs/high)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high", /datum/mood_event/high)
 	else
 		clear_fullscreen("high")
 		clear_alert("high")
-		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "high")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "high")
 
 /mob/living/carbon/set_drugginess(amount)
 	druggy = max(amount, 0)

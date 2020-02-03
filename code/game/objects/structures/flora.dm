@@ -101,6 +101,12 @@
 	icon_state = "festivus_pole"
 	desc = "During last year's Feats of Strength the Research Director was able to suplex this passing immobile rod into a planter."
 
+/obj/structure/festivus/anchored
+	name = "suplexed rod"
+	desc = "A true feat of strength, almost as good as last year."
+	icon_state = "anchored_rod"
+	anchored = TRUE
+
 /obj/structure/flora/tree/dead/Initialize()
 	icon_state = "tree_[rand(1, 6)]"
 	. = ..()
@@ -296,19 +302,7 @@
 
 /obj/item/twohanded/required/kirbyplants/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 750), 0)
-
-/obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
-	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
-	I.copy_overlays(src)
-	I.override = 1
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
-	I.layer = ABOVE_MOB_LAYER
-	..()
-
-/obj/item/twohanded/required/kirbyplants/dropped(mob/living/user)
-	..()
-	user.remove_alt_appearance("sneaking_mission")
+	AddComponent(/datum/component/tactical)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
@@ -364,10 +358,6 @@
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
 	desc = "A pile of rocks."
-
-/obj/structure/flora/rock/pile/Initialize()
-	. = ..()
-	icon_state = "[icon_state][rand(1,3)]"
 
 //Jungle grass
 

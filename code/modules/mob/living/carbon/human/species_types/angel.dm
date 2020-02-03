@@ -23,20 +23,20 @@
 	if(ishuman(H) && !fly)
 		fly = new
 		fly.Grant(H)
-	H.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	ADD_TRAIT(H, TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
 		fly.Remove(H)
 	if(H.movement_type & FLYING)
-		H.movement_type &= ~FLYING
+		H.setMovetype(H.movement_type & ~FLYING)
 	ToggleFlight(H,0)
 	if(H.dna && H.dna.species && (H.dna.features["wings"] == "Angel"))
 		if("wings" in H.dna.species.mutant_bodyparts)
 			H.dna.species.mutant_bodyparts -= "wings"
 		H.dna.features["wings"] = "None"
 		H.update_body()
-	H.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
 /datum/species/angel/spec_life(mob/living/carbon/human/H)
@@ -132,14 +132,14 @@
 	if(flight && CanFly(H))
 		stunmod = 2
 		speedmod = -0.35
-		H.movement_type |= FLYING
+		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
 		stunmod = 1
 		speedmod = 0
-		H.movement_type &= ~FLYING
+		H.setMovetype(H.movement_type & ~FLYING)
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

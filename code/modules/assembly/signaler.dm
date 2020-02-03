@@ -11,7 +11,6 @@
 
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
-	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 	var/suicider = null
 	var/hearing_range = 1
@@ -24,7 +23,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user]'s \the [src] recieves a signal, killing [user.p_them()] instantly!</span>")
+	user.visible_message("<span class='suicide'>[user]'s \the [src] receives a signal, killing [user.p_them()] instantly!</span>")
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
 
@@ -48,64 +47,50 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/signaler/ui_interact(mob/user, flag1)
-	. = ..()
-	if(is_secured(user))
-		var/t1 = "-------"
-		var/dat = {"
-<TT>
-
-<A href='byond://?src=[REF(src)];send=1'>Send Signal</A><BR>
-<B>Frequency/Code</B> for signaler:<BR>
-Frequency:
-<A href='byond://?src=[REF(src)];freq=-10'>-</A>
-<A href='byond://?src=[REF(src)];freq=-2'>-</A>
-[format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];freq=2'>+</A>
-<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
-
-Code:
-<A href='byond://?src=[REF(src)];code=-5'>-</A>
-<A href='byond://?src=[REF(src)];code=-1'>-</A>
-[src.code]
-<A href='byond://?src=[REF(src)];code=1'>+</A>
-<A href='byond://?src=[REF(src)];code=5'>+</A><BR>
-[t1]
-</TT>"}
-		user << browse(dat, "window=radio")
-		onclose(user, "radio")
+/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	if(!is_secured(user))
 		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		var/ui_width = 280
+		var/ui_height = 132
+		ui = new(user, src, ui_key, "signaler", name, ui_width, ui_height, master_ui, state)
+		ui.open()
 
+/obj/item/assembly/signaler/ui_data(mob/user)
+	var/list/data = list()
+	data["frequency"] = frequency
+	data["code"] = code
+	data["minFrequency"] = MIN_FREE_FREQ
+	data["maxFrequency"] = MAX_FREE_FREQ
 
-/obj/item/assembly/signaler/Topic(href, href_list)
-	..()
+	return data
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		usr << browse(null, "window=radio")
-		onclose(usr, "radio")
+/obj/item/assembly/signaler/ui_act(action, params)
+	if(..())
 		return
+	switch(action)
+		if("signal")
+			INVOKE_ASYNC(src, .proc/signal)
+			. = TRUE
+		if("freq")
+			frequency = unformat_frequency(params["freq"])
+			frequency = sanitize_frequency(frequency, TRUE)
+			set_frequency(frequency)
+			. = TRUE
+		if("code")
+			code = text2num(params["code"])
+			code = round(code)
+			. = TRUE
+		if("reset")
+			if(params["reset"] == "freq")
+				frequency = initial(frequency)
+			else
+				code = initial(code)
+			. = TRUE
 
-	if (href_list["freq"])
-		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
-			new_frequency = sanitize_frequency(new_frequency)
-		set_frequency(new_frequency)
-
-	if(href_list["code"])
-		src.code += text2num(href_list["code"])
-		src.code = round(src.code)
-		src.code = min(100, src.code)
-		src.code = max(1, src.code)
-
-	if(href_list["send"])
-		spawn( 0 )
-			signal()
-
-	if(usr)
-		attack_self(usr)
-
-	return
-
+	update_icon()
+	
 /obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
 		var/obj/item/assembly/signaler/signaler2 = W
@@ -158,21 +143,21 @@ Code:
 // Embedded signaller used in grenade construction.
 // It's necessary because the signaler doens't have an off state.
 // Generated during grenade construction.  -Sayu
-/obj/item/assembly/signaler/reciever
+/obj/item/assembly/signaler/receiver
 	var/on = FALSE
 
-/obj/item/assembly/signaler/reciever/proc/toggle_safety()
+/obj/item/assembly/signaler/receiver/proc/toggle_safety()
 	on = !on
 
-/obj/item/assembly/signaler/reciever/activate()
+/obj/item/assembly/signaler/receiver/activate()
 	toggle_safety()
 	return TRUE
 
-/obj/item/assembly/signaler/reciever/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The radio receiver is [on?"on":"off"].</span>")
+/obj/item/assembly/signaler/receiver/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>The radio receiver is [on?"on":"off"].</span>"
 
-/obj/item/assembly/signaler/reciever/receive_signal(datum/signal/signal)
+/obj/item/assembly/signaler/receiver/receive_signal(datum/signal/signal)
 	if(!on)
 		return
 	return ..(signal)

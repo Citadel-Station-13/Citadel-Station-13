@@ -6,7 +6,9 @@
 	layer = BELOW_MOB_LAYER
 	var/splatter_type = "splatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, new_color)
+	if(new_color)
+		color = new_color
 	if(set_dir in GLOB.diagonals)
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
@@ -41,7 +43,7 @@
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "xsplatter"
+	color = BLOOD_COLOR_XENO
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"
@@ -313,6 +315,11 @@
 	randomdir = 0
 	duration = 6
 
+/obj/effect/temp_visual/desynchronizer
+	name = "desynchronizer field"
+	icon_state = "chronofield"
+	duration = 3
+
 /obj/effect/temp_visual/impact_effect
 	icon_state = "impact_bullet"
 	duration = 5
@@ -342,6 +349,10 @@
 	icon_state = "impact_laser_purple"
 	duration = 4
 
+/obj/effect/temp_visual/impact_effect/shrink
+	icon_state = "m_shield"
+	duration = 10
+
 /obj/effect/temp_visual/impact_effect/ion
 	icon_state = "shieldsparkles"
 	duration = 6
@@ -357,6 +368,29 @@
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
+
+/obj/effect/temp_visual/love_heart
+	name = "love heart"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "heart"
+	duration = 25
+
+/obj/effect/temp_visual/love_heart/Initialize(mapload)
+	. = ..()
+	pixel_x = rand(-10,10)
+	pixel_y = rand(-10,10)
+	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = duration)
+
+/obj/effect/temp_visual/love_heart/invisible
+	icon_state = null
+
+/obj/effect/temp_visual/love_heart/invisible/Initialize(mapload, mob/seer)
+	. = ..()
+	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "heart", layer = ABOVE_MOB_LAYER, loc = src)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/onePerson, "heart", I, seer)
+	I.alpha = 255
+	I.appearance_flags = RESET_ALPHA
+	animate(I, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/bleed
 	name = "bleed"
@@ -412,3 +446,51 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/slugboom
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "slugboom"
+	randomdir = FALSE
+	duration = 30
+	pixel_x = -24
+
+/obj/effect/constructing_effect
+	icon = 'icons/effects/effects_rcd.dmi'
+	icon_state = ""
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	var/status = 0
+	var/delay = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
+	. = ..()
+	status = rcd_status
+	delay = rcd_delay
+	if (status == RCD_DECONSTRUCT)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 11)
+		delay -= 11
+		icon_state = "rcd_end_reverse"
+	else
+		update_icon()
+
+/obj/effect/constructing_effect/update_icon()
+	icon_state = "rcd"
+	if (delay < 10)
+		icon_state += "_shortest"
+	else if (delay < 20)
+		icon_state += "_shorter"
+	else if (delay < 37)
+		icon_state += "_short"
+	if (status == RCD_DECONSTRUCT)
+		icon_state += "_reverse"
+
+/obj/effect/constructing_effect/proc/end_animation()
+	if (status == RCD_DECONSTRUCT)
+		qdel(src)
+	else
+		icon_state = "rcd_end"
+		addtimer(CALLBACK(src, .proc/end), 15)
+
+/obj/effect/constructing_effect/proc/end()
+	qdel(src)

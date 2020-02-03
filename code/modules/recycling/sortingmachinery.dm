@@ -36,7 +36,7 @@
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
 			return
-		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
@@ -122,7 +122,7 @@
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
 			return
-		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
@@ -146,19 +146,18 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "cargotagger"
-	var/currTag = 0
-	//The whole system for the sorttype var is determined based on the order of this list,
-	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
-
-	//If you don't want to fuck up disposals, add to this list, and don't change the order.
-	//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
-
+	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
+	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+
+/obj/item/destTagger/borg
+	name = "cyborg destination tagger"
+	desc = "Used to fool the disposal mail network into thinking that you're a harmless parcel. Does actually work as a regular destination tagger as well."
 
 /obj/item/destTagger/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tagging [user.p_their()] final destination!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -185,8 +184,9 @@
 	onclose(user, "destTagScreen")
 
 /obj/item/destTagger/attack_self(mob/user)
-	openwindow(user)
-	return
+	if(!locked_destination)
+		openwindow(user)
+		return
 
 /obj/item/destTagger/Topic(href, href_list)
 	add_fingerprint(usr)

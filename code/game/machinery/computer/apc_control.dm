@@ -11,7 +11,6 @@
 	var/list/result_filters //For sorting the results
 	var/checking_logs = 0
 	var/list/logs
-	var/authenticated = 0
 	var/auth_id = "\[NULL\]"
 
 /obj/machinery/computer/apc_control/Initialize()
@@ -28,6 +27,7 @@
 				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
+			active_apc.remote_control = null
 			active_apc = null
 
 /obj/machinery/computer/apc_control/attack_ai(mob/user)
@@ -92,9 +92,7 @@
 	if(!usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
-		var/obj/item/card/id/ID = usr.get_active_held_item()
-		if(!istype(ID))
-			ID = usr.get_idcard()
+		var/obj/item/card/id/ID = usr.get_idcard(TRUE)
 		if(ID && istype(ID))
 			if(check_access(ID))
 				authenticated = TRUE
@@ -121,10 +119,12 @@
 			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
+			active_apc.remote_control = null
 			active_apc = null
 		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Connected to APC in [get_area_name(APC.area, TRUE)]. Interface request sent.</span>")
 		log_activity("remotely accessed APC in [get_area_name(APC.area, TRUE)]")
-		APC.ui_interact(usr, state = GLOB.not_incapacitated_state)
+		APC.remote_control = src
+		APC.ui_interact(usr)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
 		log_game("[key_name(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
@@ -137,7 +137,7 @@
 		active_apc = APC
 	if(href_list["name_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
-		var/new_filter = stripped_input(usr, "What name are you looking for?", name) as null|text
+		var/new_filter = stripped_input(usr, "What name are you looking for?", name)
 		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 			return
 		log_activity("changed name filter to \"[new_filter]\"")
@@ -182,19 +182,23 @@
 	ui_interact(usr) //Refresh the UI after a filter changes
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
+	. = ..()
 	if(!authenticated)
 		to_chat(user, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 		authenticated = TRUE
 		log_activity("logged in")
-	else if(!(obj_flags & EMAGGED))
+	else
+		if(obj_flags & EMAGGED)
+			return
 		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], disabling operator tracking.")
 		obj_flags |= EMAGGED
-	playsound(src, "sparks", 50, 1)
+		playsound(src, "sparks", 50, 1)
+	return TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !(obj_flags & EMAGGED) ? operator : "\[NULL OPERATOR\]"
-	LAZYADD(logs, "<b>([station_time_timestamp()])</b> [op_string] [log_text]")
+	LAZYADD(logs, "<b>([STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)])</b> [op_string] [log_text]")
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))

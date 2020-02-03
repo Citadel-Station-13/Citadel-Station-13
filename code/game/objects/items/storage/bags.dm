@@ -1,5 +1,5 @@
 /*
- *	These absorb the functionality of the plant bag, ore satchel, etc.
+ *	These absorb the functionality of the plant bag, ore satchel, etc
  *	They use the use_to_pickup, quick_gather, and quick_empty functions
  *	that were already defined in weapon/storage, but which had been
  *	re-implemented in other classes.
@@ -21,7 +21,7 @@
 
 /obj/item/storage/bag/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.allow_quick_empty = TRUE
 	STR.display_numerical_stacking = TRUE
@@ -40,14 +40,17 @@
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 
 	w_class = WEIGHT_CLASS_BULKY
+	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 30
 	STR.max_items = 30
 	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
+	STR.limited_random_access = TRUE
+	STR.limited_random_access_stack_position = 3
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
@@ -64,26 +67,33 @@
 	else icon_state = "[initial(icon_state)]3"
 
 /obj/item/storage/bag/trash/cyborg
+	insertable = FALSE
 
 /obj/item/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.put_in_cart(src, user)
-	J.mybag=src
-	J.update_icon()
-
-/obj/item/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
+	if(insertable)
+		J.put_in_cart(src, user)
+		J.mybag=src
+		J.update_icon()
+	else
+		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
+		return
 
 /obj/item/storage/bag/trash/bluespace
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/bag/trash/bluespace/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 60
 	STR.max_items = 60
+	STR.limited_random_access_stack_position = 5
+
+/obj/item/storage/bag/trash/bluespace/cyborg
+	insertable = FALSE
 
 // -----------------------------
 //        Mining Satchel
@@ -98,11 +108,13 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
-	var/datum/component/mobhook
+	var/mob/listeningTo
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	var/range = null
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
 	STR.max_w_class = WEIGHT_CLASS_HUGE
@@ -110,15 +122,18 @@
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
-	if (mobhook && mobhook.parent != user)
-		QDEL_NULL(mobhook)
-	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/Pickup_ores, user))
+	if(listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
+	listeningTo = user
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
-	if (mobhook)
-		QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 
 /obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
 	var/show_message = FALSE
@@ -128,15 +143,24 @@
 		return
 	if (istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
-	GET_COMPONENT(STR, /datum/component/storage)
+	if(issilicon(user))
+		var/mob/living/silicon/robot/borgo = user
+		for(var/obj/item/cyborg_clamp/C in borgo.module.modules)
+			for(var/obj/structure/ore_box/B in C)
+				box = B
+
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
 		for(var/A in tile)
 			if (!is_type_in_typecache(A, STR.can_hold))
 				continue
 			if (box)
+				if(range)
+					for(var/obj/item/stack/ore/ore in range(range, user))
+						user.transferItemToLoc(ore, box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
-			else if(SendSignal(COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
+			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
 				show_message = TRUE
 			else
 				if(!spam_protection)
@@ -155,6 +179,27 @@
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
+	range = 1
+
+/obj/item/storage/bag/ore/cyborg/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
+	STR.allow_quick_empty = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
+	STR.max_w_class = WEIGHT_CLASS_HUGE
+	STR.max_combined_stack_amount = 150
+
+/obj/item/storage/bag/ore/large
+	name = "large mining satchel"
+	desc = "This bag can hold three times the ore in many small pockets. Shockingly foldable and compact for its volume."
+
+/obj/item/storage/bag/ore/large/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
+	STR.allow_quick_empty = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
+	STR.max_w_class = WEIGHT_CLASS_HUGE
+	STR.max_combined_stack_amount = 150
 
 /obj/item/storage/bag/ore/holding //miners, your messiah has arrived
 	name = "mining satchel of holding"
@@ -163,7 +208,7 @@
 
 /obj/item/storage/bag/ore/holding/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.max_items = INFINITY
 	STR.max_combined_w_class = INFINITY
 	STR.max_combined_stack_amount = INFINITY
@@ -181,7 +226,7 @@
 
 /obj/item/storage/bag/plants/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 100
 	STR.max_items = 100
@@ -221,7 +266,7 @@
 
 /obj/item/storage/bag/sheetsnatcher/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/stack/sheet))
 	STR.cant_hold = typecacheof(list(/obj/item/stack/sheet/mineral/sandstone, /obj/item/stack/sheet/mineral/wood))
@@ -238,7 +283,7 @@
 
 /obj/item/storage/bag/sheetsnatcher/borg/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.max_combined_stack_amount = 500
 
 // -----------------------------
@@ -255,7 +300,7 @@
 
 /obj/item/storage/bag/books/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 21
 	STR.max_items = 7
@@ -280,15 +325,14 @@
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.insert_preposition = "on"
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
 	// Drop all the things. All of them.
 	var/list/obj/item/oldContents = contents.Copy()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.quick_empty()
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	// Make each item scatter a bit
 	for(var/obj/item/I in oldContents)
 		spawn()
@@ -334,11 +378,11 @@
 
 /obj/item/storage/bag/chemistry/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 200
 	STR.max_items = 50
 	STR.insert_preposition = "in"
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/syringe/dart))
 
 /*
  *  Biowaste bag (mostly for xenobiologists)
@@ -354,8 +398,21 @@
 
 /obj/item/storage/bag/bio/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 200
 	STR.max_items = 25
 	STR.insert_preposition = "in"
 	STR.can_hold = typecacheof(list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube))
+
+/obj/item/storage/bag/bio/holding
+	name = "bio bag of holding"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bspace_biobag"
+	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+
+/obj/item/storage/bag/bio/holding/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_combined_w_class = INFINITY
+	STR.max_items = 100

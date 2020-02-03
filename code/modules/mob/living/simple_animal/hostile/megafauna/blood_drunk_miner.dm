@@ -33,7 +33,7 @@ Difficulty: Medium
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 1
-	move_to_delay = 3
+	move_to_delay = 2
 	projectiletype = /obj/item/projectile/kinetic/miner
 	projectilesound = 'sound/weapons/kenetic_accel.ogg'
 	ranged = 1
@@ -52,6 +52,8 @@ Difficulty: Medium
 	var/guidance = FALSE
 	deathmessage = "falls to the ground, decaying into glowing particles."
 	death_sound = "bodyfall"
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE

@@ -12,10 +12,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	stat = DEAD
 	density = FALSE
 	canmove = 0
-	anchored = TRUE	//  don't get pushed around
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
+	hud_type = /datum/hud/ghost
+	movement_type = GROUND | FLYING
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -132,8 +133,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		AA.onNewMob(src)
 
 	. = ..()
-
+	AddElement(/datum/element/ghost_role_eligibility)
 	grant_all_languages()
+
+/mob/dead/observer/get_photo_description(obj/item/camera/camera)
+	if(!invisibility || camera.see_ghosts)
+		return "You can also see a g-g-g-g-ghooooost!"
 
 /mob/dead/observer/narsie_act()
 	var/old_color = color
@@ -169,7 +174,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
  * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
  * |- Ricotez
  */
-/mob/dead/observer/proc/update_icon(new_form)
+/mob/dead/observer/update_icon(new_form)
+	. = ..()
 	if(client) //We update our preferences in case they changed right before update_icon was called.
 		ghost_accs = client.prefs.ghost_accs
 		ghost_others = client.prefs.ghost_others
@@ -225,15 +231,17 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/r_val
 	var/b_val
 	var/g_val
-	var/color_format = lentext(input_color)
+	var/color_format = length(input_color)
+	if(color_format != length_char(input_color))
+		return 0
 	if(color_format == 3)
-		r_val = hex2num(copytext(input_color, 1, 2))*16
-		g_val = hex2num(copytext(input_color, 2, 3))*16
-		b_val = hex2num(copytext(input_color, 3, 0))*16
+		r_val = hex2num(copytext(input_color, 1, 2)) * 16
+		g_val = hex2num(copytext(input_color, 2, 3)) * 16
+		b_val = hex2num(copytext(input_color, 3, 0)) * 16
 	else if(color_format == 6)
 		r_val = hex2num(copytext(input_color, 1, 3))
 		g_val = hex2num(copytext(input_color, 3, 5))
-		b_val = hex2num(copytext(input_color, 5, 0))
+		b_val = hex2num(copytext(input_color, 5, 7))
 	else
 		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
 
@@ -247,59 +255,85 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(b_val > 255)
 		b_val = 255
 
-	return num2hex(r_val, 2) + num2hex(g_val, 2) + num2hex(b_val, 2)
+	return copytext(rgb(r_val, g_val, b_val), 2)
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = 1)
-	if(key)
-		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
-			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
-			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
-			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
-			ghost.can_reenter_corpse = can_reenter_corpse
-			ghost.key = key
-			return ghost
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
+	penalize = suiciding || penalize // suicide squad.
+	voluntary_ghosted = voluntary
+	if(!key || key[1] == "@" || (SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special, penalize) & COMPONENT_BLOCK_GHOSTING))
+		return //mob has no key, is an aghost or some component hijacked.
+	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
+	var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
+	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
+	ghost.can_reenter_corpse = can_reenter_corpse
+	if (client && client.prefs && client.prefs.auto_ooc)
+		if (!(client.prefs.chat_toggles & CHAT_OOC))
+			client.prefs.chat_toggles ^= CHAT_OOC
+	transfer_ckey(ghost, FALSE)
+	ghost.AddElement(/datum/element/ghost_role_eligibility,penalize) // technically already run earlier, but this adds the penalty
+	// needs to be done AFTER the ckey transfer, too
+	return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
+
 /mob/living/verb/ghost()
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-// CITADEL EDIT
-	if(istype(loc, /obj/machinery/cryopod))
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
-		if(response != "Ghost")//darn copypaste
-			return
-		var/obj/machinery/cryopod/C = loc
-		C.despawn_occupant()
+	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+	if(world.time < roundstart_quit_limit)
+		penalty += roundstart_quit_limit - world.time
+	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+		penalty = CANT_REENTER_ROUND
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE, (stat == DEAD)? penalty : 0, (stat == DEAD)? TRUE : FALSE) & COMPONENT_BLOCK_GHOSTING)
 		return
-// END EDIT
+
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
 		ghostize(1)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles [penalty == CANT_REENTER_ROUND ? "until the round is over" : "for the next [DisplayTimeText(penalty)]"]" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
-		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+		if(istype(loc, /obj/machinery/cryopod))
+			var/obj/machinery/cryopod/C = loc
+			C.despawn_occupant()
+		else
+			ghostize(0, penalize = TRUE, voluntary = TRUE) //0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+			suicide_log(TRUE)
 
 /mob/camera/verb/ghost()
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
+		return
+
+	var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+	if(world.time < roundstart_quit_limit)
+		penalty += roundstart_quit_limit - world.time
+	if(penalty + world.realtime - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+		penalty = CANT_REENTER_ROUND
+
+	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles [penalty == CANT_REENTER_ROUND ? "until the round is over" : "for the next [DisplayTimeText(penalty)]"]" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 	if(response != "Ghost")
 		return
-	ghostize(0)
+	ghostize(0, penalize = TRUE)
+
+
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
@@ -333,12 +367,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!can_reenter_corpse)
 		to_chat(src, "<span class='warning'>You cannot re-enter your body.</span>")
 		return
-	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
+	if(mind.current.key && mind.current.key[1] != "@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
 	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
-	mind.current.key = key
+	transfer_ckey(mind.current, FALSE)
 	return 1
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
@@ -386,6 +420,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
+		return
 
 	usr.forceMove(pick(L))
 	update_parallax_contents()
@@ -418,9 +453,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/orbitsize = (I.Width()+I.Height())*0.5
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
-	if(orbiting && orbiting.orbiting != target)
-		to_chat(src, "<span class='notice'>Now orbiting [target].</span>")
-
 	var/rot_seg
 
 	switch(ghost_orbit)
@@ -439,13 +471,39 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/orbit()
 	setDir(2)//reset dir so the right directional sprites show up
-	..()
+	return ..()
 
-/mob/dead/observer/stop_orbit()
-	..()
+/mob/dead/observer/stop_orbit(datum/component/orbiter/orbits)
+	. = ..()
 	//restart our floating animation after orbit is done.
 	pixel_y = 0
 	animate(src, pixel_y = 2, time = 10, loop = -1)
+
+/mob/dead/observer/verb/observe()
+	set name = "Observe"
+	set category = "Ghost"
+
+	var/list/creatures = getpois()
+
+	reset_perspective(null)
+
+	var/eye_name = null
+
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+
+	if (!eye_name)
+		return
+
+	var/mob/mob_eye = creatures[eye_name]
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
+		client.eye = mob_eye
+		if(mob_eye.hud_used)
+			client.screen = list()
+			LAZYINITLIST(mob_eye.observers)
+			mob_eye.observers |= src
+			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
+			observetarget = mob_eye
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -589,6 +647,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Possess!"
 	set desc= "Take over the body of a mindless creature!"
 
+	if(!can_reenter_round())
+		return FALSE
+
 	var/list/possessible = list()
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		if(istype(L,/mob/living/carbon/human/dummy) || !get_turf(L)) //Haha no.
@@ -605,10 +666,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
 		return 0
 
-	if(istype (target, /mob/living/simple_animal/hostile/spawner))
-		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
-		return 0
-
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
@@ -616,13 +673,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
 		return 0
 
-	target.key = key
+	transfer_ckey(target, FALSE)
 	target.faction = list("neutral")
 	return 1
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
-//overriden here and in /mob/living for different point span classes and sanity checks
+//overridden here and in /mob/living for different point span classes and sanity checks
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
 	if(!..())
 		return 0
@@ -738,7 +795,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	update_icon()
 
-/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()
@@ -774,32 +831,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			client.screen = list()
 			hud_used.show_hud(hud_used.hud_version)
 
-/mob/dead/observer/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
-
-	var/list/creatures = getpois()
-
-	reset_perspective(null)
-
-	var/eye_name = null
-
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
-
-	if (!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-	//Istype so we filter out points of interest that are not mobs
-	if(client && mob_eye && istype(mob_eye))
-		client.eye = mob_eye
-		if(mob_eye.hud_used)
-			client.screen = list()
-			LAZYINITLIST(mob_eye.observers)
-			mob_eye.observers |= src
-			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
-			observetarget = mob_eye
-
 /mob/dead/observer/verb/register_pai_candidate()
 	set category = "Ghost"
 	set name = "pAI Setup"
@@ -818,9 +849,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
-	..()
+	. = ..()
 	if(!invisibility)
-		to_chat(user, "It seems extremely obvious.")
+		. += "It seems extremely obvious."
 
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value

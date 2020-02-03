@@ -16,6 +16,7 @@ Regenerative extracts:
 
 
 /obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
+	. = ..()
 	if(!prox || !isliving(target))
 		return
 	var/mob/living/H = target
@@ -50,7 +51,7 @@ Regenerative extracts:
 	colour = "purple"
 
 /obj/item/slimecross/regenerative/purple/core_effect(mob/living/target, mob/user)
-	target.reagents.add_reagent("regen_jelly",10)
+	target.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 
 /obj/item/slimecross/regenerative/blue
 	colour = "blue"
@@ -119,7 +120,7 @@ Regenerative extracts:
 	C.name = "fireproofed [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
-	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	C.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
 	C.resistance_flags |= FIRE_PROOF
 
@@ -141,14 +142,15 @@ Regenerative extracts:
 	do_sparks(5,FALSE,target)
 
 /obj/item/slimecross/regenerative/bluespace/Initialize()
-	..()
+	. = ..()
 	T = get_turf(src)
 
 /obj/item/slimecross/regenerative/sepia
 	colour = "sepia"
 
-/obj/item/slimecross/regenerative/sepia/core_effect(mob/living/target, mob/user)
-	new /obj/effect/timestop(get_turf(target), 2, 50, list(user,target))
+/obj/item/slimecross/regenerative/sepia/core_effect_before(mob/living/target, mob/user)
+	to_chat(target, "<span class=notice>You try to forget how you feel.</span>")
+	target.AddComponent(/datum/component/dejavu)
 
 /obj/item/slimecross/regenerative/cerulean
 	colour = "cerulean"
@@ -173,7 +175,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/red/core_effect(mob/living/target, mob/user)
 	to_chat(target, "<span class='notice'>You feel... <i>faster.</i></span>")
-	target.reagents.add_reagent("ephedrine",3)
+	target.reagents.add_reagent(/datum/reagent/medicine/ephedrine,3)
 
 /obj/item/slimecross/regenerative/green
 	colour = "green"
@@ -184,7 +186,7 @@ Regenerative extracts:
 		var/mob/living/simple_animal/slime/S = target
 		S.random_colour()
 	if(isjellyperson(target))
-		target.reagents.add_reagent("slime_toxin",5)
+		target.reagents.add_reagent(/datum/reagent/slime_toxin,5)
 
 
 /obj/item/slimecross/regenerative/pink
@@ -192,7 +194,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pink/core_effect(mob/living/target, mob/user)
 	to_chat(target, "<span class='notice'>You feel more calm.</span>")
-	target.reagents.add_reagent("krokodil",4)
+	target.reagents.add_reagent(/datum/reagent/drug/krokodil,4)
 
 /obj/item/slimecross/regenerative/gold
 	colour = "gold"

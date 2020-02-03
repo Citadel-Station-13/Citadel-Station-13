@@ -142,13 +142,14 @@
 
 /obj/item/integrated_circuit/converter/concatenator
 	name = "concatenator"
-	desc = "This can join up to 8 strings together to get one big string."
+	desc = "This can join up to 8 strings together to get a string with a maximum of 512 characters."
 	complexity = 4
 	inputs = list()
 	outputs = list("result" = IC_PINTYPE_STRING)
 	activators = list("concatenate" = IC_PINTYPE_PULSE_IN, "on concatenated" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/number_of_pins = 8
+	var/max_string_length = 512
 
 /obj/item/integrated_circuit/converter/concatenator/Initialize()
 	for(var/i = 1 to number_of_pins)
@@ -157,10 +158,28 @@
 
 /obj/item/integrated_circuit/converter/concatenator/do_work()
 	var/result = null
+	var/spamprotection
 	for(var/k in 1 to inputs.len)
 		var/I = get_pin_data(IC_INPUT, k)
 		if(!isnull(I))
+			if((result ? length(result) : 0) + length(I) > max_string_length)
+				spamprotection = (result ? length(result) : 0) + length(I)
+				break
 			result = result + I
+
+	if(spamprotection >= max_string_length*1.75 && assembly)
+		if(assembly.fingerprintslast)
+			var/mob/M = get_mob_by_key(assembly.fingerprintslast)
+			var/more = ""
+			if(M)
+				more = "[ADMIN_LOOKUPFLW(M)] "
+			message_admins("A concatenator circuit has greatly exceeded its [max_string_length] character limit with a total of [spamprotection] characters, and has been deleted. Assembly last touched by [more ? more : assembly.fingerprintslast].")
+			investigate_log("A concatenator circuit has greatly exceeded its [max_string_length] character limit with a total of [spamprotection] characters, and has been deleted. Assembly last touched by [assembly.fingerprintslast].", INVESTIGATE_CIRCUIT)
+		else
+			message_admins("A concatenator circuit has greatly exceeded its [max_string_length] character limit with a total of [spamprotection] characters, and has been deleted. No associated key.")
+			investigate_log("A concatenator circuit has greatly exceeded its [max_string_length] character limit with a total of [spamprotection] characters, and has been deleted. No associated key.", INVESTIGATE_CIRCUIT)
+		qdel(assembly)
+		return
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -168,15 +187,17 @@
 
 /obj/item/integrated_circuit/converter/concatenator/small
 	name = "small concatenator"
-	desc = "This can join up to 4 strings together to get one big string."
+	desc = "This can join up to 4 strings together to get a string with a maximum of 256 characters."
 	complexity = 2
 	number_of_pins = 4
+	max_string_length = 256
 
 /obj/item/integrated_circuit/converter/concatenator/large
 	name = "large concatenator"
-	desc = "This can join up to 16 strings together to get one very big string."
+	desc = "This can join up to 16 strings together to get a string with a maximum of 1024 characters."
 	complexity = 6
 	number_of_pins = 16
+	max_string_length = 1024
 
 /obj/item/integrated_circuit/converter/separator
 	name = "separator"
@@ -203,8 +224,8 @@
 
 	var/split = min(index+1, length(text))
 
-	var/before_text = copytext(text, 1, split)
-	var/after_text = copytext(text, split, 0)
+	var/before_text = copytext_char(text, 1, split)
+	var/after_text = copytext_char(text, split)
 
 	set_pin_data(IC_OUTPUT, 1, before_text)
 	set_pin_data(IC_OUTPUT, 2, after_text)
@@ -310,7 +331,7 @@
 	var/strin = get_pin_data(IC_INPUT, 1)
 	var/delimiter = get_pin_data(IC_INPUT, 2)
 	if(delimiter == null)
-		set_pin_data(IC_OUTPUT, 1, string2charlist(strin))
+		set_pin_data(IC_OUTPUT, 1, text2charlist(strin))
 	else
 		set_pin_data(IC_OUTPUT, 1, splittext(strin, delimiter))
 	push_data()
@@ -357,6 +378,7 @@
 /obj/item/integrated_circuit/converter/abs_to_rel_coords
 	name = "abs to rel coordinate converter"
 	desc = "Easily convert absolute coordinates to relative coordinates with this."
+	extended_desc = "Keep in mind that both sets of input coordinates should be absolute."
 	complexity = 1
 	inputs = list(
 		"X1" = IC_PINTYPE_NUMBER,
@@ -381,6 +403,71 @@
 	if(!isnull(x1) && !isnull(y1) && !isnull(x2) && !isnull(y2))
 		set_pin_data(IC_OUTPUT, 1, x1 - x2)
 		set_pin_data(IC_OUTPUT, 2, y1 - y2)
+
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/rel_to_abs_coords
+	name = "rel to abs coordinate converter"
+	desc = "Convert relative coordinates to absolute coordinates with this."
+	extended_desc = "Keep in mind that only one set of input coordinates should be absolute, and the other relative. \
+	The output coordinates will be the absolute form of the input relative coordinates."
+	complexity = 1
+	inputs = list(
+		"X1" = IC_PINTYPE_NUMBER,
+		"Y1" = IC_PINTYPE_NUMBER,
+		"X2" = IC_PINTYPE_NUMBER,
+		"Y2" = IC_PINTYPE_NUMBER
+		)
+	outputs = list(
+		"X" = IC_PINTYPE_NUMBER,
+		"Y" = IC_PINTYPE_NUMBER
+		)
+	activators = list("compute abs coordinates" = IC_PINTYPE_PULSE_IN, "on convert" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/abs_to_rel_coords/do_work()
+	var/x1 = get_pin_data(IC_INPUT, 1)
+	var/y1 = get_pin_data(IC_INPUT, 2)
+
+	var/x2 = get_pin_data(IC_INPUT, 3)
+	var/y2 = get_pin_data(IC_INPUT, 4)
+
+	if(!isnull(x1) && !isnull(y1) && !isnull(x2) && !isnull(y2))
+		set_pin_data(IC_OUTPUT, 1, x1 + x2)
+		set_pin_data(IC_OUTPUT, 2, y1 + y2)
+
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/adv_rel_to_abs_coords
+	name = "advanced rel to abs coordinate converter"
+	desc = "Easily convert relative coordinates to absolute coordinates with this."
+	extended_desc = "This circuit only requires a single set of relative inputs to output absolute coordinates."
+	complexity = 2
+	inputs = list(
+		"X" = IC_PINTYPE_NUMBER,
+		"Y" = IC_PINTYPE_NUMBER,
+		)
+	outputs = list(
+		"X" = IC_PINTYPE_NUMBER,
+		"Y" = IC_PINTYPE_NUMBER
+		)
+	activators = list("compute abs coordinates" = IC_PINTYPE_PULSE_IN, "on convert" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/abs_to_rel_coords/do_work()
+	var/turf/T = get_turf(src)
+
+	if(!T)
+		return
+
+	var/x1 = get_pin_data(IC_INPUT, 1)
+	var/y1 = get_pin_data(IC_INPUT, 2)
+
+	if(!isnull(x1) && !isnull(y1))
+		set_pin_data(IC_OUTPUT, 1, T.x + x1)
+		set_pin_data(IC_OUTPUT, 2, T.y + y1)
 
 	push_data()
 	activate_pin(2)

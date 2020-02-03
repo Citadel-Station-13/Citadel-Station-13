@@ -1,0 +1,159 @@
+html, body {color: #E0E0E0;}
+body {
+	background: #171717;
+	font-color: #E0E0E0;
+	scrollbar-face-color:#1A1A1A;
+	scrollbar-track-color:#171717;
+	scrollbar-highlight-color:#171717;
+}
+
+a {color: #397ea5;}
+a.visited {color: #7c00e6;}
+a:visited {color: #7c00e6;}
+
+#newMessages {
+	background: #242424;
+	color: #E0E0E0;
+}
+#newMessages:hover {background: #272727;}
+
+#ping {background: #272727;}
+
+#userBar .subCell {
+	background: #272727;
+	color: #E0E0E0;
+	border-top: 1px solid #171717;
+}
+#userBar .subCell:hover {background: #272727;}
+#userBar .toggle {background: #272727;}
+
+/* MOTD */
+.motd {color: #E0E0E0;}
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #E0E0E0;}
+.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #E0E0E0;}
+
+h1, h2, h3, h4, h5, h6	{color: #E0E0E0;}
+h1.alert, h2.alert		{color: #E0E0E0;}
+
+.ooc					{color: #cca300;}
+.looc					{color: #d8b555;}
+.antagooc				{color: #ce254f;}
+.adminobserverooc		{color: #0099cc;}
+.adminooc				{color: #3d5bc3;}
+
+.admin					{color: #5975da;}
+
+.deadsay				{color: #e2c1ff;}
+.radio					{color: #1ecc43;}
+.sciradio				{color: #c68cfa;}
+.comradio				{color: #5177ff;}
+.secradio				{color: #dd3535;}
+.medradio				{color: #57b8f0;}
+.engradio				{color: #f37746;}
+.suppradio				{color: #b88646;}
+.servradio				{color: #6ca729;}
+.syndradio				{color: #8f4a4b;}
+.centcomradio			{color: #2681a5;}
+.aiprivradio			{color: #d65d95;}
+.redteamradio           {color: #ff4444;}
+.blueteamradio          {color: #3434fd;}
+
+.alert					{color: #d82020;}
+h1.alert, h2.alert		{color: #99aab5;}
+
+.attack					{color: #e01c1c;}
+.disarm					{color: #b42525;}
+.passive				{color: #a00f0f;}
+
+.userdanger				{color: #c51e1e;}
+.danger					{color: #c51e1e;}
+.warning				{color: #c51e1e;}
+.alertwarning			{color: #c51e1e;}
+.boldwarning			{color: #c51e1e;}
+.announce 				{color: #c51e1e;}
+.boldannounce			{color: #c51e1e;}
+.greenannounce			{color: #059223;}
+.info					{color: #6685f5;}
+.notice					{color: #6685f5;}
+.boldnotice				{color: #6685f5;}
+.adminnotice			{color: #6685f5;}
+.adminhelp              {color: #ff0000;}
+.unconscious			{color: #E0E0E0;}
+.red					{color: #FF0000;}
+.pink					{color: #ff70c1;}
+.blue					{color: #215cff;}
+.green					{color: #059223;}
+.nicegreen				{color: #059223;}
+.userlove				{color: #ff42a6; text-shadow: 0 0 6px #82365e;}
+.love					{color: #ff4591; text-shadow: 0 0 6px #994449;}
+.shadowling				{color: #8e8a99;}
+.cult					{color: #aa1c1c;}
+
+.cultitalic				{color: #aa1c1c;}
+.cultbold				{color: #aa1c1c;}
+.cultboldtalic			{color: #aa1c1c;}
+
+.cultlarge				{color: #aa1c1c;}
+.narsie					{color: #aa1c1c;}
+.narsiesmall			{color: #aa1c1c;}
+.hierophant				{color: #b441ee;}
+.hierophant_warning		{color: #c56bf1;}
+.purple					{color: #9956d3;}
+.holoparasite			{color: #88809c;}
+
+.revennotice			{color: #3645aa;}
+.revenboldnotice		{color: #3645aa;}
+.revenbignotice			{color: #3645aa;}
+.revenminor				{color: #823ddd;}
+.revenwarning			{color: #8911d9;}
+.revendanger			{color: #8911d9;}
+.umbra					{color: #7c00e6;}
+.umbra_emphasis			{color: #7c00e6;}
+.umbra_large			{color: #7c00e6;}
+
+.deconversion_message	{color: #a947ff;}
+
+.alloy					{color: #545b64;}
+.heavy_alloy			{color: #545b64;}
+.nezbere_large			{color: #545b64;}
+.nezbere				{color: #545b64;}
+.nezbere_small			{color: #545b64;}
+.inathneq_large			{color: #1d7dc7;}
+.inathneq				{color: #1d7dc7;}
+.inathneq_small			{color: #1d7dc7;}
+.neovgre_large			{color: #7c0622;}
+.neovgre				{color: #7c0622;}
+.neovgre_small			{color: #7c0622;}
+
+.newscaster				{color: #c05d5d;}
+.ghostalert				{color: #6600ff;}
+
+.alien					{color: #855d85;}
+.noticealien			{color: #059223;}
+.alertalien				{color: #059223;}
+.changeling				{color: #059223;}
+
+.spider					{color: #8800ff;}
+
+.interface				{color: #750e75;}
+
+.greentext				{color: #059223;}
+.redtext				{color: #c51e1e;}
+.clown					{color: #ff70c1;}
+.velvet					{color: #660015;}
+@keyframes velvet {
+	0% { color: #890020; }
+	40% { color: #c51e1e; }
+	50% { color: #FF8888; }
+	60% { color: #c51e1e; }
+	100% { color: #890020; }
+}
+
+.abductor				{color: #c204c2;}
+.mind_control			{color: #df3da9;}
+.drone					{color: #979795;}
+
+.monkeyhive				{color: #a56408;}
+.monkeylead				{color: #af6805;}
+
+.internal.boldnshit {color: #3d5bc3;}

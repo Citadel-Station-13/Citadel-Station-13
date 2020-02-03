@@ -9,7 +9,7 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	var/usability = 0
+	var/usability = FALSE
 
 	var/old_shard = FALSE
 	var/spent = FALSE
@@ -23,7 +23,7 @@
 			whatever spark it once held long extinguished."
 
 /obj/item/soulstone/anybody
-	usability = 1
+	usability = TRUE
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -35,15 +35,15 @@
 		to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>")
 
 /obj/item/soulstone/examine(mob/user)
-	..()
+	. = ..()
 	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
 		if (old_shard)
-			to_chat(user, "<span class='cult'>A soulstone, used to capture a soul, either from dead humans or from freed shades.</span>")
+			. += "<span class='cult'>A soulstone, used to capture a soul, either from dead humans or from freed shades.</span>"
 		else
-			to_chat(user, "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>")
-		to_chat(user, "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>")
+			. += "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>"
+		. += "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>"
 		if(spent)
-			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
+			. += "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>"
 
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
 	for(var/mob/living/simple_animal/shade/A in src)
@@ -63,9 +63,10 @@
 	if(!ishuman(M))//If target is not a human.
 		return ..()
 	if(iscultist(M))
-		to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
-		return
-	add_logs(user, M, "captured [M.name]'s soul", src)
+		if(iscultist(user))
+			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
+			return
+	log_combat(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
 
 ///////////////////Options for using captured souls///////////////////////////////////////
@@ -82,7 +83,7 @@
 /obj/item/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.status_flags &= ~GODMODE
-		A.canmove = 1
+		A.canmove = TRUE
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
 		icon_state = "soulstone"
@@ -101,13 +102,13 @@
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 
 /obj/structure/constructshell/examine(mob/user)
-	..()
+	. = ..()
 	if(iscultist(user) || iswizard(user) || user.stat == DEAD)
-		to_chat(user, "<span class='cult'>A construct shell, used to house bound souls from a soulstone.</span>")
-		to_chat(user, "<span class='cult'>Placing a soulstone with a soul into this shell allows you to produce your choice of the following:</span>")
-		to_chat(user, "<span class='cult'>An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.</span>")
-		to_chat(user, "<span class='cult'>A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.</span>")
-		to_chat(user, "<span class='cult'>A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>")
+		. += "<span class='cult'>A construct shell, used to house bound souls from a soulstone.</span>"
+		. += "<span class='cult'>Placing a soulstone with a soul into this shell allows you to produce your choice of the following:</span>"
+		. += "<span class='cult'>An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.</span>"
+		. += "<span class='cult'>A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.</span>"
+		. += "<span class='cult'>A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>"
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
@@ -128,15 +129,15 @@
 	switch(choice)
 		if("FORCE")
 			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
-				return 0
+				return FALSE
 			if(contents.len)
-				return 0
+				return FALSE
 			var/mob/living/carbon/T = target
 			if(T.client != null)
 				for(var/obj/item/W in T)
 					T.dropItemToGround(W)
 				init_shade(T, user)
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soul has already fled its mortal frame. You attempt to bring it back...")
 				return getCultGhost(T,user)
@@ -149,7 +150,7 @@
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
 					to_chat(user, "<span class='danger'>The soulstone seems to reject this soul.</span>")
-				return 0
+				return FALSE
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
@@ -172,7 +173,7 @@
 			else
 				T.forceMove(src) //put shade in stone
 				T.status_flags |= GODMODE
-				T.canmove = 0
+				T.canmove = FALSE
 				T.health = T.maxHealth
 				icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
@@ -217,7 +218,7 @@
 		newstruct.master = stoner
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
-	newstruct.key = target.key
+	target.transfer_ckey(newstruct)
 	var/obj/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
@@ -237,12 +238,13 @@
 	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
+	QDEL_IN(T, 5)
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
 	S.status_flags |= GODMODE //So they won't die inside the stone somehow
-	S.canmove = 0//Can't move out of the soul stone
+	S.canmove = FALSE//Can't move out of the soul stone
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
-	S.key = T.key
+	T.transfer_ckey(S)
 	S.language_holder = U.language_holder.copy(S)
 	if(U)
 		S.faction |= "[REF(U)]" //Add the master as a faction, allowing inter-mob cooperation
@@ -272,15 +274,15 @@
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)
-		return 0
+		return FALSE
 	if(!chosen_ghost)
 		to_chat(U, "<span class='danger'>There were no spirits willing to become a shade.</span>")
-		return 0
+		return FALSE
 	if(contents.len) //If they used the soulstone on someone else in the meantime
-		return 0
+		return FALSE
 	T.ckey = chosen_ghost.ckey
 	for(var/obj/item/W in T)
 		T.dropItemToGround(W)
 	init_shade(T, U)
 	qdel(T)
-	return 1
+	return TRUE

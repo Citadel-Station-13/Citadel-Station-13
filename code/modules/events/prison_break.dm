@@ -33,13 +33,7 @@
 		if(prob(50))
 			priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 		else
-			priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-			for(var/obj/machinery/computer/communications/C in GLOB.machines)
-				if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-					var/obj/item/paper/P = new(C.loc)
-					P.name = "Gr3y.T1d3 virus"
-					P.info = "Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement."
-					P.update_icon()
+			print_command_report("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Gr3y.T1d3 virus")
 	else
 		log_world("ERROR: Could not initate grey-tide. No areas in the list!")
 		kill()

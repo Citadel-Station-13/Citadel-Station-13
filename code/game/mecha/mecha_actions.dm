@@ -128,7 +128,7 @@
 
 
 /datum/action/innate/mecha/strafe
-	name = "Toggle Strafing"
+	name = "Toggle Strafing. Disabled when Alt is held."
 	button_icon_state = "strafe"
 
 /datum/action/innate/mecha/strafe/Activate()
@@ -138,8 +138,10 @@
 	chassis.toggle_strafe()
 
 /obj/mecha/AltClick(mob/living/user)
+	. = ..()
 	if((user == occupant) && user.canUseTopic(src))
 		toggle_strafe()
+		return TRUE
 
 /obj/mecha/proc/toggle_strafe()
 	strafe = !strafe
@@ -265,7 +267,7 @@
 		if("fire")
 			new_damtype = "tox"
 			chassis.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
-	chassis.damtype = new_damtype.
+	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
 	UpdateButtonIcon()

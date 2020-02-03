@@ -16,7 +16,7 @@
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
-		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+		if(M.mind.assigned_role in list("Captain", "Chaplain"))
 			return FALSE
 		if(specific_cult && specific_cult.is_sacrifice_target(M.mind))
 			return FALSE
@@ -26,7 +26,7 @@
 			return FALSE
 	else
 		return FALSE
-	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
 		return FALSE //can't convert machines, shielded, braindead, or ratvar's dogs
 	return TRUE
 
@@ -35,16 +35,16 @@
 	config_tag = "cult"
 	antag_flag = ROLE_CULTIST
 	false_report_weight = 10
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
-	protected_jobs = list()
-	required_players = 24
-	required_enemies = 4
-	recommended_enemies = 4
-	enemy_minimum_age = 14
+	restricted_jobs = list("AI", "Cyborg")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	required_players = 30
+	required_enemies = 3
+	recommended_enemies = 5
+	enemy_minimum_age = 7
 
 	announce_span = "cult"
-	announce_text = "Some crew members are trying to start a cult to Nar-Sie!\n\
-	<span class='cult'>Cultists</span>: Carry out Nar-Sie's will.\n\
+	announce_text = "Some crew members are trying to start a cult to Nar'Sie!\n\
+	<span class='cult'>Cultists</span>: Carry out Nar'Sie's will.\n\
 	<span class='notice'>Crew</span>: Prevent the cult from expanding and drive it out."
 
 	var/finished = 0
@@ -81,8 +81,11 @@
 		cultist.restricted_roles = restricted_jobs
 		log_game("[key_name(cultist)] has been selected as a cultist")
 
-
-	return (cultists_to_cult.len>=required_enemies)
+	if(cultists_to_cult.len>=required_enemies)
+		return TRUE
+	else
+		setup_error = "Not enough cultist candidates"
+		return FALSE
 
 
 /datum/game_mode/cult/post_setup()
@@ -155,7 +158,7 @@
 /datum/game_mode/cult/generate_report()
 	return "Some stations in your sector have reported evidence of blood sacrifice and strange magic. Ties to the Wizards' Federation have been proven not to exist, and many employees \
 			have disappeared; even Central Command employees light-years away have felt strange presences and at times hysterical compulsions. Interrogations point towards this being the work of \
-			the cult of Nar-Sie. If evidence of this cult is discovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and all resources should be \
+			the cult of Nar'Sie. If evidence of this cult is discovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and all resources should be \
 			devoted to stopping this cult. Note that holy water seems to weaken and eventually return the minds of cultists that ingest it, and mindshield implants will prevent conversion \
 			altogether."
 

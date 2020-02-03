@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/ghost_role/slaughter
 	weight = 1 //Very rare
 	max_occurrences = 1
+	gamemode_blacklist = list("dynamic")
 	earliest_start = 1 HOURS
 	min_players = 20
 
@@ -31,7 +32,7 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter((pick(spawn_locs)))
+	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter((pick(spawn_locs)))
 	var/mob/living/simple_animal/slaughter/S = new (holder)
 	S.holder = holder
 	player_mind.transfer_to(S)

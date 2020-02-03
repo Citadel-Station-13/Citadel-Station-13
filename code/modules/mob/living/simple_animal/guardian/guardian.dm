@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon_living = "magicOrange"
 	icon_dead = "magicOrange"
 	speed = 0
+	blood_volume = 0
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	movement_type = FLYING // Immunity to chasms and landmines, etc.
@@ -38,12 +39,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/ectoplasm = 1)
 	AIStatus = AI_OFF
+	hud_type = /datum/hud/guardian
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
-	var/mob/living/summoner
-	var/range = 10 //how far from the user the spirit can be
+	var/mob/living/carbon/summoner
+	var/range = 13 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/datum/guardianname/namedatum = new/datum/guardianname()
 	var/playstyle_string = "<span class='holoparasite bold'>You are a standard Guardian. You shouldn't exist!</span>"
@@ -148,6 +150,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		death(TRUE)
 		qdel(src)
 	snapback()
+	if(HAS_TRAIT(summoner, TRAIT_NODEATH) && (istype(summoner.wear_neck, /obj/item/clothing/neck/necklace/memento_mori)))
+		REMOVE_TRAIT(summoner, TRAIT_NODEATH, "memento_mori")
+		to_chat(summoner,"<span class='danger'>You feel incredibly vulnerable as the memento mori pulls your life force in one too many directions!")
 
 /mob/living/simple_animal/hostile/guardian/Stat()
 	..()
@@ -370,7 +375,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [my_message]")
 
-		log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
+		src.log_talk(input, LOG_SAY, tag="guardian")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -392,7 +397,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 
-	log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
+	src.log_talk(input, LOG_SAY, tag="guardian")
 
 //FORCE RECALL/RESET
 
@@ -419,15 +424,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)
 			to_chat(src, "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>")
-			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", ROLE_PAI, null, FALSE, 100)
+			var/list/mob/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", ROLE_PAI, null, FALSE, 100)
 			if(LAZYLEN(candidates))
-				var/mob/dead/observer/C = pick(candidates)
+				var/mob/C = pick(candidates)
 				to_chat(G, "<span class='holoparasite'>Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance.</span>")
 				to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[G.namedatum.colour]\">[G.real_name]</font> has been successfully reset.</span>")
 				message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(G)])")
-				G.ghostize(0)
+				G.ghostize(FALSE)
 				G.setthemename(G.namedatum.theme) //give it a new color, to show it's a new person
-				G.key = C.key
+				C.transfer_ckey(G)
 				G.reset = 1
 				switch(G.namedatum.theme)
 					if("tech")
@@ -493,10 +498,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	used = TRUE
 	to_chat(user, "[use_message]")
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
+	var/list/mob/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		spawn_guardian(user, C.key)
 	else
 		to_chat(user, "[failure_message]")
@@ -594,6 +599,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+
+/obj/item/guardiancreator/tech/choose/traitor/check_uplink_validity()
+	return !used
 
 /obj/item/guardiancreator/tech/choose
 	random = FALSE

@@ -5,7 +5,8 @@
 	icon_state = "pointer"
 	item_state = "pen"
 	var/pointer_icon_state
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = WEIGHT_CLASS_SMALL
@@ -55,7 +56,16 @@
 	else
 		return ..()
 
+/obj/item/laser_pointer/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		if(!diode)
+			. += "<span class='notice'>The diode is missing.<span>"
+		else
+			. += "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.<span>"
+
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
 	laser_act(target, user, params)
 
 /obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
@@ -67,14 +77,9 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(user.has_trait(TRAIT_NOGUNS))
+	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
 		to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK))
-			to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
-			return
 
 	add_fingerprint(user)
 
@@ -90,7 +95,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-			add_logs(user, C, "shone in the eyes", src)
+			log_combat(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -107,7 +112,7 @@
 	//robots
 	else if(iscyborg(target))
 		var/mob/living/silicon/S = target
-		add_logs(user, S, "shone in the sensors", src)
+		log_combat(user, S, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
@@ -123,7 +128,7 @@
 		if(prob(effectchance * diode.rating))
 			C.emp_act(EMP_HEAVY)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
-			add_logs(user, C, "EMPed", src)
+			log_combat(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
@@ -136,7 +141,7 @@
 			if(prob(effectchance))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
 				H.Move(targloc)
-				add_logs(user, H, "moved with a laser pointer",src)
+				log_combat(user, H, "moved with a laser pointer",src)
 			else
 				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class = 'warning'> You're briefly tempted by the shiny light... </span>")
 		else

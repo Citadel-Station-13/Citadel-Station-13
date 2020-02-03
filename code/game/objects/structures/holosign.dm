@@ -9,11 +9,13 @@
 	armor = list("melee" = 0, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 	var/obj/item/holosign_creator/projector
 
-/obj/structure/holosign/New(loc, source_projector)
+/obj/structure/holosign/Initialize(mapload, source_projector)
+	. = ..()
 	if(source_projector)
 		projector = source_projector
 		projector.signs += src
-	..()
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, alpha, RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	alpha = 0
 
 /obj/structure/holosign/Destroy()
 	if(projector)
@@ -63,30 +65,51 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
-
-/obj/structure/holosign/barrier/engineering/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
-	name = "holo firelock"
-	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
-	icon_state = "holo_firelock"
+	name = "holo fan"
+	desc = "A holographic barrier resembling a tiny fan. Though it does not prevent solid objects from passing through, gas is kept out. Somehow."
+	icon_state = "holo_fan"
 	density = FALSE
-	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
-	layer = ABOVE_MOB_LAYER
 	alpha = 150
 
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
 
-/obj/structure/holosign/barrier/atmos/Destroy()
-	var/turf/T = get_turf(src)
+/obj/structure/holosign/barrier/firelock
+	name = "holo firelock"
+	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects or gas from passing through, temperature changes are kept out."
+	icon_state = "holo_firelock"
+	density = FALSE
+	anchored = TRUE
+	alpha = 150
+	resistance_flags = FIRE_PROOF
+
+/obj/structure/holosign/barrier/firelock/blocksTemperature()
+	return TRUE
+
+/obj/structure/holosign/barrier/combifan
+	name = "holo combifan"
+	desc = "A holographic barrier resembling a blue-accented tiny fan. Though it does not prevent solid objects from passing through, gas and temperature changes are kept out."
+	icon_state = "holo_combifan"
+	max_integrity = 30
+	density = FALSE
+	anchored = TRUE
+	alpha = 150
+	CanAtmosPass = ATMOS_PASS_NO
+	resistance_flags = FIRE_PROOF
+
+/obj/structure/holosign/barrier/combolock/blocksTemperature()
+	return TRUE
+
+/obj/structure/holosign/barrier/combolock/Initialize()
 	. = ..()
-	T.air_update_turf(TRUE)
+	air_update_turf(TRUE)
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
@@ -101,6 +124,44 @@
 		take_damage(10, BRUTE, "melee", 1)	//Tasers aren't harmful.
 	if(istype(P, /obj/item/projectile/beam/disabler))
 		take_damage(5, BRUTE, "melee", 1)	//Disablers aren't harmful.
+	return BULLET_ACT_HIT
+
+/obj/structure/holosign/barrier/medical
+	name = "\improper PENLITE holobarrier"
+	desc = "A holobarrier that uses biometrics to detect human viruses. Denies passing to personnel with easily-detected, malicious viruses. Good for quarantines."
+	icon_state = "holo_medical"
+	alpha = 125 //lazy :)
+	var/force_allaccess = FALSE
+	var/buzzcd = 0
+
+/obj/structure/holosign/barrier/medical/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>"
+
+/obj/structure/holosign/barrier/medical/CanPass(atom/movable/mover, turf/target)
+	icon_state = "holo_medical"
+	if(force_allaccess)
+		return TRUE
+	if(ishuman(mover))
+		var/mob/living/carbon/human/sickboi = mover
+		var/threat = sickboi.check_virus()
+		switch(threat)
+			if(DISEASE_SEVERITY_MINOR, DISEASE_SEVERITY_MEDIUM, DISEASE_SEVERITY_HARMFUL, DISEASE_SEVERITY_DANGEROUS, DISEASE_SEVERITY_BIOHAZARD)
+				if(buzzcd < world.time)
+					playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,1,4)
+					buzzcd = (world.time + 60)
+				icon_state = "holo_medical-deny"
+				return FALSE
+			else
+				return TRUE //nice or benign diseases!
+	return TRUE
+
+/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)
+	if(CanPass(user) && user.a_intent == INTENT_HELP)
+		force_allaccess = !force_allaccess
+		to_chat(user, "<span class='warning'>You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.</span>") //warning spans because you can make the station sick!
+	else
+		return ..()
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
@@ -110,6 +171,7 @@
 
 /obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/item/projectile/P)
 	take_damage(P.damage, BRUTE, "melee", 1)	//Yeah no this doesn't get projectile resistance.
+	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()
 	shockcd = FALSE
@@ -125,7 +187,7 @@
 			shockcd = TRUE
 			addtimer(CALLBACK(src, .proc/cooldown), 5)
 
-/obj/structure/holosign/barrier/cyborg/hacked/CollidedWith(atom/movable/AM)
+/obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/movable/AM)
 	if(shockcd)
 		return
 

@@ -11,11 +11,45 @@
 	strip_delay = 80
 	dog_fashion = null
 
+// CITADEL CHANGES: More variants
+/obj/item/clothing/head/helmet/chaplain/bland
+	icon_state = "knight_generic"
+	item_state = "knight_generic"
+
+/obj/item/clothing/head/helmet/chaplain/bland/horned
+	name = "horned crusader helmet"
+	desc = "Helfen, Wehren, Heilen."
+	icon_state = "knight_horned"
+	item_state = "knight_horned"
+
+/obj/item/clothing/head/helmet/chaplain/bland/winged
+	name = "winged crusader helmet"
+	desc = "Helfen, Wehren, Heilen."
+	icon_state = "knight_winged"
+	item_state = "knight_winged"
+// CITADEL CHANGES ENDS HERE
+
 /obj/item/clothing/suit/armor/riot/chaplain
 	name = "crusader armour"
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+	allowed = list(/obj/item/storage/book/bible, HOLY_WEAPONS, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+// CITADEL CHANGES: More variants
+/obj/item/clothing/suit/armor/riot/chaplain/teutonic
+	desc = "Help, Defend, Heal!"
+	icon_state = "knight_teutonic"
+	item_state = "knight_teutonic"
+
+/obj/item/clothing/suit/armor/riot/chaplain/teutonic/alt
+	icon_state = "knight_teutonic_alt"
+	item_state = "knight_teutonic_alt"
+
+/obj/item/clothing/suit/armor/riot/chaplain/hospitaller
+	icon_state = "knight_hospitaller"
+	item_state = "knight_hospitaller"
+// CITADEL CHANGES ENDS HERE
 
 /obj/item/holybeacon
 	name = "armaments beacon"
@@ -25,7 +59,7 @@
 	item_state = "radio"
 
 /obj/item/holybeacon/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !SSreligion.holy_armor_type)
+	if(user.mind && (user.mind.isholy) && !GLOB.holy_armor_type)
 		beacon_armor(user)
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
@@ -38,20 +72,21 @@
 		display_names += list(initial(A.name) = A)
 
 	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || SSreligion.holy_armor_type)
+	var/turf/T = get_turf(M)
+	if(!T || QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)
 	var/A = holy_armor_list[index]
 
-	SSreligion.holy_armor_type = A
-	var/holy_armor_box = new A
+	GLOB.holy_armor_type = A
+	var/holy_armor_box = new A(T)
 
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 
 	if(holy_armor_box)
 		qdel(src)
-		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
+		M.put_in_hands(holy_armor_box)
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -59,6 +94,22 @@
 /obj/item/storage/box/holy/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain(src)
 	new /obj/item/clothing/suit/armor/riot/chaplain(src)
+
+// CITADEL CHANGES: More Variants
+/obj/item/storage/box/holy/teutonic
+	name = "Teutonic Kit"
+
+/obj/item/storage/box/holy/teutonic/PopulateContents() // It just works
+	pick(new /obj/item/clothing/head/helmet/chaplain/bland/horned(src), new /obj/item/clothing/head/helmet/chaplain/bland/winged(src))
+	pick(new /obj/item/clothing/suit/armor/riot/chaplain/teutonic(src), new /obj/item/clothing/suit/armor/riot/chaplain/teutonic/alt(src))
+
+/obj/item/storage/box/holy/hospitaller
+	name = "Hospitaller Kit"
+
+/obj/item/storage/box/holy/hospitaller/PopulateContents()
+	new /obj/item/clothing/head/helmet/chaplain/bland(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/hospitaller(src)
+// CITADEL CHANGES ENDS HERE
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
@@ -73,7 +124,6 @@
 	icon_state = "studentuni"
 	item_state = "studentuni"
 	body_parts_covered = ARMS|CHEST
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
@@ -117,7 +167,6 @@
 	icon_state = "witchhunter"
 	item_state = "witchhunter"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat
 	name = "witchunter hat"
@@ -142,7 +191,7 @@
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	allowed = list(/obj/item/storage/book/bible, HOLY_WEAPONS, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
 
 /obj/item/clothing/head/hooded/chaplain_hood
@@ -169,7 +218,7 @@
 
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar-Sie and Ratvar's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie and Ratvar's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -180,11 +229,12 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
-	var/reskinned = FALSE
+	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/nullrod/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
@@ -195,25 +245,24 @@
 		reskin_holy_weapon(user)
 
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
-	if(SSreligion.holy_weapon_type)
+	if(GLOB.holy_weapon_type)
 		return
-	var/obj/item/nullrod/holy_weapon
-	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
+	var/obj/item/holy_weapon
+	var/list/holy_weapons_list = subtypesof(/obj/item/nullrod) + list(HOLY_WEAPONS)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
-		var/atom/A = V
-		display_names += initial(A.name)
+		var/obj/item/nullrod/rodtype = V
+		if (initial(rodtype.chaplain_spawnable))
+			display_names[initial(rodtype.name)] = rodtype
 
 	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
 		return
 
-	var/index = display_names.Find(choice)
-	var/A = holy_weapons_list[index]
-
+	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
-	SSreligion.holy_weapon_type = holy_weapon.type
+	GLOB.holy_weapon_type = holy_weapon.type
 
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
 
@@ -222,6 +271,13 @@
 		qdel(src)
 		M.put_in_active_hand(holy_weapon)
 
+/obj/item/nullrod/proc/jedi_spin(mob/living/user)
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		user.setDir(i)
+		if(i == WEST)
+			user.emote("flip")
+		sleep(1)
+
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
@@ -229,11 +285,16 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
-	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+
+/obj/item/nullrod/godhand/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
@@ -248,7 +309,7 @@
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands)
+/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = list()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
@@ -298,6 +359,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 1.5 //slower than a real saw
 
 /obj/item/nullrod/claymore/glowing
 	icon_state = "swordon"
@@ -307,7 +370,7 @@
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/nullrod/claymore/katana
-	name = "hanzo steel"
+	name = "\improper Hanzo steel"
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	item_state = "katana"
@@ -417,10 +480,10 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
@@ -448,11 +511,13 @@
 	item_state = "chainswordon"
 	name = "possessed chainsaw sword"
 	desc = "Suffer not a heretic to live."
-	slot_flags = ITEM_SLOT_BELT
+	chaplain_spawnable = FALSE
 	force = 30
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
-
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5
 
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
@@ -473,13 +538,17 @@
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = NODROP_1 | ABSTRACT_1
+	item_flags = ABSTRACT
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+	tool_behaviour = TOOL_SAW
+	toolspeed = 2
 
 /obj/item/nullrod/chainsaw/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
 
 /obj/item/nullrod/clown
@@ -494,6 +563,9 @@
 
 /obj/item/nullrod/pride_hammer
 	icon_state = "pride"
+	item_state = "pride"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "Pride-struck Hammer"
 	desc = "It resonates an aura of Pride."
 	force = 16
@@ -501,9 +573,10 @@
 	w_class = 4
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/weapons/resonator_blast.ogg'
 
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(prob(30) && ishuman(A))
@@ -520,6 +593,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
+	force = 12
+	reach = 2
 	attack_verb = list("whipped", "lashed")
 	hitsound = 'sound/weapons/chainhit.ogg'
 
@@ -544,12 +619,14 @@
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	flags_1 = ABSTRACT_1 | NODROP_1
+	item_flags = ABSTRACT
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/nullrod/armblade/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/nullrod/armblade/tentacle
@@ -593,6 +670,44 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
+/obj/item/nullrod/claymore/bostaff/attack(mob/target, mob/living/user)
+	add_fingerprint(user)
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
+		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
+		user.Knockdown(60)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+		else
+			user.take_bodypart_damage(2*force)
+		return
+	if(iscyborg(target))
+		return ..()
+	if(!isliving(target))
+		return ..()
+	var/mob/living/carbon/C = target
+	if(C.stat || C.health < 0 || C.staminaloss > 130 )
+		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
+		return
+	if(user.a_intent == INTENT_DISARM)
+		if(!ishuman(target))
+			return ..()
+		var/mob/living/carbon/human/H = target
+		var/list/fluffmessages = list("[user] clubs [H] with [src]!", \
+									  "[user] smacks [H] with the butt of [src]!", \
+									  "[user] broadsides [H] with [src]!", \
+									  "[user] smashes [H]'s head with [src]!", \
+									  "[user] beats [H] with front of [src]!", \
+									  "[user] twirls and slams [H] with [src]!")
+		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
+							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
+		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
+		H.adjustStaminaLoss(rand(12,18))
+		if(prob(25))
+			(INVOKE_ASYNC(src, .proc/jedi_spin, user))
+	else
+		return ..()
+
 /obj/item/nullrod/tribal_knife
 	icon_state = "crysknife"
 	item_state = "crysknife"
@@ -635,9 +750,53 @@
 	name = "egyptian staff"
 	desc = "A tutorial in mummification is carved into the staff. You could probably craft the wraps if you had some cloth."
 	icon = 'icons/obj/guns/magic.dmi'
-	icon_state = "pharoah_sceptre"
-	item_state = "pharoah_sceptre"
+	icon_state = "pharaoh_sceptre"
+	item_state = "pharaoh_sceptre"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashes", "smacks", "whacks")
+
+/obj/item/nullrod/rosary
+	icon_state = "rosary"
+	item_state = null
+	name = "prayer beads"
+	desc = "A set of prayer beads used by many of the more traditional religions in space"
+	force = 4
+	throwforce = 0
+	attack_verb = list("whipped", "repented", "lashed", "flagellated")
+	var/praying = FALSE
+	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
+
+/obj/item/nullrod/rosary/Initialize()
+	.=..()
+	if(GLOB.deity)
+		deity_name = GLOB.deity
+
+/obj/item/nullrod/rosary/attack(mob/living/M, mob/living/user)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+
+	if(!user.mind || user.mind.assigned_role != "Chaplain")
+		to_chat(user, "<span class='notice'>You are not close enough with [deity_name] to use [src].</span>")
+		return
+
+	if(praying)
+		to_chat(user, "<span class='notice'>You are already using [src].</span>")
+		return
+
+	user.visible_message("<span class='info'>[user] kneels[M == user ? null : " next to [M]"] and begins to utter a prayer to [deity_name].</span>", \
+		"<span class='info'>You kneel[M == user ? null : " next to [M]"] and begin a prayer to [deity_name].</span>")
+
+	praying = TRUE
+	if(do_after(user, 20, target = M))
+		M.reagents?.add_reagent(/datum/reagent/water/holywater, 5)
+		to_chat(M, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
+		M.adjustToxLoss(-5, TRUE, TRUE)
+		M.adjustOxyLoss(-5)
+		M.adjustBruteLoss(-5)
+		M.adjustFireLoss(-5)
+		praying = FALSE
+	else
+		to_chat(user, "<span class='notice'>Your prayer to [deity_name] was interrupted.</span>")
+		praying = FALSE

@@ -1,10 +1,14 @@
 /obj/effect/proc_holder/changeling/biodegrade
 	name = "Biodegrade"
 	desc = "Dissolves restraints or other objects preventing free movement."
-	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets."
+	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	chemical_cost = 30 //High cost to prevent spam
+	loudness = 1
 	dna_cost = 2
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_freedom"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use

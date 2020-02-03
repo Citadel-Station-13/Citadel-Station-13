@@ -14,21 +14,22 @@
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
-	grind_results = list("lithium" = 15, "iron" = 5, "silicon" = 5)
+	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/rigged = FALSE	// true if rigged to explode
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
-	container_type = INJECTABLE|DRAINABLE
+	rad_flags = RAD_NO_CONTAMINATE // Prevent the same cheese as with the stock parts
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
 
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
-	START_PROCESSING(SSobj, src)
-	create_reagents(5)
+	if(self_recharge)
+		START_PROCESSING(SSobj, src)
+	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	charge = maxcharge
@@ -70,8 +71,8 @@
 	return 100*charge/maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/use(amount)
-	if(rigged && amount > 0)
+/obj/item/stock_parts/cell/use(amount, can_explode = TRUE)
+	if(rigged && amount > 0 && can_explode)
 		explode()
 		return 0
 	if(charge < amount)
@@ -93,20 +94,19 @@
 	return power_used
 
 /obj/item/stock_parts/cell/examine(mob/user)
-	..()
+	. = ..()
 	if(rigged)
-		to_chat(user, "<span class='danger'>This power cell seems to be faulty!</span>")
+		. += "<span class='danger'>This power cell seems to be faulty!</span>"
 	else
-		to_chat(user, "The charge meter reads [round(src.percent() )]%.")
+		. += "The charge meter reads [round(src.percent() )]%."
 
 /obj/item/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = !isnull(reagents.has_reagent("plasma", 5)) //has_reagent returns the reagent datum
 	..()
-
+	rigged = reagents?.has_reagent(/datum/reagent/toxin/plasma, 5) ? TRUE : FALSE //has_reagent returns the reagent datum
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
@@ -192,13 +192,17 @@
 
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
-	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	maxcharge = 1250	//25/12/6 disabler/laser/taser shots.
 	materials = list(MAT_GLASS=40)
 
 /obj/item/stock_parts/cell/secborg/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
+
+/obj/item/stock_parts/cell/lascarbine
+	name = "laser carbine power supply"
+	maxcharge = 1500			//20 laser shots.
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
@@ -356,3 +360,7 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+//found inside the inducers ordered from cargo.
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000

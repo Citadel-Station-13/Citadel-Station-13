@@ -1,5 +1,6 @@
 /datum/martial_art/mushpunch
 	name = "Mushroom Punch"
+	id = MARTIALART_MUSHPUNCH
 
 /datum/martial_art/mushpunch/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	var/atk_verb
@@ -17,7 +18,7 @@
 	D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
 	D.Knockdown(20)
 	if(atk_verb)
-		add_logs(A, D, "[atk_verb] (Mushroom Punch)")
+		log_combat(A, D, "[atk_verb] (Mushroom Punch)")
 	return TRUE
 
 /obj/item/mushpunch

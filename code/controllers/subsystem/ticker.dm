@@ -42,6 +42,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/timeLeft						//pregame timer
 	var/start_at
+
 	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
 	var/station_time_rate_multiplier = 12		//factor of station time progressal vs real time.
 
@@ -66,12 +67,6 @@ SUBSYSTEM_DEF(ticker)
 	var/end_state = "undefined"
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
-	var/tumpedbuckets = FALSE				//Have we tumped over buckets?
-
-	//Crew Objective/Miscreant stuff
-	var/list/crewobjlist = list()
-	var/list/crewobjjobs = list()
-	var/list/miscreantobjlist = list()
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
@@ -128,26 +123,30 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
-/*
-	crewobjlist = typesof(/datum/objective/crew)
-	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
-	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
-		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
-		var/list/availableto = splittext(initial(obj.jobs),",")
-		for(var/job in availableto)
-			crewobjjobs["[job]"] += list(obj) */
+
 
 	if(!GLOB.syndicate_code_phrase)
-		GLOB.syndicate_code_phrase	= generate_code_phrase()
-	if(!GLOB.syndicate_code_response)
-		GLOB.syndicate_code_response = generate_code_phrase()
+		GLOB.syndicate_code_phrase	= generate_code_phrase(return_list=TRUE)
 
-	..()
+		var/codewords = jointext(GLOB.syndicate_code_phrase, "|")
+		var/regex/codeword_match = new("([codewords])", "ig")
+
+		GLOB.syndicate_code_phrase_regex = codeword_match
+
+	if(!GLOB.syndicate_code_response)
+		GLOB.syndicate_code_response = generate_code_phrase(return_list=TRUE)
+
+		var/codewords = jointext(GLOB.syndicate_code_response, "|")
+		var/regex/codeword_match = new("([codewords])", "ig")
+
+		GLOB.syndicate_code_response_regex = codeword_match
+
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 	if(CONFIG_GET(flag/randomize_shift_time))
 		gametime_offset = rand(0, 23) HOURS
 	else if(CONFIG_GET(flag/shift_time_realtime))
 		gametime_offset = world.timeofday
+	return ..()
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
@@ -165,10 +164,6 @@ SUBSYSTEM_DEF(ticker)
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
-			if(!tumpedbuckets)
-				SStimer.tump_buckets()
-			if(!modevoted)
-				send_gamemode_vote()
 			if(isnull(timeLeft))
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
@@ -181,6 +176,8 @@ SUBSYSTEM_DEF(ticker)
 			if(start_immediately)
 				timeLeft = 0
 
+			if(!modevoted)
+				send_gamemode_vote()
 			//countdown
 			if(timeLeft < 0)
 				return
@@ -191,6 +188,12 @@ SUBSYSTEM_DEF(ticker)
 				tipped = TRUE
 
 			if(timeLeft <= 0)
+				if(SSvote.mode && (SSvote.mode == "roundtype" || SSvote.mode == "dynamic" || SSvote.mode == "mode tiers"))
+					SSvote.result()
+					SSpersistence.SaveSavedVotes()
+					for(var/client/C in SSvote.voting)
+						C << browse(null, "window=vote;can_close=0")
+					SSvote.reset()
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
 				if(start_immediately)
@@ -232,7 +235,7 @@ SUBSYSTEM_DEF(ticker)
 			if(GLOB.secret_force_mode != "secret")
 				var/datum/game_mode/smode = config.pick_mode(GLOB.secret_force_mode)
 				if(!smode.can_start())
-					message_admins("\blue Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+					message_admins("<span class='notice'>Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
 				else
 					mode = smode
 
@@ -258,13 +261,15 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
-	SSjob.DivideOccupations() 				//Distribute jobs
+	can_continue = can_continue && SSjob.DivideOccupations(mode.required_jobs) 				//Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
-			qdel(mode)
-			mode = null
+			log_game("[mode.name] failed pre_setup, cause: [mode.setup_error]")
+			send2irc("SSticker", "[mode.name] failed pre_setup, cause: [mode.setup_error]")
+			message_admins("<span class='notice'>[mode.name] failed pre_setup, cause: [mode.setup_error]</span>")
+			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return 0
@@ -303,19 +308,20 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 	SSdbcore.SetRoundStart()
 
-	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
-	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
+	to_chat(world, "<span class='notice'><B>Welcome to [station_name()], enjoy your stay!</B></span>")
+	SEND_SOUND(world, sound(get_announcer_sound("welcome")))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	if(SSevents.holidays)
-		to_chat(world, "<font color='blue'>and...</font>")
+		to_chat(world, "<span class='notice'>and...</span>")
 		for(var/holidayname in SSevents.holidays)
 			var/datum/holiday/holiday = SSevents.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
+	SSshuttle.realtimeofstart = world.realtime
 
 	return TRUE
 
@@ -324,13 +330,6 @@ SUBSYSTEM_DEF(ticker)
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
-
-/*	//assign crew objectives and generate miscreants
-	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
-		GLOB.miscreants_allowed = TRUE
-	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
-		GLOB.miscreants_allowed = TRUE
-	generate_crew_objectives() */
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
@@ -391,8 +390,8 @@ SUBSYSTEM_DEF(ticker)
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
-			if(CONFIG_GET(flag/roundstart_traits))
-				SSquirks.AssignQuirks(player, N.client, TRUE)
+				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
+					SSquirks.AssignQuirks(N.new_character, N.client, TRUE, TRUE, SSjob.GetJob(player.mind.assigned_role), FALSE, N)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -408,6 +407,9 @@ SUBSYSTEM_DEF(ticker)
 			qdel(player)
 			living.notransform = TRUE
 			if(living.client)
+				if (living.client.prefs && living.client.prefs.auto_ooc)
+					if (living.client.prefs.chat_toggles & CHAT_OOC)
+						living.client.prefs.chat_toggles ^= CHAT_OOC
 				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
 			livings += living
@@ -432,7 +434,7 @@ SUBSYSTEM_DEF(ticker)
 			m = pick(memetips)
 
 	if(m)
-		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
+		to_chat(world, "<span class='purple'><b>Tip of the round: </b>[html_encode(m)]</span>")
 
 /datum/controller/subsystem/ticker/proc/check_queue()
 	var/hpc = CONFIG_GET(number/hard_popcap)
@@ -453,7 +455,7 @@ SUBSYSTEM_DEF(ticker)
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
-			to_chat(next_in_line, "<span class='danger'>No response recieved. You have been removed from the line.</span>")
+			to_chat(next_in_line, "<span class='danger'>No response received. You have been removed from the line.</span>")
 			queued_players -= next_in_line
 			queue_delay = 0
 
@@ -468,9 +470,12 @@ SUBSYSTEM_DEF(ticker)
 	maprotatechecked = 1
 
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
-	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)))
+	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)) && CONFIG_GET(flag/tgstyle_maprotation))
 		return
-	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
+	if(CONFIG_GET(flag/tgstyle_maprotation))
+		INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
+	else
+		SSvote.initiate_vote("map","server",TRUE)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
@@ -483,7 +488,12 @@ SUBSYSTEM_DEF(ticker)
 		if(SSticker.timeLeft < 900)
 			SSticker.timeLeft = 900
 		SSticker.modevoted = TRUE
-		SSvote.initiate_vote("roundtype","server",TRUE)
+		var/dynamic = CONFIG_GET(flag/dynamic_voting)
+		if(dynamic)
+			SSvote.initiate_vote("dynamic","server",hideresults=TRUE,votesystem=SCORE_VOTING,forced=TRUE,vote_time = 20 MINUTES)
+		else
+			SSvote.initiate_vote("roundtype","server",hideresults=TRUE,votesystem=PLURALITY_VOTING,forced=TRUE, \
+			vote_time = (CONFIG_GET(flag/modetier_voting) ? 1 MINUTES : 20 MINUTES))
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
@@ -576,9 +586,21 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "The burst of energy released near [station_name()] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
+		if(GANG_VICTORY)
+			news_message = "Company officials reaffirmed that sudden deployments of special forces are not in any way connected to rumors of [station_name()] being covered in graffiti."
+
+	if(SSblackbox.first_death)
+		var/list/ded = SSblackbox.first_death
+		if(ded.len)
+			news_message += " NT Sanctioned Psykers picked up faint traces of someone near the station, allegedly having had died. Their name was: [ded["name"]], [ded["role"]], at [ded["area"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]"
+		else
+			news_message += " NT Sanctioned Psykers proudly confirm reports that nobody died this shift!"
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
+		return news_message
+	else
+		return "We regret to inform you that shit be whack, yo. None of our reporters have any idea of what may or may not have gone on."
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(SSticker.timeLeft))
@@ -661,6 +683,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	save_admin_data()
+	update_everything_flag_in_db()
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
@@ -669,7 +692,9 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
+		'sound/roundend/disappointed.ogg',
+		'sound/roundend/gondolabridge.ogg',
+		'sound/roundend/haveabeautifultime.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

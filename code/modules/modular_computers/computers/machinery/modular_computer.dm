@@ -44,7 +44,9 @@
 		cpu.attack_ghost(user)
 
 /obj/machinery/modular_computer/emag_act(mob/user)
-	return cpu ? cpu.emag_act(user) : 1
+	. = ..()
+	if(cpu)
+		. |= cpu.emag_act(user)
 
 /obj/machinery/modular_computer/update_icon()
 	cut_overlays()
@@ -92,8 +94,9 @@
 		cpu.eject_card()
 
 /obj/machinery/modular_computer/AltClick(mob/user)
+	. = ..()
 	if(cpu)
-		cpu.AltClick(user)
+		return cpu.AltClick(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -155,4 +158,5 @@
 // "Brute" damage mostly damages the casing.
 /obj/machinery/modular_computer/bullet_act(obj/item/projectile/Proj)
 	if(cpu)
-		cpu.bullet_act(Proj)
+		return cpu.bullet_act(Proj)
+	return ..()

@@ -1,21 +1,15 @@
 //supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
 #define RANGE_TURFS(RADIUS, CENTER) \
-  block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-  )
+	block( \
+		locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
+	)
 
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
 
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
-
-/proc/get_area_name(atom/X, format_text = FALSE)
-	var/area/A = isarea(X) ? X : get_area(X)
+/proc/get_area_name(atom/X, format_text = FALSE, get_base_area = FALSE)
+	var/area/A = get_base_area ? get_base_area(X) : get_area(X)
 	if(!A)
 		return null
 	return format_text ? format_text(A.name) : A.name
@@ -151,19 +145,43 @@
 			turfs += T
 	return turfs
 
+/** recursive_organ_check
+  * inputs: O (object to start with)
+  * outputs:
+  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
+  *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
+  *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
+  */
+/proc/recursive_organ_check(atom/O)
 
-//This is the new version of recursive_mob_check, used for say().
-//The other proc was left intact because morgue trays use it.
-//Sped this up again for real this time
-/proc/recursive_hear_check(O)
 	var/list/processing_list = list(O)
-	. = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		if(A.flags_1 & HEAR_1)
-			. += A
-		processing_list.Cut(1, 2)
-		processing_list += A.contents
+	var/list/processed_list = list()
+	var/index = 1
+	var/obj/item/organ/found_organ
+
+	while(index <= length(processing_list))
+
+		var/atom/A = processing_list[index]
+
+		if(istype(A, /obj/item/organ))
+			found_organ = A
+			found_organ.organ_flags ^= ORGAN_FROZEN
+
+		else if(istype(A, /mob/living/carbon))
+			var/mob/living/carbon/Q = A
+			for(var/organ in Q.internal_organs)
+				found_organ = organ
+				found_organ.organ_flags ^= ORGAN_FROZEN
+
+		for(var/atom/B in A)	//objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
+			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
+				processing_list+= B
+
+		index++
+		processed_list[A] = A
+
+	return
+
 
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
@@ -206,33 +224,30 @@
 
 	return found_mobs
 
-
 /proc/get_hearers_in_view(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	. = list()
-
 	if(!T)
 		return
-
-	var/list/processing_list = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
-	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
+	var/list/processing = list()
+	if(R == 0)
+		processing += T.contents
+	else
 		var/lum = T.luminosity
-		T.luminosity = 6 // This is the maximum luminosity
-		for(var/mob/M in view(R, T))
-			processing_list += M
-		for(var/obj/O in view(R, T))
-			processing_list += O
+		T.luminosity = 6
+		var/list/cached_view = view(R, T)
+		for(var/mob/M in cached_view)
+			processing += M
+		for(var/obj/O in cached_view)
+			processing += O
 		T.luminosity = lum
-
-	while(processing_list.len) // recursive_hear_check inlined here
-		var/atom/A = processing_list[1]
+	var/i = 0
+	while(i < length(processing))
+		var/atom/A = processing[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
-		processing_list.Cut(1, 2)
-		processing_list += A.contents
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
+		processing += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
@@ -350,7 +365,7 @@
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()
@@ -410,11 +425,8 @@
 			candidates -= M
 
 /proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
-	var/list/candidates = list()
-
-	for(var/mob/dead/observer/G in GLOB.player_list)
-		candidates += G
-
+	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+	var/list/candidates = eligibility.get_all_ghost_role_eligible()
 	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
 /proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
@@ -433,7 +445,7 @@
 			if(!gametypeCheck.age_check(M.client))
 				continue
 		if(jobbanType)
-			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, ROLE_SYNDICATE))
+			if(jobban_isbanned(M, jobbanType) || QDELETED(M) || jobban_isbanned(M, ROLE_SYNDICATE) || QDELETED(M))
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
@@ -477,7 +489,7 @@
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()
-	new_character.key = G_found.key
+	G_found.transfer_ckey(new_character, FALSE)
 
 	return new_character
 
@@ -510,6 +522,13 @@
 
 	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+
+/proc/GetHexColors(const/hexa)
+	return list(
+			GetRedPart(hexa)/ 255,
+			GetGreenPart(hexa)/ 255,
+			GetBluePart(hexa)/ 255
+		)
 
 /proc/GetRedPart(const/hexa)
 	return hex2num(copytext(hexa, 2, 4))

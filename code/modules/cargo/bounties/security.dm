@@ -1,62 +1,54 @@
-/datum/bounty/item/security/headset
-	name = "Security Headset"
-	description = "Nanotrasen wants to ensure that their encryption is working correctly. Ship them a security headset so that they can check."
-	reward = 800
-	wanted_types = list(/obj/item/radio/headset/headset_sec, /obj/item/radio/headset/heads/hos)
-
-/datum/bounty/item/security/securitybelt
-	name = "Security Belt"
-	description = "CentCom is having difficulties with their security belts. Ship one from the station to receive compensation."
-	reward = 800
-	wanted_types = list(/obj/item/storage/belt/security)
-
-/datum/bounty/item/security/sechuds
-	name = "Security HUDSunglasses"
-	description = "CentCom screwed up and ordered the wrong type of security sunglasses. They request the station ship some of theirs."
-	reward = 800
-	wanted_types = list(/obj/item/clothing/glasses/hud/security/sunglasses)
-
 /datum/bounty/item/security/riotshotgun
 	name = "Riot Shotguns"
 	description = "Hooligans have boarded CentCom! Ship riot shotguns quick, or things are going to get dirty."
-	reward = 5000
+	reward = 2500
 	required_count = 2
 	wanted_types = list(/obj/item/gun/ballistic/shotgun/riot)
-
-/datum/bounty/item/security/pinpointer
-	name = "Nuclear Pinpointer"
-	description = "There's a teeny-tiny itty-bitty chance CentCom may have lost a nuke disk. Can the station spare a pinpointer to help out?"
-	reward = 1500
-	wanted_types = list(/obj/item/pinpointer/nuke)
-
-/datum/bounty/item/security/captains_spare
-	name = "Captain's Spare"
-	description = "Captain Bart of Station 12 has forgotten his ID! Ship him your station's spare, would you?"
-	reward = 1500
-	wanted_types = list(/obj/item/card/id/captains_spare)
-
-/datum/bounty/item/security/hardsuit
-	name = "Security Hardsuit"
-	description = "Space pirates are heading towards CentCom! Quick! Ship a security hardsuit to aid the fight!"
-	reward = 2000
-	wanted_types = list(/obj/item/clothing/suit/space/hardsuit/security)
-
-/datum/bounty/item/security/krav_maga
-	name = "Krav Maga Gloves"
-	description = "Chef Howerwitz of CentCom is trying to take a kung-fu Pizza out of the oven, but his mitts aren't up to the task. Ship them a pair of Krav Maga gloves to do the job right."
-	reward = 2000
-	wanted_types = list(/obj/item/clothing/gloves/krav_maga)
 
 /datum/bounty/item/security/recharger
 	name = "Rechargers"
 	description = "Nanotrasen military academy is conducting marksmanship exercises. They request that rechargers be shipped."
-	reward = 2000
+	reward = 1700
 	required_count = 3
 	wanted_types = list(/obj/machinery/recharger)
 
-/datum/bounty/item/security/sabre
-	name = "Officer's Sabre"
-	description = "A 3-hour LARP session will be held at CentCom in the upcoming months. A shipped officer's sabre would make a good prop."
-	reward = 2500
-	wanted_types = list(/obj/item/melee/sabre)
+/datum/bounty/item/security/practice
+	name = "Practice Laser Gun"
+	description = "Nanotrasen Military Academy is conducting routine marksmanship exercises. The clown hid all the practice lasers, and we're not using live weapons after last time."
+	reward = 1500
+	required_count = 3
+	wanted_types = list(/obj/item/gun/energy/laser/practice)
 
+/datum/bounty/item/security/flashshield
+	name = "Strobe Shield"
+	description = "One of our Emergency Response Agents thinks there's vampires in a local station. Send him something to help with his fear of the dark and protect him, too."
+	reward = 3000
+	wanted_types = list(/obj/item/assembly/flash/shield)
+
+/datum/bounty/item/security/sechuds
+	name = "Sec HUDs"
+	description = "Nanotrasen military academy has started to train officers how to use Sec HUDs to the fullest affect. Please send spare Sec HUDs so we can teach the men."
+	reward = 1250
+	required_count = 5
+	wanted_types = list(/obj/item/clothing/glasses/hud/security)
+
+/datum/bounty/item/security/techslugs
+	name = "Tech Slugs"
+	description = "Nanotrasen Military Academy is conducting an ammo loading and use lessons, on the new 'Tech Slugs'. Problem is we don't have any, please fix this..."
+	reward = 3500
+	required_count = 15
+	wanted_types = list(/obj/item/ammo_casing/shotgun/techshell)
+
+/datum/bounty/item/security/wt550
+	name = "Spare WT-550 clips"
+	description = "Nanotrasen Military Academy's ammunition is running low, please send in spare ammo for practice."
+	reward = 1500
+	required_count = 5
+	wanted_types = list(/obj/item/ammo_box/magazine/wt550m9)
+
+/datum/bounty/item/security/pins
+	name = "Test range firing pins"
+	description = "Nanotrasen Military Academy just got a new set of guns, sadly they didn't come with any pins. Can you send us some Test range locked firing pins?"
+	reward = 2750
+	required_count = 3
+	wanted_types = list(/obj/item/firing_pin/test_range)

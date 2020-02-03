@@ -34,6 +34,8 @@
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
+	var/loudfactor = 0 //Used for blood tests. At 4, blood tests will succeed. At 10, blood tests will result in an explosion.
+	var/bloodtestwarnings = 0 //Used to track if the ling has been notified that they will pass blood tests.
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
@@ -71,8 +73,6 @@
 	reset_powers()
 	create_initial_profile()
 	if(give_objectives)
-		if(team_mode)
-			forge_team_objectives()
 		forge_objectives()
 	remove_clownmut()
 	. = ..()
@@ -83,7 +83,7 @@
 	if(istype(C))
 		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
 		if(B && (B.decoy_override != initial(B.decoy_override)))
-			B.vital = TRUE
+			B.organ_flags |= ORGAN_VITAL
 			B.decoy_override = FALSE
 	remove_changeling_powers()
 	. = ..()
@@ -123,6 +123,8 @@
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
 		remove_changeling_powers()
+	loudfactor = 0
+	bloodtestwarnings = 0
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -167,13 +169,20 @@
 		to_chat(owner.current, "We have reached our capacity for abilities.")
 		return
 
-	if(owner.current.has_trait(TRAIT_FAKEDEATH))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
+	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
 		to_chat(owner.current, "We lack the energy to evolve new abilities right now.")
 		return
 
 	geneticpoints -= thepower.dna_cost
 	purchasedpowers += thepower
 	thepower.on_purchase(owner.current)
+	loudfactor += thepower.loudness
+	if(loudfactor >= 4 && !bloodtestwarnings)
+		to_chat(owner.current, "<span class='warning'>Our blood is growing flammable. Our blood will react violently to heat.</span>")
+		bloodtestwarnings = 1
+	if(loudfactor >= 10 && bloodtestwarnings < 2)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will react explosively to heat.</span>")
+		bloodtestwarnings = 2
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
@@ -182,6 +191,7 @@
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
+		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5, soundenvwet = 0)
 		canrespec = 0
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
@@ -229,7 +239,7 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	if((target.has_trait(TRAIT_NOCLONE)) || (target.has_trait(TRAIT_NOCLONE)))
+	if((HAS_TRAIT(target, TRAIT_NOCLONE)) || (HAS_TRAIT(target, TRAIT_NOCLONE)))
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return
@@ -259,8 +269,11 @@
 	prof.protected = protect
 
 	prof.underwear = H.underwear
+	prof.undie_color = H.undie_color
 	prof.undershirt = H.undershirt
+	prof.shirt_color = H.shirt_color
 	prof.socks = H.socks
+	prof.socks_color = H.socks_color
 
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -327,7 +340,7 @@
 	if(istype(C))
 		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
 		if(B)
-			B.vital = FALSE
+			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 	update_changeling_icons_added()
 	return
@@ -340,7 +353,7 @@
 /datum/antagonist/changeling/greet()
 	if (you_are_greet)
 		to_chat(owner.current, "<span class='boldannounce'>You are [changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
-	to_chat(owner.current, "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>")
+	to_chat(owner.current, "<span class='boldannounce'>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with your fellow changelings.</span>")
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -446,12 +459,10 @@
 			objectives += identity_theft
 		escape_objective_possible = FALSE
 
-	owner.objectives |= objectives
-
 /datum/antagonist/changeling/proc/update_changeling_icons_added()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.join_hud(owner.current)
-	set_antag_hud(owner.current, "changling")
+	set_antag_hud(owner.current, "changeling")
 
 /datum/antagonist/changeling/proc/update_changeling_icons_removed()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
@@ -493,8 +504,11 @@
 	var/list/item_state_list = list()
 
 	var/underwear
+	var/undie_color
 	var/undershirt
+	var/shirt_color
 	var/socks
+	var/socks_color
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)

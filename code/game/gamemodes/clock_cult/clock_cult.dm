@@ -4,11 +4,11 @@ GLOBAL_VAR_INIT(servants_active, FALSE) //This var controls whether or not a lot
 
 CLOCKWORK CULT: Based off of the failed pull requests from /vg/
 
-While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
-Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
+While Nar'Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
+Ratvar, the Clockwork Justiciar, a homage to Nar'Sie granted sentience by its own power, is one such other force.
 Imprisoned within a massive construct known as the Celestial Derelict - or Reebe - an intense hatred of the Blood God festers.
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
-Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
+Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar'Sie, who can only influence natural life.
 
 This is a team-based gamemode, and the team's objective is shared by all cultists. Their goal is to defend an object called the Ark on a separate z-level.
 
@@ -37,6 +37,7 @@ Credit where due:
 4. PJB3005 from /vg/ for the failed continuation PR
 5. Xhuis from /tg/ for coding the first iteration of the mode, and the new, reworked version
 6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release prior to its rework
+7. Clockwork cult code as of now, at least the one being pulled from Citadel Station's master branch, is being, or already is, fixed by Coolgat3 and Avunia.
 
 */
 
@@ -51,7 +52,7 @@ Credit where due:
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
-		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+		if(M.mind.assigned_role in list("Captain", "Chaplain"))
 			return FALSE
 		if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
 			return FALSE
@@ -59,8 +60,12 @@ Credit where due:
 			return FALSE
 	else
 		return FALSE
-	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))
+	if(iscultist(M) || isconstruct(M) || ispAI(M))
 		return FALSE
+	if(isliving(M))
+		var/mob/living/L = M
+		if(HAS_TRAIT(L, TRAIT_MINDSHIELD))
+			return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
 	return FALSE
@@ -126,11 +131,11 @@ Credit where due:
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
-	required_players = 24
-	required_enemies = 4
-	recommended_enemies = 4
-	enemy_minimum_age = 14
-	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
+	required_players = 35
+	required_enemies = 3
+	recommended_enemies = 5
+	enemy_minimum_age = 7
+	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
 	announce_span = "brass"
 	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
@@ -144,11 +149,13 @@ Credit where due:
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	var/list/errorList = list()
-	SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
+	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
 	if(errorList.len)	// reebe failed to load
-		message_admins("Rebee failed to load!")
-		log_game("Rebee failed to load!")
+		message_admins("Reebe failed to load!")
+		log_game("Reebe failed to load!")
 		return FALSE
+	for(var/datum/parsed_map/PM in reebes)
+		PM.initTemplateBounds()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
@@ -160,6 +167,7 @@ Credit where due:
 		number_players -= 30
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
+	GLOB.clockwork_vitality += 50 * starter_servants //some starter Vitality to help recover from initial fuck ups
 	while(starter_servants)
 		var/datum/mind/servant = antag_pick(antag_candidates)
 		servants_to_serve += servant
@@ -261,14 +269,14 @@ Credit where due:
 //Servant of Ratvar outfit
 /datum/outfit/servant_of_ratvar
 	name = "Servant of Ratvar"
-	uniform = /obj/item/clothing/under/chameleon/ratvar
+	uniform = /obj/item/clothing/under/rank/engineer //no more chameleon suit for them, as requested
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/storage/belt/utility/servant
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
-	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
+	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1, /obj/item/reagent_containers/food/drinks/bottle/holyoil = 1)
 	id = /obj/item/pda
 	var/plasmaman //We use this to determine if we should activate internals in post_equip()
 
@@ -341,7 +349,7 @@ Credit where due:
 		changelog_contents += "<li>[entry]</li>"
 	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
 
-/obj/item/paper/servant_primer/examine(mob/user)
-	if(!is_servant_of_ratvar(user) && !isobserver(user))
-		to_chat(user, "<span class='danger'>You can't understand any of the words on [src].</span>")
-	..()
+/obj/item/paper/servant_primer/oui_getcontent(mob/target)
+	if(!is_servant_of_ratvar(target) && !isobserver(target))
+		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
+	return ..()

@@ -15,8 +15,9 @@
 	var/mopping = 0
 	var/mopcount = 0
 	var/mopcap = 5
-	var/mopspeed = 30
+	var/stamusage = 2
 	force_string = "robust... against germs"
+	var/insertable = TRUE
 
 /obj/item/mop/New()
 	..()
@@ -24,8 +25,9 @@
 
 
 /obj/item/mop/proc/clean(turf/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
-		A.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
+		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+		A.clean_blood()
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
 				qdel(O)
@@ -34,7 +36,14 @@
 
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
+		return
+
+	var/mob/living/L = user
+
+	if(istype(L) && L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
 		return
 
 	if(reagents.total_volume < 1)
@@ -47,11 +56,13 @@
 		return
 
 	if(T)
-		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
-
-		if(do_after(user, src.mopspeed, target = T))
-			to_chat(user, "<span class='notice'>You finish mopping.</span>")
-			clean(T)
+		user.visible_message("[user] cleans \the [T] with [src].", "<span class='notice'>You clean \the [T] with [src].</span>")
+		clean(T)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(T, used_item = src)
+		if(istype(L))
+			L.adjustStaminaLossBuffered(stamusage)
+		playsound(T, "slosh", 50, 1)
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
@@ -62,14 +73,16 @@
 
 
 /obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.put_in_cart(src, user)
-	J.mymop=src
-	J.update_icon()
+	if(insertable)
+		J.put_in_cart(src, user)
+		J.mymop=src
+		J.update_icon()
+	else
+		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
+		return
 
 /obj/item/mop/cyborg
-
-/obj/item/mop/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
+	insertable = FALSE
 
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
@@ -82,10 +95,10 @@
 	force = 6
 	throwforce = 8
 	throw_range = 4
-	mopspeed = 20
+	stamusage = 1
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
-	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
+	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
 /obj/item/mop/advanced/New()
 	..()
@@ -106,10 +119,13 @@
 		reagents.add_reagent(refill_reagent, refill_rate)
 
 /obj/item/mop/advanced/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>"
 
 /obj/item/mop/advanced/Destroy()
 	if(refill_enabled)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/item/mop/advanced/cyborg
+	insertable = FALSE

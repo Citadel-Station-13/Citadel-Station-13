@@ -11,6 +11,7 @@
 	deploy_bodybag(user, user.loc)
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(proximity)
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
@@ -45,10 +46,10 @@
 
 
 /obj/item/bodybag/bluespace/examine(mob/user)
-	..()
+	. = ..()
 	if(contents.len)
 		var/s = contents.len == 1 ? "" : "s"
-		to_chat(user, "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>")
+		. += "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>"
 
 /obj/item/bodybag/bluespace/Destroy()
 	for(var/atom/movable/A in contents)

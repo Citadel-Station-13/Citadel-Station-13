@@ -86,7 +86,7 @@
 			tag_overlay.pixel_y = boxes.len * 3
 			add_overlay(tag_overlay)
 
-/obj/item/pizzabox/worn_overlays(isinhands, icon_file)
+/obj/item/pizzabox/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = list()
 	var/current_offset = 2
 	if(isinhands)
@@ -231,7 +231,7 @@
 	if(boxes.len >= 3 && prob(25 * boxes.len))
 		disperse_pizzas()
 
-/obj/item/pizzabox/throw_impact(atom/movable/AM)
+/obj/item/pizzabox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(boxes.len >= 2 && prob(20 * boxes.len))
 		disperse_pizzas()
 
@@ -269,9 +269,14 @@
 
 /obj/item/pizzabox/margherita/Initialize()
 	. = ..()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
+	AddPizza()
 	boxtag = "Margherita Deluxe"
 
+/obj/item/pizzabox/margherita/proc/AddPizza()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
+
+/obj/item/pizzabox/margherita/robo/AddPizza()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita/robo(src)
 
 /obj/item/pizzabox/vegetable/Initialize()
 	. = ..()
@@ -303,7 +308,7 @@
 		/obj/item/reagent_containers/food/snacks/pizza/margherita = 1,
 		/obj/item/reagent_containers/food/snacks/pizza/sassysage = 0.8,
 		/obj/item/reagent_containers/food/snacks/pizza/vegetable = 0.8,
-   		/obj/item/reagent_containers/food/snacks/pizza/pineapple = 0.5,
+		/obj/item/reagent_containers/food/snacks/pizza/pineapple = 0.5,
 		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
 		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
@@ -314,9 +319,9 @@
 		pizza_preferences = list()
 
 /obj/item/pizzabox/infinite/examine(mob/user)
-	..()
+	. = ..()
 	if(isobserver(user))
-		to_chat(user, "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>")
+		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	QDEL_NULL(pizza)
@@ -327,6 +332,12 @@
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/noms) //tonight on "proc names I never thought I'd type"
 	if(!pizza_preferences[noms.ckey])
 		pizza_preferences[noms.ckey] = pickweight(pizza_types)
+		if(noms.has_quirk(/datum/quirk/pineapple_liker))
+			pizza_preferences[noms.ckey] = /obj/item/reagent_containers/food/snacks/pizza/pineapple
+		else if(noms.has_quirk(/datum/quirk/pineapple_hater))
+			var/list/pineapple_pizza_liker = pizza_types.Copy()
+			pineapple_pizza_liker -= /obj/item/reagent_containers/food/snacks/pizza/pineapple
+			pizza_preferences[noms.ckey] = pickweight(pineapple_pizza_liker)
 		if(noms.mind && noms.mind.assigned_role == "Botanist")
 			pizza_preferences[noms.ckey] = /obj/item/reagent_containers/food/snacks/pizza/dank
 

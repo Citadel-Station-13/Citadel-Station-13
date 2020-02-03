@@ -1,19 +1,18 @@
 GLOBAL_VAR_INIT(total_runtimes, GLOB.total_runtimes || 0)
 GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
-#ifdef DEBUG
-
+#ifdef USE_CUSTOM_ERROR_HANDLER
 #define ERROR_USEFUL_LEN 2
 
 /world/Error(exception/E, datum/e_src)
 	GLOB.total_runtimes++
-	
+
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("uncaught runtime error: [E]")
 		return ..()
-	
+
 	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
-	if(copytext(E.name,1,32) == "Maximum recursion level reached")
+	if(copytext(E.name, 1, 32) == "Maximum recursion level reached")//32 == length() of that string + 1
 		//log to world while intentionally triggering the byond bug.
 		log_world("runtime error: [E.name]\n[E.desc]")
 		//if we got to here without silently ending, the byond bug has been fixed.
@@ -77,7 +76,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)
-				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
+				SEND_TEXT(world.log, "\[[TIME_STAMP("hh:mm:ss", FALSE)]] Skipped [skipcount] runtimes in [E.file],[E.line].")
 				GLOB.error_cache.log_error(E, skip_count = skipcount)
 
 	error_last_seen[erroruid] = world.time
@@ -86,8 +85,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/list/usrinfo = null
 	var/locinfo
 	if(istype(usr))
-		usrinfo = list("  usr: [datum_info_line(usr)]")
-		locinfo = atom_loc_line(usr)
+		usrinfo = list("  usr: [key_name(usr)]")
+		locinfo = loc_name(usr)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
 	// The proceeding mess will almost definitely break if error messages are ever changed
@@ -103,7 +102,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 					usrinfo = null
 				continue // Our usr info is better, replace it
 
-			if(copytext(line, 1, 3) != "  ")
+			if(copytext(line, 1, 3) != "  ")//3 == length("  ") + 1
 				desclines += ("  " + line) // Pad any unpadded lines, so they look pretty
 			else
 				desclines += line
@@ -114,7 +113,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
-	var/main_line = "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
+	var/main_line = "\[[TIME_STAMP("hh:mm:ss", FALSE)]] Runtime in [E.file],[E.line]: [E]"
 	SEND_TEXT(world.log, main_line)
 	for(var/line in desclines)
 		SEND_TEXT(world.log, line)
@@ -128,5 +127,4 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
 	log_runtime("runtime error: [E.name]\n[E.desc]")
-
 #endif

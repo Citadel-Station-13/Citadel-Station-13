@@ -2,13 +2,16 @@
 	var/name = "Martial Art"
 	var/streak = ""
 	var/max_streak_length = 6
+	var/id = "" //ID, used by mind/has_martialartcode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proccode\game\objects\items\granters.dm:345:error: user.mind.has_martialart: undefined proc
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
 	var/deflection_chance = 0 //Chance to deflect projectiles
+	var/reroute_deflection = FALSE //Delete the bullet, or actually deflect it in some direction?
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
+	var/dodge_chance = 0
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb
-	var/no_guns = FALSE
+	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -25,13 +28,15 @@
 
 /datum/martial_art/proc/add_to_streak(element,mob/living/carbon/human/D)
 	if(D != current_target)
-		current_target = D
-		streak = ""
-		restraining = 0
+		reset_streak(D)
 	streak = streak+element
 	if(length(streak) > max_streak_length)
-		streak = copytext(streak,2)
+		streak = copytext(streak, 1 + length(streak[1]))
 	return
+
+/datum/martial_art/proc/reset_streak(mob/living/carbon/human/new_target)
+	current_target = new_target
+	streak = ""
 
 /datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
@@ -55,7 +60,7 @@
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
 			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
-		add_logs(A, D, "attempted to [atk_verb]")
+		log_combat(A, D, "attempted to [atk_verb]")
 		return 0
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
@@ -67,7 +72,7 @@
 
 	D.apply_damage(damage, BRUTE, affecting, armor_block)
 
-	add_logs(A, D, "punched")
+	log_combat(A, D, "punched")
 
 	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
 		D.visible_message("<span class='danger'>[A] has knocked [D] down!!</span>", \
@@ -78,7 +83,7 @@
 		D.forcesay(GLOB.hit_appends)
 	return 1
 
-/datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
+/datum/martial_art/proc/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	if(!istype(H) || !H.mind)
 		return FALSE
 	if(H.mind.martial_art)

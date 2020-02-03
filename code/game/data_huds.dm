@@ -18,7 +18,7 @@
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical
-	hud_icons = list(STATUS_HUD, HEALTH_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD, NANITE_HUD, RAD_HUD)
 
 /datum/atom_hud/data/human/medical/basic
 
@@ -47,15 +47,15 @@
 	hud_icons = list(ID_HUD)
 
 /datum/atom_hud/data/human/security/advanced
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD, NANITE_HUD)
 
 /datum/atom_hud/data/diagnostic
 
 /datum/atom_hud/data/diagnostic/basic
-	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_NANITE_FULL_HUD)
 
 /datum/atom_hud/data/diagnostic/advanced
-	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_PATH_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_NANITE_FULL_HUD, DIAG_PATH_HUD)
 
 /datum/atom_hud/data/bot_path
 	hud_icons = list(DIAG_PATH_HUD)
@@ -65,6 +65,16 @@
 
 /datum/atom_hud/sentient_disease
 	hud_icons = list(SENTIENT_DISEASE_HUD)
+
+/datum/atom_hud/ai_detector
+	hud_icons = list(AI_DETECT_HUD)
+
+/datum/atom_hud/ai_detector/add_hud_to(mob/M)
+	..()
+	if(M && (hudusers.len == 1))
+		for(var/V in GLOB.aiEyes)
+			var/mob/camera/aiEye/E = V
+			E.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -90,7 +100,7 @@
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH)))
+	if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH)))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -152,6 +162,7 @@
 	holder.icon_state = "hud[RoundHealth(src)]"
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
+	med_hud_set_radstatus()
 
 //for carbon suit sensors
 /mob/living/carbon/med_hud_set_health()
@@ -162,7 +173,7 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
@@ -172,9 +183,20 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	var/virus_threat = check_virus()
 	holder.pixel_y = I.Height() - world.icon_size
-	if(has_trait(TRAIT_XENO_HOST))
+	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+		if(tod)
+			var/tdelta = round(world.time - timeofdeath)
+			if(tdelta < (DEFIB_TIME_LIMIT * 10))
+				var/obj/item/organ/heart/He = getorgan(/obj/item/organ/heart)
+				if(He)
+					holder.icon_state = "huddefib"
+					if(He.organ_flags & ORGAN_FAILING)
+						holder.icon_state = "huddefibheart"
+				else
+					holder.icon_state = "huddefibheart"
+				return
 		holder.icon_state = "huddead"
 	else
 		switch(virus_threat)
@@ -196,6 +218,22 @@
 				holder.icon_state = "hudhealthy"
 
 
+/mob/living/proc/med_hud_set_radstatus()
+	var/image/radholder = hud_list[RAD_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	radholder.pixel_y = I.Height() - world.icon_size
+	var/mob/living/M = src
+	var/rads = M.radiation
+	switch(rads)
+		if(-INFINITY to RAD_MOB_SAFE)
+			radholder.icon_state = "hudradsafe"
+		if((RAD_MOB_SAFE+1) to RAD_MOB_MUTATE)
+			radholder.icon_state = "hudraddanger"
+		if((RAD_MOB_MUTATE+1) to RAD_MOB_VOMIT)
+			radholder.icon_state = "hudradlethal"
+		if((RAD_MOB_VOMIT+1) to INFINITY)
+			radholder.icon_state = "hudradnuke"
+
 /***********************************************
  Security HUDs! Basic mode shows only the job.
 ************************************************/
@@ -207,11 +245,11 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudno_id"
-	if(wear_id)
+	if(wear_id?.GetID())
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
 
-/mob/living/carbon/human/proc/sec_hud_set_implants()
+/mob/living/proc/sec_hud_set_implants()
 	var/image/holder
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
 		holder = hud_list[i]
@@ -222,16 +260,16 @@
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_tracking"
-		else if(istype(I, /obj/item/implant/mindshield))
-			holder = hud_list[IMPLOYAL_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_loyal"
 		else if(istype(I, /obj/item/implant/chem))
 			holder = hud_list[IMPCHEM_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_chem"
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+		holder = hud_list[IMPLOYAL_HUD]
+		var/icon/IC = icon(icon, icon_state, dir)
+		holder.pixel_y = IC.Height() - world.icon_size
+		holder.icon_state = "hud_imp_loyal"
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
@@ -248,7 +286,7 @@
 				if("Incarcerated")
 					holder.icon_state = "hudincarcerated"
 					return
-				if("Parolled")
+				if("Paroled")
 					holder.icon_state = "hudparolled"
 					return
 				if("Discharged")
@@ -259,6 +297,14 @@
 /***********************************************
  Diagnostic HUDs!
 ************************************************/
+
+/mob/living/proc/hud_set_nanite_indicator()
+	var/image/holder = hud_list[NANITE_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = null
+	if(src in SSnanites.nanite_monitored_mobs)
+		holder.icon_state = "nanite_ping"
 
 //For Diag health and cell bars!
 /proc/RoundDiagBar(value)

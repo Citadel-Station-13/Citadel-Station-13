@@ -4,37 +4,35 @@
 	var/obj/screen/using
 
 	healths = new /obj/screen/healths/guardian()
+	healths.hud = src
 	infodisplay += healths
 
 	using = new /obj/screen/guardian/Manifest()
 	using.screen_loc = ui_hand_position(2)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/guardian/Recall()
 	using.screen_loc = ui_hand_position(1)
+	using.hud = src
 	static_inventory += using
 
 	using = new owner.toggle_button_type()
 	using.screen_loc = ui_storage1
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/guardian/ToggleLight()
 	using.screen_loc = ui_inventory
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/guardian/Communicate()
 	using.screen_loc = ui_back
+	using.hud = src
 	static_inventory += using
 
-
-/mob/living/simple_animal/hostile/guardian/create_mob_hud()
-	if(client && !hud_used)
-		if(dextrous)
-			..()
-		else
-			hud_used = new /datum/hud/guardian(src, ui_style2icon(client.prefs.UI_style))
-
-/datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner, ui_style = 'icons/mob/screen_midnight.dmi') //for a dextrous guardian
+/datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner) //for a dextrous guardian
 	..()
 	var/obj/screen/using
 	if(istype(owner, /mob/living/simple_animal/hostile/guardian/dextrous))

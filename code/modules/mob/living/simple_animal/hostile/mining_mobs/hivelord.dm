@@ -11,8 +11,8 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
 	ranged = 1
-	vision_range = 5
-	aggro_vision_range = 9
+	vision_range = 4
+	aggro_vision_range = 7
 	speed = 3
 	maxHealth = 75
 	health = 75
@@ -24,7 +24,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 15
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	retreat_distance = 3
@@ -131,6 +131,7 @@
 	maxHealth = 60
 	health = 60
 	speed = 2 //faster!
+	move_to_delay = 10 //actually faster!
 	crusher_drop_mod = 20
 	dwarf_mob = TRUE
 
@@ -216,7 +217,7 @@
 	can_infest_dead = TRUE
 
 //Legion that spawns Legions
-/mob/living/simple_animal/hostile/spawner/legion
+/mob/living/simple_animal/hostile/big_legion
 	name = "legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
@@ -225,10 +226,6 @@
 	icon_dead = "legion"
 	health = 450
 	maxHealth = 450
-	max_mobs = 3
-	spawn_time = 200
-	spawn_text = "peels itself off from"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	anchored = FALSE
@@ -250,6 +247,10 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+/mob/living/simple_animal/hostile/big_legion/Initialize()
+	.=..()
+	AddComponent(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, faction, "peels itself off from", 3)
 
 //Tendril-spawned Legion remains, the charred skeletons of those whose bodies sank into laval or fell into chasms.
 /obj/effect/mob_spawn/human/corpse/charredskeleton
@@ -289,7 +290,7 @@
 			gloves = /obj/item/clothing/gloves/color/black
 			mask = /obj/item/clothing/mask/gas/explorer
 			if(prob(20))
-				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
+				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer/standard = 6, /obj/item/clothing/suit/hooded/cloak/goliath = 2, /obj/item/clothing/suit/hooded/explorer/exo = 6, /obj/item/clothing/suit/hooded/explorer/seva = 6))
 			if(prob(30))
 				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
 			if(prob(10))
@@ -365,7 +366,7 @@
 			suit_store = /obj/item/tome
 			r_pocket = /obj/item/restraints/legcuffs/bola/cult
 			l_pocket = /obj/item/melee/cultblade/dagger
-			glasses =  /obj/item/clothing/glasses/night/cultblind
+			glasses =  /obj/item/clothing/glasses/hud/health/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
 		if("Lavaknight") //START OF CIT CHANGE
 			uniform = /obj/item/clothing/under/assistantformal
@@ -377,7 +378,3 @@
 			id = /obj/item/card/id/knight //END OF CIT CHANGE
 			id_job = "Knight"
 	. = ..()
-
-
-
-

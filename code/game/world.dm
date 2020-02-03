@@ -1,19 +1,19 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
-GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
-GLOBAL_PROTECT(security_mode)
+
+GLOBAL_VAR(topic_status_lastcache)
+GLOBAL_LIST(topic_status_cache)
 
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
-	log_world("World loaded at [time_stamp()]!")
+
+	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
-
-	CheckSecurityMode()
+	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -21,7 +21,7 @@ GLOBAL_PROTECT(security_mode)
 
 	GLOB.revdata = new
 
-	config.Load()
+	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
@@ -29,11 +29,17 @@ GLOBAL_PROTECT(security_mode)
 	SSdbcore.SetRoundID()
 	SetupLogs()
 
+#ifndef USE_CUSTOM_ERROR_HANDLER
+	world.log = file("[GLOB.log_directory]/dd.log")
+#endif
+
 	load_admins()
+	load_mentors()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
+	initialize_global_loadout_items()
 	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
@@ -45,9 +51,7 @@ GLOBAL_PROTECT(security_mode)
 	if(NO_INIT_PARAMETER in params)
 		return
 
-	cit_initialize()
-
-	Master.Initialize(10, FALSE)
+	Master.Initialize(10, FALSE, TRUE)
 
 	if(TEST_RUN_PARAMETER in params)
 		HandleTestRun()
@@ -79,23 +83,43 @@ GLOBAL_PROTECT(security_mode)
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
 	if(!override_dir)
-		GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+		var/realtime = world.realtime
+		var/texttime = time2text(realtime, "YYYY/MM/DD")
+		GLOB.log_directory = "data/logs/[texttime]/round-"
+		GLOB.picture_logging_prefix = "L_[time2text(realtime, "YYYYMMDD")]_"
+		GLOB.picture_log_directory = "data/picture_logs/[texttime]/round-"
 		if(GLOB.round_id)
 			GLOB.log_directory += "[GLOB.round_id]"
+			GLOB.picture_logging_prefix += "R_[GLOB.round_id]_"
+			GLOB.picture_log_directory += "[GLOB.round_id]"
 		else
-			GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
+			var/timestamp = replacetext(TIME_STAMP("hh:mm:ss", FALSE), ":", ".")
+			GLOB.log_directory += "[timestamp]"
+			GLOB.picture_log_directory += "[timestamp]"
+			GLOB.picture_logging_prefix += "T_[timestamp]_"
 	else
 		GLOB.log_directory = "data/logs/[override_dir]"
+		GLOB.picture_logging_prefix = "O_[override_dir]_"
+		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
+	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
+	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
 	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
+	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
+	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
+	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
+	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
+	GLOB.reagent_log = "[GLOB.log_directory]/reagents.log"
+	GLOB.world_crafting_log = "[GLOB.log_directory]/crafting.log"
+
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
@@ -104,10 +128,16 @@ GLOBAL_PROTECT(security_mode)
 	start_log(GLOB.world_game_log)
 	start_log(GLOB.world_attack_log)
 	start_log(GLOB.world_pda_log)
+	start_log(GLOB.world_telecomms_log)
 	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_href_log)
 	start_log(GLOB.world_qdel_log)
 	start_log(GLOB.world_runtime_log)
+	start_log(GLOB.world_job_debug_log)
+	start_log(GLOB.tgui_log)
+	start_log(GLOB.subsystem_log)
+	start_log(GLOB.reagent_log)
+	start_log(GLOB.world_crafting_log)
 
 	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
@@ -117,22 +147,21 @@ GLOBAL_PROTECT(security_mode)
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
 
-/world/proc/CheckSecurityMode()
-	//try to write to data
-	if(!text2file("The world is running at least safe mode", "data/server_security_check.lock"))
-		GLOB.security_mode = SECURITY_ULTRASAFE
-		warning("/tg/station 13 is not supported in ultrasafe security mode. Everything will break!")
-		return
-
-	//try to shell
-	if(shell("echo \"The world is running in trusted mode\"") != null)
-		GLOB.security_mode = SECURITY_TRUSTED
-	else
-		GLOB.security_mode = SECURITY_SAFE
-		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
+	// This was printed early in startup to the world log and config_error.log,
+	// but those are both private, so let's put the commit info in the runtime
+	// log which is ultimately public.
+	log_runtime(GLOB.revdata.get_log_message())
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	//redirect to server tools if necessary
+
+	if(!SSfail2topic)
+		return "Server not initialized."
+	else if(SSfail2topic.IsRateLimited(addr))
+		return "Rate limited."
+
+	if(length(T) > CONFIG_GET(number/topic_max_size))
+		return "Payload too large!"
 
 	var/static/list/topic_handlers = TopicHandlers()
 
@@ -150,7 +179,7 @@ GLOBAL_PROTECT(security_mode)
 		return
 
 	handler = new handler()
-	return handler.TryRun(input)
+	return handler.TryRun(input, addr)
 
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
@@ -219,11 +248,11 @@ GLOBAL_PROTECT(security_mode)
 					do_hard_reboot = FALSE
 
 		if(do_hard_reboot)
-			log_world("World hard rebooted at [time_stamp()]")
+			log_world("World hard rebooted at [TIME_STAMP("hh:mm:ss", FALSE)]")
 			shutdown_logging() // See comment below.
 			TgsEndProcess()
 
-	log_world("World rebooted at [time_stamp()]")
+	log_world("World rebooted at [TIME_STAMP("hh:mm:ss", FALSE)]")
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 
@@ -256,14 +285,15 @@ GLOBAL_PROTECT(security_mode)
 	s += "Citadel"  //Replace this with something else. Or ever better, delete it and uncomment the game version. CIT CHANGE - modifies the hub entry link
 	s += "</a>"
 	s += ")\]" //CIT CHANGE - encloses the server title in brackets to make the hub entry fancier
-	s += "<br><small><i>That furry /TG/code server your mother warned you about.</i></small><br>" //CIT CHANGE - adds a tagline!
+	s += "<br>[CONFIG_GET(string/servertagline)]<br>" //CIT CHANGE - adds a tagline!
 
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
 		if (M.client)
 			n++
 
-	features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
+	if(SSmapping.config) // this just stops the runtime, honk.
+		features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
 
 	if(get_security_level())//CIT CHANGE - makes the hub entry show the security level
 		features += "[get_security_level()] alert"

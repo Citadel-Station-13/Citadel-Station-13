@@ -33,7 +33,7 @@
 /obj/structure/transit_tube/station/should_stop_pod(pod, from_dir)
 	return 1
 
-/obj/structure/transit_tube/station/CollidedWith(atom/movable/AM)
+/obj/structure/transit_tube/station/Bumped(atom/movable/AM)
 	if(!pod_moving && open_status == STATION_TUBE_OPEN && ismob(AM) && AM.dir == boarding_dir)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving)
@@ -75,7 +75,7 @@
 						if(do_after(user, 15, target = src))
 							if(open_status == STATION_TUBE_OPEN && GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
 								GM.Knockdown(100)
-								src.CollidedWith(GM)
+								src.Bumped(GM)
 						break
 		else
 			for(var/obj/structure/transit_tube_pod/pod in loc)
@@ -152,8 +152,8 @@
 		pod_moving = 0
 		if(!QDELETED(pod))
 			var/datum/gas_mixture/floor_mixture = loc.return_air()
-			floor_mixture.archive()
-			pod.air_contents.archive()
+			ARCHIVE_TEMPERATURE(floor_mixture)
+			ARCHIVE_TEMPERATURE(pod.air_contents)
 			pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
 			air_update_turf()
 

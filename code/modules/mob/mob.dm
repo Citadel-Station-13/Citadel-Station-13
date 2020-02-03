@@ -4,6 +4,7 @@
 	GLOB.alive_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
+	focus = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
@@ -32,9 +33,11 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
-	hook_vr("mob_new",list(src))
 	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+	update_config_movespeed()
+	update_movespeed(TRUE)
+	hook_vr("mob_new",list(src))
 
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
@@ -64,114 +67,138 @@
 	t +=	"<span class='danger'>Temperature: [environment.temperature] \n</span>"
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
-		if(gas[MOLES])
-			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
+		if(gas)
+			t+="<span class='notice'>[GLOB.meta_gas_names[id]]: [gas] \n</span>"
 
 	to_chat(usr, t)
 
+/mob/proc/get_photo_description(obj/item/camera/camera)
+	return "a ... thing?"
+
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+	if(audiovisual_redirect)
+		audiovisual_redirect.show_message(msg ? "<avredirspan class='small'>[msg]</avredirspan>" : null, type, alt_msg ? "<avredirspan class='small'>[alt_msg]</avredirspan>" : null, alt_type)
 
 	if(!client)
 		return
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if(type & 1 && eye_blind )//Vision related
+		if(type & MSG_VISUAL && eye_blind )//Vision related
 			if(!alt_msg)
 				return
 			else
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && !can_hear())//Hearing related
+		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
 				msg = alt_msg
 				type = alt_type
-				if(type & 1 && eye_blind)
+				if(type & MSG_VISUAL && eye_blind)
 					return
 	// voice muffling
 	if(stat == UNCONSCIOUS)
-		if(type & 2) //audio
+		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
-	else
-		to_chat(src, msg)
+		return
+	to_chat(src, msg)
 
-// Show a message to all player mobs who sees this atom
-// Show a message to the src mob (if the src is a mob)
-// Use for atoms performing visible actions
-// message is output to anyone who can see, e.g. "The [src] does something!"
-// self_message (optional) is what the src mob sees e.g. "You do something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-// vision_distance (optional) define how many tiles away the message can be seen.
-// ignored_mob (optional) doesn't show any message to a given mob if TRUE.
-
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/**
+  * Generate a visible message from this atom
+  *
+  * Show a message to all player mobs who sees this atom
+  *
+  * Show a message to the src mob (if the src is a mob)
+  *
+  * Use for atoms performing visible actions
+  *
+  * message is output to anyone who can see, e.g. "The [src] does something!"
+  *
+  * Vars:
+  * * self_message (optional) is what the src mob sees e.g. "You do something!"
+  * * blind_message (optional) is what blind people will hear e.g. "You hear something!"
+  * * vision_distance (optional) define how many tiles away the message can be seen.
+  * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
+  */
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	var/range = 7
-	if(vision_distance)
-		range = vision_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
+	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
+	if(!length(hearers))
+		return
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
+	hearers -= ignored_mobs
+	if(self_message)
+		hearers -= src
+	for(var/mob/M in hearers)
 		if(!M.client)
 			continue
-		if(M == ignored_mob)
+		//This entire if/else chain could be in two lines but isn't for readibilties sake.
+		var/msg = message
+		//CITADEL EDIT, required for vore code to remove (T != loc && T != src)) as a check
+		if(M.see_invisible<invisibility) //if src is invisible to us,
+			msg = blind_message
+		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
+			msg = blind_message
+
+		if(!msg)
 			continue
-		var/msg = message
-		if(M == src) //the src always see the main message or self message
-			if(self_message)
-				msg = self_message
-		else //CITADEL EDIT, required for vore code to remove (T != loc && T != src)) as a check
-			if(M.see_invisible<invisibility) //if src is invisible to us,
-				if(blind_message) // then people see blind message if there is one, otherwise nothing.
-					msg = blind_message
-				else
-					continue
+		M.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 
-			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
-					if(blind_message)
-						msg = blind_message
-					else
-						continue
+///Adds the functionality to self_message.
+mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+	. = ..()
+	if(self_message)
+		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
 
-		M.show_message(msg,1,blind_message,2)
+/**
+  * Show a message to all mobs in earshot of this atom
+  *
+  * Use for objects performing audible actions
+  *
+  * vars:
+  * * message is the message output to anyone who can hear.
+  * * deaf_message (optional) is what deaf people will see.
+  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
+  * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
+  */
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, list/ignored_mobs)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	var/list/hearers = get_hearers_in_view(hearing_distance, src)
+	if(!length(hearers))
+		return
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
+	hearers -= ignored_mobs
+	if(self_message)
+		hearers -= src
+	for(var/mob/M in hearers)
+		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
-// Show a message to all mobs in earshot of this one
-// This would be for audible actions by the src mob
-// message is the message output to anyone who can hear.
-// self_message (optional) is what the src mob hears.
-// deaf_message (optional) is what deaf people will see.
-// hearing_distance (optional) is the range, how many tiles away the message can be heard.
-
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
-	var/range = 7
-	if(hearing_distance)
-		range = hearing_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
-		var/msg = message
-		if(self_message && M==src)
-			msg = self_message
-		M.show_message( msg, 2, deaf_message, 1)
-
-// Show a message to all mobs in earshot of this atom
-// Use for objects performing audible actions
-// message is the message output to anyone who can hear.
-// deaf_message (optional) is what deaf people will see.
-// hearing_distance (optional) is the range, how many tiles away the message can be heard.
-
-/atom/proc/audible_message(message, deaf_message, hearing_distance)
-	var/range = 7
-	if(hearing_distance)
-		range = hearing_distance
-	for(var/mob/M in get_hearers_in_view(range, src))
-		M.show_message( message, 2, deaf_message, 1)
-
-/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
-	return 0
+/**
+  * Show a message to all mobs in earshot of this one
+  *
+  * This would be for audible actions by the src mob
+  *
+  * vars:
+  * * message is the message output to anyone who can hear.
+  * * self_message (optional) is what the src mob hears.
+  * * deaf_message (optional) is what deaf people will see.
+  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
+  * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
+  */
+/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, list/ignored_mobs)
+	. = ..()
+	if(self_message)
+		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
 /mob/proc/Life()
 	set waitfor = FALSE
@@ -294,33 +321,41 @@
 	set name = "Examine"
 	set category = "IC"
 
+	if(!client)
+		return
+
+	if(!(SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A) & COMPONENT_ALLOW_EXAMINE) && ((client.eye != src && client.eye != loc) || (isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))))
+		//cameras & co don't allow users to examine far away things, also shift-click catcher may issue examinate() calls for out-of-sight turfs
+		return
+
 	if(is_blind(src))
 		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	face_atom(A)
-	A.examine(src)
+	var/list/result = A.examine(src)
+	to_chat(src, result.Join("\n"))
 
 //same as above
 //note: ghosts can point, this is intended
 //visible_message will handle invisibility properly
-//overriden here and in /mob/dead/observer for different point span classes and sanity checks
+//overridden here and in /mob/dead/observer for different point span classes and sanity checks
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
-		return 0
+		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
-		return 0
+		return FALSE
 
 	var/tile = get_turf(A)
 	if (!tile)
-		return 0
+		return FALSE
 
 	new /obj/effect/temp_visual/point(A,invisibility)
 
-	return 1
+	return TRUE
 
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
@@ -345,9 +380,10 @@
 		spintime -= speed
 
 /mob/proc/update_pull_hud_icon()
-	if(hud_used)
-		if(hud_used.pull_icon)
-			hud_used.pull_icon.update_icon(src)
+	hud_used?.pull_icon?.update_icon()
+
+/mob/proc/update_rest_hud_icon()
+	hud_used?.rest_icon?.update_icon()
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -365,11 +401,6 @@
 		I.attack_self(src)
 		update_inv_hands()
 
-	if(!I)//CIT CHANGE - allows "using" empty hands
-		use_that_empty_hand() //CIT CHANGE - ditto
-		update_inv_hands() // CIT CHANGE - ditto.
-
-
 /mob/verb/memory()
 	set name = "Notes"
 	set category = "IC"
@@ -383,7 +414,7 @@
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
 
 	if(mind)
@@ -424,7 +455,21 @@
 //	M.Login()	//wat
 	return
 
-
+/mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
+	if(!new_mob || (!ckey && new_mob.ckey))
+		CRASH("transfer_ckey() called [new_mob ? "on ckey-less mob with a player mob as target" : "without a valid mob target"]!")
+	if(!ckey)
+		return
+	SEND_SIGNAL(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, new_mob, src)
+	if (client && client.prefs && client.prefs.auto_ooc)
+		if (client.prefs.chat_toggles & CHAT_OOC && isliving(new_mob))
+			client.prefs.chat_toggles ^= CHAT_OOC
+		if (!(client.prefs.chat_toggles & CHAT_OOC) && isdead(new_mob))
+			client.prefs.chat_toggles ^= CHAT_OOC
+	new_mob.ckey = ckey
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
+	return TRUE
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -432,18 +477,28 @@
 	reset_perspective(null)
 	unset_machine()
 
+GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
+
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".click"
 	set hidden = TRUE
 	set category = null
-	return
+	if(GLOB.exploit_warn_spam_prevention < world.time)
+		var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .click macro!"
+		log_admin(msg)
+		message_admins(msg)
+		GLOB.exploit_warn_spam_prevention = world.time + 10
 
 /mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".dblclick"
 	set hidden = TRUE
 	set category = null
-	return
+	if(GLOB.exploit_warn_spam_prevention < world.time)
+		var/msg = "[key_name_admin(src)]([ADMIN_KICK(src)]) attempted to use the .dblclick macro!"
+		log_admin(msg)
+		message_admins(msg)
+		GLOB.exploit_warn_spam_prevention = world.time + 10
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -453,6 +508,10 @@
 
 	if(href_list["flavor_more"])
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
+		onclose(usr, "[name]")
+
+	if(href_list["flavor2_more"])
+		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text_2, "\n", "<BR>")), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
 
 	if(href_list["flavor_change"])
@@ -473,7 +532,7 @@
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags_1 & ABSTRACT_1))
+				if(!(what.item_flags & ABSTRACT))
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
@@ -504,32 +563,31 @@
 		return
 	if(isAI(M))
 		return
-	show_inv(usr)
+
+/mob/MouseDrop_T(atom/dropping, atom/user)
+	. = ..()
+	if(ismob(dropping) && dropping != user)
+		var/mob/M = dropping
+		M.show_inv(user)
 
 /mob/proc/is_muzzled()
-	return 0
+	return FALSE
 
 /mob/Stat()
 	..()
 
-	if(statpanel("Status"))
-		if (client)
-			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config.map_name]")
-		var/datum/map_config/cached = SSmapping.next_map_config
-		if(cached)
-			stat(null, "Next Map: [cached.map_name]")
-		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
-		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		stat(null, "Round Time: [worldtime2text()]")
-		stat(null, "Station Time: [station_time_timestamp()]")
-		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
-			if(ETA)
-				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
+	//This is only called from client/Stat(), let's assume client exists.
 
-	if(client && client.holder)
+	if(statpanel("Status"))
+		var/list/L = list()
+		L += "Ping: [round(client.lastping,1)]ms (Avg: [round(client.avgping,1)]ms)"
+		L += SSmapping.stat_map_name
+		L += "Round ID: [GLOB.round_id || "NULL"]"
+		L += SStime_track.stat_time_text
+		L += SSshuttle.emergency_shuttle_stat_text
+		stat(null, "[L.Join("\n\n")]")
+
+	if(client.holder)
 		if(statpanel("MC"))
 			var/turf/T = get_turf(client.eye)
 			stat("Location:", COORD(T))
@@ -554,7 +612,12 @@
 			GLOB.cameranet.stat_entry()
 		if(statpanel("Tickets"))
 			GLOB.ahelp_tickets.stat_entry()
-
+		if(length(GLOB.sdql2_queries))
+			if(statpanel("SDQL2"))
+				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
+				for(var/i in GLOB.sdql2_queries)
+					var/datum/SDQL2_query/Q = i
+					Q.generate_stat()
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
 			listed_turf = null
@@ -574,8 +637,6 @@
 				if(A.IsObscured())
 					continue
 				statpanel(listed_turf.name, null, A)
-
-
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
@@ -599,59 +660,61 @@
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
+#define MOB_FACE_DIRECTION_DELAY 1
+
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)
-		return 0
-	if(world.time < client.move_delay)
-		return 0
-	if(stat==2)
-		return 0
+		return FALSE
+	if(world.time < client.last_turn)
+		return FALSE
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return FALSE
 	if(anchored)
-		return 0
+		return FALSE
 	if(notransform)
-		return 0
+		return FALSE
 	if(restrained())
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/proc/fall(forced)
 	drop_all_held_items()
 
 /mob/verb/eastface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(EAST)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/westface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(WEST)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/northface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(NORTH)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/southface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(SOUTH)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
-	return 0
+	return FALSE
 
 /mob/proc/swap_hand()
 	return
@@ -689,6 +752,18 @@
 			mob_spell_list -= S
 			qdel(S)
 
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
+	if(!magic && !holy && !tinfoil)
+		return
+	var/list/protection_sources = list()
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, tinfoil, chargecost, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
+		if(protection_sources.len)
+			return pick(protection_sources)
+		else
+			return src
+	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
+		return src
+
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
@@ -724,39 +799,25 @@
 
 //can the mob be buckled to something by default?
 /mob/proc/can_buckle()
-	return 1
+	return TRUE
 
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
-	return 1
+	return TRUE
+
+/mob/proc/can_buckle_others(mob/living/target, atom/buckle_to)
+	return TRUE
 
 //Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
 	return IsAdminGhost(src) || Adjacent(A)
 
-//Can the mob see reagents inside of containers?
-/mob/proc/can_see_reagents()
-	if(stat == DEAD) //Ghosts and such can always see reagents
-		return 1
-	if(has_unlimited_silicon_privilege) //Silicons can automatically view reagents
-		return 1
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.head && istype(H.head, /obj/item/clothing))
-			var/obj/item/clothing/CL = H.head
-			if(CL.scan_reagents)
-				return 1
-		if(H.wear_mask && H.wear_mask.scan_reagents)
-			return 1
-		if(H.glasses && istype(H.glasses, /obj/item/clothing))
-			var/obj/item/clothing/CL = H.glasses
-			if(CL.scan_reagents)
-				return 1
-	return 0
-
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return
+
+/mob/proc/canUseStorage()
+	return FALSE
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
@@ -785,7 +846,7 @@
 //This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
-	log_message("[src] name changed from [oldname] to [newname]", INDIVIDUAL_OWNERSHIP_LOG)
+	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
 		return 0
 	real_name = newname
@@ -801,7 +862,7 @@
 		replace_identification_name(oldname,newname)
 
 		for(var/datum/mind/T in SSticker.minds)
-			for(var/datum/objective/obj in T.objectives)
+			for(var/datum/objective/obj in T.get_all_objectives())
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
@@ -842,13 +903,7 @@
 	return
 
 /mob/proc/update_sight()
-	for(var/O in orbiters)
-		var/datum/orbit/orbit = O
-		var/obj/effect/wisp/wisp = orbit.orbiter
-		if (istype(wisp))
-			sight |= wisp.sight_flags
-			if(!isnull(wisp.lighting_alpha))
-				lighting_alpha = min(lighting_alpha, wisp.lighting_alpha)
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
 
 	sync_lighting_plane_alpha()
 
@@ -872,10 +927,6 @@
 
 /mob/proc/can_hold_items()
 	return FALSE
-
-/mob/proc/get_idcard()
-	return
-
 
 /mob/vv_get_dropdown()
 	. = ..()
@@ -904,3 +955,7 @@
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
+
+/mob/setMovetype(newval)
+	. = ..()
+	update_movespeed(FALSE)

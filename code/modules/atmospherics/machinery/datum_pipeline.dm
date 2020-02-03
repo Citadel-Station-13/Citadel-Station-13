@@ -57,10 +57,10 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
-									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
+									log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z]).")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
-										warning("build_pipeline(): further messages about pipenets will be supressed")
+										log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
 							possible_expansions += item
 
@@ -129,6 +129,9 @@
 
 /obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
+	if(!P)
+		CRASH("null.addMember() called by [type] on [COORD(src)]")
+		return
 	P.addMember(A, src)
 
 
@@ -142,7 +145,7 @@
 		var/member_gases = member.air_temporary.gases
 
 		for(var/id in member_gases)
-			member_gases[id][MOLES] *= member.volume/air.volume
+			member_gases[id] *= member.volume/air.volume
 
 		member.air_temporary.temperature = air.temperature
 
@@ -218,13 +221,21 @@
 		if(!P)
 			continue
 		GL += P.return_air()
-		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
-			if(V.on)
-				PL |= V.parents[1]
-				PL |= V.parents[2]
-		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
-			if(C.connected_device)
-				GL += C.portableConnectorReturnAir()
+		for(var/atmosmch in P.other_atmosmch)
+			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
+				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
+				if(V.on)
+					PL |= V.parents[1]
+					PL |= V.parents[2]
+			else if (istype(atmosmch,/obj/machinery/atmospherics/components/binary/relief_valve))
+				var/obj/machinery/atmospherics/components/binary/relief_valve/V = atmosmch
+				if(V.opened)
+					PL |= V.parents[1]
+					PL |= V.parents[2]
+			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
+				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
+				if(C.connected_device)
+					GL += C.portableConnectorReturnAir()
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
@@ -248,4 +259,4 @@
 			G.copy_from(total_gas_mixture)
 			var/list/G_gases = G.gases
 			for(var/id in G_gases)
-				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
+				G_gases[id] *= G.volume/total_gas_mixture.volume

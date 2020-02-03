@@ -24,6 +24,8 @@ Possible to do for anyone motivated enough:
  * Holopad
  */
 
+GLOBAL_LIST_EMPTY(network_holopads)
+
 #define HOLOPAD_PASSIVE_POWER_USAGE 1
 #define HOLOGRAM_POWER_USAGE 2
 
@@ -55,7 +57,6 @@ Possible to do for anyone motivated enough:
 	var/record_user			//user that inititiated the recording
 	var/obj/effect/overlay/holo_pad_hologram/replay_holo	//replay hologram
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
-	var/static/list/holopads = list()
 	var/obj/effect/overlay/holoray/ray
 	var/ringing = FALSE
 	var/offset = FALSE
@@ -96,7 +97,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/Initialize()
 	. = ..()
 	if(on_network)
-		holopads += src
+		GLOB.network_holopads += src
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
@@ -116,7 +117,7 @@ Possible to do for anyone motivated enough:
 
 	QDEL_NULL(disk)
 
-	holopads -= src
+	GLOB.network_holopads -= src
 	return ..()
 
 /obj/machinery/holopad/power_change()
@@ -141,6 +142,11 @@ Possible to do for anyone motivated enough:
 	for(var/obj/item/stock_parts/capacitor/B in component_parts)
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
+
+/obj/machinery/holopad/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Current projection range: <b>[holo_range]</b> units.</span>"
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
@@ -260,7 +266,7 @@ Possible to do for anyone motivated enough:
 		temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 		if(usr.loc == loc)
 			var/list/callnames = list()
-			for(var/I in holopads)
+			for(var/I in GLOB.network_holopads)
 				var/area/A = get_area(I)
 				if(A)
 					LAZYADD(callnames[A], I)
@@ -393,7 +399,7 @@ Possible to do for anyone motivated enough:
 		Hologram.copy_known_languages_from(user,replace = TRUE)
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-		Hologram.anchored = TRUE//So space wind cannot drag it.
+		Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		Hologram.set_light(2)	//hologram lighting
 		move_hologram()
@@ -407,7 +413,8 @@ Possible to do for anyone motivated enough:
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
+	. = ..()
 	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
@@ -416,7 +423,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad == src && speaker != HC.hologram)
-			HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
+			HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode, source)
 
 	if(outgoing_call && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message)
@@ -473,12 +480,14 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
 	if(!h || h.HC) //Holocalls can't change source.
 		return FALSE
-	for(var/pad in holopads)
+	for(var/pad in GLOB.network_holopads)
 		var/obj/machinery/holopad/another = pad
 		if(another == src)
 			continue
 		if(another.validate_location(T))
 			unset_holo(holo_owner)
+			if(another.masters && another.masters[holo_owner])
+				another.clear_holo(holo_owner)
 			another.set_holo(holo_owner, h)
 			return TRUE
 	return FALSE
@@ -496,7 +505,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	else
 		return FALSE
 
-/obj/machinery/holopad/proc/move_hologram(mob/living/user, turf/new_turf)
+/obj/machinery/holopad/proc/move_hologram(mob/living/user, turf/new_turf, direction)
 	if(LAZYLEN(masters) && masters[user])
 		var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
 		var/transfered = FALSE
@@ -508,6 +517,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				transfered = TRUE
 		//All is good.
 		holo.forceMove(new_turf)
+		if(direction)
+			holo.setDir(direction)
 		if(!transfered)
 			update_holoray(user,new_turf)
 	return TRUE
@@ -549,7 +560,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	holder.selected_default_language = record.language
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	Hologram.anchored = TRUE//So space wind cannot drag it.
+	Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2)	//hologram lighting
 	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")

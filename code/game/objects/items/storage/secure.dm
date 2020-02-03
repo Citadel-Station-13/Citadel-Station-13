@@ -26,16 +26,16 @@
 
 /obj/item/storage/secure/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 14
 
 /obj/item/storage/secure/examine(mob/user)
-	..()
-	to_chat(user, text("The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."))
+	. = ..()
+	. += "The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
-	if(SendSignal(COMSIG_IS_STORAGE_LOCKED))
+	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 		if (istype(W, /obj/item/screwdriver))
 			if (W.use_tool(src, user, 20))
 				open =! open
@@ -64,7 +64,7 @@
 	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user)
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
@@ -88,7 +88,7 @@
 				l_code = code
 				l_set = 1
 			else if ((code == l_code) && (l_set == 1))
-				SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 				cut_overlays()
 				add_overlay(icon_opened)
 				code = null
@@ -96,10 +96,10 @@
 				code = "ERROR"
 		else
 			if ((href_list["type"] == "R") && (!l_setshort))
-				SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 				cut_overlays()
 				code = null
-				SendSignal(COMSIG_TRY_STORAGE_HIDE_FROM, usr)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_FROM, usr)
 			else
 				code += text("[]", sanitize_text(href_list["type"]))
 				if (length(code) > 5)
@@ -136,7 +136,7 @@
 
 /obj/item/storage/secure/briefcase/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 21
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
@@ -146,7 +146,7 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	for(var/i = 0, i < STR.max_items - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
 
@@ -170,7 +170,7 @@
 
 /obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.cant_hold = typecacheof(list(/obj/item/storage/secure/briefcase))
 	STR.max_w_class = 8						//??
 

@@ -37,7 +37,7 @@
 				PA = new(src)
 				user.put_in_hands(PA)
 
-/obj/item/chrono_eraser/item_action_slot_check(slot, mob/user)
+/obj/item/chrono_eraser/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_BACK)
 		return 1
 
@@ -48,7 +48,7 @@
 	icon_state = "chronogun"
 	item_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
-	flags_1 = NODROP_1 | DROPDEL_1
+	item_flags = DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
@@ -58,6 +58,7 @@
 
 /obj/item/gun/energy/chrono_gun/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHRONO_GUN_TRAIT)
 	if(istype(loc, /obj/item/chrono_eraser))
 		TED = loc
 	else //admin must have spawned it
@@ -126,12 +127,11 @@
 	nodamage = 1
 	var/obj/item/gun/energy/chrono_gun/gun = null
 
-/obj/item/projectile/energy/chrono_beam/fire()
-	gun = firer.get_active_held_item()
-	if(istype(gun))
-		return ..()
-	else
-		return 0
+/obj/item/projectile/energy/chrono_beam/Initialize()
+	. = ..()
+	var/obj/item/ammo_casing/energy/chrono_beam/C = loc
+	if(istype(C))
+		gun = C.gun
 
 /obj/item/projectile/energy/chrono_beam/on_hit(atom/target)
 	if(target && gun && isliving(target))
@@ -144,6 +144,15 @@
 	projectile_type = /obj/item/projectile/energy/chrono_beam
 	icon_state = "chronobolt"
 	e_cost = 0
+	var/obj/item/gun/energy/chrono_gun/gun
+
+/obj/item/ammo_casing/energy/chrono_beam/Initialize()
+	if(istype(loc))
+		gun = loc
+	. = ..()
+
+
+
 
 
 /obj/effect/chrono_field
@@ -233,16 +242,15 @@
 		if(Pgun && istype(Pgun))
 			Pgun.field_connect(src)
 	else
-		return 0
+		return BULLET_ACT_HIT
 
 /obj/effect/chrono_field/assume_air()
 	return 0
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	GM.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
-	GM.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
+	GM.gases[/datum/gas/oxygen] = MOLES_O2STANDARD
+	GM.gases[/datum/gas/nitrogen] = MOLES_N2STANDARD
 	GM.temperature = T20C
 	return GM
 

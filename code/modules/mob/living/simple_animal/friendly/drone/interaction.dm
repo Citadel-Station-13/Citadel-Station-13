@@ -29,35 +29,18 @@
 				if("Nothing")
 					return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
+//picky up the drone c:
 /mob/living/simple_animal/drone/attack_hand(mob/user)
-	if(ishuman(user))
-		if(stat == DEAD || status_flags & GODMODE || !can_be_held)
-			..()
-			return
-		if(user.get_active_held_item())
-			to_chat(user, "<span class='warning'>Your hands are full!</span>")
-			return
-		visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
-						"<span class='userdanger'>[user] starts picking you up!</span>")
-		if(!do_after(user, 20, target = src))
-			return
-		visible_message("<span class='warning'>[user] picks up [src]!</span>", \
-						"<span class='userdanger'>[user] picks you up!</span>")
-		if(buckled)
-			to_chat(user, "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>")
-			return
-		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
-		drop_all_held_items()
-		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
-		user.put_in_hands(DH)
+	if(user.a_intent != INTENT_HELP)
+		return ..() // TODO: convert picking up mobs into an element or component.
+	mob_try_pickup(user)
 
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
 	var/mob/dead/observer/G = get_ghost()
 	if(!client && (!G || !G.client))
 		var/list/faux_gadgets = list("hypertext inflator","failsafe directory","DRM switch","stack initializer",\
 									 "anti-freeze capacitor","data stream diode","TCP bottleneck","supercharged I/O bolt",\
-									 "tradewind stablizer","radiated XML cable","registry fluid tank","open-source debunker")
+									 "tradewind stabilizer","radiated XML cable","registry fluid tank","open-source debunker")
 
 		var/list/faux_problems = list("won't be able to tune their bootstrap projector","will constantly remix their binary pool"+\
 									  " even though the BMX calibrator is working","will start leaking their XSS coolant",\
@@ -122,7 +105,7 @@
 			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
 			laws = "1. Purge all untruths and honor Ratvar."
 		else
-			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
+			visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
 							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
 			laws = \
@@ -140,7 +123,7 @@
 		if(!hacked)
 			return
 		Stun(40)
-		visible_message("<span class='info'>[src]'s dislay glows a content blue!</span>", \
+		visible_message("<span class='info'>[src]'s display glows a content blue!</span>", \
 						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>")
 		to_chat(src, "<span class='info'><b>From now on, these are your laws:</b></span>")
 		laws = initial(laws)

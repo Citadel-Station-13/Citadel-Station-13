@@ -4,8 +4,8 @@
 	max_buckled_mobs = 1
 	buckle_lying = FALSE
 	default_driver_move = FALSE
-	var/legs_required = 2
-	var/arms_requires = 0	//why not?
+	var/legs_required = 1
+	var/arms_required = 0	//why not?
 
 /obj/vehicle/ridden/Initialize()
 	. = ..()
@@ -14,7 +14,10 @@
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
 	if(key_type)
-		to_chat(user, "<span class='notice'>Put a key inside it by clicking it with the key. If there's a key inside, you can remove it via Alt-Click!</span>")
+		if(!inserted_key)
+			. += "<span class='notice'>Put a key inside it by clicking it with the key.</span>"
+		else
+			. += "<span class='notice'>Alt-click [src] to remove the key.</span>"
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -28,6 +31,9 @@
 
 /obj/vehicle/ridden/post_buckle_mob(mob/living/M)
 	add_occupant(M)
+	if(M.get_num_legs() < legs_required)
+		to_chat(M, "<span class='warning'>You don't have enough legs to operate the pedals!</span>")
+		unbuckle_mob(M)
 	return ..()
 
 /obj/vehicle/ridden/attackby(obj/item/I, mob/user, params)
@@ -43,6 +49,7 @@
 	return ..()
 
 /obj/vehicle/ridden/AltClick(mob/user)
+	. = ..()
 	if(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(!is_occupant(user))
 			to_chat(user, "<span class='notice'>You must be riding the [src] to remove [src]'s key!</span>")
@@ -51,7 +58,7 @@
 		inserted_key.forceMove(drop_location())
 		user.put_in_hands(inserted_key)
 		inserted_key = null
-	return ..()
+		return TRUE
 
 /obj/vehicle/ridden/driver_move(mob/user, direction)
 	if(key_type && !is_key(inserted_key))

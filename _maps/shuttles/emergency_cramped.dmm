@@ -11,13 +11,14 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "e" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -51,7 +52,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "j" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
@@ -64,6 +65,7 @@
 	name = "Secure Transport Vessel 5";
 	width = 14
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "l" = (
@@ -74,7 +76,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -97,6 +99,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "r" = (
@@ -109,7 +112,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "s" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{

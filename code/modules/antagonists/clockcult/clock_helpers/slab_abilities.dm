@@ -53,7 +53,7 @@
 				L.handcuffed = new/obj/item/restraints/handcuffs/clockwork(L)
 				L.update_handcuffed()
 				to_chat(ranged_ability_user, "<span class='neovgre_small'>You shackle [L].</span>")
-				add_logs(ranged_ability_user, L, "handcuffed")
+				log_combat(ranged_ability_user, L, "handcuffed")
 		else
 			to_chat(ranged_ability_user, "<span class='warning'>You fail to shackle [L].</span>")
 
@@ -67,7 +67,8 @@
 	name = "replicant manacles"
 	desc = "Heavy manacles made out of freezing-cold metal. It looks like brass, but feels much more solid."
 	icon_state = "brass_manacles"
-	flags_1 = DROPDEL_1
+	item_state = "brass_manacles"
+	item_flags = DROPDEL
 
 /obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [name] come apart at the seams!</span>", \
@@ -99,7 +100,7 @@
 		var/burndamage = L.getFireLoss()
 		var/oxydamage = L.getOxyLoss()
 		var/totaldamage = brutedamage + burndamage + oxydamage
-		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
+		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent(/datum/reagent/water/holywater)))
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>")
 			return TRUE
 
@@ -107,7 +108,7 @@
 
 		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
 		var/targetturf = get_turf(L)
-		var/has_holy_water = (L.reagents && L.reagents.has_reagent("holywater"))
+		var/has_holy_water = (L.reagents && L.reagents.has_reagent(/datum/reagent/water/holywater))
 		var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 		for(var/i in 1 to healseverity)
 			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
@@ -117,18 +118,18 @@
 			L.adjustOxyLoss(-oxydamage)
 			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
 			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
-			add_logs(ranged_ability_user, L, "healed with Sentinel's Compromise")
+			log_combat(ranged_ability_user, L, "healed with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], [has_holy_water ? "causing [L.p_them()] to briefly glow as it mends" : " mending"] [L.p_their()] bruises and burns!</span>", \
 			"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds[has_holy_water ? " and purging the darkness within you" : ""], but a deep nausea overcomes you!</span>")
 		else
 			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
-			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
+			log_combat(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
 			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
 		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
 		if(has_holy_water)
-			L.reagents.remove_reagent("holywater", 1000)
+			L.reagents.del_reagent(/datum/reagent/water/holywater)
 
 		remove_ranged_ability()
 
@@ -153,7 +154,7 @@
 		var/turf/U = get_turf(target)
 		to_chat(ranged_ability_user, "<span class='brass'>You release the light of Ratvar!</span>")
 		clockwork_say(ranged_ability_user, text2ratvar("Purge all untruths and honor Engine!"))
-		add_logs(ranged_ability_user, U, "fired at with Kindle")
+		log_combat(ranged_ability_user, U, "fired at with Kindle")
 		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
 		var/obj/item/projectile/kindle/A = new(T)
 		A.preparePixelProjectile(target, caller, params)
@@ -181,7 +182,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
-			return
+			return BULLET_ACT_HIT
 		var/atom/O = L.anti_magic_check()
 		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
 		if(O)
@@ -192,12 +193,26 @@
 				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>")
 			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
 		else
-			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
-			"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
-			L.Knockdown(15)
-			L.apply_status_effect(STATUS_EFFECT_KINDLE)
-			L.flash_act(1, 1)
-			if(iscultist(L))
+			if(!iscultist(L))
+				L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
+				"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
+				L.Knockdown(15, TRUE, FALSE, 15)
+				L.apply_status_effect(STATUS_EFFECT_KINDLE)
+				L.flash_act(1, 1)
+				if(issilicon(target))
+					var/mob/living/silicon/S = L
+					S.emp_act(EMP_HEAVY)
+			else //for Nar'sian weaklings
+				to_chat(L, "<span class='heavy_brass'>\"How does it feel to see the light, dog?\"</span>")
+				L.visible_message("<span class='warning'>[L]'s eyes flare with burning light!</span>", \
+				"<span class='userdanger'>Your vision suddenly screams with a flash of burning hot light!</span>")  //Debuffs Narsian cultists hard + deals some burn instead of just hardstunning them; Only the confusion part can stack
+				L.flash_act(1,1)
+				if(iscarbon(target))
+					var/mob/living/carbon/C = L
+					C.stuttering = max(8, C.stuttering)
+					C.drowsyness = max(8, C.drowsyness)
+					C.confused += CLAMP(16 - C.confused, 0, 8)
+					C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 				L.adjustFireLoss(15)
 	..()
 
@@ -265,7 +280,7 @@
 		"<span class='heavy_brass'>You direct the judicial force to [target].</span>")
 		var/turf/targetturf = get_turf(target)
 		new/obj/effect/clockwork/judicial_marker(targetturf, ranged_ability_user)
-		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
+		log_combat(ranged_ability_user, targetturf, "created a judicial marker")
 		remove_ranged_ability()
 
 	return TRUE

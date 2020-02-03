@@ -11,7 +11,7 @@
 	spacewalk = TRUE
 
 	radio_key = /obj/item/encryptionkey/headset_eng
-	radio_channel = "Engineering"
+	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
 	model = "Floorbot"
 	bot_core = /obj/machinery/bot_core/floorbot
@@ -19,7 +19,7 @@
 	window_name = "Automatic Station Floor Repairer v1.1"
 	path_image_color = "#FFA500"
 
-	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
+	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection
 	var/replacetiles = 0
 	var/placetiles = 0
@@ -124,7 +124,7 @@
 		..()
 
 /mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
@@ -318,9 +318,9 @@
 		sleep(50)
 		if(mode == BOT_REPAIRING && src.loc == target_turf)
 			if(autotile) //Build the floor and include a tile.
-				target_turf.PlaceOnTop(/turf/open/floor/plasteel)
+				target_turf.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
 			else //Build a hull plating without a floor tile.
-				target_turf.PlaceOnTop(/turf/open/floor/plating)
+				target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	else
 		var/turf/open/floor/F = target_turf
@@ -334,7 +334,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.PlaceOnTop(/turf/open/floor/plasteel)
+				F.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE
@@ -345,7 +345,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.PlaceOnTop(initial(tiletype.turf_type))
+				F.PlaceOnTop(initial(tiletype.turf_type), flags = CHANGETURF_INHERIT_AIR)
 				specialtiles -= 1
 				if(specialtiles == 0)
 					speak("Requesting refill of custom floortiles to continue replacing.")

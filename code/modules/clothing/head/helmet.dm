@@ -3,7 +3,7 @@
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
 	item_state = "helmet"
-	armor = list("melee" = 35, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	flags_inv = HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
@@ -54,6 +54,8 @@
 	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
+	name = "blue helmet"
+	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
 
@@ -74,6 +76,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
 	if(can_toggle && !user.incapacitated())
@@ -150,7 +153,7 @@
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/roman
-	name = "roman helmet"
+	name = "\improper Roman helmet"
 	desc = "An ancient helmet made of bronze and leather."
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
@@ -165,13 +168,13 @@
 	desc = "An ancient helmet made of plastic and leather."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
-/obj/item/clothing/head/helmet/roman/legionaire
-	name = "roman legionaire helmet"
+/obj/item/clothing/head/helmet/roman/legionnaire
+	name = "\improper Roman legionnaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
 
-/obj/item/clothing/head/helmet/roman/legionaire/fake
+/obj/item/clothing/head/helmet/roman/legionnaire/fake
 	desc = "An ancient helmet made of plastic and leather. Has a red crest on top of it."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
@@ -210,10 +213,11 @@
 	icon_state = "knight_green"
 	item_state = "knight_green"
 	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	mutantrace_variation = STYLE_MUZZLE
 
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
@@ -242,6 +246,7 @@
 	icon_state = "skull"
 	item_state = "skull"
 	strip_delay = 100
+	mutantrace_variation = STYLE_MUZZLE
 
 //LightToggle
 
@@ -321,7 +326,7 @@
 /obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
 	if(F)
 		if(F.on)
-			set_light(F.brightness_on)
+			set_light(F.brightness_on, F.flashlight_power, F.light_color)
 		else
 			set_light(0)
 		update_icon()
@@ -331,3 +336,29 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+/obj/item/clothing/head/helmet/durathread
+	name = "makeshift helmet"
+	desc = "A hardhat with strips of leather and durathread for additional blunt protection."
+	icon_state = "durathread"
+	item_state = "durathread"
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)
+
+/obj/item/clothing/head/helmet/rus_helmet
+	name = "russian helmet"
+	desc = "It can hold a bottle of vodka."
+	icon_state = "rus_helmet"
+	item_state = "rus_helmet"
+	armor = list("melee" = 30, "bullet" = 25, "laser" = 20,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 20, "fire" = 30, "acid" = 50)
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/rushelmet
+
+/obj/item/clothing/head/helmet/rus_ushanka
+	name = "battle ushanka"
+	desc = "100% bear."
+	icon_state = "rus_ushanka"
+	item_state = "rus_ushanka"
+	clothing_flags = THICKMATERIAL
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 0)

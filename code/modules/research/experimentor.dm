@@ -82,6 +82,11 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
 
+/obj/machinery/rnd/experimentor/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Malfunction probability reduced by <b>[badThingCoeff]%</b>.<br>Cooldown interval between experiments at <b>[resetTime*0.1]</b> seconds.</span>"
+
 /obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
 	if(istype(O, /obj/item/transfer_valve))
@@ -128,13 +133,13 @@
 			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
 			var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
 			for(var/node_id in listin)
-				var/datum/techweb_node/N = get_techweb_node_by_id(node_id)
+				var/datum/techweb_node/N = SSresearch.techweb_node_by_id(node_id)
 				var/str = "<b>[N.display_name]</b>: [listin[N]] points.</b>"
-				if(SSresearch.science_tech.researched_nodes[N])
+				if(SSresearch.science_tech.researched_nodes[N.id])
 					res += str
-				else if(SSresearch.science_tech.boosted_nodes[N])
+				else if(SSresearch.science_tech.boosted_nodes[N.id])
 					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
+				if(SSresearch.science_tech.visible_nodes[N.id])	//JOY OF DISCOVERY!
 					output += str
 			output += boosted + res
 			dat += output
@@ -182,10 +187,10 @@
 			experiment(dotype,process)
 			use_power(750)
 			if(dotype != FAIL)
-				var/list/datum/techweb_node/nodes = techweb_item_boost_check(process)
+				var/list/nodes = techweb_item_boost_check(process)
 				var/picked = pickweight(nodes)		//This should work.
 				if(linked_console)
-					linked_console.stored_research.boost_with_path(picked, process.type)
+					linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
@@ -271,7 +276,7 @@
 				if(!T.density)
 					if(prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-						reagentdecal.reagents.add_reagent("radium", 7)
+						reagentdecal.reagents.add_reagent(/datum/reagent/radium, 7)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
@@ -291,7 +296,9 @@
 			new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,src))))
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] destroys [exp_on], leaking dangerous gas!</span>")
-			chosenchem = pick("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
+			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/radium,/datum/reagent/toxin,
+							/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,
+							/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/ethanol/beepsky_smash)
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
@@ -304,7 +311,7 @@
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s chemical chamber has sprung a leak!</span>")
-			chosenchem = pick("mutationtoxin","nanomachines","sacid")
+			chosenchem = pick(/datum/reagent/mutationtoxin,/datum/reagent/nanomachines,/datum/reagent/toxin/acid)
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
@@ -331,7 +338,7 @@
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			var/obj/item/reagent_containers/food/drinks/coffee/C = new /obj/item/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
-			chosenchem = pick("plasma","capsaicin","ethanol")
+			chosenchem = pick(/datum/reagent/toxin/plasma,/datum/reagent/consumable/capsaicin,/datum/reagent/consumable/ethanol)
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
@@ -380,7 +387,7 @@
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
 			var/obj/item/reagent_containers/food/drinks/coffee/C = new /obj/item/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			playsound(src, 'sound/machines/ding.ogg', 50, 1) //Ding! Your death coffee is ready!
-			chosenchem = pick("uranium","frostoil","ephedrine")
+			chosenchem = pick(/datum/reagent/uranium,/datum/reagent/consumable/frostoil,/datum/reagent/medicine/ephedrine)
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
@@ -390,7 +397,7 @@
 			visible_message("<span class='danger'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent("frostoil" , 50)
+			R.add_reagent(/datum/reagent/consumable/frostoil, 50)
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = TRUE)
@@ -422,7 +429,7 @@
 	if(exp == SCANTYPE_OBLITERATE)
 		visible_message("<span class='warning'>[exp_on] activates the crushing mechanism, [exp_on] is destroyed!</span>")
 		if(linked_console.linked_lathe)
-			GET_COMPONENT_FROM(linked_materials, /datum/component/material_container, linked_console.linked_lathe)
+			var/datum/component/material_container/linked_materials = linked_console.linked_lathe.GetComponent(/datum/component/material_container)
 			for(var/material in exp_on.materials)
 				linked_materials.insert_amount( min((linked_materials.max_amount - linked_materials.total_amount), (exp_on.materials[material])), material)
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
@@ -566,7 +573,8 @@
 		else if(loc == user)
 			cooldown = TRUE
 			call(src,realProc)(user)
-			addtimer(CALLBACK(src, .proc/cd), cooldownMax)
+			if(!QDELETED(src))
+				addtimer(CALLBACK(src, .proc/cd), cooldownMax)
 	else
 		to_chat(user, "<span class='notice'>You aren't quite sure what to do with this yet.</span>")
 
@@ -583,7 +591,7 @@
 /obj/item/relic/proc/corgicannon(mob/user)
 	playsound(src, "sparks", rand(25,50), 1)
 	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
-	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .throwSmoke, C))
+	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .proc/throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/relic/proc/clean(mob/user)
@@ -651,7 +659,7 @@
 	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
 		visible_message("<span class='notice'>[src] twists and bends, relocating itself!</span>")
 		throwSmoke(userturf)
-		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')
+		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		throwSmoke(get_turf(user))
 		warn_admins(user, "Teleport", 0)
 

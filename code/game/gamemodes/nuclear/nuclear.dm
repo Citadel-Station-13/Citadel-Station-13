@@ -2,11 +2,11 @@
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	false_report_weight = 10
-	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
+	required_players = 28 // 30 players - 3 players to be the nuke ops = 25 players remaining
 	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
-	enemy_minimum_age = 14
+	enemy_minimum_age = 7
 
 	announce_span = "danger"
 	announce_text = "Syndicate forces are approaching the station in an attempt to destroy it!\n\
@@ -33,6 +33,7 @@
 			log_game("[key_name(new_op)] has been selected as a nuclear operative")
 		return TRUE
 	else
+		setup_error = "Not enough nuke op candidates"
 		return FALSE
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -63,17 +64,13 @@
 			return FALSE
 	return TRUE
 
-/datum/game_mode/nuclear/check_finished() //to be called by SSticker
-	if(replacementmode && round_converted == 2)
-		return replacementmode.check_finished()
-	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return TRUE
+/datum/game_mode/nuclear/check_finished()
+	//Keep the round going if ops are dead but bomb is ticking.
 	if(nuke_team.operatives_dead())
-		var/obj/machinery/nuclearbomb/N
-		pass(N)	//suppress unused warning
-		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
-			return FALSE	//its a static var btw
-	..()
+		for(var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)
+			if(N.proper_bomb && (N.timing || N.exploding))
+				return FALSE
+	return ..()
 
 /datum/game_mode/nuclear/set_round_result()
 	..()
@@ -134,19 +131,20 @@
 
 	var/tc = 25
 	var/command_radio = FALSE
-	var/uplink_type = /obj/item/radio/uplink/nuclear
+	var/uplink_type = /obj/item/uplink/nuclear
 
 
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
 	id = /obj/item/card/id/syndicate/nuke_leader
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	r_hand = /obj/item/nuclear_challenge
 	command_radio = TRUE
 
 /datum/outfit/syndicate/no_crystals
 	tc = 0
 
-/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
+/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_SYNDICATE)
 	R.freqlock = TRUE
@@ -154,12 +152,12 @@
 		R.command = TRUE
 
 	if(tc)
-		var/obj/item/radio/uplink/U = new uplink_type(H, H.key, tc)
+		var/obj/item/U = new uplink_type(H, H.key, tc)
 		H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
 
-	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
+	var/obj/item/implant/weapons_auth/W = new
 	W.implant(H)
-	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
+	var/obj/item/implant/explosive/E = new
 	E.implant(H)
 	H.faction |= ROLE_SYNDICATE
 	H.update_icons()
@@ -178,3 +176,20 @@
 		/obj/item/tank/jetpack/oxygen/harness=1,\
 		/obj/item/gun/ballistic/automatic/pistol=1,\
 		/obj/item/kitchen/knife/combat/survival)
+
+/datum/outfit/syndicate/lone
+	name = "Syndicate Operative - Lone"
+
+	glasses = /obj/item/clothing/glasses/night
+	mask = /obj/item/clothing/mask/gas/syndicate
+	suit = /obj/item/clothing/suit/space/syndicate/black/red
+	head = /obj/item/clothing/head/helmet/space/syndicate/black/red
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
+	internals_slot = SLOT_R_STORE
+	belt = /obj/item/storage/belt/military
+	backpack_contents = list(/obj/item/storage/box/syndie=1,\
+	/obj/item/tank/jetpack/oxygen/harness=1,\
+	/obj/item/gun/ballistic/automatic/pistol=1,\
+	/obj/item/kitchen/knife/combat/survival)
+
+	tc = 40

@@ -7,6 +7,7 @@
 	idle_power_usage = 4
 	active_power_usage = 250
 	circuit = /obj/item/circuitboard/machine/recharger
+	pass_flags = PASSTABLE
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
 
@@ -14,18 +15,47 @@
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
-		/obj/item/modular_computer))
+		/obj/item/modular_computer,
+		/obj/item/gun/ballistic/automatic/magrifle_e,
+		/obj/item/gun/ballistic/automatic/pistol/mag_e))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
+
+/obj/machinery/recharger/examine(mob/user)
+	. = ..()
+	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
+		return
+
+	if(charging)
+		. += {"<span class='notice'>\The [src] contains:</span>
+		<span class='notice'>- \A [charging].</span>"}
+
+	if(!(stat & (NOPOWER|BROKEN)))
+		. += "<span class='notice'>The status display reads:</span>"
+		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.</span>"
+		if(charging)
+			var/obj/item/stock_parts/cell/C = charging.get_cell()
+			. += "<span class='notice'>- \The [charging]'s cell is at <b>[C.percent()]%</b>.</span>"
+
+/obj/machinery/recharger/proc/setCharging(new_charging)
+	charging = new_charging
+	if (new_charging)
+		START_PROCESSING(SSmachines, src)
+		use_power = ACTIVE_POWER_USE
+		update_icon(scan = TRUE)
+	else
+		use_power = IDLE_POWER_USE
+		update_icon()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
 	if(istype(G, /obj/item/wrench))
 		if(charging)
 			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
 			return
-		anchored = !anchored
+		setAnchored(!anchored)
 		power_change()
 		to_chat(user, "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>")
 		G.play_tool_sound(src)
@@ -40,7 +70,7 @@
 
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
-			if(!isarea(a) || a.power_equip == 0)
+			if(!a || !a.powered(EQUIP))
 				to_chat(user, "<span class='notice'>[src] blinks red as you try to insert [G].</span>")
 				return 1
 
@@ -52,9 +82,8 @@
 
 			if(!user.transferItemToLoc(G, src))
 				return 1
-			charging = G
-			use_power = ACTIVE_POWER_USE
-			update_icon(scan = TRUE)
+			setCharging(G)
+
 		else
 			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
 		return 1
@@ -79,21 +108,17 @@
 		charging.update_icon()
 		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
-		charging = null
-		use_power = IDLE_POWER_USE
-		update_icon()
+		setCharging(null)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
 		charging.update_icon()
 		charging.forceMove(drop_location())
-		charging = null
-		use_power = IDLE_POWER_USE
-		update_icon()
+		setCharging(null)
 
 /obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
-		return
+		return PROCESS_KILL
 
 	var/using_power = 0
 	if(charging)
@@ -113,6 +138,8 @@
 				using_power = 1
 			update_icon(using_power)
 			return
+	else
+		return PROCESS_KILL
 
 /obj/machinery/recharger/power_change()
 	..()

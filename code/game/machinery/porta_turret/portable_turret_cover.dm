@@ -45,12 +45,12 @@
 			return
 
 		if(!parent_turret.anchored)
-			parent_turret.anchored = TRUE
+			parent_turret.setAnchored(TRUE)
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
 			parent_turret.invisibility = 0
 			parent_turret.update_icon()
 		else
-			parent_turret.anchored = FALSE
+			parent_turret.setAnchored(FALSE)
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			parent_turret.invisibility = INVISIBILITY_MAXIMUM
 			parent_turret.update_icon()
@@ -86,10 +86,13 @@
 	. = 0
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
-	if(!(parent_turret.obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
-		visible_message("[parent_turret] hums oddly...")
-		parent_turret.obj_flags |= EMAGGED
-		parent_turret.on = 0
-		spawn(40)
-			parent_turret.on = 1
+	. = ..()
+	if(parent_turret.obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
+	visible_message("[parent_turret] hums oddly...")
+	parent_turret.obj_flags |= EMAGGED
+	parent_turret.on = 0
+	spawn(40)
+		parent_turret.on = 1
+	return TRUE

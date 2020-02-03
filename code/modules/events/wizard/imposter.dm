@@ -23,7 +23,7 @@
 		I.name = I.dna.real_name
 		I.updateappearance(mutcolor_update=1)
 		I.domutcheck()
-		I.key = C.key
+		C.transfer_ckey(I, FALSE)
 		var/datum/antagonist/wizard/master = M.has_antag_datum(/datum/antagonist/wizard)
 		if(!master.wiz_team)
 			master.create_wiz_team()
@@ -36,5 +36,5 @@
 		SSticker.mode.apprentices += I.mind
 		I.mind.special_role = "imposter"
 		//
-		I.log_message("<font color='red'>Is an imposter!</font>", INDIVIDUAL_ATTACK_LOG) //?
+		I.log_message("is an imposter!", LOG_ATTACK, color="red") //?
 		SEND_SOUND(I, sound('sound/effects/magic.ogg'))

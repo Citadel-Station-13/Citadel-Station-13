@@ -10,14 +10,13 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
-
-
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
 	value = 0
 	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
+	medical_record_text = "Patient demonstrates a pathological love of pineapple."
 
 /datum/quirk/pineapple_liker/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -26,8 +25,9 @@
 
 /datum/quirk/pineapple_liker/remove()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/datum/species/species = H.dna.species
-	species.liked_food &= ~PINEAPPLE
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.liked_food &= ~PINEAPPLE
 
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
@@ -35,6 +35,7 @@
 	value = 0
 	gain_text = "<span class='notice'>You find yourself pondering what kind of idiot actually enjoys pineapples...</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
+	medical_record_text = "Patient is correct to think that pineapple is disgusting."
 
 /datum/quirk/pineapple_hater/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -43,8 +44,9 @@
 
 /datum/quirk/pineapple_hater/remove()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/datum/species/species = H.dna.species
-	species.disliked_food &= ~PINEAPPLE
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.disliked_food &= ~PINEAPPLE
 
 /datum/quirk/deviant_tastes
 	name = "Deviant Tastes"
@@ -52,6 +54,7 @@
 	value = 0
 	gain_text = "<span class='notice'>You start craving something that tastes strange.</span>"
 	lose_text = "<span class='notice'>You feel like eating normal food again.</span>"
+	medical_record_text = "Patient demonstrates irregular nutrition preferences."
 
 /datum/quirk/deviant_tastes/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -62,11 +65,10 @@
 
 /datum/quirk/deviant_tastes/remove()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/datum/species/species = H.dna.species
-	species.liked_food = initial(species.liked_food)
-	species.disliked_food = initial(species.disliked_food)
-
-
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.liked_food = initial(species.liked_food)
+		species.disliked_food = initial(species.disliked_food)
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"
@@ -83,4 +85,39 @@
 		quirk_holder.playsound_local(quirk_holder, 'sound/ambience/ambidet1.ogg', 50, FALSE)
 
 /datum/quirk/monochromatic/remove()
-	quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
+	if(quirk_holder)
+		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
+
+/datum/quirk/libido
+	name = "Nymphomania"
+	desc = "You're always feeling a bit in heat. Also, you get aroused faster than usual."
+	value = 0
+	mob_trait = TRAIT_PERMABONER
+	gain_text = "<span class='notice'>You are feeling extra wild.</span>"
+	lose_text = "<span class='notice'>You don't feel that burning sensation anymore.</span>"
+
+/datum/quirk/maso
+	name = "Masochism"
+	desc = "You are aroused by pain."
+	value = 0
+	mob_trait = TRAIT_MASO
+	gain_text = "<span class='notice'>You desire to be hurt.</span>"
+	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
+
+/datum/quirk/alcohol_intolerance
+	name = "Alcohol Intolerance"
+	desc = "You take toxin damage from alcohol rather than getting drunk."
+	value = 0
+	mob_trait = TRAIT_NO_ALCOHOL
+	medical_record_text = "Patient's body does not react properly to ethyl alcohol."
+
+/datum/quirk/alcohol_intolerance/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.disliked_food |= ALCOHOL
+
+/datum/quirk/alcohol_intolerance/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.disliked_food &= ~ALCOHOL

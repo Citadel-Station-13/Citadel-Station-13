@@ -11,12 +11,18 @@
 	var/buy_word = "Learn"
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
 	var/list/no_coexistance_typecache //Used so you can't have specific spells together
+	var/dynamic_cost = 0 // How much threat the spell costs to purchase for dynamic.
+	var/dynamic_requirement = 0 // How high the threat level needs to be for purchasing in dynamic.
 
 /datum/spellbook_entry/New()
 	..()
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(dynamic_requirement > 0 && mode.threat_level < dynamic_requirement)
+			return 0
 	return 1
 
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/spellbook/book) // Specific circumstances
@@ -24,6 +30,10 @@
 		return 0
 	for(var/spell in user.mind.spell_list)
 		if(is_type_in_typecache(spell, no_coexistance_typecache))
+			return 0
+	if(dynamic_cost>0 && istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat < dynamic_cost)
 			return 0
 	return 1
 
@@ -60,6 +70,10 @@
 				SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.spell_level]"))
 				return 1
 	//No same spell found - just learn it
+	if(dynamic_cost > 0 && istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.spend_threat(dynamic_cost)
+		mode.log_threat("Wizard spent [dynamic_cost] on [name].")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
@@ -76,13 +90,17 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = locate() in GLOB.sortedAreas
+	var/area/wizard_station/A = GLOB.areas_by_type[/area/wizard_station]
 	if(!(user in A.contents))
 		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
 	var/spell_levels = 0
+	if(dynamic_cost > 0 && istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		mode.refund_threat(dynamic_cost)
+		mode.log_threat("Wizard refunded [dynamic_cost] on [name].")
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
@@ -123,6 +141,10 @@
 	name = "Disintegrate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 
+/datum/spellbook_entry/nuclearfist
+	name = "Nuclear Fist"
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
@@ -141,7 +163,7 @@
 
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/timestop
 	category = "Defensive"
 
 /datum/spellbook_entry/smoke
@@ -285,6 +307,8 @@
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/gun/magic/staff/change
+	dynamic_requirement = 60
+	dynamic_cost = 20
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -316,9 +340,15 @@
 	cost = 1
 	category = "Defensive"
 
+/datum/spellbook_entry/item/lockerstaff
+	name = "Staff of the Locker"
+	desc = "A staff that shoots lockers. It eats anyone it hits on its way, leaving a welded locker with your victims behind."
+	item_path = /obj/item/gun/magic/staff/locker
+	category = "Defensive"
+
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
-	desc = "An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision."
+	desc = "An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you X-ray vision."
 	item_path = /obj/item/scrying
 	category = "Defensive"
 
@@ -363,6 +393,14 @@
 	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
 	item_path = /obj/item/antag_spawner/contract
 	category = "Assistance"
+	dynamic_requirement = 50
+	dynamic_cost = 10
+
+/datum/spellbook_entry/item/plasmafist
+	name = "Plasma Fist"
+	desc = "A forbidden martial art designed on the surging power of plasma. Use it to harness the ancient power."
+	item_path = /obj/item/book/granter/martial/plasma_fist
+	cost = 3
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
@@ -382,6 +420,11 @@
 	item_path = /obj/item/antag_spawner/slaughter_demon
 	limit = 3
 	category = "Assistance"
+	dynamic_requirement = 60
+
+/datum/spellbook_entry/item/bloodbottle/New()
+	..()
+	dynamic_cost = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]
 
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
@@ -396,6 +439,11 @@
 	cost = 1 //non-destructive; it's just a jape, sibling!
 	limit = 3
 	category = "Assistance"
+	dynamic_requirement = 40
+
+/datum/spellbook_entry/item/hugbottle/New()
+	..()
+	dynamic_cost = CONFIG_GET(keyed_list/dynamic_cost)["slaughter_demon"]/3
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
@@ -409,7 +457,7 @@
 
 /datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
-	desc = "An ensorcelled suit of armour, protected by a powerful shield. The shield can completly negate sixteen attacks before being permanently depleted."
+	desc = "An ensorceled suit of armour, protected by a powerful shield. The shield can completely negate sixteen attacks before being permanently depleted."
 	item_path = /obj/item/clothing/suit/space/hardsuit/shielded/wizard
 	limit = 1
 	category = "Defensive"
@@ -452,14 +500,14 @@
 
 /datum/spellbook_entry/summon/ghosts
 	name = "Summon Ghosts"
-	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilties to frustrate you."
+	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilities to frustrate you."
 	cost = 0
 
 /datum/spellbook_entry/summon/ghosts/IsAvailible()
 	if(!SSticker.mode)
 		return FALSE
 	else
-		return TRUE
+		return ..()
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
@@ -472,11 +520,13 @@
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
+	dynamic_cost = 10
+	dynamic_requirement = 60
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return !CONFIG_GET(flag/no_summon_guns)
+	return (!CONFIG_GET(flag/no_summon_guns) && ..())
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
@@ -484,16 +534,23 @@
 	active = 1
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = dynamic_cost
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on summon guns.")
 	return 1
 
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
+	dynamic_cost = 10
+	dynamic_requirement = 60
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return !CONFIG_GET(flag/no_summon_magic)
+	return (!CONFIG_GET(flag/no_summon_guns) && ..())
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
@@ -501,21 +558,33 @@
 	active = 1
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
+	if(istype(SSticker.mode,/datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = dynamic_cost
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on summon magic.")
 	return 1
 
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
 	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
+	dynamic_cost = 20
+	dynamic_requirement = 60
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return !CONFIG_GET(flag/no_summon_events)
+	return (!CONFIG_GET(flag/no_summon_events) && ..())
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
+	if(istype(SSticker.mode,/datum/game_mode/dynamic) && times == 0)
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		var/threat_spent = dynamic_cost
+		mode.spend_threat(threat_spent)
+		mode.log_threat("Wizard spent [threat_spent] on summon events.")
 	times++
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
@@ -543,11 +612,11 @@
 	var/list/categories = list()
 
 /obj/item/spellbook/examine(mob/user)
-	..()
+	. = ..()
 	if(owner)
-		to_chat(user, "There is a small signature on the front cover: \"[owner]\".")
+		. += "There is a small signature on the front cover: \"[owner]\"."
 	else
-		to_chat(user, "It appears to have no author.")
+		. += "It appears to have no author."
 
 /obj/item/spellbook/Initialize()
 	. = ..()
@@ -589,22 +658,22 @@
 	switch(category)
 		if("Offensive")
 			dat += "Spells and items geared towards debilitating and destroying.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
+			dat += "Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
 		if("Defensive")
-			dat += "Spells and items geared towards improving your survivabilty or reducing foes' ability to attack.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
+			dat += "Spells and items geared towards improving your survivability or reducing foes' ability to attack.<BR><BR>"
+			dat += "Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
 		if("Mobility")
 			dat += "Spells and items geared towards improving your ability to move. It is a good idea to take at least one.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
+			dat += "Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
 		if("Assistance")
-			dat += "Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilties.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
+			dat += "Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilities.<BR><BR>"
+			dat += "Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
 		if("Challenges")
@@ -620,16 +689,16 @@
 	dat += {"
 	<head>
 		<style type="text/css">
-      		body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
-      		ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
-      		ul#tabs li { display: inline; }
-      		ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
-      		ul#tabs li a:hover { background-color: #f1f0ee; }
-      		ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
-      		div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
-      		div.tabContent.hide { display: none; }
-    	</style>
-  	</head>
+			body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+			ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
+			ul#tabs li { display: inline; }
+			ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+			ul#tabs li a:hover { background-color: #f1f0ee; }
+			ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
+			div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+			div.tabContent.hide { display: none; }
+		</style>
+	</head>
 	"}
 	dat += {"[content]</body></html>"}
 	return dat

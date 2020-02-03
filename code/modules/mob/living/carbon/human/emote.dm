@@ -39,6 +39,19 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/human/mawp
+	key = "mawp"
+	key_third_person = "mawps"
+	message = "mawps annoyingly."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/mawp/run_emote(mob/living/user, params)
+	. = ..()
+	if(.)
+		if(ishuman(user))
+			if(prob(10))
+				user.adjustEarDamage(-5, -5)
+
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
 	key_third_person = "mumbles"
@@ -77,59 +90,26 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/H = user
-	if(!H.is_wagging_tail())
-		H.startTailWag()
+	if(!istype(H) || !H.dna || !H.dna.species || !H.dna.species.can_wag_tail(H))
+		return
+	if(!H.dna.species.is_wagging_tail())
+		H.dna.species.start_wagging_tail(H)
 	else
-		H.endTailWag()
-
-/mob/living/carbon/human/proc/is_wagging_tail()
-	return (dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)|| ("mam_waggingtail" in dna.species.mutant_bodyparts)))
+		H.dna.species.stop_wagging_tail(H)
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts)|| ("mam_tail" in H.dna.species.mutant_bodyparts) || ("mam_waggingtail" in H.dna.species.mutant_bodyparts)))
-		return TRUE
+	return H.dna && H.dna.species && H.dna.species.can_wag_tail(user)
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if(H.is_wagging_tail())
+	if(!H.dna || !H.dna.species)
+		return
+	if(H.dna.species.is_wagging_tail())
 		. = null
-
-//Don't know where else to put this, it's basically an emote
-/mob/living/carbon/human/proc/startTailWag()
-	if(!dna || !dna.species)
-		return
-	if("tail_lizard" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_lizard"
-		dna.species.mutant_bodyparts -= "spines"
-		dna.species.mutant_bodyparts |= "waggingtail_lizard"
-		dna.species.mutant_bodyparts |= "waggingspines"
-	if("tail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_human"
-		dna.species.mutant_bodyparts |= "waggingtail_human"
-	if("mam_tail" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "mam_tail"
-		dna.species.mutant_bodyparts |= "mam_waggingtail"
-	update_body()
-
-/mob/living/carbon/human/proc/endTailWag()
-	if(!dna || !dna.species)
-		return
-	if("waggingtail_lizard" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_lizard"
-		dna.species.mutant_bodyparts -= "waggingspines"
-		dna.species.mutant_bodyparts |= "tail_lizard"
-		dna.species.mutant_bodyparts |= "spines"
-	if("waggingtail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_human"
-		dna.species.mutant_bodyparts |= "tail_human"
-	if("mam_waggingtail" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "mam_waggingtail"
-		dna.species.mutant_bodyparts |= "mam_tail"
-	update_body()
 
 /datum/emote/living/carbon/human/wing
 	key = "wing"
@@ -179,4 +159,31 @@
 		var/turf/T = loc
 		T.Entered(src)
 
-//Ayy lmao
+/datum/emote/sound/human
+	mob_type_allowed_typecache = list(/mob/living/carbon/human)
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/buzz
+	key = "buzz"
+	key_third_person = "buzzes"
+	message = "buzzes."
+	message_param = "buzzes at %t."
+	sound = 'sound/machines/buzz-sigh.ogg'
+
+/datum/emote/sound/human/buzz2
+	key = "buzz2"
+	message = "buzzes twice."
+	sound = 'sound/machines/buzz-two.ogg'
+
+/datum/emote/sound/human/ping
+	key = "ping"
+	key_third_person = "pings"
+	message = "pings."
+	message_param = "pings at %t."
+	sound = 'sound/machines/ping.ogg'
+
+/datum/emote/sound/human/chime
+	key = "chime"
+	key_third_person = "chimes"
+	message = "chimes."
+	sound = 'sound/machines/chime.ogg'

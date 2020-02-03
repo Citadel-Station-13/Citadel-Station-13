@@ -32,11 +32,11 @@
 	var/list/dent_decals
 
 /turf/closed/wall/examine(mob/user)
-	..()
+	. = ..()
 	deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
-	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
+	return "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>"
 
 /turf/closed/wall/attack_tk()
 	return
@@ -139,7 +139,7 @@
 	..(user, 1)
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		dismantle_wall(1)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)

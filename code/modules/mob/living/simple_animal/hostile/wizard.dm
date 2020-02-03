@@ -37,6 +37,8 @@
 
 	var/next_cast = 0
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/wizard/Initialize()
 	. = ..()
 	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
@@ -44,7 +46,8 @@
 	fireball.human_req = 0
 	fireball.player_lock = 0
 	AddSpell(fireball)
-	implants += new /obj/item/implant/exile(src)
+	var/obj/item/implant/exile/I = new
+	I.implant(src, null, TRUE)
 
 	mm = new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	mm.clothes_req = 0

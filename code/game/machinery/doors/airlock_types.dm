@@ -8,16 +8,19 @@
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
+	wiretypepath = /datum/wires/airlock/command
 	normal_integrity = 450
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
+	wiretypepath = /datum/wires/airlock/security
 	normal_integrity = 450
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
+	wiretypepath = /datum/wires/airlock/engineering
 
 /obj/machinery/door/airlock/engineering/abandoned
 	abandoned = TRUE
@@ -25,6 +28,7 @@
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
+	wiretypepath = /datum/wires/airlock/medical
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
@@ -44,11 +48,13 @@
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_min
+	wiretypepath = /datum/wires/airlock/cargo
 
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
+	wiretypepath = /datum/wires/airlock/engineering
 
 /obj/machinery/door/airlock/atmos/abandoned
 	abandoned = TRUE
@@ -56,6 +62,7 @@
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_research
+	wiretypepath = /datum/wires/airlock/science
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
@@ -65,10 +72,12 @@
 /obj/machinery/door/airlock/science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_science
+	wiretypepath = /datum/wires/airlock/science
 
 /obj/machinery/door/airlock/virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
+	wiretypepath = /datum/wires/airlock/medical
 
 //////////////////////////////////
 /*
@@ -249,10 +258,10 @@
 	return 0
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
-	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+	if(C.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
 		log_game("Plasma airlock ignited by [key_name(user)] in [AREACOORD(src)]")
-		ignite(C.is_hot())
+		ignite(C.get_temperature())
 	else
 		return ..()
 
@@ -376,6 +385,7 @@
 	icon = 'icons/obj/doors/airlocks/vault/vault.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
+	wiretypepath = /datum/wires/airlock/secure
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
 	security_level = 6
@@ -499,7 +509,7 @@
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.Knockdown(40)
-			L.throw_at(throwtarget, 5, 1,src)
+			L.throw_at(throwtarget, 5, 1)
 		return 0
 
 /obj/machinery/door/airlock/cult/proc/conceal()
@@ -583,14 +593,12 @@
 	return ..()
 
 /obj/machinery/door/airlock/clockwork/examine(mob/user)
-	..()
-	var/gear_text = "The cogwheel is flickering and twisting wildly. Report this to a coder."
+	. = ..()
 	switch(construction_state)
 		if(GEAR_SECURE)
-			gear_text = "<span class='brass'>The cogwheel is solidly <b>wrenched</b> to the brass around it.</span>"
+			. += "<span class='brass'>The cogwheel is solidly <b>wrenched</b> to the brass around it.</span>"
 		if(GEAR_LOOSE)
-			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
-	to_chat(user, gear_text)
+			. += "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
 
 /obj/machinery/door/airlock/clockwork/emp_act(severity)
 	if(prob(80/severity))

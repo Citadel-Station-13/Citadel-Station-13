@@ -22,6 +22,7 @@
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
+	var/obj/structure/table/tableVariant // we tables now (stores table variant to be built from this stack)
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -75,23 +76,23 @@
 	. = ..()
 
 /obj/item/stack/examine(mob/user)
-	..()
+	. = ..()
 	if (is_cyborg)
 		if(singular_name)
-			to_chat(user, "There is enough energy for [get_amount()] [singular_name]\s.")
+			. += "There is enough energy for [get_amount()] [singular_name]\s."
 		else
-			to_chat(user, "There is enough energy for [get_amount()].")
+			. += "There is enough energy for [get_amount()]."
 		return
 	if(singular_name)
 		if(get_amount()>1)
-			to_chat(user, "There are [get_amount()] [singular_name]\s in the stack.")
+			. += "There are [get_amount()] [singular_name]\s in the stack."
 		else
-			to_chat(user, "There is [get_amount()] [singular_name] in the stack.")
+			. += "There is [get_amount()] [singular_name] in the stack."
 	else if(get_amount()>1)
-		to_chat(user, "There are [get_amount()] in the stack.")
+		. += "There are [get_amount()] in the stack."
 	else
-		to_chat(user, "There is [get_amount()] in the stack.")
-	to_chat(user, "<span class='notice'>Alt-click to take a custom amount.</span>")
+		. += "There is [get_amount()] in the stack."
+	. += "<span class='notice'>Alt-click to take a custom amount.</span>"
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -132,7 +133,7 @@
 		if (istype(E, /datum/stack_recipe))
 			var/datum/stack_recipe/R = E
 			var/max_multiplier = round(get_amount() / R.req_amount)
-			var/title as text
+			var/title
 			var/can_build = 1
 			can_build = can_build && (max_multiplier>0)
 
@@ -191,10 +192,17 @@
 		var/obj/O
 		if(R.max_res_amount > 1) //Is it a stack?
 			O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
+		else if(ispath(R.result_type, /turf))
+			var/turf/T = usr.drop_location()
+			if(!isturf(T))
+				return
+			T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
 		else
 			O = new R.result_type(usr.drop_location())
-		O.setDir(usr.dir)
+		if(O)
+			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
+		log_craft("[O] crafted by [usr] at [loc_name(O.loc)]")
 
 		//START: oh fuck i'm so sorry
 		if(istype(O, /obj/structure/windoor_assembly))
@@ -231,7 +239,9 @@
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return FALSE
 	var/turf/T = get_turf(usr)
-	if(R.window_checks && !valid_window_location(T, usr.dir))
+
+	var/obj/D = R.result_type
+	if(R.window_checks && !valid_window_location(T, initial(D.dir) == FULLTILE_WINDOW_DIR ? FULLTILE_WINDOW_DIR : usr.dir))
 		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
 		return FALSE
 	if(R.one_per_turf && (locate(R.result_type) in T))
@@ -246,6 +256,10 @@
 				continue
 			if(istype(AM,/obj/structure/table))
 				continue
+			if(istype(AM,/obj/structure/window))
+				var/obj/structure/window/W = AM
+				if(!W.fulltile)
+					continue
 			if(AM.density)
 				to_chat(usr, "<span class='warning'>Theres a [AM.name] here. You cant make a [R.title] here!</span>")
 				return FALSE
@@ -328,7 +342,7 @@
 		merge(o)
 	. = ..()
 
-/obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
+/obj/item/stack/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(istype(AM, merge_type))
 		merge(AM)
 	. = ..()
@@ -343,6 +357,7 @@
 		. = ..()
 
 /obj/item/stack/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(is_cyborg)
@@ -356,10 +371,11 @@
 		max = get_amount()
 		stackmaterial = min(max, stackmaterial)
 		if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-			return
+			return TRUE
 		else
 			change_stack(user, stackmaterial)
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
+		return TRUE
 
 /obj/item/stack/proc/change_stack(mob/user, amount)
 	if(!use(amount, TRUE, FALSE))
@@ -383,14 +399,17 @@
 		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
-	add_blood_DNA(from.return_blood_DNA())
-	add_fingerprint_list(from.return_fingerprints())
-	add_hiddenprint_list(from.return_hiddenprints())
-	fingerprintslast  = from.fingerprintslast
-	//TODO bloody overlay
+	if(from.blood_DNA)
+		blood_DNA = from.blood_DNA.Copy()
+	if(from.fingerprints)
+		fingerprints = from.fingerprints.Copy()
+	if(from.fingerprintshidden)
+		fingerprintshidden = from.fingerprintshidden.Copy()
+	if(from.fingerprintslast)
+		fingerprintslast = from.fingerprintslast
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
-	if(M && M.dirty < 100)
+	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
 
 /*

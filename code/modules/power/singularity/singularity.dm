@@ -7,6 +7,7 @@
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
+	move_resist = INFINITY
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = 0
@@ -81,6 +82,21 @@
 /obj/singularity/blob_act(obj/structure/blob/B)
 	return
 
+/obj/singularity/attack_tk(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		log_game("[key_name(C)] has been disintegrated by attempting to telekenetically grab a singularity.</span>")
+		C.visible_message("<span class='danger'>[C]'s head begins to collapse in on itself!</span>", "<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>", "<span class='italics'>You hear something crack and explode in gore.</span>")
+		for(var/i in 1 to 3)
+			C.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+			C.spawn_gibs()
+			sleep(1)
+		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
+		rip_u.dismember(BURN) //nice try jedi
+		qdel(rip_u)
+		return
+	return ..()
+
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
 		if(1)
@@ -98,15 +114,16 @@
 
 
 /obj/singularity/bullet_act(obj/item/projectile/P)
-	return 0 //Will there be an impact? Who knows.  Will we see it? No.
+	qdel(P)
+	return BULLET_ACT_HIT //Will there be an impact? Who knows.  Will we see it? No.
 
 
-/obj/singularity/Collide(atom/A)
+/obj/singularity/Bump(atom/A)
 	consume(A)
 	return
 
 
-/obj/singularity/CollidedWith(atom/movable/AM)
+/obj/singularity/Bumped(atom/movable/AM)
 	consume(AM)
 
 

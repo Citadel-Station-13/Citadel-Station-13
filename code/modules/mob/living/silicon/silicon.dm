@@ -11,6 +11,10 @@
 	weather_immunities = list("ash")
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	mob_biotypes = list(MOB_ROBOTIC)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	speech_span = SPAN_ROBOT
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	no_vore = TRUE
 
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
@@ -51,10 +55,6 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
-
-/mob/living/silicon/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, TRUE)
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -151,7 +151,7 @@
 			for(var/key in alarm_types_clear)
 				alarm_types_clear[key] = 0
 
-/mob/living/silicon/can_inject(mob/user, error_msg)
+/mob/living/silicon/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
 	return FALSE
@@ -385,9 +385,18 @@
 	add_sensors()
 	to_chat(src, "Sensor overlay activated.")
 
-/mob/living/silicon/proc/GetPhoto()
+/mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
-		return aicamera.selectpicture(aicamera)
+		return aicamera.selectpicture(user)
+
+/mob/living/silicon/proc/ai_roster()
+	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
+
+	dat += GLOB.data_core.get_manifest()
+	dat += "</body></html>"
+
+	src << browse(dat, "window=airoster")
+	onclose(src, "airoster")
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -406,3 +415,6 @@
 
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
+
+/mob/living/silicon/handle_high_gravity(gravity)
+	return

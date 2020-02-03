@@ -26,6 +26,7 @@
 "g" = (
 /obj/structure/alien/weeds,
 /obj/structure/table_frame,
+/obj/item/organ/alien/plasmavessel/small/tiny,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "h" = (
@@ -77,6 +78,13 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/remains/xeno,
+/obj/item/organ/brain/alien,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"s" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/remains/xeno,
+/obj/item/organ/alien/plasmavessel/small,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 
@@ -106,7 +114,7 @@ a
 a
 a
 b
-b
+s
 b
 a
 a

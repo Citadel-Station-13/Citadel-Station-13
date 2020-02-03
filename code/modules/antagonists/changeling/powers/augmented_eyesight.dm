@@ -1,4 +1,4 @@
-//Augmented Eyesight: Gives you x-ray vision or protection from flashes. Also, high DNA cost because of how powerful it is.
+//Augmented Eyesight: Gives you X-ray vision or protection from flashes. Also, high DNA cost because of how powerful it is.
 //Possible todo: make a custom message for directing a penlight/flashlight at the eyes - not sure what would display though.
 
 /obj/effect/proc_holder/changeling/augmented_eyesight
@@ -8,12 +8,16 @@
 	chemical_cost = 0
 	dna_cost = 2 //Would be 1 without thermal vision
 	active = FALSE
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_augmented_eyesight"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_purchase(mob/user) //The ability starts inactive, so we should be protected from flashes.
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if (E)
 		E.flash_protect = 2 //Adjust the user's eyes' flash protection
 		to_chat(user, "We adjust our eyes to protect them from bright lights.")
+		action.Grant(user)
 	else
 		to_chat(user, "We can't adjust our eyes if we don't have any!")
 
@@ -41,7 +45,8 @@
 	return 1
 
 
-/obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user) //Get rid of x-ray vision and flash protection when the user refunds this ability
+/obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user) //Get rid of X-ray vision and flash protection when the user refunds this ability
+	action.Remove(user)
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		if (active)

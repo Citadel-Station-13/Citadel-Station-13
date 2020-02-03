@@ -11,10 +11,6 @@
 	anchored = TRUE
 	var/deconstruction_state = SHOWCASE_CONSTRUCTED
 
-/obj/structure/showcase/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 750), 0)
-
 /obj/structure/showcase/fakeid
 	name = "\improper CentCom identification console"
 	desc = "You can use this to change ID's."
@@ -135,12 +131,11 @@
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 
 /obj/structure/showcase/examine(mob/user)
-	..()
-
+	. = ..()
 	switch(deconstruction_state)
 		if(SHOWCASE_CONSTRUCTED)
-			to_chat(user, "The showcase is fully constructed.")
+			. += "The showcase is fully constructed."
 		if(SHOWCASE_SCREWDRIVERED)
-			to_chat(user, "The showcase has its screws loosened.")
+			. += "The showcase has its screws loosened."
 		else
-			to_chat(user, "If you see this, something is wrong.")
+			. += "If you see this, something is wrong."

@@ -20,7 +20,7 @@
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
-	if(start_showpieces.len && !start_showpiece_type) 
+	if(start_showpieces.len && !start_showpiece_type)
 		var/list/showpiece_entry = pick(start_showpieces)
 		if (showpiece_entry && showpiece_entry["type"])
 			start_showpiece_type = showpiece_entry["type"]
@@ -38,14 +38,14 @@
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
-	..()
+	. = ..()
 	if(alert)
-		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
+		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
 	if(showpiece)
-		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
+		. += "<span class='notice'>There's [showpiece] inside.</span>"
 	if(trophy_message)
-		to_chat(user, "The plaque reads:")
-		to_chat(user, trophy_message)
+		. += "The plaque reads:"
+		. += trophy_message
 
 
 /obj/structure/displaycase/proc/dump()
@@ -80,7 +80,7 @@
 /obj/structure/displaycase/proc/trigger_alarm()
 	//Activate Anti-theft
 	if(alert)
-		var/area/alarmed = get_area(src)
+		var/area/alarmed = get_base_area(src)
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
@@ -164,6 +164,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
+		log_combat(user, src, "deactivates the hover field of")
 		dump()
 		src.add_fingerprint(user)
 		update_icon()
@@ -173,6 +174,7 @@
 		if (!Adjacent(user))
 			return
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
+		log_combat(user, src, "kicks")
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
 
@@ -234,6 +236,12 @@
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(ACCESS_RD)
+
+/obj/structure/displaycase/clown
+	desc = "In the event of clown, honk glass."
+	alert = TRUE
+	start_showpiece_type = /obj/item/bikehorn
+	req_access = list(ACCESS_CENT_GENERAL)
 
 /obj/structure/displaycase/trophy
 	name = "trophy display case"

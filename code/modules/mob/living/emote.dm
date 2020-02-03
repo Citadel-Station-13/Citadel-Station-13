@@ -1,7 +1,7 @@
 
 /* EMOTE DATUMS */
 /datum/emote/living
-	mob_type_allowed_typecache = list(/mob/living)
+	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
 
 /datum/emote/living/blush
@@ -58,9 +58,9 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
 	. = ..()
-	if(user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty"))
+	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
 		return FALSE
 
 /datum/emote/living/dance
@@ -87,6 +87,12 @@
 		message_simple = S.deathmessage
 	. = ..()
 	message_simple = initial(message_simple)
+	if(. && user.deathsound)
+		if(isliving(user))
+			var/mob/living/L = user
+			if(!L.can_speak_vocal() || L.oxyloss >= 50)
+				return //stop the sound if oxyloss too high/cant speak
+		playsound(user, user.deathsound, 200, TRUE, TRUE)
 	if(. && isalienadult(user))
 		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 
@@ -194,28 +200,52 @@
 	message_param = "blows a kiss to %t."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh
+/datum/emote/living/audio_emote
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/audio_emote/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent && (!C.mind || !C.mind.miming)
+
+/datum/emote/living/audio_emote/laugh
 	key = "laugh"
 	key_third_person = "laughs"
 	message = "laughs."
 	message_mime = "laughs silently!"
-	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
+/datum/emote/living/audio_emote/laugh/run_emote(mob/user, params)
 	. = ..()
-	if(. && iscarbon(user))
+	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
 		var/mob/living/carbon/C = user
-		return !C.silent
-
-/datum/emote/living/laugh/run_emote(mob/user, params)
-	. = ..()
-	if(. && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+		if(iscatperson(C))	//we ask for is cat first because they're a subtype that tests true for ishumanbasic because HERESY
+			playsound(C, pick('sound/voice/catpeople/nyahaha1.ogg',
+			'sound/voice/catpeople/nyahaha2.ogg',
+			'sound/voice/catpeople/nyaha.ogg',
+			'sound/voice/catpeople/nyahehe.ogg'),
+			50, 1)
+			return
+		else if(ismoth(C))
+			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
+		else if(ishumanbasic(C))
 			if(user.gender == FEMALE)
-				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+				playsound(C, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
-				playsound(H, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+				playsound(C, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+
+/datum/emote/living/audio_emote/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters."
+	message_mime = "chitters silently!"
+
+/datum/emote/living/audio_emote/chitter/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
+		var/mob/living/carbon/C = user
+		if(ismoth(C))
+			playsound(C, 'sound/voice/moth/mothchitter.ogg', 50, 1)
 
 /datum/emote/living/look
 	key = "look"
@@ -246,7 +276,7 @@
 				H.Knockdown(20)
 			else
 				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
-				H.adjustBrainLoss(5)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 	..()
 
 /datum/emote/living/pout
@@ -396,27 +426,22 @@
 	message = null
 
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
-	. = TRUE
-	if(copytext(input,1,5) == "says")
+	if(stop_bad_mime.Find(input, 1, 1))
 		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,9) == "exclaims")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,6) == "yells")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,5) == "asks")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else
-		. = FALSE
+		return TRUE
+	return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
 	if(jobban_isbanned(user, "emote"))
 		to_chat(user, "You cannot send custom emotes (banned).")
 		return FALSE
+	else if(QDELETED(user))
+		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
-		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as message|null), 1, MAX_MESSAGE_LEN) //CIT CHANGE - expands emote textbox
+		var/custom_emote = stripped_multiline_input("Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
@@ -475,6 +500,7 @@
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
+	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/living/carbon/human)
 
 /datum/emote/living/circle
 	key = "circle"

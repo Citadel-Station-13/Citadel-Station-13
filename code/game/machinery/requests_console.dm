@@ -263,10 +263,9 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(reject_bad_text(href_list["write"]))
-		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
-
-		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
+	if(href_list["write"])
+		dpt = ckey(reject_bad_text(href_list["write"])) //write contains the string of the receiving department's name
+		var/new_message = stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -282,7 +281,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
+		var/new_message = reject_bad_text(stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN))
 		if(new_message)
 			message = new_message
 			if (text2num(href_list["priority"]) < 2)
@@ -302,7 +301,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			message = L.treat_message(message)
 		minor_announce(message, "[department] Announcement:")
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
-		log_talk(usr,"[key_name(usr)] has made a station announcement from [src] at [AREACOORD(usr)]: [message]",LOGSAY)
+		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 		announceAuth = FALSE
 		message = ""
@@ -323,7 +322,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_icon()
 				addtimer(CALLBACK(src, .proc/clear_emergency), 3000)
 
@@ -382,7 +381,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 						screen = 6
 
 				if(radio_freq)
-					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq,get_spans(),get_default_language())
+					Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
 				switch(priority)
 					if(2)
@@ -438,9 +437,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	return
 
 /obj/machinery/requests_console/say_mod(input, message_mode)
-	var/ending = copytext(input, length(input) - 2)
-	if (ending == "!!!")
-		. = "blares"
+	if(spantext_char(input, "!", -3))
+		return "blares"
 	else
 		. = ..()
 

@@ -14,7 +14,7 @@
 
 
 /datum/round_event/disease_outbreak/announce(fake)
-	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak7.ogg')
+	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak7")
 
 /datum/round_event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)
@@ -37,9 +37,11 @@
 			continue
 		if(!H.client)
 			continue
+		if(HAS_TRAIT(H,TRAIT_EXEMPT_HEALTH_EVENTS))
+			continue
 		if(H.stat == DEAD)
 			continue
-		if(H.has_trait(TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
+		if(HAS_TRAIT(H, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
 			continue
 		var/foundAlready = FALSE	// don't infect someone that already has a disease
 		for(var/thing in H.diseases)
@@ -51,7 +53,7 @@
 		var/datum/disease/D
 		if(!advanced_virus)
 			if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
-				if(!H.dna || (H.has_trait(TRAIT_BLIND)))	//A blindness disease would be the worst.
+				if(!H.dna || (HAS_TRAIT(H, TRAIT_BLIND)))	//A blindness disease would be the worst.
 					continue
 				D = new virus_type()
 				var/datum/disease/dnaspread/DS = D
@@ -61,7 +63,7 @@
 			else
 				D = new virus_type()
 		else
-			D = make_virus(max_severity, max_severity)
+			D = new /datum/disease/advance/random(max_severity, max_severity)
 		D.carrier = TRUE
 		H.ForceContractDisease(D, FALSE, TRUE)
 
@@ -73,23 +75,3 @@
 			message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(H)]! It has these symptoms: [english_list(name_symptoms)]")
 			log_game("An event has triggered a random advanced virus outbreak on [key_name(H)]! It has these symptoms: [english_list(name_symptoms)]")
 		break
-
-/datum/round_event/disease_outbreak/proc/make_virus(max_symptoms, max_level)
-	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
-		max_symptoms = VIRUS_SYMPTOM_LIMIT
-	var/datum/disease/advance/A = new /datum/disease/advance()
-	var/list/datum/symptom/possible_symptoms = list()
-	for(var/symptom in subtypesof(/datum/symptom))
-		var/datum/symptom/S = symptom
-		if(initial(S.level) > max_level)
-			continue
-		if(initial(S.level) <= 0) //unobtainable symptoms
-			continue
-		possible_symptoms += S
-	for(var/i in 1 to max_symptoms)
-		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
-		if(chosen_symptom)
-			var/datum/symptom/S = new chosen_symptom
-			A.symptoms += S
-	A.Refresh() //just in case someone already made and named the same disease
-	return A

@@ -79,14 +79,14 @@ Difficulty: Very Hard
 			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
 
 	else if(prob(20))
-		ranged_cooldown = world.time + 30
+		ranged_cooldown = world.time + 2
 		random_shots()
 	else
 		if(prob(70))
-			ranged_cooldown = world.time + 20
+			ranged_cooldown = world.time + 10
 			blast()
 		else
-			ranged_cooldown = world.time + 40
+			ranged_cooldown = world.time + 20
 			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
@@ -117,7 +117,7 @@ Difficulty: Very Hard
 
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
@@ -235,8 +235,6 @@ Difficulty: Very Hard
 	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blackbox"
-	icon_on = "blackbox"
-	icon_off = "blackbox"
 	light_range = 8
 	max_n_of_items = INFINITY
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -375,10 +373,10 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		to_chat(user, observer_desc)
-		to_chat(user, "It is activated by [activation_method].")
+		. += observer_desc
+		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -390,14 +388,14 @@ Difficulty: Very Hard
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
 /obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot())
+	if(I.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else
 		ActivationReaction(user, ACTIVATE_WEAPON)
 	..()
 
 /obj/machinery/anomalous_crystal/bullet_act(obj/item/projectile/P, def_zone)
-	..()
+	. = ..()
 	if(istype(P, /obj/item/projectile/magic))
 		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
 		return
@@ -414,7 +412,7 @@ Difficulty: Very Hard
 	playsound(user, activation_sound, 100, 1)
 	return TRUE
 
-/obj/machinery/anomalous_crystal/CollidedWith(atom/movable/AM)
+/obj/machinery/anomalous_crystal/Bumped(atom/movable/AM)
 	..()
 	if(ismob(AM))
 		ActivationReaction(AM, ACTIVATE_MOB_BUMP)
@@ -481,34 +479,33 @@ Difficulty: Very Hard
 			NewTerrainTables = /obj/structure/table/abductor
 
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
-	if(..())
-		var/area/A = get_area(src)
-		if(!A.outdoors && !(A in affected_targets))
-			for(var/atom/Stuff in A)
-				if(isturf(Stuff))
-					var/turf/T = Stuff
-					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
-						if(O.air)
-							var/datum/gas_mixture/G = O.air
-							G.copy_from_turf(O)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
-							var/atom/Picked = pick(NewFlora)
-							new Picked(O)
-						continue
-					if(iswallturf(T) && NewTerrainWalls)
-						T.ChangeTurf(NewTerrainWalls)
-						continue
-				if(istype(Stuff, /obj/structure/chair) && NewTerrainChairs)
-					var/obj/structure/chair/Original = Stuff
-					var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
-					C.setDir(Original.dir)
-					qdel(Stuff)
-					continue
-				if(istype(Stuff, /obj/structure/table) && NewTerrainTables)
-					new NewTerrainTables(Stuff.loc)
-					continue
-			affected_targets += A
+	. = ..()
+	if(!.)
+		return
+	for(var/i in get_sub_areas(src))
+		var/area/A = i
+		if(A.outdoors || (A in affected_targets))
+			continue
+		affected_targets += A
+		for(var/stuff in A)
+			var/atom/target = stuff
+			if(isturf(target))
+				var/turf/T = target
+				if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
+					var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
+					if(NewFlora.len && prob(florachance) && !is_blocked_turf(O, TRUE))
+						var/atom/Picked = pick(NewFlora)
+						new Picked(O)
+				else if(iswallturf(T) && NewTerrainWalls)
+					T.ChangeTurf(NewTerrainWalls)
+			else if(NewTerrainChairs && istype(target, /obj/structure/chair))
+				var/obj/structure/chair/Original = target
+				var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
+				C.setDir(Original.dir)
+				qdel(target)
+			else if(NewTerrainTables && istype(target, /obj/structure/table))
+				new NewTerrainTables(target.loc)
+				qdel(target)
 
 /obj/machinery/anomalous_crystal/emitter //Generates a projectile when interacted with
 	observer_desc = "This crystal generates a projectile when activated."
@@ -560,7 +557,7 @@ Difficulty: Very Hard
 					H.regenerate_limbs()
 					H.regenerate_organs()
 					H.revive(1,0)
-					H.add_trait(TRAIT_NOCLONE, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
+					ADD_TRAIT(H, TRAIT_NOCLONE, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
@@ -577,17 +574,19 @@ Difficulty: Very Hard
 	if(..() && !ready_to_deploy)
 		GLOB.poi_list |= src
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK)
+		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK, ignore_dnr_observers = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()
 	if(.)
 		return
 	if(ready_to_deploy)
+		if(!user.can_reenter_round())
+			return FALSE
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-			W.key = user.key
+			user.transfer_ckey(W, FALSE)
 
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
@@ -651,7 +650,7 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize()
+/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
 	. = ..()
 	if(.)
 		death()
@@ -672,7 +671,7 @@ Difficulty: Very Hard
 		for(var/i in T)
 			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
-				if(!(W.flags_1 & ADMIN_SPAWNED_1) && !(W.flags_1 & HOLOGRAM_1) && !(W.flags_1 & ABSTRACT_1))
+				if(!(W.flags_1 & ADMIN_SPAWNED_1) && !(W.flags_1 & HOLOGRAM_1) && !(W.item_flags & ABSTRACT))
 					L += W
 		if(L.len)
 			var/obj/item/CHOSEN = pick(L)
@@ -723,17 +722,17 @@ Difficulty: Very Hard
 	if(isliving(A) && holder_animal)
 		var/mob/living/L = A
 		L.notransform = 1
-		L.add_trait(TRAIT_MUTE, STASIS_MUTE)
+		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags |= GODMODE
 		L.mind.transfer_to(holder_animal)
 		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
 		holder_animal.mind.AddSpell(P)
 		holder_animal.verbs -= /mob/living/verb/pulled
 
-/obj/structure/closet/stasis/dump_contents(var/kill = 1)
+/obj/structure/closet/stasis/dump_contents(override = TRUE, kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
-		L.remove_trait(TRAIT_MUTE, STASIS_MUTE)
+		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
 		if(holder_animal)
@@ -747,6 +746,12 @@ Difficulty: Very Hard
 	return
 
 /obj/structure/closet/stasis/ex_act()
+	return
+
+/obj/structure/closet/stasis/handle_lock_addition()
+	return
+
+/obj/structure/closet/stasis/handle_lock_removal()
 	return
 
 /obj/effect/proc_holder/spell/targeted/exit_possession
@@ -770,7 +775,7 @@ Difficulty: Very Hard
 	for(var/i in user)
 		if(istype(i, /obj/structure/closet/stasis))
 			var/obj/structure/closet/stasis/S = i
-			S.dump_contents(0)
+			S.dump_contents(kill=0)
 			qdel(S)
 			break
 	user.gib()

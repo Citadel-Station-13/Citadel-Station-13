@@ -30,7 +30,7 @@ Cross Blasts and the AoE burst gain additional range as Hierophant loses health,
 When Hierophant dies, it stops trying to murder you and shrinks into a small form, which, while much weaker, is still quite effective.
 - The smaller club can place a teleport beacon, allowing the user to teleport themself and their allies to the beacon.
 
-Difficulty: Hard
+Difficulty: Normal
 
 */
 
@@ -47,11 +47,12 @@ Difficulty: Hard
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
-	armour_penetration = 50
+	armour_penetration = 75
 	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_upper = 20
+	blood_volume = 0
 	speed = 1
-	move_to_delay = 10
+	move_to_delay = 11
 	ranged = 1
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
@@ -65,9 +66,9 @@ Difficulty: Hard
 
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
-	var/chaser_speed = 3 //how fast chasers are currently
-	var/chaser_cooldown = 101 //base cooldown/cooldown var between spawning chasers
-	var/major_attack_cooldown = 60 //base cooldown for major attacks
+	var/chaser_speed = 2 //how fast chasers are currently
+	var/chaser_cooldown = 50 //base cooldown/cooldown var between spawning chasers
+	var/major_attack_cooldown = 40 //base cooldown for major attacks
 	var/arena_cooldown = 200 //base cooldown/cooldown var for creating an arena
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
 	var/obj/effect/hierophant/spawned_beacon //the beacon we teleport back to
@@ -158,6 +159,8 @@ Difficulty: Hard
 				else
 					burst_range = 3
 					INVOKE_ASYNC(src, .proc/burst, get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
+				if(L.stat == CONSCIOUS && L.health >= 30)
+					OpenFire()
 			else
 				devour(L)
 		else
@@ -204,7 +207,7 @@ Difficulty: Hard
 			return
 		target_slowness += L.movement_delay()
 	target_slowness = max(target_slowness, 1)
-	chaser_speed = max(1, (3 - anger_modifier * 0.04) + ((target_slowness - 1) * 0.5))
+	chaser_speed = max(1, (2 - anger_modifier * 0.04) + ((target_slowness - 1) * 0.5))
 
 	arena_trap(target)
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.
@@ -426,6 +429,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed = 0.5) //release a wave of blasts
 	playsound(original,'sound/machines/airlockopen.ogg', 200, 1)
 	var/last_dist = 0
+	var/list/hit_mobs = list()		//don't hit people multiple times.
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
 		if(!T)
@@ -434,11 +438,11 @@ Difficulty: Hard
 		if(dist > last_dist)
 			last_dist = dist
 			sleep(1 + min(burst_range - last_dist, 12) * spread_speed) //gets faster as it gets further out
-		new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
+		new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE, hit_mobs)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
-		return
+		return altclick_listed_turf(A)
 	blink(A)
 
 //Hierophant overlays
@@ -455,7 +459,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/squares
 	icon_state = "hierophant_squares"
 	duration = 3
-	light_range = 1
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	randomdir = FALSE
 
 /obj/effect/temp_visual/hierophant/squares/Initialize(mapload, new_caster)
@@ -468,7 +472,7 @@ Difficulty: Hard
 	name = "vortex wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
 	icon_state = "wall"
-	light_range = 1
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	duration = 100
 	smooth = SMOOTH_TRUE
 
@@ -590,10 +594,15 @@ Difficulty: Hard
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
+	var/list/nohurt
 
-/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire)
+/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire, list/only_hit_once, list/donthurt = null)
 	. = ..()
+	if(only_hit_once)
+		hit_things = only_hit_once
 	friendly_fire_check = friendly_fire
+	if(donthurt)
+		hit_things += donthurt
 	if(new_caster)
 		hit_things += new_caster
 	if(ismineralturf(loc)) //drill mineral turfs
@@ -641,7 +650,7 @@ Difficulty: Hard
 						H.Goto(get_turf(caster), H.move_to_delay, 3)
 		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))
 			L.adjustBruteLoss(damage)
-		add_logs(caster, L, "struck with a [name]")
+		log_combat(caster, L, "struck with a [name]")
 	for(var/obj/mecha/M in T.contents - hit_things) //also damage mechs.
 		hit_things += M
 		if(M.occupant)

@@ -4,6 +4,8 @@ $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
 $include antag_rep.txt
+$include donator_groupings.txt
+$include dynamic_config.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -15,6 +17,9 @@ $include antag_rep.txt
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
 # SERVERNAME tgstation
+
+## Server tagline: This will appear right below the server's title.
+# SERVERTAGLINE A generic TG-based server
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 # SERVERSQLNAME tgstation
@@ -105,6 +110,9 @@ LOG_GAME
 ## log player votes
 LOG_VOTE
 
+## log player crafting
+LOG_CRAFT
+
 ## log client Whisper
 LOG_WHISPER
 
@@ -117,6 +125,9 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log telecomms messages
+LOG_TELECOMMS
+
 ## log prayers
 LOG_PRAYER
 
@@ -126,12 +137,24 @@ LOG_LAW
 ## log crew manifest to seperate file
 LOG_MANIFEST
 
+## log job divide debugging information
+#LOG_JOB_DEBUG
+
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
+
+## Enable logging pictures
+# LOG_PICTURES
+
+## log virus and actions
+LOG_VIRUS
+
+##Log camera pictures - Must have picture logging enabled
+PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
 # INACTIVITY_PERIOD 300
@@ -147,9 +170,6 @@ ALLOW_ADMIN_OOCCOLOR
 
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
-
-## If metadata is supported
-ALLOW_METADATA
 
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
@@ -217,24 +237,35 @@ CHECK_RANDOMIZER
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://tgstation13.org/phpBB/index.php
+# FORUMURL https://citadel-station.net/forum/
 
 ## Wiki address
-# WIKIURL http://www.tgstation13.org/wiki
+# WIKIURL https://katlin.dog/citadel-wiki
 
 ## Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+# RULESURL https://katlin.dog/citadel-rules/main
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/tgstation
+# GITHUBURL https://github.com/Citadel-Station-13/Citadel-Station-13
+
+## Round specific stats address
+## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
+## This will take priority over the game logs address during reboot.
+## Example: https://atlantaned.space/statbus/round.php?round=
+# ROUNDSTATSURL http://citadel-station.net/slimbus/
+
+## Game Logs address
+## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep your server's logs.
+## Example: https://tgstation13.org/parsed-logs/basil/data/logs/
+# GAMELOGURL
 
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
 ##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization
-# GITHUBREPOID 3234987
+# GITHUBREPOID 62485194
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+# BANAPPEALS https://citadel-station.net/forum/viewforum.php?f=8&sid=a0ce5331d5594ef6d49661609c6f4ff9
 
 ## System command that invokes youtube-dl, used by Play Internet Sound.
 ## You can install youtube-dl with
@@ -251,7 +282,7 @@ CHECK_RANDOMIZER
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that recieves an adminPM.
+## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
@@ -343,6 +374,11 @@ ANNOUNCE_ADMIN_LOGOUT
 ## You should edit maps.txt to match your configuration when you enable this.
 MAPROTATION
 
+## TG-style map rotation
+## By default, Citadel uses a more traditional method of map voting, where at the end of a round, players are given a full upfront vote.
+## This PR will disable that, and will make the server use TG's map rotation instead.
+#TGSTYLE_MAPROTATION
+
 ## Map voting
 ## Allows players to vote for their preffered map
 ## When it's set to zero, the map will be randomly picked each round
@@ -360,10 +396,6 @@ AUTOADMIN_RANK Game Master
 
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
-
-## GENERATE_MINIMAPS
-## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
-#GENERATE_MINIMAPS
 
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
@@ -444,3 +476,15 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 21x15
+
+### FAIL2TOPIC:
+### Automated IP bans for world/Topic() spammers
+## Enabled
+FAIL2TOPIC_ENABLED
+## Minimum wait time in deciseconds between valid requests 
+FAIL2TOPIC_RATE_LIMIT 10
+## Number of requests after breaching rate limit that triggers a ban
+FAIL2TOPIC_MAX_FAILS 5
+## Firewall rule name used on physical server
+FAIL2TOPIC_RULE_NAME _dd_fail2topic
+

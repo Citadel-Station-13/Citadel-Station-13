@@ -2,7 +2,7 @@
 //Clusterbang
 ////////////////////
 /obj/item/grenade/clusterbuster
-	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
+	desc = "Use of this weapon may constitute a war crime in your area, consult your local captain."
 	name = "clusterbang"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
@@ -94,11 +94,11 @@
 		var/chem = pick(slime_chems)
 		var/amount = 5
 		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = "plasma"
+			chem = /datum/reagent/toxin/plasma
 			amount = 4
 		if(chem == "holy water and uranium")
-			chem = "uranium"
-			reagents.add_reagent("holywater")
+			chem = /datum/reagent/uranium
+			reagents.add_reagent(/datum/reagent/water/holywater)
 		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)

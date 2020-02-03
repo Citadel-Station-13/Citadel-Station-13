@@ -24,8 +24,8 @@
 	var/energy_to_lower = -20
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
-	. = ..()
 	miniball = is_miniball
+	. = ..()
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
 
@@ -33,8 +33,8 @@
 	return
 
 /obj/singularity/energy_ball/Destroy()
-	if(orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
-		var/obj/singularity/energy_ball/EB = orbiting.orbiting
+	if(orbiting && istype(orbiting.parent, /obj/singularity/energy_ball))
+		var/obj/singularity/energy_ball/EB = orbiting.parent
 		EB.orbiting_balls -= src
 
 	for(var/ball in orbiting_balls)
@@ -71,9 +71,9 @@
 		energy = 0 // ensure we dont have miniballs of miniballs
 
 /obj/singularity/energy_ball/examine(mob/user)
-	..()
+	. = ..()
 	if(orbiting_balls.len)
-		to_chat(user, "The amount of orbiting mini-balls is [orbiting_balls.len].")
+		. += "The amount of orbiting mini-balls is [orbiting_balls.len]."
 
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
@@ -123,11 +123,23 @@
 	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 
-/obj/singularity/energy_ball/Collide(atom/A)
+/obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
 
-/obj/singularity/energy_ball/CollidedWith(atom/movable/AM)
+/obj/singularity/energy_ball/Bumped(atom/movable/AM)
 	dust_mobs(AM)
+
+/obj/singularity/energy_ball/attack_tk(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		log_game("[key_name(C)] has been disintegrated by a telekenetic grab on a tesla ball.</span>")
+		to_chat(C, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
+		C.visible_message("<span class='userdanger'>A bright flare of lightning is seen from [C]'s head, shortly before you hear a sickening sizzling!</span>")
+		var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in C.internal_organs
+		rip_u.Remove(C)
+		qdel(rip_u)
+		return
+	return ..()
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
@@ -137,12 +149,12 @@
 
 	. = ..()
 /obj/singularity/energy_ball/stop_orbit()
-	if (orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
-		var/obj/singularity/energy_ball/orbitingball = orbiting.orbiting
+	if (orbiting && istype(orbiting.parent, /obj/singularity/energy_ball))
+		var/obj/singularity/energy_ball/orbitingball = orbiting.parent
 		orbitingball.orbiting_balls -= src
 		orbitingball.dissipate_strength = orbitingball.orbiting_balls.len
-	..()
-	if (!loc && !QDELETED(src))
+	. = ..()
+	if (!QDELETED(src))
 		qdel(src)
 
 
@@ -186,11 +198,15 @@
 										/obj/structure/particle_accelerator/end_cap,
 										/obj/machinery/field/containment,
 										/obj/structure/disposalpipe,
+										/obj/structure/disposaloutlet,
+										/obj/machinery/disposal/deliveryChute,
+										/obj/machinery/camera,
 										/obj/structure/sign,
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
 										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla))
+										/obj/machinery/the_singularitygen/tesla,
+										/obj/structure/frame/machine))
 
 	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
 		if(!(tesla_flags & TESLA_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))

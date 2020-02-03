@@ -12,6 +12,7 @@
  *		Cigarette Box
  *		Cigar Case
  *		Heart Shaped Box w/ Chocolates
+ *		Ring Box
  */
 
 /obj/item/storage/fancy
@@ -25,7 +26,7 @@
 	var/fancy_open = FALSE
 
 /obj/item/storage/fancy/PopulateContents()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	for(var/i = 1 to STR.max_items)
 		new spawn_type(src)
 
@@ -36,12 +37,12 @@
 		icon_state = "[icon_type]box"
 
 /obj/item/storage/fancy/examine(mob/user)
-	..()
+	. = ..()
 	if(fancy_open)
 		if(length(contents) == 1)
-			to_chat(user, "There is one [icon_type] left.")
+			. += "There is one [icon_type] left."
 		else
-			to_chat(user, "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left.")
+			. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left."
 
 /obj/item/storage/fancy/attack_self(mob/user)
 	fancy_open = !fancy_open
@@ -72,7 +73,7 @@
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donut))
 
@@ -93,7 +94,7 @@
 
 /obj/item/storage/fancy/egg_box/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 12
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/egg))
 
@@ -115,7 +116,7 @@
 
 /obj/item/storage/fancy/candle_box/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 
 /obj/item/storage/fancy/candle_box/attack_self(mob_user)
@@ -138,25 +139,26 @@
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to extract contents.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to extract contents.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(W && contents.len > 0)
-		SendSignal(COMSIG_TRY_STORAGE_TAKE, W, user)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
 		contents -= W
 		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
+	return TRUE
 
 /obj/item/storage/fancy/cigarettes/update_icon()
 	if(fancy_open || !contents.len)
@@ -190,7 +192,7 @@
 	if(cig)
 		if(M == user && contents.len > 0 && !user.wear_mask)
 			var/obj/item/clothing/mask/cigarette/W = cig
-			SendSignal(COMSIG_TRY_STORAGE_TAKE, W, M)
+			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, M)
 			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
 			contents -= W
 			to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
@@ -276,7 +278,7 @@
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.can_hold = typecacheof(list(/obj/item/rollingpaper))
 
@@ -300,7 +302,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette/cigar))
 
@@ -309,9 +311,10 @@
 	if(fancy_open)
 		icon_state = "[initial(icon_state)]_open"
 
-		var/cigar_position = 1 //generate sprites for cigars in the box
+		var/cigar_position = 0 //to keep track of the pixel_x offset of each new overlay.
 		for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
-			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]_[cigar_position]")
+			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]")
+			cigar_overlay.pixel_x = 3 * cigar_position
 			add_overlay(cigar_overlay)
 			cigar_position++
 
@@ -319,13 +322,13 @@
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba
-	name = "\improper cohiba robusto cigar case"
+	name = "\improper Cohiba Robusto cigar case"
 	desc = "A case of imported Cohiba cigars, renowned for their strong flavor."
 	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
-	name = "\improper premium havanian cigar case"
+	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
 	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
@@ -347,6 +350,36 @@
 
 /obj/item/storage/fancy/heart_box/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 8
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/tinychocolate))
+
+/*
+ * Ring Box
+ */
+
+/obj/item/storage/fancy/ringbox
+	name = "ring box"
+	desc = "A tiny box covered in soft red felt made for holding rings."
+	icon = 'icons/obj/ring.dmi'
+	icon_state = "gold ringbox"
+	icon_type = "gold ring"
+	w_class = WEIGHT_CLASS_TINY
+	spawn_type = /obj/item/clothing/gloves/ring
+
+/obj/item/storage/fancy/ringbox/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 1
+	STR.can_hold = typecacheof(list(/obj/item/clothing/gloves/ring))
+
+/obj/item/storage/fancy/ringbox/diamond
+	icon_state = "diamond ringbox"
+	icon_type = "diamond ring"
+	spawn_type = /obj/item/clothing/gloves/ring/diamond
+
+/obj/item/storage/fancy/ringbox/silver
+	icon_state = "silver ringbox"
+	icon_type = "silver ring"
+	spawn_type = /obj/item/clothing/gloves/ring/silver
+	

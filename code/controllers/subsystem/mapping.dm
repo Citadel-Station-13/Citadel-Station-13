@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ruins_templates = list()
 	var/list/space_ruins_templates = list()
 	var/list/lava_ruins_templates = list()
+	var/datum/space_level/isolated_ruins_z //Created on demand during ruin loading.
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
@@ -25,6 +26,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/datum/turf_reservations		//list of turf reservations
 	var/list/used_turfs = list()				//list of turf = datum/turf_reservation
 
+	var/list/reservation_ready = list()
 	var/clearing_reserved_turfs = FALSE
 
 	// Z-manager stuff
@@ -33,24 +35,32 @@ SUBSYSTEM_DEF(mapping)
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
-	var/dmm_suite/loader
+	var/num_of_res_levels = 1
 
-/datum/controller/subsystem/mapping/PreInit()
+	var/stat_map_name = "Loading..."
+
+//dlete dis once #39770 is resolved
+/datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
 	if(!config)
 #ifdef FORCE_MAP
 		config = load_map_config(FORCE_MAP)
 #else
 		config = load_map_config(error_if_missing = FALSE)
 #endif
-	return ..()
-
+	stat_map_name = config.map_name
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
+	HACK_LoadMapConfig()
 	if(initialized)
 		return
 	if(config.defaulted)
-		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
-	loader = new
+		var/old_config = config
+		config = global.config.defaultmap
+		if(!config || config.defaulted)
+			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Box Station</span>")
+			config = old_config
+	GLOB.year_integer += config.year_offset
+	GLOB.announcertype = (config.announcertype == "standard" ? (prob(1) ? "medibot" : "classic") : config.announcertype)
 	loadWorld()
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
@@ -84,15 +94,15 @@ SUBSYSTEM_DEF(mapping)
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
+	SSmapping.seedStation()
 	loading_ruins = FALSE
 #endif
 	repopulate_sorted_areas()
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
-	QDEL_NULL(loader)
-	initialize_reserved_level()
-	..()
+	initialize_reserved_level(transit.z_value)
+	return ..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
    Used by the AI doomsday and the self destruct nuke.
@@ -166,6 +176,7 @@ SUBSYSTEM_DEF(mapping)
 
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
+	. = list()
 	var/start_time = REALTIMEOFDAY
 
 	if (!islist(files))  // handle single-level maps
@@ -173,10 +184,15 @@ SUBSYSTEM_DEF(mapping)
 
 	// check that the total z count of all maps matches the list of traits
 	var/total_z = 0
+	var/list/parsed_maps = list()
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
-		var/bounds = loader.load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
-		files[file] = total_z  // save the start Z of this file
+		var/datum/parsed_map/pm = new(file(full_path))
+		var/bounds = pm?.bounds
+		if (!bounds)
+			errorList |= full_path
+			continue
+		parsed_maps[pm] = total_z  // save the start Z of this file
 		total_z += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
 	if (!length(traits))  // null or empty - default
@@ -197,12 +213,13 @@ SUBSYSTEM_DEF(mapping)
 		++i
 
 	// load the maps
-	for (var/file in files)
-		var/full_path = "_maps/[path]/[file]"
-		if(!loader.load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE))
-			errorList |= full_path
+	for (var/P in parsed_maps)
+		var/datum/parsed_map/pm = P
+		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
+			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
+	return parsed_maps
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
@@ -219,6 +236,7 @@ SUBSYSTEM_DEF(mapping)
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
 		query_round_map_name.Execute()
+		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered
@@ -247,10 +265,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/asteroid/nearstation))
 	for(var/area/A in world)
-		var/turf/picked = safepick(get_area_turfs(A.type))
-		if(picked && is_station_level(picked.z))
-			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
-				GLOB.the_station_areas.Add(A.type)
+		if (is_type_in_typecache(A, station_areas_blacklist))
+			continue
+		if (!A.contents.len || !A.unique)
+			continue
+		var/turf/picked = A.contents[1]
+		if (is_station_level(picked.z))
+			GLOB.the_station_areas += A.type
 
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
@@ -312,7 +333,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		return
 
 	next_map_config = VM
-	return TRUE
+
+	. = TRUE
+
+	stat_map_name = "[config.map_name] (Next: [next_map_config.map_name])"
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)
@@ -346,6 +370,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			lava_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/space))
 			space_ruins_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/station))
+			station_room_templates[R.name] = R
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("[global.config.directory]/unbuyableshuttles.txt")
@@ -426,15 +452,23 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		GLOB.the_gateway.awaygate = new_gate
 		GLOB.the_gateway.wait = world.time
 
-/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
-	UNTIL(initialized && !clearing_reserved_turfs)
+/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override, border_type_override)
+	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)
 	var/datum/turf_reservation/reserve = new type
 	if(turf_type_override)
 		reserve.turf_type = turf_type_override
+	if(border_type_override)
+		reserve.borderturf = border_type_override
 	if(!z)
 		for(var/i in levels_by_trait(ZTRAIT_RESERVED))
 			if(reserve.Reserve(width, height, i))
 				return reserve
+		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
+		num_of_res_levels += 1
+		var/datum/space_level/newReserved = add_new_zlevel("Transit/Reserved [num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+		initialize_reserved_level(newReserved.z_value)
+		if(reserve.Reserve(width, height, newReserved.z_value))
+			return reserve
 	else
 		if(!level_trait(z, ZTRAIT_RESERVED))
 			qdel(reserve)
@@ -445,13 +479,22 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	QDEL_NULL(reserve)
 
 //This is not for wiping reserved levels, use wipe_reservations() for that.
-/datum/controller/subsystem/mapping/proc/initialize_reserved_level()
+/datum/controller/subsystem/mapping/proc/initialize_reserved_level(z)
 	UNTIL(!clearing_reserved_turfs)				//regardless, lets add a check just in case.
 	clearing_reserved_turfs = TRUE			//This operation will likely clear any existing reservations, so lets make sure nothing tries to make one while we're doing it.
-	for(var/i in levels_by_trait(ZTRAIT_RESERVED))
-		var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,i))
-		var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,i))
-		reserve_turfs(block(A, B))
+	if(!level_trait(z,ZTRAIT_RESERVED))
+		clearing_reserved_turfs = FALSE
+		CRASH("Invalid z level prepared for reservations.")
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
+	var/block = block(A, B)
+	for(var/t in block)
+		// No need to empty() these, because it's world init and they're
+		// already /turf/open/space/basic.
+		var/turf/T = t
+		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+	unused_turfs["[z]"] = block
+	reservation_ready["[z]"] = TRUE
 	clearing_reserved_turfs = FALSE
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
@@ -461,6 +504,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		LAZYINITLIST(unused_turfs["[T.z]"])
 		unused_turfs["[T.z]"] |= T
 		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+		GLOB.areas_by_type[world.area].contents += T
 		CHECK_TICK
 
 //DO NOT CALL THIS PROC DIRECTLY, CALL wipe_reservations().
@@ -479,3 +523,25 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing)
+
+/datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
+	for(var/B in areas)
+		var/area/A = B
+		A.reg_in_areas_in_z()
+
+/datum/controller/subsystem/mapping/proc/get_isolated_ruin_z()
+	if(!isolated_ruins_z)
+		isolated_ruins_z = add_new_zlevel("Isolated Ruins/Reserved", list(ZTRAIT_RESERVED = TRUE, ZTRAIT_ISOLATED_RUINS = TRUE))
+		initialize_reserved_level(isolated_ruins_z.z_value)
+	return isolated_ruins_z.z_value
+
+	// Station Ruins
+/datum/controller/subsystem/mapping
+	var/list/station_room_templates = list()
+
+/datum/controller/subsystem/mapping/proc/seedStation()
+	for(var/V in GLOB.stationroom_landmarks)
+		var/obj/effect/landmark/stationroom/LM = V
+		LM.load()
+	if(GLOB.stationroom_landmarks.len)
+		seedStation() //I'm sure we can trust everyone not to insert a 1x1 rooms which loads a landmark which loads a landmark which loads a la...

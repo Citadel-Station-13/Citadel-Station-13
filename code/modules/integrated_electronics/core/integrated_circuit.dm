@@ -24,6 +24,9 @@
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
+	var/demands_object_input = FALSE
+	var/can_input_object_when_closed = FALSE
+
 
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
@@ -32,8 +35,12 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 /obj/item/integrated_circuit/examine(mob/user)
 	interact(user)
-	external_examine(user)
 	. = ..()
+	. += external_examine(user)
+
+// Can be called via electronic_assembly/attackby()
+/obj/item/integrated_circuit/proc/additem(var/obj/item/I, var/mob/living/user)
+	attackby(I, user)
 
 // This should be used when someone is examining while the case is opened.
 /obj/item/integrated_circuit/proc/internal_examine(mob/user)
@@ -55,7 +62,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 // This should be used when someone is examining from an 'outside' perspective, e.g. reading a screen or LED.
 /obj/item/integrated_circuit/proc/external_examine(mob/user)
-	any_examine(user)
+	return any_examine(user)
 
 /obj/item/integrated_circuit/proc/any_examine(mob/user)
 	return
@@ -395,3 +402,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE
 
 	return FALSE
+
+/obj/item/integrated_circuit/can_trigger_gun(mob/living/user)
+	if(!user.is_holding(src))
+		return FALSE
+	return ..()

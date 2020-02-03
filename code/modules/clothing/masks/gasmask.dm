@@ -2,14 +2,22 @@
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	resistance_flags = NONE
+	mutantrace_variation = STYLE_MUZZLE
+
+/obj/item/clothing/mask/gas/glass
+	name = "glass gas mask"
+	desc = "A face-covering mask that can be connected to an air supply. This one doesn't obscure your face however." //More accurate
+	icon_state = "gas_clear"
+	flags_inv = HIDEEYES
+
 
 // **** Welding gas mask ****
 
@@ -51,7 +59,7 @@
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = ALLOWINTERNALS
 	icon_state = "clown"
 	item_state = "clown_hat"
 	flags_cover = MASKCOVERSEYES
@@ -83,7 +91,7 @@
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = ALLOWINTERNALS
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	flags_cover = MASKCOVERSEYES
@@ -92,7 +100,7 @@
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = ALLOWINTERNALS
 	icon_state = "mime"
 	item_state = "mime"
 	flags_cover = MASKCOVERSEYES
@@ -124,7 +132,7 @@
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = ALLOWINTERNALS
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 	flags_cover = MASKCOVERSEYES
@@ -133,7 +141,7 @@
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = ALLOWINTERNALS
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	flags_cover = MASKCOVERSEYES
@@ -154,7 +162,7 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
-	clothing_flags = MASKINTERNALS
+	clothing_flags = ALLOWINTERNALS
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 

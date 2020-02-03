@@ -16,7 +16,6 @@
 
 	var/on = TRUE
 	var/frequency = FREQ_COMMON
-	var/traitor_frequency = 0  // If tuned to this frequency, uplink will be unlocked.
 	var/canhear_range = 3  // The range around the radio in which mobs can hear what it receives.
 	var/emped = 0  // Tracks the number of EMPs currently stacked.
 
@@ -30,6 +29,7 @@
 	var/freqlock = FALSE  // Frequency lock to stop the user from untuning specialist radios.
 	var/use_command = FALSE  // If true, broadcasts will be large and BOLD.
 	var/command = FALSE  // If true, use_command can be toggled at will.
+	var/commandspan = SPAN_COMMAND //allow us to set what the fuck we want for headsets
 
 	// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
@@ -47,6 +47,7 @@
 	return BRUTELOSS
 
 /obj/item/radio/proc/set_frequency(new_frequency)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
@@ -100,19 +101,25 @@
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/interact(mob/user)
-	if (..())
-		return
 	if(unscrewed && !isAI(user))
 		wires.interact(user)
+		add_fingerprint(user)
 	else
-		ui_interact(user)
+		..()
 
 /obj/item/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
+		var/ui_width = 360
+		var/ui_height = 106
+		if(subspace_transmission)
+			if(channels.len > 0)
+				ui_height += 6 + channels.len * 21
+			else
+				ui_height += 24
+		ui = new(user, src, ui_key, "radio", name, ui_width, ui_height, master_ui, state)
 		ui.open()
 
 /obj/item/radio/ui_data(mob/user)
@@ -160,13 +167,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				frequency = sanitize_frequency(tune, freerange)
-				set_frequency(frequency)
-				GET_COMPONENT(hidden_uplink, /datum/component/uplink)
-				if(hidden_uplink && (frequency == traitor_frequency))
-					hidden_uplink.locked = FALSE
-					hidden_uplink.interact(usr)
-					ui.close()
+				set_frequency(sanitize_frequency(tune, freerange))
 		if("listen")
 			listening = !listening
 			. = TRUE
@@ -196,7 +197,7 @@
 
 /obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!spans)
-		spans = M.get_spans()
+		spans = list(M.speech_span)
 	if(!language)
 		language = M.get_default_language()
 	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
@@ -213,7 +214,7 @@
 		return
 
 	if(use_command)
-		spans |= SPAN_COMMAND
+		spans |= commandspan
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -228,7 +229,7 @@
 	// From the channel, determine the frequency and get a reference to it.
 	var/freq
 	if(channel && channels && channels.len > 0)
-		if(channel == "department")
+		if(channel == MODE_DEPARTMENT)
 			channel = channels[1]
 		freq = secure_radio_connections[channel]
 		if (!channels[channel]) // if the channel is turned off, don't broadcast
@@ -281,7 +282,8 @@
 	signal.levels = list(T.z)
 	signal.broadcast()
 
-/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
+	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
 
@@ -325,11 +327,11 @@
 
 
 /obj/item/radio/examine(mob/user)
-	..()
+	. = ..()
 	if (unscrewed)
-		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
+		. += "<span class='notice'>It can be attached and modified.</span>"
 	else
-		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
+		. += "<span class='notice'>It cannot be modified or attached.</span>"
 
 /obj/item/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -419,3 +421,16 @@
 /obj/item/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
 	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/radio/internal
+	var/obj/item/implant/radio/implant
+
+/obj/item/radio/internal/Initialize(mapload, obj/item/implant/radio/_implant)
+	. = ..()
+	implant = _implant
+
+/obj/item/radio/internal/Destroy()
+	if(implant?.imp_in)
+		qdel(implant)
+	else
+		return ..()

@@ -147,6 +147,16 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
+/datum/design/mech_seedscatter
+	name = "Exosuit Weapon (Melon Seed \"Scattershot\")"
+	desc = "Allows for the construction of Melon Seed Scattershot."
+	id = "mech_seedscatter"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/seedscatter
+	materials = list(MAT_METAL=10000, MAT_GLASS = 10000)
+	construction_time = 70
+	category = list("Exosuit Equipment")
+
 /datum/design/mech_carbine
 	name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
 	desc = "Allows for the construction of FNX-99 \"Hades\" Carbine."
@@ -209,7 +219,7 @@
 
 /datum/design/mech_missile_rack
 	name = "Exosuit Weapon (SRM-8 Missile Rack)"
-	desc = "Allows for the construction of SRM-8 Missile Rack."
+	desc = "Allows for the construction of an SRM-8 Missile Rack."
 	id = "mech_missile_rack"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack

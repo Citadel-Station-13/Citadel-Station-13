@@ -31,7 +31,6 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 	var/list/jobs = new/list()
 	jobs["Captain"] = 00
-	jobs["Head of Personnel"] = 50
 	jobs["Head of Security"] = 10
 	jobs["Warden"] = 11
 	jobs["Security Officer"] = 12
@@ -47,9 +46,10 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	jobs["Chief Engineer"] = 40
 	jobs["Station Engineer"] = 41
 	jobs["Atmospheric Technician"] = 42
-	jobs["Quartermaster"] = 51
-	jobs["Shaft Miner"] = 52
-	jobs["Cargo Technician"] = 53
+	jobs["Quartermaster"] = 50
+	jobs["Shaft Miner"] = 51
+	jobs["Cargo Technician"] = 52
+	jobs["Head of Personnel"] = 60
 	jobs["Bartender"] = 61
 	jobs["Cook"] = 62
 	jobs["Botanist"] = 63
@@ -103,7 +103,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
 		return data_by_z["[z]"]
 
-	var/list/results = list()
+	var/list/results_damaged = list()
+	var/list/results_undamaged = list()
+
 	var/obj/item/clothing/under/U
 	var/obj/item/card/id/I
 	var/turf/pos
@@ -114,20 +116,24 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/toxdam
 	var/burndam
 	var/brutedam
+	var/totaldam
 	var/area
 	var/pos_x
 	var/pos_y
 	var/life_status
 
 	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+		var/nanite_sensors = FALSE
+		if(H in SSnanites.nanite_monitored_mobs)
+			nanite_sensors = TRUE
 		// Check if their z-level is correct and if they are wearing a uniform.
 		// Accept H.z==0 as well in case the mob is inside an object.
-		if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under))
+		if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under) || nanite_sensors)
 			U = H.w_uniform
 
 			// Are the suit sensors on?
-			if ((U.has_sensor > 0) && U.sensor_mode)
-				pos = H.z == 0 || U.sensor_mode == SENSOR_COORDS ? get_turf(H) : null
+			if (nanite_sensors || ((U.has_sensor > 0) && U.sensor_mode))
+				pos = H.z == 0 || (nanite_sensors || U.sensor_mode == SENSOR_COORDS) ? get_turf(H) : null
 
 				// Special case: If the mob is inside an object confirm the z-level on turf level.
 				if (H.z == 0 && (!pos || pos.z != z))
@@ -144,23 +150,25 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 					assignment = ""
 					ijob = 80
 
-				if (U.sensor_mode >= SENSOR_LIVING)
+				if (nanite_sensors || U.sensor_mode >= SENSOR_LIVING)
 					life_status = (!H.stat ? TRUE : FALSE)
 				else
 					life_status = null
 
-				if (U.sensor_mode >= SENSOR_VITALS)
+				if (nanite_sensors || U.sensor_mode >= SENSOR_VITALS)
 					oxydam = round(H.getOxyLoss(),1)
 					toxdam = round(H.getToxLoss(),1)
 					burndam = round(H.getFireLoss(),1)
 					brutedam = round(H.getBruteLoss(),1)
+					totaldam = oxydam + toxdam + burndam + brutedam
 				else
 					oxydam = null
 					toxdam = null
 					burndam = null
 					brutedam = null
+					totaldam = 0
 
-				if (U.sensor_mode >= SENSOR_COORDS)
+				if (nanite_sensors || U.sensor_mode >= SENSOR_COORDS)
 					if (!pos)
 						pos = get_turf(H)
 					area = get_area_name(H, TRUE)
@@ -171,15 +179,25 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 					pos_x = null
 					pos_y = null
 
-				results[++results.len] = list("name" = name, "assignment" = assignment, "ijob" = ijob, "life_status" = life_status, "oxydam" = oxydam, "toxdam" = toxdam, "burndam" = burndam, "brutedam" = brutedam, "area" = area, "pos_x" = pos_x, "pos_y" = pos_y, "can_track" = H.can_track(null))
+				var/total_list = list("name" = name, "assignment" = assignment, "ijob" = ijob, "life_status" = life_status, "oxydam" = oxydam, "toxdam" = toxdam, "burndam" = burndam, "brutedam" = brutedam, "totaldam" = totaldam, "area" = area, "pos_x" = pos_x, "pos_y" = pos_y, "can_track" = H.can_track(null))
 
-	data_by_z["[z]"] = sortTim(results,/proc/sensor_compare)
+				if(totaldam)
+					results_damaged[++results_damaged.len] = total_list
+				else
+					results_undamaged[++results_undamaged.len] = total_list
+
+	var/list/returning = sortTim(results_damaged,/proc/damage_compare) + sortTim(results_undamaged,/proc/ijob_compare)
+
+	data_by_z["[z]"] = returning
 	last_update["[z]"] = world.time
 
-	return results
+	return returning
 
-/proc/sensor_compare(list/a,list/b)
+/proc/ijob_compare(list/a,list/b)
 	return a["ijob"] - b["ijob"]
+
+/proc/damage_compare(list/a,list/b)
+	return b["totaldam"] - a["totaldam"]
 
 /datum/crewmonitor/ui_act(action,params)
 	var/mob/living/silicon/ai/AI = usr

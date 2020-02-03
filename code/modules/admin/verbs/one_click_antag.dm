@@ -57,7 +57,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(isReadytoRumble(applicant, ROLE_TRAITOR, FALSE))
+		if(isReadytoRumble(applicant, ROLE_TRAITOR))
 			if(temp.age_check(applicant.client))
 				if(!(applicant.job in temp.restricted_jobs))
 					candidates += applicant
@@ -76,7 +76,7 @@
 	return 0
 
 
-/datum/admins/proc/makeChanglings()
+/datum/admins/proc/makeChangelings()
 
 	var/datum/game_mode/changeling/temp = new
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -95,11 +95,11 @@
 					candidates += applicant
 
 	if(candidates.len)
-		var/numChanglings = min(candidates.len, 3)
+		var/numChangelings = min(candidates.len, 3)
 
-		for(var/i = 0, i<numChanglings, i++)
+		for(var/i = 0, i<numChangelings, i++)
 			H = pick(candidates)
-			H.mind.make_Changling()
+			H.mind.make_Changeling()
 			candidates.Remove(H)
 
 		return 1
@@ -137,9 +137,9 @@
 
 /datum/admins/proc/makeWizard()
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", ROLE_WIZARD, null)
+	var/list/mob/candidates = pollGhostCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", ROLE_WIZARD, null)
 
-	var/mob/dead/observer/selected = pick_n_take(candidates)
+	var/mob/selected = pick_n_take(candidates)
 
 	var/mob/living/carbon/human/new_character = makeBody(selected)
 	new_character.mind.make_Wizard()
@@ -214,9 +214,9 @@
 
 /datum/admins/proc/makeNukeTeam()
 	var/datum/game_mode/nuclear/temp = new
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", ROLE_OPERATIVE, temp)
-	var/list/mob/dead/observer/chosen = list()
-	var/mob/dead/observer/theghost = null
+	var/list/mob/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", ROLE_OPERATIVE, temp)
+	var/list/mob/chosen = list()
+	var/mob/theghost = null
 
 	if(candidates.len)
 		var/numagents = 5
@@ -351,7 +351,7 @@
 		"template" = list("desc" = "Template", "callback" = CALLBACK(src, .proc/makeERTTemplateModified), "type" = "datum", "path" = "/datum/ert", "subtypesonly" = TRUE, "value" = ertemplate.type),
 		"teamsize" = list("desc" = "Team Size", "type" = "number", "value" = ertemplate.teamsize),
 		"mission" = list("desc" = "Mission", "type" = "string", "value" = ertemplate.mission),
-		"polldesc" = list("desc" = "Ghost poll description", "string" = "text", "value" = ertemplate.polldesc),
+		"polldesc" = list("desc" = "Ghost poll description", "type" = "string", "value" = ertemplate.polldesc),
 		"enforce_human" = list("desc" = "Enforce human authority", "type" = "boolean", "value" = "[(CONFIG_GET(flag/enforce_human_authority) ? "Yes" : "No")]"),
 		"open_armory" = list("desc" = "Open armory doors", "type" = "boolean", "value" = "[(ertemplate.opendoors ? "Yes" : "No")]"),
 		)
@@ -378,7 +378,7 @@
 		ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" ? TRUE : FALSE
 		ertemplate.opendoors = prefs["open_armory"]["value"] == "Yes" ? TRUE : FALSE
 
-		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc] ?", "deathsquad", null)
+		var/list/mob/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc] ?", "deathsquad", null)
 		var/teamSpawned = FALSE
 
 		if(candidates.len > 0)
@@ -404,7 +404,7 @@
 					numagents--
 					continue // This guy's unlucky, not enough spawn points, we skip him.
 				var/spawnloc = spawnpoints[numagents]
-				var/mob/dead/observer/chosen_candidate = pick(candidates)
+				var/mob/chosen_candidate = pick(candidates)
 				candidates -= chosen_candidate
 				if(!chosen_candidate.key)
 					continue
@@ -412,7 +412,7 @@
 				//Spawn the body
 				var/mob/living/carbon/human/ERTOperative = new ertemplate.mobtype(spawnloc)
 				chosen_candidate.client.prefs.copy_to(ERTOperative)
-				ERTOperative.key = chosen_candidate.key
+				chosen_candidate.transfer_ckey(ERTOperative)
 
 				if(ertemplate.enforce_human || ERTOperative.dna.species.dangerous_existence) // Don't want any exploding plasmemes
 					ERTOperative.set_species(/datum/species/human)

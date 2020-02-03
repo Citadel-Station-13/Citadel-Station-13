@@ -118,7 +118,7 @@
 		return TRUE
 
 /datum/wires/proc/is_dud(wire)
-	return dd_hasprefix(wire, WIRE_DUD_PREFIX)
+	return findtext(wire, WIRE_DUD_PREFIX)
 
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
@@ -215,8 +215,8 @@
 /datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = FALSE, \
 							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "wires", "[holder.name] wires", 350, 150 + wires.len * 30, master_ui, state)
+	if(!ui)
+		ui = new(user, src, ui_key, "wires", "[holder.name] Wires", 350, 150 + wires.len * 30, master_ui, state)
 		ui.open()
 
 /datum/wires/ui_data(mob/user)
@@ -230,6 +230,9 @@
 
 	// Same for anyone with an abductor multitool.
 	else if(user.is_holding_item_of_type(/obj/item/multitool/abductor))
+		reveal_wires = TRUE
+	// and advanced multitool
+	else if(user.is_holding_item_of_type(/obj/item/multitool/advanced))
 		reveal_wires = TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
@@ -257,8 +260,8 @@
 		if("cut")
 			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
 			if(I || IsAdminGhost(usr))
-				if(I)
-					I.play_tool_sound(src, 20)
+				if(I && holder)
+					I.play_tool_sound(holder, 20)
 				cut_color(target_wire)
 				. = TRUE
 			else
@@ -266,8 +269,8 @@
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
 			if(I || IsAdminGhost(usr))
-				if(I)
-					I.play_tool_sound(src, 20)
+				if(I && holder)
+					I.play_tool_sound(holder, 20)
 				pulse_color(target_wire, L)
 				. = TRUE
 			else

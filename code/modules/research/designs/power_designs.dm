@@ -57,16 +57,6 @@
 	category = list("Misc","Power Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/light_replacer
-	name = "Light Replacer"
-	desc = "A device to automatically replace lights. Refill with working lightbulbs."
-	id = "light_replacer"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
-	build_path = /obj/item/lightreplacer
-	category = list("Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/inducer
 	name = "Inducer"
 	desc = "The NT-75 Electromagnetic Power Inducer can wirelessly induce electric charge in an object, allowing you to recharge power cells without having to remove them."
@@ -76,6 +66,16 @@
 	build_path = /obj/item/inducer/sci
 	category = list("Power Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/inducercombat
+	name = "Combat Ready Inducer"
+	desc = "The improved NT-8475 Electromagnetic Power Inducer can this one has been SCIENCED to allow for combat. It still comes printed with SCIENCED colors!"
+	id = "combatinducer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 13000, MAT_GLASS = 10000,  MAT_SILVER = 1500,  MAT_GOLD = 1250, MAT_DIAMOND = 500, MAT_TITANIUM = 1200)
+	build_path = /obj/item/inducer/sci/combat/dry
+	category = list("Power Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/board/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"

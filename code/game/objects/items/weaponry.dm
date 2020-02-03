@@ -17,7 +17,11 @@
 /obj/item/banhammer/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
-
+/*
+oranges says: This is a meme relating to the english translation of the ss13 russian wiki page on lurkmore.
+mrdoombringer sez: and remember kids, if you try and PR a fix for this item's grammar, you are admitting that you are, indeed, a newfriend.
+for further reading, please see: https://github.com/tgstation/tgstation/pull/30173 and https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=%2F%2Flurkmore.to%2FSS13&edit-text=&act=url
+*/
 /obj/item/banhammer/attack(mob/M, mob/user)
 	if(user.zone_selected == BODY_ZONE_HEAD)
 		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer</span>", "<span class='userdanger'>[user] are stroking the head with a bangammer</span>", "you hear a bangammer stroking a head");
@@ -65,6 +69,7 @@
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/claymore/Initialize()
 	. = ..()
@@ -76,7 +81,8 @@
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
-	flags_1 = CONDUCT_1 | NODROP_1 | DROPDEL_1
+	flags_1 = CONDUCT_1
+	item_flags = DROPDEL
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	light_range = 3
@@ -86,6 +92,7 @@
 
 /obj/item/claymore/highlander/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/claymore/highlander/Destroy()
@@ -101,7 +108,7 @@
 		var/mob/living/carbon/human/H = loc
 		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
-		H.adjustStaminaLoss(-5) //CIT CHANGE - AND MAY HE NEVER SUCCUMB TO EXHAUSTION
+		H.adjustStaminaLoss(-50) //CIT CHANGE - AND MAY HE NEVER SUCCUMB TO EXHAUSTION
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
@@ -110,18 +117,18 @@
 /obj/item/claymore/highlander/pickup(mob/living/user)
 	to_chat(user, "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>")
 	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
-	user.add_trait(TRAIT_IGNORESLOWDOWN, HIGHLANDER)
+	user.ignore_slowdown(HIGHLANDER)
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
-	user.remove_trait(TRAIT_IGNORESLOWDOWN, HIGHLANDER)
+	user.unignore_slowdown(HIGHLANDER)
 	if(!QDELETED(src))
 		qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/claymore/highlander/examine(mob/user)
-	..()
-	to_chat(user, "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade.")
+	. = ..()
+	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
 	if(nuke_disk)
-		to_chat(user, "<span class='boldwarning'>It's holding the nuke disk!</span>")
+		. += "<span class='boldwarning'>It's holding the nuke disk!</span>"
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -209,7 +216,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
@@ -217,12 +224,18 @@
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
 /obj/item/katana/cursed
 	slot_flags = null
 
+/obj/item/katana/cursed/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
 /obj/item/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	return(BRUTELOSS)
 
 /obj/item/wirerod
@@ -242,13 +255,15 @@
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
 		remove_item_from_storage(user)
-		qdel(I)
+		if (!user.transferItemToLoc(I, S))
+			return
+		S.CheckParts(list(I))
 		qdel(src)
 
 		user.put_in_hands(S)
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
-	else if(istype(I, /obj/item/assembly/igniter) && !(I.flags_1 & NODROP_1))
+	else if(istype(I, /obj/item/assembly/igniter) && !HAS_TRAIT(I, TRAIT_NODROP))
 		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
 
 		remove_item_from_storage(user)
@@ -297,23 +312,27 @@
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
 	var/extended = 0
+	var/extended_force = 20
+	var/extended_throwforce = 23
+	var/extended_icon_state = "switchblade_ext"
+	var/retracted_icon_state = "switchblade"
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
-		force = 20
+		force = extended_force
 		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 23
-		icon_state = "switchblade_ext"
+		throwforce = extended_throwforce
+		icon_state = extended_icon_state
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		sharpness = IS_SHARP
 	else
-		force = 3
+		force = initial(force)
 		w_class = WEIGHT_CLASS_SMALL
-		throwforce = 5
-		icon_state = "switchblade"
+		throwforce = initial(throwforce)
+		icon_state = retracted_icon_state
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = IS_BLUNT
@@ -321,6 +340,25 @@
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
+
+/obj/item/switchblade/crafted
+	icon_state = "switchblade_ms"
+	desc = "A concealable spring-loaded knife."
+	force = 2
+	throwforce = 3
+	extended_force = 15
+	extended_throwforce = 18
+	extended_icon_state = "switchblade_ext_ms"
+	retracted_icon_state = "switchblade_ms"
+
+/obj/item/switchblade/crafted/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(istype(I, /obj/item/stack/sheet/mineral/silver))
+		icon_state = extended ? "switchblade_ext_msf" : "switchblade_msf"
+		extended_icon_state = "switchblade_ext_msf"
+		retracted_icon_state = "switchblade_msf"
+		icon_state = "switchblade_msf"
+		to_chat(user, "<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
 
 /obj/item/phone
 	name = "red phone"
@@ -411,8 +449,8 @@
 	item_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	flags_1 = NODROP_1 | ABSTRACT_1 | DROPDEL_1
-	w_class = WEIGHT_CLASS_HUGE
+	item_flags = ABSTRACT | DROPDEL
+	w_class = WEIGHT_CLASS_BULKY
 	force = 24
 	throwforce = 0
 	throw_range = 0
@@ -420,6 +458,13 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+	tool_behaviour = TOOL_SAW
+	toolspeed = 1
+
+/obj/item/mounted_chainsaw/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/mounted_chainsaw/Destroy()
 	var/obj/item/bodypart/part
@@ -443,10 +488,6 @@
 	throw_speed = 5
 	throw_range = 2
 	attack_verb = list("busted")
-
-/obj/item/statuebust/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
 
 /obj/item/tailclub
 	name = "tail club"
@@ -476,7 +517,7 @@
 	item_state = "skateboard"
 	force = 12
 	throwforce = 4
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/melee/skateboard/attack_self(mob/user)
@@ -494,9 +535,23 @@
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	var/homerun_ready = 0
 	var/homerun_able = 0
+	total_mass = 2.7 //a regular wooden major league baseball bat weighs somewhere between 2 to 3.4 pounds, according to google
+
+/obj/item/melee/baseball_bat/chaplain
+	name = "blessed baseball bat"
+	desc = "There ain't a cult in the league that can withstand a swatter."
+	force = 14
+	throwforce = 14
+	obj_flags = UNIQUE_RENAME
+	var/chaplain_spawnable = TRUE
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
+
+/obj/item/melee/baseball_bat/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
@@ -548,6 +603,12 @@
 		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
 	return 1
 
+/obj/item/melee/baseball_bat/ablative/syndi
+	name = "syndicate major league bat"
+	desc = "A metal bat made by the syndicate for the major league team."
+	force = 18 //Spear damage...
+	throwforce = 30
+
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing insects of all sizes."
@@ -575,6 +636,7 @@
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
 			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
@@ -591,7 +653,7 @@
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
 /obj/item/slapper
@@ -601,20 +663,21 @@
 	item_state = "nothing"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
 
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
-		L.endTailWag()
+		if(L && L.dna && L.dna.species)
+			L.dna.species.stop_wagging_tail(M)
 	if(user.a_intent != INTENT_HARM && ((user.zone_selected == BODY_ZONE_PRECISE_MOUTH) || (user.zone_selected == BODY_ZONE_PRECISE_EYES) || (user.zone_selected == BODY_ZONE_HEAD)))
 		user.do_attack_animation(M)
 		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
- 		"<span class='notice'>You slap [M]!</span>",\
- 		"You hear a slap.")
+		"<span class='notice'>You slap [M]!</span>",\
+		"You hear a slap.")
 		return
 	else
 		..()

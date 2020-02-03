@@ -14,6 +14,7 @@ Contents:
 	typepath = /datum/round_event/ghost_role/ninja
 	max_occurrences = 1
 	earliest_start = 40 MINUTES
+	gamemode_blacklist = list("dynamic")
 	min_players = 15
 
 /datum/round_event/ghost_role/ninja
@@ -32,7 +33,6 @@ Contents:
 	if(!success_spawn && control)
 		control.occurrences--
 	return ..()
-
 
 /datum/round_event/ghost_role/ninja/spawn_role()
 	//selecting a spawn_loc
@@ -74,6 +74,7 @@ Contents:
 	spawned_mobs += Ninja
 	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by an event.")
 	log_game("[key_name(Ninja)] was spawned as a ninja by an event.")
+	success_spawn = TRUE
 
 	return SUCCESSFUL_SPAWN
 

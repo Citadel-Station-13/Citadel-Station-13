@@ -9,6 +9,7 @@
 	active_power_usage = 13 //10 with default parts
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
+	pass_flags = PASSTABLE
 	var/static/list/item_types = list(/obj/item/trash/waffles,
 		/obj/item/trash/plate,
 		/obj/item/trash/tray,
@@ -26,9 +27,9 @@
 	RefreshParts()
 
 /obj/machinery/dish_drive/examine(mob/user)
-	..()
+	. = ..()
 	if(user.Adjacent(src))
-		to_chat(user, "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>")
+		. += "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>"
 
 /obj/machinery/dish_drive/attack_hand(mob/living/user)
 	if(!contents.len)
@@ -96,8 +97,10 @@
 	do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/AltClick(mob/living/user)
+	. = ..()
 	if(user.canUseTopic(src, !issilicon(user)))
 		do_the_dishes(TRUE)
+		return TRUE
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)
 	if(!contents.len)

@@ -7,7 +7,6 @@
 	species = "replicapod"
 	plantname = "Replica Pod"
 	product = /mob/living/carbon/human //verrry special -- Urist
-	container_type = INJECTABLE|DRAWABLE
 	lifespan = 50
 	endurance = 8
 	maturation = 10
@@ -28,11 +27,11 @@
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
 
-	create_reagents(volume)
+	create_reagents(volume, INJECTABLE | DRAWABLE)
 
 /obj/item/seeds/replicapod/on_reagent_change(changetype)
 	if(changetype == ADD_REAGENT)
-		var/datum/reagent/blood/B = reagents.has_reagent("blood")
+		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
 		if(B)
 			if(B.data["mind"] && B.data["cloneable"])
 				mind = B.data["mind"]
@@ -42,13 +41,13 @@
 				blood_type = B.data["blood_type"]
 				features = B.data["features"]
 				factions = B.data["factions"]
-				factions = B.data["quirks"]
+				quirks = B.data["quirks"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 			else
 				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
 
-	if(!reagents.has_reagent("blood"))
+	if(!reagents.has_reagent(/datum/reagent/blood))
 		mind = null
 		ckey = null
 		realName = null

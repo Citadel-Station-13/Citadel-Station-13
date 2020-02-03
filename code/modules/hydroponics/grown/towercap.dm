@@ -51,7 +51,7 @@
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
-		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
+		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", MSG_VISUAL)
 		var/seed_modifier = 0
 		if(seed)
 			seed_modifier = round(seed.potency / 25)
@@ -98,6 +98,49 @@
 /obj/item/grown/log/steel/CheckAccepted(obj/item/I)
 	return FALSE
 
+/obj/item/seeds/bamboo
+	name = "pack of bamboo seeds"
+	desc = "A plant known for its flexible and resistant logs."
+	icon_state = "seed-bamboo"
+	species = "bamboo"
+	plantname = "Bamboo"
+	product = /obj/item/grown/log/bamboo
+	lifespan = 80
+	endurance = 70
+	maturation = 15
+	production = 2
+	yield = 5
+	potency = 50
+	growthstages = 2
+	growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	icon_dead = "bamboo-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+
+/obj/item/grown/log/bamboo
+	seed = /obj/item/seeds/bamboo
+	name = "bamboo log"
+	desc = "A long and resistant bamboo log."
+	icon_state = "bamboo"
+	plank_type = /obj/item/stack/sheet/mineral/bamboo
+	plank_name = "bamboo sticks"
+
+/obj/item/grown/log/bamboo/CheckAccepted(obj/item/I)
+	return FALSE
+
+/obj/structure/punji_sticks
+	name = "punji sticks"
+	desc = "Don't step on this."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "punji"
+	resistance_flags = FLAMMABLE
+	max_integrity = 30
+	density = FALSE
+	anchored = TRUE
+
+/obj/structure/punji_sticks/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/caltrop, 20, 30, 100, CALTROP_BYPASS_SHOES)
+
 /////////BONFIRES//////////
 
 /obj/structure/bonfire
@@ -110,11 +153,16 @@
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
+	var/burn_icon = "bonfire_on_fire" //for a softer more burning embers icon, use "bonfire_warm"
 	var/grill = FALSE
 	var/fire_stack_strength = 5
 
 /obj/structure/bonfire/dense
 	density = TRUE
+
+/obj/structure/bonfire/prelit/Initialize()
+	. = ..()
+	StartBurning()
 
 /obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -143,10 +191,10 @@
 				add_overlay("bonfire_grill")
 			else
 				return ..()
-	if(W.is_hot())
+	if(W.get_temperature())
 		StartBurning()
 	if(grill)
-		if(user.a_intent != INTENT_HARM && !(W.flags_1 & ABSTRACT_1))
+		if(user.a_intent != INTENT_HARM && !(W.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(W))
 				W.forceMove(get_turf(src))
 				var/list/click_params = params2list(params)
@@ -182,14 +230,14 @@
 		var/turf/open/O = loc
 		if(O.air)
 			var/loc_gases = O.air.gases
-			if(loc_gases[/datum/gas/oxygen][MOLES] > 13)
-				return 1
-	return 0
+			if(loc_gases[/datum/gas/oxygen] > 13)
+				return TRUE
+	return FALSE
 
 /obj/structure/bonfire/proc/StartBurning()
 	if(!burning && CheckOxygen())
-		icon_state = "bonfire_on_fire"
-		burning = 1
+		icon_state = burn_icon
+		burning = TRUE
 		set_light(6)
 		Burn()
 		START_PROCESSING(SSobj, src)
@@ -203,7 +251,7 @@
 
 /obj/structure/bonfire/proc/Burn()
 	var/turf/current_location = get_turf(src)
-	current_location.hotspot_expose(1000,500,1)
+	current_location.hotspot_expose(1000,100,1)
 	for(var/A in current_location)
 		if(A == src)
 			continue

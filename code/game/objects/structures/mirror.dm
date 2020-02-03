@@ -23,16 +23,13 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-
-		var/userloc = H.loc
-
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 
 		//handle facial hair (if necessary)
-		if(H.gender == MALE)
+		if(H.gender != FEMALE)
 			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
-			if(userloc != H.loc)
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return	//no tele-grooming
 			if(new_style)
 				H.facial_hair_style = new_style
@@ -41,7 +38,7 @@
 
 		//handle normal hair
 		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in GLOB.hair_styles_list
-		if(userloc != H.loc)
+		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return	//no tele-grooming
 		if(new_style)
 			H.hair_style = new_style
@@ -90,16 +87,16 @@
 /obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombies", "clockwork golem servant", "android", "synth", "mush")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombies", "clockwork golem servant", "android", "synth", "mush", "zombie", "memezombie")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -131,16 +128,16 @@
 
 	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
 
-	if(!Adjacent(user))
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = reject_bad_name(stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN))
 
 			if(!newname)
 				return
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			H.real_name = newname
 			H.name = newname
@@ -156,7 +153,7 @@
 
 			if(!newrace)
 				return
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			H.set_species(newrace, icon_update=0)
 
@@ -186,7 +183,7 @@
 		if("gender")
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy
 				return
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
@@ -207,7 +204,7 @@
 
 		if("hair")
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
@@ -225,12 +222,16 @@
 
 		if(BODY_ZONE_PRECISE_EYES)
 			var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+H.eye_color) as color|null
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(new_eye_color)
-				H.eye_color = sanitize_hexcolor(new_eye_color)
+				var/n_color = sanitize_hexcolor(new_eye_color)
+				var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+				if(eyes)
+					eyes.eye_color = n_color
+				H.eye_color = n_color
 				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-				H.update_body()
+				H.dna.species.handle_body()
 	if(choice)
 		curse(user)
 

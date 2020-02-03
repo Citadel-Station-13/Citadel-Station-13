@@ -624,12 +624,21 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_holding
-	name = "Cyborg Upgrade (Ore Satchel of Holding)"
-	id = "borg_upgrade_holding"
+/datum/design/borg_upgrade_advcutter
+	name = "Cyborg Upgrade (Advanced Plasma Cutter)"
+	id = "borg_upgrade_advcutter"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/soh
-	materials = list(MAT_METAL = 10000, MAT_GOLD = 250, MAT_URANIUM = 500)
+	build_path = /obj/item/borg/upgrade/advcutter
+	materials = list(MAT_METAL=8000, MAT_PLASMA=2000, MAT_GOLD= 2000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_premiumka
+	name = "Cyborg Upgrade (Premium Kinetic Accelerator)"
+	id = "borg_upgrade_premiumka"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/premiumka
+	materials = list(MAT_METAL=8000, MAT_GLASS=4000, MAT_TITANIUM=2000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -648,6 +657,15 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/syndicate
 	materials = list(MAT_METAL=10000,MAT_GLASS=15000,MAT_DIAMOND = 10000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_transform_clown
+	name = "Cyborg Upgrade (Clown Module)"
+	id = "borg_transform_clown"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/transform/clown
+	materials = list(MAT_METAL=10000, MAT_GLASS=15000, MAT_BANANIUM = 1000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -687,12 +705,30 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_defibrillator
-	name = "Cyborg Upgrade (Defibrillator)"
-	id = "borg_upgrade_defibrillator"
+/datum/design/borg_upgrade_surgicalprocessor
+	name = "Cyborg Upgrade (Surgical Processor)"
+	id = "borg_upgrade_surgicalprocessor"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/defib
-	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_SILVER=10000, MAT_GOLD=10000, MAT_TITANIUM=5000, MAT_DIAMOND=5000)
+	build_path = /obj/item/borg/upgrade/processor
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_SILVER=10000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_trashofholding
+	name = "Cyborg Upgrade (Trash Bag of Holding)"
+	id = "borg_upgrade_trashofholding"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/tboh
+	materials = list(MAT_METAL=10000, MAT_GOLD=1500, MAT_URANIUM=250, MAT_PLASMA=1500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_advancedmop
+	name = "Cyborg Upgrade (Advanced Mop)"
+	id = "borg_upgrade_advancedmop"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/amop
+	materials = list(MAT_METAL=10000, MAT_GLASS=200, MAT_TITANIUM=1000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -732,6 +768,15 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_advhealth
+	name = "Cyborg Upgrade (Advance Health Scanner)"
+	id = "borg_upgrade_advhealth"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/advhealth
+	materials = list(MAT_METAL=7500, MAT_GLASS=7500, MAT_SILVER=1000, MAT_GOLD=1000, MAT_TITANIUM=2000)
+	construction_time = 100
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
@@ -750,17 +795,6 @@
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 200)
 	construction_time = 50
 	category = list("Misc")
-
-/datum/design/drone_shell
-	name = "Drone Shell"
-	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
-	id = "drone_shell"
-	build_type = MECHFAB | PROTOLATHE
-	materials = list(MAT_METAL = 800, MAT_GLASS = 350)
-	construction_time=150
-	build_path = /obj/item/drone_shell
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/synthetic_flash
 	name = "Flash"

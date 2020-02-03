@@ -1,5 +1,3 @@
-#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
-
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -27,7 +25,7 @@
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
-	var/radio_channel = "Medical"
+	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
 	var/running_anim = FALSE
 
@@ -58,6 +56,11 @@
 	unconscious_factor = initial(unconscious_factor) * C
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better matter bin, better results"
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	QDEL_NULL(radio)
@@ -167,10 +170,11 @@
 		on = FALSE
 		update_icon()
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-		radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
+		var/msg = "Patient fully restored."
 		if(autoeject) // Eject if configured.
-			radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
+			msg += " Auto ejecting patient now."
 			open_machine()
+		radio.talk_into(src, msg, radio_channel)
 		return
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -183,8 +187,8 @@
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
 				beaker.reagents.reaction(occupant, VAPOR)
-				air1.gases[/datum/gas/oxygen][MOLES] -= max(0,air1.gases[/datum/gas/oxygen][MOLES] - 2 / efficiency) //Let's use gas for this
-				air1.garbage_collect()
+				air1.gases[/datum/gas/oxygen] -= max(0,air1.gases[/datum/gas/oxygen] - 2 / efficiency) //Let's use gas for this
+				GAS_GARBAGE_COLLECT(air1.gases)
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
 
@@ -198,7 +202,7 @@
 
 	var/datum/gas_mixture/air1 = airs[1]
 
-	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
+	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen] < 5) // Turn off if the machine won't work.
 		on = FALSE
 		update_icon()
 		return
@@ -210,7 +214,7 @@
 
 		if(ishuman(occupant))
 			var/mob/living/carbon/human/H = occupant
-			cold_protection = H.get_cold_protection(air1.temperature)
+			cold_protection = H.get_thermal_protection(air1.temperature, TRUE)
 
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
@@ -220,8 +224,8 @@
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 
-		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
-		air1.garbage_collect()
+		air1.gases[/datum/gas/oxygen] = max(0,air1.gases[/datum/gas/oxygen] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
+		GAS_GARBAGE_COLLECT(air1.gases)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()
@@ -263,14 +267,14 @@
 		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
-	..()
+	. = ..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Someone's inside [src]!")
+			. += "Someone's inside [src]!"
 		else
-			to_chat(user, "You can barely make out a form floating in [src].")
+			. += "You can barely make out a form floating in [src]."
 	else
-		to_chat(user, "[src] seems empty.")
+		. += "[src] seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -294,7 +298,7 @@
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
-		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
+		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return
 	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I)) \
 		|| default_change_direction_wrench(user, I) \
@@ -392,6 +396,22 @@
 				beaker = null
 				. = TRUE
 	update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !state_open)
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	. = ..()
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(state_open)
+			close_machine()
+		else
+			open_machine()
+		update_icon()
+		return TRUE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.

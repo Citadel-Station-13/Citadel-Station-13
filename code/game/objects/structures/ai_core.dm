@@ -39,7 +39,7 @@
 
 /obj/structure/AIcore/latejoin_inactive/examine(mob/user)
 	. = ..()
-	to_chat(user, "Its transmitter seems to be [active? "on" : "off"].")
+	. += "Its transmitter seems to be [active? "on" : "off"]."
 
 /obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -52,7 +52,7 @@
 	var/area/A = get_area(src)
 	if(!A.blob_allowed)
 		return FALSE
-	if(!A.power_equip)
+	if(!A.powered(EQUIP))
 		return FALSE
 	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
 		return FALSE
@@ -63,7 +63,7 @@
 /obj/structure/AIcore/latejoin_inactive/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/multitool))
 		active = !active
-		to_chat(user, "You [active? "activate" : "deactivate"] [src]'s transimtters.")
+		to_chat(user, "You [active? "activate" : "deactivate"] [src]'s transmitters.")
 		return
 	return ..()
 
@@ -184,8 +184,9 @@
 						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
 						return
 
-					if(!CONFIG_GET(flag/allow_ai) || jobban_isbanned(M.brainmob, "AI"))
-						to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
+					if(!CONFIG_GET(flag/allow_ai) || (jobban_isbanned(M.brainmob, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+						if(!QDELETED(M))
+							to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
 
 					if(!M.brainmob.mind)

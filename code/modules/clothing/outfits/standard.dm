@@ -48,12 +48,12 @@
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	backpack_contents = list(/obj/item/stack/tile/plasteel=6)
 
-/datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
 	var/obj/item/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
-	bucket.reagents.add_reagent("water",70)
+	bucket.reagents.add_reagent(/datum/reagent/water,70)
 
 /datum/outfit/laser_tag
 	name = "Laser Tag Red"
@@ -97,7 +97,7 @@
 /datum/outfit/pirate/space/captain
 	head = /obj/item/clothing/head/helmet/space/pirate
 
-/datum/outfit/pirate/post_equip(mob/living/carbon/human/H)
+/datum/outfit/pirate/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	H.faction |= "pirate"
 
 	var/obj/item/radio/R = H.ears
@@ -125,7 +125,7 @@
 	id = /obj/item/card/id
 	r_hand = /obj/item/twohanded/fireaxe
 
-/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -150,7 +150,7 @@
 	r_pocket = /obj/item/scalpel
 	r_hand = /obj/item/twohanded/fireaxe
 
-/datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
+/datum/outfit/psycho/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	for(var/obj/item/I in H.held_items)
@@ -170,7 +170,7 @@
 	id = /obj/item/card/id/syndicate
 	belt = /obj/item/pda/heads
 
-/datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	var/obj/item/clothing/under/U = H.w_uniform
 	U.attach_accessory(new /obj/item/clothing/accessory/waistcoat(H))
 
@@ -182,11 +182,11 @@
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
 	for(var/i = 3 to 0 step -1)
-		sec_briefcase.SendSignal(COMSIG_TRY_STORAGE_INSERT, new /obj/item/stack/spacecash/c1000, null, TRUE, TRUE)
-	sec_briefcase.SendSignal(COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/energy/kinetic_accelerator/crossbow, null, TRUE, TRUE)
-	sec_briefcase.SendSignal(COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/ballistic/revolver/mateba, null, TRUE, TRUE)
-	sec_briefcase.SendSignal(COMSIG_TRY_STORAGE_INSERT, new /obj/item/ammo_box/a357, null, TRUE, TRUE)
-	sec_briefcase.SendSignal(COMSIG_TRY_STORAGE_INSERT, new /obj/item/grenade/plastic/x4, null, TRUE, TRUE)
+		SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/stack/spacecash/c1000, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/energy/kinetic_accelerator/crossbow, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/ballistic/revolver/mateba, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/ammo_box/a357, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/grenade/plastic/x4, null, TRUE, TRUE)
 
 	var/obj/item/pda/heads/pda = H.belt
 	pda.owner = H.real_name
@@ -216,7 +216,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id
 
-/datum/outfit/centcom_commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom_commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -244,7 +244,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id
 
-/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -283,7 +283,7 @@
 	back = /obj/item/storage/backpack
 	backpack_contents = list(/obj/item/storage/box=1)
 
-/datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -325,7 +325,7 @@
 
 	id = /obj/item/card/id
 
-/datum/outfit/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -349,7 +349,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/tommygun
 	id = /obj/item/card/id
 
-/datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -391,7 +391,7 @@
 		/obj/item/flashlight=1,\
 		/obj/item/grenade/plastic/x4=1)
 
-/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -399,7 +399,7 @@
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
 
-	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//Here you go Deuryn
+	var/obj/item/implant/mindshield/L = new //Here you go Deuryn
 	L.implant(H, null, 1)
 
 
@@ -424,6 +424,17 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/tank/internals/oxygen
 
-
-
-
+/datum/outfit/debug //Debug objs plus hardsuit
+	name = "Debug outfit"
+	uniform = /obj/item/clothing/under/patriotsuit
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	shoes = /obj/item/clothing/shoes/magboots/advance
+	suit_store = /obj/item/tank/internals/oxygen
+	mask = /obj/item/clothing/mask/gas/welding
+	belt = /obj/item/storage/belt/utility/chief/full
+	gloves = /obj/item/clothing/gloves/combat
+	id = /obj/item/card/id/ert
+	glasses = /obj/item/clothing/glasses/meson/night
+	ears = /obj/item/radio/headset/headset_cent/commander
+	back = /obj/item/storage/backpack/holding
+	backpack_contents = list(/obj/item/card/emag=1,	/obj/item/flashlight/emp/debug=1, /obj/item/construction/rcd/combat=1, /obj/item/gun/magic/wand/resurrection/debug=1, /obj/item/melee/transforming/energy/axe=1)

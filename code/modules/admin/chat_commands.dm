@@ -28,8 +28,8 @@
 		return
 	last_irc_check = rtod
 	var/server = CONFIG_GET(string/server)
-	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]" //CIT CHANGE - obfuscates the current gamemode from players
-
+	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]"
+	//CIT CHANGE obfuscates the gamemode for TGS bot commands on discord by removing Mode:[GLOB.master_mode]
 /datum/tgs_chat_command/ahelp
 	name = "ahelp"
 	help_text = "<ckey|ticket #> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
@@ -78,13 +78,13 @@ GLOBAL_LIST(round_end_notifiees)
 /datum/tgs_chat_command/notify
 	name = "notify"
 	help_text = "Pings the invoker when the round ends"
-	admin_only = TRUE
+	admin_only = FALSE
 
 /datum/tgs_chat_command/notify/Run(datum/tgs_chat_user/sender, params)
 	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())
 		return "[sender.mention], the round has already ended!"
 	LAZYINITLIST(GLOB.round_end_notifiees)
-	GLOB.round_end_notifiees[sender] = TRUE
+	GLOB.round_end_notifiees["<@[sender.mention]>"] = TRUE
 	return "I will notify [sender.mention] when the round ends."
 
 /datum/tgs_chat_command/sdql
@@ -102,14 +102,42 @@ GLOBAL_LIST(round_end_notifiees)
 		return "Query produced no output"
 	var/list/text_res = results.Copy(1, 3)
 	var/list/refs = results.len > 3 ? results.Copy(4) : null
+	if(refs)
+		var/list/L = list()
+		for(var/ref in refs)
+			var/atom/A = locate(ref)
+			if(A)
+				L += "[A]"
+			else
+				L += "[ref]"
+		refs = L
 	. = "[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]"
-	
+
 /datum/tgs_chat_command/reload_admins
 	name = "reload_admins"
 	help_text = "Forces the server to reload admins."
 	admin_only = TRUE
 
 /datum/tgs_chat_command/reload_admins/Run(datum/tgs_chat_user/sender, params)
-	load_admins()
+	ReloadAsync()
 	log_admin("[sender.friendly_name] reloaded admins via chat command.")
 	return "Admins reloaded."
+
+/datum/tgs_chat_command/reload_admins/proc/ReloadAsync()
+	set waitfor = FALSE
+	load_admins()
+
+/datum/tgs_chat_command/addbunkerbypass
+	name = "whitelist"
+	help_text = "whitelist <ckey>"
+	admin_only = TRUE
+
+/datum/tgs_chat_command/addbunkerbypass/Run(datum/tgs_chat_user/sender, params)
+	if(!CONFIG_GET(flag/sql_enabled))
+		return "The Database is not enabled!"
+
+	GLOB.bunker_passthrough |= ckey(params)
+
+	log_admin("[sender.friendly_name] has added [params] to the current round's bunker bypass list.")
+	message_admins("[sender.friendly_name] has added [params] to the current round's bunker bypass list.")
+	return "[params] has been added to the current round's bunker bypass list."

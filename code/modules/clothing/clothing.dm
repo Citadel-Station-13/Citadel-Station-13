@@ -22,7 +22,8 @@
 	var/cooldown = 0
 	var/obj/item/flashlight/F = null
 	var/can_flashlight = 0
-	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+
+	var/blocks_shove_knockdown = FALSE //Whether wearing the clothing item blocks the ability for shove to knock down.
 
 	var/clothing_flags = NONE
 
@@ -39,10 +40,31 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
+	//basically a restriction list.
+	var/list/species_restricted = null
+	//Basically syntax is species_restricted = list("Species Name","Species Name")
+	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
+	//You append this to clothing objects.
+
+	//Polychrome stuff:
+	var/hasprimary = FALSE	//These vars allow you to choose which overlays a clothing has
+	var/hassecondary = FALSE
+	var/hastertiary = FALSE
+	var/primary_color = "#FFFFFF" //RGB in hexcode
+	var/secondary_color = "#FFFFFF"
+	var/tertiary_color = "#808080"
+
+	//No idea what this is but eh	-tori
+	var/force_alternate_icon = FALSE
+
 /obj/item/clothing/Initialize()
 	. = ..()
+	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
+		actions_types += /datum/action/item_action/toggle_voice_box
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
+	if(hasprimary | hassecondary | hastertiary)	//Checks if polychrome is enabled
+		update_icon()	//Applies the overlays and default colors onto the clothes on spawn.
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()
@@ -51,10 +73,26 @@
 	if(ismecha(M.loc)) // stops inventory actions in a mech
 		return
 
-	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
+	if(!. && !M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
+
+/obj/item/reagent_containers/food/snacks/clothing
+	name = "oops"
+	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	tastes = list("dust" = 1, "lint" = 1)
+
+/obj/item/clothing/attack(mob/M, mob/user, def_zone)
+	if(user.a_intent != INTENT_HARM && ismoth(M))
+		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
+		clothing_as_food.name = name
+		if(clothing_as_food.attack(M, user, def_zone))
+			take_damage(15, sound_effect=FALSE)
+		qdel(clothing_as_food)
+	else
+		return ..()
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(damaged_clothes && istype(W, /obj/item/stack/sheet/cloth))
@@ -93,10 +131,10 @@
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
 /obj/item/clothing/examine(mob/user)
-	..()
+	. = ..()
 	if(damaged_clothes)
-		to_chat(user,  "<span class='warning'>It looks damaged!</span>")
-	GET_COMPONENT(pockets, /datum/component/storage)
+		. += "<span class='warning'>It looks damaged!</span>"
+	var/datum/component/storage/pockets = GetComponent(/datum/component/storage)
 	if(pockets)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
 		if(pockets.attack_hand_interact)
@@ -110,14 +148,16 @@
 		if(pockets.silent)
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
-		to_chat(user, how_cool_are_your_threads.Join())
+		. += how_cool_are_your_threads.Join()
+	if(hasprimary | hassecondary | hastertiary)	//Checks if polychrome is enabled
+		. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
 	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
 		var/mob/M = loc
-		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!</span>")
+		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
@@ -196,19 +236,94 @@ BLIND     // can't see anything
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
 
-	..()
+
+/obj/item/clothing/under/CtrlClick(mob/user)
+	. = ..()
+
+	if (!(item_flags & IN_INVENTORY))
+		return
+
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+
+	if(has_sensor == LOCKED_SENSORS)
+		to_chat(user, "The controls are locked.")
+		return
+	if(has_sensor == BROKEN_SENSORS)
+		to_chat(user, "The sensors have shorted out!")
+		return
+	if(has_sensor <= NO_SENSORS)
+		to_chat(user, "This suit does not have any sensors.")
+		return
+
+	sensor_mode = SENSOR_COORDS
+
+	to_chat(user, "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.w_uniform == src)
+			H.update_suit_sensors()
 
 /obj/item/clothing/under/AltClick(mob/user)
-	if(..())
-		return 1
-
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
+	if(attached_accessory)
+		remove_accessory(user)
 	else
-		if(attached_accessory)
-			remove_accessory(user)
-		else
-			rolldown()
+		rolldown()
+	// Polychrome stuff:
+	if(hasprimary | hassecondary | hastertiary)
+		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
+		switch(choice)	//Lets the list's options actually lead to something
+			if("Primary Color")
+				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
+				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
+					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
+				update_icon()	//updates the item icon
+				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
+			if("Secondary Color")
+				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
+				if(secondary_color_input)
+					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+			if("Tertiary Color")
+				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
+				if(tertiary_color_input)
+					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+	return TRUE
+
+/obj/item/clothing/neck/AltClick(mob/user)
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	// Polychrome stuff:
+	if(hasprimary | hassecondary | hastertiary)
+		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
+		switch(choice)	//Lets the list's options actually lead to something
+			if("Primary Color")
+				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
+				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
+					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
+				update_icon()	//updates the item icon
+				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
+			if("Secondary Color")
+				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
+				if(secondary_color_input)
+					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+			if("Tertiary Color")
+				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
+				if(tertiary_color_input)
+					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+	return TRUE
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
 	set name = "Adjust Jumpsuit Style"
@@ -232,9 +347,8 @@ BLIND     // can't see anything
 		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
-	if(adjusted == DIGITIGRADE_STYLE)
-		return
 	adjusted = !adjusted
+
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
@@ -244,6 +358,7 @@ BLIND     // can't see anything
 		fitted = initial(fitted)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
+
 	return adjusted
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
@@ -290,3 +405,53 @@ BLIND     // can't see anything
 		deconstruct(FALSE)
 	else
 		..()
+
+
+//Species-restricted clothing check. - Thanks Oraclestation, BS13, /vg/station etc.
+/obj/item/clothing/mob_can_equip(mob/M, slot, disable_warning = TRUE)
+
+	//if we can't equip the item anyway, don't bother with species_restricted (also cuts down on spam)
+	if(!..())
+		return FALSE
+
+	// Skip species restriction checks on non-equipment slots
+	if(slot in list(SLOT_IN_BACKPACK, SLOT_L_STORE, SLOT_R_STORE))
+		return TRUE
+
+	if(species_restricted && ishuman(M))
+
+		var/wearable = null
+		var/exclusive = null
+		var/mob/living/carbon/human/H = M
+
+		if("exclude" in species_restricted) //TURNS IT INTO A BLACKLIST - AKA ALL MINUS SPECIES LISTED.
+			exclusive = TRUE
+
+		if(H.dna.species)
+			if(exclusive)
+				if(!(H.dna.species.name in species_restricted))
+					wearable = TRUE
+			else
+				if(H.dna.species.name in species_restricted)
+					wearable = TRUE
+
+			if(!wearable)
+				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
+				return FALSE
+
+	return TRUE
+
+/obj/item/clothing/update_icon()	// Polychrome stuff
+	..()
+	if(hasprimary)	//Checks if the overlay is enabled
+		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_color]-primary")	//Automagically picks overlays
+		primary_overlay.color = primary_color	//Colors the greyscaled overlay
+		add_overlay(primary_overlay)	//Applies the coloured overlay onto the item sprite. but NOT the mob sprite.
+	if(hassecondary)
+		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_color]-secondary")
+		secondary_overlay.color = secondary_color
+		add_overlay(secondary_overlay)
+	if(hastertiary)
+		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_color]-tertiary")
+		tertiary_overlay.color = tertiary_color
+		add_overlay(tertiary_overlay)

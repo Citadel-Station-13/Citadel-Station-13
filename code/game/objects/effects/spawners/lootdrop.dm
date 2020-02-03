@@ -30,6 +30,18 @@
 			loot_spawned++
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/spawner/lootdrop/bedsheet
+	icon = 'icons/obj/bedsheets.dmi'
+	icon_state = "random_bedsheet"
+	name = "random dorms bedsheet"
+	loot = list(/obj/item/bedsheet = 8, /obj/item/bedsheet/blue = 8, /obj/item/bedsheet/green = 8,
+				/obj/item/bedsheet/grey = 8, /obj/item/bedsheet/orange = 8, /obj/item/bedsheet/purple = 8,
+				/obj/item/bedsheet/red = 8, /obj/item/bedsheet/yellow = 8, /obj/item/bedsheet/brown = 8,
+				/obj/item/bedsheet/black = 8, /obj/item/bedsheet/patriot = 3, /obj/item/bedsheet/rainbow = 3,
+				/obj/item/bedsheet/ian = 3, /obj/item/bedsheet/runtime = 3, /obj/item/bedsheet/nanotrasen = 3,
+				/obj/item/bedsheet/pirate = 1, /obj/item/bedsheet/cosmos = 1, /obj/item/bedsheet/gondola = 1
+				)
+
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
 	lootdoubles = FALSE
@@ -40,6 +52,13 @@
 				/obj/item/gun/ballistic/revolver/mateba,
 				/obj/item/gun/ballistic/automatic/pistol/deagle
 				)
+
+/obj/effect/spawner/lootdrop/armory_contraband/metastation
+	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5,
+				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+				/obj/item/gun/ballistic/revolver/mateba,
+				/obj/item/gun/ballistic/automatic/pistol/deagle,
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
@@ -101,6 +120,33 @@
 	loot = GLOB.maintenance_loot
 	. = ..()
 
+/obj/effect/spawner/lootdrop/glowstick
+	name = "random colored glowstick"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "random_glowstick"
+
+/obj/effect/spawner/lootdrop/glowstick/Initialize()
+	loot = typesof(/obj/item/flashlight/glowstick)
+	. = ..()
+
+
+/obj/effect/spawner/lootdrop/gloves
+	name = "random gloves"
+	desc = "These gloves are supposed to be a random color..."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "random_gloves"
+	loot = list(
+		/obj/item/clothing/gloves/color/orange = 1,
+		/obj/item/clothing/gloves/color/red = 1,
+		/obj/item/clothing/gloves/color/blue = 1,
+		/obj/item/clothing/gloves/color/purple = 1,
+		/obj/item/clothing/gloves/color/green = 1,
+		/obj/item/clothing/gloves/color/grey = 1,
+		/obj/item/clothing/gloves/color/light_brown = 1,
+		/obj/item/clothing/gloves/color/brown = 1,
+		/obj/item/clothing/gloves/color/white = 1,
+		/obj/item/clothing/gloves/color/rainbow = 1)
+
 /obj/effect/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
 	lootdoubles = FALSE
@@ -119,7 +165,7 @@
 		/obj/item/organ/heart/gland/chem = 5,
 		/obj/item/organ/heart/gland/mindshock = 5,
 		/obj/item/organ/heart/gland/plasma = 7,
-		/obj/item/organ/heart/gland/pop = 5,
+		/obj/item/organ/heart/gland/transform = 5,
 		/obj/item/organ/heart/gland/slime = 4,
 		/obj/item/organ/heart/gland/spiderman = 5,
 		/obj/item/organ/heart/gland/ventcrawling = 1,
@@ -207,6 +253,20 @@
 				/obj/item/aiModule/core/full/damaged
 				)
 
+/obj/effect/spawner/lootdrop/mre
+	name = "random MRE"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "mre"
+
+/obj/effect/spawner/lootdrop/mre/Initialize()
+	for(var/A in subtypesof(/obj/item/storage/box/mre))
+		var/obj/item/storage/box/mre/M = A
+		var/our_chance = initial(M.spawner_chance)
+		if(our_chance)
+			LAZYSET(loot, M, our_chance)
+	return ..()
+
+
 // Tech storage circuit board spawners
 // For these, make sure that lootcount equals the number of list items
 
@@ -228,7 +288,7 @@
 				/obj/item/circuitboard/machine/microwave,
 				/obj/item/circuitboard/machine/chem_dispenser/drinks,
 				/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
-				/obj/item/circuitboard/computer/slot_machine 
+				/obj/item/circuitboard/computer/slot_machine
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/rnd
@@ -237,14 +297,14 @@
 	loot = list(
 				/obj/item/circuitboard/computer/aifixer,
 				/obj/item/circuitboard/machine/rdserver,
-				/obj/item/circuitboard/computer/pandemic, 
+				/obj/item/circuitboard/computer/pandemic,
 				/obj/item/circuitboard/machine/mechfab,
 				/obj/item/circuitboard/machine/circuit_imprinter/department,
 				/obj/item/circuitboard/computer/teleporter,
-				/obj/item/circuitboard/machine/destructive_analyzer, 
+				/obj/item/circuitboard/machine/destructive_analyzer,
 				/obj/item/circuitboard/computer/rdconsole
 				)
-				
+
 /obj/effect/spawner/lootdrop/techstorage/security
 	name = "security circuit board spawner"
 	lootcount = 3
@@ -253,13 +313,13 @@
 				/obj/item/circuitboard/computer/security,
 				/obj/item/circuitboard/computer/prisoner
 				)
-				
+
 /obj/effect/spawner/lootdrop/techstorage/engineering
 	name = "engineering circuit board spawner"
 	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/atmos_alert,
-				/obj/item/circuitboard/computer/stationalert, 
+				/obj/item/circuitboard/computer/stationalert,
 				/obj/item/circuitboard/computer/powermonitor
 				)
 
@@ -300,7 +360,7 @@
 				/obj/item/circuitboard/computer/borgupload,
 				/obj/item/circuitboard/aicore
 				)
-	
+
 /obj/effect/spawner/lootdrop/techstorage/command
 	name = "secure command circuit board spawner"
 	lootcount = 3
@@ -309,7 +369,7 @@
 				/obj/item/circuitboard/computer/communications,
 				/obj/item/circuitboard/computer/card
 				)
-				
+
 /obj/effect/spawner/lootdrop/techstorage/RnD_secure
 	name = "secure RnD circuit board spawner"
 	lootcount = 3
@@ -318,3 +378,11 @@
 				/obj/item/circuitboard/computer/apc_control,
 				/obj/item/circuitboard/computer/robotics
 				)
+
+/obj/effect/spawner/lootdrop/keg
+	name = "random keg spawner"
+	lootcount = 1
+	loot = list(/obj/structure/reagent_dispensers/keg/mead = 5,
+		/obj/structure/reagent_dispensers/keg/aphro = 2,
+		/obj/structure/reagent_dispensers/keg/aphro/strong = 2,
+		/obj/structure/reagent_dispensers/keg/gargle = 1)

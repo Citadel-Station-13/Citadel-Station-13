@@ -79,7 +79,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
-	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space."
+	desc = "This spell reaches into Nar'Sie's realm, summoning one of the legendary fragments across time and space."
 
 	school = "conjuration"
 	charge_max = 2400
@@ -146,11 +146,14 @@
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
+	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser"
 	proj_lifespan = 10
 	max_targets = 6
 	action_icon_state = "magicm"
 	action_background_icon_state = "bg_demon"
 
+/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser
+	amt_knockdown = 84
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
 	name = "Paralysing Smoke"
@@ -220,7 +223,7 @@
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"
-	desc = "This spell dominates the mind of a lesser creature, causing it to see you as an ally."
+	desc = "This spell dominates the mind of a lesser creature to the will of Nar'Sie, allying it only to her direct followers."
 
 	charge_max = 600
 	range = 7
@@ -304,7 +307,8 @@
 	name = "Gauntlet Echo"
 	alpha = 180
 	amt_dam_brute = 30
-	amt_knockdown = 50
+	amt_knockdown = 84
+	amt_dam_stam = 30
 	sound = 'sound/weapons/punch3.ogg'
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut/cast(list/targets,mob/user = usr)

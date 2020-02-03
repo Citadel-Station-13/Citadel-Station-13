@@ -11,6 +11,7 @@
 		create_mob_hud()
 	if(hud_used)
 		hud_used.show_hud(hud_used.hud_version)
+		hud_used.update_ui_style(ui_style2icon(client.prefs.UI_style))
 
 	next_move = 1
 
@@ -40,12 +41,17 @@
 	update_client_colour()
 	update_mouse_pointer()
 	if(client)
-		client.click_intercept = null
-
 		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
 
-		if(client.player_details.player_actions.len)
-			for(var/datum/action/A in client.player_details.player_actions)
-				A.Grant(src)
+		if(client.player_details && istype(client.player_details))
+			if(client.player_details.player_actions.len)
+				for(var/datum/action/A in client.player_details.player_actions)
+					A.Grant(src)
 
-	log_message("Client [key_name(src)] has taken ownership of mob [src]", INDIVIDUAL_OWNERSHIP_LOG)
+			for(var/foo in client.player_details.post_login_callbacks)
+				var/datum/callback/CB = foo
+				CB.Invoke()
+
+	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
+	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
+

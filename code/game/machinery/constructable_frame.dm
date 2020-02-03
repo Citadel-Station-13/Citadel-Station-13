@@ -8,9 +8,9 @@
 	var/state = 1
 
 /obj/structure/frame/examine(user)
-	..()
+	. = ..()
 	if(circuit)
-		to_chat(user, "It has \a [circuit] installed.")
+		. += "It has \a [circuit] installed."
 
 
 /obj/structure/frame/deconstruct(disassembled = TRUE)
@@ -29,7 +29,7 @@
 	var/list/req_component_names = null // user-friendly names of components
 
 /obj/structure/frame/machine/examine(user)
-	..()
+	. = ..()
 	if(state == 3 && req_components && req_component_names)
 		var/hasContent = 0
 		var/requires = "It requires"
@@ -44,9 +44,9 @@
 			hasContent = 1
 
 		if(hasContent)
-			to_chat(user, requires + ".")
+			. += requires + "."
 		else
-			to_chat(user, "It does not require any more components.")
+			. += "It does not require any more components."
 
 /obj/structure/frame/machine/proc/update_namelist()
 	if(!req_components)
@@ -106,7 +106,7 @@
 				if(P.use_tool(src, user, 40, volume=75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
-						anchored = !anchored
+						setAnchored(!anchored)
 				return
 
 		if(2)
@@ -114,11 +114,14 @@
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				if(P.use_tool(src, user, 40, volume=75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
-					anchored = !anchored
+					setAnchored(!anchored)
 				return
 
 			if(istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/B = P
+				if(!B.build_path)
+					to_chat(user, "<span class'warning'>This circuitboard seems to be broken.</span>")
+					return
 				if(!anchored && B.needs_anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
@@ -169,7 +172,7 @@
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				if(P.use_tool(src, user, 40, volume=75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
-					anchored = !anchored
+					setAnchored(!anchored)
 				return
 
 			if(istype(P, /obj/item/screwdriver))
@@ -180,8 +183,11 @@
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
-					new_machine.anchored = anchored
+					var/obj/machinery/new_machine = new circuit.build_path(loc)
+					if(new_machine.circuit)
+						QDEL_NULL(new_machine.circuit)
+					new_machine.circuit = circuit
+					new_machine.setAnchored(anchored)
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
@@ -219,7 +225,7 @@
 							req_components[path] -= used_amt
 						else
 							added_components[part] = path
-							if(replacer.SendSignal(COMSIG_TRY_STORAGE_TAKE, part, src))
+							if(SEND_SIGNAL(replacer, COMSIG_TRY_STORAGE_TAKE, part, src))
 								req_components[path]--
 
 				for(var/obj/item/part in added_components)

@@ -66,6 +66,7 @@
 	return
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
+	. = ..()
 	if(flag)
 		return // too close
 	if(ishuman(user))
@@ -75,7 +76,7 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
-			add_logs(user, target, "flamethrowered", src)
+			log_combat(user, target, "flamethrowered", src)
 			flame_turf(turflist)
 
 /obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
@@ -137,16 +138,18 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
+	. = ..()
 	if(ptank && isliving(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
 		update_icon()
+		return TRUE
 
 /obj/item/flamethrower/examine(mob/user)
-	..()
+	. = ..()
 	if(ptank)
-		to_chat(user, "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>")
+		. += "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>"
 
 /obj/item/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)
@@ -204,7 +207,7 @@
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
 	if(air_transfer.gases[/datum/gas/plasma])
-		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5
+		air_transfer.gases[/datum/gas/plasma] *= 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)

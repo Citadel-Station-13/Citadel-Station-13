@@ -19,12 +19,15 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	vision_range = 5
-	aggro_vision_range = 18
-	anchored = TRUE
+	vision_range = 4
+	aggro_vision_range = 15
+	move_force = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_OVERPOWERING
+	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	var/list/crusher_loot
 	var/medal_type
 	var/score_type = BOSS_SCORE
@@ -36,6 +39,7 @@
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
@@ -68,8 +72,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/dust()
-	if(health > 0)
+/mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
+	if(!force && health > 0)
 		return
 	else
 		..()
@@ -83,11 +87,12 @@
 		if(L.stat != DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
-		else if(L.stat >= SOFT_CRIT)
-			if(vore_active == TRUE && L.devourable == TRUE)
-				dragon_feeding(src,L)
-			else if(L.stat == DEAD)
-				devour(L)
+			if(L.Adjacent(src) && (L.stat != CONSCIOUS))
+				if(vore_active && L.devourable == TRUE)
+					vore_attack(src,L,src)
+					LoseTarget()
+		else
+			devour(L)
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
@@ -101,21 +106,23 @@
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			adjustBruteLoss(250)
 
-		if (2)
+		if (EXPLODE_HEAVY)
 			adjustBruteLoss(100)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
-	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
+	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1)) //Don't award medals if the medal type isn't set
 		return FALSE
+	if(!SSmedals.hub_enabled) // This allows subtypes to carry on other special rewards not tied with medals. (such as bubblegum's arena shuttle)
+		return TRUE
 
 	for(var/mob/living/L in view(7,src))
 		if(L.stat || !L.client)
@@ -123,7 +130,7 @@
 		var/client/C = L.client
 		SSmedals.UnlockMedal("Boss [BOSS_KILL_MEDAL]", C)
 		SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL]", C)
-		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
+		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
 			SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]", C)
 		SSmedals.SetScore(BOSS_SCORE, C, 1)
 		SSmedals.SetScore(score_type, C, 1)

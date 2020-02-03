@@ -36,6 +36,7 @@
 	return OXYLOSS
 
 /obj/item/hand_labeler/afterattack(atom/A, mob/user,proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!mode)	//if it's off, give up.
@@ -69,7 +70,7 @@
 	if(mode)
 		to_chat(user, "<span class='notice'>You turn on [src].</span>")
 		//Now let them chose the text.
-		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = reject_bad_text(stripped_input(user, "Label text?", "Set label","", MAX_NAME_LEN))
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
@@ -89,7 +90,7 @@
 	name = "cyborg-hand labeler"
 
 /obj/item/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
-	..(A, user, proximity)
+	. = ..(A, user, proximity)
 	if(!iscyborg(user))
 		return
 

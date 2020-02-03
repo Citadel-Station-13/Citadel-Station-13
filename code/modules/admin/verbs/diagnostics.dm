@@ -9,10 +9,9 @@
 
 	var/list/lines = list("<span class='adminnotice'>[AREACOORD(target)]: [env.temperature] K ([env.temperature - T0C] C), [env.return_pressure()] kPa[(burning)?(", <font color='red'>burning</font>"):(null)]</span>")
 	for(var/id in env_gases)
-		var/gas = env_gases[id]
-		var/moles = gas[MOLES]
+		var/moles = env_gases[id]
 		if (moles >= 0.00001)
-			lines += "[gas[GAS_META][META_GAS_NAME]]: [moles] mol"
+			lines += "[GLOB.meta_gas_names[id]]: [moles] mol"
 	to_chat(usr, lines.Join("\n"))
 
 /client/proc/air_status(turf/target)
@@ -62,7 +61,7 @@
 	var/output = "<b>Radio Report</b><hr>"
 	for (var/fq in SSradio.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
-		var/list/datum/radio_frequency/fqs = SSradio.frequencies[fq]
+		var/datum/radio_frequency/fqs = SSradio.frequencies[fq]
 		if (!fqs)
 			output += "&nbsp;&nbsp;<b>ERROR</b><br>"
 			continue

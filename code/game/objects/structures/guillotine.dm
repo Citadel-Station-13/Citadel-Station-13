@@ -34,29 +34,22 @@
 	. = ..()
 
 /obj/structure/guillotine/examine(mob/user)
-	..()
+	. = ..()
 
-	var/msg = ""
-
-	msg += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
-
+	. += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]"
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
-		msg += "The blade is raised, ready to fall, and"
+		var/msg = "The blade is raised, ready to fall, and"
 
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP)
 			msg += " looks sharp enough to decapitate without any resistance."
 		else
 			msg += " doesn't look particularly sharp. Perhaps a whetstone can be used to sharpen it."
+		. += msg
 	else
-		msg += "The blade is hidden inside the stocks."
+		. += "The blade is hidden inside the stocks."
 
 	if (LAZYLEN(buckled_mobs))
-		msg += "<br/>"
-		msg += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
-
-	to_chat(user, msg)
-
-	return msg
+		. += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
 
 /obj/structure/guillotine/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -104,7 +97,7 @@
 	icon_state = "guillotine_raised"
 
 /obj/structure/guillotine/proc/drop_blade(mob/user)
-	if (buckled_mobs.len && blade_sharpness)
+	if (has_buckled_mobs() && blade_sharpness)
 		var/mob/living/carbon/human/H = buckled_mobs[1]
 
 		if (!H)
@@ -118,7 +111,7 @@
 		playsound(src, 'sound/weapons/bladeslice.ogg', 100, 1)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
-			add_logs(user, H, "beheaded", src)
+			log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
 			unbuckle_all_mobs()
 			kill_count += 1
@@ -144,7 +137,7 @@
 					delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
-			add_logs(user, H, "dropped the blade on", src, " non-fatally")
+			log_combat(user, H, "dropped the blade on", src, " non-fatally")
 			H.emote("scream")
 
 		if (blade_sharpness > 1)
@@ -246,7 +239,7 @@
 	if (do_after(user, GUILLOTINE_WRENCH_DELAY, target = src))
 		current_action = 0
 		default_unfasten_wrench(user, I, 0)
-		dir = SOUTH
+		setDir(SOUTH)
 		return TRUE
 	else
 		current_action = 0

@@ -43,7 +43,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
 	if(chassis)
-		log_message("Critical failure",1)
+		log_message("Critical failure", color="red")
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis)
@@ -75,6 +75,9 @@
 	if(crit_fail)
 		return 0
 	if(energy_drain && !chassis.has_charge(energy_drain))
+		return 0
+	if(chassis.equipment_disabled)
+		to_chat(chassis.occupant, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
 		return 0
 	return 1
 
@@ -147,9 +150,11 @@
 		chassis.occupant_message("[icon2html(src, chassis.occupant)] [message]")
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/log_message(message)
+/obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)
-		chassis.log_message("<i>[src]:</i> [message]")
+		chassis.log_message("([src]) [message]", message_type, color)
+	else
+		..()
 	return
 
 

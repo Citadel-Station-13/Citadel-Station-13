@@ -119,9 +119,9 @@
 
 
 /mob/living/simple_animal/parrot/examine(mob/user)
-	..()
+	. = ..()
 	if(stat)
-		to_chat(user, pick("This parrot is no more.", "This is a late parrot.", "This is an ex-parrot."))
+		. += pick("This parrot is no more.", "This is a late parrot.", "This is an ex-parrot.")
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
@@ -143,7 +143,8 @@
 		stat("Held Item", held_item)
 		stat("Mode",a_intent)
 
-/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
+/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
+	. = ..()
 	if(speaker != src && prob(50)) //Dont imitate ourselves
 		if(!radio_freq || prob(10))
 			if(speech_buffer.len >= 500)
@@ -151,7 +152,6 @@
 			speech_buffer |= html_decode(raw_message)
 	if(speaker == src && !client) //If a parrot squawks in the woods and no one is around to hear it, does it make a sound? This code says yes!
 		return message
-	..()
 
 /mob/living/simple_animal/parrot/radio(message, message_mode, list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
@@ -181,94 +181,85 @@
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	if(ears)
-		dat +=	"<br><b>Headset:</b> [ears] (<a href='?src=[REF(src)];remove_inv=ears'>Remove</a>)"
-	else
-		dat +=	"<br><b>Headset:</b> <a href='?src=[REF(src)];add_inv=ears'>Nothing</a>"
 
-	user << browse(dat, "window=mob[real_name];size=325x500")
-	onclose(user, "mob[real_name]")
+	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
+	dat += "<br><B>Headset:</B> <A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'>Nothing"]</A>"
+
+	user << browse(dat, "window=mob[REF(src)];size=325x500")
+	onclose(user, "window=mob[REF(src)]")
 
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
-
-	//Can the usr physically do this?
-	if(usr.incapacitated() || !usr.Adjacent(loc))
+	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		usr << browse(null, "window=mob[REF(src)]")
+		usr.unset_machine()
 		return
 
-	//Is the usr's mob type able to do this? (lolaliens)
-	if(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr))
+	//Removing from inventory
+	if(href_list["remove_inv"])
+		var/remove_from = href_list["remove_inv"]
+		switch(remove_from)
+			if("ears")
+				if(!ears)
+					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
+					return
+				if(!stat)
+					say("[available_channels.len ? "[pick(available_channels)] " : null]BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+				ears.forceMove(drop_location())
+				ears = null
+				for(var/possible_phrase in speak)
+					if(copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys)
+						possible_phrase = copytext_char(possible_phrase, 3)
 
-		//Removing from inventory
-		if(href_list["remove_inv"])
-			var/remove_from = href_list["remove_inv"]
-			switch(remove_from)
-				if("ears")
-					if(ears)
-						if(!stat)
-							if(available_channels.len)
-								src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-							else
-								src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-						ears.forceMove(src.loc)
-						ears = null
-						for(var/possible_phrase in speak)
-							if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
-								possible_phrase = copytext(possible_phrase,3)
-					else
-						to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
+	//Adding things to inventory
+	else if(href_list["add_inv"])
+		var/add_to = href_list["add_inv"]
+		if(!usr.get_active_held_item())
+			to_chat(usr, "<span class='warning'>You have nothing in your hand to put on its [add_to]!</span>")
+			return
+		switch(add_to)
+			if("ears")
+				if(ears)
+					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
+					return
+				else
+					var/obj/item/item_to_add = usr.get_active_held_item()
+					if(!item_to_add)
 						return
 
-		//Adding things to inventory
-		else if(href_list["add_inv"])
-			var/add_to = href_list["add_inv"]
-			if(!usr.get_active_held_item())
-				to_chat(usr, "<span class='warning'>You have nothing in your hand to put on its [add_to]!</span>")
-				return
-			switch(add_to)
-				if("ears")
-					if(ears)
-						to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
+					if( !istype(item_to_add,  /obj/item/radio/headset) )
+						to_chat(usr, "<span class='warning'>This object won't fit!</span>")
 						return
-					else
-						var/obj/item/item_to_add = usr.get_active_held_item()
-						if(!item_to_add)
-							return
 
-						if( !istype(item_to_add,  /obj/item/radio/headset) )
-							to_chat(usr, "<span class='warning'>This object won't fit!</span>")
-							return
+					var/obj/item/radio/headset/headset_to_add = item_to_add
 
-						var/obj/item/radio/headset/headset_to_add = item_to_add
+					if(!usr.transferItemToLoc(headset_to_add, src))
+						return
+					ears = headset_to_add
+					to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
 
-						if(!usr.transferItemToLoc(headset_to_add, src))
-							return
-						src.ears = headset_to_add
-						to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
+					clearlist(available_channels)
+					for(var/ch in headset_to_add.channels)
+						switch(ch)
+							if(RADIO_CHANNEL_ENGINEERING)
+								available_channels.Add(RADIO_TOKEN_ENGINEERING)
+							if(RADIO_CHANNEL_COMMAND)
+								available_channels.Add(RADIO_TOKEN_COMMAND)
+							if(RADIO_CHANNEL_SECURITY)
+								available_channels.Add(RADIO_TOKEN_SECURITY)
+							if(RADIO_CHANNEL_SCIENCE)
+								available_channels.Add(RADIO_TOKEN_SCIENCE)
+							if(RADIO_CHANNEL_MEDICAL)
+								available_channels.Add(RADIO_TOKEN_MEDICAL)
+							if(RADIO_CHANNEL_SUPPLY)
+								available_channels.Add(RADIO_TOKEN_SUPPLY)
+							if(RADIO_CHANNEL_SERVICE)
+								available_channels.Add(RADIO_TOKEN_SERVICE)
 
-						clearlist(available_channels)
-						for(var/ch in headset_to_add.channels)
-							switch(ch)
-								if("Engineering")
-									available_channels.Add(":e")
-								if("Command")
-									available_channels.Add(":c")
-								if("Security")
-									available_channels.Add(":s")
-								if("Science")
-									available_channels.Add(":n")
-								if("Medical")
-									available_channels.Add(":m")
-								if("Supply")
-									available_channels.Add(":u")
-								if("Service")
-									available_channels.Add(":v")
-
-						if(headset_to_add.translate_binary)
-							available_channels.Add(":b")
-		else
-			..()
+					if(headset_to_add.translate_binary)
+						available_channels.Add(MODE_TOKEN_BINARY)
+	else
+		return ..()
 
 
 /*
@@ -341,12 +332,12 @@
 		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
 		speech_shuffle_rate += 10
 		to_chat(user, "<span class='notice'>[src] eagerly devours the cracker.</span>")
-	..()
-	return
+		return // the cracker was deleted
+	return ..()
 
 //Bullets
 /mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
-	..()
+	. = ..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -356,7 +347,6 @@
 		//parrot_been_shot += 5
 		icon_state = icon_living
 		drop_held_item(0)
-	return
 
 
 /*
@@ -394,6 +384,9 @@
 	if(!isturf(src.loc) || !canmove || buckled)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
+	if(client && stat == CONSCIOUS && parrot_state != icon_living)
+		icon_state = icon_living
+		//Because the most appropriate place to set icon_state is movement_delay(), clearly
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)
@@ -426,8 +419,8 @@
 						if(prob(50))
 							useradio = 1
 
-						if((copytext(possible_phrase,1,2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase,2,3) in GLOB.department_radio_keys))
-							possible_phrase = "[useradio?pick(available_channels):""][copytext(possible_phrase,3)]" //crop out the channel prefix
+						if((possible_phrase[1] in GLOB.department_radio_prefixes) && (copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys))
+							possible_phrase = "[useradio?pick(available_channels):""][copytext_char(possible_phrase, 3)]" //crop out the channel prefix
 						else
 							possible_phrase = "[useradio?pick(available_channels):""][possible_phrase]"
 
@@ -435,15 +428,15 @@
 
 				else //If we have no headset or channels to use, dont try to use any!
 					for(var/possible_phrase in speak)
-						if((copytext(possible_phrase,1,2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase,2,3) in GLOB.department_radio_keys))
-							possible_phrase = copytext(possible_phrase,3) //crop out the channel prefix
+						if((possible_phrase[1] in GLOB.department_radio_prefixes) && (copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys))
+							possible_phrase = copytext_char(possible_phrase, 3) //crop out the channel prefix
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
 			//Search for item to steal
 			parrot_interest = search_for_item()
 			if(parrot_interest)
-				emote("me", 1, "looks in [parrot_interest]'s direction and takes flight.")
+				emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
 				icon_state = icon_living
 			return
@@ -465,7 +458,7 @@
 			if(AM)
 				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
 					parrot_interest = AM
-					emote("me", 1, "turns and flies towards [parrot_interest].")
+					emote("me", EMOTE_VISIBLE, "turns and flies towards [parrot_interest].")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
 					return
 				else	//Else it's a perch
@@ -603,12 +596,6 @@
 /*
  * Procs
  */
-
-/mob/living/simple_animal/parrot/movement_delay()
-	if(client && stat == CONSCIOUS && parrot_state != icon_living)
-		icon_state = icon_living
-		//Because the most appropriate place to set icon_state is movement_delay(), clearly
-	return ..()
 
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
@@ -772,7 +759,7 @@
 		held_item = null
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
-		emote("me", 1, "[src] eagerly downs the cracker.")
+		emote("me", EMOTE_VISIBLE, "[src] eagerly downs the cracker.")
 		return 1
 
 
@@ -909,6 +896,11 @@
 
 	. = ..()
 
+/mob/living/simple_animal/parrot/Poly/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	. = ..()
+	if(. && !client && prob(1) && prob(1)) //Only the one true bird may speak across dimensions.
+		world.TgsTargetedChatBroadcast("A stray squawk is heard... \"[message]\"", FALSE)
+
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
@@ -923,7 +915,7 @@
 		if(mind)
 			mind.transfer_to(G)
 		else
-			G.key = key
+			transfer_ckey(G)
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()

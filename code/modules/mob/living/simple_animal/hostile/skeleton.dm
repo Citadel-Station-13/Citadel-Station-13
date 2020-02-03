@@ -12,6 +12,7 @@
 	emote_see = list("rattles")
 	a_intent = INTENT_HARM
 	maxHealth = 40
+	blood_volume = 0
 	health = 40
 	speed = 1
 	harm_intent_damage = 5
@@ -33,6 +34,8 @@
 	deathmessage = "collapses into a pile of bones!"
 	del_on_death = 1
 	loot = list(/obj/effect/decal/remains/human)
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/skeleton/eskimo
 	name = "undead eskimo"
@@ -100,7 +103,7 @@
 	light_color = LIGHT_COLOR_PURPLE
 	attacktext = "slashes"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
-	deathmessage = "collapses into a pile of bones, their suit dissovling among the plasma!"
+	deathmessage = "collapses into a pile of bones, their suit dissolving among the plasma!"
 	loot = list(/obj/effect/decal/remains/plasma)
 
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer

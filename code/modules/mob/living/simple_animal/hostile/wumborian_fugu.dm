@@ -121,12 +121,13 @@
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	var/list/banned_mobs
 
 /obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(proximity_flag && isanimal(target))
 		var/mob/living/simple_animal/A = target
 		if(A.buffed || (A.type in banned_mobs) || A.stat)

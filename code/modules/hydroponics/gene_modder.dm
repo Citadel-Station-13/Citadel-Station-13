@@ -5,6 +5,7 @@
 	icon_state = "dnamod"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
+	pass_flags = PASSTABLE
 
 	var/obj/item/seeds/seed
 	var/obj/item/disk/plantgene/disk
@@ -67,6 +68,8 @@
 /obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
 		update_icon()
+		return
+	else if(default_unfasten_wrench(user, I))
 		return
 	if(default_deconstruction_crowbar(I))
 		return
@@ -198,9 +201,9 @@
 			if(!G)
 				continue
 			dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
-			if(can_extract)
+			if(can_extract && G.mutability_flags & PLANT_GENE_EXTRACTABLE)
 				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-			if(can_insert && istype(disk.gene, G.type))
+			if(can_insert && istype(disk.gene, G.type) && G.mutability_flags & PLANT_GENE_REMOVABLE)
 				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=replace'>Replace</a>"
 			dat += "</td></tr>"
 		dat += "</table></div>"
@@ -229,14 +232,15 @@
 				for(var/a in trait_genes)
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
-					if(can_extract)
+					if(can_extract && G.mutability_flags & PLANT_GENE_EXTRACTABLE)
 						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+					if(G.mutability_flags & PLANT_GENE_REMOVABLE)
+						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No trait-related genes detected in sample.<br>"
-			if(can_insert && istype(disk.gene, /datum/plant_gene/trait))
+			if(can_insert && istype(disk.gene, /datum/plant_gene/trait) && !seed.is_gene_forbidden(disk.gene.type))
 				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 			dat += "</div>"
 	else
@@ -397,7 +401,7 @@
 /obj/machinery/plantgenes/proc/repaint_seed()
 	if(!seed)
 		return
-	if(copytext(seed.name, 1, 13) == "experimental")
+	if(copytext(seed.name, 1, 13) == "experimental")//13 == length("experimental") + 1
 		return // Already modded name and icon
 	seed.name = "experimental " + seed.name
 	seed.icon_state = "seed-x"
@@ -427,7 +431,7 @@
 
 /obj/item/disk/plantgene/proc/update_name()
 	if(gene)
-		name = "[gene.get_name()] (Plant Data Disk)"
+		name = "[gene.get_name()] (plant data disk)"
 	else
 		name = "plant data disk"
 
@@ -436,5 +440,7 @@
 	to_chat(user, "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/disk/plantgene/examine(mob/user)
-	..()
-	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
+	. = ..()
+	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
+		. += "<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>"
+	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."

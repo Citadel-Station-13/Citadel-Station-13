@@ -3,9 +3,6 @@
 	S["feature_ipc_screen"] >> features["ipc_screen"]
 	S["feature_ipc_antenna"] >> features["ipc_antenna"]
 
-	//Citadel toggles
-	S["cit_toggles"] >> cit_toggles
-
 	features["ipc_screen"] 	= sanitize_inlist(features["ipc_screen"], GLOB.ipc_screens_list)
 	features["ipc_antenna"] 	= sanitize_inlist(features["ipc_antenna"], GLOB.ipc_antennas_list)
 	//Citadel
@@ -16,7 +13,6 @@
 		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
 	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
-	cit_toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 
 	//gear loadout
 	var/text_to_load
@@ -36,7 +32,6 @@
 	WRITE_FILE(S["feature_ipc_antenna"], features["ipc_antenna"])
 	//Citadel
 	WRITE_FILE(S["feature_genitals_use_skintone"], features["genitals_use_skintone"])
-	WRITE_FILE(S["feature_exhibitionist"], features["exhibitionist"])
 	WRITE_FILE(S["feature_mcolor2"], features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"], features["mcolor3"])
 	WRITE_FILE(S["feature_mam_body_markings"], features["mam_body_markings"])
@@ -44,6 +39,7 @@
 	WRITE_FILE(S["feature_mam_ears"], features["mam_ears"])
 	WRITE_FILE(S["feature_mam_tail_animated"], features["mam_tail_animated"])
 	WRITE_FILE(S["feature_taur"], features["taur"])
+	WRITE_FILE(S["feature_mam_snouts"],	features["mam_snouts"])
 	//Xeno features
 	WRITE_FILE(S["feature_xeno_tail"], features["xenotail"])
 	WRITE_FILE(S["feature_xeno_dors"], features["xenodorsal"])
@@ -59,6 +55,7 @@
 	WRITE_FILE(S["feature_has_balls"], features["has_balls"])
 	WRITE_FILE(S["feature_balls_color"], features["balls_color"])
 	WRITE_FILE(S["feature_balls_size"], features["balls_size"])
+	WRITE_FILE(S["feature_balls_shape"], features["balls_shape"])
 	WRITE_FILE(S["feature_balls_sack_size"], features["balls_sack_size"])
 	WRITE_FILE(S["feature_balls_fluid"], features["balls_fluid"])
 	//breasts features
@@ -67,6 +64,7 @@
 	WRITE_FILE(S["feature_breasts_shape"], features["breasts_shape"])
 	WRITE_FILE(S["feature_breasts_color"], features["breasts_color"])
 	WRITE_FILE(S["feature_breasts_fluid"], features["breasts_fluid"])
+	WRITE_FILE(S["feature_breasts_producing"], features["breasts_producing"])
 	//vagina features
 	WRITE_FILE(S["feature_has_vag"], features["has_vag"])
 	WRITE_FILE(S["feature_vag_shape"], features["vag_shape"])
@@ -75,8 +73,6 @@
 	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
 	//flavor text
 	WRITE_FILE(S["feature_flavor_text"], features["flavor_text"])
-
-	WRITE_FILE(S["cit_toggles"], cit_toggles)
 
 	//gear loadout
 	if(islist(chosen_gear))

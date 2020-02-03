@@ -15,7 +15,7 @@
 
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
-	var/initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	//approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
 	// If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
 
@@ -42,8 +42,7 @@
 
 /turf/open/Destroy()
 	if(active_hotspot)
-		qdel(active_hotspot)
-		active_hotspot = null
+		QDEL_NULL(active_hotspot)
 	// Adds the adjacent turfs to the current atmos processing
 	for(var/T in atmos_adjacent_turfs)
 		SSair.add_to_active(T)
@@ -73,11 +72,13 @@
 		air.copy_from(copy)
 
 /turf/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	var/datum/gas_mixture/GM = new
 	GM.copy_from_turf(src)
 	return GM
 
 /turf/open/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	return air
 
 /turf/temperature_expose()
@@ -88,7 +89,7 @@
 	temperature_archived = temperature
 
 /turf/open/archive()
-	air.archive()
+	ARCHIVE_TEMPERATURE(air)
 	archived_cycle = SSair.times_fired
 	temperature_archived = temperature
 
@@ -100,27 +101,37 @@
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
-			vars["vis_contents"] -= overlay
+			vis_contents -= overlay
 
-	if (new_overlay_types.len)
+	if (length(new_overlay_types))
 		if (atmos_overlay_types)
-			vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
+			vis_contents += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
 		else
-			vars["vis_contents"] += new_overlay_types
+			vis_contents += new_overlay_types
 
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types
 
 /turf/open/proc/tile_graphic()
+	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
+	if(!air)
+		return
 	. = new /list
-	if(air)
-		var/list/gases = air.gases
-		for(var/id in gases)
-			var/gas = gases[id]
-			var/gas_meta = gas[GAS_META]
-			var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-			if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-				. += gas_overlay
+	var/list/gases = air.gases
+	for(var/id in gases)
+		if (nonoverlaying_gases[id])
+			continue
+		var/gas = gases[id]
+		var/gas_overlay = GLOB.meta_gas_overlays[id]
+		if(gas_overlay && gas > GLOB.meta_gas_visibility[id])
+			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas / MOLES_GAS_VISIBLE_STEP, 1))]
+
+/proc/typecache_of_gases_with_no_overlays()
+	. = list()
+	for (var/gastype in subtypesof(/datum/gas))
+		var/datum/gas/gasvar = gastype
+		if (!initial(gasvar.gas_overlay))
+			.[gastype] = TRUE
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
@@ -204,7 +215,7 @@
 	if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
-		G.archive()
+		ARCHIVE_TEMPERATURE(G)
 		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
@@ -213,15 +224,27 @@
 			our_air.share(G, adjacent_turfs_length)
 			LAST_SHARE_CHECK
 
-	our_air.react(src)
-
-	update_visuals()
+	SSair.add_to_react_queue(src)
 
 	if((!our_excited_group && !(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) \
 	  || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
 		SSair.remove_from_active(src)
 
 	atmos_cooldown = cached_atmos_cooldown
+
+/turf/open/space/process_cell(fire_count) //dumb hack to prevent space pollution
+	. = ..()
+	var/datum/gas_mixture/immutable/I = space_gas
+	I.after_process_cell()
+
+/turf/proc/process_cell_reaction()
+	SSair.remove_from_react_queue(src)
+
+/turf/open/process_cell_reaction()
+	air.react(src)
+	update_visuals()
+	SSair.remove_from_react_queue(src)
+	return
 
 //////////////////////////SPACEWIND/////////////////////////////
 
@@ -244,12 +267,13 @@
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
+	var/max_force = sqrt(pressure_difference)*(MOVE_FORCE_DEFAULT / 5)
 	set waitfor = 0
 	var/move_prob = 100
 	if (pressure_resistance > 0)
 		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 	move_prob += pressure_resistance_prob_delta
-	if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
+	if (move_prob > PROBABILITY_OFFSET && prob(move_prob) && (move_resist != INFINITY) && (!anchored && (max_force >= (move_resist * MOVE_FORCE_PUSH_RATIO))) || (anchored && (max_force >= (move_resist * MOVE_FORCE_FORCEPUSH_RATIO))))
 		step(src, direction)
 		last_high_pressure_movement_air_cycle = SSair.times_fired
 
@@ -309,7 +333,7 @@
 		A.merge(T.air)
 
 	for(var/id in A_gases)
-		A_gases[id][MOLES] /= turflen
+		A_gases[id] /= turflen
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
@@ -335,6 +359,9 @@
 	SSair.excited_groups -= src
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
+/atom/movable/proc/blocksTemperature()
+	return FALSE
+
 /turf/proc/conductivity_directions()
 	if(archived_cycle < SSair.times_fired)
 		archive()
@@ -349,6 +376,9 @@
 			. |= direction
 
 /turf/proc/neighbor_conduct_with_src(turf/open/other)
+	for (var/atom/movable/G in src)
+		if (G.blocksTemperature())
+			return
 	if(!other.blocks_air) //Open but neighbor is solid
 		other.temperature_share_open_to_solid(src)
 	else //Both tiles are solid
@@ -359,7 +389,9 @@
 	if(blocks_air)
 		..()
 		return
-
+	for (var/atom/movable/G in src)
+		if (G.blocksTemperature())
+			return
 	if(!other.blocks_air) //Both tiles are open
 		var/turf/open/T = other
 		T.air.temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
@@ -378,10 +410,8 @@
 
 				if(!neighbor.thermal_conductivity)
 					continue
-
 				if(neighbor.archived_cycle < SSair.times_fired)
 					neighbor.archive()
-
 				neighbor.neighbor_conduct_with_src(src)
 
 				neighbor.consider_superconductivity()

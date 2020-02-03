@@ -8,18 +8,17 @@ Charged extracts:
 	name = "charged extract"
 	desc = "It sparks with electric power."
 	effect = "charged"
-	container_type = INJECTABLE | DRAWABLE
 	icon_state = "charged"
 
 /obj/item/slimecross/charged/Initialize()
-	..()
-	create_reagents(10)
+	. = ..()
+	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
-	if(!reagents.has_reagent("plasma",10))
+	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
 		to_chat(user, "<span class='warning'>This extract needs to be full of plasma to activate!</span>")
 		return
-	reagents.remove_reagent("plasma",10)
+	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
 	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
@@ -196,7 +195,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/gold/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/slimecross/charged/oil
 	colour = "oil"
@@ -315,7 +314,7 @@ Charged extracts:
 	var/uses = 2
 
 /obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user, proximity)
-	..()
+	. = ..()
 	if(!uses)
 		qdel(src)
 		return
@@ -352,7 +351,7 @@ Charged extracts:
 	var/uses = 2
 
 /obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user, proximity)
-	..()
+	. = ..()
 	if(!uses)
 		qdel(src)
 		return ..()
@@ -386,6 +385,9 @@ Charged extracts:
 	if(user == M)
 		to_chat(user, "<span class='warning'>You can't drink the love potion. What are you, a narcissist?</span>")
 		return ..()
+	if(M.has_status_effect(STATUS_EFFECT_INLOVE))
+		to_chat(user, "<span class='warning'>[M] is already lovestruck!</span>")
+		return ..()
 
 	M.visible_message("<span class='danger'>[user] starts to feed [M] a love potion!</span>",
 		"<span class='userdanger'>[user] starts to feed you a love potion!</span>")
@@ -393,10 +395,11 @@ Charged extracts:
 	if(!do_after(user, 50, target = M))
 		return
 	to_chat(user, "<span class='notice'>You feed [M] the love potion!</span>")
-	to_chat(M, "<span class='notice'>You develop feelings for [user], and anyone [p_they(user)] like.</span>")
-	if(!("[REF(user)]" in M.faction) && M.mind)
-		M.mind.store_memory("You have strong feelings for [user].")
+	to_chat(M, "<span class='notice'>You develop feelings for [user], and anyone [user.p_they()] like.</span>")
+	if(M.mind)
+		M.mind.store_memory("You are in love with [user].")
 	M.faction |= "[REF(user)]"
+	M.apply_status_effect(STATUS_EFFECT_INLOVE, user)
 	qdel(src)
 
 /obj/item/slimepotion/peacepotion
@@ -423,7 +426,7 @@ Charged extracts:
 	else
 		to_chat(user, "<span class='warning'>You drink the pacification potion!</span>")
 	if(isanimal(M))
-		M.add_trait(TRAIT_PACIFISM, MAGIC_TRAIT)
+		ADD_TRAIT(M, TRAIT_PACIFISM, MAGIC_TRAIT)
 	else if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)

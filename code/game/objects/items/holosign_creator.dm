@@ -11,7 +11,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/list/signs = list()
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
@@ -19,6 +19,7 @@
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
 /obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
+	. = ..()
 	if(flag)
 		if(!check_allowed_items(target, 1))
 			return
@@ -77,10 +78,34 @@
 
 /obj/item/holosign_creator/atmos
 	name = "ATMOS holofan projector"
-	desc = "A holographic projector that creates holographic barriers that prevent changes in atmosphere conditions."
-	icon_state = "signmaker_engi"
+	desc = "A holographic projector that creates holographic fans that prevent changes in atmosphere conditions. Somehow."
+	icon_state = "signmaker_atmos"
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
+	max_signs = 3
+
+/obj/item/holosign_creator/firelock
+	name = "ATMOS holofirelock projector"
+	desc = "A holographic projector that creates holographic barriers that prevent changes in temperature conditions."
+	icon_state = "signmaker_engi"
+	holosign_type = /obj/structure/holosign/barrier/firelock
+	creation_time = 0
+	max_signs = 3
+
+/obj/item/holosign_creator/combifan
+	name = "ATMOS holo-combifan projector"
+	desc = "A holographic projector that creates holographic combi-fans that prevent changes in atmosphere and temperature conditions. Somehow."
+	icon_state = "signmaker_atmos"
+	holosign_type = /obj/structure/holosign/barrier/combifan
+	creation_time = 0
+	max_signs = 3
+
+/obj/item/holosign_creator/medical
+	name = "\improper PENLITE barrier projector"
+	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."
+	icon_state = "signmaker_med"
+	holosign_type = /obj/structure/holosign/barrier/medical
+	creation_time = 30
 	max_signs = 3
 
 /obj/item/holosign_creator/cyborg
@@ -122,4 +147,3 @@
 		for(var/H in signs)
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
-

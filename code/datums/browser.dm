@@ -39,12 +39,12 @@
 	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets["[ckey(name)].css"] = file
-	register_asset("[ckey(name)].css", file)
-
-/datum/browser/proc/add_script(name, file)
-	scripts["[ckey(name)].js"] = file
-	register_asset("[ckey(name)].js", file)
+	if(istype(name, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/sheet = name
+		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
+	else
+		stylesheets["[ckey(name)].css"] = file
+		register_asset("[ckey(name)].css", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
@@ -194,7 +194,7 @@
 	.=..()
 	opentime = 0
 
-/datum/browser/modal/open()
+/datum/browser/modal/open(use_onclose = 1)
 	set waitfor = 0
 	opentime = world.time
 
@@ -371,9 +371,11 @@
 				if (isnull(settings["mainsettings"][setting]["value"]))
 					settings["mainsettings"][setting]["value"] = oldval
 			if ("string")
-				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]")
+				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"])
 			if ("number")
 				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]") as num
+			if ("color")
+				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"]) as color
 			if ("boolean")
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
 			if ("ckey")
@@ -461,4 +463,3 @@
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		src.mob.unset_machine()
-	return

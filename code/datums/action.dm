@@ -85,8 +85,10 @@
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
-		return 0
-	return 1
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
+		return FALSE
+	return TRUE
 
 /datum/action/proc/Process()
 	return
@@ -139,6 +141,17 @@
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
+/datum/action/ghost
+	icon_icon = 'icons/mob/mob.dmi'
+	button_icon_state = "ghost"
+	name = "Ghostize"
+	desc = "Turn into a ghost and freely come back to your body."
+
+/datum/action/ghost/Trigger()
+	if(!..())
+		return 0
+	var/mob/M = target
+	M.ghostize(1)
 
 //Presets for item actions
 /datum/action/item_action
@@ -193,10 +206,15 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-/datum/action/item_action/rcl
+/datum/action/item_action/rcl_col
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
@@ -237,6 +255,14 @@
 
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
+
+/datum/action/item_action/toggle_welding_screen
+	name = "Toggle Welding Screen"
+
+/datum/action/item_action/toggle_welding_screen/Trigger()
+	var/obj/item/clothing/head/hardhat/weldhat/H = target
+	if(istype(H))
+		H.toggle_welding_screen(owner)
 
 /datum/action/item_action/toggle_headphones
 	name = "Toggle Headphones"
@@ -487,6 +513,39 @@
 	else
 		to_chat(owner, "<span class='cultitalic'>Your hands are full!</span>")
 
+//MGS Box
+/datum/action/item_action/agent_box
+	name = "Deploy Box"
+	desc = "Find inner peace, here, in the box."
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	background_icon_state = "bg_agent"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "deploy_box"
+	var/cooldown = 0
+	var/boxtype = /obj/structure/closet/cardboard/agent
+
+//Handles open and closing the box
+/datum/action/item_action/agent_box/Trigger()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
+		var/obj/structure/closet/cardboard/agent/box = owner.loc
+		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+		box.open()
+		return
+	//Box closing from here on out.
+	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
+		to_chat(owner, "<span class = 'notice'>You need more space to activate this implant.</span>")
+		return
+	if(cooldown < world.time - 100)
+		var/box = new boxtype(owner.drop_location())
+		owner.forceMove(box)
+		cooldown = world.time
+		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+
+/datum/action/item_action/flash
+	name = "Flash"
 
 //Preset for spells
 /datum/action/spell_action
@@ -697,7 +756,3 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
-
-/datum/action/item_action/storage_gather_mode/Trigger()
-	GET_COMPONENT_FROM(STR, /datum/component/storage, target)
-	STR.gather_mode_switch(owner)

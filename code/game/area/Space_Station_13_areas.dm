@@ -53,7 +53,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "start"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 
 
 //EXTRA
@@ -62,7 +62,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Asteroid"
 	icon_state = "asteroid"
 	requires_power = FALSE
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	blob_allowed = FALSE //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = FALSE
 	ambientsounds = MINING
@@ -250,9 +250,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/disposal/incinerator
 	name = "Incinerator"
 	icon_state = "disposal"
+/area/maintenance/bar
+	name = "Maintenance Bar"
+	icon_state = "maintbar"
 
+/area/maintenance/bar/cafe
+	name = "Abandoned Cafe"
 
 //Hallway
+
+/area/hallway
+	nightshift_public_area = NIGHTSHIFT_AREA_PUBLIC
 
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
@@ -339,6 +347,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/heads/captain
 	name = "Captain's Office"
 	icon_state = "captain"
+	clockwork_warp_allowed = FALSE
 
 /area/crew_quarters/heads/captain/private
 	name = "Captain's Quarters"
@@ -398,14 +407,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = TRUE
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/dorms/male
 	name = "Male Dorm"
 	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/crew_quarters/dorms/female
 	name = "Female Dorm"
 	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/crew_quarters/rehab_dome
 	name = "Rehabilitation Dome"
@@ -442,26 +454,32 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/locker
 	name = "Locker Room"
 	icon_state = "locker"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/lounge
 	name = "Lounge"
 	icon_state = "yellow"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/fitness/recreation
 	name = "Recreation Area"
 	icon_state = "fitness"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/cafeteria
 	name = "Cafeteria"
 	icon_state = "cafeteria"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/cafeteria/lunchroom
 	name = "Lunchroom"
 	icon_state = "cafeteria"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
@@ -474,6 +492,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
@@ -498,19 +517,31 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Abandoned Theatre"
 	icon_state = "Theatre"
 
+/area/crew_quarters/theatre/clown
+	name = "Clown's Office"
+
+/area/crew_quarters/theatre/mime
+	name = "Mime's Office"
+
+/area/crew_quarters/cryopod
+	name = "Cryogenics"
+	icon_state = "cryosleep"
+
 /area/library
- 	name = "Library"
- 	icon_state = "library"
- 	flags_1 = NONE
+	name = "Library"
+	icon_state = "library"
+	flags_1 = NONE
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/library/lounge
- 	name = "Library Lounge"
- 	icon_state = "library"
+	name = "Library Lounge"
+	icon_state = "library"
 
 /area/library/abandoned
- 	name = "Abandoned Library"
- 	icon_state = "library"
- 	flags_1 = NONE
+	name = "Abandoned Library"
+	icon_state = "library"
+	flags_1 = NONE
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/chapel
 	icon_state = "chapel"
@@ -518,12 +549,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	flags_1 = NONE
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "The consecration here prevents you from warping in."
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/chapel/main
 	name = "Chapel"
 
 /area/chapel/main/monastery
 	name = "Monastery"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/chapel/office
 	name = "Chapel Office"
@@ -559,9 +592,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "engine"
 
 /area/engine/atmos
- 	name = "Atmospherics"
- 	icon_state = "atmos"
- 	flags_1 = NONE
+	name = "Atmospherics"
+	icon_state = "atmos"
+	flags_1 = NONE
 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
@@ -587,6 +620,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engine/storage
 	name = "Engineering Storage"
+	icon_state = "engi_storage"
+
+/area/engine/storage_shared
+	name = "Shared Engineering Storage"
 	icon_state = "engi_storage"
 
 /area/engine/transit_tube
@@ -1035,6 +1072,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Toxins Mixing Lab"
 	icon_state = "toxmix"
 
+/area/science/mixing/chamber
+	name = "Toxins Mixing Chamber"
+	icon_state = "toxmix"
+	valid_territory = FALSE
+
 /area/science/misc_lab
 	name = "Testing Lab"
 	icon_state = "toxmisc"
@@ -1086,6 +1128,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/research/abandoned
 	name = "Abandoned Research Lab"
 	icon_state = "medresearch"
+
+/area/science/nanite
+	name = "Nanite Lab"
+	icon_state = "toxmisc"
 
 //Storage
 
@@ -1284,7 +1330,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "For safety reasons, warping here is disallowed; the radio and bluespace noise could cause catastrophic results."
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
-	 										'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
+											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 /area/tcommsat/entrance
 	name = "Telecomms Teleporter"

@@ -48,19 +48,20 @@
 		/obj/item/reagent_containers/spray/waterflower/lube)
 	implants = list(/obj/item/implant/sad_trombone)
 
-	uplink_type = /obj/item/radio/uplink/clownop
+	uplink_type = /obj/item/uplink/clownop
 
 /datum/outfit/syndicate/clownop/no_crystals
 	tc = 0
 
-/datum/outfit/syndicate/clownop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/syndicate/clownop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	if(visualsOnly)
 		return
-	H.dna.add_mutation(CLOWNMUT)
+	H.dna.add_mutation(SMILE)
 
 /datum/outfit/syndicate/clownop/leader
 	name = "Clown Operative Leader - Basic"
 	id = /obj/item/card/id/syndicate/nuke_leader
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	r_hand = /obj/item/nuclear_challenge/clownops
 	command_radio = TRUE

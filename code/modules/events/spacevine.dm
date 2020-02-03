@@ -92,7 +92,7 @@
 	if(issilicon(crosser))
 		return
 	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
-		to_chat(crosser, "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>")
+		to_chat(crosser, "<span class='alert'>You accidentally touch the vine and feel a strange sensation.</span>")
 		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
@@ -172,8 +172,8 @@
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/oxygen])
 			return
-		GM.gases[/datum/gas/oxygen][MOLES] = max(GM.gases[/datum/gas/oxygen][MOLES] - severity * holder.energy, 0)
-		GM.garbage_collect()
+		GM.gases[/datum/gas/oxygen] = max(GM.gases[/datum/gas/oxygen] - severity * holder.energy, 0)
+		GAS_GARBAGE_COLLECT(GM.gases)
 
 /datum/spacevine_mutation/nitro_eater
 	name = "nitrogen consuming"
@@ -187,8 +187,8 @@
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/nitrogen])
 			return
-		GM.gases[/datum/gas/nitrogen][MOLES] = max(GM.gases[/datum/gas/nitrogen][MOLES] - severity * holder.energy, 0)
-		GM.garbage_collect()
+		GM.gases[/datum/gas/nitrogen] = max(GM.gases[/datum/gas/nitrogen] - severity * holder.energy, 0)
+		GAS_GARBAGE_COLLECT(GM.gases)
 
 /datum/spacevine_mutation/carbondioxide_eater
 	name = "CO2 consuming"
@@ -202,8 +202,8 @@
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/carbon_dioxide])
 			return
-		GM.gases[/datum/gas/carbon_dioxide][MOLES] = max(GM.gases[/datum/gas/carbon_dioxide][MOLES] - severity * holder.energy, 0)
-		GM.garbage_collect()
+		GM.gases[/datum/gas/carbon_dioxide] = max(GM.gases[/datum/gas/carbon_dioxide] - severity * holder.energy, 0)
+		GAS_GARBAGE_COLLECT(GM.gases)
 
 /datum/spacevine_mutation/plasma_eater
 	name = "toxins consuming"
@@ -217,8 +217,8 @@
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/plasma])
 			return
-		GM.gases[/datum/gas/plasma][MOLES] = max(GM.gases[/datum/gas/plasma][MOLES] - severity * holder.energy, 0)
-		GM.garbage_collect()
+		GM.gases[/datum/gas/plasma] = max(GM.gases[/datum/gas/plasma] - severity * holder.energy, 0)
+		GAS_GARBAGE_COLLECT(GM.gases)
 
 /datum/spacevine_mutation/thorns
 	name = "thorny"
@@ -251,7 +251,7 @@
 	holder.obj_integrity = holder.max_integrity
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		. = expected_damage * 0.5
 	else
 		. = expected_damage
@@ -292,7 +292,7 @@
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/spacevine/examine(mob/user)
-	..()
+	. = ..()
 	var/text = "This one is a"
 	if(mutations.len)
 		for(var/A in mutations)
@@ -301,7 +301,7 @@
 	else
 		text += " normal"
 	text += " vine."
-	to_chat(user, text)
+	. += text
 
 /obj/structure/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -331,7 +331,7 @@
 
 /obj/structure/spacevine/attacked_by(obj/item/I, mob/living/user)
 	var/damage_dealt = I.force
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		damage_dealt *= 4
 	if(I.damtype == BURN)
 		damage_dealt *= 4

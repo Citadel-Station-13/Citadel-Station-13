@@ -18,11 +18,11 @@
 	hl3_release_date = _half_life
 	can_contaminate = _can_contaminate
 
-	if(istype(parent, /atom)) 
-		RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/rad_examine)
+	if(istype(parent, /atom))
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/rad_examine)
 		if(istype(parent, /obj/item))
-			RegisterSignal(COMSIG_ITEM_ATTACK, .proc/rad_attack)
-			RegisterSignal(COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/rad_attack)
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
 	else
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
 		return
@@ -58,7 +58,7 @@
 	else
 		strength = max(strength, arguments[1])
 
-/datum/component/radioactive/proc/rad_examine(mob/user, atom/thing)
+/datum/component/radioactive/proc/rad_examine(datum/source, mob/user, list/examine_list)
 	var/atom/master = parent
 	var/list/out = list()
 	if(get_dist(master, user) <= 1)
@@ -72,9 +72,9 @@
 			out += "[out ? " and it " : "[master] "]hurts to look at."
 		else
 			out += "."
-	to_chat(user, out.Join())
+	examine_list += out.Join()
 
-/datum/component/radioactive/proc/rad_attack(atom/movable/target, mob/living/user)
+/datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)
 	radiation_pulse(parent, strength/20)
 	target.rad_act(strength/2)
 	strength -= strength / hl3_release_date

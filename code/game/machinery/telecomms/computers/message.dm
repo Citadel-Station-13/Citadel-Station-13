@@ -42,21 +42,23 @@
 		return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
-	if(!isnull(linkedServer))
-		obj_flags |= EMAGGED
-		screen = 2
-		spark_system.set_up(5, 0, src)
-		spark_system.start()
-		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
-		// Will help make emagging the console not so easy to get away with.
-		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-		var/time = 100 * length(linkedServer.decryptkey)
-		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
-		message = rebootmsg
-	else
+	if(isnull(linkedServer))
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
+		return
+	obj_flags |= EMAGGED
+	screen = 2
+	spark_system.set_up(5, 0, src)
+	spark_system.start()
+	var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
+	// Will help make emagging the console not so easy to get away with.
+	MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+	var/time = 100 * length(linkedServer.decryptkey)
+	addtimer(CALLBACK(src, .proc/UnmagConsole), time)
+	message = rebootmsg
+	return TRUE
 
 /obj/machinery/computer/message_monitor/New()
 	. = ..()
@@ -141,7 +143,7 @@
 					break
 				// Del - Sender   - Recepient - Message
 				// X   - Al Green - Your Mom  - WHAT UP!?
-				dat += "<tr><td width = '5%'><center><A href='?src=[REF(src)];delete_logs=[REF(pda)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.recipient]</td><td width='300px'>[pda.message][pda.photo ? " <a href='byond://?src=[REF(pda)];photo=1'>(Photo)</a>":""]</td></tr>"
+				dat += "<tr><td width = '5%'><center><A href='?src=[REF(src)];delete_logs=[REF(pda)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.recipient]</td><td width='300px'>[pda.message][pda.picture ? " <a href='byond://?src=[REF(pda)];photo=1'>(Photo)</a>":""]</td></tr>"
 			dat += "</table>"
 		//Hacking screen.
 		if(2)
@@ -419,11 +421,12 @@
 							"name" = "[customsender]",
 							"job" = "[customjob]",
 							"message" = custommessage,
+							"emojis" = TRUE,
 							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)
-						log_talk(usr, "[key_name(usr)] (PDA: [name]) sent \"[custommessage]\" to [signal.format_target()]", LOGPDA)
+						usr.log_message("(PDA: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
 
 
 		//Request Console Logs - KEY REQUIRED

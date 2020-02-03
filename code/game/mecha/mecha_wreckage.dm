@@ -5,7 +5,7 @@
 
 /obj/structure/mecha_wreckage
 	name = "exosuit wreckage"
-	desc = "Remains of some unfortunate mecha. Completely unrepairable, but perhaps something can be salvaged."
+	desc = "Remains of some unfortunate mecha. Completely irreparable, but perhaps something can be salvaged."
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE
 	anchored = FALSE
@@ -30,9 +30,9 @@
 	AI.remote_control = null
 
 /obj/structure/mecha_wreckage/examine(mob/user)
-	..()
+	. = ..()
 	if(AI)
-		to_chat(user, "<span class='notice'>The AI recovery beacon is active.</span>")
+		. += "<span class='notice'>The AI recovery beacon is active.</span>"
 
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))

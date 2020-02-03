@@ -7,7 +7,7 @@
 	icon_state = "qmcloak"
 	item_state = "qmcloak"
 	w_class = WEIGHT_CLASS_SMALL
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_covered = CHEST|LEGS|ARMS
 
 /obj/item/clothing/head/cloakhood
 	name = "cloak hood"
@@ -15,7 +15,6 @@
 	icon_state = "golhood"
 	desc = "A hood for a cloak."
 	body_parts_covered = HEAD
-	flags_1 = NODROP_1
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/neck/cloak/suicide_act(mob/user)
@@ -63,7 +62,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/twohanded/spear, /obj/item/twohanded/bonespear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife/combat/bone, /obj/item/kitchen/knife/combat/survival)
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60) //a fair alternative to bone armor, requiring alternative materials and gaining a suit slot
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|ARMS|LEGS
 
 /obj/item/clothing/head/hooded/cloakhood/goliath
 	name = "goliath cloak hood"
@@ -81,8 +80,8 @@
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF | GOLIATH_RESISTANCE
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
@@ -90,5 +89,5 @@
 	desc = "The skull of a dragon."
 	armor = list("melee" = 70, "bullet" = 30, "laser" = 50, "energy" = 40, "bomb" = 70, "bio" = 60, "rad" = 50, "fire" = 100, "acid" = 100)
 	heat_protection = HEAD
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF | GOLIATH_RESISTANCE

@@ -79,13 +79,17 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = "#ffffff"
 
 // the power cable object
-/obj/structure/cable/Initialize(mapload, param_color)
+/obj/structure/cable/Initialize(mapload, param_color, _d1, _d2)
 	. = ..()
 
-	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
-	var/dash = findtext(icon_state, "-")
-	d1 = text2num( copytext( icon_state, 1, dash ) )
-	d2 = text2num( copytext( icon_state, dash+1 ) )
+	if(isnull(_d1) || isnull(_d2))
+		// ensure d1 & d2 reflect the icon_state for entering and exiting cable
+		var/dash = findtext(icon_state, "-")
+		d1 = text2num(copytext(icon_state, 1, dash))
+		d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
+	else
+		d1 = _d1
+		d2 = _d2
 
 	var/turf/T = get_turf(src)			// hide if turf is not intact
 	if(level==1)
@@ -199,6 +203,10 @@ By design, d1 is the smallest direction and d2 is the highest
 // Power related
 ///////////////////////////////////////////
 
+// All power generation handled in add_avail()
+// Machines should use add_load(), surplus(), avail()
+// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
 /obj/structure/cable/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
@@ -209,13 +217,29 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)
-		return powernet.avail-powernet.load
+		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
-/obj/structure/cable/proc/avail()
+/obj/structure/cable/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
+	else
+		return 0
+
+/obj/structure/cable/proc/add_delayedload(amount)
+	if(powernet)
+		powernet.delayedload += amount
+
+/obj/structure/cable/proc/delayed_surplus()
+	if(powernet)
+		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+	else
+		return 0
+
+/obj/structure/cable/proc/newavail()
+	if(powernet)
+		return powernet.newavail
 	else
 		return 0
 
@@ -470,7 +494,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("copper" = 2) //2 copper per cable in the coil
+	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 
 /obj/item/stack/cable_coil/cyborg
@@ -619,7 +643,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
-/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user, var/showerror = TRUE)
+/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user, showerror = TRUE, forceddir)
 	var/turf/U = user.loc
 	if(!isturf(U))
 		return
@@ -634,14 +658,14 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		return
 
 
-	if(U == T) //if clicked on the turf we're standing on, try to put a cable in the direction we're facing
+	if(U == T && !forceddir) //if clicked on the turf we're standing on and a direction wasn't supplied, try to put a cable in the direction we're facing
 		place_turf(T,user)
 		return
 
 	var/dirn = get_dir(C, user)
 
-	// one end of the clicked cable is pointing towards us
-	if(C.d1 == dirn || C.d2 == dirn)
+	// one end of the clicked cable is pointing towards us and no direction was supplied
+	if((C.d1 == dirn || C.d2 == dirn) && !forceddir)
 		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
 			if (showerror)
 				to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
@@ -686,7 +710,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 			return
 
-	// exisiting cable doesn't point at our position, so see if it's a stub
+	// exisiting cable doesn't point at our position or we have a supplied direction, so see if it's a stub
 	else if(C.d1 == 0)
 							// if so, make it a full cable pointing from it's old direction to our dirn
 		var/nd1 = C.d2	// these will be the new directions

@@ -93,8 +93,15 @@
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
 	speak_emote = list("squeaks")
+	maxHealth = 90
+	health = 90
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	AIStatus = AI_OFF
+
+	harm_intent_damage = 12
+	obj_damage = 70
+	melee_damage_lower = 15
+	melee_damage_upper = 18
 
 #undef REGENERATION_DELAY

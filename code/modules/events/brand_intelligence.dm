@@ -5,6 +5,7 @@
 
 	min_players = 15
 	max_occurrences = 1
+	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/brand_intelligence
 	announceWhen	= 21
@@ -18,7 +19,14 @@
 									 "Your money can buy happiness!", \
 									 "Engage direct marketing!", \
 									 "Advertising is legalized lying! But don't let that put you off our great deals!", \
-									 "You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.")
+									 "You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.",
+									 "Gamers, rise up!",
+									 "Ok, now, this is epic.",
+									 "HUMAN FUNNY.",
+									 "But I'm already tracer!",
+									 "How do I vore people?",
+									 "ERP?",
+									 "Not epic bros...")
 
 
 /datum/round_event/brand_intelligence/announce(fake)
@@ -31,13 +39,8 @@
 	if(prob(50))
 		priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source].", "Machine Learning Alert")
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-		for(var/obj/machinery/computer/communications/C in GLOB.machines)
-			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-				var/obj/item/paper/P = new(C.loc)
-				P.name = "Rampant brand intelligence"
-				P.info = "Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source]."
-				P.update_icon()
+		print_command_report("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source].", "Rampant brand intelligence")
+
 /datum/round_event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in GLOB.machines)
 		if(!is_station_level(V.z))

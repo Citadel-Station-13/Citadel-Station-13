@@ -5,13 +5,14 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
-	var/obj/item/gps/locked
+	ui_x = 475
+	ui_y = 130
 	var/regime_set = "Teleporter"
 	var/id
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
-	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
-					//Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
+	var/turf/target
+	var/obj/item/implant/imp_t
 
 /obj/machinery/computer/teleporter/Initialize()
 	. = ..()
@@ -33,58 +34,31 @@
 			break
 	return power_station
 
-/obj/machinery/computer/teleporter/attackby(obj/I, mob/living/user, params)
-	if(istype(I, /obj/item/gps))
-		var/obj/item/gps/L = I
-		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
-			if(!user.transferItemToLoc(L, src))
-				to_chat(user, "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
-				return
-			locked = L
-			to_chat(user, "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>")
+obj/machinery/computer/teleporter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "teleporter", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/computer/teleporter/ui_data(mob/user)
+	var/list/data = list()
+	data["power_station"] = power_station ? TRUE : FALSE
+	data["teleporter_hub"] = power_station?.teleporter_hub ? TRUE : FALSE
+	data["regime_set"] = regime_set
+	data["target"] = !target ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"
+	data["calibrating"] = calibrating
+
+	if(power_station?.teleporter_hub?.calibrated || power_station?.teleporter_hub?.accuracy >= 3)
+		data["calibrated"] = TRUE
 	else
-		return ..()
+		data["calibrated"] = FALSE
 
-/obj/machinery/computer/teleporter/ui_interact(mob/user)
-	. = ..()
-	var/data = "<h3>Teleporter Status</h3>"
-	if(!power_station)
-		data += "<div class='statusDisplay'>No power station linked.</div>"
-	else if(!power_station.teleporter_hub)
-		data += "<div class='statusDisplay'>No hub linked.</div>"
-	else
-		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>"
-		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
-		if(calibrating)
-			data += "Calibration: <font color='yellow'>In Progress</font>"
-		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
-			data += "Calibration: <font color='green'>Optimal</font>"
-		else
-			data += "Calibration: <font color='red'>Sub-Optimal</font>"
-		data += "</div><BR>"
+	return data
 
-		data += "<A href='?src=[REF(src)];regimeset=1'>Change regime</A><BR>"
-		data += "<A href='?src=[REF(src)];settarget=1'>Set target</A><BR>"
-		if(locked)
-			data += "<BR><A href='?src=[REF(src)];locked=1'>Get target from memory</A><BR>"
-			data += "<A href='?src=[REF(src)];eject=1'>Eject GPS device</A><BR>"
-		else
-			data += "<BR><span class='linkOff'>Get target from memory</span><BR>"
-			data += "<span class='linkOff'>Eject GPS device</span><BR>"
 
-		data += "<BR><A href='?src=[REF(src)];calibrate=1'>Calibrate Hub</A>"
-
-	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
-	popup.set_content(data)
-	popup.open()
-
-/obj/machinery/computer/teleporter/Topic(href, href_list)
+/obj/machinery/computer/teleporter/ui_act(action, params)
 	if(..())
-		return
-
-	if(href_list["eject"])
-		eject()
-		updateDialog()
 		return
 
 	if(!check_hub_connection())
@@ -94,41 +68,39 @@
 		say("Error: Calibration in progress. Stand by.")
 		return
 
-	if(href_list["regimeset"])
-		power_station.engaged = 0
-		power_station.teleporter_hub.update_icon()
-		power_station.teleporter_hub.calibrated = 0
-		reset_regime()
-	if(href_list["settarget"])
-		power_station.engaged = 0
-		power_station.teleporter_hub.update_icon()
-		power_station.teleporter_hub.calibrated = 0
-		set_target(usr)
-	if(href_list["locked"])
-		power_station.engaged = 0
-		power_station.teleporter_hub.update_icon()
-		power_station.teleporter_hub.calibrated = 0
-		target = get_turf(locked.locked_location)
-	if(href_list["calibrate"])
-		if(!target)
-			say("Error: No target set to calibrate to.")
-			return
-		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
-			say("Hub is already calibrated!")
-			return
-		say("Processing hub calibration to target...")
+	switch(action)
+		if("regimeset")
+			power_station.engaged = FALSE
+			power_station.teleporter_hub.update_icon()
+			power_station.teleporter_hub.calibrated = FALSE
+			reset_regime()
+			. = TRUE
+		if("settarget")
+			power_station.engaged = FALSE
+			power_station.teleporter_hub.update_icon()
+			power_station.teleporter_hub.calibrated = FALSE
+			set_target(usr)
+			. = TRUE
+		if("calibrate")
+			if(!target)
+				say("Error: No target set to calibrate to.")
+				return
+			if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
+				say("Hub is already calibrated!")
+				return
 
-		calibrating = 1
-		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
-			calibrating = 0
-			if(check_hub_connection())
-				power_station.teleporter_hub.calibrated = 1
-				say("Calibration complete.")
-			else
-				say("Error: Unable to detect hub.")
-			updateDialog()
-
-	updateDialog()
+			say("Processing hub calibration to target...")
+			calibrating = TRUE
+			power_station.update_icon()
+			spawn(50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+				calibrating = FALSE
+				if(check_hub_connection())
+					power_station.teleporter_hub.calibrated = TRUE
+					say("Calibration complete.")
+				else
+					say("Error: Unable to detect hub.")
+				power_station.update_icon()
+			. = TRUE
 
 /obj/machinery/computer/teleporter/proc/check_hub_connection()
 	if(!power_station)
@@ -139,15 +111,13 @@
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
 	target = null
+	if(imp_t)
+		UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+		imp_t = null
 	if(regime_set == "Teleporter")
 		regime_set = "Gate"
 	else
 		regime_set = "Teleporter"
-
-/obj/machinery/computer/teleporter/proc/eject()
-	if(locked)
-		locked.forceMove(get_turf(src))
-		locked = null
 
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
 	var/list/L = list()
@@ -159,18 +129,32 @@
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
-			if(!I.imp_in || !isliving(I.loc))
+			if(!I.imp_in || !I.allow_teleport || !isliving(I.imp_in))
 				continue
 			else
-				var/mob/living/M = I.loc
+				var/mob/living/M = I.imp_in
 				if(M.stat == DEAD)
-					if(M.timeofdeath + 6000 < world.time)
+					if(M.timeofdeath + I.lifespan_postmortem < world.time)
 						continue
-				if(is_eligible(I))
-					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+				if(is_eligible(M))
+					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = M
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
+		if(!user.canUseTopic(src, !issilicon(user), NO_DEXTERY)) //check if we are still around
+			return
 		target = L[desc]
+		if(imp_t)
+			UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+			imp_t = null
+		if(isliving(target)) //make sure the living mob is still implanted to be a valid target
+			var/mob/living/M = target
+			var/obj/item/implant/tracking/I = locate() in M.implants
+			if(I)
+				RegisterSignal(I, COMSIG_IMPLANT_REMOVING, .proc/untarget_implant)
+				imp_t = I
+			else
+				target = null
+				return
 		var/turf/T = get_turf(target)
 		log_game("[key_name(user)] has set the teleporter target to [target] at [AREACOORD(T)]")
 
@@ -184,6 +168,8 @@
 			to_chat(user, "<span class='alert'>No active connected stations located.</span>")
 			return
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
+		if(!user.canUseTopic(src, !issilicon(user), NO_DEXTERY)) //again, check if we are still around
+			return
 		var/obj/machinery/teleport/station/target_station = L[desc]
 		if(!target_station || !target_station.teleporter_hub)
 			return
@@ -198,6 +184,14 @@
 		if(target_station.teleporter_console)
 			target_station.teleporter_console.stat &= ~NOPOWER
 			target_station.teleporter_console.update_icon()
+
+/obj/machinery/computer/teleporter/proc/untarget_implant() //untargets from mob the racker was once implanted in to prevent issues.
+	target = null
+	if(power_station)
+		power_station.engaged = FALSE
+		power_station.teleporter_hub?.update_icon()
+	UnregisterSignal(imp_t, COMSIG_IMPLANT_REMOVING)
+	imp_t = null
 
 /obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
 	var/turf/T = get_turf(AM)

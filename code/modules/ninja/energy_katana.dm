@@ -33,6 +33,7 @@
 	to_chat(user, "<span class='notice'>You [dash_toggled ? "enable" : "disable"] the dash function on [src].</span>")
 
 /obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
 	if(dash_toggled)
 		jaunt.Teleport(user, target)
 	if(proximity_flag && (isobj(target) || issilicon(target)))
@@ -55,7 +56,7 @@
 //If we hit the Ninja who owns this Katana, they catch it.
 //Works for if the Ninja throws it or it throws itself or someone tries
 //To throw it at the ninja
-/obj/item/energy_katana/throw_impact(atom/hit_atom)
+/obj/item/energy_katana/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))

@@ -38,6 +38,8 @@
 
 /obj/item/projectile/beam/weak
 	damage = 15
+
+/obj/item/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
 /obj/item/projectile/beam/practice
@@ -51,10 +53,10 @@
 	damage = 5
 
 /obj/item/projectile/beam/xray
-	name = "xray beam"
+	name = "\improper X-ray beam"
 	icon_state = "xray"
 	damage = 15
-	irradiate = 30
+	irradiate = 300
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
 
@@ -67,11 +69,12 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 36
+	damage = 28 // Citadel change for balance from 36
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
+	speed = 0.6
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler
@@ -90,7 +93,7 @@
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isturf(target) || istype(target, /obj/structure/))
+	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
 		target.ex_act(EXPLODE_HEAVY)
 
 /obj/item/projectile/beam/pulse/shotgun
@@ -104,8 +107,8 @@
 /obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
 	life -= 10
 	if(life > 0)
-		. = -1
-	..()
+		. = BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
@@ -115,7 +118,14 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/projectile/beam/emitter/singularity_pull()
-	return //don't want the emitters to miss
+	return
+
+/obj/item/projectile/beam/emitter/hitscan
+	hitscan = TRUE
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter
+	impact_type = /obj/effect/projectile/impact/laser/emitter
+	impact_effect_type = null
 
 /obj/item/projectile/beam/lasertag
 	name = "laser tag beam"
@@ -147,6 +157,11 @@
 
 /obj/item/projectile/beam/lasertag/redtag/hitscan
 	hitscan = TRUE
+
+/obj/item/projectile/beam/lasertag/redtag/hitscan/holy
+	name = "lasrifle beam"
+	damage = 0.1
+	damage_type = BURN
 
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
@@ -182,3 +197,21 @@
 		var/mob/living/carbon/M = target
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
+
+//a shrink ray that shrinks stuff, which grows back after a short while.
+/obj/item/projectile/beam/shrink
+	name = "shrink ray"
+	icon_state = "blue_laser"
+	hitsound = 'sound/weapons/shrink_hit.ogg'
+	damage = 0
+	damage_type = STAMINA
+	flag = "energy"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
+	light_color = LIGHT_COLOR_BLUE
+	var/shrink_time = 90
+
+/obj/item/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
+		return
+	target.AddComponent(/datum/component/shrink, shrink_time)

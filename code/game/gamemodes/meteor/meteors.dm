@@ -21,16 +21,16 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 //Meteor spawning global procs
 ///////////////////////////////
 
-/proc/spawn_meteors(number = 10, list/meteortypes)
+/proc/spawn_meteors(number = 10, list/meteortypes, dir)
 	for(var/i = 0; i < number; i++)
-		spawn_meteor(meteortypes)
+		spawn_meteor(meteortypes, dir)
 
-/proc/spawn_meteor(list/meteortypes)
+/proc/spawn_meteor(list/meteortypes, dir)
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
-		var/startSide = pick(GLOB.cardinals)
+		var/startSide = dir || pick(GLOB.cardinals)
 		var/startZ = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 		pickedstart = spaceDebrisStartLoc(startSide, startZ)
 		pickedgoal = spaceDebrisFinishLoc(startSide, startZ)
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	timerid = QDEL_IN(src, lifetime)
 	chase_target(target)
 
-/obj/effect/meteor/Collide(atom/A)
+/obj/effect/meteor/Bump(atom/A)
 	if(A)
 		ram_turf(get_turf(A))
 		playsound(src.loc, meteorsound, 40, 1)
@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/examine(mob/user)
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		SSmedals.UnlockMedal(MEDAL_METEOR, user.client)
-	..()
+	return ..()
 
 /obj/effect/meteor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MINING)
@@ -301,7 +301,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	if(!isspaceturf(T))
 		new /obj/effect/decal/cleanable/blood(T)
 
-/obj/effect/meteor/meaty/Collide(atom/A)
+/obj/effect/meteor/meaty/Bump(atom/A)
 	A.ex_act(hitpwr)
 	get_hit()
 
@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!isspaceturf(T))
-		new /obj/effect/decal/cleanable/xenoblood(T)
+		new /obj/effect/decal/cleanable/blood/xeno(T)
 
 //Station buster Tunguska
 /obj/effect/meteor/tunguska
@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	..()
 	explosion(src.loc, 5, 10, 15, 20, 0)
 
-/obj/effect/meteor/tunguska/Collide()
+/obj/effect/meteor/tunguska/Bump()
 	..()
 	if(prob(20))
 		explosion(src.loc,2,4,6,8)

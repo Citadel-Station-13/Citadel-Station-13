@@ -44,6 +44,10 @@
 	icon_state = "plate"
 	resistance_flags = NONE
 
+/obj/item/trash/plate/alt
+	desc = "Still some dip left. Sadly still just trash..."
+	icon_state = "plate1"
+
 /obj/item/trash/pistachios
 	name = "pistachios pack"
 	icon_state = "pistachios_pack"
@@ -66,19 +70,12 @@
 	name = "crushed can"
 	icon_state = "cola"
 	resistance_flags = NONE
-	grind_results = list("aluminium" = 10)
+	grind_results = list(/datum/reagent/aluminium = 10)
+
+/obj/item/trash/boritos
+	name = "boritos bag"
+	icon_state = "boritos"
+	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
-
-/obj/item/trash/coal
-	name = "lump of coal"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "slag"
-	desc = "Someone's gotten on the naughty list."
-	grind_results = list("carbon" = 20)
-
-/obj/item/trash/coal/burn()
-	visible_message("[src] fuses into a diamond! Someone wasn't so naughty after all...")
-	new /obj/item/stack/ore/diamond(loc)
-	qdel(src)

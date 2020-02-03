@@ -1,5 +1,5 @@
 /datum/species/mush //mush mush codecuck
-	name = "Mushroomperson"
+	name = "Anthromorphic Mushroom"
 	id = "mush"
 	mutant_bodyparts = list("caps")
 	default_features = list("caps" = "Round")
@@ -9,7 +9,7 @@
 	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like
-	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR)
+	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR,NOGENITALS,NOAROUSAL)
 	inherent_traits = list(TRAIT_NOBREATH)
 	speedmod = 1.5 //faster than golems but not by much
 
@@ -25,10 +25,6 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
-	blacklisted = TRUE //See comment below about locking it out of roundstart. The species is not intended to be available to players yet - and this means wizards, too.
-
-/datum/species/mush/check_roundstart_eligible()
-	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.
 
 /datum/species/mush/after_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H.grant_language(/datum/language/mushroom) //pomf pomf
@@ -41,19 +37,24 @@
 			H.dna.features["caps"] = "Round"
 			handle_mutant_bodyparts(H)
 		H.faction |= "mushroom"
-		mush = new(null)
-		mush.teach(H)
+		mush = new()
+		mush.teach(H, TRUE)
+	RegisterSignal(C, COMSIG_MOB_ON_NEW_MIND, .proc/on_new_mind)
+
+/datum/species/mush/proc/on_new_mind(mob/owner)
+	mush.teach(owner, TRUE) //make_temporary TRUE as it shouldn't carry over to other mobs on mind transfer_to.
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_ON_NEW_MIND)
 	C.faction -= "mushroom"
 	mush.remove(C)
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "weedkiller")
+	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
 		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return TRUE
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)

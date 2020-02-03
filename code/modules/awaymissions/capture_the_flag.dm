@@ -7,8 +7,6 @@
 #define AMMO_DROP_LIFETIME 300
 #define CTF_REQUIRED_PLAYERS 4
 
-
-
 /obj/item/twohanded/ctf
 	name = "banner"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -24,7 +22,6 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/anyonecanpickup = TRUE
@@ -41,6 +38,8 @@
 		reset = new reset_path(get_turf(src))
 
 /obj/item/twohanded/ctf/process()
+	if(is_ctf_target(loc)) //don't reset from someone's hands.
+		return PROCESS_KILL
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in GLOB.player_list)
@@ -125,8 +124,12 @@
 
 /proc/toggle_all_ctf(mob/user)
 	var/ctf_enabled = FALSE
+	var/area/A
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		ctf_enabled = CTF.toggle_ctf()
+		A = get_area(CTF)
+	for(var/obj/machinery/power/emitter/E in A)
+		E.active = ctf_enabled
 	message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
 	notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
 
@@ -154,22 +157,11 @@
 
 	var/list/dead_barricades = list()
 
-	var/static/ctf_object_typecache
 	var/static/arena_reset = FALSE
 	var/static/list/people_who_want_to_play = list()
 
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
-	if(!ctf_object_typecache)
-		ctf_object_typecache = typecacheof(list(
-			/turf,
-			/mob,
-			/area,
-			/obj/machinery,
-			/obj/structure,
-			/obj/effect/ctf,
-			/obj/item/twohanded/ctf
-		))
 	GLOB.poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
@@ -215,7 +207,6 @@
 			if(response == "Yes")
 				toggle_all_ctf(user)
 			return
-
 
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
@@ -273,6 +264,8 @@
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(ctf_gear)
+	M.dna.species.punchdamagehigh = 25
+	M.dna.species.punchdamagelow = 25
 	spawned_mobs += M
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
@@ -338,12 +331,20 @@
 
 /obj/machinery/capture_the_flag/proc/reset_the_arena()
 	var/area/A = get_area(src)
+	var/list/ctf_object_typecache = typecacheof(list(
+				/obj/machinery,
+				/obj/effect/ctf,
+				/obj/item/twohanded/ctf
+			))
 	for(var/atm in A)
-		if(!is_type_in_typecache(atm, ctf_object_typecache))
-			qdel(atm)
+		if (isturf(A) || ismob(A) || isarea(A))
+			continue
 		if(isstructure(atm))
 			var/obj/structure/S = atm
 			S.obj_integrity = S.max_integrity
+		else if(!is_type_in_typecache(atm, ctf_object_typecache))
+			qdel(atm)
+
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
@@ -369,6 +370,10 @@
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
+/proc/ctf_floor_vanish(atom/target)
+	if(isturf(target.loc))
+		qdel(target)
+
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
@@ -376,11 +381,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/m50/ctf
 	ammo_type = /obj/item/ammo_casing/a50/ctf
@@ -403,22 +404,14 @@
 
 /obj/item/gun/ballistic/automatic/laser/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/laser/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
 /obj/item/ammo_box/magazine/recharge/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_casing/caseless/laser/ctf
 	projectile_type = /obj/item/projectile/beam/ctf
@@ -436,9 +429,9 @@
 	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
+	if(isliving(target))
+		var/mob/living/H = target
+		if((RED_TEAM in H.faction) || (BLUE_TEAM in H.faction))
 			. = TRUE
 
 // RED TEAM GUNS
@@ -471,6 +464,19 @@
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
+// MELEE GANG
+/obj/item/claymore/ctf
+	slot_flags = SLOT_BACK
+
+/obj/item/claymore/ctf/pre_attack(atom/target, mob/user, params)
+	if(!is_ctf_target(target))
+		return FALSE
+	return ..()
+
+/obj/item/claymore/ctf/dropped()
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
+
 /datum/outfit/ctf
 	name = "CTF"
 	ears = /obj/item/radio/headset
@@ -484,8 +490,9 @@
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf
+	back = /obj/item/claymore/ctf
 
-/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 	var/list/no_drops = list()
@@ -494,14 +501,14 @@
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
 
-	// The shielded hardsuit is already NODROP_1
+	// The shielded hardsuit is already TRAIT_NODROP
 	no_drops += H.get_item_by_slot(SLOT_GLOVES)
 	no_drops += H.get_item_by_slot(SLOT_SHOES)
 	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
 	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.flags_1 |= NODROP_1
+		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill
@@ -527,7 +534,7 @@
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
-/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_RED)
@@ -535,7 +542,7 @@
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
 
-/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_BLUE)
@@ -555,7 +562,7 @@
 	anchored = TRUE
 	alpha = 255
 
-/obj/structure/trap/examine(mob/user)
+/obj/structure/trap/ctf/examine(mob/user)
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
@@ -606,10 +613,10 @@
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
 	reload(AM)
 
-/obj/effect/ctf/ammo/Collide(atom/movable/AM)
+/obj/effect/ctf/ammo/Bump(atom/movable/AM)
 	reload(AM)
 
-/obj/effect/ctf/ammo/CollidedWith(atom/movable/AM)
+/obj/effect/ctf/ammo/Bumped(atom/movable/AM)
 	reload(AM)
 
 /obj/effect/ctf/ammo/proc/reload(mob/living/M)

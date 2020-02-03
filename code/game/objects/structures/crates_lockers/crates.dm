@@ -13,6 +13,8 @@
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
+	material_drop = /obj/item/stack/sheet/plasteel
+	material_drop_amount = 5
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/New()
@@ -54,6 +56,12 @@
 		manifest = null
 		update_icon()
 
+/obj/structure/closet/crate/handle_lock_addition()
+	return
+
+/obj/structure/closet/crate/handle_lock_removal()
+	return
+
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
@@ -69,9 +77,18 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
-	max_integrity = 70 
+	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
+
+/obj/structure/closet/crate/coffin/examine(mob/user)
+	. = ..()
+	if(user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		. += {"<span class='cult'>This is a coffin which you can use to regenerate your burns and other wounds faster.</span>"}
+		. += {"<span class='cult'>You can also thicken your blood if you survive the day, and hide from the sun safely while inside.</span>"}
+	/*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+			. += {"<span class='cult'>This is a coffin which your master can use to shield himself from the unforgiving sun.\n
+			You yourself are still human and dont need it. Yet.</span>"} */
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -93,9 +110,29 @@
 	name = "freezer"
 	icon_state = "freezer"
 
+//Snowflake organ freezer code
+//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
+
+/obj/structure/closet/crate/freezer/open()
+	recursive_organ_check(src)
+	..()
+
+/obj/structure/closet/crate/freezer/close()
+	..()
+	recursive_organ_check(src)
+
+/obj/structure/closet/crate/freezer/Destroy()
+	recursive_organ_check(src)
+	..()
+
+/obj/structure/closet/crate/freezer/Initialize()
+	. = ..()
+	recursive_organ_check(src)
+
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."
+	icon_state = "surgery"
 
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
@@ -107,6 +144,9 @@
 	new /obj/item/reagent_containers/blood/OMinus(src)
 	new /obj/item/reagent_containers/blood/OPlus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/jellyblood(src)
+	new /obj/item/reagent_containers/blood/insect(src)
+	new /obj/item/reagent_containers/blood/synthetics(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 

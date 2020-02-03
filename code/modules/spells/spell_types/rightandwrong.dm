@@ -42,6 +42,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/revolver/grenadelauncher,
 	/obj/item/gun/ballistic/revolver/golden,
 	/obj/item/gun/ballistic/automatic/sniper_rifle,
+	/obj/item/gun/ballistic/rocketlauncher,
 	/obj/item/gun/medbeam,
 	/obj/item/gun/energy/laser/scatter,
 	/obj/item/gun/energy/gravity_gun))
@@ -96,7 +97,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		SSticker.mode.traitors += H.mind
 
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
-		H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
+		H.log_message("was made into a survivalist, and trusts no one!", LOG_ATTACK, color="red")
 
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
@@ -116,7 +117,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	if(prob(GLOB.summon_magic_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/magic)
-		H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
+		H.log_message("was made into a survivalist, and trusts no one!</font>", LOG_ATTACK, color="red")
 
 	var/magic_type = pick(GLOB.summoned_magic)
 	var/lucky = FALSE

@@ -32,6 +32,8 @@
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."
+	hud_type = /datum/hud/constructs
+	blood_volume = 0
 	var/list/construct_spells = list()
 	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
@@ -68,18 +70,13 @@
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	var/msg = "<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
-	msg += "[desc]\n"
+	. = list("<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
 	if(health < maxHealth)
-		msg += "<span class='warning'>"
 		if(health >= maxHealth/2)
-			msg += "[t_He] look[t_s] slightly dented.\n"
+			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
 		else
-			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
-		msg += "</span>"
-	msg += "*---------*</span>"
-
-	to_chat(user, msg)
+			. += "<span class='warning'><b>[t_He] look[t_s] severely dented!</b></span>"
+	. += "*---------*</span>"
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(isconstruct(M)) //is it a construct?
@@ -121,8 +118,8 @@
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
-	maxHealth = 200
-	health = 200
+	maxHealth = 150
+	health = 150
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
 	obj_damage = 90
@@ -147,7 +144,7 @@
 
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		var/reflectchance = 60 - round(P.damage/3)
+		var/reflectchance = 40 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
 			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
@@ -170,9 +167,9 @@
 					new_angle_s -= 360
 				P.setAngle(new_angle_s)
 
-			return -1 // complete projectile permutation
+			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-	return (..(P))
+	return ..()
 
 
 
@@ -227,7 +224,7 @@
 /mob/living/simple_animal/hostile/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
-	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar-Sie's armies."
+	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar'Sie's armies."
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
@@ -311,7 +308,7 @@
 /mob/living/simple_animal/hostile/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
-	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
+	desc = "A long, thin construct built to herald Nar'Sie's rise. It'll be all over soon."
 	icon_state = "chosen"
 	icon_living = "chosen"
 	maxHealth = 40
@@ -328,7 +325,7 @@
 	can_repair_constructs = TRUE
 
 
-/mob/living/simple_animal/hostile/construct/harvester/Collide(atom/AM)
+/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
 	. = ..()
 	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
 		var/atom/movable/stored_pulling = pulling
@@ -337,12 +334,12 @@
 			stored_pulling.forceMove(loc)
 		forceMove(AM)
 		if(stored_pulling)
-			start_pulling(stored_pulling, TRUE) //drag anything we're pulling through the wall with us by magic
+			start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.has_trait(TRAIT_NODISMEMBER))
+		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 			return ..()		//ATTACK!
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0
@@ -463,4 +460,3 @@
 			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
 			hud_used.healths.icon_state = "[icon_state]_health6"
-

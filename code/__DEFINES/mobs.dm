@@ -54,6 +54,10 @@
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
 
+#define BODYPART_NOT_DISABLED 0
+#define BODYPART_DISABLED_DAMAGE 1
+#define BODYPART_DISABLED_PARALYSIS 2
+
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
@@ -112,6 +116,7 @@
 #define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
+#define BIOWARE_LIGAMENTS "ligaments"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -137,14 +142,6 @@
 #define SANITY_UNSTABLE 50
 #define SANITY_CRAZY 25
 #define SANITY_INSANE 0
-
-//Beauty levels of areas for carbons
-#define BEAUTY_LEVEL_HORRID -100
-#define BEAUTY_LEVEL_BAD -66
-#define BEAUTY_LEVEL_MEH -33
-#define BEAUTY_LEVEL_DECENT 33
-#define BEAUTY_LEVEL_GOOD 66
-#define BEAUTY_LEVEL_GREAT 100
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -203,11 +200,13 @@
 #define NO_SLIP_WHEN_WALKING	(1<<0)
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
-#define SLIDE_ICE				(1<<3)
+#define FLYING_DOESNT_HELP		(1<<3)
+#define SLIDE_ICE				(1<<4)
+#define SLIP_WHEN_CRAWLING		(1<<5) //clown planet ruin amongst others
+#define SLIP_WHEN_JOGGING		(1<<6) //slips prevented by walking are also dodged if the mob is nor sprinting or fatigued... unless this flag is on.
+
 
 #define MAX_CHICKENS 50
-
-#define UNHEALING_EAR_DAMAGE 100
 
 
 #define INCORPOREAL_MOVE_BASIC 1
@@ -224,7 +223,7 @@
 
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
-#define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+#define SHADOW_SPECIES_LIGHT_THRESHOLD 0.05
 
 // Offsets defines
 
@@ -237,11 +236,15 @@
 #define OFFSET_S_STORE "s_store"
 #define OFFSET_FACEMASK "mask"
 #define OFFSET_HEAD "head"
-#define OFFSET_FACE "face"
+#define OFFSET_EYES "eyes"
+#define OFFSET_LIPS "lips"
 #define OFFSET_BELT "belt"
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HAIR "hair"
+#define OFFSET_FHAIR "fhair"
+#define OFFSET_MUTPARTS "mutantparts"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN				18	//youngest a character can be //CITADEL EDIT - 17 --> 18
@@ -260,6 +263,17 @@
 
 #define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
 
+#define MAX_REVIVE_FIRE_DAMAGE 180
+#define MAX_REVIVE_BRUTE_DAMAGE 180
+
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
+
+// /obj/item/bodypart on_mob_life() retval flag
+#define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
+
+#define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define PULL_PRONE_SLOWDOWN 0.6
+#define HUMAN_CARRY_SLOWDOWN 0

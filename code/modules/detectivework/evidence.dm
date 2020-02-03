@@ -9,13 +9,14 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/evidencebag/afterattack(obj/item/I, mob/user,proximity)
+	. = ..()
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)
 
 /obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
 	if(evidencebagEquip(I, user))
-		return 1
+		return TRUE
 
 /obj/item/evidencebag/handle_atom_del(atom/A)
 	cut_overlays()
@@ -24,12 +25,12 @@
 	desc = initial(desc)
 
 /obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
-	if(!istype(I) || I.anchored == 1)
+	if(!istype(I) || I.anchored == TRUE)
 		return
 
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
-		return 1 //now this is podracing
+		return TRUE //now this is podracing
 
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
 		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
@@ -40,8 +41,8 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(I.loc.SendSignal(COMSIG_CONTAINS_STORAGE))	//in a container.
-			I.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, I, src)
+		if(SEND_SIGNAL(I.loc, COMSIG_CONTAINS_STORAGE))	//in a container.
+			SEND_SIGNAL(I.loc, COMSIG_TRY_STORAGE_TAKE, I, src)
 		if(!user.dropItemToGround(I))
 			return
 
@@ -61,7 +62,7 @@
 	desc = "An evidence bag containing [I]. [I.desc]"
 	I.forceMove(src)
 	w_class = I.w_class
-	return 1
+	return TRUE
 
 /obj/item/evidencebag/attack_self(mob/user)
 	if(contents.len)

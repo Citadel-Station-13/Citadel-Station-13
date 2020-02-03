@@ -42,12 +42,16 @@
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 0
+	var/equipment_disabled = 0 //disabled due to EMP
 	var/dna_lock //dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect_system/spark_spread/spark_system = new
 	var/lights = FALSE
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
+	var/completely_disabled = FALSE //stops the mech from doing anything
+	var/breach_time = 0
+	var/recharge_rate = 0
 
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
@@ -65,7 +69,7 @@
 	var/internal_damage = 0 //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(ACCESS_ENGINE,ACCESS_ROBOTICS)//REQUIRED ACCESS LEVEL TO OPEN CELL COMPARTMENT
+	var/list/internals_req_access = list(ACCESS_ROBOTICS)//REQUIRED ACCESS LEVEL TO OPEN CELL COMPARTMENT
 
 	var/wreckage
 
@@ -143,7 +147,6 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
-	diag_hud_set_mechtracking()
 
 /obj/mecha/get_cell()
 	return cell
@@ -205,6 +208,15 @@
 	GLOB.mechas_list -= src //global mech list
 	return ..()
 
+/obj/mecha/proc/restore_equipment()
+	equipment_disabled = 0
+	if(istype(src, /obj/mecha/combat))
+		mouse_pointer = 'icons/mecha/mecha_mouse.dmi'
+	if(occupant)
+		SEND_SOUND(occupant, sound('sound/items/timer.ogg', volume=50))
+		to_chat(occupant, "<span=notice>Equipment control unit has been rebooted successfuly.</span>")
+		occupant.update_mouse_pointer()
+
 /obj/mecha/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
@@ -237,9 +249,8 @@
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
-	cabin_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	cabin_air.gases[/datum/gas/oxygen][MOLES] = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
-	cabin_air.gases[/datum/gas/nitrogen][MOLES] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.gases[/datum/gas/oxygen] = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.gases[/datum/gas/nitrogen] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	return cabin_air
 
 /obj/mecha/proc/add_radio()
@@ -260,23 +271,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /obj/mecha/examine(mob/user)
-	..()
+	. = ..()
 	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
-			to_chat(user, "It's fully intact.")
+			. += "It's fully intact."
 		if(65 to 85)
-			to_chat(user, "It's slightly damaged.")
+			. += "It's slightly damaged."
 		if(45 to 65)
-			to_chat(user, "It's badly damaged.")
+			. += "It's badly damaged."
 		if(25 to 45)
-			to_chat(user, "It's heavily damaged.")
+			. += "It's heavily damaged."
 		else
-			to_chat(user, "It's falling apart.")
+			. += "It's falling apart."
 	if(equipment && equipment.len)
-		to_chat(user, "It's equipped with:")
+		. += "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			to_chat(user, "[icon2html(ME, user)] \A [ME].")
+			. += "[icon2html(ME, user)] \A [ME]."
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -395,13 +406,12 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
-	diag_hud_set_mechtracking()
-
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
+	. = ..()
 	if(speaker == occupant)
 		if(radio.broadcasting)
 			radio.talk_into(speaker, text, , spans, message_language)
@@ -410,7 +420,7 @@
 		for(var/mob/M in get_hearers_in_view(7,src))
 			if(M.client)
 				speech_bubble_recipients.Add(M.client)
-		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 ////////////////////////////
 ///// Action processing ////
@@ -421,6 +431,8 @@
 	if(!occupant || occupant != user )
 		return
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
+		return
+	if(completely_disabled)
 		return
 	if(phasing)
 		occupant_message("Unable to interact with objects while phasing")
@@ -445,13 +457,13 @@
 	var/mob/living/L = user
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
-			if(L.has_trait(TRAIT_PACIFISM) && selected.harmful)
+			if(HAS_TRAIT(L, TRAIT_PACIFISM) && selected.harmful)
 				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
 			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
-		if(isliving(target) && selected.harmful && L.has_trait(TRAIT_PACIFISM))
+		if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
 		if(selected.action(target,params))
@@ -499,6 +511,8 @@
 		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
+	if(completely_disabled)
+		return
 	if(!direction)
 		return
 	if(user != occupant) //While not "realistic", this piece is player friendly.
@@ -537,7 +551,7 @@
 	var/oldloc = loc
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(dir != direction && !strafe)
+	else if(dir != direction && (!strafe || occupant.client.keys_held["Alt"]))
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
@@ -568,7 +582,7 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Collide(var/atom/obstacle)
+/obj/mecha/Bump(var/atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		spawn()
 			if(can_move)
@@ -1014,18 +1028,16 @@
 			to_chat(occupant, "[icon2html(src, occupant)] [message]")
 	return
 
-/obj/mecha/proc/log_message(message as text,red=null)
+/obj/mecha/log_message(message as text, message_type=LOG_GAME, color=null, log_globally)
 	log.len++
-	log[log.len] = list("time"="[station_time_timestamp()]","date","year"="[GLOB.year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]","date","year"="[GLOB.year_integer]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
+	..()
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
 	var/list/last_entry = log[log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
-
-GLOBAL_VAR_INIT(year, time2text(world.realtime,"YYYY"))
-GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 ///////////////////////
 ///// Power stuff /////

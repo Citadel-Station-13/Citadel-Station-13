@@ -15,10 +15,10 @@
 	ammo_x_offset = 2
 	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
 	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated icon
-	var/selfcharge = 0
+	var/selfcharge = EGUN_NO_SELFCHARGE // EGUN_SELFCHARGE if true, EGUN_SELFCHARGE_BORG drains the cyborg's cell to recharge its own
 	var/charge_tick = 0
 	var/charge_delay = 4
-	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
+	var/use_cyborg_cell = FALSE //whether the gun drains the cyborg user's cell instead, not to be confused with EGUN_SELFCHARGE_BORG
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
@@ -58,15 +58,25 @@
 
 /obj/item/gun/energy/Destroy()
 	QDEL_NULL(cell)
+	QDEL_LIST(ammo_type)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/gun/energy/process()
-	if(selfcharge && cell && cell.percent() < 100)
+	if(selfcharge && cell?.charge < cell.maxcharge)
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
 		charge_tick = 0
+		if(selfcharge == EGUN_SELFCHARGE_BORG)
+			var/atom/owner = loc
+			if(istype(owner, /obj/item/robot_module))
+				owner = owner.loc
+			if(!iscyborg(owner))
+				return
+			var/mob/living/silicon/robot/R = owner
+			if(!R.cell?.use(100))
+				return
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
@@ -79,7 +89,7 @@
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	return cell.charge >= shot.e_cost
+	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
 	if (!ammo_type || !cell)
@@ -130,25 +140,29 @@
 	return
 
 /obj/item/gun/energy/update_icon(force_update)
+	if(QDELETED(src))
+		return
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
+	var/ratio = can_shoot() ? CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+				// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if it's power cell is removed.
+				// TG issues #5361 & #47908
 	if(ratio == old_ratio && !force_update)
 		return
 	old_ratio = ratio
 	cut_overlays()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
 	if(!initial(item_state))
 		itemState = icon_state
 	if (modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		add_overlay("[icon_state]_[shot.select_name]")
 		iconState += "_[shot.select_name]"
 		if(itemState)
 			itemState += "[shot.select_name]"
-	if(cell.charge < shot.e_cost)
+	if(ratio == 0)
 		add_overlay("[icon_state]_empty")
 	else
 		if(!shaded_charge)
@@ -163,9 +177,6 @@
 		itemState += "[ratio]"
 		item_state = itemState
 
-/obj/item/gun/energy/ui_action_click()
-	toggle_gunlight()
-
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -173,6 +184,7 @@
 		if(user.is_holding(src))
 			user.visible_message("<span class='suicide'>[user] melts [user.p_their()] face off with [src]!</span>")
 			playsound(loc, fire_sound, 50, 1, -1)
+			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_icon()

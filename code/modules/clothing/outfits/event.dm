@@ -12,7 +12,7 @@
 	belt = /obj/item/tank/internals/emergency_oxygen/double
 	id = /obj/item/card/id/gold
 
-/datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 	H.fully_replace_character_name(H.real_name, "Santa Claus")
@@ -26,5 +26,5 @@
 
 	var/obj/item/storage/backpack/bag = H.back
 	var/obj/item/a_gift/gift = new(H)
-	while(bag.SendSignal(COMSIG_TRY_STORAGE_INSERT, gift, null, TRUE, FALSE))
+	while(SEND_SIGNAL(bag, COMSIG_TRY_STORAGE_INSERT, gift, null, TRUE, FALSE))
 		gift = new(H)

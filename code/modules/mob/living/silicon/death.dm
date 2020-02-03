@@ -1,5 +1,5 @@
-/mob/living/silicon/spawn_gibs()
-	new /obj/effect/gibspawner/robot(drop_location())
+/mob/living/silicon/spawn_gibs(with_bodyparts, atom/loc_override)
+	new /obj/effect/gibspawner/robot(loc_override ? loc_override.drop_location() : drop_location(), src)
 
 /mob/living/silicon/spawn_dust()
 	new /obj/effect/decal/remains/robot(loc)

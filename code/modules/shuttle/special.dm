@@ -48,7 +48,7 @@
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
-	return
+	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
@@ -165,7 +165,7 @@
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
-	access_card.flags_1 |= NODROP_1
+	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -187,7 +187,7 @@
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Knockdown(40)
-		M.throw_at(throwtarget, 5, 1,src)
+		M.throw_at(throwtarget, 5, 1)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
 		. = ..()
@@ -199,7 +199,7 @@
 		if(H.mind && H.mind.assigned_role == "Bartender")
 			return TRUE
 
-	var/obj/item/card/id/ID = user.get_idcard()
+	var/obj/item/card/id/ID = user.get_idcard(FALSE)
 	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 
@@ -223,7 +223,7 @@
 
 
 #define LUXURY_MESSAGE_COOLDOWN 100
-/obj/effect/forcefield/luxury_shuttle/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/luxury_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
 
@@ -245,6 +245,17 @@
 		counted_money += S
 		if(total_cash >= threshold)
 			break
+
+	if(AM.pulling)
+		if(istype(AM.pulling, /obj/item/coin))
+			var/obj/item/coin/C = AM.pulling
+			total_cash += C.value
+			counted_money += C
+
+		else if(istype(AM.pulling, /obj/item/stack/spacecash))
+			var/obj/item/stack/spacecash/S = AM.pulling
+			total_cash += S.value * S.amount
+			counted_money += S
 
 	if(total_cash >= threshold)
 		for(var/obj/I in counted_money)

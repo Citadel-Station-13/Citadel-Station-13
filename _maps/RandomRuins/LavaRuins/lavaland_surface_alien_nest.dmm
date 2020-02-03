@@ -1,0 +1,2005 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ac" = (
+/obj/structure/alien/resin/wall,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ad" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ae" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien/maid,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"af" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ag" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ah" = (
+/obj/structure/bed/nest,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aj" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/storage/backpack/clown,
+/obj/item/bikehorn,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ak" = (
+/obj/structure/alien/resin/membrane,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"al" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"am" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"an" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ao" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ap" = (
+/obj/structure/bed/nest,
+/obj/structure/alien/weeds,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/gloves/combat,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/under/syndicate/tacticool,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aq" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ar" = (
+/obj/structure/alien/weeds/node,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"as" = (
+/obj/structure/alien/resin/wall,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"at" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"au" = (
+/obj/structure/alien/weeds,
+/obj/item/grown/bananapeel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"av" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien/sentinel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aw" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/membrane,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aA" = (
+/obj/structure/alien/weeds,
+/obj/item/flamethrower,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aB" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/c45,
+/obj/effect/decal/cleanable/blood/gibs,
+/mob/living/simple_animal/hostile/alien/sentinel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aC" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/c45{
+	pixel_x = -6
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aE" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aF" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aG" = (
+/obj/structure/alien/weeds,
+/obj/structure/mecha_wreckage/ripley,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aH" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aI" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aJ" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aL" = (
+/obj/structure/alien/weeds,
+/obj/item/tank/internals/plasma,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aM" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/xeno,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aQ" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/clothing/suit/bio_suit/security,
+/obj/item/clothing/head/bio_hood/security,
+/obj/item/clothing/mask/breath,
+/obj/item/flashlight/seclite,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aS" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aT" = (
+/obj/structure/alien/weeds,
+/obj/item/twohanded/required/chainsaw,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aU" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/twohanded/fireaxe/boneaxe,
+/obj/item/clothing/head/helmet/gladiator,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aV" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aW" = (
+/obj/structure/alien/resin/wall,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aX" = (
+/obj/structure/alien/weeds,
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aY" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs,
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"aZ" = (
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/xenonest)
+"ba" = (
+/obj/structure/stone_tile/slab,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bb" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bc" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bd" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/xeno,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"be" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bf" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bg" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"bh" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bi" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/book_of_babel,
+/obj/item/clothing/head/wizard/black,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"bj" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/center/cracked,
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"bk" = (
+/obj/structure/stone_tile/block,
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"bl" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bm" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bn" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bo" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center,
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"bp" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"bq" = (
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"br" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/xeno,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bs" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"bt" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center,
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"bu" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"bv" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bw" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bx" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/xeno,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"by" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bz" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bA" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bB" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"bC" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/mob/living/simple_animal/hostile/alien,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"bD" = (
+/obj/structure/alien/weeds,
+/turf/template_noop,
+/area/ruin/unpowered/xenonest)
+"bE" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/center/cracked,
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
+"dE" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/healthanalyzer,
+/obj/item/clothing/suit/bio_suit/scientist,
+/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"iA" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/head/welding,
+/obj/item/weldingtool/largetank,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"kp" = (
+/obj/structure/alien/weeds,
+/obj/item/reagent_containers/syringe/alien,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"lG" = (
+/obj/structure/alien/weeds,
+/obj/effect/mob_spawn/alien/corpse/humanoid/drone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"pE" = (
+/obj/effect/mob_spawn/alien/corpse/humanoid/queen,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"yf" = (
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/alien/sentinel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"Dd" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/storage/backpack/duffelbag/sec/surgery,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"JM" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/mob_spawn/alien/corpse/humanoid/drone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"Uh" = (
+/obj/structure/alien/weeds,
+/obj/item/xenos_claw,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"Vi" = (
+/obj/structure/bed/nest,
+/obj/structure/alien/weeds,
+/obj/item/clothing/suit/space/hardsuit/mining,
+/obj/item/clothing/gloves/color/black,
+/obj/item/radio/headset/headset_cargo/mining,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"VZ" = (
+/obj/structure/alien/weeds,
+/obj/effect/gibspawner/human,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"ZT" = (
+/obj/effect/mob_spawn/human/corpse/syndicatesoldier,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+
+(1,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+ab
+ac
+ac
+aj
+ac
+am
+ac
+ac
+ac
+ac
+ab
+ab
+ac
+ac
+ac
+aU
+ak
+ag
+ar
+aH
+aJ
+ac
+ac
+ac
+ac
+aS
+ak
+am
+ak
+am
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+ab
+ac
+ad
+ad
+af
+ag
+ak
+ag
+ag
+ac
+ac
+ac
+ac
+ag
+af
+ag
+aE
+ag
+aF
+ac
+ag
+ag
+aL
+ag
+ag
+VZ
+ag
+ag
+ag
+ar
+ag
+af
+ac
+ac
+ac
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+ab
+ac
+ae
+ak
+ar
+ag
+au
+ag
+ag
+av
+ac
+ag
+ag
+ag
+ar
+ag
+ac
+ac
+ac
+ac
+ag
+ag
+ag
+ar
+ag
+af
+ac
+ac
+ac
+ag
+ag
+ag
+ag
+ag
+ag
+ac
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+ab
+ac
+af
+ak
+ag
+lG
+ac
+ac
+ag
+ar
+ag
+ag
+aA
+ag
+ac
+ac
+ac
+an
+an
+ac
+ac
+ac
+aM
+ag
+ac
+ac
+ac
+an
+ac
+al
+ac
+ag
+ag
+ao
+ag
+ag
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+ab
+ac
+ag
+ag
+ag
+ag
+aF
+ag
+ag
+ag
+ac
+ac
+ag
+ac
+ac
+ac
+an
+an
+an
+an
+an
+ac
+ag
+ac
+ac
+an
+an
+an
+ac
+ac
+ac
+ac
+ac
+ZT
+ac
+ag
+ag
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+ab
+ac
+ac
+am
+ac
+af
+ar
+ag
+ac
+ac
+ac
+am
+aF
+ag
+ag
+ac
+ac
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ac
+ac
+ac
+ag
+ag
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+ab
+ab
+ac
+ac
+ac
+ac
+am
+ac
+ac
+an
+ac
+ac
+ag
+ar
+ag
+ag
+ac
+ac
+ac
+an
+an
+an
+an
+an
+an
+an
+ac
+ac
+ac
+ac
+an
+an
+an
+an
+ac
+ac
+ar
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+ab
+ab
+an
+an
+ac
+ac
+ac
+an
+an
+an
+ac
+ac
+ac
+ag
+ag
+ag
+ag
+ac
+an
+an
+an
+an
+an
+ac
+ac
+ac
+bi
+aY
+ac
+ac
+ac
+an
+an
+ac
+ag
+ag
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+ab
+ab
+ab
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ac
+ag
+ac
+ac
+ar
+ac
+ac
+an
+an
+an
+ac
+ac
+am
+ac
+ac
+aJ
+ak
+af
+ac
+ac
+an
+ac
+ag
+ag
+ag
+ac
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+an
+an
+an
+an
+an
+an
+an
+ac
+ac
+ac
+aF
+ag
+ag
+ac
+ac
+an
+an
+ac
+am
+ag
+ar
+ag
+ag
+ag
+ag
+aF
+ac
+an
+ac
+ac
+ag
+ag
+ac
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+an
+an
+an
+an
+ac
+ac
+aG
+ag
+iA
+ac
+an
+an
+ac
+ac
+aJ
+af
+ag
+ac
+ac
+ar
+ag
+ac
+an
+an
+ac
+ag
+ar
+ag
+ag
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+ab
+ab
+ac
+ac
+af
+ag
+af
+aw
+aF
+am
+ac
+an
+an
+an
+an
+an
+ag
+ag
+ag
+ak
+ac
+an
+an
+ac
+Dd
+ag
+ak
+ag
+af
+ac
+lG
+ac
+ac
+an
+an
+ac
+ac
+ag
+ag
+ag
+dE
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+ab
+ac
+ac
+ag
+ag
+at
+ag
+ac
+ag
+at
+ac
+ac
+ac
+ac
+an
+an
+ac
+ac
+ar
+af
+ac
+ac
+an
+ac
+aV
+ac
+ac
+ac
+ac
+av
+ag
+bg
+ac
+ac
+an
+an
+ac
+ac
+ac
+ag
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+ab
+ac
+af
+ag
+ar
+lG
+ag
+ag
+ag
+ad
+ag
+ag
+ag
+ac
+ac
+an
+an
+ac
+ag
+aI
+am
+ac
+an
+ac
+ac
+ac
+an
+an
+ac
+ac
+af
+ag
+ag
+ac
+an
+an
+an
+an
+ac
+ar
+bC
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+ab
+ac
+af
+ag
+ag
+ag
+af
+ac
+ag
+af
+ao
+aB
+ag
+ag
+ac
+an
+an
+ac
+ag
+ad
+ac
+ac
+an
+an
+an
+an
+an
+an
+an
+ac
+ac
+ac
+ar
+ac
+an
+an
+an
+ac
+ac
+ag
+ak
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+ab
+ac
+ac
+ag
+ac
+ak
+ac
+ac
+ag
+at
+aQ
+at
+ag
+aw
+ac
+ac
+an
+ac
+ak
+ag
+ac
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ac
+ag
+aX
+ac
+an
+an
+an
+ac
+ag
+ag
+am
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+ab
+ac
+ah
+af
+ah
+JM
+Vi
+ak
+ag
+ag
+at
+ag
+ag
+ag
+af
+ac
+ac
+ac
+yf
+ag
+ac
+ac
+an
+an
+an
+an
+an
+an
+an
+ab
+ab
+ac
+ag
+ac
+ab
+ab
+an
+ac
+ar
+bB
+ac
+ac
+aa
+aa
+aa
+ac
+bD
+bD
+aa
+"}
+(20,1,1) = {"
+ab
+ac
+ac
+ah
+ac
+ah
+ag
+ac
+aF
+ag
+ag
+ag
+ag
+ar
+ag
+ak
+ar
+ag
+ag
+ag
+ag
+ac
+ac
+ac
+ac
+ac
+ac
+an
+ab
+ab
+ab
+ac
+ag
+ac
+ab
+ab
+ab
+ac
+ag
+ag
+ac
+ac
+aa
+aa
+aa
+aa
+ac
+bD
+aa
+"}
+(21,1,1) = {"
+ab
+ac
+ah
+ao
+ah
+ac
+ag
+ag
+ag
+ag
+pE
+ag
+at
+ag
+aC
+ak
+ar
+ag
+ag
+ag
+ag
+ag
+ak
+ag
+ac
+am
+ac
+an
+ab
+aZ
+aZ
+aZ
+bm
+aZ
+aZ
+aZ
+ab
+ac
+ag
+ag
+ag
+ac
+ac
+ac
+aa
+aa
+ac
+bD
+bD
+"}
+(22,1,1) = {"
+ab
+ac
+ac
+ap
+ac
+ah
+af
+ac
+at
+ag
+ag
+ag
+ag
+ag
+ag
+ac
+ac
+ac
+ac
+ag
+ag
+ar
+ag
+ag
+aT
+af
+ac
+aW
+ab
+aZ
+bb
+bh
+bn
+bn
+bw
+aZ
+ab
+ac
+ag
+ag
+ar
+ag
+af
+ac
+ac
+ac
+aW
+bD
+bD
+"}
+(23,1,1) = {"
+ab
+ac
+ah
+aq
+ah
+ar
+ah
+ak
+kp
+at
+ag
+ag
+aw
+af
+ac
+ac
+ab
+ab
+ac
+ac
+ac
+ac
+ag
+ag
+ag
+ar
+ag
+ac
+ac
+aZ
+bc
+bj
+bp
+bt
+bx
+aZ
+ab
+ac
+ac
+ag
+ag
+ag
+ag
+ag
+ac
+ar
+ag
+bD
+bD
+"}
+(24,1,1) = {"
+ab
+ac
+ac
+ag
+ac
+ak
+ac
+ac
+at
+ag
+av
+ag
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+aF
+ag
+aX
+ag
+ag
+ba
+bd
+bk
+bq
+bu
+by
+aZ
+ab
+ab
+ac
+ac
+ac
+ac
+ag
+ag
+ac
+ar
+ag
+bD
+bD
+"}
+(25,1,1) = {"
+ab
+ac
+ag
+ag
+JM
+ag
+ag
+ac
+ag
+ar
+ag
+ag
+ac
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ac
+ac
+ac
+ag
+Uh
+ag
+aZ
+be
+bo
+bs
+bE
+bz
+aZ
+ab
+ab
+ab
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+bD
+bD
+"}
+(26,1,1) = {"
+ab
+ac
+ac
+af
+ag
+af
+ag
+aF
+ag
+ag
+aw
+am
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+aZ
+bf
+bl
+br
+bv
+bA
+aZ
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+"}
+(27,1,1) = {"
+ab
+ab
+ac
+ac
+as
+at
+at
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

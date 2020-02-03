@@ -24,6 +24,18 @@
 	result = /obj/item/reagent_containers/food/snacks/pizza/meat
 	subcategory = CAT_PIZZA
 
+/datum/crafting_recipe/food/arnold
+	name = "Arnold pizza"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 3,
+		/obj/item/ammo_casing/c9mm = 8,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pizza/arnold
+	subcategory = CAT_PIZZA
+
 /datum/crafting_recipe/food/mushroompizza
 	name = "Mushroom pizza"
 	reqs = list(
@@ -45,7 +57,7 @@
 	result = /obj/item/reagent_containers/food/snacks/pizza/vegetable
 	subcategory = CAT_PIZZA
 
-/datum/crafting_recipe/food/donpocketpizza
+/datum/crafting_recipe/food/donkpocketpizza
 	name = "Donkpocket pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
@@ -88,4 +100,23 @@
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pizza/pineapple
+	subcategory = CAT_PIZZA
+
+/datum/crafting_recipe/food/pineapplepizza/anomaly
+	name = "Anomaly Hawaiian pizza"
+	reqs = list(
+	/obj/item/assembly/signaler/anomaly = 1,
+	/obj/item/reagent_containers/food/snacks/pizza/pineapple = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pizza/pineapple/anomaly
+	subcategory = CAT_PIZZA
+
+/datum/crafting_recipe/food/anomalypizzaboy
+	name = "Anomaly pizza box"
+	reqs = list(
+		/obj/item/pizzabox = 5,
+		/obj/item/assembly/signaler/anomaly = 1
+	)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	result = /obj/item/pizzabox/infinite
 	subcategory = CAT_PIZZA

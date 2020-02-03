@@ -26,7 +26,7 @@
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
 
-	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 5)))
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -49,9 +49,7 @@
 		if ("nothing")
 			// doot
 
-		// teehee
-		if ("delete")
-			qdel(src)
+			return
 
 /*
  * Fire Closet
@@ -63,7 +61,8 @@
 
 /obj/structure/closet/firecloset/PopulateContents()
 	..()
-
+	if (prob(50))
+		new /obj/item/reagent_containers/hypospray/medipen/firelocker(src)
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/tank/internals/oxygen/red(src)
@@ -71,6 +70,9 @@
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/full/PopulateContents()
+	..()
+	if (prob(50))
+		new /obj/item/reagent_containers/hypospray/medipen/firelocker(src)
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/flashlight(src)
@@ -132,6 +134,8 @@
 
 /obj/structure/closet/radiation/PopulateContents()
 	..()
+	if(prob(50))
+		new /obj/item/storage/firstaid/radbgone(src)
 	new /obj/item/geiger_counter(src)
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
@@ -146,18 +150,38 @@
 
 /obj/structure/closet/bombcloset/PopulateContents()
 	..()
+	if(prob(70))
+		new /obj/item/screwdriver(src)
+	if(prob(50))
+		new /obj/item/multitool(src)
+	if(prob(70))
+		new /obj/item/wirecutters(src)
 	new /obj/item/clothing/suit/bomb_suit(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/head/bomb_hood(src)
 
 /obj/structure/closet/bombcloset/security/PopulateContents()
+	..()
+	if(prob(90))
+		new /obj/item/screwdriver(src)
+	if(prob(70))
+		new /obj/item/multitool(src)
+	if(prob(90))
+		new /obj/item/wirecutters(src)
 	new /obj/item/clothing/suit/bomb_suit/security(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/bomb_hood/security(src)
 
 /obj/structure/closet/bombcloset/white/PopulateContents()
+	..()
+	if(prob(50))
+		new /obj/item/screwdriver(src)
+	if(prob(20))
+		new /obj/item/multitool(src)
+	if(prob(50))
+		new /obj/item/wirecutters(src)
 	new /obj/item/clothing/suit/bomb_suit/white(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)

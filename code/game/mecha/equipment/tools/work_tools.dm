@@ -11,6 +11,8 @@
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 	harmful = TRUE
+	tool_behaviour = TOOL_RETRACTOR
+	toolspeed = 0.8
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)
 	if(..())
@@ -64,7 +66,7 @@
 			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
 								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
 								"<span class='italics'>You hear something crack.</span>")
-			add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+			log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -78,6 +80,14 @@
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them!"
 	energy_drain = 0
+	dam_force = 0
+	var/real_clamp = FALSE
+
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
+	desc = "They won't know what clamped them! This time for real!"
+	energy_drain = 10
+	dam_force = 20
+	real_clamp = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(atom/target)
 	if(!action_checks(target))
@@ -108,11 +118,41 @@
 		if(M.stat == DEAD)
 			return
 		if(chassis.occupant.a_intent == INTENT_HARM)
-			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
-								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-		if(chassis.occupant.a_intent == INTENT_DISARM)
-			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
-								"<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
+			if(real_clamp)
+				M.take_overall_damage(dam_force)
+				if(!M)
+					return
+				M.adjustOxyLoss(round(dam_force/2))
+				M.updatehealth()
+				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
+									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
+				log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+			else
+				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
+									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
+		else if(chassis.occupant.a_intent == INTENT_DISARM)
+			if(real_clamp)
+				var/mob/living/carbon/C = target
+				var/play_sound = FALSE
+				var/limbs_gone = ""
+				var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)
+				if(affected != null)
+					affected.dismember(damtype)
+					play_sound = TRUE
+					limbs_gone = ", [affected]"
+				affected = C.get_bodypart(BODY_ZONE_R_ARM)
+				if(affected != null)
+					affected.dismember(damtype)
+					play_sound = TRUE
+					limbs_gone = "[limbs_gone], [affected]"
+				if(play_sound)
+					playsound(src, get_dismember_sound(), 80, TRUE)
+					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
+								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
+					log_combat(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+			else
+				target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
+								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
 		else
 			step_away(M,chassis)
 			target.visible_message("[chassis] tosses [target] like a piece of paper.")
@@ -131,7 +171,7 @@
 /obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
 	. = ..()
 	create_reagents(1000)
-	reagents.add_reagent("water", 1000)
+	reagents.add_reagent(/datum/reagent/water, 1000)
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 	if(!action_checks(target) || get_dist(chassis, target)>3)
@@ -202,8 +242,8 @@
 	GLOB.rcd_list += src
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
- 	GLOB.rcd_list -= src
- 	return ..()
+	GLOB.rcd_list -= src
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
 	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
@@ -222,14 +262,14 @@
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
-					W.ScrapeAway()
+					W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					playsound(W, 'sound/items/deconstruct.ogg', 50, 1)
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
-					F.ScrapeAway()
+					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("Deconstructing [target]...")
@@ -242,7 +282,7 @@
 				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
-					S.PlaceOnTop(/turf/open/floor/plating)
+					S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 					playsound(S, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 			else if(isfloorturf(target))

@@ -4,11 +4,15 @@
 	set desc = "Type what you want to know about.  This will open the wiki in your web browser. Type nothing to go to the main page."
 	set hidden = 1
 	var/wikiurl = CONFIG_GET(string/wikiurl)
+	var/wikiurltg = CONFIG_GET(string/wikiurltg)
 	if(wikiurl)
 		if(query)
-			var/output = wikiurl + "/index.php?title=Special%3ASearch&profile=default&search=" + query
+			var/output = wikiurl + "?search=" + query
+			src << link(output) 
+			output = wikiurltg + "/index.php?title=Special%3ASearch&profile=default&search=" + query
 			src << link(output)
 		else if (query != null)
+			src << link(wikiurltg)
 			src << link(wikiurl)
 	else
 		to_chat(src, "<span class='danger'>The wiki URL is not set in the server configuration.</span>")

@@ -13,10 +13,13 @@
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = FALSE
 	var/brightness_on = 4 //range of light when on
-	var/flashlight_power = 1 //strength of the light when on
+	var/flashlight_power = 0.8 //strength of the light when on
+	light_color = "#FFCC66"
 
 /obj/item/flashlight/Initialize()
 	. = ..()
+	if(icon_state == "[initial(icon_state)]-on")
+		on = TRUE
 	update_brightness()
 
 /obj/item/flashlight/proc/update_brightness(mob/user = null)
@@ -33,6 +36,7 @@
 /obj/item/flashlight/attack_self(mob/user)
 	on = !on
 	update_brightness(user)
+	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, 1)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -49,7 +53,7 @@
 	add_fingerprint(user)
 	if(istype(M) && on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))
 
-		if((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
+		if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
@@ -60,7 +64,7 @@
 			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
-		if(flashlight_power < 1)
+		if(flashlight_power < 0.3)
 			to_chat(user, "<span class='warning'>\The [src] isn't bright enough to see anything!</span> ")
 			return
 
@@ -83,16 +87,16 @@
 				else
 					user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
 										 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-					if(M.stat == DEAD || (M.has_trait(TRAIT_BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
+					if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
-					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-RAY vision
+					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-ray vision
 						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
 					else //they're okay!
 						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 
 			if(BODY_ZONE_PRECISE_MOUTH)
 
-				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
+				if(M.is_mouth_covered())
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
 					return
 
@@ -165,9 +169,12 @@
 	item_state = ""
 	flags_1 = CONDUCT_1
 	brightness_on = 2
+	light_color = "#FFDDCC"
+	flashlight_power = 0.3
 	var/holo_cooldown = 0
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(!proximity_flag)
 		if(holo_cooldown > world.time)
 			to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
@@ -177,7 +184,6 @@
 			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
-	..()
 
 /obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
@@ -201,6 +207,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
 	brightness_on = 5 // A little better than the standard flashlight.
+	light_color = "#CDDDFF"
+	flashlight_power = 0.9
 	hitsound = 'sound/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
@@ -213,6 +221,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
 	brightness_on = 5
+	light_color = "#FFDDBB"
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	materials = list()
@@ -249,6 +258,7 @@
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 7 // Pretty bright.
+	light_color = "#FA421A"
 	icon_state = "flare"
 	item_state = "flare"
 	actions_types = list()
@@ -257,7 +267,7 @@
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
-	grind_results = list("sulfur" = 15)
+	grind_results = list(/datum/reagent/sulfur = 15)
 
 /obj/item/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -314,7 +324,7 @@
 		damtype = "fire"
 		START_PROCESSING(SSobj, src)
 
-/obj/item/flashlight/flare/is_hot()
+/obj/item/flashlight/flare/get_temperature()
 	return on * heat
 
 /obj/item/flashlight/flare/torch
@@ -322,6 +332,7 @@
 	desc = "A torch fashioned from some leaves and a log."
 	w_class = WEIGHT_CLASS_BULKY
 	brightness_on = 4
+	light_color = "#FAA44B"
 	icon_state = "torch"
 	item_state = "torch"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -338,6 +349,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
+	light_color = "#FFAA44"
+	flashlight_power = 0.75
 
 
 /obj/item/flashlight/slime
@@ -351,6 +364,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
+	light_color = "#FFEEAA"
+	flashlight_power = 0.6
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
@@ -380,6 +395,7 @@
 	return
 
 /obj/item/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 
@@ -388,7 +404,7 @@
 
 		if(ismob(A))
 			var/mob/M = A
-			add_logs(user, M, "attacked", "EMP-light")
+			log_combat(user, M, "attacked", "EMP-light")
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
 								"<span class='userdanger'>[user] blinks \the [src] at you.")
 		else
@@ -398,6 +414,11 @@
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return
+
+/obj/item/flashlight/emp/debug //for testing emp_act()
+	name = "debug EMP flashlight"
+	emp_max_charges = 100
+	emp_cur_charges = 100
 
 // Glowsticks, in the uncomfortable range of similar to flares,
 // but not similar enough to make it worth a refactor
@@ -409,7 +430,8 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	item_state = "glowstick"
-	grind_results = list("phenol" = 15, "hydrogen" = 10, "oxygen" = 5) //Meth-in-a-stick
+	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
+	rad_flags = RAD_NO_CONTAMINATE
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize()
@@ -491,23 +513,13 @@
 	name = "pink glowstick"
 	color = LIGHT_COLOR_PINK
 
-/obj/item/flashlight/glowstick/random
-	name = "random colored glowstick"
-	icon_state = "random_glowstick"
-	color = null
-
-/obj/item/flashlight/glowstick/random/Initialize()
-	..()
-	var/T = pick(typesof(/obj/item/flashlight/glowstick) - /obj/item/flashlight/glowstick/random)
-	new T(loc)
-	return INITIALIZE_HINT_QDEL
-
 /obj/item/flashlight/spotlight //invisible lighting source
 	name = "disco light"
 	desc = "Groovy..."
 	icon_state = null
 	light_color = null
 	brightness_on = 0
+	flashlight_power = 1
 	light_range = 0
 	light_power = 10
 	alpha = 0
@@ -529,6 +541,6 @@
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
 	brightness_on = 15
-	flashlight_power = 1
-	flags_1 = CONDUCT_1 | DROPDEL_1
+	flags_1 = CONDUCT_1
+	item_flags = DROPDEL
 	actions_types = list()

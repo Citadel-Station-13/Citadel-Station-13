@@ -15,25 +15,25 @@
 
 /obj/item/storage/lockbox/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 14
 	STR.max_items = 4
 	STR.locked = TRUE
 
 /obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(W.GetID())
 		if(broken)
 			to_chat(user, "<span class='danger'>It appears to be broken.</span>")
 			return
 		if(allowed(user))
-			SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, !locked)
-			locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, !locked)
+			locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 			if(locked)
 				icon_state = icon_locked
 				to_chat(user, "<span class='danger'>You lock the [src.name]!</span>")
-				SendSignal(COMSIG_TRY_STORAGE_HIDE_ALL)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
 				return
 			else
 				icon_state = icon_closed
@@ -48,14 +48,16 @@
 		to_chat(user, "<span class='danger'>It's locked!</span>")
 
 /obj/item/storage/lockbox/emag_act(mob/user)
-	if(!broken)
-		broken = TRUE
-		SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
-		desc += "It appears to be broken."
-		icon_state = src.icon_broken
-		if(user)
-			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
-			return
+	. = ..()
+	if(broken)
+		return
+	broken = TRUE
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+	desc += "It appears to be broken."
+	icon_state = src.icon_broken
+	if(user)
+		visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
+	return TRUE
 
 /obj/item/storage/lockbox/Entered()
 	. = ..()
@@ -99,24 +101,25 @@
 
 /obj/item/storage/lockbox/medal/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 10
 	STR.max_combined_w_class = 20
 	STR.can_hold = typecacheof(list(/obj/item/clothing/accessory/medal))
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
-	..()
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	. = ..()
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(!locked)
-		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
+		. += "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>"
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE))
-		if(!SendSignal(COMSIG_IS_STORAGE_LOCKED))
+		if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 			open = (open ? FALSE : TRUE)
 			update_icon()
-		..()
+			return TRUE
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
@@ -131,7 +134,7 @@
 
 /obj/item/storage/lockbox/medal/update_icon()
 	cut_overlays()
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(locked)
 		icon_state = "medalbox+l"
 		open = FALSE
@@ -178,3 +181,21 @@
 /obj/item/storage/lockbox/medal/sci/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+
+/obj/item/storage/lockbox/medal/engineering
+	name	=	"engineering medal box"
+	desc	=	"A locked box used to store medals to be given to the members of the engineering department."
+	req_access	=	list(ACCESS_CE)
+
+/obj/item/storage/lockbox/medal/engineering/PopulateContents()
+	for(var/i	in	1	to	3)
+		new	/obj/item/clothing/accessory/medal/engineer(src)
+
+/obj/item/storage/lockbox/medal/medical
+	name	=	"medical medal box"
+	desc	=	"A locked box used to store medals to be given to the members of the medical department."
+	req_access	=	list(ACCESS_CMO)
+
+/obj/item/storage/lockbox/medal/medical/PopulateContents()
+	for(var/i	in	1	to	3)
+		new	/obj/item/clothing/accessory/medal/ribbon/medical_doctor(src)

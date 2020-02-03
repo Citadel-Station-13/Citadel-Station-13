@@ -37,6 +37,7 @@ GLOBAL_LIST_EMPTY(mam_ears_list)
 GLOBAL_LIST_EMPTY(mam_tails_list)
 GLOBAL_LIST_EMPTY(mam_tails_animated_list)
 GLOBAL_LIST_EMPTY(taur_list)
+GLOBAL_LIST_EMPTY(mam_snouts_list)
 
 	//Exotic Species
 GLOBAL_LIST_EMPTY(exotic_tails_list)
@@ -55,10 +56,15 @@ GLOBAL_LIST_EMPTY(ipc_screens_list)
 GLOBAL_LIST_EMPTY(ipc_antennas_list)
 
 	//Genitals and Arousal Lists
+GLOBAL_LIST_EMPTY(genitals_list)
 GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
 GLOBAL_LIST_EMPTY(cock_shapes_icons) //Associated list for names->icon_states for cockshapes.
+GLOBAL_LIST_EMPTY(gentlemans_organ_names)
+GLOBAL_LIST_EMPTY(balls_shapes_list)
+GLOBAL_LIST_EMPTY(balls_shapes_icons)
 GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
+GLOBAL_LIST_EMPTY(breasts_shapes_icons)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
 GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
 GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
@@ -89,9 +95,11 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 		"Purple"	= "#e300ff"//purple
 		))
 
-//Looc stuff
-GLOBAL_VAR_INIT(looc_allowed, 1)
-GLOBAL_VAR_INIT(dlooc_allowed, 1)
+GLOBAL_LIST_INIT(meat_types, list(
+	"Mammalian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal,
+	"Aquatic" = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic,
+	"Avian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/avian,
+	"Insect" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect))
 
 //Crew objective and miscreants stuff
 GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
@@ -113,6 +121,17 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		flavor_text = sanitize(new_flavor)
 		to_chat(src, "Your flavor text has been updated.")
 
+//Flavor Text
+/mob/living/carbon/human/verb/set_flavor_2()
+	set name = "Set Temporary Flavor Text"
+	set desc = "Sets a description of your character's current appearance. Use this for emotions, poses etc."
+	set category = "IC"
+
+	var/new_flavor = input(src, "Enter your new temporary flavor text:", "Temporary flavor text", null) as message|null
+	if(!isnull(new_flavor))
+		flavor_text_2 = sanitize(new_flavor)
+		to_chat(src, "Your temporary flavor text has been updated.")
+
 //LOOC toggles
 /client/verb/listen_looc()
 	set name = "Show/Hide LOOC"
@@ -123,87 +142,57 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	src << "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/togglelooc()
-	set category = "Server"
-	set desc="Fukken metagamers"
-	set name="Toggle LOOC"
-	toggle_looc()
-	log_admin("[key_name(usr)] toggled LOOC.")
-	message_admins("[key_name_admin(usr)] toggled LOOC.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/proc/toggle_looc(toggle = null)
-	if(toggle != null) //if we're specifically en/disabling ooc
-		if(toggle != GLOB.looc_allowed)
-			GLOB.looc_allowed = toggle
-		else
-			return
-	else //otherwise just toggle it
-		GLOB.looc_allowed = !GLOB.looc_allowed
-	world << "<B>The LOOC channel has been globally [GLOB.looc_allowed ? "enabled" : "disabled"].</B>"
-
-/datum/admins/proc/toggleloocdead()
-	set category = "Server"
-	set desc="Toggle dis bitch"
-	set name="Toggle Dead LOOC"
-	GLOB.dlooc_allowed = !( GLOB.dlooc_allowed )
-
-	log_admin("[key_name(usr)] toggled Dead LOOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead LOOC.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "TDLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
 /mob/living/carbon/proc/has_penis()
-	if(getorganslot("penis"))//slot shared with ovipositor
-		if(istype(getorganslot("penis"), /obj/item/organ/genital/penis))
-			return 1
-	return 0
+	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
+	if(G && istype(G, /obj/item/organ/genital/penis))
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/has_balls()
-	if(getorganslot("balls"))
-		if(istype(getorganslot("balls"), /obj/item/organ/genital/testicles))
-			return 1
-	return 0
+	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_TESTICLES)
+	if(G && istype(G, /obj/item/organ/genital/testicles))
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/has_vagina()
-	if(getorganslot("vagina"))
-		return 1
-	return 0
+	if(getorganslot(ORGAN_SLOT_VAGINA))
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/has_breasts()
-	if(getorganslot("breasts"))
-		return 1
-	return 0
+	if(getorganslot(ORGAN_SLOT_BREASTS))
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/has_ovipositor()
-	if(getorganslot("penis"))//shared slot
-		if(istype(getorganslot("penis"), /obj/item/organ/genital/ovipositor))
-			return 1
-	return 0
+	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
+	if(G && istype(G, /obj/item/organ/genital/ovipositor))
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/has_eggsack()
-	if(getorganslot("balls"))
-		if(istype(getorganslot("balls"), /obj/item/organ/genital/eggsack))
-			return 1
-	return 0
+	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_TESTICLES)
+	if(G && istype(G, /obj/item/organ/genital/eggsack))
+		return TRUE
+	return FALSE
 
-/mob/living/carbon/human/proc/is_bodypart_exposed(bodypart)
-
-/mob/living/carbon/proc/is_groin_exposed(var/list/L)
+/mob/living/carbon/proc/is_groin_exposed(list/L)
 	if(!L)
 		L = get_equipped_items()
-	for(var/obj/item/I in L)
+	for(var/A in L)
+		var/obj/item/I = A
 		if(I.body_parts_covered & GROIN)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
-/mob/living/carbon/proc/is_chest_exposed(var/list/L)
+/mob/living/carbon/proc/is_chest_exposed(list/L)
 	if(!L)
 		L = get_equipped_items()
-	for(var/obj/item/I in L)
+	for(var/A in L)
+		var/obj/item/I = A
 		if(I.body_parts_covered & CHEST)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 ////////////////////////
 //DANGER | DEBUG PROCS//
@@ -218,46 +207,9 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	message_admins("[src] gave everyone genitals.")
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.gender == MALE)
-			H.give_penis()
-			H.give_balls()
+			H.give_genital(/obj/item/organ/genital/penis)
+			H.give_genital(/obj/item/organ/genital/testicles)
 		else
-			H.give_vagina()
-			H.give_womb()
-			H.give_breasts()
-
-/client/proc/test_mammal_overlays()
-	set name = "Mass Give Mammalitus"
-	set category = "Dangerous"
-	set desc = "Turns every human into a mammal with tails, ears, etc. WARNING: NOT FOR LIVE SERVER USAGE!!"
-
-	log_admin("[src] turned everyone into mammals.")
-	message_admins("[src] turned everyone into mammals.")
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		if(!H.dna)
-			continue
-		var/datum/dna/hdna = H.dna
-		H.set_species(/datum/species/mammal)
-		var/subspec = pick("Fox","Wolf","Fennec")
-		switch(subspec)
-			if("Wolf")
-				hdna.features["mam_tail"] = "Wolf"
-				hdna.features["mam_ears"] = "Wolf"
-				hdna.features["snout"] = "Wolf"
-				hdna.features["mam_body_markings"] = "Wolf"
-				hdna.features["mcolor"] = "555"
-				hdna.features["mcolor2"] = "999"
-				hdna.features["mcolor3"] = "999"
-			if("Fox")
-				hdna.features["mam_tail"] = "Fox"
-				hdna.features["mam_ears"] = "Fox"
-				hdna.features["snout"] = "Fox, Long"
-				hdna.features["mam_body_markings"] = "Fox"
-				hdna.features["mcolor"] = "f60"
-				hdna.features["mcolor2"] = "fff"
-				hdna.features["mcolor3"] = "fff"
-			if("Fennec")
-				hdna.features["mam_tail"] = "Fennec"
-				hdna.features["mam_ears"] = "Fennec"
-				hdna.features["snout"] = "Fox, Short"
-				hdna.features["mam_body_markings"] = "Fox"
-		H.regenerate_icons()
+			H.give_genital(/obj/item/organ/genital/vagina)
+			H.give_genital(/obj/item/organ/genital/womb)
+			H.give_genital(/obj/item/organ/genital/breasts)

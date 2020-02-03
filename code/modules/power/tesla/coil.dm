@@ -25,7 +25,7 @@
 
 /obj/machinery/power/tesla_coil/Initialize()
 	. = ..()
-	//	wires = new /datum/wires/tesla_coil(src) //CITADEL EDIT, Kevinz you cheaty fuccboi.
+	wires = new /datum/wires/tesla_coil(src)
 	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/power/tesla_coil/RefreshParts()
@@ -35,6 +35,11 @@
 		power_multiplier += C.rating
 		zap_cooldown -= (C.rating * 20)
 	input_power_multiplier = power_multiplier
+
+/obj/machinery/power/tesla_coil/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Power generation at <b>[input_power_multiplier*100]%</b>.<br>Shock interval at <b>[zap_cooldown*0.1]</b> seconds.</span>"
 
 /obj/machinery/power/tesla_coil/on_construction()
 	if(anchored)
@@ -62,16 +67,11 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	/*if(is_wire_tool(W) && panel_open)			CITADEL EDIT - They removed the wires because they don't like my cheating
+	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
-		return*/
+		return
 
 	return ..()
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/power/tesla_coil/attack_hand(mob/user)
-	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
-		return ..()
 
 /obj/machinery/power/tesla_coil/tesla_act(power, tesla_flags, shocked_targets)
 	if(anchored && !panel_open)
@@ -99,7 +99,7 @@
 	var/power = (powernet.avail/2)
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-	tesla_zap(src, 10, power/(coeff/2))
+	tesla_zap(src, 10, power/(coeff/2), TESLA_FUSION_FLAGS)
 	tesla_buckle_check(power/(coeff/2))
 
 // Tesla R&D researcher
@@ -173,12 +173,6 @@
 		return
 
 	return ..()
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/power/grounding_rod/attack_hand(mob/user)
-	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
-		return
-	. = ..()
 
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	if(anchored && !panel_open)

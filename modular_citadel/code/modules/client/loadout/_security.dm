@@ -29,10 +29,10 @@
 	restricted_roles = list("Security Officer")
 
 /datum/gear/navyblueuniformofficer
- 	name = "security officer navyblue uniform"
+ 	name = "Security officer navyblue uniform"
  	category = SLOT_W_UNIFORM
  	path = /obj/item/clothing/under/rank/security/navyblue
- 	restricted_roles = list("Security officer")
+ 	restricted_roles = list("Security Officer")
 
 /datum/gear/navybluejacketwarden
 	name = "warden navyblue jacket"

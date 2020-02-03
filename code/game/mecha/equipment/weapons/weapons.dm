@@ -193,7 +193,7 @@
 
 //Base ballistic weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
-	name = "general ballisic weapon"
+	name = "general ballistic weapon"
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	var/projectiles
 	var/projectile_energy_cost
@@ -275,6 +275,18 @@
 	variance = 25
 	harmful = TRUE
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/seedscatter
+	name = "\improper Melon Seed \"Scattershot\""
+	desc = "A weapon for combat exosuits. Shoots a spread of pellets, shaped as seed."
+	icon_state = "mecha_scatter"
+	equip_cooldown = 20
+	projectile = /obj/item/projectile/bullet/seed
+	projectiles = 20
+	projectile_energy_cost = 25
+	projectiles_per_shot = 10
+	variance = 25
+	harmful = TRUE
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
@@ -293,7 +305,7 @@
 	name = "\improper SRM-8 missile rack"
 	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
 	icon_state = "mecha_missilerack"
-	projectile = /obj/item/projectile/bullet/srmrocket
+	projectile = /obj/item/projectile/bullet/a84mm_he
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 8
 	projectile_energy_cost = 1000
@@ -424,7 +436,7 @@
 	throwforce = 35
 	icon_state = "punching_glove"
 
-/obj/item/punching_glove/throw_impact(atom/hit_atom)
+/obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		if(ismovableatom(hit_atom))
 			var/atom/movable/AM = hit_atom

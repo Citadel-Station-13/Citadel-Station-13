@@ -3,7 +3,7 @@
 	for(var/file in args)
 		src << browse_rsc(file)
 
-/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
+/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list("txt","log","htm", "html", "md"))
 	var/path = root
 
 	for(var/i=0, i<max_iterations, i++)
@@ -20,7 +20,7 @@
 				continue
 		path += choice
 
-		if(copytext(path,-1,0) != "/")		//didn't choose a directory, no need to iterate again
+		if(copytext_char(path, -1) != "/")		//didn't choose a directory, no need to iterate again
 			break
 	var/extensions
 	for(var/i in valid_extensions)

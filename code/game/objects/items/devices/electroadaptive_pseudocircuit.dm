@@ -16,11 +16,11 @@
 	maptext = "[circuits]"
 
 /obj/item/electroadaptive_pseudocircuit/examine(mob/user)
-	..()
+	. = ..()
 	if(iscyborg(user))
-		to_chat(user, "<span class='notice'>It has material for <b>[circuits]</b> circuit[circuits == 1 ? "" : "s"]. Use the pseudocircuit on existing circuits to gain material.</span>")
-		to_chat(user, "<span class='notice'>Serves as a substitute for <b>fire/air alarm</b>, <b>firelock</b>, and <b>APC</b> electronics.</span>")
-		to_chat(user, "<span class='notice'>It can also be used on an APC with no power cell to <b>fabricate a low-capacity cell</b> at a high power cost.</span>")
+		. += "<span class='notice'>It has material for <b>[circuits]</b> circuit[circuits == 1 ? "" : "s"]. Use the pseudocircuit on existing circuits to gain material.</span>"
+		. += "<span class='notice'>Serves as a substitute for <b>fire/air alarm</b>, <b>firelock</b>, and <b>APC</b> electronics.</span>"
+		. += "<span class='notice'>It can also be used on an APC with no power cell to <b>fabricate a low-capacity cell</b> at a high power cost.</span>"
 
 /obj/item/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/living/silicon/robot/R, circuit_cost = 0)
 	if(QDELETED(R) || !istype(R))
@@ -47,6 +47,7 @@
 	return TRUE //The actual circuit magic itself is done on a per-object basis
 
 /obj/item/electroadaptive_pseudocircuit/afterattack(atom/target, mob/living/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!is_type_in_typecache(target, recycleable_circuits))

@@ -12,8 +12,10 @@
 	stat = DEAD
 	canmove = FALSE
 
-	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
+
+	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
+	var/ineligible_for_roles = FALSE
 
 /mob/dead/new_player/Initialize()
 	if(client && SSticker.state == GAME_STATE_STARTUP)
@@ -33,7 +35,8 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
-	var/output = "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
+	var/output = "<center><p>Welcome, <b>[client ? client.prefs.real_name : "Unknown User"]</b></p>"
+	output += "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
@@ -53,16 +56,20 @@
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[sanitizeSQL(ckey)]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[sanitizeSQL(ckey)]\")")
+			var/rs = REF(src)
 			if(query_get_new_polls.Execute())
 				var/newpoll = 0
 				if(query_get_new_polls.NextRow())
 					newpoll = 1
 
 				if(newpoll)
-					output += "<p><b><a href='byond://?src=[REF(src)];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+					output += "<p><b><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 				else
-					output += "<p><a href='byond://?src=[REF(src)];showpoll=1'>Show Player Polls</A></p>"
+					output += "<p><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A></p>"
+			qdel(query_get_new_polls)
+			if(QDELETED(src))
+				return
 
 	output += "</center>"
 
@@ -70,9 +77,7 @@
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
-	popup.open(0)
-	return
-
+	popup.open(FALSE)
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -138,6 +143,12 @@
 		ViewManifest()
 
 	if(href_list["SelectedJob"])
+		if(!SSticker || !SSticker.IsRoundInProgress())
+			var/msg = "[key_name(usr)] attempted to join the round using a href that shouldn't be available at this moment!"
+			log_admin(msg)
+			message_admins(msg)
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			return
 
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
@@ -150,6 +161,21 @@
 
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
+
+	if(href_list["JoinAsGhostRole"])
+		if(!GLOB.enter_allowed)
+			to_chat(usr, "<span class='notice'> There is an administrative lock on entering the game!</span>")
+
+		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
+			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
+				to_chat(usr, "<span class='warning'>Server is full.</span>")
+				return
+
+		var/obj/effect/mob_spawn/MS = pick(GLOB.mob_spawners[href_list["JoinAsGhostRole"]])
+		if(MS.attack_ghost(src, latejoinercalling = TRUE))
+			SSticker.queued_players -= src
+			SSticker.queue_delay = 4
+			qdel(src)
 
 	if(!ready && href_list["preference"])
 		if(client)
@@ -267,7 +293,7 @@
 	else
 		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
-	observer.key = key
+	transfer_ckey(observer, FALSE)
 	observer.client = client
 	observer.set_ghost_appearance()
 	if(observer.client && observer.client.prefs)
@@ -293,6 +319,8 @@
 			return "Your account is not old enough for [jobtitle]."
 		if(JOB_UNAVAILABLE_SLOTFULL)
 			return "[jobtitle] is already filled to capacity."
+		if(JOB_UNAVAILABLE_SPECIESLOCK)
+			return "Your species cannot play as a [jobtitle]."
 	return "Error: Unknown job availability."
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
@@ -310,12 +338,16 @@
 			return JOB_UNAVAILABLE_SLOTFULL
 	if(jobban_isbanned(src,rank))
 		return JOB_UNAVAILABLE_BANNED
+	if(QDELETED(src))
+		return JOB_UNAVAILABLE_GENERIC
 	if(!job.player_old_enough(client))
 		return JOB_UNAVAILABLE_ACCOUNTAGE
 	if(job.required_playtime_remaining(client))
 		return JOB_UNAVAILABLE_PLAYTIME
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
+	if(!client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
+		return JOB_UNAVAILABLE_SPECIESLOCK
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
@@ -396,7 +428,7 @@
 						SSticker.mode.make_antag_chance(humanc)
 
 	if(humanc && CONFIG_GET(flag/roundstart_traits))
-		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
+		SSquirks.AssignQuirks(humanc, humanc.client, TRUE, FALSE, job, FALSE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
@@ -409,8 +441,21 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
 
+	var/level = "green"
+	switch(GLOB.security_level)
+		if(SEC_LEVEL_GREEN)
+			level = "green"
+		if(SEC_LEVEL_BLUE)
+			level = "blue"
+		if(SEC_LEVEL_AMBER)
+			level = "amber"
+		if(SEC_LEVEL_RED)
+			level = "red"
+		if(SEC_LEVEL_DELTA)
+			level = "delta"
+
+	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]<br>Alert Level: [capitalize(level)]</div>"
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_ESCAPE)
@@ -418,56 +463,85 @@
 			if(SHUTTLE_CALL)
 				if(!SSshuttle.canRecall())
 					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
-
-	var/available_job_count = 0
-	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
-			available_job_count++;
-
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
 			SSjob.prioritized_jobs -= prioritized_job
+	dat += "<center><table><tr><td valign='top'>"
+	var/column_counter = 0
+	var/free_space = 0
+	for(var/list/category in list(GLOB.command_positions) + list(GLOB.supply_positions) + list(GLOB.engineering_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
+		var/cat_color = "fff" //random default
+		cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
+		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
+		dat += "<legend align='center' style='color: [cat_color]'>[SSjob.name_occupations[category[1]].exp_type_department]</legend>"
 
-	if(length(SSjob.prioritized_jobs))
-		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
-		var/amt = length(SSjob.prioritized_jobs)
-		var/amt_count
-		for(var/datum/job/a in SSjob.prioritized_jobs)
-			amt_count++
-			if(amt_count != amt) // checks for the last job added.
-				dat += " [a.title], "
-			else
-				dat += " [a.title]. </div>"
+		var/list/dept_dat = list()
+		for(var/job in category)
+			var/datum/job/job_datum = SSjob.name_occupations[job]
+			if(job_datum && IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
+				var/command_bold = ""
+				if(job in GLOB.command_positions)
+					command_bold = " command"
+				if(job_datum in SSjob.prioritized_jobs)
+					dept_dat += "<a class='job[command_bold]' style='display:block;width:170px'  href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
+				else
+					dept_dat += "<a class='job[command_bold]' style='display:block;width:170px' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+		if(!dept_dat.len)
+			dept_dat += "<span class='nopositions'>No positions open.</span>"
+		dat += jointext(dept_dat, "")
+		dat += "</fieldset><br>"
+		column_counter++
+		if(free_space <=4)
+			free_space++
+			if(column_counter > 0 && (column_counter % 3 == 0))
+				dat += "</td><td valign='top'>"
+		if(free_space >= 5 && (free_space % 5 == 0) && (column_counter % 3 != 0))
+			free_space = 0
+			column_counter = 0
+			dat += "</td><td valign='top'>"
 
-	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
-	dat += "<div class='jobs'><div class='jobsColumn'>"
-	var/job_count = 0
-	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
-			job_count++;
-			if (job_count > round(available_job_count / 2))
-				dat += "</div><div class='jobsColumn'>"
-			var/position_class = "otherPosition"
-			if (job.title in GLOB.command_positions)
-				position_class = "commandPosition"
-			dat += "<a class='[position_class]' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-	if(!job_count) //if there's nowhere to go, overflow opens up.
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != SSjob.overflow_role)
+	dat += "</td></tr></table></center></center>"
+
+	var/available_ghosts = 0
+	for(var/spawner in GLOB.mob_spawners)
+		if(!LAZYLEN(spawner))
+			continue
+		var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
+		if(!istype(S) || !S.can_latejoin())
+			continue
+		available_ghosts++
+		break
+
+	if(!available_ghosts)
+		dat += "<div class='notice red'>There are currently no open ghost spawners.</div>"
+	else
+		var/list/categorizedJobs = list("Ghost Role" = list(jobs = list(), titles = GLOB.mob_spawners, color = "#ffffff"))
+		for(var/spawner in GLOB.mob_spawners)
+			if(!LAZYLEN(spawner))
 				continue
-			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-			break
-	dat += "</div></div>"
+			var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
+			if(!istype(S) || !S.can_latejoin())
+				continue
+			categorizedJobs["Ghost Role"]["jobs"] += spawner
 
-	// Removing the old window method but leaving it here for reference
-	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
+		dat += "<center><table><tr><td valign='top'>"
+		for(var/jobcat in categorizedJobs)
+			if(!length(categorizedJobs[jobcat]["jobs"]))
+				continue
+			var/color = categorizedJobs[jobcat]["color"]
+			dat += "<fieldset style='border: 2px solid [color]; display: inline'>"
+			dat += "<legend align='center' style='color: [color]'>[jobcat]</legend>"
+			for(var/spawner in categorizedJobs[jobcat]["jobs"])
+				dat += "<a class='otherPosition' style='display:block;width:170px' href='byond://?src=[REF(src)];JoinAsGhostRole=[spawner]'>[spawner]</a>"
 
-	// Added the new browser window method
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
+			dat += "</fieldset><br>"
+		dat += "</td></tr></table></center>"
+		dat += "</div></div>"
+
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 720, 600)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
-	popup.set_content(dat)
-	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
-
+	popup.set_content(jointext(dat, ""))
+	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
 
 /mob/dead/new_player/proc/create_character(transfer_after)
 	spawning = 1
@@ -475,7 +549,12 @@
 
 	var/mob/living/carbon/human/H = new(loc)
 
-	if(CONFIG_GET(flag/force_random_names) || jobban_isbanned(src, "appearance"))
+	var/frn = CONFIG_GET(flag/force_random_names)
+	if(!frn)
+		frn = jobban_isbanned(src, "appearance")
+		if(QDELETED(src))
+			return
+	if(frn)
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(H)
@@ -519,3 +598,31 @@
 	src << browse(null, "window=preferences") //closes job selection
 	src << browse(null, "window=mob_occupation")
 	src << browse(null, "window=latechoices") //closes late job selection
+
+/*	Used to make sure that a player has a valid job preference setup, used to knock players out of eligibility for anything if their prefs don't make sense.
+	A "valid job preference setup" in this situation means at least having one job set to low, or not having "return to lobby" enabled
+	Prevents "antag rolling" by setting antag prefs on, all jobs to never, and "return to lobby if preferences not availible"
+	Doing so would previously allow you to roll for antag, then send you back to lobby if you didn't get an antag role
+	This also does some admin notification and logging as well, as well as some extra logic to make sure things don't go wrong
+*/
+
+/mob/dead/new_player/proc/check_preferences()
+	if(!client)
+		return FALSE //Not sure how this would get run without the mob having a client, but let's just be safe.
+	if(client.prefs.joblessrole != RETURNTOLOBBY)
+		return TRUE
+	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.
+	var/has_antags = FALSE
+	if(client.prefs.be_special.len > 0)
+		has_antags = TRUE
+	if(client.prefs.job_preferences.len == 0)
+		if(!ineligible_for_roles)
+			to_chat(src, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailable. This makes you ineligible for any round start role, please update your job preferences.</span>")
+		ineligible_for_roles = TRUE
+		ready = PLAYER_NOT_READY
+		if(has_antags)
+			log_admin("[src.ckey] just got booted back to lobby with no jobs, but antags enabled.")
+			message_admins("[src.ckey] just got booted back to lobby with no jobs enabled, but antag rolling enabled. Likely antag rolling abuse.")
+
+		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
+	return TRUE

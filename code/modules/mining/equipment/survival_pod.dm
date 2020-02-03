@@ -4,7 +4,7 @@
 	icon_state = "away"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	valid_territory = FALSE
 
 //Survival Capsule
@@ -33,8 +33,8 @@
 /obj/item/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	to_chat(user, "This capsule has the [template.name] stored.")
-	to_chat(user, template.description)
+	. += "This capsule has the [template.name] stored."
+	. += template.description
 
 /obj/item/survivalcapsule/attack_self()
 	//Can't grab when capsule is New() because templates aren't loaded then
@@ -67,10 +67,17 @@
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
+//Non-default pods
+
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
 	template_id = "shelter_beta"
+
+/obj/item/survivalcapsule/luxuryelite
+	name = "luxury elite bar capsule"
+	desc = "A luxury bar in a capsule. Bartender required and not included."
+	template_id = "shelter_charlie"
 
 //Pod objects
 
@@ -175,8 +182,6 @@
 	desc = "A heated storage unit."
 	icon_state = "donkvendor"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
-	icon_on = "donkvendor"
-	icon_off = "donkvendor"
 	light_range = 5
 	light_power = 1.2
 	light_color = "#DDFFD3"
@@ -184,6 +189,9 @@
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
 	var/empty = FALSE
+
+/obj/machinery/smartfridge/survival_pod/update_icon()
+	return
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	. = ..()
@@ -246,11 +254,6 @@
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
 	air_update_turf(1)
-
-/obj/structure/fans/Destroy()
-	var/turf/T = loc
-	. = ..()
-	T.air_update_turf(1)
 
 //Inivisible, indestructible fans
 /obj/structure/fans/tiny/invisible

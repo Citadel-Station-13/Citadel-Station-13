@@ -79,6 +79,8 @@
 #define ATTACK_EFFECT_SMASH		"smash"
 #define ATTACK_EFFECT_CLAW		"claw"
 #define ATTACK_EFFECT_DISARM	"disarm"
+#define ATTACK_EFFECT_ASS_SLAP  "ass_slap"
+#define ATTACK_EFFECT_FACE_SLAP "face_slap"
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
@@ -96,6 +98,20 @@
 
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
+#define DEFAULT_MESSAGE_RANGE 7
+
+//Shove knockdown lengths (deciseconds)
+#define SHOVE_KNOCKDOWN_SOLID 30
+#define SHOVE_KNOCKDOWN_HUMAN 30
+#define SHOVE_KNOCKDOWN_TABLE 30
+#define SHOVE_KNOCKDOWN_COLLATERAL 10
+//for the shove slowdown, see __DEFINES/movespeed_modification.dm
+#define SHOVE_SLOWDOWN_LENGTH 30
+#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Shove disarming item list
+GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
+	/obj/item/gun)))
+
 
 //Combat object defines
 
@@ -108,7 +124,7 @@
 #define EMBEDDED_IMPACT_PAIN_MULTIPLIER			4	//Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
 #define EMBED_THROWSPEED_THRESHOLD				4	//The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
+#define EMBEDDED_UNSAFE_REMOVAL_TIME			150	//A Time in ticks, total removal time = (this/item.w_class)
 
 //Gun weapon weight
 #define WEAPON_LIGHT 1
@@ -118,6 +134,10 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//E-gun self-recharge values
+#define EGUN_NO_SELFCHARGE 0
+#define EGUN_SELFCHARGE 1
+#define EGUN_SELFCHARGE_BORG 2
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -139,6 +159,7 @@
 #define EXPLODE_DEVASTATE 1
 #define EXPLODE_HEAVY 2
 #define EXPLODE_LIGHT 3
+#define EXPLODE_GIB_THRESHOLD 50
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
@@ -161,3 +182,24 @@
 #define BODY_ZONE_PRECISE_R_HAND	"r_hand"
 #define BODY_ZONE_PRECISE_L_FOOT	"l_foot"
 #define BODY_ZONE_PRECISE_R_FOOT	"r_foot"
+
+//We will round to this value in damage calculations.
+#define DAMAGE_PRECISION 0.01
+
+//items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
+#define TOTAL_MASS_TINY_ITEM		1.25
+#define TOTAL_MASS_SMALL_ITEM		2.5
+#define TOTAL_MASS_NORMAL_ITEM		3.75
+#define TOTAL_MASS_BULKY_ITEM		5
+#define TOTAL_MASS_HUGE_ITEM		6.25
+#define TOTAL_MASS_GIGANTIC_ITEM	7.5
+
+#define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
+#define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
+#define TOTAL_MASS_TOY_SWORD 1.5
+
+//bullet_act() return values
+#define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
+#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.

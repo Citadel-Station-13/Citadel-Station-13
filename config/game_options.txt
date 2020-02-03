@@ -14,11 +14,6 @@ REVIVAL_CLONING
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
-## RENAMING ###
-
-## Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
-#RENAME_CYBORG
-
 ## OOC DURING ROUND ###
 ## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
@@ -40,13 +35,16 @@ EMOJIS
 RUN_DELAY 1
 WALK_DELAY 4
 
-## The variables below affect the movement of specific mob types.
-HUMAN_DELAY 0
-ROBOT_DELAY 0
-MONKEY_DELAY 0
-ALIEN_DELAY 0
-SLIME_DELAY 0
-ANIMAL_DELAY 1
+## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
+## Entries completely override all subtypes. Later entries have precedence over earlier entries.
+## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and
+## /mob/living/carbon/human on the last entry, the last entry will override the first.
+MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 1
+##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
+MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1
 
 
 ## NAMES ###
@@ -59,10 +57,12 @@ ANIMAL_DELAY 1
 
 ## ALERT LEVELS ###
 ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
-ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
-ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
-ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised. Additionally, access requirements on some doors have been lifted.
-ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
+ALERT_BLUE_UPTO The station has received reliable information about potential threats to the station. Security staff may have weapons visible, random searches are permitted.
+ALERT_BLUE_DOWNTO Significant confirmed threats have been neutralized. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still permitted.
+ALERT_AMBER_UPTO There are signficant confirmed threats to the station. Security staff may have weapons unholstered at all times. Random searches are allowed and advised.
+ALERT_AMBER_DOWNTO The immediate threat has passed. Security is no longer authorized to use lethal force, but may continue to have weapons drawn. Access requirements have been restored.
+ALERT_RED_UPTO There is an immediate serious threat to the station. Security is now authorized to use lethal force. Additionally, access requirements on some machines have been lifted.
+ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security is still authorized to use lethal force.
 ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
 
@@ -92,6 +92,7 @@ PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
 PROBABILITY CLOWNOPS 0
+PROBABILITY BLOODSUCKER 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -114,6 +115,7 @@ CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
+CONTINUOUS BLOODSUCKER
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -254,15 +256,28 @@ EVENTS_MIN_TIME_MUL 1
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
-
 ## AI ###
 
 ## Allow the AI job to be picked.
 ALLOW_AI
 
+## Allow the AI Multicamera feature to be used by AI players
+ALLOW_AI_MULTICAM
+
+## CYBORG ##
+## Uncomment to disable the ability for cyborg flashes to knock down carbon targets
+#DISABLE_BORG_FLASH_KNOCKDOWN
+
 ## Secborg ###
+## Uncomment to bring secborgs and K-9s back in line with the rest of the modules available. This is strongly recommended if you have secborgs configured to be available at all times.
+#WEAKEN_SECBORG
+
 ## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
+
+## Determines the minimum alert level for the security cyborg model to be chosen
+## 0: Green, 1:Blue, 2:Amber, 3:Red, 4:Delta
+MINIMUM_SECBORG_ALERT 3
 
 ## Peacekeeper Borg ###
 ## Uncomment to prevent the peacekeeper cyborg module from being chosen
@@ -407,9 +422,10 @@ ROUNDSTART_RACES human
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
-#ROUNDSTART_RACES moth
+#ROUNDSTART_RACES insect
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
+ROUNDSTART_RACES felinid
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly
@@ -426,10 +442,20 @@ ROUNDSTART_RACES plasmaman
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
 #ROUNDSTART_RACES skeleton
 #ROUNDSTART_RACES zombie
-ROUNDSTART_RACES slimeperson
+#ROUNDSTART_RACES slime
 #ROUNDSTART_RACES pod
 #ROUNDSTART_RACES military_synth
 #ROUNDSTART_RACES agent
+
+## CITADEL Races
+ROUNDSTART_RACES mammal
+ROUNDSTART_RACES avian
+ROUNDSTART_RACES aquatic
+ROUNDSTART_RACES insect
+ROUNDSTART_RACES xeno
+ROUNDSTART_RACES slimeperson
+ROUNDSTART_RACES guilmon
+ROUNDSTART_RACES ipc
 
 ##-------------------------------------------------------------------------------------------
 
@@ -456,6 +482,18 @@ MIDROUND_ANTAG_TIME_CHECK 60
 
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
 MIDROUND_ANTAG_LIFE_CHECK 0.7
+
+## A "timeout", in real-time minutes, applied upon suicide, cryosleep or ghosting whilst alive,
+## during which the player shouldn't be able to come back into the round through
+## midround playable roles or mob spawners.
+## Set to 0 to completely disable it.
+SUICIDE_REENTER_ROUND_TIMER 30
+
+## A world time threshold, in minutes, under which the player receives
+## an extra timeout, purposely similar to the above one (and also stacks with),
+## equal to the difference between the current world.time and this threshold.
+## Both configs are indipendent from each other, disabling one won't affect the other.
+ROUNDSTART_SUICIDE_TIME_LIMIT 30
 
 ##Limit Spell Choices##
 ## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
@@ -512,30 +550,6 @@ MICE_ROUNDSTART 10
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
 
-## CITADEL Races
-ROUNDSTART_RACES mammal
-ROUNDSTART_RACES avian
-ROUNDSTART_RACES aquatic
-ROUNDSTART_RACES insect
-ROUNDSTART_RACES xeno
-ROUNDSTART_RACES datashark
-ROUNDSTART_RACES guilmon
-ROUNDSTART_RACES ipc
-
-## CREW OBJECTIVES ##
-## Comment to disable objectives for innocent crew members.
-ALLOW_CREW_OBJECTIVES
-
-## MISCREANTS ##
-## Comment to allow miscreants to spawn. Miscreants are a mini-antag with objectives that are not tracked.
-ALLOW_MISCREANTS
-
-## Uncomment to let miscreants spawn during Extended. I hold no responsibility for fun that may occur while this is enabled.
-#ALLOW_EXTENDED_MISCREANTS
-
-## Determines if players are allowed to print integrated circuits, uncomment to allow.
-#IC_PRINTING
-
 ## Uncomment to allow roundstart quirk selection in the character setup menu.
 ## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
 ROUNDSTART_TRAITS
@@ -546,6 +560,15 @@ ROUNDSTART_TRAITS
 ## Enable night shifts ##
 #ENABLE_NIGHT_SHIFTS
 
+## Makes night shifts only affect in-code public-flagged areas. Nightshifts hit the level as defined in __DEFINES/misc.dm that this is set to and anything below. ##
+NIGHT_SHIFT_PUBLIC_AREAS_ONLY 1
+
+## Nightshift toggles REQUIRE APC authorization ##
+#NIGHTSHIFT_TOGGLE_REQUIRES_AUTH
+
+## Nightshift toggles in public areas REQUIRE APC authorization ##
+NIGHTSHIFT_TOGGLE_PUBLIC_REQUIRES_AUTH
+
 ## Enable randomized shift start times##
 #RANDOMIZE_SHIFT_TIME
 
@@ -554,3 +577,30 @@ ROUNDSTART_TRAITS
 
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
+
+## Uncomment to use TG-style combat
+#DISABLE_STAMBUFFER
+
+#Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
+DYNAMIC_VOTING
+
+## Choose which Engine to start the round with. Weight is after the comma. Setting the weight to 0 removes the engine from rotation.
+BOX_RANDOM_ENGINE Box SM,3
+BOX_RANDOM_ENGINE Box Tesla,3
+BOX_RANDOM_ENGINE Box Singulo,3
+BOX_RANDOM_ENGINE Box SM 1x3,1
+BOX_RANDOM_ENGINE Box SM 5x5,1
+BOX_RANDOM_ENGINE Box SM 3x,0
+BOX_RANDOM_ENGINE Box TEG,3
+BOX_RANDOM_ENGINE Box Empty,0
+BOX_RANDOM_ENGINE Box Antimatter,1
+BOX_RANDOM_ENGINE Box P.A.C.M.A.N,1
+
+## Whether or not there's a mode tier list vote after the secret/extended vote.
+MODETIER_VOTING
+
+## Number of modes dropped by the modetier vote during mode selection, after vote.
+DROPPED_MODES 3
+
+## Whether the suicide verb is allowed.
+# SUICIDE_ALLOWED

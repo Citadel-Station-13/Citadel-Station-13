@@ -2,8 +2,11 @@
 	name = "Hivemind Link"
 	desc = "Link your victim's mind into the hivemind for personal interrogation."
 	chemical_cost = 0
-	dna_cost = 0
+	dna_cost = -1
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_link"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/linglink/can_sting(mob/living/carbon/user)
 	if(!..())
@@ -53,9 +56,9 @@
 					if(M.lingcheck() == LINGHIVE_LING)
 						to_chat(M, "<i><font color=#800080>We can sense a foreign presence in the hivemind...</font></i>")
 				target.mind.linglink = 1
-				target.say(":g AAAAARRRRGGGGGHHHHH!!")
-				to_chat(target, "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>")
-				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
+				target.say("[MODE_TOKEN_CHANGELING] AAAAARRRRGGGGGHHHHH!!")
+				to_chat(target, "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \"[MODE_TOKEN_CHANGELING] message\" to communicate!</span>")
+				target.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
 		if(!do_mob(user, target, 20))

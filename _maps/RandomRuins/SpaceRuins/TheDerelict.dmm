@@ -3410,7 +3410,7 @@
 "lq" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker{
-	list_reagents = list("sacid" = 50)
+	list_reagents = list(/datum/reagent/toxin/acid = 50)
 	},
 /obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished,
 /obj/item/pen,
@@ -3475,7 +3475,8 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "lF" = (
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lG" = (
 /turf/open/floor/plasteel/airless{

@@ -41,16 +41,14 @@
 	if(forkload)
 		if(M == user)
 			M.visible_message("<span class='notice'>[user] eats a delicious forkful of omelette!</span>")
-			M.reagents.add_reagent(forkload.id, 1)
+			M.reagents.add_reagent(forkload.type, 1)
 		else
 			M.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of omelette!</span>")
-			M.reagents.add_reagent(forkload.id, 1)
+			M.reagents.add_reagent(forkload.type, 1)
 		icon_state = "fork"
 		forkload = null
 
 	else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
-			M = user
 		return eyestab(M,user)
 	else
 		return ..()
@@ -79,8 +77,6 @@
 
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
-			M = user
 		return eyestab(M,user)
 	else
 		return ..()
@@ -137,7 +133,7 @@
 	icon_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	desc = "A sharpened bone. The bare mimimum in survival."
+	desc = "A sharpened bone. The bare minimum in survival."
 	force = 15
 	throwforce = 15
 	materials = list()
@@ -176,3 +172,12 @@
 	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 /* Trays  moved to /obj/item/storage/bag */
+
+/obj/item/kitchen/knife/scimitar
+	name = "Scimitar knife"
+	desc = "A knife used to cleanly butcher. Its razor-sharp edge has been honed for butchering, but has been poorly maintained over the years."
+	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+/obj/item/kitchen/knife/scimiar/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 90 - force, 100, force - 60) //bonus chance increases depending on force

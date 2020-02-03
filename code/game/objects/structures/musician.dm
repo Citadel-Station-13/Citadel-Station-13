@@ -1,6 +1,6 @@
 
 #define MUSICIAN_HEARCHECK_MINDELAY 4
-#define MUSIC_MAXLINES 300
+#define MUSIC_MAXLINES 600
 #define MUSIC_MAXLINECHARS 50
 
 /datum/song
@@ -104,13 +104,15 @@
 						playing = FALSE
 						hearing_mobs = null
 						return
-					if(!lentext(note))
+					if(!length(note))
 						continue
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
-					for(var/i=2 to lentext(note))
-						var/ni = copytext(note,i,i+1)
+					var/notelen = length(note)
+					var/ni = ""
+					for(var/i = length(note[1]) + 1, i <= notelen, i += length(ni))
+						ni = note[i]
 						if(!text2num(ni))
 							if(ni == "#" || ni == "b" || ni == "n")
 								cur_acc[cur_note] = ni
@@ -176,7 +178,7 @@
 					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
 					By default, every note is natural and in octave 3. Defining otherwise is remembered for each note.<br>
 					Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.<br>
-					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is C3,C4,C4,C3</i><br>
+					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is <i>C3,C4,C4,C3</i><br>
 					Chords can be played simply by seperating each note with a hyphon: <i>A-C#,Cn-E,E-G#,Gn-B</i><br>
 					A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
 					To make a chord be a different time, end it with /x, where the chord length will be length<br>
@@ -199,9 +201,10 @@
 	//split into lines
 	lines = splittext(text, "\n")
 	if(lines.len)
-		if(copytext(lines[1],1,6) == "BPM: ")
-			tempo = sanitize_tempo(600 / text2num(copytext(lines[1],6)))
-			lines.Cut(1,2)
+		var/bpm_string = "BPM: "
+		if(findtext(lines[1], bpm_string, 1, length(bpm_string) + 1))
+			tempo = sanitize_tempo(600 / text2num(copytext(lines[1], length(bpm_string) + 1)))
+			lines.Cut(1, 2)
 		else
 			tempo = sanitize_tempo(5) // default 120 BPM
 		if(lines.len > MUSIC_MAXLINES)
@@ -209,7 +212,7 @@
 			lines.Cut(MUSIC_MAXLINES + 1)
 		var/linenum = 1
 		for(var/l in lines)
-			if(lentext(l) > MUSIC_MAXLINECHARS)
+			if(length_char(l) > MUSIC_MAXLINECHARS)
 				to_chat(usr, "Line [linenum] too long!")
 				lines.Remove(l)
 			else
@@ -236,11 +239,11 @@
 			if(!in_range(instrumentObj, usr))
 				return
 
-			if(lentext(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
+			if(length_char(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 				if(cont == "no")
 					break
-		while(lentext(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
+		while(length_char(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 		ParseSong(t)
 
 	else if(href_list["help"])
@@ -272,7 +275,7 @@
 			return
 		if(lines.len > MUSIC_MAXLINES)
 			return
-		if(lentext(newline) > MUSIC_MAXLINECHARS)
+		if(length(newline) > MUSIC_MAXLINECHARS)
 			newline = copytext(newline, 1, MUSIC_MAXLINECHARS)
 		lines.Add(newline)
 
@@ -284,11 +287,9 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
+		var/content = stripped_input(usr, "Enter your line: ", instrumentObj.name, lines[num], MUSIC_MAXLINECHARS)
 		if(!content || !in_range(instrumentObj, usr))
 			return
-		if(lentext(content) > MUSIC_MAXLINECHARS)
-			content = copytext(content, 1, MUSIC_MAXLINECHARS)
 		if(num > lines.len || num < 1)
 			return
 		lines[num] = content
@@ -335,7 +336,7 @@
 	..()
 	song = new("piano", src)
 
-	if(prob(50))
+	if(prob(50) && icon_state == initial(icon_state))
 		name = "space minimoog"
 		desc = "This is a minimoog, like a space piano, but more spacey!"
 		icon_state = "minimoog"

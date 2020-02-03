@@ -23,6 +23,9 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_records_dsc(datum/data/record/a, datum/data/record/b)
 	return sorttext(a.fields[GLOB.cmp_field], b.fields[GLOB.cmp_field])
 
+/proc/cmp_filter_data_priority(list/A, list/B)
+	return A["priority"] - B["priority"]
+
 /proc/cmp_ckey_asc(client/a, client/b)
 	return sorttext(b.ckey, a.ckey)
 
@@ -81,3 +84,36 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
 	return A.totalResistance() - B.totalResistance()
+
+/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
+	return A.display_order - B.display_order
+
+/proc/cmp_uplink_items_dsc(datum/uplink_item/A, datum/uplink_item/B)
+	return sorttext(initial(B.name), initial(A.name))
+
+/proc/cmp_numbered_displays_name_asc(datum/numbered_display/A, datum/numbered_display/B)
+	return sorttext(A.sample_object.name, B.sample_object.name)
+
+/proc/cmp_numbered_displays_name_dsc(datum/numbered_display/A, datum/numbered_display/B)
+	return sorttext(B.sample_object.name, A.sample_object.name)
+
+/proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
+	return sorttext(initial(b.name),initial(a.name))
+
+/proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
+	var/a_sign = num2sign(initial(A.value) * -1)
+	var/b_sign = num2sign(initial(B.value) * -1)
+
+	// Neutral traits go last.
+	if(a_sign == 0)
+		a_sign = 2
+	if(b_sign == 0)
+		b_sign = 2
+
+	var/a_name = initial(A.name)
+	var/b_name = initial(B.name)
+
+	if(a_sign != b_sign)
+		return a_sign - b_sign
+	else
+		return sorttext(b_name, a_name)

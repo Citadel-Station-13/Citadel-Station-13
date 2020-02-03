@@ -81,8 +81,8 @@
 	return boolets
 
 /obj/item/gun/ballistic/revolver/examine(mob/user)
-	..()
-	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
+	. = ..()
+	. += "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
@@ -96,19 +96,26 @@
 						"Gold Trim" = "detective_gold",
 						"The Peacemaker" = "detective_peacemaker"
 						)
+	var/list/safe_calibers
+
+/obj/item/gun/ballistic/revolver/detective/Initialize()
+	. = ..()
+	safe_calibers = magazine.caliber
 
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine.caliber != initial(magazine.caliber))
+	if(chambered && !(chambered.caliber in safe_calibers))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
 			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
 			user.take_bodypart_damage(0,20)
 			user.dropItemToGround(src)
-			return 0
+			return FALSE
 	..()
 
 /obj/item/gun/ballistic/revolver/detective/screwdriver_act(mob/living/user, obj/item/I)
-	if(magazine.caliber == "38")
+	if(..())
+		return TRUE
+	if("38" in magazine.caliber)
 		to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
 		if(magazine.ammo_count())
 			afterattack(user, user)	//you know the drill
@@ -118,7 +125,7 @@
 			if(magazine.ammo_count())
 				to_chat(user, "<span class='warning'>You can't modify it!</span>")
 				return TRUE
-			magazine.caliber = "357"
+			magazine.caliber = list("357")
 			desc = "The barrel and chamber assembly seems to have been modified."
 			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
 	else
@@ -131,7 +138,7 @@
 			if(magazine.ammo_count())
 				to_chat(user, "<span class='warning'>You can't modify it!</span>")
 				return
-			magazine.caliber = "38"
+			magazine.caliber = list("38")
 			desc = initial(desc)
 			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
 	return TRUE
@@ -151,7 +158,7 @@
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/revolver/nagant
-	name = "nagant revolver"
+	name = "\improper Nagant revolver"
 	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
 	icon_state = "nagant"
 	can_suppress = TRUE
@@ -163,8 +170,9 @@
 // You can spin the chamber to randomize the position of the bullet.
 
 /obj/item/gun/ballistic/revolver/russian
-	name = "\improper russian revolver"
+	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
+	icon_state = "russianrevolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 
@@ -191,6 +199,8 @@
 	..()
 
 /obj/item/gun/ballistic/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..(null, user, flag, params)
+
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
 			if(user.a_intent == INTENT_HARM) // Flogging action
@@ -233,7 +243,7 @@
 	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
 
 /obj/item/gun/ballistic/revolver/russian/soul
-	name = "cursed russian revolver"
+	name = "cursed Russian revolver"
 	desc = "To play with this revolver requires wagering your very soul."
 
 /obj/item/gun/ballistic/revolver/russian/soul/shoot_self(mob/living/user)
@@ -273,12 +283,12 @@
 	..()
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
+	if(A.tool_behaviour == TOOL_SAW || istype(A, /obj/item/gun/energy/plasmacutter))
+		sawoff(user)
 	if(istype(A, /obj/item/melee/transforming/energy))
 		var/obj/item/melee/transforming/energy/W = A
 		if(W.active)
 			sawoff(user)
-	if(istype(A, /obj/item/circular_saw) || istype(A, /obj/item/gun/energy/plasmacutter))
-		sawoff(user)
 
 /obj/item/gun/ballistic/revolver/doublebarrel/attack_self(mob/living/user)
 	var/num_unloaded = 0
@@ -347,7 +357,7 @@
 	clumsy_check = 0
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
-	if((user.has_trait(TRAIT_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) || (user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY)))
 		return ..()
 	if(process_fire(user, user, FALSE, null, BODY_ZONE_HEAD))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")

@@ -13,14 +13,14 @@
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/spiderlollipop
- 	name = "Spider Lollipop"
- 	reqs = list(/obj/item/stack/rods = 1,
- 		/datum/reagent/consumable/sugar = 5,
- 		/datum/reagent/water = 5,
- 		/obj/item/reagent_containers/food/snacks/spiderling = 1
- 	)
- 	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
- 	subcategory = CAT_MISCFOOD
+	name = "Spider Lollipop"
+	reqs = list(/obj/item/stack/rods = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/water = 5,
+		/obj/item/reagent_containers/food/snacks/spiderling = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
 	name = "Choco coin"
@@ -116,13 +116,22 @@
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/slime
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/jelliedyoast
+/datum/crafting_recipe/food/jelliedtoast
 	name = "Jellied toast"
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/peanutbuttertoast
+	name = "Peanut butter toast"
+	reqs = list(
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/peanut_buttertoast
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/twobread
@@ -184,39 +193,6 @@
 		/obj/item/reagent_containers/food/snacks/grown/ambrosia = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/melonfruitbowl
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/spacefreezy
-	name ="Space freezy"
-	reqs = list(
-		/datum/reagent/consumable/bluecherryjelly = 5,
-		/datum/reagent/consumable/spacemountainwind = 15,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/spacefreezy
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/sundae
-	name ="Sundae"
-	reqs = list(
-		/datum/reagent/consumable/cream = 5,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/sundae
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/honkdae
-	name ="Honkdae"
-	reqs = list(
-		/datum/reagent/consumable/cream = 5,
-		/obj/item/clothing/mask/gas/clown_hat = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 2,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/honkdae
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/nachos
@@ -282,7 +258,7 @@
 	subcategory = CAT_MISCFOOD
 
 
-/datum/crafting_recipe/food/lizardwine
+/datum/crafting_recipe/lizardwine //not a subtype of /datum/crafting_recipe/food due to a bug where the resulting bottle would contain 100u of lizardwine and 100u of ethanol.
 	name = "Lizard wine"
 	time = 40
 	reqs = list(
@@ -290,6 +266,7 @@
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
+	category = CAT_FOOD
 	subcategory = CAT_MISCFOOD
 
 
@@ -344,4 +321,23 @@
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/riceball
+	name = "Onigiri"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 1,
+		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 1,
+		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/riceball
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/chocolatestrawberry
+	name = "Chocolate Strawberry"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/obj/item/reagent_containers/food/snacks/grown/strawberry  = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/chocolatestrawberry
 	subcategory = CAT_MISCFOOD

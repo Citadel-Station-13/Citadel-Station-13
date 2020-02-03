@@ -7,16 +7,13 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	dir = NONE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	var/datum/gas_mixture/gas	// gas used to flush, will appear at exit point
 	var/active = FALSE			// true if the holder is moving, otherwise inactive
 	var/count = 1000			// can travel 1000 steps before going inactive (in case of loops)
 	var/destinationTag = NONE	// changes if contains a delivery container
 	var/tomail = FALSE			// contains wrapped package
 	var/hasmob = FALSE			// contains a mob
-
-/obj/structure/disposalholder/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/structure/disposalholder/Destroy()
 	QDEL_NULL(gas)
@@ -47,6 +44,7 @@
 		var/atom/movable/AM = A
 		if(AM == src)
 			continue
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
 		AM.forceMove(src)
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM
@@ -54,6 +52,10 @@
 		if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 			var/obj/item/smallDelivery/T = AM
 			src.destinationTag = T.sortTag
+		else if(istype(AM, /mob/living/silicon/robot))
+			var/obj/item/destTagger/borg/tagger = locate() in AM
+			if (tagger)
+				src.destinationTag = tagger.currTag
 
 
 // start the movement process
@@ -115,7 +117,7 @@
 	if(user.incapacitated())
 		return
 	for(var/mob/M in range(5, get_turf(src)))
-		M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
+		M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", MSG_AUDIBLE)
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
 // called to vent all gas in holder to a location

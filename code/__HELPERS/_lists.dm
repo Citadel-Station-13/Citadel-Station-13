@@ -20,6 +20,35 @@
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+#define reverseList(L) reverseRange(L.Copy())
+
+// binary search sorted insert
+// IN: Object to be inserted
+// LIST: List to insert object into
+// TYPECONT: The typepath of the contents of the list
+// COMPARE: The variable on the objects to compare
+#define BINARY_INSERT(IN, LIST, TYPECONT, COMPARE) \
+	var/__BIN_CTTL = length(LIST);\
+	if(!__BIN_CTTL) {\
+		LIST += IN;\
+	} else {\
+		var/__BIN_LEFT = 1;\
+		var/__BIN_RIGHT = __BIN_CTTL;\
+		var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+		var/##TYPECONT/__BIN_ITEM;\
+		while(__BIN_LEFT < __BIN_RIGHT) {\
+			__BIN_ITEM = LIST[__BIN_MID];\
+			if(__BIN_ITEM.##COMPARE <= IN.##COMPARE) {\
+				__BIN_LEFT = __BIN_MID + 1;\
+			} else {\
+				__BIN_RIGHT = __BIN_MID;\
+			};\
+			__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+		};\
+		__BIN_ITEM = LIST[__BIN_MID];\
+		__BIN_MID = __BIN_ITEM.##COMPARE > IN.##COMPARE ? __BIN_MID : __BIN_MID + 1;\
+		LIST.Insert(__BIN_MID, IN);\
+	}
 
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
@@ -95,6 +124,7 @@
 
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/thing in atoms)
 		var/atom/A = thing
@@ -102,6 +132,7 @@
 			. += A
 
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/thing in atoms)
 		var/atom/A = thing
@@ -228,6 +259,7 @@
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
+	RETURN_TYPE(L[_].type)
 	if(L.len)
 		var/picked = rand(1,L.len)
 		. = L[picked]
@@ -350,6 +382,12 @@
 			i++
 	return i
 
+/proc/count_occurences_of_value(list/L, val, limit) //special thanks to salmonsnake
+	. = 0
+	for (var/i in 1 to limit)
+		if (L[i] == val)
+			.++
+
 /proc/find_record(field, value, list/L)
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
@@ -460,8 +498,18 @@
 		return l
 	. = l.Copy()
 	for(var/i = 1 to l.len)
-		if(islist(.[i]))
-			.[i] = .(.[i])
+		var/key = .[i]
+		if(isnum(key))
+			// numbers cannot ever be associative keys
+			continue
+		var/value = .[key]
+		if(islist(value))
+			value = deepCopyList(value)
+			.[key] = value
+		if(islist(key))
+			key = deepCopyList(key)
+			.[i] = key
+			.[key] = value
 
 //takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
 //use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
@@ -475,7 +523,7 @@
 		used_key_list[input_key] = 1
 	return input_key
 
-#if DM_VERSION > 512
+#if DM_VERSION > 513
 #error Remie said that lummox was adding a way to get a lists
 #error contents via list.values, if that is true remove this
 #error otherwise, update the version and bug lummox
@@ -487,6 +535,11 @@
 	. = list()
 	for(var/key in key_list)
 		. |= key_list[key]
+
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
@@ -521,3 +574,9 @@
 			L1[key] += other_value
 		else
 			L1[key] = other_value
+
+/proc/assoc_list_strip_value(list/input)
+	var/list/ret = list()
+	for(var/key in input)
+		ret += key
+	return ret

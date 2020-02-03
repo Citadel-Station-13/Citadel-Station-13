@@ -14,6 +14,19 @@
 		"spess"
 	],
 
+	"eye": [
+		"eye",
+		"blink",
+		"look",
+		"see",
+		"laser",
+		"iris",
+		"cornea",
+		"pupil",
+		"lens",
+		"optic"
+	],
+
 	"security": [
 		"sec",
 		"security",
@@ -69,6 +82,17 @@
 		"slip",
 		"slipped",
 		"slipping"
+	],
+
+	"mimes": [
+		"mime",
+		"silence",
+		"mimic",
+		"invisible",
+		"french",
+		"oui",
+		"pretending",
+		"nothing"
 	],
 
 	"greytide": [
@@ -246,6 +270,19 @@
 		"fowl"
 	],
 
+"cats": [
+		"mew",
+		"nya",
+		"moew",
+		"feline",
+		"cat",
+		"neko",
+		"viola",
+		"kitty",
+		"purr",
+		"headpat"
+	],
+
 "falling": [
 		"hold on",
 		"hang in there",
@@ -257,5 +294,52 @@
 		"let go",
 		"i'll catch you",
 		"slip"
+	],
+	
+	"syndicate": [
+		"syndicate",
+		"changeling",
+		"rev",
+		"nuke ops",
+		"syndicats",
+		"nukies",
+		"ops",
+		"traitor",
+		"second shooter",
+		"revolution",
+		"fuck nt",
+		"rigged from the start",
+		"debt to pay",
+		"brainwashing",
+		"enemy corporation",
+		"agent"
+	],
+	
+"anime": [
+		"anime",
+		"manga",
+		"baka",
+		"desu",
+		"sugoi",
+		"katana",
+		"weeb",
+		"otaku",
+		"catgirl",
+		"catgirls",
+		"ninja",
+		"uguu",
+		"waifu",
+		"husbando",
+		"best girl",
+		"worst girl",
+		"subs",
+		"dubs",
+		"season two when",
+		"cosplay",
+		"nya",
+		"nyaa",
+		"neet",
+		"ora",
+		"~"
 	]
 }

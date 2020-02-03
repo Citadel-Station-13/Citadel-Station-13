@@ -36,10 +36,13 @@
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
+/obj/machinery/door/window/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
+
 /obj/machinery/door/window/Destroy()
 	density = FALSE
-	for(var/I in debris)
-		qdel(I)
+	QDEL_LIST(debris)
 	if(obj_integrity == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
@@ -59,7 +62,7 @@
 		sleep(20)
 	close()
 
-/obj/machinery/door/window/CollidedWith(atom/movable/AM)
+/obj/machinery/door/window/Bumped(atom/movable/AM)
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
@@ -203,15 +206,20 @@
 	..()
 
 /obj/machinery/door/window/emag_act(mob/user)
-	if(!operating && density && !(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
-		operating = TRUE
-		flick("[src.base_state]spark", src)
-		playsound(src, "sparks", 75, 1)
-		sleep(6)
-		operating = FALSE
-		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
-		open(2)
+	. = ..()
+	if(operating || !density || obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	operating = TRUE
+	flick("[src.base_state]spark", src)
+	playsound(src, "sparks", 75, 1)
+	addtimer(CALLBACK(src, .proc/open_windows_me), 6)
+	return TRUE
+
+/obj/machinery/door/window/proc/open_windows_me()
+	operating = FALSE
+	desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
+	open(2)
 
 /obj/machinery/door/window/attackby(obj/item/I, mob/living/user, params)
 
@@ -247,7 +255,7 @@
 							if("rightsecure")
 								WA.facing = "r"
 								WA.secure = TRUE
-						WA.anchored = TRUE
+						WA.setAnchored(TRUE)
 						WA.state= "02"
 						WA.setDir(src.dir)
 						WA.ini_dir = src.dir
@@ -299,6 +307,35 @@
 		if("deny")
 			flick("[src.base_state]deny", src)
 
+/obj/machinery/door/window/check_access_ntnet(datum/netdata/data)
+	return !requiresID() || ..()
+
+/obj/machinery/door/window/ntnet_receive(datum/netdata/data)
+	// Check if the airlock is powered.
+	if(!hasPower())
+		return
+
+	// Check packet access level.
+	if(!check_access_ntnet(data))
+		return
+
+	// Handle received packet.
+	var/command = lowertext(data.data["data"])
+	var/command_value = lowertext(data.data["data_secondary"])
+	switch(command)
+		if("open")
+			if(command_value == "on" && !density)
+				return
+
+			if(command_value == "off" && density)
+				return
+
+			if(density)
+				INVOKE_ASYNC(src, .proc/open)
+			else
+				INVOKE_ASYNC(src, .proc/close)
+		if("touch")
+			INVOKE_ASYNC(src, .proc/open_and_close)
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

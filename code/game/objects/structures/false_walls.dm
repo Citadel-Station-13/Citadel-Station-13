@@ -7,7 +7,7 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	layer = CLOSED_TURF_LAYER
+	layer = LOW_OBJ_LAYER
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
@@ -24,6 +24,8 @@
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_MEDIUM_INSULATION
 	var/mineral = /obj/item/stack/sheet/metal
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
@@ -33,15 +35,6 @@
 /obj/structure/falsewall/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
-
-/obj/structure/falsewall/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
-
-/obj/structure/falsewall/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
 
 /obj/structure/falsewall/ratvar_act()
 	new /obj/structure/falsewall/brass(loc)
@@ -243,7 +236,7 @@
 	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/closed/wall/mineral/plasma)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot() > 300)
+	if(W.get_temperature() > 300)
 		var/turf/T = get_turf(src)
 		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma falsewall ignited by [key_name(user)] in [AREACOORD(T)]")

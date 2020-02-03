@@ -11,7 +11,7 @@
 
 /obj/item/storage/book/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if(!istype(H))
 		return
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
+	if(!GLOB.bible_icon_state && H.job == "Chaplain")
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 		for(var/i in 1 to GLOB.biblestates.len)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 /obj/item/storage/book/bible/Topic(href, href_list)
 	if(!usr.canUseTopic(src))
 		return
-	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
+	if(href_list["seticon"] && GLOB && !GLOB.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
 		var/obj/item/storage/book/bible/B = locate(href_list["src"])
@@ -74,10 +74,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		if(B.icon_state == "honk1" || B.icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
+			H.dna.add_mutation(SMILE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
-		SSreligion.bible_icon_state = B.icon_state
-		SSreligion.bible_item_state = B.item_state
+		GLOB.bible_icon_state = B.icon_state
+		GLOB.bible_item_state = B.item_state
 
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
@@ -89,7 +90,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
 			return 0
 
-	var/heal_amt = 10
+	var/heal_amt = 5
 	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1)
 
 	if(hurt_limbs.len)
@@ -100,7 +101,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
@@ -109,7 +110,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	if (user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='danger'>[src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Unconscious(400)
@@ -138,21 +139,22 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(!istype(C.head, /obj/item/clothing/head/helmet))
-				C.adjustBrainLoss(5, 60)
+			if(!istype(C.head, /obj/item/clothing/head))
+				C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 80)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 			playsound(src.loc, "punch", 25, 1, -1)
-			add_logs(user, M, "attacked", src)
+			log_combat(user, M, "attacked", src)
 
 	else
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
 
 /obj/item/storage/book/bible/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(isfloorturf(A))
@@ -161,16 +163,16 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			for(var/obj/effect/rune/R in orange(2,user))
 				R.invisibility = 0
 	if(user.mind && (user.mind.isholy))
-		if(A.reagents && A.reagents.has_reagent("water")) // blesses all the water in the holder
+		if(A.reagents && A.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
 			to_chat(user, "<span class='notice'>You bless [A].</span>")
-			var/water2holy = A.reagents.get_reagent_amount("water")
-			A.reagents.del_reagent("water")
-			A.reagents.add_reagent("holywater",water2holy)
-		if(A.reagents && A.reagents.has_reagent("unholywater")) // yeah yeah, copy pasted code - sue me
+			var/water2holy = A.reagents.get_reagent_amount(/datum/reagent/water)
+			A.reagents.del_reagent(/datum/reagent/water)
+			A.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
+		if(A.reagents && A.reagents.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
 			to_chat(user, "<span class='notice'>You purify [A].</span>")
-			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
-			A.reagents.del_reagent("unholywater")
-			A.reagents.add_reagent("holywater",unholy2clean)
+			var/unholy2clean = A.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
+			A.reagents.del_reagent(/datum/reagent/fuel/unholywater)
+			A.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
 	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
 		var/obj/item/twohanded/required/cult_bastard/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
@@ -186,9 +188,23 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 				SS.release_shades(user)
 				qdel(SS)
 			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
+			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
 			qdel(sword)
 
+	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
+		var/obj/item/soulstone/SS = A
+		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
+		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
+		if(do_after(user, 40, target = SS))
+			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
+			SS.usability = TRUE
+			for(var/mob/living/simple_animal/shade/EX in SS)
+				SSticker.mode.remove_cultist(EX.mind, 1, 0)
+				EX.icon_state = "ghost1"
+				EX.name = "Purified [EX.name]"
+				SS.release_shades(user)
+			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
+			qdel(SS)
 
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."

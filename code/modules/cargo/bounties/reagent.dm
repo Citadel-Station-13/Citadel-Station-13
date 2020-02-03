@@ -12,7 +12,7 @@
 /datum/bounty/reagent/applies_to(obj/O)
 	if(!istype(O, /obj/item/reagent_containers))
 		return FALSE
-	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.id))
+	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.type))
 		return FALSE
 	if(O.flags_1 & HOLOGRAM_1)
 		return FALSE
@@ -21,7 +21,7 @@
 /datum/bounty/reagent/ship(obj/O)
 	if(!applies_to(O))
 		return
-	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.id)
+	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.type)
 	if(shipped_volume > required_volume)
 		shipped_volume = required_volume
 
@@ -29,7 +29,7 @@
 	if(!istype(other_bounty, /datum/bounty/reagent))
 		return TRUE
 	var/datum/bounty/reagent/R = other_bounty
-	return wanted_reagent.id != R.wanted_reagent.id
+	return wanted_reagent.type != R.wanted_reagent.type
 
 /datum/bounty/reagent/simple_drink
 	name = "Simple Drink"
@@ -109,19 +109,18 @@ datum/bounty/reagent/complex_drink/New()
 		/datum/reagent/consumable/ethanol/patron,\
 		/datum/reagent/consumable/ethanol/quadruple_sec,\
 		/datum/reagent/consumable/ethanol/quintuple_sec,\
-		/datum/reagent/consumable/bluecherryshake,\
 		/datum/reagent/consumable/doctor_delight,\
 		/datum/reagent/consumable/ethanol/silencer)
-		
+
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
 	description = "CentCom is offering a reward for talented mixologists. Ship a container of [name] to claim the prize."
-	reward += rand(0, 4) * 500
+	reward += rand(0, 4) * 300
 
 /datum/bounty/reagent/chemical
 	name = "Chemical"
-	reward = 4000
+	reward = 2750
 	required_volume = 30
 
 datum/bounty/reagent/chemical/New()

@@ -17,7 +17,7 @@
 						to_chat(user, "<span class='notice'>You can't fit anything in.</span>")
 					return
 				if(thing) // put thing in belt
-					if(!equipped_belt.SendSignal(COMSIG_TRY_STORAGE_INSERT, thing, user.mob))
+					if(!SEND_SIGNAL(equipped_belt, COMSIG_TRY_STORAGE_INSERT, thing, user.mob))
 						to_chat(user, "<span class='notice'>You can't fit anything in.</span>")
 					return
 				if(!equipped_belt.contents.len) // nothing to take out
@@ -45,7 +45,7 @@
 						to_chat(user, "<span class='notice'>You can't fit anything in.</span>")
 					return
 				if(thing) // put thing in backpack
-					if(!equipped_backpack.SendSignal(COMSIG_TRY_STORAGE_INSERT, thing, user.mob))
+					if(!SEND_SIGNAL(equipped_backpack, COMSIG_TRY_STORAGE_INSERT, thing, user.mob))
 						to_chat(user, "<span class='notice'>You can't fit anything in.</span>")
 					return
 				if(!equipped_backpack.contents.len) // nothing to take out
@@ -56,4 +56,25 @@
 					return
 				stored.attack_hand(src) // take out thing from backpack
 				return
+	switch(_key)
+		if("Shift")
+			if(!user.prefs.sprint_spacebar)
+				user.prefs.sprint_toggle ? togglesprint() : sprint_hotkey(TRUE) //Yes, this looks hacky. Yes, this works.
+			return
+		if("Space")
+			if(user.prefs.sprint_spacebar)
+				user.prefs.sprint_toggle ? togglesprint() : sprint_hotkey(TRUE)
+			return
+	return ..()
+
+/mob/living/carbon/human/key_up(_key, client/user)
+	switch(_key)
+		if("Shift")
+			if(!user.prefs.sprint_spacebar && !user.prefs.sprint_toggle)
+				sprint_hotkey(FALSE)
+			return
+		if("Space")
+			if(user.prefs.sprint_spacebar && !user.prefs.sprint_toggle)
+				sprint_hotkey(FALSE)
+			return
 	return ..()

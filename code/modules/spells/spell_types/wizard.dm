@@ -28,7 +28,8 @@
 	sound = 'sound/magic/magic_missile.ogg'
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
-	amt_knockdown = 60
+	amt_knockdown = 120
+	amt_hardstun = 5
 	sound = 'sound/magic/mm_hit.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
@@ -151,19 +152,21 @@
 	sound1 = 'sound/magic/teleport_diss.ogg'
 	sound2 = 'sound/magic/teleport_app.ogg'
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+/obj/effect/proc_holder/spell/aoe_turf/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
 	clothes_req = 1
-	invocation = "TOKI WO TOMARE"
+	invocation = "TOKI YO TOMARE"
 	invocation_type = "shout"
 	range = 0
 	cooldown_min = 100
-	summon_amt = 1
 	action_icon_state = "time"
+	var/timestop_range = 2
+	var/timestop_duration = 100
 
-	summon_type = list(/obj/effect/timestop/wizard)
+/obj/effect/proc_holder/spell/aoe_turf/timestop/cast(list/targets, mob/user = usr)
+	new /obj/effect/timestop/magic(get_turf(user), timestop_range, timestop_duration, list(user))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -262,7 +265,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, stun_amt = 50)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -286,14 +289,14 @@
 		if(distfromcaster == 0)
 			if(isliving(AM))
 				var/mob/living/M = AM
-				M.Knockdown(100)
+				M.Knockdown(100, override_hardstun = 20)
 				M.adjustBruteLoss(5)
 				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
 			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
-				M.Knockdown(stun_amt)
+				M.Knockdown(stun_amt, override_hardstun = stun_amt * 0.2)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
@@ -362,7 +365,7 @@
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
+/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
@@ -374,4 +377,4 @@
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/H = thrower
-		H.say("LIGHTNINGBOLT!!")
+		H.say("LIGHTNINGBOLT!!", forced = "spell")

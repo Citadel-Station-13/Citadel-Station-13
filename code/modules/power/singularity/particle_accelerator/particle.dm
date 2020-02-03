@@ -28,7 +28,7 @@
 	addtimer(CALLBACK(src, .proc/move), 1)
 
 
-/obj/effect/accelerated_particle/Collide(atom/A)
+/obj/effect/accelerated_particle/Bump(atom/A)
 	if(A)
 		if(isliving(A))
 			toxmob(A)
@@ -59,7 +59,12 @@
 
 /obj/effect/accelerated_particle/proc/move()
 	if(!step(src,dir))
-		forceMove(get_step(src,dir))
+		var/turf/T = get_step(src,dir)
+		if(T)
+			forceMove(T)
+		else
+			qdel(src)
+			return
 	movement_range--
 	if(movement_range == 0)
 		qdel(src)

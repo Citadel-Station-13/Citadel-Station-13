@@ -17,7 +17,7 @@
 	status_flags = (CANPUSH | CANSTUN)
 
 	radio_key = /obj/item/encryptionkey/headset_med
-	radio_channel = "Medical"
+	radio_channel = RADIO_CHANNEL_MEDICAL
 
 	bot_type = MED_BOT
 	model = "Medibot"
@@ -43,16 +43,17 @@
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute_avoid = "tricordrazine"
-	var/treatment_brute = "bicaridine"
+	var/treatment_brute_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_brute = /datum/reagent/medicine/bicaridine
 	var/treatment_oxy_avoid = null
-	var/treatment_oxy = "dexalin"
-	var/treatment_fire_avoid = "tricordrazine"
-	var/treatment_fire = "kelotane"
-	var/treatment_tox_avoid = "tricordrazine"
-	var/treatment_tox = "charcoal"
+	var/treatment_oxy = /datum/reagent/medicine/dexalin
+	var/treatment_fire_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_fire = /datum/reagent/medicine/kelotane
+	var/treatment_tox_avoid = /datum/reagent/medicine/tricordrazine
+	var/treatment_tox = /datum/reagent/medicine/charcoal
+	var/treatment_tox_toxlover = /datum/reagent/toxin
 	var/treatment_virus_avoid = null
-	var/treatment_virus = "spaceacillin"
+	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 
@@ -60,9 +61,9 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_brute = "tricordrazine"
-	treatment_fire = "tricordrazine"
-	treatment_tox = "tricordrazine"
+	treatment_brute = /datum/reagent/medicine/tricordrazine
+	treatment_fire = /datum/reagent/medicine/tricordrazine
+	treatment_tox = /datum/reagent/medicine/tricordrazine
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
@@ -70,13 +71,13 @@
 	skin = "bezerk"
 	heal_threshold = 0
 	declare_crit = 0
-	treatment_oxy = "pancuronium"
+	treatment_oxy = /datum/reagent/toxin/pancuronium
 	treatment_brute_avoid = null
-	treatment_brute = "pancuronium"
+	treatment_brute = /datum/reagent/toxin/pancuronium
 	treatment_fire_avoid = null
-	treatment_fire = "sodium_thiopental"
+	treatment_fire = /datum/reagent/toxin/sodium_thiopental
 	treatment_tox_avoid = null
-	treatment_tox = "sodium_thiopental"
+	treatment_tox = /datum/reagent/toxin/sodium_thiopental
 
 /mob/living/simple_animal/bot/medbot/update_icon()
 	cut_overlays()
@@ -240,7 +241,7 @@
 			step_to(src, (get_step_away(src,user)))
 
 /mob/living/simple_animal/bot/medbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
@@ -261,7 +262,7 @@
 	if(assess_patient(H))
 		last_found = world.time
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
-			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/mcoming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/mhelp.ogg',"[H.name], you appear to be injured!" = 'sound/voice/minjured.ogg')
+			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
 			playsound(loc, messagevoice[message], 50, 0)
@@ -287,9 +288,9 @@
 		oldpatient = patient
 		soft_reset()
 
-	if(!patient)
+	if(QDELETED(patient))
 		if(!shut_up && prob(1))
-			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/mradar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/mcatch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/msurgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/mflies.ogg',"Delicious!" = 'sound/voice/mdelicious.ogg')
+			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
 			playsound(loc, messagevoice[message], 50, 0)
@@ -343,7 +344,7 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
-	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		return FALSE	//welp too late for them!
 
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
@@ -368,8 +369,9 @@
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
-		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R.id))
+		for(var/A in reagent_glass.reagents.reagent_list)
+			var/datum/reagent/R = A
+			if(!C.reagents.has_reagent(R.type))
 				return TRUE
 
 	//They're injured enough for it!
@@ -381,8 +383,8 @@
 
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return TRUE
-
-	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
+	var/treatment_toxavoid = get_avoidchem_toxin(C)
+	if(((isnull(treatment_toxavoid) || !C.reagents.has_reagent(treatment_toxavoid))) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(get_healchem_toxin(C))))
 		return TRUE
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
@@ -395,6 +397,12 @@
 				return TRUE //STOP DISEASE FOREVER
 
 	return FALSE
+
+/mob/living/simple_animal/bot/medbot/proc/get_avoidchem_toxin(mob/M)
+	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? null : treatment_tox_avoid
+
+/mob/living/simple_animal/bot/medbot/proc/get_healchem_toxin(mob/M)
+	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? treatment_tox_toxlover : treatment_tox
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
 	if(iscarbon(A))
@@ -421,8 +429,8 @@
 		soft_reset()
 		return
 
-	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
-		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
+		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(loc, messagevoice[message], 50, 0)
@@ -433,7 +441,7 @@
 	var/reagent_id = null
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
-		reagent_id = "toxin"
+		reagent_id = HAS_TRAIT(C, TRAIT_TOXINLOVER)? "charcoal" : "toxin"
 
 	else
 		if(treat_virus)
@@ -463,20 +471,23 @@
 				reagent_id = treatment_fire
 
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_tox) && !C.reagents.has_reagent(treatment_tox_avoid))
-				reagent_id = treatment_tox
+			var/toxin_heal_avoid = get_avoidchem_toxin(C)
+			var/toxin_healchem = get_healchem_toxin(C)
+			if(!C.reagents.has_reagent(toxin_healchem) && (isnull(toxin_heal_avoid) || !C.reagents.has_reagent(toxin_heal_avoid)))
+				reagent_id = toxin_healchem
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
-			for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-				if(!C.reagents.has_reagent(R.id))
+			for(var/A in reagent_glass.reagents.reagent_list)
+				var/datum/reagent/R = A
+				if(!C.reagents.has_reagent(R.type))
 					reagent_id = "internal_beaker"
 					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
 		if(C.maxHealth - C.health < heal_threshold)
 			to_chat(src, "<span class='notice'>[C] is healthy! Your programming prevents you from injecting anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 15] for oxygen damage.)</span>")
-		var/list/messagevoice = list("All patched up!" = 'sound/voice/mpatchedup.ogg',"An apple a day keeps me away." = 'sound/voice/mapple.ogg',"Feel better soon!" = 'sound/voice/mfeelbetter.ogg')
+		var/list/messagevoice = list("All patched up!" = 'sound/voice/medbot/patchedup.ogg',"An apple a day keeps me away." = 'sound/voice/medbot/apple.ogg',"Feel better soon!" = 'sound/voice/medbot/feelbetter.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(loc, messagevoice[message], 50, 0)
@@ -540,7 +551,7 @@
 		drop_part(robot_arm, Tsec)
 
 	if(emagged && prob(25))
-		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
+		playsound(loc, 'sound/voice/medbot/insult.ogg', 50, 0)
 
 	do_sparks(3, TRUE, src)
 	..()

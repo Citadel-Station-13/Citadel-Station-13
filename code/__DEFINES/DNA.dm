@@ -47,7 +47,7 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		19 //CIT CHANGE - adds more DNA blocks for cit's mutant bodyparts. Update citadel_defines.dm if this gets changed.
+#define DNA_UNI_IDENTITY_BLOCKS		14
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
@@ -55,6 +55,13 @@
 #define DNA_GENDER_BLOCK			5
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
+#define DNA_COLOR_ONE_BLOCK			8
+#define DNA_COLOR_TWO_BLOCK			9
+#define DNA_COLOR_THREE_BLOCK		10
+#define DNA_MUTANTTAIL_BLOCK		11
+#define DNA_MUTANTEAR_BLOCK			12
+#define DNA_MUTANTMARKING_BLOCK		13
+#define DNA_TAUR_BLOCK 				14
 
 #define DNA_STRUC_ENZYMES_BLOCKS	18
 #define DNA_UNIQUE_ENZYMES_LEN		32
@@ -90,12 +97,23 @@
 #define NO_DNA_COPY     14
 #define DRINKSBLOOD		15
 #define NOEYES			16
+#define MARKINGS		17
+#define MUTCOLORS2		18
+#define MUTCOLORS3		19
+#define NOAROUSAL		20	//Stops all arousal effects
+#define NOGENITALS		21	//Cannot create, use, or otherwise have genitals
+#define MATRIXED		22	//if icon is color matrix'd
+#define SKINTONE		23	//uses skin tones
+#define HORNCOLOR		24
+#define WINGCOLOR		25
 
+//organ slots
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
 #define ORGAN_SLOT_STOMACH "stomach"
+#define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"
@@ -112,3 +130,18 @@
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
+#define ORGAN_SLOT_PENIS "penis"
+#define ORGAN_SLOT_WOMB "womb"
+#define ORGAN_SLOT_VAGINA "vagina"
+#define ORGAN_SLOT_TESTICLES "testicles"
+#define ORGAN_SLOT_BREASTS "breasts"
+
+////organ defines
+#define STANDARD_ORGAN_THRESHOLD 	100
+#define STANDARD_ORGAN_HEALING 		0.001
+#define STANDARD_ORGAN_DECAY		0.00222		//designed to fail organs when left to decay for ~15 minutes
+
+#define G_MALE 1
+#define G_FEMALE 2
+#define G_PLURAL 3
+#define G_NEUTER 4

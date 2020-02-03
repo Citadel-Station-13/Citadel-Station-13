@@ -17,7 +17,7 @@
 	var/weather_overlay
 	var/weather_color = null
 
-	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the wather is over
+	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the weather is over
 	var/end_duration = 300 //In deciseconds, how long the "wind-down" graphic will appear before vanishing entirely
 	var/end_sound
 	var/end_overlay
@@ -50,7 +50,10 @@
 	stage = STARTUP_STAGE
 	var/list/affectareas = list()
 	for(var/V in get_areas(area_type))
-		affectareas += V
+		var/area/A = V
+		affectareas |= A
+		if(A.sub_areas)
+			affectareas |= A.sub_areas
 	for(var/V in protected_areas)
 		affectareas -= get_areas(V)
 	for(var/V in affectareas)

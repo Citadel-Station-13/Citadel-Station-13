@@ -1,6 +1,3 @@
-#define VEHICLE_CONTROL_PERMISSION 1
-#define VEHICLE_CONTROL_DRIVE 2
-
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
@@ -34,6 +31,19 @@
 	occupant_actions = list()
 	generate_actions()
 
+/obj/vehicle/examine(mob/user)
+	. = ..()
+	if(resistance_flags & ON_FIRE)
+		. += "<span class='warning'>It's on fire!</span>"
+	var/healthpercent = obj_integrity/max_integrity * 100
+	switch(healthpercent)
+		if(50 to 99)
+			. += "It looks slightly damaged."
+		if(25 to 50)
+			. += "It appears heavily damaged."
+		if(0 to 25)
+			. += "<span class='warning'>It's falling apart!</span>"
+
 /obj/vehicle/proc/is_key(obj/item/I)
 	return I? (key_type_exact? (I.type == key_type) : istype(I, key_type)) : FALSE
 
@@ -50,6 +60,7 @@
 			.++
 
 /obj/vehicle/proc/return_controllers_with_flag(flag)
+	RETURN_TYPE(/list/mob)
 	. = list()
 	for(var/i in occupants)
 		if(occupants[i] & flag)
@@ -72,8 +83,8 @@
 		return FALSE
 	occupants[M] = NONE
 	add_control_flags(M, control_flags)
-	grant_passenger_actions(M)
 	after_add_occupant(M)
+	grant_passenger_actions(M)
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
@@ -119,7 +130,11 @@
 			step(trailer, dir_to_move)
 		return did_move
 	else
+		after_move(direction)
 		return step(src, direction)
+
+/obj/vehicle/proc/after_move(direction)
+	return
 
 /obj/vehicle/proc/add_control_flags(mob/controller, flags)
 	if(!istype(controller) || !flags)
@@ -139,12 +154,12 @@
 			remove_controller_actions_by_flag(controller, i)
 	return TRUE
 
-/obj/vehicle/Collide(atom/movable/M)
+/obj/vehicle/Bump(atom/movable/M)
 	. = ..()
 	if(emulate_door_bumps)
-		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
+		if(istype(M, /obj/machinery/door))
 			for(var/m in occupants)
-				M.CollidedWith(m)
+				M.Bumped(m)
 
 /obj/vehicle/Move(newloc, dir)
 	. = ..()

@@ -57,7 +57,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
-	var/spanned_message = say_quote(msg, get_spans())
+	var/spanned_message = say_quote(msg)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
@@ -143,9 +143,9 @@
 	create_reagents(10)
 
 	if(overmind && overmind.blob_reagent_datum)
-		reagents.add_reagent(overmind.blob_reagent_datum.id, 10)
+		reagents.add_reagent(overmind.blob_reagent_datum.type, 10)
 	else
-		reagents.add_reagent("spore", 10)
+		reagents.add_reagent(/datum/reagent/toxin/spore, 10)
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
@@ -213,6 +213,7 @@
 	mob_size = MOB_SIZE_LARGE
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	hud_type = /datum/hud/blobbernaut
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()

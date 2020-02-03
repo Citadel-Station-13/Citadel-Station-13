@@ -22,9 +22,9 @@
 	var/slowdown_open = TRUE
 
 /obj/item/modular_computer/laptop/examine(mob/user)
-	..()
+	. = ..()
 	if(screen_on)
-		to_chat(user, "<span class='notice'>Alt-click to close it.</span>")
+		. += "<span class='notice'>Alt-click to close it.</span>"
 
 /obj/item/modular_computer/laptop/Initialize()
 	. = ..()
@@ -86,8 +86,8 @@
 /obj/item/modular_computer/laptop/AltClick(mob/user)
 	if(screen_on) // Close it.
 		try_toggle_open(user)
-	else
-		return ..()
+		return TRUE
+	return ..()
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)

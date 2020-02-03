@@ -44,12 +44,13 @@
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
+	/datum/clockwork_scripture/create_object/stargazer)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //two scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission)
+/obj/item/clockwork/slab/cyborg/engineer //three scriptures, plus a fabricator
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission,  /datum/clockwork_scripture/create_object/stargazer)
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
@@ -61,12 +62,12 @@
 /obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
-/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
+/obj/item/clockwork/slab/cyborg/janitor //six scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
+	/datum/clockwork_scripture/create_object/stargazer, /datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
 
-/obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, \
+/obj/item/clockwork/slab/cyborg/service //six scriptures, plus xray vision
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant,/datum/clockwork_scripture/create_object/stargazer, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
@@ -102,7 +103,7 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
-/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file)
+/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(isinhands && item_state && inhand_overlay)
 		var/mutable_appearance/M = mutable_appearance(icon_file, "slab_[inhand_overlay]")
@@ -120,15 +121,15 @@
 	adjust_clockwork_power(0.1) //Slabs serve as very weak power generators on their own (no, not enough to justify spamming them)
 
 /obj/item/clockwork/slab/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(LAZYLEN(quickbound))
 			for(var/i in 1 to quickbound.len)
 				if(!quickbound[i])
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		to_chat(user, "<b>Available power:</b> <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>")
+				. += "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>."
+		. += "<b>Available power:</b> <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>"
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
@@ -161,9 +162,11 @@
 	access_display(user)
 
 /obj/item/clockwork/slab/AltClick(mob/living/user)
+	. = ..()
 	if(is_servant_of_ratvar(user) && linking && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		linking = null
 		to_chat(user, "<span class='notice'>Object link canceled.</span>")
+		return TRUE
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
@@ -278,7 +281,7 @@
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
 			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
 			dat += "<font color=#BE8700><b>Visor:</b></font> A judicial visor, which is a pair of glasses that can smite an area for a brief stun and delayed explosion.<br>"
-			dat += "<font color=#BE8700><b>Wraith Specs:</b></font> Wraith spectacles, which provide true sight (x-ray, night vision) but damage the wearer's eyes.<br>"
+			dat += "<font color=#BE8700><b>Wraith Specs:</b></font> Wraith spectacles, which provide true sight (X-ray, night vision) but damage the wearer's eyes.<br>"
 			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon that produces Vitality.<br>"
 			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
 			dat += "<font color=#BE8700 size=3>Constructs</font><br>"
@@ -313,7 +316,7 @@
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Scripture")
 			dat += "<font color=#BE8700 size=3>The Ancient Scripture</font><br><br>"
-			dat += "If you have experience with the Nar-Sian cult (or the \"blood cult\") then you will know of runes. They are the manifestations of the Geometer's power, and where most \
+			dat += "If you have experience with the Nar'Sian cult (or the \"blood cult\") then you will know of runes. They are the manifestations of the Geometer's power, and where most \
 			of the cult's supernatural ability comes from. The Servant equivalent of runes is called <b>scripture</b>, and unlike runes, scripture is loaded into your clockwork slab.<br><br>"
 			dat += "Each piece of scripture has widely-varying effects. Your most important scripture, <i>Geis</i>, is obvious and suspicious, but charges your slab with energy and allows \
 			you to attack a non-Servant in melee range to restrain them and begin converting them into a Servant. This is just one example; each piece of scripture can be simple or \

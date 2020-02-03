@@ -7,6 +7,7 @@
 	desc = "It's used to monitor rooms."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera"
+	light_color = "#CDDDFF"
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 10
@@ -41,6 +42,16 @@
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 
+/obj/machinery/camera/preset/toxins //Bomb test site in space
+	name = "Hardened Bomb-Test Camera"
+	desc = "A specially-reinforced camera with a long lasting battery, used to monitor the bomb testing site. An external light is attached to the top."
+	c_tag = "Bomb Testing Site"
+	network = list("rd","toxins")
+	use_power = NO_POWER_USE //Test site is an unpowered area
+	invuln = TRUE
+	light_range = 10
+	start_active = TRUE
+
 /obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
 	for(var/i in network)
@@ -73,6 +84,7 @@
 		if(bug.current == src)
 			bug.current = null
 		bug = null
+	cancelCameraAlarm()
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -129,6 +141,8 @@
 
 // Construction/Deconstruction
 /obj/machinery/camera/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	panel_open = !panel_open
 	to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 	I.play_tool_sound(src)
@@ -278,7 +292,7 @@
 			new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 
-/obj/machinery/camera/update_icon()
+/obj/machinery/camera/update_icon_state()
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
 	else if (stat & EMPED)
@@ -305,7 +319,8 @@
 	if(status)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
-		addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+		if(!QDELETED(src)) //We'll be doing it anyway in destroy
+			addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
@@ -383,7 +398,7 @@
 			if(cam == src)
 				return
 	if(on)
-		set_light(AI_CAMERA_LUMINOSITY)
+		set_light(AI_CAMERA_LUMINOSITY, 0.8)
 	else
 		set_light(0)
 

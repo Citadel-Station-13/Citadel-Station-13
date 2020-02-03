@@ -19,6 +19,7 @@
 	spacewalk = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
+	blood_volume = 0
 
 	harm_intent_damage = 10
 	obj_damage = 50
@@ -33,6 +34,8 @@
 
 	faction = list("faithless")
 	gold_core_spawnable = HOSTILE_SPAWN
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()

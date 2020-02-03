@@ -1,25 +1,3 @@
-/obj/screen/mov_intent
-	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
-
-/obj/screen/sprintbutton
-	name = "toggle sprint"
-	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
-	icon_state = "act_sprint"
-	layer = ABOVE_HUD_LAYER - 0.1
-
-/obj/screen/sprintbutton/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.togglesprint()
-
-/obj/screen/sprintbutton/proc/insert_witty_toggle_joke_here(mob/living/carbon/human/H)
-	if(!H)
-		return
-	if(H.sprinting)
-		icon_state = "act_sprint_on"
-	else
-		icon_state = "act_sprint"
-
 /obj/screen/restbutton
 	name = "rest"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
@@ -40,10 +18,30 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_combat_mode()
 
-/obj/screen/combattoggle/proc/rebasetointerbay(mob/living/carbon/C)
-	if(!C)
+/obj/screen/combattoggle/update_icon_state()
+	var/mob/living/carbon/user = hud?.mymob
+	if(!istype(user))
 		return
-	if(C.combatmode)
+	if(user.combatmode)
 		icon_state = "combat"
 	else
 		icon_state = "combat_off"
+
+/obj/screen/voretoggle
+	name = "toggle vore mode"
+	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
+	icon_state = "nom_off"
+
+/obj/screen/voretoggle/Click()
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.toggle_vore_mode()
+
+/obj/screen/voretoggle/update_icon_state()
+	var/mob/living/carbon/user = hud?.mymob
+	if(!istype(user))
+		return
+	if(user.voremode && !user.combatmode)
+		icon_state = "nom"
+	else
+		icon_state = "nom_off"

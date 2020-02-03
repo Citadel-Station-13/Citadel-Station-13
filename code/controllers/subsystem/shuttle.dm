@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/hostileEnvironments = list() //Things blocking escape shuttle from leaving
 	var/list/tradeBlockade = list() //Things blocking cargo from leaving.
 	var/supplyBlocked = FALSE
+	var/emergency_shuttle_stat_text
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -37,6 +38,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
+	var/passive_supply_points_per_minute = 500
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -53,7 +55,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-	var/auto_call = 72000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
+	var/auto_call = 72000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2ish hours plus 15 for the shuttle. So total is 3.
+	var/realtimeofstart = 0
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
@@ -74,7 +77,9 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
-	..()
+	realtimeofstart = world.realtime
+	auto_call = CONFIG_GET(number/auto_transfer_delay)
+	return ..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
 	if(!istype(manipulator))
@@ -107,6 +112,15 @@ SUBSYSTEM_DEF(shuttle)
 			if(idle && not_centcom_evac && not_in_use)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
+
+	//Cargo stuff start
+	var/fire_time_diff = max(0, world.time - last_fire)		//Don't want this to be below 0, seriously.
+	var/point_gain = (fire_time_diff / 600) * passive_supply_points_per_minute
+	points += point_gain
+	//Cargo stuff end
+
+	var/esETA = emergency?.getModeStr()
+	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
 
 	if(!SSmapping.clearing_reserved_turfs)
 		while(transit_requesters.len)
@@ -220,6 +234,14 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+
+	if(!frequency)
+		return
+
+	var/datum/signal/status_signal = new(list("command" = "update")) // Start processing shuttle-mode displays to display the timer
+	frequency.post_signal(src, status_signal)
+
 	var/area/A = get_area(user)
 
 	log_game("[key_name(user)] has called the shuttle.")
@@ -273,7 +295,10 @@ SUBSYSTEM_DEF(shuttle)
 			if(emergency.timeLeft(1) < emergencyCallTime)
 				return
 		if(SEC_LEVEL_BLUE)
-			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.6)
+				return
+		if(SEC_LEVEL_AMBER)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.4)
 				return
 		else
 			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
@@ -359,7 +384,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.setTimer(emergencyDockTime)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
-			null, 'sound/ai/shuttledock.ogg', "Priority")
+			null, "shuttledock", "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -432,17 +457,22 @@ SUBSYSTEM_DEF(shuttle)
 */
 
 	var/transit_path = /turf/open/space/transit
+	var/border_path = /turf/open/space/transit/border
 	switch(travel_dir)
 		if(NORTH)
 			transit_path = /turf/open/space/transit/north
+			border_path = /turf/open/space/transit/border/north
 		if(SOUTH)
 			transit_path = /turf/open/space/transit/south
+			border_path = /turf/open/space/transit/border/south
 		if(EAST)
 			transit_path = /turf/open/space/transit/east
+			border_path = /turf/open/space/transit/border/east
 		if(WEST)
 			transit_path = /turf/open/space/transit/west
+			border_path = /turf/open/space/transit/border/west
 
-	var/datum/turf_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, null, /datum/turf_reservation/transit, transit_path)
+	var/datum/turf_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, null, /datum/turf_reservation/transit, transit_path, border_path)
 
 	if(!istype(proposal))
 		return FALSE
@@ -612,3 +642,11 @@ SUBSYSTEM_DEF(shuttle)
 		C.update_hidden_docking_ports(remove_images, add_images)
 
 	QDEL_LIST(remove_images)
+
+/datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end after 2 hours have passed.
+	if((world.realtime - SSshuttle.realtimeofstart) > auto_call && EMERGENCY_IDLE_OR_RECALLED) //2 hours
+		SSshuttle.emergency.request(silent = TRUE)
+		priority_announce("The shift has come to an end and the shuttle called. [seclevel2num(get_security_level()) == SEC_LEVEL_RED ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [emergency.timeLeft(600)] minutes.", null, "shuttlecalled", "Priority")
+		log_game("Round time limit reached. Shuttle has been auto-called.")
+		message_admins("Round time limit reached. Shuttle called.")
+		emergencyNoRecall = TRUE

@@ -39,7 +39,7 @@
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
 
-	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
+	wanted_objects = list(/obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
@@ -131,7 +131,7 @@
 
 /obj/item/udder/gutlunch/generateMilk()
 	if(prob(60))
-		reagents.add_reagent("cream", rand(2, 5))
+		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5))
 	if(prob(45))
-		reagents.add_reagent("salglu_solution", rand(2,5))
+		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
 

@@ -3,7 +3,6 @@
 	desc = "Someone should clean that up."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
-	beauty = -50
 
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
@@ -11,11 +10,10 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	mergeable_decal = FALSE
-	beauty = -50
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
-	reagents.add_reagent("ash", 30)
+	reagents.add_reagent(/datum/reagent/ash, 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
@@ -26,18 +24,16 @@
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
 	icon_state = "big_ash"
-	beauty = -100
 
 /obj/effect/decal/cleanable/ash/large/Initialize()
 	. = ..()
-	reagents.add_reagent("ash", 30) //double the amount of ash.
+	reagents.add_reagent(/datum/reagent/ash, 30) //double the amount of ash.
 
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
 	desc = "Back to sand."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "tiny"
-	beauty = -60
 
 /obj/effect/decal/cleanable/glass/Initialize()
 	. = ..()
@@ -46,29 +42,50 @@
 /obj/effect/decal/cleanable/glass/ex_act()
 	qdel(src)
 
+/obj/effect/decal/cleanable/glass/plasma
+	icon_state = "plasmatiny"
+
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
 	icon_state = "dirt"
+	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
+	smooth = SMOOTH_FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	beauty = -50
+
+/obj/effect/decal/cleanable/dirt/Initialize()
+	. = ..()
+	var/turf/T = get_turf(src)
+	if(T.tiled_dirt)
+		smooth = SMOOTH_MORE
+		icon = 'icons/effects/dirt.dmi'
+		icon_state = ""
+		queue_smooth(src)
+	queue_smooth_neighbors(src)
+
+/obj/effect/decal/cleanable/dirt/Destroy()
+	queue_smooth_neighbors(src)
+	return ..()
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"
 	desc = "It's still good. Four second rule!"
 	icon_state = "flour"
-	beauty = -50
+
+/obj/effect/decal/cleanable/greenglow/ecto
+	name = "ectoplasmic puddle"
+	desc = "You know who to call."
+	light_power = 2
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."
 	light_color = LIGHT_COLOR_GREEN
 	icon_state = "greenglow"
-	beauty = -150
 
 /obj/effect/decal/cleanable/greenglow/Initialize(mapload)
 	. = ..()
-	set_light(1)
+	set_light(2, 0.8, "#22FFAA")
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return
@@ -80,7 +97,6 @@
 	layer = WALL_OBJ_LAYER
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
-	beauty = -50
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
@@ -92,12 +108,10 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
 	mergeable_decal = FALSE
-	beauty = -100
 
 /obj/effect/decal/cleanable/molten_object/large
 	name = "big gooey grey mass"
 	icon_state = "big_molten"
-	beauty = -250
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
@@ -106,7 +120,6 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
-	beauty = -200
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
 	. = ..()
@@ -118,12 +131,10 @@
 			playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 			if(reagents)
-				for(var/datum/reagent/R in reagents.reagent_list)
-					if (istype(R, /datum/reagent/consumable))
-						var/datum/reagent/consumable/nutri_check = R
-						if(nutri_check.nutriment_factor >0)
-							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
-							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
+				for(var/datum/reagent/consumable/R in reagents.reagent_list)
+					if(R.nutriment_factor > 0)
+						H.nutrition += R.nutriment_factor * R.volume
+						reagents.del_reagent(R.type)
 			reagents.trans_to(H, reagents.total_volume)
 			qdel(src)
 
@@ -141,14 +152,12 @@
 	gender = NEUTER
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
-	beauty = -50
 
 /obj/effect/decal/cleanable/plant_smudge
 	name = "plant smudge"
 	gender = NEUTER
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_plant")
-	beauty = -50
 
 /obj/effect/decal/cleanable/egg_smudge
 	name = "smashed egg"
@@ -156,7 +165,6 @@
 	gender = NEUTER
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_egg1", "smashed_egg2", "smashed_egg3")
-	beauty = -50
 
 /obj/effect/decal/cleanable/pie_smudge //honk
 	name = "smashed pie"
@@ -164,7 +172,6 @@
 	gender = NEUTER
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
-	beauty = -50
 
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
@@ -172,7 +179,6 @@
 	gender = NEUTER
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
-	beauty = -60
 
 /obj/effect/decal/cleanable/shreds
 	name = "shreds"
@@ -180,7 +186,6 @@
 	icon_state = "shreds"
 	gender = PLURAL
 	mergeable_decal = FALSE
-	beauty = -75
 
 /obj/effect/decal/cleanable/shreds/ex_act(severity, target)
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
@@ -197,33 +202,30 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	icon_state = "salt_pile"
 	gender = NEUTER
-	beauty = -50
 
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
 	desc = "The herpes of arts and crafts."
-	icon = 'icons/effects/tile_effects.dmi'
+	icon = 'icons/effects/atmospherics.dmi'
 	gender = NEUTER
-	beauty = 100
 
 /obj/effect/decal/cleanable/glitter/pink
 	name = "pink glitter"
-	icon_state = "plasma"
+	icon_state = "plasma_old"
 
 /obj/effect/decal/cleanable/glitter/white
 	name = "white glitter"
-	icon_state = "nitrous_oxide"
+	icon_state = "nitrous_oxide_old"
 
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
-	icon_state = "freon"
+	icon_state = "freon_old"
 
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
 	icon_state = "flour"
-	color = "#C8A5DC"
-	beauty = -200
+	color = "#9e0089"
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"
@@ -231,4 +233,3 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	beauty = -300

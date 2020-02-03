@@ -52,22 +52,10 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			changeling.restricted_roles = restricted_jobs
 		return 1
 	else
+		setup_error = "Not enough changeling candidates"
 		return 0
 
 /datum/game_mode/changeling/post_setup()
-	//Decide if it's ok for the lings to have a team objective
-	//And then set it up to be handed out in forge_changeling_objectives
-	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
-	var/list/possible_team_objectives = list()
-	for(var/T in team_objectives)
-		var/datum/objective/changeling_team_objective/CTO = T
-
-		if(changelings.len >= initial(CTO.min_lings))
-			possible_team_objectives += T
-
-	if(possible_team_objectives.len && prob(20*changelings.len))
-		GLOB.changeling_team_objective_type = pick(possible_team_objectives)
-
 	for(var/datum/mind/changeling in changelings)
 		log_game("[key_name(changeling)] has been selected as a changeling")
 		var/datum/antagonist/changeling/new_antag = new()
@@ -82,10 +70,10 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		return
 	if(changelings.len <= (changelingcap - 2) || prob(100 - (csc * 2)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, ROLE_SYNDICATE))
+			if(!jobban_isbanned(character, ROLE_CHANGELING) && !QDELETED(character) && !jobban_isbanned(character, ROLE_SYNDICATE) && !QDELETED(character))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
-						character.mind.make_Changling()
+						character.mind.make_Changeling()
 						changelings += character.mind
 
 /datum/game_mode/changeling/generate_report()
@@ -98,8 +86,11 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
 	user.underwear = chosen_prof.underwear
+	user.undie_color = chosen_prof.undie_color
 	user.undershirt = chosen_prof.undershirt
+	user.shirt_color =chosen_prof.shirt_color
 	user.socks = chosen_prof.socks
+	user.socks_color =chosen_prof.socks_color
 
 	chosen_dna.transfer_identity(user, 1)
 	user.updateappearance(mutcolor_update=1)

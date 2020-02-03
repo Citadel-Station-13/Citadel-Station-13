@@ -91,7 +91,7 @@
 /obj/item/wallframe/apc/try_build(turf/on_wall, user)
 	if(!..())
 		return
-	var/turf/T = get_turf(user)
+	var/turf/T = get_turf(on_wall) //the user is not where it needs to be.
 	var/area/A = get_area(T)
 	if(A.get_apc())
 		to_chat(user, "<span class='warning'>This area already has an APC!</span>")
@@ -120,4 +120,4 @@
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	grind_results = list("iron" = 10, "silicon" = 10)
+	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)

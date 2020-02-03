@@ -13,6 +13,10 @@
 	var/mob/living/split_personality/owner_backseat
 
 /datum/brain_trauma/severe/split_personality/on_gain()
+	var/mob/living/M = owner
+	if(M.stat == DEAD)	//No use assigning people to a corpse
+		qdel(src)
+		return
 	..()
 	make_backseats()
 	get_ghost()
@@ -23,10 +27,10 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+		C.transfer_ckey(stranger_backseat, FALSE)
 		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
 		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 	else
@@ -61,7 +65,7 @@
 		current_backseat = owner_backseat
 		free_backseat = stranger_backseat
 
-	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.ckey : current_backseat.ckey])")
+	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])")
 	to_chat(owner, "<span class='userdanger'>You feel your control being taken away... your other personality is in charge now!</span>")
 	to_chat(current_backseat, "<span class='userdanger'>You manage to take control of your body!</span>")
 
@@ -138,11 +142,11 @@
 	to_chat(src, "<span class='notice'>As a split personality, you cannot do anything but observe. However, you will eventually gain control of your body, switching places with the current personality.</span>")
 	to_chat(src, "<span class='warning'><b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b></span>")
 
-/mob/living/split_personality/say(message)
+/mob/living/split_personality/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	to_chat(src, "<span class='warning'>You cannot speak, your other self is controlling your body!</span>")
 	return FALSE
 
-/mob/living/split_personality/emote(message)
+/mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE)
 	return
 
 ///////////////BRAINWASHING////////////////////
@@ -184,25 +188,24 @@
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s brainwashed mind?", null, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+		C.transfer_ckey(stranger_backseat, FALSE)
 	else
 		qdel(src)
 
 /datum/brain_trauma/severe/split_personality/brainwashing/on_life()
 	return //no random switching
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	if(owner.has_trait(TRAIT_DEAF) || owner == speaker)
-		return message
+/datum/brain_trauma/severe/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
+		return
+	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	if(findtext(message, codeword))
-		message = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")
+		hearing_args[HEARING_RAW_MESSAGE] = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")
 		addtimer(CALLBACK(src, /datum/brain_trauma/severe/split_personality.proc/switch_personalities), 10)
-	return message
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_say(message)
-	if(findtext(message, codeword))
-		return "" //oh hey did you want to tell people about the secret word to bring you back?
-	return message
+/datum/brain_trauma/severe/split_personality/brainwashing/handle_speech(datum/source, list/speech_args)
+	if(findtext(speech_args[SPEECH_MESSAGE], codeword))
+		speech_args[SPEECH_MESSAGE] = "" //oh hey did you want to tell people about the secret word to bring you back?
 
 /mob/living/split_personality/traitor
 	name = "split personality"

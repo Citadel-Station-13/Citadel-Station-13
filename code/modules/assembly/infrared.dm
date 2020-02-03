@@ -10,7 +10,7 @@
 	var/maxlength = 8
 	var/list/obj/effect/beam/i_beam/beams
 	var/olddir = 0
-	var/datum/component/redirect/listener
+	var/turf/listeningTo
 	var/hearing_range = 3
 
 /obj/item/assembly/infra/Initialize()
@@ -33,13 +33,13 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(listener)
+	listeningTo = null
 	QDEL_LIST(beams)
 	. = ..()
 
 /obj/item/assembly/infra/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>")
+	. = ..()
+	. += "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>"
 
 /obj/item/assembly/infra/activate()
 	if(!..())
@@ -138,11 +138,11 @@
 	. = ..()
 	setDir(t)
 
-/obj/item/assembly/infra/throw_at()
+/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	. = ..()
 	olddir = dir
 
-/obj/item/assembly/infra/throw_impact()
+/obj/item/assembly/infra/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!olddir)
 		return
@@ -163,14 +163,22 @@
 	next_activate =  world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
-	QDEL_NULL(listener)
-	listener = newloc.AddComponent(/datum/component/redirect, COMSIG_ATOM_EXITED, CALLBACK(src, .proc/check_exit))
+	if(listeningTo == newloc)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_EXITED)
+	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
+	listeningTo = newloc
 
-/obj/item/assembly/infra/proc/check_exit(atom/movable/offender)
+/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
 	if(QDELETED(src))
 		return
 	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
 		return
+	if (offender && isitem(offender))
+		var/obj/item/I = offender
+		if (I.item_flags & ABSTRACT)
+			return
 	return refreshBeam()
 
 /obj/item/assembly/infra/ui_interact(mob/user)//TODO: change this this to the wire control panel
@@ -219,10 +227,13 @@
 	var/obj/item/assembly/infra/master
 	anchored = TRUE
 	density = FALSE
-	flags_1 = ABSTRACT_1
 	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE|LETPASSTHROW
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
-	if(istype(AM, /obj/effect/beam) || (AM.flags_1 & ABSTRACT_1))
+	if(istype(AM, /obj/effect/beam))
 		return
+	if (isitem(AM))
+		var/obj/item/I = AM
+		if (I.item_flags & ABSTRACT)
+			return
 	master.trigger_beam(AM, get_turf(src))

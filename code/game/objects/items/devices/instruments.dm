@@ -10,12 +10,15 @@
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "mid"
+	var/tune_time = 0
 
 /obj/item/instrument/Initialize()
 	. = ..()
 	song = new(instrumentId, src, instrumentExt)
 
 /obj/item/instrument/Destroy()
+	if (tune_time)
+		STOP_PROCESSING(SSobj, src)
 	qdel(song)
 	song = null
 	return ..()
@@ -48,6 +51,34 @@
 	user.set_machine(src)
 	song.interact(user)
 
+/obj/item/instrument/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/musicaltuner))
+		var/mob/living/carbon/human/H = user
+		if (HAS_TRAIT(H, TRAIT_MUSICIAN))
+			if (!tune_time)
+				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
+				tune_time = 300
+				START_PROCESSING(SSobj, src)
+			else
+				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
+		else
+			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
+
+/obj/item/instrument/process()
+	if (tune_time)
+		if (song.playing)
+			for (var/mob/living/M in song.hearing_mobs)
+				M.dizziness = max(0,M.dizziness-2)
+				M.jitteriness = max(0,M.jitteriness-2)
+				M.confused = max(M.confused-1)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
+		tune_time--
+	else
+		if (!tune_time)
+			if (song.playing)
+				loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
+			STOP_PROCESSING(SSobj, src)
+
 /obj/item/instrument/violin
 	name = "space violin"
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
@@ -70,12 +101,22 @@
 	item_state = "synth"
 	instrumentId = "piano"
 	instrumentExt = "ogg"
-	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
+	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "banjo" = "ogg", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
 	actions_types = list(/datum/action/item_action/synthswitch)
 
 /obj/item/instrument/piano_synth/proc/changeInstrument(name = "piano")
 	song.instrumentDir = name
 	song.instrumentExt = insTypes[name]
+
+/obj/item/instrument/banjo
+	name = "banjo"
+	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
+	icon_state = "banjo"
+	item_state = "banjo"
+	instrumentExt = "ogg"
+	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
+	hitsound = 'sound/weapons/banjoslap.ogg'
+	instrumentId = "banjo"
 
 /obj/item/instrument/guitar
 	name = "guitar"
@@ -203,11 +244,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
 
-/obj/item/instrument/harmonica/speechModification(message)
+/obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
 	if(song.playing && ismob(loc))
 		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
 		song.playing = FALSE
-	return message
+
+/obj/item/instrument/harmonica/equipped(mob/M, slot)
+	. = ..()
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/obj/item/instrument/harmonica/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"
@@ -224,3 +272,14 @@
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
+
+/obj/item/musicaltuner
+	name = "musical tuner"
+	desc = "A device for tuning musical instruments both manual and electronic alike."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "musicaltuner"
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

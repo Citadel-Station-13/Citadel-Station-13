@@ -91,6 +91,7 @@ Class Procs:
 	verb_yell = "blares"
 	pressure_resistance = 15
 	max_integrity = 200
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -112,6 +113,11 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+		// For storing and overriding ui id and dimensions
+	var/tgui_id // ID of TGUI interface
+	var/ui_style // ID of custom TGUI style (optional)
+	var/ui_x
+	var/ui_y
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 
@@ -130,7 +136,7 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
-	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA), CALLBACK(src, .proc/power_change))
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -142,6 +148,10 @@ Class Procs:
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
+	if(length(component_parts))
+		for(var/atom/A in component_parts)
+			qdel(A)
+		component_parts.Cut()
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
@@ -167,21 +177,28 @@ Class Procs:
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/proc/dropContents()
+/obj/machinery/proc/dropContents(list/subset = null)
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/A in contents)
+		if(subset && !(A in subset))
+			continue
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
 			L.update_canmove()
-	occupant = null
+	if(occupant)
+		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
+		occupant = null
+
+/obj/machinery/proc/can_be_occupant(atom/movable/am)
+	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
 
 /obj/machinery/proc/close_machine(atom/movable/target = null)
 	state_open = FALSE
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if (!(occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)))
+			if (!(can_be_occupant(am)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())
@@ -218,10 +235,17 @@ Class Procs:
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
 		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
-	if(!silicon && (interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON))
-		return FALSE
-	else if(silicon && !(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
-		return FALSE
+
+	if(silicon)
+		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
+			return FALSE
+	else
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
+			return FALSE
+		if(!Adjacent(user))
+			var/mob/living/carbon/H = user
+			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
+				return FALSE
 	return TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,11 +255,6 @@ Class Procs:
 	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
 		user.set_machine(src)
 	. = ..()
-
-/obj/machinery/ui_status(mob/user)
-	if(can_interact(user))
-		return ..()
-	return UI_CLOSE
 
 /obj/machinery/ui_act(action, params)
 	add_fingerprint(usr)
@@ -306,12 +325,13 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
+			component_parts.Cut()
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)
 	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
 	. = M
-	M.anchored = anchored
+	M.setAnchored(anchored)
 	if(!disassembled)
 		M.obj_integrity = M.max_integrity * 0.5 //the frame is already half broken
 	transfer_fingerprints_to(M)
@@ -343,8 +363,8 @@ Class Procs:
 			panel_open = FALSE
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/I)
 	if(panel_open && I.tool_behaviour == TOOL_WRENCH)
@@ -372,7 +392,7 @@ Class Procs:
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
-			anchored = !anchored
+			setAnchored(!anchored)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN
@@ -396,7 +416,7 @@ Class Procs:
 			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
 			var/P
 			if(W.works_from_distance)
-				display_parts(user)
+				to_chat(user, display_parts(user))
 			for(var/obj/item/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
@@ -414,44 +434,46 @@ Class Procs:
 								var/obj/item/stack/SN = new SB.merge_type(null,used_amt)
 								component_parts += SN
 							else
-								if(W.SendSignal(COMSIG_TRY_STORAGE_TAKE, B, src))
+								if(SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE, B, src))
 									component_parts += B
 									B.moveToNullspace()
-							W.SendSignal(COMSIG_TRY_STORAGE_INSERT, A, null, null, TRUE)
+							SEND_SIGNAL(W, COMSIG_TRY_STORAGE_INSERT, A, null, null, TRUE)
 							component_parts -= A
-							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
+							to_chat(user, "<span class='notice'>[capitalize(A.name)] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()
 		else
-			display_parts(user)
+			to_chat(user, display_parts(user))
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return TRUE
 	return FALSE
 
 /obj/machinery/proc/display_parts(mob/user)
-	to_chat(user, "<span class='notice'>It contains the following parts:</span>")
+	. = list()
+	. += "<span class='notice'>It contains the following parts:</span>"
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>[icon2html(C, user)] \A [C].</span>")
+		. += "<span class='notice'>[icon2html(C, user)] \A [C].</span>"
+	. = jointext(., "")
 
 /obj/machinery/examine(mob/user)
-	..()
+	. = ..()
 	if(stat & BROKEN)
-		to_chat(user, "<span class='notice'>It looks broken and non-functional.</span>")
+		. += "<span class='notice'>It looks broken and non-functional.</span>"
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			to_chat(user, "<span class='warning'>It's on fire!</span>")
+			. += "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				to_chat(user,  "It looks slightly damaged.")
+				. += "It looks slightly damaged."
 			if(25 to 50)
-				to_chat(user,  "It appears heavily damaged.")
+				. += "It appears heavily damaged."
 			if(0 to 25)
-				to_chat(user,  "<span class='warning'>It's falling apart!</span>")
+				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
-		display_parts(user)
+		. += display_parts(user, TRUE)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()
@@ -476,6 +498,7 @@ Class Procs:
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
 	if (AM == occupant)
+		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
 		occupant = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8

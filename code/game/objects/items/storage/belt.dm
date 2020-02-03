@@ -10,6 +10,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
+	var/worn_overlays = FALSE //worn counterpart of the above.
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -23,6 +24,12 @@
 			add_overlay(M)
 	..()
 
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
+	. = ..()
+	if(!isinhands && worn_overlays)
+		for(var/obj/item/I in contents)
+			. += I.get_worn_belt_overlay(icon_file)
+
 /obj/item/storage/belt/Initialize()
 	. = ..()
 	update_icon()
@@ -33,10 +40,11 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //because this is easier than trying to have showers wash all contents.
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	var/static/list/can_hold = typecacheof(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -53,6 +61,7 @@
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
+		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler
 		))
 	STR.can_hold = can_hold
@@ -115,10 +124,11 @@
 	desc = "Can hold various medical equipment."
 	icon_state = "medicalbelt"
 	item_state = "medical"
+	content_overlays = TRUE
 
 /obj/item/storage/belt/medical/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.can_hold = typecacheof(list(
 		/obj/item/healthanalyzer,
@@ -136,6 +146,7 @@
 		/obj/item/flashlight/pen,
 		/obj/item/extinguisher/mini,
 		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray/mkii,
 		/obj/item/sensor_device,
 		/obj/item/radio,
 		/obj/item/clothing/gloves/,
@@ -168,6 +179,18 @@
 		/obj/item/pinpointer/crew
 		))
 
+
+/obj/item/storage/belt/medical/surgery_belt_adv
+	name = "surgical supply belt"
+	desc = "A specialized belt designed for holding surgical equipment. It seems to have specific pockets for each and every surgical tool you can think of."
+	content_overlays = FALSE
+
+/obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/surgicaldrill/advanced(src)
+	new /obj/item/surgical_drapes(src)
+
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
@@ -177,7 +200,7 @@
 
 /obj/item/storage/belt/security/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.can_hold = typecacheof(list(
@@ -216,7 +239,7 @@
 
 /obj/item/storage/belt/mining/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.max_combined_w_class = 20
@@ -275,7 +298,7 @@
 
 /obj/item/storage/belt/mining/primitive/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 
 /obj/item/storage/belt/soulstone
@@ -286,7 +309,7 @@
 
 /obj/item/storage/belt/soulstone/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(
 		/obj/item/soulstone
@@ -309,7 +332,7 @@
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 	STR.can_hold = list(
 		/obj/item/clothing/mask/luchador
@@ -320,10 +343,11 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/military/snack
@@ -336,14 +360,14 @@
 
 /obj/item/storage/belt/military/snack/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/food/snacks,
 		/obj/item/reagent_containers/food/drinks
 		))
-	
+
 	var/amount = 5
 	var/rig_snacks
 	while(contents.len <= amount)
@@ -369,7 +393,8 @@
 		/obj/item/reagent_containers/food/drinks/soda_cans/space_up,
 		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
 		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
+		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/syndicatebomb
 		))
 		new rig_snacks(src)
 
@@ -403,8 +428,49 @@
 
 /obj/item/storage/belt/military/assault/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
+
+/obj/item/storage/belt/durathread
+	name = "durathread toolbelt"
+	desc = "A toolbelt made out of durathread, it seems resistant enough to hold even big tools like an RCD, it also has higher capacity."
+	icon_state = "webbing-durathread"
+	item_state = "webbing-durathread"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/belt/durathread/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 14
+	STR.max_combined_w_class = 32
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+		/obj/item/wrench,
+		/obj/item/multitool,
+		/obj/item/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/geiger_counter,
+		/obj/item/extinguisher/mini,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/holosign_creator,
+		/obj/item/forcefield_projector,
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer,
+		/obj/item/rcd_ammo,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+		/obj/item/stack/rods,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/grenade/chem_grenade/metalfoam,
+		/obj/item/grenade/chem_grenade/smart_metal_foam
+		))
 
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
@@ -414,7 +480,7 @@
 
 /obj/item/storage/belt/grenade/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 30
 	STR.display_numerical_stacking = TRUE
 	STR.max_combined_w_class = 60
@@ -463,10 +529,11 @@
 	desc = "A belt designed to hold various rods of power. A veritable fanny pack of exotic magic."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/wands/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(
 		/obj/item/gun/magic/wand
@@ -492,36 +559,99 @@
 
 /obj/item/storage/belt/janitor/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
 	STR.can_hold = typecacheof(list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/lightreplacer,
 		/obj/item/flashlight,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
 		/obj/item/holosign_creator,
+		/obj/item/forcefield_projector,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
-		/obj/item/assembly/mousetrap
+		/obj/item/paint/paint_remover,
+		/obj/item/assembly/mousetrap,
+		/obj/item/screwdriver,
+		/obj/item/stack/cable_coil
 		))
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding shotgun ammunition."
+	desc = "A bandolier for holding ammunition."
 	icon_state = "bandolier"
 	item_state = "bandolier"
 
 /obj/item/storage/belt/bandolier/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 18
 	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
-		/obj/item/ammo_casing/shotgun
+		/obj/item/ammo_casing
 		))
+
+/obj/item/storage/belt/bandolier/durathread
+	name = "durathread bandolier"
+	desc = "An double stacked bandolier made out of durathread."
+	icon_state = "bandolier-durathread"
+	item_state = "bandolier-durathread"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/belt/bandolier/durathread/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 32
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(
+		/obj/item/ammo_casing
+		))
+
+/obj/item/storage/belt/medolier
+	name = "medolier"
+	desc = "A medical bandolier for holding smartdarts."
+	icon_state = "medolier"
+	item_state = "medolier"
+
+/obj/item/storage/belt/medolier/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 15
+	STR.display_numerical_stacking = FALSE
+	STR.allow_quick_gather = TRUE
+	STR.allow_quick_empty = TRUE
+	STR.click_gather = TRUE
+	STR.can_hold = typecacheof(list(
+		/obj/item/reagent_containers/syringe/dart
+		))
+
+/obj/item/storage/belt/medolier/full/PopulateContents()
+	for(var/i in 1 to 16)
+		new /obj/item/reagent_containers/syringe/dart/(src)
+
+/obj/item/storage/belt/medolier/afterattack(obj/target, mob/user , proximity)
+	if(!(istype(target, /obj/item/reagent_containers/glass/beaker)))
+		return
+	if(!proximity)
+		return
+	if(!target.reagents)
+		return
+
+	for(var/obj/item/reagent_containers/syringe/dart/D in contents)
+		if(round(target.reagents.total_volume, 1) <= 0)
+			to_chat(user, "<span class='notice'>You soak as many of the darts as you can with the contents from [target].</span>")
+			return
+		if(D.mode == SYRINGE_INJECT)
+			continue
+
+		D.afterattack(target, user, proximity)
+
+	..()
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
@@ -532,13 +662,15 @@
 
 /obj/item/storage/belt/holster/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 3
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.can_hold = typecacheof(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
+		/obj/item/toy/gun,
+		/obj/item/gun/energy/e_gun/mini
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
@@ -554,7 +686,7 @@
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 3
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 
@@ -614,44 +746,48 @@
 	icon_state = "sheath"
 	item_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
+	content_overlays = TRUE
+	worn_overlays = TRUE
+	var/list/fitting_swords = list(/obj/item/melee/sabre, /obj/item/melee/baton/stunsword)
+	var/starting_sword = /obj/item/melee/sabre
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
 	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
-		/obj/item/melee/sabre
-		))
+	STR.can_hold = typecacheof(fitting_swords)
+	STR.quickdraw = TRUE
 
 /obj/item/storage/belt/sabre/examine(mob/user)
-	..()
+	. = ..()
 	if(length(contents))
-		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
-
-/obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>")
-		user.put_in_hands(I)
-		update_icon()
-	else
-		to_chat(user, "[src] is empty.")
+		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/storage/belt/sabre/update_icon()
-	icon_state = "sheath"
-	item_state = "sheath"
-	if(contents.len)
-		icon_state += "-sabre"
-		item_state += "-sabre"
-	if(loc && isliving(loc))
+	. = ..()
+	if(isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
-	..()
 
 /obj/item/storage/belt/sabre/PopulateContents()
-	new /obj/item/melee/sabre(src)
-	update_icon()
+	new starting_sword(src)
+
+/obj/item/storage/belt/sabre/rapier
+	name = "rapier sheath"
+	desc = "A black, thin sheath that looks to house only a long thin blade. Feels like its made of metal."
+	icon_state = "rsheath"
+	item_state = "rsheath"
+	force = 5
+	throwforce = 15
+	block_chance = 30
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("bashed", "slashes", "prods", "pokes")
+	fitting_swords = list(/obj/item/melee/rapier)
+	starting_sword = /obj/item/melee/rapier
+
+/obj/item/storage/belt/sabre/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //To thin to block bullets
+	return ..()

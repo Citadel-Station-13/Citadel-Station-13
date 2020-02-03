@@ -5,6 +5,7 @@
 	icon_state = "door1"
 	opacity = 1
 	density = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 	max_integrity = 350
@@ -34,16 +35,17 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/poddoor = FALSE
+	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 
 /obj/machinery/door/examine(mob/user)
-	..()
+	. = ..()
 	if(red_alert_access)
 		if(GLOB.security_level >= SEC_LEVEL_RED)
-			to_chat(user, "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>")
+			. += "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>"
 		else
-			to_chat(user, "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>")
+			. += "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>"
 	if(!poddoor)
-		to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
+		. += "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>"
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
@@ -69,9 +71,11 @@
 	else
 		layer = initial(layer)
 
+/obj/machinery/door/power_change()
+	..()
+	update_icon()
+
 /obj/machinery/door/Destroy()
-	density = FALSE
-	air_update_turf(1)
 	update_freelook_sight()
 	GLOB.airlocks -= src
 	if(spark_system)
@@ -79,7 +83,7 @@
 		spark_system = null
 	return ..()
 
-/obj/machinery/door/CollidedWith(atom/movable/AM)
+/obj/machinery/door/Bumped(atom/movable/AM)
 	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))
@@ -163,7 +167,12 @@
 /obj/machinery/door/allowed(mob/M)
 	if(emergency)
 		return TRUE
+	if(unrestricted_side(M))
+		return TRUE
 	return ..()
+
+/obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, M) & unres_sides
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
@@ -178,7 +187,7 @@
 	else if(istype(I, /obj/item/weldingtool))
 		try_to_weld(I, user)
 		return 1
-	else if(!(I.flags_1 & NOBLUDGEON_1) && user.a_intent != INTENT_HARM)
+	else if(!(I.item_flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
 		return 1
 	return ..()
@@ -215,7 +224,7 @@
 	if(prob(severity*10 - 20))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
-			LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
+			LAZYADD(shockedby, "\[[TIME_STAMP("hh:mm:ss", FALSE)]\]EM Pulse")
 			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 
 /obj/machinery/door/proc/unelectrify()
@@ -279,9 +288,10 @@
 				return
 
 	operating = TRUE
-
 	do_animate("closing")
 	layer = closingLayer
+	if(!safe)
+		crush()
 	sleep(5)
 	density = TRUE
 	sleep(5)
@@ -293,8 +303,6 @@
 	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
-	else
-		crush()
 	return 1
 
 /obj/machinery/door/proc/CheckForMobs()
@@ -318,8 +326,12 @@
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)
-		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-		L.add_splatter_floor(location)
+		//add_blood_DNA doesn't work for borgs/xenos, but add_blood_floor does.
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.bleed(DOOR_CRUSH_DAMAGE)
+		else
+			L.add_splatter_floor(location)
 	for(var/obj/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 

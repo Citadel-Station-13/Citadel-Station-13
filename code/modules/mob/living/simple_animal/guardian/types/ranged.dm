@@ -16,8 +16,7 @@
 	ranged_cooldown_time = 1 //fast!
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
-	range = 13
-	playstyle_string = "<span class='holoparasite'>As a <b>ranged</b> type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.</span>"
+	playstyle_string = "<span class='holoparasite'>As a <b>ranged</b> type, you have 10% damage reduction, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.</span>"
@@ -36,7 +35,7 @@
 			obj_damage = initial(obj_damage)
 			environment_smash = initial(environment_smash)
 			alpha = 255
-			range = initial(range)
+			range = 13
 			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
 			toggle = FALSE
 		else

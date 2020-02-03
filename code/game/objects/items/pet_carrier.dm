@@ -43,17 +43,17 @@
 	..()
 
 /obj/item/pet_carrier/examine(mob/user)
-	..()
+	. = ..()
 	if(occupants.len)
 		for(var/V in occupants)
 			var/mob/living/L = V
-			to_chat(user, "<span class='notice'>It has [L] inside.</span>")
+			. += "<span class='notice'>It has [L] inside.</span>"
 	else
-		to_chat(user, "<span class='notice'>It has nothing inside.</span>")
+		. += "<span class='notice'>It has nothing inside.</span>"
 	if(user.canUseTopic(src))
-		to_chat(user, "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>")
+		. += "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>"
 		if(!open)
-			to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>")
+			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>"
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)
@@ -70,6 +70,7 @@
 	update_icon()
 
 /obj/item/pet_carrier/AltClick(mob/living/user)
+	. = ..()
 	if(open || !user.canUseTopic(src, BE_CLOSE))
 		return
 	locked = !locked
@@ -79,6 +80,7 @@
 	else
 		playsound(user, 'sound/machines/boltsup.ogg', 30, TRUE)
 	update_icon()
+	return TRUE
 
 /obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
 	if(user.a_intent == INTENT_HARM)
@@ -122,7 +124,7 @@
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, "<span class='notice'>You poke a limb through [src]'s bars and start fumbling for the lock switch... (This will take some time.)</span>")
 		to_chat(loc, "<span class='warning'>You see [user] reach through the bars and fumble for the lock switch!</span>")
-		if(!do_after(user, rand(300, 400), target = user) || open || !locked || !user in occupants)
+		if(!do_after(user, rand(300, 400), target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message("<span class='warning'>[user] flips the lock switch on [src] by reaching through!</span>", null, null, null, user)
 		to_chat(user, "<span class='boldannounce'>Bingo! The lock pops open!</span>")
@@ -132,7 +134,7 @@
 	else
 		loc.visible_message("<span class='warning'>[src] starts rattling as something pushes against the door!</span>", null, null, null, user)
 		to_chat(user, "<span class='notice'>You start pushing out of [src]... (This will take about 20 seconds.)</span>")
-		if(!do_after(user, 200, target = user) || open || !locked || !user in occupants)
+		if(!do_after(user, 200, target = user) || open || !locked || !(user in occupants))
 			return
 		loc.visible_message("<span class='warning'>[user] shoves out of	[src]!</span>", null, null, null, user)
 		to_chat(user, "<span class='notice'>You shove open [src]'s door against the lock's resistance and fall out!</span>")
@@ -151,12 +153,13 @@
 		add_overlay("[locked ? "" : "un"]locked")
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
-	. = ..()
 	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message("<span class='notice'>[usr] unloads [src].</span>", \
 		"<span class='notice'>You unload [src] onto [over_atom].</span>")
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)
+	else
+		return ..()
 
 /obj/item/pet_carrier/proc/load_occupant(mob/living/user, mob/living/target)
 	if(pet_carrier_full(src))
@@ -185,7 +188,7 @@
 	occupant_weight += occupant.mob_size
 
 /obj/item/pet_carrier/proc/remove_occupant(mob/living/occupant, turf/new_turf)
-	if(!occupant in occupants || !istype(occupant))
+	if(!(occupant in occupants) || !istype(occupant))
 		return
 	occupant.forceMove(new_turf ? new_turf : drop_location())
 	occupants -= occupant

@@ -3,11 +3,13 @@ For the main html chat area
 *********************************/
 
 //Precaching a bunch of shit
-GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
+GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of icons for the browser output
 
 //On client, created on login
 /datum/chatOutput
 	var/client/owner	 //client ref
+	var/total_checks = 0
+	var/last_check = 0
 	var/loaded       = FALSE // Has the client loaded the browser output area?
 	var/list/messageQueue //If they haven't loaded chat, this is where messages will go until they do
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
@@ -59,8 +61,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
 	for(var/key in href_list)
-		if(length(key) > 7 && findtext(key, "param")) // 7 is the amount of characters in the basic param key template.
-			var/param_name = copytext(key, 7, -1)
+		if(length_char(key) > 7 && findtext(key, "param")) // 7 is the amount of characters in the basic param key template.
+			var/param_name = copytext_char(key, 7, -1)
 			var/item       = href_list[key]
 
 			params[param_name] = item
@@ -82,6 +84,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if("setMusicVolume")
 			data = setMusicVolume(arglist(params))
 
+		if("colorPresetPost") //User just swapped color presets in their goonchat preferences. Do we do anything else?
+			switch(href_list["preset"])
+				if("light")
+					owner.force_white_theme()
+				if("dark" || "normal")
+					owner.force_dark_theme()
+
+
 	if(data)
 		ehjax_send(data = data)
 
@@ -97,7 +107,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 
 	for(var/message in messageQueue)
-		to_chat(owner, message)
+		// whitespace has already been handled by the original to_chat
+		to_chat(owner, message, handle_whitespace=FALSE)
 
 	messageQueue = null
 	sendClientData()
@@ -141,6 +152,18 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //Called by client, sent data to investigate (cookie history so far)
 /datum/chatOutput/proc/analyzeClientData(cookie = "")
+	//Spam check
+	if(world.time  >  last_check + (3 SECONDS))
+		last_check = world.time
+		total_checks = 0
+
+	total_checks += 1
+
+	if(total_checks > SPAM_TRIGGER_AUTOMUTE)
+		message_admins("[key_name(owner)] kicked for goonchat topic spam")
+		qdel(owner)
+		return
+
 	if(!cookie)
 		return
 
@@ -149,13 +172,22 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if (connData && islist(connData) && connData.len > 0 && connData["connData"])
 			connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
-			for(var/i in connectionHistory.len to 1 step -1)
+			if(connectionHistory.len > 5)
+				message_admins("[key_name(src.owner)] was kicked for an invalid ban cookie)")
+				qdel(owner)
+				return
+
+			for(var/i in min(connectionHistory.len, 5) to 1 step -1)
+				if(QDELETED(owner))
+					//he got cleaned up before we were done
+					return
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
-				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
+				if (world.IsBanned(row["ckey"], row["ip"], row["compid"], real_bans_only=TRUE))
 					found = row
 					break
+				CHECK_TICK
 
 			//Uh oh this fucker has a history of playing on a banned account!!
 			if (found.len > 0)
@@ -174,65 +206,80 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
 //Global chat procs
-
-/proc/to_chat(target, message)
-	if(!target)
+/proc/to_chat_immediate(target, message, handle_whitespace=TRUE)
+	if(!target || !message)
 		return
 
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
+	if (istype(target, /savefile))
 		CRASH("Invalid message! [message]")
 
 	if(!istext(message))
+		if (istype(message, /image) || istype(message, /sound))
+			CRASH("Invalid message! [message]")
 		return
 
 	if(target == world)
 		target = GLOB.clients
 
-	var/list/targets
-	if(!islist(target))
-		targets = list(target)
-	else
-		targets = target
-		if(!targets.len)
-			return
 	var/original_message = message
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
-	message = replacetext(message, "\n", "<br>")
-	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
+	if(handle_whitespace)
+		message = replacetext(message, "\n", "<br>")
+		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
 
-	for(var/I in targets)
-		//Grab us a client if possible
-		var/client/C = grab_client(I)
+	if(islist(target))
+		// Do the double-encoding outside the loop to save nanoseconds
+		var/twiceEncoded = url_encode(url_encode(message))
+		for(var/I in target)
+			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
+
+			if (!C)
+				continue
+
+			//Send it to the old style output window.
+			SEND_TEXT(C, original_message)
+
+			if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+				continue
+
+			if(!C.chatOutput.loaded)
+				//Client still loading, put their messages in a queue
+				C.chatOutput.messageQueue += message
+				continue
+
+			C << output(twiceEncoded, "browseroutput:output")
+	else
+		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
 
 		if (!C)
-			continue
+			return
 
 		//Send it to the old style output window.
 		SEND_TEXT(C, original_message)
 
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			continue
+			return
 
 		if(!C.chatOutput.loaded)
 			//Client still loading, put their messages in a queue
 			C.chatOutput.messageQueue += message
-			continue
+			return
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
 
-/proc/grab_client(target)
-	if(istype(target, /client))
-		return target
-	else if(ismob(target))
-		var/mob/M = target
-		if(M.client)
-			return M.client
-	else if(istype(target, /datum/mind))
-		var/datum/mind/M = target
-		if(M.current && M.current.client)
-			return M.current.client
+/proc/to_chat(target, message, handle_whitespace = TRUE)
+	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
+		to_chat_immediate(target, message, handle_whitespace)
+		return
+	SSchat.queue(target, message, handle_whitespace)
+
+/datum/chatOutput/proc/swaptolightmode() //Dark mode light mode stuff. Yell at KMC if this breaks! (See darkmode.dm for documentation)
+	owner.force_white_theme()
+
+/datum/chatOutput/proc/swaptodarkmode()
+	owner.force_dark_theme()

@@ -4,8 +4,11 @@
 // /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
 
 /datum/component/storage/concrete
+	can_transfer = TRUE
 	var/drop_all_on_deconstruct = TRUE
 	var/drop_all_on_destroy = FALSE
+	var/drop_all_on_break = FALSE
+	var/unlock_on_break = FALSE
 	var/transfer_contents_on_component_transfer = FALSE
 	var/list/datum/component/storage/slaves = list()
 
@@ -14,8 +17,9 @@
 
 /datum/component/storage/concrete/Initialize()
 	. = ..()
-	RegisterSignal(COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
-	RegisterSignal(COMSIG_OBJ_DECONSTRUCT, .proc/on_deconstruct)
+	RegisterSignal(parent, COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_deconstruct)
+	RegisterSignal(parent, COMSIG_OBJ_BREAK, .proc/on_break)
 
 /datum/component/storage/concrete/Destroy()
 	var/atom/real_location = real_location()
@@ -62,7 +66,7 @@
 /datum/component/storage/concrete/_insert_physical_item(obj/item/I, override = FALSE)
 	. = TRUE
 	var/atom/real_location = real_location()
-	if(I.loc != real_location)
+	if(I.loc != real_location && real_location)
 		I.forceMove(real_location)
 	refresh_mob_views()
 
@@ -72,7 +76,7 @@
 		var/datum/component/storage/slave = i
 		slave.refresh_mob_views()
 
-/datum/component/storage/concrete/emp_act(severity)
+/datum/component/storage/concrete/emp_act(datum/source, severity)
 	if(emp_shielded)
 		return
 	var/atom/real_location = real_location()
@@ -90,15 +94,21 @@
 	slaves -= S
 	return FALSE
 
-/datum/component/storage/concrete/proc/on_contents_del(atom/A)
+/datum/component/storage/concrete/proc/on_contents_del(datum/source, atom/A)
 	var/atom/real_location = parent
 	if(A in real_location)
 		usr = null
 		remove_from_storage(A, null)
 
-/datum/component/storage/concrete/proc/on_deconstruct(disassembled)
+/datum/component/storage/concrete/proc/on_deconstruct(datum/source, disassembled)
 	if(drop_all_on_deconstruct)
 		do_quick_empty()
+
+/datum/component/storage/concrete/proc/on_break(datum/source, damage_flag)
+	if(drop_all_on_break)
+		do_quick_empty()
+	if(unlock_on_break)
+		set_locked(source, FALSE)
 
 /datum/component/storage/concrete/can_see_contents()
 	. = ..()

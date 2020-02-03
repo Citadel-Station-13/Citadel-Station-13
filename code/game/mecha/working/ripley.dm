@@ -2,14 +2,14 @@
 	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of planetary mining."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 4 //Move speed, lower is faster.
-	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
-	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
+	step_in = 3 //Move speed, lower is faster.
+	var/fast_pressure_step_in = 2
+	var/slow_pressure_step_in = 3
 	max_temperature = 20000
 	max_integrity = 200
-	lights_power = 7
+	lights_power = 8
 	deflect_chance = 15
-	armor = list("melee" = 40, "bullet" = 20, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 30, "bullet" = 15, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -47,7 +47,7 @@
 
 /obj/mecha/working/ripley/update_icon()
 	..()
-	GET_COMPONENT(C,/datum/component/armor_plate)
+	var/datum/component/armor_plate/C = GetComponent(/datum/component/armor_plate)
 	if (C.amount)
 		cut_overlays()
 		if(C.amount < 3)
@@ -64,6 +64,9 @@
 	desc = "Autonomous Power Loader Unit. This model is refitted with additional thermal protection."
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
+	step_in = 4
+	fast_pressure_step_in = 2
+	slow_pressure_step_in = 4
 	max_temperature = 65000
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -77,6 +80,7 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	slow_pressure_step_in = 3
 	opacity=0
 	lights_power = 7
@@ -86,6 +90,18 @@
 /obj/mecha/working/ripley/deathripley/Initialize()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
+	ME.attach(src)
+
+/obj/mecha/working/ripley/deathripley/real
+	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
+
+/obj/mecha/working/ripley/deathripley/real/Initialize()
+	. = ..()
+	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+		E.detach()
+		qdel(E)
+	equipment.Cut()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
 	ME.attach(src)
 
 /obj/mecha/working/ripley/mining

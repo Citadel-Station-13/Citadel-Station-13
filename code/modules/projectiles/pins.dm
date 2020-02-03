@@ -19,6 +19,7 @@
 		gun = newloc
 
 /obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(proximity_flag)
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
@@ -36,10 +37,12 @@
 				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/firing_pin/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
+	return TRUE
 
 /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/G)
 	gun = G
@@ -56,10 +59,12 @@
 	return TRUE
 
 /obj/item/firing_pin/proc/auth_fail(mob/living/user)
-	user.show_message(fail_message, 1)
+	if(user)
+		user.show_message(fail_message, MSG_VISUAL)
 	if(selfdestruct)
-		user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
-		to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
+		if(user)
+			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", MSG_VISUAL)
+			to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
 		explosion(get_turf(gun), -1, 0, 2, 3)
 		if(gun)
 			qdel(gun)
@@ -79,6 +84,8 @@
 	pin_removeable = TRUE
 
 /obj/item/firing_pin/test_range/pin_auth(mob/living/user)
+	if(!istype(user))
+		return FALSE
 	for(var/obj/machinery/magnetic_controller/M in range(user, 3))
 		return TRUE
 	return FALSE
@@ -128,7 +135,7 @@
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	if(user && (!(user.has_trait(TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
+	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))))
 		return FALSE
 	return TRUE
 
@@ -147,7 +154,7 @@
 
 
 // DNA-keyed pin.
-// When you want to keep your toys for youself.
+// When you want to keep your toys for yourself.
 /obj/item/firing_pin/dna
 	name = "DNA-keyed firing pin"
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link."
@@ -156,7 +163,7 @@
 	var/unique_enzymes = null
 
 /obj/item/firing_pin/dna/afterattack(atom/target, mob/user, proximity_flag)
-	..()
+	. = ..()
 	if(proximity_flag && iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(M.dna && M.dna.unique_enzymes)
@@ -180,6 +187,15 @@
 /obj/item/firing_pin/dna/dredd
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
 	selfdestruct = TRUE
+
+/obj/item/firing_pin/holy
+	name = "blessed pin"
+	desc = "A firing pin that only responds to those who are holier than thou."
+
+/obj/item/firing_pin/holy/pin_auth(mob/living/user)
+	if(user.mind.isholy)
+		return TRUE
+	return FALSE
 
 // Laser tag pins
 /obj/item/firing_pin/tag

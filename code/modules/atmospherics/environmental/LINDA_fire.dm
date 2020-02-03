@@ -14,14 +14,14 @@
 	if(!air_contents)
 		return 0
 
-	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
-	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
-	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
+	var/oxy = air_contents.gases[/datum/gas/oxygen]
+	var/tox = air_contents.gases[/datum/gas/plasma]
+	var/trit = air_contents.gases[/datum/gas/tritium]
 	if(active_hotspot)
 		if(soh)
 			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
-				if(active_hotspot.temperature < exposed_temperature)
-					active_hotspot.temperature = exposed_temperature
+				if(active_hotspot.temperature < exposed_temperature*50)
+					active_hotspot.temperature = exposed_temperature*50
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return 1
@@ -36,12 +36,18 @@
 			return 0
 
 		active_hotspot = new /obj/effect/hotspot(src)
-		active_hotspot.temperature = exposed_temperature
-		active_hotspot.volume = exposed_volume
+		active_hotspot.temperature = exposed_temperature*50
+		active_hotspot.volume = exposed_volume*25
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
+	else
+		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
+		heating.temperature = exposed_temperature
+		heating.react()
+		assume_air(heating)
+		air_update_turf()
 	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
@@ -134,7 +140,7 @@
 		add_overlay(lightning_overlay)
 	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
 		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
-		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/tile_effects.dmi', "chem_gas")
+		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmospherics.dmi', "fusion_gas")
 		fusion_overlay.blend_mode = BLEND_ADD
 		fusion_overlay.alpha = fusion_amt * 255
 		var/mutable_appearance/rainbow_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "druggy")
@@ -156,7 +162,7 @@
 	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
 	alpha = heat_a
 
-#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
+#define INSUFFICIENT(path) (location.air.gases[path] < 0.5)
 /obj/effect/hotspot/process()
 	if(just_spawned)
 		just_spawned = FALSE
@@ -178,7 +184,7 @@
 		return
 
 	//Not enough to burn
-	if(((!location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5) && (!location.air.gases[/datum/gas/tritium] || location.air.gases[/datum/gas/tritium][MOLES] < 0.5)) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
+	if((location.air.gases[/datum/gas/plasma] < 0.5 && location.air.gases[/datum/gas/tritium] < 0.5) || location.air.gases[/datum/gas/oxygen] < 0.5)
 		qdel(src)
 		return
 
@@ -193,7 +199,7 @@
 			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
 			for(var/t in location.atmos_adjacent_turfs)
 				var/turf/open/T = t
-				if(T.active_hotspot)
+				if(!T.active_hotspot)
 					T.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
 
 	else
@@ -231,7 +237,7 @@
 			else
 				chance_of_deletion = 100
 			if(prob(chance_of_deletion))
-				T.ScrapeAway()
+				T.Melt()
 			else
 				T.to_be_destroyed = FALSE
 				T.max_fire_temperature_sustained = 0
@@ -245,15 +251,9 @@
 /obj/effect/hotspot/singularity_pull()
 	return
 
-/obj/effect/dummy/fire
+/obj/effect/dummy/lighting_obj/moblight/fire
 	name = "fire"
-	desc = "OWWWWWW. IT BURNS. Tell a coder if you're seeing this."
-	icon_state = "nothing"
 	light_color = LIGHT_COLOR_FIRE
 	light_range = LIGHT_RANGE_FIRE
 
-/obj/effect/dummy/fire/Initialize()
-	. = ..()
-	if(!isliving(loc))
-		return INITIALIZE_HINT_QDEL
 #undef INSUFFICIENT

@@ -1,10 +1,4 @@
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
-#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
 
 /mob/living/carbon/monkey
 
@@ -18,8 +12,8 @@
 	if(..())
 
 		if(!client)
-			if(stat == CONSCIOUS)	
-				if(on_fire || buckled || restrained() || (resting && canmove)) //CIT CHANGE - makes it so monkeys attempt to resist if they're resting
+			if(stat == CONSCIOUS)
+				if(on_fire || buckled || restrained() || (resting && canmove)) //CIT CHANGE - makes it so monkeys attempt to resist if they're resting)
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
 						walk_to(src,0)
@@ -36,6 +30,9 @@
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)
+		if(radiation > RAD_MOB_MUTATE && prob((radiation - RAD_MOB_MUTATE) / 25))
+			gorillize() 
+			return
 		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 			if(!IsKnockdown())
 				emote("collapse")
@@ -47,10 +44,6 @@
 				randmutb()
 				emote("gasp")
 				domutcheck()
-
-				if(radiation > RAD_MOB_MUTATE * 2 && prob(50))
-					gorillize()
-					return
 		if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
 			vomit(10, TRUE)
 	return ..()
@@ -87,7 +80,7 @@
 			adjust_bodytemperature(min((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
 
 
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !has_trait(TRAIT_RESISTHEAT))
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
 		switch(bodytemperature)
 			if(360 to 400)
 				throw_alert("temp", /obj/screen/alert/hot, 1)
@@ -102,7 +95,7 @@
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 
-	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !has_trait(TRAIT_RESISTCOLD))
+	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(bodytemperature)
 				if(200 to 260)
@@ -175,12 +168,4 @@
 				I.take_damage(fire_stacks, BURN, "fire", 0)
 
 		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
-		SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
-
-#undef HEAT_DAMAGE_LEVEL_1
-#undef HEAT_DAMAGE_LEVEL_2
-#undef HEAT_DAMAGE_LEVEL_3
-
-#undef COLD_DAMAGE_LEVEL_1
-#undef COLD_DAMAGE_LEVEL_2
-#undef COLD_DAMAGE_LEVEL_3
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)

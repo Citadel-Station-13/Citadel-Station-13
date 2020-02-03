@@ -2,7 +2,7 @@
 #define GORILLA_TOTAL_LAYERS 1
 
 /mob/living/simple_animal/hostile/gorilla
-	name = "Gorilla"
+	name = "gorilla"
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
 	icon = 'icons/mob/gorilla.dmi'
 	icon_state = "crawling"
@@ -37,6 +37,8 @@
 	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
+
+	do_footstep = TRUE
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
@@ -92,7 +94,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/handle_automated_speech(override)
 	if(speak_chance && (override || prob(speak_chance)))
-		playsound(src, "sound/creatures/gorilla.ogg", 200)
+		playsound(src, 'sound/creatures/gorilla.ogg', 200)
 	..()
 
 /mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
@@ -103,6 +105,13 @@
 /mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
 	oogas++
 	if(oogas >= rand(2,6))
-		playsound(src, "sound/creatures/gorilla.ogg", 200)
+		playsound(src, 'sound/creatures/gorilla.ogg', 200)
 		oogas = 0
 
+/mob/living/simple_animal/hostile/gorilla/familiar
+	name = "familiar gorilla"
+	desc = "There is no need to be upset."
+	unique_name = FALSE
+	AIStatus = AI_OFF
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0

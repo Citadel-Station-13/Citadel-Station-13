@@ -14,8 +14,8 @@
 	unique_name = TRUE
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
-
-
+	hud_type = /datum/hud/monkey
+	can_be_held = "monkey"
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	verbs += /mob/living/proc/mob_sleep
@@ -27,7 +27,6 @@
 
 	//initialize limbs
 	create_bodyparts()
-
 	create_internal_organs()
 
 	. = ..()
@@ -47,6 +46,10 @@
 	SSmobs.cubemonkeys -= src
 	return ..()
 
+/mob/living/carbon/monkey/generate_mob_holder()
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "monkey", 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi', TRUE)
+	return holder
+
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/lungs
@@ -59,26 +62,31 @@
 	internal_organs += new /obj/item/organ/stomach
 	..()
 
-/mob/living/carbon/monkey/movement_delay()
-	if(reagents)
-		if(reagents.has_reagent("morphine"))
-			return -1
-
-		if(reagents.has_reagent("nuka_cola"))
-			return -1
-
+/mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
+	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
+	var/amount
+	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
+		amount = -1
+	if(amount)
+		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+
+/mob/living/carbon/monkey/updatehealth()
+	. = ..()
+	var/slow = 0
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45)
-		. += (health_deficiency / 25)
+		slow += (health_deficiency / 25)
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
 
+/mob/living/carbon/monkey/adjust_bodytemperature(amount)
+	. = ..()
+	var/slow = 0
 	if (bodytemperature < 283.222)
-		. += (283.222 - bodytemperature) / 10 * 1.75
-
-	var/static/config_monkey_delay
-	if(isnull(config_monkey_delay))
-		config_monkey_delay = CONFIG_GET(number/monkey_delay)
-	. += config_monkey_delay
+		slow += (283.222 - bodytemperature) / 10 * 1.75
+	if(slow <= 0)
+		return
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -142,19 +150,10 @@
 			threatcount += 4 //trigger look_for_perp() since they're nonhuman and very likely hostile
 
 	//mindshield implants imply trustworthyness
-	if(isloyal())
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		threatcount -= 1
 
 	return threatcount
-
-/mob/living/carbon/monkey/get_permeability_protection()
-	var/protection = 0
-	if(head)
-		protection = 1 - head.permeability_coefficient
-	if(wear_mask)
-		protection = max(1 - wear_mask.permeability_coefficient, protection)
-	protection = protection/7 //the rest of the body isn't covered.
-	return protection
 
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot(ORGAN_SLOT_LUNGS))

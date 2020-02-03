@@ -104,7 +104,7 @@
 
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt/cast(list/targets, mob/living/user = usr)
 	if(istype(user))
-		if(istype(user.loc, /obj/effect/dummy/slaughter/))
+		if(istype(user.loc, /obj/effect/dummy/phased_mob/slaughter/))
 			if(valid_location(user))
 				to_chat(user, "<span class='warning'>You are now phasing in.</span>")
 				if(do_mob(user,user,150))
@@ -145,7 +145,7 @@
 	spawn_dust()
 	visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(loc)
+	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(loc)
 	ExtinguishMob()
 	forceMove(holder)
 	holder = holder
@@ -234,7 +234,7 @@
 		dancefloor_exists = FALSE
 		for(var/i in 1 to dancefloor_turfs.len)
 			var/turf/T = dancefloor_turfs[i]
-			T.ChangeTurf(dancefloor_turfs_types[i])
+			T.ChangeTurf(dancefloor_turfs_types[i], flags = CHANGETURF_INHERIT_AIR)
 	else
 		var/list/funky_turfs = RANGE_TURFS(1, user)
 		for(var/turf/closed/solid in funky_turfs)
@@ -248,7 +248,7 @@
 			var/turf/T = t
 			dancefloor_turfs[i] = T
 			dancefloor_turfs_types[i] = T.type
-			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
+			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b, flags = CHANGETURF_INHERIT_AIR)
 			i++
 
 /datum/effect_system/smoke_spread/transparent/dancefloor_devil

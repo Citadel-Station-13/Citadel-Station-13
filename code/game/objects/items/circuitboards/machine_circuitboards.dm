@@ -7,6 +7,10 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
+/obj/item/circuitboard/machine/sleeper/syndie
+	name = "Syndicate Sleeper (Machine Board)"
+	build_path = /obj/machinery/sleeper/syndie
+
 /obj/item/circuitboard/machine/vr_sleeper
 	name = "VR Sleeper (Machine Board)"
 	build_path = /obj/machinery/vr_sleeper
@@ -29,6 +33,15 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/bloodbankgen
+	name = "Blood Bank Generator (Machine Board)"
+	build_path = /obj/machinery/bloodbankgen
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/clonepod
@@ -215,53 +228,51 @@
 	name = "Booze-O-Mat Vendor (Machine Board)"
 	desc = "You can turn the \"brand selection\" dial using a screwdriver."
 	build_path = /obj/machinery/vending/boozeomat
-	req_components = list(
-							/obj/item/vending_refill/boozeomat = 3)
+	req_components = list(/obj/item/vending_refill/boozeomat = 1)
 
-	var/static/list/vending_names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
-							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
-							/obj/machinery/vending/cola = "Robust Softdrinks",
-							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-							/obj/machinery/vending/games = "\improper Good Clean Fun",
-							/obj/machinery/vending/autodrobe = "AutoDrobe",
-							/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
-							/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
-							/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
-							/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
-							/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
-							/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
-							/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
-							/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
-							/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
-							/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
-							/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
-							/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
-							/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
-							/obj/machinery/vending/wardrobe/chap_wardrobe = "ChapDrobe",
-							/obj/machinery/vending/wardrobe/chem_wardrobe = "ChemDrobe",
-							/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
-							/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
-							/obj/machinery/vending/clothing = "ClothesMate",
-							/obj/machinery/vending/medical = "NanoMed Plus",
-							/obj/machinery/vending/wallmed = "NanoMed")
-	needs_anchored = FALSE
+	var/static/list/vending_names_paths = list(
+		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
+		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
+		/obj/machinery/vending/snack = "Getmore Chocolate Corp",
+		/obj/machinery/vending/cola = "Robust Softdrinks",
+		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
+		/obj/machinery/vending/games = "\improper Good Clean Fun",
+		/obj/machinery/vending/autodrobe = "AutoDrobe",
+		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
+		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
+		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
+		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
+		/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
+		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
+		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
+		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
+		/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
+		/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
+		/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
+		/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
+		/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
+		/obj/machinery/vending/wardrobe/chap_wardrobe = "ChapDrobe",
+		/obj/machinery/vending/wardrobe/chem_wardrobe = "ChemDrobe",
+		/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
+		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
+		/obj/machinery/vending/clothing = "ClothesMate",
+		/obj/machinery/vending/medical = "NanoMed Plus",
+		/obj/machinery/vending/wallmed = "NanoMed")
 
 /obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
 		var/position = vending_names_paths.Find(build_path)
 		position = (position == vending_names_paths.len) ? 1 : (position + 1)
 		var/typepath = vending_names_paths[position]
-
-		to_chat(user, "<span class='notice'>You set the board to \"[vending_names_paths[typepath]]\".</span>")
 		set_type(typepath)
+		to_chat(user, "<span class='notice'>You set the board to \"[vending_names_paths[typepath]]\".</span>")
 	else
 		return ..()
 
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[vending_names_paths[build_path]] Vendor (Machine Board)"
-	req_components = list(initial(typepath.refill_canister) = initial(typepath.refill_count))
+	req_components = list(initial(typepath.refill_canister) = 1)
 
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
 	for(var/typepath in vending_names_paths)
@@ -297,6 +308,7 @@
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	desc = "You can use a screwdriver to switch between heater and freezer."
+	var/pipe_layer = PIPING_LAYER_DEFAULT
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/micro_laser = 2,
@@ -331,8 +343,18 @@
 		build_path = initial(new_type.build_path)
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
-	else
-		return ..()
+		return
+
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
+		to_chat(user, "<span class='notice'>You change the circuitboard to layer [pipe_layer].</span>")
+		return
+
+	. = ..()
+
+/obj/item/circuitboard/machine/thermomachine/examine()
+	. = ..()
+	. += "<span class='notice'>It is set to layer [pipe_layer].</span>"
 
 /obj/item/circuitboard/machine/thermomachine/heater
 	name = "Heater (Machine Board)"
@@ -400,6 +422,7 @@
 		/obj/machinery/smartfridge/food = "food",
 		/obj/machinery/smartfridge/drinks = "drinks",
 		/obj/machinery/smartfridge/extract = "slimes",
+		/obj/machinery/smartfridge/organ = "organs",
 		/obj/machinery/smartfridge/chemistry = "chems",
 		/obj/machinery/smartfridge/chemistry/virology = "viruses",
 		/obj/machinery/smartfridge/disks = "disks")
@@ -420,8 +443,8 @@
 		return ..()
 
 /obj/item/circuitboard/machine/smartfridge/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.</span>")
+	. = ..()
+	. += "<span class='info'>[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.</span>"
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator (Machine Board)"
@@ -574,7 +597,7 @@
 
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller (Machine Board)"
-	desc = "You can use a screwdriver to switch between Research and Power Generation"
+	desc = "You can use a screwdriver to switch between Research and Power Generation."
 	build_path = /obj/machinery/power/tesla_coil
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
@@ -655,6 +678,13 @@
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	name = "Booze Dispenser (Machine Board)"
 	build_path = /obj/machinery/chem_dispenser/drinks/beer
+
+/obj/item/circuitboard/machine/chem_dispenser/abductor
+	name = "Reagent Synthetizer (Abductor Machine Board)"
+	icon_state = "abductor_mod"
+	build_path = /obj/machinery/chem_dispenser/abductor
+	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"
@@ -741,6 +771,47 @@
 		/obj/item/stock_parts/scanning_module = 1,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/micro_laser = 2)
+
+/obj/item/circuitboard/machine/nanite_chamber
+	name = "Nanite Chamber (Machine Board)"
+	build_path = /obj/machinery/nanite_chamber
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 2,
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/manipulator = 1)
+
+/obj/item/circuitboard/machine/public_nanite_chamber
+	name = "Public Nanite Chamber (Machine Board)"
+	build_path = /obj/machinery/public_nanite_chamber
+	var/cloud_id = 1
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/manipulator = 1)
+
+/obj/item/circuitboard/machine/public_nanite_chamber/multitool_act(mob/living/user)
+	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
+	if(new_cloud == null)
+		return
+	cloud_id = CLAMP(round(new_cloud, 1), 1, 100)
+
+/obj/item/circuitboard/machine/public_nanite_chamber/examine(mob/user)
+	. = ..()
+	. += "Cloud ID is currently set to [cloud_id]."
+
+/obj/item/circuitboard/machine/nanite_program_hub
+	name = "Nanite Program Hub (Machine Board)"
+	build_path = /obj/machinery/nanite_program_hub
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1)
+
+/obj/item/circuitboard/machine/nanite_programmer
+	name = "Nanite Programmer (Machine Board)"
+	build_path = /obj/machinery/nanite_programmer
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 1)
 
 /obj/item/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
@@ -865,14 +936,14 @@
 	build_path = /obj/machinery/vending/donksofttoyvendor
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/vending_refill/donksoft = 3)
+		/obj/item/vending_refill/donksoft = 1)
 
 /obj/item/circuitboard/machine/vending/syndicatedonksofttoyvendor
 	name = "Syndicate Donksoft Toy Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/toyliberationstation
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/vending_refill/donksoft = 3)
+		/obj/item/vending_refill/donksoft = 1)
 
 /obj/item/circuitboard/machine/dish_drive
 	name = "Dish Drive (Machine Board)"
@@ -886,19 +957,21 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/dish_drive/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>")
-	to_chat(user, "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>")
+	. = ..()
+	. += "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>"
+	. += "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>"
 
 /obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
 	suction = !suction
 	to_chat(user, "<span class='notice'>You [suction ? "enable" : "disable"] the board's suction function.</span>")
 
 /obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
+	. = ..()
 	if(!user.Adjacent(src))
 		return
 	transmit = !transmit
 	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")
+	return TRUE
 
 /obj/item/circuitboard/machine/stacking_unit_console
 	name = "Stacking Machine Console (Machine Board)"
@@ -913,3 +986,45 @@
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/matter_bin = 2)
+
+/obj/item/circuitboard/machine/generator
+	name = "Thermo-Electric Generator (Machine Board)"
+	build_path = /obj/machinery/power/generator
+	req_components = list()
+
+/obj/item/circuitboard/machine/circulator
+	name = "Circulator/Heat Exchanger (Machine Board)"
+	build_path = /obj/machinery/atmospherics/components/binary/circulator
+	req_components = list()
+
+/obj/item/circuitboard/machine/harvester
+	name = "Harvester (Machine Board)"
+	build_path = /obj/machinery/harvester
+	req_components = list(/obj/item/stock_parts/micro_laser = 4)
+
+/obj/item/circuitboard/machine/ore_silo
+	name = "Ore Silo (Machine Board)"
+	build_path = /obj/machinery/ore_silo
+	req_components = list()
+
+/obj/item/circuitboard/machine/autobottler
+	name = "Auto-Bottler (Machine Board)"
+	build_path = /obj/machinery/rnd/production/protolathe/department/autobottler //Manips make you print things cheaper, even chems
+	req_components = list(/obj/item/stock_parts/matter_bin = 5,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/reagent_containers/glass/beaker = 6) //So it can hold lots of chems
+
+/obj/item/circuitboard/machine/kinkmate
+	name = "Kinkmate Vendor (Machine Board)"
+	build_path = /obj/machinery/vending/kink
+	req_components = list(/obj/item/vending_refill/kink = 1)
+
+/obj/item/circuitboard/machine/autoylathe
+	name = "Autoylathe (Machine Board)"
+	build_path = /obj/machinery/autoylathe
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 3,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/sheet/glass = 1)

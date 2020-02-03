@@ -27,7 +27,7 @@
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
 	desc = "These tactical gloves are fireproof and shock resistant."
-	icon_state = "black"
+	icon_state = "combat"
 	item_state = "blackgloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
@@ -58,22 +58,48 @@
 
 /obj/item/clothing/gloves/rapid
 	name = "Gloves of the North Star"
-	desc = "Just looking at these fills you with an urge to beat the shit out of people."
+	desc = "Just looking at these fills you with an urge to beat the shit out of people. Violently."
 	icon_state = "rapid"
 	item_state = "rapid"
 	transfer_prints = TRUE
 	var/warcry = "AT"
 
 /obj/item/clothing/gloves/rapid/Touch(mob/living/target,proximity = TRUE)
-	var/mob/living/M = loc
+	if(!istype(target))
+		return
 
-	if(M.a_intent == INTENT_HARM)
-		M.changeNext_move(CLICK_CD_RAPID)
-		if(warcry)
-			M.say("[warcry]", ignore_spam = TRUE)
+	var/mob/living/M = loc
+	M.changeNext_move(CLICK_CD_RAPID)
+	M.adjustStaminaLoss(-3.5) // used to be -2 with some comment about stamina buffer management but *shrug -hatterhat
+	if(warcry)
+		M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
+
 	.= FALSE
+
 
 /obj/item/clothing/gloves/rapid/attack_self(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
 	if(input)
 		warcry = input
+
+/obj/item/clothing/gloves/rapid/hug
+	name = "Hugs of the North Star"
+	desc = "Just looking at these fills you with an urge to hug the shit out of people. In a very friendly manner."
+	warcry = "owo" //Shouldn't ever come into play
+
+/obj/item/clothing/gloves/rapid/hug/Touch(mob/living/target,proximity = TRUE)
+	if(!istype(target))
+		return
+
+	var/mob/living/M = loc
+
+	if(M.a_intent == INTENT_HELP)
+		if(target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH)) //Can't hug people who are dying/dead
+			if(target.on_fire || target.lying) //No spamming extinguishing, helping them up, or other non-hugging/patting help interactions
+				return
+			else
+				M.changeNext_move(CLICK_CD_RAPID)
+	. = FALSE
+
+/obj/item/clothing/gloves/rapid/hug/attack_self(mob/user)
+	return FALSE

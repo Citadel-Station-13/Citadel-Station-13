@@ -8,8 +8,10 @@ Contains:
  - NASA Voidsuit
  - Father Christmas' magical clothes
  - Pirate's spacesuit
- - ERT hardsuit: command, sec, engi, med
+ - ERT hardsuit: Command, Sec, Engi, Med
+ - ERT High Alarm - Command, Sec, Engi, Med
  - EVA spacesuit
+ - Radiation Spacesuit
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
 */
@@ -22,7 +24,7 @@ Contains:
 	item_state = "deathsquad"
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	actions_types = list()
 
@@ -37,7 +39,7 @@ Contains:
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	dog_fashion = /datum/dog_fashion/back/deathsquad
@@ -52,6 +54,7 @@ Contains:
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 20, "fire" = 100, "acid" = 100)
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/head/helmet/space/beret
 	name = "officer's beret"
@@ -62,8 +65,9 @@ Contains:
 	flags_inv = 0
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
@@ -77,8 +81,9 @@ Contains:
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
@@ -93,6 +98,7 @@ Contains:
 	item_state = "void"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "Engineering Void Helmet"
@@ -114,6 +120,7 @@ Contains:
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 	flags_cover = HEADCOVERSEYES
+	mutantrace_variation = NONE
 
 	dog_fashion = /datum/dog_fashion/head/santa
 
@@ -124,12 +131,13 @@ Contains:
 	item_state = "santa"
 	slowdown = 0
 	allowed = list(/obj/item) //for stuffing exta special presents
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
-	name = "pirate hat"
-	desc = "Yarr."
+	name = "royal tricorne"
+	desc = "A thick, space-proof tricorne from the royal Space Queen. It's lined with a layer of reflective kevlar."
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
@@ -137,15 +145,18 @@ Contains:
 	strip_delay = 40
 	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
-	name = "pirate bandana"
+	name = "royal bandana"
+	desc = "A space-proof bandanna crafted with reflective kevlar."
 	icon_state = "bandana"
 	item_state = "bandana"
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/pirate
-	name = "pirate coat"
-	desc = "Yarr."
+	name = "royal waistcoat "
+	desc = "A royal, space-proof waistcoat. The inside of it is lined with reflective kevlar."
 	icon_state = "pirate"
 	item_state = "pirate"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -155,6 +166,7 @@ Contains:
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
 	strip_delay = 40
 	equip_delay_other = 20
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 	//Emergency Response Team suits
 /obj/item/clothing/head/helmet/space/hardsuit/ert
@@ -165,8 +177,12 @@ Contains:
 	item_color = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	flags_1 = NODROP_1
 	brightness_on = 7
+	resistance_flags = ACID_PROOF
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team suit"
@@ -178,6 +194,7 @@ Contains:
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	slowdown = 0
 	strip_delay = 130
+	resistance_flags = ACID_PROOF
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
@@ -219,6 +236,68 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	species_exception = list(/datum/species/angel)
 
+	//Red alert ERT
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/alert
+	name = "emergency response unit helmet"
+	desc = "Red alert command helmet for the ERT. This one is more armored than its standard version."
+	icon_state = "hardsuit0-ert_commander-alert"
+	item_state = "hardsuit0-ert_commander-alert"
+	item_color = "ert_commander-alert"
+	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	brightness_on = 8
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/ert/alert
+	name = "emergency response team suit"
+	desc = "Red alert command suit for the ERT. This one is more armored than its standard version."
+	icon_state = "ert_command-alert"
+	item_state = "ert_command-alert"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert
+	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC
+
+	//ERT Security
+/obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
+	desc = "Red alert security helmet for the ERT. This one is more armored than its standard version."
+	icon_state = "hardsuit0-ert_security-alert"
+	item_state = "hardsuit0-ert_security-alert"
+	item_color = "ert_security-alert"
+
+/obj/item/clothing/suit/space/hardsuit/ert/alert/sec
+	desc = "Red alert security suit for the ERT. This one is more armored than its standard version."
+	icon_state = "ert_security-alert"
+	item_state = "ert_security-alert"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
+
+	//ERT Engineering
+/obj/item/clothing/head/helmet/space/hardsuit/ert/alert/engi
+	desc = "Red alert engineer helmet for the ERT. This one is more armored than its standard version."
+	icon_state = "hardsuit0-ert_engineer-alert"
+	item_state = "hardsuit0-ert_engineer-alert"
+	item_color = "ert_engineer-alert"
+
+/obj/item/clothing/suit/space/hardsuit/ert/alert/engi
+	desc = "Red alert engineer suit for the ERT. This one is more armored than its standard version."
+	icon_state = "ert_engineer-alert"
+	item_state = "ert_engineer-alert"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/engi
+
+	//ERT Medical
+/obj/item/clothing/head/helmet/space/hardsuit/ert/alert/med
+	desc = "Red alert medical helmet for the ERT. This one is more armored than its standard version."
+	icon_state = "hardsuit0-ert_medical-alert"
+	item_state = "hardsuit0-ert_medical-alert"
+	item_color = "ert_medical-alert"
+
+/obj/item/clothing/suit/space/hardsuit/ert/alert/med
+	desc = "Red alert medical suit for the ERT. This one is more armored than its standard version."
+	icon_state = "ert_medical-alert"
+	item_state = "ert_medical-alert"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/med
+	species_exception = list(/datum/species/angel)
+
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
 	icon_state = "space"
@@ -234,6 +313,28 @@ Contains:
 	flash_protect = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
 
+//Radiation
+/obj/item/clothing/head/helmet/space/rad
+	name = "radiation voidsuit helmet"
+	desc = "A special helmet that protects against radiation and space. Not much else unfortunately."
+	icon_state = "cespace_helmet"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	item_color = "engineering"
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	actions_types = list()
+
+/obj/item/clothing/suit/space/rad
+	name = "radiation voidsuit"
+	desc = "A special suit that protects against radiation and space. Not much else unfortunately."
+	icon_state = "hardsuit-rad"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	mutantrace_variation = NONE
+
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
@@ -241,8 +342,9 @@ Contains:
 	item_state = "griffinhat"
 	armor = list("melee" = 20, "bullet" = 40, "laser" = 30, "energy" = 25, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"
@@ -252,9 +354,10 @@ Contains:
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list("melee" = 20, "bullet" = 40, "laser" = 30,"energy" = 25, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	slowdown = 0
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 //Carpsuit, bestsuit, lovesuit
 /obj/item/clothing/head/helmet/space/hardsuit/carp
@@ -265,7 +368,11 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
-	flags_1 = NODROP_1
+	mutantrace_variation = NONE
+
+/obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 
 /obj/item/clothing/suit/space/hardsuit/carp
@@ -277,7 +384,7 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75) //As whimpy whimpy whoo
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
-
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	name = "paranormal response unit helmet"
@@ -285,9 +392,14 @@ Contains:
 	icon_state = "hardsuit0-prt"
 	item_state = "hardsuit0-prt"
 	item_color = "knight_grey"
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
+	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team suit"
@@ -295,12 +407,12 @@ Contains:
 	icon_state = "knight_grey"
 	item_state = "knight_grey"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	name = "inquisitor's hardsuit"
@@ -345,7 +457,7 @@ Contains:
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!torn && prob(50))
+	if(!torn && prob(50) && damage >= 5)
 		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
 		clothing_flags &= ~STOPSPRESSUREDAMAGE
 		name = "torn [src]."

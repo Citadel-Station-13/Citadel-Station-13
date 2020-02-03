@@ -31,6 +31,8 @@
 	var/attack_state = MOOK_ATTACK_NEUTRAL
 	var/struck_target_leap = FALSE
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/jungle/mook/CanPass(atom/movable/O)
 	if(istype(O, /mob/living/simple_animal/hostile/jungle/mook))
 		var/mob/living/simple_animal/hostile/jungle/mook/M = O
@@ -145,7 +147,7 @@
 			update_icons()
 			Goto(target, move_to_delay, minimum_distance)
 
-/mob/living/simple_animal/hostile/jungle/mook/throw_impact(atom/hit_atom, throwingdatum)
+/mob/living/simple_animal/hostile/jungle/mook/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(isliving(hit_atom) && attack_state == MOOK_ATTACK_ACTIVE)
 		var/mob/living/L = hit_atom

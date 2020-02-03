@@ -19,11 +19,11 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	grind_results = list("lye" = 10)
+	grind_results = list(/datum/reagent/lye = 10)
 	var/cleanspeed = 50 //slower than mop
 	force_string = "robust... against germs"
 
@@ -51,17 +51,17 @@
 	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
 
 /obj/item/soap/suicide_act(mob/user)
-	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
+	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
 	user.visible_message("<span class='suicide'>[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!</span>")
 	new /obj/effect/particle_effect/foam(loc)
 	return (TOXLOSS)
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target, /obj/effect/decal/cleanable))
@@ -88,7 +88,7 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 			target.wash_cream()
 	return
 
@@ -111,18 +111,20 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
+	var/moodlet = "honk" //used to define which kind of moodlet is added to the honked target
+	var/list/honksounds = list('sound/items/bikehorn.ogg' = 1)
 
-/obj/item/bikehorn/Initialize()
+/obj/item/bikehorn/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	AddComponent(/datum/component/squeak, honksounds, 50)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
-	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, moodlet, /datum/mood_event/honk)
 	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src, pickweight(honksounds), 50, 1)
 	return (BRUTELOSS)
 
 //air horn
@@ -130,10 +132,7 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-
-/obj/item/bikehorn/airhorn/Initialize()
-	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
+	honksounds = list('sound/items/airhorn2.ogg' = 1)
 
 //golden bikehorn
 /obj/item/bikehorn/golden
@@ -163,9 +162,22 @@
 		M.emote("flip")
 	flip_cooldown = world.time + 7
 
+/obj/item/bikehorn/silver
+	name = "silver bike horn"
+	desc = "A shiny bike horn handcrafted in the artisan workshops of Mars, with superior kevlar-reinforced rubber bulb attached to a polished plasteel reed horn."
+	attack_verb = list("elegantly HONKED")
+	icon_state = "silverhorn"
+
+/obj/item/bikehorn/bluespacehonker
+	name = "bluespace bike horn"
+	desc = "A normal bike horn colored blue and has bluespace dust held in to reed horn allowing for silly honks through space and time, into your in childhood."
+	attack_verb = list("HONKED in bluespace", "HONKED", "quantumly HONKED")
+	icon_state = "bluespacehonker"
+	moodlet = "bshonk"
+
 //canned laughter
 /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter
 	name = "Canned Laughter"
 	desc = "Just looking at this makes you want to giggle."
 	icon_state = "laughter"
-	list_reagents = list("laughter" = 50)
+	list_reagents = list(/datum/reagent/consumable/laughter = 50)

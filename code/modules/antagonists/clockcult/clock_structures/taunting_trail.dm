@@ -43,17 +43,17 @@
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/CollidedWith(atom/movable/AM)
+/obj/structure/destructible/clockwork/taunting_trail/Bumped(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/Collide(atom/movable/AM)
+/obj/structure/destructible/clockwork/taunting_trail/Bump(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
 /obj/structure/destructible/clockwork/taunting_trail/proc/affect_mob(mob/living/L)
 	if(istype(L) && !is_servant_of_ratvar(L))
-		if(!L.anti_magic_check())
+		if(!L.anti_magic_check(chargecost = 0))
 			L.confused = min(L.confused + 15, 50)
 			L.dizziness = min(L.dizziness + 15, 50)
 			if(L.confused >= 25)

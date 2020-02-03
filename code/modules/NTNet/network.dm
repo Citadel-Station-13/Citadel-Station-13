@@ -102,20 +102,20 @@
 		return FALSE
 	data.network_id = src
 	log_data_transfer(data)
-	var/list/datum/component/ntnet_interface/recieving = list()
+	var/list/datum/component/ntnet_interface/receiving = list()
 	if((length(data.recipient_ids == 1) && data.recipient_ids[1] == NETWORK_BROADCAST_ID) || data.recipient_ids == NETWORK_BROADCAST_ID)
 		data.broadcast = TRUE
 		for(var/i in connected_interfaces_by_id)
-			recieving |= connected_interfaces_by_id[i]
+			receiving |= connected_interfaces_by_id[i]
 	else
 		for(var/i in data.recipient_ids)
-			var/datum/component/ntnet_interface/reciever = find_interface_id(i)
-			recieving |= reciever
+			var/datum/component/ntnet_interface/receiver = find_interface_id(i)
+			receiving |= receiver
 
-	for(var/i in recieving)
-		var/datum/component/ntnet_interface/reciever = i
-		if(reciever)
-			reciever.__network_recieve(data)
+	for(var/i in receiving)
+		var/datum/component/ntnet_interface/receiver = i
+		if(receiver)
+			receiver.__network_receive(data)
 
 	for(var/i in services_by_id)
 		var/datum/ntnet_service/serv = services_by_id[i]
@@ -133,14 +133,14 @@
 	return FALSE
 
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)
-	logs += "[station_time_timestamp()] - [data.generate_netlog()]"
+	logs += "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)] - [data.generate_netlog()]"
 	if(logs.len > setting_maxlogcount)
 		logs = logs.Copy(logs.len - setting_maxlogcount, 0)
 	return
 
 // Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
 /datum/ntnet/proc/add_log(log_string, obj/item/computer_hardware/network_card/source = null)
-	var/log_text = "[station_time_timestamp()] - "
+	var/log_text = "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)] - "
 	if(source)
 		log_text += "[source.get_network_tag()] - "
 	else
@@ -202,6 +202,11 @@
 		if(filename == P.filename)
 			return P
 
+/datum/ntnet/proc/get_chat_channel_by_id(id)
+	for(var/datum/ntnet_conversation/chan in chat_channels)
+		if(chan.id == id)
+			return chan
+			
 // Resets the IDS alarm
 /datum/ntnet/proc/resetIDS()
 	intrusion_detection_alarm = FALSE
