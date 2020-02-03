@@ -1028,7 +1028,7 @@
 	desc = "A large quarterstaff, with massive silver electrodes mounted at the end."
 	force = 10
 	damtype = BRUTE
-	w_class = WEIGHT_CLASS_GIGANTIC
+	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK
 	sharpness = FALSE
 	force_unwielded = 5
@@ -1036,7 +1036,7 @@
 	throwforce = 1
 	throw_speed = 1
 	block_chance = 50
-	materials = list(MAT_METAL=1000)
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 2000)
 	hitsound = 'sound/weapons/staff.ogg'
 	attack_verb = list("suppresed", "struck", "beaten", "thwacked", "pulped", "shocked")
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors.
