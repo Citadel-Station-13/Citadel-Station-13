@@ -300,7 +300,7 @@
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/H = cultist
 		H.eye_color = "f00"
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.dna?.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		ADD_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.update_body()
 
