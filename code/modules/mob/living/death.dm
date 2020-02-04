@@ -61,7 +61,7 @@
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
-	tod = STATION_TIME_TIMESTAMP("hh:mm:ss")
+	tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
 	if(mind)

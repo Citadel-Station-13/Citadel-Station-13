@@ -27,13 +27,14 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/zombie_infection/Remove(special = FALSE)
+	if(owner)
+		if(iszombie(owner) && old_species)
+			owner.set_species(old_species)
+		if(timer_id)
+			deltimer(timer_id)
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
-	if(iszombie(M) && old_species)
-		M.set_species(old_species)
-	if(timer_id)
-		deltimer(timer_id)
+	STOP_PROCESSING(SSobj, src) //Required to be done after the parent call to avoid conflicts with organ decay.
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \
@@ -44,7 +45,7 @@
 	if(!owner)
 		return
 	if(!(src in owner.internal_organs))
-		Remove(owner)
+		Remove()
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
 		owner.adjustToxLoss(1)
 		if (prob(10))

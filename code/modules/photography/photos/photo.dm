@@ -55,9 +55,8 @@
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
 			return
-		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
-		txt = copytext(txt, 1, 128)
-		if(user.canUseTopic(src, BE_CLOSE))
+		var/txt = stripped_input(user, "What would you like to write on the back?", "Photo Writing", "", 128)
+		if(txt && user.canUseTopic(src, BE_CLOSE))
 			scribble = txt
 	..()
 
@@ -85,10 +84,8 @@
 	set category = "Object"
 	set src in usr
 
-	var/mob/living/L = usr
-	if(!istype(L))
-		return
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
-	if(L.CanReach(src) && CHECK_MOBILITY(L, MOBILITY_USE))
+	var/n_name = stripped_input(usr, "What would you like to label the photo?", "Photo Labelling", "", MAX_NAME_LEN)
+	//loc.loc check is for making possible renaming photos in clipboards
+	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && usr.canmove && !usr.restrained())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
-		add_fingerprint(usr)
+	add_fingerprint(usr)

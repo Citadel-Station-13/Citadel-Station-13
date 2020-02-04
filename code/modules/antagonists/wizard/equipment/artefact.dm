@@ -246,7 +246,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
-	var/list/mob/living/carbon/human/possible = list()
+	var/list/mob/living/carbon/human/possible
 	var/obj/item/voodoo_link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
@@ -284,7 +284,7 @@
 		user.unset_machine()
 
 /obj/item/voodoo/attack_self(mob/user)
-	if(!target && possible.len)
+	if(!target && length(possible))
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
 
@@ -324,12 +324,12 @@
 		cooldown = world.time + cooldown_time
 
 /obj/item/voodoo/proc/update_targets()
-	LAZYINITLIST(possible)
+	possible = null
 	if(!voodoo_link)
 		return
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(md5(H.dna.uni_identity) in voodoo_link.fingerprints)
-			possible |= H
+			LAZYOR(possible, H)
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
 	if(prob(50) || force)

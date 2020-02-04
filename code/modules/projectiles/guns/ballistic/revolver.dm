@@ -96,15 +96,20 @@
 						"Gold Trim" = "detective_gold",
 						"The Peacemaker" = "detective_peacemaker"
 						)
+	var/list/safe_calibers
+
+/obj/item/gun/ballistic/revolver/detective/Initialize()
+	. = ..()
+	safe_calibers = magazine.caliber
 
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine.caliber != initial(magazine.caliber))
+	if(chambered && !(chambered.caliber in safe_calibers))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
 			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
 			user.take_bodypart_damage(0,20)
 			user.dropItemToGround(src)
-			return 0
+			return FALSE
 	..()
 
 /obj/item/gun/ballistic/revolver/detective/screwdriver_act(mob/living/user, obj/item/I)

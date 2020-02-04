@@ -39,12 +39,12 @@
 	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets["[ckey(name)].css"] = file
-	register_asset("[ckey(name)].css", file)
-
-/datum/browser/proc/add_script(name, file)
-	scripts["[ckey(name)].js"] = file
-	register_asset("[ckey(name)].js", file)
+	if(istype(name, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/sheet = name
+		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
+	else
+		stylesheets["[ckey(name)].css"] = file
+		register_asset("[ckey(name)].css", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent

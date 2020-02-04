@@ -61,7 +61,7 @@
 	var/mob/living/carbon/C = usr
 	if(usr.stat || usr.restrained() || C.back == src)
 		return
-	
+
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=radio")
 		onclose(usr, "radio")
@@ -127,7 +127,7 @@
 /obj/item/electropack/ui_interact(mob/user)
 	if(!ishuman(user))
 		return
-	
+
 	user.set_machine(src)
 	var/dat = {"
 <TT>
@@ -200,14 +200,14 @@ Code:
 
 /obj/item/electropack/shockcollar/attackby(obj/item/W, mob/user, params) //moves it here because on_click is being bad
 	if(istype(W, /obj/item/pen))
-		var/t = input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot") as null|text
+		var/t = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot", MAX_NAME_LEN)
 		if(t)
-			tagname = copytext(sanitize(t), 1, MAX_NAME_LEN)
-			name = "[initial(name)] - [tagname]"
+			tagname = t
+			name = "[initial(name)] - [t]"
 	else
 		return ..()
 
-/obj/item/electropack/shockcollar/ui_interact(mob/user) //on_click calls this 
+/obj/item/electropack/shockcollar/ui_interact(mob/user) //on_click calls this
 	var/dat = {"
 <TT>
 <B>Frequency/Code</B> for shock collar:<BR>

@@ -211,10 +211,10 @@
 
 /mob/living/verb/toggle_hypno()
 	set category = "IC"
-	set name = "Toggle Lewd MKUltra"
-	set desc = "Allows you to toggle if you'd like lewd flavour messages for MKUltra."
+	set name = "Toggle Lewd Hypno"
+	set desc = "Allows you to toggle if you'd like lewd flavour messages for hypno features, such as MKUltra."
 	client.prefs.cit_toggles ^= HYPNO
-	to_chat(usr, "You [((client.prefs.cit_toggles & HYPNO) ?"will":"no longer")] receive lewd flavour messages for MKUltra.")
+	to_chat(usr, "You [((client.prefs.cit_toggles & HYPNO) ?"will":"no longer")] receive lewd flavour messages for hypno.")
 
 /datum/status_effect/chem/enthrall
 	id = "enthrall"

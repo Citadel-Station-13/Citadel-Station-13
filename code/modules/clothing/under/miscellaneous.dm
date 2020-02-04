@@ -131,6 +131,9 @@
 	item_color = "officer"
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/centcom_officer/syndicate
+	has_sensor = NO_SENSORS
+
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
 	name = "\improper CentCom officer's jumpsuit"
@@ -1001,3 +1004,88 @@
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
 	mutantrace_variation = NONE
+
+/obj/item/clothing/under/squatter_outfit
+	name = "slav squatter tracksuit"
+	desc = "Cyka blyat."
+	icon_state = "squatteroutfit"
+	item_state = "squatteroutfit"
+	item_color = "squatteroutfit"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/russobluecamooutfit
+	name = "russian blue camo"
+	desc = "Drop and give me dvadtsat!"
+	icon_state = "russobluecamo"
+	item_state = "russobluecamo"
+	item_color = "russobluecamo"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/keyholesweater
+	name = "keyhole sweater"
+	desc = "What is the point of this, anyway?"
+	icon_state = "keyholesweater"
+	item_state = "keyholesweater"
+	item_color = "keyholesweater"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/stripper_pink
+	name = "pink stripper outfit"
+	icon_state = "stripper_p"
+	item_state = "stripper_p"
+	item_color = "stripper_p"
+
+/obj/item/clothing/under/stripper_green
+	name = "green stripper outfit"
+	icon_state = "stripper_g"
+	item_state = "stripper_g"
+	item_color = "stripper_g"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/mankini
+	name = "pink mankini"
+	icon_state = "mankini"
+	item_state = "mankini"
+	item_color = "mankini"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/wedding
+	name = "white wedding dress"
+	desc = "A white wedding gown made from the finest silk."
+	icon_state = "bride_white"
+	item_state = "bride_white"
+	item_color = "bride_white"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/wedding/orange
+	name = "orange wedding dress"
+	desc = "A big and puffy orange dress."
+	icon_state = "bride_orange"
+	item_state = "bride_orange"
+	item_color = "bride_orange"
+
+/obj/item/clothing/under/wedding/purple
+	name = "purple wedding dress"
+	desc = "A big and puffy purple dress."
+	icon_state = "bride_purple"
+	item_state = "bride_purple"
+	item_color = "bride_purple"
+
+/obj/item/clothing/under/wedding/blue
+	name = "blue wedding dress"
+	desc = "A big and puffy blue dress."
+	icon_state = "bride_blue"
+	item_state = "bride_blue"
+	item_color = "bride_blue"
+
+/obj/item/clothing/under/wedding/red
+	name = "red wedding dress"
+	desc = "A big and puffy red dress."
+	icon_state = "bride_red"
+	item_state = "bride_red"
+	item_color = "bride_red"
