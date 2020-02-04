@@ -43,12 +43,6 @@
 	set_light(0)
 	icon_state = "[chassis]"
 	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
-	if(possible_chassis[chassis])
-		var/datum/element/mob_holder/ele = SSpai.mob_holders_by_chassis[chassis]
-		if(ele)
-			current_mob_holder = ele.Attach(src)
-		else
-			current_mob_holder = SSpai.mob_holders_by_chassis[chassis] = AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', TRUE)
 	holoform = TRUE
 
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
@@ -104,6 +98,11 @@
 			dynamic_chassis = choice
 	resist_a_rest(FALSE, TRUE)
 	update_icon()
+	if(possible_chassis[chassis])
+		current_mob_holder = AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', SLOT_HEAD)
+	else
+		current_mob_holder?.Detach(src)
+		return
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
 /mob/living/silicon/pai/lay_down()

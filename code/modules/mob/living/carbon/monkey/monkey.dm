@@ -43,7 +43,7 @@
 
 /mob/living/carbon/monkey/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/mob_holder, "monkey", null, null, null, TRUE)
+	AddElement(/datum/element/mob_holder, "monkey", null, null, null, SLOT_HEAD)
 
 
 /mob/living/carbon/monkey/Destroy()

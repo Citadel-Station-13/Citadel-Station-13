@@ -5,10 +5,10 @@
 	var/alt_worn
 	var/right_hand
 	var/left_hand
-	var/can_head
+	var/inv_slots
 	var/proctype //if present, will be invoked on headwear generation.
 
-/datum/element/mob_holder/Attach(datum/target, _worn_state, _alt_worn, _right_hand, _left_hand, _can_head = FALSE, _proctype)
+/datum/element/mob_holder/Attach(datum/target, _worn_state, _alt_worn, _right_hand, _left_hand, _inv_slots = NONE, _proctype)
 	. = ..()
 
 	if(!isliving(target))
@@ -18,7 +18,7 @@
 	alt_worn = _alt_worn
 	right_hand = _right_hand
 	left_hand = _left_hand
-	can_head = _can_head
+	inv_slots = _inv_slots
 	proctype = _proctype
 
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup)
@@ -54,7 +54,7 @@
 					"<span class='userdanger'>[user] picks you up!</span>")
 	to_chat(user, "<span class='notice'>You pick [src] up.</span>")
 	source.drop_all_held_items()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(source), source, worn_state, alt_worn, right_hand, left_hand, can_head)
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(source), source, worn_state, alt_worn, right_hand, left_hand, inv_slots)
 	if(proctype)
 		INVOKE_ASYNC(src, proctype, source, holder, user)
 	user.put_in_hands(holder)
@@ -78,7 +78,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/mob/living/held_mob
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, can_head = FALSE)
+/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE)
 	. = ..()
 
 	if(target)
@@ -93,8 +93,7 @@
 		lefthand_file = left_hand
 	if(right_hand)
 		righthand_file = right_hand
-	if(!can_head)
-		slot_flags &= ~SLOT_HEAD
+		slot_flags = slots
 
 /obj/item/clothing/head/mob_holder/proc/assimilate(mob/living/target)
 	target.setDir(SOUTH)
