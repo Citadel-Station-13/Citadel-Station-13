@@ -111,6 +111,8 @@
 		return
 	if(QDELING(src) || (ranged && !target))
 		return
+	if(ranged && bartender_check(target))
+		return
 	var/obj/item/broken_bottle/B = new (loc)
 	B.icon_state = icon_state
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
