@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(pai)
 	var/ghost_spam = FALSE
 	var/spam_delay = 100
 	var/list/pai_card_list = list()
+	var/list/mob_holders_by_chassis = list()
 
 /datum/controller/subsystem/pai/Topic(href, href_list)
 	if(href_list["download"])

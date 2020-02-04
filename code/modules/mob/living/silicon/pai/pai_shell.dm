@@ -43,6 +43,12 @@
 	set_light(0)
 	icon_state = "[chassis]"
 	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
+	if(possible_chassis[chassis])
+		var/datum/element/mob_holder/ele = SSpai.mob_holders_by_chassis[chassis]
+		if(ele)
+			current_mob_holder = ele.Attach(src)
+		else
+			current_mob_holder = SSpai.mob_holders_by_chassis[chassis] = AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', TRUE)
 	holoform = TRUE
 
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
@@ -69,6 +75,8 @@
 	holoform = FALSE
 	if(resting)
 		lay_down()
+	current_mob_holder?.Detach(src)
+	current_mob_holder = null
 
 /mob/living/silicon/pai/proc/choose_chassis()
 	if(!isturf(loc) && loc != card)
@@ -116,19 +124,6 @@
 	else
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
-
-/mob/living/silicon/pai/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, chassis, item_head_icon, item_lh_icon, item_rh_icon)
-	if(!L.put_in_hands(holder))
-		qdel(holder)
-	else
-		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
-
-/mob/living/silicon/pai/mob_try_pickup(mob/living/user)
-	if(!possible_chassis[chassis])
-		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
-		return FALSE
-	return ..()
 
 /mob/living/silicon/pai/verb/toggle_chassis_sit()
 	set name = "Toggle Chassis Sit"
