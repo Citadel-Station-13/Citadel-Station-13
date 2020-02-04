@@ -29,6 +29,7 @@ import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
+import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
@@ -377,6 +378,10 @@ const ROUTES = {
   portable_generator: {
     component: () => PortableGenerator,
     scrollable: false,
+  },
+  personal_crafting: {
+    component: () => PersonalCrafting,
+    scrollable: true,
   },
   portable_pump: {
     component: () => PortablePump,
