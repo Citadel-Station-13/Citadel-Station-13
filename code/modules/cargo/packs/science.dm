@@ -23,8 +23,9 @@
 /datum/supply_pack/science/aliens
 	name = "Advanced Alien Alloy Crate Crate"
 	desc = "Hello brothers from the stars!!! Our fellow brethren have made contact at long last and gave us gifts man! They really did build the prymi- Connection Error- Bro we’ll send you a sheet of advanced alien alloy."
-	cost = 150000
+	cost = 15000
 	DropPodOnly = TRUE
+	contraband = TRUE
 	contains = list(/obj/item/stack/sheet/mineral/abductor)
 	crate_name = "alien bro alloy crate"
 
