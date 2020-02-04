@@ -764,11 +764,3 @@
 		if(istype(A, action_type))
 			return A
 	return
-
-/proc/find_active_innate_action(mob/M, var/action_type)
-	var/datum/action/innate/A = get_action_of_type(M, action_type)
-	if(!istype(A))
-		return FALSE
-	if(A.active)
-		return TRUE
-	return FALSE

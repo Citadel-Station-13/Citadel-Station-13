@@ -111,7 +111,7 @@
 		return
 	if(QDELING(src) || (ranged && !target))
 		return
-	if(ranged && bartender_check(target))
+	if(bartender_check(target) && ranged)
 		return
 	var/obj/item/broken_bottle/B = new (loc)
 	B.icon_state = icon_state
@@ -127,13 +127,13 @@
 		B.pixel_x = rand(-12, 12)
 		B.pixel_y = rand(-12, 12)
 	if(isGlass)
+		playsound(src, "shatter", 70, 1)
 		if(prob(33))
 			new/obj/item/shard(drop_location())
 	else
 		B.force = 0
 		B.throwforce = 0
 		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	playsound(src, "shatter", 70, 1)
 	transfer_fingerprints_to(B)
 	qdel(src)
 

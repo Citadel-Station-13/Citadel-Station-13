@@ -107,8 +107,9 @@
 	var/turf/T = get_turf(src)
 	if(!T || target.CanPass(src, T) || !thrownby || !thrownby.actions)
 		return
-	if(find_active_innate_action(thrownby, /datum/action/innate/drink_fling))
-		return TRUE
+	for(var/datum/action/innate/drink_fling/D in thrownby.actions)
+		if(D.active)
+			return TRUE
 
 /obj/item/reagent_containers/proc/ForceResetRotation()
 	transform = initial(transform)
@@ -130,7 +131,7 @@
 		if(thrownby)
 			log_combat(thrownby, M, "splashed", R)
 		reagents.reaction(target, TOUCH)
-
+		
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		transform = initial(transform)
