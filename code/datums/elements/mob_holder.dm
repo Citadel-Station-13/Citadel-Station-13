@@ -78,7 +78,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/mob/living/held_mob
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE)
+/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, slots = NONE)
 	. = ..()
 
 	if(target)
