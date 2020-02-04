@@ -17,8 +17,8 @@
 	emote_taunt = list("gnashes")
 	taunt_chance = 30
 	speed = 0
-	maxHealth = 25
-	health = 25
+	maxHealth = 35
+	health = 35
 	spacewalk = TRUE
 
 	harm_intent_damage = 8
@@ -59,8 +59,8 @@
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
-	maxHealth = 20
-	health = 20
+	maxHealth = 30
+	health = 30
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 
@@ -73,9 +73,9 @@
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize()
 	. = ..()
 	name = "[pick(GLOB.megacarp_first_names)] [pick(GLOB.megacarp_last_names)]"
-	melee_damage_lower += rand(2, 10)
+	melee_damage_lower += rand(4, 10)
 	melee_damage_upper += rand(10,20)
-	maxHealth += rand(30,60)
+	maxHealth += rand(40,60)
 	move_to_delay = rand(3,7)
 
 /mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -103,5 +103,15 @@
 	obj_damage = 70
 	melee_damage_lower = 15
 	melee_damage_upper = 18
+
+/mob/living/simple_animal/hostile/carp/cayenne/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(.)
+		regen_cooldown = world.time + REGENERATION_DELAY
+
+/mob/living/simple_animal/hostile/carp/cayenne/Life()
+	. = ..()
+	if(regen_cooldown < world.time)
+		heal_overall_damage(8)
 
 #undef REGENERATION_DELAY
