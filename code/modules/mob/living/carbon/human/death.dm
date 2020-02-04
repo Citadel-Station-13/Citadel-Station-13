@@ -6,8 +6,8 @@
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts, atom/loc_override)
 	var/location = loc_override ? loc_override.drop_location() : drop_location()
-	var/blood_dna = get_blood_dna_list()
 	if(dna?.species?.gib_types)
+		var/blood_dna = get_blood_dna_list()
 		var/datum/species/S = dna.species
 		var/length = length(S.gib_types)
 		if(length)
