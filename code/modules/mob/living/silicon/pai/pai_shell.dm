@@ -69,8 +69,6 @@
 	holoform = FALSE
 	if(resting)
 		lay_down()
-	current_mob_holder?.Detach(src)
-	current_mob_holder = null
 
 /mob/living/silicon/pai/proc/choose_chassis()
 	if(!isturf(loc) && loc != card)
@@ -102,6 +100,7 @@
 		current_mob_holder = AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', SLOT_HEAD)
 	else
 		current_mob_holder?.Detach(src)
+		current_mob_holder = null
 		return
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
