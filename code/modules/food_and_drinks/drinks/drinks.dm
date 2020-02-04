@@ -351,26 +351,6 @@
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
-	var/obj/item/broken_bottle/B = new (loc)
-	B.icon_state = icon_state
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
-	B.name = "broken [name]"
-	B.force = 0
-	B.throwforce = 0
-	B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	if(ranged)
-		var/matrix/M = matrix(B.transform)
-		M.Turn(rand(-170, 170))
-		B.transform = M
-		B.pixel_x = rand(-12, 12)
-		B.pixel_y = rand(-12, 12)
-	transfer_fingerprints_to(B)
-	qdel(src)
-
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(changetype)
 	if (reagents.reagent_list.len)
 		switch(reagents.get_master_reagent_id())
