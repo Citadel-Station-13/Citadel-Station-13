@@ -140,19 +140,17 @@
 /obj/item/reagent_containers/food/drinks/MouseDrop(atom/over, atom/src_location, atom/over_location, src_control, over_control, params)
 	var/mob/user = usr
 	. = ..()
-	if (!istype(src_location))
+	if (!istype(src_location) || !istype(over_location))
 		return
 	if (!user || user.incapacitated() || !user.Adjacent(src))
 		return
 	// Attempted drink sliding
-	if (!locate(/obj/structure/table) in src_location)
+	if (!(locate(/obj/structure/table) in src_location) || !(locate(/obj/structure/table) in over_location))
 		return
 	//Are we an expert slider?
 	var/datum/action/innate/D = get_action_of_type(user, /datum/action/innate/drink_fling)
 	if(!D?.active)
-		if (!(locate(/obj/structure/table) in over_location))
-			return
-		if (!user.Adjacent(src) || !src_location.Adjacent(over_location)) // Regular users can only do short slides.
+		if (!src_location.Adjacent(over_location)) // Regular users can only do short slides.
 			return
 		if (prob(10))
 			user.visible_message("<span class='warning'>\The [user] tries to slide \the [src] down the table, but fails miserably.</span>", "<span class='warning'>You <b>fail</b> to slide \the [src] down the table!</span>")
