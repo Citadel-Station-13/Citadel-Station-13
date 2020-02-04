@@ -16,9 +16,8 @@
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
-		/obj/item/gun/ballistic/automatic/magrifle_e,
-		/obj/item/gun/ballistic/automatic/pistol/mag_e,
-		/obj/item/twohanded/electrostaff))
+		/obj/item/twohanded/electrostaff,
+		/obj/item/gun/ballistic/automatic/magrifle))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)

@@ -643,11 +643,11 @@
 			Bump(original)
 
 /obj/item/projectile/Destroy()
+	STOP_PROCESSING(SSprojectiles, src)
 	if(hitscan)
 		finalize_hitscan_and_generate_tracers()
-	STOP_PROCESSING(SSprojectiles, src)
 	cleanup_beam_segments()
-	qdel(trajectory)
+	QDEL_NULL(trajectory)
 	return ..()
 
 /obj/item/projectile/proc/cleanup_beam_segments()

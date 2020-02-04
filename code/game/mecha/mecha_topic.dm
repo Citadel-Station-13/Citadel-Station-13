@@ -294,11 +294,11 @@
 		onclose(occupant, "exosuit_log")
 
 	if (href_list["change_name"])
-		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
-		if(newname && trim(newname))
-			name = newname
-		else
-			alert(occupant, "nope.avi")
+		var/userinput = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
+		if(!userinput || usr != occupant || usr.incapacitated())
+			return
+		name = userinput
+		return
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access

@@ -10,7 +10,7 @@
 	if(clear_conversion == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
 			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
-			if(R.purity == 1)
+			if(!R || R.purity == 1)
 				continue
 
 			var/cached_volume = R.volume
@@ -25,7 +25,6 @@
 				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
 				R.cached_purity = R.purity
 				R.purity = 1
-	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.
 /datum/chemical_reaction/proc/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
