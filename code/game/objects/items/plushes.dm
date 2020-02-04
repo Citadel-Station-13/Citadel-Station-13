@@ -593,6 +593,11 @@
 	icon_state = "lyssa"
 	item_state = "lyssa"
 
+/obj/item/toy/plush/lizardplushie/katra
+	icon_state = "katra"
+	item_state = "katra"
+	attack_verb = list("bullied", "hissed", "clawed")
+
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
