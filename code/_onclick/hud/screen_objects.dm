@@ -291,6 +291,9 @@
 		icon_state = "internal0"
 	else
 		if(!C.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+			if(HAS_TRAIT(C, TRAIT_NO_INTERNALS))
+				to_chat(C, "<span class='warning'>Due to cumbersome equipment or anatomy, you are currently unable to use internals!</span>")
+				return
 			var/obj/item/clothing/check
 			var/internals = FALSE
 

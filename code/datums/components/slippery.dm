@@ -9,8 +9,7 @@
 	callback = _callback
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), .proc/Slip)
 
-/datum/component/slippery/proc/Slip(datum/source, atom/movable/AM, extra_flags = NONE)
+/datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
 	var/mob/victim = AM
-	var/lube = lube_flags | extra_flags
-	if(istype(victim) && victim.slip(intensity, parent, lube) && callback)
+	if(istype(victim) && victim.slip(intensity, parent, lube_flags) && callback)
 		callback.Invoke(victim)
