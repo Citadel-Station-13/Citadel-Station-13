@@ -146,50 +146,50 @@
 	// Attempted drink sliding
 	if (locate(/obj/structure/table) in src_location)
 		//Are we an expert slider?
-		var/datum/action/innate/A = get_action_of_type(user, /datum/action/innate/drink_fling)
-		if(A?.active)
-			if (!user.Adjacent(src))
+		for(var/datum/action/innate/drink_fling/D in user.actions)
+			if(D.active)
+				if (!user.Adjacent(src))
+					return
+				var/distance = MANHATTAN_DISTANCE(over_location, src)
+				if (distance >= 8 || distance == 0) // More than a full screen to go, or trying to slide to the same tile
+					return ..()
+
+				// Geometrically checking if we're on a straight line.
+				var/vector/V = atoms2vector(src, over_location)
+				var/vector/V_norm = V.duplicate()
+				V_norm.normalize()
+				if (!V_norm.is_integer())
+					return ..() // Only a cardinal vector (north, south, east, west) can pass this test
+
+				// Checks if there's tables on the path.
+				var/turf/dest = get_translated_turf(V)
+				var/turf/temp_turf = src_location
+
+				do
+					temp_turf = temp_turf.get_translated_turf(V_norm)
+					if (!locate(/obj/structure/table) in temp_turf)
+						var/vector/V2 = atoms2vector(src, temp_turf)
+						vector_translate(V2, 0.1 SECONDS)
+						user.visible_message("<span class='warning'>\The [user] slides \the [src] down the table... and straight into the ground!</span>", "<span class='warning'>You slide \the [src] down the table, and straight into the ground!</span>")
+						smash(over_location, user, FALSE)
+						return
+				while (temp_turf != dest)
+
+				vector_translate(V, 0.1 SECONDS)
+				user.visible_message("<span class='notice'>\The [user] expertly slides \the [src] down the table.</span>", "<span class='notice'>You slide \the [src] down the table. What a pro.</span>")
 				return
-			var/distance = MANHATTAN_DISTANCE(over_location, src)
-			if (distance >= 8 || distance == 0) // More than a full screen to go, or trying to slide to the same tile
-				return ..()
-
-			// Geometrically checking if we're on a straight line.
-			var/vector/V = atoms2vector(src, over_location)
-			var/vector/V_norm = V.duplicate()
-			V_norm.normalize()
-			if (!V_norm.is_integer())
-				return ..() // Only a cardinal vector (north, south, east, west) can pass this test
-
-			// Checks if there's tables on the path.
-			var/turf/dest = get_translated_turf(V)
-			var/turf/temp_turf = src_location
-
-			do
-				temp_turf = temp_turf.get_translated_turf(V_norm)
-				if (!locate(/obj/structure/table) in temp_turf)
-					var/vector/V2 = atoms2vector(src, temp_turf)
-					vector_translate(V2, 0.1 SECONDS)
-					user.visible_message("<span class='warning'>\The [user] slides \the [src] down the table... and straight into the ground!</span>", "<span class='warning'>You slide \the [src] down the table, and straight into the ground!</span>")
+			else
+				if (!(locate(/obj/structure/table) in over_location))
+					return ..()
+				if (!user.Adjacent(src) || !src_location.Adjacent(over_location)) // Regular users can only do short slides.
+					return ..()
+				if (prob(10))
+					user.visible_message("<span class='warning'>\The [user] tries to slide \the [src] down the table, but fails miserably.</span>", "<span class='warning'>You <b>fail</b> to slide \the [src] down the table!</span>")
 					smash(over_location, user, FALSE)
 					return
-			while (temp_turf != dest)
-
-			vector_translate(V, 0.1 SECONDS)
-			user.visible_message("<span class='notice'>\The [user] expertly slides \the [src] down the table.</span>", "<span class='notice'>You slide \the [src] down the table. What a pro.</span>")
-			return
-		else
-			if (!(locate(/obj/structure/table) in over_location))
-				return ..()
-			if (!user.Adjacent(src) || !src_location.Adjacent(over_location)) // Regular users can only do short slides.
-				return ..()
-			if (prob(10))
-				user.visible_message("<span class='warning'>\The [user] tries to slide \the [src] down the table, but fails miserably.</span>", "<span class='warning'>You <b>fail</b> to slide \the [src] down the table!</span>")
-				smash(over_location, user, FALSE)
+				user.visible_message("<span class='notice'>\The [user] slides \the [src] down the table.</span>", "<span class='notice'>You slide \the [src] down the table!</span>")
+				forceMove(over_location)
 				return
-			user.visible_message("<span class='notice'>\The [user] slides \the [src] down the table.</span>", "<span class='notice'>You slide \the [src] down the table!</span>")
-			forceMove(over_location)
-			return
 	return ..()
 
 
