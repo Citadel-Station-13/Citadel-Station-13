@@ -21,6 +21,8 @@
 	health = 35
 	spacewalk = TRUE
 
+	var/regen_cooldown = 0 //Used for Mega carp and Cayenne
+
 	harm_intent_damage = 8
 	obj_damage = 50
 	melee_damage_lower = 15
@@ -67,8 +69,6 @@
 	obj_damage = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-
-	var/regen_cooldown = 0
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize()
 	. = ..()
