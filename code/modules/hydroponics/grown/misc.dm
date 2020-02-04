@@ -82,7 +82,7 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/silibinin = 0.1)
 
-/obj/item/seeds/galaxythistle/Initialize()
+/obj/item/seeds/galaxythistle/Initialize(mapload, nogenes = FALSE)
 	. = ..()
 	if(!nogenes)
 		unset_mutability(/datum/plant_gene/trait/invasive, PLANT_GENE_REMOVABLE)
