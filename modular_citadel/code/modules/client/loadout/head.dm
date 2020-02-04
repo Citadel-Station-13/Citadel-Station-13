@@ -59,6 +59,11 @@
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/rabbitears
 
+/datum/gear/mailmanhat
+	name = "Mailman's Hat"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/mailman
+
 //trek fancy Hats!
 /datum/gear/trekcap
 	name = "Federation Officer's Cap (White)"
@@ -105,6 +110,7 @@
 	path = /obj/item/clothing/head/christmashatg
 */
 
+//Cowboy Stuff
 /datum/gear/cowboyhat
 	name = "Cowboy Hat, Brown"
 	category = SLOT_HEAD

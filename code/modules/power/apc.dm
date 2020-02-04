@@ -56,6 +56,8 @@
 	integrity_failure = 50
 	var/damage_deflection = 10
 	resistance_flags = FIRE_PROOF
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 100, "bomb" = 30, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 
 	var/lon_range = 1.5
@@ -148,24 +150,47 @@
 	if(terminal)
 		terminal.connect_to_network()
 
-/obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
-	if (!req_access)
-		req_access = list(ACCESS_ENGINE_EQUIP)
-	if (!armor)
-		armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 100, "bomb" = 30, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
-	..()
+/obj/machinery/power/apc/Initialize(mapload, ndir, building = FALSE)
+	. = ..()
+	tdir = ndir || dir
+	var/area/A = get_base_area(src)
+	if(!building)
+		has_electronics = APC_ELECTRONICS_SECURED
+		// is starting with a power cell installed, create it and set its charge level
+		if(cell_type)
+			cell = new cell_type
+			cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
+
+		//if area isn't specified use current
+		if(areastring)
+			area = get_area_instance_from_text(areastring)
+			if(!area)
+				area = A
+				stack_trace("Bad areastring path for [src], [src.areastring]")
+		else if(isarea(A) && !areastring)
+			area = A
+		if(auto_name)
+			name = "\improper [A.name] APC"
+		update_icon()
+
+		make_terminal()
+		update_nightshift_auth_requirement()
+
+	else
+		area = A
+		opened = APC_COVER_OPENED
+		operating = FALSE
+		name = "\improper [A.name] APC"
+		stat |= MAINT
+		update_icon()
+	addtimer(CALLBACK(src, .proc/update), 5)
+
 	GLOB.apcs_list += src
 
 	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
-	if (building)
-		setDir(ndir)
-	src.tdir = dir		// to fix Vars bug
 	setDir(SOUTH)
-
-	if(auto_name)
-		name = "\improper [get_area(src)] APC"
 
 	switch(tdir)
 		if(NORTH)
@@ -176,14 +201,6 @@
 			pixel_x = 24
 		if(WEST)
 			pixel_x = -25
-	if (building)
-		area = get_area(src)
-		opened = APC_COVER_OPENED
-		operating = FALSE
-		name = "[area.name] APC"
-		stat |= MAINT
-		src.update_icon()
-		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
@@ -216,33 +233,6 @@
 	terminal = new/obj/machinery/power/terminal(src.loc)
 	terminal.setDir(tdir)
 	terminal.master = src
-
-/obj/machinery/power/apc/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		return
-	has_electronics = APC_ELECTRONICS_SECURED
-	// is starting with a power cell installed, create it and set its charge level
-	if(cell_type)
-		cell = new cell_type
-		cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
-
-	var/area/A = src.loc.loc
-
-	//if area isn't specified use current
-	if(areastring)
-		src.area = get_area_instance_from_text(areastring)
-		if(!src.area)
-			src.area = A
-			stack_trace("Bad areastring path for [src], [src.areastring]")
-	else if(isarea(A) && src.areastring == null)
-		src.area = A
-	update_icon()
-
-	make_terminal()
-	update_nightshift_auth_requirement()
-
-	addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -848,7 +838,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
+		ui = new(user, src, ui_key, "apc", name, 450, 460, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
@@ -858,7 +848,7 @@
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
-		"powerCellStatus" = cell ? cell.percent() : null,
+		"powerCellStatus" = (cell?.percent() || null),
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
 		"totalLoad" = DisplayPower(lastused_total),
@@ -1432,7 +1422,7 @@
 			return
 	for(var/A in GLOB.ai_list)
 		var/mob/living/silicon/ai/I = A
-		if(get_area(I) == area)
+		if(get_base_area(I) == area)
 			return
 
 	failure_timer = max(failure_timer, round(duration))

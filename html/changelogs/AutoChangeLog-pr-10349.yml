@@ -1,6 +1,0 @@
-author: "KathrinBailey"
-delete-after: True
-changes: 
-  - rscadd: "Empty engineering lockers for mappers."
-  - rscadd: "Industrial welding tools to the engineer welding locker."
-  - rscdel: "Removed the multitool, airlock painter, mechanical toolbox, brown sneakers, hazard vest and airlock painter from the CE's locker."

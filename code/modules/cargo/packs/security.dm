@@ -163,13 +163,6 @@
 					/obj/item/storage/box/handcuffs)
 	crate_name = "security supply crate"
 
-/datum/supply_pack/security/vending/security
-	name = "SecTech Supply Crate"
-	desc = "Officer Paul bought all the donuts? Then refill the security vendor with ths crate."
-	cost = 1500
-	contains = list(/obj/machinery/vending/security)
-	crate_name = "SecTech supply crate"
-
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
 	desc = "Upgrade your arsenal with 10 standard firing pins. Requires Security access to open."

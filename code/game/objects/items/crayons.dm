@@ -407,7 +407,7 @@
 		to_chat(user, "<span class='notice'>You spray a [temp] on \the [target.name]</span>")
 
 	if(length(text_buffer) > 1)
-		text_buffer = copytext(text_buffer,2)
+		text_buffer = copytext(text_buffer, length(text_buffer[1]) + 1)
 		SStgui.update_uis(src)
 
 	if(post_noise)
@@ -427,7 +427,7 @@
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
 	// Check area validity.
 	// Reject space, player-created areas, and non-station z-levels.
-	var/area/A = get_area(target)
+	var/area/A = get_base_area(target)
 	if(!A || (!is_station_level(A.z)) || !A.valid_territory)
 		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
 		return FALSE
@@ -461,7 +461,7 @@
 		qdel(old_marking)
 
 	var/datum/antagonist/gang/G = user.mind.has_antag_datum(/datum/antagonist/gang)
-	var/area/territory = get_area(target)
+	var/area/territory = get_base_area(target)
 
 	new /obj/effect/decal/cleanable/crayon/gang(target,G.gang,"graffiti",0,user) // Heres the gang tag.
 	to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
@@ -619,8 +619,7 @@
 	is_capped = TRUE
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
-	gang = TRUE //Gang check is true for all things upon the honored hierarchy of spraycans, except those that are FALSE.
-
+	
 	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
 
 	pre_noise = TRUE
@@ -774,7 +773,6 @@
 	icon_capped = "deathcan2_cap"
 	icon_uncapped = "deathcan2"
 	use_overlays = FALSE
-	gang = FALSE
 
 	volume_multiplier = 25
 	charges = 100
@@ -789,7 +787,6 @@
 	icon_capped = "clowncan2_cap"
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
-	gang = FALSE
 
 	reagent_contents = list(/datum/reagent/lube = 1, /datum/reagent/consumable/banana = 1)
 	volume_multiplier = 5
@@ -804,7 +801,6 @@
 	icon_capped = "mimecan_cap"
 	icon_uncapped = "mimecan"
 	use_overlays = FALSE
-	gang = FALSE
 
 	can_change_colour = FALSE
 	paint_color = "#FFFFFF" //RGB

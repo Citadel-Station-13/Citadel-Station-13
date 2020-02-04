@@ -145,7 +145,7 @@
 /datum/uplink_item/explosives/tearstache
 	name = "Teachstache Grenade"
 	desc = "A teargas grenade that launches sticky moustaches onto the face of anyone not wearing a clown or mime mask. The moustaches will \
-		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
+		remain attached to the face of all targets for two minutes, preventing the use of breath masks and other such devices."
 	item = /obj/item/grenade/chem_grenade/teargas/moustache
 	cost = 3
 	surplus = 0

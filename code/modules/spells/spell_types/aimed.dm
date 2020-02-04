@@ -94,9 +94,9 @@
 	name = "Lightning Bolt"
 	desc = "Fire a high powered lightning bolt at your foes!"
 	school = "evocation"
-	charge_max = 200
+	charge_max = 150
 	clothes_req = 1
-	invocation = "UN'LTD P'WAH"
+	invocation = "ZAP MUTHA'FUCKA"
 	invocation_type = "shout"
 	cooldown_min = 30
 	active_icon_state = "lightning"
@@ -112,12 +112,12 @@
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 	school = "evocation"
-	charge_max = 60
+	charge_max = 100
 	clothes_req = 0
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
-	cooldown_min = 20 //10 deciseconds reduction per rank
+	cooldown_min = 20 //20 deciseconds reduction per rank
 	projectile_type = /obj/item/projectile/magic/aoe/fireball
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"

@@ -87,9 +87,10 @@
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 5000)
-	build_path = /obj/item/conveyor_construct
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/stack/conveyor
 	category = list("initial", "Construction")
+	maxstack = 30
 
 /datum/design/conveyor_switch
 	name = "Conveyor Belt Switch"
@@ -102,7 +103,17 @@
 /datum/design/rcd_ammo
 	name = "Compressed Matter Cartridge"
 	id = "rcd_ammo"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 12000, MAT_GLASS = 8000)
 	build_path = /obj/item/rcd_ammo
-	category = list("initial","Construction")
+	category = list("initial","Construction","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_ammo_large
+	name = "Large Compressed Matter Cartridge"
+	id = "rcd_ammo_large"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 48000, MAT_GLASS = 32000)
+	build_path = /obj/item/rcd_ammo/large
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

@@ -126,9 +126,9 @@
 
 /datum/uplink_item/role_restricted/goldenbox
 	name = "Gold Toolbox"
-	desc = "A gold planted plastitanium toolbox loaded with tools. Comes with a set of AI detection multi-tool and a pare of combat gloves."
-	item = /obj/item/storage/toolbox/gold_real
-	cost = 3 // Has syndie tools + gloves + a robust weapon
+	desc = "A gold plated plastitanium toolbox. It comes loaded with a full tool set including a AI detector multitool and combat gloves."
+	item = /obj/item/storage/toolbox/plastitanium/gold_real
+	cost = 4 // Has syndie tools + gloves + a robust weapon
 	restricted_roles = list("Assistant", "Curator") //Curator due to this being made of gold - It fits the theme
 
 /datum/uplink_item/role_restricted/mimery
