@@ -29,7 +29,7 @@
 				nT = new C.dna.species.mutanttongue()
 			else
 				nT = new()
-			T.Remove(C)
+			T.Remove()
 			qdel(T)
 			nT.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
@@ -57,7 +57,7 @@
 					T = new C.dna.species.mutanttongue()
 				else
 					T = new()
-				oT.Remove(C)
+				oT.Remove()
 				qdel(oT)
 				T.Insert(C)
 				to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")

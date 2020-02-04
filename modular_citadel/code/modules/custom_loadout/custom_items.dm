@@ -364,10 +364,11 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 34
 
-/obj/item/bedsheet/custom/flagcape
+/obj/item/clothing/neck/flagcape
 	name = "Flag Cape"
 	desc = "A truly patriotic form of heroic attire."
 	icon = 'icons/obj/custom.dmi'
+	resistance_flags = FLAMMABLE
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "flagcape"
 	item_state = "flagcape"

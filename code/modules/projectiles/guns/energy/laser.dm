@@ -16,6 +16,19 @@
 	clumsy_check = 0
 	item_flags = NONE
 
+/obj/item/gun/energy/laser/practice/hyperburst
+	name = "toy hyper-burst launcher"
+	desc = "A toy laser with a unique beam shaping lens that projects harmless bolts capable of going through objects. Compatible with existing laser tag systems."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/magtag)
+	icon_state = "toyburst"
+	obj_flags = NONE
+	fire_delay = 40
+	weapon_weight = WEAPON_HEAVY
+	selfcharge = EGUN_SELFCHARGE
+	charge_delay = 2
+	recoil = 2
+	cell_type = /obj/item/stock_parts/cell/toymagburst
+
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
 	icon_state = "retro"
