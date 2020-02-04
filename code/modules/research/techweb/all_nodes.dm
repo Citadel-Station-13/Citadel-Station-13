@@ -203,14 +203,16 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
-//datum/techweb_node/basic_meteor_defense
-	//id = "basic_meteor_defense"
-	//display_name = "Meteor Defense Research"
-	//description = "Unlock the potential of the mysterious of why CC decided to not build these around the station themselves."
-	//prereq_ids = list("adv_engi", "high_efficiency")
-	//design_ids = list("meteor_defence", "meteor_console")
-	//research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	//export_price = 5000
+/*
+/datum/techweb_node/basic_meteor_defense
+	id = "basic_meteor_defense"
+	display_name = "Meteor Defense Research"
+	description = "Unlock the potential of the mysterious of why CC decided to not build these around the station themselves."
+	prereq_ids = list("adv_engi", "high_efficiency")
+	design_ids = list("meteor_defence", "meteor_console")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+*/
 
 //datum/techweb_node/adv_meteor_defense
 	//id = "adv_meteor_defense"
