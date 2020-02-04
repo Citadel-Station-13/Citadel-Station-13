@@ -1,44 +1,44 @@
 // Basic geometry things.
 
-/vector/
+/datum/vector/
 	var/x = 0
 	var/y = 0
 
-/vector/New(var/x, var/y)
+/datum/vector/New(var/x, var/y)
 	src.x = x
 	src.y = y
 
-/vector/proc/duplicate()
-	return new /vector(x, y)
+/datum/vector/proc/duplicate()
+	return new /datum/vector(x, y)
 
-/vector/proc/euclidian_norm()
+/datum/vector/proc/euclidian_norm()
 	return sqrt(x*x + y*y)
 
-/vector/proc/squared_norm()
+/datum/vector/proc/squared_norm()
 	return x*x + y*y
 
-/vector/proc/normalize()
+/datum/vector/proc/normalize()
 	var/norm = euclidian_norm()
 	x = x/norm
 	y = y/norm
 	return src
 
-/vector/proc/chebyshev_norm()
+/datum/vector/proc/chebyshev_norm()
 	return max(abs(x), abs(y))
 
-/vector/proc/chebyshev_normalize()
+/datum/vector/proc/chebyshev_normalize()
 	var/norm = chebyshev_norm()
 	x = x/norm
 	y = y/norm
 	return src
 
-/vector/proc/is_integer()
+/datum/vector/proc/is_integer()
 	return ISINTEGER(x) && ISINTEGER(y)
 
-/atom/movable/proc/vector_translate(var/vector/V, var/delay)
+/atom/movable/proc/datum/vector_translate(var/datum/vector/V, var/delay)
 	var/turf/T = get_turf(src)
 	var/turf/destination = locate(T.x + V.x, T.y + V.y, z)
-	var/vector/V_norm = V.duplicate()
+	var/datum/vector/V_norm = V.duplicate()
 	V_norm.chebyshev_normalize()
 	if (!V_norm.is_integer())
 		return
@@ -49,9 +49,9 @@
 		T = get_turf(src)
 		sleep(delay + world.tick_lag) // Shortest possible time to sleep
 
-/atom/proc/get_translated_turf(var/vector/V)
+/atom/proc/get_translated_turf(var/datum/vector/V)
 	var/turf/T = get_turf(src)
 	return locate(T.x + V.x, T.y + V.y, z)
 
 /proc/atoms2vector(var/atom/A, var/atom/B)
-	return new /vector((B.x - A.x), (B.y - A.y)) // Vector from A -> B
+	return new /datum/vector((B.x - A.x), (B.y - A.y)) // Vector from A -> B
