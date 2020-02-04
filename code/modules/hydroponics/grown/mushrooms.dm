@@ -217,7 +217,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/seeds/chanterelle/jupitercup/Initialize()
+/obj/item/seeds/chanterelle/jupitercup/Initialize(mapload, nogenes = FALSE)
 	. = ..()
 	if(!nogenes)
 		unset_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_EXTRACTABLE)
