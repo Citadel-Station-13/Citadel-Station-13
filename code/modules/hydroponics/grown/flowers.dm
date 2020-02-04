@@ -72,8 +72,9 @@
 	rarity = 30
 
 /obj/item/seeds/poppy/lily/trumpet/Initialize()
-	..()
-	unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
+	. = ..()
+	if(!nogenes)
+		unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
 
 /obj/item/reagent_containers/food/snacks/grown/trumpet
 	seed = /obj/item/seeds/poppy/lily/trumpet
