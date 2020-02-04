@@ -52,7 +52,7 @@ Nothing else in the console has ID requirements.
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
-	if (copytext(ID, 1, 2) == "$" && GLOB.materials_list[ID])
+	if (ID[1] == "$" && GLOB.materials_list[ID])
 		var/datum/material/material = GLOB.materials_list[ID]
 		return material.name
 

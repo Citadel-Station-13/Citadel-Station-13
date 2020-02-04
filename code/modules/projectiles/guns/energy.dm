@@ -66,6 +66,7 @@
 
 /obj/item/gun/energy/Destroy()
 	QDEL_NULL(cell)
+	QDEL_LIST(ammo_type)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
