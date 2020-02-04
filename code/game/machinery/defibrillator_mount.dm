@@ -129,7 +129,7 @@
 	if(clamps_locked)
 		to_chat(user, "<span class='warning'>You try to tug out [defib], but the mount's clamps are locked tight!</span>")
 		return
-	if(!user.get_empty_held_indexes)
+	if(!user.get_empty_held_indexes())
 		to_chat(user, "<span class='warning'>You need a free hand!</span>")
 		return
 	user.put_in_hands(defib)
