@@ -87,6 +87,7 @@ import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
+import { AtmosRelief } from './interfaces/AtmosRelief';
 
 const ROUTES = {
   achievements: {
@@ -127,6 +128,10 @@ const ROUTES = {
   },
   atmos_pump: {
     component: () => AtmosPump,
+    scrollable: false,
+  },
+  atmos_relief: {
+    component: () => AtmosRelief,
     scrollable: false,
   },
   bepis: {
