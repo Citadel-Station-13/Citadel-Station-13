@@ -1244,7 +1244,7 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	. = ..()
-	. += "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]"
+	. += "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
 
 /*
  * Toy Dagger

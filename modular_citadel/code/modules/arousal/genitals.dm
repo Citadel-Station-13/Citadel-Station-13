@@ -350,7 +350,6 @@
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
-				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 			else
 				switch(S.color_src)
 					if("cock_color")
@@ -361,6 +360,8 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
+			
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 
 			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER

@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/materials
 
 /datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list())
-	timestamp = STATION_TIME_TIMESTAMP("hh:mm:ss")
+	timestamp = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	machine_name = M.name
 	area_name = get_area_name(M, TRUE)
 	action = _action
@@ -231,8 +231,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/msg = list("([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br>")
 	var/sep = ""
 	for(var/key in materials)
+		var/datum/material/M = key
 		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
 		msg += sep
 		sep = ", "
-		msg += "[amount < 0 ? "-" : "+"][val] [copytext(key, 2)]"
+		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
 	formatted = msg.Join()

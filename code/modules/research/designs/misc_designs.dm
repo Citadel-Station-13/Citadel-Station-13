@@ -403,6 +403,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/holosigncombifan
+	name = "ATMOS Holo-Combifan Projector"
+	desc = "A holographic projector that creates holographic barriesr that prevent changes in atmospheric and temperature conditions."
+	id = "holosigncombifan"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7500, MAT_GLASS = 2500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 1750)
+	build_path = /obj/item/holosign_creator/combifan
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/forcefield_projector
 	name = "Forcefield Projector"
 	desc = "A device which can project temporary forcefields to seal off an area."

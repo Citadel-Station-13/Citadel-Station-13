@@ -85,8 +85,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(isnull(_d1) || isnull(_d2))
 		// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 		var/dash = findtext(icon_state, "-")
-		d1 = text2num( copytext( icon_state, 1, dash ) )
-		d2 = text2num( copytext( icon_state, dash+1 ) )
+		d1 = text2num(copytext(icon_state, 1, dash))
+		d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
 	else
 		d1 = _d1
 		d2 = _d2
