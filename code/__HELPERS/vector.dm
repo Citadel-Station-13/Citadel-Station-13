@@ -35,7 +35,7 @@
 /datum/vector/proc/is_integer()
 	return ISINTEGER(x) && ISINTEGER(y)
 
-/atom/movable/proc/datum/vector_translate(var/datum/vector/V, var/delay)
+/atom/movable/proc/vector_translate(var/datum/vector/V, var/delay)
 	var/turf/T = get_turf(src)
 	var/turf/destination = locate(T.x + V.x, T.y + V.y, z)
 	var/datum/vector/V_norm = V.duplicate()

@@ -144,9 +144,9 @@
 		return
 	if (!user || user.incapacitated() || !user.Adjacent(src))
 		return
-	// Attempted drink sliding
 	if (!(locate(/obj/structure/table) in src_location) || !(locate(/obj/structure/table) in over_location))
 		return
+		
 	//Are we an expert slider?
 	var/datum/action/innate/D = get_action_of_type(user, /datum/action/innate/drink_fling)
 	if(!D?.active)
