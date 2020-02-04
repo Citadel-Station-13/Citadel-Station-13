@@ -28,10 +28,10 @@
 	else
 		icon_state = "[icon_base]-off"
 
-/obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
-	..()
+/obj/item/organ/heart/Remove(special = FALSE)
 	if(!special)
-		addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
+		addtimer(CALLBACK(src, .proc/stop_if_unowned), 12 SECONDS)
+	return ..()
 
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
@@ -145,9 +145,9 @@ obj/item/organ/heart/slime
 	if(owner)
 		to_chat(owner, "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
 
-/obj/item/organ/heart/cursed/Remove(mob/living/carbon/M, special = 0)
-	..()
-	M.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+/obj/item/organ/heart/cursed/Remove(special = FALSE)
+	owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+	return ..()
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "Pump your blood"
