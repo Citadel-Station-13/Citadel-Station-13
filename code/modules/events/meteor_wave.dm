@@ -61,9 +61,9 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)
-	priority_announce(generateMeteorString(wave_name,startWhen,TRUE,direction), "Meteor Alert", "meteors")
+	priority_announce(generateMeteorString(startWhen,TRUE,direction), "Meteor Alert", "meteors")
 
-/proc/generateMeteorString(wave_name,startWhen,syndiealert,direction)
+/proc/generateMeteorString(startWhen,syndiealert,direction)
 	var/directionstring
 	switch(direction)
 		if(NORTH)
@@ -74,7 +74,7 @@
 			directionstring = " towards starboard"
 		if(WEST)
 			directionstring = " towards port"
-	return "[wave_name == "catastrophic" ? "An entire asteroid field has" : wave_name == "threatening" ? "An abundance of meteors have" : "Meteors have"] been detected on a collision course with the station[directionstring]. Estimated time until impact: [round((startWhen * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
+	return "Meteors have been detected on a collision course with the station[directionstring]. Estimated time until impact: [round((startWhen * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))
