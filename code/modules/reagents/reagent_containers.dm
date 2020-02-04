@@ -108,7 +108,7 @@
 	if(!T || !target.CanPass(src, T) || !thrownby || !thrownby.actions)
 		return
 	var/datum/action/innate/D = get_action_of_type(thrownby, /datum/action/innate/drink_fling)
-	if(D.active)
+	if(D?.active)
 		return TRUE
 
 /obj/item/reagent_containers/proc/ForceResetRotation()
