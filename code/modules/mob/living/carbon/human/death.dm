@@ -14,7 +14,7 @@
 			var/path = (with_bodyparts && length > 1) ? S.gib_types[2] : S.gib_types[1]
 			new path(location, src, get_static_viruses())
 		else
-			new S.gib_types(location, src, get_static_viruses(), dna)
+			new S.gib_types(location, src, get_static_viruses(), blood_dna)
 	else
 		if(with_bodyparts)
 			new /obj/effect/gibspawner/human(location, src, get_static_viruses())
