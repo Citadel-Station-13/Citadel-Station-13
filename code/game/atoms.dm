@@ -767,6 +767,8 @@
 			log_whisper(log_text)
 		if(LOG_EMOTE)
 			log_emote(log_text)
+		if(LOG_SUBTLER)
+			log_subtler(log_text)
 		if(LOG_DSAY)
 			log_dsay(log_text)
 		if(LOG_PDA)
