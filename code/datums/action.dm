@@ -604,8 +604,8 @@
 		if (apc)
 			apc.set_hijacked_lighting()
 			apc.update_icon()
-	H.stealthcooldown = world.time + 30 SECONDS
-	H.toggle_eyes(H.toggled && !H.stealthmode)
+	H.stealthcooldown = world.time + 15 SECONDS
+	H.toggle_eyes()
 	to_chat(owner,"<span class='notice'>You toggle the hijack implant's stealthmode [H.stealthmode ? "on" : "off"].</span>")
 
 /datum/action/item_action/flash

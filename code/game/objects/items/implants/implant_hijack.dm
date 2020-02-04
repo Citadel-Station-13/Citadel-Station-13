@@ -1,4 +1,4 @@
-#define HIJACK_APC_MAX_AMOUNT 4
+#define HIJACK_APC_MAX_AMOUNT 5
 
 /obj/item/implant/hijack
 	name = "hijack implant"
@@ -17,11 +17,12 @@
 	imp_in.click_intercept = toggled ? src : null
 	imp_in.siliconaccesstoggle = toggled ? TRUE : FALSE
 	to_chat(imp_in,"<span class='notice'>You turn [toggled ? "on" : "off"] [src]'s silicon interactions.</span>")
-	toggle_eyes(toggled && !stealthmode)
+	toggle_eyes()
 
-/obj/item/implant/hijack/proc/toggle_eyes(on)
+/obj/item/implant/hijack/proc/toggle_eyes()
 	if (!ishuman(imp_in))
 		return
+	var/on = toggled && !stealthmode
 	var/mob/living/carbon/human/H = imp_in
 	H.eye_color = on ? "ff0" : eye_color
 	H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
@@ -51,7 +52,7 @@
 		return TRUE
 
 /obj/item/implant/hijack/proc/InterceptClickOn(mob/living/user,params,atom/object)
-	if (user.get_active_held_item() || isitem(object) || !toggled || user.incapacitated())
+	if (isitem(object) || !toggled || user.incapacitated())
 		return
 	if (stealthmode == FALSE && istype(object,/obj/machinery/power/apc) && !user.CanReach(object))
 		if (hijack_remotely(object))
@@ -74,6 +75,8 @@
 	if (modifiers["alt"])
 		object.AIAltClick(imp_in)
 		return TRUE
+	if (user.get_active_held_item())
+		return
 	object.attack_ai(imp_in)
 	return TRUE
 
@@ -97,7 +100,7 @@
 		imp_in.toggleSiliconAccessArea(apc.area)
 		apc.update_icon()
 		stealthcooldown = world.time + 3 MINUTES
-		toggle_eyes(TRUE)
+		toggle_eyes()
 	else
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")
 	imp_in.light_power = 0

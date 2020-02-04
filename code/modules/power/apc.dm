@@ -863,7 +863,7 @@
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
 	var/abilitiesavail = FALSE
-	if (H && H.stealthmode)
+	if (H && !H.stealthmode)
 		abilitiesavail = TRUE
 	var/list/data = list(
 		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user),
