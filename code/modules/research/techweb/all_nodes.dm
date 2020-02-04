@@ -78,7 +78,7 @@
 /datum/techweb_node/aftercare
 	id = "aftercare"
 	display_name = "Aftercare"
-	description = "What you use when its to late."
+	description = "What you use when it's too late."
 	prereq_ids = list("biotech", "adv_engi")
 	design_ids = list("bodybag", "containmentbodybag", "harvester")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
