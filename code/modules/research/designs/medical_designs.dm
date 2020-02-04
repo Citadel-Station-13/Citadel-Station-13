@@ -122,16 +122,6 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/bluespacebodybag
-	name = "Bluespace Body Bag"
-	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
-	id = "bluespacebodybag"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500, MAT_BLUESPACE = 500)
-	build_path = /obj/item/bodybag/bluespace
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/plasmarefiller
 	name = "Plasma-Man Jumpsuit Refill"
 	desc = "A refill pack for the auto-extinguisher on Plasma-man suits."
@@ -229,6 +219,40 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_SILVER= 3500, MAT_GOLD = 3500, MAT_PLASTIC = 5000)
 	build_path = /obj/item/storage/belt/organbox
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+////////////////////////////////////////
+//////////Body Bags/////////////////////
+////////////////////////////////////////
+
+/datum/design/bodybag
+	name = "Body Bag"
+	desc = "A normal body bag used for storge of dead crew."
+	id = "bodybag"
+	build_type = PROTOLATHE
+	materials = list(MAT_PLASTIC = 4000)
+	build_path = /obj/item/bodybag
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/bluespacebodybag
+	name = "Bluespace Body Bag"
+	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
+	id = "bluespacebodybag"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500, MAT_BLUESPACE = 500)
+	build_path = /obj/item/bodybag/bluespace
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/containmentbodybag
+	name = "Containment Body Bag"
+	desc = "A containment body bag, heavy and radiation proof."
+	id = "containmentbodybag"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_PLASTIC = 4000, MAT_TITANIUM = 2000)
+	build_path = /obj/item/bodybag/containment
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 

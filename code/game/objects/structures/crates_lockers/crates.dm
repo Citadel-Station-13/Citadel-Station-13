@@ -169,6 +169,7 @@
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
 	icon_state = "radiation"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"

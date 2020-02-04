@@ -75,12 +75,20 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/aftercare
+	id = "aftercare"
+	display_name = "Aftercare"
+	description = "What you use when its to late."
+	prereq_ids = list("biotech", "adv_engi")
+	design_ids = list("bodybag", "containmentbodybag", "harvester")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "defibrillator_compact", "smartdartgun", "medicinalsmartdart", "pHmeter")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "holobarrier_med", "defibrillator_compact", "smartdartgun", "medicinalsmartdart", "pHmeter")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -239,17 +247,16 @@
 	prereq_ids = list("adv_engi", "high_efficiency")
 	design_ids = list("meteor_defence", "meteor_console")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	export_price = 5000
-*/
 
-//datum/techweb_node/adv_meteor_defense
-	//id = "adv_meteor_defense"
-	//display_name = "Meteor Defense Research"
-	//description = "New and improved coding and lock on tech for meteor defence!"
-	//prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
-	//design_ids = list("meteor_disk")
-	//research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
-	//export_price = 5000
+/datum/techweb_node/adv_meteor_defense
+	id = "adv_meteor_defense"
+	display_name = "Meteor Defense Research"
+	description = "New and improved coding and lock on tech for meteor defence!"
+	prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
+	design_ids = list("meteor_disk")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
+*/
 
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
