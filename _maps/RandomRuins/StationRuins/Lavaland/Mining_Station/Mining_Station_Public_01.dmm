@@ -814,8 +814,11 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "ou" = (
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/tile/brown{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
 	},
 /obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
@@ -1168,14 +1171,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"tJ" = (
-/obj/item/beacon,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "tK" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -2235,6 +2230,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/item/beacon,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "KO" = (
@@ -2530,6 +2526,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "Nk" = (
@@ -6608,9 +6605,9 @@ VT
 VT
 Cd
 Ed
-tJ
+Wf
 II
-ou
+Jo
 Ed
 Cd
 Cd
@@ -6671,7 +6668,7 @@ wX
 Wf
 YM
 GN
-II
+ou
 Nf
 mN
 Aj
