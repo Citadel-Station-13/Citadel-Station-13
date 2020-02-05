@@ -358,7 +358,7 @@
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
@@ -397,6 +397,8 @@
 			if(O)
 				O.on_life()
 	else
+		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
+			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			if(O)
