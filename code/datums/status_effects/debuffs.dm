@@ -79,11 +79,11 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-/datum/status_effect/no_combat_mode/
+/datum/status_effect/no_combat_mode
 	id = "no_combat_mode"
-	blocks_combatmode = TRUE
 	alert_type = null
 	status_type = STATUS_EFFECT_REPLACE
+	blocks_combatmode = TRUE
 
 /datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -149,6 +149,7 @@
 	slowdown = 8
 	slowdown_priority = 100
 	nextmove_modifier = 2
+	blocks_combatmode = TRUE
 
 /datum/status_effect/electrode/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
