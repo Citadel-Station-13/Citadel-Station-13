@@ -20,13 +20,6 @@
 	var/wave_name = "normal"
 	var/direction
 
-/datum/round_event/meteor_wave/setup()
-	announceWhen = 1
-	startWhen = rand(60, 90) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
-	if(GLOB.singularity_counter)
-		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
-	endWhen = startWhen + 60
-
 /datum/round_event/meteor_wave/New()
 	..()
 	if(!wave_type)
@@ -74,7 +67,7 @@
 			directionstring = " towards starboard"
 		if(WEST)
 			directionstring = " towards port"
-	return "Meteors have been detected on a collision course with the station[directionstring]. Estimated time until impact: [round((startWhen * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
+	return "Meteors have been detected on a collision course with the station,[directionstring]. [GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))
