@@ -3,7 +3,7 @@
 	id = /datum/reagent/drug/space_drugs
 	results = list(/datum/reagent/drug/space_drugs = 3)
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/lithium = 1)
-	mix_message = "The liquid becomes runny and psychedelic."
+	mix_message = "The liquid becomes runny and swirls colors."
 
 /datum/chemical_reaction/crank
 	name = "Crank"
@@ -34,7 +34,7 @@
 	id = /datum/reagent/drug/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)
 	required_reagents = list(/datum/reagent/toxin/bad_food = 1, /datum/reagent/saltpetre = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/consumable/enzyme = 1, /datum/reagent/consumable/tea = 1, /datum/reagent/mercury = 1)
-	mix_message = "Hard chunks fall out of the solution."
+	mix_message = "Hard chunks fall into the solution."
 	required_temp = 374
 
 /datum/chemical_reaction/aranesp
@@ -59,7 +59,7 @@
 	required_temp = 280
 	is_cold_recipe = TRUE
 	required_reagents = list(/datum/reagent/moonsugar = 10, /datum/reagent/medicine/morphine = 5)
-	mix_message = "Many layers form as the solution cools."
+	mix_message = "Multiple layers form as the solution cools."
 
 /datum/chemical_reaction/skoomarevert
 	name = "skoomarevert"
@@ -67,4 +67,4 @@
 	results = list(/datum/reagent/moonsugar = 1, /datum/reagent/medicine/morphine = 2.5)
 	required_temp = 315 //a little above normal body temperature
 	required_reagents = list(/datum/reagent/drug/skooma = 1)
-	mix_message = "Layers form as the solution heats."
+	mix_message = "Multiple layers form as the solution heats."
