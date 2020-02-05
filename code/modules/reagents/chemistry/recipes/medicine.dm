@@ -342,7 +342,7 @@
 	results = list(/datum/reagent/medicine/modafinil = 5)
 	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/ammonia = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list(/datum/reagent/bromine = 1) // as close to the real world synthesis as possible
-	mix_message = "The mixture becomes more dense as it's heated."
+	mix_message = "The mixture densifies as it's heated."
 
 /datum/chemical_reaction/psicodine
 	name = "Psicodine"
