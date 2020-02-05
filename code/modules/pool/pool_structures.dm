@@ -15,8 +15,7 @@
 	. = ..()
 	if(.)
 		return
-	var/is_swimming = SEND_SIGNAL(user, COMSIG_IS_SWIMMING)
-	if(!is_swimming)
+	if(!HAS_TRAIT(user, TRAIT_SWIMMING))
 		if(user.CanReach(src))
 			user.AddElement(/datum/element/swimming)
 			user.forceMove(get_step(src, dir))
@@ -44,7 +43,8 @@
 	if(jumping)
 		for(var/mob/living/jumpee in loc) //hackzors.
 			playsound(jumpee, 'sound/effects/splash.ogg', 60, TRUE, 1)
-			jumpee.AddElement(/datum/element/swimming)
+			if(!HAS_TRAIT(jumpee, TRAIT_SWIMMING))
+				jumpee.AddElement(/datum/element/swimming)
 			jumpee.Stun(2)
 
 /obj/structure/pool/Lboard/proc/reset_position(mob/user, initial_layer, initial_px, initial_py)
@@ -59,7 +59,7 @@
 			to_chat(user, "<span class='notice'>Someone else is already making a jump!</span>")
 			return
 		var/turf/T = get_turf(src)
-		if(SEND_SIGNAL(user, COMSIG_IS_SWIMMING))
+		if(HAS_TRAIT(user, TRAIT_SWIMMING))
 			return
 		else
 			if(Adjacent(jumper))
@@ -73,7 +73,7 @@
 				jumper.layer = RIPPLE_LAYER
 				jumper.pixel_x = 3
 				jumper.pixel_y = 7
-				jumper.dir = 8
+				jumper.dir = WEST
 				sleep(1)
 				jumper.forceMove(T)
 				addtimer(CALLBACK(src, .proc/dive, jumper, original_layer, original_px, original_py), 10)

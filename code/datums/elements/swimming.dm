@@ -7,16 +7,13 @@
 		return
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_IS_SWIMMING, .proc/is_swimming)
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/check_valid)
+	ADD_TRAIT(target, TRAIT_SWIMMING, TRAIT_SWIMMING)		//seriously there's only one way to get this
 
 /datum/element/swimming/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_IS_SWIMMING)
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
-
-/datum/element/swimming/proc/is_swimming()
-	return IS_SWIMMING
+	REMOVE_TRAIT(target, TRAIT_SWIMMING, TRAIT_SWIMMING)
 
 /datum/element/swimming/proc/check_valid(datum/source)
 	var/mob/living/L = source

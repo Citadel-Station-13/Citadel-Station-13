@@ -50,7 +50,7 @@
 // Mousedrop hook to normal turfs to get out of pools.
 /turf/open/MouseDrop_T(atom/from, mob/user)
 	// I could make this /open/floor and not have the !istype but ehh - kev
-	if(isliving(from) && SEND_SIGNAL(from, COMSIG_IS_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated() && !istype(src, /turf/open/pool))
+	if(isliving(from) && HAS_TRAIT(from, TRAIT_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated() && !istype(src, /turf/open/pool))
 		var/mob/living/L = from
 		//The element only exists if you're on water and a living mob, so let's skip those checks.
 		var/pre_msg
@@ -81,7 +81,7 @@
 			return ..()			//human weak, monkey (and anyone else) ook ook eek eek strong
 		if(isliving(AM) && (locate(/obj/structure/pool/ladder) in src))
 			return ..()			//climbing out
-		return istype(newloc, type)
+		return istype(newloc, /turf/open/pool)
 	return ..()
 
 // Exited logic
@@ -105,7 +105,7 @@
 		return ..()
 	if(isliving(AM))
 		var/mob/living/victim = AM
-		if(!SEND_SIGNAL(victim, COMSIG_IS_SWIMMING))		//poor guy not swimming time to dunk them!
+		if(!HAS_TRAIT(victim, TRAIT_SWIMMING))		//poor guy not swimming time to dunk them!
 			victim.AddElement(/datum/element/swimming)
 			controller.mobs_in_pool += victim
 			if(locate(/obj/structure/pool/ladder) in src)		//safe climbing
@@ -126,7 +126,7 @@
 						H.visible_message("<span class='danger'>[H] falls in and takes a drink!</span>",
 											"<span class='userdanger'>You fall in and swallow some water!</span>")
 						playsound(src, 'sound/effects/splash.ogg', 60, TRUE, 1)
-				else if(!istype(H.head, /obj/item/clothing/head/helmet))
+				else if(!H.head || !(H.head.armor.getRating(melee) > 20))
 					if(prob(75))
 						H.visible_message("<span class='danger'>[H] falls in the drained pool!</span>",
 													"<span class='userdanger'>You fall in the drained pool!</span>")
@@ -155,7 +155,7 @@
 	if(!isliving(from))
 		return
 	var/mob/living/victim = from
-	if(user.stat || user.lying || !Adjacent(user) || !from.Adjacent(user) || !iscarbon(user) || !victim.has_gravity(src) || SEND_SIGNAL(victim, COMSIG_IS_SWIMMING))
+	if(user.stat || user.lying || !Adjacent(user) || !from.Adjacent(user) || !iscarbon(user) || !victim.has_gravity(src) || HAS_TRAIT(victim, TRAIT_SWIMMING))
 		return
 	var/victimname = victim == user? "themselves" : "[victim]"
 	var/starttext = victim == user? "[user] is descending into [src]." : "[user] is lowering [victim] into [src]."
@@ -177,7 +177,7 @@
 	. = ..()
 	if(.)
 		return
-	if((user.loc != src) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated() && Adjacent(user) && SEND_SIGNAL(user, COMSIG_IS_SWIMMING) && filled && (next_splash < world.time))
+	if((user.loc != src) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated() && Adjacent(user) && HAS_TRAIT(user, TRAIT_SWIMMING) && filled && (next_splash < world.time))
 		playsound(src, 'sound/effects/watersplash.ogg', 8, TRUE, 1)
 		next_splash = world.time + 25
 		var/obj/effect/splash/S = new(src)

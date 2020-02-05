@@ -69,7 +69,7 @@
 	START_PROCESSING(SSfastprocess, src)
 	create_reagents(1000)
 	if(noreact_reagents)
-		reagents.reagents_holder_flags |= NO_REACTION
+		reagents.reagents_holder_flags |= NO_REACT
 	wires = new /datum/wires/poolcontroller(src)
 	scan_things()
 
@@ -111,15 +111,19 @@
 
 /obj/machinery/pool/controller/AltClick(mob/user)
 	. = ..()
-	if(isliving(user) && user.Adjacent(src) && user.CanReach(src) && !user.IsStun() && !user.IsKnockdown() && !user.incapacitated())
-		visible_message("<span class='boldwarning'>[user] starts to drain [src]!</span>")
-		draining = TRUE
-		if(do_after(user, 50, target = src))
-			reagents.remove_all(INFINITY)
-			visible_message("<span class='boldnotice'>[user] drains [src].</span>")
-			say("Reagents cleared.")
-			update_color()
+	if(!isliving(user) || !user.Adjacent(src) || !user.CanReach(src) || user.IsStun() || user.IsKnockdown() || user.incapacitated())
+		return FALSE
+	visible_message("<span class='boldwarning'>[user] starts to drain [src]!</span>")
+	draining = TRUE
+	if(!do_after(user, 50, target = src))
 		draining = FALSE
+		return TRUE
+	reagents.remove_all(INFINITY)
+	visible_message("<span class='boldnotice'>[user] drains [src].</span>")
+	say("Reagents cleared.")
+	update_color()
+	draining = FALSE
+	return TRUE
 
 /obj/machinery/pool/controller/attackby(obj/item/W, mob/user)
 	if(shocked && !(stat & NOPOWER))
@@ -196,27 +200,29 @@
 /obj/machinery/pool/controller/proc/process_reagents()
 	if(last_reagent_process > world.time + reagent_tick_interval)
 		return
-	if(length(reagents.reagent_list) > 0)
-		for(var/turf/open/pool/W in linked_turfs)
-			for(var/mob/living/carbon/human/swimee in W)
-				for(var/datum/reagent/R in reagents.reagent_list)
-					if(R.reagent_state == SOLID)
-						R.reagent_state = LIQUID
-					if(!swimee.reagents.has_reagent(POOL_NO_OVERDOSE_MEDICINE_MAX))
-						swimee.reagents.add_reagent(R.type, 0.5) //osmosis
-				reagents.reaction(swimee, VAPOR, 0.03) //3 percent. Need to find a way to prevent this from stacking chems at some point like the above.
-			for(var/obj/objects in W)
-				if(W.reagents)
-					W.reagents.reaction(objects, VAPOR, 1)
+	if(!length(reagents.reagent_list))
+		return
+	for(var/turf/open/pool/W in linked_turfs)
+		for(var/mob/living/carbon/human/swimee in W)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				if(R.reagent_state == SOLID)
+					R.reagent_state = LIQUID
+				if(!swimee.reagents.has_reagent(POOL_NO_OVERDOSE_MEDICINE_MAX))
+					swimee.reagents.add_reagent(R.type, 0.5) //osmosis
+			reagents.reaction(swimee, VAPOR, 0.03) //3 percent. Need to find a way to prevent this from stacking chems at some point like the above.
+		for(var/obj/objects in W)
+			if(W.reagents)
+				W.reagents.reaction(objects, VAPOR, 1)
 	last_reagent_process = world.time
 
 /obj/machinery/pool/controller/process()
 	updateUsrDialog()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!drained)
-		process_pool()
-		process_reagents()
+	if(drained)
+		return
+	process_pool()
+	process_reagents()
 
 /obj/machinery/pool/controller/proc/process_pool()
 	if(!drained)
