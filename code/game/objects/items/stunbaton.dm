@@ -48,7 +48,7 @@
 		baton_stun(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/cell/high/plus
 
 /obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE, explode = TRUE)
 	var/obj/item/stock_parts/cell/copper_top = get_cell()
