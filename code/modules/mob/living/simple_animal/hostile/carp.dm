@@ -95,7 +95,7 @@
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
 
-	regen_amout = 8
+	regen_amount = 8
 
 	speak_emote = list("squeaks")
 	maxHealth = 90
