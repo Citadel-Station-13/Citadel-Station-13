@@ -405,7 +405,7 @@
 
 /datum/design/holosigncombifan
 	name = "ATMOS Holo-Combifan Projector"
-	desc = "A holographic projector that creates holographic barriesr that prevent changes in atmospheric and temperature conditions."
+	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric and temperature conditions."
 	id = "holosigncombifan"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 2500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 1750)
