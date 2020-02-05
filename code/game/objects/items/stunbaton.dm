@@ -189,7 +189,7 @@
 
 
 	L.Knockdown(stunpwr, override_stamdmg = 0)
-	L.apply_damage(stunpwr*0.55, STAMINA, user.zone_selected)
+	L.apply_damage(stunpwr*0.5, STAMINA, user.zone_selected)
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
