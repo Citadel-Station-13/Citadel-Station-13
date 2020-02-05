@@ -5,35 +5,35 @@
 	results = list(/datum/reagent/medicine/leporazine = 2)
 	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/copper = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
-	mix_message = "The liquid becomes a light pink colour."
+	mix_message = "The mixture becomes a light pink colour."
 
 /datum/chemical_reaction/rezadone
 	name = "Rezadone"
 	id = /datum/reagent/medicine/rezadone
 	results = list(/datum/reagent/medicine/rezadone = 3)
 	required_reagents = list(/datum/reagent/toxin/carpotoxin = 1, /datum/reagent/cryptobiolin = 1, /datum/reagent/copper = 1)
-	mix_message = "The liquid starts to harden and become dry."
+	mix_message = "The mixture starts to harden and become dry."
 
 /datum/chemical_reaction/spaceacillin
 	name = "Spaceacillin"
 	id = /datum/reagent/medicine/spaceacillin
 	results = list(/datum/reagent/medicine/spaceacillin = 2)
 	required_reagents = list(/datum/reagent/cryptobiolin = 1, /datum/reagent/medicine/epinephrine = 1)
-	mix_message = "The liquid mixes smoothly."
+	mix_message = "The mixture mixes smoothly."
 
 /datum/chemical_reaction/inacusiate
 	name = "inacusiate"
 	id = /datum/reagent/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/charcoal = 1)
-	mix_message = "The liquid bubbles loudly."
+	mix_message = "The mixture bubbles loudly."
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
 	id = /datum/reagent/medicine/synaptizine
 	results = list(/datum/reagent/medicine/synaptizine = 3)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/lithium = 1, /datum/reagent/water = 1)
-	mix_message = "The liquid starts to stick to the glass."
+	mix_message = "The mixture creeps along the glass."
 
 /datum/chemical_reaction/charcoal
 	name = "Charcoal"
@@ -48,14 +48,14 @@
 	id = /datum/reagent/medicine/silver_sulfadiazine
 	results = list(/datum/reagent/medicine/silver_sulfadiazine = 5)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
-	mix_message = "The liquid becomes buoyant."
+	mix_message = "The mixture grows and shrinks slowly."
 
 /datum/chemical_reaction/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = /datum/reagent/medicine/salglu_solution
 	results = list(/datum/reagent/medicine/salglu_solution = 3)
 	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
-	mix_message = "The liquid starts to stick to the glass."
+	mix_message = "The mixture creeps along the glass."
 
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
@@ -76,7 +76,7 @@
 	id = /datum/reagent/medicine/synthflesh
 	results = list(/datum/reagent/medicine/synthflesh = 3)
 	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
-	mix_message = "The liquid becomes thick."
+	mix_message = "The mixture emits a pungent smell as it becomes thick."
 
 /datum/chemical_reaction/synthtissue
 	name = "Synthtissue"
@@ -149,28 +149,28 @@
 	id = /datum/reagent/medicine/pen_acid/pen_jelly
 	results = list(/datum/reagent/medicine/pen_acid/pen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/pen_acid = 1, /datum/reagent/toxin/slimejelly = 1)
-	mix_message = "The liquid starts to stick to the glass."
+	mix_message = "The mixture starts to creep up glass."
 
 /datum/chemical_reaction/sal_acid
 	name = "Salicyclic Acid"
 	id = /datum/reagent/medicine/sal_acid
 	results = list(/datum/reagent/medicine/sal_acid = 5)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
-	mix_message = "The liquid starts to stick to the glass."
+	mix_message = "The mixture starts to stick to the glass."
 
 /datum/chemical_reaction/oxandrolone
 	name = "Oxandrolone"
 	id = /datum/reagent/medicine/oxandrolone
 	results = list(/datum/reagent/medicine/oxandrolone = 6)
 	required_reagents = list(/datum/reagent/carbon = 3, /datum/reagent/phenol = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
-	mix_message = "The liquid starts to turn into a blue hue."
+	mix_message = "The mixture starts to turn into a blue hue."
 
 /datum/chemical_reaction/salbutamol
 	name = "Salbutamol"
 	id = /datum/reagent/medicine/salbutamol
 	results = list(/datum/reagent/medicine/salbutamol = 5)
 	required_reagents = list(/datum/reagent/medicine/sal_acid = 1, /datum/reagent/lithium = 1, /datum/reagent/aluminium = 1, /datum/reagent/bromine = 1, /datum/reagent/ammonia = 1)
-	mix_message = "The liquid starts to turn into a light blue."
+	mix_message = "The mixture starts to turn into a light blue."
 
 /datum/chemical_reaction/perfluorodecalin
 	name = "Perfluorodecalin"
@@ -206,7 +206,7 @@
 	id = /datum/reagent/medicine/atropine
 	results = list(/datum/reagent/medicine/atropine = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/acetone = 1, /datum/reagent/diethylamine = 1, /datum/reagent/phenol = 1, /datum/reagent/toxin/acid = 1)
-	mix_message = "The liquid quickly blackens."
+	mix_message = "The mixture quickly blackens."
 
 /datum/chemical_reaction/epinephrine
 	name = "Epinephrine"
@@ -305,7 +305,7 @@
 	id = /datum/reagent/medicine/tricordrazine
 	results = list(/datum/reagent/medicine/tricordrazine = 3)
 	required_reagents = list(/datum/reagent/medicine/bicaridine = 1, /datum/reagent/medicine/kelotane = 1, /datum/reagent/medicine/antitoxin = 1)
-	mix_message = "The mixture rapidly mixes together."
+	mix_message = "The mixture rapidly reacts with itself."
 
 /datum/chemical_reaction/regen_jelly
 	name = "Regenerative Jelly"
@@ -333,7 +333,7 @@
 	id = /datum/reagent/medicine/morphine
 	results = list(/datum/reagent/medicine/morphine = 2)
 	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1)
-	mix_message = "The liquid densifies as it's heated."
+	mix_message = "The mixture becomes more dense as it's heated."
 	required_temp = 480
 
 /datum/chemical_reaction/modafinil
@@ -342,7 +342,7 @@
 	results = list(/datum/reagent/medicine/modafinil = 5)
 	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/ammonia = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list(/datum/reagent/bromine = 1) // as close to the real world synthesis as possible
-	mix_message = "The liquid densifies as it's heated."
+	mix_message = "The mixture becomes more dense as it's heated."
 
 /datum/chemical_reaction/psicodine
 	name = "Psicodine"
