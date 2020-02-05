@@ -303,3 +303,64 @@
 /turf/closed/wall/mineral/plastitanium/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
+
+/////////////////////Pirate Plastitanium walls/////////////////////
+
+/turf/closed/wall/mineral/plastitaniumpirate
+	name = "wall"
+	desc = "Yarr just try to blow this to smithereens!"
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle"
+	explosion_block = 50
+	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/plastitaniumpirate, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitaniumpirate, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+
+/turf/closed/wall/mineral/plastitaniumpirate/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "map-shuttle_nd"
+	explosion_block = 50
+
+/turf/closed/wall/mineral/plastitaniumpirate/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+	smooth = SMOOTH_FALSE
+	explosion_block = 50
+
+/turf/closed/wall/mineral/plastitaniumpirate/overspace
+	icon_state = "map-overspace"
+	fixed_underlay = list("space"=1)
+	explosion_block = 50
+
+/turf/closed/wall/mineral/plastitaniumpirate/explosive/ex_act(severity)
+	var/datum/explosion/acted_explosion = null
+	for(var/datum/explosion/E in GLOB.explosions)
+		if(E.explosion_id == explosion_id)
+			acted_explosion = E
+			break
+	if(acted_explosion && istype(acted_explosion.explosion_source, /obj/item/bombcore))
+		var/obj/item/bombcore/large/bombcore = new(get_turf(src))
+		bombcore.detonate()
+	..()
+
+//have to copypaste this code
+/turf/closed/wall/mineral/plastitaniumpirate/interior/copyTurf(turf/T)
+	if(T.type != type)
+		T.ChangeTurf(type)
+		if(underlays.len)
+			T.underlays = underlays
+	if(T.icon_state != icon_state)
+		T.icon_state = icon_state
+	if(T.icon != icon)
+		T.icon = icon
+	if(color)
+		T.atom_colours = atom_colours.Copy()
+		T.update_atom_colour()
+	if(T.dir != dir)
+		T.setDir(dir)
+	T.transform = transform
+	return T
+
+/turf/closed/wall/mineral/plastitaniumpirate/copyTurf(turf/T)
+	. = ..()
+	T.transform = transform

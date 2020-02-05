@@ -89,7 +89,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "aj" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/turf/closed/wall/mineral/plastitaniumpirate/nodiagonal,
 /area/shuttle/pirate)
 "ak" = (
 /obj/machinery/airalarm/all_access{
@@ -469,7 +469,7 @@
 	icon_state = "standard_lethal";
 	mode = 1
 	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/turf/closed/wall/mineral/plastitaniumpirate/nodiagonal,
 /area/shuttle/pirate)
 "aR" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -477,7 +477,7 @@
 	icon_state = "standard_lethal";
 	mode = 1
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitaniumpirate,
 /area/shuttle/pirate)
 "aS" = (
 /obj/effect/turf_decal/stripes/line,
@@ -486,7 +486,7 @@
 /area/shuttle/pirate)
 "aU" = (
 /obj/structure/sign/departments/engineering,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/turf/closed/wall/mineral/plastitaniumpirate/nodiagonal,
 /area/shuttle/pirate)
 "aV" = (
 /obj/effect/mob_spawn/human/pirate{
@@ -897,7 +897,7 @@
 	icon_state = "standard_lethal";
 	mode = 1
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitaniumpirate,
 /area/shuttle/pirate)
 "dy" = (
 /obj/structure/chair/wood/normal,
@@ -948,7 +948,8 @@
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ep" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/plastitaniumpirate{
+//obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
 	},
@@ -978,7 +979,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "ex" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/plastitaniumpirate
+//obj/structure/window/reinforced,
 /obj/structure/frame/machine,
 /obj/item/wrench,
 /turf/open/floor/plating/airless,
@@ -988,17 +990,19 @@
 	id = "piratebridge"
 	},
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plastitaniumpirate,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ez" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/plastitaniumpirate
+//obj/structure/window/reinforced,
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil/cut/red,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eA" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/plastitaniumpirate
+//obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
 	},
@@ -1016,7 +1020,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "fW" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitaniumpirate,
 /area/shuttle/pirate)
 "fY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1090,7 +1094,7 @@
 	icon_state = "standard_lethal";
 	mode = 1
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitaniumpirate,
 /area/shuttle/pirate)
 "yi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{

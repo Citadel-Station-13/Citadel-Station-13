@@ -348,6 +348,22 @@
 		spark_system.start()	//creates some sparks because they look cool
 		qdel(cover)	//deletes the cover - no need on keeping it there!
 
+//turret healing
+/obj/machinery/porta_turret/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+		if(obj_integrity < max_integrity)
+			if(!I.tool_start_check(user, amount=0))
+				return
+			user.visible_message("[user] is welding the turret.", \
+							"<span class='notice'>You begin repairing the turret...</span>", \
+							"<span class='italics'>You hear welding.</span>")
+			if(I.use_tool(src, user, 40, volume=50))
+				obj_integrity = max_integrity
+				user.visible_message("[user.name] has repaired [src].", \
+									"<span class='notice'>You finish repairing the turret.</span>")
+		else
+			to_chat(user, "<span class='notice'>The turret doesn't need repairing.</span>")
+		return
 
 
 /obj/machinery/porta_turret/process()
@@ -670,7 +686,11 @@
 	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
-	desc = "An energy blaster auto-turret."
+	desc = "An energy blaster auto-turret. Use a welder to fix."
+	explosion_block = 50
+	max_integrity = 350
+	integrity_failure = 20
+
 
 /obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_stun"

@@ -163,6 +163,13 @@ again.
 	icon_state = "plastitaniumwindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/plastitanium)
 
+//plastitaniumpirate window
+
+/obj/effect/spawner/structure/window/plastitaniumpirate
+	name = "plastitanium window spawner"
+	icon_state = "plastitaniumwindow_spawner"
+	explosion_block = 50
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/plastitaniumpirate)
 
 //ice window
 
