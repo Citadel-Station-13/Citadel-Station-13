@@ -87,7 +87,7 @@
 	if(IsAdminGhost(user))
 		return TRUE
 
-	if(computer.hasSiliconAccessInArea(user))
+	if(computer && computer.hasSiliconAccessInArea(user))
 		return TRUE
 
 	if(ishuman(user))
