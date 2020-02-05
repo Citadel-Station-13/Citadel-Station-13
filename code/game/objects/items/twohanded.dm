@@ -1046,7 +1046,7 @@
 	var/lethal_stam_cost = 4
 	var/stun_cost = 333				//10000/333*25 = 750. stunbatons are at time of writing 10000/1000*49 = 490.
 	var/stun_status_effect = STATUS_EFFECT_ELECTROSTAFF			//a small slowdown effect
-	var/stun_stamdmg = 25
+	var/stun_stamdmg = 40
 	var/stun_status_duration = 25
 	var/stun_stam_cost = 3.5
 
