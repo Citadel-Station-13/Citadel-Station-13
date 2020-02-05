@@ -281,7 +281,7 @@
 	desc = "A refill canister for Donksoft Toy Vendors."
 	id = "donksoft_refill"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 25000, MAT_GLASS = 15000, MAT_PLASMA = 20000, MAT_GOLD = 10000, MAT_SILVER = 10000)
+	materials = list(/datum/material/iron = 25000, /datum/material/glass = 15000, /datum/material/plasma = 20000, /datum/material/gold = 10000, /datum/material/silver = 10000)
 	build_path = /obj/item/vending_refill/donksoft
 	category = list("Equipment")
 
@@ -334,7 +334,7 @@
 	desc = "A spray bottle, with an unscrewable top."
 	id = "spraybottle"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 200)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
 	build_path = /obj/item/reagent_containers/spray
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -344,7 +344,7 @@
 	desc = "A trap used to catch space bears and other legged creatures."
 	id = "beartrap"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_TITANIUM = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/titanium = 1000)
 	build_path = /obj/item/restraints/legcuffs/beartrap
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -398,7 +398,7 @@
 	desc = "A holographic projector that creates holographic barriers that prevent changes in temperature conditions."
 	id = "holosignfirelock"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/firelock
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -408,7 +408,7 @@
 	desc = "A holographic projector that creates holographic barriesr that prevent changes in atmospheric and temperature conditions."
 	id = "holosigncombifan"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 2500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 1750)
+	materials = list(/datum/material/iron = 7500, /datum/material/glass = 2500, /datum/material/silver = 2500, /datum/material/gold = 2500, /datum/material/titanium = 1750)
 	build_path = /obj/item/holosign_creator/combifan
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -428,7 +428,7 @@
 	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
 	build_type = PROTOLATHE
 	build_path = /obj/item/holosign_creator/medical
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
 	id = "holobarrier_med"
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -508,57 +508,57 @@
 	desc = "A robust flashlight used by security."
 	id = "seclite"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2500)
+	materials = list(/datum/material/iron = 2500)
 	build_path = /obj/item/flashlight/seclite
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/detective_scanner
 	name = "Forensic Scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	id = "detective_scanner"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 2500, MAT_SILVER = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 2500, /datum/material/silver = 2000)
 	build_path = /obj/item/detective_scanner
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/pepperspray
 	name = "Pepper Spray"
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly. Printed pepper sprays do not contain reagents."
 	id = "pepperspray"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000)
 	build_path = /obj/item/reagent_containers/spray/pepper/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/bola_energy
 	name = "Energy Bola"
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	id = "bola_energy"
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 500, MAT_PLASMA = 500, MAT_TITANIUM = 500)
+	materials = list(/datum/material/silver = 500, /datum/material/plasma = 500, /datum/material/titanium = 500)
 	build_path = /obj/item/restraints/legcuffs/bola/energy
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/zipties
 	name = "Zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	id = "zipties"
 	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 250)
+	materials = list(/datum/material/plastic = 250)
 	build_path = /obj/item/restraints/handcuffs/cable/zipties
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/evidencebag
 	name = "Evidence Bag"
 	desc = "An empty evidence bag."
 	id = "evidencebag"
 	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 100)
+	materials = list(/datum/material/plastic = 100)
 	build_path = /obj/item/evidencebag
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

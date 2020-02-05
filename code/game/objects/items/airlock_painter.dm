@@ -64,7 +64,7 @@
 		if(!L)
 			return OXYLOSS
 
-		L.Remove(user)
+		L.Remove()
 
 		// make some colorful reagent, and apply it to the lungs
 		L.create_reagents(10)

@@ -74,7 +74,7 @@
 	desc = "A revolver speedloader."
 	id = "sl357"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/a357
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -84,7 +84,7 @@
 	desc = "A revolver speedloader. Cuts through like a hot knife through butter."
 	id = "sl357ap"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 30000, MAT_TITANIUM = 45000)
+	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 45000)
 	build_path = /obj/item/ammo_box/a357/ap
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

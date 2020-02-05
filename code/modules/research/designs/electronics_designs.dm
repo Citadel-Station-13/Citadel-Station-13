@@ -28,7 +28,7 @@
 	desc = "A software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading."
 	id = "ai_cam_upgrade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 15000, MAT_SILVER = 15000, MAT_DIAMOND = 20000, MAT_PLASMA = 10000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/gold = 15000, /datum/material/silver = 15000, /datum/material/diamond = 20000, /datum/material/plasma = 10000)
 	build_path = /obj/item/surveillance_upgrade
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -51,7 +51,7 @@
 	desc = "Allows for the construction of a nanite communication remote."
 	id = "nanite_comm_remote"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
 	build_path = /obj/item/nanite_remote/comm
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

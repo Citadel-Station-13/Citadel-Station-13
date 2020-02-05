@@ -33,7 +33,7 @@
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, special = 1)
+		replaced.Remove(TRUE)
 		if(drop_if_replaced)
 			replaced.forceMove(get_turf(M))
 		else
@@ -54,20 +54,19 @@
 	return TRUE
 
 //Special is for instant replacement like autosurgeons
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/proc/Remove(special = FALSE)
+	if(owner)
+		owner.internal_organs -= src
+		if(owner.internal_organs_slot[slot] == src)
+			owner.internal_organs_slot.Remove(slot)
+		if((organ_flags & ORGAN_VITAL) && !special && !(owner.status_flags & GODMODE))
+			owner.death()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.Remove(owner)
+		. = owner //for possible subtypes specific post-removal code.
 	owner = null
-	if(M)
-		M.internal_organs -= src
-		if(M.internal_organs_slot[slot] == src)
-			M.internal_organs_slot.Remove(slot)
-		if((organ_flags & ORGAN_VITAL) && !special && !(M.status_flags & GODMODE))
-			M.death()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Remove(M)
 	START_PROCESSING(SSobj, src)
-
-	return TRUE
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
@@ -185,7 +184,7 @@
 	if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
-		Remove(owner, TRUE)
+		Remove(TRUE)
 	return ..()
 
 /obj/item/organ/attack(mob/living/carbon/M, mob/user)
@@ -338,7 +337,7 @@
 				T = new dna.species.mutanttongue()
 			else
 				T = new()
-			oT.Remove(src)
+			oT.Remove()
 			qdel(oT)
 			T.Insert(src)
 

@@ -638,7 +638,7 @@
 	id = "borg_upgrade_premiumka"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/premiumka
-	materials = list(MAT_METAL=8000, MAT_GLASS=4000, MAT_TITANIUM=2000)
+	materials = list(/datum/material/iron=8000, /datum/material/glass=4000, /datum/material/titanium=2000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 

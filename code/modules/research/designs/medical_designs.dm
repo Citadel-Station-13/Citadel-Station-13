@@ -178,7 +178,7 @@
 	id = "medspray"
 	build_path = /obj/item/reagent_containers/medspray
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2500, MAT_GLASS = 500)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 500)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -306,7 +306,7 @@
 	id = "defibrillator_compact"
 	build_type = PROTOLATHE
 	build_path = /obj/item/defibrillator/compact
-	materials = list(MAT_METAL = 16000, MAT_GLASS = 8000, MAT_SILVER = 6000, MAT_GOLD = 3000)
+	materials = list(/datum/material/iron = 16000, /datum/material/glass = 8000, /datum/material/silver = 6000, /datum/material/gold = 3000)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 

@@ -141,7 +141,7 @@
 	name = "Rifle Bullet (7.62mm)"
 	id = "a762"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 5000) //need seclathe for clips
+	materials = list(/datum/material/iron = 5000) //need seclathe for clips
 	build_path = /obj/item/ammo_casing/a762
 	category = list("hacked", "Security")
 
