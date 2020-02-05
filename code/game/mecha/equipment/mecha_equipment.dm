@@ -43,7 +43,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
 	if(chassis)
-		log_message("Critical failure", color="red")
+		mecha_log_message("Critical failure", color="red")
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis)
@@ -116,7 +116,7 @@
 	M.equipment += src
 	chassis = M
 	forceMove(M)
-	M.log_message("[src] initialized.")
+	M.mecha_log_message("[src] initialized.")
 	if(!M.selected && selectable)
 		M.selected = src
 	src.update_chassis_page()
@@ -129,7 +129,7 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		update_chassis_page()
-		chassis.log_message("[src] removed from equipment.")
+		chassis.mecha_log_message("[src] removed from equipment.")
 		chassis = null
 		set_ready_state(1)
 	return
@@ -150,18 +150,14 @@
 		chassis.occupant_message("[icon2html(src, chassis.occupant)] [message]")
 	return
 
-/obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
+/obj/item/mecha_parts/mecha_equipment/proc/mecha_log_message(message, color)
+	log_message(message, LOG_GAME, color)			//pass to default admin logging too
 	if(chassis)
-		chassis.log_message("([src]) [message]", message_type, color)
-	else
-		..()
-	return
-
+		chassis.mecha_log_message(message, color)		//and pass to our chassis
 
 //Used for reloading weapons/tools etc. that use some form of resource
 /obj/item/mecha_parts/mecha_equipment/proc/rearm()
 	return 0
-
 
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
 	return 0
