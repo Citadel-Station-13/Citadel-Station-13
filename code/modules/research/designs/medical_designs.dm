@@ -254,7 +254,7 @@
 	materials = list(MAT_METAL = 6000, MAT_PLASTIC = 4000, MAT_TITANIUM = 2000)
 	build_path = /obj/item/bodybag/containment
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 ////////////////////////////////////////
 //////////Defibrillator Tech////////////
