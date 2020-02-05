@@ -88,16 +88,15 @@
 
 /obj/item/gunwip
 	name = "unfinished gun"
-	desc = "You shouldn't see this description. It's a bug. Please report it."
-	icon_state = "saber"
+	desc = "A bug. Please report it."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "receiver"
 	var/obj/item/gunmodule/receiverpart/receiver
 	var/obj/item/gunmodule/barrelpart/barrel
 	var/obj/item/gunmodule/stockpart/stock
 	var/obj/item/gunmodule/grippart/grip
 	var/obj/item/gunmodule/triggerassembly/trigassembly
 
-/obj/item/gunwip/Initialize()
-	desc = "An unfinished gun. It appears to be built on a [receiver]."
 
 /obj/item/gunwip/proc/partAdd(mob/user, obj/item/I = null)
 	if(!istype(I, /obj/item/gunmodule))
@@ -166,18 +165,21 @@
 
 /obj/item/gunwip/attack_self(mob/user)
 	if(receiver)
-		user.transferItemToLoc(receiver, user)
+		user.transferItemToLoc(receiver, get_turf(user))
 	if(barrel)
-		user.transferItemToLoc(barrel, user)
+		user.transferItemToLoc(barrel, get_turf(user))
 	if(stock)
-		user.transferItemToLoc(stock, user)
+		user.transferItemToLoc(stock, get_turf(user))
 	if(grip)
-		user.transferItemToLoc(grip, user)
+		user.transferItemToLoc(grip, get_turf(user))
 	if(trigassembly)
-		user.transferItemToLoc(trigassembly, user)
+		user.transferItemToLoc(trigassembly, get_turf(user))
 	to_chat(user, "You disassemble the [name].")
 	qdel(src)
 
+/obj/item/gunwip/attack_hand(mob/user)
+	. = ..()
+	return
 //
 // PARTS
 //
@@ -204,13 +206,13 @@
 	. = ..()
 	. += "The modular receiver is designed for [calibre] ammunition."
 	. += "The average rate of fire of the weapon is [firerate] RPM."
-	. += "The receiver accepts [magazine.name] magazines."
+
 
 /obj/item/gunmodule/receiverpart/attack_self(mob/user)
-	var/obj/item/gunwip/rawgun = new(get_turf(src))
+	var/obj/item/gunwip/rawgun = /obj/item/gunwip
+	rawgun.desc = "An unfinished gun. It appears to be built on a [src.name]."
+	rawgun.partAdd(user, src)
 	user.put_in_hands(rawgun)
-	user.transferItemToLoc(src, rawgun)
-	rawgun.receiver = src
 
 
 /obj/item/gunmodule/barrelpart
@@ -226,7 +228,7 @@
 /obj/item/gunmodule/stockpart
 	name = "debug modular stock"
 	desc = "Debug item. Report it on github if you see it."
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	var/accuracymod = 1
 	var/weightmod = 1
 	var/recoilmod = 0.4
@@ -267,15 +269,17 @@
 	name = "rifle stock"
 	desc = "A heavy, crude rifle stock roughly carved out of wood. Pretty stable."
 	weightmod = 1.5
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/gunmodule/grippart/crude
 	name = "rifle grip"
 	desc = "A bulky, crude rifle grip, roughly carved out of wood. Fairly stable."
 	weightmod = 1.5
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/gunmodule/triggerassembly/improv
 	name = "improvised trigger assembly"
-	desc = "An improvised trigger assembly for a firearm."
+	desc = "An improvised trigger assembly for a firearm. A little unreliable.s"
 	maxburst = 1
 	failchancemod = 2.5
 
