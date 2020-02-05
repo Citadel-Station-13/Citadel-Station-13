@@ -1032,13 +1032,12 @@
 	sharpness = FALSE
 	force_unwielded = 5
 	force_wielded = 10
-	throwforce = 1
+	throwforce = 15			//if you are a madman and finish someone off with this, power to you.
 	throw_speed = 1
 	block_chance = 50
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 2000)
-	hitsound = 'sound/weapons/staff.ogg'
-	attack_verb = list("suppresed", "struck", "beaten", "thwacked", "pulped", "shocked")
-	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors.
+	attack_verb = list("struck", "beaten", "thwacked", "pulped")
+	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors. (to curb stun-kill rampaging without it being on)
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	var/on = FALSE
 	var/can_block_projectiles = FALSE		//can't block guns
@@ -1110,16 +1109,16 @@
 	else
 		turn_on(user, silent)
 
-/obj/item/twohanded/electrostaff/attack_self(mob/user)
-	var/oldwielded = wielded
+/obj/item/twohanded/electrostaff/wield(mob/user)
 	. = ..()
-	if(.)
-		return
-	if(oldwielded != wielded)
-		if(wielded)
-			turn_on(user)
-		else
-			turn_off(user)
+	if(wielded)
+		turn_on(user)
+	add_fingerprint(user)
+
+/obj/item/twohanded/electrostaff/unwield(mob/user)
+	. = ..()
+	if(!wielded)
+		turn_off(user)
 	add_fingerprint(user)
 
 /obj/item/twohanded/electrostaff/update_icon()
