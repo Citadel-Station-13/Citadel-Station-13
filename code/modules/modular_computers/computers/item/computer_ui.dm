@@ -38,7 +38,8 @@
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
 
-		ui = new(user, src, ui_key, "ntos_main", "NTOS Main menu", 400, 500, master_ui, state)
+		ui = new(user, src, ui_key, "ntos_main", "NtOS Main menu", 400, 500, master_ui, state)
+		ui.set_style("ntos")
 		ui.open()
 		ui.set_autoupdate(state = 1)
 
@@ -68,10 +69,10 @@
 	switch(action)
 		if("PC_exit")
 			kill_program()
-			return 1
+			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
-			return 1
+			return TRUE
 		if("PC_minimize")
 			var/mob/user = usr
 			if(!active_program || !all_components[MC_CPU])
@@ -156,6 +157,7 @@
 			comp_light_color = new_color
 			light_color = new_color
 			update_light()
+			return TRUE
 		else
 			return
 

@@ -77,7 +77,10 @@
 		return TRUE
 	if (user.get_active_held_item())
 		return
-	object.attack_ai(imp_in)
+	if (user.CanReach(object))
+		object.attack_robot(imp_in)
+	else
+		object.attack_ai(imp_in)
 	return TRUE
 
 /obj/item/implant/hijack/proc/hijack_remotely(obj/machinery/power/apc/apc)
@@ -86,6 +89,9 @@
 	to_chat(imp_in, "<span class='notice'>Establishing remote connection with APC.</span>")
 	if (!do_after(imp_in, 4 SECONDS,target=apc))
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")
+		return TRUE
+	if (LAZYLEN(imp_in.siliconaccessareas) >= HIJACK_APC_MAX_AMOUNT)
+		to_chat(src,"<span class='warning'>You are connected to too many APCs! Too many more will fry your brain.</span>")
 		return TRUE
 	imp_in.light_power = 2
 	imp_in.light_range = 2
@@ -99,7 +105,7 @@
 		apc.set_hijacked_lighting()
 		imp_in.toggleSiliconAccessArea(apc.area)
 		apc.update_icon()
-		stealthcooldown = world.time + 3 MINUTES
+		stealthcooldown = world.time + 1 MINUTES + 30 SECONDS
 		toggle_eyes()
 	else
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")

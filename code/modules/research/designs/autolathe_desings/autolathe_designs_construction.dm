@@ -103,7 +103,17 @@
 /datum/design/rcd_ammo
 	name = "Compressed Matter Cartridge"
 	id = "rcd_ammo"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 12000, MAT_GLASS = 8000)
 	build_path = /obj/item/rcd_ammo
-	category = list("initial","Construction")
+	category = list("initial","Construction","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_ammo_large
+	name = "Large Compressed Matter Cartridge"
+	id = "rcd_ammo_large"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 48000, MAT_GLASS = 32000)
+	build_path = /obj/item/rcd_ammo/large
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

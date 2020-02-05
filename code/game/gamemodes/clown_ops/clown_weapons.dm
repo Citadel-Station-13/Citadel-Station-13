@@ -57,10 +57,8 @@
 /obj/item/melee/transforming/energy/sword/bananium
 	name = "bananium sword"
 	desc = "An elegant weapon, for a more civilized age."
-	force = 0
-	throwforce = 0
-	force_on = 0
-	throwforce_on = 0
+	force_on = 15
+	throwforce_on = 15
 	hitsound = null
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
@@ -69,24 +67,26 @@
 	heat = 0
 	light_color = "#ffff00"
 	var/next_trombone_allowed = 0
+	var/datum/component/slippery/slipper
 
 /obj/item/melee/transforming/energy/sword/bananium/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
+	slipper = LoadComponent(/datum/component/slippery, 81, GALOSHES_DONT_HELP)
 	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/attack(mob/living/M, mob/living/user)
 	..()
 	if(active)
-		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-		slipper.Slip(M)
+		slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
+		slipper.Slip(src, M)
+		slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
 
 /obj/item/melee/transforming/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
 	if(active)
-		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-		slipper.Slip(hit_atom)
+		slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
+		slipper.Slip(src, hit_atom)
+		slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
 
 /obj/item/melee/transforming/energy/sword/bananium/attackby(obj/item/I, mob/living/user, params)
 	if((world.time > next_trombone_allowed) && istype(I, /obj/item/melee/transforming/energy/sword/bananium))
@@ -98,7 +98,6 @@
 
 /obj/item/melee/transforming/energy/sword/bananium/transform_weapon(mob/living/user, supress_message_text)
 	..()
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/ignition_effect(atom/A, mob/user)
@@ -108,8 +107,9 @@
 	if(!active)
 		transform_weapon(user, TRUE)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!</span>")
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-	slipper.Slip(user)
+	slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
+	slipper.Slip(src, user)
+	slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
 	return SHAME
 
 //BANANIUM SHIELD
@@ -126,16 +126,15 @@
 	on_force = 0
 	on_throwforce = 0
 	on_throw_speed = 1
+	var/datum/component/slippery/slipper
 
 /obj/item/shield/energy/bananium/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
+	slipper = LoadComponent(/datum/component/slippery, 81, GALOSHES_DONT_HELP)
 	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/attack_self(mob/living/carbon/human/user)
 	..()
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
@@ -149,8 +148,9 @@
 	if(active)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
-			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-			slipper.Slip(hit_atom)
+			slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
+			slipper.Slip(src, hit_atom)
+			slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
 		if(thrownby && !caught)
 			throw_at(thrownby, throw_range+2, throw_speed, null, 1)
 	else
@@ -212,7 +212,7 @@
 				M.equip_to_slot_or_del(the_stash, SLOT_WEAR_MASK, TRUE, TRUE, TRUE, TRUE)
 
 /obj/item/clothing/mask/fakemoustache/sticky
-	var/unstick_time = 600
+	var/unstick_time = 2 MINUTES
 
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize()
 	. = ..()

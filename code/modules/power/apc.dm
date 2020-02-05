@@ -154,6 +154,7 @@
 
 /obj/machinery/power/apc/Initialize(mapload, ndir, building = FALSE)
 	. = ..()
+	tdir = ndir || dir
 	var/area/A = get_base_area(src)
 	if(!building)
 		has_electronics = APC_ELECTRONICS_SECURED
@@ -191,9 +192,6 @@
 	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
-	if (building)
-		setDir(ndir)
-	src.tdir = dir		// to fix Vars bug
 	setDir(SOUTH)
 
 	switch(tdir)
@@ -857,13 +855,13 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
+		ui = new(user, src, ui_key, "apc", name, 450, 460, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
 	var/abilitiesavail = FALSE
-	if (H && !H.stealthmode)
+	if (H && !H.stealthmode && H.toggled)
 		abilitiesavail = TRUE
 	var/list/data = list(
 		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user),
@@ -871,7 +869,7 @@
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
-		"powerCellStatus" = cell ? cell.percent() : null,
+		"powerCellStatus" = (cell?.percent() || null),
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
 		"totalLoad" = DisplayPower(lastused_total),
@@ -882,8 +880,8 @@
 		"nightshiftLights" = nightshift_lights,
 		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
 		"hijacker" = hijacker == user ? TRUE : FALSE,
-		"drainavail" = cell.percent() > 85 && abilitiesavail,
-		"lockdownavail" = cell.percent() > 35 && abilitiesavail,
+		"drainavail" = cell.percent() >= 85 && abilitiesavail,
+		"lockdownavail" = cell.percent() >= 35 && abilitiesavail,
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
@@ -966,7 +964,6 @@
 	. = ..()
 	if (!. && !QDELETED(remote_control))
 		. = remote_control.can_interact(user)
-	message_admins("[area.hasSiliconAccessInArea(user)] & [hijacker == user && area.hasSiliconAccessInArea(user)]")
 	if (hijacker == user && area.hasSiliconAccessInArea(user))
 		return TRUE
 

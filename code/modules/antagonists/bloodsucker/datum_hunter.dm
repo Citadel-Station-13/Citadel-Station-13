@@ -283,8 +283,8 @@
 		streak = ""
 		restraining = 0
 	streak = streak+element
-	if(length(streak) > max_streak_length)
-		streak = copytext(streak,2)
+	if(length_char(streak) > max_streak_length)
+		streak = streak[1]
 	return
 
 

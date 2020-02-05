@@ -15,7 +15,7 @@
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 	if(user.stat != DEAD)
 		user.emote("deathgasp")
-		user.tod = STATION_TIME_TIMESTAMP("hh:mm:ss")
+		user.tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	user.fakedeath("changeling") //play dead
 	user.update_stat()
 	user.update_canmove()
