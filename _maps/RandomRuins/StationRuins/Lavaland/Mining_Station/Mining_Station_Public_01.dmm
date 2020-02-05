@@ -674,6 +674,7 @@
 /area/mine/production)
 "mp" = (
 /obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 2;
 	height = 5;
@@ -1897,6 +1898,7 @@
 /area/mine/laborcamp)
 "Hk" = (
 /obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 3;
 	height = 7;
@@ -2286,6 +2288,7 @@
 /area/mine/living_quarters)
 "Lb" = (
 /obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 3;
 	height = 10;
