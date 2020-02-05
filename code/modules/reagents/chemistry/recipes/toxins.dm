@@ -35,7 +35,7 @@
 	id = /datum/reagent/toxin/acid/fluacid
 	results = list(/datum/reagent/toxin/acid/fluacid = 4)
 	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/fluorine = 1, /datum/reagent/hydrogen = 1, /datum/reagent/potassium = 1)
-	mix_message = "<span class='danger'>A colourless liquid forms.</span>"
+	mix_message = "<span class='danger'>A colourless mixture forms.</span>"
 	required_temp = 380
 
 /datum/chemical_reaction/sulfonal
@@ -43,7 +43,7 @@
 	id = /datum/reagent/toxin/sulfonal
 	results = list(/datum/reagent/toxin/sulfonal = 3)
 	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/diethylamine = 1, /datum/reagent/sulfur = 1)
-	mix_message = "The liquid evenly mixes."
+	mix_message = "The mixture evenly mixes."
 
 /datum/chemical_reaction/lipolicide
 	name = "lipolicide"
@@ -56,14 +56,14 @@
 	id = /datum/reagent/toxin/mutagen
 	results = list(/datum/reagent/toxin/mutagen = 3)
 	required_reagents = list(/datum/reagent/radium = 1, /datum/reagent/phosphorus = 1, /datum/reagent/chlorine = 1)
-	mix_message = "The liquid becomes runny"
+	mix_message = "The mixture becomes runny"
 
 /datum/chemical_reaction/lexorin
 	name = "Lexorin"
 	id = /datum/reagent/toxin/lexorin
 	results = list(/datum/reagent/toxin/lexorin = 3)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
-	mix_message = "The liquid becomes thick"
+	mix_message = "The mixture becomes thick"
 
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
@@ -77,7 +77,7 @@
 	id = /datum/reagent/toxin/mutetoxin
 	results = list(/datum/reagent/toxin/mutetoxin = 2)
 	required_reagents = list(/datum/reagent/uranium = 2, /datum/reagent/water = 1, /datum/reagent/carbon = 1)
-	mix_message = "The liquid is silent as it bubbles."
+	mix_message = "The mixture is silent as it bubbles."
 
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
@@ -98,7 +98,7 @@
 	id = /datum/reagent/toxin/mindbreaker
 	results = list(/datum/reagent/toxin/mindbreaker = 5)
 	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/charcoal = 1)
-	mix_message = "The liquid fluffs up quickly."
+	mix_message = "The mixture fluffs up quickly."
 
 /datum/chemical_reaction/heparin
 	name = "Heparin"
@@ -126,14 +126,14 @@
 	id = /datum/reagent/toxin/anacea
 	results = list(/datum/reagent/toxin/anacea = 3)
 	required_reagents = list(/datum/reagent/medicine/haloperidol = 1, /datum/reagent/impedrezene = 1, /datum/reagent/radium = 1)
-	mix_message = "The liquid mixes effortlessly."
+	mix_message = "The mixture mixes effortlessly."
 
 /datum/chemical_reaction/mimesbane
 	name = "Mime's Bane"
 	id = /datum/reagent/toxin/mimesbane
 	results = list(/datum/reagent/toxin/mimesbane = 3)
 	required_reagents = list(/datum/reagent/radium = 1, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/consumable/nothing = 1)
-	mix_message = "The liquid bubbles stop moving."
+	mix_message = "The mixture bubbles stop moving."
 
 /datum/chemical_reaction/bonehurtingjuice
 	name = "Bone Hurting Juice"
