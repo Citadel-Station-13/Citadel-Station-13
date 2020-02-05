@@ -424,6 +424,7 @@
 			unload_hypo(vial,user)
 
 /obj/item/hypospray/mkii/AltClick(mob/living/user)
+	..()
 	if(user.canUseTopic(src, FALSE))
 		switch(mode)
 			if(HYPO_SPRAY)
