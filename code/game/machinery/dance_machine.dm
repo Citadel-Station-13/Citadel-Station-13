@@ -430,6 +430,6 @@
 /obj/machinery/jukebox/disco/process()
 	. = ..()
 	if(active)
-		for(var/mob/M in rangers)
+		for(var/mob/living/M in rangers)
 			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)
