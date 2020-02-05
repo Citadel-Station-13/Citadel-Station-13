@@ -423,18 +423,19 @@
 		else
 			unload_hypo(vial,user)
 
-/obj/item/hypospray/mkii/verb/modes()
-	set name = "Toggle Application Mode"
-	set category = "Object"
-	set src in usr
-	var/mob/M = usr
-	switch(mode)
-		if(HYPO_SPRAY)
-			mode = HYPO_INJECT
-			to_chat(M, "[src] is now set to inject contents on application.")
-		if(HYPO_INJECT)
-			mode = HYPO_SPRAY
-			to_chat(M, "[src] is now set to spray contents on application.")
+/obj/item/hypospray/mkii/AltClick(mob/living/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
+		switch(mode)
+			if(HYPO_SPRAY)
+				mode = HYPO_INJECT
+				to_chat(user, "[src] is now set to inject contents on application.")
+			if(HYPO_INJECT)
+				mode = HYPO_SPRAY
+				to_chat(user, "[src] is now set to spray contents on application.")
+
+/obj/item/hypospray/mkii/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>You can click on it while holding <b>Alt</b> to toggle its mode from spraying to injecting.</span>"
 
 #undef HYPO_SPRAY
 #undef HYPO_INJECT
