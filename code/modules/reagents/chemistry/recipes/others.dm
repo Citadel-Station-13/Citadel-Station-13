@@ -4,7 +4,7 @@
 	id = "sterilizine"
 	results = list(/datum/reagent/space_cleaner/sterilizine = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/charcoal = 1, /datum/reagent/chlorine = 1)
-	mix_message = "The liquid becomes runny."
+	mix_message = "The mixture becomes runny."
 
 /datum/chemical_reaction/lube
 	name = "Space Lube"
@@ -121,7 +121,7 @@
 	name = "Meatification"
 	id = "meatification"
 	required_reagents = list(/datum/reagent/liquidgibs = 10, /datum/reagent/consumable/nutriment = 10, /datum/reagent/carbon = 10)
-	mix_message = "The mix thickens, rapidly forming large chunks of meat."
+	mix_message = "The mix thickens, rapidly forming into large chunks of meat."
 	mob_react = FALSE
 
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, multiplier)
@@ -152,7 +152,7 @@
 	id = "mulligan"
 	results = list(/datum/reagent/mulligan = 1)
 	required_reagents = list(/datum/reagent/slime_toxin = 1, /datum/reagent/toxin/mutagen = 1)
-	mix_message = "The liquid becomes sticky."
+	mix_message = "The mixture becomes sticky."
 
 /datum/chemical_reaction/fermis_plush
 	name = "Fermis plush"
@@ -376,7 +376,7 @@
 	id = "foam surfactant"
 	results = list(/datum/reagent/fluorosurfactant = 5)
 	required_reagents = list(/datum/reagent/fluorine = 2, /datum/reagent/carbon = 2, /datum/reagent/toxin/acid = 1)
-	mix_message = "The liquid foams up."
+	mix_message = "The mixture foams up."
 
 /datum/chemical_reaction/foam
 	name = "Foam"
@@ -400,7 +400,7 @@
 	id = "metalfoam"
 	required_reagents = list(/datum/reagent/aluminium = 3, /datum/reagent/foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
-	mix_message = "The liquid foams up."
+	mix_message = "The mixture foams up."
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
@@ -418,7 +418,7 @@
 	id = "smart_metal_foam"
 	required_reagents = list(/datum/reagent/aluminium = 3, /datum/reagent/smart_foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = TRUE
-	mix_message = "The liquid foams up."
+	mix_message = "The mixture foams up."
 
 /datum/chemical_reaction/smart_foam/on_reaction(datum/reagents/holder, multiplier)
 	var/turf/location = get_turf(holder.my_atom)
@@ -433,7 +433,7 @@
 	id = "ironlfoam"
 	required_reagents = list(/datum/reagent/iron = 3, /datum/reagent/foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
-	mix_message = "The liquid foams up."
+	mix_message = "The mixture foams up."
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
@@ -449,7 +449,7 @@
 	id = /datum/reagent/foaming_agent
 	results = list(/datum/reagent/foaming_agent = 1)
 	required_reagents = list(/datum/reagent/lithium = 1, /datum/reagent/hydrogen = 1)
-	mix_message = "The liquid foams up sticking to the container."
+	mix_message = "The mixture foams up sticking to the container."
 
 /datum/chemical_reaction/smart_foaming_agent
 	name = "Smart foaming Agent"
@@ -466,21 +466,21 @@
 	id = /datum/reagent/ammonia
 	results = list(/datum/reagent/ammonia = 3)
 	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
-	mix_message = "The liquid starts to emit a bad odor."
+	mix_message = "The mixture starts to emit a bad odor."
 
 /datum/chemical_reaction/diethylamine
 	name = "Diethylamine"
 	id = /datum/reagent/diethylamine
 	results = list(/datum/reagent/diethylamine = 2)
 	required_reagents = list (/datum/reagent/ammonia = 1, /datum/reagent/consumable/ethanol = 1)
-	mix_message = "The liquid starts to emit a bad odor."
+	mix_message = "The mixture starts to emit a bad odor."
 
 /datum/chemical_reaction/space_cleaner
 	name = "Space cleaner"
 	id = /datum/reagent/space_cleaner
 	results = list(/datum/reagent/space_cleaner = 2)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/water = 1)
-	mix_message = "The liquid starts to emit a lemony smell." //Joke on lemony sented cleaners
+	mix_message = "The mixture starts to emit a lemony smell." //Joke on lemony sented cleaners
 
 /datum/chemical_reaction/plantbgone
 	name = "Plant-B-Gone"
@@ -538,7 +538,7 @@
 	id = /datum/reagent/ash
 	results = list(/datum/reagent/ash = 1)
 	required_reagents = list(/datum/reagent/oil = 1)
-	mix_message = "The liquid burns up into dust."
+	mix_message = "The mixture burns up into dust."
 	required_temp = 480
 
 /datum/chemical_reaction/colorful_reagent
@@ -605,42 +605,42 @@
 	id = /datum/reagent/saltpetre
 	results = list(/datum/reagent/saltpetre = 3)
 	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 3)
-	mix_message = "The liquid starts to become runny."
+	mix_message = "The mixture starts to become runny."
 
 /datum/chemical_reaction/lye
 	name = "lye"
 	id = /datum/reagent/lye
 	results = list(/datum/reagent/lye = 3)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
-	mix_message = "The liquid starts to become runny and turn chalky white."
+	mix_message = "The mixture starts to become runny and turn chalky white."
 
 /datum/chemical_reaction/lye2
 	name = "lye"
 	id = "lye2"
 	results = list(/datum/reagent/lye = 2)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/water = 1, /datum/reagent/carbon = 1)
-	mix_message = "The liquid starts to become runny and turn chalky white."
+	mix_message = "The mixture starts to become runny and turn chalky white."
 
 /datum/chemical_reaction/royal_bee_jelly
 	name = "royal bee jelly"
 	id = /datum/reagent/royal_bee_jelly
 	results = list(/datum/reagent/royal_bee_jelly = 5)
 	required_reagents = list(/datum/reagent/toxin/mutagen = 10, /datum/reagent/consumable/honey = 40)
-	mix_message = "The liquid starts to stick to the container's walls."
+	mix_message = "The mixture starts to stick to the container's walls."
 
 /datum/chemical_reaction/laughter
 	name = "laughter"
 	id = /datum/reagent/consumable/laughter
 	results = list(/datum/reagent/consumable/laughter = 10) // Fuck it. I'm not touching this one.
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/banana = 1)
-	mix_message = "The liquid starts to look funny."
+	mix_message = "The mixture starts to look funny."
 
 /datum/chemical_reaction/plastic_polymers
 	name = "plastic polymers"
 	id = "plastic_polymers"
 	required_reagents = list(/datum/reagent/oil = 5, /datum/reagent/toxin/acid = 2, /datum/reagent/ash = 3)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
-	mix_message = "The liquid starts clump up into plastic sheets."
+	mix_message = "The mixture starts clump up into plastic sheets."
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
@@ -652,7 +652,7 @@
 	id = /datum/reagent/pax
 	results = list(/datum/reagent/pax = 3)
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
-	mix_message = "The liquid starts to look peaceful."
+	mix_message = "The mixture starts to look peaceful."
 
 /datum/chemical_reaction/cat
 	name = "felined mutation toxic"
@@ -660,7 +660,7 @@
 	results = list(/datum/reagent/mutationtoxin/felinid = 1)
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1) // Maybe aphro+ if it becomes a shitty meme
 	required_temp = 450
-	mix_message = "The liquid starts to look fluffy."
+	mix_message = "The mixture starts to look fluffy."
 
 /datum/chemical_reaction/moff
 	name = "insect mutation toxic"
@@ -668,7 +668,7 @@
 	results = list(/datum/reagent/mutationtoxin/insect = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 2, /datum/reagent/ammonia = 5, /datum/reagent/lithium = 1, /datum/reagent/mutationtoxin = 1)
 	required_temp = 320
-	mix_message = "The liquid starts to look dusty."
+	mix_message = "The mixture starts to look dusty."
 
 /datum/chemical_reaction/notlight //Harder to make do to it being a hard race to play
 	name = "shadow mutation toxic"
@@ -676,7 +676,7 @@
 	results = list(/datum/reagent/mutationtoxin/shadow = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 5, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/oculine = 10, /datum/reagent/mutationtoxin = 1)
 	required_temp = 600
-	mix_message = "The liquid starts to look dark."
+	mix_message = "The mixture starts to look dark."
 
 // Liquid Carpets
 
@@ -685,7 +685,7 @@
 	id = /datum/reagent/carpet
 	results = list(/datum/reagent/carpet = 2)
 	required_reagents = list(/datum/reagent/drug/space_drugs = 1, /datum/reagent/blood = 1)
-	mix_message = "The liquid starts to look fibrous."
+	mix_message = "The mixture starts to look fibrous."
 
 /datum/chemical_reaction/carpet/black
 	name = "liquid black carpet"
