@@ -20,11 +20,6 @@
 	maxHealth = 35
 	health = 35
 	spacewalk = TRUE
-
-	var/regen = FALSE //Can it heal over time or not?
-	var/regen_cooldown = 0 //Used for how long it takes before a healing will take place default in 60 seconds
-	var/heal_amout = 0 //How much is healed pre regen cooldown
-
 	harm_intent_damage = 8
 	obj_damage = 50
 	melee_damage_lower = 15
@@ -32,19 +27,6 @@
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("gnashes")
-
-	//Some carps heal over time
-
-/mob/living/simple_animal/hostile/carp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(regen)
-		regen_cooldown = world.time + REGENERATION_DELAY
-
-/mob/living/simple_animal/hostile/carp/Life()
-	. = ..()
-	if(regen && regen_cooldown < world.time)
-		heal_overall_damage(heal_amout)
-
 	//Space carp aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -53,6 +35,19 @@
 	movement_type = FLYING
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
+	//some carps heal over time
+	var/regen_cooldown = 0 //Used for how long it takes before a healing will take place default in 60 seconds
+	var/regen_amount = 0 //How much is healed pre regen cooldown
+
+/mob/living/simple_animal/hostile/carp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(regen_amount)
+		regen_cooldown = world.time + REGENERATION_DELAY
+
+/mob/living/simple_animal/hostile/carp/Life()
+	. = ..()
+	if(regen_amount && regen_cooldown < world.time)
+		heal_overall_damage(regen_amount)
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. = ..()
@@ -76,8 +71,7 @@
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
 
-	heal_amout = 6
-	regen = TRUE
+	regen_amount = 6
 
 	maxHealth = 30
 	health = 30
@@ -101,8 +95,7 @@
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
 
-	regen = TRUE
-	heal_amout = 8
+	regen_amout = 8
 
 	speak_emote = list("squeaks")
 	maxHealth = 90
