@@ -21,7 +21,9 @@
 	health = 35
 	spacewalk = TRUE
 
-	var/regen_cooldown = 0 //Used for Mega carp and Cayenne
+	var/regen = FALSE //Can it heal over time or not?
+	var/regen_cooldown = 0 //Used for how long it takes before a healing will take place default in 60 seconds
+	var/heal_amout = 0 //How much is healed pre regen cooldown
 
 	harm_intent_damage = 8
 	obj_damage = 50
@@ -30,6 +32,20 @@
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("gnashes")
+
+	//Some carps heal over time
+
+/mob/living/simple_animal/hostile/carp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(regen != TRUE)
+		return
+	else
+		regen_cooldown = world.time + REGENERATION_DELAY
+
+/mob/living/simple_animal/hostile/carp/Life()
+	. = ..()
+	if(regen_cooldown < world.time)
+		heal_overall_damage(heal_amout)
 
 	//Space carp aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -61,6 +77,10 @@
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
+
+	heal_amout = 6
+	regen = TRUE
+
 	maxHealth = 30
 	health = 30
 	pixel_x = -16
@@ -78,40 +98,24 @@
 	maxHealth += rand(40,60)
 	move_to_delay = rand(3,7)
 
-/mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(.)
-		regen_cooldown = world.time + REGENERATION_DELAY
-
-/mob/living/simple_animal/hostile/carp/megacarp/Life()
-	. = ..()
-	if(regen_cooldown < world.time)
-		heal_overall_damage(4)
-
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
+
+	regen = TRUE
+	heal_amout = 8
+
 	speak_emote = list("squeaks")
 	maxHealth = 90
 	health = 90
 	gold_core_spawnable = NO_SPAWN
-	faction = list(ROLE_SYNDICATE)
+	faction = list(ROLE_SYNDICATE, "carp") //They are still a carp
 	AIStatus = AI_OFF
 
 	harm_intent_damage = 12
 	obj_damage = 70
 	melee_damage_lower = 15
 	melee_damage_upper = 18
-
-/mob/living/simple_animal/hostile/carp/cayenne/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(.)
-		regen_cooldown = world.time + REGENERATION_DELAY
-
-/mob/living/simple_animal/hostile/carp/cayenne/Life()
-	. = ..()
-	if(regen_cooldown < world.time)
-		heal_overall_damage(8)
 
 #undef REGENERATION_DELAY
