@@ -327,6 +327,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "fU" = (
@@ -812,6 +813,13 @@
 	},
 /turf/open/floor/plating,
 /area/mine/production)
+"ou" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel,
+/area/mine/production)
 "ow" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -1165,6 +1173,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "tK" = (
@@ -6601,7 +6610,7 @@ Cd
 Ed
 tJ
 II
-Jo
+ou
 Ed
 Cd
 Cd
