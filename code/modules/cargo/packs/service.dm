@@ -10,8 +10,23 @@
 	group = "Service"
 
 //////////////////////////////////////////////////////////////////////////////
-/////////////////////////////// Cargo ////////////////////////////////////////
+//////////////////////////////// Cargo ///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/service/wrapping_paper
+	name = "Cargo Packaging Crate"
+	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, or the Clown's severed head? You can do all that, with this crate full of festive (and normal) wrapping paper. Also contains a hand labeler and a destination tagger for easy shipping!"
+	cost = 1000
+	contains = list(/obj/item/stack/wrapping_paper,
+					/obj/item/stack/wrapping_paper,
+					/obj/item/stack/wrapping_paper,
+					/obj/item/stack/packageWrap,
+					/obj/item/stack/packageWrap,
+					/obj/item/stack/packageWrap,
+					/obj/item/destTagger,
+					/obj/item/hand_labeler)
+	crate_type = /obj/structure/closet/crate/wooden
+	crate_name = "wrapping paper crate"
 
 /datum/supply_pack/service/cargo_supples
 	name = "Cargo Supplies Crate"
@@ -101,6 +116,23 @@
 	crate_name = "ice cream vat crate"
 	crate_type = /obj/structure/closet/crate
 
+/datum/supply_pack/service/grill
+	name = "Grilling Starter Kit"
+	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT ONLY 5000 BUX GET NOW! Contains a cooking grill and five fuel coal sheets."
+	cost = 3000
+	contains = list(/obj/item/stack/sheet/mineral/coal/five,
+					/obj/machinery/grill/unwrenched)
+	crate_name = "grilling starter kit crate"
+	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/service/grillfuel
+	name = "Grilling Fuel Kit"
+	desc = "Contains coal and coal accessories. (Note: only ten coal sheets.)"
+	cost = 1000
+	contains = list(/obj/item/stack/sheet/mineral/coal/ten)
+	crate_name = "grilling fuel kit crate"
+	crate_type = /obj/structure/closet/crate
+
 /datum/supply_pack/service/cutlery
 	name = "Kitchen Cutlery Deluxe Set"
 	desc = "Need to slice and dice away those \"Tomatoes\"? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
@@ -115,7 +147,7 @@
 					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/knife/butcher,
-					/obj/item/kitchen/rollingpin, 
+					/obj/item/kitchen/rollingpin,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
 					/obj/item/trash/plate,
@@ -240,45 +272,3 @@
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
 
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////// Vendor Refills //////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-	
-/datum/supply_pack/service/vending/bartending
-	name = "Bartending Supply Crate"
-	desc = "Bring on the booze with vending machine refills, as well as a free book containing the well-kept secrets to the bartending trade!"
-	cost = 2000
-	contains = list(/obj/item/vending_refill/boozeomat,
-					/obj/item/vending_refill/coffee,
-					/obj/item/book/granter/action/drink_fling)
-	crate_name = "bartending supply crate"
-
-/datum/supply_pack/service/vending/cigarette
-	name = "Cigarette Supply Crate"
-	desc = "Don't believe the reports - smoke today! Contains a cigarette vending machine refill."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/cigarette)
-	crate_name = "cigarette supply crate"
-	crate_type = /obj/structure/closet/crate
-
-/datum/supply_pack/service/vending/games
-	name = "Games Supply Crate"
-	desc = "Get your game on with this game vending machine refill."
-	cost = 1000
-	contains = list(/obj/item/vending_refill/games)
-	crate_name = "games supply crate"
-	crate_type = /obj/structure/closet/crate
-
-/datum/supply_pack/service/vending/snack
-	name = "Snack Supply Crate"
-	desc = "One vending machine refill of cavity-bringin' goodness! The number one dentist recommended order!"
-	cost = 1500
-	contains = list(/obj/item/vending_refill/snack)
-	crate_name = "snacks supply crate"
-
-/datum/supply_pack/service/vending/cola
-	name = "Softdrinks Supply Crate"
-	desc = "Got whacked by a toolbox, but you still have those pesky teeth? Get rid of those pearly whites with this soda machine refill, today!"
-	cost = 1500
-	contains = list(/obj/item/vending_refill/cola)
-	crate_name = "soft drinks supply crate"

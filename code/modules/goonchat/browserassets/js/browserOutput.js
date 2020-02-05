@@ -6,7 +6,6 @@
 ******************************************/
 
 //DEBUG STUFF
-var triggerError = attachErrorHandler('chatDebug', true);
 var escaper = encodeURIComponent || escape;
 var decoder = decodeURIComponent || unescape;
 window.onerror = function(msg, url, line, col, error) {
@@ -229,7 +228,7 @@ function highlightTerms(el) {
 							console.log(newWord)
 					}
 					newText += newWord || words[w].replace("<", "&lt;");
-					newText += w >= words.length ? '' : ' ';
+					newText += w >= words.length - 1 ? '' : ' ';
 				}
 			} else { //Every other type of element
 				newText += outerHTML(el.childNodes[c]);

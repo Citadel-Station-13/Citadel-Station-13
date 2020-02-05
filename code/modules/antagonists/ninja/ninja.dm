@@ -52,6 +52,7 @@
 			if(2)	//steal
 				var/datum/objective/steal/special/O = new /datum/objective/steal/special()
 				O.owner = owner
+				O.find_target()
 				objectives += O
 
 			if(3)	//protect/kill

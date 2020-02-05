@@ -24,13 +24,13 @@
 	name = "Advanced Alien Alloy Crate Crate"
 	desc = "Hello brothers from the stars!!! Our fellow brethren have made contact at long last and gave us gifts man! They really did build the prymi- Connection Error- Bro we’ll send you a sheet of advanced alien alloy."
 	cost = 15000
-	contraband = TRUE
 	DropPodOnly = TRUE
+	contraband = TRUE
 	contains = list(/obj/item/stack/sheet/mineral/abductor)
 	crate_name = "alien bro alloy crate"
 
 /datum/supply_pack/science/beakers
-	name = "Chemistry Beackers Crate"
+	name = "Chemistry Beakers Crate"
 	desc = "Glassware for any chemistry lab! Contains four small beakers, three large, two plastic, and one metamaterial. As well as three droppers and two pairs of latex gloves."
 	cost = 1500
 	contains = list(/obj/item/reagent_containers/glass/beaker,
@@ -81,6 +81,16 @@
 					/obj/item/integrated_electronics/debugger,
 					/obj/item/integrated_electronics/wirer)
 	crate_name = "circuitry starter pack crate"
+
+/datum/supply_pack/science/glasswork
+	name = "Glass Blower Kit Crate"
+	desc = "Learn and make glassworks of usefull things for a profit! Contains glassworking tools and blowing rods. Glass not included."
+	cost = 1000
+	contains = list(/obj/item/glasswork/glasskit,
+					/obj/item/glasswork/glasskit,
+					/obj/item/glasswork/blowing_rod,
+					/obj/item/glasswork/blowing_rod)
+	crate_name = "glassblower gear crate"
 
 /datum/supply_pack/science/monkey
 	name = "Monkey Cube Crate"

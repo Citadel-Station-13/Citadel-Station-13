@@ -73,6 +73,7 @@
 #define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
 #define ADMIN_PUNISHMENT_MAZING "Puzzle"
 #define ADMIN_PUNISHMENT_PIE "Cream Pie"
+#define ADMIN_PUNISHMENT_CUSTOM_PIE "Custom Cream Pie"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
@@ -87,5 +88,5 @@
 #define MAX_KEYPRESS_COMMANDLENGTH 16
 ///Max amount of keypress messages per second over two seconds before client is autokicked
 #define MAX_KEYPRESS_AUTOKICK 100
-///Length of held key rolling buffer
-#define HELD_KEY_BUFFER_LENGTH 15
+///Length of max held keys
+#define MAX_HELD_KEYS 15

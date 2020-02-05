@@ -401,7 +401,10 @@
 							mutcolor = "bad"
 					temp_html += "<div class='statusLine'><span class='[mutcolor]'>[HM.name] </span>"
 					temp_html += "<a href='?src=[REF(src)];task=remove_from_advinjector;injector=[A];path=[HM.type];'>Remove</a></div>"
-				temp_html += "<div class='statusLine'> <a href='?src=[REF(src)];task=advinjector;injector=[A];'>Print Advanced Injector</a>"
+				if (injectorready < world.time)
+					temp_html += "<div class='statusLine'> <a href='?src=[REF(src)];task=advinjector;injector=[A];'>Print Advanced Injector</a>"
+				else
+					temp_html += "<div class='statusLine'> <span class='linkOff'>Print Advanced Injector</span>"
 				temp_html += "<a href='?src=[REF(src)];task=remove_advinjector;injector=[A];'>Remove Injector</a></div>"
 				temp_html += "<br></div>"
 		else
@@ -688,7 +691,7 @@
 					viable_occupant.radiation += (RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength)/(connected.damage_coeff ** 2) //Read comment in "transferbuffer" section above for explanation
 					switch(href_list["task"])                                                                                             //Same thing as there but values are even lower, on best part they are about 0.0*, effectively no damage
 						if("pulseui")
-							var/len = length(viable_occupant.dna.uni_identity)
+							var/len = length_char(viable_occupant.dna.uni_identity)
 							num = WRAP(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2
                                                                                                                          //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
@@ -696,12 +699,12 @@
 							var/subblock = num - block*DNA_BLOCK_SIZE
 							last_change = "UI #[block]-[subblock]; "
 
-							var/hex = copytext(viable_occupant.dna.uni_identity, num, num+1)
+							var/hex = copytext_char(viable_occupant.dna.uni_identity, num, num+1)
 							last_change += "[hex]"
 							hex = scramble(hex, radstrength, radduration)
 							last_change += "->[hex]"
 
-							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
+							viable_occupant.dna.uni_identity = copytext_char(viable_occupant.dna.uni_identity, 1, num) + hex + copytext_char(viable_occupant.dna.uni_identity, num + 1)
 							viable_occupant.updateappearance(mutations_overlay_update=1)
 				else
 					current_screen = "mainmenu"

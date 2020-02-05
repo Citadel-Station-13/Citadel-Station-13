@@ -12,7 +12,6 @@
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	var/wait
-	var/mode = MAIN_SCREEN
 	var/datum/symptom/selected_symptom
 	var/obj/item/reagent_containers/beaker
 
@@ -56,18 +55,14 @@
 		if(istype(D, /datum/disease/advance))
 			var/datum/disease/advance/A = D
 			var/disease_name = SSdisease.get_disease_name(A.GetDiseaseID())
-			if((disease_name == "Unknown") && A.mutable)
-				this["can_rename"] = TRUE
+			this["can_rename"] = ((disease_name == "Unknown") && A.mutable)
 			this["name"] = disease_name
 			this["is_adv"] = TRUE
 			this["symptoms"] = list()
-			var/symptom_index = 1
 			for(var/symptom in A.symptoms)
 				var/datum/symptom/S = symptom
 				var/list/this_symptom = list()
-				this_symptom["name"] = S.name
-				this_symptom["sym_index"] = symptom_index
-				symptom_index++
+				this_symptom = get_symptom_data(S)
 				this["symptoms"] += list(this_symptom)
 			this["resistance"] = A.totalResistance()
 			this["stealth"] = A.totalStealth()
@@ -128,29 +123,28 @@
 /obj/machinery/computer/pandemic/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "pandemic", name, 700, 500, master_ui, state)
+		ui = new(user, src, ui_key, "pandemic", name, 520, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/pandemic/ui_data(mob/user)
 	var/list/data = list()
 	data["is_ready"] = !wait
-	data["mode"] = mode
-	switch(mode)
-		if(MAIN_SCREEN)
-			if(beaker)
-				data["has_beaker"] = TRUE
-				if(!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
-					data["beaker_empty"] = TRUE
-				var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
-				if(B)
-					data["has_blood"] = TRUE
-					data[/datum/reagent/blood] = list()
-					data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
-					data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
-					data["viruses"] = get_viruses_data(B)
-					data["resistances"] = get_resistance_data(B)
-		if(SYMPTOM_DETAILS)
-			data["symptom"] = get_symptom_data(selected_symptom)
+	if(beaker)
+		data["has_beaker"] = TRUE
+		data["beaker_empty"] = (!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
+		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
+		if(B)
+			data["has_blood"] = TRUE
+			data[/datum/reagent/blood] = list()
+			data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
+			data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
+			data["viruses"] = get_viruses_data(B)
+			data["resistances"] = get_resistance_data(B)
+		else
+			data["has_blood"] = FALSE
+	else
+		data["has_beaker"] = FALSE
+		data["has_blood"] = FALSE
 
 	return data
 
@@ -209,19 +203,6 @@
 			update_icon()
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)
 			. = TRUE
-		if("symptom_details")
-			var/picked_symptom_index = text2num(params["picked_symptom"])
-			var/index = text2num(params["index"])
-			var/datum/disease/advance/A = get_by_index("viruses", index)
-			var/datum/symptom/S = A.symptoms[picked_symptom_index]
-			mode = SYMPTOM_DETAILS
-			selected_symptom = S
-			. = TRUE
-		if("back")
-			mode = MAIN_SCREEN
-			selected_symptom = null
-			. = TRUE
-
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())

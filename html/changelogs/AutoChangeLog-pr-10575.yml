@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - rscadd: "Replaces a lot of ingame UIs with TGUI next, increasing performance drastically."

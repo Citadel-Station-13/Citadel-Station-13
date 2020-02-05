@@ -23,6 +23,7 @@
 		/datum/language/aphasia,
 		/datum/language/slime,
 		/datum/language/vampiric,
+		/datum/language/dwarf,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2
@@ -71,12 +72,13 @@
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
-/obj/item/organ/tongue/Remove(mob/living/carbon/M, special = 0)
-	..()
-	if(say_mod && M.dna && M.dna.species)
-		M.dna.species.say_mod = initial(M.dna.species.say_mod)
-	UnregisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
-	M.RegisterSignal(M, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+/obj/item/organ/tongue/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		if(say_mod && owner.dna?.species)
+			owner.dna.species.say_mod = initial(owner.dna.species.say_mod)
+		UnregisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+		owner.RegisterSignal(owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+	return ..()
 
 /obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
 	return is_type_in_typecache(dt, languages_possible)
@@ -189,7 +191,7 @@
 		var/insertpos = rand(1, message_list.len - 1)
 		var/inserttext = message_list[insertpos]
 
-		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
+		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
 			message_list[insertpos] = inserttext + "..."
 
 		if(prob(20) && message_list.len > 3)
@@ -290,7 +292,7 @@
 
 /obj/item/organ/tongue/fluffy/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
-	if(copytext(message, 1, 2) != "*")
+	if(message[1] != "*")
 		message = replacetext(message, "ne", "nye")
 		message = replacetext(message, "nu", "nyu")
 		message = replacetext(message, "na", "nya")

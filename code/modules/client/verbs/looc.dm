@@ -13,7 +13,7 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 	if(!mob)
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
 

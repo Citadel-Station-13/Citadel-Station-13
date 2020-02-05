@@ -197,7 +197,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 		if(HAS_TRAIT(M, TRAIT_BLIND))
 			if(eyes)
-				eyes.Remove(M)
+				eyes.Remove()
 				eyes.forceMove(get_turf(M))
 				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
 				M.emote("scream")
@@ -887,7 +887,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/barefoot/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
 		var/mob/living/carbon/human/H = M
-		if(!H.shoes)
+		if(!H.shoes || !(H.shoes.body_parts_covered & FEET))
 			H.adjustBruteLoss(-3, 0)
 			. = 1
 	return ..() || .

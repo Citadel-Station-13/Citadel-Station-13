@@ -31,7 +31,7 @@
 		reset_streak(D)
 	streak = streak+element
 	if(length(streak) > max_streak_length)
-		streak = copytext(streak,2)
+		streak = copytext(streak, 1 + length(streak[1]))
 	return
 
 /datum/martial_art/proc/reset_streak(mob/living/carbon/human/new_target)

@@ -60,8 +60,8 @@
 		var/flagslist = splittext(set_obj_flags,";")
 		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
 		for (var/flag in flagslist)
-			if (findtext(flag,"!",1,2))
-				flag = copytext(flag,1-(length(flag))) // Get all but the initial !
+			if(flag[1] == "!")
+				flag = copytext(flag, length(flag[1]) + 1) // Get all but the initial !
 				obj_flags &= ~string_to_objflag[flag]
 			else
 				obj_flags |= string_to_objflag[flag]
@@ -178,7 +178,7 @@
 		machine = null
 
 //called when the user unsets the machine.
-/atom/movable/proc/on_unset_machine(mob/user)
+/atom/proc/on_unset_machine(mob/user)
 	return
 
 /mob/proc/set_machine(obj/O)

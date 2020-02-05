@@ -93,6 +93,24 @@
 /obj/structure/holosign/barrier/firelock/blocksTemperature()
 	return TRUE
 
+/obj/structure/holosign/barrier/combifan
+	name = "holo combifan"
+	desc = "A holographic barrier resembling a blue-accented tiny fan. Though it does not prevent solid objects from passing through, gas and temperature changes are kept out."
+	icon_state = "holo_combifan"
+	max_integrity = 30
+	density = FALSE
+	anchored = TRUE
+	alpha = 150
+	CanAtmosPass = ATMOS_PASS_NO
+	resistance_flags = FIRE_PROOF
+
+/obj/structure/holosign/barrier/combolock/blocksTemperature()
+	return TRUE
+
+/obj/structure/holosign/barrier/combolock/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
 	desc = "A fragile energy field that blocks movement. Excels at blocking lethal projectiles."
