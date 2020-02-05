@@ -1,4 +1,3 @@
-#define TIME_BLOODSUCKER_NIGHT	900 		// 15 minutes
 #define TIME_BLOODSUCKER_DAY_WARN	90 		// 1.5 minutes
 #define TIME_BLOODSUCKER_DAY_FINAL_WARN	25 	// 25 sec
 #define TIME_BLOODSUCKER_DAY	60 			// 1.5 minutes // 10 is a second, 600 is a minute.
@@ -11,6 +10,7 @@
 	var/cancel_me = FALSE
 	var/amDay = FALSE
 	var/time_til_cycle = 0
+	var/nightime_duration = 900 //15 Minutes
 
 /obj/effect/sunlight/Initialize()
 	countdown()
@@ -21,7 +21,7 @@
 
 	while(!cancel_me)
 
-		time_til_cycle = TIME_BLOODSUCKER_NIGHT
+		time_til_cycle = nightime_duration
 
 		// Part 1: Night (all is well)
 		while(time_til_cycle > TIME_BLOODSUCKER_DAY_WARN)
@@ -81,7 +81,9 @@
 				  	  "<span class = 'announce'>The solar flare has ended, and the daylight danger has passed...for now.</span>")
 		amDay = FALSE
 		day_end()   // Remove VANISHING ACT power from all vamps who have it! Clear Warnings (sunlight, locker protection)
-		message_admins("BLOODSUCKER NOTICE: Daylight Ended. Resetting to Night (Lasts for [TIME_BLOODSUCKER_NIGHT / 60] minutes.)")
+		nightime_duration += 100 //Each day makes the night a minute longer.
+		message_admins("BLOODSUCKER NOTICE: Daylight Ended. Resetting to Night (Lasts for [nightime_duration / 60] minutes.)")
+
 
 
 /obj/effect/sunlight/proc/hud_tick()
@@ -97,7 +99,7 @@
 		sleep(10)
 		time_til_cycle --
 
-/obj/effect/sunlight/proc/warn_daylight(danger_level=0, vampwarn = "", vassalwarn = "")
+/obj/effect/sunlight/proc/warn_daylight(danger_level =0, vampwarn = "", vassalwarn = "")
 	for(var/datum/mind/M in SSticker.mode.bloodsuckers)
 		if(!istype(M))
 			continue

@@ -175,6 +175,7 @@
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
+#define TRAIT_NO_INTERNALS		"no-internals"
 #define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
 
 // common trait sources

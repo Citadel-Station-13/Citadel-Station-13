@@ -189,21 +189,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(brain && (replace_current || !should_have_brain))
 		if(!brain.decoy_override)//Just keep it if it's fake
-			brain.Remove(C,TRUE,TRUE)
+			brain.Remove(TRUE,TRUE)
 			QDEL_NULL(brain)
 	if(should_have_brain && !brain)
 		brain = new mutant_brain()
 		brain.Insert(C, TRUE, TRUE)
 
 	if(heart && (!should_have_heart || replace_current))
-		heart.Remove(C,1)
+		heart.Remove(TRUE)
 		QDEL_NULL(heart)
 	if(should_have_heart && !heart)
 		heart = new mutant_heart()
 		heart.Insert(C)
 
 	if(lungs && (!should_have_lungs || replace_current))
-		lungs.Remove(C,1)
+		lungs.Remove(TRUE)
 		QDEL_NULL(lungs)
 	if(should_have_lungs && !lungs)
 		if(mutantlungs)
@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		lungs.Insert(C)
 
 	if(liver && (!should_have_liver || replace_current))
-		liver.Remove(C,1)
+		liver.Remove(TRUE)
 		QDEL_NULL(liver)
 	if(should_have_liver && !liver)
 		if(mutantliver)
@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		liver.Insert(C)
 
 	if(stomach && (!should_have_stomach || replace_current))
-		stomach.Remove(C,1)
+		stomach.Remove(TRUE)
 		QDEL_NULL(stomach)
 	if(should_have_stomach && !stomach)
 		if(mutantstomach)
@@ -233,14 +233,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		stomach.Insert(C)
 
 	if(appendix && (!should_have_appendix || replace_current))
-		appendix.Remove(C,1)
+		appendix.Remove(TRUE)
 		QDEL_NULL(appendix)
 	if(should_have_appendix && !appendix)
 		appendix = new()
 		appendix.Insert(C)
 
 	if(tail && (!should_have_tail || replace_current))
-		tail.Remove(C,1)
+		tail.Remove(TRUE)
 		QDEL_NULL(tail)
 	if(should_have_tail && !tail)
 		tail = new mutanttail()
@@ -248,21 +248,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(C.get_bodypart(BODY_ZONE_HEAD))
 		if(eyes && (replace_current || !should_have_eyes))
-			eyes.Remove(C,1)
+			eyes.Remove(TRUE)
 			QDEL_NULL(eyes)
 		if(should_have_eyes && !eyes)
 			eyes = new mutanteyes
 			eyes.Insert(C, TRUE)
 
 		if(ears && (replace_current || !should_have_ears))
-			ears.Remove(C,1)
+			ears.Remove(TRUE)
 			QDEL_NULL(ears)
 		if(should_have_ears && !ears)
 			ears = new mutantears
 			ears.Insert(C)
 
 		if(tongue && (replace_current || !should_have_tongue))
-			tongue.Remove(C,1)
+			tongue.Remove(TRUE)
 			QDEL_NULL(tongue)
 		if(should_have_tongue && !tongue)
 			tongue = new mutanttongue
@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/mutantorgan in old_species.mutant_organs)
 			var/obj/item/organ/I = C.getorgan(mutantorgan)
 			if(I)
-				I.Remove(C)
+				I.Remove()
 				QDEL_NULL(I)
 
 	for(var/path in mutant_organs)
@@ -1585,7 +1585,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
 			stop_wagging_tail(target)
 		return FALSE
-	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+	else if(!(user.client?.prefs.cit_toggles & NO_ASS_SLAP) && aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
 		if(target.client?.prefs.cit_toggles & NO_ASS_SLAP)
 			to_chat(user,"A force stays your hand, preventing you from slapping \the [target]'s ass!")
 			return FALSE
@@ -1601,7 +1601,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"<span class='danger'>\The [user] slaps \the [target]'s ass!</span>",\
 			"<span class='notice'>You slap [user == target ? "your" : "\the [target]'s"] ass!</span>",\
 			"You hear a slap."
-		)			
+		)
 		return FALSE
 	else if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
@@ -1884,6 +1884,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(get_turf(target) == target_oldturf)
 				shove_blocked = TRUE
 
+		var/append_message = ""
 		if(shove_blocked && !target.buckled)
 			var/directional_blocked = !target.Adjacent(target_shove_turf)
 			var/targetatrest = target.resting
@@ -1897,33 +1898,30 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
 					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
+				append_message += ", into [target_collateral_human.name]"
 
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			var/target_held_item = target.get_active_held_item()
-			var/knocked_item = FALSE
-			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
-				target_held_item = null
-			if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
-				target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
-				if(target_held_item)
+		var/obj/item/target_held_item = target.get_active_held_item()
+		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
+			target_held_item = null
+		if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
+			target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+			if(target_held_item)
+				if(!HAS_TRAIT(target_held_item, TRAIT_NODROP))
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
 						"<span class='danger'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
-				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
-			else if(target_held_item)
-				target.dropItemToGround(target_held_item)
-				knocked_item = TRUE
+					append_message += ", loosening their grip on [target_held_item]"
+				else
+					append_message += ", but couldn't loose their grip on [target_held_item]"
+			addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+		else if(target_held_item)
+			if(target.dropItemToGround(target_held_item))
 				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
 					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
-			var/append_message = ""
-			if(target_held_item)
-				if(knocked_item)
-					append_message = "causing them to drop [target_held_item]"
-				else
-					append_message = "loosening their grip on [target_held_item]"
-			log_combat(user, target, "shoved", append_message)
+				append_message += ", causing them to drop [target_held_item]"
+		log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE)
 	var/hit_percent = (100-(blocked+armor))/100

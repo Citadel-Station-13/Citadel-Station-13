@@ -8,10 +8,10 @@
 	slot = ORGAN_SLOT_TAIL
 	var/tail_type = "None"
 
-/obj/item/organ/tail/Remove(mob/living/carbon/human/H,  special = 0)
-	..()
-	if(H && H.dna && H.dna.species)
-		H.dna.species.stop_wagging_tail(H)
+/obj/item/organ/tail/Remove(special = FALSE)
+	if(owner?.dna?.species)
+		owner.dna.species.stop_wagging_tail(owner)
+	return ..()
 
 /obj/item/organ/tail/cat
 	name = "cat tail"
@@ -26,13 +26,14 @@
 			H.dna.features["tail_human"] = tail_type
 			H.update_body()
 
-/obj/item/organ/tail/cat/Remove(mob/living/carbon/human/H,  special = 0)
-	..()
-	if(istype(H))
+/obj/item/organ/tail/cat/Remove(special = FALSE)
+	if(!QDELETED(owner) && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		H.dna.features["tail_human"] = "None"
 		H.dna.species.mutant_bodyparts -= "tail_human"
 		color = H.hair_color
 		H.update_body()
+	return ..()
 
 /obj/item/organ/tail/lizard
 	name = "lizard tail"
@@ -54,12 +55,13 @@
 			H.dna.species.mutant_bodyparts |= "spines"
 		H.update_body()
 
-/obj/item/organ/tail/lizard/Remove(mob/living/carbon/human/H,  special = 0)
-	..()
-	if(istype(H))
+/obj/item/organ/tail/lizard/Remove(special = FALSE)
+	if(!QDELETED(owner) && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		H.dna.species.mutant_bodyparts -= "tail_lizard"
 		H.dna.species.mutant_bodyparts -= "spines"
 		color = "#" + H.dna.features["mcolor"]
 		tail_type = H.dna.features["tail_lizard"]
 		spines = H.dna.features["spines"]
 		H.update_body()
+	return ..()

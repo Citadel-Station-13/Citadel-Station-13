@@ -6,7 +6,7 @@
 	button_icon_state = "power_tres"
 
 	bloodcost = 10
-	cooldown = 60
+	cooldown = 80
 	amToggle = FALSE
 	//target_range = 2
 
