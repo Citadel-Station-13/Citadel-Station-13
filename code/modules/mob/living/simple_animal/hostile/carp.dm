@@ -37,14 +37,12 @@
 
 /mob/living/simple_animal/hostile/carp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(regen != TRUE)
-		return
-	else
+	if(regen)
 		regen_cooldown = world.time + REGENERATION_DELAY
 
 /mob/living/simple_animal/hostile/carp/Life()
 	. = ..()
-	if(regen_cooldown < world.time)
+	if(regen && regen_cooldown < world.time)
 		heal_overall_damage(heal_amout)
 
 	//Space carp aren't affected by cold.
