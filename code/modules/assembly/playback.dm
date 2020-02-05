@@ -25,12 +25,13 @@
 	listening = FALSE
 	languages = message_language
 	say("The recorded message is '[recorded]'.", language = message_language)
+	activate_cooldown = max(round(length(recorded) * 0.5), 3 SECONDS)
 
 /obj/item/assembly/playback/activate()
-	if(recorded == "") // Why say anything when there isn't anything to say
+	. = ..()
+	if(!. || !recorded) // Why say anything when there isn't anything to say
 		return FALSE
 	say("[recorded]", language = languages) // Repeat the message in the language it was said in
-	return TRUE
 
 /obj/item/assembly/playback/proc/record()
 	if(!secured || holder)

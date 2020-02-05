@@ -129,7 +129,7 @@
 		if(16)
 			T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/fluffy
-			T.Remove(M)
+			T.Remove()
 			nT.Insert(M)
 			T.moveToNullspace()//To valhalla
 			to_chat(M, "<span class='big warning'>Your tongue feels... weally fwuffy!!</span>")
@@ -152,7 +152,7 @@
 /datum/reagent/fermi/furranium/on_mob_delete(mob/living/carbon/M)
 	if(cached_purity < 0.95)//Only permanent if you're a good chemist.
 		nT = M.getorganslot(ORGAN_SLOT_TONGUE)
-		nT.Remove(M)
+		nT.Remove()
 		qdel(nT)
 		T.Insert(M)
 		to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")

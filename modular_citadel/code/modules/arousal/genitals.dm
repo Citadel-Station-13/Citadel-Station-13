@@ -35,8 +35,6 @@
 /obj/item/organ/genital/Destroy()
 	if(linked_organ)
 		update_link(TRUE)//this should remove any other links it has
-	if(owner)
-		Remove(owner, TRUE)//this should remove references to it, so it can be GCd correctly
 	return ..()
 
 /obj/item/organ/genital/proc/set_aroused_state(new_state)
@@ -203,10 +201,9 @@
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 
 /obj/item/organ/genital/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	if(.)
-		update(TRUE)
-		UnregisterSignal(M, COMSIG_MOB_DEATH)
+	update(TRUE)
+	if(!QDELETED(owner))
+		UnregisterSignal(owner, COMSIG_MOB_DEATH)
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
@@ -350,7 +347,6 @@
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
-				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 			else
 				switch(S.color_src)
 					if("cock_color")
@@ -361,6 +357,8 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
+			
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 
 			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER

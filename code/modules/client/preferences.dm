@@ -1446,9 +1446,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE)
-					if(!isnull(msg))
-						msg = copytext(msg, 1, MAX_MESSAGE_LEN*2)
+					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN, TRUE)
+					if(msg)
+						msg = msg
 						features["flavor_text"] = msg
 
 				if("hair")

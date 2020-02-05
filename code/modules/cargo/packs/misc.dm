@@ -204,12 +204,41 @@
 	for(var/i in 1 to 9)
 		new /obj/item/coin/silver(.)
 
+/datum/supply_pack/misc/dueling_stam
+	name = "Dueling Pistols"
+	desc = "Resolve all your quarrels with some nonlethal fun."
+	cost = 2000
+	contains = list(/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina)
+	crate_name = "dueling pistols"
+
+/datum/supply_pack/misc/dueling_lethal
+	name = "Lethal Dueling Pistols"
+	desc = "Settle your differences the true spaceman way."
+	cost = 3000
+	contraband = TRUE
+	contains = list(/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox)
+	crate_name = "dueling pistols (lethal)"
+
+/datum/supply_pack/misc/dueling_death
+	name = "Elimination Dueling Pistols"
+	desc = "It's high noon."
+	cost = 5000
+	hidden = TRUE
+	contains = list(/obj/item/storage/lockbox/dueling)
+	crate_name = "dueling pistols (elimination)"
+
 /datum/supply_pack/misc/dirtymags
 	name = "Dirty Magazines"
 	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
 	hidden = TRUE
 	cost = 12000
-	var/num_contained = 3 
+	var/num_contained = 3
 	contains = list(/obj/item/ammo_box/a357,
 					/obj/item/ammo_box/a357,
 					/obj/item/ammo_box/a357,
@@ -238,6 +267,13 @@
 					/obj/item/storage/fancy/candle_box,
 					/obj/item/storage/box/matches)
 	crate_name = "candle crate"
+
+/datum/supply_pack/misc/diamondring
+	name = "Diamond Ring"
+	desc = "Show them your love is like a diamond: unbreakable and forever lasting. Shipped straight from child slave cartels in the space african mines."
+	cost = 10000
+	contains = list(/obj/item/storage/fancy/ringbox/diamond)
+	crate_name = "diamond ring crate"
 
 /datum/supply_pack/misc/exoticfootwear
 	name = "Exotic Footwear Crate"
@@ -273,6 +309,16 @@
 					)
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
+
+/datum/supply_pack/misc/jewelry
+	name = "Jewelry Crate"
+	desc = "Bling out with this crate of jewelry. Includes gold necklace and a set of two rings."
+	cost = 5000
+	contains = list(/obj/item/clothing/neck/necklace/dope,
+					/obj/item/storage/fancy/ringbox,
+					/obj/item/storage/fancy/ringbox/silver
+					)
+	crate_name = "jewelry crate"
 
 /datum/supply_pack/misc/jukebox
 	name = "Jukebox"

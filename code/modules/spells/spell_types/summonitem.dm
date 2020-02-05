@@ -58,7 +58,7 @@
 					if(organ.owner)
 						// If this code ever runs I will be happy
 						log_combat(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
-						organ.Remove(organ.owner)
+						organ.Remove()
 			else
 				while(!isturf(item_to_retrieve.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
 					if(isitem(item_to_retrieve.loc))

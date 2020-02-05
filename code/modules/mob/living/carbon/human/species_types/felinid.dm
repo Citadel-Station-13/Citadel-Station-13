@@ -88,7 +88,7 @@
 		if(NT)
 			NT.Insert(H, drop_if_replaced = FALSE)
 		else
-			tail.Remove(H)
+			tail.Remove()
 
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
