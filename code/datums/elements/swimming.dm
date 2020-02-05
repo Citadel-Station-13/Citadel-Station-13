@@ -3,10 +3,10 @@
 	element_flags = ELEMENT_DETACH
 
 /datum/element/swimming/Attach(datum/target)
-	if(!isliving(target))
-		return ELEMENT_INCOMPATIBLE
 	if((. = ..()) == ELEMENT_INCOMPATIBLE)
 		return
+	if(!isliving(target))
+		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_IS_SWIMMING, .proc/is_swimming)
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/check_valid)
 
