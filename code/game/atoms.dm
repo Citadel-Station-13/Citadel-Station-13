@@ -6,6 +6,7 @@
 
 	var/flags_1 = NONE
 	var/interaction_flags_atom = NONE
+	var/ghost_flags = NONE
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
