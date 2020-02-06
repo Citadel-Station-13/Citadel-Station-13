@@ -40,6 +40,8 @@
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
 
+#define THRESHOLD_UNHUSK 50 // health threshold for synthflesh/rezadone to unhusk someone
+
 //reagent bitflags, used for altering how they works
 #define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body
 #define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing
