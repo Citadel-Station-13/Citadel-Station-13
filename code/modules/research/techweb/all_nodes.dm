@@ -75,9 +75,9 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/aftercare
-	id = "aftercare"
-	display_name = "Aftercare"
+/datum/techweb_node/cadaver_management
+	id = "cadaver_management"
+	display_name = "Cadaver Management"
 	description = "What you use when it's too late."
 	prereq_ids = list("biotech", "adv_engi")
 	design_ids = list("bodybag", "containmentbodybag", "harvester")
