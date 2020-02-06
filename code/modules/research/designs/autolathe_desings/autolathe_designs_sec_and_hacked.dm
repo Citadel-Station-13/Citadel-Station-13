@@ -137,6 +137,14 @@
 	build_path = /obj/item/ammo_casing/a357
 	category = list("hacked", "Security")
 
+/datum/design/n762
+	name = "Nagant Revolver Bullet (7.62x38mmR)"
+	id = "n762"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/n762
+	category = list("hacked", "Security")
+
 /datum/design/a762
 	name = "Rifle Bullet (7.62mm)"
 	id = "a762"
