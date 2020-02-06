@@ -262,53 +262,21 @@
 	update_genitals()
 
 /mob/living/carbon/human/proc/update_genitals()
-	if(!QDELETED(src))
-		dna.species.handle_genitals(src)
-
-//Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
-/mob/living/carbon/human/proc/emergent_genital_call()
-	if(!client.prefs.arousable)
-		return FALSE
-
-	var/organCheck = locate(/obj/item/organ/genital) in internal_organs
-	var/breastCheck = getorganslot(ORGAN_SLOT_BREASTS)
-	var/willyCheck = getorganslot(ORGAN_SLOT_PENIS)
-
-	if(organCheck == FALSE)
-		if(ishuman(src) && dna.species.id == "human")
-			dna.features["genitals_use_skintone"] = TRUE
-			dna.species.use_skintones = TRUE
-		if(MUTCOLORS)
-			if(src.dna.species.fixed_mut_color)
-				dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
-				dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
-				return
-		//So people who haven't set stuff up don't get rainbow surprises.
-		dna.features["cock_color"] = "[dna.features["mcolor"]]"
-		dna.features["breasts_color"] = "[dna.features["mcolor"]]"
-	else //If there's a new organ, make it the same colour.
-		if(breastCheck == FALSE)
-			dna.features["breasts_color"] = dna.features["cock_color"]
-		else if (willyCheck == FALSE)
-			dna.features["cock_color"] = dna.features["breasts_color"]
-	return TRUE
-
-/datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness
-	if(!H)//no args
-		CRASH("H = null")
-	if(!LAZYLEN(H.internal_organs) || ((NOGENITALS in species_traits) && !H.genital_override) || HAS_TRAIT(H, TRAIT_HUSK))
+	if(QDELETED(src))
 		return
 	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_FRONT_LAYER)
-
 	for(var/L in relevant_layers) //Less hardcode
-		H.remove_overlay(L)
-	H.remove_overlay(GENITALS_EXPOSED_LAYER)
+		remove_overlay(L)
+	remove_overlay(GENITALS_EXPOSED_LAYER)
+	if(!LAZYLEN(internal_organs) || ((NOGENITALS in dna.species.species_traits) && !genital_override) || HAS_TRAIT(src, TRAIT_HUSK))
+		return
+
 	//start scanning for genitals
 
 	var/list/gen_index[GENITAL_LAYER_INDEX_LENGTH]
 	var/list/genitals_to_add
 	var/list/fully_exposed
-	for(var/obj/item/organ/genital/G in H.internal_organs)
+	for(var/obj/item/organ/genital/G in internal_organs)
 		if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 			LAZYADD(gen_index[G.layer_index], G)
 	for(var/L in gen_index)
@@ -345,19 +313,19 @@
 			if(S.center)
 				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
 
-			if(use_skintones && H.dna.features["genitals_use_skintone"])
-				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
+			if(use_skintones && dna.features["genitals_use_skintone"])
+				genital_overlay.color = "#[skintone2hex(skin_tone)]"
 			else
 				switch(S.color_src)
 					if("cock_color")
-						genital_overlay.color = "#[H.dna.features["cock_color"]]"
+						genital_overlay.color = "#[dna.features["cock_color"]]"
 					if("balls_color")
-						genital_overlay.color = "#[H.dna.features["balls_color"]]"
+						genital_overlay.color = "#[dna.features["balls_color"]]"
 					if("breasts_color")
-						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
+						genital_overlay.color = "#[dna.features["breasts_color"]]"
 					if("vag_color")
-						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-			
+						genital_overlay.color = "#[dna.features["vag_color"]]"
+
 			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 
 			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
@@ -367,11 +335,40 @@
 				standing += genital_overlay
 
 		if(LAZYLEN(standing))
-			H.overlays_standing[layer] = standing
+			overlays_standing[layer] = standing
 
 	if(LAZYLEN(fully_exposed))
-		H.overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
-		H.apply_overlay(GENITALS_EXPOSED_LAYER)
+		overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
+		apply_overlay(GENITALS_EXPOSED_LAYER)
 
 	for(var/L in relevant_layers)
-		H.apply_overlay(L)
+		apply_overlay(L)
+
+
+//Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
+/mob/living/carbon/human/proc/emergent_genital_call()
+	if(!client.prefs.arousable)
+		return FALSE
+
+	var/organCheck = locate(/obj/item/organ/genital) in internal_organs
+	var/breastCheck = getorganslot(ORGAN_SLOT_BREASTS)
+	var/willyCheck = getorganslot(ORGAN_SLOT_PENIS)
+
+	if(organCheck == FALSE)
+		if(ishuman(src) && dna.species.id == "human")
+			dna.features["genitals_use_skintone"] = TRUE
+			dna.species.use_skintones = TRUE
+		if(MUTCOLORS)
+			if(src.dna.species.fixed_mut_color)
+				dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
+				dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
+				return
+		//So people who haven't set stuff up don't get rainbow surprises.
+		dna.features["cock_color"] = "[dna.features["mcolor"]]"
+		dna.features["breasts_color"] = "[dna.features["mcolor"]]"
+	else //If there's a new organ, make it the same colour.
+		if(breastCheck == FALSE)
+			dna.features["breasts_color"] = dna.features["cock_color"]
+		else if (willyCheck == FALSE)
+			dna.features["cock_color"] = dna.features["breasts_color"]
+	return TRUE
