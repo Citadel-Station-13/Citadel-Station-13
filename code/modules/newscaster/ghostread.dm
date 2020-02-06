@@ -1,4 +1,8 @@
 /mob/dead/observer/verb/read_news()
+	set name = "Read Newscaster"
+	set desc = "Open a list of available news channels"
+	set category = "Ghost"
+
 	var/datum/browser/popup = new(user, "ghost_news_list", 450, 600)
 	popup.set_content(render_news_channel_list())
 	popup.open()
@@ -11,7 +15,7 @@
 			render_news_channel(D)
 
 /mob/dead/observer/proc/render_news_channel_list()
-	var/datum/news_network = GLOB.news_network()
+	var/datum/news_network = GLOB.news_network
 	var/list/content = list()
 	for(var/i in news_network.network_channels)
 		var/datum/news/feed_channel/FC = i
@@ -27,7 +31,7 @@
 	if(!length(FC.messages))
 	content += "<b>This channel is empty.<b><BR>"
 		for(var/i in FC.messages)
-			var/datum/feed_message/FM = i
+			var/datum/news/feed_message/FM = i
 			content += "-[FM.returnBody(-1)] <BR>"
 			if(FM.img)
 				src << browse_rsc(FM.img, "tmp_photo[i].png")
