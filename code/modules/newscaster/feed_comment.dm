@@ -1,4 +1,4 @@
-/datum/newscaster/feed_comment
+/datum/news/feed_comment
 	var/author = ""
 	var/body = ""
 	var/time_stamp = ""

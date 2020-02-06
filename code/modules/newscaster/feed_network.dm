@@ -2,17 +2,17 @@ GLOBAL_DATUM_INIT(news_network, /datum/news_network, new)
 
 /// Contains all the news datum of a newscaster system.
 /datum/news_network
-	var/list/datum/newscaster/feed_channel/network_channels = list()
-	var/datum/newscaster/wanted_message/wanted_issue
+	var/list/datum/news/feed_channel/network_channels = list()
+	var/datum/news/wanted_message/wanted_issue
 	var/lastAction
 	var/redactedText = "\[REDACTED\]"
 
 /datum/news_network/New()
 	CreateFeedChannel("Station Announcements", "SS13", 1)
-	wanted_issue = new /datum/newscaster/wanted_message
+	wanted_issue = new /datum/news/wanted_message
 
 /datum/news_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = 0)
-	var/datum/newscaster/feed_channel/newChannel = new /datum/newscaster/feed_channel
+	var/datum/news/feed_channel/newChannel = new /datum/news/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
 	newChannel.locked = locked
@@ -20,7 +20,7 @@ GLOBAL_DATUM_INIT(news_network, /datum/news_network, new)
 	network_channels += newChannel
 
 /datum/news_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = 0, allow_comments = 1)
-	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
+	var/datum/news/feed_message/newMsg = new /datum/news/feed_message
 	newMsg.author = author
 	newMsg.body = msg
 	newMsg.time_stamp = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
@@ -30,7 +30,7 @@ GLOBAL_DATUM_INIT(news_network, /datum/news_network, new)
 		newMsg.img = picture.picture_image
 		newMsg.caption = picture.caption
 		newMsg.photo_file = save_photo(picture.picture_image)
-	for(var/datum/newscaster/feed_channel/FC in network_channels)
+	for(var/datum/news/feed_channel/FC in network_channels)
 		if(FC.channel_name == channel_name)
 			FC.messages += newMsg
 			break

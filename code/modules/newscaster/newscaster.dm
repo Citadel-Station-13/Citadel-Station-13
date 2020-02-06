@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/datum/picture/picture
 	var/channel_name = ""
 	var/c_locked=0
-	var/datum/newscaster/feed_channel/viewing_channel = null
+	var/datum/news/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 
 /obj/machinery/newscaster/security_unit
@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if( isemptylist(GLOB.news_network.network_channels) )
 					dat+="<I>No active channels found...</I>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						if(CHANNEL.is_admin_channel)
 							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=[REF(src)];show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 						else
@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			if(7)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 				var/list/existing_authors = list()
-				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 					if(FC.authorCensor)
 						existing_authors += GLOB.news_network.redactedText
 					else
@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
 					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
 				var/check = 0
-				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 					if(FC.channel_name == channel_name)
 						check = 1
 						break
@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				var/total_num=length(GLOB.news_network.network_channels)
 				var/active_num=total_num
 				var/message_num=0
-				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 					if(!FC.censored)
 						message_num += length(FC.messages)
 					else
@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
 						var/i = 0
-						for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
+						for(var/datum/news/feed_message/MESSAGE in viewing_channel.messages)
 							i++
 							dat+="-[MESSAGE.returnBody(-1)] <BR>"
 							if(MESSAGE.img)
@@ -215,7 +215,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 								dat+="<BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)] </FONT>\] - ([MESSAGE.time_stamp])</FONT><BR>"
 							dat+="<b><font size=1>[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]</font></b><br>"
-							for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+							for(var/datum/news/feed_comment/comment in MESSAGE.comments)
 								dat+="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 							if(MESSAGE.locked)
 								dat+="<b>Comments locked</b><br>"
@@ -231,7 +231,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(isemptylist(GLOB.news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						dat+="<A href='?src=[REF(src)];pick_censor_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Cancel</A>"
 			if(11)
@@ -242,7 +242,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(isemptylist(GLOB.news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						dat+="<A href='?src=[REF(src)];pick_d_notice=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Back</A>"
 			if(12)
@@ -251,11 +251,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(isemptylist(viewing_channel.messages))
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
+					for(var/datum/news/feed_message/MESSAGE in viewing_channel.messages)
 						dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 						dat+="<FONT SIZE=2><A href='?src=[REF(src)];censor_channel_story_body=[REF(MESSAGE)]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=[REF(src)];censor_channel_story_author=[REF(MESSAGE)]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
 						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=[REF(src)];lock_comment=[REF(MESSAGE)]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
-						for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+						for(var/datum/news/feed_comment/comment in MESSAGE.comments)
 							dat+="[comment.body] <a href='?src=[REF(src)];del_comment=[REF(comment)];del_comment_msg=[REF(MESSAGE)]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[10]'>Back</A>"
 			if(13)
@@ -268,7 +268,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					if(isemptylist(viewing_channel.messages))
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
-						for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
+						for(var/datum/news/feed_message/MESSAGE in viewing_channel.messages)
 							dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[11]'>Back</A>"
 			if(14)
@@ -349,13 +349,13 @@ GLOBAL_LIST_EMPTY(allCasters)
 			updateUsrDialog()
 		else if(href_list["submit_new_channel"])
 			var/list/existing_authors = list()
-			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+			for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.authorCensor)
 					existing_authors += GLOB.news_network.redactedText
 				else
 					existing_authors += FC.author
 			var/check = 0
-			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+			for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.channel_name == channel_name)
 					check = 1
 					break
@@ -371,7 +371,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			updateUsrDialog()
 		else if(href_list["set_channel_receiving"])
 			var/list/available_channels = list()
-			for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
+			for(var/datum/news/feed_channel/F in GLOB.news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
 			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
@@ -461,33 +461,33 @@ GLOBAL_LIST_EMPTY(allCasters)
 			screen=18
 			updateUsrDialog()
 		else if(href_list["censor_channel_author"])
-			var/datum/newscaster/feed_channel/FC = locate(href_list["censor_channel_author"])
+			var/datum/news/feed_channel/FC = locate(href_list["censor_channel_author"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
 				return
 			FC.toggleCensorAuthor()
 			updateUsrDialog()
 		else if(href_list["censor_channel_story_author"])
-			var/datum/newscaster/feed_message/MSG = locate(href_list["censor_channel_story_author"])
+			var/datum/news/feed_message/MSG = locate(href_list["censor_channel_story_author"])
 			if(MSG.is_admin_message)
 				alert("This message was created by a Nanotrasen Officer. You cannot censor its author.","Ok")
 				return
 			MSG.toggleCensorAuthor()
 			updateUsrDialog()
 		else if(href_list["censor_channel_story_body"])
-			var/datum/newscaster/feed_message/MSG = locate(href_list["censor_channel_story_body"])
+			var/datum/news/feed_message/MSG = locate(href_list["censor_channel_story_body"])
 			if(MSG.is_admin_message)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
 				return
 			MSG.toggleCensorBody()
 			updateUsrDialog()
 		else if(href_list["pick_d_notice"])
-			var/datum/newscaster/feed_channel/FC = locate(href_list["pick_d_notice"])
+			var/datum/news/feed_channel/FC = locate(href_list["pick_d_notice"])
 			viewing_channel = FC
 			screen=13
 			updateUsrDialog()
 		else if(href_list["toggle_d_notice"])
-			var/datum/newscaster/feed_channel/FC = locate(href_list["toggle_d_notice"])
+			var/datum/news/feed_channel/FC = locate(href_list["toggle_d_notice"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot place a D-Notice upon it.","Ok")
 				return
@@ -506,21 +506,21 @@ GLOBAL_LIST_EMPTY(allCasters)
 				viewing_channel = null
 			updateUsrDialog()
 		else if(href_list["show_channel"])
-			var/datum/newscaster/feed_channel/FC = locate(href_list["show_channel"])
+			var/datum/news/feed_channel/FC = locate(href_list["show_channel"])
 			viewing_channel = FC
 			screen = 9
 			updateUsrDialog()
 		else if(href_list["pick_censor_channel"])
-			var/datum/newscaster/feed_channel/FC = locate(href_list["pick_censor_channel"])
+			var/datum/news/feed_channel/FC = locate(href_list["pick_censor_channel"])
 			viewing_channel = FC
 			screen = 12
 			updateUsrDialog()
 		else if(href_list["new_comment"])
-			var/datum/newscaster/feed_message/FM = locate(href_list["new_comment"])
+			var/datum/news/feed_message/FM = locate(href_list["new_comment"])
 			var/cominput = copytext_char(stripped_input(usr, "Write your message:", "New comment", null), 140)
 			if(cominput)
 				scan_user(usr)
-				var/datum/newscaster/feed_comment/FC = new/datum/newscaster/feed_comment
+				var/datum/news/feed_comment/FC = new/datum/news/feed_comment
 				FC.author = scanned_user
 				FC.body = cominput
 				FC.time_stamp = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
@@ -528,14 +528,14 @@ GLOBAL_LIST_EMPTY(allCasters)
 				usr.log_message("(as [scanned_user]) commented on message [FM.returnBody(-1)] -- [FC.body]", LOG_COMMENT)
 			updateUsrDialog()
 		else if(href_list["del_comment"])
-			var/datum/newscaster/feed_comment/FC = locate(href_list["del_comment"])
-			var/datum/newscaster/feed_message/FM = locate(href_list["del_comment_msg"])
+			var/datum/news/feed_comment/FC = locate(href_list["del_comment"])
+			var/datum/news/feed_message/FM = locate(href_list["del_comment_msg"])
 			if(istype(FC) && istype(FM))
 				FM.comments -= FC
 				qdel(FC)
 				updateUsrDialog()
 		else if(href_list["lock_comment"])
-			var/datum/newscaster/feed_message/FM = locate(href_list["lock_comment"])
+			var/datum/news/feed_message/FM = locate(href_list["lock_comment"])
 			FM.locked ^= 1
 			updateUsrDialog()
 		else if(href_list["set_comment"])
@@ -660,7 +660,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/proc/print_paper()
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
 	var/obj/item/newspaper/NEWSPAPER = new /obj/item/newspaper
-	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+	for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 		NEWSPAPER.news_content += FC
 	if(GLOB.news_network.wanted_issue.active)
 		NEWSPAPER.wantedAuthor = GLOB.news_network.wanted_issue.scannedUser
@@ -701,7 +701,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/screen = 0
 	var/pages = 0
 	var/curr_page = 0
-	var/list/datum/newscaster/feed_channel/news_content = list()
+	var/list/datum/news/feed_channel/news_content = list()
 	var/scribble=""
 	var/scribble_page = null
 	var/wantedAuthor
@@ -737,12 +737,12 @@ GLOBAL_LIST_EMPTY(allCasters)
 						dat+="<I>Other than the title, the rest of the newspaper is unprinted...</I>"
 				else
 					dat+="Contents:<BR><ul>"
-					for(var/datum/newscaster/feed_channel/NP in news_content)
+					for(var/datum/news/feed_channel/NP in news_content)
 						pages++
 					if(wantedAuthor)
 						dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR>"
 					var/temp_page=0
-					for(var/datum/newscaster/feed_channel/NP in news_content)
+					for(var/datum/news/feed_channel/NP in news_content)
 						temp_page++
 						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
 					dat+="</ul>"
@@ -750,9 +750,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(human_user)];mach_close=newspaper_main'>Done reading</A></DIV>"
 			if(1) // X channel pages inbetween.
-				for(var/datum/newscaster/feed_channel/NP in news_content)
+				for(var/datum/news/feed_channel/NP in news_content)
 					pages++
-				var/datum/newscaster/feed_channel/C = news_content[curr_page]
+				var/datum/news/feed_channel/C = news_content[curr_page]
 				dat += "<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.returnAuthor(notContent(C.authorCensorTime))]</FONT>\]</FONT><BR><BR>"
 				if(notContent(C.DclassCensorTime))
 					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
@@ -761,7 +761,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 						dat+="No Feed stories stem from this channel..."
 					else
 						var/i = 0
-						for(var/datum/newscaster/feed_message/MESSAGE in C.messages)
+						for(var/datum/news/feed_message/MESSAGE in C.messages)
 							if(MESSAGE.creationTime > creationTime)
 								if(i == 0)
 									dat+="No Feed stories stem from this channel..."
@@ -779,7 +779,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV>"
 			if(2) //Last page
-				for(var/datum/newscaster/feed_channel/NP in news_content)
+				for(var/datum/news/feed_channel/NP in news_content)
 					pages++
 				if(wantedAuthor!=null)
 					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"

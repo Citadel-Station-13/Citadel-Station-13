@@ -1,1 +1,1 @@
-/datum/newscaster
+/datum/news

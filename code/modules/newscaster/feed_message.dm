@@ -1,4 +1,4 @@
-/datum/newscaster/feed_message
+/datum/news/feed_message
 	var/author =""
 	var/body =""
 	var/list/authorCensorTime = list()
@@ -6,7 +6,7 @@
 	var/is_admin_message = 0
 	var/icon/img = null
 	var/time_stamp = ""
-	var/list/datum/newscaster/feed_comment/comments = list()
+	var/list/datum/news/feed_comment/comments = list()
 	var/locked = FALSE
 	var/caption = ""
 	var/creationTime
@@ -14,7 +14,7 @@
 	var/bodyCensor
 	var/photo_file
 
-/datum/newscaster/feed_message/proc/returnAuthor(censor)
+/datum/news/feed_message/proc/returnAuthor(censor)
 	if(censor == -1)
 		censor = authorCensor
 	var/txt = "[GLOB.news_network.redactedText]"
@@ -22,7 +22,7 @@
 		txt = author
 	return txt
 
-/datum/newscaster/feed_message/proc/returnBody(censor)
+/datum/news/feed_message/proc/returnBody(censor)
 	if(censor == -1)
 		censor = bodyCensor
 	var/txt = "[GLOB.news_network.redactedText]"
@@ -30,7 +30,7 @@
 		txt = body
 	return txt
 
-/datum/newscaster/feed_message/proc/toggleCensorAuthor()
+/datum/news/feed_message/proc/toggleCensorAuthor()
 	if(authorCensor)
 		authorCensorTime.Add(GLOB.news_network.lastAction*-1)
 	else
@@ -38,7 +38,7 @@
 	authorCensor = !authorCensor
 	GLOB.news_network.lastAction ++
 
-/datum/newscaster/feed_message/proc/toggleCensorBody()
+/datum/news/feed_message/proc/toggleCensorBody()
 	if(bodyCensor)
 		bodyCensorTime.Add(GLOB.news_network.lastAction*-1)
 	else

@@ -1,4 +1,4 @@
-/datum/newscaster/wanted_message
+/datum/news/wanted_message
 	var/active
 	var/criminal
 	var/body

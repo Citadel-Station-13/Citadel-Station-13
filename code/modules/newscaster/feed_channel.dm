@@ -1,6 +1,6 @@
-/datum/newscaster/feed_channel
+/datum/news/feed_channel
 	var/channel_name = ""
-	var/list/datum/newscaster/feed_message/messages = list()
+	var/list/datum/news/feed_message/messages = list()
 	var/locked = FALSE
 	var/author = ""
 	var/censored = 0
@@ -9,7 +9,7 @@
 	var/authorCensor
 	var/is_admin_channel = 0
 
-/datum/newscaster/feed_channel/proc/returnAuthor(censor)
+/datum/news/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)
 		censor = authorCensor
 	var/txt = "[GLOB.news_network.redactedText]"
@@ -17,7 +17,7 @@
 		txt = author
 	return txt
 
-/datum/newscaster/feed_channel/proc/toggleCensorDclass()
+/datum/news/feed_channel/proc/toggleCensorDclass()
 	if(censored)
 		DclassCensorTime.Add(GLOB.news_network.lastAction*-1)
 	else
@@ -25,7 +25,7 @@
 	censored = !censored
 	GLOB.news_network.lastAction ++
 
-/datum/newscaster/feed_channel/proc/toggleCensorAuthor()
+/datum/news/feed_channel/proc/toggleCensorAuthor()
 	if(authorCensor)
 		authorCensorTime.Add(GLOB.news_network.lastAction*-1)
 	else
