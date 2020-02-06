@@ -28,7 +28,6 @@
 	content += "<b>This channel is empty.<b><BR>"
 		for(var/i in FC.messages)
 			var/datum/feed_message/FM = i
-			content += "
 			content += "-[FM.returnBody(-1)] <BR>"
 			if(FM.img)
 				src << browse_rsc(FM.img, "tmp_photo[i].png")
