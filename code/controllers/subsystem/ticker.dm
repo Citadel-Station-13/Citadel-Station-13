@@ -479,15 +479,15 @@ SUBSYSTEM_DEF(ticker)
 	else
 		switch(CONFIG_GET(string/map_vote_type))
 			if("PLURALITY")
-				SSvote.initiate_vote("map","server",TRUE)
+				SSvote.initiate_vote("map","server",hideresults=TRUE)
 			if("APPROVAL")
-				SSvote.initiate_vote("map","server",TRUE,votesystem = APPROVAL_VOTING)
+				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = APPROVAL_VOTING)
 			if("IRV")
-				SSvote.initiate_vote("map","server",TRUE,votesystem = INSTANT_RUNOFF_VOTING)
+				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = INSTANT_RUNOFF_VOTING)
 			if("SCORE")
-				SSvote.initiate_vote("map","server",TRUE,votesystem = MAJORITY_JUDGEMENT_VOTING)
+				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = MAJORITY_JUDGEMENT_VOTING)
 		// fallback
-		SSvote.initiate_vote("map","server",TRUE)
+		SSvote.initiate_vote("map","server",hideresults=TRUE)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
