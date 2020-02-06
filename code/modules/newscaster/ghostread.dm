@@ -37,7 +37,7 @@
 			if(FM.img)
 				src << browse_rsc(FM.img, "tmp_photo[i].png")
 				content += "<img src='tmp_photo[i].png' width = '180'><BR>"
-				if(FC.caption)
+				if(FM.caption)
 					content += "[FM.caption]<BR>"
 				content += "<BR>"
 			content += "<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[FM.returnAuthor(-1)] </FONT>\] - ([FM.time_stamp])</FONT><BR>"
