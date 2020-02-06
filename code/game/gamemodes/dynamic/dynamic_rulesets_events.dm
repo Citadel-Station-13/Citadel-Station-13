@@ -148,7 +148,7 @@
 //                METEORS                   //
 //                                          //
 //////////////////////////////////////////////
-
+/*
 /datum/dynamic_ruleset/event/meteor_wave
 	name = "Meteor Wave"
 	config_tag = "meteor_wave"
@@ -176,7 +176,7 @@
 		cost = 15
 		typepath = /datum/round_event/meteor_wave
 	return ..()
-
+*/
 //////////////////////////////////////////////
 //                                          //
 //               ANOMALIES                  //
