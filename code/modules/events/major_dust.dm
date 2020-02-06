@@ -1,3 +1,4 @@
+/*
 /datum/round_event_control/meteor_wave/major_dust
 	name = "Major Space Dust"
 	typepath = /datum/round_event/meteor_wave/major_dust
@@ -21,3 +22,4 @@
 		priority_announce(pick(reason), "Collision Alert")
 	else
 		print_command_report("[pick(reason)]", "Collision Alert")
+*/
