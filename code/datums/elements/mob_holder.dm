@@ -1,5 +1,5 @@
 /datum/element/mob_holder
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
 	var/worn_state
 	var/alt_worn
