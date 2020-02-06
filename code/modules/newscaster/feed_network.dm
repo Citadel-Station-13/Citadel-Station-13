@@ -1,16 +1,17 @@
-GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
+GLOBAL_DATUM_INIT(news_network, /datum/news_network, new)
 
-/datum/newscaster/feed_network
+/// Contains all the news datum of a newscaster system.
+/datum/news_network
 	var/list/datum/newscaster/feed_channel/network_channels = list()
 	var/datum/newscaster/wanted_message/wanted_issue
 	var/lastAction
 	var/redactedText = "\[REDACTED\]"
 
-/datum/newscaster/feed_network/New()
+/datum/news_network/New()
 	CreateFeedChannel("Station Announcements", "SS13", 1)
 	wanted_issue = new /datum/newscaster/wanted_message
 
-/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = 0)
+/datum/news_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = 0)
 	var/datum/newscaster/feed_channel/newChannel = new /datum/newscaster/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
@@ -18,7 +19,7 @@ GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
 	newChannel.is_admin_channel = adminChannel
 	network_channels += newChannel
 
-/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = 0, allow_comments = 1)
+/datum/news_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = 0, allow_comments = 1)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
 	newMsg.body = msg
@@ -38,7 +39,7 @@ GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
 	lastAction ++
 	newMsg.creationTime = lastAction
 
-/datum/newscaster/feed_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = 0, newMessage = 0)
+/datum/news_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = 0, newMessage = 0)
 	wanted_issue.active = 1
 	wanted_issue.criminal = criminal
 	wanted_issue.body = body
@@ -52,7 +53,7 @@ GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
 			N.newsAlert()
 			N.update_icon()
 
-/datum/newscaster/feed_network/proc/deleteWanted()
+/datum/news_network/proc/deleteWanted()
 	wanted_issue.active = 0
 	wanted_issue.criminal = null
 	wanted_issue.body = null
@@ -61,7 +62,7 @@ GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
 	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
 		NEWSCASTER.update_icon()
 
-/datum/newscaster/feed_network/proc/save_photo(icon/photo)
+/datum/news_network/proc/save_photo(icon/photo)
 	var/photo_file = copytext_char(md5("\icon[photo]"), 1, 6)
 	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
 		//Clean up repeated frames
