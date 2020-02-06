@@ -2,7 +2,7 @@
 
 #define SINGULO_BEACON_DISTURBANCE 0.2 //singularity beacon also improve the odds of meteor waves and speed them up a little.
 #define SINGULO_BEACON_MAX_DISTURBANCE 0.6 //maximum cap due to how meteor waves can be potentially round ending.
-
+/*
 /datum/round_event_control/meteor_wave
 	name = "Meteor Wave: Normal"
 	typepath = /datum/round_event/meteor_wave
@@ -19,13 +19,6 @@
 	var/list/wave_type
 	var/wave_name = "normal"
 	var/direction
-
-/datum/round_event/meteor_wave/setup()
-	announceWhen = 1
-	startWhen = rand(60, 90) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
-	if(GLOB.singularity_counter)
-		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
-	endWhen = startWhen + 60
 
 /datum/round_event/meteor_wave/New()
 	..()
@@ -74,7 +67,7 @@
 			directionstring = " towards starboard"
 		if(WEST)
 			directionstring = " towards port"
-	return "Meteors have been detected on a collision course with the station[directionstring]. Estimated time until impact: [round((startWhen * SSevents.wait) / 10, 0.1)] seconds.[GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
+	return "Meteors have been detected on a collision course with the station,[directionstring]. [GLOB.singularity_counter && syndiealert ? " Warning: Anomalous gravity pulse detected, Syndicate technology interference likely." : ""]"
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))
@@ -101,6 +94,6 @@
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
-
+*/
 #undef SINGULO_BEACON_DISTURBANCE
 #undef SINGULO_BEACON_MAX_DISTURBANCE
