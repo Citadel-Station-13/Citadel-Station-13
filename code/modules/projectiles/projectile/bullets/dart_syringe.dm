@@ -6,7 +6,7 @@
 
 /obj/item/projectile/bullet/dart/Initialize()
 	. = ..()
-	create_reagents(50, NO_REACT)
+	create_reagents(50, NO_REACT, NO_REAGENTS_VALUE)
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = FALSE, skip = FALSE)
 	if(iscarbon(target))

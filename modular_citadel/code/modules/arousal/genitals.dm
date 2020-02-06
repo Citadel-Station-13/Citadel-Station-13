@@ -23,7 +23,7 @@
 /obj/item/organ/genital/Initialize(mapload, mob/living/carbon/human/H)
 	. = ..()
 	if(fluid_id)
-		create_reagents(fluid_max_volume)
+		create_reagents(fluid_max_volume, NONE, NO_REAGENTS_VALUE)
 		if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
 			reagents.add_reagent(fluid_id, fluid_max_volume)
 	if(H)
@@ -357,7 +357,7 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-			
+
 			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 
 			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))

@@ -61,8 +61,9 @@
 	var/reactedVol = 0 //how much of the reagent is reacted during a fermireaction
 	var/fermiIsReacting = FALSE //that prevents multiple reactions from occurring (i.e. add_reagent calls to process_reactions(), this stops any extra reactions.)
 	var/fermiReactID //instance of the chem reaction used during a fermireaction, kept here so it's cache isn't lost between loops/procs.
+	var/value_multiplier = DEFAULT_REAGENTS_VALUE //used for cargo reagents selling.
 
-/datum/reagents/New(maximum=100, new_flags)
+/datum/reagents/New(maximum=100, new_flags = NONE, new_value = DEFAULT_REAGENTS_VALUE)
 	maximum_volume = maximum
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
@@ -72,6 +73,7 @@
 		build_chemical_reactions_list()
 
 	reagents_holder_flags = new_flags
+	value_multiplier = new_value
 
 /datum/reagents/Destroy()
 	. = ..()
@@ -1147,10 +1149,10 @@
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/atom/proc/create_reagents(max_vol, flags)
+/atom/proc/create_reagents(max_vol, flags, new_value)
 	if(reagents)
 		qdel(reagents)
-	reagents = new/datum/reagents(max_vol, flags)
+	reagents = new/datum/reagents(max_vol, flags, new_value)
 	reagents.my_atom = src
 
 /proc/get_random_reagent_id()	// Returns a random reagent type minus blacklisted reagents
