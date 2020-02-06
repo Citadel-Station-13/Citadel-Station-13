@@ -477,7 +477,15 @@ SUBSYSTEM_DEF(ticker)
 	if(CONFIG_GET(flag/tgstyle_maprotation))
 		INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 	else
-		SSvote.initiate_vote("map","server",TRUE)
+		switch(CONFIG_GET(string/map_vote_type))
+			if("PLURALITY")
+				SSvote.initiate_vote("map","server",TRUE)
+			else if("APPROVAL")
+				SSvote.initiate_vote("map","server",TRUE,votesystem = APPROVAL_VOTING)
+			else if("IRV")
+				SSvote.initiate_vote("map","server",TRUE,votesystem = INSTANT_RUNOFF_VOTING)
+			else if("SCORE")
+				SSvote.initiate_vote("map","server",TRUE,votesystem = MAJORITY_JUDGEMENT_VOTING)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
