@@ -2,7 +2,6 @@
 	var/channel_name = ""
 	var/list/datum/news/feed_message/messages = list()
 	var/locked = FALSE
-	var/author = ""
 	var/censored = 0
 	var/list/authorCensorTime = list()
 	var/list/DclassCensorTime = list()

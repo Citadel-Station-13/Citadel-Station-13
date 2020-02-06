@@ -1,5 +1,4 @@
 /datum/news/feed_message
-	var/author =""
 	var/body =""
 	var/list/authorCensorTime = list()
 	var/list/bodyCensorTime = list()
