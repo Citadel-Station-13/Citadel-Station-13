@@ -59,7 +59,7 @@
 			Nanotrasen crew who spot these suits are known to panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
@@ -78,3 +78,9 @@
 	cost = 30
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	exclude_modes = list()
+
+/datum/uplink_item/suits/thiefgloves
+	name = "Thieving Gloves"
+	desc = "A pair of gloves that are insulated and frictionless, allowing you to steal easily from anyone you see."
+	item = /obj/item/clothing/gloves/thief
+	cost = 4

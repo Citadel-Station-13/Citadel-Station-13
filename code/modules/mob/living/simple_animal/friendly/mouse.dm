@@ -26,17 +26,16 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
-	can_be_held = TRUE
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg'=1), 100)
 	if(!body_color)
-		body_color = pick( list("brown","gray","white") )
+		body_color = pick(list("brown","gray","white"))
+	AddElement(/datum/element/mob_holder, "mouse_[body_color]")
 	icon_state = "mouse_[body_color]"
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
-	can_be_held = "mouse_[body_color]"
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
@@ -89,17 +88,14 @@
 /mob/living/simple_animal/mouse/white
 	body_color = "white"
 	icon_state = "mouse_white"
-	can_be_held = "mouse_white"
 
 /mob/living/simple_animal/mouse/gray
 	body_color = "gray"
 	icon_state = "mouse_gray"
-	can_be_held = "mouse_gray"
 
 /mob/living/simple_animal/mouse/brown
 	body_color = "brown"
 	icon_state = "mouse_brown"
-	can_be_held = "mouse_brown"
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom
@@ -124,7 +120,3 @@
 /obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
 	reagents.clear_reagents()
 
-/mob/living/simple_animal/mouse/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
-	holder.w_class = WEIGHT_CLASS_TINY
-	return holder
