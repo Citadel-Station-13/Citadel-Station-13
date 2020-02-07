@@ -400,6 +400,7 @@
 		var/temp_flavor = print_flavor_text_2()
 		if(temp_flavor)
 			. += temp_flavor
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 	. += "*---------*</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!

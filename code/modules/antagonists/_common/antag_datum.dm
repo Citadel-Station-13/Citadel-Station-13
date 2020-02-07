@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
+	var/list/blacklisted_quirks = list(/datum/quirk/nonviolent,/datum/quirk/mute) // Quirks that will be removed upon gaining this antag. Pacifist and mute are default.
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -70,6 +71,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			greet()
 		apply_innate_effects()
 		give_antag_moodies()
+		remove_blacklisted_quirks()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 
@@ -117,6 +119,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	SEND_SIGNAL(owner.current, COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
 
+/datum/antagonist/proc/remove_blacklisted_quirks()
+	var/mob/living/L = owner
+	if(istype(L))
+		var/list/cut = list()
+		cut = SSquirks.filter_quirks(L.roundstart_quirks,blacklisted_quirks)
+		for(var/q in cut)
+			var/datum/quirk/Q = q
+			if(Q.antag_removal_text)
+				to_chat(L, "<span class='boldannounce'>[Q.antag_removal_text]</span>")
+			L.remove_quirk(Q.type)
+
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
 	return
@@ -134,7 +147,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(objectives.len)
 		report += printobjectives(objectives)
 		for(var/datum/objective/objective in objectives)
-			if(!objective.check_completion())
+			if(objective.completable && !objective.check_completion())
 				objectives_complete = FALSE
 				break
 

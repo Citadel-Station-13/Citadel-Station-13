@@ -364,6 +364,29 @@
 			runnable_modes[M] = final_weight
 	return runnable_modes
 
+/datum/controller/configuration/proc/get_runnable_storytellers()
+	var/list/datum/dynamic_storyteller/runnable_storytellers = new
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
+	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
+	for(var/T in storyteller_cache)
+		var/datum/dynamic_storyteller/S = T
+		var/config_tag = initial(S.config_tag)
+		var/final_weight = initial(S.weight)
+		if(probabilities[config_tag]<=0)
+			continue
+		final_weight = probabilities[config_tag]
+		if(SSpersistence.saved_storytellers.len == 3 && repeated_mode_adjust.len == 3)
+			var/name = initial(S.name)
+			var/recent_round = min(SSpersistence.saved_storytellers.Find(name),3)
+			var/adjustment = 0
+			while(recent_round)
+				adjustment += repeated_mode_adjust[recent_round]
+				recent_round = SSpersistence.saved_modes.Find(name,recent_round+1,0)
+			final_weight *= ((100-adjustment)/100)
+		runnable_storytellers[S] = final_weight
+	return runnable_storytellers
+
+
 /datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
 	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)

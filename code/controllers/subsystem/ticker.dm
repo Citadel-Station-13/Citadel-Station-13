@@ -68,6 +68,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
+	var/station_integrity = 100				// stored at roundend for use in some antag goals
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 

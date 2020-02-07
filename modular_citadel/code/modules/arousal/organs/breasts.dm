@@ -46,7 +46,9 @@
 			desc += " You estimate that they're [uppertext(size)]-cups."
 
 	if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION) && aroused_state)
-		desc += " They're leaking [initial(fluid_id.name)]."
+		var/datum/reagent/R = GLOB.chemical_reagents_list[fluid_id]
+		if(R)
+			desc += " They're leaking [lowertext(R.name)]."
 	var/string
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
@@ -120,7 +122,6 @@
 		color = "#[D.features["breasts_color"]]"
 	size = D.features["breasts_size"]
 	shape = D.features["breasts_shape"]
-	fluid_id = D.features["breasts_fluid"]
 	if(!D.features["breasts_producing"])
 		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION|CAN_CLIMAX_WITH|CAN_MASTURBATE_WITH)
 	if(!isnum(size))
