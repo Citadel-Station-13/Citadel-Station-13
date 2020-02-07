@@ -5,7 +5,7 @@
 	var/automatic_burst_overlay = TRUE
 	can_suppress = TRUE
 	burst_size = 3
-	fire_delay = 2
+	burst_shot_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 
 /obj/item/gun/ballistic/automatic/proto
@@ -77,11 +77,9 @@
 
 /obj/item/gun/ballistic/automatic/proc/enable_burst()
 	burst_size = initial(burst_size)
-	fire_delay = initial(fire_delay)
 
 /obj/item/gun/ballistic/automatic/proc/disable_burst()
 	burst_size = 1
-	fire_delay = 0
 
 /obj/item/gun/ballistic/automatic/can_shoot()
 	return get_ammo()
@@ -100,7 +98,7 @@
 	item_state = "c20r"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	fire_delay = 2
+	burst_shot_delay = 2
 	burst_size = 2
 	pin = /obj/item/firing_pin/implant/pindicate
 	can_bayonet = TRUE
@@ -130,7 +128,7 @@
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	can_suppress = FALSE
 	burst_size = 2
-	fire_delay = 1
+	burst_shot_delay = 1
 	can_bayonet = TRUE
 	knife_x_offset = 25
 	knife_y_offset = 12
@@ -165,7 +163,7 @@
 	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
-	fire_delay = 2
+	burst_shot_delay = 2
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/m90/Initialize()
@@ -212,7 +210,6 @@
 		if(0)
 			select = 1
 			burst_size = initial(burst_size)
-			fire_delay = initial(fire_delay)
 			to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 		if(1)
 			select = 2
@@ -220,7 +217,6 @@
 		if(2)
 			select = 0
 			burst_size = 1
-			fire_delay = 0
 			to_chat(user, "<span class='notice'>You switch to semi-auto.</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
@@ -237,7 +233,7 @@
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = FALSE
 	burst_size = 4
-	fire_delay = 1
+	burst_shot_delay = 1
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
@@ -249,7 +245,7 @@
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = FALSE
 	burst_size = 3
-	fire_delay = 1
+	burst_shot_delay = 1
 
 // Bulldog shotgun //
 
@@ -264,7 +260,6 @@
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	can_suppress = FALSE
 	burst_size = 1
-	fire_delay = 0
 	pin = /obj/item/firing_pin/implant/pindicate
 	actions_types = list()
 
@@ -301,7 +296,7 @@
 	var/cover_open = FALSE
 	can_suppress = FALSE
 	burst_size = 3
-	fire_delay = 1
+	burst_shot_delay = 1
 	spread = 7
 	pin = /obj/item/firing_pin/implant/pindicate
 
@@ -421,7 +416,7 @@
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	fire_delay = 2
 	can_suppress = FALSE
-	burst_size = 0
+	burst_size = 1
 	actions_types = list()
 	fire_sound = 'sound/weapons/laser.ogg'
 	casing_ejector = FALSE
