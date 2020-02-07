@@ -77,10 +77,14 @@
 		azoom = new (src)
 
 /obj/item/gun/Destroy()
-	QDEL_NULL(pin)
-	QDEL_NULL(gun_light)
-	QDEL_NULL(bayonet)
-	QDEL_NULL(chambered)
+	if(pin)
+		QDEL_NULL(pin)
+	if(gun_light)
+		QDEL_NULL(gun_light)
+	if(bayonet)
+		QDEL_NULL(bayonet)
+	if(chambered)
+		QDEL_NULL(chambered)
 	return ..()
 
 /obj/item/gun/CheckParts(list/parts_list)
