@@ -104,3 +104,93 @@
 	shotdamage = 0
 	shottype = /obj/item/projectile/energy/electrode
 	shotcost = 100 //5 shots on basic 500kj cell.
+
+/obj/item/egunpart/focuspart/double
+	name = "pulse-delay repeater focus"
+	desc = "Advanced focus that splits the beam into two shots, one slightly behind the other."
+	damagemod = 0.6
+	shotcount = 2
+	spreadmod = 3
+
+/obj/item/egunpart/focuspart/quad
+	name = "quadrangle-split focus"
+	desc = "A simple focus that splits a single beam into four distinct beams at a moderate spread."
+	damagemod = 0.3
+	shotcount = 4
+	spreadmod = 15
+
+/obj/item/egunpart/focuspart/quint
+	name = "quintangle-split focus"
+	desc = "A very complex focus that splits a single beam into four distinct beams at a tight spread."
+	damagemod = 0.25
+	shotcount = 5
+	spreadmod = 3
+
+/obj/item/egunpart/focuspart/hyperscatter
+	name = "hyperscatter multi-focus"
+	desc = "Advanced focus that splits the beam into twelve really weak shots."
+	damagemod = 0.09
+	shotcount = 12
+	spreadmod = 60
+
+/obj/item/egunpart/focuspart/powershot
+	name = "enviromental supercollector focus"
+	desc = "A complex focus that draws less potent light from the enviroment to empower an energy weapon beam."
+	damagemod = 2
+	shotcount = 1
+	spreadmod = 7
+
+/obj/item/egunpart/framepart/highcap
+	name = "heavy energy weapon frame"
+	desc = "A frame for heavier energy weapons. Has a higher capacity."
+	wclassmod = 2.5 //at least WEIGHT_CLASS_NORMAL
+	usedcell /obj/item/stock_parts/cell{charge = 1000; maxcharge = 1000}
+	capacity = "1 MJ"
+
+/obj/item/egunpart/framepart/super
+	name = 	"super-heavy energy weapon frame"
+	desc = "A frame for very heavy energy weapons. Has a great capacity."
+	wclassmod = 4.5 //at least WEIGHT_CLASS_HUGE
+	usedcell /obj/item/stock_parts/cell{charge = 2000; maxcharge = 2000}
+	capacity = "1 MJ"
+
+/obj/item/egunpart/framepart/compact
+	name = "compact energy weapon frame"
+	desc = "A compact frame with a lesser capacity."
+	wclassmod = 1
+	usedcell /obj/item/stock_parts/cell{charge = 300; maxcharge = 300}
+	capacity = "300 MJ"
+
+/obj/item/egunpart/framepart/micro
+	name = "micro-energy weapon frame"
+	desc = "A really tiny energy weapon frame. Might not be able to fire with certain modules."
+	wclassmod = 0.5
+	usedcell /obj/item/stock_parts/cell{charge = 100; maxcharge = 100}
+	capacity = "100 kJ"
+
+/obj/item/egunpart/framepart/atomic
+	name = "nuclear-powered energy weapon frame"
+	desc = "Toasty! Moderate capacity, charges itself, heavy as fuck."
+	wclassmod = 5.5 //whatever the hell is between huge and gigantic, this is it.
+	usedcell /obj/item/stock_parts/cell{charge = 400; maxcharge = 400; self_recharge = TRUE; chargerate = 25} //16 seconds to fully recharge.
+	capacity = "400 kJ"
+	selfcharge = TRUE
+
+/obj/item/egunpart/framepart/atomic/lame
+	name = "simple nuclear-powered energy weapon frame"
+	desc = "Toasty! Smaller but way slower selfcharging than the other atomic frame."
+	wclassmod = 3.5 //at least huge
+	usedcell /obj/item/stock_parts/cell{charge = 400; maxcharge = 400; self_recharge = TRUE; chargerate = 10} //40 seconds to fully recharge.
+
+/obj/item/egunpart/framepart/syndicate
+	name = "red and black energy weapon frame"
+	desc = "A genuine Gorlex energy weapon frame. Where the hell did you get this?"
+	wclassmod = 1.5
+	usedcell /obj/item/stock_parts/cell{charge = 2500; maxcharge = 2500}
+	capacity = "2.5 MJ"
+
+/obj/item/egunpart/framepart/syndicate/selfcharge
+	desc = "A genuine Gorlex energy weapon frame, nuclear version. Where the hell did you get this?"
+	wclassmod = 1.5
+	usedcell /obj/item/stock_parts/cell{charge = 2500; maxcharge = 2500 self_recharge = TRUE; chargerate = 250}//10 second selfcharge
+	capacity = "2.5 MJ"
