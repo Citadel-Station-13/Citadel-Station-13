@@ -201,7 +201,10 @@ SUBSYSTEM_DEF(vote)
 		max_score=max(max_score,scores[score_name])
 		min_score=min(min_score,scores[score_name])
 	for(var/score_name in scores)
-		scores[score_name] = (scores[score_name]-min_score)/(max_score-min_score)
+		if(max_score == min_score)
+			scores[score_name] = 1
+		else
+			scores[score_name] = (scores[score_name]-min_score)/(max_score-min_score)
 		SSblackbox.record_feedback("nested tally","voting",scores[score_name],list(blackbox_text,"Total scores",score_name))
 
 /datum/controller/subsystem/vote/proc/get_runoff_results(var/blackbox_text)
