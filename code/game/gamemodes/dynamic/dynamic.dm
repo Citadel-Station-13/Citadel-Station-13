@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
-GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
+GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
 /datum/game_mode/dynamic
 	name = "dynamic mode"
