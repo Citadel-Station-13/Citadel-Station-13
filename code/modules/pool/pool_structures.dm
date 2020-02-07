@@ -74,6 +74,7 @@
 				jumper.pixel_x = 3
 				jumper.pixel_y = 7
 				jumper.dir = WEST
+				jumper.Addelement(/datum/element/swimming)
 				sleep(1)
 				jumper.forceMove(T)
 				addtimer(CALLBACK(src, .proc/dive, jumper, original_layer, original_px, original_py), 10)
