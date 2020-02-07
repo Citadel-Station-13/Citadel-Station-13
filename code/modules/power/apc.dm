@@ -880,8 +880,8 @@
 		"nightshiftLights" = nightshift_lights,
 		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
 		"hijacker" = hijacker == user ? TRUE : FALSE,
-		"drainavail" = cell.percent() >= 85 && abilitiesavail,
-		"lockdownavail" = cell.percent() >= 35 && abilitiesavail,
+		"drainavail" = cell && cell.percent() >= 85 && abilitiesavail,
+		"lockdownavail" = cell && cell.percent() >= 35 && abilitiesavail,
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
