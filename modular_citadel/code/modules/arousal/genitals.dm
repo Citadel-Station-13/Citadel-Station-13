@@ -235,12 +235,6 @@
 /obj/item/organ/genital/proc/get_features(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/genitals_layertext(layer)
-	switch(layer)
-		if(GENITALS_BEHIND_LAYER)
-			return "BEHIND"
-		if(GENITALS_FRONT_LAYER)
-			return "FRONT"
 
 //procs to handle sprite overlays being applied to humans
 
@@ -261,7 +255,12 @@
 /mob/living/carbon/human/proc/update_genitals()
 	if(QDELETED(src))
 		return
-	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_FRONT_LAYER)
+	var/static/list/relevant_layers
+	if(!relevant_layers)
+		relevant_layers = list()
+		relevant_layers[GENITALS_BEHIND_LAYER] = "BEHIND"
+		relevant_layers[GENITALS_FRONT_LAYER] = "FRONT"
+	var/static/list/layer_strings = list
 	for(var/L in relevant_layers) //Less hardcode
 		remove_overlay(L)
 	remove_overlay(GENITALS_EXPOSED_LAYER)
@@ -285,7 +284,7 @@
 	//start applying overlays
 	for(var/layer in relevant_layers)
 		var/list/standing = list()
-		var/layertext = genitals_layertext(layer)
+		var/layertext = relevant_layers[layer]
 		for(var/A in genitals_to_add)
 			var/obj/item/organ/genital/G = A
 			var/datum/sprite_accessory/S
@@ -310,7 +309,7 @@
 			if(S.center)
 				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
 
-			if(use_skintones && dna.features["genitals_use_skintone"])
+			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(skin_tone)]"
 			else
 				switch(S.color_src)
