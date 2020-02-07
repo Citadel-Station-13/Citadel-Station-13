@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(fail2topic)
 				rate_limiting -= ip
 				fail_counts -= ip
 			else		//if we remove that, and the next element is in its place. check that instead of incrementing.
-				i++
+				++i
 			if(MC_TICK_CHECK)
 				return
 
