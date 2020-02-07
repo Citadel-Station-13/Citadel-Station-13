@@ -215,16 +215,26 @@
 		playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, 1)
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], converting the attack into a wave of force!</span>")
 		var/turf/T = get_turf(owner)
-		var/list/thrown_items = list()
-		for(var/atom/movable/A in range(T, 7))
-			if(A == owner || A.anchored || thrown_items[A])
-				continue
-			var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(A, T)))
-			A.throw_at(throwtarget,10,1)
-			thrown_items[A] = A
-
+		var/list/cachedrange = range(T, 7) - owner
+		var/safety = 50
+		for(var/mob/M in cachedrange)		//priority
+			if(!safety)
+				break
+			if(!M.anchored && isliving(M))
+				do_the_throw(T, M)
+				safety--
+		for(var/obj/O in cachedrange)
+			if(!safety)
+				break
+			if(!O.anchored)
+				do_the_throw(T, O)
+				safety--
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
+
+/obj/item/clothing/suit/armor/reactive/repulse/proc/do_the_throw(var/turf/origin, atom/movable/A)
+		var/throwtarget = get_edge_target_turf(origin, get_dir(origin, get_step_away(A, origin)))
+		A.throw_at(throwtarget,10,1)
 
 /obj/item/clothing/suit/armor/reactive/table
 	name = "reactive table armor"
