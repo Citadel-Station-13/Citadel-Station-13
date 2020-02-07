@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/attach_spans(input, list/spans)
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb)
-		input = capitalize(copytext(input, length(input[customsayverb]) + 1))
+		input = capitalize(copytext(input, customsayverb + length(input[customsayverb])))
 	if(input)
 		return "[message_spans_start(spans)][input]</span>"
 	else
