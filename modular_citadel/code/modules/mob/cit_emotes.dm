@@ -14,7 +14,6 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/insult/run_emote(mob/living/user, params)
-	var/insult_message = ""
 	if(user.mind?.miming)
 		message = "creatively gesticulates."
 	else if(!user.is_muzzled())
