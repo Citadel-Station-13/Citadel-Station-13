@@ -32,23 +32,18 @@
 	else
 		update()
 
-/obj/item/organ/genital/Destroy()
-	if(linked_organ)
-		update_link(TRUE)//this should remove any other links it has
-	return ..()
-
 /obj/item/organ/genital/proc/set_aroused_state(new_state)
 	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
 		aroused_state = new_state
 	return aroused_state
 
-/obj/item/organ/genital/proc/update(removing = FALSE)
+/obj/item/organ/genital/proc/update()
 	if(QDELETED(src))
 		return
 	update_size()
 	update_appearance()
-	if(linked_organ_slot || (linked_organ && removing))
-		update_link(removing)
+	if(linked_organ_slot || (linked_organ && !owner))
+		update_link()
 
 //exposure and through-clothing code
 /mob/living/carbon
@@ -174,19 +169,18 @@
 		return TRUE
 	return FALSE
 
-/obj/item/organ/genital/proc/update_link(removing = FALSE)
-	if(!removing && owner)
+/obj/item/organ/genital/proc/update_link()
+	if(owner)
 		if(linked_organ)
-			return
+			return FALSE
 		linked_organ = owner.getorganslot(linked_organ_slot)
 		if(linked_organ)
 			linked_organ.linked_organ = src
 			linked_organ.upon_link()
 			upon_link()
 			return TRUE
-	else
-		if(linked_organ)
-			linked_organ.linked_organ = null
+	if(linked_organ)
+		linked_organ.linked_organ = null
 		linked_organ = null
 	return FALSE
 
@@ -200,10 +194,12 @@
 		update()
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 
-/obj/item/organ/genital/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	update(TRUE)
-	if(!QDELETED(owner))
-		UnregisterSignal(owner, COMSIG_MOB_DEATH)
+/obj/item/organ/genital/Remove(special = FALSE)
+	var/mob/living/carbon/human/H = . = ..()
+	update()
+	if(!QDELETED(H))
+		UnregisterSignal(H, COMSIG_MOB_DEATH)
+		H.update_genitals()
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA

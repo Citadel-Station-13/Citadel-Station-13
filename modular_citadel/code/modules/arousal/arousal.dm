@@ -10,12 +10,6 @@
 	var/hidden_undershirt = FALSE
 	var/hidden_socks = FALSE
 
-//Species vars
-/datum/species
-	var/list/cum_fluids = list("semen")
-	var/list/milk_fluids = list("milk")
-	var/list/femcum_fluids = list("femcum")
-
 //Mob procs
 /mob/living/carbon/human/proc/underwear_toggle()
 	set name = "Toggle undergarments"

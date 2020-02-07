@@ -14,7 +14,7 @@
 	size = 2 //arbitrary value derived from length and girth for sprites.
 	layer_index = PENIS_LAYER_INDEX
 	var/length = 6 //inches
-	var/prev_length = 6 //really should be renamed to prev_length
+	var/prev_length = 6
 	var/girth = 4.38
 	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
 

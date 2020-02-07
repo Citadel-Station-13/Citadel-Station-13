@@ -63,7 +63,6 @@
 			var/mob/living/carbon/human/H = owner
 			icon_state = sanitize_text(string)
 			H.update_genitals()
-			icon_state = sanitize_text(string)
 
 //Allows breasts to grow and change size, with sprite changes too.
 //maximum wah
