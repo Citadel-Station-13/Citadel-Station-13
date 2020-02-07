@@ -40,7 +40,7 @@
 /obj/item/projectile/gravity/proc/can_throw(atom/movable/AM, list/thrown)
 	return (AM != src) && (AM != firer) && !AM.anchored && !thrown[AM]
 
-/obj/item/projectile/garvity/proc/do_the_throw(turf/origin, atom/movable/AM, list/thrown)
+/obj/item/projectile/gravity/proc/do_the_throw(turf/origin, atom/movable/AM, list/thrown)
 	thrown[AM] = TRUE
 	var/target = get_target(origin, AM)
 	if(!target)
