@@ -195,7 +195,8 @@
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 
 /obj/item/organ/genital/Remove(special = FALSE)
-	var/mob/living/carbon/human/H = . = ..()
+	. = ..()
+	var/mob/living/carbon/human/H = .
 	update()
 	if(!QDELETED(H))
 		UnregisterSignal(H, COMSIG_MOB_DEATH)
