@@ -255,14 +255,13 @@ SUBSYSTEM_DEF(vote)
 				text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
 			if(vote_system == MAJORITY_JUDGEMENT_VOTING)
 				text += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
-		else
-			for(var/i=1,i<=choices.len,i++)
-				var/votes = choices[choices[i]]
-				if(!votes)
-					votes = 0
-				if(was_roundtype_vote)
-					stored_gamemode_votes[choices[i]] = votes
-				text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
+		for(var/i=1,i<=choices.len,i++)
+			var/votes = choices[choices[i]]
+			if(!votes)
+				votes = 0
+			if(was_roundtype_vote)
+				stored_gamemode_votes[choices[i]] = votes
+			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
 			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes
 				text = "\n<b>Vote Tied Between:</b>"
