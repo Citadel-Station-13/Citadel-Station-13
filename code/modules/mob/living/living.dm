@@ -758,10 +758,22 @@
 	if(HAS_TRAIT(what, TRAIT_NODROP))
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
-	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
+	var/strip_mod = 1
+	var/strip_silence = FALSE
+	if (ishuman(src)) //carbon doesn't actually wear gloves
+		var/mob/living/carbon/C = src
+		var/obj/item/clothing/gloves/g = C.gloves
+		if (istype(g))
+			strip_mod = g.strip_mod
+			strip_silence = g.strip_silence
+	if (!strip_silence)
+		who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
-	what.add_fingerprint(src)
-	if(do_mob(src, who, what.strip_delay, ignorehelditem = TRUE))
+		what.add_fingerprint(src)
+	else
+		to_chat(src,"<span class='notice'>You try to remove [who]'s [what.name].</span>")
+		what.add_fingerprint(src)
+	if(do_mob(src, who, round(what.strip_delay / strip_mod), ignorehelditem = TRUE))
 		if(what && Adjacent(who))
 			if(islist(where))
 				var/list/L = where
