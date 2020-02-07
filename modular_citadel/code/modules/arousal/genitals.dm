@@ -260,7 +260,6 @@
 		relevant_layers = list()
 		relevant_layers[GENITALS_BEHIND_LAYER] = "BEHIND"
 		relevant_layers[GENITALS_FRONT_LAYER] = "FRONT"
-	var/static/list/layer_strings = list
 	for(var/L in relevant_layers) //Less hardcode
 		remove_overlay(L)
 	remove_overlay(GENITALS_EXPOSED_LAYER)
