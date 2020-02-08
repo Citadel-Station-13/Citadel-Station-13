@@ -193,6 +193,7 @@
 					/obj/item/reagent_containers/food/snacks/meat/slab/bear,
 					/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
 					/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+					/obj/item/reagent_containers/food/snacks/meat/rawcrab,
 					/obj/item/reagent_containers/food/snacks/meat/rawbacon,
 					/obj/item/reagent_containers/food/snacks/spiderleg,
 					/obj/item/reagent_containers/food/snacks/carpmeat,
@@ -213,7 +214,7 @@
 
 /datum/supply_pack/organic/fakemeat
 	name = "Meat Crate 'Synthetic'"
-	desc = "Run outta meat already? Keep the lizards content with this freezer filled with cruelty-free chemically compounded meat! Contains 12 slabs of meat product, and 4 slabs of *carp*."
+	desc = "Run outta meat already? Keep the lizards content with this freezer filled with cruelty-free chemically compounded meat! Contains 9 slabs of meat product, 3 carb meat and 4 slabs of *carp*."
 	cost = 1200 // Buying 3 food crates nets you 9 meat for 900 points, plus like, 6 bags of rice, flour, and egg boxes. This is 12 for 500, but you -only- get meat and carp.
 	contains = list(/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
@@ -224,9 +225,9 @@
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
 					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
-					/obj/item/reagent_containers/food/snacks/meat/slab/meatproduct,
+					/obj/item/reagent_containers/food/snacks/meat/rawcrab,
+					/obj/item/reagent_containers/food/snacks/meat/rawcrab,
+					/obj/item/reagent_containers/food/snacks/meat/rawcrab,
 					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
 					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
 					/obj/item/reagent_containers/food/snacks/carpmeat/imitation,
@@ -327,7 +328,7 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains thirteen different seeds."
+	desc = "Big things have small beginnings. Contains fourteen different seeds."
 	cost = 1250
 	contains = list(/obj/item/seeds/chili,
 					/obj/item/seeds/berry,
