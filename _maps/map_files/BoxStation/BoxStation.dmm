@@ -22128,6 +22128,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/cap_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bdj" = (

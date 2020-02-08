@@ -62346,7 +62346,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "cbd" = (
-/obj/effect/landmark/event_spawn,
+/obj/machinery/vending/wardrobe/cap_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "cbe" = (
@@ -64633,6 +64633,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "ceI" = (
@@ -85385,10 +85386,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
-"cNB" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall,
 /area/medical/medbay/central)
 "cNC" = (
 /obj/machinery/door/firedoor,
@@ -168897,7 +168894,7 @@ cHP
 cIS
 bqX
 cMa
-cNB
+iQI
 cPr
 cQW
 cSF
