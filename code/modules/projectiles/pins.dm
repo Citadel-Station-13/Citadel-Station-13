@@ -69,12 +69,9 @@
 		if(gun)
 			qdel(gun)
 
-
-
 /obj/item/firing_pin/magic
 	name = "magic crystal shard"
 	desc = "A small enchanted shard which allows magical weapons to fire."
-
 
 // Test pin, works only near firing range.
 /obj/item/firing_pin/test_range
@@ -229,3 +226,16 @@
 	if(gun)
 		gun.pin = null
 	return ..()
+
+//Station Locked
+
+/obj/item/firing_pin/away
+	name = "station locked pin"
+	desc = "A firing pin that only will fire when off the station."
+
+/obj/item/firing_pin/away/pin_auth(mob/living/user)
+	var/station_zlevel = get_area(src)
+	if(station_zlevel in GLOB.the_station_areas)
+		to_chat(user, "<span class='warning'>The pin beeps, refusing to fire.</span>")
+		return FALSE
+	return TRUE
