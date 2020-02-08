@@ -36,4 +36,4 @@
 		F.update_brightness()
 
 /obj/item/vending_refill/security
-	icon_state = "snackorange"
+	icon_state = "refill_games"

@@ -148,8 +148,8 @@
 
 /obj/machinery/chem_master/on_deconstruction()
 	var/atom/A = drop_location()
-	beaker.forceMove(A)
-	bottle.forceMove(A)
+	beaker?.forceMove(A)
+	bottle?.forceMove(A)
 	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \

@@ -144,7 +144,7 @@
 				C.dropItemToGround(W)
 			for(var/X in C.internal_organs)
 				var/obj/item/organ/I = X
-				I.Remove(C)
+				I.Remove()
 				I.forceMove(body_turf)
 		var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))
 		if(wheres_wizdo)

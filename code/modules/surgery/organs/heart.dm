@@ -28,10 +28,10 @@
 	else
 		icon_state = "[icon_base]-off"
 
-/obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
-	..()
+/obj/item/organ/heart/Remove(special = FALSE)
 	if(!special)
-		addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
+		addtimer(CALLBACK(src, .proc/stop_if_unowned), 12 SECONDS)
+	return ..()
 
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
@@ -145,9 +145,9 @@ obj/item/organ/heart/slime
 	if(owner)
 		to_chat(owner, "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
 
-/obj/item/organ/heart/cursed/Remove(mob/living/carbon/M, special = 0)
-	..()
-	M.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+/obj/item/organ/heart/cursed/Remove(special = FALSE)
+	owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+	return ..()
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "Pump your blood"
@@ -220,20 +220,11 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 	ramount = 0
 
-
-
 /obj/item/organ/heart/ipc
 	name = "IPC heart"
 	desc = "An electronic pump that regulates hydraulic functions, they have an auto-restart after EMPs."
 	icon_state = "heart-c"
 	organ_flags = ORGAN_SYNTHETIC
-
-/obj/item/organ/heart/ipc/emp_act()
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 10)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"

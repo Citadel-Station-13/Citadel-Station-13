@@ -51,7 +51,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	see_in_dark = 7
 	blood_volume = 0
-	can_be_held = TRUE
+	var/can_be_held = TRUE //mob holder element.
 	held_items = list(null, null)
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
@@ -101,6 +101,11 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 
+/mob/living/simple_animal/drone/ComponentInitialize()
+	. = ..()
+	if(can_be_held)
+		//icon/item state is defined in mob_holder/drone_worn_icon()
+		AddElement(/datum/element/mob_holder, null, 'icons/mob/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', TRUE, /datum/element/mob_holder.proc/drone_worn_icon)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -283,7 +288,3 @@
 		var/obj/item/clothing/H = head
 		if(H.clothing_flags & SCAN_REAGENTS)
 			return TRUE
-
-/mob/living/simple_animal/drone/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "[visualAppearence]_hat", null, null, null, TRUE)
-	return holder

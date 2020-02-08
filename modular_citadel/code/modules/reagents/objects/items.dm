@@ -71,7 +71,7 @@
 	if(!istype(cont))
 		return
 	if(used == TRUE)
-		to_chat(user, "<span class='warning'>[user] has already been used!</span>")
+		to_chat(user, "<span class='warning'>[src] has already been used!</span>")
 		return
 	if(!LAZYLEN(cont.reagents.reagent_list))
 		return
@@ -107,6 +107,7 @@
 		if(-INFINITY to 1)
 			color = "#c6040c"
 	desc += " The paper looks to be around a pH of [round(cont.reagents.pH, 1)]"
+	name = "used [name]"
 	used = TRUE
 
 /obj/item/fermichem/pHmeter

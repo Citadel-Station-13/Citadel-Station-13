@@ -416,7 +416,7 @@
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
-	return copytext(ID,2)
+	return copytext_char(ID,2)
 
 /obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
 	if(panel_open)

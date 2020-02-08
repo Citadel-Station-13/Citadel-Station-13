@@ -216,12 +216,12 @@
 		if(equip_ready)
 			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
-			log_message("Activated.")
+			mecha_log_message("Activated.")
 			set_ready_state(0)
 		else
 			STOP_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid")
-			log_message("Deactivated.")
+			mecha_log_message("Deactivated.")
 			set_ready_state(1)
 		chassis.add_overlay(droid_overlay)
 		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
@@ -283,7 +283,7 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_charge()
 	if(equip_ready) //disabled
 		return
-	var/area/A = get_area(chassis)
+	var/area/A = get_base_area(chassis)
 	var/pow_chan = get_power_channel(A)
 	if(pow_chan)
 		return 1000 //making magic
@@ -304,11 +304,11 @@
 		if(equip_ready) //inactive
 			START_PROCESSING(SSobj, src)
 			set_ready_state(0)
-			log_message("Activated.")
+			mecha_log_message("Activated.")
 		else
 			STOP_PROCESSING(SSobj, src)
 			set_ready_state(1)
-			log_message("Deactivated.")
+			mecha_log_message("Deactivated.")
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
 	if(!chassis)
@@ -328,7 +328,7 @@
 		occupant_message("No powercell detected.")
 		return
 	if(cur_charge < chassis.cell.maxcharge)
-		var/area/A = get_area(chassis)
+		var/area/A = get_base_area(chassis)
 		if(A)
 			var/pow_chan
 			for(var/c in list(EQUIP,ENVIRON,LIGHT))
@@ -379,11 +379,11 @@
 		if(equip_ready) //inactive
 			set_ready_state(0)
 			START_PROCESSING(SSobj, src)
-			log_message("Activated.")
+			mecha_log_message("Activated.")
 		else
 			set_ready_state(1)
 			STOP_PROCESSING(SSobj, src)
-			log_message("Deactivated.")
+			mecha_log_message("Deactivated.")
 
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
@@ -440,14 +440,14 @@
 		return
 	if(fuel.amount<=0)
 		STOP_PROCESSING(SSobj, src)
-		log_message("Deactivated - no fuel.")
+		mecha_log_message("Deactivated - no fuel.")
 		set_ready_state(1)
 		return
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
 		set_ready_state(1)
 		occupant_message("No powercell detected.")
-		log_message("Deactivated.")
+		mecha_log_message("Deactivated.")
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/use_fuel = fuel_per_cycle_idle

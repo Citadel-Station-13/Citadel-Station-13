@@ -57,6 +57,7 @@
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
+	var/poster_item_type = /obj/item/poster
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
@@ -114,7 +115,7 @@
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/P = new(loc, src)
+	var/obj/item/poster/P = new poster_item_type(loc, src)
 	forceMove(P)
 	return P
 
@@ -128,7 +129,7 @@
 	if (smooth & SMOOTH_DIAGONAL)
 		for (var/O in overlays)
 			var/image/I = O
-			if (copytext(I.icon_state, 1, 3) == "d-")
+			if(copytext(I.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
 				return
 
 	var/stuff_on_wall = 0

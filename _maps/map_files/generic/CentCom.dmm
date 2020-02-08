@@ -506,6 +506,7 @@
 "bx" = (
 /obj/structure/table,
 /obj/machinery/readybutton,
+/obj/item/storage/lockbox/dueling/hugbox/stamina,
 /turf/open/floor/holofloor/basalt,
 /area/holodeck/rec_center/thunderdome)
 "by" = (
@@ -522,6 +523,7 @@
 /area/holodeck/rec_center/thunderdome)
 "bA" = (
 /obj/machinery/readybutton,
+/obj/item/storage/lockbox/dueling/hugbox/stamina,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

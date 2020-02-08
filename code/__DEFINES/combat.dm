@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BODY_ZONE_PRECISE_R_FOOT	"r_foot"
 
 //We will round to this value in damage calculations.
-#define DAMAGE_PRECISION 0.1
+#define DAMAGE_PRECISION 0.01
 
 //items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
 #define TOTAL_MASS_TINY_ITEM		1.25
