@@ -236,7 +236,7 @@
 	return
 
 /obj/item/gun/proc/on_cooldown()
-	return busy_action || firing || (last_fire + fire_delay > world.time)
+	return busy_action || firing || ((last_fire + fire_delay) > world.time)
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)
