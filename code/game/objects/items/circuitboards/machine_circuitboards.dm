@@ -35,6 +35,9 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/autolathe/secure
+	name = "Secure Autolathe (Machine Board")
+
 /obj/item/circuitboard/machine/bloodbankgen
 	name = "Blood Bank Generator (Machine Board)"
 	build_path = /obj/machinery/bloodbankgen
