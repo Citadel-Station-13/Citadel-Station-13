@@ -70,8 +70,6 @@
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bonedagger)
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bonespear)
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/boneaxe)
-	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/headpike)
-	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/headpikebone)
 	
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
