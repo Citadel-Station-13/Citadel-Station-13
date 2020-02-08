@@ -136,18 +136,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
 		"balls_efficiency" = CUM_EFFICIENCY,
-		"balls_fluid" = "semen",
 		"has_breasts" = FALSE,
 		"breasts_color" = "fff",
 		"breasts_size" = "C",
 		"breasts_shape" = "Pair",
-		"breasts_fluid" = "milk",
 		"breasts_producing" = FALSE,
 		"has_vag" = FALSE,
 		"vag_shape" = "Human",
 		"vag_color" = "fff",
 		"has_womb" = FALSE,
-		"womb_fluid" = "femcum",
 		"flavor_text" = "",
 		"meat_type" = "Mammalian"
 		)

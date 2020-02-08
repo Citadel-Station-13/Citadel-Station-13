@@ -63,10 +63,10 @@
 				possible_targets.Cut(index,index+1)
 
 				if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
+					var/datum/objective/assassinate/once/O = new /datum/objective/assassinate()
 					O.owner = owner
 					O.target = M
-					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
+					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]. You may let [M.p_they()] live, if they come back from death."
 					objectives += O
 				else										//protect
 					var/datum/objective/protect/O = new /datum/objective/protect()
@@ -74,23 +74,16 @@
 					O.target = M
 					O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
 					objectives += O
-			if(4)	//debrain/capture
-				if(!possible_targets.len)	continue
-				var/selected = rand(1,possible_targets.len)
-				var/datum/mind/M = possible_targets[selected]
-				var/is_bad_guy = possible_targets[M]
-				possible_targets.Cut(selected,selected+1)
-
-				if(is_bad_guy ^ helping_station)			//debrain (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/debrain/O = new /datum/objective/debrain()
+			if(4)	//flavor
+				if(helping_station)
+					var/datum/objective/flavor/ninja_helping/O = new /datum/objective/flavor/ninja_helping
 					O.owner = owner
-					O.target = M
-					O.explanation_text = "Steal the brain of [M.current.real_name]."
+					O.forge_objective()
 					objectives += O
-				else										//capture
-					var/datum/objective/capture/O = new /datum/objective/capture()
+				else
+					var/datum/objective/flavor/ninja_syndie/O = new /datum/objective/flavor/ninja_helping
 					O.owner = owner
-					O.gen_amount_goal()
+					O.forge_objective()
 					objectives += O
 			else
 				break

@@ -102,6 +102,12 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
 	G.unlock()
+	var/datum/antagonist/survivalist/guns/our_antag_datum = H.mind.has_antag_datum(/datum/antagonist/survivalist/guns)
+	if(our_antag_datum)
+		var/datum/objective/hoard/O = new()
+		O.owner = H
+		O.set_target(G)
+		our_antag_datum.objectives += O
 	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, 1)
 
 	var/in_hand = H.put_in_hands(G) // not always successful
@@ -127,6 +133,13 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	var/obj/item/M = new magic_type(get_turf(H))
 	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
+
+	var/datum/antagonist/survivalist/magic/our_antag_datum = H.mind.has_antag_datum(/datum/antagonist/survivalist/magic)
+	if(istype(our_antag_datum))
+		var/datum/objective/hoard/O = new()
+		O.owner = H
+		O.set_target(M)
+		our_antag_datum.objectives += O
 
 	var/in_hand = H.put_in_hands(M)
 
