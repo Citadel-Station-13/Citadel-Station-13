@@ -13,6 +13,8 @@
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
+	material_drop = /obj/item/stack/sheet/plasteel
+	material_drop_amount = 5
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/New()
@@ -81,7 +83,7 @@
 
 /obj/structure/closet/crate/coffin/examine(mob/user)
 	. = ..()
-	if(user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	if(user.mind?.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		. += {"<span class='cult'>This is a coffin which you can use to regenerate your burns and other wounds faster.</span>"}
 		. += {"<span class='cult'>You can also thicken your blood if you survive the day, and hide from the sun safely while inside.</span>"}
 	/*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
@@ -142,6 +144,9 @@
 	new /obj/item/reagent_containers/blood/OMinus(src)
 	new /obj/item/reagent_containers/blood/OPlus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/jellyblood(src)
+	new /obj/item/reagent_containers/blood/insect(src)
+	new /obj/item/reagent_containers/blood/synthetics(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 

@@ -197,7 +197,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 		if(HAS_TRAIT(M, TRAIT_BLIND))
 			if(eyes)
-				eyes.Remove(M)
+				eyes.Remove()
 				eyes.forceMove(get_turf(M))
 				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
 				M.emote("scream")

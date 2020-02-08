@@ -191,7 +191,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
 		if(Vc)
-			Vc.Remove(M)
+			Vc.Remove()
 		nVc.Insert(M)
 		qdel(Vc)
 		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle you speak in a more charasmatic and sultry tone.</i></span>")

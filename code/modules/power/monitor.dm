@@ -19,6 +19,8 @@
 	var/record_interval = 50
 	var/next_record = 0
 	var/is_secret_monitor = FALSE
+	tgui_id = "power_monitor"
+	ui_style = "ntos"
 
 /obj/machinery/computer/monitor/secret //Hides the power monitor (such as ones on ruins & CentCom) from PDA's to prevent metagaming.
 	name = "outdated power monitoring console"
@@ -85,7 +87,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "power_monitor", name, 1200, 1000, master_ui, state)
+		ui = new(user, src, ui_key, tgui_id, name, 550, 700, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/monitor/ui_data()

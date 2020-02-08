@@ -65,8 +65,10 @@
 	update_icon()
 
 /obj/item/gun/energy/Destroy()
-	QDEL_NULL(cell)
-	STOP_PROCESSING(SSobj, src)
+	if(flags_1 & INITIALIZED_1)
+		QDEL_NULL(cell)
+		QDEL_LIST(ammo_type)
+		STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/gun/energy/examine(mob/user)

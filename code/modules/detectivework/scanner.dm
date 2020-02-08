@@ -123,7 +123,7 @@
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
 		var/found_something = FALSE
-		add_log("<B>[STATION_TIME_TIMESTAMP("hh:mm:ss")][get_timestamp()] - [target_name]</B>", 0)
+		add_log("<B>[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)][get_timestamp()] - [target_name]</B>", 0)
 
 		// Fingerprints
 		if(length(fingerprints))

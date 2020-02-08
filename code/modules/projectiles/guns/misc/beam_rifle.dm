@@ -43,7 +43,7 @@
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
-	var/last_aim_beam = 0
+	var/last_aimbeam = 0
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
 
@@ -187,10 +187,9 @@
 
 /obj/item/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
 	var/diff = abs(aiming_lastangle - lastangle)
-	check_user()
-	if((last_aim_beam + 1) > world.time)
+	if(!check_user())
 		return
-	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
+	if(((diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD) || ((last_aimbeam + 1) > world.time)) && !force_update)
 		return
 	aiming_lastangle = lastangle
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
@@ -211,7 +210,7 @@
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
 	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
-	last_aim_beam = world.time
+	last_aimbeam = world.time
 
 /obj/item/gun/energy/beam_rifle/process()
 	if(!aiming)
