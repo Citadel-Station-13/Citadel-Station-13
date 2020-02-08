@@ -507,14 +507,13 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom
 	name = "centcom combat winter coat"
-	desc = "An armored heavy jacket with very robust armor, for Nanotrasen officers use only."
+	desc = "An armored heavy jacket with robust armor, for Nanotrasen officers use only."
 	icon_state = "coatcentcom"
 	item_state = "coatcentcom"
-	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90)
+	armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 50, "bomb" = 35, "bio" = 25, "rad" = 25, "fire" = 35, "acid" = 50)
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_flags = THICKMATERIAL
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -527,14 +526,14 @@
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "winterhood_centcom"
-	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90)
+	armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 50, "bomb" = 35, "bio" = 25, "rad" = 25, "fire" = 35, "acid" = 50)
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's armored winter coat"
 	desc = "A heavily armored heavy jacket reinforced with a thin and robust layer of a plasteel alloy. Not as heavily armored as the captain's carapace, but at least it covers more, and is pretty warm."
 	icon_state = "coatcaptain"
 	item_state = "coatcaptain"
-	armor = list("melee" = 45, "bullet" = 35, "laser" = 45, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 35, "acid" = 85)
+	armor = list("melee" = 25, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 35, "acid" = 85)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
@@ -549,7 +548,7 @@
 	desc = "An armored heavy jacket with inferior armor to an armor vest, but better overall coverage. Keep away from fire."
 	icon_state = "coathop"
 	item_state = "coathop"
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 5, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
 
 /obj/item/clothing/head/hooded/winterhood/hop
@@ -557,8 +556,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/hop/Initialize()
 	. = ..()
-	if(!allowed)
-		allowed = GLOB.security_vest_allowed
+	allowed |= GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/hooded/wintercoat/security
 	name = "security armored winter coat"
