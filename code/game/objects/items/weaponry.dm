@@ -295,7 +295,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	resistance_flags = FIRE_PROOF
 
 
-/obj/item/switchblade
+/obj/item/
+
 	name = "switchblade"
 	icon_state = "switchblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -360,7 +361,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		icon_state = "switchblade_msf"
 		to_chat(user, "<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
 
-/obj/item/switchblade/toxic
+/obj/item/switchblade/toxic //Credits to Putnam and Hatterhat for helping me with the procs. Couldn't do it without you guys :)
 	icon_state = "switchblade_tox"
 	desc = "A strange knife, warm to the touch. Rumors say the blade is made from superchilled condensed Tritium gas, able to burn and poison anything it comes across. Handle with care."
 	force = 2
