@@ -328,7 +328,7 @@
 		if(DUEL_HUGBOX_NONE)
 			var/obj/item/bodypart/B = L.get_bodypart(BODY_ZONE_HEAD)
 			B.dismember()
-			QDEL_IN(B, 1)
+			qdel(B)
 		if(DUEL_HUGBOX_LETHAL)
 			L.adjustBruteLoss(180)
 			L.death()				//Die, powergamers.

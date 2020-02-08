@@ -24,13 +24,16 @@
           extra = ` tooltip-${this.get('tooltip-side')}`
         if (this.get('grid'))
           extra += ' gridable'
-        const state = this.get('state')
-        const style = this.get('style')
-        const active_class = this.get('enabled') ? 'active' : 'inactive'
-        if (!state) {
-          return `${active_class} normal ${style} ${extra}`
+        if (this.get('enabled')) {
+          const state = this.get('state')
+          const style = this.get('style')
+          if (!state) {
+            return `active normal ${style} ${extra}`
+          } else {
+            return `inactive ${state} ${extra}`
+          }
         } else {
-          return `${active_class} ${state} ${extra}`
+          return `inactive disabled ${extra}`
         }
       }
 		},

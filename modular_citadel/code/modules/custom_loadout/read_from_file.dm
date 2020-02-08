@@ -13,18 +13,18 @@ GLOBAL_LIST(custom_item_list)
 	GLOB.custom_item_list = list()
 	var/list/file_lines = world.file2list(custom_filelist)
 	for(var/line in file_lines)
-		if(!length(line))	//Emptyline, no one cares.
+		if(length(line) == 0)	//Emptyline, no one cares.
 			continue
-		if(copytext(line,1,3) == "//")	//Commented line, ignore. 3 == length("//") + 1
+		if(copytext(line,1,3) == "//")	//Commented line, ignore.
 			continue
 		var/ckey_str_sep = findtext(line, "|")						//Process our stuff..
-		var/char_str_sep = findtext(line, "|", ckey_str_sep + length(ckey_str_sep))
-		var/job_str_sep = findtext(line, "|", char_str_sep + length(char_str_sep))
-		var/item_str_sep = findtext(line, "|", job_str_sep + length(job_str_sep))
+		var/char_str_sep = findtext(line, "|", ckey_str_sep+1)
+		var/job_str_sep = findtext(line, "|", char_str_sep+1)
+		var/item_str_sep = findtext(line, "|", job_str_sep+1)
 		var/ckey_str = ckey(copytext(line, 1, ckey_str_sep))
-		var/char_str = copytext(line, ckey_str_sep + length(ckey_str_sep), char_str_sep)
-		var/job_str = copytext(line, char_str_sep + length(char_str_sep), job_str_sep)
-		var/item_str = copytext(line, job_str_sep + length(job_str_sep), item_str_sep)
+		var/char_str = copytext(line, ckey_str_sep+1, char_str_sep)
+		var/job_str = copytext(line, char_str_sep+1, job_str_sep)
+		var/item_str = copytext(line, job_str_sep+1, item_str_sep)
 		if(!ckey_str || !char_str || !job_str || !item_str || !length(ckey_str) || !length(char_str) || !length(job_str) || !length(item_str))
 			log_admin("Errored custom_items_whitelist line: [line] - Component/separator missing!")
 		if(!islist(GLOB.custom_item_list[ckey_str]))
@@ -42,7 +42,7 @@ GLOBAL_LIST(custom_item_list)
 		for(var/item_string in item_strings)
 			var/path_str_sep = findtext(item_string, "=")
 			var/path = copytext(item_string, 1, path_str_sep)	//Path to spawn
-			var/amount = copytext(item_string, path_str_sep + length(path_str_sep))	//Amount to spawn
+			var/amount = copytext(item_string, path_str_sep+1)	//Amount to spawn
 			//world << "DEBUG: Item string [item_string] processed"
 			amount = text2num(amount)
 			path = text2path(path)

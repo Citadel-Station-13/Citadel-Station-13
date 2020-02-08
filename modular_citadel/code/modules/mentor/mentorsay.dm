@@ -5,9 +5,8 @@
 	if(!is_mentor())
 		return
 
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)
-		return
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(!msg)	return
 
 	msg = emoji_parse(msg)
 	log_mentor("MSAY: [key_name(src)] : [msg]")

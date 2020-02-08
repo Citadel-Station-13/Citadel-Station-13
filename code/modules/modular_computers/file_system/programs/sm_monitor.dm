@@ -9,9 +9,8 @@
 	network_destination = "supermatter monitoring system"
 	size = 5
 	tgui_id = "ntos_supermatter_monitor"
-	ui_style = "ntos"
 	ui_x = 600
-	ui_y = 350
+	ui_y = 400
 	var/last_status = SUPERMATTER_INACTIVE
 	var/list/supermatters
 	var/obj/machinery/power/supermatter_crystal/active		// Currently selected supermatter crystal.

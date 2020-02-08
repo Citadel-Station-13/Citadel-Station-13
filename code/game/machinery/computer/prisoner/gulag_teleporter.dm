@@ -6,9 +6,6 @@
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
-	ui_x = 350
-	ui_y = 295
-
 	var/default_goal = 200
 	var/obj/machinery/gulag_teleporter/teleporter = null
 	var/obj/structure/gulag_beacon/beacon = null
@@ -25,7 +22,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "gulag_console", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "gulag_console", name, 455, 440, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_data(mob/user)
@@ -53,19 +50,13 @@
 		data["teleporter_location"] = "([teleporter.x], [teleporter.y], [teleporter.z])"
 		data["teleporter_lock"] = teleporter.locked
 		data["teleporter_state_open"] = teleporter.state_open
-	else
-		data["teleporter"] = null
 	if(beacon)
 		data["beacon"] = beacon
 		data["beacon_location"] = "([beacon.x], [beacon.y], [beacon.z])"
-	else
-		data["beacon"] = null
 	if(contained_id)
 		data["id"] = contained_id
 		data["id_name"] = contained_id.registered_name
 		data["goal"] = contained_id.goal
-	else
-		data["id"] = null
 	data["can_teleport"] = can_teleport
 
 	return data
@@ -81,41 +72,36 @@
 	switch(action)
 		if("scan_teleporter")
 			teleporter = findteleporter()
-			return TRUE
 		if("scan_beacon")
 			beacon = findbeacon()
-			return TRUE
 		if("handle_id")
 			if(contained_id)
 				id_eject(usr)
 			else
 				id_insert(usr)
-			return TRUE
 		if("set_goal")
-			var/new_goal = text2num(params["value"])
+			var/new_goal = input("Set the amount of points:", "Points", contained_id.goal) as num|null
 			if(!isnum(new_goal))
 				return
 			if(!new_goal)
 				new_goal = default_goal
+			if (new_goal > 1000)
+				to_chat(usr, "The entered amount of points is too large. Points have instead been set to the maximum allowed amount.")
 			contained_id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
-			return TRUE
 		if("toggle_open")
 			if(teleporter.locked)
-				to_chat(usr, "<span class='alert'>The teleporter must be unlocked first.</span>")
+				to_chat(usr, "The teleporter is locked")
 				return
 			teleporter.toggle_open()
-			return TRUE
 		if("teleporter_lock")
 			if(teleporter.state_open)
-				to_chat(usr, "<span class='alert'>The teleporter must be closed first.</span>")
+				to_chat(usr, "Close the teleporter before locking!")
 				return
 			teleporter.locked = !teleporter.locked
-			return TRUE
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
 			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
-			return TRUE
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()
@@ -143,12 +129,12 @@
 		say("[contained_id]'s ID card goal defaulting to [contained_id.goal] points.")
 	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.")
 	teleporter.handle_prisoner(contained_id, temporary_record)
-	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
+	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Stun(40) // small travel dizziness
 	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, 1)
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()

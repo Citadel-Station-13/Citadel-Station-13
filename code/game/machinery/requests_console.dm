@@ -263,9 +263,10 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(href_list["write"])
-		dpt = ckey(reject_bad_text(href_list["write"])) //write contains the string of the receiving department's name
-		var/new_message = stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN)
+	if(reject_bad_text(href_list["write"]))
+		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
+
+		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -281,7 +282,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = reject_bad_text(stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN))
+		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
 			if (text2num(href_list["priority"]) < 2)
@@ -437,8 +438,9 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	return
 
 /obj/machinery/requests_console/say_mod(input, message_mode)
-	if(spantext_char(input, "!", -3))
-		return "blares"
+	var/ending = copytext(input, length(input) - 2)
+	if (ending == "!!!")
+		. = "blares"
 	else
 		. = ..()
 

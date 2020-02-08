@@ -10,10 +10,9 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
-	threshold_desc = list(
-		"Stage Speed 6" = "Doubles healing speed.",
-		"Stealth 4" = "Healing will no longer be visible to onlookers.",
-	)
+	threshold_desc = "<b>Stage Speed 6:</b> Doubles healing speed.<br>\
+					  <b>Stealth 4:</b> Healing will no longer be visible to onlookers."
+
 /datum/symptom/heal/Start(datum/disease/advance/A)
 	if(!..())
 		return
@@ -55,10 +54,8 @@
 	level = 6
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
 	var/nearspace_penalty = 0.3
-	threshold_desc = list(
-		"Stage Speed 6" = "Increases healing speed.",
-		"Transmission 6" = "Removes penalty for only being close to space.",
-	)
+	threshold_desc = "<b>Stage Speed 6:</b> Increases healing speed.<br>\
+					  <b>Transmission 6:</b> Removes penalty for only being close to space."
 
 /datum/symptom/heal/starlight/Start(datum/disease/advance/A)
 	if(!..())
@@ -108,10 +105,8 @@
 	level = 7
 	var/food_conversion = FALSE
 	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
-	threshold_desc = list(
-		"Resistance 7" = "Increases chem removal speed.",
-		"Stage Speed 6" = "Consumed chemicals nourish the host.",
-	)
+	threshold_desc = "<b>Resistance 7:</b> Increases chem removal speed.<br>\
+					  <b>Stage Speed 6:</b> Consumed chemicals nourish the host."
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
 	if(!..())
@@ -144,10 +139,9 @@
 	var/reduced_hunger = FALSE
 	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
 	 but also causing increased hunger."
-	threshold_desc = list(
-		"Stealth 3" = "Reduces hunger rate.",
-		"Stage Speed 10" = "Chemical metabolization is tripled instead of doubled.",
-	)
+	threshold_desc = "<b>Stealth 3:</b> Reduces hunger rate.<br>\
+					  <b>Stage Speed 10:</b> Chemical metabolization is tripled instead of doubled."
+
 /datum/symptom/heal/metabolism/Start(datum/disease/advance/A)
 	if(!..())
 		return
@@ -178,9 +172,8 @@
 	transmittable = -1
 	level = 6
 	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
-	threshold_desc = list(
-		"Stage Speed 8" = "Doubles healing speed.",
-	)
+	threshold_desc = "<b>Stage Speed 8:</b> Doubles healing speed."
+
 /datum/symptom/heal/darkness/Start(datum/disease/advance/A)
 	if(!..())
 		return
@@ -229,11 +222,9 @@
 	var/deathgasp = FALSE
 	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
-	threshold_desc = list(
-		"Stealth 2" = "Host appears to die when falling into a coma.",
-		"Resistance 4" = "The virus also stabilizes the host while they are in critical condition.",
-		"Stage Speed 7" = "Increases healing speed.",
-	)
+	threshold_desc = "<b>Stealth 2:</b> Host appears to die when falling into a coma.<br>\
+					<b>Resistance 4:</b> The virus also stabilizes the host while they are in critical condition.<br>\
+					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/coma/Start(datum/disease/advance/A)
 	if(!..())
@@ -322,10 +313,8 @@
 	level = 6
 	passive_message = "<span class='notice'>Your skin feels oddly dry...</span>"
 	var/absorption_coeff = 1
-	threshold_desc = list(
-		"Resistance 5" = "Water is consumed at a much slower rate.",
-		"Stage Speed 7" = "Increases healing speed.",
-	)
+	threshold_desc = "<b>Resistance 5:</b> Water is consumed at a much slower rate.<br>\
+					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/water/Start(datum/disease/advance/A)
 	if(!..())
@@ -380,10 +369,9 @@
 	level = 8
 	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
 	var/temp_rate = 1
-	threshold_desc = list(
-		"Transmission 6" = "Additionally increases temperature adjustment rate and heals those who love toxins",
-		"Resistance 7" = "Increases healing speed.",
-	)
+	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate and heals toxin lovers.<br>\
+					  <b>Stage Speed 7:</b> Increases healing speed."
+
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	if(!..())
 		return

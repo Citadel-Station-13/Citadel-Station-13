@@ -16,6 +16,5 @@ export const postcss = {
   gradient: require('postcss-filter-gradient'),
   opacity: require('postcss-opacity'),
   plsfilters: require('pleeease-filters'),
-  rgba: require('postcss-color-rgba-fallback'),
-  cssnano: require('cssnano'),
+  rgba: require('postcss-color-rgba-fallback')
 }

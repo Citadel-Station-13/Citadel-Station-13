@@ -59,6 +59,7 @@
 
 	var/custom_species = null
 
+	var/datum/personal_crafting/handcrafting
 	var/datum/physiology/physiology
 
 	var/list/datum/bioware = list()

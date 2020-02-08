@@ -189,7 +189,7 @@
 		var/insertpos = rand(1, message_list.len - 1)
 		var/inserttext = message_list[insertpos]
 
-		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
+		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
 			message_list[insertpos] = inserttext + "..."
 
 		if(prob(20) && message_list.len > 3)
@@ -290,7 +290,7 @@
 
 /obj/item/organ/tongue/fluffy/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
+	if(copytext(message, 1, 2) != "*")
 		message = replacetext(message, "ne", "nye")
 		message = replacetext(message, "nu", "nyu")
 		message = replacetext(message, "na", "nya")

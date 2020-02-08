@@ -117,37 +117,37 @@
 	category = "Holiday"
 
 /datum/uplink_item/bundles_TC
-	category = "Telecrystals and Bundles"
+	category = "Bundles and Telecrystals"
 	surplus = 0
 	cant_discount = TRUE
 
 /datum/uplink_item/dangerous
-	category = "Conspicuous Weapons"
+	category = "Conspicuous and Dangerous Weapons"
 
 /datum/uplink_item/stealthy_weapons
-	category = "Stealthy Weapons"
+	category = "Stealthy and Inconspicuous Weapons"
 
 /datum/uplink_item/ammo
 	category = "Ammunition"
 	surplus = 40
 
 /datum/uplink_item/explosives
-	category = "Explosives"
+	category = "Grenades and Explosives"
 
 /datum/uplink_item/support
-	category = "Support and Exosuits"
+	category = "Support and Mechanized Exosuits"
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/suits
-	category = "Clothing"
+	category = "Space Suits, Hardsuits and Clothing"
 	surplus = 40
 
 /datum/uplink_item/stealthy_tools
-	category = "Stealth Gadgets"
+	category = "Stealth and Camouflage Items"
 
 /datum/uplink_item/device_tools
-	category = "Misc. Gadgets"
+	category = "Devices and Tools"
 
 /datum/uplink_item/implants
 	category = "Implants"

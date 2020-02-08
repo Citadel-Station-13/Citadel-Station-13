@@ -72,21 +72,20 @@
 		display_names += list(initial(A.name) = A)
 
 	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	var/turf/T = get_turf(M)
-	if(!T || QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)
 	var/A = holy_armor_list[index]
 
 	GLOB.holy_armor_type = A
-	var/holy_armor_box = new A(T)
+	var/holy_armor_box = new A
 
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 
 	if(holy_armor_box)
 		qdel(src)
-		M.put_in_hands(holy_armor_box)
+		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"

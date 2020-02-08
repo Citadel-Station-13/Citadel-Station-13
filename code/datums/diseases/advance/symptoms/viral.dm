@@ -26,7 +26,7 @@ BONUS
 //////////////////////////////////////
 Viral evolution
 
-	Moderate stealth reduction.
+	Moderate stealth reductopn.
 	Major decreases to resistance.
 	increases stage speed.
 	increase to transmission

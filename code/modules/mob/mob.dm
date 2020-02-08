@@ -82,7 +82,7 @@
 	if(!client)
 		return
 
-	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
 		if(type & MSG_VISUAL && eye_blind )//Vision related
@@ -414,7 +414,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
 
 	if(mind)
@@ -513,7 +513,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	if(href_list["flavor2_more"])
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text_2, "\n", "<BR>")), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
-
+		
 	if(href_list["flavor_change"])
 		update_flavor_text()
 

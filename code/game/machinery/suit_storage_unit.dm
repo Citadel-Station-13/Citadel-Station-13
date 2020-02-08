@@ -266,7 +266,7 @@
 			for(var/atom/movable/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
 				AM.clean_blood()
-				AM.fingerprints = null
+				AM.fingerprints = list()
 				var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
 				if(contamination)
 					qdel(contamination)
@@ -390,24 +390,14 @@
 	data["uv_super"] = uv_super
 	if(helmet)
 		data["helmet"] = helmet.name
-	else
-		data["helmet"] = null
 	if(suit)
 		data["suit"] = suit.name
-	else
-		data["suit"] = null
 	if(mask)
 		data["mask"] = mask.name
-	else
-		data["mask"] = null
 	if(storage)
 		data["storage"] = storage.name
-	else
-		data["storage"] = null
 	if(occupant)
-		data["occupied"] = TRUE
-	else
-		data["occupied"] = FALSE
+		data["occupied"] = 1
 	return data
 
 /obj/machinery/suit_storage_unit/ui_act(action, params)

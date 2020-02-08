@@ -57,8 +57,10 @@
 /obj/item/melee/transforming/energy/sword/bananium
 	name = "bananium sword"
 	desc = "An elegant weapon, for a more civilized age."
-	force_on = 15
-	throwforce_on = 15
+	force = 0
+	throwforce = 0
+	force_on = 0
+	throwforce_on = 0
 	hitsound = null
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
@@ -70,7 +72,7 @@
 
 /obj/item/melee/transforming/energy/sword/bananium/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 81, GALOSHES_DONT_HELP)
+	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
@@ -78,13 +80,13 @@
 	..()
 	if(active)
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-		slipper.Slip(src, M, FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
+		slipper.Slip(M)
 
 /obj/item/melee/transforming/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
 	if(active)
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-		slipper.Slip(src, hit_atom, FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
+		slipper.Slip(hit_atom)
 
 /obj/item/melee/transforming/energy/sword/bananium/attackby(obj/item/I, mob/living/user, params)
 	if((world.time > next_trombone_allowed) && istype(I, /obj/item/melee/transforming/energy/sword/bananium))
@@ -107,7 +109,7 @@
 		transform_weapon(user, TRUE)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!</span>")
 	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-	slipper.Slip(src, user, FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
+	slipper.Slip(user)
 	return SHAME
 
 //BANANIUM SHIELD
@@ -127,7 +129,7 @@
 
 /obj/item/shield/energy/bananium/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 81, GALOSHES_DONT_HELP)
+	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
@@ -148,7 +150,7 @@
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
 			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-			slipper.Slip(src, hit_atom, FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
+			slipper.Slip(hit_atom)
 		if(thrownby && !caught)
 			throw_at(thrownby, throw_range+2, throw_speed, null, 1)
 	else
@@ -210,7 +212,7 @@
 				M.equip_to_slot_or_del(the_stash, SLOT_WEAR_MASK, TRUE, TRUE, TRUE, TRUE)
 
 /obj/item/clothing/mask/fakemoustache/sticky
-	var/unstick_time = 2 MINUTES
+	var/unstick_time = 600
 
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize()
 	. = ..()

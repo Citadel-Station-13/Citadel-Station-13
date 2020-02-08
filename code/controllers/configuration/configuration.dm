@@ -109,13 +109,13 @@
 		if(!L)
 			continue
 
-		var/firstchar = L[1]
+		var/firstchar = copytext(L, 1, 2)
 		if(firstchar == "#")
 			continue
 
 		var/lockthis = firstchar == "@"
 		if(lockthis)
-			L = copytext(L, length(firstchar) + 1)
+			L = copytext(L, 2)
 
 		var/pos = findtext(L, " ")
 		var/entry = null
@@ -123,7 +123,7 @@
 
 		if(pos)
 			entry = lowertext(copytext(L, 1, pos))
-			value = copytext(L, pos + length(L[pos]))
+			value = copytext(L, pos + 1)
 		else
 			entry = lowertext(L)
 
@@ -269,7 +269,7 @@
 		t = trim(t)
 		if(length(t) == 0)
 			continue
-		else if(t[1] == "#")
+		else if(copytext(t, 1, 2) == "#")
 			continue
 
 		var/pos = findtext(t, " ")
@@ -278,7 +278,7 @@
 
 		if(pos)
 			command = lowertext(copytext(t, 1, pos))
-			data = copytext(t, pos + length(t[pos]))
+			data = copytext(t, pos + 1)
 		else
 			command = lowertext(t)
 

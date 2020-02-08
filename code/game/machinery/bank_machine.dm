@@ -46,37 +46,34 @@
 			new /obj/item/stack/spacecash/c200(drop_location()) // will autostack
 			playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 			SSshuttle.points -= 200
-		if(next_warning < world.time && prob(15))
-			var/area/A = get_area(loc)
-			var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
-			radio.talk_into(src, message, radio_channel)
-			next_warning = world.time + minimum_time_between_warnings
+			if(next_warning < world.time && prob(15))
+				var/area/A = get_area(loc)
+				var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
+				radio.talk_into(src, message, radio_channel)
+				next_warning = world.time + minimum_time_between_warnings
 
-/obj/machinery/computer/bank_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "bank_machine", name, 320, 165, master_ui, state)
-		ui.open()
+/obj/machinery/computer/bank_machine/ui_interact(mob/user)
+	. = ..()
+	var/dat = "[station_name()] secure vault. Authorized personnel only.<br>"
+	dat += "Current Balance: [SSshuttle.points] credits.<br>"
+	if(!siphoning)
+		dat += "<A href='?src=[REF(src)];siphon=1'>Siphon Credits</A><br>"
+	else
+		dat += "<A href='?src=[REF(src)];halt=1'>Halt Credit Siphon</A><br>"
 
-/obj/machinery/computer/bank_machine/ui_data(mob/user)
-	var/list/data = list()
-	data["current_balance"] = SSshuttle.points
-	data["siphoning"] = siphoning
-	data["station_name"] = station_name()
+	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
 
-	return data
+	var/datum/browser/popup = new(user, "computer", "Bank Vault", 300, 200)
+	popup.set_content("<center>[dat]</center>")
+	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
-/obj/machinery/computer/bank_machine/ui_act(action, params)
+/obj/machinery/computer/bank_machine/Topic(href, href_list)
 	if(..())
 		return
-
-	switch(action)
-		if("siphon")
-			say("Siphon of station credits has begun!")
-			siphoning = TRUE
-			. = TRUE
-		if("halt")
-			say("Station credit withdrawal halted.")
-			siphoning = FALSE
-			. = TRUE
+	if(href_list["siphon"])
+		say("Siphon of station credits has begun!")
+		siphoning = TRUE
+	if(href_list["halt"])
+		say("Station credit withdrawal halted.")
+		siphoning = FALSE

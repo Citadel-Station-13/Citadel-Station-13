@@ -345,7 +345,7 @@
 			if(!SSticker.HasRoundStarted())
 				alert("The game hasn't started yet!")
 				return
-			var/objective = stripped_input(usr, "Enter an objective")
+			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
 			if(!objective)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))

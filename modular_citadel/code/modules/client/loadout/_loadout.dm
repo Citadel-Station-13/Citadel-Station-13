@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 	LAZYINITLIST(GLOB.loadout_whitelist_ids)
 	var/list/file_lines = world.file2list(loadout_config)
 	for(var/line in file_lines)
-		if(!line || line[1] == "#")
+		if(!line || findtextEx(line,"#",1,2))
 			continue
 		var/list/lineinfo = splittext(line, "|")
 		var/lineID = lineinfo[1]
@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 			var/sublinetypedef = findtext(subline, "=")
 			if(sublinetypedef)
 				var/sublinetype = copytext(subline, 1, sublinetypedef)
-				var/list/sublinecontent = splittext(copytext(subline, sublinetypedef+ length(sublinetypedef)), ",")
+				var/list/sublinecontent = splittext(copytext(subline, sublinetypedef+1), ",")
 				if(sublinetype == "WHITELIST")
 					GLOB.loadout_whitelist_ids["[lineID]"] = sublinecontent
 

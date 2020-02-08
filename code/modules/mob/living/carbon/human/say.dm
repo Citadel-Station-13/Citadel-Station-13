@@ -87,22 +87,30 @@
 /mob/living/carbon/human/proc/forcesay(list/append) //this proc is at the bottom of the file because quote fuckery makes notepad++ cri
 	if(stat == CONSCIOUS)
 		if(client)
+			var/virgin = 1	//has the text been modified yet?
 			var/temp = winget(client, "input", "text")
-			var/say_starter = "Say \"" //"
-			if(findtextEx(temp, say_starter, 1, length(say_starter) + 1) && length(temp) > length(say_starter))	//case sensitive means
+			if(findtextEx(temp, "Say \"", 1, 7) && length(temp) > 5)	//"case sensitive means
 
-				temp = trim_left(copytext(temp, length(say_starter + 1)))
-				temp = replacetext(temp, ";", "", 1, 2)	//general radio
-				while(trim_left(temp)[1] == ":")	//dept radio again (necessary)
-					temp = copytext_char(trim_left(temp), 3)
+				temp = replacetext(temp, ";", "")	//general radio
 
-				if(temp[1] == "*")	//emotes
+				if(findtext(trim_left(temp), ":", 6, 7))	//dept radio
+					temp = copytext(trim_left(temp), 8)
+					virgin = 0
+
+				if(virgin)
+					temp = copytext(trim_left(temp), 6)	//normal speech
+					virgin = 0
+
+				while(findtext(trim_left(temp), ":", 1, 2))	//dept radio again (necessary)
+					temp = copytext(trim_left(temp), 3)
+
+				if(findtext(temp, "*", 1, 2))	//emotes
 					return
 
 				var/trimmed = trim_left(temp)
 				if(length(trimmed))
 					if(append)
-						trimmed += pick(append)
+						temp += pick(append)
 
-					say(trimmed)
+					say(temp)
 				winset(client, "input", "text=[null]")

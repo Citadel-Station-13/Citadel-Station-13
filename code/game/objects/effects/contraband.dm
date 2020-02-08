@@ -128,7 +128,7 @@
 	if (smooth & SMOOTH_DIAGONAL)
 		for (var/O in overlays)
 			var/image/I = O
-			if(copytext(I.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
+			if (copytext(I.icon_state, 1, 3) == "d-")
 				return
 
 	var/stuff_on_wall = 0

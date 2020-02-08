@@ -641,13 +641,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
+				var/t = input(U, "Please enter new ringtone", name, ttone) as text
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
 						return
 					else
-						ttone = t
+						ttone = copytext(sanitize(t), 1, 20)
 				else
 					U << browse(null, "window=pda")
 					return

@@ -16,7 +16,6 @@
 	var/power_efficiency = 1
 	var/x_offset = 0
 	var/y_offset = 0
-	var/indicator_icon = "launchpad_target"
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = 0
@@ -35,27 +34,16 @@
 			return
 
 		if(panel_open)
-			if(I.tool_behaviour == TOOL_MULTITOOL)
-				if(!multitool_check_buffer(user, I))
-					return
+			if(istype(I, /obj/item/multitool))
 				var/obj/item/multitool/M = I
 				M.buffer = src
 				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
-				return TRUE
+				return 1
 
 		if(default_deconstruction_crowbar(I))
 			return
 
 	return ..()
-
-/obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
-	. = ..()
-	if(.)
-		return
-	var/target_x = x + x_offset
-	var/target_y = y + y_offset
-	var/turf/target = locate(target_x, target_y, z)
-	ghost.forceMove(target)
 
 /obj/machinery/launchpad/proc/isAvailable()
 	if(stat & NOPOWER)
@@ -63,14 +51,6 @@
 	if(panel_open)
 		return FALSE
 	return TRUE
-
-/obj/machinery/launchpad/proc/set_offset(x, y)
-	if(teleporting)
-		return
-	if(!isnull(x))
-		x_offset = CLAMP(x, -range, range)
-	if(!isnull(y))
-		y_offset = CLAMP(y, -range, range)
 
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending)
 	if(teleporting)
@@ -89,21 +69,11 @@
 	var/area/A = get_area(target)
 
 	flick(icon_teleport, src)
-
-	//Change the indicator's icon to show that we're teleporting
-	if(sending)
-		indicator_icon = "launchpad_launch"
-	else
-		indicator_icon = "launchpad_pull"
-
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
 	teleporting = TRUE
 
 
 	sleep(teleport_speed)
-
-	//Set the indicator icon back to normal
-	indicator_icon = "launchpad_target"
 
 	if(QDELETED(src) || !isAvailable())
 		return
@@ -121,25 +91,25 @@
 		source = dest
 		dest = target
 
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
 	var/first = TRUE
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
-		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
-			continue//don't teleport these
+		// if it's anchored, don't teleport
 		var/on_chair = ""
-		if(ROI.anchored)// if it's anchored, don't teleport
+		if(ROI.anchored)
 			if(isliving(ROI))
 				var/mob/living/L = ROI
 				if(L.buckled)
 					// TP people on office chairs
 					if(L.buckled.anchored)
 						continue
+
 					on_chair = " (on a chair)"
 				else
 					continue
-			else
+			else if(!isobserver(ROI))
 				continue
 		if(!first)
 			log_msg += ", "
@@ -188,11 +158,11 @@
 	var/obj/item/storage/briefcase/launchpad/briefcase
 
 /obj/machinery/launchpad/briefcase/Initialize(mapload, briefcase)
-    . = ..()
-    if(!briefcase)
-        log_game("[src] has been spawned without a briefcase.")
-        return INITIALIZE_HINT_QDEL
-    src.briefcase = briefcase
+	. = ..()
+	if(!briefcase)
+		log_game("[src] has been spawned without a briefcase.")
+		return INITIALIZE_HINT_QDEL
+	src.briefcase = briefcase
 
 /obj/machinery/launchpad/briefcase/Destroy()
 	QDEL_NULL(briefcase)
@@ -285,7 +255,7 @@
 /obj/item/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 300, 240, master_ui, state) //width, height
+		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 550, 400, master_ui, state) //width, height
 		ui.set_style("syndicate")
 		ui.open()
 
@@ -300,9 +270,10 @@
 		return data
 
 	data["pad_name"] = pad.display_name
-	data["range"] = pad.range
-	data["x"] = pad.x_offset
-	data["y"] = pad.y_offset
+	data["abs_x"] = abs(pad.x_offset)
+	data["abs_y"] = abs(pad.y_offset)
+	data["north_south"] = pad.y_offset > 0 ? "N":"S"
+	data["east_west"] = pad.x_offset > 0 ? "E":"W"
 	return data
 
 /obj/item/launchpad_remote/proc/teleport(mob/user, obj/machinery/launchpad/pad)
@@ -318,33 +289,76 @@
 	if(..())
 		return
 	switch(action)
-		if("set_pos")
-			var/new_x = text2num(params["x"])
-			var/new_y = text2num(params["y"])
-			pad.set_offset(new_x, new_y)
+		if("right")
+			if(pad.x_offset < pad.range)
+				pad.x_offset++
 			. = TRUE
-		if("move_pos")
-			var/plus_x = text2num(params["x"])
-			var/plus_y = text2num(params["y"])
-			pad.set_offset(
-				x = pad.x_offset + plus_x,
-				y = pad.y_offset + plus_y
-			)
+
+		if("left")
+			if(pad.x_offset > (pad.range * -1))
+				pad.x_offset--
 			. = TRUE
+
+		if("up")
+			if(pad.y_offset < pad.range)
+				pad.y_offset++
+			. = TRUE
+
+		if("down")
+			if(pad.y_offset > (pad.range * -1))
+				pad.y_offset--
+			. = TRUE
+
+		if("up-right")
+			if(pad.y_offset < pad.range)
+				pad.y_offset++
+			if(pad.x_offset < pad.range)
+				pad.x_offset++
+			. = TRUE
+
+		if("up-left")
+			if(pad.y_offset < pad.range)
+				pad.y_offset++
+			if(pad.x_offset > (pad.range * -1))
+				pad.x_offset--
+			. = TRUE
+
+		if("down-right")
+			if(pad.y_offset > (pad.range * -1))
+				pad.y_offset--
+			if(pad.x_offset < pad.range)
+				pad.x_offset++
+			. = TRUE
+
+		if("down-left")
+			if(pad.y_offset > (pad.range * -1))
+				pad.y_offset--
+			if(pad.x_offset > (pad.range * -1))
+				pad.x_offset--
+			. = TRUE
+
+		if("reset")
+			pad.y_offset = 0
+			pad.x_offset = 0
+			. = TRUE
+
 		if("rename")
 			. = TRUE
-			var/new_name = params["name"]
+			var/new_name = stripped_input(usr, "How do you want to rename the launchpad?", "Launchpad", pad.display_name, 15)
 			if(!new_name)
 				return
 			pad.display_name = new_name
+
 		if("remove")
 			. = TRUE
 			if(usr && alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
 				pad = null
+
 		if("launch")
 			sending = TRUE
 			teleport(usr, pad)
 			. = TRUE
+
 		if("pull")
 			sending = FALSE
 			teleport(usr, pad)

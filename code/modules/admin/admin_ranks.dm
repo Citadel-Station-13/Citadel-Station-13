@@ -135,10 +135,10 @@ GLOBAL_PROTECT(protected_ranks)
 	var/previous_rights = 0
 	//load text from file and process each line separately
 	for(var/line in world.file2list("[global.config.directory]/admin_ranks.txt"))
-		if(!line || findtextEx_char(line,"#",1,2))
+		if(!line || findtextEx(line,"#",1,2))
 			continue
 		var/next = findtext(line, "=")
-		var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, line[next])))
+		var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, next)))
 		if(!R)
 			continue
 		GLOB.admin_ranks += R
@@ -146,7 +146,7 @@ GLOBAL_PROTECT(protected_ranks)
 		var/prev = findchar(line, "+-*", next, 0)
 		while(prev)
 			next = findchar(line, "+-*", prev + 1, 0)
-			R.process_keyword(copytext_char(line, prev, next), previous_rights)
+			R.process_keyword(copytext(line, prev, next), previous_rights)
 			prev = next
 		previous_rights = R.rights
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)

@@ -27,10 +27,8 @@ Bonus
 	base_message_chance = 50
 	symptom_delay_min = 15
 	symptom_delay_max = 40
-	threshold_desc = list(
-		"Transmission 6" = "Also causes druggy vision.",
-		"Stealth 4" = "The symptom remains hidden until active.",
-	)
+	threshold_desc = "<b>Transmission 6:</b> Also causes druggy vision.<br>\
+					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/dizzy/Start(datum/disease/advance/A)
 	if(!..())

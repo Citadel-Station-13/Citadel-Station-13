@@ -50,12 +50,6 @@
 			D.forcesay(GLOB.hit_appends)
 	return 1
 
-/datum/martial_art/boxing/teach(mob/living/carbon/human/H, make_temporary = TRUE)
-	. = ..()
-	if(.)
-		if(H.pulling && ismob(H.pulling))
-			H.stop_pulling()
-
 /obj/item/clothing/gloves/boxing
 	var/datum/martial_art/boxing/style = new
 
@@ -64,7 +58,7 @@
 		return
 	if(slot == SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
-		style.teach(H,TRUE)
+		style.teach(H,1)
 	return
 
 /obj/item/clothing/gloves/boxing/dropped(mob/user)

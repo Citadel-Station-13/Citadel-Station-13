@@ -29,9 +29,7 @@ Bonus
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 45
-	threshold_desc = list(
-		"Stealth 4" = "The symptom is less noticeable."
-	)
+	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
 	if(!..())

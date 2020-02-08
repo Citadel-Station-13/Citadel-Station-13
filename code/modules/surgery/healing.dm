@@ -25,7 +25,7 @@
 	name = "repair body"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 65, /obj/item/pen = 55)
 	repeatable = TRUE
-	time = 15
+	time = 25
 	var/brutehealing = 0
 	var/burnhealing = 0
 	var/missinghpbonus = 0 //heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
@@ -117,15 +117,15 @@
 /********************BRUTE STEPS********************/
 /datum/surgery_step/heal/brute/basic
 	name = "tend bruises"
-	brutehealing = 10
+	brutehealing = 5
 	missinghpbonus = 15
 
 /datum/surgery_step/heal/brute/upgraded
-	brutehealing = 10
+	brutehealing = 5
 	missinghpbonus = 10
 
 /datum/surgery_step/heal/brute/upgraded/femto
-	brutehealing = 10
+	brutehealing = 5
 	missinghpbonus = 5
 
 /***************************BURN***************************/
@@ -155,15 +155,15 @@
 /********************BURN STEPS********************/
 /datum/surgery_step/heal/burn/basic
 	name = "tend burn wounds"
-	burnhealing = 10
+	burnhealing = 5
 	missinghpbonus = 15
 
 /datum/surgery_step/heal/burn/upgraded
-	burnhealing = 10
+	burnhealing = 5
 	missinghpbonus = 10
 
 /datum/surgery_step/heal/burn/upgraded/femto
-	burnhealing = 10
+	burnhealing = 5
 	missinghpbonus = 5
 
 /***************************COMBO***************************/
@@ -193,19 +193,19 @@
 /********************COMBO STEPS********************/
 /datum/surgery_step/heal/combo
 	name = "tend physical wounds"
-	brutehealing = 6
-	burnhealing = 6
+	brutehealing = 3
+	burnhealing = 3
 	missinghpbonus = 15
-	time = 6
+	time = 10
 
 /datum/surgery_step/heal/combo/upgraded
-	brutehealing = 6
-	burnhealing = 6
+	brutehealing = 3
+	burnhealing = 3
 	missinghpbonus = 10
 
 /datum/surgery_step/heal/combo/upgraded/femto
-	brutehealing = 3
-	burnhealing = 3
+	brutehealing = 1
+	burnhealing = 1
 	missinghpbonus = 2.5
 
 /datum/surgery_step/heal/combo/upgraded/femto/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -1,5 +1,3 @@
-#define MAX_CHANNELS 1000
-
 /datum/ntnet_conversation
 	var/id = null
 	var/title = "Untitled Conversation"
@@ -10,11 +8,7 @@
 	var/static/ntnrc_uid = 0
 
 /datum/ntnet_conversation/New()
-	id = ntnrc_uid + 1
-	if(id > MAX_CHANNELS)
-		qdel(src)
-		return
-	ntnrc_uid = id
+	id = ntnrc_uid++
 	if(SSnetworks.station_network)
 		SSnetworks.station_network.chat_channels.Add(src)
 	..()
@@ -72,5 +66,3 @@
 
 	add_status_message("[client.username] has changed channel title from [title] to [newtitle]")
 	title = newtitle
-
-#undef MAX_CHANNELS

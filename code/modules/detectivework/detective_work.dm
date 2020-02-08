@@ -9,7 +9,8 @@
 	else if(M.bloody_hands > 1)
 		if(add_blood_DNA(M.blood_DNA, M.diseases))
 			M.bloody_hands--
-	LAZYINITLIST(suit_fibers)
+	if(!suit_fibers)
+		suit_fibers = list()
 	var/fibertext
 	var/item_multiplier = isitem(src)?1.2:1
 	if(M.wear_suit)
@@ -65,6 +66,7 @@
 
 	fingerprintslast = M.ckey
 
+
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
 /atom/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
 	if(!M || !M.key)
@@ -91,10 +93,15 @@
 		fingerprints[full_print] = full_print
 
 /atom/proc/transfer_fingerprints_to(atom/A)
+	// Make sure everything are lists.
+	LAZYINITLIST(A.fingerprints)
+	LAZYINITLIST(A.fingerprintshidden)
+	LAZYINITLIST(fingerprints)
+	LAZYINITLIST(fingerprintshidden)
+
+	// Transfer
 	if(fingerprints)
-		LAZYINITLIST(A.fingerprints)
-		A.fingerprints |= fingerprints            //detective
+		A.fingerprints |= fingerprints.Copy()            //detective
 	if(fingerprintshidden)
-		LAZYINITLIST(A.fingerprintshidden)
-		A.fingerprintshidden |= fingerprintshidden    //admin
+		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin
 	A.fingerprintslast = fingerprintslast

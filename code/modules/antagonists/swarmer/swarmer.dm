@@ -19,7 +19,6 @@
 	job_description = "Swarmer"
 	death = FALSE
 	roundstart = FALSE
-	short_desc = "You are a swarmer, a weapon of a long dead civilization."
 	flavour_text = {"
 	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>
 	<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>

@@ -3,20 +3,13 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
-	ui_x = 780
-	ui_y = 750
-
+	req_access = list(ACCESS_CARGO)
 	var/requestonly = FALSE
 	var/contraband = FALSE
-	var/self_paid = FALSE
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
-		cannot transport live organisms, human remains, classified nuclear weaponry, \
-		homing beacons or machinery housing any form of artificial intelligence."
+		cannot transport live organisms, human remains, classified nuclear weaponry \
+		or homing beacons."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	/// radio used by the console to send messages on supply channel
-	var/obj/item/radio/headset/radio
-	/// var that tracks message cooldown
-	var/message_cooldown
 
 	light_color = "#E2853D"//orange
 
@@ -25,21 +18,17 @@
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
+	req_access = list()
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
-	radio = new /obj/item/radio/headset/headset_cargo(src)
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
 	if (board.obj_flags & EMAGGED)
 		obj_flags |= EMAGGED
 	else
 		obj_flags &= ~EMAGGED
-
-/obj/machinery/computer/cargo/Destroy()
-	QDEL_NULL(radio)
-	..()
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
 	. = EXPORT_CARGO
@@ -49,11 +38,11 @@
 		. |= EXPORT_EMAG
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
-	if(user)
-		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
-		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
+	"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
 	obj_flags |= EMAGGED
 	contraband = TRUE
@@ -62,21 +51,23 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
-	update_static_data(user)
+	req_access = list()
+	return TRUE
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cargo", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "cargo", name, 1000, 800, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
+	data["requestonly"] = requestonly
 	data["location"] = SSshuttle.supply.getStatusText()
+	data["points"] = SSshuttle.points
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
-	data["points"] = SSshuttle.points
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	var/message = "Remember to stamp and send back the supply manifests."
@@ -85,30 +76,6 @@
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
 	data["message"] = message
-	data["cart"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
-		data["cart"] += list(list(
-			"object" = SO.pack.name,
-			"cost" = SO.pack.cost,
-			"id" = SO.id,
-			"orderer" = SO.orderer,
-		))
-
-	data["requests"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.requestlist)
-		data["requests"] += list(list(
-			"object" = SO.pack.name,
-			"cost" = SO.pack.cost,
-			"orderer" = SO.orderer,
-			"reason" = SO.reason,
-			"id" = SO.id
-		))
-
-	return data
-
-/obj/machinery/computer/cargo/ui_static_data(mob/user)
-	var/list/data = list()
-	data["requestonly"] = requestonly
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
@@ -123,13 +90,36 @@
 			"name" = P.name,
 			"cost" = P.cost,
 			"id" = pack,
-			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			"access" = P.access
+			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
+
+	data["cart"] = list()
+	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
+		data["cart"] += list(list(
+			"object" = SO.pack.name,
+			"cost" = SO.pack.cost,
+			"id" = SO.id
+		))
+
+	data["requests"] = list()
+	for(var/datum/supply_order/SO in SSshuttle.requestlist)
+		data["requests"] += list(list(
+			"object" = SO.pack.name,
+			"cost" = SO.pack.cost,
+			"orderer" = SO.orderer,
+			"reason" = SO.reason,
+			"id" = SO.id
+		))
+
 	return data
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
+		return
+	if(!allowed(usr))
+		to_chat(usr, "<span class='notice'>Access denied.</span>")
+		return
+	if(action != "add" && requestonly)
 		return
 	switch(action)
 		if("send")

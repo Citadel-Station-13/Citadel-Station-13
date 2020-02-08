@@ -152,10 +152,7 @@
 		if(istart == 0)
 			return	//No field found with matching id
 
-		if(links)
-			laststart = istart + length(info_links[istart])
-		else
-			laststart = istart + length(info[istart])
+		laststart = istart+1
 		locid++
 		if(locid == id)
 			var/iend = 1

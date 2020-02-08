@@ -43,24 +43,24 @@
 	if(!istext(color))
 		color = ""
 
-	var/start = 1 + (text2ascii(color, 1) == 35)
+	var/start = 1 + (text2ascii(color,1)==35)
 	var/len = length(color)
-	var/char = ""
+	var/step_size = 1 + ((len+1)-start != desired_format)
 
 	. = ""
-	for(var/i = start, i <= len, i += length(char))
-		char = color[i]
-		switch(text2ascii(char))
-			if(48 to 57)	//numbers 0 to 9
-				. += char
-			if(97 to 102)	//letters a to f
-				. += char
-			if(65 to 70)	//letters A to F - translates to lowercase
-				. += lowertext(char)
+	for(var/i=start, i<=len, i+=step_size)
+		var/ascii = text2ascii(color,i)
+		switch(ascii)
+			if(48 to 57)
+				. += ascii2text(ascii)		//numbers 0 to 9
+			if(97 to 102)
+				. += ascii2text(ascii)		//letters a to f
+			if(65 to 70)
+				. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
 			else
 				break
 
-	if(length_char(.) != desired_format)
+	if(length(.) != desired_format)
 		if(default)
 			return default
 		return crunch + repeat_string(desired_format, "0")
@@ -68,9 +68,7 @@
 	return crunch + .
 
 /proc/sanitize_ooccolor(color)
-	if(length(color) != length_char(color))
-		CRASH("Invalid characters in color '[color]'")
-	var/list/HSL = rgb2hsl(hex2num(copytext(color, 2, 4)), hex2num(copytext(color, 4, 6)), hex2num(copytext(color, 6, 8)))
+	var/list/HSL = rgb2hsl(hex2num(copytext(color,2,4)),hex2num(copytext(color,4,6)),hex2num(copytext(color,6,8)))
 	HSL[3] = min(HSL[3],0.4)
 	var/list/RGB = hsl2rgb(arglist(HSL))
 	return "#[num2hex(RGB[1],2)][num2hex(RGB[2],2)][num2hex(RGB[3],2)]"
