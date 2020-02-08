@@ -31,11 +31,6 @@
 				return 1
 	return !density
 
-/obj/structure/closet/crate/crowbar_act(mob/user,obj/item/tool)
-	if (manifest)
-		tear_manifest(user)
-	return ..()
-
 /obj/structure/closet/crate/update_icon()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
@@ -49,6 +44,13 @@
 		return
 	if(manifest)
 		tear_manifest(user)
+
+/obj/structure/closet/crate/tool_interact(obj/item/W, mob/user)
+	if(istype(W, /obj/item/crowbar))
+		if (manifest)
+			tear_manifest(user)
+			return TRUE
+	return ..()
 
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
