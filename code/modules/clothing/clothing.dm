@@ -57,7 +57,6 @@
 	//No idea what this is but eh	-tori
 	var/force_alternate_icon = FALSE
 
-
 /obj/item/clothing/Initialize()
 	. = ..()
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
@@ -82,7 +81,7 @@
 /obj/item/reagent_containers/food/snacks/clothing
 	name = "oops"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	tastes = list("dust" = 1, "lint" = 1)
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)

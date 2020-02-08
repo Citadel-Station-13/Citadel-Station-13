@@ -486,7 +486,7 @@
 	if(!(upgradetier & XENOBIO_UPGRADE_MONKEYS)) // CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
 		to_chat(user, "<span class='warning'>This console does not have the monkey upgrade.</span>")
 		return
-	if(!GLOB.cameranet.checkTurfVis(M.loc))
+	if(!isturf(M.loc) || !GLOB.cameranet.checkTurfVis(M.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
 	var/mob/living/C = user

@@ -51,14 +51,17 @@
 	REMOVE_TRAIT(user, TRAIT_COLDBLOODED, "bloodsucker")
 	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT, "bloodsucker")
 	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT, "bloodsucker")
+	REMOVE_TRAIT(user, TRAIT_VIRUSIMMUNE, "bloodsucker")
 	var/obj/item/organ/heart/vampheart/H = user.getorganslot(ORGAN_SLOT_HEART)
-
+	var/obj/item/organ/eyes/vassal/bloodsucker/E = user.getorganslot(ORGAN_SLOT_EYES)
+	E.flash_protect = 0 
+	
 	// WE ARE ALIVE! //
 	bloodsuckerdatum.poweron_masquerade = TRUE
 	while(bloodsuckerdatum && ContinueActive(user))
 
 		// HEART
-		if (istype(H))
+		if(istype(H))
 			H.FakeStart()
 
 		// 		PASSIVE (done from LIFE)
@@ -67,7 +70,7 @@
 		// Don't Heal
 
 		// Pay Blood Toll (if awake)
-		if (user.stat == CONSCIOUS)
+		if(user.stat == CONSCIOUS)
 			bloodsuckerdatum.AddBloodVolume(-0.2)
 
 		sleep(20) // Check every few ticks that we haven't disabled this power
@@ -89,9 +92,13 @@
 	ADD_TRAIT(user, TRAIT_COLDBLOODED, "bloodsucker")
 	ADD_TRAIT(user, TRAIT_NOHARDCRIT, "bloodsucker")
 	ADD_TRAIT(user, TRAIT_NOSOFTCRIT, "bloodsucker")
+	ADD_TRAIT(user, TRAIT_VIRUSIMMUNE, "bloodsucker")
 
 	// HEART
 	var/obj/item/organ/heart/H = user.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/eyes/vassal/bloodsucker/E = user.getorganslot(ORGAN_SLOT_EYES)
 	H.Stop()
+
+	E.flash_protect = 2
 
 	to_chat(user, "<span class='notice'>Your heart beats one final time, while your skin dries out and your icy pallor returns.</span>")

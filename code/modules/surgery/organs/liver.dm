@@ -33,14 +33,12 @@
 
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				for(var/I in C.reagents.reagent_list)
-					var/datum/reagent/pickedreagent = I
-					if(istype(pickedreagent, /datum/reagent/toxin))
-						var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
-						if (thisamount <= toxTolerance && thisamount)
-							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
-						else
-							damage += (thisamount*toxLethality)
+				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
+					var/thisamount = C.reagents.get_reagent_amount(T.type)
+					if (thisamount && thisamount <= toxTolerance)
+						C.reagents.remove_reagent(T.type, 1)
+					else
+						damage += (thisamount*toxLethality)
 
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)
@@ -56,15 +54,16 @@
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("iron", 5)
+	S.reagents.add_reagent(/datum/reagent/iron, 5)
 	return S
 
 //Just in case
-/obj/item/organ/liver/Remove(mob/living/carbon/M, special = 0)
-	..()
-	M.remove_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY)
-	M.ResetBloodVol() //At the moment, this shouldn't allow application twice. You either have this OR a thirsty ferret.
-	sizeMoveMod(1, M)
+/obj/item/organ/liver/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		owner.remove_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY)
+		owner.ResetBloodVol() //At the moment, this shouldn't allow application twice. You either have this OR a thirsty ferret.
+		sizeMoveMod(1, owner)
+	return ..()
 
 //Applies some of the effects to the patient.
 /obj/item/organ/liver/proc/pharmacokinesis()

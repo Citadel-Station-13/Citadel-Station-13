@@ -54,7 +54,7 @@
 /datum/design/desttagger
 	name = "Destination Tagger"
 	id = "desttagger"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 250, MAT_GLASS = 125)
 	build_path = /obj/item/destTagger
 	category = list("initial", "Electronics")
@@ -62,7 +62,7 @@
 /datum/design/handlabeler
 	name = "Hand Labeler"
 	id = "handlabel"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 125)
 	build_path = /obj/item/hand_labeler
 	category = list("initial", "Electronics")

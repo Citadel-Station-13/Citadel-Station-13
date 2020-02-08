@@ -54,7 +54,7 @@
 	var/atom/Tsec = drop_location()
 	new /obj/item/stock_parts/cell/potato(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
-	S.reagents.add_reagent("whiskey", 15)
+	S.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
 	S.on_reagent_change(ADD_REAGENT)
 	..()
 
@@ -205,7 +205,7 @@ Auto Patrol: []"},
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A)
@@ -221,7 +221,7 @@ Auto Patrol: []"},
 		..()
 
 
-/mob/living/simple_animal/bot/secbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/simple_animal/bot/secbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))

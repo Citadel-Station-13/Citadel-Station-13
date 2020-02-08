@@ -25,7 +25,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 5
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
-	grind_results = list("phosphorus" = 2)
+	grind_results = list(/datum/reagent/phosphorus = 2)
 
 /obj/item/match/process()
 	smoketime--
@@ -113,7 +113,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 30
-	var/list/list_reagents = list("nicotine" = 15)
+	var/list/list_reagents = list(/datum/reagent/drug/nicotine = 15)
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
@@ -146,14 +146,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
 		return
 	if(istype(glass))	//you can dip cigarettes into beakers
-		if(glass.reagents.trans_to(src, chem_volume))	//if reagents were transfered, show the message
+		if(glass.reagents.trans_to(src, chem_volume, log = "cigar fill: dip cigarette"))	//if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dip \the [src] into \the [glass].</span>")
 		else			//if not, either the beaker was empty, or the cigarette was full
 			if(!glass.reagents.total_volume)
 				to_chat(user, "<span class='notice'>[glass] is empty.</span>")
 			else
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
-
 
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
 	if(lit)
@@ -169,15 +168,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/welder.ogg'
 	damtype = "fire"
 	force = 4
-	if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
+	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
+		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 		e.start()
 		qdel(src)
 		return
-	if(reagents.get_reagent_amount("welding_fuel")) // the fuel explodes, too, but much less violently
+	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), get_turf(src), 0, 0)
+		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
 		e.start()
 		qdel(src)
 		return
@@ -268,29 +267,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/uplift
 	desc = "An Uplift Smooth brand cigarette."
-	list_reagents = list("nicotine" = 7.5, "menthol" = 7.5)
+	list_reagents = list(/datum/reagent/drug/nicotine = 7.5, /datum/reagent/consumable/menthol = 7.5)
 
 /obj/item/clothing/mask/cigarette/robust
 	desc = "A Robust brand cigarette."
 
 /obj/item/clothing/mask/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
-	list_reagents = list("nicotine" = 15, "gold" = 1)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/gold = 1)
 
 /obj/item/clothing/mask/cigarette/carp
 	desc = "A Carp Classic brand cigarette."
 
 /obj/item/clothing/mask/cigarette/syndicate
 	desc = "An unknown brand cigarette."
-	list_reagents = list("nicotine" = 15, "omnizine" = 15)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/medicine/omnizine = 15)
 
 /obj/item/clothing/mask/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
-	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/toxin/lipolicide = 4, /datum/reagent/ammonia = 2, /datum/reagent/toxin/plantbgone = 1, /datum/reagent/toxin = 1.5)
 
 /obj/item/clothing/mask/cigarette/xeno
 	desc = "A Xeno Filtered brand cigarette."
-	list_reagents = list ("nicotine" = 20, "regen_jelly" = 15, "krokodil" = 4)
+	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
 
 // Rollies.
 
@@ -313,17 +312,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_y = rand(-5, 5)
 
 /obj/item/clothing/mask/cigarette/rollie/nicotine
-	list_reagents = list("nicotine" = 15)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15)
 
 /obj/item/clothing/mask/cigarette/rollie/trippy
-	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/drug/mushroomhallucinogen = 35)
 	starts_lit = TRUE
 
 /obj/item/clothing/mask/cigarette/rollie/cannabis
-	list_reagents = list("space_drugs" = 15, "lipolicide" = 35)
+	list_reagents = list(/datum/reagent/drug/space_drugs = 15, /datum/reagent/toxin/lipolicide = 35)
 
 /obj/item/clothing/mask/cigarette/rollie/mindbreaker
-	list_reagents = list("mindbreaker" = 35, "lipolicide" = 15)
+	list_reagents = list(/datum/reagent/toxin/mindbreaker = 35, /datum/reagent/toxin/lipolicide = 15)
 
 /obj/item/cigbutt/roach
 	name = "roach"
@@ -377,7 +376,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigbutt"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
-	grind_results = list("carbon" = 2)
+	grind_results = list(/datum/reagent/carbon = 2)
 
 /obj/item/cigbutt/cigarbutt
 	name = "cigar butt"
@@ -438,7 +437,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				packeditem = 1
 				name = "[O.name]-packed [initial(name)]"
 				if(O.reagents)
-					O.reagents.trans_to(src, O.reagents.total_volume)
+					O.reagents.trans_to(src, O.reagents.total_volume, log = "cigar fill: pipe pack")
 				qdel(O)
 			else
 				to_chat(user, "<span class='warning'>It has to be dried first!</span>")
@@ -506,7 +505,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
-	grind_results = list("iron" = 1, "welding_fuel" = 5, "oil" = 5)
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/oil = 5)
 
 /obj/item/lighter/Initialize()
 	. = ..()
@@ -665,7 +664,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 3000 //Blue flame!
 	light_color = LIGHT_COLOR_CYAN
 	overlay_state = "slime"
-	grind_results = list("iron" = 1, "welding_fuel" = 5, "pyroxadone" = 5)
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/medicine/pyroxadone = 5)
 
 
 ///////////
@@ -687,7 +686,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(O.dry)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
-			target.reagents.trans_to(R, R.chem_volume)
+			target.reagents.trans_to(R, R.chem_volume, log = "cigar fill: rolling paper afterattack")
 			qdel(target)
 			qdel(src)
 			user.put_in_active_hand(R)
@@ -719,7 +718,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/Initialize(mapload, param_color)
 	. = ..()
 	create_reagents(chem_volume, NO_REACT) // so it doesn't react until you light it
-	reagents.add_reagent("nicotine", 50)
+	reagents.add_reagent(/datum/reagent/drug/nicotine, 50)
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red","blue","black","white","green","purple","yellow","orange")
@@ -810,14 +809,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				reagents.reaction(C, INGEST, fraction)
 				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
 					reagents.remove_any(REAGENTS_METABOLISM)
-				if(reagents.get_reagent_amount("welding_fuel"))
+				if(reagents.get_reagent_amount(/datum/reagent/fuel))
 					//HOT STUFF
 					C.fire_stacks = 2
 					C.IgniteMob()
 
-				if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
+				if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 					var/datum/effect_system/reagents_explosion/e = new()
-					e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
+					e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 					e.start()
 					qdel(src)
 				return
@@ -903,7 +902,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 			//Transfer reagents and remove the plant
 			user.show_message("<span class='notice'>You stuff the [DP] into the [src]'s bowl.</span>", MSG_VISUAL)
-			DP.reagents.trans_to(src, 100)
+			DP.reagents.trans_to(src, 100, log = "cigar fill: bong")
 			qdel(DP)
 			return
 		else

@@ -12,7 +12,7 @@
 	var/list/skipped_areas = list(/area/engine/engineering, /area/engine/supermatter, /area/engine/atmospherics_engine, /area/ai_monitored/turret_protected/ai)
 
 	for(var/area/A in world)
-		if( !A.requires_power || A.always_unpowered )
+		if( !A.requires_power || A.always_unpowered || A.base_area)
 			continue
 
 		var/skip = 0
@@ -61,8 +61,9 @@
 		S.output_attempt = 1
 		S.update_icon()
 		S.power_change()
+
 	for(var/area/A in world)
-		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A, /area/arrival))
+		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A, /area/arrival) && !A.always_unpowered && !A.base_area)
 			A.power_light = TRUE
 			A.power_equip = TRUE
 			A.power_environ = TRUE

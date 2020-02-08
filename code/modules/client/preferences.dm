@@ -21,6 +21,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/last_ip
 	var/last_id
 
+	var/icon/custom_holoform_icon
+	var/list/cached_holoform_icons
+	var/last_custom_holoform = 0
+
 	//Cooldowns for saving/loading. These are four are all separate due to loading code calling these one after another
 	var/saveprefcooldown
 	var/loadprefcooldown
@@ -133,7 +137,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
 		"balls_efficiency" = CUM_EFFICIENCY,
-		"balls_fluid" = "semen",
 		"has_ovi" = FALSE,
 		"ovi_shape" = "knotted",
 		"ovi_length" = 6,
@@ -148,7 +151,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"breasts_color" = "fff",
 		"breasts_size" = "C",
 		"breasts_shape" = "Pair",
-		"breasts_fluid" = "milk",
 		"breasts_producing" = FALSE,
 		"has_vag" = FALSE,
 		"vag_shape" = "Human",
@@ -159,7 +161,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"womb_cum_rate" = CUM_RATE,
 		"womb_cum_mult" = CUM_RATE_MULT,
 		"womb_efficiency" = CUM_EFFICIENCY,
-		"womb_fluid" = "femcum",
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
@@ -195,7 +196,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/auto_fit_viewport = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
-	
+
 	var/sprint_spacebar = FALSE
 	var/sprint_toggle = FALSE
 
@@ -1003,6 +1004,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Forced Feminization:</b> <a href='?_src_=prefs;preference=feminization'>[(cit_toggles & FORCED_FEM) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<b>Forced Masculinization:</b> <a href='?_src_=prefs;preference=masculinization'>[(cit_toggles & FORCED_MASC) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<b>Lewd Hypno:</b> <a href='?_src_=prefs;preference=hypno'>[(cit_toggles & HYPNO) ? "Allowed" : "Disallowed"]</a><br>"
+			dat += "<b>Bimbofication:</b> <a href='?_src_=prefs;preference=bimbo'>[(cit_toggles & BIMBOFICATION) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "</td>"
 			dat +="<td width='300px' height='300px' valign='top'>"
 			dat += "<h2>Other content prefs</h2>"
@@ -1011,6 +1013,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=never_hypno'>[(cit_toggles & NEVER_HYPNO) ? "Disallowed" : "Allowed"]</a><br>"
 			dat += "<b>Aphrodisiacs:</b> <a href='?_src_=prefs;preference=aphro'>[(cit_toggles & NO_APHRO) ? "Disallowed" : "Allowed"]</a><br>"
 			dat += "<b>Ass Slapping:</b> <a href='?_src_=prefs;preference=ass_slap'>[(cit_toggles & NO_ASS_SLAP) ? "Disallowed" : "Allowed"]</a><br>"
+			dat += "</tr></table>"
 			dat += "<br>"
 
 
@@ -1470,9 +1473,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE)
-					if(!isnull(msg))
-						msg = copytext(msg, 1, MAX_MESSAGE_LEN*2)
+					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN, TRUE)
+					if(msg)
+						msg = msg
 						features["flavor_text"] = msg
 
 				if("hair")
@@ -2224,13 +2227,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("never_hypno")
 					cit_toggles ^= NEVER_HYPNO
-				
+
 				if("aphro")
 					cit_toggles ^= NO_APHRO
 
 				if("ass_slap")
 					cit_toggles ^= NO_ASS_SLAP
-					
+
+				if("bimbo")
+					cit_toggles ^= BIMBOFICATION
+
 				//END CITADEL EDIT
 
 				if("ambientocclusion")
@@ -2422,3 +2428,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 		else
 			custom_names[name_id] = sanitized_name
+
+/datum/preferences/proc/get_filtered_holoform(filter_type)
+	if(!custom_holoform_icon)
+		return
+	LAZYINITLIST(cached_holoform_icons)
+	if(!cached_holoform_icons[filter_type])
+		cached_holoform_icons[filter_type] = process_holoform_icon_filter(custom_holoform_icon, filter_type)
+	return cached_holoform_icons[filter_type]

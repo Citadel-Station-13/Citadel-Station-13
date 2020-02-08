@@ -32,7 +32,7 @@
 	if(bag)
 		. += "<span class='notice'>It has \a [bag.name] hooked to its <b>input</b> slot. The counter reads: \"Current Capacity: [bag.reagents.total_volume] of [bag.reagents.maximum_volume]\"</span>"
 	if(outbag)
-		. += "<span class='notice'>It has \a [bag.name] hooked to its <b>output</b> slot. The counter reads: \"Current Capacity: [outbag.reagents.total_volume] of [outbag.reagents.maximum_volume]\"</span>"
+		. += "<span class='notice'>It has \a [outbag.name] hooked to its <b>output</b> slot. The counter reads: \"Current Capacity: [outbag.reagents.total_volume] of [outbag.reagents.maximum_volume]\"</span>"
 
 
 /obj/machinery/bloodbankgen/handle_atom_del(atom/A)
@@ -123,15 +123,15 @@
 		if(reagents.total_volume >= reagents.maximum_volume || !bag || !bag.reagents.total_volume)
 			beep_stop_pumping()
 			return
-		var/blood_amount = bag.reagents.get_reagent_amount("blood")
+		var/blood_amount = bag.reagents.get_reagent_amount(/datum/reagent/blood)
 		//monitor the machine and blood bag's reagents storage.
 		var/amount = min(blood_amount, min(transfer_amount, reagents.maximum_volume - reagents.total_volume))
 		if(!amount)
 			beep_stop_pumping()
 			return
 		var/bonus = bag.blood_type == "SY" ? 0 : 5 * efficiency //no infinite loops using synthetics.
-		reagents.add_reagent("syntheticblood", amount + bonus)
-		bag.reagents.remove_reagent("blood", amount)
+		reagents.add_reagent(/datum/reagent/blood/synthetics, amount + bonus)
+		bag.reagents.remove_reagent(/datum/reagent/blood, amount)
 		update_icon()
 
 	if(filling)

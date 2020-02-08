@@ -17,6 +17,12 @@
 	var/sprint_stamina_cost = 0.70			//stamina loss per tile while insufficient sprint buffer.
 	//---End
 
+/mob/living/update_config_movespeed()
+	. = ..()
+	sprint_buffer_max = CONFIG_GET(number/movedelay/sprint_buffer_max)
+	sprint_buffer_regen_ds = CONFIG_GET(number/movedelay/sprint_buffer_regen_per_ds)
+	sprint_stamina_cost = CONFIG_GET(number/movedelay/sprint_stamina_cost)
+
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
 	if(resting)

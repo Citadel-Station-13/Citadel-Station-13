@@ -63,3 +63,8 @@
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
 	materials = list(MAT_METAL = 1125)
+
+/obj/item/ammo_casing/caseless/foam_dart/mag
+	name = "magfoam dart"
+	desc = "A foam dart with fun light-up projectiles powered by magnets!"
+	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/mag

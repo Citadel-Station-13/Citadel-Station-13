@@ -87,6 +87,13 @@
 	max_ammo = 40
 	materials = list(MAT_METAL = 500)
 
+/obj/item/ammo_box/foambox/mag
+	name = "ammo box (Magnetic Foam Darts)"
+	icon = 'icons/obj/guns/toy.dmi'
+	icon_state = "foambox"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	max_ammo = 42
+
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot

@@ -9,6 +9,8 @@
 	var/list/vassal_allowed_antags = list(/datum/antagonist/brother, /datum/antagonist/traitor, /datum/antagonist/traitor/internal_affairs, /datum/antagonist/survivalist, \
 										  /datum/antagonist/rev, /datum/antagonist/nukeop, /datum/antagonist/pirate, /datum/antagonist/cult, /datum/antagonist/abductee)
 	// The antags you're allowed to be if turning Vassal.
+/proc/isvamp(mob/living/M)
+	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 
 /datum/game_mode/bloodsucker
 	name = "bloodsucker"

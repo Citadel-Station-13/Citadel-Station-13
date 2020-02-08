@@ -15,6 +15,13 @@
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
 
+/obj/item/clothing/suit/armor/navyblue
+	name = "security officer's jacket"
+	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
+	icon_state = "officerbluejacket"
+	item_state = "officerbluejacket"
+	body_parts_covered = CHEST|ARMS
+
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
 	desc = "A slim Type I armored vest that provides decent protection against most types of damage."
@@ -52,8 +59,17 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
 
+/obj/item/clothing/suit/armor/hos/navyblue
+	name = "head of security's jacket"
+	desc = "This piece of clothing was specifically designed for asserting superior authority."
+	icon_state = "hosbluejacket"
+	item_state = "hosbluejacket"
+	body_parts_covered = CHEST|ARMS
+	cold_protection = CHEST|ARMS
+	heat_protection = CHEST|ARMS
+
 /obj/item/clothing/suit/armor/hos/trenchcoat
-	name = "armored trenchoat"
+	name = "armored trenchcoat"
 	desc = "A trenchcoat enhanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
@@ -77,6 +93,13 @@
 	name = "warden's armored jacket"
 	desc = "A red jacket with silver rank pips and body armor strapped on top."
 	icon_state = "warden_jacket"
+
+/obj/item/clothing/suit/armor/vest/warden/navyblue
+	name = "warden's jacket"
+	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
+	icon_state = "wardenbluejacket"
+	item_state = "wardenbluejacket"
+	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
@@ -248,3 +271,20 @@
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 30, "energy" = 5, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+
+/obj/item/clothing/suit/armor/vest/russian
+	name = "russian vest"
+	desc = "A bulletproof vest with forest camo. Good thing there's plenty of forests to hide in around here, right?"
+	icon_state = "rus_armor"
+	item_state = "rus_armor"
+	armor = list("melee" = 25, "bullet" = 30, "laser" = 0, "energy" = 15, "bomb" = 10, "bio" = 0, "rad" = 20, "fire" = 20, "acid" = 50)
+/obj/item/clothing/suit/armor/vest/russian_coat
+	name = "russian battle coat"
+	desc = "Used in extremly cold fronts, made out of real bears."
+	icon_state = "rus_coat"
+	item_state = "rus_coat"
+	clothing_flags = THICKMATERIAL
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)

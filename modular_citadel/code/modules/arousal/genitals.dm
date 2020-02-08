@@ -2,19 +2,20 @@
 	color = "#fcccb3"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/shape = "human"
-	var/sensitivity = AROUSAL_START_VALUE
+	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm
 	var/masturbation_verb = "masturbate"
 	var/orgasm_verb = "cumming" //present continous
+	var/arousal_verb = "You feel aroused"
+	var/unarousal_verb = "You no longer feel aroused"
 	var/fluid_transfer_factor = 0 //How much would a partner get in them if they climax using this?
 	var/size = 2 //can vary between num or text, just used in icon_state strings
-	var/fluid_id = null
+	var/datum/reagent/fluid_id = null
 	var/fluid_max_volume = 50
 	var/fluid_efficiency = 1
 	var/fluid_rate = CUM_RATE
 	var/fluid_mult = 1
 	var/aroused_state = FALSE //Boolean used in icon_state strings
-	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 	var/obj/item/organ/genital/linked_organ
 	var/linked_organ_slot //used for linking an apparatus' organ to its other half on update_link().
 	var/layer_index = GENITAL_LAYER_INDEX //Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
@@ -34,9 +35,12 @@
 /obj/item/organ/genital/Destroy()
 	if(linked_organ)
 		update_link(TRUE)//this should remove any other links it has
-	if(owner)
-		Remove(owner, TRUE)//this should remove references to it, so it can be GCd correctly
 	return ..()
+
+/obj/item/organ/genital/proc/set_aroused_state(new_state)
+	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
+		aroused_state = new_state
+	return aroused_state
 
 /obj/item/organ/genital/proc/update(removing = FALSE)
 	if(QDELETED(src))
@@ -90,11 +94,9 @@
 	set desc = "Allows you to toggle which genitals should show through clothes or not."
 
 	var/list/genital_list = list()
-	for(var/obj/item/organ/O in internal_organs)
-		if(isgenital(O))
-			var/obj/item/organ/genital/G = O
-			if(!CHECK_BITFIELD(G.genital_flags, GENITAL_INTERNAL))
-				genital_list += G
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(!CHECK_BITFIELD(G.genital_flags, GENITAL_INTERNAL))
+			genital_list += G
 	if(!genital_list.len) //There is nothing to expose
 		return
 	//Full list of exposable genitals created
@@ -104,6 +106,39 @@
 		var/picked_visibility = input(src, "Choose visibility setting", "Expose/Hide genitals", "Hidden by clothes") in list("Always visible", "Hidden by clothes", "Always hidden")
 		picked_organ.toggle_visibility(picked_visibility)
 	return
+
+/mob/living/carbon/verb/toggle_arousal_state()
+	set category = "IC"
+	set name = "Toggle genital arousal"
+	set desc = "Allows you to toggle which genitals are showing signs of arousal."
+	var/list/genital_list = list()
+	for(var/obj/item/organ/genital/G in internal_organs)
+		var/datum/sprite_accessory/S
+		switch(G.type)
+			if(/obj/item/organ/genital/penis)
+				S = GLOB.cock_shapes_list[G.shape]
+			if(/obj/item/organ/genital/testicles)
+				S = GLOB.balls_shapes_list[G.shape]
+			if(/obj/item/organ/genital/vagina)
+				S = GLOB.vagina_shapes_list[G.shape]
+			if(/obj/item/organ/genital/breasts)
+				S = GLOB.breasts_shapes_list[G.shape]
+		if(S?.alt_aroused)
+			genital_list += G
+	if(!genital_list.len) //There's nothing that can show arousal
+		return
+	var/obj/item/organ/genital/picked_organ
+	picked_organ = input(src, "Choose which genitalia to toggle arousal on", "Set genital arousal", null) in genital_list
+	if(picked_organ)
+		var/original_state = picked_organ.aroused_state
+		picked_organ.set_aroused_state(!picked_organ.aroused_state)
+		if(original_state != picked_organ.aroused_state)
+			to_chat(src,"<span class='userlove'>[picked_organ.aroused_state ? picked_organ.arousal_verb : picked_organ.unarousal_verb].</span>")
+		else
+			to_chat(src,"<span class='userlove'>You can't make that genital [picked_organ.aroused_state ? "unaroused" : "aroused"]!</span>")
+		picked_organ.update_appearance()
+	return
+
 
 /obj/item/organ/genital/proc/modify_size(modifier, min = -INFINITY, max = INFINITY)
 	fluid_max_volume += modifier*2.5
@@ -166,10 +201,9 @@
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 
 /obj/item/organ/genital/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	if(.)
-		update(TRUE)
-		UnregisterSignal(M, COMSIG_MOB_DEATH)
+	update(TRUE)
+	if(!QDELETED(owner))
+		UnregisterSignal(owner, COMSIG_MOB_DEATH)
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
@@ -233,7 +267,7 @@
 
 //Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
 /mob/living/carbon/human/proc/emergent_genital_call()
-	if(!canbearoused)
+	if(!client.prefs.arousable)
 		return FALSE
 
 	var/organCheck = locate(/obj/item/organ/genital) in internal_organs
@@ -313,7 +347,6 @@
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
-				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 			else
 				switch(S.color_src)
 					if("cock_color")
@@ -324,6 +357,8 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
+			
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 
 			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER

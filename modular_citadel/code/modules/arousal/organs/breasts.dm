@@ -6,11 +6,13 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_BREASTS
 	size = "c" //refer to the breast_values static list below for the cups associated number values
-	fluid_id = "milk"
+	fluid_id = /datum/reagent/consumable/milk
 	fluid_rate = MILK_RATE
 	shape = "pair"
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_FUID_PRODUCTION
 	masturbation_verb = "massage"
+	arousal_verb = "Your breasts start feeling sensitive"
+	unarousal_verb = "Your breasts no longer feel sensitive"
 	orgasm_verb = "leaking"
 	fluid_transfer_factor = 0.5
 	var/static/list/breast_values = list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
@@ -44,7 +46,9 @@
 			desc += " You estimate that they're [uppertext(size)]-cups."
 
 	if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION) && aroused_state)
-		desc += " They're leaking [fluid_id]."
+		var/datum/reagent/R = GLOB.chemical_reagents_list[fluid_id]
+		if(R)
+			desc += " They're leaking [lowertext(R.name)]."
 	var/string
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
@@ -118,7 +122,6 @@
 		color = "#[D.features["breasts_color"]]"
 	size = D.features["breasts_size"]
 	shape = D.features["breasts_shape"]
-	fluid_id = D.features["breasts_fluid"]
 	if(!D.features["breasts_producing"])
 		DISABLE_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION|CAN_CLIMAX_WITH|CAN_MASTURBATE_WITH)
 	if(!isnum(size))

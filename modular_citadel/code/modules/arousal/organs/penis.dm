@@ -6,6 +6,8 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_PENIS
 	masturbation_verb = "stroke"
+	arousal_verb = "You pop a boner"
+	unarousal_verb = "Your boner goes down"
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH
 	linked_organ_slot = ORGAN_SLOT_TESTICLES
 	fluid_transfer_factor = 0.5
@@ -26,7 +28,7 @@
 	..()
 
 /obj/item/organ/genital/penis/update_size(modified = FALSE)
-	if(length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
+	if(length <= 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		if(owner)
 			to_chat(owner, "<span class='warning'>You feel your tallywacker shrinking away from your body as your groin flattens out!</b></span>")
 		QDEL_IN(src, 1)

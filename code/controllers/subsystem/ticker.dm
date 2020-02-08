@@ -68,6 +68,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
+	var/station_integrity = 100				// stored at roundend for use in some antag goals
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -188,6 +190,12 @@ SUBSYSTEM_DEF(ticker)
 				tipped = TRUE
 
 			if(timeLeft <= 0)
+				if(SSvote.mode && (SSvote.mode == "roundtype" || SSvote.mode == "dynamic" || SSvote.mode == "mode tiers"))
+					SSvote.result()
+					SSpersistence.SaveSavedVotes()
+					for(var/client/C in SSvote.voting)
+						C << browse(null, "window=vote;can_close=0")
+					SSvote.reset()
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
 				if(start_immediately)
@@ -357,7 +365,7 @@ SUBSYSTEM_DEF(ticker)
 		var/turf/epi = bomb.loc
 		qdel(bomb)
 		if(epi)
-			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
+			explosion(epi, 512, 0, 0, 0, TRUE, TRUE, 0, TRUE)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
@@ -483,7 +491,11 @@ SUBSYSTEM_DEF(ticker)
 			SSticker.timeLeft = 900
 		SSticker.modevoted = TRUE
 		var/dynamic = CONFIG_GET(flag/dynamic_voting)
-		SSvote.initiate_vote(dynamic ? "dynamic" : "roundtype","server",TRUE)
+		if(dynamic)
+			SSvote.initiate_vote("dynamic","server",hideresults=TRUE,votesystem=SCORE_VOTING,forced=TRUE,vote_time = 20 MINUTES)
+		else
+			SSvote.initiate_vote("roundtype","server",hideresults=TRUE,votesystem=PLURALITY_VOTING,forced=TRUE, \
+			vote_time = (CONFIG_GET(flag/modetier_voting) ? 1 MINUTES : 20 MINUTES))
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state

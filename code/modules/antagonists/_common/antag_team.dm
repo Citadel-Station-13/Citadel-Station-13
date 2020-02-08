@@ -36,11 +36,17 @@
 		var/win = TRUE
 		var/objective_count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+			if(objective.completable)
+				var/completion = objective.check_completion()
+				if(completion >= 1)
+					report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+				else if(completion <= 0)
+					report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+					win = FALSE
+				else
+					report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
-				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				win = FALSE
+				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text]"
 			objective_count++
 		if(win)
 			report += "<span class='greentext'>The [name] was successful!</span>"

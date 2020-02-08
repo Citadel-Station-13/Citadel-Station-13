@@ -370,22 +370,25 @@
 /////////////////////
 
 /obj/item/clothing/accessory/padding
-	name = "soft padding"
-	desc = "Some long sheets of padding to help soften the blows of a physical attacks."
+	name = "protective padding"
+	desc = "A soft padding meant to cushion the wearer from melee harm."
 	icon_state = "padding"
 	item_color = "nothing"
-	armor = list("melee" = 15, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 45)
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 45)
+	flags_inv = HIDEACCESSORY //hidden from indiscrete mob examines.
 
 /obj/item/clothing/accessory/kevlar
-	name = "kevlar sheets"
-	desc = "Long thin sheets of kevlar to help resist bullets and some physical attacks."
+	name = "kevlar padding"
+	desc = "A layered kevlar padding meant to cushion the wearer from ballistic harm."
 	icon_state = "padding"
 	item_color = "nothing"
 	armor = list("melee" = 10, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
+	flags_inv = HIDEACCESSORY
 
 /obj/item/clothing/accessory/plastics
-	name = "underling plastic sheet"
-	desc = "A full body sheet of white plastic to help defuse lasers and energy based weapons."
+	name = "ablative padding"
+	desc = "A thin ultra-refractory composite padding meant to cushion the wearer from energy lasers harm."
 	icon_state = "plastics"
 	item_color = "nothing"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = -40)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = -40)
+	flags_inv = HIDEACCESSORY

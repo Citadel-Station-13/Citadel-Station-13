@@ -70,3 +70,7 @@
 /obj/effect/projectile/tracer/laser/wavemotion
 	name = "particle trail"
 	icon_state = "tracer_wavemotion"
+
+/obj/effect/projectile/tracer/laser/emitter
+	name = "emitter beam"
+	icon_state = "emitter"

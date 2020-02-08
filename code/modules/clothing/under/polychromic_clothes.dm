@@ -25,9 +25,9 @@
 	secondary_color = "#FFFFFF"
 	tertiary_color = "#808080"
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION //Not all clothes are currently digi-compatible (only the shorts are as of time of writing)
+	mutantrace_variation = NONE //Not all clothes are currently digi-compatible (only the shorts are as of time of writing)
 
-/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens.
+/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
 	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
@@ -86,7 +86,7 @@
 	secondary_color = "#808080"
 	tertiary_color = "#808080"
 	body_parts_covered = CHEST|GROIN|ARMS
-	mutantrace_variation = MUTANTRACE_VARIATION	//to enable digitigrade wearing
+	mutantrace_variation = STYLE_DIGITIGRADE //to enable digitigrade wearing
 
 /obj/item/clothing/under/polychromic/jumpsuit
 	name = "polychromic tri-tone jumpsuit"

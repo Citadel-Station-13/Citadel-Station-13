@@ -82,7 +82,7 @@
 	if(!client)
 		return
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
 		if(type & MSG_VISUAL && eye_blind )//Vision related
@@ -321,20 +321,18 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	set name = "Examine"
 	set category = "IC"
 
-	if(!client)
-		return
-
-	if(!(SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A) & COMPONENT_ALLOW_EXAMINE) && ((client.eye != src && client.eye != loc) || (isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))))
-		//cameras & co don't allow users to examine far away things, also shift-click catcher may issue examinate() calls for out-of-sight turfs
+	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
+		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
 	if(is_blind(src))
-		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
+		to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
 		return
 
 	face_atom(A)
 	var/list/result = A.examine(src)
 	to_chat(src, result.Join("\n"))
+	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 //same as above
 //note: ghosts can point, this is intended
@@ -414,7 +412,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
 
 	if(mind)
@@ -456,8 +454,10 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	return
 
 /mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
-	if(!ckey || !new_mob)
-		CRASH("transfer_ckey() called [ckey ? "" : "on a ckey-less mob[new_mob ? "" : " and "]"][new_mob ? "" : "without a valid mob target"]!")
+	if(!new_mob || (!ckey && new_mob.ckey))
+		CRASH("transfer_ckey() called [new_mob ? "on ckey-less mob with a player mob as target" : "without a valid mob target"]!")
+	if(!ckey)
+		return
 	SEND_SIGNAL(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, new_mob, src)
 	if (client && client.prefs && client.prefs.auto_ooc)
 		if (client.prefs.chat_toggles & CHAT_OOC && isliving(new_mob))
@@ -506,6 +506,10 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 	if(href_list["flavor_more"])
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
+		onclose(usr, "[name]")
+
+	if(href_list["flavor2_more"])
+		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text_2, "\n", "<BR>")), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
 
 	if(href_list["flavor_change"])
@@ -565,31 +569,24 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		M.show_inv(user)
 
 /mob/proc/is_muzzled()
-	return 0
+	return FALSE
 
-/mob/Stat(delayoverride)
-	. = ..()
-	var/statdelay = delayoverride || 10
+/mob/Stat()
+	..()
+
+	//This is only called from client/Stat(), let's assume client exists.
+
 	if(statpanel("Status"))
-		if (client)
-			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
-		var/datum/map_config/cached = SSmapping.next_map_config
-		if(cached)
-			stat(null, "Next Map: [cached.map_name]")
-		stat(null, "Round ID: [GLOB.round_id || "NULL"]")
-		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		stat(null, "Round Time: [WORLDTIME2TEXT("hh:mm:ss")]")
-		stat(null, "Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]")
-		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
-			if(ETA)
-				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
+		var/list/L = list()
+		L += "Ping: [round(client.lastping,1)]ms (Avg: [round(client.avgping,1)]ms)"
+		L += SSmapping.stat_map_name
+		L += "Round ID: [GLOB.round_id || "NULL"]"
+		L += SStime_track.stat_time_text
+		L += SSshuttle.emergency_shuttle_stat_text
+		stat(null, "[L.Join("\n\n")]")
 
-	if(client?.holder)
+	if(client.holder)
 		if(statpanel("MC"))
-			statdelay = 0		//It's assumed that if you're doing this you are doing debug stuff, don't do ioditic things.
 			var/turf/T = get_turf(client.eye)
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
@@ -615,7 +612,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 			GLOB.ahelp_tickets.stat_entry()
 		if(length(GLOB.sdql2_queries))
 			if(statpanel("SDQL2"))
-				statdelay = 0		//It's assumed that if you're doing this you are doing debug stuff, don't do ioditic things.
 				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
 				for(var/i in GLOB.sdql2_queries)
 					var/datum/SDQL2_query/Q = i
@@ -645,7 +641,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		if(changeling)
 			add_stings_to_statpanel(changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
-	sleep(statdelay)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)
@@ -802,11 +797,14 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 //can the mob be buckled to something by default?
 /mob/proc/can_buckle()
-	return 1
+	return TRUE
 
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
-	return 1
+	return TRUE
+
+/mob/proc/can_buckle_others(mob/living/target, atom/buckle_to)
+	return TRUE
 
 //Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)

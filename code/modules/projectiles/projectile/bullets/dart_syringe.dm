@@ -15,7 +15,7 @@
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
 				if(skip == TRUE)
-					return
+					return BULLET_ACT_HIT
 				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 				return TRUE
@@ -27,13 +27,13 @@
 	..(target, blocked)
 	DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 	reagents.handle_reactions()
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	. = ..()
-	reagents.add_reagent("aluminium", 15)
-	reagents.add_reagent("foaming_agent", 5)
-	reagents.add_reagent("facid", 5)
+	reagents.add_reagent(/datum/reagent/aluminium, 15)
+	reagents.add_reagent(/datum/reagent/foaming_agent, 5)
+	reagents.add_reagent(/datum/reagent/toxin/acid, 5)
 
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
@@ -52,30 +52,29 @@
 		if(blocked != 100)
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..(target, blocked, TRUE)
-				for(var/datum/reagent/R in reagents.reagent_list) //OD prevention time!
-					if(istype(R, /datum/reagent/medicine)) //Is this a medicine?
-						if(M.reagents.has_reagent(R.id))
-							if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
-								M.reagents.add_reagent(R.id, R.volume)
-							else
-								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.id)) -1)
-								M.reagents.add_reagent(R.id, transVol)
+				for(var/datum/reagent/medicine/R in reagents.reagent_list) //OD prevention time!
+					if(M.reagents.has_reagent(R.type))
+						if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
+							M.reagents.add_reagent(R.type, R.volume)
 						else
-							if(!R.overdose_threshold == 0)
-								var/transVol = CLAMP(R.volume, 0, R.overdose_threshold-1)
-								M.reagents.add_reagent(R.id, transVol)
-							else
-								M.reagents.add_reagent(R.id, R.volume)
+							var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.type)) -1)
+							M.reagents.add_reagent(R.type, transVol)
+					else
+						if(!R.overdose_threshold == 0)
+							var/transVol = CLAMP(R.volume, 0, R.overdose_threshold-1)
+							M.reagents.add_reagent(R.type, transVol)
+						else
+							M.reagents.add_reagent(R.type, R.volume)
 
 
 
 				target.visible_message("<span class='notice'>\The [src] beeps!</span>")
 				to_chat("<span class='notice'><i>You feel a tiny prick as a smartdart embeds itself in you with a beep.</i></span>")
-				return TRUE
+				return BULLET_ACT_HIT
 			else
 				blocked = 100
 				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
 									   "<span class='userdanger'>You see a [src] bounce off you, booping sadly!</span>")
 
 	target.visible_message("<span class='danger'>\The [src] fails to land on target!</span>")
-	return TRUE
+	return BULLET_ACT_BLOCK

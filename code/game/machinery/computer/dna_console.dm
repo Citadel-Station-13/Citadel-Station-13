@@ -88,7 +88,7 @@
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation/(RAD_MOB_SAFE/100)]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation/(RAD_MOB_SAFE/100)] %</div></div>"
-				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("potass_iodide")
+				var/rejuvenators = viable_occupant.reagents.get_reagent_amount(/datum/reagent/medicine/potass_iodide)
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
@@ -274,13 +274,18 @@
 			var/max_line_len = 7*DNA_BLOCK_SIZE
 			if(viable_occupant)
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
-				var/len = length(viable_occupant.dna.uni_identity)
-				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
-					if ((i % max_line_len) == 0)
+				var/char = ""
+				var/ui_text = viable_occupant.dna.uni_identity
+				var/len_byte = length(ui_text)
+				var/char_it = 0
+				for(var/byte_it = 1, byte_it <= len_byte, byte_it += length(char))
+					char_it++
+					char = ui_text[byte_it]
+					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[char_it];'>[char]</a>"
+					if((char_it % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
-					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
-						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
+					if((char_it % DNA_BLOCK_SIZE) == 0 && byte_it < len_byte)
+						temp_html += "<div class='dnaBlockNumber'>[(char_it / DNA_BLOCK_SIZE) + 1]</div>"
 			else
 				temp_html += "----"
 			temp_html += "</div></div></div><br>"
@@ -288,13 +293,18 @@
 			temp_html += "<br><div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
 			if(viable_occupant)
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
-				var/len = length(viable_occupant.dna.struc_enzymes)
-				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
-					if ((i % max_line_len) == 0)
+				var/char = ""
+				var/se_text = viable_occupant.dna.struc_enzymes
+				var/len_byte = length(se_text)
+				var/char_it = 0
+				for(var/byte_it = 1, byte_it <= len_byte, byte_it += length(char))
+					char_it++
+					char = se_text[byte_it]
+					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulsese;num=[char_it];'>[char]</a>"
+					if((char_it % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
-					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
-						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
+					if((char_it % DNA_BLOCK_SIZE) == 0 && byte_it < len_byte)
+						temp_html += "<div class='dnaBlockNumber'>[(char_it / DNA_BLOCK_SIZE) + 1]</div>"
 			else
 				temp_html += "----"
 			temp_html += "</div></div></div>"
@@ -342,9 +352,9 @@
 			current_screen = href_list["text"]
 		if("rejuv")
 			if(viable_occupant && viable_occupant.reagents)
-				var/potassiodide_amount = viable_occupant.reagents.get_reagent_amount("potass_iodide")
+				var/potassiodide_amount = viable_occupant.reagents.get_reagent_amount(/datum/reagent/medicine/potass_iodide)
 				var/can_add = max(min(REJUVENATORS_MAX - potassiodide_amount, REJUVENATORS_INJECT), 0)
-				viable_occupant.reagents.add_reagent("potass_iodide", can_add)
+				viable_occupant.reagents.add_reagent(/datum/reagent/medicine/potass_iodide, can_add)
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
 			if(num && text)
@@ -465,7 +475,7 @@
 					viable_occupant.radiation += (RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength)/(connected.damage_coeff ** 2) //Read comment in "transferbuffer" section above for explanation
 					switch(href_list["task"])                                                                                             //Same thing as there but values are even lower, on best part they are about 0.0*, effectively no damage
 						if("pulseui")
-							var/len = length(viable_occupant.dna.uni_identity)
+							var/len = length_char(viable_occupant.dna.uni_identity)
 							num = WRAP(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2
 																														//Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
@@ -473,12 +483,12 @@
 							var/subblock = num - block*DNA_BLOCK_SIZE
 							last_change = "UI #[block]-[subblock]; "
 
-							var/hex = copytext(viable_occupant.dna.uni_identity, num, num+1)
+							var/hex = copytext_char(viable_occupant.dna.uni_identity, num, num+1)
 							last_change += "[hex]"
 							hex = scramble(hex, radstrength, radduration)
 							last_change += "->[hex]"
 
-							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
+							viable_occupant.dna.uni_identity = copytext_char(viable_occupant.dna.uni_identity, 1, num) + hex + copytext_char(viable_occupant.dna.uni_identity, num + 1)
 							viable_occupant.updateappearance(mutations_overlay_update=1)
 						if("pulsese")
 							var/len = length(viable_occupant.dna.struc_enzymes)
@@ -489,12 +499,12 @@
 							var/subblock = num - block*DNA_BLOCK_SIZE
 							last_change = "SE #[block]-[subblock]; "
 
-							var/hex = copytext(viable_occupant.dna.struc_enzymes, num, num+1)
+							var/hex = copytext_char(viable_occupant.dna.struc_enzymes, num, num+1)
 							last_change += "[hex]"
 							hex = scramble(hex, radstrength, radduration)
 							last_change += "->[hex]"
 
-							viable_occupant.dna.struc_enzymes = copytext(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext(viable_occupant.dna.struc_enzymes, num+1, 0)
+							viable_occupant.dna.struc_enzymes = copytext_char(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext_char(viable_occupant.dna.struc_enzymes, num + 1)
 							viable_occupant.domutcheck()
 				else
 					current_screen = "mainmenu"

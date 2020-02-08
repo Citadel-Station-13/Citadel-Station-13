@@ -11,6 +11,23 @@
 	access = ACCESS_SECURITY
 	crate_type = /obj/structure/closet/crate/secure/gear
 
+/datum/supply_pack/security/ammo
+	name = "Ammo Crate - General Purpose"
+	desc = "Contains two 20-round magazines for the WT-550 Auto Rifle, three boxes of buckshot ammo, three boxes of rubber ammo and special .38 speedloarders. Requires Security access to open."
+	cost = 2500
+	contains = list(/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/ammo_box/c38/trac,
+					/obj/item/ammo_box/c38/hotshot,
+					/obj/item/ammo_box/c38/iceblox)
+	crate_name = "ammo crate"
+
 /datum/supply_pack/security/armor
 	name = "Armor Crate"
 	desc = "Three vests of well-rounded, decently-protective armor. Requires Security access to open."
@@ -64,8 +81,8 @@
 	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
 	contraband = TRUE
 	cost = 5750 // Its basicly sec suits, good boots/gloves
-	contains = list(/obj/item/clothing/suit/security/officer/russian,
-					/obj/item/clothing/suit/security/officer/russian,
+	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
+					/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/head/ushanka,
@@ -87,7 +104,7 @@
 	contraband = TRUE
 	access = FALSE
 	cost = 5500 //
-	contains = list(/obj/item/clothing/suit/security/officer/russian,
+	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/head/ushanka,
 					/obj/item/clothing/suit/armor/bulletproof,
@@ -124,15 +141,15 @@
 	cost = 3250
 	contains = list(/obj/item/clothing/under/rank/security/navyblue,
 					/obj/item/clothing/under/rank/security/navyblue,
-					/obj/item/clothing/suit/security/officer,
-					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/suit/armor/navyblue,
+					/obj/item/clothing/suit/armor/navyblue,
 					/obj/item/clothing/head/beret/sec/navyofficer,
 					/obj/item/clothing/head/beret/sec/navyofficer,
 					/obj/item/clothing/under/rank/warden/navyblue,
-					/obj/item/clothing/suit/security/warden,
+					/obj/item/clothing/suit/armor/vest/warden/navyblue,
 					/obj/item/clothing/head/beret/sec/navywarden,
 					/obj/item/clothing/under/rank/head_of_security/navyblue,
-					/obj/item/clothing/suit/security/hos,
+					/obj/item/clothing/suit/armor/hos/navyblue,
 					/obj/item/clothing/head/beret/sec/navyhos)
 	crate_name = "security clothing crate"
 

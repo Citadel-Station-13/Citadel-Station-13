@@ -39,7 +39,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //Clone serum #chemClone
 /datum/reagent/fermi/SDGF //vars, mostly only care about keeping track if there's a player in the clone or not.
 	name = "synthetic-derived growth factor"
-	id = "SDGF"
 	description = "A rapidly diving mass of Embryonic stem cells. These cells are missing a nucleus and quickly replicate a host’s DNA before growing to form an almost perfect clone of the host. In some cases neural replication takes longer, though the underlying reason underneath has yet to be determined."
 	color = "#a502e0" // rgb: 96, 0, 255
 	var/playerClone = FALSE
@@ -49,9 +48,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/list/candies = list()
 	var/pollStarted = FALSE
 	var/startHunger
-	impure_chem 			= "SDGFtox"
+	impure_chem 			= /datum/reagent/impure/SDGFtox
 	inverse_chem_val 		= 0.5
-	inverse_chem		= "SDZF"
+	inverse_chem		= /datum/reagent/impure/SDZF
 	can_synth = TRUE
 
 
@@ -95,7 +94,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//I seriously wonder if anyone will ever use this function.
 				if(M.getorganslot(ORGAN_SLOT_ZOMBIE))//sure, it "treats" it, but "you've" still got it. Doesn't always work as well; needs a ghost.
 					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
-					ZI.Remove(M)
+					ZI.Remove()
 					ZI.Insert(SM)
 					log_game("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
 
@@ -122,8 +121,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				SM.nutrition = startHunger/2
 
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
-				SM.reagents.add_reagent("SDGFheal", volume)
-				M.reagents.remove_reagent(id, volume)
+				SM.reagents.add_reagent(/datum/reagent/fermi/SDGFheal, volume)
+				M.reagents.remove_reagent(type, volume)
 				log_game("FERMICHEM: [volume]u of SDGFheal has been transferred to the clone")
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Sentient clones made")
 				return ..()
@@ -141,7 +140,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							M.adjustBruteLoss(-1, 0)
 							M.adjustFireLoss(-1, 0)
 							M.heal_bodypart_damage(1,1)
-							M.reagents.remove_reagent(id, 1)//faster rate of loss.
+							M.reagents.remove_reagent(type, 1)//faster rate of loss.
 				else //If there's no ghosts, but they've made a large amount, then proceed to make flavourful clone, where you become fat and useless until you split.
 					switch(current_cycle)
 						if(21)
@@ -185,7 +184,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							log_game("FERMICHEM: [M] ckey: [M.key] has created a mindless clone of themselves")
 							SSblackbox.record_feedback("tally", "fermi_chem", 1, "Braindead clones made")
 						if(87 to INFINITY)
-							M.reagents.remove_reagent(id, volume)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
+							M.reagents.remove_reagent(type, volume)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 
 
 	..()
@@ -265,18 +264,17 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			SM.set_species(mutation)
 
 		//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
-		SM.reagents.add_reagent("SDGFheal", volume)
-		M.reagents.remove_reagent(id, volume)
-
+		SM.reagents.add_reagent(/datum/reagent/fermi/SDGFheal, volume)
+		log_combat(M, M, "SDGF clone-vived", src)
+		M.reagents.del_reagent(type)
 		SM.updatehealth()
 		SM.emote("gasp")
-		log_combat(M, M, "SDGF clone-vived", src)
+		return
 	..()
 
 //Unobtainable, used in clone spawn.
 /datum/reagent/fermi/SDGFheal
 	name = "synthetic-derived healing factor"
-	id = "SDGFheal"
 	description = "Leftover SDGF is transferred into the resulting clone, which quickly heals up the stresses from suddenly splitting. Restores blood, nutrition, and repaires brain and clone damage quickly. Only obtainable from using excess SDGF, and only enters the cloned body."
 	metabolization_rate = 0.8
 	can_synth = FALSE
@@ -292,7 +290,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //Unobtainable, used if SDGF is impure but not too impure
 /datum/reagent/impure/SDGFtox
 	name = "Synthetic-derived apoptosis factor"
-	id = "SDGFtox"
 	description = "Impure synthetic-derived growth factor causes certain cells to undergo cell death, causing clone damage, and damaging blood cells."//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
 	metabolization_rate = 1
 	can_synth = FALSE
@@ -305,7 +302,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //Fail state of SDGF
 /datum/reagent/impure/SDZF
 	name = "synthetic-derived zombie factor"
-	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. Emulates normal synthetic-derived growth factor, but produces a hostile zombie at the end of it."
 	color = "#a502e0" // rgb: 96, 0, 255
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
@@ -338,7 +334,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.adjustToxLoss(1, 0)// the warning!
 
 		if(86)//mean clone time!
-			if (!M.reagents.has_reagent("pen_acid"))//Counterplay is pent.)
+			if (!M.reagents.has_reagent(/datum/reagent/medicine/pen_acid))//Counterplay is pent.)
 				message_admins("(non-infectious) SDZF: Zombie spawned at [M] [COORD(M)]!")
 				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 				M.next_move_modifier = 1
@@ -352,7 +348,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				ZI.name = M.real_name
 				ZI.desc = "[M]'s clone, gone horribly wrong."
 				log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying zombie instead")
-				M.reagents.remove_reagent(id, 20)
+				M.reagents.remove_reagent(type, 20)
 
 			else//easier to deal with
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour!</span>")
@@ -362,12 +358,12 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				S.name = "Living teratoma"
 				S.real_name = "Living teratoma"//horrifying!!
 				S.rabid = 1//Make them an angery boi
-				M.reagents.remove_reagent(id, volume)
+				M.reagents.remove_reagent(type, volume)
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 				log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying teratoma instead")
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Zombie clones made!")
 
 		if(87 to INFINITY)
 			M.adjustToxLoss(2, 0)
-			M.reagents.remove_reagent(id, 1)
+			M.reagents.remove_reagent(type, 1)
 	..()
