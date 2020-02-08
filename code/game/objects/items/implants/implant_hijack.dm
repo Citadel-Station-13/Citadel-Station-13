@@ -10,6 +10,7 @@
 	var/eye_color
 	var/stealthmode = FALSE
 	var/stealthcooldown = 0
+	var/hijacking = FALSE
 
 /obj/item/implant/hijack/activate()
 	. = ..()
@@ -84,14 +85,17 @@
 	return TRUE
 
 /obj/item/implant/hijack/proc/hijack_remotely(obj/machinery/power/apc/apc)
-	if (apc.hijacker)
+	if (apc.hijacker || hijacking)
 		return FALSE //can't remotely hijack an already hijacked APC
+	hijacking = TRUE
 	to_chat(imp_in, "<span class='notice'>Establishing remote connection with APC.</span>")
 	if (!do_after(imp_in, 4 SECONDS,target=apc))
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")
+		hijacking = FALSE
 		return TRUE
 	if (LAZYLEN(imp_in.siliconaccessareas) >= HIJACK_APC_MAX_AMOUNT)
 		to_chat(src,"<span class='warning'>You are connected to too many APCs! Too many more will fry your brain.</span>")
+		hijacking = FALSE
 		return TRUE
 	imp_in.light_power = 2
 	imp_in.light_range = 2
@@ -109,6 +113,7 @@
 		toggle_eyes()
 	else
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")
+	hijacking = FALSE
 	imp_in.light_power = 0
 	imp_in.light_range = 0
 	imp_in.light_color = COLOR_YELLOW
