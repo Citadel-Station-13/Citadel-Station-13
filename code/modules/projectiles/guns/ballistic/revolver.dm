@@ -364,3 +364,63 @@
 		user.emote("scream")
 		user.drop_all_held_items()
 		user.Knockdown(80)
+
+// IMPROVISED REVOLVER //
+//Has 3 calibers - .38 .357 rev762.
+//.38 has a 5% odds of failing, .357 has a 25% as well as rev762
+//Once you caliber up, you can NOT go down
+
+/obj/item/gun/ballistic/revolver/detective/makeshift
+	name = "makeshift revolver"
+	desc = "A makeshift revolver made with ducttape and dreams. Not the most reliable..."
+	icon_state = "irevgun"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/makeshift
+	var/failer_odds = 5
+	can_suppress = TRUE
+	recoil = 2
+
+/obj/item/gun/ballistic/revolver/detective/makeshift/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(chambered)
+		if(prob((failer_odds)))
+			playsound(user, fire_sound, 50, 1)
+			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
+			user.take_bodypart_damage(0,25)
+			user.dropItemToGround(src)
+			return FALSE
+	..()
+
+/obj/item/gun/ballistic/revolver/detective/makeshift/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if("38" in magazine.caliber)
+		to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
+		if(magazine.ammo_count())
+			afterattack(user, user)	//you know the drill
+			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+			return TRUE
+		if(I.use_tool(src, user, 30))
+			if(magazine.ammo_count())
+				to_chat(user, "<span class='warning'>You can't modify it!</span>")
+				return TRUE
+			magazine.caliber = list("357")
+			desc = "The barrel and chamber assembly seems to have been modified."
+			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
+			failer_odds = 25
+	if("357" in magazine.caliber)
+		to_chat(user, "<span class='notice'>You begin to improve modifications to [src]...</span>")
+		if(magazine.ammo_count())
+			afterattack(user, user)	//and again
+			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+			return TRUE
+		if(I.use_tool(src, user, 30))
+			if(magazine.ammo_count())
+				to_chat(user, "<span class='warning'>You can't modify it!</span>")
+				return
+			magazine.caliber = list("n762")
+			desc = initial(desc)
+			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
+	if("n762" in magazine.caliber)
+		user.visible_message("<span class='danger'>You cant modify it any more!</span>")
+		failer_odds = 25
+		return TRUE
+	return TRUE

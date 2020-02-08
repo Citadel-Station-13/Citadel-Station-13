@@ -4,6 +4,13 @@
 	caliber = list("38")
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/cylinder/rev38/makeshift
+	name = "makeshift cylinder"
+	ammo_type = /obj/item/ammo_casing/c38
+	caliber = list("38")
+	max_ammo = 1
+	multiload = 0
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev762
 	name = "\improper Nagant revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/n762
@@ -20,3 +27,12 @@
 /obj/item/ammo_box/magazine/internal/rus357/Initialize()
 	stored_ammo += new ammo_type(src)
 	. = ..()
+
+//Makeshift Pistol
+
+/obj/item/ammo_box/magazine/internal/cylinder/nine/makeshift
+	name = "makeshift cylinder"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = list("9mm")
+	max_ammo = 1
+	multiload = 0
