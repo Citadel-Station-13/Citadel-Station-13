@@ -43,7 +43,7 @@
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
 		var/cm = tm.pull_request_commit
-		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 11)))
+		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
 		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
 			continue
 		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[tm.number]\">#[tm.number][details]</a><br>"
@@ -57,11 +57,11 @@
 	// Round ID
 	if(GLOB.round_id)
 		msg += "<b>Round ID:</b> [GLOB.round_id]"
-	
+
 	msg += "<b>BYOND Version:</b> [world.byond_version].[world.byond_build]"
 	if(DM_VERSION != world.byond_version || DM_BUILD != world.byond_build)
 		msg += "<b>Compiled with BYOND Version:</b> [DM_VERSION].[DM_BUILD]"
-		
+
 	// Revision information
 	var/datum/getrev/revdata = GLOB.revdata
 	msg += "<b>Server revision compiled on:</b> [revdata.date]"

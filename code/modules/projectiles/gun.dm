@@ -76,6 +76,13 @@
 	if(zoomable)
 		azoom = new (src)
 
+/obj/item/gun/Destroy()
+	QDEL_NULL(pin)
+	QDEL_NULL(gun_light)
+	QDEL_NULL(bayonet)
+	QDEL_NULL(chambered)
+	return ..()
+
 /obj/item/gun/CheckParts(list/parts_list)
 	..()
 	var/obj/item/gun/G = locate(/obj/item/gun) in contents

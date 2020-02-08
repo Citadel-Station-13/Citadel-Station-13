@@ -92,7 +92,7 @@
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
 	item = /obj/item/storage/belt/military
 	cost = 1
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"

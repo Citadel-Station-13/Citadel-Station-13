@@ -47,6 +47,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		else if (job in completed_asset_jobs) //byond bug ID:2256651
 			to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 			src << browse("...", "window=asset_cache_browser")
+			// Keypress passthrough
+	if(href_list["__keydown"])
+		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
+		if(keycode)
+			keyDown(keycode)
+		return
+	if(href_list["__keyup"])
+		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
+		if(keycode)
+			keyUp(keycode)
+		return
+
 
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
@@ -411,7 +423,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			winset(src, "[child]", "[entries[child]]")
 			if (!ispath(child, /datum/verbs/menu))
 				var/procpath/verbpath = child
-				if (copytext(verbpath.name,1,2) != "@")
+				if (verbpath.name[1] != "@")
 					new child(src)
 
 	for (var/thing in prefs.menuoptions)

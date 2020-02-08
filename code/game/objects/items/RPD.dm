@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
 		assets.send(user)
 
-		ui = new(user, src, ui_key, "rpd", name, 425, 515, master_ui, state)
+		ui = new(user, src, ui_key, "rpd", name, 425, 472, master_ui, state)
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_data(mob/user)
@@ -316,9 +316,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			playeffect = FALSE
 		if("mode")
 			var/n = text2num(params["mode"])
-			if(n == 2 && !(mode&1) && !(mode&2))
-				mode |= 3
-			else if(mode&n)
+			if(mode & n)
 				mode &= ~n
 			else
 				mode |= n
@@ -327,6 +325,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		spark_system.start()
 		effectcooldown = world.time + 100
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+	return TRUE
 
 /obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
 	var/turf/T = get_turf(A)
