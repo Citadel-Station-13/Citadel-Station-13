@@ -234,8 +234,8 @@
 	desc = "A firing pin that only will fire when off the station."
 
 /obj/item/firing_pin/away/pin_auth(mob/living/user)
-	var/station_zlevel = get_area(src)
-	if(station_zlevel in GLOB.the_station_areas)
+	var/station_area = get_area(src)
+	if(station_area in GLOB.the_station_areas)
 		to_chat(user, "<span class='warning'>The pin beeps, refusing to fire.</span>")
 		return FALSE
 	return TRUE
