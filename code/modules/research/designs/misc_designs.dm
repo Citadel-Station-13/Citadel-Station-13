@@ -250,10 +250,10 @@
 	name = "Plant Data Disk"
 	desc = "A disk for storing plant genetic data."
 	id = "diskplantgene"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL=200, MAT_GLASS=100)
 	build_path = /obj/item/disk/plantgene
-	category = list("Electronics")
+	category = list("Electronics","Imported")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/roastingstick
