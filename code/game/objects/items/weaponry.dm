@@ -360,6 +360,65 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		icon_state = "switchblade_msf"
 		to_chat(user, "<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
 
+/obj/item/switchblade/toxic
+	icon_state = "switchblade_tox"
+	desc = "A strange knife, warm to the touch. Rumors say the blade is made from superchilled condensed Tritium gas, able to burn and poison anything it comes across. Handle with care."
+	force = 2
+	hitsound = 'sound/weapons/Radknife.ogg'
+	extended_force = 0
+	extended_throwforce = 8
+	extended_icon_state = "switchblade_tox_ext"
+	retracted_icon_state = "switchblade_tox"
+
+/obj/item/switchblade/toxic/attack_self(mob/user)
+	. = ..()
+	playsound(src.loc, 'sound/weapons/laserPump.ogg', 50, 1)
+	if(extended)
+		hitsound = 'sound/weapons/Radknife.ogg'
+		embedding = embedding.setRating(embed_chance = 75)
+	else
+		attack_verb = list("singed","burnt")
+		hitsound = 'sound/items/Welder.ogg'
+
+/obj/item/switchblade/toxic/attack(mob/living/target)
+	. = ..()
+	if (!QDELETED(target) && (extended))
+		playsound(src.loc, 'sound/weapons/Radknife.ogg', 50, 1)
+		target.adjustToxLoss(20)
+		target.adjustFireLoss(5)
+	else
+		target.adjustToxLoss(5)
+		target.adjustFireLoss(2)
+
+/obj/item/switchblade/toxic/throw_impact(mob/living/target)
+	. = ..()
+	if (!QDELETED(target) && (extended))
+		playsound(src.loc, 'sound/weapons/Radknife.ogg', 50, 1)
+		target.adjustToxLoss(15)
+		target.adjustFireLoss(10)
+	else
+		target.adjustFireLoss(3)
+
+/obj/item/switchblade/toxic/emp_act()
+	. = ..()
+	if (extended)
+		icon_state = "switchblade_toxE_ext"
+	else
+		icon_state = "switchblade_toxE"
+	extended_icon_state = "switchblade_toxE_ext"
+	retracted_icon_state = "switchblade_toxE"
+	playsound(src.loc, 'sound/misc/bloblarm.ogg', 50, 1)
+	playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 60, 1, 10)
+	visible_message("<span class ='warning'>The hilt of the [src] sparks as the blade begins to unravel! Get away from it, now!")
+	addtimer(CALLBACK(src, .proc/detonate),140)
+
+/obj/item/switchblade/toxic/proc/detonate()
+	visible_message("<span class ='userdanger'>The [src] violently explodes, sending waves of supercooled Tritium rushing out!")
+	atmos_spawn_air("tritium=7000;TEMP=43.15")
+	explosion(src.loc,1,2,4,flame_range = 5)
+	qdel(src)
+	return
+		
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."

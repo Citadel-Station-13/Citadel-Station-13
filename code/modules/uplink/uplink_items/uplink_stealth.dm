@@ -76,6 +76,19 @@
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/stealthy_weapons/toxblade
+	name = "Stabilized Tritium Blade"
+	desc = "A switchblade, comprised of an advanced stabilization \
+		field hilt containing a blade forged from an internal \
+		cansiter of supercooled, condensed Tritium. Capable of downing nearly \
+		any foe in only a few swings, no matter how well armored. Handle with care; \
+		the stabilization field is fragile. While heat and other sources are unlikely \
+		to damage it, any electromagnetic interference could result in catastrophic consequences."
+	item = /obj/item/switchblade/toxic
+	cost = 13
+	surplus = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
