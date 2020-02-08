@@ -16,6 +16,7 @@
 	material_drop = /obj/item/stack/sheet/plasteel
 	material_drop_amount = 5
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/structure/closet/crate/New()
 	..()
