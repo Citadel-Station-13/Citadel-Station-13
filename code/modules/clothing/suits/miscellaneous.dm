@@ -332,7 +332,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
-	mutantrace_variation = NONE
 
 /obj/item/clothing/head/ran
 	name = "shikigami hat"
