@@ -36,7 +36,7 @@
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/autolathe/secure
-	name = "Secure Autolathe (Machine Board")
+	name = "Secure Autolathe (Machine Board)"
 	build_path = /obj/machinery/autolathe/secure
 
 /obj/item/circuitboard/machine/bloodbankgen
