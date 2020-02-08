@@ -362,8 +362,10 @@
 	. = ..()
 	if(.)
 		return
+	if(!user || !istype(user, /mob/living))
+		return FALSE
 	if(length(src_object.contents()))
-		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
+		to_chat(user, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object.parent))
 			return FALSE
 

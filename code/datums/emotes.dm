@@ -18,6 +18,7 @@
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
 	var/static/list/emote_list = list()
+	var/static/regex/stop_bad_mime = regex(@"says|exclaims|yells|asks")
 
 /datum/emote/New()
 	if(key_third_person)

@@ -137,7 +137,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
 		"balls_efficiency" = CUM_EFFICIENCY,
-		"balls_fluid" = "semen",
 		"has_ovi" = FALSE,
 		"ovi_shape" = "knotted",
 		"ovi_length" = 6,
@@ -152,7 +151,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"breasts_color" = "fff",
 		"breasts_size" = "C",
 		"breasts_shape" = "Pair",
-		"breasts_fluid" = "milk",
 		"breasts_producing" = FALSE,
 		"has_vag" = FALSE,
 		"vag_shape" = "Human",
@@ -163,7 +161,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"womb_cum_rate" = CUM_RATE,
 		"womb_cum_mult" = CUM_RATE_MULT,
 		"womb_efficiency" = CUM_EFFICIENCY,
-		"womb_fluid" = "femcum",
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
@@ -199,7 +196,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/auto_fit_viewport = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
-	
+
 	var/sprint_spacebar = FALSE
 	var/sprint_toggle = FALSE
 
@@ -1476,9 +1473,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE)
-					if(!isnull(msg))
-						msg = copytext(msg, 1, MAX_MESSAGE_LEN*2)
+					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN, TRUE)
+					if(msg)
+						msg = msg
 						features["flavor_text"] = msg
 
 				if("hair")
@@ -2230,7 +2227,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("never_hypno")
 					cit_toggles ^= NEVER_HYPNO
-				
+
 				if("aphro")
 					cit_toggles ^= NO_APHRO
 
@@ -2239,7 +2236,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("bimbo")
 					cit_toggles ^= BIMBOFICATION
-					
+
 				//END CITADEL EDIT
 
 				if("ambientocclusion")

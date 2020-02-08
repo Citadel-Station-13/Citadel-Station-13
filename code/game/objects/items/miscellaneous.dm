@@ -26,3 +26,11 @@
 	w_class = WEIGHT_CLASS_HUGE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
+
+/obj/item/supermatterspray
+	name = "supermatter spray"
+	desc = "A spray bottle containing some kind of magical spray to fix the SM. \"Do not inhale.\" is written on the side. Unless aimed at the supermatter, it does nothing."
+	icon = 'icons/obj/supermatter.dmi'
+	icon_state = "supermatterspray"
+	w_class = WEIGHT_CLASS_SMALL
+	var/usesleft = 2

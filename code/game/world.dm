@@ -8,6 +8,7 @@ GLOBAL_LIST(topic_status_cache)
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
+	enable_debugger()
 
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
@@ -115,9 +116,11 @@ GLOBAL_LIST(topic_status_cache)
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
+	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
 	GLOB.reagent_log = "[GLOB.log_directory]/reagents.log"
 	GLOB.world_crafting_log = "[GLOB.log_directory]/crafting.log"
+
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
@@ -132,6 +135,7 @@ GLOBAL_LIST(topic_status_cache)
 	start_log(GLOB.world_qdel_log)
 	start_log(GLOB.world_runtime_log)
 	start_log(GLOB.world_job_debug_log)
+	start_log(GLOB.tgui_log)
 	start_log(GLOB.subsystem_log)
 	start_log(GLOB.reagent_log)
 	start_log(GLOB.world_crafting_log)

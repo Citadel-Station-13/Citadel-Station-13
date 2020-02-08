@@ -68,7 +68,6 @@
 	shape = D.features["balls_shape"]
 	if(D.features["balls_shape"] == "Hidden")
 		ENABLE_BITFIELD(genital_flags, GENITAL_INTERNAL)
-	fluid_id = D.features["balls_fluid"]
 	fluid_rate = D.features["balls_cum_rate"]
 	fluid_mult = D.features["balls_cum_mult"]
 	fluid_efficiency = D.features["balls_efficiency"]

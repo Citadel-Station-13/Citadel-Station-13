@@ -55,16 +55,18 @@
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
-/obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
-	..()
+/obj/item/organ/brain/Remove(special = FALSE, no_id_transfer = FALSE)
+	. = ..()
+	var/mob/living/carbon/C = .
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
+	if((!QDELETED(src) || C) && !no_id_transfer)
 		transfer_identity(C)
-	C.update_hair()
+	if(C)
+		C.update_hair()
 
 /obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.

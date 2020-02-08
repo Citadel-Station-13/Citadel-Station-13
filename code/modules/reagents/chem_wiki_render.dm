@@ -196,7 +196,7 @@
 		return ""
 
 
-	var/outstring = "|<a href=\"#[R.name]\"><h5 id=\"[R.name]\">!\[[R.color]\](https://placehold.it/15/[copytext(R.color, 2, 8)]/000000?text=+)[R.name]</h5></a> pH: [R.pH] | "
+	var/outstring = "|<a href=\"#[R.name]\"><h5 id=\"[R.name]\">!\[[R.color]\](https://placehold.it/15/[copytext_char(R.color, 2, 8)]/000000?text=+)[R.name]</h5></a> pH: [R.pH] | "
 	var/datum/reagent/R3
 	if(CR)
 		outstring += "<ul>"

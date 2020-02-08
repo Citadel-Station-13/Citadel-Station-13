@@ -73,13 +73,14 @@
 	active_mind_control = FALSE
 	return TRUE
 
-/obj/item/organ/heart/gland/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/gland/Remove(special = FALSE)
 	active = 0
 	if(initial(uses) == 1)
 		uses = initial(uses)
-	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	hud.remove_from_hud(owner)
-	clear_mind_control()
+	if(!QDELETED(owner))
+		var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
+		hud.remove_from_hud(owner)
+		clear_mind_control()
 	..()
 
 /obj/item/organ/heart/gland/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
