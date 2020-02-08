@@ -63,7 +63,16 @@
 	new_spawn.grant_language(/datum/language/draconic)
 	var/datum/language_holder/holder = new_spawn.get_language_holder()
 	holder.selected_default_language = /datum/language/draconic
-
+	newspawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bonearmor)
+	newspawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bonetalisman)
+	newspawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bracers)
+	newspawn..mind.teach_crafting_recipe(/datum/crafting_recipe/bonebag)
+	newspawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bonedagger)
+	newspawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bonespear)
+	newspawn.mind.teach_crafting_recipe(/datum/crafting_recipe/boneaxe)
+	newspawn.mind.teach_crafting_recipe(/datum/crafting_recipe/headpike)
+	newspawn.mind.teach_crafting_recipe(/datum/crafting_recipe/headpikebone)
+	
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
