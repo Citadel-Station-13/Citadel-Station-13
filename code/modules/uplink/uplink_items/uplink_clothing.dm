@@ -84,3 +84,9 @@
 	desc = "A pair of gloves that are insulated and frictionless, allowing you to steal easily from anyone you see."
 	item = /obj/item/clothing/gloves/thief
 	cost = 4
+
+/datum/uplink_item/suits/wallwalkers
+	name = "Wall Walking Boots"
+	desc = "Through bluespace magic stolen from an organisation that hoards technology, these boots simply allow you to slip through the atoms that make up anything, but only while walking, for safety reasons. As well as this, they unfortunately cause minor breath loss as the majority of atoms in your lungs are sucked out into any solid object you walk through."
+	item = /obj/item/clothing/shoes/wallwalkers
+	cost = 6
