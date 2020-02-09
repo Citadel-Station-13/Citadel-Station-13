@@ -37,8 +37,8 @@ Difficulty: Normal
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "hierophant"
 	desc = "A massive metal club that hangs in the air as though waiting. It'll make you dance to its beat."
-	health = 2500
-	maxHealth = 2500
+	health = 1875
+	maxHealth = 1875
 	attacktext = "clubs"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "hierophant"
@@ -47,9 +47,9 @@ Difficulty: Normal
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
-	armour_penetration = 75
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	armour_penetration = 56
+	melee_damage_lower = 12
+	melee_damage_upper = 15
 	blood_volume = 0
 	speed = 1
 	move_to_delay = 11
@@ -396,10 +396,10 @@ Difficulty: Normal
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, src)
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
-		B.damage = 30
+		B.damage = 27
 	for(var/t in RANGE_TURFS(1, source))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
-		B.damage = 30
+		B.damage = 27
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
 	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
@@ -512,7 +512,7 @@ Difficulty: Normal
 	var/currently_seeking = FALSE
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
 	var/monster_damage_boost = TRUE
-	var/damage = 10
+	var/damage = 8
 
 /obj/effect/temp_visual/hierophant/chaser/Initialize(mapload, new_caster, new_target, new_speed, is_friendly_fire)
 	. = ..()
@@ -589,7 +589,7 @@ Difficulty: Normal
 	light_power = 2
 	desc = "Get out of the way!"
 	duration = 9
-	var/damage = 10 //how much damage do we do?
+	var/damage = 8 //how much damage do we do?
 	var/monster_damage_boost = TRUE //do we deal extra damage to monsters? Used by the boss
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE

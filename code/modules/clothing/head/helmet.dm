@@ -242,7 +242,7 @@
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = HEADCOVERSEYES
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 10, "bio" = 5, "rad" = 20, "fire" = 40, "acid" = 20)
+	armor = list("melee" = 19, "bullet" = 19, "laser" = 19, "energy" = 8, "bomb" = 8, "bio" = 5, "rad" = 20, "fire" = 40, "acid" = 20)
 	icon_state = "skull"
 	item_state = "skull"
 	strip_delay = 100

@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It does increased damage in low pressure."
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 18
+	force = 14
 	throwforce = 10
 	var/burst_time = 30
 	var/fieldlimit = 6
@@ -20,7 +20,7 @@
 	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
-	force = 20
+	force = 15
 	fieldlimit = 8
 	quick_burst_mod = 1
 
@@ -55,7 +55,7 @@
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 50
-	var/resonance_damage = 20
+	var/resonance_damage = 15
 	var/damage_multiplier = 1
 	var/creator
 	var/obj/item/resonator/res

@@ -24,10 +24,10 @@
 	icon_aggro = "pandora"
 	icon_dead = "pandora_dead"
 	icon_gib = "syndicate_gib"
-	maxHealth = 800
-	health = 800
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	maxHealth = 600
+	health = 600
+	melee_damage_lower = 12
+	melee_damage_upper = 12
 	attacktext = "smashes into the side of"
 	/*attack_verb_continuous = "smashes into the side of"
 	attack_verb_simple = "smash into the side of"*/
@@ -171,7 +171,7 @@
 
 //The specific version of hiero's squares pandora uses
 /obj/effect/temp_visual/hierophant/blast/pandora
-	damage = 20
+	damage = 15
 	monster_damage_boost = FALSE
 
 //Pandora's loot: Hope

@@ -14,8 +14,8 @@
 	vision_range = 4
 	aggro_vision_range = 7
 	speed = 3
-	maxHealth = 75
-	health = 75
+	maxHealth = 57
+	health = 57
 	harm_intent_damage = 5
 	melee_damage_lower = 0
 	melee_damage_upper = 0
@@ -72,9 +72,9 @@
 	maxHealth = 1
 	health = 1
 	movement_type = FLYING
-	harm_intent_damage = 5
-	melee_damage_lower = 2
-	melee_damage_upper = 2
+	harm_intent_damage = 4
+	melee_damage_lower = 1
+	melee_damage_upper = 1
 	attacktext = "slashes"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/pierce.ogg'
@@ -100,8 +100,8 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	obj_damage = 60
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 12
+	melee_damage_upper = 12
 	attacktext = "lashes out at"
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
@@ -128,8 +128,8 @@
 	icon_living = "dwarf_legion"
 	icon_aggro = "dwarf_legion"
 	icon_dead = "dwarf_legion"
-	maxHealth = 60
-	health = 60
+	maxHealth = 45
+	health = 45
 	speed = 2 //faster!
 	move_to_delay = 10 //actually faster!
 	crusher_drop_mod = 20
@@ -166,10 +166,10 @@
 	friendly = "buzzes near"
 	vision_range = 10
 	maxHealth = 1
-	health = 5
-	harm_intent_damage = 5
-	melee_damage_lower = 12
-	melee_damage_upper = 12
+	health = 1
+	harm_intent_damage = 4
+	melee_damage_lower = 9
+	melee_damage_upper = 9
 	attacktext = "bites"
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
@@ -204,8 +204,8 @@
 //Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced
 	stat_attack = DEAD
-	maxHealth = 120
-	health = 120
+	maxHealth = 80
+	health = 80
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
 	icon_state = "dwarf_legion"
 	icon_living = "dwarf_legion"
@@ -224,10 +224,10 @@
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
-	health = 450
-	maxHealth = 450
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	health = 338
+	maxHealth = 338
+	melee_damage_lower = 16
+	melee_damage_upper = 16
 	anchored = FALSE
 	AIStatus = AI_ON
 	stop_automated_movement = FALSE

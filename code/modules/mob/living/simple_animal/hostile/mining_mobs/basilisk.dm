@@ -18,12 +18,12 @@
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
-	maxHealth = 200
-	health = 200
-	harm_intent_damage = 5
+	maxHealth = 150
+	health = 150
+	harm_intent_damage = 4
 	obj_damage = 60
-	melee_damage_lower = 12
-	melee_damage_upper = 12
+	melee_damage_lower = 9
+	melee_damage_upper = 9
 	attacktext = "bites into"
 	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
@@ -69,8 +69,8 @@
 	icon_dead = "watcher_dead"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 12
+	melee_damage_upper = 12
 	attacktext = "impales"
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
@@ -98,8 +98,8 @@
 	icon_living = "watcher_magmawing"
 	icon_aggro = "watcher_magmawing"
 	icon_dead = "watcher_magmawing_dead"
-	maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
-	health = 215
+	maxHealth = 162 //Compensate for the lack of slowdown on projectiles with a bit of extra health
+	health = 162
 	light_range = 3
 	light_power = 2.5
 	light_color = LIGHT_COLOR_LAVA
@@ -114,8 +114,8 @@
 	icon_living = "watcher_icewing"
 	icon_aggro = "watcher_icewing"
 	icon_dead = "watcher_icewing_dead"
-	maxHealth = 170
-	health = 170
+	maxHealth = 128
+	health = 128
 	projectiletype = /obj/item/projectile/temp/basilisk/icewing
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1) //No sinew; the wings are too fragile to be usable
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
@@ -124,7 +124,7 @@
 /obj/item/projectile/temp/basilisk/magmawing
 	name = "scorching blast"
 	icon_state = "lava"
-	damage = 5
+	damage = 4
 	damage_type = BURN
 	nodamage = FALSE
 	temperature = 500 //Heats you up!
@@ -138,7 +138,7 @@
 			L.IgniteMob()
 
 /obj/item/projectile/temp/basilisk/icewing
-	damage = 5
+	damage = 4
 	damage_type = BURN
 	nodamage = FALSE
 

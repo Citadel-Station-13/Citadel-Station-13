@@ -26,8 +26,8 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum
 	name = "bubblegum"
 	desc = "In what passes for a hierarchy among slaughter demons, this one is king."
-	health = 2500
-	maxHealth = 2500
+	health = 1875
+	maxHealth = 1875
 	attacktext = "rends"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "bubblegum"
@@ -36,9 +36,9 @@ Difficulty: Hard
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	speak_emote = list("gurgles")
-	armour_penetration = 40
-	melee_damage_lower = 40
-	melee_damage_upper = 40
+	armour_penetration = 30
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	speed = 1
 	move_to_delay = 10
 	ranged_cooldown_time = 10

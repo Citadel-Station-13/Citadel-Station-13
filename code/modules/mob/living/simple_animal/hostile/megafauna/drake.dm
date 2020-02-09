@@ -33,8 +33,8 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."
-	health = 2500
-	maxHealth = 2500
+	health = 1875
+	maxHealth = 1875
 	spacewalk = TRUE
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -44,9 +44,9 @@ Difficulty: Medium
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
 	speak_emote = list("roars")
-	armour_penetration = 40
-	melee_damage_lower = 40
-	melee_damage_upper = 40
+	armour_penetration = 30
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	speed = 1
 	move_to_delay = 5
 	ranged = 1
@@ -379,12 +379,12 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"
-	maxHealth = 200
-	health = 200
+	maxHealth = 150
+	health = 150
 	faction = list("neutral")
-	obj_damage = 80
-	melee_damage_upper = 30
-	melee_damage_lower = 30
+	obj_damage = 60
+	melee_damage_upper = 21
+	melee_damage_lower = 21
 	mouse_opacity = MOUSE_OPACITY_ICON
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()

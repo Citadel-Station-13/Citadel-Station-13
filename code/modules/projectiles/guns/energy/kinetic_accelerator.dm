@@ -47,7 +47,7 @@
 /obj/item/projectile/kinetic/premium
 	name = "kinetic force"
 	icon_state = null
-	damage = 50
+	damage = 38
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 4
@@ -211,7 +211,7 @@
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = null
-	damage = 40
+	damage = 30
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3

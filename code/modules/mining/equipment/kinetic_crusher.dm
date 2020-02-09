@@ -12,10 +12,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 0
-	force_wielded = 20
-	throwforce = 5
+	force_wielded = 15
+	throwforce = 4
 	throw_speed = 4
-	armour_penetration = 10
+	armour_penetration = 8
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
@@ -31,7 +31,7 @@
 
 /obj/item/twohanded/kinetic_crusher/cyborg //probably give this a unique sprite later
 	desc = "An integrated version of the standard kinetic crusher with a grinded down axe head to dissuade mis-use against crewmen. Deals damage equal to the standard crusher against creatures, however."
-	force = 10 //wouldn't want to give a borg a 20 brute melee weapon unemagged now would we
+	force = 8 //wouldn't want to give a borg a 20 brute melee weapon unemagged now would we
 	detonation_damage = 60
 	wielded = 1
 
@@ -176,7 +176,7 @@
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	flag = "bomb"
-	range = 6
+	range = 5
 	log_override = TRUE
 	var/obj/item/twohanded/kinetic_crusher/hammer_synced
 

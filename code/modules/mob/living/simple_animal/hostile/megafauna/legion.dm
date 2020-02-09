@@ -18,8 +18,8 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
-	health = 800
-	maxHealth = 800
+	health = 600
+	maxHealth = 8600
 	spacewalk = TRUE
 	icon_state = "legion"
 	icon_living = "legion"
@@ -28,9 +28,9 @@ Difficulty: Medium
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	speak_emote = list("echoes")
-	armour_penetration = 50
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	armour_penetration = 38
+	melee_damage_lower = 19
+	melee_damage_upper = 19
 	speed = 1
 	move_to_delay = 2
 	ranged = 1
@@ -158,7 +158,7 @@ Difficulty: Medium
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	force = 25
+	force = 19
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm

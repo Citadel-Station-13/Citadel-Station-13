@@ -5,8 +5,8 @@
 	icon_state = "pickaxe"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
-	force = 15
-	throwforce = 10
+	force = 12
+	throwforce = 8
 	item_state = "pickaxe"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
@@ -42,7 +42,7 @@
 	name = "compact pickaxe"
 	desc = "A smaller, compact version of the standard pickaxe."
 	icon_state = "minipick"
-	force = 10
+	force = 8
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
@@ -54,7 +54,7 @@
 	item_state = "spickaxe"
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
-	force = 17
+	force = 13
 	materials = list(MAT_SILVER=4000)
 
 /obj/item/pickaxe/diamond
@@ -63,7 +63,7 @@
 	item_state = "dpickaxe"
 	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
-	force = 19
+	force = 15
 	materials = list(MAT_DIAMOND=4000)
 
 /obj/item/pickaxe/drill
@@ -118,7 +118,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	force = 8
+	force = 6
 	tool_behaviour = TOOL_SHOVEL
 	toolspeed = 0.1 //Can only dig ash and thats about it, out classed by the picks and drills no more!
 	usesound = 'sound/effects/shovel_dig.ogg'

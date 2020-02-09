@@ -123,9 +123,8 @@
 	icon_state = "survivalknife"
 	item_state = "knife"
 	desc = "A hunting grade survival knife."
-	force = 15
-	throwforce = 15
-	bayonet = TRUE
+	force = 12
+	throwforce = 12
 
 /obj/item/kitchen/knife/combat/bone
 	name = "bone dagger"
@@ -134,8 +133,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
-	force = 15
-	throwforce = 15
+	force = 12
+	throwforce = 12
 	materials = list()
 
 /obj/item/kitchen/knife/combat/cyborg

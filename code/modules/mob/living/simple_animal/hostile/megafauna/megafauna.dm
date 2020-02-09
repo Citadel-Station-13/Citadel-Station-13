@@ -1,13 +1,13 @@
 /mob/living/simple_animal/hostile/megafauna
 	name = "boss of this gym"
 	desc = "Attack the weak point for massive damage."
-	health = 1000
-	maxHealth = 1000
+	health = 750
+	maxHealth = 750
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	mob_biotypes = list(MOB_ORGANIC, MOB_EPIC)
-	obj_damage = 400
+	obj_damage = 300
 	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
