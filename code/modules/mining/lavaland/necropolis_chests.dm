@@ -835,7 +835,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	damage_type = BURN
+	damtype = "fire"
 	force = 20
 	throwforce = 20
 	reach = 2
@@ -845,7 +845,7 @@
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
 
-/obj/item/melee/fire_tail/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/fire_tail/afterattack(target, mob/user, proximity_flag)
 	. = ..()
 	if(ishuman(target) && proximity_flag)
 		var/mob/living/carbon/human/H = target
@@ -853,7 +853,6 @@
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(fire_stacks)
 		M.IgniteMob()
 
 //Blood
