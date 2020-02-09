@@ -372,6 +372,7 @@
 	icon_state = "walkboots"
 	var/walkcool = 0
 	var/wallcharges = 4
+	var/newlocobject = null
 	//sparks, maybe oxydamage instead
 
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
@@ -385,20 +386,22 @@
 	..()
 	LAZYREMOVE(user.user_movement_hooks,src)
 
-/obj/item/clothing/shoes/wallwalkers/attackby(obj/item/I, mob/user, params)
-	. = ..() //yes this is shamelessly copied
-	if(istype(I, /obj/item/stack/ore/bluespace_crystal))
-		var/obj/item/stack/ore/bluespace_crystal/B = I
-		wallcharges += 1
-		to_chat(user, "<span class='notice'>You tap the [src] with the [I].</span>")
-		if(B.amount > 1)
-			B.amount -= 1
+/obj/item/clothing/shoes/wallwalkers/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/bluespacerecharge))
+		var/obj/item/bluespacerecharge/ER = W
+		if(ER.uses)
+			wallcharges += ER.uses
+			to_chat(user, "<span class='notice'>You charged the bluespace crystal in the [src]. It now has [wallcharges] charges left.</span>")
+			ER.uses = 0
+			ER.icon_state = "[initial(ER.icon_state)]0"
 		else
-			qdel(I)
+			to_chat(user, "<span class='warning'>[ER] has no crystal on it.</span>")
+		return
+	. = ..()
 
 /obj/item/clothing/shoes/wallwalkers/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It has [wallcharges] charges left. Recharge with bluespace crystals.</span>"
+	. += "<span class='warning'>It has [wallcharges] charges left.</span>"
 
 /obj/item/clothing/shoes/wallwalkers/intercept_user_move(dir,mob/living/m,newloc,oldloc)
 	if (walkcool < world.time && m.m_intent == MOVE_INTENT_WALK && wallcharges > 0)
@@ -412,15 +415,17 @@
 			for (var/atom/T in newloc) //stuff on the new turf
 				if (!T.CanPass(m,newloc) && T != m)
 					issolid = TRUE
+					newlocobject = T
 					break
 			if (!issolid)
 				for (var/atom/T in oldloc) //directional shit on the old turf
-					if (!T.CanPass(m,newloc) && T != m)
+					if (!T.CanPass(m,newloc) && T != m && T != newlocobject)
 						issolid = TRUE
 						break
+				newlocobject = null //stopping structures from using two charges because of how shitty the canpass code is
 		m.forceMove(newloc)
 		if (issolid)
-			m.adjustOxyLoss(rand(5,15))
+			m.adjustOxyLoss(rand(5,13))
 			if (prob(10))
 				m.adjustBruteLoss(rand(3,5))
 				to_chat(m,"<span class='warning'>You feel as if travelling through the solid object left something behind and it hurts!</span>")
@@ -429,3 +434,32 @@
 			s.start()
 			flash_lighting_fx(3, 3, LIGHT_COLOR_ORANGE)
 			wallcharges--
+
+/obj/item/bluespacerecharge
+	name = "bluespace crystal recharging device"
+	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for replacing the crystals in bluespace devices."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "bluespace_charge"
+	item_flags = NOBLUDGEON
+	var/uses = 6
+
+/obj/item/bluespacerecharge/examine(mob/user)
+	. = ..()
+	if(uses)
+		. += "<span class='notice'>It can add up to [uses] charges to compatible devices.</span>"
+	else
+		. += "<span class='warning'>The crystal is gone.</span>"
+
+/obj/item/bluespacerecharge/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/stack/ore/bluespace_crystal) && !uses)
+		var/obj/item/stack/ore/bluespace_crystal/B = I
+		if (B.amount < 10)
+			return
+		uses += 3
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		if(B.amount > 10)
+			B.amount -= 10
+		else
+			qdel(I)
+		icon_state = initial(icon_state)
