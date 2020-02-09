@@ -303,19 +303,3 @@
 /turf/closed/wall/mineral/plastitanium/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
-
-/////////////////////Pirate Plastitanium walls/////////////////////
-
-/turf/closed/wall/mineral/plastitanium/pirate
-	desc = "Yarr just try to blow this to smithereens!"
-	explosion_block = 50
-	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium/pirate, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium/pirate, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
-
-/turf/closed/wall/mineral/plastitanium/nodiagonal/pirate/
-	explosion_block = 50
-
-/turf/closed/wall/mineral/plastitanium/nosmooth/pirate/
-	explosion_block = 50
-
-/turf/closed/wall/mineral/plastitanium/overspace/pirate/
-	explosion_block = 50

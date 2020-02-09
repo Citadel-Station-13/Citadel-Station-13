@@ -598,7 +598,7 @@
 //pirate ship windows
 /obj/structure/window/plastitanium/pirate
 	desc = "Yarr this window be explosion proof!"
-	explosion_block = 50
+	explosion_block = 30
 
 /obj/structure/window/plastitanium/pirate/unanchored
 	anchored = FALSE

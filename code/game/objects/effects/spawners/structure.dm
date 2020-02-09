@@ -166,8 +166,6 @@ again.
 //plastitanium pirate window
 
 /obj/effect/spawner/structure/window/plastitanium/pirate
-	explosion_block = 50
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/plastitanium/pirate)
 
 //ice window
 
