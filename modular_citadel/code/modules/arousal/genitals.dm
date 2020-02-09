@@ -38,6 +38,8 @@
 	return ..()
 
 /obj/item/organ/genital/proc/set_aroused_state(new_state)
+	if(!(genital_flags & GENITAL_CAN_AROUSE))
+		return FALSE
 	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
 		aroused_state = new_state
 	return aroused_state
@@ -113,17 +115,7 @@
 	set desc = "Allows you to toggle which genitals are showing signs of arousal."
 	var/list/genital_list = list()
 	for(var/obj/item/organ/genital/G in internal_organs)
-		var/datum/sprite_accessory/S
-		switch(G.type)
-			if(/obj/item/organ/genital/penis)
-				S = GLOB.cock_shapes_list[G.shape]
-			if(/obj/item/organ/genital/testicles)
-				S = GLOB.balls_shapes_list[G.shape]
-			if(/obj/item/organ/genital/vagina)
-				S = GLOB.vagina_shapes_list[G.shape]
-			if(/obj/item/organ/genital/breasts)
-				S = GLOB.breasts_shapes_list[G.shape]
-		if(S?.alt_aroused)
+		if(G.genital_flags & GENITAL_CAN_AROUSE)
 			genital_list += G
 	if(!genital_list.len) //There's nothing that can show arousal
 		return
@@ -325,7 +317,6 @@
 			var/obj/item/organ/genital/G = A
 			var/datum/sprite_accessory/S
 			var/size = G.size
-			var/aroused_state = G.aroused_state
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = GLOB.cock_shapes_list[G.shape]
@@ -338,10 +329,9 @@
 
 			if(!S || S.icon_state == "none")
 				continue
+			var/aroused_state = G.aroused_state && S.alt_aroused
 
 			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[aroused_state]_[layertext]"
-
 			if(S.center)
 				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
 
@@ -357,8 +347,8 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-			
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
+
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][use_skintones ? "_s" : ""]_[aroused_state]_[layertext]"
 
 			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
