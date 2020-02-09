@@ -22,7 +22,7 @@
 
 /datum/round_event/meteor_wave/setup()
 	announceWhen = 1
-	startWhen = rand(60, 90) //Yeah for SOME REASON this is measured in seconds and not deciseconds???
+	startWhen = rand(90, 180) // Apparently it is by 2 seconds, so 90 is actually 180 seconds, and 180 is 360 seconds. So this is 3-6 minutes
 	if(GLOB.singularity_counter)
 		startWhen *= 1 - min(GLOB.singularity_counter * SINGULO_BEACON_DISTURBANCE, SINGULO_BEACON_MAX_DISTURBANCE)
 	endWhen = startWhen + 60
