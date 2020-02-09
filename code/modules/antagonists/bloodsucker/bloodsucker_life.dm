@@ -84,7 +84,7 @@
 	//It is called from your coffin on close (by you only)
 	if(poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
-	owner.current.adjustStaminaLoss(-2 + (regenRate * -8) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustStaminaLoss(-1.5 + (regenRate * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-0.1 * (regenRate * 2) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 	// No Bleeding
@@ -125,7 +125,7 @@
 			C.adjustFireLoss(-fireheal * mult, forced = TRUE)
 			C.adjustToxLoss(-toxinheal * mult * 2, forced = TRUE) //Toxin healing because vamps arent immune
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
-			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
+			AddBloodVolume((bruteheal * -0.5 + fireheal * -1 + toxinheal * -0.2) / mult * costMult)	// Costs blood to heal
 			return TRUE // Healed! Done for this tick.
 		if(amInCoffinWhileTorpor) 	// Limbs? (And I have no other healing)
 			var/list/missing = owner.current.get_missing_limbs() 	// Heal Missing
@@ -189,7 +189,7 @@
 /datum/antagonist/bloodsucker/proc/HandleDeath()
 	// 	FINAL DEATH
 	// Fire Damage? (above double health)
-	if(owner.current.getFireLoss_nonProsthetic() >= owner.current.getMaxHealth() * 1.5)
+	if(owner.current.getFireLoss_nonProsthetic() >= owner.current.maxHealth * 2.5)
 		FinalDeath()
 		return
 	// Staked while "Temp Death" or Asleep

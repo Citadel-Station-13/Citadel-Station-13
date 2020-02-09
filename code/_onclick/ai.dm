@@ -140,10 +140,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(locked)
-		bolt_raise(usr)
-	else
-		bolt_drop(usr)
+	toggle_bolt(usr)
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
 	if(obj_flags & EMAGGED)
@@ -165,10 +162,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(!emergency)
-		emergency_on(usr)
-	else
-		emergency_off(usr)
+	toggle_emergency(usr)
 
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.

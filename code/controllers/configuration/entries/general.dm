@@ -267,6 +267,9 @@
 
 /datum/config_entry/flag/tgstyle_maprotation
 
+/datum/config_entry/string/map_vote_type
+	config_entry_value = "SCORE"
+
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75
 	min_val = 0
@@ -431,3 +434,7 @@
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
+
+/datum/config_entry/number/max_bunker_days
+	config_entry_value = 7
+	min_val = 1

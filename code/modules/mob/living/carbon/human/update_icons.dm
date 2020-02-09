@@ -182,10 +182,10 @@ There are several things that need to be remembered:
 
 	if(!gloves && bloody_hands)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER, color = blood_DNA_to_color())
-		if(get_num_arms() < 2)
-			if(has_left_hand())
+		if(get_num_arms(FALSE) < 2)
+			if(has_left_hand(FALSE))
 				bloody_overlay.icon_state = "bloodyhands_left"
-			else if(has_right_hand())
+			else if(has_right_hand(FALSE))
 				bloody_overlay.icon_state = "bloodyhands_right"
 
 		overlays_standing[GLOVES_LAYER] = bloody_overlay
@@ -265,7 +265,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_shoes()
 	remove_overlay(SHOES_LAYER)
 
-	if(get_num_legs() <2)
+	if(get_num_legs(FALSE) <2)
 		return
 
 	if(client && hud_used)
@@ -461,6 +461,8 @@ There are several things that need to be remembered:
 		var/alt_icon = M.alternate_worn_icon || 'icons/mob/mask.dmi'
 		var/muzzled = FALSE
 		var/variation_flag = NONE
+		if(head && (head.flags_inv & HIDEMASK))
+			return
 		if(("mam_snouts" in dna.species.default_features) && dna.features["mam_snouts"] != "None")
 			muzzled = TRUE
 		if(!muzzled && ("snout" in dna.species.default_features) && dna.features["snout"] != "None")

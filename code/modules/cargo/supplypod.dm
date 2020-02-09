@@ -114,7 +114,7 @@
 			for(var/X in CM.internal_organs)
 				var/destination = get_edge_target_turf(T, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 				var/obj/item/organ/O = X
-				O.Remove(CM) //Note that this isn't the same proc as for lists
+				O.Remove() //Note that this isn't the same proc as for lists
 				O.forceMove(T) //Move the organ outta the body
 				O.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
 				sleep(1)

@@ -322,6 +322,26 @@
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/empgrenade(src)
 
+/obj/item/storage/box/minibombs
+	name = "box of syndicate minibombs"
+	desc = "A box containing 2 highly explosive syndicate minibombs."
+	icon_state = "syndiebox"
+	illustration = "frag"
+
+/obj/item/storage/box/minibombs/PopulateContents()
+	new /obj/item/grenade/syndieminibomb(src)
+	new /obj/item/grenade/syndieminibomb(src)
+
+/obj/item/storage/box/bombananas
+	name = "box of bombananas"
+	desc = "A box containing 2 highly explosive bombananas. Discard peel at enemy after consumption."
+	icon_state = "syndiebox"
+	illustration = "frag"
+
+/obj/item/storage/box/bombananas/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/grown/banana/bombanana(src)
+	new /obj/item/reagent_containers/food/snacks/grown/banana/bombanana(src)
+
 /obj/item/storage/box/trackimp
 	name = "boxed tracking implant kit"
 	desc = "Box full of scum-bag tracking utensils."
