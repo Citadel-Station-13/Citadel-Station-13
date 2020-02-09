@@ -27,7 +27,7 @@
 
 	max_integrity = 160		//the turret's health
 	integrity_failure = 80
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = FALSE		//if the turret responds to control panels
@@ -349,7 +349,13 @@
 		qdel(cover)	//deletes the cover - no need on keeping it there!
 
 //turret healing
+/obj/machinery/porta_turret/examine(mob/user)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		. += "<span class='notice'>Use a welder to fix it.</span>"
+
 /obj/machinery/porta_turret/welder_act(mob/living/user, obj/item/I)
+	. = TRUE
 	if(obj_integrity < max_integrity)
 		if(!I.tool_start_check(user, amount=0))
 			return
@@ -360,10 +366,8 @@
 			obj_integrity = max_integrity
 			user.visible_message("[user.name] has repaired [src].", \
 								"<span class='notice'>You finish repairing the turret.</span>")
-			return TRUE
 	else
 		to_chat(user, "<span class='notice'>The turret doesn't need repairing.</span>")
-	return
 
 
 /obj/machinery/porta_turret/process()
@@ -686,7 +690,7 @@
 	nonlethal_projectile_sound = 'sound/weapons/taser2.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
-	desc = "An energy blaster auto-turret. Use a welder to fix."
+	desc = "An energy blaster auto-turret."
 
 
 /obj/machinery/porta_turret/syndicate/energy/heavy
@@ -703,6 +707,7 @@
 /obj/machinery/porta_turret/syndicate/energy/pirate
 	max_integrity = 260
 	integrity_failure = 20
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 
 /obj/machinery/porta_turret/syndicate/setup()

@@ -266,17 +266,17 @@
 	explosion_block = 30
 	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate/pirate, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium/pirate, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
 
-/turf/closed/wall/r_wall/syndicate/pirate/nodiagonal/
+/turf/closed/wall/r_wall/syndicate/pirate/nodiagonal
 	smooth = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"
 	explosion_block = 30
 
-/turf/closed/wall/r_wall/syndicate/pirate/nosmooth/
+/turf/closed/wall/r_wall/syndicate/pirate/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
 	explosion_block = 30
 
-/turf/closed/wall/r_wall/syndicate/pirate/overspace/
+/turf/closed/wall/r_wall/syndicate/pirate/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
 	explosion_block = 30

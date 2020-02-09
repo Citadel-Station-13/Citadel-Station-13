@@ -166,6 +166,7 @@ again.
 //plastitanium pirate window
 
 /obj/effect/spawner/structure/window/plastitanium/pirate
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/plastitanium/pirate)
 
 //ice window
 
