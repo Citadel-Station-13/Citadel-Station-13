@@ -31,15 +31,18 @@ SUBSYSTEM_DEF(fail2topic)
 	return ..()
 
 /datum/controller/subsystem/fail2topic/fire()
-	for(var/i in 1 to length(rate_limiting))
-		var/ip = rate_limiting[i]
-		var/last_attempt = rate_limiting[ip]
-		if (world.time - last_attempt > rate_limit)
-			rate_limiting -= ip
-			fail_counts -= ip
-
-		if (MC_TICK_CHECK)
-			return
+	if(length(rate_limiting))
+		var/i = 1
+		while(i <= length(rate_limiting))
+			var/ip = rate_limiting[i]
+			var/last_attempt = rate_limiting[ip]
+			if(world.time - last_attempt > rate_limit)
+				rate_limiting -= ip
+				fail_counts -= ip
+			else		//if we remove that, and the next element is in its place. check that instead of incrementing.
+				++i
+			if(MC_TICK_CHECK)
+				return
 
 /datum/controller/subsystem/fail2topic/Shutdown()
 	DropFirewallRule()

@@ -30,6 +30,10 @@
 
 	RegisterSignal(target, COMSIG_MOB_ATTACK_HAND, .proc/on_attack_hand)
 
+/datum/element/wuv/Detach(datum/source, force)
+	. = ..()
+	UnregisterSignal(source, COMSIG_MOB_ATTACK_HAND)
+
 /datum/element/wuv/proc/on_attack_hand(datum/source, mob/user)
 	var/mob/living/L = source
 
