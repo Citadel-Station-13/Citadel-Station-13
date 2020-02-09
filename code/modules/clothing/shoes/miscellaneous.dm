@@ -365,3 +365,67 @@
 	name = "black cowboy boots"
 	desc = "A pair of black cowboy boots, pretty easy to scuff up."
 	icon_state = "cowboyboots_black"
+
+/obj/item/clothing/shoes/wallwalkers
+	name = "wall walking boots"
+	desc = "Contrary to popular belief, these do not allow you to walk on walls. Through bluespace magic stolen from an organisation that hoards technology, they simply allow you to slip through the atoms that make up anything, but only while walking, for safety reasons. As well as this, they unfortunately cause minor breath loss as the majority of atoms in your lungs are sucked out into any solid object you walk through. Make sure not to overuse them."
+	icon_state = "walkboots"
+	var/walkcool = 0
+	var/wallcharges = 4
+	//sparks, maybe oxydamage instead
+
+/obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
+	..()
+	if (slot == SLOT_SHOES)
+		LAZYADD(user.user_movement_hooks,src)
+	else
+		LAZYREMOVE(user.user_movement_hooks,src)
+
+/obj/item/clothing/shoes/wallwalkers/dropped(mob/user)
+	..()
+	LAZYREMOVE(user.user_movement_hooks,src)
+
+/obj/item/clothing/shoes/wallwalkers/attackby(obj/item/I, mob/user, params)
+	. = ..() //yes this is shamelessly copied
+	if(istype(I, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/B = I
+		wallcharges += 1
+		to_chat(user, "<span class='notice'>You tap the [src] with the [I].</span>")
+		if(B.amount > 1)
+			B.amount -= 1
+		else
+			qdel(I)
+
+/obj/item/clothing/shoes/wallwalkers/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>It has [wallcharges] charges left. Recharge with bluespace crystals.</span>"
+
+/obj/item/clothing/shoes/wallwalkers/intercept_user_move(dir,mob/living/m,newloc,oldloc)
+	if (walkcool < world.time && m.m_intent == MOVE_INTENT_WALK && wallcharges > 0)
+		walkcool = world.time + m.movement_delay()
+		var/issolid = FALSE
+		var/turf/K = newloc
+		if (istype(K))
+			if (K.density)
+				issolid = TRUE
+		if (!issolid)
+			for (var/atom/T in newloc) //stuff on the new turf
+				if (!T.CanPass(m,newloc) && T != m)
+					issolid = TRUE
+					break
+			if (!issolid)
+				for (var/atom/T in oldloc) //directional shit on the old turf
+					if (!T.CanPass(m,newloc) && T != m)
+						issolid = TRUE
+						break
+		m.forceMove(newloc)
+		if (issolid)
+			m.adjustOxyLoss(rand(5,15))
+			if (prob(10))
+				m.adjustBruteLoss(rand(3,5))
+				to_chat(m,"<span class='warning'>You feel as if travelling through the solid object left something behind and it hurts!</span>")
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+			s.set_up(5, 1, oldloc)
+			s.start()
+			flash_lighting_fx(3, 3, LIGHT_COLOR_ORANGE)
+			wallcharges--
