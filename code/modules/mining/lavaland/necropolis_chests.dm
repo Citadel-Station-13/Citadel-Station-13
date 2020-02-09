@@ -723,7 +723,7 @@
 			new /obj/item/lava_staff(src)
 		if(3)
 			new /obj/item/book/granter/spell/sacredflame(src)
-			new /obj/item/gun/magic/wand/fireball(src)
+			new /obj/item/melee/fire_tail(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
 
@@ -824,6 +824,37 @@
 	final_block_chance += CLAMP((ghost_counter * 5), 0, 75)
 	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
 	return ..()
+
+//Fire-Tail
+
+/obj/item/melee/fire_tail
+	name = "drake tail"
+	desc = "A long flaming tail from an ash drake."
+	icon_state = "draketail"
+	item_state = "chain"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	damage_type = BURN
+	force = 20
+	throwforce = 20
+	reach = 2
+	w_class = WEIGHT_CLASS_NORMAL
+	item_flags = NONE
+	total_mass = 1.5
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/chainhit.ogg'
+
+/obj/item/melee/fire_tail/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	. = ..()
+	if(ishuman(target) && proximity_flag)
+		var/mob/living/carbon/human/H = target
+		H.drop_all_held_items()
+		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(fire_stacks)
+		M.IgniteMob()
 
 //Blood
 
