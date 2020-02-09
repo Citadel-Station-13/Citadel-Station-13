@@ -47,7 +47,7 @@
 	if(!client?.prefs.arousable || (aphro && (client?.prefs.cit_toggles & NO_APHRO)) || (maso && !HAS_TRAIT(src, TRAIT_MASO)))
 		return // no adjusting made here
 	for(var/obj/item/organ/genital/G in internal_organs)
-		if(genital_flags & GENITAL_CAN_AROUSE && !G.aroused_state && prob(strength*G.sensitivity))
+		if(G.genital_flags & GENITAL_CAN_AROUSE && !G.aroused_state && prob(strength*G.sensitivity))
 			G.set_aroused_state(strength > 0)
 			G.update_appearance()
 			if(G.aroused_state)
