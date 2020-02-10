@@ -420,13 +420,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return TRUE
 
 /mob/proc/getImplant(type)
-	if (!istype(src,/mob/living))
-		return
-	var/mob/living/L = src
-	for (var/I in L.implants)
-		if (istype(I,type))
-			return I
-	return null
+	return
+
+/mob/living/getImplant(type)
+	return locate(type) in implants
 
 /proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="", var/allow_all=FALSE)
 	if(allow_all & TRUE)
