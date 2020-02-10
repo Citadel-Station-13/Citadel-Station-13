@@ -342,7 +342,7 @@
 /datum/export/weapon/real_toolbox
 	cost = 600
 	unit_name = "golden toolbox"
-	export_types = list(/obj/item/storage/toolbox/gold_real)
+	export_types = list(/obj/item/storage/toolbox/plastitanium/gold_real)
 
 /datum/export/weapon/melee
 	cost = 50

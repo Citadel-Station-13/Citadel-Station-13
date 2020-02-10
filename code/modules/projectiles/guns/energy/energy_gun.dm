@@ -97,7 +97,7 @@
 	pin = null
 	can_charge = 0
 	ammo_x_offset = 1
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	selfcharge = EGUN_SELFCHARGE
 	var/fail_tick = 0
 	var/fail_chance = 0
@@ -113,18 +113,21 @@
 	..()
 
 /obj/item/gun/energy/e_gun/nuclear/proc/failcheck()
-	if(prob(fail_chance) && isliving(loc))
-		var/mob/living/M = loc
+	if(prob(fail_chance))
 		switch(fail_tick)
 			if(0 to 200)
 				fail_tick += (2*(fail_chance))
-				M.rad_act(400)
-				to_chat(M, "<span class='userdanger'>Your [name] feels warmer.</span>")
+				radiation_pulse(src, 50)
+				var/mob/M = (ismob(loc) && loc) || (ismob(loc.loc) && loc.loc)		//thank you short circuiting. if you powergame and nest these guns deeply you get to suffer no-warning radiation death.
+				if(M)
+					to_chat(M, "<span class='userdanger'>Your [name] feels warmer.</span>")
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
-				M.rad_act(800)
-				crit_fail = 1
-				to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
+				radiation_pulse(src, 200)
+				crit_fail = TRUE
+				var/mob/M = (ismob(loc) && loc) || (ismob(loc.loc) && loc.loc)
+				if(M)
+					to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
 	. = ..()

@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
-GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
+GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
 /datum/game_mode/dynamic
 	name = "dynamic mode"
@@ -239,12 +239,20 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 			. += "<b>Peaceful Waypoint</b></center><BR>"
 			. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive. However, even deep in our territory there may be subversive elements, especially for such a high-value target as your station. Keep an eye out, but don't expect much trouble."
 			set_security_level(SEC_LEVEL_GREEN)
+			for(var/T in subtypesof(/datum/station_goal))
+				var/datum/station_goal/G = new T
+				if(!(G in station_goals))
+					station_goals += G
 		if(21 to 79)
 			var/perc_green = 100-round(100*((threat_level-21)/(79-21)))
 			if(prob(perc_green))
 				. += "<b>Core Territory</b></center><BR>"
 				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
 				set_security_level(SEC_LEVEL_GREEN)
+				for(var/T in subtypesof(/datum/station_goal))
+					var/datum/station_goal/G = new T
+					if(!(G in station_goals))
+						station_goals += G
 			else if(prob(perc_green))
 				. += "<b>Contested System</b></center><BR>"
 				. += "Your station's orbit passes along the edge of Nanotrasen's sphere of influence. While subversive elements remain the most likely threat against your station, hostile organizations are bolder here, where our grip is weaker. Exercise increased caution against elite Syndicate strike forces, or Executives forbid, some kind of ill-conceived unionizing attempt."
@@ -273,7 +281,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 	if(GLOB.security_level >= SEC_LEVEL_BLUE)
 		priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", "intercept")
 	else
-		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no likely threats to [station_name()]. Have a secure shift!", "Security Report", "commandreport")
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no likely threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", "commandreport")
 
 // Yes, this is copy pasted from game_mode
 /datum/game_mode/dynamic/check_finished(force_ending)
@@ -346,7 +354,8 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 		generate_threat()
 
 	storyteller.start_injection_cooldowns()
-
+	SSevents.frequency_lower = storyteller.event_frequency_lower // 6 minutes by default
+	SSevents.frequency_upper = storyteller.event_frequency_upper // 20 minutes by default
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	initial_threat_level = threat_level
 	return TRUE
@@ -395,7 +404,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, null)
 
 /datum/game_mode/dynamic/post_setup(report)
 	update_playercounts()
-
+			
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()

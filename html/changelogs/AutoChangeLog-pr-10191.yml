@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Custom holoforms have been added for pAIs and AIs. oh and cyborg holograms of specific modules too."
-  - balance: "pais are no longer indestructible-flagged while in card form. pai radios now short out if they are forcefully collapsed from damage."

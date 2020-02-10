@@ -327,6 +327,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "fU" = (
@@ -674,6 +675,7 @@
 /area/mine/production)
 "mp" = (
 /obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 2;
 	height = 5;
@@ -716,13 +718,13 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "mN" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "nm" = (
@@ -811,6 +813,16 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/mine/production)
+"ou" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel,
 /area/mine/production)
 "ow" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -1160,13 +1172,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"tJ" = (
-/obj/item/beacon,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
 "tK" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -1569,10 +1574,10 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Bc" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "Be" = (
@@ -1897,6 +1902,7 @@
 /area/mine/laborcamp)
 "Hk" = (
 /obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 3;
 	height = 7;
@@ -2226,6 +2232,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/item/beacon,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "KO" = (
@@ -2286,6 +2293,7 @@
 /area/mine/living_quarters)
 "Lb" = (
 /obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
 	dwidth = 3;
 	height = 10;
@@ -2296,10 +2304,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Lc" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "Le" = (
@@ -2370,7 +2378,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Processing Area";
-	req_access_txt = "48"
+	req_access_txt = "48";
+	security_level = 6
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -2520,6 +2529,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "Nk" = (
@@ -3008,13 +3018,13 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "Vo" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "Vs" = (
@@ -5458,7 +5468,7 @@ JY
 JY
 jJ
 jJ
-JY
+VT
 VT
 VT
 wz
@@ -5514,8 +5524,8 @@ JY
 JY
 JY
 JY
-JY
-JY
+VT
+VT
 VT
 VT
 wz
@@ -5569,9 +5579,9 @@ JY
 JY
 JY
 JY
-JY
-JY
-JY
+VT
+VT
+VT
 VT
 VT
 VT
@@ -5625,8 +5635,8 @@ JY
 JY
 JY
 JY
-JY
-JY
+VT
+VT
 VT
 VT
 VT
@@ -5681,8 +5691,8 @@ JY
 JY
 JY
 JY
-JY
-Lm
+VT
+VT
 VT
 VT
 VT
@@ -5737,8 +5747,8 @@ JY
 JY
 JY
 JY
-JY
-Lm
+VT
+VT
 VT
 VT
 VT
@@ -5793,8 +5803,8 @@ JY
 JY
 JY
 JY
-JY
-JY
+VT
+VT
 VT
 VT
 VT
@@ -5848,9 +5858,9 @@ JY
 Lm
 VT
 VT
-JY
-JY
-JY
+VT
+VT
+VT
 VT
 VT
 VT
@@ -5906,8 +5916,8 @@ VT
 VT
 VT
 VT
-Lm
-Lm
+VT
+VT
 VT
 VT
 Lm
@@ -6598,7 +6608,7 @@ VT
 VT
 Cd
 Ed
-tJ
+Wf
 II
 Jo
 Ed
@@ -6661,7 +6671,7 @@ wX
 Wf
 YM
 GN
-II
+ou
 Nf
 mN
 Aj

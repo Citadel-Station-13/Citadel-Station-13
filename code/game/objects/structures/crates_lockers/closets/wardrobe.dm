@@ -126,8 +126,10 @@
 		new /obj/item/clothing/mask/bandana/black(src)
 	if(prob(40))
 		new /obj/item/clothing/under/assistantformal(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/aformal(src)
 	if(prob(40))
 		new /obj/item/clothing/under/assistantformal(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/aformal(src)
 	if(prob(30))
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -169,4 +171,6 @@
 	if(prob(30))
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+	if (prob(30))
+		new /obj/item/clothing/suit/hooded/wintercoat/polychromic(src)
 	return
