@@ -487,7 +487,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
 			return
 		else
-			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
+			var/mob/dead/observer/ghost = new/mob/dead/observer(get_turf(M), M)
 			ghost.ckey = M.ckey
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
