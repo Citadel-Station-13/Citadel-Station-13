@@ -222,9 +222,15 @@
 	item_state = "coffee"
 	spillable = TRUE
 
-/obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
+/obj/item/reagent_containers/food/drinks/mug/tea/on_reagent_change(changetype)
 	if(reagents.total_volume)
 		icon_state = "tea"
+	else
+		icon_state = "tea_empty"
+
+/obj/item/reagent_containers/food/drinks/mug/coco/on_reagent_change(changetype)
+	if(reagents.total_volume)
+		icon_state = "coco"
 	else
 		icon_state = "tea_empty"
 
