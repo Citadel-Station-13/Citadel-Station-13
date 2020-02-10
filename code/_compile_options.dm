@@ -41,7 +41,7 @@
 
 //Compatability -- These procs were added in 513.1493, not 513.1490
 //Which really shoulda bumped us up to 514 right then and there but instead Lummox is a dumb dumb
-#if DM_BUILD < 1493
+/*#if DM_BUILD < 1493
 #define length_char(args...) length(args)
 #define text2ascii_char(args...) text2ascii(args)
 #define copytext_char(args...) copytext(args)
@@ -57,7 +57,7 @@
 // /regex procs
 #define Find_char(args...) Find(args)
 #define Replace_char(args...) Replace(args)
-#endif
+#endif*/
 
 //Additional code for the above flags.
 #ifdef TESTING
