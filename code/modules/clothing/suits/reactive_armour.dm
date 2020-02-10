@@ -217,24 +217,24 @@
 		var/turf/T = get_turf(owner)
 		var/list/cachedrange = range(T, 7) - owner
 		var/safety = 50
-		for(var/mob/living/M in cachedrange)		//priority
-			if(!safety)
-				break
-			if(!M.anchored && isliving(M))
-				do_the_throw(T, M)
-				safety--
+		var/list/to_throw = list()
+		for(var/mob/living/L in cachedrange)
+			if(L.move_resist > MOVE_FORCE_EXTREMELY_STRONG)
+				continue
+			to_throw += L
 		for(var/obj/O in cachedrange)
+			if(O.anchored)
+				continue
+			to_throw += O
+		for(var/i in to_throw)
 			if(!safety)
 				break
-			if(!O.anchored)
-				do_the_throw(T, O)
-				safety--
+			var/atom/movable/AM = i
+			var/throwtarget = get_edge_target_turf(origin, get_dir(T, get_step_away(A, origin)))
+			A.throw_at(throwtarget,10,1)
+			safety--
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
-
-/obj/item/clothing/suit/armor/reactive/repulse/proc/do_the_throw(var/turf/origin, atom/movable/A)
-		var/throwtarget = get_edge_target_turf(origin, get_dir(origin, get_step_away(A, origin)))
-		A.throw_at(throwtarget,10,1)
 
 /obj/item/clothing/suit/armor/reactive/table
 	name = "reactive table armor"
