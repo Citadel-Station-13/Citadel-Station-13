@@ -402,10 +402,12 @@
 	machine_name = "ViroDrobe"
 
 /obj/machinery/vending/wardrobe/cap_wardrobe
-	name = "\improper Captain's Wardrobe"
+	name = "Captain's Wardrobe"
 	desc = "The latest and greatest in Nanotrasen fashion for your great leader."
 	icon_state = "capsdrobe"
+	icon_deny = "capsdrobe-deny"
 	product_ads = "Only the greatest for a commander such as ours."
+	req_access = list(ACCESS_CAPTAIN)
 	vend_reply = "A wonderful day to you, great leader."
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/captain = 1,
 					/obj/item/storage/backpack/captain = 1, 
@@ -421,7 +423,7 @@
 					/obj/item/clothing/head/caphat/beret/white = 1,
 					/obj/item/clothing/under/captainparade = 1,
 					/obj/item/clothing/suit/captunic = 1,
-					/obj/item/clothing/under/rank/captain/femformal = 1, //Fuck your Citadel Edits and fuck locker bloat, we VENDERSTATION now.
+					/obj/item/clothing/under/rank/captain/femformal = 1,
 					/obj/item/clothing/glasses/sunglasses/gar/supergar = 1,
 					/obj/item/clothing/gloves/color/captain = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/cap_wardrobe

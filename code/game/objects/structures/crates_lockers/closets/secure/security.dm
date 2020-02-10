@@ -1,4 +1,4 @@
-/obj/structure/closet/secure_closet/captains //Unbloated by ShadeAware aka Michael Labs
+/obj/structure/closet/secure_closet/captains //Cosmetics have been moved to the Captain's Drobe found in code/modules/vending/wardrobes.
 	name = "\proper captain's locker"
 	req_access = list(ACCESS_CAPTAIN)
 	icon_state = "cap"
