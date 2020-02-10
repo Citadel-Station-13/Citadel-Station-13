@@ -458,6 +458,7 @@
 
 			var/list/allowed_types = list(
 				/datum/objective/assassinate,
+				/datum/objective/assassinate/once,
 				/datum/objective/maroon,
 				/datum/objective/debrain,
 				/datum/objective/protect,

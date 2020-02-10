@@ -1538,3 +1538,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			return "."
 		if(189)
 			return "-"
+
+/proc/generate_items_inside(list/items_list, where_to)
+	for(var/each_item in items_list)
+		for(var/i in 1 to items_list[each_item])
+			new each_item(where_to)

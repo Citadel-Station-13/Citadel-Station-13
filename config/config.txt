@@ -6,6 +6,7 @@ $include comms.txt
 $include antag_rep.txt
 $include donator_groupings.txt
 $include dynamic_config.txt
+$include plushies/defines.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -383,6 +384,15 @@ MAPROTATION
 ## Allows players to vote for their preffered map
 ## When it's set to zero, the map will be randomly picked each round
 ALLOW_MAP_VOTING 1
+
+## Map voting type
+## Determines what kind of vote the map vote is
+## Options are:
+##   PLURALITY (default, only vote for one option)
+##   APPROVAL (can vote for as many as you want), I
+##   IRV (vote by ranked choice, winner determined by instant runoff algorithm)
+##   SCORE (give individual rankings of each choice, winner determined by majority judgement algorithm)
+MAP_VOTE_TYPE SCORE
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
