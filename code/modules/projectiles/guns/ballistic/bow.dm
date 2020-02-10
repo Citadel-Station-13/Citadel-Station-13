@@ -37,7 +37,7 @@
 		to_chat(user, "<span class='notice'>You gently release the bowstring, removing the arrow.</span>")
 	else if (get_ammo())
 		to_chat(user, "<span class='notice'>You draw back the bowstring.</span>")
-		playsound(src, 'sound/weapons/bowdraw.wav', 100, 1)
+		playsound(src, 'sound/weapons/bowdraw.wav', 75, 0) //gets way too high pitched if the freq varies
 		chamber_round()
 	update_icon()
 
