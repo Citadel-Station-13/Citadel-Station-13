@@ -81645,6 +81645,19 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/crew_quarters/cryopod)
+"eQf" = (
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "eZe" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -98511,7 +98524,7 @@ bgA
 biz
 bkb
 blZ
-bnM
+eQf
 bqf
 bqf
 bqf
