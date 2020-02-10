@@ -217,7 +217,7 @@
 		var/turf/T = get_turf(owner)
 		var/list/cachedrange = range(T, 7) - owner
 		var/safety = 50
-		for(var/mob/M in cachedrange)		//priority
+		for(var/mob/living/M in cachedrange)		//priority
 			if(!safety)
 				break
 			if(!M.anchored && isliving(M))
