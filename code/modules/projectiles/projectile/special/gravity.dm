@@ -32,15 +32,14 @@
 		if(!safety)
 			break
 		var/atom/movable/AM = i
-		if(can_throw(AM, thrown) && do_the_throw(T, AM, thrown))
+		if(do_the_throw(T, AM, thrown))
 			safety--
 	for(var/turf/F in range(T,power))
 		new /obj/effect/temp_visual/gravpush(F)
 
-/obj/item/projectile/gravity/proc/can_throw(atom/movable/AM, list/thrown)
-	return (AM != src) && (AM != firer) && !AM.anchored && !thrown[AM]
-
 /obj/item/projectile/gravity/proc/do_the_throw(turf/origin, atom/movable/AM, list/thrown)
+	if((AM == src) || (AM == firer) || AM.anchored || thrown[AM])
+		return
 	thrown[AM] = TRUE
 	var/target = get_target(origin, AM)
 	if(!target)
