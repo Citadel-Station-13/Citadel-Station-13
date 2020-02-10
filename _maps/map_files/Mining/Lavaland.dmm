@@ -1911,7 +1911,6 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "Bj" = (
-/obj/structure/necropolis_gate,
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
@@ -1919,6 +1918,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood,
+/obj/structure/necropolis_gate/ashwalker,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "Br" = (
