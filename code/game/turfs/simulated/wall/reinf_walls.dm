@@ -269,14 +269,10 @@
 /turf/closed/wall/r_wall/syndicate/pirate/nodiagonal
 	smooth = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"
-	explosion_block = 30
 
 /turf/closed/wall/r_wall/syndicate/pirate/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	explosion_block = 30
 
 /turf/closed/wall/r_wall/syndicate/pirate/overspace
 	icon_state = "map-overspace"
-	fixed_underlay = list("space"=1)
-	explosion_block = 30
