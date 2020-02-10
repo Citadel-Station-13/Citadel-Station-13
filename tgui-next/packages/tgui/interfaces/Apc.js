@@ -201,6 +201,29 @@ export const Apc = props => {
               onClick={() => act('toggle_nightshift')} />
           )} />
       </Section>
+      {data.hijackable && (
+        <Section
+          title="Hijacking"
+          buttons={(
+            <Fragment>
+              <Button
+                icon="unlock"
+                content="Hijack"
+                disabled={data.hijacker}
+                onClick={() => act('hijack')} />
+              <Button
+                icon="lock"
+                content="Lockdown"
+                disabled={!data.lockdownavail}
+                onClick={() => act('lockdown')} />
+              <Button
+                icon="lightbulb-o"
+                content="Drain"
+                disabled={!data.drainavail}
+                onClick={() => act('drain')} />
+            </Fragment>
+          )} />
+      )}
     </Fragment>
   );
 };

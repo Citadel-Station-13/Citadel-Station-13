@@ -261,7 +261,7 @@
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = html_decode(stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
 				var/target_loc = drop_location()
@@ -288,7 +288,7 @@
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = html_decode(stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN))
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 
@@ -314,7 +314,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = html_decode(stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 				return
 			var/obj/item/reagent_containers/pill/P
 
@@ -332,7 +332,7 @@
 
 			if(condi)
 				var/name = html_decode(stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
@@ -345,7 +345,7 @@
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = ((reagents.total_volume*1000) % 30000) / 1000 //% operator doesn't support decimals.
 				var/name = html_decode(stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 					return
 
 				var/obj/item/reagent_containers/glass/bottle/P
@@ -373,7 +373,7 @@
 				amount_full = round(reagents.total_volume / 60)
 				vol_part = reagents.total_volume % 60
 			var/name = html_decode(stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 				return
 
 			var/obj/item/reagent_containers/glass/bottle/vial/small/P
@@ -408,7 +408,7 @@
 				vol_each = min(reagents.total_volume / amount, 20)
 
 			var/name = html_decode(stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 				return
 
 			var/obj/item/reagent_containers/syringe/dart/D
