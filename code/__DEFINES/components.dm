@@ -187,10 +187,10 @@
 	#define SPEECH_MESSAGE 1
 	// #define SPEECH_BUBBLE_TYPE 2
 	#define SPEECH_SPANS 3
-	/* #define SPEECH_SANITIZE 4
+//	#define SPEECH_SANITIZE 4
 	#define SPEECH_LANGUAGE 5
-	#define SPEECH_IGNORE_SPAM 6
-	#define SPEECH_FORCED 7 */
+//	#define SPEECH_IGNORE_SPAM 6
+//	#define SPEECH_FORCED 7
 
 // /mob/living signals
 #define COMSIG_LIVING_FULLY_HEAL "living_fully_healed"		//from base of /mob/living/fully_heal(): (admin_revive)

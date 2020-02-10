@@ -4,7 +4,7 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return TRUE
-	if(issilicon(M))
+	if(hasSiliconAccessInArea(M))
 		if(ispAI(M))
 			return FALSE
 		return TRUE	//AI can do whatever it wants
