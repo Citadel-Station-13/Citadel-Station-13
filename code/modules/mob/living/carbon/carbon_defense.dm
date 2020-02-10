@@ -300,7 +300,7 @@
 			if(S?.can_wag_tail(src) && !S.is_wagging_tail())
 				var/static/list/wagging_tails = list(FEAT_TAIL_HUMAN, FEAT_TAIL_LIZARD, FEAT_TAIL_MAM)
 				for(var/F in wagging_tails)
-					if((F in S.default_features) && dna.features[F] != "None"
+					if((F in S.default_features) && dna.features[F] != "None")
 						emote("wag")
 						break
 
