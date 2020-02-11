@@ -1703,6 +1703,7 @@
 /obj/structure/stone_tile/slab,
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck/syndicate,
+/obj/item/construction/rcd/loaded/upgraded,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "ub" = (
@@ -2587,7 +2588,6 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/obj/item/construction/rcd/loaded/upgraded,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "Xz" = (
