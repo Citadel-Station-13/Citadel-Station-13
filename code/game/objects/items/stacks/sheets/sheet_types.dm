@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 		new /datum/stack_recipe("hydroponics crate", /obj/structure/closet/crate/hydroponics, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("engineering crate", /obj/structure/closet/crate/engineering, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("eletrical crate", /obj/structure/closet/crate/engineering/electrical, 5, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("RCD storge crate", /obj/structure/closet/crate/rcd, 5, time = 50, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("RCD storage crate", /obj/structure/closet/crate/rcd, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 		new /datum/stack_recipe("science crate", /obj/structure/closet/crate/science, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	)), \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
@@ -808,4 +808,3 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
-
