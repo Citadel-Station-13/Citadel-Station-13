@@ -35,9 +35,9 @@
 	return ..()
 
 /obj/machinery/oui_canview(mob/user)
-	if(user.has_unlimited_silicon_privilege)
+	if(user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user))
 		return TRUE
-	if(!can_interact())
+	if(!can_interact(user))
 		return FALSE
 	if(iscyborg(user))
 		return can_see(user, src, 7)

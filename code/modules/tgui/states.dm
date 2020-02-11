@@ -103,7 +103,7 @@
 		return UI_CLOSE
 
 	var/dist = get_dist(src_object, src)
-	if(dist <= 1) // Open and interact if 1-0 tiles away.
+	if(dist <= 1 || src_object.hasSiliconAccessInArea(src)) // Open and interact if 1-0 tiles away.
 		return UI_INTERACTIVE
 	else if(dist <= 2) // View only if 2-3 tiles away.
 		return UI_UPDATE

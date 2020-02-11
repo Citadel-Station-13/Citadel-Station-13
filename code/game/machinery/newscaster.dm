@@ -514,7 +514,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(active_user && !isobserver(active_user) && get_dist(active_user,src)<=1 && usr!=active_user)
 		to_chat(usr, "<span class='warning'>You must wait for [active_user] to finish and move away.</span>")
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || issilicon(usr) || isobserver(usr))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || hasSiliconAccessInArea(usr) || isobserver(usr))
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
