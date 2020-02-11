@@ -372,7 +372,7 @@
 
 /obj/item/gun/ballistic/revolver/detective/makeshift
 	name = "makeshift revolver"
-	desc = "A makeshift revolver made with ducttape and dreams. Not the most reliable..."
+	desc = "A makeshift revolver made with duct tape and dreams. Not the most reliable..."
 	icon_state = "irevgun"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/makeshift
