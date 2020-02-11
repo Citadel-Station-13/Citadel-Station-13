@@ -425,7 +425,7 @@
 
 /obj/item/hypospray/mkii/CtrlClick(mob/living/user)
 	. = ..()
-	if(user.canUseTopic(src, FALSE))
+	if(user.canUseTopic(src, FALSE) && user.get_active_held_item(src))
 		switch(mode)
 			if(HYPO_SPRAY)
 				mode = HYPO_INJECT
