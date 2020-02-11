@@ -1,3 +1,4 @@
+/* Doesnt work anymore due to code updates, was unused anyways.
 /obj/item/nanite_hijacker
 	name = "nanite remote control" //fake name
 	desc = "A device that can load nanite programming disks, edit them at will, and imprint them to nanites remotely."
@@ -155,3 +156,4 @@
 					if("Reset Activation Timer")
 						program.timer_type = NANITE_TIMER_RESET
 			. = TRUE
+*/
