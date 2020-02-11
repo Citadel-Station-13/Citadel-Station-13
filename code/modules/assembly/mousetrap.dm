@@ -48,7 +48,8 @@
 			if("feet")
 				if(!H.shoes || !(H.shoes.body_parts_covered & FEET))
 					affecting = H.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-					H.Knockdown(60)
+					var/mult = HAS_TRAIT(H,TRAIT_SENSITIVESOLES) && HAS_TRAIT(H,TRAIT_LIGHT_STEP) ? 1 : HAS_TRAIT(H,TRAIT_SENSITIVESOLES) ? 1.25 : HAS_TRAIT(H, TRAIT_LIGHT_STEP) ? 0.75 : 1
+					H.Knockdown(60*mult)
 			if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 				if(!H.gloves)
 					affecting = H.get_bodypart(type)

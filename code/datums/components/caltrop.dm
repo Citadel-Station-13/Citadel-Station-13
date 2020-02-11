@@ -46,8 +46,8 @@
 			return
 
 		var/damage = rand(min_damage, max_damage)
-		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
-			damage *= 0.75
+		var/mult = HAS_TRAIT(H,TRAIT_SENSITIVESOLES) && HAS_TRAIT(H,TRAIT_LIGHT_STEP) ? 1 : HAS_TRAIT(H,TRAIT_SENSITIVESOLES) ? 1.25 : HAS_TRAIT(H, TRAIT_LIGHT_STEP) ? 0.75 : 1
+		damage *= mult
 		H.apply_damage(damage, BRUTE, picked_def_zone)
 
 		if(cooldown < world.time - 10) //cooldown to avoid message spam.
@@ -59,4 +59,4 @@
 						"<span class='userdanger'>You slide on [A]!</span>")
 
 			cooldown = world.time
-		H.Knockdown(60)
+		H.Knockdown(60 * mult)

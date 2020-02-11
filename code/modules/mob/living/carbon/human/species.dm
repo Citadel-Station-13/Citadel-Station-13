@@ -1109,9 +1109,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_SHOES)
-			if(H.shoes)
+			if(H.shoes || HAS_TRAIT(H,TRAIT_SENSITIVESOLES))
 				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_FEET) )
+			if( !(I.slot_flags & ITEM_SLOT_FEET))
 				return FALSE
 			if(num_legs < 2)
 				return FALSE

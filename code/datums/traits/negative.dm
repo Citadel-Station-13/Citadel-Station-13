@@ -405,3 +405,14 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	mob_trait = TRAIT_COLDBLOODED
 	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
 	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"
+
+/datum/quirk/sensitivesoles
+	name = "Sensitive Soles"
+	desc = "The soles of your feet are too sensitive. Wearing any shoes is completely out of the question, and any sharp objects will hurt you more."
+	value = -1
+	mob_trait = TRAIT_SENSITIVESOLES
+
+/datum/quirk/sensitivesoles/post_add()
+	var/mob/living/carbon/human/H = quirk_holder
+	if (H.shoes)
+		H.shoes.forceMove(get_turf(H)) //fuck your shoes and adding loadout shit before quirks, goddamn
