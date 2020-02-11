@@ -500,14 +500,5 @@ FAIL2TOPIC_MAX_FAILS 5
 ## Firewall rule name used on physical server
 FAIL2TOPIC_RULE_NAME _dd_fail2topic
 
-<<<<<<< ours
-=======
-##Default view size, in tiles. Should *always* be square.
-## The alternative square viewport size if you're using a widescreen view size
-## You probably shouldn't ever be changing this, but it's here if you want to.
-DEFAULT_VIEW_SQUARE 15x15
-
-
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
->>>>>>> theirs
