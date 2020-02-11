@@ -196,6 +196,14 @@
 	item_state = "p_suit"
 	item_color = "lightpurple"
 
+/obj/item/clothing/under/color/lightpurple/trackless
+	name = "purple jumpsuit"
+	desc = "A magically colored jumpsuit. No sensors are attached!"
+	icon_state = "lightpurple"
+	item_state = "p_suit"
+	item_color = "lightpurple"
+	has_sensor = NO_SENSORS
+
 /obj/item/clothing/under/skirt/color/lightpurple
 	name = "lightpurple jumpskirt"
 	icon_state = "lightpurple_skirt"
