@@ -488,7 +488,7 @@ SUBSYSTEM_DEF(ticker)
 			if("SCORE")
 				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = MAJORITY_JUDGEMENT_VOTING)
 		// fallback
-		SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = MAJORITY_JUDGEMENT_VOTING)
+		SSvote.initiate_vote("map","server",hideresults=TRUE)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
