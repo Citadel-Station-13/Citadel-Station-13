@@ -54320,6 +54320,10 @@
 	},
 /turf/open/floor/plating,
 /area/space/nearstation)
+"hAK" = (
+/obj/machinery/computer/arcade/minesweeper,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
 "hBA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
@@ -55208,10 +55212,6 @@
 /obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"kPz" = (
-/obj/machinery/computer/arcade/minesweeper,
-/turf/open/floor/wood,
-/area/crew_quarters/heads/captain)
 "kQk" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -90869,7 +90869,7 @@ aVv
 aXg
 aYF
 aZV
-kPz
+hAK
 bcn
 tgH
 ben
