@@ -354,6 +354,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(cultslurring)
 		message = cultslur(message)
+	
+	if(clockcultslurring)
+		message = CLOCK_CULT_SLUR(message)
 
 	message = capitalize(message)
 
