@@ -533,9 +533,6 @@
 //Yes, it's ""safe"" to drop items here
 /obj/belly/AllowDrop()
 	return TRUE
-/*
-/obj/belly/onDropInto(var/atom/movable/AM)
-	return null */
 
 //Handle a mob struggling
 // Called from /mob/living/carbon/relaymove()

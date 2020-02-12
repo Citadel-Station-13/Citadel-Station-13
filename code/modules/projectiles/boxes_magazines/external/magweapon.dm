@@ -13,7 +13,7 @@
 	name = "magpistol magazine (non-lethal disabler)"
 	icon_state = "smallmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/magnetic/weak/disabler
-	max_ammo = 15
+	max_ammo = 16
 
 /obj/item/ammo_box/magazine/mmag/small/lethal
 	name = "magpistol magazine (lethal)"

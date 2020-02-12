@@ -100,7 +100,8 @@
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/cartridge/lawyer
-	name = "\improper P.R.O.V.E. cartridge"
+	name = "\improper S.P.A.M. cartridge"
+	desc = "Introducing the Station Public Announcement Messenger cartridge, featuring the unique ability to broadcast-mark messages, designed for lawyers across Nanotrasen to advertise their useful and important services."
 	icon_state = "cart-law"
 	access = CART_SECURITY
 	spam_enabled = 1
@@ -608,7 +609,7 @@ Code:
 /obj/item/cartridge/Topic(href, href_list)
 	..()
 
-	if(!usr.canUseTopic(src, !issilicon(usr)))
+	if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return

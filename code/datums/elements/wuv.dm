@@ -1,6 +1,6 @@
 
 /datum/element/wuv //D'awwwww
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
 	//the for the me emote proc call when petted.
 	var/pet_emote
@@ -29,6 +29,10 @@
 	punt_moodlet = punt_mood
 
 	RegisterSignal(target, COMSIG_MOB_ATTACK_HAND, .proc/on_attack_hand)
+
+/datum/element/wuv/Detach(datum/source, force)
+	. = ..()
+	UnregisterSignal(source, COMSIG_MOB_ATTACK_HAND)
 
 /datum/element/wuv/proc/on_attack_hand(datum/source, mob/user)
 	var/mob/living/L = source

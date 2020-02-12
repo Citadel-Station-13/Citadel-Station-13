@@ -155,28 +155,6 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = NONE
 
-//Security
-/obj/item/clothing/suit/security/officer
-	name = "security officer's jacket"
-	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
-	icon_state = "officerbluejacket"
-	item_state = "officerbluejacket"
-	body_parts_covered = CHEST|ARMS
-
-/obj/item/clothing/suit/security/warden
-	name = "warden's jacket"
-	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
-	icon_state = "wardenbluejacket"
-	item_state = "wardenbluejacket"
-	body_parts_covered = CHEST|ARMS
-
-/obj/item/clothing/suit/security/hos
-	name = "head of security's jacket"
-	desc = "This piece of clothing was specifically designed for asserting superior authority."
-	icon_state = "hosbluejacket"
-	item_state = "hosbluejacket"
-	body_parts_covered = CHEST|ARMS
-
 //Surgeon
 /obj/item/clothing/suit/apron/surgical
 	name = "surgical apron"

@@ -31,12 +31,11 @@
 	if(was_running)
 		user.toggle_move_intent()
 	ADD_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
-	while(bloodsuckerdatum && ContinueActive(user) || user.m_intent == MOVE_INTENT_RUN)
+	while(bloodsuckerdatum && ContinueActive(user))
 		// Pay Blood Toll (if awake)
 		owner.alpha = max(20, owner.alpha - min(75, 10 + 5 * level_current))
 		bloodsuckerdatum.AddBloodVolume(-0.2)
 		sleep(5) // Check every few ticks that we haven't disabled this power
-	// Return to Running (if you were before)
 
 /datum/action/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
 	if (!..())

@@ -131,7 +131,7 @@
 
 /obj/item/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(.)
+	if(. && isliving(target))
 		var/mob/living/L = target
 		if (istype(L))
 			L.adjust_fire_stacks(0.1)
@@ -144,7 +144,7 @@
 
 /obj/item/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(.)
+	if(. && isliving(target))
 		var/mob/living/L = target
 		L.apply_status_effect(/datum/status_effect/freon/watcher)
 

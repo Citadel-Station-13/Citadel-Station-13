@@ -26,6 +26,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/failsafe_code
 	var/datum/ui_state/checkstate
 	var/compact_mode = FALSE
+	var/debug = FALSE
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate)
 	if(!isitem(parent))
@@ -166,6 +167,18 @@ GLOBAL_LIST_EMPTY(uplinks)
 				"cost" = I.cost,
 				"desc" = I.desc,
 			))
+				if(I.restricted_roles.len)
+					var/is_inaccessible = 1
+					for(var/R in I.restricted_roles)
+						if(R == user.mind.assigned_role || debug)
+							is_inaccessible = 0
+					if(is_inaccessible)
+						continue
+				cat["items"] += list(list(
+					"name" = I.name,
+					"cost" = I.cost,
+					"desc" = I.desc,
+				))
 		data["categories"] += list(cat)
 	return data
 

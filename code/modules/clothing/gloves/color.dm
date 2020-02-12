@@ -41,6 +41,7 @@
 	permeability_coefficient = 1
 	resistance_flags = NONE
 	transfer_prints = TRUE
+	strip_mod = 0.8
 
 /obj/item/clothing/gloves/cut/family
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
@@ -76,6 +77,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	var/can_be_cut = 1
+	strip_mod = 1.2
 
 /obj/item/clothing/gloves/color/black/hos
 	item_color = "hosred"	//Exists for washing machines. Is not different from black gloves in any way.
