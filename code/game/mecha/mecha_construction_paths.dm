@@ -165,7 +165,7 @@
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The power cell is secured."
-		)
+		),
 
 		//16
 		list(
