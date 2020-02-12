@@ -172,7 +172,7 @@
 		location = location.loc
 		if(ismob(location))
 			return location.loc.assume_air(env)
-	return loc.assume_air(env)
+	return location.assume_air(env)
 
 /obj/item/clothing/head/mob_holder/remove_air(amount)
 	var/atom/location = loc
@@ -183,4 +183,4 @@
 		location = location.loc
 		if(ismob(location))
 			return location.loc.remove_air(amount)
-	return loc.remove_air(amount)
+	return location.remove_air(amount)
