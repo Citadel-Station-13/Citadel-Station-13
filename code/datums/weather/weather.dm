@@ -61,7 +61,7 @@
 		if(A.z in impacted_z_levels)
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
-	SSweather.processing += src		//not processing subsystem
+	START_PROCESSING(SSweather, src)			//The reason this doesn't start and stop at main stage is because processing list is also used to see active running weathers (for example, you wouldn't want two ash storms starting at once.)
 	update_areas()
 	for(var/M in GLOB.player_list)
 		var/turf/mob_turf = get_turf(M)
@@ -104,8 +104,16 @@
 	if(stage == END_STAGE)
 		return 1
 	stage = END_STAGE
-	SSweather.processing -= src				//not processing subsystem
+	STOP_PROCESSING(SSweather, src)
 	update_areas()
+
+/datum/weather/process()
+	if(aesthetic || (stage != MAIN_STAGE))
+		return
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
+		if(can_weather_act(L))
+			weather_act(L)
 
 /datum/weather/proc/can_weather_act(mob/living/L) //Can this weather impact a mob?
 	var/turf/mob_turf = get_turf(L)
