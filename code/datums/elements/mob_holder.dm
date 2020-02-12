@@ -40,7 +40,7 @@
 		to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
 	if(source.buckled)
-		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
+		to_chat(user, "<span class='warning'>[source] is buckled to something!</span>")
 		return FALSE
 	if(source == user)
 		to_chat(user, "<span class='warning'>You can't pick yourself up.</span>")
@@ -52,7 +52,7 @@
 
 	source.visible_message("<span class='warning'>[user] picks up [source]!</span>", \
 					"<span class='userdanger'>[user] picks you up!</span>")
-	to_chat(user, "<span class='notice'>You pick [src] up.</span>")
+	to_chat(user, "<span class='notice'>You pick [source] up.</span>")
 	source.drop_all_held_items()
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(source), source, worn_state, alt_worn, right_hand, left_hand, inv_slots)
 	if(proctype)
@@ -101,6 +101,8 @@
 	target.forceMove(src)
 	var/image/I = new //work around to retain the same appearance to the mob idependently from inhands/worn states.
 	I.appearance = target.appearance
+	I.layer = FLOAT_LAYER //So it doesn't get screwed up by layer overrides.
+	I.plane = FLOAT_PLANE //Same as above but for planes.
 	I.override = TRUE
 	add_overlay(I)
 	name = target.name
@@ -158,7 +160,7 @@
 /obj/item/clothing/head/mob_holder/container_resist()
 	if(isliving(loc))
 		var/mob/living/L = loc
-		L.visible_message("<span class='warning'>[src] escapes from [L]!</span>", "<span class='warning'>[src] escapes your grip!</span>")
+		L.visible_message("<span class='warning'>[held_mob] escapes from [L]!</span>", "<span class='warning'>[held_mob] escapes your grip!</span>")
 	release()
 
 /obj/item/clothing/head/mob_holder/assume_air(datum/gas_mixture/env)
