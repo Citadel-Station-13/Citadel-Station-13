@@ -429,3 +429,4 @@
 
 /obj/item/vending_refill/wardrobe/cap_wardrobe
 	machine_name = "Captain's Wardrobe"
+	icon_state = "refill_caps"
