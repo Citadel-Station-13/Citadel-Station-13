@@ -502,8 +502,6 @@
 	no_drops += W
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
-	
-	ADD_TRAIT(H, TRAIT_FREESPRINT, "CTF")
 
 	// The shielded hardsuit is already TRAIT_NODROP
 	no_drops += H.get_item_by_slot(SLOT_GLOVES)
