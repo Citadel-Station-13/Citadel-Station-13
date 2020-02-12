@@ -466,7 +466,7 @@
 
 // MELEE GANG
 /obj/item/claymore/ctf
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/claymore/ctf/pre_attack(atom/target, mob/user, params)
 	if(!is_ctf_target(target))
