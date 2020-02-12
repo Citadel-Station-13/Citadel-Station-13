@@ -119,7 +119,7 @@
 					if(!istype(D, /datum/disease/advance))
 						preserve += D
 				data["viruses"] = preserve
-	return 1
+	return TRUE
 
 /datum/reagent/blood/proc/get_diseases()
 	. = list()
@@ -171,6 +171,19 @@
 	taste_description = "waxy"
 	color = BLOOD_COLOR_BUG // Bug colored, I guess.
 	pH = 7.25
+
+/datum/reagent/blood/tomato
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Tomato Blood"
+	description = "This highly resembles blood, but it doesnt actually function like blood."
+	taste_description = "sap" //Like tree sap?
+	pH = 7.45
+
+/datum/reagent/blood/tomato/on_merge(list/mix_data) //Tomato blood doesnt mix.
+	return FALSE
+
+/datum/reagent/blood/tomato/on_mob_life(mob/living/carbon/C) //So it bloodsuckers cant use this as an unlimited blood supply
+	return
 
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)

@@ -47,7 +47,7 @@
 	splat_type = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
 	foodtype = FRUIT | GROSS
-	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
+	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood/tomato = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
 
 // Blue Tomato
