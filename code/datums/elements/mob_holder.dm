@@ -130,7 +130,7 @@
 	if(AM == held_mob)
 		held_mob.reset_perspective()
 		held_mob = null
-		qdel(src)
+		QDEL_IN(src, 1) //To avoid a qdel loop.
 
 /obj/item/clothing/head/mob_holder/Entered(atom/movable/AM, atom/newloc)
 	. = ..()
