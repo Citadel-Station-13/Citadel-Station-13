@@ -84,8 +84,11 @@
 /proc/_min(...)
 	return min(arglist(args))
 
-/proc/_new(type, arguments)
-	return new type (arglist(arguments))
+/proc/_new(type, where, ...)
+	if(length(args) > 2)
+		return new type(arglist(args.Copy(2)))
+	else
+		return new type(where)
 
 /proc/_num2text(N, SigFig = 6)
 	return num2text(N, SigFig)
