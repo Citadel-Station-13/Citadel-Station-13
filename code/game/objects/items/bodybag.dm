@@ -89,4 +89,4 @@
 	icon_state = "radbodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/containment
 	w_class = WEIGHT_CLASS_NORMAL
-	rad_flags = NO_MAT_REDEMPTION | RAD_NO_CONTAMINATE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
