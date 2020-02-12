@@ -231,3 +231,10 @@
 	cost = 2
 	item = /obj/item/clothing/shoes/magboots/crushing
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+
+/datum/uplink_item/role_restricted/dual_shotgun
+	name = "Cycler Shotgun"
+	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
+	cost = 12
+	item = /obj/item/gun/ballistic/shotgun/automatic/dual_tube
+	restricted_roles = list("Warden")
