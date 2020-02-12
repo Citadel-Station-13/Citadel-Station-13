@@ -53,7 +53,7 @@
 
 /obj/machinery/jukebox/ui_interact(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if (!anchored)
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
@@ -406,12 +406,11 @@
 	lying_prev = 0
 
 /obj/machinery/jukebox/proc/dance_over()
-	SSjukeboxes.removejukebox(SSjukeboxes.findjukeboxindex(src))
+	var/position = SSjukeboxes.findjukeboxindex(src)
+	if(!position)
+		return
+	SSjukeboxes.removejukebox(position)
 	STOP_PROCESSING(SSobj, src)
-	for(var/mob/living/L in rangers)
-		if(!L || !L.client)
-			continue
-		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	rangers = list()
 
 /obj/machinery/jukebox/disco/dance_over()
@@ -431,6 +430,6 @@
 /obj/machinery/jukebox/disco/process()
 	. = ..()
 	if(active)
-		for(var/mob/M in rangers)
+		for(var/mob/living/M in rangers)
 			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)

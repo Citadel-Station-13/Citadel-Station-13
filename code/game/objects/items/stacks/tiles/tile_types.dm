@@ -233,38 +233,110 @@
 	turf_type = /turf/open/floor/carpet/royalblue
 	tableVariant = /obj/structure/table/wood/fancy/royalblue
 
+/obj/item/stack/tile/carpet/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/black/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/black/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/blackred/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/blackred/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/blackred/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/monochrome/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/monochrome/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/monochrome/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/blue/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/blue/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/blue/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/cyan/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/cyan/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/cyan/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/green/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/green/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/green/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/orange/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/orange/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/orange/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/purple/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/purple/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/purple/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/red/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/red/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/red/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/royalblack/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/royalblack/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/royalblack/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/royalblue/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/royalblue/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50

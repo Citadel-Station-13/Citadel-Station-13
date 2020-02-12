@@ -109,3 +109,36 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
+
+/obj/item/gun/ballistic/automatic/toy/magrifle
+	name = "foamag rifle"
+	desc = "A foam launching magnetic rifle. Ages 8 and up."
+	icon_state = "foamagrifle"
+	obj_flags = NONE
+	mag_type = /obj/item/ammo_box/magazine/toy/foamag
+	fire_sound = 'sound/weapons/magrifle.ogg'
+	burst_size = 1
+	actions_types = null
+	fire_delay = 3
+	spread = 60
+	recoil = 0.1
+	can_suppress = FALSE
+	inaccuracy_modifier = 0.5
+	weapon_weight = WEAPON_MEDIUM
+	dualwield_spread_mult = 1.4
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/gun/ballistic/shotgun/toy/mag
+	name = "foam force magpistol"
+	desc = "A fancy toy sold alongside light-up foam force darts. Ages 8 and up."
+	icon_state = "toymag"
+	item_state = "gun"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/mag
+	fire_sound = 'sound/weapons/magpistol.ogg'
+	fire_delay = 2
+	recoil = 0.1
+	inaccuracy_modifier = 0.25
+	dualwield_spread_mult = 1.4
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM

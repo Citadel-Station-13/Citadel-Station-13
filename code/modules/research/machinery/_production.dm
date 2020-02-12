@@ -2,7 +2,7 @@
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = BELOW_OBJ_LAYER
-	var/consoleless_interface = FALSE			//Whether it can be used without a console.
+	var/consoleless_interface = TRUE			//Whether it can be used without a console.
 	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
@@ -72,6 +72,12 @@
 		total_rating += M.rating
 	total_rating = max(1, total_rating)
 	efficiency_coeff = total_rating
+
+/obj/machinery/rnd/production/examine(mob/user)
+	. = ..()
+	var/datum/component/remote_materials/materials = GetComponent(/datum/component/remote_materials)
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.local_size]</b> material units locally.<br>Material usage efficiency at <b>[efficiency_coeff*100]%</b>.</span>"
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()

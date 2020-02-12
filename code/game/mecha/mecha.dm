@@ -49,6 +49,7 @@
 	var/lights = FALSE
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
+	var/completely_disabled = FALSE //stops the mech from doing anything
 	var/breach_time = 0
 	var/recharge_rate = 0
 
@@ -138,7 +139,7 @@
 	add_cell()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
-	log_message("[src.name] created.")
+	mecha_log_message("[src.name] created.")
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -431,6 +432,8 @@
 		return
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
 		return
+	if(completely_disabled)
+		return
 	if(phasing)
 		occupant_message("Unable to interact with objects while phasing")
 		return
@@ -490,7 +493,7 @@
 		events.fireEvent("onMove",get_turf(src))
 	if (internal_tank.disconnect()) // Something moved us and broke connection
 		occupant_message("<span class='warning'>Air port connection teared off!</span>")
-		log_message("Lost connection to gas port.")
+		mecha_log_message("Lost connection to gas port.")
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
@@ -508,6 +511,8 @@
 		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
+	if(completely_disabled)
+		return
 	if(!direction)
 		return
 	if(user != occupant) //While not "realistic", this piece is player friendly.
@@ -817,7 +822,7 @@
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
 		return
-	log_message("[user] tries to move in.")
+	mecha_log_message("[user] tries to move in.")
 	if (occupant)
 		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
 		log_append_to_last("Permission denied.")
@@ -927,7 +932,7 @@
 	icon_state = initial(icon_state)
 	update_icon()
 	setDir(dir_in)
-	log_message("[mmi_as_oc] moved in as pilot.")
+	mecha_log_message("[mmi_as_oc] moved in as pilot.")
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 	GrantActions(brainmob)
@@ -978,7 +983,7 @@
 	var/mob/living/L = occupant
 	occupant = null //we need it null when forceMove calls Exited().
 	if(mob_container.forceMove(newloc))//ejecting mob container
-		log_message("[mob_container] moved out.")
+		mecha_log_message("[mob_container] moved out.")
 		L << browse(null, "window=exosuit")
 
 		if(istype(mob_container, /obj/item/mmi))
@@ -1023,10 +1028,10 @@
 			to_chat(occupant, "[icon2html(src, occupant)] [message]")
 	return
 
-/obj/mecha/log_message(message as text, message_type=LOG_GAME, color=null, log_globally)
+/obj/mecha/proc/mecha_log_message(message, color)
 	log.len++
-	log[log.len] = list("time"="[STATION_TIME_TIMESTAMP("hh:mm:ss")]","date","year"="[GLOB.year_integer]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
-	..()
+	log[log.len] = list("time"="[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]","date","year"="[GLOB.year_integer]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
+	log_message(message, LOG_GAME, color)			//also do the normal admin logs I guess.
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)

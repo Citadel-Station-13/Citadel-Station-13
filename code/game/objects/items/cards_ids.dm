@@ -128,6 +128,9 @@
 		return
 	. = ..()
 
+/obj/item/card/emag/empty
+	uses = 0
+
 /obj/item/emagrecharge
 	name = "electromagnet charging device"
 	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices, sadly this can't be recharged like a normal cell."
@@ -269,14 +272,11 @@ update_label("John Doe", "Clowny")
 	if(isliving(user) && user.mind)
 		if(user.mind.special_role || anyone)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
-				var/t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
-				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
-					if (t)
-						alert("Invalid name.")
+				var/input_name = reject_bad_name(stripped_input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN), TRUE)
+				if(!input_name)
 					return
-				registered_name = t
 
-				var/u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
+				var/u = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant", MAX_MESSAGE_LEN)
 				if(!u)
 					registered_name = ""
 					return
@@ -542,3 +542,14 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/knight/captain
 	id_color = "#FFD700"
+
+/obj/item/card/id/debug
+	name = "\improper Debug ID"
+	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
+	icon_state = "ert_janitor"
+	assignment = "Jannie"
+
+/obj/item/card/id/debug/Initialize()
+	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+	. = ..()
+

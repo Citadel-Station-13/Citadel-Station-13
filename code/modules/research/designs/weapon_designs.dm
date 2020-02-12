@@ -47,6 +47,44 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+//////////////////
+//Mag-Rifle Mags//
+//////////////////
+
+/datum/design/mag_magrifle
+	name = "Magrifle Magazine (Lethal)"
+	desc = "A 24-round magazine for the Magrifle."
+	id = "mag_magrifle"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
+	build_path = /obj/item/ammo_box/magazine/mmag/lethal
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/mag_magrifle/nl
+	name = "Magrifle Magazine (Non-Lethal)"
+	desc = "A 24- round non-lethal magazine for the Magrifle."
+	id = "mag_magrifle_nl"
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
+	build_path = /obj/item/ammo_box/magazine/mmag
+
+/datum/design/mag_magpistol
+	name = "Magpistol Magazine"
+	desc = "A 14 round magazine for the Magpistol."
+	id = "mag_magpistol"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
+	build_path = /obj/item/ammo_box/magazine/mmag/small/lethal
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/mag_magpistol/nl
+	name = "Magpistol Magazine (Non-Lethal)"
+	desc = "A 14 round non-lethal magazine for the Magpistol."
+	id = "mag_magpistol_nl"
+	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
+	build_path = /obj/item/ammo_box/magazine/mmag/small
+
 //////////////
 //WT550 Mags//
 //////////////
@@ -320,6 +358,26 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
 	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/magpistol
+	name = "Magpistol"
+	desc = "A weapon which fires ferromagnetic slugs."
+	id = "magpistol"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
+	build_path = /obj/item/gun/ballistic/automatic/magrifle/pistol/nopin
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/magrifle
+	name = "Magrifle"
+	desc = "An upscaled Magpistol in rifle form."
+	id = "magrifle"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
+	build_path = /obj/item/gun/ballistic/automatic/magrifle/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 

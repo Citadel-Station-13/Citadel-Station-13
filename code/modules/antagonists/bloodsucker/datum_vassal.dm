@@ -8,7 +8,7 @@
 	return SSticker.mode.make_vassal(C,owner)
 
 /datum/antagonist/bloodsucker/proc/FreeAllVassals()
-	for (var/datum/antagonist/vassal/V in vassals)
+	for(var/datum/antagonist/vassal/V in vassals)
 		SSticker.mode.remove_vassal(V.owner)
 
 /datum/antagonist/vassal
@@ -22,7 +22,7 @@
 
 /datum/antagonist/vassal/can_be_owned(datum/mind/new_owner)
 	// If we weren't created by a bloodsucker, then we cannot be a vassal (assigned from antag panel)
-	if (!master)
+	if(!master)
 		return FALSE
 	return ..()
 
@@ -63,9 +63,9 @@
 /datum/antagonist/vassal/on_removal()
 	SSticker.mode.vassals -= owner // Add if not already in here (and you might be, if you were picked at round start)
 	// Mindslave Remove
-	if (master && master.owner)
+	if(master && master.owner)
 		master.vassals -= src
-		if (owner.enslaved_to == master.owner.current)
+		if(owner.enslaved_to == master.owner.current)
 			owner.enslaved_to = null
 	// Master Pinpointer
 	owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)

@@ -22,7 +22,10 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
-	citaTopic(href, href_list) //CITADEL EDIT, MENTORS
+	if(href_list["makementor"])
+		makeMentor(href_list["makementor"])
+	else if(href_list["removementor"])
+		removeMentor(href_list["removementor"])
 
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
@@ -971,6 +974,16 @@
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]</span>")
 
+	else if(href_list["makeeligible"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = locate(href_list["makeeligible"])
+		if(!ismob(M))
+			to_chat(usr, "this can only be used on instances of type /mob.")
+		var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+		if(M.ckey in eli.timeouts)
+			eli.timeouts -= M.ckey
+
 	else if(href_list["sendtoprison"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1218,8 +1231,8 @@
 		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
 		var/client/C = usr.client
-		if(!isobserver(usr))
-			C.admin_ghost()
+		if(!isobserver(usr) && !C.admin_ghost())
+			return
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
 
@@ -1241,8 +1254,8 @@
 		var/z = text2num(href_list["Z"])
 
 		var/client/C = usr.client
-		if(!isobserver(usr))
-			C.admin_ghost()
+		if(!isobserver(usr) && !C.admin_ghost())
+			return
 		sleep(2)
 		C.jumptocoord(x,y,z)
 
@@ -1704,8 +1717,6 @@
 		if(!check_rights(R_ADMIN))
 			return
 		src.admincaster_feed_channel.channel_name = stripped_input(usr, "Provide a Feed Channel Name.", "Network Channel Handler", "")
-		while (findtext(src.admincaster_feed_channel.channel_name," ") == 1)
-			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,length(src.admincaster_feed_channel.channel_name)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
@@ -1745,9 +1756,7 @@
 	else if(href_list["ac_set_new_message"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story.", "Network Channel Handler", ""))
-		while (findtext(src.admincaster_feed_message.returnBody(-1)," ") == 1)
-			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,length(src.admincaster_feed_message.returnBody(-1))+1)
+		src.admincaster_feed_message.body = adminscrub(stripped_input(usr, "Write your Feed story.", "Network Channel Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
@@ -1806,17 +1815,13 @@
 	else if(href_list["ac_set_wanted_name"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_wanted_message.criminal = adminscrub(input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
-		while(findtext(src.admincaster_wanted_message.criminal," ") == 1)
-			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,length(admincaster_wanted_message.criminal)+1)
+		src.admincaster_wanted_message.criminal = adminscrub(stripped_input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_wanted_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
-		while (findtext(src.admincaster_wanted_message.body," ") == 1)
-			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,length(src.admincaster_wanted_message.body)+1)
+		src.admincaster_wanted_message.body = adminscrub(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
@@ -2156,3 +2161,59 @@
 	dat += {"<A href='?src=[REF(src)];[HrefToken()];f_secret2=secret'>Random (default)</A><br>"}
 	dat += {"Now: [GLOB.secret_force_mode]"}
 	usr << browse(dat, "window=f_secret")
+
+/datum/admins/proc/makeMentor(ckey)
+	if(!usr.client)
+		return
+	if (!check_rights(0))
+		return
+	if(!ckey)
+		return
+	var/client/C = GLOB.directory[ckey]
+	if(C)
+		if(check_rights_for(C, R_ADMIN,0))
+			to_chat(usr, "<span class='danger'>The client chosen is an admin! Cannot mentorize.</span>")
+			return
+	if(SSdbcore.Connect())
+		var/datum/DBQuery/query_get_mentor = SSdbcore.NewQuery("SELECT id FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
+		if(!query_get_mentor.warn_execute())
+			return
+		if(query_get_mentor.NextRow())
+			to_chat(usr, "<span class='danger'>[ckey] is already a mentor.</span>")
+			return
+		var/datum/DBQuery/query_add_mentor = SSdbcore.NewQuery("INSERT INTO `[format_table_name("mentor")]` (`id`, `ckey`) VALUES (null, '[ckey]')")
+		if(!query_add_mentor.warn_execute())
+			return
+		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new mentor [ckey]');")
+		if(!query_add_admin_log.warn_execute())
+			return
+	else
+		to_chat(usr, "<span class='danger'>Failed to establish database connection. The changes will last only for the current round.</span>")
+	new /datum/mentors(ckey)
+	to_chat(usr, "<span class='adminnotice'>New mentor added.</span>")
+
+/datum/admins/proc/removeMentor(ckey)
+	if(!usr.client)
+		return
+	if (!check_rights(0))
+		return
+	if(!ckey)
+		return
+	var/client/C = GLOB.directory[ckey]
+	if(C)
+		if(check_rights_for(C, R_ADMIN,0))
+			to_chat(usr, "<span class='danger'>The client chosen is an admin, not a mentor! Cannot de-mentorize.</span>")
+			return
+		C.remove_mentor_verbs()
+		C.mentor_datum = null
+		GLOB.mentors -= C
+	if(SSdbcore.Connect())
+		var/datum/DBQuery/query_remove_mentor = SSdbcore.NewQuery("DELETE FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
+		if(!query_remove_mentor.warn_execute())
+			return
+		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed mentor [ckey]');")
+		if(!query_add_admin_log.warn_execute())
+			return
+	else
+		to_chat(usr, "<span class='danger'>Failed to establish database connection. The changes will last only for the current round.</span>")
+	to_chat(usr, "<span class='adminnotice'>Mentor removed.</span>")

@@ -46,34 +46,22 @@
 		cell.use(shot.e_cost)//... drain the cell cell
 	chambered = 0 //either way, released the prepared shot
 
-/obj/item/gun/energy/pumpaction/select_fire(mob/living/user)	//makes it so that it doesn't rack itself when changing firing modes unless already racked
-	select++
-	if (select > ammo_type.len)
-		select = 1
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	fire_sound = shot.fire_sound
-	fire_delay = shot.delay
-	if (shot.select_name)
-		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
-	if(chambered)
-		chambered = 0
-		recharge_newshot(1)
-	update_icon()
-	if(ismob(loc))		//forces inhands to update
-		var/mob/M = loc
-		M.update_inv_hands()
-	return
+/obj/item/gun/energy/pumpaction/post_set_firemode()
+	var/has_shot = chambered
+	. = ..(recharge_newshot = FALSE)
+	if(has_shot)
+		recharge_newshot(TRUE)
 
 /obj/item/gun/energy/pumpaction/update_icon()	//adds racked indicators
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(chambered)
 		add_overlay("[icon_state]_rack_[shot.select_name]")
 	else
 		add_overlay("[icon_state]_rack_empty")
 
 /obj/item/gun/energy/pumpaction/proc/pump(mob/M)	//pumping proc. Checks if the gun is empty and plays a different sound if it is.
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(cell.charge < shot.e_cost)
 		playsound(M, 'sound/weapons/laserPumpEmpty.ogg', 100, 1)	//Ends with three beeps made from highly processed knife honing noises
 	else
@@ -102,7 +90,7 @@
 /obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file, style_flags = NONE)	//ammo counter for inhands
 	. = ..()
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(isinhands)
 		if(cell.charge < shot.e_cost)
 			var/mutable_appearance/ammo_inhand = mutable_appearance(icon_file, "[item_state]_empty")

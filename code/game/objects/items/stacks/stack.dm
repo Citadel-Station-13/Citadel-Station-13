@@ -202,6 +202,7 @@
 		if(O)
 			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
+		log_craft("[O] crafted by [usr] at [loc_name(O.loc)]")
 
 		//START: oh fuck i'm so sorry
 		if(istype(O, /obj/structure/windoor_assembly))
@@ -341,7 +342,7 @@
 		merge(o)
 	. = ..()
 
-/obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
+/obj/item/stack/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(istype(AM, merge_type))
 		merge(AM)
 	. = ..()
@@ -398,11 +399,14 @@
 		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
-	blood_DNA = from.blood_DNA
-	fingerprints  = from.fingerprints
-	fingerprintshidden  = from.fingerprintshidden
-	fingerprintslast  = from.fingerprintslast
-	//TODO bloody overlay
+	if(from.blood_DNA)
+		blood_DNA = from.blood_DNA.Copy()
+	if(from.fingerprints)
+		fingerprints = from.fingerprints.Copy()
+	if(from.fingerprintshidden)
+		fingerprintshidden = from.fingerprintshidden.Copy()
+	if(from.fingerprintslast)
+		fingerprintslast = from.fingerprintslast
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(istype(M) && M.dirty < 100)

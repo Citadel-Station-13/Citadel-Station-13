@@ -207,7 +207,7 @@
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
 	if(name == initial(name))
-		name = "[get_area_name(src)] Air Alarm"
+		name = "[get_area_name(src, get_base_area = TRUE)] Air Alarm"
 
 	power_change()
 	set_frequency(frequency)
@@ -245,12 +245,12 @@
 /obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list(
 		"locked" = locked,
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user),
 		"emagged" = (obj_flags & EMAGGED ? 1 : 0),
 		"danger_level" = danger_level,
 	)
 
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	data["atmos_alarm"] = A.atmosalm
 	data["fire_alarm"] = A.fire
 
@@ -288,7 +288,7 @@
 								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id] * partial_pressure)
 		))
 
-	if(!locked || user.has_unlimited_silicon_privilege)
+	if(!locked || user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user))
 		data["vents"] = list()
 		for(var/id_tag in A.air_vent_names)
 			var/long_name = A.air_vent_names[id_tag]
@@ -368,7 +368,7 @@
 /obj/machinery/airalarm/ui_act(action, params)
 	if(..() || buildstage != 2)
 		return
-	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
+	if((locked && !usr.has_unlimited_silicon_privilege && !hasSiliconAccessInArea(usr)) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
 	var/device_id = params["id_tag"]
 	switch(action)
@@ -386,9 +386,10 @@
 			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
-			var/area/A = get_area(src)
-			var/target = input("New target pressure:", name, A.air_vent_info[device_id][(action == "set_external_pressure" ? "external" : "internal")]) as num|null
-			if(!isnull(target) && !..())
+
+			var/target = params["value"]
+			if(!isnull(target))
+
 				send_signal(device_id, list("[action]" = target), usr)
 				. = TRUE
 		if("reset_external_pressure")
@@ -420,12 +421,12 @@
 			apply_mode()
 			. = TRUE
 		if("alarm")
-			var/area/A = get_area(src)
+			var/area/A = get_base_area(src)
 			if(A.atmosalert(2, src))
 				post_alert(2)
 			. = TRUE
 		if("reset")
-			var/area/A = get_area(src)
+			var/area/A = get_base_area(src)
 			if(A.atmosalert(0, src))
 				post_alert(0)
 			. = TRUE
@@ -456,7 +457,7 @@
 		return 0
 
 /obj/machinery/airalarm/proc/refresh_all()
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	for(var/id_tag in A.air_vent_names)
 		var/list/I = A.air_vent_info[id_tag]
 		if(I && I["timestamp"] + AALARM_REPORT_TIMEOUT / 2 > world.time)
@@ -507,7 +508,7 @@
 			return "Flood"
 
 /obj/machinery/airalarm/proc/apply_mode()
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
 			for(var/device_id in A.air_scrub_names)
@@ -645,7 +646,7 @@
 
 	icon_state = "alarm1"
 	var/overlay_state = AALARM_OVERLAY_OFF
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
 			add_overlay(AALARM_OVERLAY_GREEN)
@@ -715,7 +716,7 @@
 		return
 
 	var/datum/signal/alert_signal = new(list(
-		"zone" = get_area_name(src),
+		"zone" = get_area_name(src, get_base_area = TRUE),
 		"type" = "Atmospheric"
 	))
 	if(alert_level==2)
@@ -728,7 +729,7 @@
 	frequency.post_signal(src, alert_signal, range = -1)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 
 	var/new_area_danger_level = 0
 	for(var/obj/machinery/airalarm/AA in A)
@@ -839,7 +840,7 @@
 
 /obj/machinery/airalarm/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)) || !isturf(loc))
 		return
 	togglelock(user)
 	return TRUE

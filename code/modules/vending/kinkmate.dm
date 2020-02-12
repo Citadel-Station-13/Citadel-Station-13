@@ -1,7 +1,6 @@
 /obj/machinery/vending/kink
 	name = "KinkMate"
 	desc = "A vending machine for all your unmentionable desires."
-	icon = 'icons/obj/citvending.dmi'
 	icon_state = "kink"
 	circuit = /obj/item/circuitboard/machine/kinkmate
 	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
@@ -44,5 +43,4 @@
 
 /obj/item/vending_refill/kink
 	machine_name 	= "KinkMate"
-	icon			= 'modular_citadel/icons/vending_restock.dmi'
 	icon_state 		= "refill_kink"

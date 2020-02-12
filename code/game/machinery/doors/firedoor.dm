@@ -32,7 +32,7 @@
 	CalculateAffectingAreas()
 
 /obj/machinery/door/firedoor/examine(mob/user)
-	..()
+	. = ..()
 	if(!density)
 		. += "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>"
 	else if(!welded)
@@ -44,7 +44,7 @@
 
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
-	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
+	affecting_areas = get_adjacent_open_areas(src) | get_base_area(src)
 	for(var/I in affecting_areas)
 		var/area/A = I
 		LAZYADD(A.firedoors, src)

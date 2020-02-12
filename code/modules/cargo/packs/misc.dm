@@ -13,16 +13,6 @@
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/misc/abandonedcrate
-	name = "Loot Box"
-	desc = "Try your luck with these highly secure loot boxes! Solve the lock, win great prizes! WARNING: EXPLOSIVE FAILURE."
-	contraband = TRUE
-	cost = 15000
-	contains = list(/obj/structure/closet/crate/secure/loot)
-	crate_name = "abandoned crate"
-	crate_type = /obj/structure/closet/crate/large
-	dangerous = TRUE
-
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with six canvasses, two easels, two boxes of crayons, and a rainbow crayon!"
@@ -83,7 +73,7 @@
 	name = "Captain Pen"
 	desc = "A spare Captain fountain pen."
 	access = ACCESS_CAPTAIN
-	cost = 10000
+	cost = 5000
 	contains = list(/obj/item/pen/fountain/captain)
 	crate_name = "captain pen"
 	crate_type = /obj/structure/closet/crate/secure/weapon //It is a combat pen
@@ -153,7 +143,7 @@
 					/obj/item/bedsheet/purple,
 					/obj/item/bedsheet/red,
 					/obj/item/bedsheet/yellow,
-					/obj/item/bedsheet/brown, 
+					/obj/item/bedsheet/brown,
 					/obj/item/bedsheet/black,
 					/obj/item/bedsheet/rainbow)
 	crate_name = "colored bedsheet crate"
@@ -182,18 +172,6 @@
 					/obj/structure/piano/unanchored)
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/misc/cbtpack
-	name = "CBT Equipment"
-	desc = "(*!&@#CBT is a special term coined by high ranking syndicate operatives for a special form of information extraction. While the training required to use this shipment is highly classified, the distribution of it's contents are not. In addition to this crates unusual contents, we have added a bar of soap.#@*$"
-	hidden = TRUE
-	cost = 2400
-	contains = list(/mob/living/simple_animal/chicken,
-					/obj/item/toy/beach_ball/holoball,
-					/obj/item/melee/baton/cattleprod,
-					/obj/item/soap/syndie)
-	crate_name = "cbt crate"
-	crate_type = /obj/structure/closet/crate/large
-
 /datum/supply_pack/misc/casinocrate
 	name = "Casino Crate"
 	desc = "Start up your own grand casino with this crate filled with slot machine and arcade boards!"
@@ -216,8 +194,8 @@
 	name = "Coin Crate"
 	desc = "Psssst, hey, you. Yes, you. I've heard that coins can do some special things on your station, give you access to some pretty cool stuff. Here's the deal, you give me some credits, and I give so some coins. Sound like a deal? I'll give you 10 for 10000 creds."
 	contraband = TRUE
-	cost = 10000
-	contains = list(/obj/item/coin/silver)
+	cost = 3000
+	contains = list(/obj/item/coin/silver) // 400 x 10 = 2 sheets of silver for 2300cr
 	crate_name = "coin crate"
 	crate_type = /obj/structure/closet/crate/large
 
@@ -226,9 +204,76 @@
 	for(var/i in 1 to 9)
 		new /obj/item/coin/silver(.)
 
+/datum/supply_pack/misc/dueling_stam
+	name = "Dueling Pistols"
+	desc = "Resolve all your quarrels with some nonlethal fun."
+	cost = 2000
+	contains = list(/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina,
+	/obj/item/storage/lockbox/dueling/hugbox/stamina)
+	crate_name = "dueling pistols"
+
+/datum/supply_pack/misc/dueling_lethal
+	name = "Lethal Dueling Pistols"
+	desc = "Settle your differences the true spaceman way."
+	cost = 3000
+	contraband = TRUE
+	contains = list(/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox,
+	/obj/item/storage/lockbox/dueling/hugbox)
+	crate_name = "dueling pistols (lethal)"
+
+/datum/supply_pack/misc/dueling_death
+	name = "Elimination Dueling Pistols"
+	desc = "It's high noon."
+	cost = 5000
+	hidden = TRUE
+	contains = list(/obj/item/storage/lockbox/dueling)
+	crate_name = "dueling pistols (elimination)"
+
+/datum/supply_pack/misc/dirtymags
+	name = "Dirty Magazines"
+	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
+	hidden = TRUE
+	cost = 12000
+	var/num_contained = 3
+	contains = list(/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/a357,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/pistolm9mm,
+					/obj/item/ammo_box/magazine/m45/kitchengun,
+					/obj/item/ammo_box/magazine/m45/kitchengun)
+	crate_name = "crate"
+
+/datum/supply_pack/misc/dirtymags/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////// Misc Supplies ///////////////////////////////
+///////////////////////////////// Misc Supplies //////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/misc/candles
+	name = "Candle Crate"
+	desc = "Set up a romantic dinner or host a séance with these extra candles and crayons."
+	cost = 850
+	contains = list(/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/box/matches)
+	crate_name = "candle crate"
+
+/datum/supply_pack/misc/diamondring
+	name = "Diamond Ring"
+	desc = "Show them your love is like a diamond: unbreakable and forever lasting. Shipped straight from child slave cartels in the space african mines."
+	cost = 10000
+	contains = list(/obj/item/storage/fancy/ringbox/diamond)
+	crate_name = "diamond ring crate"
 
 /datum/supply_pack/misc/exoticfootwear
 	name = "Exotic Footwear Crate"
@@ -246,19 +291,50 @@
 					/obj/item/clothing/shoes/kindleKicks)
 	crate_name = "footie crate"
 
-/datum/supply_pack/misc/wrapping_paper
-	name = "Festive Wrapping Paper Crate"
-	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, or the Clown's severed head? You can do all that, with this crate full of wrapping paper."
-	cost = 1000
-	contains = list(/obj/item/stack/wrapping_paper)
-	crate_type = /obj/structure/closet/crate/wooden
-	crate_name = "festive wrapping paper crate"
+/datum/supply_pack/misc/funeral
+	name = "Funeral Supplies"
+	desc = "Mourn your dead properly buy sending them off with love filled notes, clean clothes, and a proper ceremony. Contains two candle packs, funeral garb, flowers, a paperbin , and crayons to help aid in religious rituals. Coffin included."
+	cost = 1200
+	contains = list(/obj/item/clothing/under/burial,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/storage/fancy/candle_box,
+					/obj/item/reagent_containers/food/snacks/grown/harebell,
+					/obj/item/reagent_containers/food/snacks/grown/harebell,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+					/obj/item/storage/crayons,
+					/obj/item/paper_bin
+					)
+	crate_name = "coffin"
+	crate_type = /obj/structure/closet/crate/coffin
+
+/datum/supply_pack/misc/jewelry
+	name = "Jewelry Crate"
+	desc = "Bling out with this crate of jewelry. Includes gold necklace and a set of two rings."
+	cost = 5000
+	contains = list(/obj/item/clothing/neck/necklace/dope,
+					/obj/item/storage/fancy/ringbox,
+					/obj/item/storage/fancy/ringbox/silver
+					)
+	crate_name = "jewelry crate"
 
 /datum/supply_pack/misc/jukebox
 	name = "Jukebox"
 	cost = 10000
 	contains = list(/obj/machinery/jukebox)
 	crate_name = "Jukebox"
+
+/datum/supply_pack/misc/abandonedcrate
+	name = "Loot Box"
+	desc = "Try your luck with these highly secure loot boxes! Solve the lock, win great prizes! WARNING: EXPLOSIVE FAILURE."
+	contraband = TRUE
+	cost = 15000
+	contains = list(/obj/structure/closet/crate/secure/loot)
+	crate_name = "abandoned crate"
+	crate_type = /obj/structure/closet/crate/large
+	dangerous = TRUE
 
 /datum/supply_pack/misc/potted_plants
 	name = "Potted Plants Crate"
@@ -283,25 +359,6 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie)
 	crate_name = "religious supplies crate"
-
-/datum/supply_pack/misc/funeral
-	name = "Funeral Supplies"
-	desc = "Mourn your dead properly buy sending them off with love filled notes, clean clothes, and a proper ceremony. Contains two candle packs, funeral garb, flowers, a paperbin , and crayons to help aid in religious rituals. Coffin included."
-	cost = 1200
-	contains = list(/obj/item/clothing/under/burial,
-					/obj/item/storage/fancy/candle_box,
-					/obj/item/storage/fancy/candle_box,
-					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/harebell,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
-					/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
-					/obj/item/storage/crayons,
-					/obj/item/paper_bin
-					)
-	crate_name = "coffin"
-	crate_type = /obj/structure/closet/crate/coffin
 
 /datum/supply_pack/misc/shower
 	name = "Shower Supplies"
@@ -361,29 +418,6 @@
 					/obj/item/stack/tile/carpet/monochrome/fifty,
 					/obj/item/stack/tile/carpet/monochrome/fifty)
 	crate_name = "premium carpet crate"
-
-/datum/supply_pack/misc/party
-	name = "Party Equipment"
-	desc = "Celebrate both life and death on the station with Nanotrasen's Party Essentials(tm)! Contains seven colored glowsticks, four beers, two ales, a drinking shaker, and a bottle of patron & goldschlager!"
-	cost = 2000
-	contains = list(/obj/item/storage/box/drinkingglasses,
-					/obj/item/reagent_containers/food/drinks/shaker,
-					/obj/item/reagent_containers/food/drinks/bottle/patron,
-					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/flashlight/glowstick,
-					/obj/item/flashlight/glowstick/red,
-					/obj/item/flashlight/glowstick/blue,
-					/obj/item/flashlight/glowstick/cyan,
-					/obj/item/flashlight/glowstick/orange,
-					/obj/item/flashlight/glowstick/yellow,
-					/obj/item/flashlight/glowstick/pink)
-	crate_name = "party equipment crate"
 
 /datum/supply_pack/misc/noslipfloor
 	name = "High-traction Floor Tiles"
