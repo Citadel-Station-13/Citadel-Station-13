@@ -186,8 +186,8 @@
 	return
 
 /datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
-	if(isvamp(C))
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if(isvamp(L))
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = L.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		bloodsuckerdatum.handle_eat_human_food(reac_volume * 2)
 	return
 
