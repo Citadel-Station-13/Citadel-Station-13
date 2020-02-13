@@ -372,14 +372,15 @@
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
-	if(hackable || !hacked)
-		for(var/id in SSresearch.techweb_designs)
-			var/datum/design/D = SSresearch.techweb_design_by_id(id)
-			if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
-				if(hacked)
-					stored_research.add_design(D)
-				else
-					stored_research.remove_design(D)
+	if(!hackable && hacked)
+		return
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
+		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
+			if(hacked)
+				stored_research.add_design(D)
+			else
+				stored_research.remove_design(D)
 
 /obj/machinery/autolathe/hacked/Initialize()
 	. = ..()
