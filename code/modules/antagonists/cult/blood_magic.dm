@@ -143,7 +143,7 @@
 //Cult Blood Spells
 /datum/action/innate/cult/blood_spell/stun
 	name = "Stun"
-	desc = "A potent spell that will stun and mute victims upon contact.  Becomes burn and knockback when the cult has ascended!"
+	desc = "A potent spell that will stun and mute victims upon contact.  When the cult ascends, so does the spell, it burns and throws back the victim!"
 	button_icon_state = "hand"
 	magic_path = "/obj/item/melee/blood_magic/stun"
 	health_cost = 10
