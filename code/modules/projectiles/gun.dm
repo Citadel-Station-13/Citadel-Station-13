@@ -79,8 +79,11 @@
 
 /obj/item/gun/Initialize()
 	. = ..()
-	if(pin && !no_pin_required)
-		pin = new pin(src)
+	if(pin)
+		if(no_pin_required)
+			pin = null
+		else
+			pin = new pin(src)
 	if(gun_light)
 		alight = new (src)
 	if(zoomable)
