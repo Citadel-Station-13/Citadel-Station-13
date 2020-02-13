@@ -274,7 +274,7 @@
 		return
 
 	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-
+		var/friendly_check = FALSE
 		if(lying)
 			if(buckled)
 				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
@@ -289,39 +289,35 @@
 			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
 
 		else if(check_zone(M.zone_selected) == "head")
-			var/mob/living/carbon/human/H = src
-			var/datum/species/pref_species = H.dna.species
+			var/datum/species/S
+			if(ishuman(src))
+				S = dna.species
 
-			M.visible_message("<span class='notice'>[M] gives [H] a pat on the head to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You give [H] a pat on the head to make [p_them()] feel better!</span>")
+			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
+						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
-			if(HAS_TRAIT(M, TRAIT_FRIENDLY))
-				var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-				if (mood.sanity >= SANITY_GREAT)
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
-				else if (mood.sanity >= SANITY_DISTURBED)
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
-			if(H.dna.species.can_wag_tail(H))
-				if("tail_human" in pref_species.default_features)
-					if(H.dna.features["tail_human"] == "None")
+			friendly_check = TRUE
+			if(S?.can_wag_tail(src))
+				if("tail_human" in S.default_features)
+					if(dna.features["tail_human"] == "None")
 						return
 					else
-						if(!H.dna.species.is_wagging_tail())
-							H.emote("wag")
+						if(!dna.species.is_wagging_tail())
+							emote("wag")
 
-				if("tail_lizard" in pref_species.default_features)
-					if(H.dna.features["tail_lizard"] == "None")
+				if("tail_lizard" in S.default_features)
+					if(dna.features["tail_lizard"] == "None")
 						return
 					else
-						if(!H.dna.species.is_wagging_tail())
-							H.emote("wag")
+						if(!dna.species.is_wagging_tail())
+							emote("wag")
 
-				if("mam_tail" in pref_species.default_features)
-					if(H.dna.features["mam_tail"] == "None")
+				if("mam_tail" in S.default_features)
+					if(dna.features["mam_tail"] == "None")
 						return
 					else
-						if(!H.dna.species.is_wagging_tail())
-							H.emote("wag")
+						if(!dna.species.is_wagging_tail())
+							emote("wag")
 
 			else
 				return
@@ -335,8 +331,11 @@
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
-			if(HAS_TRAIT(M, TRAIT_FRIENDLY))
-				var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+			friendly_check = TRUE
+
+		if(friendly_check && HAS_TRAIT(M, TRAIT_FRIENDLY))
+			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+			if(mood)
 				if (mood.sanity >= SANITY_GREAT)
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
 				else if (mood.sanity >= SANITY_DISTURBED)

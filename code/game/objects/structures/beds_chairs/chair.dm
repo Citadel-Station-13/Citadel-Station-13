@@ -371,6 +371,43 @@
 	origin_type = /obj/structure/chair/stool/bar
 
 //////////////////////////
+//Alien(Disco) Stools!////
+//////////////////////////
+
+/obj/structure/chair/stool/alien
+	name = "alien stool"
+	desc = "A hard stool made of advanced alien alloy."
+	icon_state = "stoolalien"
+	icon = 'icons/obj/abductor.dmi'
+	item_chair = /obj/item/chair/stool/alien
+	buildstacktype = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+
+/obj/structure/chair/stool/bar/alien
+	name = "bronze bar stool"
+	desc = "A hard bar stool made of advanced alien alloy."
+	icon_state = "baralien"
+	icon = 'icons/obj/abductor.dmi'
+	item_chair = /obj/item/chair/stool/bar/alien
+	buildstacktype = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+
+/obj/item/chair/stool/alien
+	name = "stool"
+	icon_state = "stoolalien_toppled"
+	item_state = "stoolalien"
+	icon = 'icons/obj/abductor.dmi'
+	origin_type = /obj/structure/chair/stool/alien
+	break_chance = 0 //It's too sturdy.
+
+/obj/item/chair/stool/bar/alien
+	name = "bar stool"
+	icon_state = "baralien_toppled"
+	item_state = "baralien"
+	icon = 'icons/obj/abductor.dmi'
+	origin_type = /obj/structure/chair/stool/bar/alien
+
+//////////////////////////
 //Brass & Bronze stools!//
 //////////////////////////
 

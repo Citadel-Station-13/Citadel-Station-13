@@ -10,7 +10,7 @@
 	desc = "Dominate the mind of a mortal who can see your eyes."
 	button_icon_state = "power_mez"
 	bloodcost = 30
-	cooldown = 200
+	cooldown = 300
 	target_range = 1
 	power_activates_immediately = FALSE
 	message_Trigger = "Whom will you subvert to your will?"

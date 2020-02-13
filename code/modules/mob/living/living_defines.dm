@@ -91,6 +91,7 @@
 	var/stuttering = 0
 	var/slurring = 0
 	var/cultslurring = 0
+	var/clockcultslurring = 0
 	var/derpspeech = 0
 
 	var/list/implants = null
@@ -102,8 +103,6 @@
 	var/last_words	//used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
-
-	var/can_be_held = FALSE	//whether this can be picked up and held.
 
 	var/radiation = 0 //If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT

@@ -8,13 +8,13 @@
 	masturbation_verb = "stroke"
 	arousal_verb = "You pop a boner"
 	unarousal_verb = "Your boner goes down"
-	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE
 	linked_organ_slot = ORGAN_SLOT_TESTICLES
 	fluid_transfer_factor = 0.5
 	size = 2 //arbitrary value derived from length and girth for sprites.
 	layer_index = PENIS_LAYER_INDEX
 	var/length = 6 //inches
-	var/prev_length = 6 //really should be renamed to prev_length
+	var/prev_length = 6
 	var/girth = 4.38
 	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
 
@@ -73,22 +73,21 @@
 
 /obj/item/organ/genital/penis/update_appearance()
 	. = ..()
-	var/string
+	var/datum/sprite_accessory/S = GLOB.cock_shapes_list[shape]
+	var/icon_shape = S ? S.icon_state : "human"
+	icon_state = "penis_[icon_shape]_[size]"
 	var/lowershape = lowertext(shape)
 	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(girth, 0.25)] inch[round(girth, 0.25) != 1 ? "es" : ""] in girth."
-
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
 				color = "#[skintone2hex(H.skin_tone)]"
-				string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]-s"
+				icon_state += "_s"
 		else
 			color = "#[owner.dna.features["cock_color"]]"
-			string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			icon_state = sanitize_text(string)
 			H.update_genitals()
 
 /obj/item/organ/genital/penis/get_features(mob/living/carbon/human/H)

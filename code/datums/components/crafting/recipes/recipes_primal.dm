@@ -1,10 +1,3 @@
-/datum/crafting_recipe/bonearmor
-	name = "Bone Armor"
-	result = /obj/item/clothing/suit/armor/bone
-	time = 30
-	reqs = list(/obj/item/stack/sheet/bone = 6)
-	category = CAT_PRIMAL
-
 /datum/crafting_recipe/bonetalisman
 	name = "Bone Talisman"
 	result = /obj/item/clothing/accessory/talisman
@@ -27,13 +20,6 @@
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				 /obj/item/stack/sheet/sinew = 1)
-	category = CAT_PRIMAL
-
-/datum/crafting_recipe/skullhelm
-	name = "Skull Helmet"
-	result = /obj/item/clothing/head/helmet/skull
-	time = 30
-	reqs = list(/obj/item/stack/sheet/bone = 4)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/goliathcloak
@@ -60,13 +46,6 @@
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 3,
 				/obj/item/stack/sheet/sinew = 2)
-	category = CAT_PRIMAL
-
-/datum/crafting_recipe/bonedagger
-	name = "Bone Dagger"
-	result = /obj/item/kitchen/knife/combat/bone
-	time = 20
-	reqs = list(/obj/item/stack/sheet/bone = 2)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bonespear

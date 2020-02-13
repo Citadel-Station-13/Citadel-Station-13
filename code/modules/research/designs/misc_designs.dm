@@ -250,10 +250,10 @@
 	name = "Plant Data Disk"
 	desc = "A disk for storing plant genetic data."
 	id = "diskplantgene"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL=200, MAT_GLASS=100)
 	build_path = /obj/item/disk/plantgene
-	category = list("Electronics")
+	category = list("Electronics","Imported")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/roastingstick
@@ -405,7 +405,7 @@
 
 /datum/design/holosigncombifan
 	name = "ATMOS Holo-Combifan Projector"
-	desc = "A holographic projector that creates holographic barriesr that prevent changes in atmospheric and temperature conditions."
+	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric and temperature conditions."
 	id = "holosigncombifan"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 2500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 1750)

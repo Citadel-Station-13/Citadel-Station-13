@@ -60,6 +60,8 @@
 	breakout_time = 600
 	pryLidTimer = 400
 	resistance_flags = NONE
+	integrity_failure = 70
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 30, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 
 /obj/structure/closet/crate/coffin/meatcoffin
 	name = "meat coffin"
@@ -75,7 +77,9 @@
 	resistance_flags = NONE
 	material_drop = /obj/item/reagent_containers/food/snacks/meat/slab
 	material_drop_amount = 3
-
+	integrity_failure = 40
+	armor = list("melee" = 70, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
+	
 /obj/structure/closet/crate/coffin/metalcoffin
 	name = "metal coffin"
 	desc = "A big metal sardine can inside of another big metal sardine can, in space."
@@ -90,6 +94,8 @@
 	resistance_flags = NONE
 	material_drop = /obj/item/stack/sheet/metal
 	material_drop_amount = 5
+	integrity_failure = 60
+	armor = list("melee" = 40, "bullet" = 15, "laser" = 50, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 
 //////////////////////////////////////////////
 

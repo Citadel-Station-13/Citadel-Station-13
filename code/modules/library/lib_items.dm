@@ -129,6 +129,14 @@
 				choice.forceMove(drop_location())
 			update_icon()
 
+/obj/structure/bookcase/attack_ghost(mob/dead/observer/user as mob)
+	if(contents.len && in_range(user, src))
+		var/obj/item/book/choice = input("Which book would you like to read?") as null|obj in contents
+		if(choice)
+			if(!istype(choice)) //spellbook, cult tome, or the one weird bible storage
+				to_chat(user,"A mysterious force is keeping you from reading that.")
+				return
+			choice.attack_self(user)
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(loc, 4)
@@ -204,8 +212,9 @@
 		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+		if(istype(user, /mob/living))
+			user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
 		onclose(user, "book")
 	else
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")
@@ -310,6 +319,9 @@
 		return
 	else
 		..()
+
+/obj/item/book/attack_ghost(mob/user)
+	attack_self(user)
 
 
 /*
