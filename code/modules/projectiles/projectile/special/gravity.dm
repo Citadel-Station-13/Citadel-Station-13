@@ -18,15 +18,12 @@
 /obj/item/projectile/gravity/on_hit()
 	. = ..()
 	var/turf/T = get_turf(src)
-	var/list/tothrow
-	var/list/mobs = list()
-	var/list/objs = list()
+	var/list/tothrow = list()
 	var/list/cachedrange = range(T, power)
 	for(var/mob/M in cachedrange)
-		mobs += M
+		tothrow += M
 	for(var/obj/O in cachedrange)
-		objs += O
-	tothrow = mobs + objs		//mobs priority
+		tothrow += O
 	var/safety = 50
 	for(var/i in tothrow)
 		if(!safety)
