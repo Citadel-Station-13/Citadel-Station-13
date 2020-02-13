@@ -79,7 +79,7 @@
 
 /obj/item/gun/Initialize()
 	. = ..()
-	if(pin)
+	if(pin && !no_pin_required)
 		pin = new pin(src)
 	if(gun_light)
 		alight = new (src)
