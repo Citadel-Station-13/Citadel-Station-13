@@ -86,10 +86,14 @@
 		azoom = new (src)
 
 /obj/item/gun/Destroy()
-	QDEL_NULL(pin)
-	QDEL_NULL(gun_light)
-	QDEL_NULL(bayonet)
-	QDEL_NULL(chambered)
+	if(pin)
+		QDEL_NULL(pin)
+	if(gun_light)
+		QDEL_NULL(gun_light)
+	if(bayonet)
+		QDEL_NULL(bayonet)
+	if(chambered)
+		QDEL_NULL(chambered)
 	return ..()
 
 /obj/item/gun/CheckParts(list/parts_list)
@@ -236,7 +240,7 @@
 	return
 
 /obj/item/gun/proc/on_cooldown()
-	return busy_action || firing || (last_fire + fire_delay > world.time)
+	return busy_action || firing || ((last_fire + fire_delay) > world.time)
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)

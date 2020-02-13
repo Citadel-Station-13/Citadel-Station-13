@@ -106,6 +106,8 @@
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
 	var/obj/machinery/computer/apc_control/remote_control = null
+	var/mob/living/carbon/hijacker
+	var/hijackerlast = TRUE
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
@@ -260,7 +262,7 @@
 
 	. += "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>"
 
-	if(issilicon(user))
+	if(area.hasSiliconAccessInArea(user))
 		. += "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>"
 
 // update the APC icon to show the three base states
@@ -299,12 +301,15 @@
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-
+	var/hijackerreturn
+	if (hijacker)
+		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
+		hijackerreturn = H && !H.stealthmode
 	if(update & 2)
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
 			SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[hijackerreturn ? "3" : charging]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 			if(operating)
 				SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 				SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
@@ -319,6 +324,8 @@
 				light_color = LIGHT_COLOR_BLUE
 			if(APC_FULLY_CHARGED)
 				light_color = LIGHT_COLOR_GREEN
+		if (hijackerreturn)
+			light_color = LIGHT_COLOR_YELLOW
 		set_light(lon_range)
 	else if(update_state & UPSTATE_BLUESCREEN)
 		light_color = LIGHT_COLOR_BLUE
@@ -387,14 +394,19 @@
 		else if(environ==2)
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
 
-
 	var/results = 0
-	if(last_update_state == update_state && last_update_overlay == update_overlay)
+	var/hijackerreturn
+	if (hijacker)
+		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
+		hijackerreturn = H && !H.stealthmode
+	if(last_update_state == update_state && last_update_overlay == update_overlay && hijackerreturn == hijackerlast)
 		return 0
 	if(last_update_state != update_state)
 		results += 1
-	if(last_update_overlay != update_overlay)
+	if(last_update_overlay != update_overlay || hijackerreturn  != hijackerlast)
 		results += 2
+	if (hijackerreturn  != hijackerlast)
+		hijackerlast = hijackerreturn
 	return results
 
 // Used in process so it doesn't update the icon too much
@@ -534,7 +546,7 @@
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
 
-	if(issilicon(user) && get_dist(src,user)>1)
+	if(area.hasSiliconAccessInArea(user) && get_dist(src,user)>1)
 		return attack_hand(user)
 
 	if	(istype(W, /obj/item/stock_parts/cell) && opened)
@@ -741,7 +753,7 @@
 
 /obj/machinery/power/apc/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.canUseTopic(src, !area.hasSiliconAccessInArea(user)) || !isturf(loc))
 		return
 	togglelock(user)
 	return TRUE
@@ -756,7 +768,7 @@
 	else if(stat & (BROKEN|MAINT))
 		to_chat(user, "<span class='warning'>Nothing happens!</span>")
 	else
-		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
+		if((allowed(usr) || area.hasSiliconAccessInArea(usr)) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
 			update_icon()
@@ -833,6 +845,11 @@
 	if((stat & MAINT) && !opened) //no board; no interface
 		return
 
+/obj/machinery/power/apc/oui_canview(mob/user)
+	if(user.has_unlimited_silicon_privilege || area.hasSiliconAccessInArea(user))
+		return TRUE
+	return ..()
+
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -842,8 +859,12 @@
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
+	var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
+	var/abilitiesavail = FALSE
+	if (H && !H.stealthmode && H.toggled)
+		abilitiesavail = TRUE
 	var/list/data = list(
-		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)),
+		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user),
 		"lock_nightshift" = nightshift_requires_auth,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
@@ -853,11 +874,14 @@
 		"chargingStatus" = charging,
 		"totalLoad" = DisplayPower(lastused_total),
 		"coverLocked" = coverlocked,
-		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
+		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console() || area.hasSiliconAccessInArea(user),
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
-
+		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
+		"hijacker" = hijacker == user ? TRUE : FALSE,
+		"drainavail" = cell && cell.percent() >= 85 && abilitiesavail,
+		"lockdownavail" = cell && cell.percent() >= 35 && abilitiesavail,
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
@@ -925,17 +949,12 @@
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
 		return TRUE
+	if (user == hijacker || (area.hasSiliconAccessInArea(user) && !aidisabled))
+		return TRUE
 	if(user.has_unlimited_silicon_privilege)
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
-		if (                                                             \
-			src.aidisabled ||                                            \
-			malfhack && istype(malfai) &&                                \
-			(                                                            \
-				(istype(AI) && (malfai!=AI && malfai != AI.parent)) ||   \
-				(istype(robot) && (robot in malfai.connected_robots))    \
-			)                                                            \
-		)
+		if (src.aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai!=AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
 			if(!loud)
 				to_chat(user, "<span class='danger'>\The [src] has eee disabled!</span>")
 			return FALSE
@@ -945,10 +964,14 @@
 	. = ..()
 	if (!. && !QDELETED(remote_control))
 		. = remote_control.can_interact(user)
+	if (hijacker == user && area.hasSiliconAccessInArea(user))
+		return TRUE
 
 /obj/machinery/power/apc/ui_status(mob/user)
 	. = ..()
 	if (!QDELETED(remote_control) && user == remote_control.operator)
+		. = UI_INTERACTIVE
+	if (user == hijacker && area.hasSiliconAccessInArea(user))
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
@@ -959,7 +982,10 @@
 			failure_timer = 0
 			update_icon()
 			update()
-	var/authorized = (!locked || usr.has_unlimited_silicon_privilege || (integration_cog && (is_servant_of_ratvar(usr))))
+	if (action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
+		hijack(usr)
+		return
+	var/authorized = (!locked || usr.has_unlimited_silicon_privilege || area.hasSiliconAccessInArea(usr) || (integration_cog && (is_servant_of_ratvar(usr))))
 	if((action == "toggle_nightshift") && (!nightshift_requires_auth || authorized))
 		toggle_nightshift_lights()
 		return TRUE
@@ -967,7 +993,7 @@
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(usr.has_unlimited_silicon_privilege || area.hasSiliconAccessInArea(usr))
 				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
 					to_chat(usr, "The APC does not respond to the command.")
 				else
@@ -1001,7 +1027,7 @@
 				update()
 			return TRUE
 		if("overload")
-			if(usr.has_unlimited_silicon_privilege)
+			if(usr.has_unlimited_silicon_privilege || area.hasSiliconAccessInArea(usr))
 				overload_lighting()
 			return TRUE
 		if("hack")
@@ -1023,7 +1049,26 @@
 					L.no_emergency = emergency_lights
 					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 				CHECK_TICK
-			return TRUE
+		if("drain")
+			cell.use(cell.charge)
+			hijacker.toggleSiliconAccessArea(area)
+			hijacker = null
+			set_hijacked_lighting()
+			update_icon()
+			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
+			H.stealthcooldown = world.time + 2 MINUTES
+			energy_fail(30 SECONDS * (cell.charge / cell.maxcharge))
+		if("lockdown")
+			var/celluse = rand(20,35)
+			celluse = celluse /100
+			for (var/obj/machinery/door/D in GLOB.airlocks)
+				if (get_area(D) == area)
+					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
+					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
+			cell.charge -= cell.maxcharge*celluse
+			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
+			H.stealthcooldown = world.time + 3 MINUTES
+	return TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	if(!is_operational() || failure_timer)
@@ -1031,6 +1076,39 @@
 	operating = !operating
 	update()
 	update_icon()
+
+/obj/machinery/power/apc/proc/hijack(mob/living/L)
+	if (!istype(L))
+		return
+	if (hijacker && hijacker != L)
+		var/obj/item/implant/hijack/H = L.getImplant(/obj/item/implant/hijack)
+		to_chat(L, "<span class='warning'>Someone already has control of this APC. Beginning counter-hijack.</span>")
+		H.hijacking = TRUE
+		if (do_after(L,20 SECONDS,target=src))
+			hijacker.toggleSiliconAccessArea(area)
+			if (L.toggleSiliconAccessArea(area))
+				hijacker = L
+				update_icon()
+				set_hijacked_lighting()
+			H.hijacking = FALSE
+			return
+		else
+			to_chat(L, "<span class='warning'>Aborting.</span>")
+			H.hijacking = FALSE
+			return
+	to_chat(L, "<span class='notice'>Beginning hijack of APC.</span>")
+	var/obj/item/implant/hijack/H = L.getImplant(/obj/item/implant/hijack)
+	H.hijacking = TRUE
+	if (do_after(L,H.stealthmode ? 12 SECONDS : 5 SECONDS,target=src))
+		if (L.toggleSiliconAccessArea(area))
+			hijacker = L
+			update_icon()
+			set_hijacked_lighting()
+			H.hijacking = FALSE
+	else
+		to_chat(L, "<span class='warning'>Aborting.</span>")
+		H.hijacking = FALSE
+		return
 
 /obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)
 	if(!istype(malf))
@@ -1436,6 +1514,17 @@
 		if(L.nightshift_allowed)
 			L.nightshift_enabled = nightshift_lights
 			L.update(FALSE)
+		CHECK_TICK
+
+/obj/machinery/power/apc/proc/set_hijacked_lighting()
+	set waitfor = FALSE
+	var/hijackerreturn
+	if (hijacker)
+		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
+		hijackerreturn = H && !H.stealthmode
+	for(var/obj/machinery/light/L in area)
+		L.hijacked = hijackerreturn
+		L.update(FALSE)
 		CHECK_TICK
 
 /obj/machinery/power/apc/proc/update_nightshift_auth_requirement()
