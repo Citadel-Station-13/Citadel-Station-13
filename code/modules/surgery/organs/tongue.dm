@@ -30,6 +30,12 @@
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()
+	low_threshold_passed = "<span class='info'>Your [name] feels a little sore.</span>"
+	low_threshold_cleared = "<span class='info'>Your [name] soreness subsides.</span>"
+	high_threshold_passed = "<span class='warning'>Your [name] is really starting to hurt.</span>"
+	high_threshold_cleared = "<span class='info'>The pain of your [name] subsides a little.</span>"
+	now_failing = "<span class='warning'>Your [name] feels like it's about to fall out!.</span>"
+	now_fixed = "<span class='info'>The excruciating pain of your [name] subsides.</span>"
 	languages_possible = languages_possible_base
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
@@ -40,7 +46,7 @@
 		return
 	if(organ_flags & ORGAN_SYNTHETIC)
 		var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
-		owner.say("The pH is appropriately [pick(errormessage)].")
+		owner.say("The pH is appropriately [pick(errormessage)].", forced = "EMPed synthetic tongue")
 
 /obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
 
@@ -58,11 +64,6 @@
 		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
 		qdel(src)
-	else if ((damage / maxHealth) > 0.85)
-		to_chat(owner, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
-	else if ((damage / maxHealth) > 0.5)
-		to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
-
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
