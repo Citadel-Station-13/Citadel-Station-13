@@ -236,3 +236,20 @@
 	throwforce = 15 //Massive pice of metal
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = SLOWS_WHILE_IN_HAND
+
+/obj/item/shield/riot/implant
+	name = "riot tower shield"
+	desc = "A massive shield that can block a lot of attacks, can take a lot of abuse before braking."
+	item_state = "metal"
+	icon_state = "metal"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	block_chance = 30 //May be big but hard to move around to block.
+	force = 10
+	slowdown = 1
+	transparent = FALSE
+	item_flags = SLOWS_WHILE_IN_HAND
+
+/obj/item/shield/riot/implant/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 60 //Massive shield
+	return ..()
