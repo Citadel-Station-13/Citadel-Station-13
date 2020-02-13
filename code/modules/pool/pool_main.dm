@@ -72,7 +72,7 @@
 /turf/open/pool/Exit(atom/movable/AM, atom/newloc)
 	if(!AM.has_gravity(src))
 		return ..()
-	if(isliving(AM) || istype(AM, /obj/structure))
+	if(isliving(AM) || isstructure(AM))
 		if(AM.throwing)
 			return ..()			//WHEEEEEEEEEEE
 		if(istype(AM, /obj/structure) && isliving(AM.pulledby))
