@@ -247,12 +247,9 @@
 /mob/living/carbon/human/proc/update_genitals()
 	if(QDELETED(src))
 		return
-	var/static/list/relevant_layers
+	var/static/list/relevant_layers = list("[GENITALS_BEHIND_LAYER]" = "BEHIND", "[GENITALS_FRONT_LAYER]" = "FRONT")
 	var/static/list/layers_num
-	if(!relevant_layers)
-		relevant_layers = list()
-		relevant_layers["[GENITALS_BEHIND_LAYER]"] = "BEHIND"
-		relevant_layers["[GENITALS_FRONT_LAYER]"] = "FRONT"
+	if(!layers_num)
 		for(var/L in relevant_layers)
 			LAZYSET(layers_num, L, text2num(L))
 	for(var/L in relevant_layers) //Less hardcode
