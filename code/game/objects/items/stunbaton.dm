@@ -17,8 +17,9 @@
 
 	var/stamforce = 25
 	var/status = FALSE
+	var/knockdown = TRUE
 	var/obj/item/stock_parts/cell/cell
-	var/hitcost = 1000
+	var/hitcost = 750
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
 
@@ -52,7 +53,7 @@
 		baton_stun(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/cell/high/plus
 
 /obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE, explode = TRUE)
 	var/obj/item/stock_parts/cell/copper_top = get_cell()
@@ -143,7 +144,7 @@
 		..()
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
-	. = common_baton_melee(M, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
+	return common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
 
 //return TRUE to interrupt attack chain.
 /obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
@@ -188,7 +189,8 @@
 		stunpwr *= round(stuncharge/hitcost, 0.1)
 
 	if(!disarming)
-		L.Knockdown(100, override_stamdmg = 0)		//knockdown
+		if(knockdown)
+			L.Knockdown(100, override_stamdmg = 0)		//knockdown
 		L.adjustStaminaLoss(stunpwr)
 	else
 		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
@@ -214,7 +216,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.Knockdown(stunforce*3)
+	user.Knockdown(stamforce*6)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 
@@ -276,8 +278,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 60
-	hitcost = 2000
+	stamforce = 25
+	hitcost = 1000
+	knockdown = FALSE
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	var/obj/item/assembly/igniter/sparkler
