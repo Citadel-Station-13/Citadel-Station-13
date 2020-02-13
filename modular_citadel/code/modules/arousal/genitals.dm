@@ -250,8 +250,8 @@
 	var/static/list/relevant_layers
 	if(!relevant_layers)
 		relevant_layers = list()
-		relevant_layers[GENITALS_BEHIND_LAYER] = "BEHIND"
-		relevant_layers[GENITALS_FRONT_LAYER] = "FRONT"
+		relevant_layers["[GENITALS_BEHIND_LAYER]"] = "BEHIND"
+		relevant_layers["[GENITALS_FRONT_LAYER]"] = "FRONT"
 	for(var/L in relevant_layers) //Less hardcode
 		remove_overlay(L)
 	remove_overlay(GENITALS_EXPOSED_LAYER)
@@ -320,7 +320,7 @@
 				standing += genital_overlay
 
 		if(LAZYLEN(standing))
-			overlays_standing[layer] = standing
+			overlays_standing[text2num(layer)] = standing
 
 	if(LAZYLEN(fully_exposed))
 		overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
