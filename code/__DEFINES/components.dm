@@ -330,8 +330,6 @@
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
-/*******Element signals*******/
-
 /*******Non-Signal Component Related Defines*******/
 
 //Redirection component init flags

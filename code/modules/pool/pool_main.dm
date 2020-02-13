@@ -15,7 +15,9 @@
 	update_icon()
 
 /turf/open/pool/Destroy()
-	controller = null
+	if(controller)
+		controller.linked_turfs -= src
+		controller = null
 	QDEL_NULL(watereffect)
 	QDEL_NULL(watertop)
 	return ..()

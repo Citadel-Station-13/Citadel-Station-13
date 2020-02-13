@@ -116,6 +116,10 @@
 	for(var/i in 1 to min(duration, 100))
 		L.setDir(turn(L.dir, 90))
 		sleep(delay)
+		if(QDELETED(L))
+			break
+		if(QDELETED(src))
+			return
 	whirling_mobs -= L
 
 /obj/machinery/pool/filter
