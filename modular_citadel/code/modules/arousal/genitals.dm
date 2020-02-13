@@ -204,6 +204,7 @@
 	update(TRUE)
 	if(!QDELETED(owner))
 		UnregisterSignal(owner, COMSIG_MOB_DEATH)
+	return ..()
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
