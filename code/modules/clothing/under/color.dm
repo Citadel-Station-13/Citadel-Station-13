@@ -41,6 +41,10 @@
 	item_color = "black"
 	resistance_flags = NONE
 
+/obj/item/clothing/under/color/black/trackless
+	desc = "A black jumpsuit that has its sensors removed."
+	has_sensor = NO_SENSORS
+
 /obj/item/clothing/under/skirt/color/black
 	name = "black jumpskirt"
 	icon_state = "black_skirt"
@@ -189,12 +193,15 @@
 	item_state = "b_suit"
 	item_color = "teal_skirt"
 
-
 /obj/item/clothing/under/color/lightpurple
 	name = "purple jumpsuit"
 	icon_state = "lightpurple"
 	item_state = "p_suit"
 	item_color = "lightpurple"
+
+/obj/item/clothing/under/color/lightpurple/trackless
+	desc = "A magically colored jumpsuit. No sensors are attached!"
+	has_sensor = NO_SENSORS
 
 /obj/item/clothing/under/skirt/color/lightpurple
 	name = "lightpurple jumpskirt"
