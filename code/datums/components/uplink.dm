@@ -158,27 +158,17 @@ GLOBAL_LIST_EMPTY(uplinks)
 			if(I.restricted_roles.len)
 				var/is_inaccessible = TRUE
 				for(var/R in I.restricted_roles)
-					if(R == user.mind.assigned_role)
+					if(R == user.mind.assigned_role || debug)
 						is_inaccessible = FALSE
 				if(is_inaccessible)
 					continue
+					if(is_inaccessible)
+						continue
 			cat["items"] += list(list(
 				"name" = I.name,
 				"cost" = I.cost,
 				"desc" = I.desc,
 			))
-				if(I.restricted_roles.len)
-					var/is_inaccessible = 1
-					for(var/R in I.restricted_roles)
-						if(R == user.mind.assigned_role || debug)
-							is_inaccessible = 0
-					if(is_inaccessible)
-						continue
-				cat["items"] += list(list(
-					"name" = I.name,
-					"cost" = I.cost,
-					"desc" = I.desc,
-				))
 		data["categories"] += list(cat)
 	return data
 
