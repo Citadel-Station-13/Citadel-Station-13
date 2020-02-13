@@ -9,9 +9,11 @@
   */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	if(item_flags & NO_ATTACK_CHAIN_SOFT_STAMCRIT)
-		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
-			to_chat(user, "<span class='warning'>You are too exhausted to swing [src]!</span>")
-			return
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+				to_chat(L, "<span class='warning'>You are too exhausted to swing [src]!</span>")
+				return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return
 	if(pre_attack(target, user, params))
