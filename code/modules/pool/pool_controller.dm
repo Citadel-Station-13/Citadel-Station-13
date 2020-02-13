@@ -354,15 +354,15 @@
 /obj/machinery/pool/controller/proc/temp2text()
 	switch(temperature)
 		if(POOL_FRIGID)
-			return "<span class='bad'>Frigid</span>"
+			return "<span class='boldwarning'>Frigid</span>"
 		if(POOL_COOL)
-			return "<span class='good'>Cool</span>"
+			return "<span class='boldnotice'>Cool</span>"
 		if(POOL_NORMAL)
-			return "<span class='good'>Normal</span>"
+			return "<span class='notice'>Normal</span>"
 		if(POOL_WARM)
-			return "<span class='good'>Warm</span>"
+			return "<span class='boldnotice'>Warm</span>"
 		if(POOL_SCALDING)
-			return "<span class='bad'>Scalding</span>"
+			return "<span class='boldwarning'>Scalding</span>"
 		else
 			return "Outside of possible range."
 
