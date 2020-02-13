@@ -94,7 +94,7 @@
 								H.adjustBruteLoss(2)
 								to_chat(H, "<span class='danger'>You're caught in the drain!</span>")
 							else
-								H.apply_damage(2.5, BRUTE, pick("l_leg", "r_leg")) //drain should only target the legs
+								H.apply_damage(2.5, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)) //drain should only target the legs
 								to_chat(H, "<span class='danger'>Your legs are caught in the drain!</span>")
 			else
 				for(var/turf/open/pool/P in controller.linked_turfs)
