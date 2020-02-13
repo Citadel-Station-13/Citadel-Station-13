@@ -29753,16 +29753,16 @@
 /obj/item/clothing/under/rank/security/navyblue,
 /obj/item/clothing/under/rank/security/navyblue,
 /obj/item/clothing/under/rank/security/navyblue,
-/obj/item/clothing/suit/security/officer,
-/obj/item/clothing/suit/security/officer,
-/obj/item/clothing/suit/security/officer,
-/obj/item/clothing/suit/security/officer,
-/obj/item/clothing/suit/security/officer,
-/obj/item/clothing/suit/security/officer,
+/obj/item/clothing/suit/armor/navyblue,
+/obj/item/clothing/suit/armor/navyblue,
+/obj/item/clothing/suit/armor/navyblue,
+/obj/item/clothing/suit/armor/navyblue,
+/obj/item/clothing/suit/armor/navyblue,
+/obj/item/clothing/suit/armor/navyblue,
 /obj/item/clothing/under/rank/warden/navyblue,
-/obj/item/clothing/suit/security/warden,
+/obj/item/clothing/suit/armor/vest/warden/navyblue,
 /obj/item/clothing/under/rank/head_of_security/navyblue,
-/obj/item/clothing/suit/security/hos,
+/obj/item/clothing/suit/armor/hos/navyblue,
 /obj/item/clothing/head/beret/sec/navyofficer,
 /obj/item/clothing/head/beret/sec/navyofficer,
 /obj/item/clothing/head/beret/sec/navyofficer,
@@ -81645,6 +81645,19 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/crew_quarters/cryopod)
+"eQf" = (
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "eZe" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -98511,7 +98524,7 @@ bgA
 biz
 bkb
 blZ
-bnM
+eQf
 bqf
 bqf
 bqf

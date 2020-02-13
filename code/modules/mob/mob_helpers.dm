@@ -147,6 +147,10 @@
 		. += newletter
 	return sanitize(.)
 
+//Ratvarian Slurring!
+
+#define CLOCK_CULT_SLUR(phrase) sanitize(text2ratvar(phrase))
+
 ///Adds stuttering to the message passed in
 /proc/stutter(phrase)
 	phrase = html_decode(phrase)
@@ -401,6 +405,29 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!user.client.AI_Interact) // Do they have it enabled?
 		return
 	return TRUE
+
+/atom/proc/hasSiliconAccessInArea(mob/user)
+	return user && (issilicon(user) || (user.siliconaccesstoggle && (get_area(src) in user.siliconaccessareas)))
+
+/mob/proc/toggleSiliconAccessArea(area/area)
+	if (area in siliconaccessareas)
+		siliconaccessareas -= area
+		to_chat(src,"<span class='warning'>You lost control of [area]!</span>")
+		return FALSE
+	else
+		if (LAZYLEN(siliconaccessareas) < HIJACK_APC_MAX_AMOUNT)
+			siliconaccessareas += area
+			to_chat(src,"<span class='notice'>You successfully took control of [area].</span>")
+		else
+			to_chat(src,"<span class='warning'>You are connected to too many APCs! Too many more will fry your brain.</span>")
+			return FALSE
+		return TRUE
+
+/mob/proc/getImplant(type)
+	return
+
+/mob/living/getImplant(type)
+	return locate(type) in implants
 
 /proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="", var/allow_all=FALSE)
 	if(allow_all & TRUE)

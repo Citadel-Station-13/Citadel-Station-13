@@ -16,7 +16,7 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female,var/roundstart = FALSE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
+/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, roundstart = FALSE, skip_prototype = TRUE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
 	if(!istype(male))
@@ -25,7 +25,7 @@
 		female = list()
 
 	for(var/path in typesof(prototype))
-		if(path == prototype)
+		if(path == prototype && skip_prototype)
 			continue
 		if(roundstart)
 			var/datum/sprite_accessory/P = path

@@ -1,5 +1,5 @@
 /datum/element/mob_holder
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
 	var/worn_state
 	var/alt_worn
@@ -47,7 +47,7 @@
 		return FALSE
 	source.visible_message("<span class='warning'>[user] starts picking up [source].</span>", \
 					"<span class='userdanger'>[user] starts picking you up!</span>")
-	if(!do_after(user, 20, target = src) || source.buckled)
+	if(!do_after(user, 20, target = source) || source.buckled)
 		return FALSE
 
 	source.visible_message("<span class='warning'>[user] picks up [source]!</span>", \

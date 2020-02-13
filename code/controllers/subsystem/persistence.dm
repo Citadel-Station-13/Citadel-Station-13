@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_dynamic_rules = list(list(),list(),list())
-	var/list/saved_storytellers = list("foo","bar","baz","foo again","bar again")
+	var/list/saved_storytellers = list("foo","bar","baz")
 	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
@@ -191,6 +191,7 @@ SUBSYSTEM_DEF(persistence)
 	if(!json)
 		return
 	saved_storytellers = json["data"]
+	saved_storytellers.len = 3
 
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
 	var/json_file = file("data/RecentMaps.json")
@@ -429,9 +430,7 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectStoryteller(var/datum/game_mode/dynamic/mode)
-	saved_storytellers.len = 5
-	saved_storytellers[5] = saved_storytellers[4]
-	saved_storytellers[4] = saved_storytellers[3]
+	saved_storytellers.len = 3
 	saved_storytellers[3] = saved_storytellers[2]
 	saved_storytellers[2] = saved_storytellers[1]
 	saved_storytellers[1] = mode.storyteller.name

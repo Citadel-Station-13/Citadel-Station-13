@@ -73,6 +73,12 @@
 	user.adjustOxyLoss(500)
 	charges--
 
+/obj/item/gun/magic/wand/death/debug
+	desc = "In some obscure circles, this is known as the 'cloning tester's friend'."
+	max_charges = 500
+	variable_charges = FALSE
+	can_charge = TRUE
+	recharge_rate = 1
 
 /////////////////////////////////////
 //WAND OF HEALING

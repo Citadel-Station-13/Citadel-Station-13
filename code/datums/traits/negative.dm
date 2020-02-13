@@ -6,6 +6,7 @@
 	value = -2
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
+	antag_removal_text = "Your antagonistic nature has removed your blood deficiency."
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
 /datum/quirk/blooddeficiency/on_process()
@@ -37,6 +38,8 @@
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	var/obj/item/heirloom
 	var/where
+
+GLOBAL_LIST_EMPTY(family_heirlooms)
 
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -76,6 +79,7 @@
 		/obj/item/lighter,
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
+	GLOB.family_heirlooms += heirloom
 	var/list/slots = list(
 		"in your left pocket" = SLOT_L_STORE,
 		"in your right pocket" = SLOT_R_STORE,
@@ -140,9 +144,8 @@
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
-	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
-	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
+	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES))
+		H.put_in_hands(glasses)
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
@@ -188,11 +191,7 @@
 	gain_text = "<span class='danger'>You feel repulsed by the thought of violence!</span>"
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
-
-/datum/quirk/nonviolent/on_process()
-	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
-		qdel(src)
+	antag_removal_text = "Your antagonistic nature has caused you to renounce your pacifism."
 
 /datum/quirk/paraplegic
 	name = "Paraplegic"
@@ -355,6 +354,7 @@
 	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
 	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
 	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
+	antag_removal_text = "Your antagonistic nature has caused your voice to be heard."
 	var/datum/brain_trauma/severe/mute/mute
 
 /datum/quirk/mute/add()
@@ -365,11 +365,6 @@
 /datum/quirk/mute/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	H?.cure_trauma_type(mute, TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/quirk/mute/on_process()
-	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
-		qdel(src)
 
 /datum/quirk/unstable
 	name = "Unstable"
