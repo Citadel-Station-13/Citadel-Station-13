@@ -46,10 +46,9 @@
 		tear_manifest(user)
 
 /obj/structure/closet/crate/tool_interact(obj/item/W, mob/user)
-	if(istype(W, /obj/item/wirecutters))
-		if (manifest)
-			tear_manifest(user)
-			return TRUE
+	if(W.tool_behaviour == TOOL_WIRECUTTER && manifest)
+		tear_manifest(user)
+		return TRUE
 	return ..()
 
 /obj/structure/closet/crate/open(mob/living/user)
