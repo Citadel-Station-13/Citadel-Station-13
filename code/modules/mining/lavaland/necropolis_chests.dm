@@ -851,9 +851,10 @@
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(2)
 		M.IgniteMob()
-	if(issimple_animal(target))
-		if(faction &= "mining")
-		force = 120
+		if(target.faction |= "mining" )
+			force = 80 //More damage if your in mining faction
+
+if(faction != null)
 
 //Blood
 
