@@ -849,7 +849,11 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(2)
 		M.IgniteMob()
+	if(issimple_animal(target))
+		if(faction &= "mining")
+		force = 120
 
 //Blood
 
