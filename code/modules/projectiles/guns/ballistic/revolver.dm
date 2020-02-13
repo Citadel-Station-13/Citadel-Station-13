@@ -370,17 +370,21 @@
 //.38 has a 5% odds of failing, .357 has a 25% as well as rev762
 //Once you caliber up, you can NOT go down
 
-/obj/item/gun/ballistic/revolver/detective/makeshift
-	name = "makeshift revolver"
-	desc = "A makeshift revolver made with duct tape and dreams. Not the most reliable..."
+/obj/item/gun/ballistic/revolver/makeshift
+	name = "makeshift high caliber pistol"
+	desc = "A makeshift high caliber pistol made with duct tape and dreams. Not the most reliable..."
 	icon_state = "irevgun"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/makeshift
-	var/failer_odds = 5
+	var/failer_odds = 25
 	can_suppress = TRUE
-	recoil = 2
+	recoil = 5
 
-/obj/item/gun/ballistic/revolver/detective/makeshift/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/revolver/makeshift/Initialize()
+	. = ..()
+	verbs -= /obj/item/gun/ballistic/revolver/verb/spin
+
+/obj/item/gun/ballistic/revolver/makeshift/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(chambered)
 		if(prob((failer_odds)))
 			playsound(user, fire_sound, 50, 1)
@@ -390,56 +394,59 @@
 			return FALSE
 	..()
 
-/obj/item/gun/ballistic/revolver/detective/makeshift/screwdriver_act(mob/living/user, obj/item/I)
+/obj/item/gun/ballistic/revolver/makeshift/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
-		return TRUE
+		return
 	if("38" in magazine.caliber)
 		to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
 		if(magazine.ammo_count())
 			afterattack(user, user)	//you know the drill
 			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-			return TRUE
-		if(I.use_tool(src, user, 30))
-			if(magazine.ammo_count())
-				to_chat(user, "<span class='warning'>You can't modify it!</span>")
-				return TRUE
-			magazine.caliber = list("357")
-			desc = "The barrel and chamber assembly seems to have been modified."
-			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
-			failer_odds = 25
+			return
+		else
+			if(I.use_tool(src, user, 30))
+				magazine.caliber = list("357")
+				desc = "The barrel and chamber assembly seems to have been modified."
+				to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
+				failer_odds = 35
+				return
 	if("357" in magazine.caliber)
 		to_chat(user, "<span class='notice'>You begin to improve modifications to [src]...</span>")
 		if(magazine.ammo_count())
 			afterattack(user, user)	//and again
 			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-			return TRUE
-		if(I.use_tool(src, user, 30))
-			if(magazine.ammo_count())
-				to_chat(user, "<span class='warning'>You can't modify it!</span>")
+			return
+		else
+			if(I.use_tool(src, user, 30))
+				magazine.caliber = list("n762")
+				desc = initial(desc)
+				to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire n762 rounds.</span>")
 				return
-			magazine.caliber = list("n762")
-			desc = initial(desc)
-			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire n762 rounds.</span>")
 	if("n762" in magazine.caliber)
 		user.visible_message("<span class='danger'>You cant modify it any more!</span>")
-		failer_odds = 25
-		return TRUE
-	return TRUE
+		failer_odds = 35
+		return
+	return
 
 //Makeshift Pistol
 //We start out with 9mm ammo and work are ways up
 //Higher caliber the higher odds it has of failing
 
-/obj/item/gun/ballistic/revolver/detective/makeshift/pistol
+/obj/item/gun/ballistic/revolver/makeshift_pistol
 	name = "makeshift pistol"
 	desc = "A small, pistol made of duct tape and dreams, does not seem all that reliable..."
 	icon_state = "irevgun"
 	w_class = WEIGHT_CLASS_SMALL
+	can_suppress = TRUE
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/nine/makeshift
-	failer_odds = 1//We start with 1% do to 9mm ammo being that shit
+	var/failer_odds = 1//We start with 1% do to 9mm ammo being that shit
 	var/caliber_damage = 15//Higher calibers when failing deal more harm then others
 
-/obj/item/gun/ballistic/revolver/detective/makeshift/pistol/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/revolver/makeshift_pistol/Initialize()
+	. = ..()
+	verbs -= /obj/item/gun/ballistic/revolver/verb/spin
+
+/obj/item/gun/ballistic/revolver/makeshift_pistol/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(chambered)
 		if(prob((failer_odds)))
 			playsound(user, fire_sound, 50, 1)
@@ -449,42 +456,40 @@
 			return FALSE
 	..()
 
-/obj/item/gun/ballistic/revolver/detective/makeshift/pistol/screwdriver_act(mob/living/user, obj/item/I)
+/obj/item/gun/ballistic/revolver/makeshift_pistol/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
-		return TRUE
+		return
 	if("9mm" in magazine.caliber)
 		to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
 		if(magazine.ammo_count())
 			afterattack(user, user)	//you know the drill
 			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-			return TRUE
-		if(I.use_tool(src, user, 30))
-			if(magazine.ammo_count())
-				to_chat(user, "<span class='warning'>You can't modify it!</span>")
-				return TRUE
-			magazine.caliber = list("10mm")
-			desc = "The barrel and chamber assembly seems to have been modified."
-			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire 10mm rounds.</span>")
-			failer_odds = 25
-			caliber_damage = 30
+			return
+		else
+			if(I.use_tool(src, user, 30))
+				magazine.caliber = list("10mm")
+				desc = "The barrel and chamber assembly seems to have been modified."
+				to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire 10mm rounds.</span>")
+				failer_odds = 25
+				caliber_damage = 30
+				return
 	if("10mm" in magazine.caliber)
 		to_chat(user, "<span class='notice'>You begin to improve modifications to [src]...</span>")
 		if(magazine.ammo_count())
 			afterattack(user, user)	//and again
 			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-			return TRUE
-		if(I.use_tool(src, user, 30))
-			if(magazine.ammo_count())
-				to_chat(user, "<span class='warning'>You can't modify it!</span>")
+			return
+		else
+			if(I.use_tool(src, user, 30))
+				magazine.caliber = list(".45")
+				desc = initial(desc)
+				to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .45 rounds.</span>")
+				failer_odds = 30
+				caliber_damage = 45
 				return
-			magazine.caliber = list(".45")
-			desc = initial(desc)
-			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .45 rounds.</span>")
-			failer_odds = 40
-			caliber_damage = 45
 	if(".45" in magazine.caliber)
 		user.visible_message("<span class='danger'>You cant modify it any more!</span>")
-		failer_odds = 40
+		failer_odds = 30
 		caliber_damage = 45
-		return TRUE
-	return TRUE
+		return
+	return

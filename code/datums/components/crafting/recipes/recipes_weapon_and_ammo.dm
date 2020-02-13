@@ -246,7 +246,8 @@
 
 /datum/crafting_recipe/isrevolver
 	name = "Improvised Revolver"
-	result = /obj/item/gun/ballistic/revolver/detective/makeshift
+	always_availible = FALSE
+	result = /obj/item/gun/ballistic/revolver/makeshift
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
@@ -260,7 +261,8 @@
 
 /datum/crafting_recipe/ispistol
 	name = "Improvised Pistol"
-	result = /obj/item/gun/ballistic/revolver/detective/makeshift/pistol
+	always_availible = FALSE
+	result = /obj/item/gun/ballistic/revolver/makeshift_pistol
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
@@ -274,6 +276,7 @@
 
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
+	always_availible = FALSE
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
@@ -286,6 +289,7 @@
 
 /datum/crafting_recipe/irifle
 	name = "Improvised Rifle(7.62mm)"
+	always_availible = FALSE
 	result = /obj/item/gun/ballistic/shotgun/boltaction/improvised
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 2,
