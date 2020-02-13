@@ -96,6 +96,16 @@
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
 	foodtype = MEAT | FRIED | BREAKFAST
 
+/obj/item/reagent_containers/food/snacks/baconegg
+	name = "bacon and eggs"
+	desc = "A fried egg with a side of bacon. Delicious!"
+	icon_state = "baconegg"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bitesize = 1
+	filling_color = "#FFFFF0"
+	tastes = list("egg" = 2, "bacon" = 2, "salt" = 1, "pepper" = 1)
+	foodtype = MEAT | FRIED | BREAKFAST
+
 /obj/item/reagent_containers/food/snacks/boiledegg
 	name = "boiled egg"
 	desc = "A hard boiled egg."
