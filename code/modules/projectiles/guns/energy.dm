@@ -150,7 +150,7 @@
 		if(istype(v, /obj/item/ammo_casing/energy))		//already set
 			ammo_type[v] = isnull(user_can_select)? TRUE : user_can_select
 		else
-			C = new v			//if you put non energycasing/type stuff in here you deserve the runtime
+			C = new v(src)			//if you put non energycasing/type stuff in here you deserve the runtime
 			ammo_type[i] = C
 			ammo_type[C] = isnull(user_can_select)? TRUE : user_can_select
 	set_firemode_index(initial(current_firemode_index))

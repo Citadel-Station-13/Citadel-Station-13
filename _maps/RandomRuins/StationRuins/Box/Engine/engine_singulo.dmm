@@ -735,7 +735,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "Si" = (
 /obj/structure/cable/yellow{
