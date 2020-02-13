@@ -225,6 +225,16 @@
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/pin_away
+	name = "Station Locked Pin"
+	desc = "This is a security firing pin which only authorizes users who are off station."
+	id = "pin_away"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_GLASS = 2000)
+	build_path = /obj/item/firing_pin/away
+	category = list("Firing Pins")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 //////////////
 //Guns////////
 //////////////
