@@ -113,7 +113,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", flavor_text, MAX_FAVOR_LEN, TRUE)
+	var/new_flavor = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", flavor_text, MAX_FAVOR_LEN, TRUE)
 	if(!isnull(new_flavor))
 		flavor_text = new_flavor
 		to_chat(src, "Your flavor text has been updated.")
