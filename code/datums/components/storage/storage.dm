@@ -363,7 +363,7 @@
 					break
 	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 
-/datum/component/storage/proc/show_to(mob/M, set_screen_size = FALSE)
+/datum/component/storage/proc/show_to(mob/M, set_screen_size = TRUE)
 	if(!M.client)
 		return FALSE
 	var/list/cview = getviewsize(M.client.view)
