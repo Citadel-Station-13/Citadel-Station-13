@@ -253,7 +253,7 @@
 		relevant_layers["[GENITALS_BEHIND_LAYER]"] = "BEHIND"
 		relevant_layers["[GENITALS_FRONT_LAYER]"] = "FRONT"
 	for(var/L in relevant_layers) //Less hardcode
-		remove_overlay(L)
+		remove_overlay(tex2num(L))
 	remove_overlay(GENITALS_EXPOSED_LAYER)
 	if(!LAZYLEN(internal_organs) || ((NOGENITALS in dna.species.species_traits) && !genital_override) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
