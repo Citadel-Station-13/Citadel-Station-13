@@ -29,7 +29,7 @@
 #define IMMUTABLE_SLOW          			(1<<9)	//When players should not be able to change the slowdown of the item (Speed potions, ect)
 #define SURGICAL_TOOL						(1<<10)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
 #define NO_UNIFORM_REQUIRED					(1<<11) //Can be worn on certain slots (currently belt and id) that would otherwise require an uniform.
-#define NO_ATTACK_CHAIN_SOFT_STAMCRIT		(1<<12)		//Entirely blocks melee_attack_chain() if user is soft stamcritted. Uses getStaminaLoss() to check at this point in time.
+#define NO_ATTACK_CHAIN_SOFT_STAMCRIT		(1<<12)		//Entirely blocks melee_attack_chain() if user is soft stamcritted. Uses getStaminaLoss() to check at this point in time. THIS DOES NOT BLOCK RANGED AFTERATTACK()S, ONLY MELEE RANGE AFTERATTACK()S.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
