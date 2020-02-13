@@ -149,7 +149,6 @@
 //Tools  Arms//
 ///////////////
 
-
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
@@ -158,7 +157,7 @@
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act()
 	. = ..()
-	if(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list)
+	if(obj_flags |= EMAGGED)
 		return
 	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
@@ -171,20 +170,20 @@
 
 /obj/item/organ/cyberimp/arm/surgery/emag_act()
 	. = ..()
-	if(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list)
+	if(obj_flags |= EMAGGED)
 		return
 	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/janitor
-	name = "janitor toolset implant"
+	name = "janitorial tools implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	contents = newlist(/obj/item/lightreplacer, /obj/item/holosign_creator, /obj/item/soap/nanotrasen, /obj/item/reagent_containers/spray/cyborg_drying, /obj/item/mop/advanced, /obj/item/paint/paint_remover, /obj/item/reagent_containers/glass/beaker/large, /obj/item/reagent_containers/spray/cleaner) //Beaker if for refilling sprays
 
 /obj/item/organ/cyberimp/arm/janitor/emag_act()
 	. = ..()
-	if(locate(/obj/item/soap/syndie) in items_list) //If we have syndie soap we have the other items
+	if(obj_flags |= EMAGGED)
 		return
 	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated deluxe cleaning supplies!</span>")
 	items_list += new /obj/item/soap/syndie(src) //We add not replace.
@@ -193,12 +192,12 @@
 
 /obj/item/organ/cyberimp/arm/service
 	name = "service toolset implant"
-	desc = "A set of tools needed for any barkeep or cook on the user's arm."
+	desc = "A set of miscellaneous gadgets hidden behind a concealed panel on the user's arm."
 	contents = newlist(/obj/item/extinguisher/mini, /obj/item/kitchen/knife/combat/bone/plastic, /obj/item/hand_labeler, /obj/item/pen, /obj/item/reagent_containers/dropper, /obj/item/kitchen/rollingpin, /obj/item/reagent_containers/glass/beaker/large, /obj/item/reagent_containers/syringe,/obj/item/reagent_containers/food/drinks/shaker, /obj/item/radio/off, /obj/item/camera, /obj/item/modular_computer/tablet/preset/cargo)
 
 /obj/item/organ/cyberimp/arm/service/emag_act()
 	. = ..()
-	if(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list)
+	if(obj_flags |= EMAGGED)
 		return
 	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated real knife!</span>")
 	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
@@ -243,8 +242,10 @@
 /obj/item/organ/cyberimp/arm/flash/Initialize()
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
-		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
+		var/obj/item/assembly/flash/armimplant/F = new(src)
 		F.I = src
+		items_list += F
+		return TRUE
 
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
@@ -259,8 +260,10 @@
 /obj/item/organ/cyberimp/arm/combat/Initialize()
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
-		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
+		var/obj/item/assembly/flash/armimplant/F = new(src)
 		F.I = src
+		items_list += F
+		return TRUE
 
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
@@ -274,14 +277,16 @@
 
 /obj/item/organ/cyberimp/arm/shield/emag_act()
 	. = ..()
-	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
+	if(obj_flags |= EMAGGED)
 		return
-	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
+	to_chat(usr, "<span class='notice'>You unlock [src]'s high-power flash!</span>")
 	items_list += new /obj/item/assembly/flash/armimplant(src)
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/shield/Initialize()
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
-		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
+		var/obj/item/assembly/flash/armimplant/F = new(src)
 		F.I = src
+		items_list += F
+		return TRUE
