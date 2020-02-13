@@ -73,7 +73,7 @@ Difficulty: Medium
 	target.stun_absorption -= "miner"
 
 /obj/item/projectile/kinetic/miner
-	damage = 50
+	damage = 40
 	speed = 0.9
 	icon_state = "ka_tracer"
 	range = MINER_DASH_RANGE
