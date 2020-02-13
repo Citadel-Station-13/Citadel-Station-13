@@ -15,7 +15,7 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	item_flags = NEEDS_PERMIT
+	item_flags = NEEDS_PERMIT | NO_ATTACK_CHAIN_SOFT_STAMCRIT
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"

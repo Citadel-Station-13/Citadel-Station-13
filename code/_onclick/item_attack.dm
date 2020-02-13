@@ -1,5 +1,9 @@
 
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
+	if(item_flags & NO_ATTACK_CHAIN_SOFT_STAMCRIT)
+		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+			to_chat(user, "<span class='warning'>You are too exhausted to swing [src]!</span>")
+			return
 	if(!tool_attack_chain(user, target) && pre_attack(target, user, params))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 		var/resolved = target.attackby(src, user, params)
@@ -112,7 +116,7 @@
 	send_item_attack_message(I, user)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW)) 
+		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW))
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
