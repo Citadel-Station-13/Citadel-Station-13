@@ -316,7 +316,7 @@
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
 				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
 			else
-				genital_overlay.layer = -layer_num[layer]
+				genital_overlay.layer = -layers_num[layer]
 				standing += genital_overlay
 
 		if(LAZYLEN(standing))
