@@ -423,9 +423,9 @@
 		else
 			unload_hypo(vial,user)
 
-/obj/item/hypospray/mkii/AltClick(mob/living/user)
+/obj/item/hypospray/mkii/CtrlClick(mob/living/user)
 	. = ..()
-	if(user.canUseTopic(src, FALSE))
+	if(user.canUseTopic(src, FALSE) && user.get_active_held_item(src))
 		switch(mode)
 			if(HYPO_SPRAY)
 				mode = HYPO_INJECT
@@ -437,7 +437,7 @@
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'><b>Alt-Click</b> it to toggle its mode from spraying to injecting and vice versa.</span>"
+	. += "<span class='notice'><b>Ctrl-Click</b> it to toggle its mode from spraying to injecting and vice versa.</span>"
 
 #undef HYPO_SPRAY
 #undef HYPO_INJECT

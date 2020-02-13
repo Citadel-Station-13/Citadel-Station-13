@@ -52,13 +52,12 @@ Nothing else in the console has ID requirements.
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
+	if(GLOB.chemical_reagents_list[ID])
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
+		return reagent.name
 	if (ID[1] == "$" && GLOB.materials_list[ID])
 		var/datum/material/material = GLOB.materials_list[ID]
 		return material.name
-
-	else if(GLOB.chemical_reagents_list[ID])
-		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
-		return reagent.name
 	return "ERROR: Report This"
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).

@@ -820,3 +820,11 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
+
+/proc/get_action_of_type(mob/M, var/action_type)
+	if(!M.actions || !ispath(action_type, /datum/action))
+		return
+	for(var/datum/action/A in M.actions)
+		if(istype(A, action_type))
+			return A
+	return 

@@ -272,7 +272,7 @@
 /datum/outfit/wizard
 	name = "Blue Wizard"
 
-	uniform = /obj/item/clothing/under/color/lightpurple
+	uniform = /obj/item/clothing/under/color/lightpurple/trackless
 	suit = /obj/item/clothing/suit/wizrobe
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	ears = /obj/item/radio/headset
