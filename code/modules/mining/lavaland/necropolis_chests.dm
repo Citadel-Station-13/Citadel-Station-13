@@ -854,8 +854,6 @@
 		if(target.faction |= "mining" )
 			force = 80 //More damage if your in mining faction
 
-if(faction != null)
-
 //Blood
 
 /obj/item/dragons_blood
