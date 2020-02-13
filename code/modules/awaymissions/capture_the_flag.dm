@@ -470,7 +470,7 @@
 
 /obj/item/claymore/ctf/pre_attack(atom/target, mob/user, params)
 	if(!is_ctf_target(target))
-		return FALSE
+		return TRUE
 	return ..()
 
 /obj/item/claymore/ctf/dropped()
