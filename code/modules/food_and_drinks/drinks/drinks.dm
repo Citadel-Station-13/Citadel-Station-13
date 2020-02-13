@@ -222,26 +222,25 @@
 	item_state = "coffee"
 	spillable = TRUE
 
-/obj/item/reagent_containers/food/drinks/mug/tea/on_reagent_change(changetype)
+/obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
+	cut_overlays()    
 	if(reagents.total_volume)
-		icon_state = "tea"
-	else
-		icon_state = "tea_empty"
-
-/obj/item/reagent_containers/food/drinks/mug/coco/on_reagent_change(changetype)
-	if(reagents.total_volume)
-		icon_state = "coco"
+		var/mutable_appearance/MA = mutable_appearance(icon,"mugoverlay")
+		MA.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(MA)
 	else
 		icon_state = "tea_empty"
 
 /obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple tea"
+	icon_state = "tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
 
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
+	icon_state = "coco"
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 30, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
