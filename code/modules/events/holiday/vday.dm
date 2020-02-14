@@ -66,6 +66,7 @@
 
 /obj/item/valentine/Initialize(mapload)
 	message = pick(GLOB.flirts)
+	return ..()
 
 GLOBAL_LIST_INIT(flirts, "Roses are red / Violets are good / One day while Andy...",
 					"My love for you is like the singularity. It cannot be contained.",
