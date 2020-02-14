@@ -162,4 +162,13 @@ GLOBAL_VAR_INIT(singularity_counter, 0)
 	desc = "A label on it reads: <i>Warning: Activating this device will send a silly explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb/badmin/clown
 
+/obj/item/sbeacondrop/turret_10mm
+	desc = "A label on it reads: <i>Warning: Activating this device will send a active 10mm turret</i>."
+	droptype = /obj/machinery/porta_turret/syndicate/turret_c10mm
+
+/obj/item/sbeacondrop/turret_45
+	desc = "A label on it reads: <i>Warning: Activating this device will send a active .45 turret</i>."
+	droptype = /obj/machinery/porta_turret/syndicate/turret_45
+
+
 #undef METEOR_DISASTER_MODIFIER

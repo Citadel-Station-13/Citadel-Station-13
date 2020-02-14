@@ -25,6 +25,22 @@
 	include_modes = list(/datum/game_mode/nuclear)
 	restricted = TRUE
 
+/datum/uplink_item/support/turret_10mm
+	name = "Deployable Turret (10mm)"
+	desc = "Place down a weak Turret on demand, useful for protecting the bomb or suppressive fire."
+	item = /obj/item/sbeacondrop/turret_10mm
+	cost = 20
+	include_modes = list(/datum/game_mode/nuclear)
+	restricted = TRUE
+
+/datum/uplink_item/support/turret_45
+	name = "Deployable Turret (.45)"
+	desc = "Place down a weak turret on demand, useful for protecting the bomb or suppressive fire."
+	cost = 20
+	item = /obj/item/sbeacondrop/turret_45
+	include_modes = list(/datum/game_mode/nuclear)
+	restricted = TRUE
+
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \

@@ -692,7 +692,6 @@
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
 
-
 /obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
@@ -708,7 +707,6 @@
 	max_integrity = 260
 	integrity_failure = 20
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
-
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
@@ -739,6 +737,32 @@
 		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
 		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
 		return TRUE
+
+/obj/machinery/porta_turret/syndicate/turret_c10mm
+	density = FALSE
+	integrity_failure = 20
+	max_integrity = 80
+	shot_delay = 2
+	scan_range = 10 //So it can shoot people in full screen mode
+	stun_projectile = /obj/item/projectile/bullet/c10mm
+	lethal_projectile = /obj/item/projectile/bullet/c10mm
+
+/obj/machinery/porta_turret/syndicate/turret_c10mm/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+
+/obj/machinery/porta_turret/syndicate/turret_45
+	density = FALSE
+	integrity_failure = 20
+	max_integrity = 80
+	shot_delay = 2
+	scan_range = 10 //So it can shoot people in full screen mode
+	stun_projectile = /obj/item/projectile/bullet/c45
+	lethal_projectile = /obj/item/projectile/bullet/c45_nostamina
+
+obj/machinery/porta_turret/syndicate/turret_45/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
