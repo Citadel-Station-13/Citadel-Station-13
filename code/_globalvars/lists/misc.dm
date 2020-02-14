@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(donators_by_group)	//group id = donator list of ckeys
 
-GLOBAL_LIST_INIT(flirts, "Roses are red / Violets are good / One day while Andy...",
+GLOBAL_LIST_INIT(flirts, list("Roses are red / Violets are good / One day while Andy...",
 		"My love for you is like the singularity. It cannot be contained.",
 		"Will you be my lusty xenomorph maid?",
 		"We go together like the clown and the external airlock.",
@@ -56,4 +56,4 @@ GLOBAL_LIST_INIT(flirts, "Roses are red / Violets are good / One day while Andy.
 		"I must be tripping on BZ, because I saw an angel walk by.",
 		"Wanna empty out my tool storage?",
 		"Did you visit the medbay after you fell from heaven?",
-		"Are you wearing space pants? Wanna not be?" )
+		"Are you wearing space pants? Wanna not be?" ))
