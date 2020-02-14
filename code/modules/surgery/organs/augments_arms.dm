@@ -157,8 +157,9 @@
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act()
 	. = ..()
-	if(obj_flags |= EMAGGED)
+	if(obj_flags & EMAGGED)
 		return
+	obj_flags |= EMAGGED
 	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
 	return TRUE
@@ -170,21 +171,23 @@
 
 /obj/item/organ/cyberimp/arm/surgery/emag_act()
 	. = ..()
-	if(obj_flags |= EMAGGED)
+	if(obj_flags & EMAGGED)
 		return
+	obj_flags |= EMAGGED
 	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/janitor
 	name = "janitorial tools implant"
-	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
+	desc = "A set of janitorial tools on the user's arm."
 	contents = newlist(/obj/item/lightreplacer, /obj/item/holosign_creator, /obj/item/soap/nanotrasen, /obj/item/reagent_containers/spray/cyborg_drying, /obj/item/mop/advanced, /obj/item/paint/paint_remover, /obj/item/reagent_containers/glass/beaker/large, /obj/item/reagent_containers/spray/cleaner) //Beaker if for refilling sprays
 
 /obj/item/organ/cyberimp/arm/janitor/emag_act()
 	. = ..()
-	if(obj_flags |= EMAGGED)
+	if(obj_flags & EMAGGED)
 		return
+	obj_flags |= EMAGGED
 	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated deluxe cleaning supplies!</span>")
 	items_list += new /obj/item/soap/syndie(src) //We add not replace.
 	items_list += new /obj/item/reagent_containers/spray/cyborg_lube(src)
@@ -197,8 +200,9 @@
 
 /obj/item/organ/cyberimp/arm/service/emag_act()
 	. = ..()
-	if(obj_flags |= EMAGGED)
+	if(obj_flags & EMAGGED)
 		return
+	obj_flags |= EMAGGED
 	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated real knife!</span>")
 	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
 	return TRUE
@@ -242,10 +246,8 @@
 /obj/item/organ/cyberimp/arm/flash/Initialize()
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
-		var/obj/item/assembly/flash/armimplant/F = new(src)
+		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
-		items_list += F
-		return TRUE
 
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
@@ -260,10 +262,8 @@
 /obj/item/organ/cyberimp/arm/combat/Initialize()
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
-		var/obj/item/assembly/flash/armimplant/F = new(src)
+		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
-		items_list += F
-		return TRUE
 
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
@@ -277,8 +277,9 @@
 
 /obj/item/organ/cyberimp/arm/shield/emag_act()
 	. = ..()
-	if(obj_flags |= EMAGGED)
+	if(obj_flags & EMAGGED)
 		return
+	obj_flags |= EMAGGED
 	to_chat(usr, "<span class='notice'>You unlock [src]'s high-power flash!</span>")
 	items_list += new /obj/item/assembly/flash/armimplant(src)
 	return TRUE
