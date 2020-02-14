@@ -17,8 +17,11 @@
 
 /obj/item/clothing/gloves/ring/diamond
 	name = "diamond ring"
-	desc = "A tiny gold ring, studded with a diamond. Cultures have used these rings in courtship for a millenia."
+	desc = "An expensive ring, studded with a diamond. Cultures have used these rings in courtship for a millenia."
 	icon_state = "ringdiamond"
+	
+/obj/item/clothing/gloves/ring/diamond/attack_self(mob/user)
+	user.visible_message("<span class='warning'>\The [user] gets down on one knee, presenting \the [src].</span>","<span class='warning'>You get down on one knee, presenting \the [src].</span>")
 
 /obj/item/clothing/gloves/ring/silver
 	name = "silver ring"
