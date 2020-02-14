@@ -57,7 +57,7 @@
 		if("Numpad3")
 			user.body_l_leg()
 			return
-		if ("V")
+		if("V")
 			lay_down()
 			return
 
