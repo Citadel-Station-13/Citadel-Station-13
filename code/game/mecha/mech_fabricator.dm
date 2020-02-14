@@ -349,7 +349,7 @@
 		remove_from_queue(text2num(href_list["remove_from_queue"]))
 		return update_queue_on_page()
 	if(href_list["partset_to_queue"])
-		add_part_set_to_queue(text2num(href_list["partset_to_queue"]))
+		add_part_set_to_queue(href_list["partset_to_queue"])
 		return update_queue_on_page()
 	if(href_list["process_queue"])
 		spawn(0)
