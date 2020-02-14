@@ -174,14 +174,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			A.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			A.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
 	if(istype(A, /obj/item/twohanded/required/cult_bastard) || istype(A, /obj/item/melee/cultblade) && !iscultist(user))
-		var/isbastardsword = FALSE
-		var/obj/item/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
-		if(do_after(user, 40, target = sword))
+		if(do_after(user, 40, target = A))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
-			if(isbastardsword)
-				for(var/obj/item/soulstone/SS in sword.contents)
+			if(istype(A, /obj/item/twohanded/required/cult_bastard))
+				for(var/obj/item/soulstone/SS in A.contents)
 					SS.usability = TRUE
 					for(var/mob/living/simple_animal/shade/EX in SS)
 						SSticker.mode.remove_cultist(EX.mind, 1, 0)
