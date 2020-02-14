@@ -64,9 +64,10 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/valentine/New()
-	..()
-	message = pick("Roses are red / Violets are good / One day while Andy...",
+/obj/item/valentine/Initialize(mapload)
+	message = pick(GLOB.flirts)
+
+GLOBAL_LIST_INIT(flirts, "Roses are red / Violets are good / One day while Andy...",
 					"My love for you is like the singularity. It cannot be contained.",
 					"Will you be my lusty xenomorph maid?",
 					"We go together like the clown and the external airlock.",
