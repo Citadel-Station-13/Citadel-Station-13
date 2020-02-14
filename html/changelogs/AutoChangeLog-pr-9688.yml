@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "humans should now drop gibs when gibbed again."
-  - rscadd: "synths (not to be confused with IPCs), android and corporate species, as well as robotic simple mobs, will now spawn robotic giblets instead of organic ones."

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Rosary beads prayer now works on non-carbon mobs too, and won't break when performed on a monkey or other humanoids."
-  - tweak: "You can flagellate people with rosary beads on harm intent. It's even mediocrer than the sord though."

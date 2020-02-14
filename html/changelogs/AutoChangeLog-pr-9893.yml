@@ -1,5 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - bugfix: "Threat log now accurately represents what actually used the threat."
-  - tweak: "Verbose threat log (admin-only) now shows ALL threat level changes."

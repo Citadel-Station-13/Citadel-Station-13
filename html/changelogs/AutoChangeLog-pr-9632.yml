@@ -1,5 +1,0 @@
-author: "Kevinz000, Cruix, MrStonedOne, Denton, Kmc2000, Anturk, MrDoomBringer, Dennok, TheChosenEvilOne, Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "Added support for Multi-Z power, atmospherics and disposals"
-  - bugfix: "massive service department nerf: space can no longer be extra crispy."

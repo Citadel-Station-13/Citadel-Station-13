@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the little issue of PDA skins not updating on job equip."
-  - tweak: "Anomaly Crystals of the clowning type will now rename the victim to their clown name preference when triggered, instead of giving them a random clown name."

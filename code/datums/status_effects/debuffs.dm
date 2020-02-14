@@ -33,7 +33,6 @@
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
-
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
@@ -80,14 +79,13 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-//TASER
-/datum/status_effect/electrode
-	id = "tased"
-	blocks_combatmode = TRUE
-	status_type = STATUS_EFFECT_REPLACE
+/datum/status_effect/no_combat_mode
+	id = "no_combat_mode"
 	alert_type = null
+	status_type = STATUS_EFFECT_REPLACE
+	blocks_combatmode = TRUE
 
-/datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
@@ -95,20 +93,73 @@
 		var/mob/living/carbon/C = owner
 		if(C.combatmode)
 			C.toggle_combat_mode(TRUE)
-		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
+
+/datum/status_effect/no_combat_mode/mesmerize
+	id = "Mesmerize"
+	alert_type = /obj/screen/alert/status_effect/mesmerized
+
+/datum/status_effect/no_combat_mode/mesmerize/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+
+/datum/status_effect/no_combat_mode/mesmerize/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+
+/obj/screen/alert/status_effect/mesmerized
+	name = "Mesmerized"
+	desc = "You cant tear your sight from who is in front of you...Their gaze is simply too enthralling.."
+	icon = 'icons/mob/actions/bloodsucker.dmi'
+	icon_state = "power_mez"
+
+/datum/status_effect/electrode
+	id = "tased"
+	var/slowdown = 1.5
+	var/slowdown_priority = 50		//to make sure the stronger effect overrides
+	var/affect_crawl = FALSE
+	var/nextmove_modifier = 1
+	var/stamdmg_per_ds = 1		//a 20 duration would do 20 stamdmg, disablers do 24 or something
+	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
+
+/datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration)) //TODO, figure out how to grab from subtype
+		duration = set_duration
+	. = ..()
+	last_tick = world.time
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(C.combatmode)
+			C.toggle_combat_mode(TRUE)
+		C.add_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]", TRUE, priority = slowdown_priority, override = TRUE, multiplicative_slowdown = slowdown, blacklisted_movetypes = affect_crawl? NONE : CRAWLING)
 
 /datum/status_effect/electrode/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.remove_movespeed_modifier(MOVESPEED_ID_TASED_STATUS)
+		C.remove_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]")
 	. = ..()
 
 /datum/status_effect/electrode/tick()
+	var/diff = world.time - last_tick
 	if(owner)
-		owner.adjustStaminaLoss(5) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+		owner.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+	last_tick = world.time
 
 /datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
-	return 2
+	return nextmove_modifier
+
+/datum/status_effect/electrode/no_combat_mode
+	id = "tased_strong"
+	slowdown = 8
+	slowdown_priority = 100
+	nextmove_modifier = 2
+	blocks_combatmode = TRUE
+
+/datum/status_effect/electrode/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(C.combatmode)
+			C.toggle_combat_mode(TRUE)
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
@@ -281,7 +332,7 @@
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)
-		owner.reagents.del_reagent("holywater") //can't be deconverted
+		owner.reagents.del_reagent(/datum/reagent/water/holywater) //can't be deconverted
 
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
@@ -388,6 +439,19 @@
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
 
+/datum/status_effect/neck_slice
+	id = "neck_slice"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	duration = -1
+
+/datum/status_effect/neck_slice/tick()
+	var/mob/living/carbon/human/H = owner
+	if(H.stat == DEAD || H.bleed_rate <= 8)
+		H.remove_status_effect(/datum/status_effect/neck_slice)
+	if(prob(10))
+		H.emote(pick("gasp", "gag", "choke"))
+
 /mob/living/proc/apply_necropolis_curse(set_curse, duration = 10 MINUTES)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	if(!set_curse)
@@ -481,7 +545,7 @@
 	deltimer(timerid)
 
 
-//Kindle: Used by servants of Ratvar. 10-second knockdown, reduced by 1 second per 5 damage taken while the effect is active.
+//Kindle: Used by servants of Ratvar. 10-second knockdown, reduced by 1 second per 5 damage taken while the effect is active. Does not take into account Oxy-damage
 /datum/status_effect/kindle
 	id = "kindle"
 	status_type = STATUS_EFFECT_UNIQUE
@@ -489,6 +553,7 @@
 	duration = 100
 	alert_type = /obj/screen/alert/status_effect/kindle
 	var/old_health
+	var/old_oxyloss
 
 /datum/status_effect/kindle/tick()
 	owner.Knockdown(15, TRUE, FALSE, 15)
@@ -498,7 +563,9 @@
 		C.stuttering = max(5, C.stuttering)
 	if(!old_health)
 		old_health = owner.health
-	var/health_difference = old_health - owner.health
+	if(!old_oxyloss)
+		old_oxyloss = owner.getOxyLoss()
+	var/health_difference = old_health - owner.health - CLAMP(owner.getOxyLoss() - old_oxyloss,0, owner.getOxyLoss())
 	if(!health_difference)
 		return
 	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as [owner.p_theyre()] harmed!</span>", \
@@ -506,6 +573,7 @@
 	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
 	duration -= health_difference
 	old_health = owner.health
+	old_oxyloss = owner.getOxyLoss()
 
 /datum/status_effect/kindle/on_remove()
 	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
@@ -569,7 +637,7 @@
 	if(do_after(mob_viewer, 35, null, mob_viewer))
 		if(isliving(mob_viewer))
 			var/mob/living/L = mob_viewer
-			to_chat(mob_viewer, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			to_chat(mob_viewer, "<span class='notice'>You successfully remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 

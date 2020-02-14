@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Several fixes and QoL for dullahans. They can see and hear visible and audible messages now, don't need a space helmet they can't wear anyway to be space/temperature proof, can examine things through shiftclick, and, most of all, fixed their head being unpickable. Fixed dullahans gibbing when revived or had their limbs regenerated."

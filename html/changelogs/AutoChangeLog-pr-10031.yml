@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed holodeck sleepers leaving sleeper buffers behind when deleted."

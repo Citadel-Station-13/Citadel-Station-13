@@ -132,6 +132,10 @@
 						pickupTarget = null
 						pickupTimer = 0
 					else if(ismob(pickupTarget.loc)) // in someones hand
+						if(istype(pickupTarget, /obj/item/clothing/head/mob_holder/))
+							var/obj/item/clothing/head/mob_holder/h = pickupTarget
+							if(h && h.held_mob==src)
+								return//dont let them pickpocket themselves
 						var/mob/M = pickupTarget.loc
 						if(!pickpocketing)
 							pickpocketing = TRUE
@@ -365,6 +369,23 @@
 		retaliate(L)
 	return ..()
 
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(M.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(M)
+	else if(M.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+		retaliate(M)
+	return ..()
+
+/mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
+	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(L)
+	return ..()
+
+/mob/living/carbon/monkey/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
+	if(user.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(user)
+	return ..()
+
 /mob/living/carbon/monkey/attack_paw(mob/living/L)
 	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
@@ -382,9 +403,9 @@
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && isliving(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
-/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))

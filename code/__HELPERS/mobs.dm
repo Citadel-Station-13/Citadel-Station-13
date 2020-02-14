@@ -20,8 +20,6 @@
 		else
 			return "000"
 
-#define UNDIE_COLORABLE(U) (U?.has_color)
-
 /proc/random_underwear(gender)
 	if(!GLOB.underwear_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/bottom, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
@@ -76,6 +74,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_wings, GLOB.insect_wings_list)
 	if(!GLOB.insect_fluffs_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_fluff, GLOB.insect_fluffs_list)
+	if(!GLOB.insect_markings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_markings, GLOB.insect_markings_list)
 
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
@@ -151,6 +151,7 @@
 		"caps"				= pick(GLOB.caps_list),
 		"insect_wings"		= pick(GLOB.insect_wings_list),
 		"insect_fluff"		= "None",
+		"insect_markings"     = pick(GLOB.insect_markings_list),
 		"taur"				= "None",
 		"mam_body_markings" = pick(snowflake_markings_list),
 		"mam_ears" 			= pick(snowflake_ears_list),
@@ -178,7 +179,6 @@
 		"balls_cum_rate"	= CUM_RATE,
 		"balls_cum_mult"	= CUM_RATE_MULT,
 		"balls_efficiency"	= CUM_EFFICIENCY,
-		"balls_fluid" 		= "semen",
 		"has_ovi"			= FALSE,
 		"ovi_shape"			= "knotted",
 		"ovi_length"		= 6,
@@ -193,7 +193,6 @@
 		"breasts_color" 	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"breasts_size" 		= pick(GLOB.breasts_size_list),
 		"breasts_shape"		= "Pair",
-		"breasts_fluid" 	= "milk",
 		"breasts_producing" = FALSE,
 		"has_vag"			= FALSE,
 		"vag_shape"			= pick(GLOB.vagina_shapes_list),
@@ -205,7 +204,6 @@
 		"womb_cum_rate"		= CUM_RATE,
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
-		"womb_fluid" 		= "femcum",
 		"ipc_screen"		= "Sunburst",
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",

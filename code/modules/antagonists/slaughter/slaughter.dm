@@ -12,7 +12,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "daemon"
 	icon_living = "daemon"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -33,6 +33,7 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	see_in_dark = 8
+	blood_volume = 0 //No bleeding on getting shot, for skeddadles
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	bloodcrawl = BLOODCRAWL_EAT
 	var/playstyle_string = "<span class='big bold'>You are a slaughter demon,</span><B> a terrible creature from another realm. You have a single desire: To kill.  \
@@ -99,10 +100,9 @@
 	if(M.mind)
 		M.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl(null))
 
-/obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
-	..()
-	if(M.mind)
-		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
+/obj/item/organ/heart/demon/Remove(special = FALSE)
+	owner?.mind?.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
+	return ..()
 
 /obj/item/organ/heart/demon/Stop()
 	return 0 // Always beating.

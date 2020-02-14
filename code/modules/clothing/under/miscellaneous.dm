@@ -131,6 +131,9 @@
 	item_color = "officer"
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/centcom_officer/syndicate
+	has_sensor = NO_SENSORS
+
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
 	name = "\improper CentCom officer's jumpsuit"
@@ -467,6 +470,34 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
+/obj/item/clothing/under/sundresswhite
+	name = "white sundress"
+	desc = "Makes you want to frolic in a field of lillies."
+	icon_state = "sundress_white"
+	item_state = "sundress"
+	item_color = "sundress_white"
+	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/greendress
+	name = "green dress"
+	desc = "A tight green dress"
+	icon_state = "dress_green"
+	item_color = "dress_green"
+	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/pinkdress
+	name = "pink dress"
+	desc = "A tight pink dress"
+	icon_state = "dress_pink"
+	item_color = "dress_pink"
+	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
 /obj/item/clothing/under/captainparade
 	name = "captain's parade uniform"
 	desc = "A captain's luxury-wear, for special occasions."
@@ -500,12 +531,40 @@
 	item_color = "assistant_formal"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/staffassistant
+	name = "staff assistant's jumpsuit"
+	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
+	icon = 'goon/icons/obj/item_js_rank.dmi'
+	alternate_worn_icon = 'goon/icons/mob/worn_js_rank.dmi'
+	icon_state = "assistant"
+	item_state = "gy_suit"
+	item_color = "assistant"
+	mutantrace_variation = NONE
+
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
 	desc = "Filled with Latin fire."
 	icon_state = "black_tango"
 	item_state = "wcoat"
 	item_color = "black_tango"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/westernbustle
+	name = "western bustle dress"
+	desc = "Filled with Western fire."
+	icon_state = "western_bustle"
+	item_state = "wcoat"
+	item_color = "western_bustle"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/flamenco
+	name = "flamenco dress"
+	desc = "Filled with Latin fire."
+	icon_state = "flamenco"
+	item_state = "wcoat"
+	item_color = "flamenco"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -525,6 +584,43 @@
 	icon_state = "sailor_dress"
 	item_state = "sailordress"
 	item_color = "sailor_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/flowerdress
+	name = "flower dress"
+	desc = "Lovely dress"
+	icon_state = "flower_dress"
+	item_state = "sailordress"
+	item_color = "flower_dress"
+	body_parts_covered = CHEST|GROIN|LEGS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/sweptskirt
+	name = "swept skirt"
+	desc = "Formal skirt"
+	icon_state = "skirt_swept"
+	item_color = "skirt_swept"
+	body_parts_covered = GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/corset
+	name = "black corset"
+	desc = "Nanotrasen is not resposible for any organ damage"
+	icon_state = "corset"
+	item_color = "corset"
+	body_parts_covered = CHEST|GROIN
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/croptop
+	name = "crop top"
+	desc = "We've saved money by giving you half a shirt!"
+	icon_state = "croptop"
+	item_color = "croptop"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -667,7 +763,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
 	slowdown = 1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 	can_adjust = FALSE
 	strip_delay = 80
 	var/next_extinguish = 0
@@ -821,3 +917,175 @@
 	can_adjust = FALSE
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
+
+/obj/item/clothing/under/christmas/christmasmaler
+	name = "red masculine christmas suit"
+	desc = "A simple red christmas suit that looks close to Santa's!"
+	icon_state = "christmasmaler"
+	item_state = "christmasmaler"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+
+/obj/item/clothing/under/christmas/christmasmaleg
+	name = "green masculine christmas suit"
+	desc = "A simple green christmas suit that smells minty!"
+	icon_state = "christmasmaleg"
+	item_state = "christmasmaleg"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+
+/obj/item/clothing/under/christmas/christmasfemaler
+	name = "red feminine christmas suit"
+	desc = "A simple red christmas suit that looks like Mrs Claus!"
+	icon_state = "christmasfemaler"
+	item_state = "christmasfemaler"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+
+/obj/item/clothing/under/christmas/christmasfemaleg
+	name = "green feminine christmas suit"
+	desc = "A simple green christmas suit that smells minty!"
+	icon_state = "christmasfemaleg"
+	item_state = "christmasfemaleg"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+
+// Lunar Clothes
+/obj/item/clothing/under/lunar/qipao
+	name = "Black Qipao"
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is black."
+	icon_state = "qipao"
+	item_state = "qipao"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/qipao/white
+	name = "White Qipao"
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is white."
+	icon_state = "qipao_white"
+	item_state = "qipao_white"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/qipao/red
+	name = "Red Qipao"
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is red."
+	icon_state = "qipao_red"
+	item_state = "qipao_red"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/cheongsam
+	name = "Black Cheongsam"
+	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is black."
+	icon_state = "cheong"
+	item_state = "cheong"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/cheongsam/white
+	name = "White Cheongsam"
+	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is white."
+	icon_state = "cheongw"
+	item_state = "cheongw"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/lunar/cheongsam/red
+	name = "Red Cheongsam"
+	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is red.."
+	icon_state = "cheongr"
+	item_state = "cheongr"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/squatter_outfit
+	name = "slav squatter tracksuit"
+	desc = "Cyka blyat."
+	icon_state = "squatteroutfit"
+	item_state = "squatteroutfit"
+	item_color = "squatteroutfit"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/russobluecamooutfit
+	name = "russian blue camo"
+	desc = "Drop and give me dvadtsat!"
+	icon_state = "russobluecamo"
+	item_state = "russobluecamo"
+	item_color = "russobluecamo"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/keyholesweater
+	name = "keyhole sweater"
+	desc = "What is the point of this, anyway?"
+	icon_state = "keyholesweater"
+	item_state = "keyholesweater"
+	item_color = "keyholesweater"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/stripper_pink
+	name = "pink stripper outfit"
+	icon_state = "stripper_p"
+	item_state = "stripper_p"
+	item_color = "stripper_p"
+
+/obj/item/clothing/under/stripper_green
+	name = "green stripper outfit"
+	icon_state = "stripper_g"
+	item_state = "stripper_g"
+	item_color = "stripper_g"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/mankini
+	name = "pink mankini"
+	icon_state = "mankini"
+	item_state = "mankini"
+	item_color = "mankini"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/wedding
+	name = "white wedding dress"
+	desc = "A white wedding gown made from the finest silk."
+	icon_state = "bride_white"
+	item_state = "bride_white"
+	item_color = "bride_white"
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/wedding/orange
+	name = "orange wedding dress"
+	desc = "A big and puffy orange dress."
+	icon_state = "bride_orange"
+	item_state = "bride_orange"
+	item_color = "bride_orange"
+
+/obj/item/clothing/under/wedding/purple
+	name = "purple wedding dress"
+	desc = "A big and puffy purple dress."
+	icon_state = "bride_purple"
+	item_state = "bride_purple"
+	item_color = "bride_purple"
+
+/obj/item/clothing/under/wedding/blue
+	name = "blue wedding dress"
+	desc = "A big and puffy blue dress."
+	icon_state = "bride_blue"
+	item_state = "bride_blue"
+	item_color = "bride_blue"
+
+/obj/item/clothing/under/wedding/red
+	name = "red wedding dress"
+	desc = "A big and puffy red dress."
+	icon_state = "bride_red"
+	item_state = "bride_red"
+	item_color = "bride_red"

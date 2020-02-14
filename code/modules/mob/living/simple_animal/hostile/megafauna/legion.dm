@@ -137,7 +137,7 @@ Difficulty: Medium
 		if(last_legion)
 			loot = list(/obj/item/staff/storm)
 			elimination = 0
-		else if(prob(5))
+		else if(prob(20))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 
@@ -170,7 +170,7 @@ Difficulty: Medium
 		to_chat(user, "<span class='warning'>The staff is still recharging!</span>")
 		return
 
-	var/area/user_area = get_area(user)
+	var/area/user_area = get_base_area(user)
 	var/turf/user_turf = get_turf(user)
 	if(!user_area || !user_turf || (user_area.type in excluded_areas))
 		to_chat(user, "<span class='warning'>Something is preventing you from using the staff here.</span>")

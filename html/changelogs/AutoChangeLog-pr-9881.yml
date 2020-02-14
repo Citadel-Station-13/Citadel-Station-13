@@ -1,4 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - rscadd: "Dynamic voting now features extended, if recent rounds have been chaotic."

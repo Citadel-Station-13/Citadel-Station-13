@@ -57,14 +57,11 @@ GLOBAL_LIST_EMPTY(ipc_antennas_list)
 
 	//Genitals and Arousal Lists
 GLOBAL_LIST_EMPTY(genitals_list)
-GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
-GLOBAL_LIST_EMPTY(cock_shapes_icons) //Associated list for names->icon_states for cockshapes.
+GLOBAL_LIST_EMPTY(cock_shapes_list)
 GLOBAL_LIST_EMPTY(gentlemans_organ_names)
 GLOBAL_LIST_EMPTY(balls_shapes_list)
-GLOBAL_LIST_EMPTY(balls_shapes_icons)
 GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
-GLOBAL_LIST_EMPTY(breasts_shapes_icons)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
 GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
 GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
@@ -99,7 +96,7 @@ GLOBAL_LIST_INIT(meat_types, list(
 	"Mammalian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal,
 	"Aquatic" = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic,
 	"Avian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/avian,
-	"Inesct" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect))
+	"Insect" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect))
 
 //Crew objective and miscreants stuff
 GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
@@ -120,6 +117,17 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	if(!isnull(new_flavor))
 		flavor_text = sanitize(new_flavor)
 		to_chat(src, "Your flavor text has been updated.")
+
+//Flavor Text
+/mob/living/carbon/human/verb/set_flavor_2()
+	set name = "Set Temporary Flavor Text"
+	set desc = "Sets a description of your character's current appearance. Use this for emotions, poses etc."
+	set category = "IC"
+
+	var/new_flavor = input(src, "Enter your new temporary flavor text:", "Temporary flavor text", null) as message|null
+	if(!isnull(new_flavor))
+		flavor_text_2 = sanitize(new_flavor)
+		to_chat(src, "Your temporary flavor text has been updated.")
 
 //LOOC toggles
 /client/verb/listen_looc()

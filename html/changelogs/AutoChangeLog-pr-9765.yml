@@ -1,5 +1,0 @@
-author: "dapnee"
-delete-after: True
-changes: 
-  - bugfix: "fixed closet initialisation being broken"
-  - rscdel: "emergency closets no longer have a 1% chance to delete themselves"

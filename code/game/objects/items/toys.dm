@@ -84,7 +84,7 @@
 	else
 		return ..()
 
-/obj/item/toy/balloon/throw_impact(atom/hit_atom)
+/obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		balloon_burst(hit_atom)
 
@@ -338,11 +338,12 @@
 		M.update_inv_hands()
 
 /obj/item/toy/sword/cx/AltClick(mob/living/user)
+	. = ..()
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
+		return TRUE
 
 	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
 		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
@@ -350,8 +351,9 @@
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 		update_light()
+	return TRUE
 
-/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file)
+/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(active)
 		if(isinhands)
@@ -451,6 +453,7 @@
 	force_wielded = 0
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
+	sharpness = IS_BLUNT
 
 /obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
@@ -470,6 +473,7 @@
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
 	slowdown_wielded = 0
+	sharpness = IS_BLUNT
 
 /obj/item/twohanded/dualsaber/hypereutactic/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
@@ -529,7 +533,7 @@
 /obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
 	pop_burst()
 
-/obj/item/toy/snappop/throw_impact(atom/hit_atom)
+/obj/item/toy/snappop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		pop_burst()
 
@@ -1150,7 +1154,7 @@
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
+/obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
 		for(var/mob/M in urange(10, src))
@@ -1199,7 +1203,7 @@
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
-/obj/item/toy/snowball/throw_impact(atom/hit_atom)
+/obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
 		qdel(src)
@@ -1242,7 +1246,7 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	. = ..()
-	. += "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]"
+	. += "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
 
 /*
  * Toy Dagger

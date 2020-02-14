@@ -183,6 +183,23 @@
 	explosion(user.loc, 1, 0, 2, 3, FALSE, FALSE, 2)
 	qdel(src)
 
+/obj/item/book/granter/spell/nuclearfist
+	spell = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+	spellname = "nuclear fist"
+	icon_state ="booknuclearfist"
+	desc = "This book radiates confidence."
+	remarks = list("Line them up....", ".. knock em' down...", "Dress in yellow for maximum effect... why?", "The energy comes from spinach... huh", "Work out for three years? No way!", "Oh I'll cast you a spell allright...", "What ho mighty wizard... ho ho ho...")
+
+/obj/item/book/granter/spell/nuclearfist/recoil(mob/living/carbon/user)
+	..()
+	to_chat(user, "<span class='danger'>Your arm spontaneously detonates!</span>")
+	explosion(user.loc, -1, 0, 2, -1, FALSE, FALSE, 2)
+	var/obj/item/bodypart/part = user.get_holding_bodypart_of_item(src)
+	if(part)
+		part.dismember()
+		qdel(part)
+
+
 /obj/item/book/granter/spell/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
 	spellname = "sacred flame"
@@ -391,6 +408,23 @@
 	remarks = list("I must prove myself worthy to the masters of the sleeping carp...", "Stance means everything...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Grab them first so they don't retaliate...", "I must prove myself worthy of this power...")
 
 /obj/item/book/granter/martial/carp/onlearned(mob/living/carbon/user)
+	..()
+	if(oneuse == TRUE)
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
+/obj/item/book/granter/martial/bass
+	martial = /datum/martial_art/the_rising_bass
+	name = "shifting scroll"
+	martialname = "rising bass"
+	desc = "A paper scroll that seems to move even as you read it, the letters never seem to stay still."
+	greet = "<span class='sciradio'>You have learned the ancient martial art of the Rising Bass. Your skill at running away has increased quite a bit. Use the combos to get away from opponents quickly. Along with this, you now dodge all projectiles and catch anything thrown at you.</span>"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll2"
+	remarks = list("The trick is to disarm them...","Running away helps in many situations...","Never stay still...","Fighting won't help unless you're forced to...", "Crush their limbs to incapacitate them...", "Stay as far away as possible...")
+
+/obj/item/book/granter/martial/bass/onlearned(mob/living/carbon/user)
 	..()
 	if(oneuse == TRUE)
 		desc = "It's completely blank."

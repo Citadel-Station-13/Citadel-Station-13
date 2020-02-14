@@ -1,4 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - bugfix: "From-ghosts dynamic rulesets now actually listen to \"required candidates\""

@@ -317,7 +317,7 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
-/obj/item/clothing/suit/security/officer/russian
+/obj/item/clothing/suit/armor/navyblue/russian
 	name = "\improper Russian officer's jacket"
 	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
 	icon_state = "officertanjacket"
@@ -325,17 +325,16 @@
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/ran
-	name = "Shikigami costume"
+	name = "shikigami costume"
 	desc = "A costume that looks like a certain shikigami, is super fluffy."
 	icon_state = "ran_suit"
 	item_state = "ran_suit"
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
-//2061
 
 /obj/item/clothing/head/ran
-	name = "Shikigami hat"
+	name = "shikigami hat"
 	desc = "A hat that looks like it keeps any fluffy ears contained super warm, has little charms over it."
 	icon_state = "ran_hat"
 	item_state = "ran_hat"
@@ -742,6 +741,7 @@
 	name = "assistant's formal winter coat"
 	icon_state = "coataformal"
 	item_state = "coataformal"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter,/obj/item/clothing/gloves/color/yellow)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/aformal
 
 /obj/item/clothing/head/hooded/winterhood/aformal
@@ -762,7 +762,10 @@
 	name = "ratvarian winter coat"
 	icon_state = "coatratvar"
 	item_state = "coatratvar"
+	armor = list("melee" = 30, "bullet" = 45, "laser" = -10, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/clockwork/replica_fabricator, /obj/item/clockwork/integration_cog, /obj/item/clockwork/slab, /obj/item/clockwork/weapon/ratvarian_spear)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/ratvar
+	var/real = TRUE
 
 /obj/item/clothing/head/hooded/winterhood/ratvar
 	icon_state = "winterhood_ratvar"
@@ -770,14 +773,74 @@
 	light_power = 1
 	light_color = "#B18B25" //clockwork slab background top color
 
+/obj/item/clothing/suit/hooded/wintercoat/ratvar/equipped(mob/living/user,slot)
+	..()
+	if (slot != SLOT_WEAR_SUIT || !real)
+		return
+	if (is_servant_of_ratvar(user))
+		return
+	else
+		user.dropItemToGround(src)
+		to_chat(user,"<span class='large_brass'>\"Amusing that you think you are fit to wear this.\"</span>")
+		to_chat(user,"<span class='userdanger'>Your skin burns where the coat touched your skin!</span>")
+		user.adjustFireLoss(rand(10,16))
+
 /obj/item/clothing/suit/hooded/wintercoat/narsie
 	name = "narsian winter coat"
 	icon_state = "coatnarsie"
 	item_state = "coatnarsie"
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 30,"energy" = 10, "bomb" = 30, "bio" = 10, "rad" = 10, "fire" = 30, "acid" = 30)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/restraints/legcuffs/bola/cult,/obj/item/melee/cultblade,/obj/item/melee/cultblade/dagger,/obj/item/reagent_containers/glass/beaker/unholywater,/obj/item/cult_shift,/obj/item/flashlight/flare/culttorch,/obj/item/twohanded/cult_spear)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/narsie
+	var/real = TRUE
+
+/obj/item/clothing/suit/hooded/wintercoat/narsie/equipped(mob/living/user,slot)
+	..()
+	if (slot != SLOT_WEAR_SUIT || !real)
+		return
+	if (iscultist(user))
+		return
+	else
+		user.dropItemToGround(src)
+		to_chat(user,"<span class='cultlarge'>\"You are not fit to wear my follower's coat!\"</span>")
+		to_chat(user,"<span class='userdanger'>Sharp spines jab you from within the coat!</span>")
+		user.adjustBruteLoss(rand(10,16))
 
 /obj/item/clothing/head/hooded/winterhood/narsie
 	icon_state = "winterhood_narsie"
+
+/obj/item/clothing/suit/hooded/wintercoat/ratvar/fake
+	name = "brass winter coat"
+	icon_state = "coatratvar"
+	item_state = "coatratvar"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	real = FALSE
+
+/obj/item/clothing/suit/hooded/wintercoat/narsie/fake
+	name = "runed winter coat"
+	icon_state = "coatnarsie"
+	item_state = "coatnarsie"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	real = FALSE
+
+/obj/item/clothing/suit/hooded/wintercoat/durathread
+	name = "durathread winter coat"
+	desc = "The one coat to rule them all. Extremely durable while providing the utmost comfort."
+	icon_state = "coatdurathread"
+	item_state = "coatdurathread"
+	armor = list("melee" = 15, "bullet" = 8, "laser" = 25, "energy" = 5, "bomb" = 12, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/durathread
+
+/obj/item/clothing/suit/hooded/wintercoat/durathread/Initialize()
+	. = ..()
+	allowed = GLOB.security_wintercoat_allowed
+
+/obj/item/clothing/head/hooded/winterhood/durathread
+	icon_state = "winterhood_durathread"
+	armor = list("melee" = 20, "bullet" = 8, "laser" = 15, "energy" = 8, "bomb" = 25, "bio" = 10, "rad" = 15, "fire" = 75, "acid" = 37)
+
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"
@@ -816,7 +879,6 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	resistance_flags = NONE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
 
 /obj/item/clothing/suit/assu_suit
@@ -828,3 +890,108 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
+
+/obj/item/clothing/suit/hooded/wintercoat/christmascoatr
+	name = "red christmas coat"
+	desc = "A festive red Christmas coat! Smells like Candy Cane!"
+	icon_state = "christmascoatr"
+	item_state = "christmascoatr"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodr
+
+/obj/item/clothing/head/hooded/winterhood/christmashoodr
+	icon_state = "christmashoodr"
+
+/obj/item/clothing/suit/hooded/wintercoat/christmascoatg
+	name = "green christmas coat"
+	desc = "A festive green Christmas coat! Smells like Candy Cane!"
+	icon_state = "christmascoatg"
+	item_state = "christmascoatg"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodg
+
+/obj/item/clothing/head/hooded/winterhood/christmashoodg
+	icon_state = "christmashoodg"
+
+/obj/item/clothing/suit/hooded/wintercoat/christmascoatrg
+	name = "red and green christmas coat"
+	desc = "A festive red and green Christmas coat! Smells like Candy Cane!"
+	icon_state = "christmascoatrg"
+	item_state = "christmascoatrg"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/christmashoodrg
+
+/obj/item/clothing/head/hooded/winterhood/christmashoodrg
+	icon_state = "christmashoodrg"
+
+/obj/item/clothing/suit/hooded/wintercoat/polychromic
+	name = "polychromic winter coat"
+	icon_state = "coatpoly"
+	item_state = "coatpoly"
+	item_color = "coatpoly"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic
+	hasprimary = TRUE
+	hassecondary = TRUE
+	hastertiary = TRUE
+	primary_color = "#6A6964"
+	secondary_color = "#C4B8A6"
+	tertiary_color = "#0000FF"
+
+/obj/item/clothing/head/hooded/winterhood/polychromic
+	icon_state = "winterhood_poly"
+	item_color = "winterhood_poly"
+	item_state = "winterhood_poly"
+
+/obj/item/clothing/head/hooded/winterhood/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
+	. = ..()
+	if(suit.hasprimary | suit.hassecondary)
+		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
+			if(suit.hasprimary)	//checks if overlays are enabled
+				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary")	//automagical sprite selection
+				primary_worn.color = suit.primary_color	//colors the overlay
+				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+			if(suit.hassecondary)
+				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary")
+				secondary_worn.color = suit.secondary_color
+				. += secondary_worn
+
+/obj/item/clothing/suit/hooded/wintercoat/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
+	. = ..()
+	if(hasprimary | hassecondary | hastertiary)
+		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
+			if(hasprimary)	//checks if overlays are enabled
+				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary[suittoggled ? "_t" : ""]")	//automagical sprite selection
+				primary_worn.color = primary_color	//colors the overlay
+				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+			if(hassecondary)
+				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary[suittoggled ? "_t" : ""]")
+				secondary_worn.color = secondary_color
+				. += secondary_worn
+			if(hastertiary)
+				var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[item_color]-tertiary[suittoggled ? "_t" : ""]")
+				tertiary_worn.color = tertiary_color
+				. += tertiary_worn
+
+/obj/item/clothing/suit/hooded/wintercoat/AltClick(mob/user)
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(hasprimary | hassecondary | hastertiary)
+		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
+		switch(choice)	//Lets the list's options actually lead to something
+			if("Primary Color")
+				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
+				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
+					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
+				update_icon()	//updates the item icon
+				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
+			if("Secondary Color")
+				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
+				if(secondary_color_input)
+					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+			if("Tertiary Color")
+				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
+				if(tertiary_color_input)
+					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+	return TRUE

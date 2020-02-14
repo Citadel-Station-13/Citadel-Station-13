@@ -110,6 +110,7 @@
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/mob/listeningTo
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	var/range = null
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
@@ -130,7 +131,8 @@
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
-	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
 
 /obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
@@ -141,12 +143,21 @@
 		return
 	if (istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
+	if(issilicon(user))
+		var/mob/living/silicon/robot/borgo = user
+		for(var/obj/item/cyborg_clamp/C in borgo.module.modules)
+			for(var/obj/structure/ore_box/B in C)
+				box = B
+
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
 		for(var/A in tile)
 			if (!is_type_in_typecache(A, STR.can_hold))
 				continue
 			if (box)
+				if(range)
+					for(var/obj/item/stack/ore/ore in range(range, user))
+						user.transferItemToLoc(ore, box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
 			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
@@ -168,6 +179,7 @@
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
+	range = 1
 
 /obj/item/storage/bag/ore/cyborg/ComponentInitialize()
 	. = ..()
@@ -387,10 +399,12 @@
 /obj/item/storage/bag/bio/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows you to pick up Lungs, Liver, and Stomach
 	STR.max_combined_w_class = 200
 	STR.max_items = 25
 	STR.insert_preposition = "in"
-	STR.can_hold = typecacheof(list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.can_hold = typecacheof(list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube, /obj/item/organ, /obj/item/reagent_containers/food/snacks/meat/slab, /obj/item/bodypart))
+	STR.cant_hold = typecacheof(list(/obj/item/organ/brain, /obj/item/organ/liver/cybernetic, /obj/item/organ/heart/cybernetic, /obj/item/organ/lungs/cybernetic, /obj/item/organ/tongue/cybernetic, /obj/item/organ/ears/cybernetic, /obj/item/organ/eyes/robotic, /obj/item/organ/cyberimp))
 
 /obj/item/storage/bag/bio/holding
 	name = "bio bag of holding"

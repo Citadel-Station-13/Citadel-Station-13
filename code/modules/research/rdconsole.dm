@@ -52,13 +52,12 @@ Nothing else in the console has ID requirements.
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
-	if (copytext(ID, 1, 2) == "$" && GLOB.materials_list[ID])
-		var/datum/material/material = GLOB.materials_list[ID]
-		return material.name
-
-	else if(GLOB.chemical_reagents_list[ID])
+	if(GLOB.chemical_reagents_list[ID])
 		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
 		return reagent.name
+	if (ID[1] == "$" && GLOB.materials_list[ID])
+		var/datum/material/material = GLOB.materials_list[ID]
+		return material.name
 	return "ERROR: Report This"
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
@@ -394,7 +393,7 @@ Nothing else in the console has ID requirements.
 	l += "<h3>Chemical Storage:</h3>"
 	for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
 		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeP=[R.id]'>Purge</A>"
+		l += "<A href='?src=[REF(src)];disposeP=[R]'>Purge</A>"
 	l += "</div>"
 	return l
 
@@ -497,7 +496,7 @@ Nothing else in the console has ID requirements.
 	l += "<h3>Chemical Storage:</h3>"
 	for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
 		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A>"
+		l += "<A href='?src=[REF(src)];disposeI=[R]'>Purge</A>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
@@ -833,8 +832,8 @@ Nothing else in the console has ID requirements.
 	for(var/i in 1 to length(ui))
 		if(!findtextEx(ui[i], RDSCREEN_NOBREAK))
 			ui[i] += "<br>"
-		ui[i] = replacetextEx(ui[i], RDSCREEN_NOBREAK, "")
-	return ui.Join("")
+	. = ui.Join("")
+	return replacetextEx(., RDSCREEN_NOBREAK, "")
 
 /obj/machinery/computer/rdconsole/Topic(raw, ls)
 	if(..())

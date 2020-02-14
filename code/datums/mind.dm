@@ -88,6 +88,9 @@
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	var/old_character = current
+	var/signals = SEND_SIGNAL(new_character, COMSIG_MOB_PRE_PLAYER_CHANGE, new_character, old_character) | SEND_SIGNAL(src, COMSIG_PRE_MIND_TRANSFER, new_character, old_character)
+	if(signals & COMPONENT_STOP_MIND_TRANSFER)
+		return
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
@@ -125,17 +128,18 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
-	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 
 //CIT CHANGE - makes arousal update when transfering bodies
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
 		var/mob/living/L = new_character
-		if(L.client && L.client.prefs)
-			L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
-			L.update_arousal_hud() //Removes the old icon
+		if(L.client?.prefs && L.client.prefs.auto_ooc && L.client.prefs.chat_toggles & CHAT_OOC)
+			DISABLE_BITFIELD(L.client.prefs.chat_toggles,CHAT_OOC)
+
+	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
+	SEND_SIGNAL(new_character, COMSIG_MOB_ON_NEW_MIND)
 
 /datum/mind/proc/store_memory(new_text)
-	if((length(memory) + length(new_text)) <= MAX_MESSAGE_LEN)
+	if((length_char(memory) + length_char(new_text)) <= MAX_MESSAGE_LEN)
 		memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
@@ -405,7 +409,7 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
+		var/new_memo = stripped_multiline_input(usr, "Write new memory", "Memory", memory, MAX_MESSAGE_LEN)
 		if (isnull(new_memo))
 			return
 		memory = new_memo
@@ -454,6 +458,7 @@
 
 			var/list/allowed_types = list(
 				/datum/objective/assassinate,
+				/datum/objective/assassinate/once,
 				/datum/objective/maroon,
 				/datum/objective/debrain,
 				/datum/objective/protect,
@@ -517,7 +522,7 @@
 		if(!objective)
 			to_chat(usr,"Invalid objective.")
 			return
-		//qdel(objective) Needs cleaning objective destroys
+		qdel(objective) //TODO: Needs cleaning objective destroys (whatever that means)
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
 
@@ -740,6 +745,7 @@
 	else
 		mind = new /datum/mind(key)
 		SSticker.minds += mind
+		SEND_SIGNAL(src, COMSIG_MOB_ON_NEW_MIND)
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src

@@ -94,6 +94,7 @@
 		qdel(src)
 
 /obj/vehicle/ridden/scooter/skateboard/AltClick(mob/user)
+	. = ..()
 	var/datum/component/riding/R = src.GetComponent(/datum/component/riding)
 	if (!adjusted_speed)
 		R.vehicle_move_delay = 0
@@ -103,6 +104,7 @@
 		R.vehicle_move_delay = 1
 		to_chat(user, "<span class='notice'>You adjust the wheels on [src] to make it go slower.</span>")
 		adjusted_speed = FALSE
+	return TRUE
 
 //CONSTRUCTION
 /obj/item/scooter_frame

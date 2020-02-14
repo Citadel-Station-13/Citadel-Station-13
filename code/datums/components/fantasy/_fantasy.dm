@@ -30,11 +30,13 @@
 	return ..()
 
 /datum/component/fantasy/RegisterWithParent()
+	. = ..()
 	var/obj/item/master = parent
 	originalName = master.name
 	modify()
 
 /datum/component/fantasy/UnregisterFromParent()
+	. = ..()
 	unmodify()
 
 /datum/component/fantasy/InheritComponent(datum/component/fantasy/newComp, original, list/arguments)

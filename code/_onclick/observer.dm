@@ -31,7 +31,7 @@
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"])
-		AltClickNoInteract(src, A)
+		altclick_listed_turf(A)
 		return
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)

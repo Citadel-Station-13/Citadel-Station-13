@@ -1,4 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - bugfix: "Every dynamic-triggered event is now blacklisted from being triggered by the random events system when dynamic can trigger them."

@@ -16,7 +16,7 @@
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
 	canmove = FALSE
 	status_flags = CANSTUN|CANPUSH
@@ -101,6 +101,7 @@
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
@@ -176,13 +177,13 @@
 	fire_stacks = 0
 	. = ..()
 
-/mob/living/silicon/ai/proc/set_core_display_icon(client/C)
+/mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
 	if(client && !C)
 		C = client
-	if(!(C?.prefs?.preferred_ai_core_display))
-		icon_state = display_icon_override || initial(icon_state)
+	if(!input && !C?.prefs?.preferred_ai_core_display)
+		icon_state = initial(icon_state)
 	else
-		var/preferred_icon = display_icon_override || C.prefs.preferred_ai_core_display
+		var/preferred_icon = input ? input : C.prefs.preferred_ai_core_display
 		icon_state = resolve_ai_icon(preferred_icon)
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -202,8 +203,9 @@
 
 	if(!ai_core_icon || incapacitated())
 		return
+
 	display_icon_override = ai_core_icon
-	set_core_display_icon()
+	set_core_display_icon(ai_core_icon)
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -259,15 +261,6 @@
 	viewalerts = 1
 	src << browse(dat, "window=aialerts&can_close=0")
 
-/mob/living/silicon/ai/proc/ai_roster()
-	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
-
-	dat += GLOB.data_core.get_manifest()
-	dat += "</body></html>"
-
-	src << browse(dat, "window=airoster")
-	onclose(src, "airoster")
-
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
 		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
@@ -319,9 +312,16 @@
 		return // stop
 	if(incapacitated())
 		return
-	anchored = !anchored // Toggles the anchor
+	var/is_anchored = FALSE
+	if(move_resist == MOVE_FORCE_OVERPOWERING)
+		move_resist = MOVE_FORCE_NORMAL
+		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
+	else
+		is_anchored = TRUE
+		move_resist = MOVE_FORCE_OVERPOWERING
+		ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 
-	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
@@ -600,7 +600,10 @@
 	if(incapacitated())
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	emote_display = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/n_emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	if(!n_emote)
+		return
+	emote_display = n_emote
 	for (var/each in GLOB.ai_status_displays) //change status of displays
 		var/obj/machinery/status_display/ai/M = each
 		M.emotion = emote_display
@@ -677,18 +680,23 @@
 				"green face" = 'icons/mob/ai.dmi',
 				"xeno queen" = 'icons/mob/alien.dmi',
 				"horror" = 'icons/mob/ai.dmi',
-				"creature" = 'icons/mob/ai.dmi'
+				"creature" = 'icons/mob/ai.dmi',
+				"custom"
 				)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
 			if(input)
 				qdel(holo_icon)
 				switch(input)
-					if("xeno queen")
+					if("custom")
+						if(client?.prefs?.custom_holoform_icon)
+							holo_icon = client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
+						else
+							holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
+					else if("xeno queen")
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
-	return
 
 /mob/living/silicon/ai/proc/corereturn()
 	set category = "Malfunction"
@@ -887,7 +895,7 @@
 	. = ..()
 	if(.) //successfully ressuscitated from death
 		set_eyeobj_visible(TRUE)
-		set_core_display_icon()
+		set_core_display_icon(display_icon_override)
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null

@@ -15,6 +15,13 @@
 
 	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
+	var/vampDesc = ReturnVampExamine(user) // Vamps recognize the names of other vamps.
+	var/vassDesc = ReturnVassalExamine(user) // Vassals recognize each other's marks.
+	if (vampDesc != "") // If we don't do it this way, we add a blank space to the string...something to do with this -->  . += ""
+		. += vampDesc
+	if (vassDesc != "")
+		. += vassDesc
+
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
@@ -34,7 +41,7 @@
 		var/accessory_msg
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
-			if(U.attached_accessory)
+			if(U.attached_accessory && !(U.attached_accessory.flags_inv & HIDEACCESSORY) && !(U.flags_inv & HIDEACCESSORY))
 				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
 
 		. += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_msg]."
@@ -92,6 +99,10 @@
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
 		else if(eye_color == BLOODCULT_EYE && iscultist(src) && HAS_TRAIT(src, TRAIT_CULT_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
+		else if(HAS_TRAIT(src, TRAIT_HIJACKER))
+			var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
+			if (H && !H.stealthmode && H.toggled)
+				. += "<b><font color=orange>[t_His] eyes are flickering a bright yellow!</font></b>"
 
 	//ears
 	if(ears && !(SLOT_EARS in obscured))
@@ -237,18 +248,18 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
-	if(blood_volume < (BLOOD_VOLUME_SAFE*blood_ratio))
+	if(ShowAsPaleExamine())
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
 	else if(bleed_rate)
-		if(reagents.has_reagent("heparin"))
+		if(bleed_rate >= 8) //8 is the rate at which heparin causes you to bleed
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
 
-	if(reagents.has_reagent("teslium"))
+	if(reagents.has_reagent(/datum/reagent/teslium))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
 	if(islist(stun_absorption))
@@ -271,7 +282,7 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
-	if(reagents.has_reagent("astral"))
+	if(reagents.has_reagent(/datum/reagent/fermi/astral))
 		if(mind)
 			msg += "[t_He] has wild, spacey eyes and they have a strange, abnormal look to them.\n"
 		else
@@ -301,7 +312,7 @@
 	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
 	if(Vc)
 		if(istype(Vc, /obj/item/organ/vocal_cords/velvet))
-			if(client?.prefs.lewdchem)
+			if(client.prefs.cit_toggles & HYPNO)
 				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>\n"
 
 
@@ -378,13 +389,18 @@
 	else if(isobserver(user) && traitstring)
 		. += "<span class='info'><b>Traits:</b> [traitstring]</span>"
 
-	if(print_flavor_text())
-		if(get_visible_name() == "Unknown")	//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
-			. += "...?"
-		else if(skipface) //Sometimes we're not unknown, but impersonating someone in a hardsuit, let's not reveal our flavor text then either.
-			. += "...?"
-		else
-			. += "[print_flavor_text()]"
+	//No flavor text unless the face can be seen. Prevents certain metagaming with impersonation.
+	var/invisible_man = skipface || get_visible_name() == "Unknown"
+	if(invisible_man)
+		. += "...?"
+	else
+		var/flavor = print_flavor_text()
+		if(flavor)
+			. += flavor
+		var/temp_flavor = print_flavor_text_2()
+		if(temp_flavor)
+			. += temp_flavor
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 	. += "*---------*</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!

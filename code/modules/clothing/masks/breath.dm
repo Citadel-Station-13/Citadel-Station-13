@@ -13,7 +13,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/mask/breath/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is wrapping \the [src]'s tube around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -23,11 +23,11 @@
 	adjustmask(user)
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	else
-		adjustmask(user)
+	adjustmask(user)
+	return TRUE
 
 /obj/item/clothing/mask/breath/examine(mob/user)
 	. = ..()

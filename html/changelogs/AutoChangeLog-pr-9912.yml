@@ -1,7 +1,0 @@
-author: "Owai-Seek"
-delete-after: True
-changes: 
-  - rscadd: "15+ new crates for cargo"
-  - tweak: "organizes crates and moving them to proper categories"
-  - rscdel: "some dumb stuff like toner crates
-re"

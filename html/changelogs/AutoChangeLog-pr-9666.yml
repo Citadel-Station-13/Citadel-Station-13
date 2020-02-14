@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - balance: "Lowered blob event earliest start from 1 hour to 40 minutes (ergo one third), and the required player population from 40 to 35."

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed hidden random event reports only priting a paper message without sending the message to the consoles' message list."

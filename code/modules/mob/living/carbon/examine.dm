@@ -15,7 +15,7 @@
 	if (wear_mask)
 		. += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face."
 	if (wear_neck)
-		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
+		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
 
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
@@ -112,4 +112,5 @@
 				. += "[t_He] look[p_s()] very happy."
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
 				. += "[t_He] look[p_s()] ecstatic."
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 	. += "*---------*</span>"

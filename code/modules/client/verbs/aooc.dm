@@ -31,7 +31,7 @@ GLOBAL_VAR_INIT(normal_aooc_colour, "#ce254f")
 	if(QDELETED(src))
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
 
 	if(!msg)
@@ -116,7 +116,7 @@ GLOBAL_VAR_INIT(normal_aooc_colour, "#ce254f")
 		antaglisting |= M.current.client
 
 	for(var/mob/M in GLOB.player_list)
-		if(M.client && (M.stat == DEAD || M.client.holder))
+		if(M.client && (M.stat == DEAD || M.client.holder || is_special_character(M)))
 			antaglisting |= M.client
 
 	for(var/client/C in antaglisting)

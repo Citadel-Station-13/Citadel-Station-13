@@ -1,5 +1,0 @@
-author: "KathrinBailey"
-delete-after: True
-changes: 
-  - rscadd: "Ports TG's pews https://github.com/tgstation/tgstation/pull/42712"
-  - rscadd: "The first step of a corporate incursion of Space IKEA into Nanotrasen."

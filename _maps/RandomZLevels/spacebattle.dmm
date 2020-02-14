@@ -5,6 +5,16 @@
 "ab" = (
 /turf/open/space,
 /area/space)
+"ac" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
+/turf/open/floor/plasteel,
+/area/awaymission/spacebattle/cruiser)
 "ad" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
@@ -2597,16 +2607,6 @@
 /obj/effect/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"jK" = (
-/mob/living/simple_animal/hostile/syndicate/melee/sword,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/spacebattle/cruiser)
 "jL" = (
 /obj/machinery/door/poddoor{
 	id = "spacebattlearmory";
@@ -2894,10 +2894,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"kM" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/mineral/random,
-/area/space/nearstation)
 "vw" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate5)
@@ -3175,7 +3171,7 @@ aa
 aa
 aa
 aa
-kM
+aa
 "}
 (2,1,1) = {"
 aa
@@ -35686,10 +35682,10 @@ eC
 cn
 fL
 cp
-jK
+ac
 fs
 fO
-jK
+ac
 eM
 eM
 eM

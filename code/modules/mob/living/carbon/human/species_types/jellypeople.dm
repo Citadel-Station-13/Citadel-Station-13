@@ -12,7 +12,7 @@
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	gib_types = list(/obj/effect/gibspawner/slime, /obj/effect/gibspawner/slime/bodypartless)
-	exotic_blood = "jellyblood"
+	exotic_blood = /datum/reagent/blood/jellyblood
 	exotic_bloodtype = "GEL"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
@@ -44,7 +44,7 @@
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
+	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for vampires
 		return
 	if(!H.blood_volume)
 		H.blood_volume += 5
@@ -116,6 +116,33 @@
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
 
+/datum/species/jelly/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		stop_wagging_tail(H)
+
+/datum/species/jelly/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+	. = ..()
+
+/datum/species/jelly/can_wag_tail(mob/living/carbon/human/H)
+	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
+
+/datum/species/jelly/is_wagging_tail(mob/living/carbon/human/H)
+	return ("mam_waggingtail" in mutant_bodyparts)
+
+/datum/species/jelly/start_wagging_tail(mob/living/carbon/human/H)
+	if("mam_tail" in mutant_bodyparts)
+		mutant_bodyparts -= "mam_tail"
+		mutant_bodyparts |= "mam_waggingtail"
+	H.update_body()
+
+/datum/species/jelly/stop_wagging_tail(mob/living/carbon/human/H)
+	if("mam_waggingtail" in mutant_bodyparts)
+		mutant_bodyparts -= "mam_waggingtail"
+		mutant_bodyparts |= "mam_tail"
+	H.update_body()
+
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
 
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
@@ -177,6 +204,8 @@
 	bodies = old_species.bodies
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
+	if((HAS_TRAIT(H, TRAIT_NOMARROW)))
+		return
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
@@ -409,34 +438,6 @@
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
-
-/datum/species/jelly/roundstartslime/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/jelly/roundstartslime/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-/datum/species/jelly/roundstartslime/can_wag_tail(mob/living/carbon/human/H)
-	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
-
-/datum/species/jelly/roundstartslime/is_wagging_tail(mob/living/carbon/human/H)
-	return ("mam_waggingtail" in mutant_bodyparts)
-
-/datum/species/jelly/roundstartslime/start_wagging_tail(mob/living/carbon/human/H)
-	if("mam_tail" in mutant_bodyparts)
-		mutant_bodyparts -= "mam_tail"
-		mutant_bodyparts |= "mam_waggingtail"
-	H.update_body()
-
-/datum/species/jelly/roundstartslime/stop_wagging_tail(mob/living/carbon/human/H)
-	if("mam_waggingtail" in mutant_bodyparts)
-		mutant_bodyparts -= "mam_waggingtail"
-		mutant_bodyparts |= "mam_tail"
-	H.update_body()
-
 
 /datum/action/innate/slime_change
 	name = "Alter Form"
@@ -838,19 +839,18 @@
 	link_minds = new(src)
 	link_minds.Grant(C)
 	slimelink_owner = C
-	link_mob(C)
+	link_mob(C, TRUE)
 
-/datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
-	if(QDELETED(M) || M.stat == DEAD)
+/datum/species/jelly/stargazer/proc/link_mob(mob/living/M, selflink = FALSE)
+	if(QDELETED(M) || (M in linked_mobs))
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD)) //mindshield implant, no dice
-		return FALSE
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		return FALSE
-	if(M in linked_mobs)
+	if(!selflink && (M.stat == DEAD || HAS_TRAIT(M, TRAIT_MINDSHIELD) || M.anti_magic_check(FALSE, FALSE, TRUE, 0)))
 		return FALSE
 	linked_mobs.Add(M)
-	to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+	if(!selflink)
+		to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+		RegisterSignal(M, COMSIG_MOB_DEATH , .proc/unlink_mob)
+		RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unlink_mob)
 	var/datum/action/innate/linked_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(M)
@@ -860,6 +860,7 @@
 	var/link_id = linked_mobs.Find(M)
 	if(!(link_id))
 		return
+	UnregisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/linked_speech/action = linked_actions[link_id]
 	action.Remove(M)
 	to_chat(M, "<span class='notice'>You are no longer connected to [slimelink_owner.real_name]'s Slime Link.</span>")
@@ -892,18 +893,11 @@
 		Remove(H)
 		return
 
-	if(QDELETED(H) || H.stat == DEAD)
-		species.unlink_mob(H)
-		return
-
 	if(message)
 		var/msg = "<i><font color=#008CA2>\[[species.slimelink_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
 		log_directed_talk(H, species.slimelink_owner, msg, LOG_SAY, "slime link")
 		for(var/X in species.linked_mobs)
 			var/mob/living/M = X
-			if(QDELETED(M) || M.stat == DEAD)
-				species.unlink_mob(M)
-				continue
 			to_chat(M, msg)
 
 		for(var/X in GLOB.dead_mob_list)

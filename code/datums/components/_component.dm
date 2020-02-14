@@ -53,7 +53,7 @@
 
 // If you want/expect to be moving the component around between parents, use this to register on the parent for signals
 /datum/component/proc/RegisterWithParent()
-	return
+	SEND_SIGNAL(src, COMSIG_COMPONENT_REGISTER_PARENT) //CITADEL EDIT
 
 /datum/component/proc/Initialize(...)
 	return
@@ -85,7 +85,7 @@
 	UnregisterFromParent()
 
 /datum/component/proc/UnregisterFromParent()
-	return
+	SEND_SIGNAL(src, COMSIG_COMPONENT_UNREGISTER_PARENT) //CITADEL EDIT
 
 /datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))

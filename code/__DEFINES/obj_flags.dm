@@ -41,6 +41,7 @@
 #define VOICEBOX_TOGGLABLE 		(1<<6)	//The voicebox in this clothing can be toggled.
 #define VOICEBOX_DISABLED 		(1<<7)	//The voicebox is currently turned off.
 #define IGNORE_HAT_TOSS			(1<<8)	//Hats with negative effects when worn (i.e the tinfoil hat).
+#define SCAN_REAGENTS			(1<<9)	// Allows helmets and glasses to scan reagents.
 
 // Flags for the organ_flags var on /obj/item/organ
 

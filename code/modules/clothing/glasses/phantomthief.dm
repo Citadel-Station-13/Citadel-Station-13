@@ -26,7 +26,7 @@
 /obj/item/clothing/glasses/phantomthief/syndicate/proc/injectadrenaline(mob/user, combatmodestate)
 	if(istype(user) && combatmodestate && world.time >= nextadrenalinepop)
 		nextadrenalinepop = world.time + 5 MINUTES
-		user.reagents.add_reagent("syndicateadrenals", 5)
+		user.reagents.add_reagent(/datum/reagent/syndicateadrenals, 5)
 		user.playsound_local(user, 'sound/misc/adrenalinject.ogg', 100, 0, pressure_affected = FALSE)
 
 /obj/item/clothing/glasses/phantomthief/syndicate/equipped(mob/user, slot)

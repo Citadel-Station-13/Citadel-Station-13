@@ -2,19 +2,20 @@
 	color = "#fcccb3"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/shape = "human"
-	var/sensitivity = AROUSAL_START_VALUE
+	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm
 	var/masturbation_verb = "masturbate"
 	var/orgasm_verb = "cumming" //present continous
+	var/arousal_verb = "You feel aroused"
+	var/unarousal_verb = "You no longer feel aroused"
 	var/fluid_transfer_factor = 0 //How much would a partner get in them if they climax using this?
 	var/size = 2 //can vary between num or text, just used in icon_state strings
-	var/fluid_id = null
+	var/datum/reagent/fluid_id = null
 	var/fluid_max_volume = 50
 	var/fluid_efficiency = 1
 	var/fluid_rate = CUM_RATE
 	var/fluid_mult = 1
 	var/aroused_state = FALSE //Boolean used in icon_state strings
-	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 	var/obj/item/organ/genital/linked_organ
 	var/linked_organ_slot //used for linking an apparatus' organ to its other half on update_link().
 	var/layer_index = GENITAL_LAYER_INDEX //Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
@@ -31,20 +32,20 @@
 	else
 		update()
 
-/obj/item/organ/genital/Destroy()
-	if(linked_organ)
-		update_link(TRUE)//this should remove any other links it has
-	if(owner)
-		Remove(owner, TRUE)//this should remove references to it, so it can be GCd correctly
-	return ..()
+/obj/item/organ/genital/proc/set_aroused_state(new_state)
+	if(!(genital_flags & GENITAL_CAN_AROUSE))
+		return FALSE
+	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
+		aroused_state = new_state
+	return aroused_state
 
-/obj/item/organ/genital/proc/update(removing = FALSE)
+/obj/item/organ/genital/proc/update()
 	if(QDELETED(src))
 		return
 	update_size()
 	update_appearance()
-	if(linked_organ_slot || (linked_organ && removing))
-		update_link(removing)
+	if(linked_organ_slot || (linked_organ && !owner))
+		update_link()
 
 //exposure and through-clothing code
 /mob/living/carbon
@@ -90,11 +91,9 @@
 	set desc = "Allows you to toggle which genitals should show through clothes or not."
 
 	var/list/genital_list = list()
-	for(var/obj/item/organ/O in internal_organs)
-		if(isgenital(O))
-			var/obj/item/organ/genital/G = O
-			if(!CHECK_BITFIELD(G.genital_flags, GENITAL_INTERNAL))
-				genital_list += G
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(!CHECK_BITFIELD(G.genital_flags, GENITAL_INTERNAL))
+			genital_list += G
 	if(!genital_list.len) //There is nothing to expose
 		return
 	//Full list of exposable genitals created
@@ -104,6 +103,29 @@
 		var/picked_visibility = input(src, "Choose visibility setting", "Expose/Hide genitals", "Hidden by clothes") in list("Always visible", "Hidden by clothes", "Always hidden")
 		picked_organ.toggle_visibility(picked_visibility)
 	return
+
+/mob/living/carbon/verb/toggle_arousal_state()
+	set category = "IC"
+	set name = "Toggle genital arousal"
+	set desc = "Allows you to toggle which genitals are showing signs of arousal."
+	var/list/genital_list = list()
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(G.genital_flags & GENITAL_CAN_AROUSE)
+			genital_list += G
+	if(!genital_list.len) //There's nothing that can show arousal
+		return
+	var/obj/item/organ/genital/picked_organ
+	picked_organ = input(src, "Choose which genitalia to toggle arousal on", "Set genital arousal", null) in genital_list
+	if(picked_organ)
+		var/original_state = picked_organ.aroused_state
+		picked_organ.set_aroused_state(!picked_organ.aroused_state)
+		if(original_state != picked_organ.aroused_state)
+			to_chat(src,"<span class='userlove'>[picked_organ.aroused_state ? picked_organ.arousal_verb : picked_organ.unarousal_verb].</span>")
+		else
+			to_chat(src,"<span class='userlove'>You can't make that genital [picked_organ.aroused_state ? "unaroused" : "aroused"]!</span>")
+		picked_organ.update_appearance()
+	return
+
 
 /obj/item/organ/genital/proc/modify_size(modifier, min = -INFINITY, max = INFINITY)
 	fluid_max_volume += modifier*2.5
@@ -132,26 +154,25 @@
 		amount += 0.1
 	var/multiplier = fluid_mult
 	if(reagents.total_volume >= 5)
-		multiplier *= 0.5
+		multiplier *= 0.8
 	if(reagents.total_volume < reagents.maximum_volume)
 		reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
 		reagents.add_reagent(fluid_id, (amount * multiplier))//generate the cum
 		return TRUE
 	return FALSE
 
-/obj/item/organ/genital/proc/update_link(removing = FALSE)
-	if(!removing && owner)
+/obj/item/organ/genital/proc/update_link()
+	if(owner)
 		if(linked_organ)
-			return
+			return FALSE
 		linked_organ = owner.getorganslot(linked_organ_slot)
 		if(linked_organ)
 			linked_organ.linked_organ = src
 			linked_organ.upon_link()
 			upon_link()
 			return TRUE
-	else
-		if(linked_organ)
-			linked_organ.linked_organ = null
+	if(linked_organ)
+		linked_organ.linked_organ = null
 		linked_organ = null
 	return FALSE
 
@@ -165,11 +186,13 @@
 		update()
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 
-/obj/item/organ/genital/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/genital/Remove(special = FALSE)
 	. = ..()
-	if(.)
-		update(TRUE)
-		UnregisterSignal(M, COMSIG_MOB_DEATH)
+	var/mob/living/carbon/human/H = .
+	update()
+	if(!QDELETED(H))
+		UnregisterSignal(H, COMSIG_MOB_DEATH)
+		H.update_genitals()
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
@@ -204,12 +227,6 @@
 /obj/item/organ/genital/proc/get_features(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/genitals_layertext(layer)
-	switch(layer)
-		if(GENITALS_BEHIND_LAYER)
-			return "BEHIND"
-		if(GENITALS_FRONT_LAYER)
-			return "FRONT"
 
 //procs to handle sprite overlays being applied to humans
 
@@ -228,12 +245,94 @@
 	update_genitals()
 
 /mob/living/carbon/human/proc/update_genitals()
-	if(!QDELETED(src))
-		dna.species.handle_genitals(src)
+	if(QDELETED(src))
+		return
+	var/static/list/relevant_layers = list("[GENITALS_BEHIND_LAYER]" = "BEHIND", "[GENITALS_FRONT_LAYER]" = "FRONT")
+	var/static/list/layers_num
+	if(!layers_num)
+		for(var/L in relevant_layers)
+			LAZYSET(layers_num, L, text2num(L))
+	for(var/L in relevant_layers) //Less hardcode
+		remove_overlay(layers_num[L])
+	remove_overlay(GENITALS_EXPOSED_LAYER)
+	if(!LAZYLEN(internal_organs) || ((NOGENITALS in dna.species.species_traits) && !genital_override) || HAS_TRAIT(src, TRAIT_HUSK))
+		return
+
+	//start scanning for genitals
+
+	var/list/gen_index[GENITAL_LAYER_INDEX_LENGTH]
+	var/list/genitals_to_add
+	var/list/fully_exposed
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
+			LAZYADD(gen_index[G.layer_index], G)
+	for(var/L in gen_index)
+		if(L) //skip nulls
+			LAZYADD(genitals_to_add, L)
+	if(!genitals_to_add)
+		return
+	//Now we added all genitals that aren't internal and should be rendered
+	//start applying overlays
+	for(var/layer in relevant_layers)
+		var/list/standing = list()
+		var/layertext = relevant_layers[layer]
+		for(var/A in genitals_to_add)
+			var/obj/item/organ/genital/G = A
+			var/datum/sprite_accessory/S
+			var/size = G.size
+			switch(G.type)
+				if(/obj/item/organ/genital/penis)
+					S = GLOB.cock_shapes_list[G.shape]
+				if(/obj/item/organ/genital/testicles)
+					S = GLOB.balls_shapes_list[G.shape]
+				if(/obj/item/organ/genital/vagina)
+					S = GLOB.vagina_shapes_list[G.shape]
+				if(/obj/item/organ/genital/breasts)
+					S = GLOB.breasts_shapes_list[G.shape]
+
+			if(!S || S.icon_state == "none")
+				continue
+			var/aroused_state = G.aroused_state && S.alt_aroused
+
+			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
+			if(S.center)
+				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
+
+			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
+				genital_overlay.color = "#[skintone2hex(skin_tone)]"
+			else
+				switch(S.color_src)
+					if("cock_color")
+						genital_overlay.color = "#[dna.features["cock_color"]]"
+					if("balls_color")
+						genital_overlay.color = "#[dna.features["balls_color"]]"
+					if("breasts_color")
+						genital_overlay.color = "#[dna.features["breasts_color"]]"
+					if("vag_color")
+						genital_overlay.color = "#[dna.features["vag_color"]]"
+
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][dna.species.use_skintones ? "_s" : ""]_[aroused_state]_[layertext]"
+
+			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
+				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
+				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
+			else
+				standing += genital_overlay
+
+		if(LAZYLEN(standing))
+			overlays_standing[layers_num[layer]] = standing
+
+	if(LAZYLEN(fully_exposed))
+		overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
+		apply_overlay(GENITALS_EXPOSED_LAYER)
+
+	for(var/L in relevant_layers)
+		apply_overlay(layers_num[L])
+
 
 //Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
 /mob/living/carbon/human/proc/emergent_genital_call()
-	if(!canbearoused)
+	if(!client.prefs.arousable)
 		return FALSE
 
 	var/organCheck = locate(/obj/item/organ/genital) in internal_organs
@@ -258,85 +357,3 @@
 		else if (willyCheck == FALSE)
 			dna.features["cock_color"] = dna.features["breasts_color"]
 	return TRUE
-
-/datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness
-	if(!H)//no args
-		CRASH("H = null")
-	if(!LAZYLEN(H.internal_organs) || ((NOGENITALS in species_traits) && !H.genital_override) || HAS_TRAIT(H, TRAIT_HUSK))
-		return
-	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_FRONT_LAYER)
-
-	for(var/L in relevant_layers) //Less hardcode
-		H.remove_overlay(L)
-	H.remove_overlay(GENITALS_EXPOSED_LAYER)
-	//start scanning for genitals
-
-	var/list/gen_index[GENITAL_LAYER_INDEX_LENGTH]
-	var/list/genitals_to_add
-	var/list/fully_exposed
-	for(var/obj/item/organ/genital/G in H.internal_organs)
-		if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
-			LAZYADD(gen_index[G.layer_index], G)
-	for(var/L in gen_index)
-		if(L) //skip nulls
-			LAZYADD(genitals_to_add, L)
-	if(!genitals_to_add)
-		return
-	//Now we added all genitals that aren't internal and should be rendered
-	//start applying overlays
-	for(var/layer in relevant_layers)
-		var/list/standing = list()
-		var/layertext = genitals_layertext(layer)
-		for(var/A in genitals_to_add)
-			var/obj/item/organ/genital/G = A
-			var/datum/sprite_accessory/S
-			var/size = G.size
-			var/aroused_state = G.aroused_state
-			switch(G.type)
-				if(/obj/item/organ/genital/penis)
-					S = GLOB.cock_shapes_list[G.shape]
-				if(/obj/item/organ/genital/testicles)
-					S = GLOB.balls_shapes_list[G.shape]
-				if(/obj/item/organ/genital/vagina)
-					S = GLOB.vagina_shapes_list[G.shape]
-				if(/obj/item/organ/genital/breasts)
-					S = GLOB.breasts_shapes_list[G.shape]
-
-			if(!S || S.icon_state == "none")
-				continue
-
-			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[aroused_state]_[layertext]"
-
-			if(S.center)
-				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
-
-			if(use_skintones && H.dna.features["genitals_use_skintone"])
-				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
-				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
-			else
-				switch(S.color_src)
-					if("cock_color")
-						genital_overlay.color = "#[H.dna.features["cock_color"]]"
-					if("balls_color")
-						genital_overlay.color = "#[H.dna.features["balls_color"]]"
-					if("breasts_color")
-						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
-					if("vag_color")
-						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-
-			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
-				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
-				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
-			else
-				standing += genital_overlay
-
-		if(LAZYLEN(standing))
-			H.overlays_standing[layer] = standing
-
-	if(LAZYLEN(fully_exposed))
-		H.overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
-		H.apply_overlay(GENITALS_EXPOSED_LAYER)
-
-	for(var/L in relevant_layers)
-		H.apply_overlay(L)

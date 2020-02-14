@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed ai displays status being reset to \"Neutral\" on login, regardless of choice."

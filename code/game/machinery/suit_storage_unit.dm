@@ -266,7 +266,7 @@
 			for(var/atom/movable/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
 				AM.clean_blood()
-				AM.fingerprints = list()
+				AM.fingerprints = null
 				var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
 				if(contamination)
 					qdel(contamination)
@@ -326,6 +326,9 @@
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(state_open && is_operational())
+		if(istype(I, /obj/item/clothing/head/mob_holder))
+			to_chat(user, "<span class='warning'>You can't quite fit that in while you hold it!</span>")
+			return
 		if(istype(I, /obj/item/clothing/suit))
 			if(suit)
 				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
@@ -387,14 +390,24 @@
 	data["uv_super"] = uv_super
 	if(helmet)
 		data["helmet"] = helmet.name
+	else
+		data["helmet"] = null
 	if(suit)
 		data["suit"] = suit.name
+	else
+		data["suit"] = null
 	if(mask)
 		data["mask"] = mask.name
+	else
+		data["mask"] = null
 	if(storage)
 		data["storage"] = storage.name
+	else
+		data["storage"] = null
 	if(occupant)
-		data["occupied"] = 1
+		data["occupied"] = TRUE
+	else
+		data["occupied"] = FALSE
 	return data
 
 /obj/machinery/suit_storage_unit/ui_act(action, params)

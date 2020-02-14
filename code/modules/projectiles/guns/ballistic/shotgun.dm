@@ -225,10 +225,11 @@
 	spread = 2
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	toggle_stock(user)
-	. = ..()
+	return TRUE
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/examine(mob/user)
 	. = ..()
@@ -289,8 +290,10 @@
 		to_chat(user, "You switch to tube A.")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	pump()
+	return TRUE
 
 // DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm

@@ -20,12 +20,14 @@
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
 /datum/component/orbiter/RegisterWithParent()
+	. = ..()
 	var/atom/target = parent
 	while(ismovableatom(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react)
 		target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
+	. = ..()
 	var/atom/target = parent
 	while(ismovableatom(target))
 		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)

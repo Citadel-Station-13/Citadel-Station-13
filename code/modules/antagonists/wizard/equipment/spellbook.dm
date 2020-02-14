@@ -141,6 +141,10 @@
 	name = "Disintegrate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 
+/datum/spellbook_entry/nuclearfist
+	name = "Nuclear Fist"
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
@@ -159,7 +163,7 @@
 
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/timestop
 	category = "Defensive"
 
 /datum/spellbook_entry/smoke
@@ -391,6 +395,12 @@
 	category = "Assistance"
 	dynamic_requirement = 50
 	dynamic_cost = 10
+
+/datum/spellbook_entry/item/plasmafist
+	name = "Plasma Fist"
+	desc = "A forbidden martial art designed on the surging power of plasma. Use it to harness the ancient power."
+	item_path = /obj/item/book/granter/martial/plasma_fist
+	cost = 3
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"

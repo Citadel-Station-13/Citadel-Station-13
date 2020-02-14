@@ -1,4 +1,0 @@
-author: "PersianXerxes"
-delete-after: True
-changes: 
-  - tweak: "Reduces the grace period for meteors from a minimum of 5 and maximum of 10 to 3 and 6 minutes respectively."

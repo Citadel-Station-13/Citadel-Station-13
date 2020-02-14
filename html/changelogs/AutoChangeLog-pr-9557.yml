@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Dynamic voting"
-  - config: "Added DYNAMIC_VOTING to game_options"

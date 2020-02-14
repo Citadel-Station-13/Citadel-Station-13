@@ -38,6 +38,7 @@
 
 /obj/item/geiger_counter/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/item/geiger_counter/process()
@@ -182,14 +183,16 @@
 		return ..()
 
 /obj/item/geiger_counter/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
-		return ..()
+		return
 	if(!scanning)
 		to_chat(usr, "<span class='warning'>[src] must be on to reset its radiation level!</span>")
-		return 0
+		return TRUE
 	radiation_count = 0
 	to_chat(usr, "<span class='notice'>You flush [src]'s radiation counts, resetting it to normal.</span>")
 	update_icon()
+	return TRUE
 
 /obj/item/geiger_counter/emag_act(mob/user)
 	. = ..()

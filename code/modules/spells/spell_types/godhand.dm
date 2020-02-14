@@ -182,3 +182,38 @@
 
 	if(charges <= 0)
 		qdel(src)
+
+/obj/item/melee/touch_attack/nuclearfist
+	name = "\improper PURE MANLINESS"
+	desc = "SHOW THEM RAW POWER"
+	catchphrase = "I CAST FIST!"
+	on_use_sound = 'sound/weapons/nuclear_fist.ogg'
+	icon_state = "disintegrate"
+	item_state = "disintegrate"
+
+/obj/item/melee/touch_attack/nuclearfist/afterattack(atom/movable/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
+		return
+	if(!user.can_speak_vocal())
+		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
+		return
+	var/mob/M = target
+	var/atom/A = M.anti_magic_check()
+	if(A)
+		if(isitem(A))
+			target.visible_message("<span class='warning'>[target]'s [A] glows brightly as it wards off the spell!</span>")
+		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<span class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
+		user.flash_act()
+		var/obj/item/bodypart/part = user.get_holding_bodypart_of_item(src)
+		if(part)
+			part.dismember()
+		return ..()
+	var/angle = dir2angle(get_dir(src, get_step_away(target, src)))
+	var/obj/item/projectile/magic/nuclear/P = new(get_turf(src))
+	P.victim = target
+	target.forceMove(P)
+	P.setAngle(angle)
+	P.original = user
+	P.firer = user
+	P.fire()
+	return ..()

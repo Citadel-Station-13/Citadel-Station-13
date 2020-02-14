@@ -8,4 +8,4 @@
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	amount_per_transfer_from_this = 0
-	possible_transfer_amounts = list(0)
+	possible_transfer_amounts = list()
