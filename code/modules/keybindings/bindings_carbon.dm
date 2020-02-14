@@ -6,7 +6,4 @@
 		if("C")
 			toggle_combat_mode()
 			return
-		if ("V")
-			lay_down()
-			return
 	return ..()
