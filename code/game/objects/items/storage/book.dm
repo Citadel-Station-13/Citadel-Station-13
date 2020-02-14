@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			A.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			A.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
 	if(istype(A, /obj/item/twohanded/required/cult_bastard) || istype(A, /obj/item/melee/cultblade) && !iscultist(user))
-		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+		to_chat(user, "<span class='notice'>You begin to exorcise [A].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
 		if(do_after(user, 40, target = A))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
@@ -187,9 +187,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 						EX.name = "Purified [EX.name]"
 					SS.release_shades(user)
 					qdel(SS)
-			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified [sword]!</span>")
-			qdel(sword)
+			new /obj/item/nullrod/claymore(get_turf(A))
+			user.visible_message("<span class='notice'>[user] has purified [A]!</span>")
+			qdel(A)
 
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
