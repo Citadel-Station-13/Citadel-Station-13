@@ -57,6 +57,9 @@
 		if("Numpad3")
 			user.body_l_leg()
 			return
+		if ("V")
+			lay_down()
+			return
 
 	if(client.keys_held["Ctrl"])
 		switch(SSinput.movement_keys[_key])
