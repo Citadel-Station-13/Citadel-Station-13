@@ -66,6 +66,22 @@
 	force = 19
 	materials = list(MAT_DIAMOND=4000)
 
+/obj/item/pickaxe/plasteel
+	name = "plasteel-tipped pickaxe"
+	icon_state = "titaxe"
+	toolspeed = 0.5
+	desc = "A pickaxe with a plasteel pick head. Less robust at cracking rock walls and digging up dirt than the titanium pickaxe, but better at cracking open skulls."
+	force = 19
+	materials = list(MAT_METAL=2000, MAT_PLASMA=2000)
+
+/obj/item/pickaxe/titanium
+	name = "titanium-tipped pickaxe"
+	icon_state = "psteelaxe"
+	toolspeed = 0.3
+	desc = "A pickaxe with a titanium pick head. Extremely robust at cracking rock walls and digging up dirt, but less than the plasteel pickaxe at cracking open skulls."
+	force = 17
+	materials = list(MAT_TITANIUM=4000)
+
 /obj/item/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
