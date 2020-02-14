@@ -99,6 +99,10 @@
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
 		else if(eye_color == BLOODCULT_EYE && iscultist(src) && HAS_TRAIT(src, TRAIT_CULT_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
+		else if(HAS_TRAIT(src, TRAIT_HIJACKER))
+			var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
+			if (H && !H.stealthmode && H.toggled)
+				. += "<b><font color=orange>[t_His] eyes are flickering a bright yellow!</font></b>"
 
 	//ears
 	if(ears && !(SLOT_EARS in obscured))

@@ -21911,7 +21911,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/arcade/minesweeper,
+/obj/machinery/vending/wardrobe/cap_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bdj" = (
@@ -55854,6 +55854,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"nZL" = (
+/obj/machinery/computer/arcade/minesweeper,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
 "oax" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/light,
@@ -90865,7 +90869,7 @@ aVv
 aXg
 aYF
 aZV
-bbw
+nZL
 bcn
 tgH
 ben
