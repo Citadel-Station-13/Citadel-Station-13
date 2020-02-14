@@ -179,17 +179,11 @@
 	taste_description = "sap" //Like tree sap?
 	pH = 7.45
 
-/datum/reagent/blood/tomato/on_merge(list/mix_data) //Tomato blood doesnt mix.
-	return FALSE
-
-/datum/reagent/blood/tomato/on_mob_life(mob/living/carbon/C) //So it bloodsuckers cant use this as an unlimited blood supply
-	return
-
-/datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+/datum/reagent/blood/tomato/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+	..()
 	if(isvamp(L))
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = L.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		bloodsuckerdatum.handle_eat_human_food(reac_volume * 2)
-	return
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
