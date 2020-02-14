@@ -177,6 +177,7 @@
 	shuttleId = "pirateship"
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
+	resistance_flags = INDESTRUCTIBLE
 	light_color = LIGHT_COLOR_RED
 	possible_destinations = "pirateship_away;pirateship_home;pirateship_custom"
 
@@ -184,6 +185,7 @@
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
 	shuttleId = "pirateship"
+	resistance_flags = INDESTRUCTIBLE
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
 	x_offset = 9
@@ -226,6 +228,7 @@
 	desc = "This sophisticated machine scans the nearby space for items of value."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
+	resistance_flags = INDESTRUCTIBLE
 	density = TRUE
 	var/cooldown = 300
 	var/next_use = 0
@@ -259,6 +262,7 @@
 	name = "cargo hold pad"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle-o"
+	resistance_flags = INDESTRUCTIBLE
 	var/idle_state = "lpad-idle-o"
 	var/warmup_state = "lpad-idle"
 	var/sending_state = "lpad-beam"
@@ -272,6 +276,7 @@
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
+	resistance_flags = INDESTRUCTIBLE
 	var/status_report = "Idle"
 	var/obj/machinery/piratepad/pad
 	var/warmup_time = 100

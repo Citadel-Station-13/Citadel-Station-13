@@ -10,6 +10,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	strip_mod = 0.9
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
@@ -23,6 +24,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 30)
+	strip_mod = 0.9
 
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
@@ -38,6 +40,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	strip_mod = 1.5
 
 
 /obj/item/clothing/gloves/bracer
@@ -103,3 +106,15 @@
 
 /obj/item/clothing/gloves/rapid/hug/attack_self(mob/user)
 	return FALSE
+
+/obj/item/clothing/gloves/thief
+	name = "black gloves"
+	desc = "Gloves made with completely frictionless, insulated cloth, easier to steal from people with."
+	icon_state = "thief"
+	item_state = "blackgloves"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	strip_delay = 80
+	transfer_prints = FALSE
+	strip_mod = 5
+	strip_silence = TRUE

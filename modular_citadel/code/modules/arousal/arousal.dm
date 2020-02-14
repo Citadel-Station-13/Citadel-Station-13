@@ -10,12 +10,6 @@
 	var/hidden_undershirt = FALSE
 	var/hidden_socks = FALSE
 
-//Species vars
-/datum/species
-	var/list/cum_fluids = list("semen")
-	var/list/milk_fluids = list("milk")
-	var/list/femcum_fluids = list("femcum")
-
 //Mob procs
 /mob/living/carbon/human/proc/underwear_toggle()
 	set name = "Toggle undergarments"
@@ -46,20 +40,12 @@
 	var/list/obj/item/organ/genital/genit_list = list()
 	if(!client?.prefs.arousable || (aphro && (client?.prefs.cit_toggles & NO_APHRO)) || (maso && !HAS_TRAIT(src, TRAIT_MASO)))
 		return // no adjusting made here
-	if(strength>0)
-		for(var/obj/item/organ/genital/G in internal_organs)
-			if(!G.aroused_state && prob(strength*G.sensitivity))
-				G.set_aroused_state(TRUE)
-				G.update_appearance()
-				if(G.aroused_state)
-					genit_list += G
-	else
-		for(var/obj/item/organ/genital/G in internal_organs)
-			if(G.aroused_state && prob(strength*G.sensitivity))
-				G.set_aroused_state(FALSE)
-				G.update_appearance()
-				if(G.aroused_state)
-					genit_list += G
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(G.genital_flags & GENITAL_CAN_AROUSE && !G.aroused_state && prob(strength*G.sensitivity))
+			G.set_aroused_state(strength > 0)
+			G.update_appearance()
+			if(G.aroused_state)
+				genit_list += G
 	return genit_list
 
 /obj/item/organ/genital/proc/climaxable(mob/living/carbon/human/H, silent = FALSE) //returns the fluid source (ergo reagents holder) if found.

@@ -6,6 +6,7 @@ $include comms.txt
 $include antag_rep.txt
 $include donator_groupings.txt
 $include dynamic_config.txt
+$include plushies/defines.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -384,6 +385,15 @@ MAPROTATION
 ## When it's set to zero, the map will be randomly picked each round
 ALLOW_MAP_VOTING 1
 
+## Map voting type
+## Determines what kind of vote the map vote is
+## Options are:
+##   PLURALITY (default, only vote for one option)
+##   APPROVAL (can vote for as many as you want), I
+##   IRV (vote by ranked choice, winner determined by instant runoff algorithm)
+##   SCORE (give individual rankings of each choice, winner determined by majority judgement algorithm)
+MAP_VOTE_TYPE SCORE
+
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
 ## A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
@@ -438,8 +448,14 @@ MINUTE_CLICK_LIMIT 400
 ##How long to wait between messaging admins about occurences of a unique error
 #ERROR_MSG_DELAY 50
 
-## Send a message to IRC when starting a new game
-#IRC_ANNOUNCE_NEW_GAME
+## Chat Announce Options
+## Various messages to be sent to game chats
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
+## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
+## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+
+## Send a message with the station name starting a new game
+#CHAT_ANNOUNCE_NEW_GAME
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS
@@ -490,3 +506,5 @@ FAIL2TOPIC_MAX_FAILS 5
 ## Firewall rule name used on physical server
 FAIL2TOPIC_RULE_NAME _dd_fail2topic
 
+## Enable automatic profiling - Byond 513.1506 and newer only.
+#AUTO_PROFILE

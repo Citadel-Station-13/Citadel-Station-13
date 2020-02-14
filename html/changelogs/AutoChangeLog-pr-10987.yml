@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - imageadd: "Fixed dozen missing privates sprites."
