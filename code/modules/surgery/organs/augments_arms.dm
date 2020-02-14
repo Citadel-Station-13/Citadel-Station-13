@@ -283,11 +283,3 @@
 	to_chat(usr, "<span class='notice'>You unlock [src]'s high-power flash!</span>")
 	items_list += new /obj/item/assembly/flash/armimplant(src)
 	return TRUE
-
-/obj/item/organ/cyberimp/arm/shield/Initialize()
-	. = ..()
-	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
-		var/obj/item/assembly/flash/armimplant/F = new(src)
-		F.I = src
-		items_list += F
-		return TRUE
