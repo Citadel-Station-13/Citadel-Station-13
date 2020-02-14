@@ -317,7 +317,7 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
-/obj/item/clothing/suit/security/officer/russian
+/obj/item/clothing/suit/armor/navyblue/russian
 	name = "\improper Russian officer's jacket"
 	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
 	icon_state = "officertanjacket"
@@ -325,17 +325,16 @@
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/ran
-	name = "Shikigami costume"
+	name = "shikigami costume"
 	desc = "A costume that looks like a certain shikigami, is super fluffy."
 	icon_state = "ran_suit"
 	item_state = "ran_suit"
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
-//2061
 
 /obj/item/clothing/head/ran
-	name = "Shikigami hat"
+	name = "shikigami hat"
 	desc = "A hat that looks like it keeps any fluffy ears contained super warm, has little charms over it."
 	icon_state = "ran_hat"
 	item_state = "ran_hat"
@@ -880,7 +879,6 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	resistance_flags = NONE
-	mutantrace_variation = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
 
 /obj/item/clothing/suit/assu_suit
@@ -922,3 +920,78 @@
 
 /obj/item/clothing/head/hooded/winterhood/christmashoodrg
 	icon_state = "christmashoodrg"
+
+/obj/item/clothing/suit/hooded/wintercoat/polychromic
+	name = "polychromic winter coat"
+	icon_state = "coatpoly"
+	item_state = "coatpoly"
+	item_color = "coatpoly"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic
+	hasprimary = TRUE
+	hassecondary = TRUE
+	hastertiary = TRUE
+	primary_color = "#6A6964"
+	secondary_color = "#C4B8A6"
+	tertiary_color = "#0000FF"
+
+/obj/item/clothing/head/hooded/winterhood/polychromic
+	icon_state = "winterhood_poly"
+	item_color = "winterhood_poly"
+	item_state = "winterhood_poly"
+
+/obj/item/clothing/head/hooded/winterhood/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
+	. = ..()
+	if(suit.hasprimary | suit.hassecondary)
+		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
+			if(suit.hasprimary)	//checks if overlays are enabled
+				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary")	//automagical sprite selection
+				primary_worn.color = suit.primary_color	//colors the overlay
+				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+			if(suit.hassecondary)
+				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary")
+				secondary_worn.color = suit.secondary_color
+				. += secondary_worn
+
+/obj/item/clothing/suit/hooded/wintercoat/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
+	. = ..()
+	if(hasprimary | hassecondary | hastertiary)
+		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
+			if(hasprimary)	//checks if overlays are enabled
+				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary[suittoggled ? "_t" : ""]")	//automagical sprite selection
+				primary_worn.color = primary_color	//colors the overlay
+				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+			if(hassecondary)
+				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary[suittoggled ? "_t" : ""]")
+				secondary_worn.color = secondary_color
+				. += secondary_worn
+			if(hastertiary)
+				var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[item_color]-tertiary[suittoggled ? "_t" : ""]")
+				tertiary_worn.color = tertiary_color
+				. += tertiary_worn
+
+/obj/item/clothing/suit/hooded/wintercoat/AltClick(mob/user)
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(hasprimary | hassecondary | hastertiary)
+		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
+		switch(choice)	//Lets the list's options actually lead to something
+			if("Primary Color")
+				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
+				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
+					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
+				update_icon()	//updates the item icon
+				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
+			if("Secondary Color")
+				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
+				if(secondary_color_input)
+					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+			if("Tertiary Color")
+				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
+				if(tertiary_color_input)
+					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				user.regenerate_icons()
+	return TRUE

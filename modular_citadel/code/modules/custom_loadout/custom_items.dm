@@ -364,10 +364,11 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 34
 
-/obj/item/bedsheet/custom/flagcape
+/obj/item/clothing/neck/flagcape
 	name = "Flag Cape"
 	desc = "A truly patriotic form of heroic attire."
 	icon = 'icons/obj/custom.dmi'
+	resistance_flags = FLAMMABLE
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "flagcape"
 	item_state = "flagcape"
@@ -556,3 +557,13 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NONE
+
+/obj/item/toy/plush/mammal/dog/fritz
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "fritz"
+	item_state = "fritz"
+	attack_verb = list("barked", "boofed", "shotgun'd")
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
+	mutantrace_variation = NONE
+

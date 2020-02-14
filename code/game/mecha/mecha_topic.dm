@@ -292,11 +292,11 @@
 		onclose(occupant, "exosuit_log")
 
 	if (href_list["change_name"])
-		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
-		if(newname && trim(newname))
-			name = newname
-		else
-			alert(occupant, "nope.avi")
+		var/userinput = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
+		if(!userinput || usr != occupant || usr.incapacitated())
+			return
+		name = userinput
+		return
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access
@@ -313,7 +313,7 @@
 		if(internal_tank.connected_port)
 			if(internal_tank.disconnect())
 				occupant_message("Disconnected from the air system port.")
-				log_message("Disconnected from gas port.")
+				mecha_log_message("Disconnected from gas port.")
 			else
 				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
 				return
@@ -321,7 +321,7 @@
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
 				occupant_message("Connected to the air system port.")
-				log_message("Connected to gas port.")
+				mecha_log_message("Connected to gas port.")
 			else
 				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
 				return
@@ -339,14 +339,14 @@
 
 	if(href_list["repair_int_control_lost"])
 		occupant_message("Recalibrating coordination system...")
-		log_message("Recalibration of coordination system started.")
+		mecha_log_message("Recalibration of coordination system started.")
 		var/T = loc
 		spawn(100)
 			if(T == loc)
 				clearInternalDamage(MECHA_INT_CONTROL_LOST)
 				occupant_message("<span class='notice'>Recalibration successful.</span>")
-				log_message("Recalibration of coordination system finished with 0 errors.")
+				mecha_log_message("Recalibration of coordination system finished with 0 errors.")
 			else
 				occupant_message("<span class='warning'>Recalibration failed!</span>")
-				log_message("Recalibration of coordination system failed with 1 error.", color="red")
+				mecha_log_message("Recalibration of coordination system failed with 1 error.", color="red")
 

@@ -1,7 +1,11 @@
 /* Glass stack types
  * Contains:
  *		Glass sheets
+ *		Plasma glass
  *		Reinforced glass sheets
+ *		Reinforced plasma glass
+ *		Titanium glass
+ *		Plastitanium glass
  *		Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
@@ -374,3 +378,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	icon_state = "plasmalarge"
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "plasma"
+
+/obj/item/shard/plasma/alien
+	name = "alien shard"
+	desc = "A nasty looking shard of advanced alloy glass."

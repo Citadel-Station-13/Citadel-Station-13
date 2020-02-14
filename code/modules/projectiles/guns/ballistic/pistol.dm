@@ -79,6 +79,7 @@
 /obj/item/gun/ballistic/automatic/pistol/stickman
 	name = "flat gun"
 	desc = "A 2 dimensional gun.. what?"
+	can_suppress = FALSE
 	icon_state = "flatgun"
 
 /obj/item/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)

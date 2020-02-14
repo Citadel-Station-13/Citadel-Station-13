@@ -61,7 +61,7 @@
 	QDEL_LIST(unattached_flesh)
 	. = ..()
 
-/obj/machinery/clonepod/RefreshParts()	
+/obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
 	efficiency = 0
 	for(var/obj/item/stock_parts/scanning_module/S in component_parts)
@@ -471,7 +471,7 @@
 		if(!istype(organ) || (organ.organ_flags & ORGAN_VITAL))
 			continue
 		organ.organ_flags |= ORGAN_FROZEN
-		organ.Remove(H, special=TRUE)
+		organ.Remove(TRUE)
 		organ.forceMove(src)
 		unattached_flesh += organ
 

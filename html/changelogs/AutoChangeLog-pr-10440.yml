@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Added a sort of \"game mode ban\" by way of having people rank their game modes favorite to least favorite after the secret/extended vote."
-  - bugfix: "Turns out the schulze scoring was written wrong and it was setting things to 0 that shouldn't have been, so that's fixed."

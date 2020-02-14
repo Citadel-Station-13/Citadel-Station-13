@@ -142,7 +142,7 @@
 		var/new_sentence = stripped_input(user, "Choose the sentence that the host will be forced to say.", "Sentence", sentence, MAX_MESSAGE_LEN)
 		if(!new_sentence)
 			return
-		if(copytext(new_sentence, 1, 2) == "*") //emotes are abusable, like surrender
+		if(new_sentence[1] == "*") //emotes are abusable, like surrender
 			return
 		sentence = new_sentence
 	if(setting == "Comm Code")
