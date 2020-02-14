@@ -138,8 +138,8 @@
 
 ////organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
-#define STANDARD_ORGAN_HEALING 		(1/(15 MINUTES / 1 SECONDS))
-#define STANDARD_ORGAN_DECAY		(1/(15 MINUTES / 1 SECONDS))		//designed to fail organs when left to decay for ~15 minutes. 1 SECOND is SSmobs tickrate.
+#define STANDARD_ORGAN_HEALING 		(1/(15 MINUTES / (2 SECONDS)))
+#define STANDARD_ORGAN_DECAY		(1/(15 MINUTES / (2 SECONDS)))		//designed to fail organs when left to decay for ~15 minutes. 2 SECOND is SSmobs tickrate.
 
 #define G_MALE 1
 #define G_FEMALE 2
