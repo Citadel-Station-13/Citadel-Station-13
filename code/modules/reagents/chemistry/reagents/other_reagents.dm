@@ -2139,3 +2139,10 @@
 			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
 
 	..()
+
+/datum/reagent/preservahyde
+	name = "Preservahyde"
+	description = "A powerful preservation agent, utilizing the preservative effects of formaldehyde with significantly less of the histamine."
+	reagent_state = LIQUID
+	color = "#f7685e"
+	metabolization_rate = REAGENTS_METABOLISM * 0.25
