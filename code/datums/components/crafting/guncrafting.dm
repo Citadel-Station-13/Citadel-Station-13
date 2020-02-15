@@ -69,18 +69,22 @@
 			var/obj/item/gun/ballistic/revolver/doublebarrel/improvised/I = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 			new I(user.loc, 1)
 			qdel(src)
+	if(istype(D, /obj/item/pipe))
+		to_chat(user, "<span class='notice'>The barrle is exstended making a longer gun!</span>")
+		var/obj/item/weaponcrafting/receiver/stock/barrled/gun/long/R = /obj/item/weaponcrafting/receiver/stock/barrled/gun/long
+		new R(user.loc, 1)
+		qdel(src)
+		qdel(D)
+
+//To be added later
 /*	if(istype(D, /obj/item/circular_saw))
 		if(D.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>The barrle is sawn off making a smaller gun!</span>")
 			var/obj/item/weaponcrafting/receiver/stock/barrled/gun/short/L = /obj/item/weaponcrafting/receiver/stock/barrled/gun/short
 			new L(user.loc, 1)
 			qdel(src)
-*/	if(istype(D, /obj/item/pipe))
-		to_chat(user, "<span class='notice'>The barrle is exstended making a longer gun!</span>")
-		var/obj/item/weaponcrafting/receiver/stock/barrled/gun/long/R = /obj/item/weaponcrafting/receiver/stock/barrled/gun/long
-		new R(user.loc, 1)
-		qdel(src)
-		qdel(D)
+*/	
+
 
 /obj/item/weaponcrafting/receiver/stock/barreled/gun/long
 	name = "rifle gun assembly"
