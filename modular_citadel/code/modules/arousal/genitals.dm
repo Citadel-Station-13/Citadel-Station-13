@@ -23,7 +23,7 @@
 /obj/item/organ/genital/Initialize(mapload, do_update = TRUE)
 	. = ..()
 	if(fluid_id)
-		create_reagents(fluid_max_volume)
+		create_reagents(fluid_max_volume, NONE, NO_REAGENTS_VALUE)
 		if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
 			reagents.add_reagent(fluid_id, fluid_max_volume)
 	if(do_update)

@@ -11,6 +11,7 @@
 	container_flags = APTFT_VERB
 	volume = 5
 	spillable = FALSE
+	reagent_value = NO_REAGENTS_VALUE
 	var/wipe_sound
 	var/soak_efficiency = 1
 	var/extinguish_efficiency = 0
