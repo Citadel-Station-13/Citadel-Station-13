@@ -506,3 +506,5 @@ FAIL2TOPIC_MAX_FAILS 5
 ## Firewall rule name used on physical server
 FAIL2TOPIC_RULE_NAME _dd_fail2topic
 
+## Enable automatic profiling - Byond 513.1506 and newer only.
+#AUTO_PROFILE

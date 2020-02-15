@@ -47,6 +47,7 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
+#define INIT_ORDER_PROFILER			101
 #define INIT_ORDER_FAIL2TOPIC		22
 #define INIT_ORDER_TITLE			20
 #define INIT_ORDER_GARBAGE			19

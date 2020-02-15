@@ -172,6 +172,7 @@
 /obj/item/reagent_containers/spray/drying_agent
 	name = "drying agent spray"
 	desc = "A spray bottle for drying agent."
+	icon_state = "cleaner_drying"
 	volume = 100
 	list_reagents = list(/datum/reagent/drying_agent = 100)
 	amount_per_transfer_from_this = 2
