@@ -69,6 +69,7 @@
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_arrow)
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_bow)
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/ashen_arrow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/quiver)
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bow_tablet)
 
 	if(ishuman(new_spawn))

@@ -203,12 +203,12 @@
 //Bow and Arrows/////////
 /////////////////////////
 
-/datum/export/weapon/techslug
+/datum/export/weapon/bows
 	cost = 450
 	unit_name = "bow"
 	export_types = list(/obj/item/gun/ballistic/bow)
 
-/datum/export/weapon/techslug
+/datum/export/weapon/arrows
 	cost = 150
 	unit_name = "arrow"
 	export_types = list(/obj/item/ammo_casing/caseless/arrow, /obj/item/ammo_casing/caseless/arrow/bone, /obj/item/ammo_casing/caseless/arrow/ashen)
@@ -217,6 +217,11 @@
 	cost = 500
 	unit_name = "stone tablets"
 	export_types = list(/obj/item/book/granter/crafting_recipe/bone_bow)
+
+/datum/export/weapon/quiver
+	cost = 100
+	unit_name = "quiver"
+	export_types = list(/obj/item/storage/belt/quiver)
 
 
 /////////////////////////

@@ -14,7 +14,7 @@
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "riflestock"
 
-/obj/item/weaponcrafting/silkstrink
+/obj/item/weaponcrafting/silkstring
 	name = "silkstring"
 	desc = "A long pice of silk looks like cable coil."
 	icon = 'icons/obj/improvised.dmi'
