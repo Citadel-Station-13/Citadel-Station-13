@@ -103,7 +103,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	else if(message_mode || saymode)
 		message = copytext_char(message, 3)
 	message = trim_left(message)
-
+	if(!message)
+		return
 	if(message_mode == MODE_ADMIN)
 		if(client)
 			client.cmd_admin_say(message)
@@ -223,7 +224,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			. = "<span class='small'>[.]</span>"
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
-	. = ..()
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args) //parent calls can't overwrite the current proc args.
 	if(!client)
 		return
 	var/deaf_message
@@ -353,6 +354,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(cultslurring)
 		message = cultslur(message)
+	
+	if(clockcultslurring)
+		message = CLOCK_CULT_SLUR(message)
 
 	message = capitalize(message)
 

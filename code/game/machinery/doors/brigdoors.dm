@@ -2,13 +2,11 @@
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Arial Black"
-#define MAX_TIMER 9000
+#define MAX_TIMER 15 MINUTES
 
-#define PRESET_SHORT 1200
-#define PRESET_MEDIUM 1800
-#define PRESET_LONG 3000
-
-
+#define PRESET_SHORT 2 MINUTES
+#define PRESET_MEDIUM 3 MINUTES
+#define PRESET_LONG 5 MINUTES
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Brig Door control displays.
@@ -25,7 +23,7 @@
 	desc = "A remote control for a door."
 	req_access = list(ACCESS_SECURITY)
 	density = FALSE
-	var/id = null // id of linked machinery/lockers
+	var/id			// id of linked machinery/lockers
 
 	var/activation_time = 0
 	var/timer_duration = 0
@@ -43,8 +41,6 @@
 	Radio = new/obj/item/radio(src)
 	Radio.listening = 0
 
-/obj/machinery/door_timer/Initialize()
-	. = ..()
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 			if (M.id == id)
@@ -71,7 +67,7 @@
 		return
 
 	if(timing)
-		if(world.realtime - activation_time >= timer_duration)
+		if(REALTIMEOFDAY - activation_time >= timer_duration)
 			timer_end() // open doors, reset timer, clear status screen
 		update_icon()
 
@@ -80,14 +76,13 @@
 	..()
 	update_icon()
 
-
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
 /obj/machinery/door_timer/proc/timer_start()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
 
-	activation_time = world.realtime
+	activation_time = REALTIMEOFDAY
 	timing = TRUE
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
@@ -103,7 +98,6 @@
 		C.locked = TRUE
 		C.update_icon()
 	return 1
-
 
 /obj/machinery/door_timer/proc/timer_end(forced = FALSE)
 
@@ -136,7 +130,7 @@
 
 
 /obj/machinery/door_timer/proc/time_left(seconds = FALSE)
-	. = max(0,timer_duration - (activation_time ? world.realtime - activation_time : 0))
+	. = max(0,timer_duration - (activation_time ? REALTIMEOFDAY - activation_time : 0))
 	if(seconds)
 		. /= 10
 
@@ -240,7 +234,7 @@
 					preset_time = PRESET_LONG
 			. = set_timer(preset_time)
 			if(timing)
-				activation_time = world.realtime
+				activation_time = REALTIMEOFDAY
 		else
 			. = FALSE
 

@@ -44,6 +44,12 @@
 			index = findtext(t, char, index + length(char))
 	return t
 
+/proc/sanitize_name(t,list/repl_chars = null)
+	if(t == "space" || t == "floor" || t == "wall" || t == "r-wall" || t == "monkey" || t == "unknown" || t == "inactive ai")	//prevents these common metagamey names
+		alert("Invalid name.")
+		return ""
+	return sanitize(t)
+	
 /proc/sanitize_filename(t)
 	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 

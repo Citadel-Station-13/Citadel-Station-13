@@ -191,7 +191,7 @@
 		else if(istype(I, /obj/item/gun/energy))
 			var/obj/item/gun/energy/EG = I
 			if(EG.cell?.charge < EG.cell.maxcharge)
-				var/obj/item/ammo_casing/energy/S = EG.ammo_type[EG.select]
+				var/obj/item/ammo_casing/energy/S = EG.ammo_type[EG.current_firemode_index]
 				EG.cell.give(S.e_cost * coeff)
 				if(!EG.chambered)
 					EG.recharge_newshot(TRUE)
