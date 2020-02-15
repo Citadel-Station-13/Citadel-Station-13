@@ -16,7 +16,7 @@
 	desc = "Arrow made of bone and sinew."
 	damage = 35
 	armour_penetration = 40
-	ammo_type = /obj/item/ammo_casing/caseless/arrow/ashen
+	ammo_type = /obj/item/ammo_casing/caseless/arrow/bone
 
 /obj/item/projectile/bullet/reusable/arrow/bronze //Just some AP shots
 	name = "bronze arrow"
