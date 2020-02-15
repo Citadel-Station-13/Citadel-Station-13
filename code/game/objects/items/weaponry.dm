@@ -346,8 +346,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A concealable spring-loaded knife."
 	force = 2
 	throwforce = 3
-	extended_force = 15
-	extended_throwforce = 18
+	extended_force = 10
+	extended_throwforce = 10
 	extended_icon_state = "switchblade_ext_ms"
 	retracted_icon_state = "switchblade_ms"
 
