@@ -326,7 +326,7 @@
 				part_set = tpart_set
 				screen = "parts"
 	if(href_list["part"])
-		var/T = href_list["part_set"]
+		var/T = href_list["part"]
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
@@ -337,7 +337,7 @@
 						add_to_queue(D)
 					break
 	if(href_list["add_to_queue"])
-		var/T = href_list["part_set"]
+		var/T = href_list["add_to_queue"]
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
@@ -349,7 +349,7 @@
 		remove_from_queue(text2num(href_list["remove_from_queue"]))
 		return update_queue_on_page()
 	if(href_list["partset_to_queue"])
-		add_part_set_to_queue(text2num(href_list["remove_from_queue"]))
+		add_part_set_to_queue(href_list["partset_to_queue"])
 		return update_queue_on_page()
 	if(href_list["process_queue"])
 		spawn(0)
