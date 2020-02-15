@@ -190,7 +190,7 @@
 
 	if(!disarming)
 		if(knockdown)
-			L.Knockdown(100, override_stamdmg = 0)		//knockdown
+			L.Knockdown(50, override_stamdmg = 0)		//knockdown
 		L.adjustStaminaLoss(stunpwr)
 	else
 		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
