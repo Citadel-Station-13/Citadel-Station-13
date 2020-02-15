@@ -168,7 +168,7 @@
 		return
 	if(firing)
 		return
-	if(user.getStaminaLoss >= STAMINA_SOFTCRIT)			//respect stamina softcrit
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)			//respect stamina softcrit
 		to_chat(user, "<span class='warning'>You are too exhausted to fire [src]!</span>")
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
