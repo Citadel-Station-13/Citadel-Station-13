@@ -48,7 +48,7 @@
 /obj/item/weaponcrafting/receiver/stock/barrled/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/stack/packageWrap))
-		var/obj/item/weaponcrafting/receiver/stock/barrled/gun/G = /obj/item/weaponcrafting/receiver/stock/barrled/gun
+		var/obj/item/weaponcrafting/receiver/stock/barreled/gun/G = /obj/item/weaponcrafting/receiver/stock/barreled/gun
 		if(W.use(15))
 			to_chat(user, "<span class='notice'>You add [W] to [src]!</span>")
 			qdel(src)
@@ -71,7 +71,7 @@
 			qdel(src)
 	if(istype(D, /obj/item/pipe))
 		to_chat(user, "<span class='notice'>The barrle is exstended making a longer gun!</span>")
-		var/obj/item/weaponcrafting/receiver/stock/barrled/gun/long/R = /obj/item/weaponcrafting/receiver/stock/barrled/gun/long
+		var/obj/item/weaponcrafting/receiver/stock/barreled/gun/long/R = /obj/item/weaponcrafting/receiver/stock/barreled/gun/long
 		new R(user.loc, 1)
 		qdel(src)
 		qdel(D)
