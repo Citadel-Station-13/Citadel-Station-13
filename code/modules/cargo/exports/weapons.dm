@@ -200,6 +200,26 @@
 	export_types = list(/obj/item/ammo_casing/shotgun/dragonsbreath, /obj/item/ammo_casing/shotgun/meteorslug, /obj/item/ammo_casing/shotgun/pulseslug, /obj/item/ammo_casing/shotgun/frag12, /obj/item/ammo_casing/shotgun/ion, /obj/item/ammo_casing/shotgun/laserslug)
 
 /////////////////////////
+//Bow and Arrows/////////
+/////////////////////////
+
+/datum/export/weapon/techslug
+	cost = 450
+	unit_name = "bow"
+	export_types = list(/obj/item/gun/ballistic/bow)
+
+/datum/export/weapon/techslug
+	cost = 150
+	unit_name = "arrow"
+	export_types = list(/obj/item/ammo_casing/caseless/arrow, /obj/item/ammo_casing/caseless/arrow/bone, /obj/item/ammo_casing/caseless/arrow/ashen)
+
+/datum/export/weapon/bow_teaching
+	cost = 500
+	unit_name = "stone tablets"
+	export_types = list(/obj/item/book/granter/crafting_recipe/bone_bow)
+
+
+/////////////////////////
 //The Traitor Sell Outs//
 /////////////////////////
 

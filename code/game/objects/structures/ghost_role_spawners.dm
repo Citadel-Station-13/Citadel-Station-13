@@ -64,6 +64,13 @@
 	var/datum/language_holder/holder = new_spawn.get_language_holder()
 	holder.selected_default_language = /datum/language/draconic
 
+//Ash walkers on birth understand how to make bone bows, bone arrows and ashen arrows
+
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_arrow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_bow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/ashen_arrow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bow_tablet)
+
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
