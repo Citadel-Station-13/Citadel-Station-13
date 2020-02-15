@@ -723,7 +723,7 @@
 			new /obj/item/lava_staff(src)
 		if(3)
 			new /obj/item/book/granter/spell/sacredflame(src)
-			new /obj/item/melee/fire_tail(src)
+			new /obj/item/melee/chainofcommand/fire_tail(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
 
@@ -827,27 +827,17 @@
 
 //Fire-Tail
 
-/obj/item/melee/fire_tail
+/obj/item/melee/chainofcommand/fire_tail
 	name = "drake tail"
 	desc = "A long flaming tail from an ash drake."
 	icon_state = "draketail"
-	item_state = "chain"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
-	damtype = "fire"
+	damtype = BURN
 	force = 20
-	throwforce = 20
-	reach = 2
-	w_class = WEIGHT_CLASS_NORMAL
-	item_flags = NONE
 	total_mass = 1.5
-	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
-	hitsound = 'sound/weapons/chainhit.ogg'
 
-/obj/item/melee/fire_tail/afterattack(target, mob/user, proximity_flag)
+/obj/item/melee/fire_tail/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(iscarbon(target))
+	if(iscarbon(target) && proximity_flag)
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(2)
 		M.IgniteMob()
