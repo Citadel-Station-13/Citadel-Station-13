@@ -1328,12 +1328,12 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	if (C.client && C.client.prefs)
 		var/datum/preferences/prefs = C.client.prefs
-		var/mob/living/carbon/human/dummy/M = generate_or_wait_for_human_dummy("hallucination")
+		var/mob/living/carbon/human/dummy/M = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_HALLUCINATION)
 		prefs.copy_to(M)
 		COMPILE_OVERLAYS(M)
 		CHECK_TICK
 		image = image(M,C)
-		unset_busy_human_dummy("hallucination")
+		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_HALLUCINATION)
 		image.override = TRUE
 		target.client.images |= image
 		QDEL_IN(src, 20 SECONDS)
