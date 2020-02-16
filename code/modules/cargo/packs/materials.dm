@@ -47,7 +47,7 @@
 	cost = 9050
 	contains = list(/obj/item/stack/sheet/plasteel/fifty)
 	crate_name = "plasteel sheets crate"
-
+/*
 /datum/supply_pack/materials/plastitanium50
 	name = "50 Plastitanium Sheets"
 	desc = "Build an evil empire with fifty plastitanium sheets."
@@ -63,7 +63,7 @@
 	contraband = TRUE
 	contains = list(/obj/item/stack/sheet/plastitaniumglass/fifty)
 	crate_name = "plastitanium glass sheets crate"
-
+*/
 /datum/supply_pack/materials/plastic50
 	name = "50 Plastic Sheets"
 	desc = "Build a limitless amount of toys with fifty plastic sheets!"
