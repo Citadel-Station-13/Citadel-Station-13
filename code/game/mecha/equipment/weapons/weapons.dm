@@ -303,10 +303,12 @@
 	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/seed
 	projectiles = 20
-	projectile_energy_cost = 25
+	projectiles_cache = 20
+	projectiles_cache_max = 160
 	projectiles_per_shot = 10
 	variance = 25
 	harmful = TRUE
+	ammo_type = "scattershot"
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
