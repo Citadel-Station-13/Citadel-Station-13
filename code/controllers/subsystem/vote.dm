@@ -90,19 +90,19 @@ SUBSYSTEM_DEF(vote)
 					if(choices[GLOB.master_mode] >= greatest_votes)
 						greatest_votes = choices[GLOB.master_mode]
 			else if(mode == "transfer") // austation begin -- Crew autotransfer vote
-					var/factor = 1
-					switch(world.time / (1 MINUTES ))
-						if(0 to 60)
-							factor = 0.5
-						if(61 to 120)
-							factor = 0.8
-						if(121 to 240)
-							factor = 1
-						if(241 to 300)
-							factor = 1.2
-						else
-							factor = 1.4
-					choices["Initiate Crew Transfer"] += round(non_voters.len * factor) // austation end
+				var/factor = 1
+				switch(world.time / (1 MINUTES))
+					if(0 to 60)
+						factor = 0.5
+					if(61 to 120)
+						factor = 0.8
+					if(121 to 240)
+						factor = 1
+					if(241 to 300)
+						factor = 1.2
+					else
+						factor = 1.4
+				choices["Initiate Crew Transfer"] += round(non_voters.len * factor) // austation end
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -380,12 +380,12 @@ SUBSYSTEM_DEF(vote)
 				if(SSmapping.changemap(config.maplist[.]))
 					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.map_name] for next round!</span>")
 			if("transfer") // austation begin -- Crew autotransfer vote
-					if(. == "Initiate Crew Transfer")
-						//TODO find a cleaner way to do this
-						SSshuttle.requestEvac(null,"Crew transfer requested.")
-						var/obj/machinery/computer/communications/C = locate() in GLOB.machines
-						if(C)
-							C.post_status("shuttle") // austation end
+				if(. == "Initiate Crew Transfer")
+					//TODO find a cleaner way to do this
+					SSshuttle.requestEvac(null,"Crew transfer requested.")
+					var/obj/machinery/computer/communications/C = locate() in GLOB.machines
+					if(C)
+						C.post_status("shuttle") // austation end
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
