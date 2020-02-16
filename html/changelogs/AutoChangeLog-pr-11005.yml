@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - tweak: "Hyposprays now switch modes on CTRL click, instead of alt, as it was already reserved for dispension amount."

@@ -51,6 +51,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
+	var/no_pin_required = FALSE //whether the gun can be fired without a pin
 
 	var/obj/item/flashlight/gun_light
 	var/can_flashlight = 0
@@ -79,7 +80,10 @@
 /obj/item/gun/Initialize()
 	. = ..()
 	if(pin)
-		pin = new pin(src)
+		if(no_pin_required)
+			pin = null
+		else
+			pin = new pin(src)
 	if(gun_light)
 		alight = new (src)
 	if(zoomable)
@@ -107,6 +111,8 @@
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
+	if(no_pin_required)
+		return
 	if(pin)
 		. += "It has \a [pin] installed."
 	else
@@ -226,6 +232,8 @@
 		return FALSE
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
+	if(no_pin_required)
+		return TRUE
 	if(pin)
 		if(pin.pin_auth(user) || (pin.obj_flags & EMAGGED))
 			return TRUE

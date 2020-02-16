@@ -112,7 +112,6 @@
 			else
 				return ..()
 
-
 /obj/structure/bookcase/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -129,14 +128,17 @@
 				choice.forceMove(drop_location())
 			update_icon()
 
-/obj/structure/bookcase/attack_ghost(mob/dead/observer/user as mob)
-	if(contents.len && in_range(user, src))
-		var/obj/item/book/choice = input("Which book would you like to read?") as null|obj in contents
-		if(choice)
-			if(!istype(choice)) //spellbook, cult tome, or the one weird bible storage
-				to_chat(user,"A mysterious force is keeping you from reading that.")
-				return
-			choice.attack_self(user)
+/obj/structure/bookcase/attack_ghost(mob/dead/observer/user)
+	. = ..()
+	if(!length(contents))
+		to_chat(user, "<span class='warning'>It's empty!</span>")
+		return
+	var/obj/item/book/choice = input("Which book would you like to read?") as null|obj in contents
+	if(choice)
+		if(!istype(choice)) //spellbook, cult tome, or the one weird bible storage
+			to_chat(user,"A mysterious force is keeping you from reading that.")
+			return
+		choice.attack_ghost(user)
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(loc, 4)
@@ -211,14 +213,17 @@
 		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
 		return
 	if(dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		if(istype(user, /mob/living))
-			user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
-		onclose(user, "book")
+		show_to(user)
+		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
 	else
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")
 
+/obj/item/book/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	show_to(O)
+
+/obj/item/book/proc/show_to(mob/user)
+	user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
@@ -319,9 +324,6 @@
 		return
 	else
 		..()
-
-/obj/item/book/attack_ghost(mob/user)
-	attack_self(user)
 
 
 /*

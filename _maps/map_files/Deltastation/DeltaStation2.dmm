@@ -34904,7 +34904,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/autolathe{
+/obj/machinery/autolathe/secure{
 	name = "public autolathe"
 	},
 /turf/open/floor/plasteel,
@@ -62353,7 +62353,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "cbd" = (
-/obj/effect/landmark/event_spawn,
+/obj/machinery/vending/wardrobe/cap_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "cbe" = (
@@ -127169,6 +127169,13 @@
 	dir = 9
 	},
 /area/science/circuit)
+"rjr" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain/private)
 "rqh" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -169426,7 +169433,7 @@ bUO
 bXf
 bUQ
 cbe
-ccP
+rjr
 ceH
 cgu
 cij

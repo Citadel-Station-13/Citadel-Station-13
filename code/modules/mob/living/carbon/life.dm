@@ -362,7 +362,7 @@
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(bodytemperature <= T0C-10 || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
+	if((bodytemperature <= T0C-10) || !(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		return
 
 	// Wait a bit before decaying
@@ -580,6 +580,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 	if(cultslurring)
 		cultslurring = max(cultslurring-1, 0)
+
+	if(clockcultslurring)
+		clockcultslurring = max(clockcultslurring-1, 0)
 
 	if(silent)
 		silent = max(silent-1, 0)
