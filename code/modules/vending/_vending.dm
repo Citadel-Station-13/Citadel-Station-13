@@ -146,6 +146,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				if (dump_amount >= 16)
 					return
 
+GLOBAL_LIST_EMPTY(vending_products)
+
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, start_empty = FALSE)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
@@ -154,6 +156,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 		var/atom/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		GLOB.vending_products[typepath] = 1
 		R.name = initial(temp.name)
 		R.product_path = typepath
 		if(!start_empty)
@@ -336,7 +339,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			display_records = product_records + hidden_records + coin_records
 		dat += "<table>"
 		for (var/datum/data/vending_product/R in display_records)
-			dat += "<tr><td><img src='data:image/jpeg;base64,[GetIconForProduct(R)]'/></td>"
+			dat += {"<tr><td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>"}
 			dat += "<td style=\"width: 100%\"><b>[sanitize(R.name)]</b></td>"
 			if(R.amount > 0)
 				dat += "<td><b>[R.amount]&nbsp;</b></td><td><a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a></td>"
@@ -362,17 +365,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "vending", (name))
+	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-
-/obj/machinery/vending/proc/GetIconForProduct(datum/data/vending_product/P)
-	if(vending_cache[P.product_path])
-		return vending_cache[P.product_path]
-	var/product = new P.product_path()
-	vending_cache[P.product_path] = icon2base64(getFlatIcon(product, no_anim = TRUE))
-	qdel(product)
-	return vending_cache[P.product_path]
 
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
