@@ -70,7 +70,7 @@
 
 /datum/chemical_reaction/synthflesh2
 	name = "Synthflesh"
-	id = /datum/reagent/medicine/synthflesh
+	id = "synthflesh_2"
 	results = list(/datum/reagent/medicine/synthflesh = 3)
 	required_reagents = list(/datum/reagent/blood/synthetics = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
 
