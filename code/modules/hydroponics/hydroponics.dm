@@ -664,7 +664,7 @@
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 2))
 		if(myseed)
-			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 0.02))
+			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 0.034))
 		adjustPests(-rand(1,2))
 
 	// Nutriment Compost, effectively
