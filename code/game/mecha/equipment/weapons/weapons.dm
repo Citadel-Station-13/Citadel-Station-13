@@ -237,7 +237,6 @@
 				projectiles_cache = 0
 
 		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
-		log_message("Rearmed [src.name].", LOG_MECHA)
 		return TRUE
 
 
