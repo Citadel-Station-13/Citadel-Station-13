@@ -68,6 +68,12 @@
 	results = list(/datum/reagent/medicine/synthflesh = 3)
 	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
 
+/datum/chemical_reaction/synthflesh2
+	name = "Synthflesh"
+	id = /datum/reagent/medicine/synthflesh
+	results = list(/datum/reagent/medicine/synthflesh = 3)
+	required_reagents = list(/datum/reagent/blood/synthetics = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
+
 /datum/chemical_reaction/synthtissue
 	name = "Synthtissue"
 	id = /datum/reagent/synthtissue
