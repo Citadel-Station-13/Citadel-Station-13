@@ -236,7 +236,7 @@
 	throwforce = 15 //Massive pice of metal
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = SLOWS_WHILE_IN_HAND
-  transparent = FALSE
+	transparent = FALSE
 
 /obj/item/shield/riot/implant
 	name = "riot tower shield"
