@@ -57072,7 +57072,7 @@
 /turf/open/floor/plating,
 /area/space)
 "sRH" = (
-/obj/machinery/autolathe{
+/obj/machinery/autolathe/secure{
 	name = "public autolathe"
 	},
 /turf/open/floor/plasteel,
