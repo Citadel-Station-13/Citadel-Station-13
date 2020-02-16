@@ -156,7 +156,9 @@
 "x" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
-/obj/item/gps/mining,
+/obj/item/gps/mining{
+	tracking = 0
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "z" = (
