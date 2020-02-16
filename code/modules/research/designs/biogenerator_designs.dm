@@ -127,7 +127,7 @@
 	name = "Diethylamine"
 	id = "diethylamine_biogen"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 75)
+	materials = list(MAT_BIOMASS = 150)
 	build_path = /obj/item/reagent_containers/glass/bottle/diethylamine
 	category = list("initial","Botany Chemicals")
 
@@ -135,7 +135,7 @@
 	name = "Saltpetre"
 	id = "saltpetre_biogen"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 125)
+	materials = list(MAT_BIOMASS = 225)
 	build_path = /obj/item/reagent_containers/glass/bottle/saltpetre
 	category = list("initial","Botany Chemicals")
 
