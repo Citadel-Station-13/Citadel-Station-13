@@ -65,6 +65,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 //Returns a random turf in a ring around the target mob, useful for sound hallucinations
 /datum/hallucination/proc/random_far_turf()
+	var/turf/target_T = get_turf(target)
+	if(!target_T)
+		return
 	var/x_based = prob(50)
 	var/first_offset = pick(-8,-7,-6,-5,5,6,7,8)
 	var/second_offset = rand(-8,8)
@@ -76,7 +79,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	else
 		y_off = first_offset
 		x_off = second_offset
-	var/turf/T = locate(target.x + x_off, target.y + y_off, target.z)
+	var/turf/T = locate(target_T.x + x_off, target_T.y + y_off, target_T.z)
 	return T
 
 /obj/effect/hallucination
