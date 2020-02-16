@@ -3,7 +3,7 @@
 ///////////////////////////////////
 
 /datum/design/milk
-	name = "10 Milk"
+	name = "10u Milk"
 	id = "milk"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 20)
@@ -11,7 +11,7 @@
 	category = list("initial","Food")
 
 /datum/design/cream
-	name = "10 Cream"
+	name = "10u Cream"
 	id = "cream"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 30)
@@ -124,19 +124,19 @@
 	category = list("initial","Botany Chemicals")
 
 /datum/design/diethylamine
-	name = "Diethylamine"
+	name = "10u Diethylamine"
 	id = "diethylamine_biogen"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 150)
-	build_path = /obj/item/reagent_containers/glass/bottle/diethylamine
+	materials = list(MAT_BIOMASS = 50)
+	make_reagents = list(/datum/reagent/diethylamine = 10)
 	category = list("initial","Botany Chemicals")
 
 /datum/design/saltpetre
-	name = "Saltpetre"
+	name = "10u Saltpetre"
 	id = "saltpetre_biogen"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 225)
-	build_path = /obj/item/reagent_containers/glass/bottle/saltpetre
+	materials = list(MAT_BIOMASS = 75)
+	make_reagents = list(/datum/reagent/saltpetre = 10)
 	category = list("initial","Botany Chemicals")
 
 /datum/design/botany_bottle
