@@ -107,22 +107,6 @@
 	build_path = /obj/item/reagent_containers/glass/bottle/nutrient/rh
 	category = list("initial","Botany Chemicals")
 
-/datum/design/diethylamine
-	name = "Diethylamine"
-	id = "diethylamine_biogen"
-	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 75)
-	build_path = /obj/item/reagent_containers/glass/bottle/diethylamine
-	category = list("initial","Botany Chemicals")
-
-/datum/design/saltpetre
-	name = "Saltpetre"
-	id = "saltpetre_biogen"
-	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 125)
-	build_path = /obj/item/reagent_containers/glass/bottle/saltpetre
-	category = list("initial","Botany Chemicals")
-
 /datum/design/weed_killer
 	name = "Weed Killer"
 	id = "weed_killer"
@@ -137,6 +121,22 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 50)
 	build_path = /obj/item/reagent_containers/glass/bottle/killer/pestkiller
+	category = list("initial","Botany Chemicals")
+
+/datum/design/diethylamine
+	name = "Diethylamine"
+	id = "diethylamine_biogen"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 75)
+	build_path = /obj/item/reagent_containers/glass/bottle/diethylamine
+	category = list("initial","Botany Chemicals")
+
+/datum/design/saltpetre
+	name = "Saltpetre"
+	id = "saltpetre_biogen"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 125)
+	build_path = /obj/item/reagent_containers/glass/bottle/saltpetre
 	category = list("initial","Botany Chemicals")
 
 /datum/design/botany_bottle
