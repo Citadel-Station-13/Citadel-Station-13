@@ -202,7 +202,7 @@
 	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
 	if(!S)
 		icon = 'icons/obj/clothing/hats.dmi'
-		icon_state = pwig
+		icon_state = "pwig"
 	else
 		icon = S.icon
 		icon_state = S.icon_state

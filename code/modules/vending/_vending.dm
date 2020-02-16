@@ -323,10 +323,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return ..()
 
 /obj/machinery/vending/ui_interact(mob/user)
-	var/dat = ""
+	var/list/dat = list()
 
-	dat += "<h3>Select an item</h3>"
-	dat += "<div class='statusDisplay'>"
+	dat += {"<h3>Select an item</h3>"
+				<div class='statusDisplay'>"}
 	if(!product_records.len)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
@@ -339,8 +339,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 			display_records = product_records + hidden_records + coin_records
 		dat += "<table>"
 		for (var/datum/data/vending_product/R in display_records)
-			dat += {"<tr><td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>"}
-			dat += "<td style=\"width: 100%\"><b>[sanitize(R.name)]</b></td>"
+			dat += {"<tr><td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>
+				<td style=\"width: 100%\"><b>[sanitize(R.name)]</b></td>"}
 			if(R.amount > 0)
 				dat += "<td><b>[R.amount]&nbsp;</b></td><td><a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a></td>"
 			else
@@ -366,7 +366,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
-	popup.set_content(dat)
+	popup.set_content(dat.join())
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
