@@ -39,7 +39,7 @@
 
 /obj/item/implant/hijack/removed(mob/living/source, silent = FALSE, special = 0)
 	if(..())
-		REMOVE_TRAIT(target, TRAIT_HIJACKER, "implant")
+		REMOVE_TRAIT(source, TRAIT_HIJACKER, "implant")
 		for (var/area/area in source.siliconaccessareas)
 			source.toggleSiliconAccessArea(area)
 			var/obj/machinery/power/apc/apc = area.get_apc()
