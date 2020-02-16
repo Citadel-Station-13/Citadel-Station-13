@@ -113,8 +113,7 @@
 	desc = "Contains set of tools to defuse a nuke."
 	cost = 7500 //Useful for traitors/nukies that fucked up
 	dangerous = TRUE
-	contraband = TRUE
-	DropPodOnly = TRUE
+	hidden = TRUE
 	contains = list(/obj/item/nuke_core_container/nt,
 					/obj/item/screwdriver/nuke/nt,
 					/obj/item/paper/guides/nt/nuke_instructions)
