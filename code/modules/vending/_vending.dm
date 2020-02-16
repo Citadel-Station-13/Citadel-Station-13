@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/ui_interact(mob/user)
 	var/list/dat = list()
 
-	dat += {"<h3>Select an item</h3>"
+	dat += {"<h3>Select an item</h3>
 				<div class='statusDisplay'>"}
 	if(!product_records.len)
 		dat += "<font color = 'red'>No product loaded!</font>"
