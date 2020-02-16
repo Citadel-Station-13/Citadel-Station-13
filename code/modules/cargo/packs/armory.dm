@@ -192,8 +192,7 @@
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/shotgun/boltaction,
-					/obj/item/staff/broom) //Its... A real thing that was done in the Russian army
+					/obj/item/gun/ballistic/shotgun/boltaction)
 	crate_name = "surplus military crate"
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
