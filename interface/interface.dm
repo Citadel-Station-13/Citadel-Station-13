@@ -124,9 +124,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tm = me
 \tt = say
 \to = OOC
-\tl = LOOC
 \tb = resist
-\tv = rest
 \t<B></B>h = stop pulling
 \tx = swap-hand
 \tz = activate held object (or y)
@@ -190,10 +188,8 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tm = me
 \tt = say
 \to = OOC
-\tl = LOOC
 \tx = cycle active modules
 \tb = resist
-\tv = rest
 \tz = activate held object (or y)
 \tf = cycle-intents-left
 \tg = cycle-intents-right
