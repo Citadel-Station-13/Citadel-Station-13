@@ -339,7 +339,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			display_records = product_records + hidden_records + coin_records
 		dat += "<table>"
 		for (var/datum/data/vending_product/R in display_records)
-			dat += {"<tr><td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>
+			dat += {"<tr><td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></span></td>
 				<td style=\"width: 100%\"><b>[sanitize(R.name)]</b></td>"}
 			if(R.amount > 0)
 				dat += "<td><b>[R.amount]&nbsp;</b></td><td><a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a></td>"
