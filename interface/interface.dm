@@ -125,6 +125,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tt = say
 \to = OOC
 \tb = resist
+\tv = rest
 \t<B></B>h = stop pulling
 \tx = swap-hand
 \tz = activate held object (or y)
@@ -184,6 +185,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \td = right
 \tw = up
 \tq = unequip active module
+\tv = rest
 \t<B></B>h = stop pulling
 \tm = me
 \tt = say
