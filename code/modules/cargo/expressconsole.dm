@@ -197,7 +197,7 @@
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						SSshuttle.points -= SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)
-						SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
+						SSblackbox.record_feedback("nested tally", "cargo_imports", MAX_EMAG_ROCKETS, list("[SO.pack.cost * 0.72]", "[SO.pack.name]"))
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
