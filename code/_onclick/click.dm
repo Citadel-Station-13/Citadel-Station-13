@@ -82,11 +82,11 @@
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
+	if(modifiers["shift"] && ((client && client.show_popup_menus) || modifiers["middle"])) //CIT CHANGE - makes shift-click examine use right click instead of left click in combat mode
+		ShiftClickOn(A)
+		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
-		return
-	if(modifiers["shift"] && (client && client.show_popup_menus || modifiers["right"])) //CIT CHANGE - makes shift-click examine use right click instead of left click in combat mode
-		ShiftClickOn(A)
 		return
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
