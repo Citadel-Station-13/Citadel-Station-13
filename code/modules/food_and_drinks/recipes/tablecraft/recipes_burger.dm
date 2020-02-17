@@ -3,25 +3,6 @@
 
 ////////////////////////////////////////////////STANDARD BURGS////////////////////////////////////////////////
 
-
-/datum/crafting_recipe/food/appendixburger
-	name = "Appendix burger"
-	reqs = list(
-		/obj/item/organ/appendix = 1,
-		/obj/item/reagent_containers/food/snacks/bun = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/burger/appendix
-	subcategory = CAT_BURGER
-
-/datum/crafting_recipe/food/brainburger
-	name = "Brain burger"
-	reqs = list(
-		/obj/item/organ/brain = 1,
-		/obj/item/reagent_containers/food/snacks/bun = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/burger/brain
-	subcategory = CAT_BURGER
-
 /datum/crafting_recipe/food/burger
 	name = "Burger"
 	reqs = list(
@@ -101,7 +82,54 @@
 	result = /obj/item/reagent_containers/food/snacks/burger/human
 	subcategory = CAT_BURGER
 
+/datum/crafting_recipe/food/ribburger
+	name = "McRib"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/bbqribs = 1,     //The sauce is already included in the ribs
+			/obj/item/reagent_containers/food/snacks/onion_slice = 1, //feel free to remove if too burdensome.
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/rib
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/mcguffin
+	name = "McGuffin"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/friedegg = 1,
+			/obj/item/reagent_containers/food/snacks/meat/bacon = 2,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/mcguffin
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/tofuburger
+	name = "Tofu burger"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tofu = 1,
+		/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/tofu
+	subcategory = CAT_BURGER
+
 ///////////////EXOTIC//////////////////
+
+/datum/crafting_recipe/food/appendixburger
+	name = "Appendix burger"
+	reqs = list(
+		/obj/item/organ/appendix = 1,
+		/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/appendix
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/brainburger
+	name = "Brain burger"
+	reqs = list(
+		/obj/item/organ/brain = 1,
+		/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/brain
+	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/bearger
 	name = "Bearger"
@@ -158,35 +186,6 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/jelly/cherry
-	subcategory = CAT_BURGER
-
-/datum/crafting_recipe/food/ribburger
-	name = "McRib"
-	reqs = list(
-			/obj/item/reagent_containers/food/snacks/bbqribs = 1,     //The sauce is already included in the ribs
-			/obj/item/reagent_containers/food/snacks/onion_slice = 1, //feel free to remove if too burdensome.
-			/obj/item/reagent_containers/food/snacks/bun = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/burger/rib
-	subcategory = CAT_BURGER
-
-/datum/crafting_recipe/food/mcguffin
-	name = "McGuffin"
-	reqs = list(
-			/obj/item/reagent_containers/food/snacks/friedegg = 1,
-			/obj/item/reagent_containers/food/snacks/meat/bacon = 2,
-			/obj/item/reagent_containers/food/snacks/bun = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/burger/mcguffin
-	subcategory = CAT_BURGER
-
-/datum/crafting_recipe/food/tofuburger
-	name = "Tofu burger"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/tofu = 1,
-		/obj/item/reagent_containers/food/snacks/bun = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/burger/tofu
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/baseballburger
