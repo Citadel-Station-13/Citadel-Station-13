@@ -1,5 +1,5 @@
 /datum/element/mob_holder
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
 	var/worn_state
 	var/alt_worn
@@ -40,19 +40,19 @@
 		to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
 	if(source.buckled)
-		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
+		to_chat(user, "<span class='warning'>[source] is buckled to something!</span>")
 		return FALSE
 	if(source == user)
 		to_chat(user, "<span class='warning'>You can't pick yourself up.</span>")
 		return FALSE
 	source.visible_message("<span class='warning'>[user] starts picking up [source].</span>", \
 					"<span class='userdanger'>[user] starts picking you up!</span>")
-	if(!do_after(user, 20, target = src) || source.buckled)
+	if(!do_after(user, 20, target = source) || source.buckled)
 		return FALSE
 
 	source.visible_message("<span class='warning'>[user] picks up [source]!</span>", \
 					"<span class='userdanger'>[user] picks you up!</span>")
-	to_chat(user, "<span class='notice'>You pick [src] up.</span>")
+	to_chat(user, "<span class='notice'>You pick [source] up.</span>")
 	source.drop_all_held_items()
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(source), source, worn_state, alt_worn, right_hand, left_hand, inv_slots)
 	if(proctype)
@@ -101,6 +101,8 @@
 	target.forceMove(src)
 	var/image/I = new //work around to retain the same appearance to the mob idependently from inhands/worn states.
 	I.appearance = target.appearance
+	I.layer = FLOAT_LAYER //So it doesn't get screwed up by layer overrides.
+	I.plane = FLOAT_PLANE //Same as above but for planes.
 	I.override = TRUE
 	add_overlay(I)
 	name = target.name
@@ -128,7 +130,7 @@
 	if(AM == held_mob)
 		held_mob.reset_perspective()
 		held_mob = null
-		qdel(src)
+		QDEL_IN(src, 1) //To avoid a qdel loop.
 
 /obj/item/clothing/head/mob_holder/Entered(atom/movable/AM, atom/newloc)
 	. = ..()
@@ -158,7 +160,7 @@
 /obj/item/clothing/head/mob_holder/container_resist()
 	if(isliving(loc))
 		var/mob/living/L = loc
-		L.visible_message("<span class='warning'>[src] escapes from [L]!</span>", "<span class='warning'>[src] escapes your grip!</span>")
+		L.visible_message("<span class='warning'>[held_mob] escapes from [L]!</span>", "<span class='warning'>[held_mob] escapes your grip!</span>")
 	release()
 
 /obj/item/clothing/head/mob_holder/assume_air(datum/gas_mixture/env)
@@ -170,7 +172,7 @@
 		location = location.loc
 		if(ismob(location))
 			return location.loc.assume_air(env)
-	return loc.assume_air(env)
+	return location.assume_air(env)
 
 /obj/item/clothing/head/mob_holder/remove_air(amount)
 	var/atom/location = loc
@@ -181,4 +183,4 @@
 		location = location.loc
 		if(ismob(location))
 			return location.loc.remove_air(amount)
-	return loc.remove_air(amount)
+	return location.remove_air(amount)

@@ -15,7 +15,7 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	item_flags = NEEDS_PERMIT
+	item_flags = NEEDS_PERMIT | NO_ATTACK_CHAIN_SOFT_STAMCRIT
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -51,6 +51,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
+	var/no_pin_required = FALSE //whether the gun can be fired without a pin
 
 	var/obj/item/flashlight/gun_light
 	var/can_flashlight = 0
@@ -79,17 +80,24 @@
 /obj/item/gun/Initialize()
 	. = ..()
 	if(pin)
-		pin = new pin(src)
+		if(no_pin_required)
+			pin = null
+		else
+			pin = new pin(src)
 	if(gun_light)
 		alight = new (src)
 	if(zoomable)
 		azoom = new (src)
 
 /obj/item/gun/Destroy()
-	QDEL_NULL(pin)
-	QDEL_NULL(gun_light)
-	QDEL_NULL(bayonet)
-	QDEL_NULL(chambered)
+	if(pin)
+		QDEL_NULL(pin)
+	if(gun_light)
+		QDEL_NULL(gun_light)
+	if(bayonet)
+		QDEL_NULL(bayonet)
+	if(chambered)
+		QDEL_NULL(chambered)
 	return ..()
 
 /obj/item/gun/CheckParts(list/parts_list)
@@ -103,6 +111,8 @@
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
+	if(no_pin_required)
+		return
 	if(pin)
 		. += "It has \a [pin] installed."
 	else
@@ -157,6 +167,9 @@
 	if(!target)
 		return
 	if(firing)
+		return
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)			//respect stamina softcrit
+		to_chat(user, "<span class='warning'>You are too exhausted to fire [src]!</span>")
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
@@ -222,6 +235,8 @@
 		return FALSE
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
+	if(no_pin_required)
+		return TRUE
 	if(pin)
 		if(pin.pin_auth(user) || (pin.obj_flags & EMAGGED))
 			return TRUE
@@ -236,7 +251,7 @@
 	return
 
 /obj/item/gun/proc/on_cooldown()
-	return busy_action || firing || (last_fire + fire_delay > world.time)
+	return busy_action || firing || ((last_fire + fire_delay) > world.time)
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)

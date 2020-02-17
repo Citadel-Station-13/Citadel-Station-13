@@ -401,6 +401,8 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	new/datum/stack_recipe("alien bed", /obj/structure/bed/abductor, 2, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("alien locker", /obj/structure/closet/abductor, 2, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("alien table frame", /obj/structure/table_frame/abductor, 1, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("alien bar stool", /obj/item/chair/stool/bar/alien, 1, time = 20, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("alien stool", /obj/item/chair/stool/alien, 1, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("alien airlock assembly", /obj/structure/door_assembly/door_assembly_abductor, 4, time = 20, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("alien floor tile", /obj/item/stack/tile/mineral/abductor, 1, 4, 20), \

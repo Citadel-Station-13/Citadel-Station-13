@@ -270,7 +270,7 @@
 			if(!is_operational() || recording_recipe)
 				return
 			var/amount = text2num(params["amount"])
-			if(beaker && amount in beaker.possible_transfer_amounts)
+			if(beaker && (amount in beaker.possible_transfer_amounts))
 				beaker.reagents.remove_all(amount)
 				work_animation()
 				. = TRUE
@@ -319,7 +319,7 @@
 			if(!is_operational())
 				return
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
-			if(!usr.canUseTopic(src, !issilicon(usr)))
+			if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 				return
 			if(saved_recipes[name] && alert("\"[name]\" already exists, do you want to overwrite it?",, "Yes", "No") == "No")
 				return

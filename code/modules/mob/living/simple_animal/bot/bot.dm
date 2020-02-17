@@ -3,7 +3,7 @@
 	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	light_range = 3
 	light_power = 0.9
 	light_color = "#CDDDFF"
@@ -810,14 +810,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	switch(href_list["operation"])
 		if("patrol")
-			if(!issilicon(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+			if(!hasSiliconAccessInArea(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
 				return TRUE
 			auto_patrol = !auto_patrol
 			bot_reset()
 		if("remote")
 			remote_disabled = !remote_disabled
 		if("hack")
-			if(!issilicon(usr) && !IsAdminGhost(usr))
+			if(!hasSiliconAccessInArea(usr) && !IsAdminGhost(usr))
 				var/msg = "[key_name(usr)] attempted to hack a bot with a href that shouldn't be available!"
 				message_admins(msg)
 				log_admin(msg)
@@ -836,7 +836,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(usr, "<span class='notice'>[text_dehack]</span>")
 				bot_reset()
 		if("ejectpai")
-			if(paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
+			if(paicard && (!locked || hasSiliconAccessInArea(usr) || IsAdminGhost(usr)))
 				to_chat(usr, "<span class='notice'>You eject [paicard] from [bot_name]</span>")
 				ejectpai(usr)
 	update_controls()
@@ -863,13 +863,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
 			return TRUE
-		else if(!issilicon(user) && !IsAdminGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
+		else if(!hasSiliconAccessInArea(user) && !IsAdminGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return TRUE
 	return FALSE
 
 /mob/living/simple_animal/bot/proc/hack(mob/user)
 	var/hack
-	if(issilicon(user) || IsAdminGhost(user)) //Allows silicons or admins to toggle the emag status of a bot.
+	if(hasSiliconAccessInArea(user) || IsAdminGhost(user)) //Allows silicons or admins to toggle the emag status of a bot.
 		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=[REF(src)];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
@@ -878,7 +878,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
 	var/eject = ""
-	if((!locked || issilicon(usr) || IsAdminGhost(usr)))
+	if((!locked || hasSiliconAccessInArea(usr) || IsAdminGhost(usr)))
 		if(paicard || allow_pai)
 			eject += "Personality card status: "
 			if(paicard)

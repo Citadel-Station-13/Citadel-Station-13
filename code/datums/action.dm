@@ -544,6 +544,70 @@
 		cooldown = world.time
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
+/datum/action/item_action/removeAPCs
+	name = "Relinquish APC"
+	desc = "Let go of an APC, relinquish control back to the station."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijackx"
+
+/datum/action/item_action/removeAPCs/Trigger()
+	var/list/areas = list()
+	for (var/area/a in owner.siliconaccessareas)
+		areas[a.name] = a
+	var/removeAPC = input("Select an APC to remove:","Remove APC Control",1) as null|anything in areas
+	if (!removeAPC)
+		return
+	var/area/area = areas[removeAPC]
+	var/obj/machinery/power/apc/apc = area.get_apc()
+	if (!apc || !(area in owner.siliconaccessareas))
+		return
+	apc.hijacker = null
+	apc.update_icon()
+	apc.set_hijacked_lighting()
+	owner.toggleSiliconAccessArea(area)
+
+/datum/action/item_action/accessAPCs
+	name = "Access APC Interface"
+	desc = "Open the APC's interface."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijacky"
+
+/datum/action/item_action/accessAPCs/Trigger()
+	var/list/areas = list()
+	for (var/area/a in owner.siliconaccessareas)
+		areas[a.name] = a
+	var/accessAPC = input("Select an APC to access:","Access APC Interface",1) as null|anything in areas
+	if (!accessAPC)
+		return
+	var/area/area = areas[accessAPC]
+	var/obj/machinery/power/apc/apc = area.get_apc()
+	if (!apc || !(area in owner.siliconaccessareas))
+		return
+	apc.ui_interact(owner)
+
+/datum/action/item_action/stealthmodetoggle
+	name = "Toggle Stealth Mode"
+	desc = "Toggles the stealth mode on the hijack implant."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijackz"
+
+/datum/action/item_action/stealthmodetoggle/Trigger()
+	var/obj/item/implant/hijack/H = target
+	if (!istype(H))
+		return
+	if (H.stealthcooldown > world.time)
+		to_chat(owner,"<span class='warning'>The hijack implant's stealth mode toggle is still rebooting!</span>")
+		return
+	H.stealthmode = !H.stealthmode
+	for (var/area/area in H.imp_in.siliconaccessareas)
+		var/obj/machinery/power/apc/apc = area.get_apc()
+		if (apc)
+			apc.set_hijacked_lighting()
+			apc.update_icon()
+	H.stealthcooldown = world.time + 15 SECONDS
+	H.toggle_eyes()
+	to_chat(owner,"<span class='notice'>You toggle the hijack implant's stealthmode [H.stealthmode ? "on" : "off"].</span>")
+
 /datum/action/item_action/flash
 	name = "Flash"
 
@@ -756,3 +820,11 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
+
+/proc/get_action_of_type(mob/M, var/action_type)
+	if(!M.actions || !ispath(action_type, /datum/action))
+		return
+	for(var/datum/action/A in M.actions)
+		if(istype(A, action_type))
+			return A
+	return 

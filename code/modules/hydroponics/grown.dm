@@ -15,6 +15,7 @@
 	// Saves us from having to define each stupid grown's dried_type as itself.
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 	resistance_flags = FLAMMABLE
+	reagent_value = HARVEST_REAGENTS_VALUE
 	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
 	var/can_distill = TRUE //If FALSE, this object cannot be distilled into an alcohol.
 	var/distill_reagent //If NULL and this object can be distilled, it uses a generic fruit_wine reagent and adjusts its variables.

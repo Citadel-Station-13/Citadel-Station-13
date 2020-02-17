@@ -110,6 +110,7 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_HIJACKER			"hijacker"
 #define TRAIT_SIXTHSENSE		"sixthsense"
 #define TRAIT_DISSECTED			"dissected"
 #define TRAIT_FEARLESS			"fearless"

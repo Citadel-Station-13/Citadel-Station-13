@@ -1,3 +1,6 @@
+#define BREASTS_ICON_MIN_SIZE 1
+#define BREASTS_ICON_MAX_SIZE 6
+
 /obj/item/organ/genital/breasts
 	name = "breasts"
 	desc = "Female milk producing organs."
@@ -9,7 +12,7 @@
 	fluid_id = /datum/reagent/consumable/milk
 	fluid_rate = MILK_RATE
 	shape = "pair"
-	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_FUID_PRODUCTION
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_FUID_PRODUCTION|GENITAL_CAN_AROUSE
 	masturbation_verb = "massage"
 	arousal_verb = "Your breasts start feeling sensitive"
 	unarousal_verb = "Your breasts no longer feel sensitive"
@@ -19,8 +22,8 @@
 	var/cached_size //these two vars pertain size modifications and so should be expressed in NUMBERS.
 	var/prev_size //former cached_size value, to allow update_size() to early return should be there no significant changes.
 
-/obj/item/organ/genital/breasts/Initialize(mapload, mob/living/carbon/human/H)
-	if(!H)
+/obj/item/organ/genital/breasts/Initialize(mapload, do_update = TRUE)
+	if(do_update)
 		cached_size = breast_values[size]
 		prev_size = cached_size
 	return ..()
@@ -49,21 +52,21 @@
 		var/datum/reagent/R = GLOB.chemical_reagents_list[fluid_id]
 		if(R)
 			desc += " They're leaking [lowertext(R.name)]."
-	var/string
+	var/datum/sprite_accessory/S = GLOB.breasts_shapes_list[shape]
+	var/icon_shape = S ? S.icon_state : "pair"
+	var/icon_size = CLAMP(breast_values[size], BREASTS_ICON_MIN_SIZE, BREASTS_ICON_MAX_SIZE)
+	icon_state = "breasts_[icon_shape]_[breast_values[icon_size]]"
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
 				color = "#[skintone2hex(H.skin_tone)]"
-				string = "breasts_[GLOB.breasts_shapes_icons[shape]]_[size]-s"
+				icon_state += "_s"
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
-			string = "breasts_[GLOB.breasts_shapes_icons[shape]]_[size]"
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			icon_state = sanitize_text(string)
 			H.update_genitals()
-			icon_state = sanitize_text(string)
 
 //Allows breasts to grow and change size, with sprite changes too.
 //maximum wah
@@ -130,3 +133,6 @@
 		cached_size = size
 		size = breast_values[size]
 	prev_size = cached_size
+
+#undef BREASTS_ICON_MIN_SIZE
+#undef BREASTS_ICON_MAX_SIZE

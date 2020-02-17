@@ -487,7 +487,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
 			return
 		else
-			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
+			var/mob/dead/observer/ghost = new/mob/dead/observer(get_turf(M), M)
 			ghost.ckey = M.ckey
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
@@ -1058,7 +1058,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	set name = "Start Line Profiling"
 	set desc = "Starts tracking line by line profiling for code lines that support it"
 
-	PROFILE_START
+	LINE_PROFILE_START
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] started line by line profiling.</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Line Profiling")
@@ -1069,7 +1069,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	set name = "Stops Line Profiling"
 	set desc = "Stops tracking line by line profiling for code lines that support it"
 
-	PROFILE_STOP
+	LINE_PROFILE_STOP
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] stopped line by line profiling.</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop Line Profiling")

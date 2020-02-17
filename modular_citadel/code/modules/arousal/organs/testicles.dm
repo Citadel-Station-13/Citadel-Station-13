@@ -43,19 +43,19 @@
 /obj/item/organ/genital/testicles/update_appearance()
 	. = ..()
 	desc = "You see an [size_name] pair of testicles."
+	var/datum/sprite_accessory/S = GLOB.balls_shapes_list[shape]
+	var/icon_shape = S ? S.icon_state : "single"
+	icon_state = "testicles_[icon_shape]_[size]"
 	if(owner)
-		var/string
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
 				color = "#[skintone2hex(H.skin_tone)]"
-				string = "testicles_[GLOB.balls_shapes_icons[shape]]_[size]-s"
+				icon_state += "_s"
 		else
 			color = "#[owner.dna.features["balls_color"]]"
-			string = "testicles_[GLOB.balls_shapes_icons[shape]]_[size]"
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			icon_state = sanitize_text(string)
 			H.update_genitals()
 
 /obj/item/organ/genital/testicles/get_features(mob/living/carbon/human/H)
