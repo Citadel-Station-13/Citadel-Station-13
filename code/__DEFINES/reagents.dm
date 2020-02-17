@@ -22,6 +22,11 @@
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER 	(REFILLABLE | DRAINABLE | TRANSPARENT)
 
+//reagents_value defines, for cargo stuff.
+#define DEFAULT_REAGENTS_VALUE 1
+#define NO_REAGENTS_VALUE 0
+#define HARVEST_REAGENTS_VALUE 0.3
+
 
 #define TOUCH			1	// splashing
 #define INGEST			2	// ingestion
@@ -39,6 +44,8 @@
 #define DEL_REAGENT		1	// reagent deleted (fully cleared)
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
+
+#define THRESHOLD_UNHUSK 50 // health threshold for synthflesh/rezadone to unhusk someone
 
 //reagent bitflags, used for altering how they works
 #define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body

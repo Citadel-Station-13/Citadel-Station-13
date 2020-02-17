@@ -96,7 +96,7 @@
 		charges_left = charges
 
 	if(!reagents)
-		create_reagents(charges_left * volume_multiplier)
+		create_reagents(charges_left * volume_multiplier, NONE, NO_REAGENTS_VALUE)
 	reagents.clear_reagents()
 
 	var/total_weight = 0
@@ -619,7 +619,7 @@
 	is_capped = TRUE
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
-	
+
 	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
 
 	pre_noise = TRUE

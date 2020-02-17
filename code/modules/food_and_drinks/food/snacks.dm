@@ -71,10 +71,11 @@ All foods are distributed among various categories. Use common sense.
 	if(!eater)
 		return
 	if(!reagents.total_volume)
-		var/obj/item/trash_item = generate_trash(eater)
+		var/mob/living/location = loc
+		var/obj/item/trash_item = generate_trash(location)
 		qdel(src)
-		eater.put_in_hands(trash_item)
-
+		if(istype(location))
+			location.put_in_hands(trash_item)
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
@@ -245,7 +246,7 @@ All foods are distributed among various categories. Use common sense.
 	return TRUE
 
 /obj/item/reagent_containers/food/snacks/proc/initialize_slice(obj/item/reagent_containers/food/snacks/slice, reagents_per_slice)
-	slice.create_reagents(slice.volume)
+	slice.create_reagents(slice.volume, reagent_flags, reagent_value)
 	reagents.trans_to(slice,reagents_per_slice)
 	if(name != initial(name))
 		slice.name = "slice of [name]"
@@ -279,7 +280,7 @@ All foods are distributed among various categories. Use common sense.
 
 // initialize_cooked_food() is called when microwaving the food
 /obj/item/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/reagent_containers/food/snacks/S, cooking_efficiency = 1)
-	S.create_reagents(S.volume)
+	S.create_reagents(S.volume, reagent_flags, reagent_value)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
 	if(S.bonus_reagents && S.bonus_reagents.len)

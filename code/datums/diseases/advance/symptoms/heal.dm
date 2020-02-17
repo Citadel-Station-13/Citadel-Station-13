@@ -448,9 +448,11 @@
 	symptom_delay_max = 1
 	passive_message = "<span class='notice'>Your skin glows faintly for a moment.</span>"
 	var/cellular_damage = FALSE
-	threshold_desc = "<b>Transmission 6:</b> Additionally heals cellular damage and toxin lovers.<br>\
-					  <b>Resistance 7:</b> Increases healing speed."
-
+	threshold_desc = list(
+	"Transmission 6" = "Additionally heals cellular damage and toxin lovers.",
+	"Resistance 7" = "Increases healing speed.",
+	)
+	
 /datum/symptom/heal/radiation/Start(datum/disease/advance/A)
 	if(!..())
 		return

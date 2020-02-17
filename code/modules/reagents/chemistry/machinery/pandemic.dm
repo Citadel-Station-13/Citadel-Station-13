@@ -170,7 +170,7 @@
 			if(!A.mutable)
 				return
 			if(A)
-				var/new_name = stripped_input(usr, "Name the disease", "New name", "", MAX_NAME_LEN)
+				var/new_name = sanitize_name(html_encode(params["name"]))
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)
@@ -181,27 +181,30 @@
 			if(!istype(A) || !A.mutable)
 				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
 				return
+			wait = TRUE
+			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			A = A.Copy()
 			var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY", "viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
-			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
-			wait = TRUE
+			B.reagents.add_reagent(/datum/reagent/blood/synthetics, 10, data)
 			update_icon()
 			var/turf/source_turf = get_turf(src)
 			log_virus("A culture bottle was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
-			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
+			
 			. = TRUE
 		if("create_vaccine_bottle")
+			wait = TRUE
+			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 400)
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
-			wait = TRUE
+			
 			update_icon()
-			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)
+			
 			. = TRUE
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)

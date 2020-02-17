@@ -29,6 +29,7 @@ import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
+import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
@@ -85,6 +86,7 @@ import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
+import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 import { AtmosRelief } from './interfaces/AtmosRelief';
@@ -378,6 +380,10 @@ const ROUTES = {
     component: () => PortableGenerator,
     scrollable: false,
   },
+  personal_crafting: {
+    component: () => PersonalCrafting,
+    scrollable: true,
+  },
   portable_pump: {
     component: () => PortablePump,
     scrollable: false,
@@ -469,6 +475,11 @@ const ROUTES = {
   turbine_computer: {
     component: () => TurbineComputer,
     scrollable: false,
+  },
+  uplink: {
+    component: () => Uplink,
+    scrollable: true,
+    theme: 'syndicate',
   },
   vault_controller: {
     component: () => VaultController,

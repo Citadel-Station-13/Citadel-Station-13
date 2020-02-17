@@ -30,7 +30,7 @@
 /obj/machinery/telecomms/ui_interact(mob/user)
 	. = ..()
 	// You need a multitool to use this, or be silicon
-	if(!issilicon(user))
+	if(!hasSiliconAccessInArea(user))
 		// istype returns false if the value is null
 		if(!istype(user.get_active_held_item(), /obj/item/multitool))
 			return
@@ -97,7 +97,7 @@
 
 	var/obj/item/multitool/P = null
 	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/multitool))
+	if(!hasSiliconAccessInArea(user) && istype(user.get_active_held_item(), /obj/item/multitool))
 		P = user.get_active_held_item()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
@@ -162,7 +162,7 @@
 	if(..())
 		return
 
-	if(!issilicon(usr))
+	if(!hasSiliconAccessInArea(usr))
 		if(!istype(usr.get_active_held_item(), /obj/item/multitool))
 			return
 
@@ -270,6 +270,6 @@
 	updateUsrDialog()
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || in_range(user, src))
+	if(hasSiliconAccessInArea(user) || in_range(user, src))
 		return TRUE
 	return FALSE

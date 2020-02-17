@@ -107,7 +107,7 @@
 	interact(user)
 
 /obj/item/integrated_circuit_printer/interact(mob/user)
-	if(!(in_range(src, user) || issilicon(user)))
+	if(!(in_range(src, user) || hasSiliconAccessInArea(user)))
 		return
 
 	if(isnull(current_category))

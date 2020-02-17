@@ -12,7 +12,7 @@
 	maxHealth = 250
 	health = 250
 	gender = NEUTER
-	mob_biotypes = list(MOB_INORGANIC)
+	mob_biotypes = NONE
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
@@ -197,8 +197,6 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			return 0
 	return ..()
 
-
-
 /mob/living/simple_animal/hostile/mimic/copy/ranged
 	var/obj/item/gun/TrueGun = null
 	var/obj/item/gun/magic/Zapstick
@@ -229,14 +227,13 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			casingtype = initial(M.ammo_type)
 		if(istype(G, /obj/item/gun/energy))
 			Zapgun = G
-			var/selectfiresetting = Zapgun.select
-			var/obj/item/ammo_casing/energy/E = Zapgun.ammo_type[selectfiresetting]
+			var/obj/item/ammo_casing/energy/E = Zapgun.ammo_type[Zapgun.current_firemode_index]
 			projectiletype = initial(E.projectile_type)
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(the_target)
 	if(Zapgun)
 		if(Zapgun.cell)
-			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
+			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.current_firemode_index]
 			if(Zapgun.cell.charge >= shot.e_cost)
 				Zapgun.cell.use(shot.e_cost)
 				Zapgun.update_icon()

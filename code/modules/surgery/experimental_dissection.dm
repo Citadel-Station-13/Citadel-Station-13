@@ -24,8 +24,8 @@
 
 /datum/surgery_step/dissection
 	name = "dissection"
-	implements = list(/obj/item/scalpel/augment = 75, /obj/item/scalpel/advanced = 60, /obj/item/scalpel = 45, /obj/item/kitchen/knife = 20, /obj/item/shard = 10)// special tools not only cut down time but also improve probability, doesn't use TOOL_SCALPEL because different scalpels have different probs
-	time = 125
+	implements = list(/obj/item/scalpel/alien = 100, /obj/item/scalpel/advanced = 99, /obj/item/scalpel = 90, /obj/item/kitchen/knife = 45, /obj/item/shard = 25)// special tools not only cut down time but also improve probability, doesn't use TOOL_SCALPEL because different scalpels have different probs
+	time = 100
 	silicons_obey_prob = TRUE
 	repeatable = TRUE
 

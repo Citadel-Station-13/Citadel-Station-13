@@ -3,7 +3,7 @@
 
 /mob/living/carbon/Initialize()
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, NONE, NO_REAGENTS_VALUE)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
@@ -559,7 +559,7 @@
 	health = round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION)
 	staminaloss = round(total_stamina, DAMAGE_PRECISION)
 	update_stat()
-	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
+	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
 		become_husk("burn")
 	med_hud_set_health()
 	if(stat == SOFT_CRIT)

@@ -142,7 +142,7 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
-	if(operating || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 
 	var/list/options = list()
@@ -170,10 +170,10 @@
 		for(var/key in options)
 			choice = key
 	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+		choice = show_radial_menu(user, src, options, require_near = !hasSiliconAccessInArea(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 
 	switch(choice)
@@ -190,7 +190,7 @@
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+	if(!in_range(user, src) && !hasSiliconAccessInArea(user) && !isobserver(user))
 		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
 		return
 

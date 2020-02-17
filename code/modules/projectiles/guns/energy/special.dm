@@ -36,7 +36,7 @@
 
 /obj/item/gun/energy/decloner/update_icon()
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("decloner_spin")
 
@@ -185,7 +185,7 @@
 	var/atmos_link = FALSE
 
 /obj/item/gun/energy/wormhole_projector/update_icon()
-	icon_state = "[initial(icon_state)][select]"
+	icon_state = "[initial(icon_state)][current_firemode_index]"
 	item_state = icon_state
 
 /obj/item/gun/energy/wormhole_projector/update_ammo_types()
@@ -320,7 +320,7 @@
 
 /obj/item/gun/energy/emitter/update_icon()
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("emitter_carbine_empty")
 	else

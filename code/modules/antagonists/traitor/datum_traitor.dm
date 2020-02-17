@@ -77,19 +77,23 @@
 	var/is_hijacker = FALSE
 	var/datum/game_mode/dynamic/mode
 	var/is_dynamic = FALSE
+	var/hijack_prob = 0
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
 		is_dynamic = TRUE
-		if(mode.storyteller.flags & NO_ASSASSIN)
-			is_hijacker = FALSE
+		if(mode.threat >= CONFIG_GET(number/dynamic_hijack_cost))
+			hijack_prob = CLAMP(mode.threat_level-50,0,20)
 		if(GLOB.joined_player_list.len>=GLOB.dynamic_high_pop_limit)
-			is_hijacker = (prob(10) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
+			is_hijacker = (prob(hijack_prob) && mode.threat_level > CONFIG_GET(number/dynamic_hijack_high_population_requirement))
 		else
 			var/indice_pop = min(10,round(GLOB.joined_player_list.len/mode.pop_per_requirement)+1)
-			is_hijacker = (prob(10) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
+			is_hijacker = (prob(hijack_prob) && (mode.threat_level >= CONFIG_GET(number_list/dynamic_hijack_requirements)[indice_pop]))
+		if(mode.storyteller.flags & NO_ASSASSIN)
+			is_hijacker = FALSE
 	else if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
+		hijack_prob = 10
 		is_hijacker = prob(10)
-	var/martyr_chance = prob(20)
+	var/martyr_chance = prob(hijack_prob*2)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
 	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
 		if(!SSticker.mode.exchange_red)
@@ -170,7 +174,7 @@
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
 		is_dynamic = TRUE
-		assassin_prob = mode.threat_level*(2/3)
+		assassin_prob = max(0,mode.threat_level-20)
 	if(prob(assassin_prob))
 		if(is_dynamic)
 			var/threat_spent = CONFIG_GET(number/dynamic_assassinate_cost)
@@ -187,8 +191,13 @@
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
 			add_objective(maroon_objective)
-		else
+		else if(prob(max(0,assassin_prob-20)))
 			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = owner
+			kill_objective.find_target()
+			add_objective(kill_objective)
+		else
+			var/datum/objective/assassinate/once/kill_objective = new
 			kill_objective.owner = owner
 			kill_objective.find_target()
 			add_objective(kill_objective)
@@ -198,11 +207,21 @@
 			download_objective.owner = owner
 			download_objective.gen_amount_goal()
 			add_objective(download_objective)
-		else
+		else if(prob(40)) // cum. not counting download: 40%.
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner
 			steal_objective.find_target()
 			add_objective(steal_objective)
+		else if(prob(100/3)) // cum. not counting download: 20%.
+			var/datum/objective/sabotage/sabotage_objective = new
+			sabotage_objective.owner = owner
+			sabotage_objective.find_target()
+			add_objective(sabotage_objective)
+		else  // cum. not counting download: 40%
+			var/datum/objective/flavor/traitor/flavor_objective = new
+			flavor_objective.owner = owner
+			flavor_objective.forge_objective()
+			add_objective(flavor_objective)
 
 /datum/antagonist/traitor/proc/forge_single_AI_objective()
 	.=1
@@ -369,11 +388,17 @@
 	if(objectives.len)//If the traitor had no objectives, don't need to process this.
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+			if(objective.completable)
+				var/completion = objective.check_completion()
+				if(completion >= 1)
+					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+				else if(completion <= 0)
+					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+					traitorwin = FALSE
+				else
+					objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				traitorwin = FALSE
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text]"
 			count++
 
 	if(uplink_true)

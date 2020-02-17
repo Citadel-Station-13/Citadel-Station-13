@@ -128,6 +128,9 @@
 		return
 	. = ..()
 
+/obj/item/card/emag/empty
+	uses = 0
+
 /obj/item/emagrecharge
 	name = "electromagnet charging device"
 	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices, sadly this can't be recharged like a normal cell."
@@ -247,6 +250,7 @@ update_label("John Doe", "Clowny")
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
+	var/forged = FALSE //have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 
 /obj/item/card/id/syndicate/Initialize()
 	. = ..()
@@ -262,26 +266,52 @@ update_label("John Doe", "Clowny")
 		var/obj/item/card/id/I = O
 		src.access |= I.access
 		if(isliving(user) && user.mind)
-			if(user.mind.special_role)
+			if(user.mind.special_role || anyone)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
 /obj/item/card/id/syndicate/attack_self(mob/user)
 	if(isliving(user) && user.mind)
-		if(user.mind.special_role || anyone)
-			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
-				var/input_name = reject_bad_name(stripped_input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN), TRUE)
-				if(!input_name)
-					return
+		var/first_use = registered_name ? FALSE : TRUE
+		if(!(user.mind.special_role || anyone)) //Unless anyone is allowed, only syndies can use the card, to stop metagaming.
+			if(first_use) //If a non-syndie is the first to forge an unassigned agent ID, then anyone can forge it.
+				anyone = TRUE
+			else
+				return ..()
 
-				var/u = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant", MAX_MESSAGE_LEN)
-				if(!u)
-					registered_name = ""
-					return
-				assignment = u
-				update_label()
-				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
+		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset")
+		if(user.incapacitated())
+			return
+		if(popup_input == "Forge/Reset" && !forged)
+			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+			input_name = reject_bad_name(input_name)
+			if(!input_name)
+				// Invalid/blank names give a randomly generated one.
+				if(user.gender == MALE)
+					input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+				else if(user.gender == FEMALE)
+					input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
+				else
+					input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
+
+			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
+			if(!target_occupation)
 				return
-	..()
+			registered_name = input_name
+			assignment = target_occupation
+			update_label()
+			forged = TRUE
+			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
+			log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[assignment]\".")
+			return
+		else if (popup_input == "Forge/Reset" && forged)
+			registered_name = initial(registered_name)
+			assignment = initial(assignment)
+			log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
+			update_label()
+			forged = FALSE
+			to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
+			return
+	return ..()
 
 /obj/item/card/id/syndicate/anyone
 	anyone = TRUE
@@ -539,3 +569,14 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/knight/captain
 	id_color = "#FFD700"
+
+/obj/item/card/id/debug
+	name = "\improper Debug ID"
+	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
+	icon_state = "ert_janitor"
+	assignment = "Jannie"
+
+/obj/item/card/id/debug/Initialize()
+	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+	. = ..()
+
