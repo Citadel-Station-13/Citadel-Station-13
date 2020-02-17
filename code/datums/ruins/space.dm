@@ -353,3 +353,15 @@
 	suffix = "roid5.dmm"
 	name = "Mineable Asteroid 3"
 	description = "Mineral asteroid. Ft. Holofans."
+
+/datum/map_template/ruin/spacenearstation/roid6
+	id = "roid6"
+	suffix = "roid6.dmm"
+	name = "Mineable Asteroid 4"
+	description = "Mineral asteroid. Ft. Crashed escape pod."
+
+/datum/map_template/ruin/spacenearstation/roid7
+	id = "roid7"
+	suffix = "roid7.dmm"
+	name = "Mineable Asteroid 5"
+	description = "Mineral asteroid. Ft. Derelict space bar."

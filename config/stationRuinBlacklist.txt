@@ -8,3 +8,5 @@
 #_maps/RandomRuins/StationRuins/Space/roid3.dmm
 #_maps/RandomRuins/StationRuins/Space/roid4.dmm
 #_maps/RandomRuins/StationRuins/Space/roid5.dmm
+#_maps/RandomRuins/StationRuins/Space/roid6.dmm
+#_maps/RandomRuins/StationRuins/Space/roid7.dmm
