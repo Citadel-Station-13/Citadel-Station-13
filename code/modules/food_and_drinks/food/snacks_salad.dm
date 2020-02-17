@@ -4,7 +4,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	trash = /obj/item/reagent_containers/glass/bowl
 	bitesize = 3
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1)
 	foodtype = VEGETABLES

@@ -14,7 +14,7 @@
 	subcategory = CAT_ICE
 
 /datum/crafting_recipe/food/spacefreezy
-	name ="Space freezy"
+	name ="Space Freezy"
 	reqs = list(
 		/datum/reagent/consumable/bluecherryjelly = 5,
 		/datum/reagent/consumable/spacemountainwind = 15,

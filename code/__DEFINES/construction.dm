@@ -92,8 +92,10 @@
 #define CAT_BREAD	"Breads"
 #define CAT_BURGER	"Burgers"
 #define CAT_CAKE	"Cakes"
+#define CAT_FISH	"Eastern"
 #define CAT_EGG	"Egg-Based Food"
 #define CAT_MEAT	"Meats"
+#define CAT_MEXICAN	"Mexican"
 #define CAT_MISCFOOD	"Misc. Food"
 #define CAT_PASTRY	"Pastries"
 #define CAT_PIE	"Pies"
@@ -102,7 +104,7 @@
 #define CAT_SANDWICH	"Sandwiches"
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
-#define CAT_FISH	"Fish"
+#define CAT_SWEETS	"Sweets"
 #define CAT_ICE	"Frozen"
 
 #define RCD_FLOORWALL 1

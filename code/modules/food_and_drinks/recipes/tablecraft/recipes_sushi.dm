@@ -1,4 +1,5 @@
-//////////////////////////Sushi Components///////////////////////
+/////////////Recategorizing this as -Eastern- foods///////////////
+///////////////////////Sushi Components///////////////////////////
 
 /datum/crafting_recipe/food/sushi_rice
 	name = "Sushi Rice"
@@ -93,33 +94,58 @@
 	result = /obj/item/reagent_containers/food/snacks/sushie_pro
 	subcategory = CAT_FISH
 
-///////////////Gaijin junk/////////////////////////////////////
+//////////////////Not-Fish//////////////////////
 
-/datum/crafting_recipe/food/fishfingers
-	name = "Fish fingers"
+/datum/crafting_recipe/food/chawanmushi
+	name = "Chawanmushi"
 	reqs = list(
-		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/reagent_containers/food/snacks/boiledegg = 2,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/chawanmushi
+	subcategory = CAT_FISH
+
+/datum/crafting_recipe/food/khachapuri
+	name = "Khachapuri"
+	reqs = list(
+		/datum/reagent/consumable/eggyolk = 5,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/khachapuri
+	subcategory = CAT_FISH
+
+/datum/crafting_recipe/food/rawkhinkali
+	name = "Raw Khinkali"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/reagent_containers/food/snacks/faggot = 1
+	)
+	result =  /obj/item/reagent_containers/food/snacks/rawkhinkali
+	subcategory = CAT_FISH
+
+/datum/crafting_recipe/food/meatbun
+	name = "Meat bun"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/fishfingers
+	result = /obj/item/reagent_containers/food/snacks/meatbun
 	subcategory = CAT_FISH
 
-/datum/crafting_recipe/food/cubancarp
-	name = "Cuban carp"
+/datum/crafting_recipe/food/fortunecookie
+	time = 15
+	name = "Fortune cookie"
 	reqs = list(
-		/datum/reagent/consumable/flour = 5,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/paper = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/cubancarp
-	subcategory = CAT_FISH
-
-/datum/crafting_recipe/food/fishandchips
-	name = "Fish and chips"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/fries = 1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	parts =	list(
+		/obj/item/paper = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/fishandchips
+	result = /obj/item/reagent_containers/food/snacks/fortunecookie
 	subcategory = CAT_FISH
