@@ -123,12 +123,12 @@
 	build_path = /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	category = list("initial","Botany Chemicals")
 
-/datum/design/diethylamine
-	name = "10u Diethylamine"
-	id = "diethylamine_biogen"
+/datum/design/ammonia
+	name = "10u Ammonia"
+	id = "ammonia_biogen"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 50)
-	make_reagents = list(/datum/reagent/diethylamine = 10)
+	materials = list(MAT_BIOMASS = 25)
+	make_reagents = list(/datum/reagent/ammonia = 10)
 	category = list("initial","Botany Chemicals")
 
 /datum/design/saltpetre
