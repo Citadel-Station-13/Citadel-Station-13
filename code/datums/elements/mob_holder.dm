@@ -93,7 +93,7 @@
 		lefthand_file = left_hand
 	if(right_hand)
 		righthand_file = right_hand
-		slot_flags = slots
+	slot_flags = slots
 
 /obj/item/clothing/head/mob_holder/proc/assimilate(mob/living/target)
 	target.setDir(SOUTH)
