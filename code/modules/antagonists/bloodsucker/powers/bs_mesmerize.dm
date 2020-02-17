@@ -88,29 +88,29 @@
 	return TRUE
 
 /datum/action/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/A)
-    // set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
-    var/mob/living/carbon/target = A
-    var/mob/living/user = owner
+	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
+	var/mob/living/carbon/target = A
+	var/mob/living/user = owner
 
-    if(istype(target))
-        PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
-        var/power_time = 138 + level_current * 12
-        target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 50)
-        user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 50)
-        if(do_mob(user, target, 50, TRUE, TRUE))
-            if (CheckCanTarget(target)) // target just has to be out of view when it is fully charged in order to avoid
-                target.face_atom(user)
-                target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
-                target.Stun(power_time)
-                to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
-                target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
-                target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
-        spawn(power_time)
-            if(istype(target))
-                target.notransform = FALSE
-                // They Woke Up! (Notice if within view)
-                if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
-                    to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
+	if(istype(target))
+		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
+		var/power_time = 138 + level_current * 12
+		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 50)
+		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 50)
+		if(do_mob(user, target, 50, TRUE, TRUE))
+			if (CheckCanTarget(target)) // target just has to be out of view when it is fully charged in order to avoid
+				target.face_atom(user)
+				target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
+				target.Stun(power_time)
+				to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
+				target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
+				target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+		spawn(power_time)
+			if(istype(target))
+				target.notransform = FALSE
+				// They Woke Up! (Notice if within view)
+				if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
+					to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
 
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)
