@@ -743,3 +743,13 @@
 	id = "blue_glitter_white"
 	results = list(/datum/reagent/glitter/blue  = 2)
 	required_reagents = list(/datum/reagent/glitter/white = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
+
+//////////////////////////////////// Synthblood ///////////////////////////////////////////
+
+/datum/chemical_reaction/synth_blood
+	name = "Synthetic Blood"
+	id = /datum/reagent/blood/synthetics
+	results = list(/datum/reagent/blood/synthetics = 3)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/iron = 1, /datum/reagent/stable_plasma = 1)
+	mix_message = "The mixture congeals and gives off a faint copper scent."
+	required_temp = 350
