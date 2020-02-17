@@ -316,3 +316,40 @@
 	suffix = "advancedlab.dmm"
 	name = "Abductor Replication Lab"
 	description = "Some scientists tried and almost succeeded to recreate abductor tools. Somewhat slower and a bit less modern than their originals, these tools are the best you can get if you aren't an alien."
+
+//Space ruins for the station z
+/datum/map_template/ruin/spacenearstation
+	prefix = "_maps/RandomRuins/SpaceRuinsStation/"
+	cost = 1
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/spacenearstation/roid1
+	id = "roid1"
+	suffix = "roid1.dmm"
+	name = "Mineable Asteroid 1"
+	description = "Mineral asteroid 1."
+	allow_duplicates = TRUE
+
+/datum/map_template/ruin/spacenearstation/roid2
+	id = "roid2"
+	suffix = "roid2.dmm"
+	name = "Crab Roid"
+	description = "Mineral asteroid. Ft. Crabs."
+
+/datum/map_template/ruin/spacenearstation/roid3
+	id = "roid3"
+	suffix = "roid3.dmm"
+	name = "Dorm Roid"
+	description = "Mineral asteroid. Ft. Dorm."
+
+/datum/map_template/ruin/spacenearstation/roid4
+	id = "roid4"
+	suffix = "roid4.dmm"
+	name = "Mineable Asteroid 2"
+	description = "Mineral asteroid 2."
+
+/datum/map_template/ruin/spacenearstation/roid5
+	id = "roid5"
+	suffix = "roid5.dmm"
+	name = "Mineable Asteroid 3"
+	description = "Mineral asteroid. Ft. Holofans."

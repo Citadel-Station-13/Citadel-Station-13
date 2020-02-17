@@ -143,10 +143,6 @@
 /obj/item/mining_scanner,
 /turf/open/floor/plating/asteroid,
 /area/ruin/unpowered)
-"aE" = (
-/obj/machinery/status_display/shuttle,
-/turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
 "aF" = (
 /obj/item/pickaxe/emergency,
 /turf/open/floor/plating/asteroid,
@@ -237,19 +233,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
-"aZ" = (
-/turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
-"ba" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/mineral/titanium,
-/area/ruin/unpowered)
-"bb" = (
-/obj/structure/shuttle/engine/propulsion/left{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
 "bc" = (
 /obj/item/circuitboard/machine/circuit_imprinter,
 /turf/open/floor/plating/asteroid,
@@ -954,7 +937,7 @@ bh
 an
 an
 ae
-aZ
+ae
 bt
 bt
 bt
@@ -1006,7 +989,7 @@ ao
 ao
 ao
 ak
-ba
+af
 bt
 bt
 bt
@@ -1058,7 +1041,7 @@ ap
 an
 as
 aj
-aE
+al
 bt
 bt
 bt
@@ -1110,7 +1093,7 @@ ao
 ao
 ao
 ak
-ba
+af
 ac
 bt
 bt
@@ -1162,7 +1145,7 @@ an
 an
 an
 ae
-aZ
+ae
 ac
 bt
 bt
@@ -1214,7 +1197,7 @@ af
 ar
 af
 at
-bb
+at
 ac
 bt
 bt

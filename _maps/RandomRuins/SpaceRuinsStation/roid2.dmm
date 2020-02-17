@@ -1,0 +1,289 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/overlay/palmtree_l,
+/turf/open/floor/holofloor/beach,
+/area/ruin/unpowered)
+"j" = (
+/turf/open/floor/holofloor/beach/coast_t,
+/area/ruin/unpowered)
+"n" = (
+/turf/open/floor/holofloor/beach/coast_b,
+/area/ruin/unpowered)
+"o" = (
+/turf/template_noop,
+/area/template_noop)
+"p" = (
+/turf/open/floor/holofloor/beach/water,
+/area/ruin/unpowered)
+"s" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered)
+"t" = (
+/obj/effect/overlay/palmtree_r,
+/turf/open/floor/holofloor/beach,
+/area/ruin/unpowered)
+"u" = (
+/obj/structure/marker_beacon,
+/turf/open/floor/holofloor/beach/coast_t,
+/area/ruin/unpowered)
+"v" = (
+/turf/open/floor/holofloor/beach,
+/area/ruin/unpowered)
+"A" = (
+/turf/open/floor/holofloor/beach,
+/area/ruin/unpowered)
+"F" = (
+/mob/living/simple_animal/crab{
+	desc = "This little bugger seems so happy to dance.!";
+	name = "raving crab"
+	},
+/turf/open/floor/holofloor/beach/coast_t,
+/area/ruin/unpowered)
+"H" = (
+/obj/structure/marker_beacon,
+/turf/open/floor/holofloor/beach,
+/area/ruin/unpowered)
+"L" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered)
+"R" = (
+/mob/living/simple_animal/crab{
+	desc = "This little bugger seems so happy to dance.!";
+	name = "raving crab"
+	},
+/turf/open/floor/holofloor/beach,
+/area/ruin/unpowered)
+"T" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"X" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"Z" = (
+/turf/open/floor/holofloor/beach,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+o
+o
+X
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+"}
+(2,1,1) = {"
+X
+L
+L
+X
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+"}
+(3,1,1) = {"
+X
+L
+L
+L
+L
+X
+X
+X
+X
+X
+o
+o
+o
+o
+"}
+(4,1,1) = {"
+o
+X
+L
+L
+L
+L
+L
+L
+L
+L
+X
+o
+o
+o
+"}
+(5,1,1) = {"
+o
+X
+L
+L
+Z
+Z
+L
+L
+L
+L
+L
+X
+o
+o
+"}
+(6,1,1) = {"
+X
+L
+L
+L
+Z
+R
+j
+n
+p
+p
+L
+L
+X
+o
+"}
+(7,1,1) = {"
+X
+L
+L
+Z
+a
+Z
+u
+n
+p
+p
+L
+L
+X
+o
+"}
+(8,1,1) = {"
+X
+L
+L
+H
+R
+Z
+j
+n
+p
+p
+L
+L
+X
+o
+"}
+(9,1,1) = {"
+X
+L
+L
+Z
+Z
+Z
+u
+n
+p
+p
+L
+L
+X
+o
+"}
+(10,1,1) = {"
+X
+L
+L
+L
+Z
+t
+F
+n
+p
+p
+L
+L
+X
+o
+"}
+(11,1,1) = {"
+o
+X
+X
+L
+L
+Z
+L
+L
+L
+L
+L
+L
+X
+o
+"}
+(12,1,1) = {"
+o
+o
+o
+X
+L
+L
+L
+L
+L
+L
+L
+L
+X
+o
+"}
+(13,1,1) = {"
+o
+o
+o
+o
+X
+L
+L
+L
+L
+o
+X
+X
+L
+X
+"}
+(14,1,1) = {"
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+X
+o
+"}
