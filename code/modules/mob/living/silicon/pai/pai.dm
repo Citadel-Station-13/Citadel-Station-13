@@ -11,6 +11,7 @@
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
+	silicon_privileges = PRIVILEDGES_PAI
 	var/datum/element/mob_holder/current_mob_holder //because only a few of their chassis can be actually held.
 
 	var/network = "ss13"
