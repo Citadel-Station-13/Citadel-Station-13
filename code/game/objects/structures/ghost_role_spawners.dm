@@ -31,7 +31,7 @@
 	new_spawn.underwear = "Nude" //You're a plant, partner
 	new_spawn.undershirt = "Nude" //changing underwear/shirt/socks doesn't seem to function correctly right now because of some bug elsewhere?
 	new_spawn.socks = "Nude"
-	new_spawn.regenerate_icons()
+	new_spawn.update_body()
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
