@@ -1636,6 +1636,7 @@
 #include "code\modules\client\verbs\looc.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
+#include "code\modules\client\verbs\slooc.dm"
 #include "code\modules\client\verbs\suicide.dm"
 #include "code\modules\client\verbs\who.dm"
 #include "code\modules\clothing\chameleon.dm"
