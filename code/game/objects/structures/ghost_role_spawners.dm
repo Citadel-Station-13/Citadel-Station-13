@@ -19,9 +19,6 @@
 	Estimated time of last contact: Deployment, 5000 millennia ago."
 	assignedrole = "Lifebringer"
 
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-
-
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
@@ -30,18 +27,10 @@
 	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
 	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
 	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
-	new_spawn.real_name = plant_name
+	new_spawn.real_name = plant_name //why this works when moving it from one function to another is beyond me
 	new_spawn.underwear = "Nude" //You're a plant, partner
-	new_spawn.undershirt = "Nude"
+	new_spawn.undershirt = "Nude" //changing underwear/shirt/socks doesn't seem to function correctly right now because of some bug elsewhere?
 	new_spawn.socks = "Nude"
-	new_spawn.dna.features["snout"] = "None"
-	new_spawn.dna.features["body_markings"] = "Plain"
-	new_spawn.dna.features["mam_tail"] = "None"
-	new_spawn.dna.features["taur"] = "None"
-	new_spawn.dna.features["ears"] = "None"
-	new_spawn.dna.features["legs"] = "Plantigrade"
-	new_spawn.facial_hair_style = "Shaved"
-	new_spawn.hair_style = "Bald"
 	new_spawn.regenerate_icons()
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
