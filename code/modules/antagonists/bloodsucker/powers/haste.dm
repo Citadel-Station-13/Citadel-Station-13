@@ -62,7 +62,7 @@
 		var/success = step_towards(user, T)		//This does not try to go around obstacles.
 		if(!success)
 			success = step_to(user, T)			//this does
-		if(!sucecss)
+		if(!success)
 			if(++consequetive_failures > 3)		//if 3 steps don't work
 				break			//just stop
 		else
@@ -81,7 +81,7 @@
 
 /datum/action/bloodsucker/targeted/haste/proc/on_move()
 	for(var/mob/living/L in dview(1, get_turf(owner)))
-		if(hit[AM] && (AM != owner))
+		if(!hit[L] && (L != owner))
 			hit[L] = TRUE
 			playsound(L, "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
 			L.Knockdown(10 + level_current * 5, override_hardstun = 0.1)
