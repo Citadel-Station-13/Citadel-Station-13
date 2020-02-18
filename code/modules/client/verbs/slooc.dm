@@ -1,5 +1,5 @@
 /client/verb/slooc(msg as text)
-	set name = "SLOOC"
+	set name = "Subtle LOOC"
 	set desc = "Subtle LOOC, seen only by those within close distance."
 	set category = "OOC"
 
