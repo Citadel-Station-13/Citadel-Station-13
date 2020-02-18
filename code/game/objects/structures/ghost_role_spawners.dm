@@ -19,21 +19,20 @@
 	Estimated time of last contact: Deployment, 5000 millennia ago."
 	assignedrole = "Lifebringer"
 
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
-	new_spawn.real_name = plant_name
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.underwear = "Nude" //You're a plant, partner
-		H.update_body()
-
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/carbon/human/new_spawn)
 	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
+	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+	new_spawn.real_name = plant_name //why this works when moving it from one function to another is beyond me
+	new_spawn.underwear = "Nude" //You're a plant, partner
+	new_spawn.undershirt = "Nude" //changing underwear/shirt/socks doesn't seem to function correctly right now because of some bug elsewhere?
+	new_spawn.socks = "Nude"
+	new_spawn.update_body()
+
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
 /obj/effect/mob_spawn/human/ash_walker
