@@ -291,7 +291,7 @@
 
 /datum/design/broom
 	name = "Broom"
-	desc = "Just your everyday standard mop."
+	desc = "Just your everyday standard broom."
 	id = "broom"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 600)
