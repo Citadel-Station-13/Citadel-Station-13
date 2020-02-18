@@ -64,7 +64,7 @@
 		if(!success)
 			success = step_to(user, T)			//this does
 		if(!success)
-			if(++consequetive_failures > 3)		//if 3 steps don't work
+			if(++consequetive_failures >= 3)		//if 3 steps don't work
 				break			//just stop
 		else
 			consequetive_failures = 0
@@ -72,7 +72,8 @@
 			user.setDir(turn(user.dir, 90))		//down? spin2win :^)
 		if(user.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE))		//actually down? stop.
 			break
-		sleep(speed)
+		if(success)		//don't sleep if we failed to move.
+			sleep(speed)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	hit = null
 	user.update_canmove()
