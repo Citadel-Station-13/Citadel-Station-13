@@ -1025,11 +1025,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/estaff_righthand.dmi'
 	name = "riot suppression electrostaff"
 	desc = "A large quarterstaff, with massive silver electrodes mounted at the end."
-	force = 10
-	damtype = BRUTE
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_OCLOTHING
-	sharpness = FALSE
 	force_unwielded = 5
 	force_wielded = 10
 	throwforce = 15			//if you are a madman and finish someone off with this, power to you.

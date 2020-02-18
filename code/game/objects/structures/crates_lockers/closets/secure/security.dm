@@ -267,7 +267,7 @@
 	new /obj/item/clothing/suit/armor/bulletproof(src)
 
 /obj/structure/closet/secure_closet/lethalshots
-	name = "shotgun lethal rounds"
+	name = "lethal ammunition and riot staves"
 	req_access = list(ACCESS_ARMORY)
 	icon_state = "tac"
 /obj/structure/closet/secure_closet/lethalshots/PopulateContents()
