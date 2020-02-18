@@ -33,7 +33,6 @@
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
-
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
@@ -80,11 +79,11 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-/datum/status_effect/no_combat_mode/
+/datum/status_effect/no_combat_mode
 	id = "no_combat_mode"
-	blocks_combatmode = TRUE
 	alert_type = null
 	status_type = STATUS_EFFECT_REPLACE
+	blocks_combatmode = TRUE
 
 /datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -113,31 +112,54 @@
 	icon = 'icons/mob/actions/bloodsucker.dmi'
 	icon_state = "power_mez"
 
-/datum/status_effect/no_combat_mode/electrode
+/datum/status_effect/electrode
 	id = "tased"
+	var/slowdown = 1.5
+	var/slowdown_priority = 50		//to make sure the stronger effect overrides
+	var/affect_crawl = FALSE
+	var/nextmove_modifier = 1
+	var/stamdmg_per_ds = 1		//a 20 duration would do 20 stamdmg, disablers do 24 or something
+	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
 
-/datum/status_effect/no_combat_mode/electrode/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration)) //TODO, figure out how to grab from subtype
 		duration = set_duration
+	. = ..()
+	last_tick = world.time
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(C.combatmode)
+			C.toggle_combat_mode(TRUE)
+		C.add_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]", TRUE, priority = slowdown_priority, override = TRUE, multiplicative_slowdown = slowdown, blacklisted_movetypes = affect_crawl? NONE : CRAWLING)
+
+/datum/status_effect/electrode/on_remove()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.remove_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]")
+	. = ..()
+
+/datum/status_effect/electrode/tick()
+	var/diff = world.time - last_tick
+	if(owner)
+		owner.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+	last_tick = world.time
+
+/datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
+	return nextmove_modifier
+
+/datum/status_effect/electrode/no_combat_mode
+	id = "tased_strong"
+	slowdown = 8
+	slowdown_priority = 100
+	nextmove_modifier = 2
+	blocks_combatmode = TRUE
+
+/datum/status_effect/electrode/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		if(C.combatmode)
 			C.toggle_combat_mode(TRUE)
-		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
-
-/datum/status_effect/no_combat_mode/electrode/on_remove()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.remove_movespeed_modifier(MOVESPEED_ID_TASED_STATUS)
-	. = ..()
-
-/datum/status_effect/no_combat_mode/electrode/tick()
-	if(owner)
-		owner.adjustStaminaLoss(5) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
-
-/datum/status_effect/no_combat_mode/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
-	return 2
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace

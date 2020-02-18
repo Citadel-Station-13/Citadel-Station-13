@@ -46,7 +46,9 @@
 
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
-#define STATUS_EFFECT_TASED /datum/status_effect/no_combat_mode/electrode/ //the affected has been tased, preventing fine muscle control
+#define STATUS_EFFECT_TASED_WEAK /datum/status_effect/electrode				//not as crippling, just slows down
+
+#define STATUS_EFFECT_TASED /datum/status_effect/electrode/no_combat_mode //the affected has been tased, preventing fine muscle control
 
 #define STATUS_EFFECT_PACIFY /datum/status_effect/pacify //the affected is pacified, preventing direct hostile actions
 

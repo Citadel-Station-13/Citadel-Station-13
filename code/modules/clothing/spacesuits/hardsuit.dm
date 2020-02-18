@@ -269,7 +269,7 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 90)
-	on = TRUE
+	on = FALSE
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
@@ -367,6 +367,12 @@
 	on = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
+
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug/Initialize()
+	. = ..()
+	soundloop.volume = 0
+
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit"
 	desc = "An elite version of the syndicate hardsuit, with improved armour and fireproofing. It is in travel mode."
@@ -380,6 +386,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
+/obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
+	slowdown = 0
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl

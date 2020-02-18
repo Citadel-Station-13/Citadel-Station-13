@@ -11,6 +11,8 @@
 	var/transfer_blood = 0
 	strip_delay = 20
 	equip_delay_other = 40
+	var/strip_mod = 1 //how much they alter stripping items time by, higher is quicker
+	var/strip_silence = FALSE //if it shows a warning when stripping
 
 /obj/item/clothing/gloves/ComponentInitialize()
 	. = ..()

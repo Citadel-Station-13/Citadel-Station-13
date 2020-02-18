@@ -16,40 +16,6 @@
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
-
-/obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
-	//Creates a shattering noise and replaces the bottle with a broken_bottle
-	if(bartender_check(target) && ranged)
-		return
-	var/obj/item/broken_bottle/B = new (loc)
-	if(!ranged)
-		thrower.put_in_hands(B)
-	else
-		var/matrix/M = matrix(B.transform)
-		M.Turn(rand(-170, 170))
-		B.transform = M
-		B.pixel_x = rand(-12, 12)
-		B.pixel_y = rand(-12, 12)
-	B.icon_state = icon_state
-
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
-
-	if(isGlass)
-		if(prob(33))
-			new/obj/item/shard(drop_location())
-		playsound(src, "shatter", 70, 1)
-	else
-		B.force = 0
-		B.throwforce = 0
-		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	B.name = "broken [name]"
-	transfer_fingerprints_to(B)
-
-	qdel(src)
-
 /obj/item/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
 
 	if(!target)
@@ -109,7 +75,7 @@
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
 	name = "broken bottle"
-	desc = "A bottle with a sharp broken bottom."
+	desc = "A shattered glass container with sharp edges."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
 	force = 9

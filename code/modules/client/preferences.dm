@@ -137,7 +137,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
 		"balls_efficiency" = CUM_EFFICIENCY,
-		"balls_fluid" = "semen",
 		"has_ovi" = FALSE,
 		"ovi_shape" = "knotted",
 		"ovi_length" = 6,
@@ -152,7 +151,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"breasts_color" = "fff",
 		"breasts_size" = "C",
 		"breasts_shape" = "Pair",
-		"breasts_fluid" = "milk",
 		"breasts_producing" = FALSE,
 		"has_vag" = FALSE,
 		"vag_shape" = "Human",
@@ -163,7 +161,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"womb_cum_rate" = CUM_RATE,
 		"womb_cum_mult" = CUM_RATE_MULT,
 		"womb_efficiency" = CUM_EFFICIENCY,
-		"womb_fluid" = "femcum",
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
@@ -1476,9 +1473,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN, TRUE)
+					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", features["flavor_text"], MAX_FAVOR_LEN, TRUE)
 					if(msg)
-						msg = msg
 						features["flavor_text"] = msg
 
 				if("hair")

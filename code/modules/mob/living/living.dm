@@ -40,11 +40,6 @@
 	QDEL_LIST(diseases)
 	return ..()
 
-
-/mob/living/proc/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
-	return holder
-
 /mob/living/onZImpact(turf/T, levels)
 	if(!isgroundlessturf(T))
 		ZImpactDamage(T, levels)
@@ -763,10 +758,22 @@
 	if(HAS_TRAIT(what, TRAIT_NODROP))
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
-	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
+	var/strip_mod = 1
+	var/strip_silence = FALSE
+	if (ishuman(src)) //carbon doesn't actually wear gloves
+		var/mob/living/carbon/C = src
+		var/obj/item/clothing/gloves/g = C.gloves
+		if (istype(g))
+			strip_mod = g.strip_mod
+			strip_silence = g.strip_silence
+	if (!strip_silence)
+		who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
-	what.add_fingerprint(src)
-	if(do_mob(src, who, what.strip_delay, ignorehelditem = TRUE))
+		what.add_fingerprint(src)
+	else
+		to_chat(src,"<span class='notice'>You try to remove [who]'s [what.name].</span>")
+		what.add_fingerprint(src)
+	if(do_mob(src, who, round(what.strip_delay / strip_mod), ignorehelditem = TRUE))
 		if(what && Adjacent(who))
 			if(islist(where))
 				var/list/L = where
@@ -1073,7 +1080,7 @@
 			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
-		if (pulledby)
+		if (pulledby && isliving(pulledby))
 			var/mob/living/L = pulledby
 			L.update_pull_movespeed()
 	if(buckled)
@@ -1087,6 +1094,10 @@
 			fall(forced = 1)
 	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
 	density = !lying
+	if(resting)
+		ENABLE_BITFIELD(movement_type, CRAWLING)
+	else
+		DISABLE_BITFIELD(movement_type, CRAWLING)
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
 			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
@@ -1172,8 +1183,6 @@
 		return
 	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
 		return
-	if(can_be_held)
-		mob_try_pickup(over)
 
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))

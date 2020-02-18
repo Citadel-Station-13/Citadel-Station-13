@@ -1,5 +1,6 @@
 /datum/dynamic_storyteller
 	var/name = "none"
+	var/config_tag = null
 	var/desc = "A coder's idiocy."
 	var/list/property_weights = list()
 	var/curve_centre = 0
@@ -7,6 +8,8 @@
 	var/forced_threat_level = -1
 	var/flags = 0
 	var/weight = 3 // how many rounds need to have been recently played for this storyteller to be left out of the vote
+	var/event_frequency_lower = 6 MINUTES
+	var/event_frequency_upper = 20 MINUTES
 	var/datum/game_mode/dynamic/mode = null
 
 /**
@@ -19,14 +22,6 @@ Property weights are:
 "extended" -- How much the antag is conducive to a long round. Nukies and cults are bad for this; Wizard is less bad; and so on.
 "conversion" -- Basically a bool. Conversion antags, well, convert. It's its own class for a good reason.
 */
-
-/datum/dynamic_storyteller/New()
-	..()
-	if (istype(SSticker.mode, /datum/game_mode/dynamic))
-		mode = SSticker.mode
-		GLOB.dynamic_curve_centre = curve_centre
-		GLOB.dynamic_curve_width = curve_width
-		GLOB.dynamic_forced_threat_level = forced_threat_level
 
 /datum/dynamic_storyteller/proc/start_injection_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_latejoin_delay_max + GLOB.dynamic_first_latejoin_delay_min)
@@ -42,7 +37,28 @@ Property weights are:
 	return
 
 /datum/dynamic_storyteller/proc/on_start()
-	return
+	if (istype(SSticker.mode, /datum/game_mode/dynamic))
+		mode = SSticker.mode
+		GLOB.dynamic_curve_centre = curve_centre
+		GLOB.dynamic_curve_width = curve_width
+		if(flags & USE_PREF_WEIGHTS)
+			var/voters = 0
+			var/mean = 0
+			for(var/client/c in GLOB.clients)
+				var/vote = c.prefs.preferred_chaos
+				if(vote)
+					voters += 1
+					switch(vote)
+						if(CHAOS_NONE)
+							mean -= 5
+						if(CHAOS_LOW)
+							mean -= 2.5
+						if(CHAOS_HIGH)
+							mean += 2.5
+						if(CHAOS_MAX)
+							mean += 5
+			GLOB.dynamic_curve_centre += (mean/voters)
+		GLOB.dynamic_forced_threat_level = forced_threat_level
 
 /datum/dynamic_storyteller/proc/get_midround_cooldown()
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
@@ -154,12 +170,15 @@ Property weights are:
 
 /datum/dynamic_storyteller/cowabunga
 	name = "Chaotic"
+	config_tag = "chaotic"
 	curve_centre = 10
 	desc = "Chaos: high. Variation: high. Likely antags: clock cult, revs, wizard."
 	property_weights = list("extended" = -1, "chaos" = 10)
-	weight = 2
+	weight = 1
+	event_frequency_lower = 2 MINUTES
+	event_frequency_upper = 10 MINUTES
 	flags = WAROPS_ALWAYS_ALLOWED
-	var/refund_cooldown
+	var/refund_cooldown = 0
 	
 /datum/dynamic_storyteller/cowabunga/get_midround_cooldown()
 	return ..() / 4
@@ -169,12 +188,13 @@ Property weights are:
 
 /datum/dynamic_storyteller/cowabunga/do_process()
 	if(refund_cooldown < world.time)
-		mode.refund_threat(10)
-		mode.log_threat("Cowabunga it is. Refunded 10 threat. Threat is now [mode.threat].")
-		refund_cooldown = world.time + 300 SECONDS
+		mode.refund_threat(20)
+		mode.log_threat("Cowabunga it is. Refunded 20 threat. Threat is now [mode.threat].")
+		refund_cooldown = world.time + 600 SECONDS
 
 /datum/dynamic_storyteller/team
 	name = "Teamwork"
+	config_tag = "teamwork"
 	desc = "Chaos: high. Variation: low. Likely antags: nukies, clockwork cult, wizard, blob, xenomorph."
 	curve_centre = 2
 	curve_width = 1.5
@@ -187,6 +207,7 @@ Property weights are:
 
 /datum/dynamic_storyteller/conversion
 	name = "Conversion"
+	config_tag = "conversion"
 	desc = "Chaos: high. Variation: medium. Likely antags: cults, bloodsuckers, revs."
 	curve_centre = 3
 	curve_width = 1
@@ -196,24 +217,33 @@ Property weights are:
 
 /datum/dynamic_storyteller/classic
 	name = "Random"
+	config_tag = "random"
 	desc = "Chaos: varies. Variation: highest. No special weights attached."
 	weight = 6
+	flags = USE_PREF_WEIGHTS
 	curve_width = 4
 
 /datum/dynamic_storyteller/memes
 	name = "Story"
+	config_tag = "story"
 	desc = "Chaos: varies. Variation: high. Likely antags: abductors, nukies, wizard, traitor."
+	weight = 4
+	flags = USE_PREF_WEIGHTS
 	curve_width = 4
 	property_weights = list("story_potential" = 10)
 
 /datum/dynamic_storyteller/suspicion
 	name = "Intrigue"
+	config_tag = "intrigue"
 	desc = "Chaos: low. Variation: high. Likely antags: traitor, bloodsucker. Rare: revs, blood cult."
+	weight = 4
+	flags = USE_PREF_WEIGHTS
 	curve_width = 4
 	property_weights = list("trust" = -5)
 
 /datum/dynamic_storyteller/liteextended
 	name = "Calm"
+	config_tag = "calm"
 	desc = "Chaos: low. Variation: medium. Likely antags: bloodsuckers, traitors, sentient disease, revenant."
 	curve_centre = -5
 	curve_width = 0.5
@@ -226,10 +256,12 @@ Property weights are:
 
 /datum/dynamic_storyteller/extended
 	name = "Extended"
+	config_tag = "extended"
 	desc = "Chaos: none. Variation: none. Likely antags: none."
 	curve_centre = -20
-	weight = 2
+	weight = 0
 	curve_width = 0.5
 
 /datum/dynamic_storyteller/extended/on_start()
+	..()
 	GLOB.dynamic_forced_extended = TRUE

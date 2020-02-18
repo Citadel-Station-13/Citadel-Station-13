@@ -551,7 +551,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = 1
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role in list("Station Engineer", "Atmospheric Technician", "Chief Engineer")) //Engineers lose radiation poisoning at a massive rate.
+	if(M.mind && (M.mind.assigned_role in list("Station Engineer", "Atmospheric Technician", "Chief Engineer"))) //Engineers lose radiation poisoning at a massive rate.
 		M.radiation = max(M.radiation - 25, 0)
 	return ..()
 
@@ -725,11 +725,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/dorf_mode
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_metabolize(mob/living/M)
+	var/real_dorf = isdwarf(M) //_species(H, /datum/species/dwarf)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE))
+		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE) || real_dorf)
 			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
-			boozepwr = 5 //We've had worse in the mines
+			if(real_dorf)
+				boozepwr = 100 // Don't want dwarves to die because of a low booze power
+			else
+				boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/M)
@@ -1506,6 +1510,23 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/M)
 	M.cultslurring = min(M.cultslurring + 3, 3)
+	M.stuttering = min(M.stuttering + 3, 3)
+	..()
+
+/datum/reagent/consumable/ethanol/cogchamp
+	name = "CogChamp"
+	description = "Now you can fill yourself with the power of Ratvar!"
+	color = rgb(255, 201, 49)
+	boozepwr = 10
+	quality = DRINK_FANTASTIC
+	taste_description = "a brass taste with a hint of oil"
+	glass_icon_state = "cogchamp"
+	glass_name = "CogChamp"
+	glass_desc = "Not even Ratvar's Four Generals could withstand this!  Qevax Jryy!"
+	value = 8.13
+
+/datum/reagent/consumable/ethanol/cogchamp/on_mob_life(mob/living/carbon/M)
+	M.clockcultslurring = min(M.clockcultslurring + 3, 3)
 	M.stuttering = min(M.stuttering + 3, 3)
 	..()
 

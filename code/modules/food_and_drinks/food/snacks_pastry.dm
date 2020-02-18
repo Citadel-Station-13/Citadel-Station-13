@@ -353,6 +353,13 @@
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR | BREAKFAST
 
+/obj/item/reagent_containers/food/snacks/muffin/poppy
+	name = "poppy muffin"
+	icon_state = "poppymuffin"
+	desc = "A classic lemon poppy seed muffin. Do not consume prior to drug testing."
+	tastes = list("muffin" = 3, "lemon" = 1, "seeds" = 1)
+	foodtype = GRAIN | SUGAR | BREAKFAST
+
 /obj/item/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."

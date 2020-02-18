@@ -22,12 +22,12 @@
 		return
 	// Wearing mask
 	var/mob/living/L = owner
-	if (L.is_mouth_covered())
-		if (display_error)
+	if(L.is_mouth_covered())
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You cannot feed with your mouth covered! Remove your mask.</span>")
 		return FALSE
 	// Find my Target!
-	if (!FindMyTarget(display_error)) // Sets feed_target within after Validating
+	if(!FindMyTarget(display_error)) // Sets feed_target within after Validating
 		return FALSE
 		// Not in correct state
 	// DONE!
@@ -35,36 +35,36 @@
 
 /datum/action/bloodsucker/feed/proc/ValidateTarget(mob/living/target, display_error) // Called twice: validating a subtle victim, or validating your grapple victim.
 	// Bloodsuckers + Animals MUST be grabbed aggressively!
-	if (!owner.pulling || target == owner.pulling && owner.grab_state < GRAB_AGGRESSIVE)
+	if(!owner.pulling || target == owner.pulling && owner.grab_state < GRAB_AGGRESSIVE)
 		// NOTE: It's OKAY that we are checking if(!target) below, AFTER animals here. We want passive check vs animal to warn you first, THEN the standard warning.
 		// Animals:
-		if (isliving(target) && !iscarbon(target))
-			if (display_error)
+		if(isliving(target) && !iscarbon(target))
+			if(display_error)
 				to_chat(owner, "<span class='warning'>Lesser beings require a tighter grip.</span>")
 			return FALSE
 		// Bloodsuckers:
-		else if (iscarbon(target) && target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-			if (display_error)
+		else if(iscarbon(target) && target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+			if(display_error)
 				to_chat(owner, "<span class='warning'>Other Bloodsuckers will not fall for your subtle approach.</span>")
 			return FALSE
 	// Must have Target
-	if (!target)	 //  || !ismob(target)
-		if (display_error)
+	if(!target)	 //  || !ismob(target)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You must be next to or grabbing a victim to feed from them.</span>")
 		return FALSE
 	// Not even living!
-	if (!isliving(target) || issilicon(target))
-		if (display_error)
+	if(!isliving(target) || issilicon(target))
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You may only feed from living beings.</span>")
 		return FALSE
-	if (target.blood_volume <= 0)
-		if (display_error)
+	if(target.blood_volume <= 0)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>Your victim has no blood to take.</span>")
 		return FALSE
-	if (ishuman(target))
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(NOBLOOD in H.dna.species.species_traits)// || owner.get_blood_id() != target.get_blood_id())
-			if (display_error)
+			if(display_error)
 				to_chat(owner, "<span class='warning'>Your victim's blood is not suitable for you to take.</span>")
 			return FALSE
 	return TRUE
@@ -75,9 +75,9 @@
 	feed_target = null
 	target_grappled = FALSE
 	// If you are pulling a mob, that's your target. If you don't like it, then release them.
-	if (owner.pulling && ismob(owner.pulling))
+	if(owner.pulling && ismob(owner.pulling))
 		// Check grapple target Valid
-		if (!ValidateTarget(owner.pulling, display_error)) // Grabbed targets display error.
+		if(!ValidateTarget(owner.pulling, display_error)) // Grabbed targets display error.
 			return FALSE
 		target_grappled = TRUE
 		feed_target = owner.pulling
@@ -86,11 +86,11 @@
 	var/list/mob/living/seen_targets = view(1, owner)
 	var/list/mob/living/seen_mobs = list()
 	for(var/mob/living/M in seen_targets)
-		if (isliving(M) && M != owner)
+		if(isliving(M) && M != owner)
 			seen_mobs += M
 	// None Seen!
-	if (seen_mobs.len == 0)
-		if (display_error)
+	if(seen_mobs.len == 0)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You must be next to or grabbing a victim to feed from them.</span>")
 		return FALSE
 	// Check Valids...
@@ -98,19 +98,19 @@
 	var/list/targets_dead = list()
 	for(var/mob/living/M in seen_mobs)
 		// Check adjecent Valid target
-		if (M != owner && ValidateTarget(M, display_error = FALSE)) // Do NOT display errors. We'll be doing this again in CheckCanUse(), which will rule out grabbed targets.
+		if(M != owner && ValidateTarget(M, display_error = FALSE)) // Do NOT display errors. We'll be doing this again in CheckCanUse(), which will rule out grabbed targets.
 			// Prioritize living, but remember dead as backup
-			if (M.stat < DEAD)
+			if(M.stat < DEAD)
 				targets_valid += M
 			else
 				targets_dead += M
 	// No Living? Try dead.
-	if (targets_valid.len == 0 && targets_dead.len > 0)
+	if(targets_valid.len == 0 && targets_dead.len > 0)
 		targets_valid = targets_dead
 	// No Targets
-	if (targets_valid.len == 0)
+	if(targets_valid.len == 0)
 		// Did I see targets? Then display at least one error
-		if (seen_mobs.len > 1)
+		if(seen_mobs.len > 1)
 			if (display_error)
 				to_chat(owner, "<span class='warning'>None of these are valid targets to feed from subtly.</span>")
 		else
@@ -136,28 +136,28 @@
 	// Initial Wait
 	var/feed_time = (amSilent ? 45 : 25) - (2.5 * level_current)
 	feed_time = max(15, feed_time)
-	if (amSilent)
+	if(amSilent)
 		to_chat(user, "<span class='notice'>You lean quietly toward [target] and secretly draw out your fangs...</span>")
 	else
 		to_chat(user, "<span class='warning'>You pull [target] close to you and draw out your fangs...</span>")
-	if (!do_mob(user, target, feed_time,0,1,extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))//sleep(10)
+	if(!do_mob(user, target, feed_time,0,1,extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))//sleep(10)
 		to_chat(user, "<span class='warning'>Your feeding was interrupted.</span>")
 		//DeactivatePower(user,target)
 		return
 	// Put target to Sleep (Bloodsuckers are immune to their own bite's sleep effect)
-	if (!amSilent)
+	if(!amSilent)
 		ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
 		if(target.stat <= UNCONSCIOUS)
 			sleep(1)
 			// Wait, then Cancel if Invalid
-			if (!ContinueActive(user,target)) // Cancel. They're gone.
+			if(!ContinueActive(user,target)) // Cancel. They're gone.
 				//DeactivatePower(user,target)
 				return
 		// Pull Target Close
-		if (!target.density) // Pull target to you if they don't take up space.
+		if(!target.density) // Pull target to you if they don't take up space.
 			target.Move(user.loc)
 	// Broadcast Message
-	if (amSilent)
+	if(amSilent)
 		//if (!iscarbon(target))
 		//	user.visible_message("<span class='notice'>[user] shifts [target] closer to [user.p_their()] mouth.</span>", \
 		//					 	 "<span class='notice'>You secretly slip your fangs into [target]'s flesh.</span>", \
@@ -173,7 +173,7 @@
 			if(M != owner && M != target && iscarbon(M) && M.mind && !M.has_unlimited_silicon_privilege && !M.eye_blind && !M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 				was_unnoticed = FALSE
 				break
-		if (was_unnoticed)
+		if(was_unnoticed)
 			to_chat(user, "<span class='notice'>You think no one saw you...</span>")
 		else
 			to_chat(user, "<span class='warning'>Someone may have noticed...</span>")
@@ -197,16 +197,16 @@
 
 	// FEEEEEEEEED!!! //
 	bloodsuckerdatum.poweron_feed = TRUE
-	while (bloodsuckerdatum && target && active)
+	while(bloodsuckerdatum && target && active)
 	//user.mobility_flags &= ~MOBILITY_MOVE // user.canmove = 0 // Prevents spilling blood accidentally.
 
 		// Abort? A bloody mistake.
-		if (!do_mob(user, target, 20, 0, 0, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
+		if(!do_mob(user, target, 20, 0, 0, extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))
 			// May have disabled Feed during do_mob
-			if (!active || !ContinueActive(user, target))
+			if(!active || !ContinueActive(user, target))
 				break
 
-			if (amSilent)
+			if(amSilent)
 				to_chat(user, "<span class='warning'>Your feeding has been interrupted...but [target.p_they()] didn't seem to notice you.<span>")
 			else
 				to_chat(user, "<span class='warning'>Your feeding has been interrupted!</span>")
@@ -214,11 +214,11 @@
 						 			 "<span class='userdanger'>Your teeth are ripped from [target]'s throat. [target.p_their(TRUE)] blood sprays everywhere!</span>")
 
 				// Deal Damage to Target (should have been more careful!)
-				if (iscarbon(target))
+				if(iscarbon(target))
 					var/mob/living/carbon/C = target
 					C.bleed(15)
 				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
-				if (ishuman(target))
+				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
 					H.bleed_rate += 5
 				target.add_splatter_floor(get_turf(target))
@@ -228,7 +228,7 @@
 				target.emote("scream")
 
 			// Killed Target?
-			if (was_alive)
+			if(was_alive)
 				CheckKilledTarget(user,target)
 
 			return
@@ -237,40 +237,40 @@
 		// 		Handle Feeding! User & Victim Effects (per tick)
 		bloodsuckerdatum.HandleFeeding(target, blood_take_mult)
 		amount_taken += amSilent ? 0.3 : 1
-		if (!amSilent)
+		if(!amSilent)
 			ApplyVictimEffects(target)	// Sleep, paralysis, immobile, unconscious, and mute
-		if (amount_taken > 5 && target.stat < DEAD && ishuman(target))
+		if(amount_taken > 5 && target.stat < DEAD && ishuman(target))
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood) // GOOD // in bloodsucker_life.dm
 
 		///////////////////////////////////////////////////////////
 		// Not Human?
-		if (!ishuman(target))
+		if(!ishuman(target))
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood_bad) // BAD // in bloodsucker_life.dm
-			if (!warning_target_inhuman)
+			if(!warning_target_inhuman)
 				to_chat(user, "<span class='notice'>You recoil at the taste of a lesser lifeform.</span>")
 				warning_target_inhuman = TRUE
 		// Dead Blood?
-		if (target.stat >= DEAD)
-			if (ishuman(target))
+		if(target.stat >= DEAD)
+			if(ishuman(target))
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood_dead) // BAD // in bloodsucker_life.dm
-			if (!warning_target_dead)
+			if(!warning_target_dead)
 				to_chat(user, "<span class='notice'>Your victim is dead. [target.p_their(TRUE)] blood barely nourishes you.</span>")
 				warning_target_dead = TRUE
 		// Full?
-		if (!warning_full && user.blood_volume >= bloodsuckerdatum.maxBloodVolume)
+		if(!warning_full && user.blood_volume >= bloodsuckerdatum.maxBloodVolume)
 			to_chat(user, "<span class='notice'>You are full. Further blood will be wasted.</span>")
 			warning_full = TRUE
 		// Blood Remaining? (Carbons/Humans only)
-		if (iscarbon(target) && !target.AmBloodsucker(1))
-			if (target.blood_volume <= BLOOD_VOLUME_BAD && warning_target_bloodvol > BLOOD_VOLUME_BAD)
+		if(iscarbon(target) && !target.AmBloodsucker(1))
+			if(target.blood_volume <= BLOOD_VOLUME_BAD && warning_target_bloodvol > BLOOD_VOLUME_BAD)
 				to_chat(user, "<span class='warning'>Your victim's blood volume is fatally low!</span>")
-			else if (target.blood_volume <= BLOOD_VOLUME_OKAY && warning_target_bloodvol > BLOOD_VOLUME_OKAY)
+			else if(target.blood_volume <= BLOOD_VOLUME_OKAY && warning_target_bloodvol > BLOOD_VOLUME_OKAY)
 				to_chat(user, "<span class='warning'>Your victim's blood volume is dangerously low.</span>")
-			else if (target.blood_volume <= BLOOD_VOLUME_SAFE && warning_target_bloodvol > BLOOD_VOLUME_SAFE)
+			else if(target.blood_volume <= BLOOD_VOLUME_SAFE && warning_target_bloodvol > BLOOD_VOLUME_SAFE)
 				to_chat(user, "<span class='notice'>Your victim's blood is at an unsafe level.</span>")
 			warning_target_bloodvol = target.blood_volume // If we had a warning to give, it's been given by now.
 		// Done?
-		if (target.blood_volume <= 0)
+		if(target.blood_volume <= 0)
 			to_chat(user, "<span class='notice'>You have bled your victim dry.</span>")
 			break
 
@@ -279,7 +279,7 @@
 
 	// DONE!
 	//DeactivatePower(user,target)
-	if (amSilent)
+	if(amSilent)
 		to_chat(user, "<span class='notice'>You slowly release [target]'s wrist." + (target.stat == 0 ? " [target.p_their(TRUE)] face lacks expression, like you've already been forgotten.</span>" : ""))
 	else
 		user.visible_message("<span class='warning'>[user] unclenches their teeth from [target]'s neck.</span>", \
@@ -289,13 +289,13 @@
 	log_combat(owner, target, "fed on blood", addition="(and took [amount_taken] blood)")
 
 	// Killed Target?
-	if (was_alive)
+	if(was_alive)
 		CheckKilledTarget(user,target)
 
 
 /datum/action/bloodsucker/feed/proc/CheckKilledTarget(mob/living/user, mob/living/target)
 	// Bad Vampire. You shouldn't do that.
-	if (target && target.stat >= DEAD && ishuman(target))
+	if(target && target.stat >= DEAD && ishuman(target))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankkilled", /datum/mood_event/drankkilled) // BAD // in bloodsucker_life.dm
 
 /datum/action/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
@@ -304,18 +304,18 @@
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target)
 	// Bloodsuckers not affected by "the Kiss" of another vampire
-	if (!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	if(!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		target.Unconscious(50,0)
 		target.Knockdown(40 + 5 * level_current,1)
 		// NOTE: THis is based on level of power!
-		if (ishuman(target))
+		if(ishuman(target))
 			target.adjustStaminaLoss(5, forced = TRUE)// Base Stamina Damage
 
 /datum/action/bloodsucker/feed/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// No longer Feeding
-	if (bloodsuckerdatum)
+	if(bloodsuckerdatum)
 		bloodsuckerdatum.poweron_feed = FALSE
 	feed_target = null
 	// My mouth is no longer full

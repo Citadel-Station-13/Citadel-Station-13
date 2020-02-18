@@ -1,3 +1,5 @@
+/datum/config_entry/flag/auto_profile // Automatically start profiler on server start
+
 /datum/config_entry/flag/autoadmin  // if autoadmin is enabled
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -267,6 +269,9 @@
 
 /datum/config_entry/flag/tgstyle_maprotation
 
+/datum/config_entry/string/map_vote_type
+	config_entry_value = "SCORE"
+
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75
 	min_val = 0
@@ -389,6 +394,13 @@
 	config_entry_value = 50
 
 /datum/config_entry/flag/irc_announce_new_game
+	deprecated_by = /datum/config_entry/string/chat_announce_new_game
+
+/datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
+	return ""	//default broadcast
+
+/datum/config_entry/string/chat_announce_new_game
+	config_entry_value = null
 
 /datum/config_entry/flag/debug_admin_hrefs
 

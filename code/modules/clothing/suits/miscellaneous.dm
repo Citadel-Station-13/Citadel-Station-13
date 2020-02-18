@@ -317,7 +317,7 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
-/obj/item/clothing/suit/security/officer/russian
+/obj/item/clothing/suit/armor/navyblue/russian
 	name = "\improper Russian officer's jacket"
 	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
 	icon_state = "officertanjacket"
@@ -325,17 +325,16 @@
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/ran
-	name = "Shikigami costume"
+	name = "shikigami costume"
 	desc = "A costume that looks like a certain shikigami, is super fluffy."
 	icon_state = "ran_suit"
 	item_state = "ran_suit"
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
-//2061
 
 /obj/item/clothing/head/ran
-	name = "Shikigami hat"
+	name = "shikigami hat"
 	desc = "A hat that looks like it keeps any fluffy ears contained super warm, has little charms over it."
 	icon_state = "ran_hat"
 	item_state = "ran_hat"
@@ -704,8 +703,9 @@
 	name = "cosmic winter coat"
 	icon_state = "coatcosmic"
 	item_state = "coatcosmic"
-	allowed = list(/obj/item/flashlight)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/cosmic
+	light_power = 1.8
+	light_range = 1.2
 
 /obj/item/clothing/head/hooded/winterhood/cosmic
 	icon_state = "winterhood_cosmic"
@@ -880,7 +880,6 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	resistance_flags = NONE
-	mutantrace_variation = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = -15) //nylon sucks against acid
 
 /obj/item/clothing/suit/assu_suit

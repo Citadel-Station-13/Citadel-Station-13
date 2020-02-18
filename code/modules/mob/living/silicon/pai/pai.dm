@@ -11,7 +11,7 @@
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
-	can_be_held = TRUE
+	var/datum/element/mob_holder/current_mob_holder //because only a few of their chassis can be actually held.
 
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
@@ -64,9 +64,6 @@
 	var/list/possible_chassis			//initialized in initialize.
 	var/list/dynamic_chassis_icons		//ditto.
 	var/list/chassis_pixel_offsets_x	//stupid dogborgs
-	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
-	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
-	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20

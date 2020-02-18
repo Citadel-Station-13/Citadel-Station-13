@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(vote)
 		var/list/this_vote = voted[ckey]
 		var/list/pretty_vote = list()
 		for(var/choice in choices)
-			if("[choice]" in this_vote && "[choice]" in scores_by_choice)
+			if(("[choice]" in this_vote) && ("[choice]" in scores_by_choice))
 				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],/proc/cmp_numeric_asc)
 				// START BALLOT GATHERING
 				pretty_vote += "[choice]"
@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/score_name in scores_by_choice)
 		var/list/score = scores_by_choice[score_name]
 		for(var/indiv_score in score)
-			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score])) 
+			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score]))
 		if(score.len == 0)
 			scores_by_choice -= score_name
 	while(scores_by_choice.len > 1)
@@ -188,22 +188,47 @@ SUBSYSTEM_DEF(vote)
 			choices[score_name]++
 
 /datum/controller/subsystem/vote/proc/calculate_scores(var/blackbox_text)
-	var/list/scores_by_choice = list()
 	for(var/choice in choices)
-		scores_by_choice += "[choice]"
-		scores_by_choice["[choice]"] = list()
+		scores += "[choice]"
+		scores["[choice]"] = 0
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
-		for(var/choice in choices)
-			if("[choice]" in this_vote && "[choice]" in scores_by_choice)
-				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],/proc/cmp_numeric_asc)
-	var/middle_score = round(GLOB.vote_score_options.len/2,1)
-	for(var/score_name in scores_by_choice)
-		var/list/score = scores_by_choice[score_name]
-		for(var/S in score)
-			scores[score_name] += S-middle_score
+		for(var/choice in this_vote)
+			scores["[choice]"] += this_vote["[choice]"]
+	var/min_score = 100
+	var/max_score = -100
+	for(var/score_name in scores) // normalize the scores from 0-1
+		max_score=max(max_score,scores[score_name])
+		min_score=min(min_score,scores[score_name])
+	for(var/score_name in scores)
+		if(max_score == min_score)
+			scores[score_name] = 1
+		else
+			scores[score_name] = (scores[score_name]-min_score)/(max_score-min_score)
 		SSblackbox.record_feedback("nested tally","voting",scores[score_name],list(blackbox_text,"Total scores",score_name))
 
+/datum/controller/subsystem/vote/proc/get_runoff_results(var/blackbox_text)
+	var/already_lost_runoff = list()
+	var/list/cur_choices = choices.Copy()
+	for(var/ckey in voted)
+		choices[choices[voted[ckey][1]]]++ // jesus christ how horrifying
+	for(var/_this_var_unused_ignore_it in 1 to choices.len) // if it takes more than this something REALLY wrong happened
+		for(var/ckey in voted)
+			cur_choices[cur_choices[voted[ckey][1]]]++ // jesus christ how horrifying
+		var/least_vote = 100000
+		var/least_voted
+		for(var/i in 1 to cur_choices.len)
+			var/option = cur_choices[i]
+			if(cur_choices[option] > voted.len/2)
+				return list(option)
+			else if(cur_choices[option] < least_vote && !(option in already_lost_runoff))
+				least_vote = cur_choices[option]
+				least_voted = i
+		already_lost_runoff += cur_choices[least_voted]
+		for(var/ckey in voted)
+			voted[ckey] -= least_voted
+		for(var/option in cur_choices)
+			cur_choices[option] = 0
 
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
@@ -214,32 +239,29 @@ SUBSYSTEM_DEF(vote)
 	else
 		text += "<b>[capitalize(mode)] Vote</b>"
 		vote_title_text = "[capitalize(mode)] Vote"
-	if(vote_system == RANKED_CHOICE_VOTING)
+	if(vote_system == SCHULZE_VOTING)
 		calculate_condorcet_votes(vote_title_text)
 	if(vote_system == SCORE_VOTING)
-		calculate_majority_judgement_vote(vote_title_text)
 		calculate_scores(vote_title_text)
-	var/list/winners = get_result()
+	if(vote_system == MAJORITY_JUDGEMENT_VOTING)
+		calculate_majority_judgement_vote(vote_title_text) // nothing uses this at the moment
+	var/list/winners = vote_system == INSTANT_RUNOFF_VOTING ? get_runoff_results() : get_result()
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
 		if(was_roundtype_vote)
 			stored_gamemode_votes = list()
-		if(!obfuscated && vote_system == RANKED_CHOICE_VOTING)
-			text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
-		if(mode == "mode tiers")
-			for(var/score_name in scores)
-				var/score = scores[score_name]
-				if(!score)
-					score = 0
-				text = "\n<b>[score_name]:</b> [obfuscated ? "???" : score]"
-		else
-			for(var/i=1,i<=choices.len,i++)
-				var/votes = choices[choices[i]]
-				if(!votes)
-					votes = 0
-				if(was_roundtype_vote)
-					stored_gamemode_votes[choices[i]] = votes
-				text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
+		if(!obfuscated)
+			if(vote_system == SCHULZE_VOTING)
+				text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
+			if(vote_system == MAJORITY_JUDGEMENT_VOTING)
+				text += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
+		for(var/i=1,i<=choices.len,i++)
+			var/votes = choices[choices[i]]
+			if(!votes)
+				votes = 0
+			if(was_roundtype_vote)
+				stored_gamemode_votes[choices[i]] = votes
+			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
 			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes
 				text = "\n<b>Vote Tied Between:</b>"
@@ -249,6 +271,15 @@ SUBSYSTEM_DEF(vote)
 			text += "\n<b>Vote Result: [obfuscated ? "???" : .]</b>" //CIT CHANGE - adds obfuscated votes
 		else
 			text += "\n<b>Did not vote:</b> [GLOB.clients.len-voted.len]"
+	else if(vote_system == SCORE_VOTING)
+		for(var/score_name in scores)
+			var/score = scores[score_name]
+			if(!score)
+				score = 0
+			if(was_roundtype_vote)
+				stored_gamemode_votes[score_name] = score
+			text = "\n<b>[score_name]:</b> [obfuscated ? "???" : score]"
+			. = 1
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
@@ -258,7 +289,7 @@ SUBSYSTEM_DEF(vote)
 		if(APPROVAL_VOTING,PLURALITY_VOTING)
 			for(var/i=1,i<=choices.len,i++)
 				SSblackbox.record_feedback("nested tally","voting",choices[choices[i]],list(vote_title_text,choices[i]))
-		if(RANKED_CHOICE_VOTING)
+		if(SCHULZE_VOTING,INSTANT_RUNOFF_VOTING)
 			for(var/i=1,i<=voted.len,i++)
 				var/list/myvote = voted[voted[i]]
 				if(islist(myvote))
@@ -266,13 +297,18 @@ SUBSYSTEM_DEF(vote)
 						SSblackbox.record_feedback("nested tally","voting",1,list(vote_title_text,"[j]\th",choices[myvote[j]]))
 	if(obfuscated) //CIT CHANGE - adds obfuscated votes. this messages admins with the vote's true results
 		var/admintext = "Obfuscated results"
-		if(vote_system == RANKED_CHOICE_VOTING)
-			admintext += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
-		else if(vote_system == SCORE_VOTING)
-			admintext += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
-		for(var/i=1,i<=choices.len,i++)
-			var/votes = choices[choices[i]]
-			admintext += "\n<b>[choices[i]]:</b> [votes]"
+		if(vote_system != SCORE_VOTING)
+			if(vote_system == SCHULZE_VOTING)
+				admintext += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
+			else if(vote_system == MAJORITY_JUDGEMENT_VOTING)
+				admintext += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
+			for(var/i=1,i<=choices.len,i++)
+				var/votes = choices[choices[i]]
+				admintext += "\n<b>[choices[i]]:</b> [votes]"
+		else
+			for(var/i=1,i<=scores.len,i++)
+				var/score = scores[scores[i]]
+				admintext += "\n<b>[scores[i]]:</b> [score]"
 		message_admins(admintext)
 	return .
 
@@ -316,15 +352,13 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				if(. == "Secret")
-					GLOB.master_mode = "secret"
-					SSticker.save_mode(.)
-					message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
-					log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
-				else
-					GLOB.master_mode = "dynamic"
-					var/datum/dynamic_storyteller/S = config.pick_storyteller(.)
-					GLOB.dynamic_storyteller_type = S
+				GLOB.master_mode = "dynamic"
+				var/list/runnable_storytellers = config.get_runnable_storytellers()
+				for(var/T in runnable_storytellers)
+					var/datum/dynamic_storyteller/S = T
+					runnable_storytellers[S] *= scores[initial(S.name)]
+				var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
+				GLOB.dynamic_storyteller_type = S
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -342,7 +376,7 @@ SUBSYSTEM_DEF(vote)
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
-	
+
 	return .
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote, score = 0)
@@ -375,7 +409,7 @@ SUBSYSTEM_DEF(vote)
 						voted[usr.ckey] = list(vote)
 						choices[choices[vote]]++
 						return vote
-				if(RANKED_CHOICE_VOTING)
+				if(SCHULZE_VOTING,INSTANT_RUNOFF_VOTING)
 					if(usr.ckey in voted)
 						if(vote in voted[usr.ckey])
 							voted[usr.ckey] -= vote
@@ -384,7 +418,7 @@ SUBSYSTEM_DEF(vote)
 						voted[usr.ckey] = list()
 					voted[usr.ckey] += vote
 					saved -= usr.ckey
-				if(SCORE_VOTING)
+				if(SCORE_VOTING,MAJORITY_JUDGEMENT_VOTING)
 					if(!(usr.ckey in voted))
 						voted += usr.ckey
 						voted[usr.ckey] = list()
@@ -444,19 +478,16 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T
-					var/recent_rounds = 0
-					for(var/i in 1 to SSpersistence.saved_storytellers.len)
-						if(SSpersistence.saved_storytellers[i] == initial(S.name))
-							recent_rounds++
-					if(recent_rounds < initial(S.weight))
+					var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
+					if(probabilities[initial(S.config_tag)] > 0)
 						choices.Add(initial(S.name))
 						choice_descs.Add(initial(S.desc))
-				choices.Add("Secret")
-				choice_descs.Add("Standard secret. Switches mode if it wins.")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
 					return 0
+				var/system_string = input(usr,"Which voting type?",GLOB.vote_type_names[1]) in GLOB.vote_type_names
+				vote_system = GLOB.vote_type_names[system_string]
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
@@ -514,9 +545,9 @@ SUBSYSTEM_DEF(vote)
 				. += "<h3>Vote one.</h3>"
 			if(APPROVAL_VOTING)
 				. += "<h3>Vote any number of choices.</h3>"
-			if(RANKED_CHOICE_VOTING)
+			if(SCHULZE_VOTING,INSTANT_RUNOFF_VOTING)
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom. 1 is your favorite, and higher numbers are worse.</h3>"
-			if(SCORE_VOTING)
+			if(SCORE_VOTING,MAJORITY_JUDGEMENT_VOTING)
 				. += "<h3>Grade the candidates by how much you like them.</h3>"
 				. += "<h3>No-votes have no power--your opinion is only heard if you vote!</h3>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
@@ -536,7 +567,7 @@ SUBSYSTEM_DEF(vote)
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
 				. += "</ul><hr>"
-			if(RANKED_CHOICE_VOTING)
+			if(SCHULZE_VOTING,INSTANT_RUNOFF_VOTING)
 				var/list/myvote = voted[C.ckey]
 				for(var/i=1,i<=choices.len,i++)
 					var/vote = (islist(myvote) ? (myvote.Find(i)) : 0)
@@ -553,7 +584,7 @@ SUBSYSTEM_DEF(vote)
 					. += "(Saved!)"
 				. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
 				. += "(<a href='?src=[REF(src)];vote=reset'>Reset votes</a>)"
-			if(SCORE_VOTING)
+			if(SCORE_VOTING,MAJORITY_JUDGEMENT_VOTING)
 				var/list/myvote = voted[C.ckey]
 				for(var/i=1,i<=choices.len,i++)
 					. += "<li><b>[choices[i]]</b>"
@@ -656,7 +687,7 @@ SUBSYSTEM_DEF(vote)
 			voted[usr.ckey] = SSpersistence.saved_votes[usr.ckey][mode]
 			if(islist(voted[usr.ckey]))
 				var/malformed = FALSE
-				if(vote_system == SCORE_VOTING)
+				if(vote_system == SCORE_VOTING || vote_system == MAJORITY_JUDGEMENT_VOTING)
 					for(var/thing in voted[usr.ckey])
 						if(!(thing in choices))
 							malformed = TRUE
@@ -670,7 +701,7 @@ SUBSYSTEM_DEF(vote)
 				to_chat(usr,"Your saved vote was malformed! Start over!")
 				voted -= usr.ckey
 		else
-			if(vote_system == SCORE_VOTING)
+			if(vote_system == SCORE_VOTING || vote_system == MAJORITY_JUDGEMENT_VOTING)
 				submit_vote(round(text2num(href_list["vote"])),round(text2num(href_list["score"])))
 			else
 				submit_vote(round(text2num(href_list["vote"])))
