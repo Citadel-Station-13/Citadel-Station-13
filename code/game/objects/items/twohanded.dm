@@ -1032,7 +1032,6 @@
 	throwforce = 15			//if you are a madman and finish someone off with this, power to you.
 	throw_speed = 1
 	block_chance = 30
-	materials = list(MAT_METAL = 4000, MAT_SILVER = 2000)
 	attack_verb = list("struck", "beaten", "thwacked", "pulped")
 	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors. (to curb stun-kill rampaging without it being on)
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
