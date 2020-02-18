@@ -147,10 +147,10 @@
 		ion_trail = new
 	ion_trail.set_up(M)
 
-/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Remove(special = FALSE)
 	if(on)
-		toggle(silent = TRUE)
-	..()
+		toggle(TRUE)
+	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/ui_action_click()
 	toggle()
@@ -170,10 +170,11 @@
 				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
 	else
 		ion_trail.stop()
-		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-		owner.remove_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER)
-		if(!silent)
-			to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
+		if(!QDELETED(owner))
+			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+			owner.remove_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER)
+			if(!silent)
+				to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
 		on = FALSE
 	update_icon()
 

@@ -1983,8 +1983,8 @@
 		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
 		var/client/C = usr.client
-		if(!isobserver(usr))
-			C.admin_ghost()
+		if(!isobserver(usr) && !C.admin_ghost())
+			return
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
 
@@ -2006,8 +2006,8 @@
 		var/z = text2num(href_list["Z"])
 
 		var/client/C = usr.client
-		if(!isobserver(usr))
-			C.admin_ghost()
+		if(!isobserver(usr) && !C.admin_ghost())
+			return
 		sleep(2)
 		C.jumptocoord(x,y,z)
 
@@ -2469,8 +2469,6 @@
 		if(!check_rights(R_ADMIN))
 			return
 		src.admincaster_feed_channel.channel_name = stripped_input(usr, "Provide a Feed Channel Name.", "Network Channel Handler", "")
-		while (findtext(src.admincaster_feed_channel.channel_name," ") == 1)
-			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,length(src.admincaster_feed_channel.channel_name)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
@@ -2483,7 +2481,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/check = 0
-		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+		for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 				check = 1
 				break
@@ -2502,7 +2500,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/list/available_channels = list()
-		for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
+		for(var/datum/news/feed_channel/F in GLOB.news_network.network_channels)
 			available_channels += F.channel_name
 		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in available_channels )
 		src.access_news_network()
@@ -2510,9 +2508,7 @@
 	else if(href_list["ac_set_new_message"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story.", "Network Channel Handler", ""))
-		while (findtext(src.admincaster_feed_message.returnBody(-1)," ") == 1)
-			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,length(src.admincaster_feed_message.returnBody(-1))+1)
+		src.admincaster_feed_message.body = adminscrub(stripped_input(usr, "Write your Feed story.", "Network Channel Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
@@ -2571,17 +2567,13 @@
 	else if(href_list["ac_set_wanted_name"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_wanted_message.criminal = adminscrub(input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
-		while(findtext(src.admincaster_wanted_message.criminal," ") == 1)
-			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,length(admincaster_wanted_message.criminal)+1)
+		src.admincaster_wanted_message.criminal = adminscrub(stripped_input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_wanted_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
-		while (findtext(src.admincaster_wanted_message.body," ") == 1)
-			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,length(src.admincaster_wanted_message.body)+1)
+		src.admincaster_wanted_message.body = adminscrub(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
@@ -2614,28 +2606,28 @@
 	else if(href_list["ac_censor_channel_author"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
+		var/datum/news/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
 		FC.toggleCensorAuthor()
 		src.access_news_network()
 
 	else if(href_list["ac_censor_channel_story_author"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
+		var/datum/news/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
 		MSG.toggleCensorAuthor()
 		src.access_news_network()
 
 	else if(href_list["ac_censor_channel_story_body"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
+		var/datum/news/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
 		MSG.toggleCensorBody()
 		src.access_news_network()
 
 	else if(href_list["ac_pick_d_notice"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
+		var/datum/news/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen=13
 		src.access_news_network()
@@ -2643,7 +2635,7 @@
 	else if(href_list["ac_toggle_d_notice"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
+		var/datum/news/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
 		FC.toggleCensorDclass()
 		src.access_news_network()
 
@@ -2659,17 +2651,17 @@
 		src.admincaster_screen = text2num(href_list["ac_setScreen"])
 		if (src.admincaster_screen == 0)
 			if(src.admincaster_feed_channel)
-				src.admincaster_feed_channel = new /datum/newscaster/feed_channel
+				src.admincaster_feed_channel = new /datum/news/feed_channel
 			if(src.admincaster_feed_message)
-				src.admincaster_feed_message = new /datum/newscaster/feed_message
+				src.admincaster_feed_message = new /datum/news/feed_message
 			if(admincaster_wanted_message)
-				admincaster_wanted_message = new /datum/newscaster/wanted_message
+				admincaster_wanted_message = new /datum/news/wanted_message
 		src.access_news_network()
 
 	else if(href_list["ac_show_channel"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_show_channel"])
+		var/datum/news/feed_channel/FC = locate(href_list["ac_show_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 9
 		src.access_news_network()
@@ -2677,7 +2669,7 @@
 	else if(href_list["ac_pick_censor_channel"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
+		var/datum/news/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 12
 		src.access_news_network()
@@ -2696,8 +2688,8 @@
 	else if(href_list["ac_del_comment"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_comment/FC = locate(href_list["ac_del_comment"])
-		var/datum/newscaster/feed_message/FM = locate(href_list["ac_del_comment_msg"])
+		var/datum/news/feed_comment/FC = locate(href_list["ac_del_comment"])
+		var/datum/news/feed_message/FM = locate(href_list["ac_del_comment_msg"])
 		FM.comments -= FC
 		qdel(FC)
 		src.access_news_network()
@@ -2705,7 +2697,7 @@
 	else if(href_list["ac_lock_comment"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/newscaster/feed_message/FM = locate(href_list["ac_lock_comment"])
+		var/datum/news/feed_message/FM = locate(href_list["ac_lock_comment"])
 		FM.locked ^= 1
 		src.access_news_network()
 

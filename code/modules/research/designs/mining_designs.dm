@@ -62,6 +62,26 @@
 	category = list("Mining Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/plasteel_pick
+	name = "plasteel-tipped pickaxe"
+	desc = "A pickaxe with a plasteel pick head. Less robust at cracking rock walls and digging up dirt than the titanium pickaxe, but better at cracking open skulls."
+	id = "plasteel_pick"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=2000, MAT_PLASMA=2000)
+	build_path = /obj/item/pickaxe/plasteel
+	category = list("Mining Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/titanium_pick
+	name = "titanium-tipped pickaxe"
+	desc = "A pickaxe with a titanium pick head. Extremely robust at cracking rock walls and digging up dirt, but less than the plasteel pickaxe at cracking open skulls."
+	id = "titanium_pick"
+	build_type = PROTOLATHE
+	materials = list(MAT_TITANIUM = 4000)
+	build_path = /obj/item/pickaxe/titanium
+	category = list("Mining Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
 /datum/design/jackhammer
 	name = "Sonic Jackhammer"
 	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well."

@@ -81,8 +81,8 @@
 	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
 	contraband = TRUE
 	cost = 5750 // Its basicly sec suits, good boots/gloves
-	contains = list(/obj/item/clothing/suit/security/officer/russian,
-					/obj/item/clothing/suit/security/officer/russian,
+	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
+					/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/head/ushanka,
@@ -104,7 +104,7 @@
 	contraband = TRUE
 	access = FALSE
 	cost = 5500 //
-	contains = list(/obj/item/clothing/suit/security/officer/russian,
+	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/head/ushanka,
 					/obj/item/clothing/suit/armor/bulletproof,
@@ -141,15 +141,15 @@
 	cost = 3250
 	contains = list(/obj/item/clothing/under/rank/security/navyblue,
 					/obj/item/clothing/under/rank/security/navyblue,
-					/obj/item/clothing/suit/security/officer,
-					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/suit/armor/navyblue,
+					/obj/item/clothing/suit/armor/navyblue,
 					/obj/item/clothing/head/beret/sec/navyofficer,
 					/obj/item/clothing/head/beret/sec/navyofficer,
 					/obj/item/clothing/under/rank/warden/navyblue,
-					/obj/item/clothing/suit/security/warden,
+					/obj/item/clothing/suit/armor/vest/warden/navyblue,
 					/obj/item/clothing/head/beret/sec/navywarden,
 					/obj/item/clothing/under/rank/head_of_security/navyblue,
-					/obj/item/clothing/suit/security/hos,
+					/obj/item/clothing/suit/armor/hos/navyblue,
 					/obj/item/clothing/head/beret/sec/navyhos)
 	crate_name = "security clothing crate"
 

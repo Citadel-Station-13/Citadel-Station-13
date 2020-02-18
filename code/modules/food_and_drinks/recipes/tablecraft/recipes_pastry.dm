@@ -377,6 +377,17 @@ datum/crafting_recipe/food/donut/meat
 	result = /obj/item/reagent_containers/food/snacks/muffin/booberry
 	subcategory = CAT_PASTRY
 
+/datum/crafting_recipe/food/poppymuffin
+	name = "Poppy muffin"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/reagent_containers/food/snacks/grown/citrus/lemon = 1,
+		/obj/item/seeds/poppy = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/muffin/poppy
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
 	reqs = list(
@@ -481,6 +492,8 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/grown/oat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/oatmealcookie
+	subcategory = CAT_PASTRY
+
 
 /datum/crafting_recipe/food/raisincookie
 	name = "Raisin cookie"

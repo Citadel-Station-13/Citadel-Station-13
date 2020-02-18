@@ -1,6 +1,6 @@
 /datum/outfit/ninja
 	name = "Space Ninja"
-	uniform = /obj/item/clothing/under/color/black
+	uniform = /obj/item/clothing/under/color/black/trackless
 	suit = /obj/item/clothing/suit/space/space_ninja
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/space_ninja

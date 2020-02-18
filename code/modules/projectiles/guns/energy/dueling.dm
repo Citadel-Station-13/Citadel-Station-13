@@ -320,15 +320,15 @@
 		if(C.setting == counter_setting)
 			return BULLET_ACT_BLOCK
 
-	var/mob/living/L = target
-	if(!istype(target))
+	if(!isliving(target))
 		return BULLET_ACT_BLOCK
 
+	var/mob/living/L = target
 	switch(hugbox)
 		if(DUEL_HUGBOX_NONE)
 			var/obj/item/bodypart/B = L.get_bodypart(BODY_ZONE_HEAD)
 			B.dismember()
-			qdel(B)
+			QDEL_IN(B, 1)
 		if(DUEL_HUGBOX_LETHAL)
 			L.adjustBruteLoss(180)
 			L.death()				//Die, powergamers.

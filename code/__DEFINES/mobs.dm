@@ -35,17 +35,17 @@
 #define BLOODCRAWL 1
 #define BLOODCRAWL_EAT 2
 
-//Mob bio-types
-#define MOB_ORGANIC 	"organic"
-#define MOB_INORGANIC 	"inorganic"
-#define MOB_ROBOTIC 	"robotic"
-#define MOB_UNDEAD		"undead"
-#define MOB_HUMANOID 	"humanoid"
-#define MOB_BUG 		"bug"
-#define MOB_BEAST		"beast"
-#define MOB_EPIC		"epic" //megafauna
-#define MOB_REPTILE		"reptile"
-#define MOB_SPIRIT		"spirit"
+//Mob bio-types flags
+#define MOB_ORGANIC 	1 << 0
+#define MOB_MINERAL		1 << 1
+#define MOB_ROBOTIC 	1 << 2
+#define MOB_UNDEAD		1 << 3
+#define MOB_HUMANOID 	1 << 4
+#define MOB_BUG 		1 << 5
+#define MOB_BEAST		1 << 6
+#define MOB_EPIC		1 << 7 //megafauna
+#define MOB_REPTILE		1 << 8
+#define MOB_SPIRIT		1 << 9
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -200,9 +200,11 @@
 #define NO_SLIP_WHEN_WALKING	(1<<0)
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
-#define SLIDE_ICE				(1<<3)
-#define SLIP_WHEN_CRAWLING		(1<<4) //clown planet ruin
-#define SLIP_WHEN_JOGGING		(1<<5) //slips prevented by walking are also dodged if the mob is not sprinting or fatigued... unless this flag is on.
+#define FLYING_DOESNT_HELP		(1<<3)
+#define SLIDE_ICE				(1<<4)
+#define SLIP_WHEN_CRAWLING		(1<<5) //clown planet ruin amongst others
+#define SLIP_WHEN_JOGGING		(1<<6) //slips prevented by walking are also dodged if the mob is nor sprinting or fatigued... unless this flag is on.
+
 
 #define MAX_CHICKENS 50
 

@@ -82,7 +82,7 @@
 	if(!client)
 		return
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
 		if(type & MSG_VISUAL && eye_blind )//Vision related
@@ -321,20 +321,18 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	set name = "Examine"
 	set category = "IC"
 
-	if(!client)
-		return
-
-	if(!(SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A) & COMPONENT_ALLOW_EXAMINE) && ((client.eye != src && client.eye != loc) || (isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))))
-		//cameras & co don't allow users to examine far away things, also shift-click catcher may issue examinate() calls for out-of-sight turfs
+	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
+		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
 	if(is_blind(src))
-		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
+		to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
 		return
 
 	face_atom(A)
 	var/list/result = A.examine(src)
 	to_chat(src, result.Join("\n"))
+	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 //same as above
 //note: ghosts can point, this is intended
@@ -414,7 +412,7 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
 
 	if(mind)
@@ -513,9 +511,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	if(href_list["flavor2_more"])
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text_2, "\n", "<BR>")), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
-		
-	if(href_list["flavor_change"])
-		update_flavor_text()
 
 	if(href_list["refresh"])
 		if(machine && in_range(src, usr))
@@ -810,7 +805,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 //Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
-	return IsAdminGhost(src) || Adjacent(A)
+	return IsAdminGhost(src) || Adjacent(A) || A.hasSiliconAccessInArea(src)
 
 //Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)

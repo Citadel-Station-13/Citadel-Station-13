@@ -100,7 +100,8 @@
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/cartridge/lawyer
-	name = "\improper P.R.O.V.E. cartridge"
+	name = "\improper S.P.A.M. cartridge"
+	desc = "Introducing the Station Public Announcement Messenger cartridge, featuring the unique ability to broadcast-mark messages, designed for lawyers across Nanotrasen to advertise their useful and important services."
 	icon_state = "cart-law"
 	access = CART_SECURITY
 	spam_enabled = 1
@@ -309,9 +310,14 @@ Code:
 					var/list/S = list(" Off","AOff","  On", " AOn")
 					var/list/chg = list("N","C","F")
 
+//Neither copytext nor copytext_char is appropriate here; neither 30 UTF-8 code units nor 30 code points equates to 30 columns of output.
+//Some glyphs are very tall or very wide while others are small or even take up no space at all.
+//Emojis can take modifiers which are many characters but render as only one glyph.
+//A proper solution here (as far as Unicode goes, maybe not ideal as far as markup goes, a table would be better)
+//would be to use <span style="width: NNNpx; overflow: none;">[A.area.name]</span>
 					for(var/obj/machinery/power/apc/A in L)
-						menu += copytext(add_tspace(A.area.name, 30), 1, 30)
-						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(DisplayPower(A.lastused_total), 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+						menu += copytext_char(add_trailing(A.area.name, 30, " "), 1, 30)
+						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_leading(DisplayPower(A.lastused_total), 6, " ")]  [A.cell ? "[add_leading(round(A.cell.percent()), 3, " ")]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 				menu += "</FONT></PRE>"
 
@@ -557,22 +563,22 @@ Code:
 		if (53) // Newscaster
 			menu = "<h4>[PDAIMG(notes)] Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=[REF(src)];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
-			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
+			var/datum/news/feed_channel/current
+			for(var/datum/news/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(!current)
 				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
 				return
 			var/i = 1
-			for(var/datum/newscaster/feed_message/msg in current.messages)
+			for(var/datum/news/feed_message/msg in current.messages)
 				menu +="-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 				menu +="<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"
 				if(msg.img)
 					user << browse_rsc(msg.img, "tmp_photo[i].png")
 					menu +="<img src='tmp_photo[i].png' width = '180'><BR>"
 				i++
-				for(var/datum/newscaster/feed_comment/comment in msg.comments)
+				for(var/datum/news/feed_comment/comment in msg.comments)
 					menu +="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 			menu += "<br> <A href='byond://?src=[REF(src)];choice=Newscaster Message'>Post Message</a>"
 
@@ -603,7 +609,7 @@ Code:
 /obj/item/cartridge/Topic(href, href_list)
 	..()
 
-	if(!usr.canUseTopic(src, !issilicon(usr)))
+	if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return
@@ -676,8 +682,8 @@ Code:
 		if("Newscaster Message")
 			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
 			var/message = host_pda.msg_input()
-			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
+			var/datum/news/feed_channel/current
+			for(var/datum/news/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != host_pda_owner_name)

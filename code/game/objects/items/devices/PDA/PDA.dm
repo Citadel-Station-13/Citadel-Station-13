@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
 				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
-				dat += "[STATION_TIME_TIMESTAMP("hh:mm:ss")]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer]"
 
 				dat += "<br><br>"
@@ -641,13 +641,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text
+				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
 						return
 					else
-						ttone = copytext(sanitize(t), 1, 20)
+						ttone = t
 				else
 					U << browse(null, "window=pda")
 					return
@@ -721,7 +721,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/pda/proc/remove_id(mob/user)
-	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(hasSiliconAccessInArea(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	do_remove_id(user)
 
@@ -916,7 +916,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	remove_pen()
 
 /obj/item/pda/proc/toggle_light()
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+	if(hasSiliconAccessInArea(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(fon)
 		fon = FALSE
@@ -928,7 +928,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/remove_pen()
 
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(hasSiliconAccessInArea(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	if(inserted_item)

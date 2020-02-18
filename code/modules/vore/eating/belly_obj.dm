@@ -190,7 +190,7 @@
 			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 				var/sound/eating = GLOB.pred_vore_sounds[vore_sound]
 				SEND_SOUND(H,eating)
-			else if(H && H in contents && H.client)
+			else if(H?.client && (H in contents))
 				var/sound/eating = GLOB.prey_vore_sounds[vore_sound]
 				SEND_SOUND(H,eating)
 			recent_sound = TRUE
@@ -246,7 +246,7 @@
 				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
 					H.playsound_local(owner.loc, releasement, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
-				else if(H && H in contents && H.client)
+				else if(H?.client && (H in contents))
 					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
 					SEND_SOUND(H,releasement)
 				recent_sound = TRUE
@@ -302,7 +302,7 @@
 				if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 					var/sound/releasement = GLOB.pred_release_sounds[release_sound]
 					H.playsound_local(owner.loc, releasement, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
-				else if(H && H in contents && H.client)
+				else if(H?.client && (H in contents))
 					var/sound/releasement = GLOB.prey_release_sounds[release_sound]
 					SEND_SOUND(H,releasement)
 				recent_sound = TRUE
@@ -364,7 +364,7 @@
 			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 				var/sound/eating = GLOB.pred_vore_sounds[vore_sound]
 				H.playsound_local(owner.loc, eating, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
-			else if(H && H in contents && H.client)
+			else if(H?.client && (H in contents))
 				var/sound/eating = GLOB.prey_vore_sounds[vore_sound]
 				SEND_SOUND(H,eating)
 			recent_sound = TRUE
@@ -533,9 +533,6 @@
 //Yes, it's ""safe"" to drop items here
 /obj/belly/AllowDrop()
 	return TRUE
-/*
-/obj/belly/onDropInto(var/atom/movable/AM)
-	return null */
 
 //Handle a mob struggling
 // Called from /mob/living/carbon/relaymove()
@@ -589,7 +586,7 @@
 		for(var/mob/living/H in hearing_mobs)
 			if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 				H.playsound_local(owner.loc, pred_struggle_snuggle, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
-			else if(H && H in contents && H.client)
+			else if(H && H.client && (H in contents))
 				SEND_SOUND(H,prey_struggle_snuggle)
 
 	else

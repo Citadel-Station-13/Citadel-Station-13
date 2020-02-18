@@ -62,8 +62,9 @@
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
-	
+	if(.)
+		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+
 /datum/action/innate/elite_attack/herald_trishot
 	name = "Triple Shot"
 	button_icon_state = "herald_trishot"

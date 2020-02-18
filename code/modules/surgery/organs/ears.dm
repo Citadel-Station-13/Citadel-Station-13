@@ -104,13 +104,14 @@
 		H.dna.features["ears"] = "Cat"
 		H.update_body()
 
-/obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
-	..()
-	if(istype(H))
+/obj/item/organ/ears/cat/Remove(special = FALSE)
+	if(!QDELETED(owner) && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		color = H.hair_color
 		H.dna.features["ears"] = "None"
 		H.dna.species.mutant_bodyparts -= "ears"
 		H.update_body()
+	return ..()
 
 /obj/item/organ/ears/bronze
 	name = "tin ears"

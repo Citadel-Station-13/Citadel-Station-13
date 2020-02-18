@@ -89,10 +89,10 @@
 	stored_items = list()
 
 
-/obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/brain/anti_drop/Remove(special = FALSE)
 	if(active)
 		ui_action_click()
-	..()
+	return ..()
 
 
 /obj/item/organ/cyberimp/brain/anti_stun
