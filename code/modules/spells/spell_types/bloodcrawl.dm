@@ -13,6 +13,7 @@
 	action_icon_state = "bloodcrawl"
 	action_background_icon_state = "bg_demon"
 	var/phased = 0
+	charge_max = 6
 
 /obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
 	for(var/obj/effect/decal/cleanable/target in range(range, get_turf(user)))
