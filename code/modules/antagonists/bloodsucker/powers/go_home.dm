@@ -28,9 +28,9 @@
 			to_chat(owner, "<span class='warning'>Your coffin has been destroyed!</span>")
 		return FALSE
 	return TRUE
-	
+
 /datum/action/bloodsucker/gohome/proc/flicker_lights(var/flicker_range, var/beat_volume)
-	for(var/obj/machinery/light/L in view(flicker_range, get_turf(owner)))	
+	for(var/obj/machinery/light/L in view(flicker_range, get_turf(owner)))
 	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', beat_volume, 1)
 
 
@@ -45,7 +45,7 @@
 	flicker_lights(4, 40)
 	sleep(50)
 	flicker_lights(4, 60)
-	for(var/obj/machinery/light/L in view(6, get_turf(owner)))		
+	for(var/obj/machinery/light/L in view(6, get_turf(owner)))
 		L.flicker(5)
 	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', 60, 1)
 	// ( STEP TWO: Lights OFF? )
@@ -56,7 +56,7 @@
 	if(!owner)
 		return
 	// SEEN?: (effects ONLY if there are witnesses! Otherwise you just POOF)
-	
+
 	var/am_seen = FALSE		// Do Effects (seen by anyone)
 	var/drop_item = FALSE	// Drop Stuff (seen by non-vamp)
 	if(isturf(owner.loc)) // Only check if I'm not in a Locker or something.
@@ -95,12 +95,12 @@
 		puff.effect_type = /obj/effect/particle_effect/smoke/vampsmoke
 		puff.set_up(3, 0, get_turf(owner))
 		puff.start()
-	
+
 	//STEP FIVE: Create animal at prev location
 	var/mob/living/simple_animal/SA = pick(/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/retaliate/bat) //prob(300) /mob/living/simple_animal/mouse,
 	new SA (owner.loc)
 	// TELEPORT: Move to Coffin & Close it!
-	do_teleport(owner, bloodsuckerdatum.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_QUANTUM) 
+	do_teleport(owner, bloodsuckerdatum.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 	user.resting = TRUE
 	user.Stun(30,1)
 	// CLOSE LID: If fail, force me in.
@@ -112,4 +112,4 @@
 		bloodsuckerdatum.coffin.update_icon()
 		// Lock Coffin
 		bloodsuckerdatum.coffin.LockMe(owner)
-	
+
