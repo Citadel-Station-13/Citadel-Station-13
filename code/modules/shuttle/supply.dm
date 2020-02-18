@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
 
 	for(var/chem in ex.reagents_value)
 		var/value = ex.reagents_value[chem]
-		msg += "[value] credits: received [ex.reagents_volume[chem]]u of [chem].\n"
+		msg += "[value > 0 ? "+" : ""][value] credits: received [ex.reagents_volume[chem]]u of [chem].\n"
 		SSshuttle.points += value
 
 	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)

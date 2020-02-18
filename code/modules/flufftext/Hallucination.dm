@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/items = 4,
 	/datum/hallucination/fire = 3,
 	/datum/hallucination/self_delusion = 2,
+	/datum/hallucination/naked = 2,
 	/datum/hallucination/delusion = 2,
 	/datum/hallucination/shock = 1,
 	/datum/hallucination/death = 1,
@@ -65,6 +66,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 //Returns a random turf in a ring around the target mob, useful for sound hallucinations
 /datum/hallucination/proc/random_far_turf()
+	var/turf/target_T = get_turf(target)
+	if(!target_T)
+		return
 	var/x_based = prob(50)
 	var/first_offset = pick(-8,-7,-6,-5,5,6,7,8)
 	var/second_offset = rand(-8,8)
@@ -76,7 +80,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	else
 		y_off = first_offset
 		x_off = second_offset
-	var/turf/T = locate(target.x + x_off, target.y + y_off, target.z)
+	var/turf/T = locate(target_T.x + x_off, target_T.y + y_off, target_T.z)
 	return T
 
 /obj/effect/hallucination
@@ -1318,3 +1322,26 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	else
 		to_chat(C,"<span class='userdanger'>[G] violently grabs you!</span>")
 	qdel(src)
+
+/datum/hallucination/naked
+	var/image/image
+
+/datum/hallucination/naked/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	..()
+	if (C.client && C.client.prefs)
+		var/datum/preferences/prefs = C.client.prefs
+		var/mob/living/carbon/human/dummy/M = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_HALLUCINATION)
+		prefs.copy_to(M)
+		COMPILE_OVERLAYS(M)
+		CHECK_TICK
+		image = image(M,C)
+		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_HALLUCINATION)
+		image.override = TRUE
+		target.client.images |= image
+		QDEL_IN(src, 20 SECONDS)
+
+/datum/hallucination/naked/Destroy()
+	if(target.client)
+		target.client.images.Remove(image)
+	return ..()

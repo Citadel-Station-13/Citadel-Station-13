@@ -183,6 +183,7 @@
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= SSshuttle.points && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						SSshuttle.points -= SO.pack.cost
+						SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 						new /obj/effect/abstract/DPtarget(LZ, podType, SO)
 						. = TRUE
 						update_icon()
@@ -196,6 +197,7 @@
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						SSshuttle.points -= SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)
+						SSblackbox.record_feedback("nested tally", "cargo_imports", MAX_EMAG_ROCKETS, list("[SO.pack.cost * 0.72]", "[SO.pack.name]"))
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)

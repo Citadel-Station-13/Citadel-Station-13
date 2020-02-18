@@ -14,6 +14,13 @@
 		saltresult += "[saltprimarysubject] [saltsecondarysubject]"
 	return "[saltresult]!"
 
+/datum/tgs_chat_command/valentine
+	name = "valentine"
+	help_text = "Get a random flirt line."
+
+/datum/tgs_chat_command/valentine/Run(datum/tgs_chat_user/sender, params)
+	return "[pick(GLOB.flirts)]"
+
 /datum/tgs_chat_command/despacito
 	name = "despacito"			//someone please high effort this sometime and make it a full on ytdl search
 	help_text = "This is so sad."

@@ -1080,7 +1080,7 @@
 			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
-		if (pulledby)
+		if (pulledby && isliving(pulledby))
 			var/mob/living/L = pulledby
 			L.update_pull_movespeed()
 	if(buckled)

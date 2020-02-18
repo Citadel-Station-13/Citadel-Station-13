@@ -1,174 +1,4 @@
-GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
 GLOBAL_LIST_EMPTY(allCasters)
-
-/datum/newscaster
-
-/datum/newscaster/feed_comment
-	var/author = ""
-	var/body = ""
-	var/time_stamp = ""
-
-/datum/newscaster/feed_message
-	var/author =""
-	var/body =""
-	var/list/authorCensorTime = list()
-	var/list/bodyCensorTime = list()
-	var/is_admin_message = 0
-	var/icon/img = null
-	var/time_stamp = ""
-	var/list/datum/newscaster/feed_comment/comments = list()
-	var/locked = FALSE
-	var/caption = ""
-	var/creationTime
-	var/authorCensor
-	var/bodyCensor
-	var/photo_file
-
-/datum/newscaster/feed_message/proc/returnAuthor(censor)
-	if(censor == -1)
-		censor = authorCensor
-	var/txt = "[GLOB.news_network.redactedText]"
-	if(!censor)
-		txt = author
-	return txt
-
-/datum/newscaster/feed_message/proc/returnBody(censor)
-	if(censor == -1)
-		censor = bodyCensor
-	var/txt = "[GLOB.news_network.redactedText]"
-	if(!censor)
-		txt = body
-	return txt
-
-/datum/newscaster/feed_message/proc/toggleCensorAuthor()
-	if(authorCensor)
-		authorCensorTime.Add(GLOB.news_network.lastAction*-1)
-	else
-		authorCensorTime.Add(GLOB.news_network.lastAction)
-	authorCensor = !authorCensor
-	GLOB.news_network.lastAction ++
-
-/datum/newscaster/feed_message/proc/toggleCensorBody()
-	if(bodyCensor)
-		bodyCensorTime.Add(GLOB.news_network.lastAction*-1)
-	else
-		bodyCensorTime.Add(GLOB.news_network.lastAction)
-	bodyCensor = !bodyCensor
-	GLOB.news_network.lastAction ++
-
-/datum/newscaster/feed_channel
-	var/channel_name = ""
-	var/list/datum/newscaster/feed_message/messages = list()
-	var/locked = FALSE
-	var/author = ""
-	var/censored = 0
-	var/list/authorCensorTime = list()
-	var/list/DclassCensorTime = list()
-	var/authorCensor
-	var/is_admin_channel = 0
-
-/datum/newscaster/feed_channel/proc/returnAuthor(censor)
-	if(censor == -1)
-		censor = authorCensor
-	var/txt = "[GLOB.news_network.redactedText]"
-	if(!censor)
-		txt = author
-	return txt
-
-/datum/newscaster/feed_channel/proc/toggleCensorDclass()
-	if(censored)
-		DclassCensorTime.Add(GLOB.news_network.lastAction*-1)
-	else
-		DclassCensorTime.Add(GLOB.news_network.lastAction)
-	censored = !censored
-	GLOB.news_network.lastAction ++
-
-/datum/newscaster/feed_channel/proc/toggleCensorAuthor()
-	if(authorCensor)
-		authorCensorTime.Add(GLOB.news_network.lastAction*-1)
-	else
-		authorCensorTime.Add(GLOB.news_network.lastAction)
-	authorCensor = !authorCensor
-	GLOB.news_network.lastAction ++
-
-/datum/newscaster/wanted_message
-	var/active
-	var/criminal
-	var/body
-	var/scannedUser
-	var/isAdminMsg
-	var/icon/img
-	var/photo_file
-
-/datum/newscaster/feed_network
-	var/list/datum/newscaster/feed_channel/network_channels = list()
-	var/datum/newscaster/wanted_message/wanted_issue
-	var/lastAction
-	var/redactedText = "\[REDACTED\]"
-
-/datum/newscaster/feed_network/New()
-	CreateFeedChannel("Station Announcements", "SS13", 1)
-	wanted_issue = new /datum/newscaster/wanted_message
-
-/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = 0)
-	var/datum/newscaster/feed_channel/newChannel = new /datum/newscaster/feed_channel
-	newChannel.channel_name = channel_name
-	newChannel.author = author
-	newChannel.locked = locked
-	newChannel.is_admin_channel = adminChannel
-	network_channels += newChannel
-
-/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = 0, allow_comments = 1)
-	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
-	newMsg.author = author
-	newMsg.body = msg
-	newMsg.time_stamp = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
-	newMsg.is_admin_message = adminMessage
-	newMsg.locked = !allow_comments
-	if(picture)
-		newMsg.img = picture.picture_image
-		newMsg.caption = picture.caption
-		newMsg.photo_file = save_photo(picture.picture_image)
-	for(var/datum/newscaster/feed_channel/FC in network_channels)
-		if(FC.channel_name == channel_name)
-			FC.messages += newMsg
-			break
-	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		NEWSCASTER.newsAlert(channel_name)
-	lastAction ++
-	newMsg.creationTime = lastAction
-
-/datum/newscaster/feed_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = 0, newMessage = 0)
-	wanted_issue.active = 1
-	wanted_issue.criminal = criminal
-	wanted_issue.body = body
-	wanted_issue.scannedUser = scanned_user
-	wanted_issue.isAdminMsg = adminMsg
-	if(picture)
-		wanted_issue.img = picture.picture_image
-		wanted_issue.photo_file = save_photo(picture.picture_image)
-	if(newMessage)
-		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
-			N.newsAlert()
-			N.update_icon()
-
-/datum/newscaster/feed_network/proc/deleteWanted()
-	wanted_issue.active = 0
-	wanted_issue.criminal = null
-	wanted_issue.body = null
-	wanted_issue.scannedUser = null
-	wanted_issue.img = null
-	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		NEWSCASTER.update_icon()
-
-/datum/newscaster/feed_network/proc/save_photo(icon/photo)
-	var/photo_file = copytext_char(md5("\icon[photo]"), 1, 6)
-	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
-		//Clean up repeated frames
-		var/icon/clean = new /icon()
-		clean.Insert(photo, "", SOUTH, 1, 0)
-		fcopy(clean, "[GLOB.log_directory]/photos/[photo_file].png")
-	return photo_file
 
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"
@@ -176,7 +6,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	icon_state = "newscaster"
 	materials = list(MAT_METAL=14000, MAT_GLASS=8000)
 	result_path = /obj/machinery/newscaster
-
 
 /obj/machinery/newscaster
 	name = "newscaster"
@@ -189,7 +18,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	max_integrity = 200
 	integrity_failure = 50
-	ghost_flags = INTERACT_GHOST_READ
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -197,12 +25,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/alert_delay = 500
 	var/alert = FALSE
 	var/scanned_user = "Unknown"
-	var/mob/active_user = null
 	var/msg = ""
 	var/datum/picture/picture
 	var/channel_name = ""
 	var/c_locked=0
-	var/datum/newscaster/feed_channel/viewing_channel = null
+	var/datum/news/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 
 /obj/machinery/newscaster/security_unit
@@ -266,10 +93,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/machinery/newscaster/ui_interact(mob/user)
 	. = ..()
-	if(ishuman(user) || issilicon(user) || isobserver(user))
-		var/mob/M = user
+	if(ishuman(user) || issilicon(user))
+		var/mob/living/human_or_robot_user = user
 		var/dat
-		scan_user(M)
+		scan_user(human_or_robot_user)
 		switch(screen)
 			if(0)
 				dat += "Welcome to Newscasting Unit #[unit_no].<BR> Interface & News networks Operational."
@@ -281,7 +108,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+= "<BR><A href='?src=[REF(src)];create_feed_story=1'>Submit new Feed story</A>"
 				dat+= "<BR><A href='?src=[REF(src)];menu_paper=1'>Print newspaper</A>"
 				dat+= "<BR><A href='?src=[REF(src)];refresh=1'>Re-scan User</A>"
-				dat+= "<BR><BR><A href='?src=[REF(M)];mach_close=newscaster_main'>Exit</A>"
+				dat+= "<BR><BR><A href='?src=[REF(human_or_robot_user)];mach_close=newscaster_main'>Exit</A>"
 				if(securityCaster)
 					var/wanted_already = 0
 					if(GLOB.news_network.wanted_issue.active)
@@ -296,7 +123,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if( isemptylist(GLOB.news_network.network_channels) )
 					dat+="<I>No active channels found...</I>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						if(CHANNEL.is_admin_channel)
 							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=[REF(src)];show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 						else
@@ -335,7 +162,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			if(7)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 				var/list/existing_authors = list()
-				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 					if(FC.authorCensor)
 						existing_authors += GLOB.news_network.redactedText
 					else
@@ -345,7 +172,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
 					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
 				var/check = 0
-				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 					if(FC.channel_name == channel_name)
 						check = 1
 						break
@@ -358,7 +185,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				var/total_num=length(GLOB.news_network.network_channels)
 				var/active_num=total_num
 				var/message_num=0
-				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+				for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 					if(!FC.censored)
 						message_num += length(FC.messages)
 					else
@@ -377,7 +204,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
 						var/i = 0
-						for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
+						for(var/datum/news/feed_message/MESSAGE in viewing_channel.messages)
 							i++
 							dat+="-[MESSAGE.returnBody(-1)] <BR>"
 							if(MESSAGE.img)
@@ -388,7 +215,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 								dat+="<BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)] </FONT>\] - ([MESSAGE.time_stamp])</FONT><BR>"
 							dat+="<b><font size=1>[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]</font></b><br>"
-							for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+							for(var/datum/news/feed_comment/comment in MESSAGE.comments)
 								dat+="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 							if(MESSAGE.locked)
 								dat+="<b>Comments locked</b><br>"
@@ -404,7 +231,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(isemptylist(GLOB.news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						dat+="<A href='?src=[REF(src)];pick_censor_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Cancel</A>"
 			if(11)
@@ -415,7 +242,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(isemptylist(GLOB.news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
+					for(var/datum/news/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						dat+="<A href='?src=[REF(src)];pick_d_notice=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Back</A>"
 			if(12)
@@ -424,11 +251,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(isemptylist(viewing_channel.messages))
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
-					for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
+					for(var/datum/news/feed_message/MESSAGE in viewing_channel.messages)
 						dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 						dat+="<FONT SIZE=2><A href='?src=[REF(src)];censor_channel_story_body=[REF(MESSAGE)]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=[REF(src)];censor_channel_story_author=[REF(MESSAGE)]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
 						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=[REF(src)];lock_comment=[REF(MESSAGE)]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
-						for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+						for(var/datum/news/feed_comment/comment in MESSAGE.comments)
 							dat+="[comment.body] <a href='?src=[REF(src)];del_comment=[REF(comment)];del_comment_msg=[REF(MESSAGE)]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[10]'>Back</A>"
 			if(13)
@@ -441,7 +268,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					if(isemptylist(viewing_channel.messages))
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
-						for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
+						for(var/datum/news/feed_message/MESSAGE in viewing_channel.messages)
 							dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[11]'>Back</A>"
 			if(14)
@@ -503,44 +330,32 @@ GLOBAL_LIST_EMPTY(allCasters)
 			if(21)
 				dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnel to refill machine storage.</FONT><BR><BR>"
 				dat+="<A href='?src=[REF(src)];setScreen=[0]'>Return</A>"
-		var/datum/browser/popup = new(M, "newscaster_main", "Newscaster Unit #[unit_no]", 400, 600)
+		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[unit_no]", 400, 600)
 		popup.set_content(dat)
-		popup.set_title_image(M.browse_rsc_icon(icon, icon_state))
+		popup.set_title_image(human_or_robot_user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if(active_user && !isobserver(active_user) && get_dist(active_user,src)<=1 && usr!=active_user)
-		to_chat(usr, "<span class='warning'>You must wait for [active_user] to finish and move away.</span>")
-		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || hasSiliconAccessInArea(usr) || isobserver(usr))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || hasSiliconAccessInArea(usr))
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"set a channel's name"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			channel_name = stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN)
 			updateUsrDialog()
 		else if(href_list["set_channel_lock"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"locked a channel"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			c_locked = !c_locked
 			updateUsrDialog()
 		else if(href_list["submit_new_channel"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"created a new channel"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			var/list/existing_authors = list()
-			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+			for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.authorCensor)
 					existing_authors += GLOB.news_network.redactedText
 				else
 					existing_authors += FC.author
 			var/check = 0
-			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+			for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.channel_name == channel_name)
 					check = 1
 					break
@@ -555,33 +370,21 @@ GLOBAL_LIST_EMPTY(allCasters)
 					screen=5
 			updateUsrDialog()
 		else if(href_list["set_channel_receiving"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the receiving channel"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			var/list/available_channels = list()
-			for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
+			for(var/datum/news/feed_channel/F in GLOB.news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
 			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 			updateUsrDialog()
 		else if(href_list["set_new_message"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"set the message of a new feed story"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			var/temp_message = trim(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", msg))
 			if(temp_message)
 				msg = temp_message
 				updateUsrDialog()
 		else if(href_list["set_attachment"])
-			if(isobserver(usr))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			AttachPhoto(usr)
 			updateUsrDialog()
 		else if(href_list["submit_new_message"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"added a new story"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			if(msg =="" || msg=="\[REDACTED\]" || scanned_user == "Unknown" || channel_name == "" )
 				screen=6
 			else
@@ -591,27 +394,15 @@ GLOBAL_LIST_EMPTY(allCasters)
 				msg = ""
 			updateUsrDialog()
 		else if(href_list["create_channel"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"created a channel"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			screen=2
 			updateUsrDialog()
 		else if(href_list["create_feed_story"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"created a feed story"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			screen=3
 			updateUsrDialog()
 		else if(href_list["menu_paper"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,""))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			screen=8
 			updateUsrDialog()
 		else if(href_list["print_paper"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"printed a paper"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			if(!paper_remaining)
 				screen=21
 			else
@@ -619,21 +410,12 @@ GLOBAL_LIST_EMPTY(allCasters)
 				screen = 20
 			updateUsrDialog()
 		else if(href_list["menu_censor_story"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"censored a story"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			screen=10
 			updateUsrDialog()
 		else if(href_list["menu_censor_channel"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"censored a channel"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			screen=11
 			updateUsrDialog()
 		else if(href_list["menu_wanted"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,""))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			var/already_wanted = 0
 			if(GLOB.news_network.wanted_issue.active)
 				already_wanted = 1
@@ -643,21 +425,12 @@ GLOBAL_LIST_EMPTY(allCasters)
 			screen = 14
 			updateUsrDialog()
 		else if(href_list["set_wanted_name"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the name of a wanted person"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			channel_name = stripped_input(usr, "Provide the name of the Wanted person", "Network Security Handler")
 			updateUsrDialog()
 		else if(href_list["set_wanted_desc"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set the description of a wanted person"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			msg = stripped_input(usr, "Provide a description of the Wanted person and any other details you deem important", "Network Security Handler")
 			updateUsrDialog()
 		else if(href_list["submit_wanted"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"submitted a wanted poster"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
 			var/input_param = text2num(href_list["submit_wanted"])
 			if(msg == "" || channel_name == "" || scanned_user == "Unknown")
 				screen = 16
@@ -688,48 +461,33 @@ GLOBAL_LIST_EMPTY(allCasters)
 			screen=18
 			updateUsrDialog()
 		else if(href_list["censor_channel_author"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor an author"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
-			var/datum/newscaster/feed_channel/FC = locate(href_list["censor_channel_author"])
+			var/datum/news/feed_channel/FC = locate(href_list["censor_channel_author"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
 				return
 			FC.toggleCensorAuthor()
 			updateUsrDialog()
 		else if(href_list["censor_channel_story_author"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor a story's author"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
-			var/datum/newscaster/feed_message/MSG = locate(href_list["censor_channel_story_author"])
+			var/datum/news/feed_message/MSG = locate(href_list["censor_channel_story_author"])
 			if(MSG.is_admin_message)
 				alert("This message was created by a Nanotrasen Officer. You cannot censor its author.","Ok")
 				return
 			MSG.toggleCensorAuthor()
 			updateUsrDialog()
 		else if(href_list["censor_channel_story_body"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to censor a story"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
-			var/datum/newscaster/feed_message/MSG = locate(href_list["censor_channel_story_body"])
+			var/datum/news/feed_message/MSG = locate(href_list["censor_channel_story_body"])
 			if(MSG.is_admin_message)
 				alert("This channel was created by a Nanotrasen Officer. You cannot censor it.","Ok")
 				return
 			MSG.toggleCensorBody()
 			updateUsrDialog()
 		else if(href_list["pick_d_notice"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,""))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
-			var/datum/newscaster/feed_channel/FC = locate(href_list["pick_d_notice"])
+			var/datum/news/feed_channel/FC = locate(href_list["pick_d_notice"])
 			viewing_channel = FC
 			screen=13
 			updateUsrDialog()
 		else if(href_list["toggle_d_notice"])
-			if(isobserver(usr) && !canGhostWrite(usr,src,"tried to set a D-notice"))
-				to_chat(usr, "<span class='warning'>You can't do that.</span>")
-				return
-			var/datum/newscaster/feed_channel/FC = locate(href_list["toggle_d_notice"])
+			var/datum/news/feed_channel/FC = locate(href_list["toggle_d_notice"])
 			if(FC.is_admin_channel)
 				alert("This channel was created by a Nanotrasen Officer. You cannot place a D-Notice upon it.","Ok")
 				return
@@ -748,21 +506,21 @@ GLOBAL_LIST_EMPTY(allCasters)
 				viewing_channel = null
 			updateUsrDialog()
 		else if(href_list["show_channel"])
-			var/datum/newscaster/feed_channel/FC = locate(href_list["show_channel"])
+			var/datum/news/feed_channel/FC = locate(href_list["show_channel"])
 			viewing_channel = FC
 			screen = 9
 			updateUsrDialog()
 		else if(href_list["pick_censor_channel"])
-			var/datum/newscaster/feed_channel/FC = locate(href_list["pick_censor_channel"])
+			var/datum/news/feed_channel/FC = locate(href_list["pick_censor_channel"])
 			viewing_channel = FC
 			screen = 12
 			updateUsrDialog()
 		else if(href_list["new_comment"])
-			var/datum/newscaster/feed_message/FM = locate(href_list["new_comment"])
+			var/datum/news/feed_message/FM = locate(href_list["new_comment"])
 			var/cominput = copytext_char(stripped_input(usr, "Write your message:", "New comment", null), 140)
 			if(cominput)
 				scan_user(usr)
-				var/datum/newscaster/feed_comment/FC = new/datum/newscaster/feed_comment
+				var/datum/news/feed_comment/FC = new/datum/news/feed_comment
 				FC.author = scanned_user
 				FC.body = cominput
 				FC.time_stamp = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
@@ -770,14 +528,14 @@ GLOBAL_LIST_EMPTY(allCasters)
 				usr.log_message("(as [scanned_user]) commented on message [FM.returnBody(-1)] -- [FC.body]", LOG_COMMENT)
 			updateUsrDialog()
 		else if(href_list["del_comment"])
-			var/datum/newscaster/feed_comment/FC = locate(href_list["del_comment"])
-			var/datum/newscaster/feed_message/FM = locate(href_list["del_comment_msg"])
+			var/datum/news/feed_comment/FC = locate(href_list["del_comment"])
+			var/datum/news/feed_message/FM = locate(href_list["del_comment_msg"])
 			if(istype(FC) && istype(FM))
 				FM.comments -= FC
 				qdel(FC)
 				updateUsrDialog()
 		else if(href_list["lock_comment"])
-			var/datum/newscaster/feed_message/FM = locate(href_list["lock_comment"])
+			var/datum/news/feed_message/FM = locate(href_list["lock_comment"])
 			FM.locked ^= 1
 			updateUsrDialog()
 		else if(href_list["set_comment"])
@@ -876,12 +634,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 			picture = selection
 
 /obj/machinery/newscaster/proc/scan_user(mob/living/user)
-	if(active_user)
-		if(active_user != user)
-			if(get_dist(active_user,src)<=1)
-				if(!isobserver(active_user))
-					to_chat(user, "<span class='warning'>Wait for [active_user] to finish and move away.</span>")
-					return
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)
@@ -901,19 +653,14 @@ GLOBAL_LIST_EMPTY(allCasters)
 	else if(issilicon(user))
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
-	else if (IsAdminGhost(user))
-		scanned_user = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
-	else if (isobserver(user))
-		scanned_user = "Space-Time Anomaly #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	else
 		throw EXCEPTION("Invalid user for this proc")
 		return
-	active_user = user
 
 /obj/machinery/newscaster/proc/print_paper()
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
 	var/obj/item/newspaper/NEWSPAPER = new /obj/item/newspaper
-	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+	for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 		NEWSPAPER.news_content += FC
 	if(GLOB.news_network.wanted_issue.active)
 		NEWSPAPER.wantedAuthor = GLOB.news_network.wanted_issue.scannedUser
@@ -924,7 +671,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	NEWSPAPER.forceMove(drop_location())
 	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
-
 
 /obj/machinery/newscaster/proc/remove_alert()
 	alert = FALSE
@@ -940,177 +686,3 @@ GLOBAL_LIST_EMPTY(allCasters)
 	else
 		say("Attention! Wanted issue distributed!")
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, 1)
-
-/obj/item/newspaper
-	name = "newspaper"
-	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "newspaper"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("bapped")
-	var/screen = 0
-	var/pages = 0
-	var/curr_page = 0
-	var/list/datum/newscaster/feed_channel/news_content = list()
-	var/scribble=""
-	var/scribble_page = null
-	var/wantedAuthor
-	var/wantedCriminal
-	var/wantedBody
-	var/wantedPhoto
-	var/creationTime
-
-/obj/item/newspaper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>")
-	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced="newspaper suicide")
-	var/mob/living/carbon/human/H = user
-	var/obj/W = new /obj/item/reagent_containers/food/drinks/bottle/whiskey(H.loc)
-	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), 1)
-	W.reagents.trans_to(H, W.reagents.total_volume)
-	user.visible_message("<span class='suicide'>[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>")
-
-	return(TOXLOSS)
-
-/obj/item/newspaper/attack_self(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		var/dat
-		pages = 0
-		switch(screen)
-			if(0) //Cover
-				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen? Space Facilities</FONT></div><HR>"
-				if(isemptylist(news_content))
-					if(wantedAuthor)
-						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR></ul>"
-					else
-						dat+="<I>Other than the title, the rest of the newspaper is unprinted...</I>"
-				else
-					dat+="Contents:<BR><ul>"
-					for(var/datum/newscaster/feed_channel/NP in news_content)
-						pages++
-					if(wantedAuthor)
-						dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR>"
-					var/temp_page=0
-					for(var/datum/newscaster/feed_channel/NP in news_content)
-						temp_page++
-						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
-					dat+="</ul>"
-				if(scribble_page==curr_page)
-					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(human_user)];mach_close=newspaper_main'>Done reading</A></DIV>"
-			if(1) // X channel pages inbetween.
-				for(var/datum/newscaster/feed_channel/NP in news_content)
-					pages++
-				var/datum/newscaster/feed_channel/C = news_content[curr_page]
-				dat += "<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.returnAuthor(notContent(C.authorCensorTime))]</FONT>\]</FONT><BR><BR>"
-				if(notContent(C.DclassCensorTime))
-					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
-				else
-					if(isemptylist(C.messages))
-						dat+="No Feed stories stem from this channel..."
-					else
-						var/i = 0
-						for(var/datum/newscaster/feed_message/MESSAGE in C.messages)
-							if(MESSAGE.creationTime > creationTime)
-								if(i == 0)
-									dat+="No Feed stories stem from this channel..."
-								break
-							if(i == 0)
-								dat+="<ul>"
-							i++
-							dat+="-[MESSAGE.returnBody(notContent(MESSAGE.bodyCensorTime))] <BR>"
-							if(MESSAGE.img)
-								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
-								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
-							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(notContent(MESSAGE.authorCensorTime))]</FONT>\]</FONT><BR><BR>"
-						dat+="</ul>"
-				if(scribble_page==curr_page)
-					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV>"
-			if(2) //Last page
-				for(var/datum/newscaster/feed_channel/NP in news_content)
-					pages++
-				if(wantedAuthor!=null)
-					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
-					dat+="<B>Criminal name</B>: <FONT COLOR='maroon'>[wantedCriminal]</FONT><BR>"
-					dat+="<B>Description</B>: [wantedBody]<BR>"
-					dat+="<B>Photo:</B>: "
-					if(wantedPhoto)
-						user << browse_rsc(wantedPhoto, "tmp_photow.png")
-						dat+="<BR><img src='tmp_photow.png' width = '180'>"
-					else
-						dat+="None"
-				else
-					dat+="<I>Apart from some uninteresting classified ads, there's nothing on this page...</I>"
-				if(scribble_page==curr_page)
-					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV>"
-		dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
-		human_user << browse(dat, "window=newspaper_main;size=300x400")
-		onclose(human_user, "newspaper_main")
-	else
-		to_chat(user, "The paper is full of unintelligible symbols!")
-
-/obj/item/newspaper/proc/notContent(list/L)
-	if(!L.len)
-		return 0
-	for(var/i=L.len;i>0;i--)
-		var/num = abs(L[i])
-		if(creationTime <= num)
-			continue
-		else
-			if(L[i] > 0)
-				return 1
-			else
-				return 0
-	return 0
-
-/obj/item/newspaper/Topic(href, href_list)
-	var/mob/living/U = usr
-	..()
-	if((src in U.contents) || (isturf(loc) && in_range(src, U)))
-		U.set_machine(src)
-		if(href_list["next_page"])
-			if(curr_page == pages+1)
-				return //Don't need that at all, but anyway.
-			if(curr_page == pages) //We're at the middle, get to the end
-				screen = 2
-			else
-				if(curr_page == 0) //We're at the start, get to the middle
-					screen=1
-			curr_page++
-			playsound(loc, "pageturn", 50, 1)
-		else if(href_list["prev_page"])
-			if(curr_page == 0)
-				return
-			if(curr_page == 1)
-				screen = 0
-			else
-				if(curr_page == pages+1) //we're at the end, let's go back to the middle.
-					screen = 1
-			curr_page--
-			playsound(loc, "pageturn", 50, 1)
-		if(ismob(loc))
-			attack_self(loc)
-
-/obj/item/newspaper/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
-			return
-		if(scribble_page == curr_page)
-			to_chat(user, "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>")
-		else
-			var/s = stripped_input(user, "Write something", "Newspaper")
-			if (!s)
-				return
-			if(!user.canUseTopic(src, BE_CLOSE))
-				return
-			scribble_page = curr_page
-			scribble = s
-			attack_self(user)
-	else
-		return ..()
