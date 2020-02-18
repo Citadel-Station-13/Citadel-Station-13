@@ -54,8 +54,8 @@
 	REMOVE_TRAIT(user, TRAIT_VIRUSIMMUNE, "bloodsucker")
 	var/obj/item/organ/heart/vampheart/H = user.getorganslot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/eyes/vassal/bloodsucker/E = user.getorganslot(ORGAN_SLOT_EYES)
-	E.flash_protect = 0 
-	
+	E.flash_protect = 0
+
 	// WE ARE ALIVE! //
 	bloodsuckerdatum.poweron_masquerade = TRUE
 	while(bloodsuckerdatum && ContinueActive(user))

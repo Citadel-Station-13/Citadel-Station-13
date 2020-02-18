@@ -47,6 +47,7 @@
 
 /datum/action/bloodsucker/targeted/haste/FireTargetedPower(atom/A)
 	// This is a non-async proc to make sure the power is "locked" until this finishes.
+	hit = list()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	var/mob/living/user = owner
 	var/turf/T = isturf(A) ? A : get_turf(A)
@@ -73,6 +74,7 @@
 			break
 		sleep(speed)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	hit = null
 	user.update_canmove()
 
 /datum/action/bloodsucker/targeted/haste/DeactivatePower(mob/living/user = owner, mob/living/target)
