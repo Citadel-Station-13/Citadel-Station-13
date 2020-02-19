@@ -9,6 +9,8 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 	verbs += /mob/living/carbon/human/proc/underwear_toggle //fwee
+	verbs += /mob/proc/set_flavor
+	verbs += /mob/proc/set_flavor_2
 
 	//initialize limbs first
 	create_bodyparts()

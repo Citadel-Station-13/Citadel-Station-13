@@ -107,7 +107,7 @@
 	var/icon_update_needed = FALSE
 	var/obj/machinery/computer/apc_control/remote_control = null
 	var/mob/living/carbon/hijacker
-	var/hijackerlast = FALSE
+	var/hijackerlast = TRUE
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
@@ -399,14 +399,14 @@
 	if (hijacker)
 		var/obj/item/implant/hijack/H = hijacker.getImplant(/obj/item/implant/hijack)
 		hijackerreturn = H && !H.stealthmode
-	if(last_update_state == update_state && last_update_overlay == update_overlay && hijackerreturn ? hijackerlast : !hijackerlast)
+	if(last_update_state == update_state && last_update_overlay == update_overlay && hijackerreturn == hijackerlast)
 		return 0
 	if(last_update_state != update_state)
 		results += 1
-	if(last_update_overlay != update_overlay || hijackerreturn ? !hijackerlast : hijackerlast)
+	if(last_update_overlay != update_overlay || hijackerreturn  != hijackerlast)
 		results += 2
-	if (hijackerreturn ? !hijackerlast : hijackerlast)
-		hijackerlast = hijackerreturn ? TRUE : FALSE
+	if (hijackerreturn  != hijackerlast)
+		hijackerlast = hijackerreturn
 	return results
 
 // Used in process so it doesn't update the icon too much

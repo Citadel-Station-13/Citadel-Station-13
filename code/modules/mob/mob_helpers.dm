@@ -147,6 +147,10 @@
 		. += newletter
 	return sanitize(.)
 
+//Ratvarian Slurring!
+
+#define CLOCK_CULT_SLUR(phrase) sanitize(text2ratvar(phrase))
+
 ///Adds stuttering to the message passed in
 /proc/stutter(phrase)
 	phrase = html_decode(phrase)
@@ -420,25 +424,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return TRUE
 
 /mob/proc/getImplant(type)
-	if (!istype(src,/mob/living))
-		return
-	var/mob/living/L = src
-	for (var/I in L.implants)
-		if (istype(I,type))
-			return I
-	return null
+	return
 
-/proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="", var/allow_all=FALSE)
-	if(allow_all & TRUE)
-		if(!target.GetComponent(/datum/component/anti_magic))
-			return 1
-	if(IsAdminGhost(A))
-		if (desc != "")
-			log_admin("GHOST: [key_name(A)] [desc] ([target.name] at [loc_name(target)])")
-		else
-			log_admin("GHOST: [key_name(A)] fucked with the [target.name] at [loc_name(target)]")
-		return 1
-	return 0
+/mob/living/getImplant(type)
+	return locate(type) in implants
 
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")

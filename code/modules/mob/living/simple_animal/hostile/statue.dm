@@ -9,7 +9,7 @@
 	icon_dead = "human_male"
 	gender = NEUTER
 	a_intent = INTENT_HARM
-	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_HUMANOID
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -191,7 +191,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		var/turf/T = get_turf(L.loc)
-		if(T && T in targets)
+		if(T && (T in targets))
 			L.blind_eyes(4)
 	return
 

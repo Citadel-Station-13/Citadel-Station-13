@@ -101,6 +101,10 @@
 	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/cryoxadone = 1)
 	mob_react = FALSE
 
+/datum/chemical_reaction/synthmeat/synthblood
+	id = "synthmeat_synthblood"
+	required_reagents = list(/datum/reagent/blood/synthetics = 5, /datum/reagent/medicine/cryoxadone = 1)
+
 /datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= multiplier, i++)

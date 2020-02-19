@@ -703,8 +703,9 @@
 	name = "cosmic winter coat"
 	icon_state = "coatcosmic"
 	item_state = "coatcosmic"
-	allowed = list(/obj/item/flashlight)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/cosmic
+	light_power = 1.8
+	light_range = 1.2
 
 /obj/item/clothing/head/hooded/winterhood/cosmic
 	icon_state = "winterhood_cosmic"
