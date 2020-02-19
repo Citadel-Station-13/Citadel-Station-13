@@ -4,8 +4,8 @@
 	icon_state = "largebins"
 	open_sound = 'sound/effects/bin_open.ogg'
 	close_sound = 'sound/effects/bin_close.ogg'
-	material_drop = /obj/item/stack/sheet/plastic
-	material_drop_amount = 40
+	material_drop = /obj/item/stack/sheet/metal
+	material_drop_amount = 10
 	anchored = TRUE
 	horizontal = FALSE
 	delivery_icon = null

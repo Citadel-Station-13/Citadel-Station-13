@@ -130,7 +130,7 @@
 
 /datum/supply_pack/emergency/bomb
 	name = "Explosive Emergency Crate"
-	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (Time not included.)"
+	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and become the hero the station des... I mean needs! Time not included, but a full bomb suit and hood, as well as a mask and defusal kit are! Non-Nuclear ordnances only."
 	cost = 1500
 	contains = list(/obj/item/clothing/head/bomb_hood,
 					/obj/item/clothing/suit/bomb_suit,

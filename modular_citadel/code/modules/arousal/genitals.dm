@@ -20,16 +20,13 @@
 	var/linked_organ_slot //used for linking an apparatus' organ to its other half on update_link().
 	var/layer_index = GENITAL_LAYER_INDEX //Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 
-/obj/item/organ/genital/Initialize(mapload, mob/living/carbon/human/H)
+/obj/item/organ/genital/Initialize(mapload, do_update = TRUE)
 	. = ..()
 	if(fluid_id)
-		create_reagents(fluid_max_volume)
+		create_reagents(fluid_max_volume, NONE, NO_REAGENTS_VALUE)
 		if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
 			reagents.add_reagent(fluid_id, fluid_max_volume)
-	if(H)
-		get_features(H)
-		Insert(H)
-	else
+	if(do_update)
 		update()
 
 /obj/item/organ/genital/proc/set_aroused_state(new_state)
@@ -221,7 +218,9 @@
 /mob/living/carbon/human/proc/give_genital(obj/item/organ/genital/G)
 	if(!dna || (NOGENITALS in dna.species.species_traits) || getorganslot(initial(G.slot)))
 		return FALSE
-	G = new G(null, src)
+	G = new G(null, FALSE)
+	G.get_features(src)
+	G.Insert(src)
 	return G
 
 /obj/item/organ/genital/proc/get_features(mob/living/carbon/human/H)
@@ -247,13 +246,13 @@
 /mob/living/carbon/human/proc/update_genitals()
 	if(QDELETED(src))
 		return
-	var/static/list/relevant_layers
-	if(!relevant_layers)
-		relevant_layers = list()
-		relevant_layers[GENITALS_BEHIND_LAYER] = "BEHIND"
-		relevant_layers[GENITALS_FRONT_LAYER] = "FRONT"
+	var/static/list/relevant_layers = list("[GENITALS_BEHIND_LAYER]" = "BEHIND", "[GENITALS_FRONT_LAYER]" = "FRONT")
+	var/static/list/layers_num
+	if(!layers_num)
+		for(var/L in relevant_layers)
+			LAZYSET(layers_num, L, text2num(L))
 	for(var/L in relevant_layers) //Less hardcode
-		remove_overlay(L)
+		remove_overlay(layers_num[L])
 	remove_overlay(GENITALS_EXPOSED_LAYER)
 	if(!LAZYLEN(internal_organs) || ((NOGENITALS in dna.species.species_traits) && !genital_override) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
@@ -317,17 +316,18 @@
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
 				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
 			else
+				genital_overlay.layer = -layers_num[layer]
 				standing += genital_overlay
 
 		if(LAZYLEN(standing))
-			overlays_standing[layer] = standing
+			overlays_standing[layers_num[layer]] = standing
 
 	if(LAZYLEN(fully_exposed))
 		overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
 		apply_overlay(GENITALS_EXPOSED_LAYER)
 
 	for(var/L in relevant_layers)
-		apply_overlay(L)
+		apply_overlay(layers_num[L])
 
 
 //Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.

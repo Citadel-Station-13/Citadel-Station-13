@@ -258,6 +258,9 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard
 
+/obj/item/stack/sheet/plastitaniumglass/fifty
+	amount = 50
+
 /obj/item/stack/sheet/plastitaniumglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.plastitaniumglass_recipes
 	return ..()

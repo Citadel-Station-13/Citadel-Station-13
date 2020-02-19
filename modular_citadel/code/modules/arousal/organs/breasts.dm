@@ -22,8 +22,8 @@
 	var/cached_size //these two vars pertain size modifications and so should be expressed in NUMBERS.
 	var/prev_size //former cached_size value, to allow update_size() to early return should be there no significant changes.
 
-/obj/item/organ/genital/breasts/Initialize(mapload, mob/living/carbon/human/H)
-	if(!H)
+/obj/item/organ/genital/breasts/Initialize(mapload, do_update = TRUE)
+	if(do_update)
 		cached_size = breast_values[size]
 		prev_size = cached_size
 	return ..()

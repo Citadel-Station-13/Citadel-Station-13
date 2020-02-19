@@ -383,7 +383,7 @@
 	name = "Hot Chocolate"
 	description = "Made with love! And coco beans."
 	nutriment_factor = 3 * REAGENTS_METABOLISM
-	color = "#403010" // rgb: 64, 48, 16
+	color = "#660000" // rgb: 221, 202, 134
 	taste_description = "creamy chocolate"
 	glass_icon_state  = "chocolateglass"
 	glass_name = "glass of chocolate"

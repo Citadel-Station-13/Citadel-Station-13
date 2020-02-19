@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	reagent_flags = OPENCONTAINER
+	reagent_value = DEFAULT_REAGENTS_VALUE
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -280,19 +281,24 @@
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
+	cut_overlays()    
 	if(reagents.total_volume)
-		icon_state = "tea"
+		var/mutable_appearance/MA = mutable_appearance(icon,"mugoverlay")
+		MA.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(MA)
 	else
 		icon_state = "tea_empty"
 
 /obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple tea"
+	icon_state = "tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
 
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
+	icon_state = "coco"
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 30, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF

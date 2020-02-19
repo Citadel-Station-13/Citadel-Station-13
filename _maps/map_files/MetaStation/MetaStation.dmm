@@ -28355,6 +28355,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/vending/wardrobe/cap_wardrobe,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bdL" = (
@@ -31855,7 +31856,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/autolathe{
+/obj/machinery/autolathe/secure{
 	name = "public autolathe"
 	},
 /turf/open/floor/plasteel,

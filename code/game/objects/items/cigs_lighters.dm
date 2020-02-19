@@ -122,7 +122,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/Initialize()
 	. = ..()
-	create_reagents(chem_volume, INJECTABLE | NO_REACT) // so it doesn't react until you light it
+	create_reagents(chem_volume, INJECTABLE | NO_REACT, NO_REAGENTS_VALUE) // so it doesn't react until you light it
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
@@ -717,7 +717,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/Initialize(mapload, param_color)
 	. = ..()
-	create_reagents(chem_volume, NO_REACT) // so it doesn't react until you light it
+	create_reagents(chem_volume, NO_REACT, NO_REAGENTS_VALUE) // so it doesn't react until you light it
 	reagents.add_reagent(/datum/reagent/drug/nicotine, 50)
 	if(!icon_state)
 		if(!param_color)

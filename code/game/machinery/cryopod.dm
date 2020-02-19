@@ -6,7 +6,6 @@
  * ~ Zuhayr
  */
 
-
 //Main cryopod console.
 
 /obj/machinery/computer/cryopod
@@ -18,7 +17,6 @@
 	density = FALSE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
 	req_one_access = list(ACCESS_HEADS, ACCESS_ARMORY) //Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
-	var/mode = null
 
 	var/menu = 1 //Which menu screen to display
 
@@ -130,7 +128,8 @@
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			updateUsrDialog()
 			return
-		if(!allow_items) return
+		if(!allow_items)
+			return
 
 		if(frozen_items.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
@@ -182,7 +181,7 @@
 	var/last_no_computer_message = 0
 
 	// These items are preserved when the process() despawn proc occurs.
-	var/list/preserve_items = list(
+	var/static/list/preserve_items = typecacheof(list(
 		/obj/item/hand_tele,
 		/obj/item/card/id/captains_spare,
 		/obj/item/aicard,
@@ -203,9 +202,9 @@
 		/obj/item/tank/jetpack,
 		/obj/item/documents,
 		/obj/item/nuke_core_container
-	)
+	))
 	// These items will NOT be preserved
-	var/list/do_not_preserve_items = list (
+	var/static/list/do_not_preserve_items = typecacheof(list(
 		/obj/item/mmi/posibrain,
 		/obj/item/gun/energy/laser/mounted,
 		/obj/item/gun/energy/e_gun/advtaser/mounted,
@@ -215,7 +214,7 @@
 		/obj/item/gun/energy/printer,
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gun/energy/laser/cyborg
-	)
+	))
 
 /obj/machinery/cryopod/Initialize(mapload)
 	. = ..()
@@ -287,14 +286,14 @@
 #define CRYO_DESTROY 0
 #define CRYO_PRESERVE 1
 #define CRYO_OBJECTIVE 2
+#define CRYO_IGNORE 3
 
 /obj/machinery/cryopod/proc/should_preserve_item(obj/item/I)
 	for(var/datum/objective_item/steal/T in control_computer.theft_cache)
 		if(istype(I, T.targetitem) && T.check_special_completion(I))
 			return CRYO_OBJECTIVE
-	for(var/T in preserve_items)
-		if(istype(I, T) && !(I.type in do_not_preserve_items))
-			return CRYO_PRESERVE
+	if(preserve_items[I] && !do_not_preserve_items[I])
+		return CRYO_PRESERVE
 	return CRYO_DESTROY
 
 // This function can not be undone; do not call this unless you are sure
@@ -303,52 +302,47 @@
 		find_control_computer()
 
 	var/mob/living/mob_occupant = occupant
+	var/list/obj/item/cryo_items = list()
 
 	//Handle Borg stuff first
 	if(iscyborg(mob_occupant))
 		var/mob/living/silicon/robot/R = mob_occupant
-
-		R.contents -= R.mmi
-		qdel(R.mmi)
+		if(R.mmi?.brain)
+			cryo_items[R.mmi] = CRYO_IGNORE
+			cryo_items[R.mmi.brain] = CRYO_IGNORE
 		for(var/obj/item/I in R.module) // the tools the borg has; metal, glass, guns etc
 			for(var/obj/item/O in I) // the things inside the tools, if anything; mainly for janiborg trash bags
-				if(should_preserve_item(O) != CRYO_DESTROY) // Preserve important things inside the item
-					continue
+				cryo_items[O] = should_preserve_item(O)
 				O.forceMove(src)
 			R.module.remove_module(I, TRUE)	//delete the module itself so it doesn't transfer over.
 
 	//Drop all items into the pod.
 	for(var/obj/item/I in mob_occupant)
-		mob_occupant.doUnEquip(I)
-		I.forceMove(src)
-
+		if(cryo_items[I] == CRYO_IGNORE)
+			continue
+		cryo_items[I] = should_preserve_item(I)
+		mob_occupant.transferItemToLoc(I, src, TRUE)
 		if(I.contents.len) //Make sure we catch anything not handled by qdel() on the items.
-			if(should_preserve_item(I) != CRYO_DESTROY) // Don't remove the contents of things that need preservation
+			if(cryo_items[I] != CRYO_DESTROY) // Don't remove the contents of things that need preservation
 				continue
 			for(var/obj/item/O in I.contents)
-				if(istype(O, /obj/item/tank)) //Stop eating pockets, you fuck!
-					continue
+				cryo_items[O] = should_preserve_item(O)
 				O.forceMove(src)
 
-	//Delete all items not on the preservation list.
-	var/list/items = contents
-	items -= mob_occupant // Don't delete the occupant
-
-	for(var/obj/item/I in items)
-		if(istype(I, /obj/item/pda))
-			var/obj/item/pda/P = I
-			QDEL_NULL(P.id)
-			qdel(P)
+	for(var/A in cryo_items)
+		var/obj/item/I = A
+		if(QDELETED(I)) //edge cases and DROPDEL.
 			continue
-
-		var/preserve = should_preserve_item(I)
-		if(preserve == CRYO_DESTROY)
+		var/preserve = cryo_items[I]
+		if(preserve == CRYO_IGNORE)
+			continue
+		else if(preserve == CRYO_DESTROY)
 			qdel(I)
-		else if(control_computer && control_computer.allow_items)
+		else if(control_computer?.allow_items)
 			control_computer.frozen_items += I
 			if(preserve == CRYO_OBJECTIVE)
 				control_computer.objective_items += I
-			I.loc = null
+			I.moveToNullspace()
 		else
 			I.forceMove(loc)
 
@@ -417,6 +411,7 @@
 #undef CRYO_DESTROY
 #undef CRYO_PRESERVE
 #undef CRYO_OBJECTIVE
+#undef CRYO_IGNORE
 
 /obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
 	if(!istype(target) || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || !ismob(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
@@ -443,29 +438,24 @@
 	var/generic_plsnoleave_message = " Please adminhelp before leaving the round, even if there are no administrators online!"
 
 	if(target == user && world.time - target.client.cryo_warned > 5 MINUTES)//if we haven't warned them in the last 5 minutes
-		var/caught = FALSE
+		var/list/caught_string
+		var/addendum = ""
 		if(target.mind.assigned_role in GLOB.command_positions)
-			alert("<span class='userdanger'>You're a Head of Staff![generic_plsnoleave_message] Be sure to put your locker items back into your locker!</span>")
-			caught = TRUE
+			LAZYADD(caught_string, "Head of Staff")
+			addendum = " Be sure to put your locker items back into your locker!"
 		if(iscultist(target) || is_servant_of_ratvar(target))
-			to_chat(target, "<span class='userdanger'>You're a Cultist![generic_plsnoleave_message]</span>")
-			caught = TRUE
+			LAZYADD(caught_string, "Cultist")
 		if(is_devil(target))
-			alert("<span class='userdanger'>You're a Devil![generic_plsnoleave_message]</span>")
-			caught = TRUE
-		if(istype(SSticker.mode, /datum/antagonist/gang))
-			if(target.mind.has_antag_datum(/datum/antagonist/gang))
-				alert("<span class='userdanger'>You're a Gangster![generic_plsnoleave_message]</span>")
-				caught = TRUE
-		if(istype(SSticker.mode, /datum/antagonist/rev))
-			if(target.mind.has_antag_datum(/datum/antagonist/rev/head))
-				alert("<span class='userdanger'>You're a Head Revolutionary![generic_plsnoleave_message]</span>")
-				caught = TRUE
-			else if(target.mind.has_antag_datum(/datum/antagonist/rev))
-				alert("<span class='userdanger'>You're a Revolutionary![generic_plsnoleave_message]</span>")
-				caught = TRUE
+			LAZYADD(caught_string, "Devil")
+		if(target.mind.has_antag_datum(/datum/antagonist/gang))
+			LAZYADD(caught_string, "Gangster")
+		if(target.mind.has_antag_datum(/datum/antagonist/rev/head))
+			LAZYADD(caught_string, "Head Revolutionary")
+		if(target.mind.has_antag_datum(/datum/antagonist/rev))
+			LAZYADD(caught_string, "Revolutionary")
 
-		if(caught)
+		if(caught_string)
+			alert(target, "You're a [english_list(caught_string)]![generic_plsnoleave_message][addendum]")
 			target.client.cryo_warned = world.time
 			return
 

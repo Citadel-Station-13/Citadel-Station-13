@@ -17,6 +17,7 @@
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = FALSE
+	var/hackable = TRUE
 	var/disabled = 0
 	var/shocked = FALSE
 	var/hack_wire
@@ -371,6 +372,8 @@
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
+	if(!hackable && hacked)
+		return
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
@@ -382,6 +385,12 @@
 /obj/machinery/autolathe/hacked/Initialize()
 	. = ..()
 	adjust_hacked(TRUE)
+
+/obj/machinery/autolathe/secure
+	name = "secured autolathe"
+	desc = "An autolathe reprogrammed with security protocols to prevent hacking."
+	hackable = FALSE
+	circuit = /obj/item/circuitboard/machine/autolathe/secure
 
 //Called when the object is constructed by an autolathe
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
