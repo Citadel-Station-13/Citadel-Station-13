@@ -1,3 +1,11 @@
+/// IN THE FUTURE, WE WILL PROBABLY REFACTOR TO LESSEN THE NEED FOR UPDATE_MOBILITY, BUT FOR NOW.. WE CAN START DOING THIS.
+/// FOR BLOCKING MOVEMENT, USE TRAIT_MOBILITY_NOMOVE AS MUCH AS POSSIBLE. IT WILL MAKE REFACTORS IN THE FUTURE EASIER.
+/mob/living/ComponentInitialize()
+	. = ..()
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOMOVE), .proc/update_mobility)
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOPICKUP), .proc/update_mobility)
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOUSE), .proc/update_mobility)
+
 //Stuff like mobility flag updates, resting updates, etc.
 
 //Force-set resting variable, without needing to resist/etc.
@@ -14,7 +22,7 @@
 //Force mob to rest, does NOT do stamina damage.
 //It's really not recommended to use this proc to give feedback, hence why silent is defaulting to true.
 /mob/living/proc/KnockToFloor(disarm_items = FALSE, silent = TRUE, updating = TRUE)
-	if(!silent)
+	if(!silent && !resting)
 		to_chat(src, "<span class='warning'>You are knocked to the floor!</span>")
 	set_resting(TRUE, TRUE, updating)
 	if(disarm_items)
