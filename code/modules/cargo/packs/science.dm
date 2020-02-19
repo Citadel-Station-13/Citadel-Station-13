@@ -84,7 +84,7 @@
 
 /datum/supply_pack/science/glasswork
 	name = "Glass Blower Kit Crate"
-	desc = "Learn and make glassworks of usefull things for a profit! Contains glassworking tools and blowing rods. Glass not included."
+	desc = "Learn and make glassworks of useful things for a profit! Contains glassworking tools and blowing rods. Glass not included."
 	cost = 1000
 	contains = list(/obj/item/glasswork/glasskit,
 					/obj/item/glasswork/glasskit,
@@ -111,9 +111,9 @@
 /datum/supply_pack/science/nuke_b_gone
 	name = "Nuke Defusal Kit"
 	desc = "Contains set of tools to defuse a nuke."
-	cost = 7500 //Usefull for traitors/nukies that fucked up
+	cost = 7500 //Useful for traitors/nukies that fucked up
 	dangerous = TRUE
-	DropPodOnly = TRUE
+	hidden = TRUE
 	contains = list(/obj/item/nuke_core_container/nt,
 					/obj/item/screwdriver/nuke/nt,
 					/obj/item/paper/guides/nt/nuke_instructions)
@@ -194,7 +194,7 @@
 /datum/supply_pack/science/supermater
 	name = "Supermatter Extraction Tools Crate"
 	desc = "Contains a set of tools to extract a sliver of supermatter. Consult your CE today!"
-	cost = 7500 //Usefull for traitors that fucked up
+	cost = 7500 //Useful for traitors that fucked up
 	hidden = TRUE
 	contains = list(/obj/item/nuke_core_container/supermatter,
 					/obj/item/scalpel/supermatter,
