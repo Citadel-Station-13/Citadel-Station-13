@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define GAS_GARBAGE_COLLECT(GASGASGAS)\
 	var/list/CACHE_GAS = GASGASGAS;\
 	for(var/id in CACHE_GAS){\
-		if(CACHE_GAS[id] < 0.0000001)\
+		if(CACHE_GAS[id] < 0.00001)\
 			CACHE_GAS -= id;\
 	}
 
