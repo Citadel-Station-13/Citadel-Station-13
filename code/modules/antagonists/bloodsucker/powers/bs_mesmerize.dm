@@ -21,14 +21,14 @@
 	. = ..()
 	if(!.)
 		return
-	if (!owner.getorganslot(ORGAN_SLOT_EYES))
+	if(!owner.getorganslot(ORGAN_SLOT_EYES))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You have no eyes with which to mesmerize.</span>")
 		return FALSE
 	// Check: Eyes covered?
 	var/mob/living/L = owner
-	if (istype(L) && L.is_eyes_covered() || !isturf(owner.loc))
-		if (display_error)
+	if(istype(L) && L.is_eyes_covered() || !isturf(owner.loc))
+		if(display_error)
 			to_chat(owner, "<span class='warning'>Your eyes are concealed from sight.</span>")
 		return FALSE
 	return TRUE
@@ -38,51 +38,51 @@
 
 /datum/action/bloodsucker/targeted/mesmerize/CheckCanTarget(atom/A,display_error)
 	// Check: Self
-	if (A == owner)
+	if(A == owner)
 		return FALSE
 	var/mob/living/carbon/target = A // We already know it's carbon due to CheckValidTarget()
 
 	// Bloodsucker
-	if (target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	if(target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Bloodsuckers are immune to [src].</span>")
 		return FALSE
 	// Dead/Unconscious
-	if (target.stat > CONSCIOUS)
+	if(target.stat > CONSCIOUS)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your victim is not [(target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))?"alive":"conscious"].</span>")
 		return FALSE
 	// Check: Target has eyes?
-	if (!target.getorganslot(ORGAN_SLOT_EYES))
+	if(!target.getorganslot(ORGAN_SLOT_EYES))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>They have no eyes!</span>")
 		return FALSE
 	// Check: Target blind?
-	if (target.eye_blind > 0)
+	if(target.eye_blind > 0)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your victim's eyes are glazed over. They cannot perceive you.</span>")
 		return FALSE
 	// Check: Target See Me? (behind wall)
-	if (!(target in view(target_range, get_turf(owner))))
+	if(!(target in view(target_range, get_turf(owner))))
 		// Sub-Check: GET CLOSER
 		//if (!(owner in range(target_range, get_turf(target)))
 		//	if (display_error)
 		//		to_chat(owner, "<span class='warning'>You're too far from your victim.</span>")
-		if (display_error)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You're too far outside your victim's view.</span>")
 		return FALSE
 
-	if (target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ?
+	if(target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ?
 		return TRUE
 
 	// Check: Facing target?
-	if (!is_A_facing_B(owner,target))	// in unsorted.dm
+	if(!is_A_facing_B(owner,target))	// in unsorted.dm
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You must be facing your victim.</span>")
 		return FALSE
 	// Check: Target facing me?
-	if (!target.resting && !is_A_facing_B(target,owner))
-		if (display_error)
+	if(!target.resting && !is_A_facing_B(target,owner))
+		if(display_error)
 			to_chat(owner, "<span class='warning'>Your victim must be facing you to see into your eyes.</span>")
 		return FALSE
 	return TRUE
@@ -93,12 +93,12 @@
 	var/mob/living/user = owner
 
 	if(istype(target))
-		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
 		var/power_time = 138 + level_current * 12
-		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 50)
-		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 50)
-		if(do_mob(user, target, 50, TRUE, TRUE))
-			if (CheckCanTarget(target)) // target just has to be out of view when it is fully charged in order to avoid
+		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
+		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
+		if(do_mob(user, target, 30, TRUE, TRUE)) // 3 seconds windup
+			if(CheckCanTarget(target)) // target just has to be out of view when it is fully charged in order to avoid
+				PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
 				target.face_atom(user)
 				target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
 				target.Stun(power_time)
