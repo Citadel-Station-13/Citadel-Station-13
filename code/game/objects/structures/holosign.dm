@@ -110,7 +110,7 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	resistance_flags = FIRE_PROOF
 
-/obj/structure/holosign/barrier/combolock/blocksTemperature()
+/obj/structure/holosign/barrier/combolock/BlockSuperconductivity()
 	return TRUE
 
 /obj/structure/holosign/barrier/combolock/Initialize()
