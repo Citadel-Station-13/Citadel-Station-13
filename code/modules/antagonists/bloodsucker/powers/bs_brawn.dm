@@ -72,7 +72,7 @@
 		if(rand(5 + powerlevel) >= 5)
 			target.visible_message("<span class='danger'>[user] lands a vicious punch, sending [target] away!</span>", \
 							  "<span class='userdanger'>[user] has landed a horrifying punch on you, sending you flying!!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.DefaultCombatKnockdownKnockdown(min(5, rand(10, 10 * powerlevel)) )
+			target.DefaultCombatKnockdown(min(5, rand(10, 10 * powerlevel)) )
 		// Attack!
 		playsound(get_turf(target), 'sound/weapons/punch4.ogg', 60, 1, -1)
 		user.do_attack_animation(target, ATTACK_EFFECT_SMASH)

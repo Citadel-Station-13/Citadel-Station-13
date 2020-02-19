@@ -88,7 +88,7 @@
 	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
-		they_can_move = L.canmove //L.mobility_flags & MOBILITY_MOVE
+		they_can_move = L.mobility_flags & MOBILITY_MOVE
 		//Also spread diseases
 		for(var/thing in diseases)
 			var/datum/disease/D = thing

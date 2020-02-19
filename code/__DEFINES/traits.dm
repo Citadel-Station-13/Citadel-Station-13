@@ -35,7 +35,7 @@
 				} \
 			};\
 			if (!length(_L[trait])) { \
-				_L -= trait \
+				_L -= trait; \
 				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_REMOVE_TRAIT); \
 			}; \
 			if (!length(_L)) { \
@@ -51,8 +51,8 @@
 			for (var/_T in _L) { \
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
-					_L -= _T } \
-					SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_REMOVE_TRAIT); \
+					_L -= _T ; \
+					SEND_SIGNAL(target, SIGNAL_TRAIT(_T), COMPONENT_REMOVE_TRAIT); } \
 				};\
 				if (!length(_L)) { \
 					target.status_traits = null\
