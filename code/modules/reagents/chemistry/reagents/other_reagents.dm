@@ -13,7 +13,7 @@
 	shot_glass_icon_state = "shotglassred"
 	pH = 7.4
 
-/datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+/datum/reagent/blood/reaction_mob(mob/living/L, method = TOUCH, reac_volume)
 	if(data && data["viruses"])
 		for(var/thing in data["viruses"])
 			var/datum/disease/D = thing
@@ -26,6 +26,9 @@
 			else //ingest, patch or inject
 				L.ForceContractDisease(D)
 
+	if(data["blood_type"] == "SY")
+		disgust_bloodsucker(L, FALSE, -5, TRUE)
+	
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/blood_id = C.get_blood_id()
@@ -175,15 +178,22 @@
 /datum/reagent/blood/tomato
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Tomato Blood"
-	description = "This highly resembles blood, but it doesnt actually function like blood."
+	description = "This highly resembles blood, but it doesnt actually function like it, resembling more ketchup, with a more blood-like consistency."
 	taste_description = "sap" //Like tree sap?
 	pH = 7.45
 
-/datum/reagent/blood/tomato/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+/datum/reagent/blood/tomato/reaction_mob(mob/living/L, method = TOUCH, reac_volume)
 	..()
-	if(isvamp(L))
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = L.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		bloodsuckerdatum.handle_eat_human_food(reac_volume * 2)
+	disgust_bloodsucker(L, reac_volume * 2, -5, TRUE)
+
+/datum/reagent/proc/disgust_bloodsucker(mob/living/carbon/C, disgust, blood_change, force)
+	if(isvamp(C))
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if(disgust)
+			bloodsuckerdatum.handle_eat_human_food(disgust, force)
+		if(blood_change)
+			bloodsuckerdatum.AddBloodVolume(blood_change)
+
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
