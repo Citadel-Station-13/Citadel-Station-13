@@ -217,12 +217,12 @@
 		var/obj/item/gun/weapon = O
 		if(weapon.gun_light)
 			var/obj/item/flashlight/seclite/light = weapon.gun_light
-			light.on = FALSE
-			light.brightness_on = 0
-			light.flashlight_power = 0
-			light.update_brightness()
+			light.forceMove(get_turf(weapon))
+			light.burn()
+			weapon.gun_light = null
 			weapon.update_gunlight()
-			visible_message("<span class='danger'>[light] on [O] flickers out and dies!</span>")
+			QDEL_NULL(weapon.alight)
+			visible_message("<span class='danger'>[light] on [O] flickers out and disintegrates!</span>")
 	else
 		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 		O.burn()
