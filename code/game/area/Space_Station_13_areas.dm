@@ -1245,6 +1245,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "storage_wing"
 
 
+// Vacant Rooms
+
+/area/vacant_room
+	name = "Vacant Room"
+	ambientsounds = MAINTENANCE
+	icon_state = "vacant_room"
+
+/area/vacant_room/office
+	name = "Vacant Office"
+	icon_state = "vacant_room"
+
+/area/vacant_room/commissary
+	name = "Vacant Commissary"
+	icon_state = "vacant_room"
+
+
 //AI
 
 /area/ai_monitored/security/armory
