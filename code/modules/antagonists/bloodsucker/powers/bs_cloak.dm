@@ -10,7 +10,7 @@
 	amToggle = TRUE
 	warn_constant_cost = TRUE
 	var/moveintent_was_run
-	var/walk_threshold = 0.4 // arbitrary number, to be changed.
+	var/walk_threshold = 0.4 // arbitrary number, to be changed. edit in last commit: this is fine after testing on box station for a bit
 	var/lum
 
 /datum/action/bloodsucker/cloak/CheckCanUse(display_error)
