@@ -157,13 +157,9 @@
 	var/planet_atmos = planetary_atmos
 	var/datum/gas_mixture/our_air = air
 	if (planet_atmos)
-		var/datum/gas_mixture/G = new
-		G.copy_from_turf(src)
-		ARCHIVE_TEMPERATURE(G)
-		if(!(our_air.compare(G)))
-			SSair.remove_from_active(src)
-			return // stop this early so it doesn't get *too* excited
-		adjacent_turfs_length++
+		air.copy_from_turf(src)
+		SSair.remove_from_active(src)
+		return
 
 	var/should_share_air = FALSE
 	for(var/t in adjacent_turfs)
@@ -224,13 +220,6 @@
 				lowest_moles = min(molage,lowest_moles)
 				var/datum/gas_mixture/enemy_copy = enemy_air.copy()
 				MERGE_GASES(final_air,enemy_copy)
-		if (planet_atmos) //share our air with the "atmosphere" "above" the turf
-			var/datum/gas_mixture/G = new
-			G.copy_from_turf(src)
-			ARCHIVE_TEMPERATURE(G)
-			if(!(our_air.compare(G)))
-				return // stop this early so it doesn't get *too* excited
-			MERGE_GASES(final_air,G)
 		var/datum/gas_mixture/new_air
 		if(are_we_spaced)
 			new_air = are_we_spaced
