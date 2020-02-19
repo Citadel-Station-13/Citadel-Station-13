@@ -193,6 +193,7 @@
 					/obj/item/reagent_containers/food/snacks/meat/slab/bear,
 					/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
 					/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+					/obj/item/reagent_containers/food/snacks/meat/rawcrab,
 					/obj/item/reagent_containers/food/snacks/meat/rawbacon,
 					/obj/item/reagent_containers/food/snacks/spiderleg,
 					/obj/item/reagent_containers/food/snacks/carpmeat,
@@ -327,7 +328,7 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains thirteen different seeds."
+	desc = "Big things have small beginnings. Contains fourteen different seeds."
 	cost = 1250
 	contains = list(/obj/item/seeds/chili,
 					/obj/item/seeds/berry,
