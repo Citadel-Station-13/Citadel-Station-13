@@ -480,18 +480,15 @@ SUBSYSTEM_DEF(ticker)
 		switch(vote_type)
 			if("PLURALITY")
 				SSvote.initiate_vote("map","server",hideresults=TRUE)
-				return
 			if("APPROVAL")
 				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = APPROVAL_VOTING)
-				return
 			if("IRV")
 				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = INSTANT_RUNOFF_VOTING)
-				return
 			if("SCORE")
 				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = MAJORITY_JUDGEMENT_VOTING)
-				return
+			else
+				SSvote.initiate_vote("map","server",hideresults=TRUE)
 		// fallback
-		SSvote.initiate_vote("map","server",hideresults=TRUE)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
