@@ -172,6 +172,14 @@
 	restricted_roles = list("Cook", "Janitor")
 	item = /obj/item/ammo_box/magazine/m45/kitchengun
 
+/datum/uplink_item/role_restricted/bullet_sponge
+	name = "Bullet Sponge"
+	desc = "A seemingly magic sponge that is able to remove spent bullet case from any crime scene!"
+	cost = 1
+	surplus = 20
+	restricted_roles = list("Cook", "Janitor", "Assistant")
+	item = /obj/item/soap/sponge/bullet
+
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \

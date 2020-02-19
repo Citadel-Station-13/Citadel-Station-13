@@ -14,7 +14,7 @@
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "soap"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
@@ -24,6 +24,7 @@
 	throw_speed = 3
 	throw_range = 7
 	grind_results = list(/datum/reagent/lye = 10)
+	var/bulletclean = FALSE
 	var/cleanspeed = 50 //slower than mop
 	force_string = "robust... against germs"
 
@@ -34,6 +35,14 @@
 /obj/item/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
 	icon_state = "soapnt"
+
+/obj/item/soap/sponge //For maps that dont want soap with slip
+	name = "sponge"
+	desc = "A normal cleaning sponge."
+	icon_state = "sponge"
+
+/obj/item/soap/sponge/Initialize()
+	. = ..()
 
 /obj/item/soap/homemade
 	desc = "A homemade bar of soap. Smells of... well...."
@@ -49,6 +58,18 @@
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
 	icon_state = "soapsyndie"
 	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
+
+/obj/item/soap/sponge/bullet
+	name = "bullet sponge"
+	desc = "A sponge that is able to clean up any crime. Has some space lube mixed in and gives an faint smell of fear and lemons."
+	icon_state = "sponge"
+	armor = list("bullet" = 95)
+	cleanspeed = 5
+	bulletclean = TRUE
+
+/obj/item/soap/sponge/bullet/Initialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 120)
 
 /obj/item/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
@@ -81,6 +102,9 @@
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
+	else if(istype(target, /obj/item/ammo_casing/spent) && bulletclean == TRUE) //No messages otherwise it gives us away
+		if(do_after(user, src.cleanspeed, target = target))
+			qdel(target)
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
