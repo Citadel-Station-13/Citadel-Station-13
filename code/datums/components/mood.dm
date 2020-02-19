@@ -236,6 +236,15 @@
 	qdel(event)
 	update_mood()
 
+/datum/component/mood/proc/remove_temp_moods() //Removes all temp moodsfor(var/i in mood_events)
+	for(var/i in mood_events)
+		var/datum/mood_event/moodlet = mood_events[i]
+		if(!moodlet || !moodlet.timeout)
+			continue
+		mood_events -= moodlet.category
+		qdel(moodlet)
+	update_mood()
+
 /datum/component/mood/proc/modify_hud(datum/source)
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
@@ -271,6 +280,13 @@
 			add_event(null, "nutrition", /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
+
+///Called when parent is ahealed.
+/datum/component/mood/proc/on_revive(datum/source, full_heal)
+	if(!full_heal)
+		return
+	remove_temp_moods()
+	setSanity(initial(sanity))
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
