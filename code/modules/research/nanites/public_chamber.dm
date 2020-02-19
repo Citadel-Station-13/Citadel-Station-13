@@ -163,7 +163,7 @@
 			return
 		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))
 			inject_nanites(attacker)
-
+5
 /obj/machinery/public_nanite_chamber/open_machine()
 	if(state_open)
 		return FALSE

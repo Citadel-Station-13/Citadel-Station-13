@@ -429,18 +429,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/living/getImplant(type)
 	return locate(type) in implants
 
-/proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="", var/allow_all=FALSE)
-	if(allow_all & TRUE)
-		if(!target.GetComponent(/datum/component/anti_magic))
-			return 1
-	if(IsAdminGhost(A))
-		if (desc != "")
-			log_admin("GHOST: [key_name(A)] [desc] ([target.name] at [loc_name(target)])")
-		else
-			log_admin("GHOST: [key_name(A)] fucked with the [target.name] at [loc_name(target)]")
-		return 1
-	return 0
-
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
