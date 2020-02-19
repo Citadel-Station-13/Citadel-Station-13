@@ -241,7 +241,7 @@
 		var/datum/mood_event/moodlet = mood_events[i]
 		if(!moodlet || !moodlet.timeout)
 			continue
-		mood_events -= moodlet.category
+		mood_events -= i
 		qdel(moodlet)
 	update_mood()
 
