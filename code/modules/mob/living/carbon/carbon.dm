@@ -840,6 +840,9 @@
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.brain_death = FALSE
+	for(var/O in internal_organs)
+		var/obj/item/organ/organ = O
+		organ.setOrganDamage(0)
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
@@ -852,7 +855,8 @@
 			qdel(R)
 		update_handcuffed()
 		if(reagents)
-			reagents.addiction_list = list()
+			for(var/addi in reagents.addiction_list)
+				reagents.remove_addiction(addi)
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
