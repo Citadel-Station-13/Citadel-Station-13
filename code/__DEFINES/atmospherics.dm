@@ -286,6 +286,26 @@
 			out_var += cached_gases[id] * cached_gasheats[id];\
 		}\
 	}
+
+#define PRESSURE(gas,out_var)\
+	if(gas.volume > 0){\
+		var/list/pressure_cached_gases = gas.gases;\
+		TOTAL_MOLES(pressure_cached_gases, out_var);\
+		out_var *= R_IDEAL_GAS_EQUATION * gas.temperature / gas.volume;\
+	}
+
+#define COPY_GAS_FROM_TO(from,to)\
+	if(from && to){\
+		var/list/from_gases = from.gases;\
+		var/list/to_gases = to.gases;\
+		from.temperature = to.temperature;\
+		for(var/to_id in to_gases){\
+			from_gases[to_id] = to_gases[to_id];\
+		}\
+		from_gases &= to_gases;\
+	}
+
+
 // probably use merge() over this, but it's not a proc so less overhead
 #define MERGE_GASES(taker,giver)\
 	if(giver && taker){\

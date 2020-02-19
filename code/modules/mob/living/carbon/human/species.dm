@@ -2084,7 +2084,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
-	var/pressure = environment.return_pressure()
+	var/pressure
+	PRESSURE(environment,pressure)
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)

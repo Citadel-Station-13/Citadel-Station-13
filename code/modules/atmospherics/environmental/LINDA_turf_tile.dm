@@ -66,11 +66,12 @@
 
 /turf/open/proc/copy_air_with_tile(turf/open/T)
 	if(istype(T))
-		air.copy_from(T.air)
+		var/datum/gas_mixture/T_air = T.air
+		COPY_GAS_FROM_TO(air,T_air)
 
 /turf/open/proc/copy_air(datum/gas_mixture/copy)
 	if(copy)
-		air.copy_from(copy)
+		COPY_GAS_FROM_TO(air,copy)
 
 /turf/return_air()
 	RETURN_TYPE(/datum/gas_mixture)
@@ -210,7 +211,8 @@
 				lowest_pressure_tile = enemy_tile
 				break
 			else
-				var/pressure = enemy_air.return_pressure()
+				var/pressure
+				PRESSURE(enemy_air,pressure)
 				var/molage
 				TOTAL_MOLES(enemy_air,molage)
 				if(pressure < lowest_pressure || lowest_pressure == -1)
@@ -234,12 +236,15 @@
 		else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
 			our_excited_group.dismantle_cooldown = 0
 		consider_pressure_difference(lowest_pressure_tile,air.return_pressure()-lowest_pressure)
-		our_air.copy_from(new_air)
+		COPY_GAS_FROM_TO(our_air,new_air)
 		update_visuals()
 		for(var/t in adjacent_turfs)
 			var/turf/open/enemy_tile = t
-			var/difference = enemy_tile.air.return_pressure() - lowest_pressure
-			enemy_tile.air.copy_from(new_air)
+			var/enemy_pressure
+			var/datum/gas_mixture/enemy_air = enemy_tile.air
+			PRESSURE(enemy_air,enemy_pressure)
+			var/difference = enemy_pressure - lowest_pressure
+			COPY_GAS_FROM_TO(enemy_air,new_air)
 			enemy_tile.last_equalize = max(enemy_tile.last_equalize,fire_count-atmos_mixed_tick_delay)
 			enemy_tile.update_visuals()
 			enemy_tile.consider_pressure_difference(lowest_pressure_tile, -difference)
@@ -360,7 +365,8 @@
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
-		T.air.copy_from(A)
+		var/datum/gas_mixture/T_air = T.air
+		COPY_GAS_FROM_TO(T_air,A)
 		T.update_visuals()
 
 	breakdown_cooldown = 0
