@@ -8,16 +8,6 @@
 	//oh no vore time
 	var/voremode = FALSE
 
-/mob/living/carbon/CanPass(atom/movable/mover, turf/target)
-	. = ..()
-	if(.)
-		var/mob/living/mobdude = mover
-		if(istype(mobdude))
-			if(CHECK_BITFIELD(mobility_flags, MOBILITY_STAND) && !CHECK_BITFIELD(mobdude.mobility_flags, MOBILITY_STAND))
-				if(!(mobdude.pass_flags & PASSMOB))
-					return FALSE
-	return .
-
 /mob/living/carbon/proc/toggle_combat_mode(forced, silent)
 	if(!forced)
 		if(recoveringstam || stat != CONSCIOUS)

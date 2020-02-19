@@ -110,11 +110,18 @@
 	var/restrained = restrained()
 	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
 	var/canmove = !immobilize && !stun && conscious && !paralyze && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && (has_arms || ignore_legs || has_legs) && !pinned && !recoveringstam
+	var/canresist = !stun && conscious && !stat_softcrit && !paralyze && (has_arms || ignore_legs || has_legs) && !recoveringstam
 
 	if(canmove)
 		mobility_flags |= MOBILITY_MOVE
 	else
 		mobility_flags &= ~MOBILITY_MOVE
+
+	if(canresist)
+		mobility_flags |= MOBILITY_RESIST
+	else
+		mobility_flags &= !MOBILITY_RESIST
+
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !recoveringstam
 	var/canstand = canstand_involuntary && !resting
 
@@ -125,9 +132,6 @@
 
 	if(should_be_lying)
 		mobility_flags &= ~MOBILITY_STAND
-		if(buckled)
-			if(buckled.buckle_lying != -1)
-				lying = buckled.buckle_lying
 		if(!lying) //force them on the ground
 			lying = pick(90, 270)
 	else
