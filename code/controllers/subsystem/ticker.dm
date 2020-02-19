@@ -480,12 +480,16 @@ SUBSYSTEM_DEF(ticker)
 		switch(vote_type)
 			if("PLURALITY")
 				SSvote.initiate_vote("map","server",hideresults=TRUE)
+				return
 			if("APPROVAL")
 				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = APPROVAL_VOTING)
+				return
 			if("IRV")
 				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = INSTANT_RUNOFF_VOTING)
+				return
 			if("SCORE")
 				SSvote.initiate_vote("map","server",hideresults=TRUE,votesystem = MAJORITY_JUDGEMENT_VOTING)
+				return
 		// fallback
 		SSvote.initiate_vote("map","server",hideresults=TRUE)
 
