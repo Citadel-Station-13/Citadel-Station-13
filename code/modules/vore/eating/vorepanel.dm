@@ -245,12 +245,10 @@
 	var/pref_on = "#173d15"
 	var/pref_off = "#990000"
 	dat += "<br><a style='background:[user.digestable ? pref_on : pref_off];' href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: [user.digestable ? "ON" : "OFF"])</a>"
-	dat += "<br><a style='background:[user.devourable ? pref_on : pref_off];' href='?src=\ref[src];toggledg=1'>Toggle Devourable (Currently: [user.devourable ? "ON" : "OFF"])</a>"
-	dat += "<br><a style='background:[user.feeding ? pref_on : pref_off];' href='?src=\ref[src];toggledg=1'>Toggle Feeding (Currently: [user.feeding ? "ON" : "OFF"])</a>"
+	dat += "<br><a style='background:[user.devourable ? pref_on : pref_off];' href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: [user.devourable ? "ON" : "OFF"])</a>"
+	dat += "<br><a style='background:[user.feeding ? pref_on : pref_off];' href='?src=\ref[src];toggledfeed=1'>Toggle Feeding (Currently: [user.feeding ? "ON" : "OFF"])</a>"
 	if(user.client.prefs_vr)
-		dat += "<br><a style='background:[user.client.prefs_vr.lickable ? pref_on : pref_off];' href='?src=\ref[src];toggledg=1'>Toggle Licking (Currently: [user.client.prefs_vr.lickable ? "ON" : "OFF"])</a>"
-	else
-		dat += "<br><a style='background:[pref_off];' href='?src=\ref[src];toggledg=1'>Licking not toggleable (OFF))</a>"
+		dat += "<br><a style='background:[user.client.prefs_vr.lickable ? pref_on : pref_off];' href='?src=\ref[src];toggledlickable=1'>Toggle Licking (Currently: [user.client.prefs_vr.lickable ? "ON" : "OFF"])</a>"
 	//Returns the dat html to the vore_look
 	return dat
 
