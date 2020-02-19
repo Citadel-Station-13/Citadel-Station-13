@@ -82,7 +82,7 @@
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["shift"] && ((client && client.show_popup_menus) || modifiers["middle"])) //CIT CHANGE - makes shift-click examine use right click instead of left click in combat mode
+	if(modifiers["shift"] && ((client?.show_popup_menus) || (!client?.prefs.sprint_spacebar && clientkeys_held["Space"]))) //CIT CHANGE - makes shift-click examine use space instead of left click in combat mode
 		ShiftClickOn(A)
 		return
 	if(modifiers["middle"])
