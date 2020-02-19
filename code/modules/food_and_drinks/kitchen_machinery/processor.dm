@@ -134,7 +134,7 @@
 
 	var/mob/living/L = usr
 	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
-		return ..()
+		return
 	empty()
 	add_fingerprint(usr)
 
