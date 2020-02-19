@@ -28,7 +28,7 @@
 					CAT_BURGER,
 					CAT_CAKE,
 					CAT_EGG,
-					CAT_FISH,
+					CAT_EASTERN,
 					CAT_ICE,
 					CAT_MEAT,
 					CAT_MEXICAN,

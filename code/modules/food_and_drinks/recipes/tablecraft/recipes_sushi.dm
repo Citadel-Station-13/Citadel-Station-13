@@ -8,7 +8,7 @@
 		/datum/reagent/consumable/rice = 10
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushi_rice
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/sea_weed
 	name = "Sea Weed Sheet"
@@ -18,7 +18,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sea_weed
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/tuna_can
 	name = "Can of Tuna"
@@ -28,7 +28,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/tuna
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 //////////////////////////Sushi/////////////////////////////////
 
@@ -40,7 +40,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sashimi
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/riceball
 	name = "Onigiri"
@@ -50,7 +50,7 @@
 		/obj/item/reagent_containers/food/snacks/sushi_rice = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/riceball
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/sushie_egg
 	name = "Tobiko"
@@ -60,7 +60,7 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/tobiko
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/sushie_basic
 	name = "Funa Hosomaki"
@@ -71,7 +71,7 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 3,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_basic
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/sushie_adv
 	name = "Funa Nigiri"
@@ -81,7 +81,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_adv
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/sushie_pro
 	name = "Well made Funa Nigiri"
@@ -92,7 +92,7 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_pro
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 //////////////////Not-Fish//////////////////////
 
@@ -105,7 +105,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chawanmushi
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/khachapuri
 	name = "Khachapuri"
@@ -115,7 +115,7 @@
 		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/khachapuri
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/rawkhinkali
 	name = "Raw Khinkali"
@@ -124,7 +124,7 @@
 		/obj/item/reagent_containers/food/snacks/faggot = 1
 	)
 	result =  /obj/item/reagent_containers/food/snacks/rawkhinkali
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/meatbun
 	name = "Meat bun"
@@ -135,7 +135,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/meatbun
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
 
 /datum/crafting_recipe/food/fortunecookie
 	time = 15
@@ -148,4 +148,4 @@
 		/obj/item/paper = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/fortunecookie
-	subcategory = CAT_FISH
+	subcategory = CAT_EASTERN
