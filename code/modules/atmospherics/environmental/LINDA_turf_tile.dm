@@ -142,7 +142,7 @@
 /turf/open/process_cell(fire_count,forced = FALSE)
 	var/atmos_mix_tick_delay = SSair.atmos_mix_tick_delay
 	var/atmos_mixed_tick_delay = (atmos_mix_tick_delay-SSair.atmos_mixed_tick_delay)
-	if(fire_count - last_equalize < atmos_mix_tick_delay || forced)
+	if(!forced && fire_count - last_equalize < atmos_mix_tick_dela)
 		return
 	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
