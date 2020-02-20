@@ -15,7 +15,7 @@
 	maxbodytemp = INFINITY
 	minbodytemp = 0
 	blood_volume = 0
-	has_unlimited_silicon_privilege = 1
+	silicon_privileges = PRIVILEDGES_BOT
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	verb_say = "states"

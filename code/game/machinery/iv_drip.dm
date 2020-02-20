@@ -184,7 +184,7 @@
 	if(usr.incapacitated())
 		return
 	if(beaker)
-		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
+		if(usr && Adjacent(usr) && usr.can_hold_items())
 			if(!usr.put_in_hands(beaker))
 				beaker.forceMove(drop_location())
 		beaker = null
