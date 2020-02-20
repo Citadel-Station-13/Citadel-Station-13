@@ -1123,7 +1123,7 @@
 
 /obj/item/twohanded/electrostaff/update_icon()
 	. = ..()
-	var/final = on? "electrostaff_1" : "electrostaff_3"
+	var/final = wielded? (on? "electrostaff_1" : "electrostaff_3") : "electrostaff"
 	icon_state = final
 	item_state = final
 	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
