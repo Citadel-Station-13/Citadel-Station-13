@@ -360,4 +360,5 @@
 				C.Stun(30)
 				//C.Dizzy(50)
 				foodInGut = 0
+				SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "vampdisgust", /datum/mood_event/bloodsucker_disgust)
 		sickphase ++
