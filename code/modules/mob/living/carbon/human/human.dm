@@ -803,7 +803,7 @@
 		hud_used.staminas?.update_icon_state()
 		hud_used.staminabuffer?.update_icon_state()
 
-/mob/living/carbon/human/fully_heal(admin_revive = 0)
+/mob/living/carbon/human/fully_heal(admin_revive = FALSE)
 	if(admin_revive)
 		regenerate_limbs()
 		regenerate_organs()
