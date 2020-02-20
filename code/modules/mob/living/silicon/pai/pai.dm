@@ -74,7 +74,7 @@
 	var/emitteroverloadcd = 100
 
 	var/radio_short = FALSE
-	var/radio_short_cooldown = 5 MINUTES
+	var/radio_short_cooldown = 3 MINUTES
 	var/radio_short_timerid
 
 	canmove = FALSE
