@@ -12,8 +12,11 @@
 
 /mob/living/carbon/human/movement_delay()
 	. = 0
-	if(!resting && m_intent == MOVE_INTENT_RUN && !sprinting)
-		. += 1
+	if(!resting && m_intent == MOVE_INTENT_RUN && sprinting)
+		var/static/datum/config_entry/number/movedelay/sprint_speed_increase/SSI
+		if(!SSI)
+			SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
+		. -= SSI.config_entry_value
 	if(wrongdirmovedelay)
 		. += 1
 	. += ..()

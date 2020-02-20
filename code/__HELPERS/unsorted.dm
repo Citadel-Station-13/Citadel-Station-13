@@ -6,25 +6,18 @@
 
 //Inverts the colour of an HTML string
 /proc/invertHTML(HTMLstring)
-
-	if (!( istext(HTMLstring) ))
+	if(!istext(HTMLstring))
 		CRASH("Given non-text argument!")
 		return
-	else
-		if (length(HTMLstring) != 7)
-			CRASH("Given non-HTML argument!")
-			return
+	else if(length(HTMLstring) != 7)
+		CRASH("Given non-HTML argument!")
+		return
+	else if(length_char(HTMLstring) != 7)
+		CRASH("Given non-hex symbols in argument!")
 	var/textr = copytext(HTMLstring, 2, 4)
 	var/textg = copytext(HTMLstring, 4, 6)
 	var/textb = copytext(HTMLstring, 6, 8)
-	var/r = hex2num(textr)
-	var/g = hex2num(textg)
-	var/b = hex2num(textb)
-	textr = num2hex(255 - r, 2)
-	textg = num2hex(255 - g, 2)
-	textb = num2hex(255 - b, 2)
-	return text("#[][][]", textr, textg, textb)
-	return
+	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end)
@@ -184,15 +177,15 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
 	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
+		return FALSE
 
 	var/i, ch, len = length(key)
 
-	for (i = 7, i <= len, ++i)
+	for (i = 7, i <= len, ++i) //we know the first 6 chars are Guest-
 		ch = text2ascii(key, i)
-		if (ch < 48 || ch > 57)
-			return 0
-	return 1
+		if (ch < 48 || ch > 57) //0-9
+			return FALSE
+	return TRUE
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
 /mob/proc/apply_pref_name(role, client/C)
@@ -457,36 +450,35 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /atom/proc/GetAllContents(var/T)
 	var/list/processing_list = list(src)
-	var/list/assembled = list()
 	if(T)
-		while(processing_list.len)
-			var/atom/A = processing_list[1]
-			processing_list.Cut(1, 2)
+		. = list()
+		var/i = 0
+		while(i < length(processing_list))
+			var/atom/A = processing_list[++i]
 			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 			//This is also why we don't need to check against assembled as we go along
 			processing_list += A.contents
 			if(istype(A,T))
-				assembled += A
+				. += A
 	else
-		while(processing_list.len)
-			var/atom/A = processing_list[1]
-			processing_list.Cut(1, 2)
+		var/i = 0
+		while(i < length(processing_list))
+			var/atom/A = processing_list[++i]
 			processing_list += A.contents
-			assembled += A
-	return assembled
+		return processing_list
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
 	if(!length(ignore_typecache))
 		return GetAllContents()
 	var/list/processing = list(src)
-	var/list/assembled = list()
-	while(processing.len)
-		var/atom/A = processing[1]
-		processing.Cut(1,2)
+	. = list()
+	var/i = 0
+	while(i < length(processing))
+		var/atom/A = processing[++i]
 		if(!ignore_typecache[A.type])
 			processing += A.contents
-			assembled += A
-	return assembled
+			. += A
+
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -1315,7 +1307,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/GUID()
 	var/const/GUID_VERSION = "b"
 	var/const/GUID_VARIANT = "d"
-	var/node_id = copytext(md5("[rand()*rand(1,9999999)][world.name][world.hub][world.hub_password][world.internet_address][world.address][world.contents.len][world.status][world.port][rand()*rand(1,9999999)]"), 1, 13)
+	var/node_id = copytext_char(md5("[rand()*rand(1,9999999)][world.name][world.hub][world.hub_password][world.internet_address][world.address][world.contents.len][world.status][world.port][rand()*rand(1,9999999)]"), 1, 13)
 
 	var/time_high = "[num2hex(text2num(time2text(world.realtime,"YYYY")), 2)][num2hex(world.realtime, 6)]"
 
@@ -1502,3 +1494,74 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		return -1
 	else
 		return 0
+
+// Converts browser keycodes to BYOND keycodes.
+/proc/browser_keycode_to_byond(keycode)
+	keycode = text2num(keycode)
+	switch(keycode)
+		// letters and numbers
+		if(65 to 90, 48 to 57)
+			return ascii2text(keycode)
+		if(17)
+			return "Ctrl"
+		if(18)
+			return "Alt"
+		if(16)
+			return "Shift"
+		if(37)
+			return "West"
+		if(38)
+			return "North"
+		if(39)
+			return "East"
+		if(40)
+			return "South"
+		if(45)
+			return "Insert"
+		if(46)
+			return "Delete"
+		if(36)
+			return "Northwest"
+		if(35)
+			return "Southwest"
+		if(33)
+			return "Northeast"
+		if(34)
+			return "Southeast"
+		if(112 to 123)
+			return "F[keycode-111]"
+		if(96 to 105)
+			return "Numpad[keycode-96]"
+		if(188)
+			return ","
+		if(190)
+			return "."
+		if(189)
+			return "-"
+
+/proc/generate_items_inside(list/items_list, where_to)
+	for(var/each_item in items_list)
+		for(var/i in 1 to items_list[each_item])
+			new each_item(where_to)
+
+//sends a message to chat
+//config_setting should be one of the following
+//null - noop
+//empty string - use TgsTargetBroadcast with admin_only = FALSE
+//other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
+/proc/send2chat(message, config_setting)
+	if(config_setting == null || !world.TgsAvailable())
+		return
+	var/datum/tgs_version/version = world.TgsVersion()
+	if(config_setting == "" || version.suite == 3)
+		world.TgsTargetedChatBroadcast(message, FALSE)
+		return
+
+	var/list/channels_to_use = list()
+	for(var/I in world.TgsChatChannelInfo())
+		var/datum/tgs_chat_channel/channel = I
+		if(channel.tag == config_setting)
+			channels_to_use += channel
+
+	if(channels_to_use.len)
+		world.TgsChatBroadcast()

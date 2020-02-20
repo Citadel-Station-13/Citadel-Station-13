@@ -245,7 +245,7 @@
 /obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list(
 		"locked" = locked,
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user),
 		"emagged" = (obj_flags & EMAGGED ? 1 : 0),
 		"danger_level" = danger_level,
 	)
@@ -288,7 +288,7 @@
 								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id] * partial_pressure)
 		))
 
-	if(!locked || user.has_unlimited_silicon_privilege)
+	if(!locked || user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user))
 		data["vents"] = list()
 		for(var/id_tag in A.air_vent_names)
 			var/long_name = A.air_vent_names[id_tag]
@@ -368,7 +368,7 @@
 /obj/machinery/airalarm/ui_act(action, params)
 	if(..() || buildstage != 2)
 		return
-	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
+	if((locked && !usr.has_unlimited_silicon_privilege && !hasSiliconAccessInArea(usr)) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
 	var/device_id = params["id_tag"]
 	switch(action)
@@ -386,9 +386,10 @@
 			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
-			var/area/A = get_base_area(src)
-			var/target = input("New target pressure:", name, A.air_vent_info[device_id][(action == "set_external_pressure" ? "external" : "internal")]) as num|null
-			if(!isnull(target) && !..())
+
+			var/target = params["value"]
+			if(!isnull(target))
+
 				send_signal(device_id, list("[action]" = target), usr)
 				. = TRUE
 		if("reset_external_pressure")
@@ -839,7 +840,7 @@
 
 /obj/machinery/airalarm/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)) || !isturf(loc))
 		return
 	togglelock(user)
 	return TRUE

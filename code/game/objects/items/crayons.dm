@@ -96,7 +96,7 @@
 		charges_left = charges
 
 	if(!reagents)
-		create_reagents(charges_left * volume_multiplier)
+		create_reagents(charges_left * volume_multiplier, NONE, NO_REAGENTS_VALUE)
 	reagents.clear_reagents()
 
 	var/total_weight = 0
@@ -407,7 +407,7 @@
 		to_chat(user, "<span class='notice'>You spray a [temp] on \the [target.name]</span>")
 
 	if(length(text_buffer) > 1)
-		text_buffer = copytext(text_buffer,2)
+		text_buffer = copytext(text_buffer, length(text_buffer[1]) + 1)
 		SStgui.update_uis(src)
 
 	if(post_noise)
@@ -619,7 +619,6 @@
 	is_capped = TRUE
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
-	gang = TRUE //Gang check is true for all things upon the honored hierarchy of spraycans, except those that are FALSE.
 
 	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
 
@@ -711,7 +710,8 @@
 
 	if(isobj(target))
 		if(actually_paints)
-			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
+			var/list/hsl = rgb2hsl(hex2num(copytext(paint_color,2,4)),hex2num(copytext(paint_color,4,6)),hex2num(copytext(paint_color,6,8)))
+			if(hsl[3] < 0.25 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
 				return FALSE
 
@@ -774,7 +774,6 @@
 	icon_capped = "deathcan2_cap"
 	icon_uncapped = "deathcan2"
 	use_overlays = FALSE
-	gang = FALSE
 
 	volume_multiplier = 25
 	charges = 100
@@ -789,7 +788,6 @@
 	icon_capped = "clowncan2_cap"
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
-	gang = FALSE
 
 	reagent_contents = list(/datum/reagent/lube = 1, /datum/reagent/consumable/banana = 1)
 	volume_multiplier = 5
@@ -804,7 +802,6 @@
 	icon_capped = "mimecan_cap"
 	icon_uncapped = "mimecan"
 	use_overlays = FALSE
-	gang = FALSE
 
 	can_change_colour = FALSE
 	paint_color = "#FFFFFF" //RGB

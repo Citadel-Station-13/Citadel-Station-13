@@ -121,4 +121,10 @@
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
 
+	var/siliconaccessareas = list()
+	var/siliconaccesstoggle = FALSE
+
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
+
+	var/flavor_text = ""
+	var/flavor_text_2 = "" //version of the above that only lasts for the current round.

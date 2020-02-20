@@ -532,7 +532,7 @@
 /obj/structure/closet/CtrlShiftClick(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_SKITTISH))
 		return ..()
-	if(!user.canUseTopic(src) || !isturf(user.loc))
+	if(!user.canUseTopic(src) || !isturf(user.loc) || !user.Adjacent(src) || !user.CanReach(src))
 		return
 	dive_into(user)
 

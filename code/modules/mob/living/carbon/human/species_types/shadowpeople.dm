@@ -84,10 +84,10 @@
 	shadowwalk = SW
 
 
-/obj/item/organ/brain/nightmare/Remove(mob/living/carbon/M, special = 0)
-	if(shadowwalk)
-		M.RemoveSpell(shadowwalk)
-	..()
+/obj/item/organ/brain/nightmare/Remove(special = FALSE)
+	if(shadowwalk && owner)
+		owner.RemoveSpell(shadowwalk)
+	return ..()
 
 
 /obj/item/organ/heart/nightmare
@@ -120,12 +120,12 @@
 		blade = new/obj/item/light_eater
 		M.put_in_hands(blade)
 
-/obj/item/organ/heart/nightmare/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/nightmare/Remove(special = FALSE)
 	respawn_progress = 0
-	if(blade && special != HEART_SPECIAL_SHADOWIFY)
-		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
+	if(!QDELETED(owner) && blade && special != HEART_SPECIAL_SHADOWIFY)
+		owner.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
 		QDEL_NULL(blade)
-	..()
+	return ..()
 
 /obj/item/organ/heart/nightmare/Stop()
 	return 0
@@ -146,7 +146,7 @@
 		owner.revive(full_heal = TRUE)
 		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
 			var/mob/living/carbon/old_owner = owner
-			Remove(owner, HEART_SPECIAL_SHADOWIFY)
+			Remove(HEART_SPECIAL_SHADOWIFY)
 			old_owner.set_species(/datum/species/shadow)
 			Insert(old_owner, HEART_SPECIAL_SHADOWIFY)
 			to_chat(owner, "<span class='userdanger'>You feel the shadows invade your skin, leaping into the center of your chest! You're alive!</span>")

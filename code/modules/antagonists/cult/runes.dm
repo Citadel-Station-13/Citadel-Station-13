@@ -889,7 +889,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(new_human)
 			new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 									  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
-			for(var/obj/I in new_human)
+			for(var/obj/item/I in new_human)
 				new_human.dropItemToGround(I, TRUE)
 			new_human.dust()
 	else if(choice == "Ascend as a Dark Spirit")

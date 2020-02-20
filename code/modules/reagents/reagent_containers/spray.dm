@@ -23,6 +23,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	container_flags = NONE //APTFT is alternated between the initial value and stream_amount and shouldn't be exploited.
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
 	. = ..()
@@ -67,7 +68,7 @@
 /obj/item/reagent_containers/spray/proc/spray(atom/A)
 	var/range = CLAMP(get_dist(src, A), 1, current_range)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
-	D.create_reagents(amount_per_transfer_from_this)
+	D.create_reagents(amount_per_transfer_from_this, NONE, NO_REAGENTS_VALUE)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
 	if(stream_mode)
 		reagents.trans_to(D, amount_per_transfer_from_this)
@@ -171,6 +172,7 @@
 /obj/item/reagent_containers/spray/drying_agent
 	name = "drying agent spray"
 	desc = "A spray bottle for drying agent."
+	icon_state = "cleaner_drying"
 	volume = 100
 	list_reagents = list(/datum/reagent/drying_agent = 100)
 	amount_per_transfer_from_this = 2

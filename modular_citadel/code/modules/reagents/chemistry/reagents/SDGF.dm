@@ -94,7 +94,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//I seriously wonder if anyone will ever use this function.
 				if(M.getorganslot(ORGAN_SLOT_ZOMBIE))//sure, it "treats" it, but "you've" still got it. Doesn't always work as well; needs a ghost.
 					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
-					ZI.Remove(M)
+					ZI.Remove()
 					ZI.Insert(SM)
 					log_game("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
 

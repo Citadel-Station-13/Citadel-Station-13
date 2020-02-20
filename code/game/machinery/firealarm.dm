@@ -198,7 +198,7 @@
 					return
 				else if(W.force) //hit and turn it on
 					..()
-					var/area/A = get_area(src)
+					var/area/A = get_base_area(src)
 					if(!A.fire)
 						alarm()
 					return

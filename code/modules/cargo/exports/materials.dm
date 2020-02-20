@@ -65,11 +65,6 @@
 	material_id = MAT_TITANIUM
 	message = "cm3 of titanium"
 
-/datum/export/material/plastitanium
-	cost = 165 // plasma + titanium costs
-	material_id = MAT_TITANIUM // code can only check for one material_id; plastitanium is half plasma, half titanium
-	message = "cm3 of plastitanium"
-
 /datum/export/material/plastic
 	cost = 5
 	material_id = MAT_PLASTIC

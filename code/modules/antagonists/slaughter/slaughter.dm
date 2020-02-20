@@ -12,7 +12,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "daemon"
 	icon_living = "daemon"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -100,10 +100,9 @@
 	if(M.mind)
 		M.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl(null))
 
-/obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
-	..()
-	if(M.mind)
-		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
+/obj/item/organ/heart/demon/Remove(special = FALSE)
+	owner?.mind?.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
+	return ..()
 
 /obj/item/organ/heart/demon/Stop()
 	return 0 // Always beating.

@@ -20,7 +20,6 @@
 					/obj/item/clothing/under/rank/security/grey = 5,
 					/obj/item/clothing/under/pants/khaki = 5)
 	premium = list(/obj/item/clothing/under/rank/security/navyblue = 5,
-					/obj/item/clothing/suit/security/officer = 5,
 					/obj/item/clothing/head/beret/sec/navyofficer = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 
@@ -400,3 +399,35 @@
 
 /obj/item/vending_refill/wardrobe/viro_wardrobe
 	machine_name = "ViroDrobe"
+
+/obj/machinery/vending/wardrobe/cap_wardrobe
+	name = "Captain's Wardrobe"
+	desc = "The latest and greatest in Nanotrasen fashion for your great leader."
+	icon_state = "capsdrobe"
+	icon_deny = "capsdrobe-deny"
+	product_ads = "Only the greatest for a commander such as ours."
+	req_access = list(ACCESS_CAPTAIN)
+	vend_reply = "A wonderful day to you, great leader."
+	products = list(/obj/item/clothing/suit/hooded/wintercoat/captain = 1,
+					/obj/item/storage/backpack/captain = 1, 
+					/obj/item/storage/backpack/satchel/cap = 1,
+					/obj/item/storage/backpack/duffelbag/captain = 1,
+					/obj/item/clothing/neck/cloak/cap = 1,
+					/obj/item/clothing/shoes/sneakers/brown = 2,
+					/obj/item/clothing/under/rank/captain = 1,
+					/obj/item/clothing/under/rank/captain/skirt = 1,
+					/obj/item/clothing/head/caphat = 1,
+					/obj/item/clothing/head/caphat/parade = 1,
+					/obj/item/clothing/head/caphat/beret = 1,
+					/obj/item/clothing/head/caphat/beret/white = 1,
+					/obj/item/clothing/under/captainparade = 1,
+					/obj/item/clothing/suit/captunic = 1,
+					/obj/item/clothing/under/rank/captain/femformal = 1,
+					/obj/item/clothing/glasses/sunglasses/gar/supergar = 1,
+					/obj/item/clothing/gloves/color/captain = 1)
+	refill_canister = /obj/item/vending_refill/wardrobe/cap_wardrobe
+
+/obj/item/vending_refill/wardrobe/cap_wardrobe
+	machine_name = "Captain's Wardrobe"
+	icon_state = "refill_caps"
+	

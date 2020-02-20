@@ -15,7 +15,7 @@
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/stunforce = 140
+	var/stunforce = 70
 	var/status = FALSE
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
@@ -188,8 +188,8 @@
 		stunpwr *= round(stuncharge/hitcost, 0.1)
 
 
-	L.Knockdown(stunpwr)
-	L.adjustStaminaLoss(stunpwr*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+	L.Knockdown(stunpwr, override_stamdmg = 0)
+	L.apply_damage(stunpwr*0.5, STAMINA, user.zone_selected)
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
@@ -274,7 +274,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 100
+	stunforce = 60
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
