@@ -6,7 +6,11 @@
 		sanity--
 		var/width_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(width / 2)
 		var/height_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(height / 2)
-		var/turf/central_turf = forced_turf ? forced_turf : locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z)
+		var/turf/central_turf
+		if(is_station_level(z)) //used to make a square around the station for generating station side ruins without getting too close.
+			central_turf = pick(block(locate(10,10,z), locate((world.maxx - 10), (world.maxy - 10), z)) - block(locate(45,45,z), locate(210,210,z))) //FIGURE OUT A BETTER WAY TO DO THIS
+		else
+			central_turf = forced_turf ? forced_turf : locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z)
 		var/valid = TRUE
 
 		for(var/turf/check in get_affected_turfs(central_turf,1))
