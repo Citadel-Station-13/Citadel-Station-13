@@ -48,12 +48,12 @@
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
-	desc = "The nanites purge toxins and chemicals from the host's bloodstream, however it is dangerous to slimepeople biology due to inaccuracy."
+	desc = "The nanites purge toxins and chemicals from the host's bloodstream, however it is dangerous to slime biology due to inaccuracy."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
 /datum/nanite_program/purging/check_conditions()
-	var/foreign_reagent = LAZYLEN(host_mob.reagents.reagent_list)
+	var/foreign_reagent = length(host_mob.reagents?.reagent_list)
 	if(!host_mob.getToxLoss() && !foreign_reagent)
 		return FALSE
 	return ..()
@@ -73,18 +73,17 @@
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_heal/check_conditions()
+	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		for(var/X in C.get_traumas())
-			var/datum/brain_trauma/BT = X
-			if(BT.resilience <= TRAUMA_RESILIENCE_BASIC)
-				return ..()
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN))
-		return ..()
-	return FALSE
+		if(length(C.get_traumas()))
+			problems = TRUE
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+		problems = TRUE
+	return problems ? ..() : FALSE
 
 /datum/nanite_program/brain_heal/active_effect()
-	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1, TRUE)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
@@ -148,7 +147,7 @@
 /datum/nanite_program/purging_advanced
 	name = "Selective Blood Purification"
 	desc = "The nanites purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals. \
-			The added processing power required to analyze the chemicals severely increases the nanite consumption rate. Due to added complexity, it is safe with slimepeople biology."
+			The added processing power required to analyze the chemicals severely increases the nanite consumption rate. This program is safe with slime biology due to the increased precision."
 	use_rate = 2
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
@@ -181,7 +180,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(3/parts.len, 3/parts.len))
+			if(L.heal_damage(3/parts.len, 3/parts.len, null, BODYPART_ORGANIC))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
@@ -196,70 +195,54 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/brain_heal_advanced/check_conditions()
+	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		for(var/X in C.get_traumas())
-			var/datum/brain_trauma/BT = X
-			if(BT.resilience <= TRAUMA_RESILIENCE_LOBOTOMY)
-				return ..()
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN))
-		return ..()
-	return FALSE
+		if(length(C.get_traumas()))
+			problems = TRUE
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+		problems = TRUE
+	return problems ? ..() : FALSE
 
 /datum/nanite_program/brain_heal_advanced/active_effect()
-	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2, TRUE)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
 
-/datum/nanite_program/triggered/defib
+/datum/nanite_program/defib
 	name = "Defibrillation"
 	desc = "The nanites shock the host's heart when triggered, bringing them back to life if the body can sustain it."
+	can_trigger = TRUE
 	trigger_cost = 25
 	trigger_cooldown = 120
-	rogue_types = list(/datum/nanite_program/triggered/shocking)
+	rogue_types = list(/datum/nanite_program/shocking)
 
-/datum/nanite_program/triggered/defib/trigger()
-	if(!..())
-		return
-
+/datum/nanite_program/defib/on_trigger(comm_message)
 	host_mob.notify_ghost_cloning("Your heart is being defibrillated by nanites. Re-enter your corpse if you want to be revived!")
 	addtimer(CALLBACK(src, .proc/zap), 50)
 
-/datum/nanite_program/triggered/defib/proc/check_revivable()
+/datum/nanite_program/defib/proc/check_revivable()
 	if(!iscarbon(host_mob)) //nonstandard biology
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.suiciding || HAS_TRAIT(C, TRAIT_NOCLONE) || C.hellbound) //can't revive
-		return FALSE
-	if((world.time - C.timeofdeath) > 1800) //too late
-		return FALSE
-	if((C.getBruteLoss() > 180) || (C.getFireLoss() > 180) || !C.can_be_revived()) //too damaged
-		return FALSE
-	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
-		return FALSE
-	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || C.suiciding)
-		return FALSE
 	if(C.get_ghost())
 		return FALSE
-	return TRUE
+	return C.can_defib()
 
-/datum/nanite_program/triggered/defib/proc/zap()
+/datum/nanite_program/defib/proc/zap()
 	var/mob/living/carbon/C = host_mob
-	playsound(C, 'sound/machines/defib_charge.ogg', 50, 0)
+	playsound(C, 'sound/machines/defib_charge.ogg', 50, FALSE)
 	sleep(30)
-	playsound(C, 'sound/machines/defib_zap.ogg', 50, 0)
+	playsound(C, 'sound/machines/defib_zap.ogg', 50, FALSE)
 	if(check_revivable())
-		playsound(C, 'sound/machines/defib_success.ogg', 50, 0)
+		playsound(C, 'sound/machines/defib_success.ogg', 50, FALSE)
 		C.set_heartattack(FALSE)
-		C.revive()
+		C.revive(full_heal = FALSE, admin_revive = FALSE)
 		C.emote("gasp")
 		C.Jitter(100)
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
-		var/tplus = world.time - C.timeofdeath
-		if(tplus > 600)
-			C.adjustOrganLoss(ORGAN_SLOT_BRAIN,  max(0, ((1800 - tplus) / 1800 * 150)), 150)
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
-		playsound(C, 'sound/machines/defib_failed.ogg', 50, 0)
+		playsound(C, 'sound/machines/defib_failed.ogg', 50, FALSE)
+
