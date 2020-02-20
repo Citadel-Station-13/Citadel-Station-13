@@ -58,7 +58,7 @@
 	else if(istype(on_transform_fail))
 		on_transform_fail.Invoke(parent, active, new_active, user, signal_source)
 	else
-		call(parent, on_trasnform_fail)(parent, active, new_active, user, signal_source)
+		call(parent, on_transform_fail)(parent, active, new_active, user, signal_source)
 
 /datum/component/transforming/proc/transform_on(mob/user, forced = FALSE, datum/signal_source, checks_passed = TRUE)
 	if(active)			//already on
