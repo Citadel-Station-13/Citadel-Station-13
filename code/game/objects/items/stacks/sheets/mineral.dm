@@ -323,6 +323,9 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	point_value = 45
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
 
+/obj/item/stack/sheet/mineral/plastitanium/fifty
+	amount = 50
+
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
 	))

@@ -93,7 +93,7 @@
 		lefthand_file = left_hand
 	if(right_hand)
 		righthand_file = right_hand
-		slot_flags = slots
+	slot_flags = slots
 
 /obj/item/clothing/head/mob_holder/proc/assimilate(mob/living/target)
 	target.setDir(SOUTH)
@@ -114,16 +114,14 @@
 			w_class = WEIGHT_CLASS_NORMAL
 		if(MOB_SIZE_LARGE)
 			w_class = WEIGHT_CLASS_HUGE
-	RegisterSignal(src, COMSIG_CLICK_SHIFT, .proc/examine_held_mob)
 
 /obj/item/clothing/head/mob_holder/Destroy()
 	if(held_mob)
 		release()
 	return ..()
 
-/obj/item/clothing/head/mob_holder/proc/examine_held_mob(datum/source, mob/user)
-	held_mob.ShiftClick(user)
-	return COMPONENT_DENY_EXAMINATE
+/obj/item/clothing/head/mob_holder/examine(mob/user)
+	return held_mob?.examine(user) || ..()
 
 /obj/item/clothing/head/mob_holder/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
