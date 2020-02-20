@@ -1096,7 +1096,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/approved_targets = list()
 	check_sabotages:
 		for(var/datum/sabotage_objective/possible_sabotage in GLOB.possible_sabotages)
-			if(!is_unique_objective(possible_sabotage.sabotage_type) || possible_sabotage.check_conditions())
+			if(!is_unique_objective(possible_sabotage.sabotage_type) || possible_sabotage.check_conditions() || !possible_sabotage.can_run())
 				continue
 			for(var/datum/mind/M in owners)
 				if(M.current.mind.assigned_role in possible_sabotage.excludefromjob)

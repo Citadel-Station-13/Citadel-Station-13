@@ -34,6 +34,7 @@
 #define CAN_MASTURBATE_WITH		(1<<5)
 #define MASTURBATE_LINKED_ORGAN	(1<<6) //used to pass our mission to the linked organ
 #define CAN_CLIMAX_WITH			(1<<7)
+#define GENITAL_CAN_AROUSE		(1<<8)
 
 #define COCK_SIZE_MIN		1
 #define COCK_SIZE_MAX		20

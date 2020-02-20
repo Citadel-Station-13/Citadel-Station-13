@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(vote)
 		var/list/this_vote = voted[ckey]
 		var/list/pretty_vote = list()
 		for(var/choice in choices)
-			if("[choice]" in this_vote && "[choice]" in scores_by_choice)
+			if(("[choice]" in this_vote) && ("[choice]" in scores_by_choice))
 				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],/proc/cmp_numeric_asc)
 				// START BALLOT GATHERING
 				pretty_vote += "[choice]"
@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/score_name in scores_by_choice)
 		var/list/score = scores_by_choice[score_name]
 		for(var/indiv_score in score)
-			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score])) 
+			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score]))
 		if(score.len == 0)
 			scores_by_choice -= score_name
 	while(scores_by_choice.len > 1)
@@ -201,7 +201,10 @@ SUBSYSTEM_DEF(vote)
 		max_score=max(max_score,scores[score_name])
 		min_score=min(min_score,scores[score_name])
 	for(var/score_name in scores)
-		scores[score_name] = (scores[score_name]-min_score)/(max_score-min_score)
+		if(max_score == min_score)
+			scores[score_name] = 1
+		else
+			scores[score_name] = (scores[score_name]-min_score)/(max_score-min_score)
 		SSblackbox.record_feedback("nested tally","voting",scores[score_name],list(blackbox_text,"Total scores",score_name))
 
 /datum/controller/subsystem/vote/proc/get_runoff_results(var/blackbox_text)
@@ -252,14 +255,13 @@ SUBSYSTEM_DEF(vote)
 				text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
 			if(vote_system == MAJORITY_JUDGEMENT_VOTING)
 				text += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
-		else
-			for(var/i=1,i<=choices.len,i++)
-				var/votes = choices[choices[i]]
-				if(!votes)
-					votes = 0
-				if(was_roundtype_vote)
-					stored_gamemode_votes[choices[i]] = votes
-				text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
+		for(var/i=1,i<=choices.len,i++)
+			var/votes = choices[choices[i]]
+			if(!votes)
+				votes = 0
+			if(was_roundtype_vote)
+				stored_gamemode_votes[choices[i]] = votes
+			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
 			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes
 				text = "\n<b>Vote Tied Between:</b>"
@@ -374,7 +376,7 @@ SUBSYSTEM_DEF(vote)
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
-	
+
 	return .
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote, score = 0)
@@ -484,6 +486,8 @@ SUBSYSTEM_DEF(vote)
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
 					return 0
+				var/system_string = input(usr,"Which voting type?",GLOB.vote_type_names[1]) in GLOB.vote_type_names
+				vote_system = GLOB.vote_type_names[system_string]
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)

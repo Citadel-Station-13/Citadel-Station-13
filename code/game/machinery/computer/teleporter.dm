@@ -140,7 +140,7 @@ obj/machinery/computer/teleporter/ui_interact(mob/user, ui_key = "main", datum/t
 					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = M
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
-		if(!user.canUseTopic(src, !issilicon(user), NO_DEXTERY)) //check if we are still around
+		if(!user.canUseTopic(src, !hasSiliconAccessInArea(user), NO_DEXTERY)) //check if we are still around
 			return
 		target = L[desc]
 		if(imp_t)
@@ -168,7 +168,7 @@ obj/machinery/computer/teleporter/ui_interact(mob/user, ui_key = "main", datum/t
 			to_chat(user, "<span class='alert'>No active connected stations located.</span>")
 			return
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
-		if(!user.canUseTopic(src, !issilicon(user), NO_DEXTERY)) //again, check if we are still around
+		if(!user.canUseTopic(src, !hasSiliconAccessInArea(user), NO_DEXTERY)) //again, check if we are still around
 			return
 		var/obj/machinery/teleport/station/target_station = L[desc]
 		if(!target_station || !target_station.teleporter_hub)

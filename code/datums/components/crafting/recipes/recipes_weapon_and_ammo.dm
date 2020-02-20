@@ -8,6 +8,12 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/pin_removal/check_requirements(mob/user, list/collected_requirements)
+	var/obj/item/gun/G = collected_requirements[/obj/item/gun][1]
+	if (G.no_pin_required || !G.pin)
+		return FALSE
+	return TRUE
+
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
 	result = /obj/item/assembly/flash/shield
@@ -193,6 +199,16 @@
 //////////////////
 
 
+/datum/crafting_recipe/pipebow
+	name = "Pipe Bow"
+	result =  /obj/item/gun/ballistic/bow/pipe
+	reqs = list(/obj/item/pipe = 5,
+	/obj/item/stack/sheet/plastic = 15,
+	/obj/item/weaponcrafting/silkstring = 10)
+	time = 450
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/smartdartgun
 	name = "Smart dartgun"
 	result =  /obj/item/gun/syringe/dart
@@ -301,6 +317,37 @@
 //////////////////
 ///AMMO CRAFTING//
 //////////////////
+
+/datum/crafting_recipe/arrow
+	name = "Arrow"
+	result = /obj/item/ammo_casing/caseless/arrow
+	time = 40
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
+				 /obj/item/weaponcrafting/silkstring = 1,
+				 /obj/item/stack/rods = 3) // 1 metal sheet is worth 1.5 arrows
+	category = CAT_WEAPONRY
+	subcategory = CAT_AMMO
+
+/datum/crafting_recipe/bone_arrow
+	name = "Bone Arrow"
+	result = /obj/item/ammo_casing/caseless/arrow/bone
+	time = 40
+	always_availible = FALSE
+	reqs = list(/obj/item/stack/sheet/bone = 1,
+				 /obj/item/stack/sheet/sinew = 1,
+				 /obj/item/ammo_casing/caseless/arrow/ashen = 1)
+	category = CAT_WEAPONRY
+	subcategory = CAT_AMMO
+
+/datum/crafting_recipe/ashen_arrow
+	name = "Harden Arrow"
+	result = /obj/item/ammo_casing/caseless/arrow/ashen
+	tools = list(/obj/structure/bonfire)
+	time = 20
+	always_availible = FALSE
+	reqs = list(/obj/item/ammo_casing/caseless/arrow = 1)
+	category = CAT_WEAPONRY
+	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/smartdart
 	name = "Medical smartdart"

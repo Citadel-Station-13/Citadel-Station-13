@@ -3,7 +3,7 @@
 
 /mob/living/carbon/Initialize()
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, NONE, NO_REAGENTS_VALUE)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
@@ -987,3 +987,6 @@
 			return TRUE
 	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
 		return TRUE
+
+/mob/living/carbon/can_hold_items()
+	return TRUE

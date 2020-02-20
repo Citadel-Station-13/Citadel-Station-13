@@ -11,6 +11,7 @@
 	container_flags = APTFT_VERB
 	volume = 5
 	spillable = FALSE
+	reagent_value = NO_REAGENTS_VALUE
 	var/wipe_sound
 	var/soak_efficiency = 1
 	var/extinguish_efficiency = 0
@@ -26,7 +27,7 @@
 	if(reagents.total_volume)
 		. += "<span class='notice'>It's soaked. Alt-Click to squeeze it dry, and perhaps gather the liquids into another held open container.</span>"
 
-/obj/item/reagent_containers/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
+/obj/item/reagent_containers/rag/afterattack(atom/A, mob/user,proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -45,7 +46,7 @@
 			C.visible_message("<span class='notice'>[user] has touched \the [C] with \the [src].</span>")
 			log_combat(user, C, "touched", log_object)
 
-	else if(istype(A) && src in user)
+	else if(istype(A) && (src in user))
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user, action_speed, target = A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")

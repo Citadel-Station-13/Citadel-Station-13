@@ -21,7 +21,7 @@
 
 /obj/item/mop/New()
 	..()
-	create_reagents(mopcap)
+	create_reagents(mopcap, NONE, NO_REAGENTS_VALUE)
 
 
 /obj/item/mop/proc/clean(turf/A)

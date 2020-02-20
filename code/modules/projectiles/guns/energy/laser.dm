@@ -11,6 +11,7 @@
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
+	icon_state = "laser-p"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0

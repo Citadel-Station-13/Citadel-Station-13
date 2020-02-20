@@ -248,6 +248,7 @@
 	mutations = list(BLINDMUT)
 	duration = 300
 	sound = 'sound/magic/blind.ogg'
+
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
@@ -266,15 +267,22 @@
 	action_icon_state = "repulse"
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, stun_amt = 50)
+	var/list/mobs = list()
+	var/list/objs = list()
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
 	playMagSound()
 	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
-		for(var/atom/movable/AM in T)
-			thrownatoms += AM
-
+		for(var/mob/M in T)
+			mobs += M
+		for(var/obj/O in T)
+			objs += O
+	thrownatoms = mobs + objs		//mobs first
+	var/safety = 50
 	for(var/am in thrownatoms)
+		if(!safety)
+			break
 		var/atom/movable/AM = am
 		if(AM == user || AM.anchored)
 			continue
@@ -299,6 +307,7 @@
 				M.Knockdown(stun_amt, override_hardstun = stun_amt * 0.2)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+			safety--
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"

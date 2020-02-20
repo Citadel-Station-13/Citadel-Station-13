@@ -5,7 +5,7 @@
 	icon_living = "stickman"
 	icon_dead = "stickman_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_HUMANOID
 	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
@@ -40,7 +40,7 @@
 	minimum_distance = 5
 	icon_state = "stickmanranged"
 	icon_living = "stickmanranged"
-	casingtype = /obj/item/ammo_casing/c45/nostamina
+	casingtype = /obj/item/ammo_casing/c10mm
 	projectilesound = 'sound/misc/bang.ogg'
 	loot = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
 
@@ -51,7 +51,7 @@
 	icon_state = "stickdog"
 	icon_living = "stickdog"
 	icon_dead = "stickdog_dead"
-	mob_biotypes = list(MOB_INORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_BEAST
 
 /mob/living/simple_animal/hostile/stickman/Initialize(mapload, var/wizard_summoned)
 	. = ..()

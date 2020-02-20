@@ -95,7 +95,7 @@
 	ignore_flags = 1 //so you can medipen through hardsuits
 	reagent_flags = DRAWABLE
 	flags_1 = null
-	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/preservahyde = 3)
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -423,9 +423,9 @@
 		else
 			unload_hypo(vial,user)
 
-/obj/item/hypospray/mkii/AltClick(mob/living/user)
+/obj/item/hypospray/mkii/CtrlClick(mob/living/user)
 	. = ..()
-	if(user.canUseTopic(src, FALSE))
+	if(user.canUseTopic(src, FALSE) && user.get_active_held_item(src))
 		switch(mode)
 			if(HYPO_SPRAY)
 				mode = HYPO_INJECT
@@ -437,7 +437,7 @@
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'><b>Alt-Click</b> it to toggle its mode from spraying to injecting and vice versa.</span>"
+	. += "<span class='notice'><b>Ctrl-Click</b> it to toggle its mode from spraying to injecting and vice versa.</span>"
 
 #undef HYPO_SPRAY
 #undef HYPO_INJECT

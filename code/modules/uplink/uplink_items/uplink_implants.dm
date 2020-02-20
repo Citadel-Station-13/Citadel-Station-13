@@ -29,6 +29,22 @@
 	item = /obj/item/storage/box/syndie_kit/imp_freedom
 	cost = 5
 
+/datum/uplink_item/implants/hijack
+	name = "Hijack Implant"
+	desc = "An implant that will let you hack into the APCs on station, allowing you to control them at will and the machinery within those rooms."
+	item = /obj/item/implanter/hijack
+	cost = 14 //really overkill, 14 tc, can still get caught in a room you haven't hijacked and you're fucked.
+	surplus = 0 //nope not having hijack implants with surplus crates nope nope nope nope
+	restricted = TRUE
+
+/datum/uplink_item/implants/radio
+	name = "Internal Syndicate Radio Implant"
+	desc = "An implant injected into the body, allowing the use of an internal Syndicate radio. \
+			Used just like a regular headset, but can be disabled to use external headsets normally and to avoid detection."
+	item = /obj/item/storage/box/syndie_kit/imp_radio
+	cost = 4
+	restricted = TRUE
+
 /datum/uplink_item/implants/microbomb
 	name = "Microbomb Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
@@ -45,14 +61,6 @@
 	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	restricted = TRUE
-
-/datum/uplink_item/implants/radio
-	name = "Internal Syndicate Radio Implant"
-	desc = "An implant injected into the body, allowing the use of an internal Syndicate radio. \
-			Used just like a regular headset, but can be disabled to use external headsets normally and to avoid detection."
-	item = /obj/item/storage/box/syndie_kit/imp_radio
-	cost = 4
 	restricted = TRUE
 
 /datum/uplink_item/implants/reviver

@@ -1080,7 +1080,7 @@
 			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
-		if (pulledby)
+		if (pulledby && isliving(pulledby))
 			var/mob/living/L = pulledby
 			L.update_pull_movespeed()
 	if(buckled)
@@ -1094,6 +1094,10 @@
 			fall(forced = 1)
 	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
 	density = !lying
+	if(resting)
+		ENABLE_BITFIELD(movement_type, CRAWLING)
+	else
+		DISABLE_BITFIELD(movement_type, CRAWLING)
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
 			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs

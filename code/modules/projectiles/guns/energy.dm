@@ -67,7 +67,8 @@
 /obj/item/gun/energy/Destroy()
 	if(flags_1 & INITIALIZED_1)
 		QDEL_NULL(cell)
-		QDEL_LIST(ammo_type)
+		if(!(flags_1 & HOLOGRAM_1)) //holodeck stuff.
+			QDEL_LIST(ammo_type)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -150,7 +151,7 @@
 		if(istype(v, /obj/item/ammo_casing/energy))		//already set
 			ammo_type[v] = isnull(user_can_select)? TRUE : user_can_select
 		else
-			C = new v			//if you put non energycasing/type stuff in here you deserve the runtime
+			C = new v(src)			//if you put non energycasing/type stuff in here you deserve the runtime
 			ammo_type[i] = C
 			ammo_type[C] = isnull(user_can_select)? TRUE : user_can_select
 	set_firemode_index(initial(current_firemode_index))

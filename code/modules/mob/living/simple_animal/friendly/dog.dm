@@ -1,7 +1,7 @@
 //Dogs.
 
 /mob/living/simple_animal/pet/dog
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
@@ -19,7 +19,7 @@
 
 /mob/living/simple_animal/pet/dog/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/wuv, "yaps_happily!", EMOTE_AUDIBLE, /datum/mood_event/pet_animal, "growls!", EMOTE_AUDIBLE)
+	AddElement(/datum/element/wuv, "yaps happily!", EMOTE_AUDIBLE, /datum/mood_event/pet_animal, "growls!", EMOTE_AUDIBLE)
 	AddElement(/datum/element/mob_holder, held_icon)
 
 //Corgis and pugs are now under one dog subtype
