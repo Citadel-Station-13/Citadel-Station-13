@@ -190,7 +190,7 @@
 	if(!(active2 in GLOB.data_core.medical))
 		active2 = null
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			temp = null
@@ -216,7 +216,7 @@
 		else if(href_list["login"])
 			var/mob/M = usr
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
-			if(issilicon(M))
+			if(hasSiliconAccessInArea(M))
 				active1 = null
 				active2 = null
 				authenticated = 1
@@ -478,7 +478,7 @@
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", authenticated, rank, STATION_TIME_TIMESTAMP("hh:mm:ss"), time2text(world.realtime, "MMM DD"), GLOB.year_integer, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", authenticated, rank, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time), time2text(world.realtime, "MMM DD"), GLOB.year_integer, t1)
 
 			else if(href_list["del_c"])
 				if((istype(active2, /datum/data/record) && active2.fields[text("com_[]", href_list["del_c"])]))
@@ -569,7 +569,7 @@
 	if(user)
 		if(message)
 			if(authenticated)
-				if(user.canUseTopic(src, !issilicon(user)))
+				if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
 							return 1

@@ -124,6 +124,10 @@
 /datum/language_holder/drone/syndicate
 	only_speaks_language = null
 
+/datum/language_holder/dwarf
+	languages = list(/datum/language/common, /datum/language/dwarf)
+	only_speaks_language = /datum/language/dwarf
+
 /datum/language_holder/slime
 	languages = list(/datum/language/common, /datum/language/slime)
 	only_speaks_language = /datum/language/slime

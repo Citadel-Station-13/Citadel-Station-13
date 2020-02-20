@@ -57,3 +57,11 @@
 /obj/item/ammo_box/magazine/toy/m762/riot
 	icon_state = "a762-riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+
+/obj/item/ammo_box/magazine/toy/foamag
+	name = "foam force magrifle magazine"
+	icon_state = "foamagmag"
+	max_ammo = 24
+	multiple_sprites = 2
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	materials = list(MAT_METAL = 200)

@@ -110,6 +110,7 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_HIJACKER			"hijacker"
 #define TRAIT_SIXTHSENSE		"sixthsense"
 #define TRAIT_DISSECTED			"dissected"
 #define TRAIT_FEARLESS			"fearless"
@@ -174,6 +175,7 @@
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
+#define TRAIT_NO_INTERNALS		"no-internals"
 #define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
 
 // common trait sources
@@ -232,8 +234,9 @@
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define RISING_BASS_TRAIT "rising_bass"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
-#define NUKEOP_ANTAGONIST "nukeop-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
+#define TIMESTOP_TRAIT "timestop"
 #define NUKEOP_TRAIT "nuke-op"
+#define CLOWNOP_TRAIT "clown-op"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"

@@ -595,6 +595,14 @@
 /obj/structure/window/plastitanium/unanchored
 	anchored = FALSE
 
+//pirate ship windows
+/obj/structure/window/plastitanium/pirate
+	desc = "Yarr this window be explosion proof!"
+	explosion_block = 30
+
+/obj/structure/window/plastitanium/pirate/unanchored
+	anchored = FALSE
+
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass."

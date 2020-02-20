@@ -126,9 +126,9 @@
 
 /datum/uplink_item/role_restricted/goldenbox
 	name = "Gold Toolbox"
-	desc = "A gold planted plastitanium toolbox loaded with tools. Comes with a set of AI detection multi-tool and a pare of combat gloves."
-	item = /obj/item/storage/toolbox/gold_real
-	cost = 3 // Has syndie tools + gloves + a robust weapon
+	desc = "A gold plated plastitanium toolbox. It comes loaded with a full tool set including a AI detector multitool and combat gloves."
+	item = /obj/item/storage/toolbox/plastitanium/gold_real
+	cost = 4 // Has syndie tools + gloves + a robust weapon
 	restricted_roles = list("Assistant", "Curator") //Curator due to this being made of gold - It fits the theme
 
 /datum/uplink_item/role_restricted/mimery
@@ -223,4 +223,11 @@
 	desc = "A small emitter fitted into a gun case, do to size constraints and safety it can only shoot about ten times when fully charged."
 	cost = 5 //Low ammo, and deals same as 10mm but emp-able
 	item = /obj/item/gun/energy/emitter
+	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+
+/datum/uplink_item/role_restricted/crushmagboots
+	name = "Crushing Magboots"
+	desc = "A pair of extra-strength magboots that crush anyone you walk over."
+	cost = 2
+	item = /obj/item/clothing/shoes/magboots/crushing
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")

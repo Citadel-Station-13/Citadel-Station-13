@@ -423,3 +423,15 @@
 	desc = "A security cowboy hat, perfect for any true lawman"
 	icon_state = "cowboyhat_sec"
 	item_state= "cowboyhat_sec"
+
+/obj/item/clothing/head/squatter_hat
+	name = "slav squatter hat"
+	icon_state = "squatter_hat"
+	item_state = "squatter_hat"
+	desc = "Cyka blyat."
+
+/obj/item/clothing/head/russobluecamohat
+	name = "russian blue camo beret"
+	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
+	icon_state = "russobluecamohat"
+	item_state = "russobluecamohat"

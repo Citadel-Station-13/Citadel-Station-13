@@ -1,6 +1,6 @@
 
 /datum/element/wuv //D'awwwww
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
 	//the for the me emote proc call when petted.
 	var/pet_emote
@@ -30,6 +30,10 @@
 
 	RegisterSignal(target, COMSIG_MOB_ATTACK_HAND, .proc/on_attack_hand)
 
+/datum/element/wuv/Detach(datum/source, force)
+	. = ..()
+	UnregisterSignal(source, COMSIG_MOB_ATTACK_HAND)
+
 /datum/element/wuv/proc/on_attack_hand(datum/source, mob/user)
 	var/mob/living/L = source
 
@@ -43,7 +47,7 @@
 			addtimer(CALLBACK(src, .proc/pet_the_dog, source, user), 1)
 
 /datum/element/wuv/proc/pet_the_dog(mob/target, mob/user)
-	if(!QDELETED(target) || !QDELETED(user) || target.stat != CONSCIOUS)
+	if(QDELETED(target) || QDELETED(user) || target.stat != CONSCIOUS)
 		return
 	new /obj/effect/temp_visual/heart(target.loc)
 	if(pet_emote)
@@ -52,7 +56,7 @@
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, target, pet_moodlet, target)
 
 /datum/element/wuv/proc/kick_the_dog(mob/target, mob/user)
-	if(!QDELETED(target) || !QDELETED(user) || target.stat != CONSCIOUS)
+	if(QDELETED(target) || QDELETED(user) || target.stat != CONSCIOUS)
 		return
 	if(punt_emote)
 		target.emote("me", punt_type, punt_emote)

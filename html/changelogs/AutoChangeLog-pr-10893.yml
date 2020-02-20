@@ -1,0 +1,5 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - rscadd: "Added a TGUI Next interface for crafting"
+  - rscdel: "Removed the old TGUI slow crafting interface"

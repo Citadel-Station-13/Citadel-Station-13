@@ -179,7 +179,6 @@
 		"balls_cum_rate"	= CUM_RATE,
 		"balls_cum_mult"	= CUM_RATE_MULT,
 		"balls_efficiency"	= CUM_EFFICIENCY,
-		"balls_fluid" 		= "semen",
 		"has_ovi"			= FALSE,
 		"ovi_shape"			= "knotted",
 		"ovi_length"		= 6,
@@ -194,7 +193,6 @@
 		"breasts_color" 	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"breasts_size" 		= pick(GLOB.breasts_size_list),
 		"breasts_shape"		= "Pair",
-		"breasts_fluid" 	= "milk",
 		"breasts_producing" = FALSE,
 		"has_vag"			= FALSE,
 		"vag_shape"			= pick(GLOB.vagina_shapes_list),
@@ -206,7 +204,6 @@
 		"womb_cum_rate"		= CUM_RATE,
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
-		"womb_fluid" 		= "femcum",
 		"ipc_screen"		= "Sunburst",
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
@@ -532,7 +529,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			continue
 		if(M.stat != DEAD && !override)
 			continue
-		if(speaker_key && speaker_key in prefs.ignoring)
+		if(speaker_key && (speaker_key in prefs.ignoring))
 			continue
 
 		switch(message_type)

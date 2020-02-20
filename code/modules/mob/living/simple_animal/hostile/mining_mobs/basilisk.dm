@@ -8,7 +8,7 @@
 	icon_aggro = "Basilisk_alert"
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	move_to_delay = 20
 	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
@@ -131,7 +131,7 @@
 
 /obj/item/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(.)
+	if(. && isliving(target))
 		var/mob/living/L = target
 		if (istype(L))
 			L.adjust_fire_stacks(0.1)
@@ -144,7 +144,7 @@
 
 /obj/item/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(.)
+	if(. && isliving(target))
 		var/mob/living/L = target
 		L.apply_status_effect(/datum/status_effect/freon/watcher)
 

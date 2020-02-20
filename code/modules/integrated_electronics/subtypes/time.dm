@@ -175,7 +175,7 @@
 	desc = "Tells you what the time is, in terms and adjusted for your local station or planet"
 
 /obj/item/integrated_circuit/time/clock/station/get_time()
-	return STATION_TIME(FALSE)
+	return STATION_TIME(FALSE, world.time)
 
 /obj/item/integrated_circuit/time/clock/bluespace
 	name = "integrated clock (Bluespace Absolute Time)"
