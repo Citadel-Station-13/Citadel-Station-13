@@ -341,7 +341,7 @@
 #define COMSIG_TOGGLE_TRANSFORM					"toggle_transform"				//(mob/user, force) same as above but toggles
 #define COMSIG_TRANSFORM_ACTIVATE				"activate_transform"			//(mob/user, force) same as above but turns on. returns true if already on!
 #define COMSIG_TRANSFORM_DEACTIVATE				"deactivate_transform"			//(mob/user, force) same as above but turns off.
-	#define COMPONENT_TRASNFORM_SUCCESS				(1<<0)			//for the above 4 signals, means transforming was successful.
+	#define COMPONENT_TRANSFORM_SUCCESS				(1<<0)			//for the above 4 signals, means transforming was successful.
 	#define COMPONENT_ALREADY_TRANSFORMED			(1<<1)			//unnecessary, active is already what the signal wanted it to be
 
 /*******Non-Signal Component Related Defines*******/

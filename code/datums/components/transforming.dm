@@ -3,7 +3,7 @@
  */
 
 /datum/component/transforming
-	var/compflags_transforming = TRANSFORM_ATTACK_SELF
+	var/compflags_transforming = ATTACK_SELF_TRANSFORM
 	/// Are we currently active?
 	var/active = FALSE
 	/// Either a callback or a proctype. Called with arguments (obj/item/parent, new_active, mob/user, forced, datum/signal_source, checks_passed) where checks_passed is if it could transform.
@@ -14,7 +14,7 @@
 /// On transform and can transform can be proctypes/procpaths if the target is parent.
 /datum/component/transforming/Initialize(compflags_transforming, datum/callback/on_transform, datum/callback/can_transform)
 	if(!isitem(parent))
-		return COMPONENT_INCOMPATIbLE
+		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
@@ -40,7 +40,7 @@
 	else
 		call(parent, on_transform)(parent, active, user, forced, signal_source, checks_passed)
 
-/datum/component/transforming/proc/invoke_can_transform(mob/user, datum/signal_source, new_active_)
+/datum/component/transforming/proc/invoke_can_transform(mob/user, datum/signal_source, new_active)
 	. = TRUE
 	if(!can_transform)
 		return
@@ -85,7 +85,7 @@
 
 /datum/component/transforming/proc/signal_transform_activate(datum/source, mob/living/user, forced)
 	if(active)
-		return ALREADY_TRANSFORMED
+		return COMPONENT_ALREADY_TRANSFORMED
 	var/passed = check_transform(source, user, TRUE)
 	if(passed || forced)
 		if(transform_on(user, forced, source, passed))

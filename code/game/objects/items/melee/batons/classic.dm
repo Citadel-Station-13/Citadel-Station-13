@@ -10,7 +10,6 @@
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldown = 13
-	var/on = TRUE
 	var/last_hit = 0
 	var/stun_stam_cost_coeff = 1.25
 	var/hardstun_ds = 1
@@ -18,12 +17,14 @@
 	var/stam_dmg = 30
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
-	if(!on)
+	if(!baton_stun(target, user))
 		return ..()
 
+// return true to disrupt normal melee attack chain
+/obj/item/melee/classic_baton/proc/baton_stun(mob/living/target, mob/living/user)
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes batons unusuable in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
-		return //CIT CHANGE - ditto
+		return FALSE//CIT CHANGE - ditto
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
@@ -34,24 +35,22 @@
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 		else
 			user.take_bodypart_damage(2*force)
-		return
+		return TRUE
 	if(iscyborg(target))
-		..()
-		return
+		return FALSE
 	if(!isliving(target))
-		return
+		return FALSE
 	if (user.a_intent == INTENT_HARM)
-		if(!..() || !iscyborg(target))
-			return
+		return FALSE
 	else
 		if(last_hit < world.time)
 			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
-				return
+				return TRUE
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if(check_martial_counter(H, user))
-					return
+					return TRUE
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 			target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
 			log_combat(user, target, "stunned", src)
@@ -64,6 +63,7 @@
 				target.LAssailant = user
 			last_hit = world.time + cooldown
 			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
+	return TRUE
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -83,6 +83,11 @@
 /obj/item/melee/classic_baton/telescopic/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/transforming, ATTACK_SELF_TRANSFORM, .proc/on_transform)
+
+/obj/item/melee/classic_baton/baton_stun(mob/living/target, mob/living/user)
+	if(!(SEND_SIGNAL(src, COMSIG_IS_TRANSFORMED) & COMPONENT_IS_TRANSFORMED))
+		return FALSE
+	return ..()
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
