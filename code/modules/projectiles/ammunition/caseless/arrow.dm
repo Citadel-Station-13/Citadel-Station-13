@@ -10,7 +10,7 @@
 /obj/item/ammo_casing/caseless/arrow/ashen
 	name = "ashen arrow"
 	desc = "Fire harderned wooden arrow."
-	icon_state = "asharrow"
+	icon_state = "ashenarrow"
 	projectile_type = /obj/item/projectile/bullet/reusable/arrow/ashen
 
 /obj/item/ammo_casing/caseless/arrow/bone
