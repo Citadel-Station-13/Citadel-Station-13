@@ -330,6 +330,20 @@
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
+// /datum/component/transforming signals
+#define COMSIG_HAS_TRANSFORM 					"has_transform"					//Check transformed state
+	#define COMPONENT_HAS_TRANSFORM					(1<<0)			//component exists
+#define COMSIG_IS_TRANSFORMED					"is_transformed"				//Returns true/false based on if it is active.
+	#define COMPONENT_IS_TRANSFORMED				(1<<0)			//transform is active
+#define COMSIG_CAN_TRANSFORM					"can_transform"					//(mob/user) Invokes the usual checks, return TRUE/FALSE based on if it can transform.
+	#define COMPONENT_CAN_TRANSFORM					(1<<0)			//checks passed
+#define COMSIG_SET_TRANSFORM					"set_transform"					//(active, mob/user, force) - tries to set transform active to active. force will ignore can transform. returns true/false based on success/fail.
+#define COMSIG_TOGGLE_TRANSFORM					"toggle_transform"				//(mob/user, force) same as above but toggles
+#define COMSIG_TRANSFORM_ACTIVATE				"activate_transform"			//(mob/user, force) same as above but turns on. returns true if already on!
+#define COMSIG_TRANSFORM_DEACTIVATE				"deactivate_transform"			//(mob/user, force) same as above but turns off.
+	#define COMPONENT_TRASNFORM_SUCCESS				(1<<0)			//for the above 4 signals, means transforming was successful.
+	#define COMPONENT_ALREADY_TRANSFORMED			(1<<1)			//unnecessary, active is already what the signal wanted it to be
+
 /*******Non-Signal Component Related Defines*******/
 
 //Redirection component init flags
@@ -350,3 +364,7 @@
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
+
+/// COMPONENT CONFIGURATION FLAGS
+// /datum/component/transforming - compflags_transforming
+#define ATTACK_SELF_TRANSFORM (1<<0)			//transform on attack self
