@@ -56,17 +56,6 @@
 		control.connected_panels -= src
 		control = null
 
-/obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/S)
-	if(!S)
-		S = new /obj/item/solar_assembly
-		S.glass_type = new /obj/item/stack/sheet/glass(null, 2)
-		S.anchored = TRUE
-	else
-		S.moveToNullspace()
-	S.glass_type.on_solar_construction(src)
-	obj_integrity = max_integrity
-	update_icon()
-
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	user.visible_message("<span class='notice'>[user] begins to take the glass off [src].</span>", "<span class='notice'>You begin to take the glass off [src]...</span>")
@@ -226,7 +215,7 @@
 			new shard(Tsec)
 			new shard(Tsec)
 	else if(glass_type)
-		forceMove(glass_type, Tsec)
+		glass_type.forceMove(Tsec)
 	glass_type = null
 
 

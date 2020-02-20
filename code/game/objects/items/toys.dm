@@ -289,7 +289,7 @@
 	var/light_brightness = 3
 	actions_types = list()
 
-/obj/item/toy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+/obj/item/toy/sword/cx/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
@@ -1014,6 +1014,7 @@
 
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))

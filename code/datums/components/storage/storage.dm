@@ -41,6 +41,7 @@
 
 	var/obj/screen/storage/boxes					//storage display object
 	var/obj/screen/close/closer						//close button object
+	var/current_maxscreensize
 
 	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
 
@@ -362,11 +363,15 @@
 					break
 	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 
-/datum/component/storage/proc/show_to(mob/M)
+/datum/component/storage/proc/show_to(mob/M, set_screen_size = TRUE)
 	if(!M.client)
 		return FALSE
 	var/list/cview = getviewsize(M.client.view)
 	var/maxallowedscreensize = cview[1]-8
+	if(set_screen_size)
+		current_maxscreensize = maxallowedscreensize
+	else if(current_maxscreensize)
+		maxallowedscreensize = current_maxscreensize
 	if(M.active_storage != src && (M.stat == CONSCIOUS))
 		for(var/obj/item/I in accessible_items())
 			if(I.on_found(M))
@@ -547,14 +552,14 @@
 				return
 			A.add_fingerprint(M)
 
-/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE)
+/datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE, ghost = FALSE)
 	var/atom/A = parent
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
 	if(!force && (check_locked(null, M) || !M.CanReach(parent, view_only = TRUE)))
 		return FALSE
-	show_to(M)
+	show_to(M, !ghost)
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
 	if(isitem(O))
@@ -665,7 +670,7 @@
 	return can_be_inserted(I, silent, M)
 
 /datum/component/storage/proc/show_to_ghost(datum/source, mob/dead/observer/M)
-	return user_show_to_mob(M, TRUE)
+	return user_show_to_mob(M, TRUE, TRUE)
 
 /datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE)
 	return user_show_to_mob(showto, force)

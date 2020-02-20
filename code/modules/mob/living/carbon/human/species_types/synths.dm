@@ -5,7 +5,7 @@
 	sexes = 0
 	species_traits = list(NOTRANSSTING,NOGENITALS,NOAROUSAL) //all of these + whatever we inherit from the real species
 	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
-	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
+	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
@@ -39,9 +39,8 @@
 	if(chem.type == /datum/reagent/medicine/synthflesh)
 		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
-	else
-		return ..()
+		return TRUE
+	return ..()
 
 
 /datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)

@@ -82,8 +82,9 @@
 
 /obj/item/implant/explosive/proc/boom_goes_the_weasel()
 	explosion(get_turf(imp_in ? imp_in : src), heavy, medium, weak, weak, flame_range = weak)
-	imp_in?.gib(TRUE)
-	qdel(src)
+	if(!QDELETED(imp_in))
+		imp_in.gib(TRUE)
+		qdel(src)
 
 /obj/item/implant/explosive/macro
 	name = "macrobomb implant"

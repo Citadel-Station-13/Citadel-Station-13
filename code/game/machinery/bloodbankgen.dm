@@ -274,20 +274,20 @@
 
 	return TRUE
 
-/obj/machinery/bloodbankgen/proc/detachinput()
+/obj/machinery/bloodbankgen/proc/detachinput(mob/user)
 	if(bag)
 		bag.forceMove(drop_location())
-		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
-			usr.put_in_hands(bag)
+		if(user && Adjacent(usr) && user.can_hold_items())
+			user.put_in_hands(bag)
 		bag = null
 		draining = null
 		update_icon()
 
-/obj/machinery/bloodbankgen/proc/detachoutput()
+/obj/machinery/bloodbankgen/proc/detachoutput(mob/user)
 	if(outbag)
 		outbag.forceMove(drop_location())
-		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
-			usr.put_in_hands(outbag)
+		if(user && Adjacent(user) && user.can_hold_items())
+			user.put_in_hands(outbag)
 		outbag = null
 		filling = null
 		update_icon()
@@ -325,12 +325,12 @@
 		activateinput()
 
 	else if(href_list["detachinput"])
-		detachinput()
+		detachinput(usr)
 
 	else if(href_list["activateoutput"])
 		activateoutput()
 
 	else if(href_list["detachoutput"])
-		detachoutput()
+		detachoutput(usr)
 
 	updateUsrDialog()

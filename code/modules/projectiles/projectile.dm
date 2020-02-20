@@ -52,7 +52,6 @@
 	var/hitscan = FALSE		//Whether this is hitscan. If it is, speed is basically ignored.
 	var/list/beam_segments	//assoc list of datum/point or datum/point/vector, start = end. Used for hitscan effect generation.
 	var/datum/point/beam_index
-	var/turf/hitscan_last	//last turf touched during hitscanning.
 	var/tracer_type
 	var/muzzle_type
 	var/impact_type
@@ -90,6 +89,10 @@
 	var/decayedRange			//stores original range
 	var/reflect_range_decrease = 5			//amount of original range that falls off when reflecting, so it doesn't go forever
 	var/is_reflectable = FALSE // Can it be reflected or not?
+	
+	/// factor to multiply by for zone accuracy percent.
+	var/zone_accuracy_factor = 1
+	
 		//Effects
 	var/stun = 0
 	var/knockdown = 0
@@ -185,10 +188,6 @@
 				else
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir, bloodtype_to_color())
 
-			if(iscarbon(L) && !HAS_TRAIT(L, TRAIT_NOMARROW))
-				var/mob/living/carbon/C = L
-				C.bleed(damage)
-			else
 				L.add_splatter_floor(target_loca)
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
@@ -211,11 +210,8 @@
 		L.on_hit(src)
 
 	var/reagent_note
-	if(reagents && reagents.reagent_list)
-		reagent_note = " REAGENTS:"
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += R.type + " ("
-			reagent_note += num2text(R.volume) + ") "
+	if(reagents)
+		reagent_note = reagents.log_list()
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
@@ -253,7 +249,8 @@
 			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
+	if(check_zone(def_zone) != BODY_ZONE_CHEST)
+		def_zone = ran_zone(def_zone, max(100-(7*distance), 5) * zone_accuracy_factor) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
 		var/volume = CLAMP(vol_by_damage() + 20, 0, 100)
@@ -494,8 +491,6 @@
 		process_homing()
 	var/forcemoved = FALSE
 	for(var/i in 1 to SSprojectiles.global_iterations_per_move)
-		if(QDELETED(src))
-			return
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
 		if(!istype(T))
@@ -508,14 +503,16 @@
 			forceMove(T)
 			trajectory_ignore_forcemove = FALSE
 			after_z_change(old, loc)
+			forcemoved = TRUE
+			if(QDELETED(src))
+				return
 			if(!hitscanning)
 				pixel_x = trajectory.return_px()
 				pixel_y = trajectory.return_py()
-			forcemoved = TRUE
-			hitscan_last = loc
 		else if(T != loc)
 			step_towards(src, T)
-			hitscan_last = loc
+			if(QDELETED(src))
+				return
 	if(!hitscanning && !forcemoved)
 		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move

@@ -53,7 +53,7 @@
 
 /obj/machinery/jukebox/ui_interact(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if (!anchored)
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
@@ -202,6 +202,8 @@
 	for(var/i in 1 to 10)
 		spawn_atom_to_turf(/obj/effect/temp_visual/hierophant/telegraph/edge, src, 1, FALSE)
 		sleep(5)
+		if(QDELETED(src))
+			return
 
 #define DISCO_INFENO_RANGE (rand(85, 115)*0.01)
 
@@ -430,6 +432,6 @@
 /obj/machinery/jukebox/disco/process()
 	. = ..()
 	if(active)
-		for(var/mob/M in rangers)
+		for(var/mob/living/M in rangers)
 			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)

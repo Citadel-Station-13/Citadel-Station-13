@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/list/species_traits = list()
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
-	var/list/inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
 	var/attack_verb = "punch"	// punch-specific attack verb
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
@@ -1264,10 +1264,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.update_mutant_bodyparts()
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == exotic_blood)
+	if(chem.type == exotic_blood && !istype(exotic_blood, /datum/reagent/blood))
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
-		return 1
+		return TRUE
 	return FALSE
 
 /datum/species/proc/check_weakness(obj/item, mob/living/attacker)
