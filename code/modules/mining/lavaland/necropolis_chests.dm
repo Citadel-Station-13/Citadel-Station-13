@@ -835,7 +835,7 @@
 	force = 20
 	total_mass = 1.5
 
-/obj/item/melee/fire_tail/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/melee/chainofcommand/fire_tail/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(iscarbon(target) && proximity_flag)
 		var/mob/living/carbon/M = target
