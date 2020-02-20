@@ -206,7 +206,7 @@
 			return
 		if(STAGE_1)
 			var/datum/species/S = new
-			msg = "AUTHENTICATING - FAIL. AUTHENTICATING - FAIL. AUTHENTICATING - FAI###### Welcome, technician [S.random_name(pick(MALE, FEMALE))]."
+			msg = "AUTHENTICATING - FAIL. AUTHENTICATING - FAIL. AUTHENTICATING - FAI###### Welcome, technician JOHN DOE."
 			qdel(S)
 		if(STAGE_2)
 			msg = "Warning: Navigational route fails \"IS_AUTHORIZED\". Please try againNN[scramble_message_replace_chars("againagainagainagainagain", 70)]."
