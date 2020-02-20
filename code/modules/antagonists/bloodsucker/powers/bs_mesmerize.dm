@@ -16,6 +16,7 @@
 	message_Trigger = "Whom will you subvert to your will?"
 	must_be_capacitated = TRUE
 	bloodsucker_can_buy = TRUE
+	var/success
 
 /datum/action/bloodsucker/targeted/mesmerize/CheckCanUse(display_error)
 	. = ..()
@@ -97,7 +98,8 @@
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
 		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
 		if(do_mob(user, target, 30, TRUE, TRUE)) // 3 seconds windup
-			if(CheckCanTarget(target)) // target just has to be out of view when it is fully charged in order to avoid
+			success = CheckCanTarget(target)
+			if(success) // target just has to be out of view when it is fully charged in order to avoid
 				PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
 				target.face_atom(user)
 				target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
@@ -105,8 +107,15 @@
 				to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
 				target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
 				target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+			else
+				to_chat(user, "<span class='warning'>[target] has escaped your gaze!</span>")
+				DeactivatePower()
+				DeactivateRangedAbility()
+				StartCooldown()
+				// oops! if they knew how they could just spam stun the victim and themselves.
+
 		spawn(power_time)
-			if(istype(target))
+			if(istype(target) && success)
 				target.notransform = FALSE
 				// They Woke Up! (Notice if within view)
 				if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
