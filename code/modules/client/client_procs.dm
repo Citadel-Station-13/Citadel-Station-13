@@ -737,13 +737,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
-/client/Click(atom/object, atom/location, control, params)
+/client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
 	var/ab = FALSE
 	var/list/L = params2list(params)
 	if (object && object == middragatom && L["left"])
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 	var/mcl = CONFIG_GET(number/minute_click_limit)
-	if (!holder && mcl)
+	if (!holder && !ignore_spam && mcl)
 		var/minute = round(world.time, 600)
 		if (!clicklimiter)
 			clicklimiter = new(LIMITER_SIZE)
@@ -768,7 +768,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			return
 
 	var/scl = CONFIG_GET(number/second_click_limit)
-	if (!holder && scl)
+	if (!holder && !ignore_spam && scl)
 		var/second = round(world.time, 10)
 		if (!clicklimiter)
 			clicklimiter = new(LIMITER_SIZE)
