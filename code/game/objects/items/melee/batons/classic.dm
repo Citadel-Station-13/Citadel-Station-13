@@ -77,7 +77,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 0
-	on = FALSE
 	total_mass = TOTAL_MASS_NORMAL_ITEM
 
 /obj/item/melee/classic_baton/telescopic/ComponentInitialize()
