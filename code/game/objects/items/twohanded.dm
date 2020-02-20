@@ -510,7 +510,7 @@
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
 	return FALSE
 
-/obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+/obj/item/twohanded/dualsaber/hypereutactic/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
