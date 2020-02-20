@@ -224,7 +224,9 @@
 				MERGE_GASES(final_air,enemy_copy)
 		var/datum/gas_mixture/new_air
 		if(are_we_spaced)
-			new_air = are_we_spaced
+			var/datum/gas_mixture/space_air = are_we_spaced
+			COPY_GAS_FROM_TO(space_air,new_air)
+			new_air.temperature = final_air.temperature
 		else
 			new_air = (final_air.remove_ratio(1 / (adjacent_turfs_length + 1)))
 		if(!istype(new_air)) // this can happen if this runs in space
