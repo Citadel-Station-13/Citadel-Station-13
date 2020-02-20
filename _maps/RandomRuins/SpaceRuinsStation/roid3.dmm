@@ -15,16 +15,16 @@
 /area/ruin/space/has_grav/powered)
 "d" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "e" = (
 /obj/item/reagent_containers/glass/bottle/nutrient/ez,
 /obj/item/reagent_containers/glass/bottle/nutrient/ez,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "g" = (
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "i" = (
 /obj/structure/fireplace{
 	dir = 8
@@ -34,7 +34,7 @@
 "j" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "m" = (
 /obj/structure/mineral_door/woodrustic{
 	name = "Event Hall"
@@ -51,17 +51,17 @@
 "o" = (
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "p" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered)
+/area/ruin/space)
 "q" = (
 /turf/template_noop,
 /area/template_noop)
 "s" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "t" = (
 /turf/closed/indestructible/wood,
 /area/ruin/space/has_grav/powered)
@@ -71,7 +71,7 @@
 "w" = (
 /obj/item/plant_analyzer,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "y" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
@@ -79,7 +79,7 @@
 "A" = (
 /obj/item/seeds/glowshroom,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "C" = (
 /obj/structure/chair/wood/normal{
 	dir = 1
@@ -92,7 +92,7 @@
 "F" = (
 /obj/item/seeds/grass,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "J" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/showroomfloor,
@@ -139,11 +139,11 @@
 "T" = (
 /obj/item/shovel/spade,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "W" = (
 /obj/item/cultivator,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "Y" = (
 /obj/structure/table/wood,
 /obj/item/phone,
@@ -152,7 +152,7 @@
 "Z" = (
 /obj/item/seeds/tower,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 
 (1,1,1) = {"
 q

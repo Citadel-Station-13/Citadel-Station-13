@@ -11,7 +11,7 @@
 /area/space/nearstation)
 "c" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "d" = (
 /obj/item/chair,
 /turf/open/floor/plating/airless{
@@ -23,7 +23,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/ruin/unpowered)
+/area/ruin/space)
 "f" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
@@ -34,28 +34,28 @@
 "g" = (
 /obj/structure/girder,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "h" = (
 /obj/item/chair/stool/bar,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/ruin/unpowered)
+/area/ruin/space)
 "i" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "j" = (
 /obj/item/ammo_casing/shotgun/beanbag,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "k" = (
 /turf/closed/wall,
-/area/ruin/unpowered)
+/area/ruin/space)
 "l" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "m" = (
 /obj/item/storage/box/drinkingglasses,
 /obj/structure/table/wood,
@@ -65,7 +65,7 @@
 	status = 2
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "n" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless{
@@ -91,45 +91,50 @@
 	status = 2
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "r" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "s" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "t" = (
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "u" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
+"w" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space)
 "x" = (
 /obj/structure/table/wood,
 /obj/item/trash/plate,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "y" = (
 /obj/structure/table_frame,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "z" = (
 /obj/machinery/light{
 	icon_state = "tube-broken";
 	status = 2
 	},
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "A" = (
 /obj/item/ammo_casing/c46x30mm,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/ruin/unpowered)
+/area/ruin/space)
 "B" = (
 /obj/structure/fluff/broken_flooring{
 	icon_state = "singular"
@@ -148,37 +153,37 @@
 /obj/structure/table/wood,
 /obj/item/storage/firstaid/brute,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "E" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/ruin/unpowered)
+/area/ruin/space)
 "F" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "G" = (
 /turf/open/space/basic,
 /area/space)
 "H" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "I" = (
 /obj/structure/table/wood,
 /obj/item/kitchen/fork,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "K" = (
 /obj/item/ammo_casing/shotgun/improvised,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "L" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "M" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
@@ -188,17 +193,23 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/ruin/unpowered)
+/area/ruin/space)
+"O" = (
+/obj/item/stack/sheet/metal,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space)
 "P" = (
 /obj/item/toy/plush/beeplushie,
 /obj/vehicle/ridden/lavaboat,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "Q" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "R" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 1;
@@ -206,21 +217,21 @@
 	name = "broken plating"
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "S" = (
 /obj/item/ammo_casing/c46x30mm,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/ruin/unpowered)
+/area/ruin/space)
 "T" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "U" = (
 /obj/item/chair/stool/bar,
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "V" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/metal,
@@ -237,16 +248,16 @@
 /area/space/nearstation)
 "X" = (
 /turf/open/floor/plasteel/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "Y" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/clothing/head/chefhat,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/ruin/unpowered)
+/area/ruin/space)
 "Z" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered)
+/area/ruin/space)
 
 (1,1,1) = {"
 G
@@ -498,7 +509,7 @@ c
 G
 G
 p
-M
+w
 N
 N
 k
@@ -521,7 +532,7 @@ G
 o
 b
 X
-n
+O
 N
 r
 t

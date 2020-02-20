@@ -1,56 +1,59 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered)
+/area/ruin/space)
 "h" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered)
+/area/ruin/space)
 "t" = (
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered)
+/area/ruin/space)
 "B" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "G" = (
 /obj/item/holosign_creator/atmos,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered)
+/area/ruin/space)
 "K" = (
 /turf/template_noop,
 /area/template_noop)
 "P" = (
 /obj/structure/holosign/barrier/atmos,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered)
+/area/ruin/space)
+"R" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space)
 "Y" = (
 /obj/structure/fluff/fokoff_sign,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 
 (1,1,1) = {"
 K
 K
 K
-B
-B
-B
-B
+R
+R
+R
+R
 K
 K
 K
 K
-B
+R
 b
 b
-B
+R
 K
 K
 "}
 (2,1,1) = {"
 K
 K
-B
+R
 b
 b
 b
@@ -58,24 +61,24 @@ b
 B
 K
 K
-B
+R
 b
 b
 b
 b
-B
+R
 K
 "}
 (3,1,1) = {"
 K
-B
+R
 b
 b
 b
 b
 b
 b
-B
+R
 Y
 b
 b
@@ -83,10 +86,10 @@ b
 b
 b
 b
-B
+R
 "}
 (4,1,1) = {"
-B
+R
 b
 b
 b
@@ -95,17 +98,17 @@ b
 b
 b
 b
-B
+R
 b
 b
 b
 b
 b
 b
-B
+R
 "}
 (5,1,1) = {"
-B
+R
 b
 b
 b
@@ -121,11 +124,11 @@ b
 b
 b
 b
-B
+R
 "}
 (6,1,1) = {"
 K
-B
+R
 b
 b
 b
@@ -139,17 +142,17 @@ b
 b
 b
 b
-B
+R
 K
 "}
 (7,1,1) = {"
 K
 K
-B
+R
 b
 b
 b
-B
+R
 P
 t
 h
@@ -158,17 +161,17 @@ t
 b
 b
 b
-B
+R
 K
 "}
 (8,1,1) = {"
 K
 K
 K
-B
+R
 Y
-B
-B
+R
+R
 b
 b
 b
@@ -176,7 +179,7 @@ t
 t
 P
 Y
-B
+R
 K
 K
 "}
@@ -184,8 +187,8 @@ K
 K
 K
 K
-B
-B
+R
+R
 b
 b
 b
@@ -194,7 +197,7 @@ b
 b
 b
 b
-B
+R
 K
 K
 K
@@ -203,7 +206,7 @@ K
 K
 K
 K
-B
+R
 b
 b
 b
@@ -214,7 +217,7 @@ b
 b
 b
 b
-B
+R
 K
 K
 "}
@@ -222,7 +225,7 @@ K
 K
 K
 K
-B
+R
 b
 b
 b
@@ -232,7 +235,7 @@ b
 b
 b
 b
-B
+R
 K
 K
 K
@@ -242,15 +245,15 @@ K
 K
 K
 K
-B
+R
 b
 b
 b
 b
-B
-B
-B
-B
+R
+R
+R
+R
 K
 K
 K
@@ -262,10 +265,10 @@ K
 K
 K
 K
-B
+R
 b
 b
-B
+R
 K
 K
 K
@@ -282,8 +285,8 @@ K
 K
 K
 K
-B
-B
+R
+R
 K
 K
 K

@@ -4,28 +4,28 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "h" = (
 /turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "i" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "k" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/item/reagent_containers/food/snacks/meat/slab/spider,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "q" = (
 /obj/structure/shuttle/engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "r" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -34,48 +34,48 @@
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "v" = (
 /turf/template_noop,
 /area/template_noop)
 "x" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "C" = (
 /obj/effect/decal/remains/human,
 /obj/item/twohanded/spear,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "F" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "J" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 "O" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "P" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/meat/slab/spider,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "R" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "S" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -83,14 +83,14 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "U" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered)
+/area/ruin/space)
 "W" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space)
 
 (1,1,1) = {"
 v

@@ -2,71 +2,59 @@
 "a" = (
 /obj/effect/overlay/palmtree_l,
 /turf/open/floor/holofloor/beach,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "j" = (
 /turf/open/floor/holofloor/beach/coast_t,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "n" = (
 /turf/open/floor/holofloor/beach/coast_b,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "o" = (
 /turf/template_noop,
 /area/template_noop)
 "p" = (
 /turf/open/floor/holofloor/beach/water,
-/area/ruin/unpowered)
-"s" = (
-/turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "t" = (
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/holofloor/beach,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "u" = (
 /obj/structure/marker_beacon,
 /turf/open/floor/holofloor/beach/coast_t,
-/area/ruin/unpowered)
-"v" = (
-/turf/open/floor/holofloor/beach,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "A" = (
 /turf/open/floor/holofloor/beach,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "F" = (
 /mob/living/simple_animal/crab{
 	desc = "This little bugger seems so happy to dance.!";
 	name = "raving crab"
 	},
 /turf/open/floor/holofloor/beach/coast_t,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "H" = (
 /obj/structure/marker_beacon,
 /turf/open/floor/holofloor/beach,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "L" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered)
+/area/ruin/space)
 "R" = (
 /mob/living/simple_animal/crab{
 	desc = "This little bugger seems so happy to dance.!";
 	name = "raving crab"
 	},
 /turf/open/floor/holofloor/beach,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "T" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
-"X" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
-"Z" = (
-/turf/open/floor/holofloor/beach,
-/area/ruin/unpowered)
+/area/ruin/space)
 
 (1,1,1) = {"
 o
 o
-X
+T
 o
 o
 o
@@ -80,10 +68,10 @@ o
 o
 "}
 (2,1,1) = {"
-X
+T
 L
 L
-X
+T
 o
 o
 o
@@ -96,16 +84,16 @@ o
 o
 "}
 (3,1,1) = {"
-X
+T
 L
 L
 L
 L
-X
-X
-X
-X
-X
+T
+T
+T
+T
+T
 o
 o
 o
@@ -113,7 +101,7 @@ o
 "}
 (4,1,1) = {"
 o
-X
+T
 L
 L
 L
@@ -122,33 +110,33 @@ L
 L
 L
 L
-X
+T
 o
 o
 o
 "}
 (5,1,1) = {"
 o
-X
+T
 L
 L
-Z
-Z
+A
+A
 L
 L
 L
 L
 L
-X
+T
 o
 o
 "}
 (6,1,1) = {"
-X
+T
 L
 L
 L
-Z
+A
 R
 j
 n
@@ -156,63 +144,63 @@ p
 p
 L
 L
-X
+T
 o
 "}
 (7,1,1) = {"
-X
+T
 L
 L
-Z
+A
 a
-Z
+A
 u
 n
 p
 p
 L
 L
-X
+T
 o
 "}
 (8,1,1) = {"
-X
+T
 L
 L
 H
 R
-Z
+A
 j
 n
 p
 p
 L
 L
-X
+T
 o
 "}
 (9,1,1) = {"
-X
+T
 L
 L
-Z
-Z
-Z
+A
+A
+A
 u
 n
 p
 p
 L
 L
-X
+T
 o
 "}
 (10,1,1) = {"
-X
+T
 L
 L
 L
-Z
+A
 t
 F
 n
@@ -220,30 +208,30 @@ p
 p
 L
 L
-X
+T
 o
 "}
 (11,1,1) = {"
 o
-X
-X
+T
+T
 L
 L
-Z
-L
-L
-L
+A
 L
 L
 L
-X
+L
+L
+L
+T
 o
 "}
 (12,1,1) = {"
 o
 o
 o
-X
+T
 L
 L
 L
@@ -252,7 +240,7 @@ L
 L
 L
 L
-X
+T
 o
 "}
 (13,1,1) = {"
@@ -260,16 +248,16 @@ o
 o
 o
 o
-X
+T
 L
 L
 L
 L
 o
-X
-X
+T
+T
 L
-X
+T
 "}
 (14,1,1) = {"
 o
@@ -284,6 +272,6 @@ o
 o
 o
 o
-X
+T
 o
 "}
