@@ -196,7 +196,7 @@ RLD
 
 /obj/item/construction/rcd/verb/change_airlock_access(mob/user)
 
-	if (!ishuman(user) && !user.has_unlimited_silicon_privilege)
+	if (!ishuman(user) && !user.silicon_privileges)
 		return
 
 	var/t1 = ""
