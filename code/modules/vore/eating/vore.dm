@@ -40,6 +40,7 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 	var/digestable = FALSE
 	var/devourable = FALSE
 	var/feeding = FALSE
+	var/lickable = FALSE
 //	var/allowmobvore = TRUE
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
