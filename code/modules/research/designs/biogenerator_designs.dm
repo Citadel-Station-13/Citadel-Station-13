@@ -56,7 +56,7 @@
 	id = "enzyme"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 30)
-	make_reagents = list("enzyme" = 10)
+	make_reagents = list(/datum/reagent/consumable/enzyme = 10)
 	category = list("initial","Food")
 
 /datum/design/flour_sack
