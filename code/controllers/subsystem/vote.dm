@@ -216,7 +216,7 @@ SUBSYSTEM_DEF(vote)
 		for(var/ckey in voted)
 			cur_choices[cur_choices[voted[ckey][1]]]++ // jesus christ how horrifying
 		var/least_vote = 100000
-		var/least_voted
+		var/least_voted = 1
 		for(var/i in 1 to cur_choices.len)
 			var/option = cur_choices[i]
 			if(cur_choices[option] > voted.len/2)
@@ -227,8 +227,8 @@ SUBSYSTEM_DEF(vote)
 		already_lost_runoff += cur_choices[least_voted]
 		for(var/ckey in voted)
 			voted[ckey] -= least_voted
-		for(var/option in cur_choices)
-			cur_choices[option] = 0
+		for(var/i in 1 to cur_choices.len)
+			cur_choices[cur_choices[i]] = 0
 
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
