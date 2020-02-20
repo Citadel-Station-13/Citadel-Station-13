@@ -16,10 +16,10 @@ SUBSYSTEM_DEF(autotransfer)
 	return ..()
 
 /datum/controller/subsystem/autotransfer/fire()
-	if(maxvotes > votes)
+	if(maxvotes > curvotes)
 		if(world.time > targettime)
 			SSvote.initiate_vote("transfer",null) //TODO figure out how to not use null as the user
 			targettime = targettime + CONFIG_GET(number/vote_autotransfer_interval)
-			votes += 1
+			curvotes += 1
 	else
 		SSshuttle.autoEnd()
