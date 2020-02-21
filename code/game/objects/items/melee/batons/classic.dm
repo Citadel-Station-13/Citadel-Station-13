@@ -38,31 +38,29 @@
 		return TRUE
 	if(iscyborg(target))
 		return FALSE
-	if(!isliving(target))
-		return FALSE
 	if (user.a_intent == INTENT_HARM)
 		return FALSE
+	if(last_hit > world.time)
+		return TRUE
+	if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
+		return TRUE
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(check_martial_counter(H, user))
+			return TRUE
+	playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
+	target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+	log_combat(user, target, "stunned", src)
+	src.add_fingerprint(user)
+	target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
+		"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+	if(!iscarbon(user))
+		target.LAssailant = null
 	else
-		if(last_hit < world.time)
-			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
-				return TRUE
-			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				if(check_martial_counter(H, user))
-					return TRUE
-			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
-			log_combat(user, target, "stunned", src)
-			src.add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
-			if(!iscarbon(user))
-				target.LAssailant = null
-			else
-				target.LAssailant = user
-			last_hit = world.time + cooldown
-			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
+		target.LAssailant = user
+	last_hit = world.time + cooldown
+	user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
 	return TRUE
 
 /obj/item/melee/classic_baton/telescopic
@@ -78,15 +76,14 @@
 	item_flags = NONE
 	force = 0
 	total_mass = TOTAL_MASS_NORMAL_ITEM
+	var/active = FALSE
 
 /obj/item/melee/classic_baton/telescopic/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/transforming, ATTACK_SELF_TRANSFORM, .proc/on_transform)
 
 /obj/item/melee/classic_baton/baton_stun(mob/living/target, mob/living/user)
-	if(!(SEND_SIGNAL(src, COMSIG_IS_TRANSFORMED) & COMPONENT_IS_TRANSFORMED))
-		return FALSE
-	return ..()
+	return active? ..() : FALSE
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -104,6 +101,7 @@
 		return (BRUTELOSS)
 
 /obj/item/melee/classic_baton/telescopic/proc/on_transform(obj/item/parent, new_active, mob/user, forced, datum/signal_source, checks_passed)
+	active = new_active
 	if(user)
 		if(new_active)
 			to_chat(user, "<span class ='warning'>You extend the baton.</span>")
