@@ -136,7 +136,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1.5/parts.len, 1.5/parts.len, only_robotic = TRUE, only_organic = FALSE)) //much faster than organic healing
+			if(L.heal_damage(1.5/parts.len, 1.5/parts.len, null, TRUE, FALSE)) //much faster than organic healing
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
