@@ -211,20 +211,19 @@ SUBSYSTEM_DEF(vote)
 	var/already_lost_runoff = list()
 	var/list/cur_choices = choices.Copy()
 	for(var/ckey in voted)
-		choices[choices[voted[ckey][1]]]++ // jesus christ how horrifying
+		choices["[voted[ckey][1]]"]++ // jesus christ how horrifying
 	for(var/_this_var_unused_ignore_it in 1 to choices.len) // if it takes more than this something REALLY wrong happened
 		for(var/ckey in voted)
-			cur_choices[cur_choices[voted[ckey][1]]]++ // jesus christ how horrifying
+			cur_choices["[voted[ckey][1]]]"]++ // oh god it's being done AGAIN
 		var/least_vote = 100000
-		var/least_voted = 1
-		for(var/i in 1 to cur_choices.len)
-			var/option = cur_choices[i]
-			if(cur_choices[option] > voted.len/2)
-				return list(option)
-			else if(cur_choices[option] < least_vote && !(option in already_lost_runoff))
-				least_vote = cur_choices[option]
-				least_voted = i
-		already_lost_runoff += cur_choices[least_voted]
+		var/least_voted = -1
+		for(var/option in cur_choices)
+			if(cur_choices["[option]"] > voted.len/2)
+				return list("[option]")
+			else if(cur_choices["[option]"] < least_vote && !("[option]" in already_lost_runoff))
+				least_vote = cur_choices["[option]"]
+				least_voted = option
+		already_lost_runoff += cur_choices["[least_voted]"]
 		for(var/ckey in voted)
 			voted[ckey] -= least_voted
 		for(var/i in 1 to cur_choices.len)
@@ -411,12 +410,12 @@ SUBSYSTEM_DEF(vote)
 						return vote
 				if(SCHULZE_VOTING,INSTANT_RUNOFF_VOTING)
 					if(usr.ckey in voted)
-						if(vote in voted[usr.ckey])
-							voted[usr.ckey] -= vote
+						if(choices[vote] in voted[usr.ckey])
+							voted[usr.ckey] -= choices[vote]
 					else
 						voted += usr.ckey
 						voted[usr.ckey] = list()
-					voted[usr.ckey] += vote
+					voted[usr.ckey] += choices[vote]
 					saved -= usr.ckey
 				if(SCORE_VOTING,MAJORITY_JUDGEMENT_VOTING)
 					if(!(usr.ckey in voted))
