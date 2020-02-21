@@ -1367,3 +1367,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/lounge
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
+
+/area/crew_quarters/fitness/pool
+	name = "Pool Area"
+	icon_state = "pool"
