@@ -528,7 +528,7 @@
 		if(B.cell)
 			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
-				var/stunforce = B.stunforce
+				var/stunforce = B.stamforce
 				user.DefaultCombatKnockdown(stunforce)
 				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)

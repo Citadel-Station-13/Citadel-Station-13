@@ -14,6 +14,9 @@
 	message_Trigger = ""//"Whom will you subvert to your will?"
 	bloodsucker_can_buy = TRUE
 	must_be_capacitated = TRUE
+	var/list/hit			//current hit, set while power is in use as we can't pass the list as an extra calling argument in registersignal.
+	/// If set, uses this speed in deciseconds instead of world.tick_lag
+	var/speed_override
 
 /datum/action/bloodsucker/targeted/haste/CheckCanUse(display_error)
 	. = ..()
@@ -43,42 +46,46 @@
 	return TRUE
 
 /datum/action/bloodsucker/targeted/haste/FireTargetedPower(atom/A)
-	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
+	// This is a non-async proc to make sure the power is "locked" until this finishes.
+	hit = list()
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	var/mob/living/user = owner
 	var/turf/T = isturf(A) ? A : get_turf(A)
 	// Pulled? Not anymore.
-	owner.pulledby = null
-	// Step One: Heatseek toward Target's Turf
-	walk_to(owner, T, 0, 0.01, 20) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
+	user.pulledby?.stop_pulling()
+	// Go to target turf
+	// DO NOT USE WALK TO.
 	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-	var/safety = 20
-	while(get_turf(owner) != T && safety > 0 && !(isliving(target) && target.Adjacent(owner)))
-		user.mobility_flags = NONE
-		safety --
-		// Did I get knocked down?
-		if(owner && owner.incapacitated(ignore_restraints=TRUE, ignore_grab=TRUE))// owner.incapacitated())
-			// We're gonna cancel. But am I on the ground? Spin me!
-			if(!CHECK_MOBILITY(user, MOBILITY_STAND))
-				var/send_dir = get_dir(owner, T)
-				new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
-				owner.spin(10)
+	var/safety = get_dist(user, T) * 3 + 1
+	var/consequetive_failures = 0
+	var/speed = isnull(speed_override)? world.tick_lag : speed_override
+	while(--safety && (get_turf(user) != T))
+		var/success = step_towards(user, T)		//This does not try to go around obstacles.
+		if(!success)
+			success = step_to(user, T)			//this does
+		if(!success)
+			if(++consequetive_failures >= 3)		//if 3 steps don't work
+				break			//just stop
+		else
+			consequetive_failures = 0
+		if(user.resting)
+			user.setDir(turn(user.dir, 90))		//down? spin2win :^)
+		if(user.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE))		//actually down? stop.
 			break
-		// Spin/Stun people we pass.
-		//var/mob/living/newtarget = locate(/mob/living) in oview(1, owner)
-		var/list/mob/living/foundtargets = list()
-		for(var/mob/living/newtarget in oview(1, owner))
-			if (newtarget && newtarget != target && !(newtarget in foundtargets))//!newtarget.IsKnockdown())
-				if (rand(0, 5) < level_current)
-					playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
-					newtarget.DefaultCombatKnockdown(10 + level_current * 5)
-				if(newtarget.IsStun())
-					newtarget.spin(10,1)
-					if (rand(0,4))
-						newtarget.drop_all_held_items()
-				foundtargets += newtarget
-		sleep(1)
-	user?.update_mobility() //Let the poor guy move again
+		if(success)		//don't sleep if we failed to move.
+			sleep(speed)
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	hit = null
+	user.update_canmove()
 
 /datum/action/bloodsucker/targeted/haste/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE
-	user.update_mobility()
+	user.update_canmove()
+
+/datum/action/bloodsucker/targeted/haste/proc/on_move()
+	for(var/mob/living/L in dview(1, get_turf(owner)))
+		if(!hit[L] && (L != owner))
+			hit[L] = TRUE
+			playsound(L, "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
+			L.Knockdown(10 + level_current * 5, override_hardstun = 0.1)
+			L.spin(10, 1)

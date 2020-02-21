@@ -2,7 +2,6 @@
 	name = "pAI"
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -75,7 +74,7 @@
 	var/emitteroverloadcd = 100
 
 	var/radio_short = FALSE
-	var/radio_short_cooldown = 5 MINUTES
+	var/radio_short_cooldown = 3 MINUTES
 	var/radio_short_timerid
 
 	mobility_flags = NONE
