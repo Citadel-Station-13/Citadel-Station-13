@@ -118,7 +118,7 @@
 		force = 0 //not so robust now
 		attack_verb = list("prodded", "poked")
 	update_icon()
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
 
 /obj/item/melee/classic_baton/update_icon()
