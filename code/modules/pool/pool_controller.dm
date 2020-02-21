@@ -111,7 +111,7 @@
 
 /obj/machinery/pool/controller/AltClick(mob/user)
 	. = ..()
-	if(!isliving(user) || !user.Adjacent(src) || !user.CanReach(src) || user.IsStun() || user.IsKnockdown() || user.incapacitated())
+	if(!isliving(user) || !user.Adjacent(src) || !user.CanReach(src) || !CHECK_MOBILITY(user, MOBILITY_USE))
 		return FALSE
 	visible_message("<span class='boldwarning'>[user] starts to drain [src]!</span>")
 	draining = TRUE
