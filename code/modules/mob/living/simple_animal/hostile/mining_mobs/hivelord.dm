@@ -176,7 +176,6 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "is shrugged off by"
-	pass_flags = PASSTABLE | PASSMOB
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
