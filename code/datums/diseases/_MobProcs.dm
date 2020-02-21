@@ -17,9 +17,8 @@
 	if(HasDisease(D))
 		return FALSE
 
-	if(!(D.infectable_biotypes & mob_biotypes))
+	if(!(D.infectable_biotypes))
 		return FALSE
-
 
 	if(!(type in D.viable_mobtypes))
 		return FALSE
