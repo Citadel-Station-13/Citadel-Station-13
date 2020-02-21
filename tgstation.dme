@@ -1,3 +1,4 @@
+
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
@@ -77,6 +78,7 @@
 #include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
+#include "code\__DEFINES\pool.dm"
 #include "code\__DEFINES\preferences.dm"
 #include "code\__DEFINES\procpath.dm"
 #include "code\__DEFINES\profile.dm"
@@ -491,6 +493,7 @@
 #include "code\datums\elements\earhealing.dm"
 #include "code\datums\elements\ghost_role_eligibility.dm"
 #include "code\datums\elements\mob_holder.dm"
+#include "code\datums\elements\swimming.dm"
 #include "code\datums\elements\wuv.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\getrev.dm"
@@ -2371,6 +2374,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\netherworld.dm"
 #include "code\modules\mob\living\simple_animal\hostile\pirate.dm"
 #include "code\modules\mob\living\simple_animal\hostile\russian.dm"
+#include "code\modules\mob\living\simple_animal\hostile\sharks.dm"
 #include "code\modules\mob\living\simple_animal\hostile\skeleton.dm"
 #include "code\modules\mob\living\simple_animal\hostile\statue.dm"
 #include "code\modules\mob\living\simple_animal\hostile\stickman.dm"
@@ -2527,6 +2531,13 @@
 #include "code\modules\photography\photos\album.dm"
 #include "code\modules\photography\photos\frame.dm"
 #include "code\modules\photography\photos\photo.dm"
+#include "code\modules\pool\pool_controller.dm"
+#include "code\modules\pool\pool_drain.dm"
+#include "code\modules\pool\pool_effects.dm"
+#include "code\modules\pool\pool_main.dm"
+#include "code\modules\pool\pool_noodles.dm"
+#include "code\modules\pool\pool_structures.dm"
+#include "code\modules\pool\pool_wires.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cell.dm"
