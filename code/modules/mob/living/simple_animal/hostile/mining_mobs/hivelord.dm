@@ -411,6 +411,6 @@
 			belt = /obj/item/storage/belt/fannypack/yellow
 			id_job = "Assisant"
 			id = /obj/item/card/id
-			l_pocket = /obj/item/paper/fluff/bee_objectives
+			l_pocket = /obj/item/reagent_containers/food/drinks/soda_cans/buzz_fuzz
 			mask = /obj/item/clothing/mask/rat/bee
 	. = ..()
