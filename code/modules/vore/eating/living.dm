@@ -384,6 +384,9 @@
 	if(!istype(tasted))
 		return
 
+	if(!tasted.client?.prefs_vr.lickable)
+		return
+
 	if(src == stat)
 		return
 

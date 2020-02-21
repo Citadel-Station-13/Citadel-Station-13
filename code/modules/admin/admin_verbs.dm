@@ -714,7 +714,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	AI_Interact = !AI_Interact
 	if(mob && IsAdminGhost(mob))
-		mob.has_unlimited_silicon_privilege = AI_Interact
+		mob.silicon_privileges = AI_Interact ? ALL : NONE
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")

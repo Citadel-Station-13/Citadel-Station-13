@@ -357,15 +357,9 @@
 	maxcharge = 12000
 	chargerate = 600
 
-/obj/item/stock_parts/cell/magnetic/empty
-	start_charged = FALSE
-
 /obj/item/stock_parts/cell/magnetic/pistol
 	name = "magpistol power supply"
 	maxcharge = 6000
-
-/obj/item/stock_parts/cell/magnetic/pistol/empty
-	start_charged = FALSE
 
 /obj/item/stock_parts/cell/toymagburst
 	name = "toy mag burst rifle power supply"

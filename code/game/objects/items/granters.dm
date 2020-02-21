@@ -490,7 +490,13 @@
 	oneuse = FALSE
 	remarks = list("Looks like these would sell much better in a plasma fire...", "Using glass bowls rather then cones?", "Mixing soda and ice-cream?", "Tall glasses with of liquids and solids...", "Just add a bit of icecream and cherry on top?")
 
-//Later content when I have free time - Trilby Date:24-Aug-2019
+/obj/item/book/granter/crafting_recipe/bone_bow //Bow crafting for non-ashwalkers
+	name = "Sandstone manual on bows"
+	desc = "A standstone slab with everything you need to know for making bows and arrows just like an ashwalker would."
+	crafting_recipe_types = list(/datum/crafting_recipe/bone_arrow, /datum/crafting_recipe/bone_bow, /datum/crafting_recipe/ashen_arrow, /datum/crafting_recipe/quiver, /datum/crafting_recipe/bow_tablet)
+	icon_state = "stone_tablet"
+	oneuse = FALSE
+	remarks = list("Sticking burning arrows into the sand makes them stronger?", "Breaking the bone apart to get shards, not sharpening  the bone.", "Sinew is just like rope?")
 
 /obj/item/book/granter/crafting_recipe/under_the_oven //Illegal cook book
 	name = "Under The Oven"

@@ -834,12 +834,31 @@
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
+/mob/living/carbon/proc/can_defib()
+	var/tlimit = DEFIB_TIME_LIMIT * 10
+	var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
+	if(suiciding || hellbound || HAS_TRAIT(src, TRAIT_HUSK))
+		return
+	if((world.time - timeofdeath) > tlimit)
+		return
+	if((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+		return
+	if(!heart || (heart.organ_flags & ORGAN_FAILING))
+		return
+	var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
+	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || suiciding)
+		return
+	return TRUE
+
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
 		reagents.clear_reagents()
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.brain_death = FALSE
+	for(var/O in internal_organs)
+		var/obj/item/organ/organ = O
+		organ.setOrganDamage(0)
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
@@ -852,7 +871,8 @@
 			qdel(R)
 		update_handcuffed()
 		if(reagents)
-			reagents.addiction_list = list()
+			for(var/addi in reagents.addiction_list)
+				reagents.remove_addiction(addi)
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
@@ -987,3 +1007,6 @@
 			return TRUE
 	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
 		return TRUE
+
+/mob/living/carbon/can_hold_items()
+	return TRUE
