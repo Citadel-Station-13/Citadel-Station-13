@@ -94,7 +94,7 @@
 	result = /obj/item/reagent_containers/food/snacks/sushie_pro
 	subcategory = CAT_EASTERN
 
-//////////////////Not-Fish//////////////////////
+//////////////////Eastern Not-Fish//////////////////////
 
 /datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
@@ -148,4 +148,35 @@
 		/obj/item/paper = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/fortunecookie
+	subcategory = CAT_EASTERN
+
+//////////////////////////////////////////////FISH///////////////////////////////////////////
+
+/datum/crafting_recipe/food/fishfingers
+	name = "Fish fingers"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/fishfingers
+	subcategory = CAT_EASTERN
+
+/datum/crafting_recipe/food/cubancarp
+	name = "Cuban carp"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/cubancarp
+	subcategory = CAT_EASTERN
+
+/datum/crafting_recipe/food/fishandchips
+	name = "Fish and chips"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/fries = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/fishandchips
 	subcategory = CAT_EASTERN
