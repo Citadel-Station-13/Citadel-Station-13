@@ -55,6 +55,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
+	var/extendvote_passed = FALSE
+
 	var/realtimeofstart = 0
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
@@ -648,3 +650,4 @@ SUBSYSTEM_DEF(shuttle)
 		log_game("Round end vote passed. Shuttle has been auto-called.")
 		message_admins("Round end vote passed. Shuttle has been auto-called.")
 		emergencyNoRecall = TRUE
+		extendvote_passed = TRUE
