@@ -289,6 +289,16 @@
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
 
+/datum/design/broom
+	name = "Broom"
+	desc = "Just your everyday standard broom."
+	id = "broom"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 600)
+	build_path = /obj/item/twohanded/broom
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/mop
 	name = "Mop"
 	desc = "Just your everyday standard mop."

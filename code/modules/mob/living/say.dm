@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(M.stat != DEAD) //not dead, not important
 			if(yellareas)	//CIT CHANGE - see above. makes yelling penetrate walls
 				var/area/A = get_area(M)	//CIT CHANGE - ditto
-				if(istype(A) && A.ambientsounds != SPACE && A in yellareas)	//CIT CHANGE - ditto
+				if(istype(A) && A.ambientsounds != SPACE && (A in yellareas))	//CIT CHANGE - ditto
 					listening |= M	//CIT CHANGE - ditto
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(message_mode == MODE_HEADSET)
 			imp.radio.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
-		if(message_mode == MODE_DEPARTMENT || message_mode in GLOB.radiochannels)
+		if(message_mode == MODE_DEPARTMENT || (message_mode in GLOB.radiochannels))
 			imp.radio.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 

@@ -7,6 +7,7 @@
 	knockdown = 100
 	dismemberment = 50
 	armour_penetration = 50
+	zone_accuracy_factor = 100		//guarunteed 100%
 	var/breakthings = TRUE
 
 /obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = 0)

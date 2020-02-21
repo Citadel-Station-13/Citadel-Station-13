@@ -376,6 +376,14 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /*
  * Silk
  */
+
+	GLOBAL_LIST_INIT(silk_recipes, list ( \
+	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 4, time = 40), \
+	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 2, time = 40), \
+	null, \
+	new/datum/stack_recipe("silk string", /obj/item/weaponcrafting/silkstring, 2, time = 40), \
+	))
+
 /obj/item/stack/sheet/silk
 	name = "silk"
 	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
@@ -385,14 +393,14 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/silk
 
-//obj/item/stack/sheet/silk/Initialize(mapload, new_amount, merge = TRUE)
-//	recipes = GLOB.silk_recipes
-//	return ..()
+/obj/item/stack/sheet/silk/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.silk_recipes
+	return ..()
 
 /*
  * Durathread
  */
-	GLOBAL_LIST_INIT(durathread_recipes, list ( \
+GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/durathread, 4, time = 40),
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \

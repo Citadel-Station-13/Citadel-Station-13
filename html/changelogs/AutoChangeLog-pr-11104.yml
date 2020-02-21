@@ -1,0 +1,4 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - server: "Express console is now logging what it buys, like the normal console should"
