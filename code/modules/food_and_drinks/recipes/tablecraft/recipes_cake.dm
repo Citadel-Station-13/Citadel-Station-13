@@ -80,6 +80,15 @@
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday
 	subcategory = CAT_CAKE
 
+/datum/crafting_recipe/food/briochecake
+	name = "Brioche cake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/datum/reagent/consumable/sugar = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/brioche
+	subcategory = CAT_CAKE
+
 /datum/crafting_recipe/food/carrotcake
 	name = "Carrot cake"
 	reqs = list(

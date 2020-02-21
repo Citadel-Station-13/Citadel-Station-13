@@ -294,7 +294,7 @@
 	icon_state = "bowl"
 	reagent_flags = OPENCONTAINER
 	materials = list(MAT_GLASS = 500)
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks))

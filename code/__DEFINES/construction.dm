@@ -97,14 +97,13 @@
 #define CAT_MEAT	"Meats"
 #define CAT_MEXICAN	"Mexican"
 #define CAT_MISCFOOD	"Misc. Food"
-#define CAT_PASTRY	"Pastries"
+#define CAT_PASTRY	"Pastries & Sweets"
 #define CAT_PIE	"Pies"
 #define CAT_PIZZA	"Pizzas"
 #define CAT_SALAD	"Salads"
 #define CAT_SANDWICH	"Sandwiches"
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
-#define CAT_SWEETS	"Sweets"
 #define CAT_ICE	"Frozen"
 
 #define RCD_FLOORWALL 1
