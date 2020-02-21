@@ -2,7 +2,6 @@
 	name = "pAI"
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -11,7 +10,8 @@
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
-	can_be_held = TRUE
+	silicon_privileges = PRIVILEDGES_PAI
+	var/datum/element/mob_holder/current_mob_holder //because only a few of their chassis can be actually held.
 
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
@@ -64,9 +64,6 @@
 	var/list/possible_chassis			//initialized in initialize.
 	var/list/dynamic_chassis_icons		//ditto.
 	var/list/chassis_pixel_offsets_x	//stupid dogborgs
-	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
-	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
-	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
@@ -77,7 +74,7 @@
 	var/emitteroverloadcd = 100
 
 	var/radio_short = FALSE
-	var/radio_short_cooldown = 5 MINUTES
+	var/radio_short_cooldown = 3 MINUTES
 	var/radio_short_timerid
 
 	canmove = FALSE

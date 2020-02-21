@@ -173,23 +173,25 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			var/unholy2clean = A.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			A.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			A.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
-	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
-		var/obj/item/twohanded/required/cult_bastard/sword = A
-		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+	if(istype(A, /obj/item/twohanded/required/cult_bastard) || istype(A, /obj/item/melee/cultblade) && !iscultist(user))
+		to_chat(user, "<span class='notice'>You begin to exorcise [A].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
-		if(do_after(user, 40, target = sword))
+		if(do_after(user, 40, target = A))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
-			for(var/obj/item/soulstone/SS in sword.contents)
-				SS.usability = TRUE
-				for(var/mob/living/simple_animal/shade/EX in SS)
-					SSticker.mode.remove_cultist(EX.mind, 1, 0)
-					EX.icon_state = "ghost1"
-					EX.name = "Purified [EX.name]"
-				SS.release_shades(user)
-				qdel(SS)
-			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
-			qdel(sword)
+			if(istype(A, /obj/item/twohanded/required/cult_bastard))
+				for(var/obj/item/soulstone/SS in A.contents)
+					SS.usability = TRUE
+					for(var/mob/living/simple_animal/shade/EX in SS)
+						SSticker.mode.remove_cultist(EX.mind, 1, 0)
+						EX.icon_state = "ghost1"
+						EX.name = "Purified [EX.name]"
+					SS.release_shades(user)
+					qdel(SS)
+				new /obj/item/nullrod/claymore(get_turf(A))
+			else
+				new /obj/item/claymore/purified(get_turf(A))
+			user.visible_message("<span class='notice'>[user] has purified [A]!</span>")
+			qdel(A)
 
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
@@ -244,3 +246,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 
 /obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
 	return FALSE
+
+/obj/item/storage/book/bible/syndicate/empty
+	uses = 0

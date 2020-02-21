@@ -178,7 +178,7 @@
 /datum/supply_pack/security/armory/russian
 	name = "Russian Surplus Crate"
 	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
-	cost = 5000
+	cost = 7500
 	contraband = TRUE
 	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
 					/obj/item/ammo_box/a762,
@@ -192,12 +192,11 @@
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/shotgun/boltaction,
 					/obj/item/gun/ballistic/shotgun/boltaction)
 	crate_name = "surplus military crate"
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 10)
+	for(var/i in 1 to 5)
 		var/item = pick(contains)
 		new item(C)
 
@@ -218,7 +217,7 @@
 	crate_name = "swat crate"
 
 /datum/supply_pack/security/armory/swattasers //Lesser AEG tbh
-	name = "SWAT tatical tasers Crate"
+	name = "SWAT tactical tasers Crate"
 	desc = "Contains two tactical energy gun, these guns are able to tase, disable and lethal as well as hold a seclight. Requires Armory access to open."
 	cost = 7000
 	contains = list(/obj/item/gun/energy/e_gun/stun,
@@ -226,7 +225,7 @@
 	crate_name = "swat taser crate"
 
 /datum/supply_pack/security/armory/woodstock
-	name = "Classic WoodStock Shotguns Crate"
+	name = "WoodStock Classic Shotguns Crate"
 	desc = "Contains three rustic, pumpaction shotguns. Requires Armory access to open."
 	cost = 3000
 	contains = list(/obj/item/gun/ballistic/shotgun,

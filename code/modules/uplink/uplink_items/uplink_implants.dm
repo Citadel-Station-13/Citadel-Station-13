@@ -20,7 +20,7 @@
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/anti_stun
 	cost = 12
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
@@ -29,22 +29,12 @@
 	item = /obj/item/storage/box/syndie_kit/imp_freedom
 	cost = 5
 
-/datum/uplink_item/implants/microbomb
-	name = "Microbomb Implant"
-	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
-			The more implants inside of you, the higher the explosive power. \
-			This will permanently destroy your body, however."
-	item = /obj/item/storage/box/syndie_kit/imp_microbomb
-	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/implants/macrobomb
-	name = "Macrobomb Implant"
-	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
-			Upon death, releases a massive explosion that will wipe out everything nearby."
-	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
-	cost = 20
-	include_modes = list(/datum/game_mode/nuclear)
+/datum/uplink_item/implants/hijack
+	name = "Hijack Implant"
+	desc = "An implant that will let you hack into the APCs on station, allowing you to control them at will and the machinery within those rooms."
+	item = /obj/item/implanter/hijack
+	cost = 14 //really overkill, 14 tc, can still get caught in a room you haven't hijacked and you're fucked.
+	surplus = 0 //nope not having hijack implants with surplus crates nope nope nope nope
 	restricted = TRUE
 
 /datum/uplink_item/implants/radio
@@ -55,12 +45,30 @@
 	cost = 4
 	restricted = TRUE
 
+/datum/uplink_item/implants/microbomb
+	name = "Microbomb Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
+			The more implants inside of you, the higher the explosive power. \
+			This will permanently destroy your body, however."
+	item = /obj/item/storage/box/syndie_kit/imp_microbomb
+	cost = 2
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/implants/macrobomb
+	name = "Macrobomb Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
+			Upon death, releases a massive explosion that will wipe out everything nearby."
+	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
+	cost = 20
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	restricted = TRUE
+
 /datum/uplink_item/implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/reviver
 	cost = 8
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/implants/stealthimplant
 	name = "Stealth Implant"
@@ -81,7 +89,7 @@
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
 	item = /obj/item/autosurgeon/thermal_eyes
 	cost = 8
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
@@ -99,4 +107,4 @@
 	item = /obj/item/autosurgeon/xray_eyes
 	cost = 10
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)

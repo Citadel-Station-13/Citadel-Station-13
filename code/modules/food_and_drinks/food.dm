@@ -12,6 +12,7 @@
 	possible_transfer_amounts = list()
 	volume = 50	//Sets the default container amount for all food items.
 	reagent_flags = INJECTABLE
+	reagent_value = NO_REAGENTS_VALUE
 	resistance_flags = FLAMMABLE
 	var/foodtype = NONE
 	var/last_check_time

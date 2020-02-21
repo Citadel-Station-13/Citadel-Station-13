@@ -144,7 +144,13 @@
 					/obj/item/clothing/head/cowboyhat/white = 3,
 					/obj/item/clothing/head/cowboyhat/pink = 3,
 					/obj/item/clothing/shoes/cowboyboots = 3,
-					/obj/item/clothing/shoes/cowboyboots/black = 3)
+					/obj/item/clothing/shoes/cowboyboots/black = 3,
+					/obj/item/clothing/under/lunar/qipao = 3,
+					/obj/item/clothing/under/lunar/qipao/white = 3,
+					/obj/item/clothing/under/lunar/qipao/red = 3,
+					/obj/item/clothing/under/lunar/cheongsam = 3,
+					/obj/item/clothing/under/lunar/cheongsam/white = 3,
+					/obj/item/clothing/under/lunar/cheongsam/red = 3)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 3,
 					/obj/item/clothing/under/syndicate/tacticool/skirt = 3,
 					/obj/item/clothing/mask/balaclava = 3,
@@ -164,7 +170,8 @@
 					/obj/item/clothing/suit/jacket/leather/overcoat = 4,
 					/obj/item/clothing/under/pants/mustangjeans = 3,
 					/obj/item/clothing/neck/necklace/dope = 5,
-					/obj/item/clothing/suit/jacket/letterman_nanotrasen = 5)
+					/obj/item/clothing/suit/jacket/letterman_nanotrasen = 5,
+					/obj/item/clothing/suit/hooded/wintercoat/polychromic = 5)
 	refill_canister = /obj/item/vending_refill/clothing
 
 /obj/item/vending_refill/clothing

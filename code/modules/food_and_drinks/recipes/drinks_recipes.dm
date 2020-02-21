@@ -585,6 +585,14 @@
 	mix_message = "The mixture develops a sinister glow."
 	mix_sound = 'sound/effects/singlebeat.ogg'
 
+/datum/chemical_reaction/cogchamp
+	name = "CogChamp"
+	id = /datum/reagent/consumable/ethanol/cogchamp
+	results = list(/datum/reagent/consumable/ethanol/cogchamp = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/cognac = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol/screwdrivercocktail = 1)
+	mix_message = "You hear faint sounds of gears turning as it mixes."
+	mix_sound = 'sound/effects/clockcult_gateway_closing.ogg'
+
 /datum/chemical_reaction/quadruplesec
 	name = "Quadruple Sec"
 	id = /datum/reagent/consumable/ethanol/quadruple_sec

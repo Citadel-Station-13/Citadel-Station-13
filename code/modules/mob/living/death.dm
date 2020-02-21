@@ -25,7 +25,7 @@
 
 /mob/living/proc/spawn_gibs(with_bodyparts, atom/loc_override)
 	var/location = loc_override ? loc_override.drop_location() : drop_location()
-	if(MOB_ROBOTIC in mob_biotypes)
+	if(mob_biotypes & MOB_ROBOTIC)
 		new /obj/effect/gibspawner/robot(location, src, get_static_viruses())
 	else
 		new /obj/effect/gibspawner/generic(location, src, get_static_viruses())
@@ -61,7 +61,7 @@
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
-	tod = STATION_TIME_TIMESTAMP("hh:mm:ss")
+	tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
 	if(mind)

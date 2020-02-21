@@ -14,7 +14,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
 	melee_damage_lower = 18
 	melee_damage_upper = 18
@@ -22,9 +22,11 @@
 	maxHealth = 50
 	speed = 10
 	glide_size = 2
-	can_be_held = "sloth" //finally oranges can be held
 	do_footstep = TRUE
 
+/mob/living/simple_animal/pet/fox/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/mob_holder, "sloth") //finally oranges can be held
 
 //Cargo Sloth
 /mob/living/simple_animal/sloth/paperwork

@@ -260,7 +260,7 @@
 	if(..())
 		return
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr))
 		//Authenticate
 		if (href_list["auth"])
 			if(LINKED_SERVER_NONRESPONSIVE)
@@ -421,7 +421,7 @@
 							"name" = "[customsender]",
 							"job" = "[customjob]",
 							"message" = custommessage,
-							"emoji_message" = emoji_parse(custommessage),
+							"emojis" = TRUE,
 							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
 						))
 						// this will log the signal and transmit it to the target

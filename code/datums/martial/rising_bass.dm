@@ -1,8 +1,6 @@
 #define SIDE_KICK_COMBO "DH"
 #define SHOULDER_FLIP_COMBO "GHDGHH"
-#define REPULSE_PUNCH_COMBO "GHGH"
 #define FOOT_SMASH_COMBO "HH"
-#define DEFT_SWITCH_COMBO "GDD"
 
 /datum/martial_art/the_rising_bass
 	name = "The Rising Bass"
@@ -10,6 +8,9 @@
 	dodge_chance = 100
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/rising_bass_help
+	var/datum/action/risingbassmove/repulsepunch = new/datum/action/risingbassmove/repulsepunch()
+	var/datum/action/risingbassmove/deftswitch = new/datum/action/risingbassmove/deftswitch()
+	var/repulsecool = 0
 
 /datum/martial_art/the_rising_bass/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SIDE_KICK_COMBO))
@@ -20,7 +21,7 @@
 		streak = ""
 		shoulderFlip(A,D)
 		return 1
-	if(findtext(streak,REPULSE_PUNCH_COMBO))
+	if(findtext(streak,"rplse"))
 		streak = ""
 		repulsePunch(A,D)
 		return 1
@@ -28,11 +29,44 @@
 		streak = ""
 		footSmash(A,D)
 		return 1
-	if(findtext(streak,DEFT_SWITCH_COMBO))
+	if(findtext(streak,"deft"))
 		streak = ""
 		deftSwitch(A,D)
 		return 1
 	return 0
+
+
+//Repulse Punch - Slams the opponent far away from you.
+/datum/action/risingbassmove
+	name = ""
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = ""
+	var/movestreak = ""
+
+/datum/action/risingbassmove/Trigger()
+	if(owner.incapacitated())
+		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
+		return
+	var/mob/living/carbon/human/H = owner
+	if (H.mind.martial_art.streak == "[movestreak]")
+		H.mind.martial_art.streak = ""
+		to_chat(H,"<span class='danger'>You relax your muscles and return to a neutral position.</span>")
+	else
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			to_chat(H, "<span class='warning'>You don't want to harm other people!</span>")
+			return
+		to_chat(H,"<span class='danger'>You get ready to use the [name] maneuver!</span>")
+		H.mind.martial_art.streak = "[movestreak]"
+
+/datum/action/risingbassmove/repulsepunch
+	name = "Repulse Punch"
+	button_icon_state = "repulsepunch"
+	movestreak = "rplse"
+
+/datum/action/risingbassmove/deftswitch
+	name = "Deft Switch"
+	button_icon_state = "deftswitch"
+	movestreak = "deft"
 
 
 /datum/martial_art/the_rising_bass/proc/sideKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -75,7 +109,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/repulsePunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(!D.IsKnockdown() || !D.lying || repulsecool > world.time)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] smashes [D] in the chest, throwing them away!</span>", \
 						  "<span class='userdanger'>[A] smashes you in the chest, repelling you away!</span>")
@@ -85,6 +119,7 @@
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 		D.Knockdown(90)
 		log_combat(A, D, "repulse punched (Rising Bass)")
+		repulsecool = world.time + 3 SECONDS
 		return 1
 	return basic_hit(A,D)
 
@@ -132,6 +167,11 @@
 		return 1
 	return ..()
 
+/datum/martial_art/the_rising_bass/add_to_streak(element,mob/living/carbon/human/D)
+	if (streak == "deft" || streak == "rplse")
+		return
+	. = ..()
+
 /mob/living/carbon/human/proc/rising_bass_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Rising Bass clan."
@@ -149,10 +189,14 @@
 	. = ..()
 	if(!.)
 		return
+	deftswitch.Grant(H)
+	repulsepunch.Grant(H)
 	ADD_TRAIT(H, TRAIT_NOGUNS, RISING_BASS_TRAIT)
 	ADD_TRAIT(H, TRAIT_AUTO_CATCH_ITEM, RISING_BASS_TRAIT)
 
 /datum/martial_art/the_rising_bass/on_remove(mob/living/carbon/human/H)
 	. = ..()
+	deftswitch.Remove(H)
+	repulsepunch.Remove(H)
 	REMOVE_TRAIT(H, TRAIT_NOGUNS, RISING_BASS_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_AUTO_CATCH_ITEM, RISING_BASS_TRAIT)

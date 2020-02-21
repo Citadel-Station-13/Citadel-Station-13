@@ -229,12 +229,12 @@
 /datum/export/gear/magboots
 	cost = 50
 	unit_name = "magboots"
-	export_types = list(/obj/item/clothing/shoes/magboots, /obj/item/clothing/shoes/magboots/atmos)
+	export_types = list(/obj/item/clothing/shoes/magboots)
 
 /datum/export/gear/nosellboots
 	cost = -5000 //We DONT want scew antags
 	unit_name = "error shipment stolen"
-	export_types = list(/obj/item/clothing/shoes/magboots/advance, /obj/item/clothing/shoes/magboots/deathsquad)
+	export_types = list(/obj/item/clothing/shoes/magboots/advance)
 
 /datum/export/gear/syndamagboots
 	cost = 250
@@ -279,7 +279,7 @@
 /datum/export/gear/magicboots //Magic as in Antag - Wiz/Cults
 	cost = 450
 	unit_name = "magic shoes"
-	export_types = list(/obj/item/clothing/shoes/sandal/marisa, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/shoes/cult, /obj/item/clothing/shoes/clockwork, /obj/item/clothing/shoes/clown_shoes/taeclowndo, /obj/item/clothing/shoes/sandal/slippers)
+	export_types = list(/obj/item/clothing/shoes/sandal/marisa, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/shoes/cult, /obj/item/clothing/shoes/clockwork, /obj/item/clothing/shoes/clown_shoes/taeclowndo)
 	include_subtypes = TRUE
 
 //Headsets/Ears
@@ -585,8 +585,7 @@ datum/export/gear/glasses //glasses are not worth selling
 	export_types = list(/obj/item/clothing/under/scratch, /obj/item/clothing/under/sl_suit, /obj/item/clothing/under/rank/vice, /obj/item/clothing/under/suit_jacket, \
 						/obj/item/clothing/under/burial, /obj/item/clothing/under/skirt/black, /obj/item/clothing/under/captainparade, /obj/item/clothing/under/hosparademale, \
 						/obj/item/clothing/under/hosparadefem, /obj/item/clothing/under/assistantformal, /obj/item/clothing/under/stripeddress, /obj/item/clothing/under/redeveninggown, \
-						/obj/item/clothing/under/plaid_skirt, /obj/item/clothing/under/geisha, /obj/item/clothing/under/trek, /obj/item/clothing/under/wedding, /obj/item/clothing/under/aviatoruniform,\
-						/obj/item/clothing/under/mega, /obj/item/clothing/under/cia, /obj/item/clothing/under/casualwear, /obj/item/clothing/under/rank)
+						/obj/item/clothing/under/plaid_skirt, /obj/item/clothing/under/geisha, /obj/item/clothing/under/trek, /obj/item/clothing/under/rank)
 	include_subtypes = TRUE
 
 /datum/export/gear/armored_jumpsuit

@@ -1,7 +1,11 @@
 /* Glass stack types
  * Contains:
  *		Glass sheets
+ *		Plasma glass
  *		Reinforced glass sheets
+ *		Reinforced plasma glass
+ *		Titanium glass
+ *		Plastitanium glass
  *		Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
@@ -10,7 +14,15 @@
  */
 GLOBAL_LIST_INIT(glass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	null, \
+	new/datum/stack_recipe_list("glass working bases", list( \
+		new/datum/stack_recipe("chem dish", /obj/item/glasswork/glass_base/dish, 10), \
+		new/datum/stack_recipe("lens", /obj/item/glasswork/glass_base/glass_lens, 15), \
+		new/datum/stack_recipe("spout flask", /obj/item/glasswork/glass_base/spouty, 20), \
+		new/datum/stack_recipe("small bulb flask", /obj/item/glasswork/glass_base/flask_small, 5), \
+		new/datum/stack_recipe("large bottle flask", /obj/item/glasswork/glass_base/flask_large, 15), \
+	)), \
 ))
 
 /obj/item/stack/sheet/glass
@@ -246,6 +258,9 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard
 
+/obj/item/stack/sheet/plastitaniumglass/fifty
+	amount = 50
+
 /obj/item/stack/sheet/plastitaniumglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.plastitaniumglass_recipes
 	return ..()
@@ -366,3 +381,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	icon_state = "plasmalarge"
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "plasma"
+
+/obj/item/shard/plasma/alien
+	name = "alien shard"
+	desc = "A nasty looking shard of advanced alloy glass."

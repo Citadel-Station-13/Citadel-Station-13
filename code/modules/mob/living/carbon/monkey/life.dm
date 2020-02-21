@@ -30,6 +30,9 @@
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)
+		if(radiation > RAD_MOB_MUTATE && prob((radiation - RAD_MOB_MUTATE) / 25))
+			gorillize() 
+			return
 		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 			if(!IsKnockdown())
 				emote("collapse")
@@ -41,10 +44,6 @@
 				randmutb()
 				emote("gasp")
 				domutcheck()
-
-				if(radiation > RAD_MOB_MUTATE * 2 && prob(50))
-					gorillize()
-					return
 		if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
 			vomit(10, TRUE)
 	return ..()

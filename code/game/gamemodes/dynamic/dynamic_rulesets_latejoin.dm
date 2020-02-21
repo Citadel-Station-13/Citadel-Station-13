@@ -47,6 +47,8 @@
 	assigned += M.mind
 	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(antag_datum)
+	log_admin("[M.name] was made into a [name] by dynamic.")
+	message_admins("[M.name] was made into a [name] by dynamic.")
 	return TRUE
 
 //////////////////////////////////////////////
@@ -71,12 +73,6 @@
 	flags = TRAITOR_RULESET
 	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1)
 	always_max_weight = TRUE
-
-/datum/dynamic_ruleset/latejoin/infiltrator/execute()
-	. = ..()
-	for(var/datum/mind/M in assigned)
-		log_admin("[M.name] was made into a traitor by dynamic.")
-		message_admins("[M.name] was made into a traitor by dynamic.")
 
 //////////////////////////////////////////////
 //                                          //
@@ -225,3 +221,25 @@
 		log_admin("[M.name] was made into a bloodsucker by dynamic.")
 		message_admins("[M.name] was made into a bloodsucker by dynamic.")
 	return TRUE
+
+//////////////////////////////////////////////
+//                                          //
+//                 COLLECTOR                //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/collector
+	name = "Contraband Collector"
+	config_tag = "latejoin_collector"
+	antag_datum = /datum/antagonist/collector
+	antag_flag = ROLE_MINOR_ANTAG
+	restricted_roles = list("AI", "Cyborg")
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	required_candidates = 1
+	weight = 5
+	cost = 1
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	high_population_requirement = 10
+	repeatable = TRUE
+	flags = TRAITOR_RULESET
+	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 2)
