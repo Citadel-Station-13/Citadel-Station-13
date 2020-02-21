@@ -139,6 +139,17 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	else
 		return "<span class='notice'>[html_encode(copytext_char(msg, 1, 37))]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
 
+/mob/proc/print_flavor_text_2(flavor)
+	if(!flavor)
+		return
+	// We are decoding and then encoding to not only get correct amount of characters, but also to prevent partial escaping characters being shown.
+	var/msg = html_decode(replacetext(flavor, "\n", " "))
+	if(length_char(msg) <= 40)
+		return "<span class='notice'>[html_encode(msg)]</span>"
+	else
+		return "<span class='notice'>[html_encode(copytext_char(msg, 1, 37))]... <a href='?src=[REF(src)];flavor2_more=1'>More...</span></a>"
+
+
 //LOOC toggles
 /client/verb/listen_looc()
 	set name = "Show/Hide LOOC"
