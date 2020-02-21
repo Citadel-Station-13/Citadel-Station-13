@@ -1061,6 +1061,8 @@
 			target = A
 		else
 			target = A.loc
+			if(!isturf(target)) //read: Mob inventories.
+				return
 	else
 		target = user.loc
 	if (locate(/obj/structure/table) in target.contents)
