@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - tweak: "tableslamming has 0.4 second cooldown instead of 0.8"

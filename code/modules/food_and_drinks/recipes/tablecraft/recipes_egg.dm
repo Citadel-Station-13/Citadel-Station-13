@@ -13,6 +13,15 @@
 	result = /obj/item/reagent_containers/food/snacks/friedegg
 	subcategory = CAT_EGG
 
+/datum/crafting_recipe/food/baconegg
+	name = "Bacon and Eggs"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/friedegg = 1,
+		/obj/item/reagent_containers/food/snacks/meat/bacon = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/baconegg
+	subcategory = CAT_EGG
+
 /datum/crafting_recipe/food/omelette
 	name = "Omelette"
 	reqs = list(

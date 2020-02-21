@@ -20,7 +20,7 @@
 
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
-	if(!d_type)
+	if(!d_type || !def_zone)
 		return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
@@ -336,7 +336,8 @@
 			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
 				for(var/I in contents)
 					var/atom/A = I
-					A.ex_act(severity)
+					if(!QDELETED(A))
+						A.ex_act(severity)
 				gib()
 				return
 			else

@@ -310,7 +310,13 @@
 	originalname = "astrotame"
 	list_reagents = list(/datum/reagent/consumable/astrotame = 5)
 
+//Other Sauce
 /obj/item/reagent_containers/food/condiment/pack/bbqsauce
 	name = "bbq sauce pack"
 	originalname = "bbq sauce"
 	list_reagents = list(/datum/reagent/consumable/bbqsauce = 10)
+
+/obj/item/reagent_containers/food/condiment/pack/soysauce
+	name = "soy sauce pack"
+	originalname = "soy sauce"
+	list_reagents = list(/datum/reagent/consumable/soysauce = 10)

@@ -57,14 +57,11 @@ GLOBAL_LIST_EMPTY(ipc_antennas_list)
 
 	//Genitals and Arousal Lists
 GLOBAL_LIST_EMPTY(genitals_list)
-GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
-GLOBAL_LIST_EMPTY(cock_shapes_icons) //Associated list for names->icon_states for cockshapes.
+GLOBAL_LIST_EMPTY(cock_shapes_list)
 GLOBAL_LIST_EMPTY(gentlemans_organ_names)
 GLOBAL_LIST_EMPTY(balls_shapes_list)
-GLOBAL_LIST_EMPTY(balls_shapes_icons)
 GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
-GLOBAL_LIST_EMPTY(breasts_shapes_icons)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
 GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
 GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
@@ -111,26 +108,36 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
 
 //Flavor Text
-/mob/living/carbon/human/verb/set_flavor()
+/mob/proc/set_flavor()
 	set name = "Set Flavor Text"
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	var/new_flavor = input(src, "Enter your new flavor text:", "Flavor text", null) as message|null
+	var/new_flavor = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", flavor_text, MAX_FAVOR_LEN, TRUE)
 	if(!isnull(new_flavor))
-		flavor_text = sanitize(new_flavor)
+		flavor_text = new_flavor
 		to_chat(src, "Your flavor text has been updated.")
 
 //Flavor Text
-/mob/living/carbon/human/verb/set_flavor_2()
+/mob/proc/set_flavor_2()
 	set name = "Set Temporary Flavor Text"
 	set desc = "Sets a description of your character's current appearance. Use this for emotions, poses etc."
 	set category = "IC"
 
-	var/new_flavor = input(src, "Enter your new temporary flavor text:", "Temporary flavor text", null) as message|null
+	var/new_flavor = stripped_multiline_input(usr, "Set the temporary flavor text in your 'examine' verb. This should be used only for things pertaining to the current round!", "Short-Term Flavor Text", flavor_text_2, MAX_FAVOR_LEN, TRUE)
 	if(!isnull(new_flavor))
-		flavor_text_2 = sanitize(new_flavor)
+		flavor_text_2 = new_flavor
 		to_chat(src, "Your temporary flavor text has been updated.")
+
+/mob/proc/print_flavor_text(flavor)
+	if(!flavor)
+		return
+	// We are decoding and then encoding to not only get correct amount of characters, but also to prevent partial escaping characters being shown.
+	var/msg = html_decode(replacetext(flavor, "\n", " "))
+	if(length_char(msg) <= 40)
+		return "<span class='notice'>[html_encode(msg)]</span>"
+	else
+		return "<span class='notice'>[html_encode(copytext_char(msg, 1, 37))]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
 
 //LOOC toggles
 /client/verb/listen_looc()

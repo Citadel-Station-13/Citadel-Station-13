@@ -431,35 +431,21 @@
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
-	else if(can_defib(H))
+	else if(H.can_defib())
 		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 	do_help(H, user)
 
-/obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H) //Our code here is different than tg, if it breaks in testing; BUG_PROBABLE_CAUSE
-	var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
-	if(H.suiciding || H.hellbound || HAS_TRAIT(H, TRAIT_HUSK))
-		return
-	if((world.time - H.timeofdeath) > tlimit)
-		return
-	if((H.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (H.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
-		return
-	if(!heart || (heart.organ_flags & ORGAN_FAILING))
-		return
-	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || H.suiciding)
-		return
-	return TRUE
-
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(req_defib)
-		if(defib.pullshocksafely && isliving(H.pulledby))
-			H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
-	else
-		var/mob/living/M = H.pulledby
-		if(M.electrocute_act(30, src))
-			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
-			M.emote("scream")
+	if(!H.pulledby || !isliving(H.pulledby))
+		return
+	if(req_defib && defib.pullshocksafely)
+		H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
+		return
+	var/mob/living/M = H.pulledby
+	if(M.electrocute_act(30, src))
+		M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
+		M.emote("scream")
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)

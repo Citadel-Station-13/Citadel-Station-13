@@ -5,6 +5,7 @@
 	force = 3
 	throwforce = 3
 	icon = 'icons/mob/human_parts.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	icon_state = ""
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	var/mob/living/carbon/owner = null
@@ -773,8 +774,6 @@
 	px_y = 12
 	stam_heal_tick = 4
 	max_stamina_damage = 50
-	var/blood_state = BLOOD_STATE_NOT_BLOODY
-	var/list/bloody_legs = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
 /obj/item/bodypart/l_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_LEG))
@@ -833,8 +832,6 @@
 	px_y = 12
 	max_stamina_damage = 50
 	stam_heal_tick = 4
-	var/blood_state = BLOOD_STATE_NOT_BLOODY
-	var/list/bloody_legs = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
 /obj/item/bodypart/r_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_LEG))

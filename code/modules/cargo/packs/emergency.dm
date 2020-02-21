@@ -11,11 +11,13 @@
 
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
-	desc = "TUNNEL SNAKES OWN THIS TOWN. Contains an unbranded All Terrain Vehicle, and a complete gang outfit -- consists of black gloves, a menacing skull bandanna, and a SWEET leather overcoat!"
+	desc = "TUNNEL SNAKES OWN THIS TOWN. Contains an unbranded All Terrain Vehicle, two cans of spraypaint, and a complete gang outfit -- consists of black gloves, a menacing skull bandanna, and a SWEET leather overcoat!"
 	cost = 2500
 	contraband = TRUE
 	contains = list(/obj/vehicle/ridden/atv,
 					/obj/item/key,
+					/obj/item/toy/crayon/spraycan,
+					/obj/item/toy/crayon/spraycan,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
@@ -126,24 +128,9 @@
 	crate_name = "emergency rcds"
 	crate_type = /obj/structure/closet/crate/internals
 
-/datum/supply_pack/emergency/soft_suit
-	name = "Emergency Space Suit"
-	desc = "Are there bombs going off left and right? Are there meteors shooting around the station? Well then! Here's two fragile space suits for emergencies. Comes with air and masks."
-	cost = 1200
-	contains = list(/obj/item/tank/internals/air,
-					/obj/item/tank/internals/air,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/suit/space/fragile,
-					/obj/item/clothing/suit/space/fragile,
-					/obj/item/clothing/head/helmet/space/fragile,
-					/obj/item/clothing/head/helmet/space/fragile)
-	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
-
 /datum/supply_pack/emergency/bomb
 	name = "Explosive Emergency Crate"
-	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (Time not included.)"
+	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and become the hero the station des... I mean needs! Time not included, but a full bomb suit and hood, as well as a mask and defusal kit are! Non-Nuclear ordnances only."
 	cost = 1500
 	contains = list(/obj/item/clothing/head/bomb_hood,
 					/obj/item/clothing/suit/bomb_suit,
@@ -208,7 +195,7 @@
 	crate_name = "metal foam grenade crate"
 
 /datum/supply_pack/emergency/mre
-	name = "MRE supply kit (emergency rations)"
+	name = "MRE Packs (Emergency Rations)"
 	desc = "The lights are out. Oxygen's running low. You've run out of food except space weevils. Don't let this be you! Order our NT branded MRE kits today! This pack contains 5 MRE packs with a randomized menu and an oxygen tank."
 	cost = 2000
 	contains = list(/obj/item/storage/box/mre/menu1/safe,
@@ -295,6 +282,21 @@
 					/obj/item/clothing/mask/breath)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/emergency/soft_suit
+	name = "Space Suits (Fragile)"
+	desc = "Are there bombs going off left and right? Are there meteors shooting around the station? Well then! Here's two fragile space suits for emergencies. Comes with air and masks."
+	cost = 1200
+	contains = list(/obj/item/tank/internals/air,
+					/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/suit/space/fragile,
+					/obj/item/clothing/suit/space/fragile,
+					/obj/item/clothing/head/helmet/space/fragile,
+					/obj/item/clothing/head/helmet/space/fragile)
+	crate_name = "emergency crate"
+	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/spacejets
 	name = "Spare EVA Jetpacks"

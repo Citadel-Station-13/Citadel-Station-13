@@ -51,6 +51,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	null, \
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("trash bin", /obj/structure/closet/crate/bin, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE),\
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
@@ -154,6 +155,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = TRUE), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
+	new/datum/stack_recipe("crate", /obj/structure/closet/crate, 5, time = 90,  one_per_turf = TRUE), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
 		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 6, time = 50, one_per_turf = 1, on_floor = 1), \
@@ -309,6 +311,15 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	recipes = GLOB.bamboo_recipes
 	return ..()
 
+/obj/item/stack/sheet/mineral/bamboo/ten
+	amount = 10
+
+/obj/item/stack/sheet/mineral/bamboo/twenty
+	amount = 20
+
+/obj/item/stack/sheet/mineral/bamboo/fifty
+	amount = 50
+
 /*
  * Cloth
  */
@@ -365,6 +376,14 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /*
  * Silk
  */
+
+	GLOBAL_LIST_INIT(silk_recipes, list ( \
+	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 4, time = 40), \
+	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 2, time = 40), \
+	null, \
+	new/datum/stack_recipe("silk string", /obj/item/weaponcrafting/silkstring, 2, time = 40), \
+	))
+
 /obj/item/stack/sheet/silk
 	name = "silk"
 	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
@@ -374,14 +393,14 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/silk
 
-//obj/item/stack/sheet/silk/Initialize(mapload, new_amount, merge = TRUE)
-//	recipes = GLOB.silk_recipes
-//	return ..()
+/obj/item/stack/sheet/silk/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.silk_recipes
+	return ..()
 
 /*
  * Durathread
  */
-	GLOBAL_LIST_INIT(durathread_recipes, list ( \
+GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/durathread, 4, time = 40),
 	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
 	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
@@ -688,6 +707,16 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	/*
  * Bones
  */
+
+GLOBAL_LIST_INIT(bone_recipes, list(
+	new /datum/stack_recipe("Bone Dagger", /obj/item/kitchen/knife/combat/bone, 2, time = 20), \
+	new /datum/stack_recipe("Skull Helmet", /obj/item/clothing/head/helmet/skull, 4, time = 30), \
+	new /datum/stack_recipe("Bone Armor", /obj/item/clothing/suit/armor/bone, 6, time = 30)))
+
+/obj/item/stack/sheet/bone/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.bone_recipes
+	. = ..()
+
 /obj/item/stack/sheet/bone
 	name = "bones"
 	icon = 'icons/obj/mining.dmi'
@@ -704,12 +733,15 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	grind_results = list(/datum/reagent/carbon = 10)
 	merge_type = /obj/item/stack/sheet/bone
 
+	/*
+ * Plastic
+ */
+
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("see-through plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
 	new /datum/stack_recipe("opaque plastic flaps", /obj/structure/plasticflaps/opaque, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
 	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/empty), \
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
-	new /datum/stack_recipe("large trash cart", /obj/structure/closet/crate/bin,50),\
 	new /datum/stack_recipe("wet floor sign", /obj/item/caution, 2)))
 
 /obj/item/stack/sheet/plastic

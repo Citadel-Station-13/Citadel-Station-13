@@ -132,14 +132,14 @@
 		return INITIALIZE_HINT_QDEL
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
-	RegisterSignal(owner, COMSIG_MOB_EXAMINATE, .proc/examinate_check)
+	RegisterSignal(owner, COMSIG_CLICK_SHIFT, .proc/examinate_check)
 	RegisterSignal(src, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
 	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
-	RegisterSignal(owner, COMSIG_LIVING_FULLY_HEAL, .proc/retrieve_head)
+	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
 
-/obj/item/dullahan_relay/proc/examinate_check(mob/source, atom/A)
-	if(source.client.eye == src && ((A in view(source.client.view, src)) || (isturf(A) && source.sight & SEE_TURFS) || (ismob(A) && source.sight & SEE_MOBS) || (isobj(A) && source.sight & SEE_OBJS)))
-		return COMPONENT_ALLOW_EXAMINE
+/obj/item/dullahan_relay/proc/examinate_check(atom/source, mob/user)
+	if(user.client.eye == src)
+		return COMPONENT_ALLOW_EXAMINATE
 
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
 	if(!QDELETED(owner))
@@ -148,8 +148,9 @@
 /obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_limbs)
 	excluded_limbs |= BODY_ZONE_HEAD // So we don't gib when regenerating limbs.
 
-/obj/item/dullahan_relay/proc/retrieve_head(datum/source, admin_revive = FALSE)
-	if(admin_revive) //retrieving the owner's head for ahealing purposes.
+//Retrieving the owner's head for better ahealing.
+/obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)
+	if(admin_revive)
 		var/obj/item/bodypart/head/H = loc
 		var/turf/T = get_turf(owner)
 		if(H && istype(H) && T && !(H in owner.GetAllContents()))

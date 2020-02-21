@@ -38,9 +38,9 @@
 	wielded = 0
 	if(!isnull(force_unwielded))
 		force = force_unwielded
-	var/sf = findtext(name," (Wielded)")
+	var/sf = findtext(name, " (Wielded)", -10)//10 == length(" (Wielded)")
 	if(sf)
-		name = copytext(name,1,sf)
+		name = copytext(name, 1, sf)
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
@@ -347,7 +347,6 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-
 	clean_blood()
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
@@ -511,7 +510,7 @@
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
 	return FALSE
 
-/obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+/obj/item/twohanded/dualsaber/hypereutactic/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
@@ -1017,3 +1016,66 @@
 		C.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
+
+/obj/item/twohanded/broom
+	name = "broom"
+	desc = "This is my BROOMSTICK! It can be used manually or braced with two hands to sweep items as you move. It has a telescopic handle for compact storage." //LIES
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "broom0"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	force = 8
+	throwforce = 10
+	throw_speed = 3
+	throw_range = 7
+	w_class = WEIGHT_CLASS_NORMAL
+	force_unwielded = 8
+	force_wielded = 12
+	attack_verb = list("swept", "brushed off", "bludgeoned", "whacked")
+	resistance_flags = FLAMMABLE
+
+/obj/item/twohanded/broom/update_icon_state()
+	icon_state = "broom[wielded]"
+
+/obj/item/twohanded/broom/wield(mob/user)
+	. = ..()
+	if(!wielded)
+		return
+	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
+
+/obj/item/twohanded/broom/unwield(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+
+/obj/item/twohanded/broom/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	sweep(user, A, FALSE)
+
+/obj/item/twohanded/broom/proc/sweep(mob/user, atom/A, moving = TRUE)
+	var/turf/target
+	if (!moving)
+		if (isturf(A))
+			target = A
+		else
+			target = A.loc
+	else
+		target = user.loc
+	if (locate(/obj/structure/table) in target.contents)
+		return
+	var/i = 0
+	for(var/obj/item/garbage in target.contents)
+		if(!garbage.anchored)
+			garbage.Move(get_step(target, user.dir), user.dir)
+		i++
+		if(i >= 20)
+			break
+	if(i >= 1)
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 5, TRUE, -1)
+
+/obj/item/twohanded/broom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
+	J.put_in_cart(src, user)
+	J.mybroom=src
+	J.update_icon()

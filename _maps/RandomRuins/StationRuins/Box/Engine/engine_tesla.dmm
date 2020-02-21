@@ -240,7 +240,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "nR" = (
 /obj/structure/cable{
@@ -902,14 +902,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
-"VR" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine Northeast";
-	network = list("ss13","engine")
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -1728,7 +1720,7 @@ dz
 dz
 FP
 FP
-VR
+FP
 dz
 dz
 Yl

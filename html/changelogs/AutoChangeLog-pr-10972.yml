@@ -1,0 +1,4 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - tweak: "Bone armor/Dagger are now crafting from bones rather then crafting menu"

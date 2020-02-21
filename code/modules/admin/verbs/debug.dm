@@ -487,7 +487,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
 			return
 		else
-			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
+			var/mob/dead/observer/ghost = new/mob/dead/observer(get_turf(M), M)
 			ghost.ckey = M.ckey
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
@@ -541,7 +541,9 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
 	var/list/areas_with_multiple_APCs = list()
+	var/list/sub_areas_APC = list()
 	var/list/areas_with_air_alarm = list()
+	var/list/sub_areas_air_alarm = list()
 	var/list/areas_with_RC = list()
 	var/list/areas_with_light = list()
 	var/list/areas_with_LS = list()
@@ -578,6 +580,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		if(!A)
 			dat += "Skipped over [APC] in invalid location, [APC.loc]."
 			continue
+		LAZYSET(sub_areas_APC, A.type, get_sub_areas(A, FALSE))
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 		else if(A.type in areas_all)
@@ -585,10 +588,11 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		CHECK_TICK
 
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
-		var/area/A = get_area(AA)
+		var/area/A = get_base_area(AA)
 		if(!A) //Make sure the target isn't inside an object, which results in runtimes.
 			dat += "Skipped over [AA] in invalid location, [AA.loc].<br>"
 			continue
+		LAZYSET(sub_areas_air_alarm, A.type, get_sub_areas(A, FALSE))
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 		CHECK_TICK
@@ -638,8 +642,8 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 			areas_with_camera.Add(A.type)
 		CHECK_TICK
 
-	var/list/areas_without_APC = areas_all - areas_with_APC
-	var/list/areas_without_air_alarm = areas_all - areas_with_air_alarm
+	var/list/areas_without_APC = areas_all - (areas_with_APC + flatten_list(sub_areas_APC))
+	var/list/areas_without_air_alarm = areas_all - (areas_with_air_alarm + flatten_list(sub_areas_air_alarm))
 	var/list/areas_without_RC = areas_all - areas_with_RC
 	var/list/areas_without_light = areas_all - areas_with_light
 	var/list/areas_without_LS = areas_all - areas_with_LS
@@ -656,12 +660,18 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		dat += "<h1>AREAS WITH MULTIPLE APCS:</h1>"
 		for(var/areatype in areas_with_multiple_APCs)
 			dat += "[areatype]<br>"
+			if(sub_areas_APC[areatype])
+				dat += "&nbsp;&nbsp;SUB-AREAS:<br>&nbsp;&nbsp;"
+				dat += jointext(sub_areas_APC[areatype], "<br>&nbsp;&nbsp;")
 			CHECK_TICK
 
 	if(areas_without_air_alarm.len)
 		dat += "<h1>AREAS WITHOUT AN AIR ALARM:</h1>"
 		for(var/areatype in areas_without_air_alarm)
 			dat += "[areatype]<br>"
+			if(sub_areas_air_alarm[areatype])
+				dat += "&nbsp;&nbsp;SUB-AREAS:<br>&nbsp;&nbsp;"
+				dat += jointext(sub_areas_air_alarm[areatype], "<br>&nbsp;&nbsp;")
 			CHECK_TICK
 
 	if(areas_without_RC.len)
@@ -1048,7 +1058,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	set name = "Start Line Profiling"
 	set desc = "Starts tracking line by line profiling for code lines that support it"
 
-	PROFILE_START
+	LINE_PROFILE_START
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] started line by line profiling.</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Line Profiling")
@@ -1059,7 +1069,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	set name = "Stops Line Profiling"
 	set desc = "Stops tracking line by line profiling for code lines that support it"
 
-	PROFILE_STOP
+	LINE_PROFILE_STOP
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] stopped line by line profiling.</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop Line Profiling")
