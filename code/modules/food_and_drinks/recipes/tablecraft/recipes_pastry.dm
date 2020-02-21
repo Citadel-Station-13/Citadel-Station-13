@@ -525,7 +525,7 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/grown/apple = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/candiedapple
-	subcategory = CAT_SWEETS
+	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/chococoin
 	name = "Choco coin"
@@ -534,7 +534,7 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/chococoin
-	subcategory = CAT_SWEETS
+	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/chocoorange
 	name = "Choco orange"
@@ -543,7 +543,7 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/chocoorange
-	subcategory = CAT_SWEETS
+	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/chocolatebunny
 	name = "Chocolate bunny"
@@ -552,7 +552,7 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chocolatebunny
-	subcategory = CAT_SWEETS
+	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/chocolatestrawberry
 	name = "Chocolate Strawberry"
@@ -561,7 +561,7 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/grown/strawberry  = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chocolatestrawberry
-	subcategory = CAT_SWEETS
+	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/fudgedice
 	name = "Fudge dice"
@@ -570,7 +570,7 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/fudgedice
-	subcategory = CAT_SWEETS
+	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/honeybar
 	name = "Honey nut bar"
@@ -579,7 +579,7 @@ datum/crafting_recipe/food/donut/meat
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/honeybar
-	subcategory = CAT_SWEETS
+	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/spiderlollipop
 	name = "Spider Lollipop"
@@ -589,4 +589,4 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/spiderling = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
-	subcategory = CAT_SWEETS
+	subcategory = CAT_PASTRY
