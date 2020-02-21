@@ -82,6 +82,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE | PASSMOB //they shouldn't get stuck behind hivelords.
+	density = FALSE
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
