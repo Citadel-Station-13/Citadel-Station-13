@@ -18,15 +18,7 @@
 
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
-	if(!S)
-		assembly = new /obj/item/solar_assembly
-		assembly.glass_type = new /obj/item/stack/sheet/glass(null, 2)
-		assembly.tracker = TRUE
-		assembly.anchored = TRUE
-	else
-		S.moveToNullspace()
-		assembly = S
-	update_icon()
+	Make(S)
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/sun_update)
 
@@ -47,16 +39,6 @@
 		control.connected_tracker = null
 		control = null
 
-//updates the tracker icon and the facing angle for the control computer
-/obj/machinery/power/tracker/proc/set_angle(angle)
-	sun_angle = angle
-
-	//set icon dir to show sun illumination
-	setDir(turn(NORTH, -angle - 22.5)	)// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
-
-	if(powernet && (powernet == control.powernet)) //update if we're still in the same powernet
-		control.currentdir = angle
-
 ///Tell the controller to turn the solar panels
 /obj/machinery/power/tracker/proc/sun_update(datum/source, azimuth)
 	setDir(angle2dir(azimuth))
@@ -69,9 +51,7 @@
 		S.glass_type = new /obj/item/stack/sheet/glass(null, 2)
 		S.tracker = TRUE
 		S.anchored = TRUE
-	else
-		S.moveToNullspace()
-	update_icon()
+	S.forceMove(src)
 
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)

@@ -27,15 +27,16 @@
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
-	panel = new()
-#if DM_VERSION >= 513
-	panel.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_ICON|VIS_INHERIT_PLANE
-	vis_contents += panel
-#endif
-	panel.icon = icon
-	panel.icon_state = "solar_panel"
-	panel.layer = FLY_LAYER
-	Make(S)
+	if(!S)
+		assembly = new /obj/item/solar_assembly
+		assembly.glass_type = new /obj/item/stack/sheet/glass(null, 2)
+		assembly.anchored = TRUE
+	else
+		S.moveToNullspace()
+		assembly = S
+	assembly.glass_type.on_solar_construction(src)
+	obj_integrity = max_integrity
+	update_icon()
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
 
@@ -78,7 +79,7 @@
 
 /obj/machinery/power/solar/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		stat |= BROKEN
 		unset_control()
 		update_icon()
@@ -324,16 +325,13 @@
 					if(!T.control) //i.e unconnected
 						T.set_control(src)
 
-/obj/machinery/power/solar_control/update_icon()
+/obj/machinery/power/solar/update_icon()
+	..()
 	cut_overlays()
-	if(stat & NOPOWER)
-		add_overlay("[icon_keyboard]_off")
-		return
-	add_overlay(icon_keyboard)
 	if(stat & BROKEN)
-		add_overlay("[icon_state]_broken")
+		add_overlay(mutable_appearance(icon, "solar_panel-b", FLY_LAYER))
 	else
-		add_overlay(icon_screen)
+		add_overlay(mutable_appearance(icon, "solar_panel", FLY_LAYER))
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
