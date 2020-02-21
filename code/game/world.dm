@@ -8,6 +8,11 @@ GLOBAL_LIST(topic_status_cache)
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
+	enable_debugger()
+
+#if DM_VERSION >= 513 && DM_BUILD >= 1506
+	world.Profile(PROFILE_START)
+#endif
 
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
@@ -17,7 +22,7 @@ GLOBAL_LIST(topic_status_cache)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	TgsNew()
+	TgsNew(minimum_required_security_level = TGS_SECURITY_TRUSTED)
 
 	GLOB.revdata = new
 

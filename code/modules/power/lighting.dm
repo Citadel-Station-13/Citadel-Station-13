@@ -220,6 +220,7 @@
 	var/bulb_emergency_colour = "#FF3232"	// determines the colour of the light while it's in emergency mode
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
+	var/hijacked = FALSE	// if true, the light is in a hijacked area
 
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
@@ -298,7 +299,10 @@
 			if(emergency_mode || (A && A.fire))
 				icon_state = "[base_state]_emergency"
 			else
-				icon_state = "[base_state]"
+				if (hijacked)
+					icon_state = "[base_state]_hijacked"
+				else
+					icon_state = "[base_state]"
 				if(on)
 					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
 					glowybit.alpha = CLAMP(light_power*250, 30, 200)
@@ -326,6 +330,10 @@
 		var/area/A = get_base_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
+		else if (hijacked)
+			BR = BR * 1.5
+			PO = PO * 1.5
+			CO = color ? color : LIGHT_COLOR_YELLOW
 		else if (nightshift_enabled)
 			BR = nightshift_brightness
 			PO = nightshift_light_power
@@ -355,7 +363,7 @@
 	if(on != on_gs)
 		on_gs = on
 		if(on)
-			static_power_used = brightness * 14.4 //20W per unit luminosity
+			static_power_used = brightness * 14.4 * (hijacked ? 2 : 1) //20W per unit luminosity
 			addStaticPower(static_power_used, STATIC_LIGHT)
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)

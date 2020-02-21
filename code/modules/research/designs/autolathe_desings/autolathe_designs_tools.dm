@@ -1,8 +1,8 @@
 ///////////////////////////////////
-//////////Autolathe Designs ///////
+/////////Autolathe Designs/////////
 ///////////////////////////////////
 ///////////
-///Tools //
+///Tools///
 ///////////
 /datum/design/bucket
 	name = "Bucket"
@@ -52,7 +52,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
 	build_path = /obj/item/multitool
-	category = list("initial","Tools")
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/analyzer
 	name = "Analyzer"

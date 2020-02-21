@@ -67,6 +67,16 @@
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
+/datum/export/material/plastitanium
+	cost = 165 // plasma + titanium costs
+	export_types = list(/obj/item/stack/sheet/mineral/plastitanium)
+	message = "of plastitanium"
+
+/datum/export/material/plastitanium_glass
+	cost = 168 // plasma + titanium + glass costs
+	export_types = list(/obj/item/stack/sheet/plastitaniumglass)
+	message = "of plastitanium glass"
+
 // 1 glass + 0.5 metal, cost is rounded up.
 /datum/export/stack/rglass
 	cost = 6

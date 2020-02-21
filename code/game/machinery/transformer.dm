@@ -27,7 +27,7 @@
 
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
-	if(cooldown && (issilicon(user) || isobserver(user)))
+	if(cooldown && (hasSiliconAccessInArea(user) || isobserver(user)))
 		. += "It will be ready in [DisplayTimeText(cooldown_timer - world.time)]."
 
 /obj/machinery/transformer/Destroy()

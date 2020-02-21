@@ -38,6 +38,7 @@
 
 /obj/item/geiger_counter/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/item/geiger_counter/process()

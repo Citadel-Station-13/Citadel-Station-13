@@ -19,21 +19,20 @@
 	Estimated time of last contact: Deployment, 5000 millennia ago."
 	assignedrole = "Lifebringer"
 
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
-	new_spawn.real_name = plant_name
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.underwear = "Nude" //You're a plant, partner
-		H.update_body()
-
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	return ..()
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/carbon/human/new_spawn)
 	ADD_TRAIT(new_spawn,TRAIT_EXEMPT_HEALTH_EVENTS,GHOSTROLE_TRAIT)
+	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
+	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+	new_spawn.real_name = plant_name //why this works when moving it from one function to another is beyond me
+	new_spawn.underwear = "Nude" //You're a plant, partner
+	new_spawn.undershirt = "Nude" //changing underwear/shirt/socks doesn't seem to function correctly right now because of some bug elsewhere?
+	new_spawn.socks = "Nude"
+	new_spawn.update_body()
+
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
 /obj/effect/mob_spawn/human/ash_walker
@@ -51,18 +50,29 @@
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	short_desc = "You are an ash walker. Your tribe worships the Necropolis."
-	flavour_text = "The wastes are sacred ground, its monsters a blessed bounty. You would never leave its sacred ground. \
-	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. \
-	Fresh sacrifices for your nest."
+	flavour_text = "The wastes are sacred ground, its monsters a blessed bounty. You would never willingly leave your homeland behind. \
+	You have seen lights in the distance... they foreshadow the arrival of outsiders to your domain. \
+	Ensure your nest remains protected at all costs."
 	assignedrole = "Ash Walker"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
-	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
+	if(is_mining_level(z))
+		to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
+	else
+		to_chat(new_spawn, "<span class='userdanger'>You have been born outside of your natural home! Whether you decide to return home, or make due with your new home is your own decision.</span>")
 
 	new_spawn.grant_language(/datum/language/draconic)
 	var/datum/language_holder/holder = new_spawn.get_language_holder()
 	holder.selected_default_language = /datum/language/draconic
+
+//Ash walkers on birth understand how to make bone bows, bone arrows and ashen arrows
+
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_arrow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bone_bow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/ashen_arrow)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/quiver)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bow_tablet)
 
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn

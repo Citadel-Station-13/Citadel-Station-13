@@ -287,6 +287,26 @@
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
 
+/obj/item/surgical_drapes/advanced
+	name = "smart surgical drapes"
+	desc = "A quite quirky set of drapes with wireless synchronization to the station's research networks, with an integrated display allowing users to execute advanced surgeries without the aid of an operating computer."
+	var/datum/techweb/linked_techweb
+
+/obj/item/surgical_drapes/advanced/Initialize(mapload)
+	. = ..()
+	linked_techweb = SSresearch.science_tech
+
+/obj/item/surgical_drapes/advanced/proc/get_advanced_surgeries()
+	. = list()
+	if(!linked_techweb)
+		return
+	for(var/subtype in subtypesof(/datum/design/surgery))
+		var/datum/design/surgery/prototype = subtype
+		var/id = initial(prototype.id)
+		if(id in linked_techweb.researched_designs)
+			prototype = SSresearch.techweb_design_by_id(id)
+			. |= prototype.surgery
+
 /obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
 	name = "organ storage bag"
 	desc = "A container for holding body parts."

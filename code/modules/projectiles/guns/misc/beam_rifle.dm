@@ -43,6 +43,7 @@
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
+	var/last_aimbeam = 0
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
 
@@ -186,8 +187,9 @@
 
 /obj/item/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
 	var/diff = abs(aiming_lastangle - lastangle)
-	check_user()
-	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
+	if(!check_user())
+		return
+	if(((diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD) || ((last_aimbeam + 1) > world.time)) && !force_update)
 		return
 	aiming_lastangle = lastangle
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
@@ -208,6 +210,7 @@
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
 	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
+	last_aimbeam = world.time
 
 /obj/item/gun/energy/beam_rifle/process()
 	if(!aiming)
@@ -296,27 +299,17 @@
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	process_aim()
-	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
+	if(aiming_time_left <= aiming_time_fire_threshold && check_user() && ((lastfire + delay) <= world.time))
 		sync_ammo()
-		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
+		do_fire(M.client.mouseObject, M, FALSE, M.client.mouseParams, M.zone_selected)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
 	return ..()
 
-/obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(target in user.contents) //can't shoot stuff inside us.
-			return
-		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
-			return
-		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
-			return
-	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
-		return
-	if(lastfire > world.time + delay)
-		return
-	lastfire = world.time
+/obj/item/gun/energy/beam_rifle/do_fire(atom/target, mob/living/user, message = TRUE, params, zone_override = "", bonus_spread = 0)
 	. = ..()
+	if(.)
+		lastfire = world.time
 	stop_aiming()
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()

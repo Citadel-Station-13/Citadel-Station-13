@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/list/species_traits = list()
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
-	var/list/inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
 	var/attack_verb = "punch"	// punch-specific attack verb
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
@@ -1264,10 +1264,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.update_mutant_bodyparts()
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == exotic_blood)
+	if(chem.type == exotic_blood && !istype(exotic_blood, /datum/reagent/blood))
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
-		return 1
+		return TRUE
 	return FALSE
 
 /datum/species/proc/check_weakness(obj/item, mob/living/attacker)
@@ -1585,7 +1585,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
 			stop_wagging_tail(target)
 		return FALSE
-	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+	else if(!(user.client?.prefs.cit_toggles & NO_ASS_SLAP) && aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
 		if(target.client?.prefs.cit_toggles & NO_ASS_SLAP)
 			to_chat(user,"A force stays your hand, preventing you from slapping \the [target]'s ass!")
 			return FALSE
@@ -1884,6 +1884,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(get_turf(target) == target_oldturf)
 				shove_blocked = TRUE
 
+		var/append_message = ""
 		if(shove_blocked && !target.buckled)
 			var/directional_blocked = !target.Adjacent(target_shove_turf)
 			var/targetatrest = target.resting
@@ -1897,33 +1898,30 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
 					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
+				append_message += ", into [target_collateral_human.name]"
 
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			var/target_held_item = target.get_active_held_item()
-			var/knocked_item = FALSE
-			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
-				target_held_item = null
-			if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
-				target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
-				if(target_held_item)
+		var/obj/item/target_held_item = target.get_active_held_item()
+		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
+			target_held_item = null
+		if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
+			target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+			if(target_held_item)
+				if(!HAS_TRAIT(target_held_item, TRAIT_NODROP))
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
 						"<span class='danger'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
-				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
-			else if(target_held_item)
-				target.dropItemToGround(target_held_item)
-				knocked_item = TRUE
+					append_message += ", loosening their grip on [target_held_item]"
+				else
+					append_message += ", but couldn't loose their grip on [target_held_item]"
+			addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+		else if(target_held_item)
+			if(target.dropItemToGround(target_held_item))
 				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
 					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
-			var/append_message = ""
-			if(target_held_item)
-				if(knocked_item)
-					append_message = "causing them to drop [target_held_item]"
-				else
-					append_message = "loosening their grip on [target_held_item]"
-			log_combat(user, target, "shoved", append_message)
+				append_message += ", causing them to drop [target_held_item]"
+		log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)

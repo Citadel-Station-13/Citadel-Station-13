@@ -120,7 +120,7 @@
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	. = TRUE
 	if(!defib)
@@ -129,9 +129,10 @@
 	if(clamps_locked)
 		to_chat(user, "<span class='warning'>You try to tug out [defib], but the mount's clamps are locked tight!</span>")
 		return
-	if(!user.put_in_hands(defib))
+	if(!user.get_empty_held_indexes())
 		to_chat(user, "<span class='warning'>You need a free hand!</span>")
 		return
+	user.put_in_hands(defib)
 	user.visible_message("<span class='notice'>[user] unhooks [defib] from [src].</span>", \
 	"<span class='notice'>You slide out [defib] from [src] and unhook the charging cables.</span>")
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)

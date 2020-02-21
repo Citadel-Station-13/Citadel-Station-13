@@ -250,10 +250,10 @@
 	name = "Plant Data Disk"
 	desc = "A disk for storing plant genetic data."
 	id = "diskplantgene"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron=200, /datum/material/glass=100)
 	build_path = /obj/item/disk/plantgene
-	category = list("Electronics")
+	category = list("Electronics","Imported")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/roastingstick
@@ -288,6 +288,26 @@
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
+
+/datum/design/broom
+	name = "Broom"
+	desc = "Just your everyday standard broom."
+	id = "broom"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 600)
+	build_path = /obj/item/twohanded/broom
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/mop
+	name = "Mop"
+	desc = "Just your everyday standard mop."
+	id = "mop"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1200, /datum/material/glass = 100)
+	build_path = /obj/item/mop
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/advmop
 	name = "Advanced Mop"
@@ -405,7 +425,7 @@
 
 /datum/design/holosigncombifan
 	name = "ATMOS Holo-Combifan Projector"
-	desc = "A holographic projector that creates holographic barriesr that prevent changes in atmospheric and temperature conditions."
+	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric and temperature conditions."
 	id = "holosigncombifan"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 7500, /datum/material/glass = 2500, /datum/material/silver = 2500, /datum/material/gold = 2500, /datum/material/titanium = 1750)

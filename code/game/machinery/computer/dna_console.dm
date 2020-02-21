@@ -64,7 +64,7 @@
 	if(!user)
 		return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
-	if(!(in_range(src, user) || issilicon(user)))
+	if(!(in_range(src, user) || hasSiliconAccessInArea(user)))
 		popup.close()
 		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
@@ -318,7 +318,7 @@
 		return
 	if(!isturf(usr.loc))
 		return
-	if(!((isturf(loc) && in_range(src, usr)) || issilicon(usr)))
+	if(!((isturf(loc) && in_range(src, usr)) || hasSiliconAccessInArea(usr)))
 		return
 	if(current_screen == "working")
 		return

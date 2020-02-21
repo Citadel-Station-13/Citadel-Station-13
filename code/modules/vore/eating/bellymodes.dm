@@ -195,7 +195,7 @@
 				for(var/mob/living/H in hearing_mobs)
 					if(H && H.client && (isturf(H.loc) || (H.loc != src.contents)))
 						SEND_SOUND(H,pred_digest)
-					else if(H && H in contents && H.client)
+					else if(H?.client && (H in contents))
 						SEND_SOUND(H,prey_digest)
 
 		//No digestion protection for megafauna.

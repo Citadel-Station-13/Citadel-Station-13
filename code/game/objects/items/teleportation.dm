@@ -138,14 +138,17 @@
 
 /obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
 	if(try_dispel_portal(target, user))
-		return FALSE
+		return TRUE
 	return ..()
 
-/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
-	if(is_parent_of_portal(target))
+/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user, delay = 30)
+	var/datum/beam/B = user.Beam(target)
+	if(is_parent_of_portal(target) && (!delay || do_after(user, delay, target = target)))
 		qdel(target)
 		to_chat(user, "<span class='notice'>You dispel [target] with \the [src]!</span>")
+		qdel(B)
 		return TRUE
+	qdel(B)
 	return FALSE
 
 /obj/item/hand_tele/afterattack(atom/target, mob/user)

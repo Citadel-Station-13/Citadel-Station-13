@@ -676,7 +676,7 @@
 		else
 			. += "It looks very robust."
 
-	if(issilicon(user) && (!stat & BROKEN))
+	if(hasSiliconAccessInArea(user) && (!stat & BROKEN))
 		. += "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>"
 		. += "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>"
 		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"
@@ -1322,9 +1322,9 @@
 		if(density && !open(2)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>")
 
-/obj/machinery/door/airlock/hostile_lockdown(mob/origin)
+/obj/machinery/door/airlock/hostile_lockdown(mob/origin, aicontrolneeded = TRUE)
 	// Must be powered and have working AI wire.
-	if(canAIControl(src) && !stat)
+	if((aicontrolneeded && canAIControl(src) && !stat) || !aicontrolneeded)
 		locked = FALSE //For airlocks that were bolted open.
 		safe = FALSE //DOOR CRUSH
 		close()
@@ -1334,9 +1334,9 @@
 			LAZYADD(shockedby, "\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(origin)]")
 
 
-/obj/machinery/door/airlock/disable_lockdown()
+/obj/machinery/door/airlock/disable_lockdown(aicontrolneeded = TRUE)
 	// Must be powered and have working AI wire.
-	if(canAIControl(src) && !stat)
+	if((aicontrolneeded && canAIControl(src) && !stat) || !aicontrolneeded)
 		unbolt()
 		set_electrified(NOT_ELECTRIFIED)
 		open()
@@ -1528,7 +1528,7 @@
 			. = TRUE
 
 /obj/machinery/door/airlock/proc/user_allowed(mob/user)
-	return (issilicon(user) && canAIControl(user)) || IsAdminGhost(user)
+	return (hasSiliconAccessInArea(user) && canAIControl(user)) || IsAdminGhost(user)
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	if(!user_allowed(user))

@@ -47,9 +47,10 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_FAIL2TOPIC		100
-#define INIT_ORDER_TITLE			99
-#define INIT_ORDER_GARBAGE			98
+#define INIT_ORDER_PROFILER			100
+#define INIT_ORDER_FAIL2TOPIC		99
+#define INIT_ORDER_TITLE			98
+#define INIT_ORDER_GARBAGE			97
 #define INIT_ORDER_DBCORE			95
 #define INIT_ORDER_BLACKBOX			94
 #define INIT_ORDER_SERVER_MAINT		93

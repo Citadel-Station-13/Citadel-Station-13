@@ -105,7 +105,7 @@
 		return
 
 	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
-	if(!(in_range(src, user) || issilicon(user)))
+	if(!(in_range(src, user) || hasSiliconAccessInArea(user)))
 		popup.close()
 		return
 
