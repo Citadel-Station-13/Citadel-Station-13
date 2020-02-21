@@ -22,11 +22,11 @@
 	icon_state = "riflestock"
 
 /obj/item/weaponcrafting/stock/attackby(obj/item/S, mob/user, params)
-	..()
+	. = ..()
 	if(istype(S, /obj/item/pipe))
 		return
 	if(istype(S, /obj/item/weaponcrafting/receiver))
-		var/obj/item/weaponcrafting/receiver/stock/R = /obj/item/weaponcrafting/receiver/stock
+		var/R = /obj/item/weaponcrafting/receiver/stock
 		to_chat(user, "<span class='notice'>You add [S] to [src]!</span>")
 		qdel(S)
 		qdel(src)
@@ -38,9 +38,9 @@
 	icon_state = "mounted_receiver"
 
 /obj/item/weaponcrafting/receiver/stock/attackby(obj/item/P, mob/user, params)
-	..()
+	. = ..()
 	if(istype(P, /obj/item/pipe))
-		var/obj/item/weaponcrafting/receiver/stock/barreled/B = /obj/item/weaponcrafting/receiver/stock/barreled
+		var/B = /obj/item/weaponcrafting/receiver/stock/barreled
 		to_chat(user, "<span class='notice'>You add [P] to [src]!</span>")
 		qdel(P)
 		qdel(src)
@@ -52,9 +52,9 @@
 	icon_state = "mounted_receiver_piped"
 
 /obj/item/weaponcrafting/receiver/stock/barrled/attackby(obj/item/W, mob/user, params)
-	..()
+	. = ..()
 	if(istype(W, /obj/item/stack/packageWrap))
-		var/obj/item/weaponcrafting/receiver/stock/barreled/gun/G = /obj/item/weaponcrafting/receiver/stock/barreled/gun
+		var/G = /obj/item/weaponcrafting/receiver/stock/barreled/gun
 		if(W.use(15))
 			to_chat(user, "<span class='notice'>You add [W] to [src]!</span>")
 			qdel(src)
@@ -68,7 +68,7 @@
 	icon_state = "mounted_receiver_piped_wrapped"
 
 /obj/item/weaponcrafting/receiver/stock/barreled/gun/attackby(obj/item/D, mob/user, params)
-	if(istype(D, /obj/item/screwdriver))
+	if(istype(D, TOOL_SCREWDRIVER))
 		to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 		if(D.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>Improvised shotgun completed!</span>")
@@ -83,10 +83,10 @@
 		qdel(D)
 
 //To be added later
-/*	if(istype(D, /obj/item/circular_saw))
+/*	if(istype(D, TOOL_SAW))
 		if(D.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>The barrle is sawn off making a smaller gun!</span>")
-			var/obj/item/weaponcrafting/receiver/stock/barrled/gun/short/L = /obj/item/weaponcrafting/receiver/stock/barrled/gun/short
+			var/L = /obj/item/weaponcrafting/receiver/stock/barrled/gun/short
 			new L(user.loc, 1)
 			qdel(src)
 */
@@ -98,7 +98,8 @@
 	icon_state = "mounted_receiver_piped_wrapped"
 
 /obj/item/weaponcrafting/receiver/stock/barreled/gun/long/attackby(obj/item/D, mob/user, params)
-	if(istype(D, /obj/item/screwdriver))
+	. = ..()
+	if(istype(D, TOOL_SCREWDRIVER))
 		to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 		if(D.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>Improvised rifle completed!</span>")
@@ -112,18 +113,18 @@
 	icon_state = "pistol"
 
 /obj/item/weaponcrafting/receiver/stock/barreled/gun/short/attackby(obj/item/D, mob/user, params)
-	if(istype(D, /obj/item/screwdriver))
+	if(istype(D, TOOL_SCREWDRIVER))
 		to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 		if(D.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>Improvised pistol completed!</span>")
-			var/obj/item/gun/ballistic/revolver/makeshift_pistol/M = /obj/item/gun/ballistic/revolver/makeshift_pistol
+			var/M = /obj/item/gun/ballistic/revolver/makeshift_pistol
 			new M(user.loc, 1)
 			qdel(src)
-	if(istype(D, /obj/item/surgicaldrill))
+	if(istype(D, TOOL_DRILL))
 		to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 		if(D.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>Improvised high caliber pistol Completed!</span>")
-			var/obj/item/gun/ballistic/revolver/makeshift/H = /obj/item/gun/ballistic/revolver/makeshift
+			var/H = /obj/item/gun/ballistic/revolver/makeshift
 			new H(user.loc, 1)
 			qdel(src)
 */
