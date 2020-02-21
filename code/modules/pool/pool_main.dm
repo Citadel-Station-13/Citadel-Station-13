@@ -50,9 +50,11 @@
 	layer = BELOW_MOB_LAYER
 
 // Mousedrop hook to normal turfs to get out of pools.
-/turf/open/MouseDrop_T(atom/from, mob/user)
+/turf/open/MouseDrop_T(atom/from, mob/living/user)
+	if(!istype(user))
+		return ..()
 	// I could make this /open/floor and not have the !istype but ehh - kev
-	if(isliving(from) && HAS_TRAIT(from, TRAIT_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && !CHECK_MOBILITY(user, MOBILITY_USE) && !istype(src, /turf/open/pool))
+	if(HAS_TRAIT(from, TRAIT_SWIMMING) && isliving(user) && ((user == from) || user.CanReach(from)) && !CHECK_MOBILITY(user, MOBILITY_USE) && !istype(src, /turf/open/pool))
 		var/mob/living/L = from
 		//The element only exists if you're on water and a living mob, so let's skip those checks.
 		var/pre_msg
