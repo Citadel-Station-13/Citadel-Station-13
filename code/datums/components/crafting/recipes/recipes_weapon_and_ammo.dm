@@ -260,36 +260,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/isrevolver
-	name = "Improvised Revolver"
-	always_availible = FALSE
-	result = /obj/item/gun/ballistic/revolver/makeshift
-	reqs = list(/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/pipe = 1,
-				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/rods = 1,
-				/obj/item/pen = 1,
-				/obj/item/stack/packageWrap = 25)
-	tools = list(TOOL_SCREWDRIVER)
-	time = 300
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
-/datum/crafting_recipe/ispistol
-	name = "Improvised Pistol"
-	always_availible = FALSE
-	result = /obj/item/gun/ballistic/revolver/makeshift_pistol
-	reqs = list(/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/pipe = 1,
-				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/rods = 1,
-				/obj/item/pen = 1,
-				/obj/item/stack/packageWrap = 25)
-	tools = list(TOOL_SCREWDRIVER)
-	time = 300
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
