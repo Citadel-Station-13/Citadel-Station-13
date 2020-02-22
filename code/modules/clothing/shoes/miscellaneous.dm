@@ -387,53 +387,55 @@
 	LAZYREMOVE(user.user_movement_hooks,src)
 
 /obj/item/clothing/shoes/wallwalkers/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/bluespacerecharge))
-		var/obj/item/bluespacerecharge/ER = W
-		if(ER.uses)
-			wallcharges += ER.uses
-			to_chat(user, "<span class='notice'>You charged the bluespace crystal in the [src]. It now has [wallcharges] charges left.</span>")
-			ER.uses = 0
-			ER.icon_state = "[initial(ER.icon_state)]0"
-		else
-			to_chat(user, "<span class='warning'>[ER] has no crystal on it.</span>")
-		return
 	. = ..()
+	if(!istype(W, /obj/item/bluespacerecharge))
+		return
+	var/obj/item/bluespacerecharge/ER = W
+	if(ER.uses)
+		wallcharges += ER.uses
+		to_chat(user, "<span class='notice'>You charged the bluespace crystal in the [src]. It now has [wallcharges] charges left.</span>")
+		ER.uses = 0
+		ER.icon_state = "[initial(ER.icon_state)]0"
+	else
+		to_chat(user, "<span class='warning'>[ER] has no crystal on it.</span>")
 
 /obj/item/clothing/shoes/wallwalkers/examine(mob/user)
 	. = ..()
 	. += "<span class='warning'>It has [wallcharges] charges left.</span>"
 
 /obj/item/clothing/shoes/wallwalkers/intercept_user_move(dir,mob/living/m,newloc,oldloc)
-	if (walkcool < world.time && m.m_intent == MOVE_INTENT_WALK && wallcharges > 0)
-		walkcool = world.time + m.movement_delay()
-		var/issolid = FALSE
-		var/turf/K = newloc
-		if (istype(K))
-			if (K.density)
+	if (walkcool >= world.time || m.m_intent != MOVE_INTENT_WALK || wallcharges <= 0)
+		return
+	walkcool = world.time + m.movement_delay()
+	var/issolid = FALSE
+	var/turf/K = newloc
+	if (istype(K))
+		if (K.density)
+			issolid = TRUE
+	if (!issolid)
+		for (var/atom/T in newloc) //stuff on the new turf
+			if (!T.CanPass(m,newloc) && T != m)
 				issolid = TRUE
+				newlocobject = T
+				break
 		if (!issolid)
-			for (var/atom/T in newloc) //stuff on the new turf
-				if (!T.CanPass(m,newloc) && T != m)
+			for (var/atom/T in oldloc) //directional shit on the old turf
+				if (!T.CanPass(m,newloc) && T != m && T != newlocobject)
 					issolid = TRUE
-					newlocobject = T
 					break
-			if (!issolid)
-				for (var/atom/T in oldloc) //directional shit on the old turf
-					if (!T.CanPass(m,newloc) && T != m && T != newlocobject)
-						issolid = TRUE
-						break
-				newlocobject = null //stopping structures from using two charges because of how shitty the canpass code is
-		m.forceMove(newloc)
-		if (issolid)
-			m.adjustOxyLoss(rand(5,13))
-			if (prob(10))
-				m.adjustBruteLoss(rand(3,5))
-				to_chat(m,"<span class='warning'>You feel as if travelling through the solid object left something behind and it hurts!</span>")
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, oldloc)
-			s.start()
-			flash_lighting_fx(3, 3, LIGHT_COLOR_ORANGE)
-			wallcharges--
+			newlocobject = null //stopping structures from using two charges because of how shitty the canpass code is
+	m.forceMove(newloc)
+	if (!issolid)
+		return
+	m.adjustOxyLoss(rand(5,13))
+	if (prob(10))
+		m.adjustBruteLoss(rand(3,5))
+		to_chat(m,"<span class='warning'>You feel as if travelling through the solid object left something behind and it hurts!</span>")
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(5, 1, oldloc)
+	s.start()
+	flash_lighting_fx(3, 3, LIGHT_COLOR_ORANGE)
+	wallcharges--
 
 /obj/item/bluespacerecharge
 	name = "bluespace crystal recharging device"
@@ -452,14 +454,12 @@
 
 /obj/item/bluespacerecharge/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/stack/ore/bluespace_crystal) && !uses)
-		var/obj/item/stack/ore/bluespace_crystal/B = I
-		if (B.amount < 10)
-			return
-		uses += 3
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		if(B.amount > 10)
-			B.amount -= 10
-		else
-			qdel(I)
-		icon_state = initial(icon_state)
+	if(!istype(I, /obj/item/stack/ore/bluespace_crystal) || uses)
+		return
+	var/obj/item/stack/ore/bluespace_crystal/B = I
+	if (B.amount < 10)
+		return
+	uses += 3
+	to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+	B.use(10)
+	icon_state = initial(icon_state)
