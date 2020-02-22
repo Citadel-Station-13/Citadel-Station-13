@@ -240,12 +240,11 @@
 
 /obj/item/shield/riot/implant
 	name = "riot tower shield"
-	desc = "A massive shield that can block a lot of attacks, can take a lot of abuse before braking."
+	desc = "A massive shield that can block a lot of attacks, can take a lot of abuse before braking." //It cant brake unless you somehow get it outside the implant
 	item_state = "metal"
 	icon_state = "metal"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	block_chance = 30 //May be big but hard to move around to block.
-	force = 10
 	slowdown = 1
 	transparent = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
