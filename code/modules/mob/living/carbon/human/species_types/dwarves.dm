@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	. = ..()
 	var/dwarf_hair = pick("Beard (Dwarf)", "Beard (Very Long)", "Beard (Long)") //beard roullette
 	var/mob/living/carbon/human/H = C
+	H.grant_language(/datum/language/dwarf)
 	H.facial_hair_style = dwarf_hair
 	H.update_hair()
 	H.transform = H.transform.Scale(1, 0.8) //We use scale, and yeah. Dwarves can become gnomes with DWARFISM.
@@ -41,6 +42,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	. = ..()
 	H.transform = H.transform.Scale(1, 1.25) //And we undo it.
 	UnregisterSignal(H, COMSIG_MOB_SAY) //We register handle_speech is not being used.
+	H.remove_language(/datum/language/dwarf)
 
 //Dwarf Name stuff
 /proc/dwarf_name() //hello caller: my name is urist mcuristurister
@@ -52,21 +54,20 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 //Dwarf Speech handling - Basically a filter/forces them to say things. The IC helper
 /datum/species/dwarf/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = " [message]" //Credits to goonstation for the strings list.
-		var/list/dwarf_words = strings("dwarf_replacement.json", "dwarf") //thanks to regex too.
+	if(speech_args[SPEECH_LANGUAGE] != /datum/language/dwarf) // No accent if they speak their language
+		if(message[1] != "*")
+			message = " [message]" //Credits to goonstation for the strings list.
+			var/list/dwarf_words = strings("dwarf_replacement.json", "dwarf") //thanks to regex too.
+			for(var/key in dwarf_words) //Theres like 1459 words or something man.
+				var/value = dwarf_words[key] //Thus they will always be in character.
+				if(islist(value)) //Whether they like it or not.
+					value = pick(value) //This could be drastically reduced if needed though.
+				message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+				message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+				message = replacetextEx(message, " [key]", " [value]") //Also its scottish.
 
-		for(var/key in dwarf_words) //Theres like 1459 words or something man.
-			var/value = dwarf_words[key] //Thus they will always be in character.
-			if(islist(value)) //Whether they like it or not.
-				value = pick(value) //This could be drastically reduced if needed though.
-
-			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
-			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
-			message = replacetextEx(message, " [key]", " [value]") //Also its scottish.
-
-		if(prob(3))
-			message += pick(" By Armok!")
+	if(prob(3))
+		message += " By Armok!"
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
 //This mostly exists because my testdwarf's liver died while trying to also not die due to no alcohol.

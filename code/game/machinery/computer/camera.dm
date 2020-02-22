@@ -36,7 +36,7 @@
 	return ..()
 
 /obj/machinery/computer/security/can_interact(mob/user)
-	if((!issilicon(user) && !Adjacent(user)) || is_blind(user) || !in_view_range(user, src))
+	if((!hasSiliconAccessInArea(user) && !Adjacent(user)) || is_blind(user) || !in_view_range(user, src))
 		return FALSE
 	return ..()
 

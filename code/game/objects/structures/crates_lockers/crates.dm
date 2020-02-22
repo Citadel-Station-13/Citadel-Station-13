@@ -47,6 +47,12 @@
 	if(manifest)
 		tear_manifest(user)
 
+/obj/structure/closet/crate/tool_interact(obj/item/W, mob/user)
+	if(W.tool_behaviour == TOOL_WIRECUTTER && manifest)
+		tear_manifest(user)
+		return TRUE
+	return ..()
+
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
 	if(. && manifest)
@@ -83,7 +89,7 @@
 
 /obj/structure/closet/crate/coffin/examine(mob/user)
 	. = ..()
-	if(user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	if(user.mind?.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		. += {"<span class='cult'>This is a coffin which you can use to regenerate your burns and other wounds faster.</span>"}
 		. += {"<span class='cult'>You can also thicken your blood if you survive the day, and hide from the sun safely while inside.</span>"}
 	/*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)

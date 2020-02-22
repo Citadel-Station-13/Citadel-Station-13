@@ -23,7 +23,7 @@
 	if(!boomingandboxing)
 		var/list/tracklist = list()
 		for(var/datum/track/S in SSjukeboxes.songs)
-			if(istype(S) && S.song_associated_id in availabletrackids)
+			if(istype(S) && (S.song_associated_id in availabletrackids))
 				tracklist[S.song_name] = S
 		var/selected = input(user, "Play song", "Track:") as null|anything in tracklist
 		if(QDELETED(src) || !selected || !istype(tracklist[selected], /datum/track))

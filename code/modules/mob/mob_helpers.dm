@@ -147,6 +147,10 @@
 		. += newletter
 	return sanitize(.)
 
+//Ratvarian Slurring!
+
+#define CLOCK_CULT_SLUR(phrase) sanitize(text2ratvar(phrase))
+
 ///Adds stuttering to the message passed in
 /proc/stutter(phrase)
 	phrase = html_decode(phrase)
@@ -402,6 +406,29 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 	return TRUE
 
+/atom/proc/hasSiliconAccessInArea(mob/user, flags = PRIVILEDGES_SILICON)
+	return user.silicon_privileges & (flags) || (user.siliconaccesstoggle && (get_area(src) in user.siliconaccessareas))
+
+/mob/proc/toggleSiliconAccessArea(area/area)
+	if (area in siliconaccessareas)
+		siliconaccessareas -= area
+		to_chat(src,"<span class='warning'>You lost control of [area]!</span>")
+		return FALSE
+	else
+		if (LAZYLEN(siliconaccessareas) < HIJACK_APC_MAX_AMOUNT)
+			siliconaccessareas += area
+			to_chat(src,"<span class='notice'>You successfully took control of [area].</span>")
+		else
+			to_chat(src,"<span class='warning'>You are connected to too many APCs! Too many more will fry your brain.</span>")
+			return FALSE
+		return TRUE
+
+/mob/proc/getImplant(type)
+	return
+
+/mob/living/getImplant(type)
+	return locate(type) in implants
+
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
@@ -528,4 +555,4 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
+	return stat == DEAD || silicon_privileges //Dead guys and silicons can always see reagents

@@ -9,7 +9,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=2500)
 
 	var/code = 2
 	var/frequency = FREQ_ELECTROPACK
@@ -157,7 +157,7 @@ Code:
 	w_class = WEIGHT_CLASS_SMALL
 	strip_delay = 60
 	equip_delay_other = 60
-	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
 
 	var/tagname = null
 
@@ -166,7 +166,7 @@ Code:
 	id = "shockcollar"
 	build_type = AUTOLATHE
 	build_path = /obj/item/electropack/shockcollar
-	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass =2000)
 	category = list("hacked", "Misc")
 
 /obj/item/electropack/shockcollar/attack_hand(mob/user)

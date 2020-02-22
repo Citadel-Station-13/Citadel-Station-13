@@ -53,7 +53,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		Unit | Condition | Status | Direction | Distance<br>"
 		for(var/PDT in turrets)
 			var/obj/machinery/porta_turret/aux_base/T = PDT
-			var/integrity = max((T.obj_integrity-T.integrity_failure)/(T.max_integrity-T.integrity_failure)*100, 0)
+			var/integrity = max((T.obj_integrity-T.integrity_failure * T.max_integrity)/(T.max_integrity-T.integrity_failure * max_integrity)*100, 0)
 			var/status
 			if(T.stat & BROKEN)
 				status = "<span class='bad'>ERROR</span>"
@@ -151,7 +151,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(!is_mining_level(T.z))
 			return BAD_ZLEVEL
 
-		
+
 		var/list/colony_turfs = base_dock.return_ordered_turfs(T.x,T.y,T.z,base_dock.dir)
 		for(var/i in 1 to colony_turfs.len)
 			CHECK_TICK

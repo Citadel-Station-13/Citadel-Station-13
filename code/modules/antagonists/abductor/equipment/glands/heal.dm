@@ -65,14 +65,14 @@
 /obj/item/organ/heart/gland/heal/proc/reject_implant(obj/item/organ/cyberimp/implant)
 	owner.visible_message("<span class='warning'>[owner] vomits up his [implant.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [implant.name]!</span>")
 	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
-	implant.Remove(owner)
+	implant.Remove()
 	implant.forceMove(owner.drop_location())
 
 /obj/item/organ/heart/gland/heal/proc/replace_liver(obj/item/organ/liver/liver)
 	if(liver)
 		owner.visible_message("<span class='warning'>[owner] vomits up his [liver.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [liver.name]!</span>")
 		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
-		liver.Remove(owner)
+		liver.Remove()
 		liver.forceMove(owner.drop_location())
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble in your bowels...</span>")
@@ -87,7 +87,7 @@
 	if(lungs)
 		owner.visible_message("<span class='warning'>[owner] vomits up his [lungs.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [lungs.name]!</span>")
 		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
-		lungs.Remove(owner)
+		lungs.Remove()
 		lungs.forceMove(owner.drop_location())
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble inside your chest...</span>")
@@ -102,7 +102,7 @@
 	if(eyes)
 		owner.visible_message("<span class='warning'>[owner]'s [eyes.name] fall out of their sockets!</span>", "<span class='userdanger'>Your [eyes.name] fall out of their sockets!</span>")
 		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
-		eyes.Remove(owner)
+		eyes.Remove()
 		eyes.forceMove(owner.drop_location())
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble behind your eye sockets...</span>")

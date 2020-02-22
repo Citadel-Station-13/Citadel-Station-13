@@ -7,13 +7,14 @@
 /mob/living/carbon/human/spawn_gibs(with_bodyparts, atom/loc_override)
 	var/location = loc_override ? loc_override.drop_location() : drop_location()
 	if(dna?.species?.gib_types)
+		var/blood_dna = get_blood_dna_list()
 		var/datum/species/S = dna.species
 		var/length = length(S.gib_types)
 		if(length)
 			var/path = (with_bodyparts && length > 1) ? S.gib_types[2] : S.gib_types[1]
 			new path(location, src, get_static_viruses())
 		else
-			new S.gib_types(location, src, get_static_viruses())
+			new S.gib_types(location, src, get_static_viruses(), blood_dna)
 	else
 		if(with_bodyparts)
 			new /obj/effect/gibspawner/human(location, src, get_static_viruses())

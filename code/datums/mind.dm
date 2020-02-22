@@ -61,7 +61,6 @@
 	var/late_joiner = FALSE
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
-
 	var/list/learned_recipes //List of learned recipe TYPES.
 
 /datum/mind/New(var/key)
@@ -458,6 +457,7 @@
 
 			var/list/allowed_types = list(
 				/datum/objective/assassinate,
+				/datum/objective/assassinate/once,
 				/datum/objective/maroon,
 				/datum/objective/debrain,
 				/datum/objective/protect,
@@ -714,6 +714,11 @@
 	if(G)
 		G.reenter_corpse()
 
+/// Sets our can_hijack to the fastest speed our antag datums allow.
+/datum/mind/proc/get_hijack_speed()
+	. = 0
+	for(var/datum/antagonist/A in antag_datums)
+		. = max(., A.hijack_speed())
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)

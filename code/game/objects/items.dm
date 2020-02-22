@@ -68,7 +68,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
-	var/list/materials
 	var/reskinned = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
@@ -111,8 +110,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 /obj/item/Initialize()
-
-	materials =	typelist("materials", materials)
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
@@ -233,9 +230,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	// Extractable materials. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (materials.len)
+	if (length(custom_materials))
 		sep = ""
-		for(var/mat in materials)
+		for(var/mat in custom_materials)
 			research_msg += sep
 			research_msg += CallMaterialName(mat)
 			sep = ", "
@@ -400,12 +397,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return usr.client.Click(src, src_location, src_control, params)
 	var/list/directaccess = usr.DirectAccess()	//This, specifically, is what requires the copypaste. If this were after the adjacency check, then it'd be impossible to use items in your inventory, among other things.
 												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
-	if((usr.CanReach(src) || (src in directaccess)) && (usr.CanReach(over) || (over in directaccess)))
-		if(!usr.get_active_held_item())
-			usr.UnarmedAttack(src, TRUE)
-			if(usr.get_active_held_item() == src)
-				melee_attack_chain(usr, over)
-			return TRUE //returning TRUE as a "is this overridden?" flag
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		if(C.combatmode && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
+			if(!C.get_active_held_item())
+				C.UnarmedAttack(src, TRUE)
+				if(C.get_active_held_item() == src)
+					melee_attack_chain(C, over)
+				return TRUE //returning TRUE as a "is this overridden?" flag
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 

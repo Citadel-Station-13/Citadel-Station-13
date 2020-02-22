@@ -29,6 +29,7 @@ import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
+import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
@@ -47,6 +48,11 @@ import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
+import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
+import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
+import { NaniteProgramHub } from './interfaces/NaniteProgramHub';
+import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
+import { NaniteRemote } from './interfaces/NaniteRemote';
 import { Mule } from './interfaces/Mule';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
@@ -85,8 +91,10 @@ import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
+import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
+import { AtmosRelief } from './interfaces/AtmosRelief';
 
 const ROUTES = {
   achievements: {
@@ -127,6 +135,10 @@ const ROUTES = {
   },
   atmos_pump: {
     component: () => AtmosPump,
+    scrollable: false,
+  },
+  atmos_relief: {
+    component: () => AtmosRelief,
     scrollable: false,
   },
   bepis: {
@@ -294,6 +306,26 @@ const ROUTES = {
     component: () => MechBayPowerConsole,
     scrollable: false,
   },
+  nanite_chamber_control: {
+    component: () => NaniteChamberControl,
+    scrollable: true,
+  },
+  nanite_cloud_control: {
+    component: () => NaniteCloudControl,
+    scrollable: true,
+  },
+  nanite_program_hub: {
+    component: () => NaniteProgramHub,
+    scrollable: true,
+  },
+  nanite_programmer: {
+    component: () => NaniteProgrammer,
+    scrollable: true,
+  },
+  nanite_remote: {
+    component: () => NaniteRemote,
+    scrollable: true,
+  },
   mulebot: {
     component: () => Mule,
     scrollable: false,
@@ -372,6 +404,10 @@ const ROUTES = {
   portable_generator: {
     component: () => PortableGenerator,
     scrollable: false,
+  },
+  personal_crafting: {
+    component: () => PersonalCrafting,
+    scrollable: true,
   },
   portable_pump: {
     component: () => PortablePump,
@@ -464,6 +500,11 @@ const ROUTES = {
   turbine_computer: {
     component: () => TurbineComputer,
     scrollable: false,
+  },
+  uplink: {
+    component: () => Uplink,
+    scrollable: true,
+    theme: 'syndicate',
   },
   vault_controller: {
     component: () => VaultController,
