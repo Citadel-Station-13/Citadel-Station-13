@@ -103,7 +103,7 @@
 	desc = "An old russian Minutemen crate, comes with a full russian outfit, a mosin and a stripper clip."
 	contraband = TRUE
 	access = FALSE
-	cost = 5500 //
+	cost = 6500 //
 	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/head/ushanka,

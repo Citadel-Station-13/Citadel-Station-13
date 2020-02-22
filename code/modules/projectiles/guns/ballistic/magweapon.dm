@@ -61,7 +61,6 @@
 /obj/item/gun/ballistic/automatic/magrifle/nopin
 	pin = null
 	spawnwithmagazine = FALSE
-	cell_type = /obj/item/stock_parts/cell/magnetic/empty
 
 /obj/item/gun/ballistic/automatic/magrifle/hyperburst
 	name = "\improper Hyper-Burst Rifle"
@@ -100,4 +99,3 @@
 /obj/item/gun/ballistic/automatic/magrifle/pistol/nopin
 	pin = null
 	spawnwithmagazine = FALSE
-	cell_type = /obj/item/stock_parts/cell/magnetic/pistol/empty

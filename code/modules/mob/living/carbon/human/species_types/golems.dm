@@ -308,7 +308,8 @@
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
+		return TRUE
+	return ..()
 
 //Radioactive
 /datum/species/golem/uranium
@@ -622,12 +623,11 @@
 	if(chem.type == /datum/reagent/water/holywater)
 		H.adjustFireLoss(4)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-
-	if(chem.type == /datum/reagent/fuel/unholywater)
+	else if(chem.type == /datum/reagent/fuel/unholywater)
 		H.adjustBruteLoss(-4)
 		H.adjustFireLoss(-4)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-
+	return ..()
 
 /datum/species/golem/clockwork
 	name = "Clockwork Golem"

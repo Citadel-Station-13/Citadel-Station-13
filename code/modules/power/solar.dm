@@ -12,7 +12,7 @@
 	active_power_usage = 0
 	var/id = 0
 	max_integrity = 150
-	integrity_failure = 50
+	integrity_failure = 0.33
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -24,7 +24,16 @@
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
-	Make(S)
+	if(!S)
+		assembly = new /obj/item/solar_assembly
+		assembly.glass_type = new /obj/item/stack/sheet/glass(null, 2)
+		assembly.anchored = TRUE
+	else
+		S.moveToNullspace()
+		assembly = S
+	assembly.glass_type.on_solar_construction(src)
+	obj_integrity = max_integrity
+	update_icon()
 	connect_to_network()
 
 /obj/machinery/power/solar/Destroy()
@@ -44,17 +53,6 @@
 	if(control)
 		control.connected_panels.Remove(src)
 	control = null
-
-/obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/S)
-	if(!S)
-		S = new /obj/item/solar_assembly
-		S.glass_type = new /obj/item/stack/sheet/glass(null, 2)
-		S.anchored = TRUE
-	else
-		S.moveToNullspace()
-	S.glass_type.on_solar_construction(src)
-	obj_integrity = max_integrity
-	update_icon()
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -201,7 +199,7 @@
 			new shard(Tsec)
 			new shard(Tsec)
 	else if(glass_type)
-		forceMove(glass_type, Tsec)
+		glass_type.forceMove(Tsec)
 	glass_type = null
 
 /obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
@@ -226,7 +224,8 @@
 		var/obj/item/stack/sheet/G = S.change_stack(null, 2)
 		if(G)
 			glass_type = G
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			G.moveToNullspace()
+			playsound(loc, 'sound/machines/click.ogg', 50, 1)
 			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)
@@ -266,7 +265,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0

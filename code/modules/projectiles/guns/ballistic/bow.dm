@@ -22,11 +22,9 @@
 /obj/item/gun/ballistic/bow/chamber_round()
 	chambered = magazine.get_round(1)
 
-/obj/item/gun/ballistic/bow/afterattack()
-	. = ..()
-	if (chambered)
-		chambered = null
-		magazine.get_round(0)
+/obj/item/gun/ballistic/bow/process_chamber()
+	chambered = null
+	magazine.get_round(0)
 	update_icon()
 
 /obj/item/gun/ballistic/bow/attack_self(mob/living/user)
@@ -47,7 +45,22 @@
 		update_icon()
 
 /obj/item/gun/ballistic/bow/update_icon()
-	icon_state = "bow_[get_ammo() ? (chambered ? "firing" : "loaded") : "unloaded"]"
+	icon_state = "[initial(icon_state)]_[get_ammo() ? (chambered ? "firing" : "loaded") : "unloaded"]"
 
 /obj/item/gun/ballistic/bow/can_shoot()
 	return chambered
+
+/obj/item/gun/ballistic/bow/ashen
+	name = "bone bow"
+	desc = "Some sort of primitive projectile weapon made of bone and sinew. Used to fire arrows."
+	icon_state = "ashenbow"
+	item_state = "ashenbow"
+	force = 8
+
+/obj/item/gun/ballistic/bow/pipe
+	name = "pipe bow"
+	desc = "Some sort of pipe made projectile weapon made of a silk string and lots of bending. Used to fire arrows."
+	icon_state = "pipebow"
+	item_state = "pipebow"
+	inaccuracy_modifier = 1.1 //Made of pipe and in a rush
+	force = 0

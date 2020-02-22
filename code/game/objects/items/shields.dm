@@ -20,7 +20,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
+	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
@@ -106,7 +106,7 @@
 	item_state = "buckler"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	materials = list()
+	custom_materials = null
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
@@ -217,7 +217,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	item_state = "metal"
 	icon_state = "makeshift_shield"
-	materials = list(MAT_METAL = 18000)
+	custom_materials = list(/datum/material/iron = 18000)
 	slot_flags = null
 	block_chance = 35
 	force = 10
