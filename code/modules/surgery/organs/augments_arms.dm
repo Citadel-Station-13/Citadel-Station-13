@@ -281,5 +281,6 @@
 		return
 	obj_flags |= EMAGGED
 	to_chat(usr, "<span class='notice'>You unlock [src]'s high-power flash!</span>")
-	items_list += new /obj/item/assembly/flash/armimplant(src)
-	return TRUE
+	var/obj/item/assembly/flash/armimplant/F = new(src)
+	items_list += F
+	F.I = src
