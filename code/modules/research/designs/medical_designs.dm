@@ -374,7 +374,7 @@
 	desc = "An implanted riot shield, designed to be installed on subject's arm."
 	id = "ci-shield"
 	build_type = PROTOLATHE
-	materials = list (/datum/material/iron = 8500, /datum/material/glass = 8500, /datum/material/silver = 1800, /datum/material/irontitanium = 600)
+	materials = list (/datum/material/iron = 8500, /datum/material/glass = 8500, /datum/material/silver = 1800, /datum/material/titanium = 600)
 	construction_time = 200
 	build_path = /obj/item/organ/cyberimp/arm/shield
 	category = list("Misc", "Medical Designs")
