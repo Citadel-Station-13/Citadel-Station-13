@@ -179,17 +179,23 @@
 		/obj/item/pinpointer/crew
 		))
 
-
 /obj/item/storage/belt/medical/surgery_belt_adv
 	name = "surgical supply belt"
 	desc = "A specialized belt designed for holding surgical equipment. It seems to have specific pockets for each and every surgical tool you can think of."
 	content_overlays = FALSE
+	var/advanced_drapes = FALSE
 
 /obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
 	new /obj/item/scalpel/advanced(src)
 	new /obj/item/retractor/advanced(src)
 	new /obj/item/surgicaldrill/advanced(src)
-	new /obj/item/surgical_drapes(src)
+	if(advanced_drapes)
+		new /obj/item/surgical_drapes/advanced(src)
+	else
+		new /obj/item/surgical_drapes(src)
+
+/obj/item/storage/belt/medical/surgery_belt_adv/cmo
+	advanced_drapes = TRUE
 
 /obj/item/storage/belt/security
 	name = "security belt"
@@ -575,6 +581,7 @@
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
+		/obj/item/twohanded/broom,
 		/obj/item/paint/paint_remover,
 		/obj/item/assembly/mousetrap,
 		/obj/item/screwdriver,

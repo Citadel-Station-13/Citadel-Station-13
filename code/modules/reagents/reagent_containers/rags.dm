@@ -53,7 +53,7 @@
 			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 	return
 
-/obj/item/reagent_containers/rag/pre_altattackby(mob/living/M, mob/living/user, params)
+/obj/item/reagent_containers/rag/alt_pre_attack(mob/living/M, mob/living/user, params)
 	if(istype(M) && user.a_intent == INTENT_HELP)
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(M.on_fire)

@@ -211,24 +211,24 @@ SUBSYSTEM_DEF(vote)
 	var/already_lost_runoff = list()
 	var/list/cur_choices = choices.Copy()
 	for(var/ckey in voted)
-		choices[choices[voted[ckey][1]]]++ // jesus christ how horrifying
+		choices["[choices[voted[ckey][1]]]"]++ // jesus christ how horrifying
 	for(var/_this_var_unused_ignore_it in 1 to choices.len) // if it takes more than this something REALLY wrong happened
 		for(var/ckey in voted)
-			cur_choices[cur_choices[voted[ckey][1]]]++ // jesus christ how horrifying
+			cur_choices["[cur_choices[voted[ckey][1]]]]"]++ // jesus christ how horrifying
 		var/least_vote = 100000
-		var/least_voted
+		var/least_voted = 1
 		for(var/i in 1 to cur_choices.len)
 			var/option = cur_choices[i]
-			if(cur_choices[option] > voted.len/2)
-				return list(option)
-			else if(cur_choices[option] < least_vote && !(option in already_lost_runoff))
-				least_vote = cur_choices[option]
+			if(cur_choices["[option]"] > voted.len/2)
+				return list("[option]")
+			else if(cur_choices["[option]"] < least_vote && !("[option]" in already_lost_runoff))
+				least_vote = cur_choices["[option]"]
 				least_voted = i
 		already_lost_runoff += cur_choices[least_voted]
 		for(var/ckey in voted)
 			voted[ckey] -= least_voted
-		for(var/option in cur_choices)
-			cur_choices[option] = 0
+		for(var/i in 1 to cur_choices.len)
+			cur_choices["[cur_choices[i]]"] = 0
 
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
