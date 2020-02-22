@@ -13,7 +13,7 @@
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 	var/breakout_time = 1200
 	var/message_cooldown
