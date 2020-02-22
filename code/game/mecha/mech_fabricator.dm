@@ -29,6 +29,7 @@
 								"H.O.N.K",
 								"Phazon",
 								"Exosuit Equipment",
+								"Exosuit Ammunition",
 								"Cyborg Upgrade Modules",
 								"Misc"
 								)
@@ -62,6 +63,11 @@
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
+/obj/machinery/mecha_part_fabricator/examine(mob/user)
+	. = ..()
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.</span>"
 
 /obj/machinery/mecha_part_fabricator/emag_act()
 	. = ..()
@@ -312,9 +318,8 @@
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 	if(..())
 		return
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 	if(href_list["part_set"])
-		var/tpart_set = afilter.getStr("part_set")
+		var/tpart_set = href_list["part_set"]
 		if(tpart_set)
 			if(tpart_set=="clear")
 				part_set = null
@@ -322,7 +327,7 @@
 				part_set = tpart_set
 				screen = "parts"
 	if(href_list["part"])
-		var/T = afilter.getStr("part")
+		var/T = href_list["part"]
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
@@ -333,7 +338,7 @@
 						add_to_queue(D)
 					break
 	if(href_list["add_to_queue"])
-		var/T = afilter.getStr("add_to_queue")
+		var/T = href_list["add_to_queue"]
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
@@ -342,10 +347,10 @@
 					break
 		return update_queue_on_page()
 	if(href_list["remove_from_queue"])
-		remove_from_queue(afilter.getNum("remove_from_queue"))
+		remove_from_queue(text2num(href_list["remove_from_queue"]))
 		return update_queue_on_page()
 	if(href_list["partset_to_queue"])
-		add_part_set_to_queue(afilter.get("partset_to_queue"))
+		add_part_set_to_queue(href_list["partset_to_queue"])
 		return update_queue_on_page()
 	if(href_list["process_queue"])
 		spawn(0)
@@ -359,8 +364,8 @@
 	if(href_list["screen"])
 		screen = href_list["screen"]
 	if(href_list["queue_move"] && href_list["index"])
-		var/index = afilter.getNum("index")
-		var/new_index = index + afilter.getNum("queue_move")
+		var/index = text2num(href_list["index"])
+		var/new_index = index + text2num(href_list["queue_move"])
 		if(isnum(index) && isnum(new_index) && ISINTEGER(index) && ISINTEGER(new_index))
 			if(ISINRANGE(new_index,1,queue.len))
 				queue.Swap(index,new_index)
@@ -371,7 +376,7 @@
 	if(href_list["sync"])
 		sync()
 	if(href_list["part_desc"])
-		var/T = afilter.getStr("part_desc")
+		var/T = href_list["part_desc"]
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
@@ -411,7 +416,7 @@
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
-	return copytext(ID,2)
+	return copytext_char(ID,2)
 
 /obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
 	if(panel_open)

@@ -9,7 +9,7 @@
 /obj/item/projectile/bullet/spinfusor/on_hit(atom/target, blocked = FALSE) //explosion to emulate the spinfusor's AOE
 	..()
 	explosion(target, -1, -1, 2, 0, -1)
-	return 1
+	return BULLET_ACT_HIT
 
 /obj/item/ammo_casing/caseless/spinfusor
 	name = "spinfusor disk"
@@ -66,17 +66,3 @@
 	ammo_type = /obj/item/ammo_casing/caseless/spinfusor
 	w_class = WEIGHT_CLASS_NORMAL
 	max_ammo = 4
-
-/datum/supply_pack/security/armory/spinfusor
-	name = "Stormhammer Spinfusor Crate"
-	cost = 14000
-	contains = list(/obj/item/gun/ballistic/automatic/spinfusor,
-					/obj/item/gun/ballistic/automatic/spinfusor)
-	crate_name = "spinfusor crate"
-
-/datum/supply_pack/security/armory/spinfusorammo
-	name = "Spinfusor Disk Crate"
-	cost = 7000
-	contains = list(/obj/item/ammo_box/aspinfusor,
-					/obj/item/ammo_box/aspinfusor)
-	crate_name = "spinfusor disk crate"

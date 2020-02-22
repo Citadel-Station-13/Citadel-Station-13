@@ -14,10 +14,10 @@ Burning extracts:
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/burning/attack_self(mob/user)
-	if(!reagents.has_reagent("plasma",10))
+	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
 		to_chat(user, "<span class='warning'>This extract needs to be full of plasma to activate!</span>")
 		return
-	reagents.remove_reagent("plasma",10)
+	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
 	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
 	playsound(src, 'sound/magic/fireball.ogg', 50, 1)
@@ -44,7 +44,7 @@ Burning extracts:
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] boils over with a caustic gas!</span>")
 	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent("condensedcapsaicin", 100)
+	R.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
 
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
@@ -113,8 +113,8 @@ Burning extracts:
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] releases a burst of chilling smoke!</span>")
 	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent("frostoil", 40)
-	user.reagents.add_reagent("cryoxadone",10)
+	R.add_reagent(/datum/reagent/consumable/frostoil, 40)
+	user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,10)
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
 	smoke.start()
@@ -131,7 +131,7 @@ Burning extracts:
 	for(var/i = 0, i < amount, i++)
 		var/path = get_random_food()
 		var/obj/item/O = new path(pick(turfs))
-		O.reagents.add_reagent("slimejelly",5) //Oh god it burns
+		O.reagents.add_reagent(/datum/reagent/toxin/slimejelly, 5) //Oh god it burns
 		if(prob(50))
 			O.desc += " It smells strange..."
 	user.visible_message("<span class='danger'>[src] produces a few pieces of food!</span>")
@@ -154,7 +154,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
-	new /obj/item/camera/timefreeze(get_turf(user))
+	new /obj/item/camera/rewind(get_turf(user))
 	..()
 
 /obj/item/slimecross/burning/cerulean
@@ -268,7 +268,7 @@ Burning extracts:
 /obj/item/slimecross/burning/lightpink/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] lets off a hypnotizing pink glow!</span>")
 	for(var/mob/living/carbon/C in view(7, get_turf(user)))
-		C.reagents.add_reagent("pax",5)
+		C.reagents.add_reagent(/datum/reagent/pax, 5)
 	..()
 
 /obj/item/slimecross/burning/adamantine
@@ -289,25 +289,88 @@ Burning extracts:
 
 //Misc. things added
 
+//Rewind camera - I'm already Burning Sepia
+/obj/item/camera/rewind
+	name = "sepia-tinted camera"
+	desc = "They say a picture is like a moment stopped in time."
+	pictures_left = 1
+	pictures_max = 1
+	can_customise = FALSE
+	default_picture_name = "A nostalgic picture"
+	var/used = FALSE
+
+/datum/saved_bodypart
+	var/obj/item/bodypart/old_part
+	var/bodypart_type
+	var/brute_dam
+	var/burn_dam
+	var/stamina_dam
+
+/datum/saved_bodypart/New(obj/item/bodypart/part)
+	old_part = part
+	bodypart_type = part.type
+	brute_dam = part.brute_dam
+	burn_dam = part.burn_dam
+	stamina_dam = part.stamina_dam
+
+/mob/living/carbon/proc/apply_saved_bodyparts(list/datum/saved_bodypart/parts)
+	var/list/dont_chop = list()
+	for(var/zone in parts)
+		var/datum/saved_bodypart/saved_part = parts[zone]
+		var/obj/item/bodypart/already = get_bodypart(zone)
+		if(QDELETED(saved_part.old_part))
+			saved_part.old_part = new saved_part.bodypart_type
+		if(!already || already != saved_part.old_part)
+			saved_part.old_part.replace_limb(src, TRUE)
+		saved_part.old_part.heal_damage(INFINITY, INFINITY, INFINITY, null, FALSE)
+		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
+		dont_chop[zone] = TRUE
+	for(var/_part in bodyparts)
+		var/obj/item/bodypart/part = _part
+		if(dont_chop[part.body_zone])
+			continue
+		part.drop_limb(TRUE)
+
+/mob/living/carbon/proc/save_bodyparts()
+	var/list/datum/saved_bodypart/ret = list()
+	for(var/_part in bodyparts)
+		var/obj/item/bodypart/part = _part
+		var/datum/saved_bodypart/saved_part = new(part)
+
+		ret[part.body_zone] = saved_part
+	return ret
+
+/obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
+	if(!on || !pictures_left || !isturf(target.loc))
+		return
+	if(!used)//selfie time
+		if(user == target)
+			to_chat(user, "<span class=notice>You take a selfie!</span>")
+		else
+			to_chat(user, "<span class=notice>You take a photo with [target]!</span>")
+			to_chat(target, "<span class=notice>[user] takes a photo with you!</span>")
+		to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
+
+		used = TRUE
+		target.AddComponent(/datum/component/dejavu, 2)
+	.=..()
+
+//Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
 /obj/item/camera/timefreeze
 	name = "sepia-tinted camera"
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
+	var/used = FALSE
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	. = ..()
-	var/text = "The camera fades away"
-	if(disk)
-		text += ", leaving the disk behind!"
-		user.put_in_hands(disk)
-	else
-		text += "!"
-	to_chat(user,"<span class='notice'>[text]</span>")
-	qdel(src)
+	if(!used) //refilling the film does not refill the timestop
+		new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
+		used = TRUE
+		desc = "This camera has seen better days."
+	return ..()
 
 /obj/item/slimepotion/extract_cloner
 	name = "extract cloning potion"

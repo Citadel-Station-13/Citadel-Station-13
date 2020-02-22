@@ -108,7 +108,7 @@ datum/crafting_recipe/food/donut/meat
 /datum/crafting_recipe/food/donut/bungo
 	name = "Bungo Donut"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/grown/bungofruit = 1,
+		/datum/reagent/consumable/bungojuice = 3,
 		/obj/item/reagent_containers/food/snacks/donut/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/bungo
@@ -175,7 +175,7 @@ datum/crafting_recipe/food/donut/meat
 /datum/crafting_recipe/food/donut/jelly/bungo
 	name = "Bungo Jelly Donut"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/grown/bungofruit = 1,
+		/datum/reagent/consumable/bungojuice = 3,
 		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/bungo
@@ -242,7 +242,7 @@ datum/crafting_recipe/food/donut/meat
 /datum/crafting_recipe/food/donut/slimejelly/bungo
 	name = "Bungo Slime Donut"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/grown/bungofruit = 1,
+		/datum/reagent/consumable/bungojuice = 3,
 		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/bungo
@@ -377,6 +377,17 @@ datum/crafting_recipe/food/donut/meat
 	result = /obj/item/reagent_containers/food/snacks/muffin/booberry
 	subcategory = CAT_PASTRY
 
+/datum/crafting_recipe/food/poppymuffin
+	name = "Poppy muffin"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/reagent_containers/food/snacks/grown/citrus/lemon = 1,
+		/obj/item/seeds/poppy = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/muffin/poppy
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
 	reqs = list(
@@ -481,6 +492,8 @@ datum/crafting_recipe/food/donut/meat
 		/obj/item/reagent_containers/food/snacks/grown/oat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/oatmealcookie
+	subcategory = CAT_PASTRY
+
 
 /datum/crafting_recipe/food/raisincookie
 	name = "Raisin cookie"

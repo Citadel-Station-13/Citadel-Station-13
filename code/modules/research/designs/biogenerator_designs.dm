@@ -3,19 +3,19 @@
 ///////////////////////////////////
 
 /datum/design/milk
-	name = "10 Milk"
+	name = "10u Milk"
 	id = "milk"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 20)
-	make_reagents = list("milk" = 10)
+	make_reagents = list(/datum/reagent/consumable/milk = 10)
 	category = list("initial","Food")
 
 /datum/design/cream
-	name = "10 Cream"
+	name = "10u Cream"
 	id = "cream"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 30)
-	make_reagents = list("cream" = 10)
+	make_reagents = list(/datum/reagent/consumable/cream = 10)
 	category = list("initial","Food")
 
 /datum/design/milk_carton
@@ -39,7 +39,7 @@
 	id = "black_pepper"
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 25)
-	make_reagents = list("blackpepper" = 10)
+	make_reagents = list(/datum/reagent/consumable/blackpepper = 10)
 	category = list("initial","Food")
 
 /datum/design/pepper_mill
@@ -49,6 +49,22 @@
 	materials = list(MAT_BIOMASS = 50)
 	build_path = /obj/item/reagent_containers/food/condiment/peppermill
 	make_reagents = list()
+	category = list("initial","Food")
+
+/datum/design/enzyme
+	name = "10u Universal Enzyme"
+	id = "enzyme"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 30)
+	make_reagents = list("enzyme" = 10)
+	category = list("initial","Food")
+
+/datum/design/flour_sack
+	name = "Flour Sack"
+	id = "flour_sack"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 150)
+	build_path = /obj/item/reagent_containers/food/condiment/flour
 	category = list("initial","Food")
 
 /datum/design/monkey_cube
@@ -105,6 +121,22 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 50)
 	build_path = /obj/item/reagent_containers/glass/bottle/killer/pestkiller
+	category = list("initial","Botany Chemicals")
+
+/datum/design/ammonia
+	name = "10u Ammonia"
+	id = "ammonia_biogen"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 25)
+	make_reagents = list(/datum/reagent/ammonia = 10)
+	category = list("initial","Botany Chemicals")
+
+/datum/design/saltpetre
+	name = "10u Saltpetre"
+	id = "saltpetre_biogen"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 75)
+	make_reagents = list(/datum/reagent/saltpetre = 10)
 	category = list("initial","Botany Chemicals")
 
 /datum/design/botany_bottle

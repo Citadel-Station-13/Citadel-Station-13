@@ -343,7 +343,7 @@
 	new /obj/item/implanter/radio/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
-	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/under/rank/centcom_officer/syndicate(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/radio/headset/headset_cent/empty(src)
@@ -391,3 +391,9 @@
 
 	if(prob(50))
 		new /obj/item/seeds/random(src) //oops, an additional packet might have slipped its way into the box
+
+/obj/item/storage/box/syndie_kit/revolver
+
+/obj/item/storage/box/syndie_kit/revolver/PopulateContents()
+	new /obj/item/gun/ballistic/revolver(src)
+	new /obj/item/ammo_box/a357(src)

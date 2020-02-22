@@ -22,13 +22,14 @@
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/zone_selected = null
+	var/zone_selected = BODY_ZONE_CHEST
 
 	var/computer_id = null
 	var/list/logging = list()
-	var/obj/machinery/machine = null
+	var/atom/machine = null
 
 	var/next_move = null
+	var/create_area_cooldown
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
@@ -94,7 +95,7 @@
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
-	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
+	var/silicon_privileges = NONE // Can they interact with station electronics
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
@@ -119,3 +120,11 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
+	var/siliconaccessareas = list()
+	var/siliconaccesstoggle = FALSE
+
+	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
+
+	var/flavor_text = ""
+	var/flavor_text_2 = "" //version of the above that only lasts for the current round.

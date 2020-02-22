@@ -184,7 +184,7 @@
 	if(usr.incapacitated())
 		return
 	if(beaker)
-		if(usr && Adjacent(usr) && !issiliconoradminghost(usr))
+		if(usr && Adjacent(usr) && usr.can_hold_items())
 			if(!usr.put_in_hands(beaker))
 				beaker.forceMove(drop_location())
 		beaker = null
@@ -221,6 +221,22 @@
 		. += "\t<span class='notice'>No chemicals are attached.</span>\n"
 
 	. += "\t<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+
+/obj/machinery/iv_drip/telescopic
+	name = "telescopic IV drip"
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down."
+	icon_state = "iv_drip"
+
+/obj/machinery/iv_drip/telescopic/update_icon()
+	..()
+	icon_state = icon_state + "_tele"
+
+/obj/machinery/iv_drip/telescopic/AltClick(mob/user)
+	if (attached || beaker || !user.canUseTopic(src, BE_CLOSE))
+		return ..()
+	new /obj/item/tele_iv(get_turf(src))
+	qdel(src)
+	return TRUE
 
 #undef IV_TAKING
 #undef IV_INJECTING

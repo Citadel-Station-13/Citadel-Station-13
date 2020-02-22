@@ -72,20 +72,21 @@
 		display_names += list(initial(A.name) = A)
 
 	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
+	var/turf/T = get_turf(M)
+	if(!T || QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)
 	var/A = holy_armor_list[index]
 
 	GLOB.holy_armor_type = A
-	var/holy_armor_box = new A
+	var/holy_armor_box = new A(T)
 
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 
 	if(holy_armor_box)
 		qdel(src)
-		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
+		M.put_in_hands(holy_armor_box)
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -308,7 +309,7 @@
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands)
+/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = list()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
@@ -479,10 +480,10 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
@@ -789,7 +790,7 @@
 
 	praying = TRUE
 	if(do_after(user, 20, target = M))
-		M.reagents?.add_reagent("holywater", 5)
+		M.reagents?.add_reagent(/datum/reagent/water/holywater, 5)
 		to_chat(M, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
 		M.adjustToxLoss(-5, TRUE, TRUE)
 		M.adjustOxyLoss(-5)

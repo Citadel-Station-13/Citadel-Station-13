@@ -88,6 +88,28 @@
 	else
 		return ..()
 
+/obj/structure/chair/alt_attack_hand(mob/living/user)
+	if(Adjacent(user) && istype(user))
+		if(!item_chair || !user.can_hold_items() || !has_buckled_mobs() || buckled_mobs.len > 1 || dir != user.dir || flags_1 & NODECONSTRUCT_1)
+			return TRUE
+		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+			return TRUE
+		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
+			return TRUE
+		var/mob/living/poordude = buckled_mobs[1]
+		if(!istype(poordude))
+			return TRUE
+		user.visible_message("<span class='notice'>[user] pulls [src] out from under [poordude].</span>", "<span class='notice'>You pull [src] out from under [poordude].</span>")
+		var/C = new item_chair(loc)
+		user.put_in_hands(C)
+		poordude.Knockdown(20)//rip in peace
+		user.adjustStaminaLoss(5)
+		unbuckle_all_mobs(TRUE)
+		qdel(src)
+		return TRUE
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
 		..()
@@ -347,6 +369,43 @@
 	icon_state = "bar_toppled"
 	item_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
+
+//////////////////////////
+//Alien(Disco) Stools!////
+//////////////////////////
+
+/obj/structure/chair/stool/alien
+	name = "alien stool"
+	desc = "A hard stool made of advanced alien alloy."
+	icon_state = "stoolalien"
+	icon = 'icons/obj/abductor.dmi'
+	item_chair = /obj/item/chair/stool/alien
+	buildstacktype = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+
+/obj/structure/chair/stool/bar/alien
+	name = "bronze bar stool"
+	desc = "A hard bar stool made of advanced alien alloy."
+	icon_state = "baralien"
+	icon = 'icons/obj/abductor.dmi'
+	item_chair = /obj/item/chair/stool/bar/alien
+	buildstacktype = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+
+/obj/item/chair/stool/alien
+	name = "stool"
+	icon_state = "stoolalien_toppled"
+	item_state = "stoolalien"
+	icon = 'icons/obj/abductor.dmi'
+	origin_type = /obj/structure/chair/stool/alien
+	break_chance = 0 //It's too sturdy.
+
+/obj/item/chair/stool/bar/alien
+	name = "bar stool"
+	icon_state = "baralien_toppled"
+	item_state = "baralien"
+	icon = 'icons/obj/abductor.dmi'
+	origin_type = /obj/structure/chair/stool/bar/alien
 
 //////////////////////////
 //Brass & Bronze stools!//

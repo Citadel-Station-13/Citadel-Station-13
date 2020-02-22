@@ -151,6 +151,7 @@
 	var/key_mode
 	var/value_mode
 	var/splitter = " "
+	var/lowercase = TRUE
 
 /datum/config_entry/keyed_list/New()
 	. = ..()
@@ -167,8 +168,11 @@
 	var/key_value = null
 
 	if(key_pos || value_mode == VALUE_MODE_FLAG)
-		key_name = lowertext(copytext(str_val, 1, key_pos))
-		key_value = copytext(str_val, key_pos + 1)
+		key_name = copytext(str_val, 1, key_pos)
+		if(lowercase)
+			key_name = lowertext(key_name)
+		if(key_pos)
+			key_value = copytext(str_val, key_pos + length(str_val[key_pos]))
 		var/new_key
 		var/new_value
 		var/continue_check_value

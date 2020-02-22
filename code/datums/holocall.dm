@@ -12,7 +12,12 @@
 /mob/camera/aiEye/remote/holo/setLoc()
 	. = ..()
 	var/obj/machinery/holopad/H = origin
-	H.move_hologram(eye_user, loc)
+	H?.move_hologram(eye_user, loc)
+
+/obj/machinery/holopad/remove_eye_control(mob/living/user)
+	if(user.client)
+		user.reset_perspective(null)
+	user.remote_control = null
 
 //this datum manages it's own references
 
@@ -53,11 +58,6 @@
 //cleans up ALL references :)
 /datum/holocall/Destroy()
 	QDEL_NULL(hangup)
-
-	var/user_good = !QDELETED(user)
-	if(user_good)
-		user.reset_perspective()
-		user.remote_control = null
 
 	if(!QDELETED(eye))
 		QDEL_NULL(eye)
@@ -257,8 +257,8 @@
 		var/splitpoint = findtext(prepared_line," ")
 		if(!splitpoint)
 			continue
-		var/command = copytext(prepared_line,1,splitpoint)
-		var/value = copytext(prepared_line,splitpoint+1)
+		var/command = copytext(prepared_line, 1, splitpoint)
+		var/value = copytext(prepared_line, splitpoint + length(prepared_line[splitpoint]))
 		switch(command)
 			if("DELAY")
 				var/delay_value = text2num(value)

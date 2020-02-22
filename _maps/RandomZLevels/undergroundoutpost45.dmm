@@ -25,6 +25,9 @@
 "ag" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/undergroundoutpost45/central)
+"ah" = (
+/turf/open/space,
+/area/space/nearstation)
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -13945,10 +13948,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"zi" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/open/space,
-/area/space/nearstation)
 "KE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -14211,7 +14210,7 @@ aa
 aa
 aa
 aa
-zi
+ah
 "}
 (2,1,1) = {"
 aa

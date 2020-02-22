@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - tweak: "Stat() slowed down for anti-lag measures."

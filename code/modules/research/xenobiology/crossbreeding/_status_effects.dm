@@ -890,8 +890,8 @@ datum/status_effect/stabilized/blue/on_remove()
 			healing_types += TOX
 		if(owner.getCloneLoss() > 0)
 			healing_types += CLONE
-
-		owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
+		if(length(healing_types))
+			owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
 		owner.nutrition += 3
 		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
 	else
@@ -910,9 +910,9 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/lightpink/tick()
 	owner.adjustStaminaLoss(-4.5)
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
-		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent("epinephrine"))
+		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")
-			H.reagents.add_reagent("epinephrine",5)
+			H.reagents.add_reagent(/datum/reagent/medicine/epinephrine,5)
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/on_remove()

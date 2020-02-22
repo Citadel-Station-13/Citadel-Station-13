@@ -1,5 +1,4 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging
-	icon = 'icons/obj/atmospherics/pipes/heat.dmi'
 	level = 2
 	var/minimum_temperature_difference = 20
 	var/thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
@@ -26,7 +25,9 @@
 
 	var/turf/T = loc
 	if(istype(T))
-		if(T.blocks_air)
+		if(islava(T))
+			environment_temperature = 5000
+		else if(T.blocks_air)
 			environment_temperature = T.temperature
 		else
 			var/turf/open/OT = T

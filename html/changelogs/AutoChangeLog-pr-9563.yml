@@ -1,4 +1,0 @@
-author: "Fermis"
-delete-after: True
-changes: 
-  - tweak: "tweaked how super bases/acids work but limiting them"

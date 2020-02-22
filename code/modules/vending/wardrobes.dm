@@ -20,7 +20,6 @@
 					/obj/item/clothing/under/rank/security/grey = 5,
 					/obj/item/clothing/under/pants/khaki = 5)
 	premium = list(/obj/item/clothing/under/rank/security/navyblue = 5,
-					/obj/item/clothing/suit/security/officer = 5,
 					/obj/item/clothing/head/beret/sec/navyofficer = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 
@@ -135,7 +134,6 @@
 					/obj/item/clothing/gloves/fingerless = 3,
 					/obj/item/clothing/head/soft/black = 3,
 					/obj/item/clothing/mask/bandana/skull = 2)
-	premium = list(/obj/item/radio/headset/headset_rob = 2) //Cit change
 	contraband = list(/obj/item/clothing/suit/hooded/techpriest = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 
@@ -268,16 +266,17 @@
 					/obj/item/cartridge/janitor = 3,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/head/soft/purple = 2,
+					/obj/item/twohanded/broom = 2,
 					/obj/item/paint/paint_remover = 2,
-					/obj/item/melee/flyswatter = 1,
+					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
 					/obj/item/caution = 8,
-					/obj/item/holosign_creator = 1,
-					/obj/item/lightreplacer = 1,
-					/obj/item/soap = 1,
-					/obj/item/storage/bag/trash = 1,
-					/obj/item/clothing/shoes/galoshes = 1,
-					/obj/item/watertank/janitor = 1,
+					/obj/item/holosign_creator = 2,
+					/obj/item/lightreplacer = 2,
+					/obj/item/soap = 2,
+					/obj/item/storage/bag/trash = 2,
+					/obj/item/clothing/shoes/galoshes = 2,
+					/obj/item/watertank/janitor = 2,
 					/obj/item/storage/belt/janitor = 2,
 					/obj/item/screwdriver = 2,
 					/obj/item/stack/cable_coil/random = 4)
@@ -336,6 +335,8 @@
 					/obj/item/clothing/head/nemes = 1,
 					/obj/item/clothing/head/pharaoh = 1,
 					/obj/item/storage/fancy/candle_box = 3)
+	premium = list(/obj/item/toy/plush/plushvar = 1,
+					/obj/item/toy/plush/narplush = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 
 /obj/item/vending_refill/wardrobe/chap_wardrobe
@@ -399,3 +400,35 @@
 
 /obj/item/vending_refill/wardrobe/viro_wardrobe
 	machine_name = "ViroDrobe"
+
+/obj/machinery/vending/wardrobe/cap_wardrobe
+	name = "Captain's Wardrobe"
+	desc = "The latest and greatest in Nanotrasen fashion for your great leader."
+	icon_state = "capsdrobe"
+	icon_deny = "capsdrobe-deny"
+	product_ads = "Only the greatest for a commander such as ours."
+	req_access = list(ACCESS_CAPTAIN)
+	vend_reply = "A wonderful day to you, great leader."
+	products = list(/obj/item/clothing/suit/hooded/wintercoat/captain = 1,
+					/obj/item/storage/backpack/captain = 1, 
+					/obj/item/storage/backpack/satchel/cap = 1,
+					/obj/item/storage/backpack/duffelbag/captain = 1,
+					/obj/item/clothing/neck/cloak/cap = 1,
+					/obj/item/clothing/shoes/sneakers/brown = 2,
+					/obj/item/clothing/under/rank/captain = 1,
+					/obj/item/clothing/under/rank/captain/skirt = 1,
+					/obj/item/clothing/head/caphat = 1,
+					/obj/item/clothing/head/caphat/parade = 1,
+					/obj/item/clothing/head/caphat/beret = 1,
+					/obj/item/clothing/head/caphat/beret/white = 1,
+					/obj/item/clothing/under/captainparade = 1,
+					/obj/item/clothing/suit/captunic = 1,
+					/obj/item/clothing/under/rank/captain/femformal = 1,
+					/obj/item/clothing/glasses/sunglasses/gar/supergar = 1,
+					/obj/item/clothing/gloves/color/captain = 1)
+	refill_canister = /obj/item/vending_refill/wardrobe/cap_wardrobe
+
+/obj/item/vending_refill/wardrobe/cap_wardrobe
+	machine_name = "Captain's Wardrobe"
+	icon_state = "refill_caps"
+	

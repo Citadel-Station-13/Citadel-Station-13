@@ -5,8 +5,8 @@
 	say_mod = "hisses"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR)
-	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_REPTILE)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs", "taur", "deco_wings")
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
 	coldmod = 1.5
@@ -72,19 +72,6 @@
 		mutant_bodyparts |= "tail_lizard"
 		mutant_bodyparts |= "spines"
 	H.update_body()
-
-/datum/species/lizard/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
-	if(("legs" in C.dna.species.mutant_bodyparts) && (C.dna.features["legs"] == "Digitigrade" || C.dna.features["legs"] == "Avian"))
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
-	return ..()
-
-/datum/species/lizard/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Plantigrade")
-		species_traits -= DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
 
 /*
  Lizard subspecies: ASHWALKERS
