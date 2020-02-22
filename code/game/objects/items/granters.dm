@@ -496,7 +496,7 @@
 	crafting_recipe_types = list(/datum/crafting_recipe/bone_arrow, /datum/crafting_recipe/bone_bow, /datum/crafting_recipe/ashen_arrow, /datum/crafting_recipe/quiver, /datum/crafting_recipe/bow_tablet)
 	icon_state = "stone_tablet"
 	oneuse = FALSE
-	remarks = list("Sticking burning arrows into the sand makes them stronger?", "Breaking the bone apart to get shards, not sharpening the bone...", "Sinew is just like rope?")
+	remarks = list("Sticking burning arrows into the sand makes them stronger...", "Breaking the bone apart to get shards, not sharpening the bone...", "Sinew is just like rope...")
 
 /obj/item/book/granter/crafting_recipe/under_the_oven //Illegal cook book
 	name = "Under The Oven"
