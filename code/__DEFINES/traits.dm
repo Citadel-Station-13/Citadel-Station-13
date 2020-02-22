@@ -55,6 +55,7 @@
 	} while (0)
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
 //mob traits
 #define TRAIT_BLIND 			"blind"
@@ -136,7 +137,7 @@
 #define TRAIT_NOMARROW			"nomarrow"		// You don't make blood, with chemicals or nanites.
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
-
+#define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it

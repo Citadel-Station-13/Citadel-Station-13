@@ -26,11 +26,19 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/board/autolathe_secure
+	name = "Machine Design (Secure Autolathe Board)"
+	desc = "The circuit board for an autolathe. This one is programmed to not allow hacking."
+	id = "autolathe_secure"
+	build_path = /obj/item/circuitboard/machine/autolathe/secure
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 /datum/design/board/recharger
 	name = "Machine Design (Weapon Recharger Board)"
 	desc = "The circuit board for a Weapon Recharger."
 	id = "recharger"
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
+	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
 	build_path = /obj/item/circuitboard/machine/recharger
 	category = list("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL

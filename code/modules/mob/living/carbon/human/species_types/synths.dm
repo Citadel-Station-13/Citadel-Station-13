@@ -39,9 +39,8 @@
 	if(chem.type == /datum/reagent/medicine/synthflesh)
 		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
-	else
-		return ..()
+		return TRUE
+	return ..()
 
 
 /datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)

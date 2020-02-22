@@ -38,6 +38,13 @@
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 
+	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+	var/list/custom_materials
+	///Bitfield for how the atom handles materials.
+	var/material_flags = NONE
+	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
+	var/material_modifier = 1
+
 	var/icon/blood_splatter_icon
 	var/list/fingerprints
 	var/list/fingerprintshidden
@@ -88,6 +95,12 @@
 
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
+
+	var/temp_list = list()
+	for(var/i in custom_materials)
+		temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
+	custom_materials = null //Null the list to prepare for applying the materials properly
+	set_custom_materials(temp_list)
 
 	ComponentInitialize()
 
@@ -289,6 +302,11 @@
 
 	if(desc)
 		. += desc
+
+	if(custom_materials)
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			. += "<u>It is made out of [M.name]</u>."
 
 	if(reagents)
 		if(reagents.reagents_holder_flags & TRANSPARENT)
@@ -872,3 +890,26 @@ Proc for attack log creation, because really why not
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
+
+///Sets the custom materials for an item.
+/atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
+
+	if(!materials)
+		materials = custom_materials
+
+	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
+		for(var/i in custom_materials)
+			var/datum/material/custom_material = getmaterialref(i)
+			custom_material.on_removed(src, material_flags) //Remove the current materials
+
+	if(!length(materials))
+		return
+
+	custom_materials = list() //Reset the list
+
+	for(var/x in materials)
+		var/datum/material/custom_material = getmaterialref(x)
+
+		if(!(material_flags & MATERIAL_NO_EFFECTS))
+			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
+		custom_materials[custom_material] += materials[x] * multiplier

@@ -234,6 +234,7 @@
 
 /datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
 	abstract_type = /datum/config_entry/number/movedelay
+	integer = FALSE
 
 /datum/config_entry/number/movedelay/ValidateAndSet()
 	. = ..()

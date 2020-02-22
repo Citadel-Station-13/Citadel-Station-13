@@ -482,7 +482,8 @@
 	med_hud_set_status()
 
 //proc used to ressuscitate a mob
-/mob/living/proc/revive(full_heal = 0, admin_revive = 0)
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
@@ -528,11 +529,6 @@
 	fire_stacks = 0
 	confused = 0
 	update_canmove()
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if (mood)
-		QDEL_LIST_ASSOC_VAL(mood.mood_events)
-		mood.sanity = SANITY_GREAT
-		mood.update_mood()
 	//Heal all organs
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -540,8 +536,6 @@
 			for(var/organ in C.internal_organs)
 				var/obj/item/organ/O = organ
 				O.setOrganDamage(0)
-	SEND_SIGNAL(src, COMSIG_LIVING_FULLY_HEAL, admin_revive)
-
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -551,6 +545,12 @@
 
 /mob/living/proc/update_damage_overlays()
 	return
+
+/mob/living/Crossed(atom/movable/AM)
+	. = ..()
+	for(var/i in get_equipped_items())
+		var/obj/item/item = i
+		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM)
 
 /mob/living/Move(atom/newloc, direct)
 	if (buckled && buckled.loc != newloc) //not updating position
@@ -1080,7 +1080,7 @@
 			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
-		if (pulledby)
+		if (pulledby && isliving(pulledby))
 			var/mob/living/L = pulledby
 			L.update_pull_movespeed()
 	if(buckled)

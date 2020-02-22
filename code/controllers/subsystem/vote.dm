@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(vote)
 		var/list/this_vote = voted[ckey]
 		var/list/pretty_vote = list()
 		for(var/choice in choices)
-			if("[choice]" in this_vote && "[choice]" in scores_by_choice)
+			if(("[choice]" in this_vote) && ("[choice]" in scores_by_choice))
 				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],/proc/cmp_numeric_asc)
 				// START BALLOT GATHERING
 				pretty_vote += "[choice]"
@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/score_name in scores_by_choice)
 		var/list/score = scores_by_choice[score_name]
 		for(var/indiv_score in score)
-			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score])) 
+			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score]))
 		if(score.len == 0)
 			scores_by_choice -= score_name
 	while(scores_by_choice.len > 1)
@@ -211,24 +211,24 @@ SUBSYSTEM_DEF(vote)
 	var/already_lost_runoff = list()
 	var/list/cur_choices = choices.Copy()
 	for(var/ckey in voted)
-		choices[choices[voted[ckey][1]]]++ // jesus christ how horrifying
+		choices["[choices[voted[ckey][1]]]"]++ // jesus christ how horrifying
 	for(var/_this_var_unused_ignore_it in 1 to choices.len) // if it takes more than this something REALLY wrong happened
 		for(var/ckey in voted)
-			cur_choices[cur_choices[voted[ckey][1]]]++ // jesus christ how horrifying
+			cur_choices["[cur_choices[voted[ckey][1]]]]"]++ // jesus christ how horrifying
 		var/least_vote = 100000
-		var/least_voted
+		var/least_voted = 1
 		for(var/i in 1 to cur_choices.len)
 			var/option = cur_choices[i]
-			if(cur_choices[option] > voted.len/2)
-				return list(option)
-			else if(cur_choices[option] < least_vote && !(option in already_lost_runoff))
-				least_vote = cur_choices[option]
+			if(cur_choices["[option]"] > voted.len/2)
+				return list("[option]")
+			else if(cur_choices["[option]"] < least_vote && !("[option]" in already_lost_runoff))
+				least_vote = cur_choices["[option]"]
 				least_voted = i
 		already_lost_runoff += cur_choices[least_voted]
 		for(var/ckey in voted)
 			voted[ckey] -= least_voted
-		for(var/option in cur_choices)
-			cur_choices[option] = 0
+		for(var/i in 1 to cur_choices.len)
+			cur_choices["[cur_choices[i]]"] = 0
 
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
@@ -376,7 +376,7 @@ SUBSYSTEM_DEF(vote)
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
-	
+
 	return .
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote, score = 0)

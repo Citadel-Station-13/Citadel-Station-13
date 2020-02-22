@@ -44,7 +44,7 @@
 
 				if(safe_thing)
 					if(!safe_thing.reagents)
-						safe_thing.create_reagents(100)
+						safe_thing.create_reagents(100, NONE, NO_REAGENTS_VALUE)
 
 					reagents.reaction(safe_thing, TOUCH, fraction)
 					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this)

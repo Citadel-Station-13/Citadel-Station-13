@@ -259,7 +259,7 @@
 	light_color = "#37FFF7"
 	actions_types = list()
 
-/obj/item/melee/transforming/energy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+/obj/item/melee/transforming/energy/sword/cx/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
