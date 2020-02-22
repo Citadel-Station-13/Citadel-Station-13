@@ -102,6 +102,7 @@
 	for(var/obj/item/I in embedded_objects)
 		embedded_objects -= I
 		I.forceMove(src)
+		I.unembedded()
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
 		SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")

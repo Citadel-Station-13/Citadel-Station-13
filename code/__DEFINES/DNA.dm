@@ -12,6 +12,7 @@
 #define MUTATE		/datum/mutation/human/bad_dna
 #define COUGH		/datum/mutation/human/cough
 #define DWARFISM	/datum/mutation/human/dwarfism
+#define GIGANTISM	/datum/mutation/human/gigantism
 #define CLOWNMUT	/datum/mutation/human/clumsy
 #define TOURETTES	/datum/mutation/human/tourettes
 #define DEAFMUT		/datum/mutation/human/deaf
@@ -30,17 +31,28 @@
 #define ELVIS		/datum/mutation/human/elvis
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
+#define ANTIGLOWY	/datum/mutation/human/glow/anti
 #define TELEPATHY	/datum/mutation/human/telepathy
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
+#define TONGUESPIKE	/datum/mutation/human/tongue_spike
+#define TONGUESPIKECHEM		/datum/mutation/human/tongue_spike/chem
 #define STRONG    	/datum/mutation/human/strong
+#define STIMMED		/datum/mutation/human/stimmed
 #define FIRESWEAT	/datum/mutation/human/fire
 #define THERMAL		/datum/mutation/human/thermal
-#define INSULATED	/datum/mutation/human/insulated
-#define SHOCKTOUCH	/datum/mutation/human/shock
 #define ANTENNA		/datum/mutation/human/antenna
 #define PARANOIA	/datum/mutation/human/paranoia
 #define MINDREAD	/datum/mutation/human/mindreader
+#define INSULATED	/datum/mutation/human/insulated
+#define SHOCKTOUCH	/datum/mutation/human/shock
+#define OLFACTION	/datum/mutation/human/olfaction
+#define ACIDFLESH	/datum/mutation/human/acidflesh
+#define BADBLINK	/datum/mutation/human/badblink
+#define SPASTIC		/datum/mutation/human/spastic
+#define GELADIKINESIS		/datum/mutation/human/geladikinesis
+#define CRYOKINESIS /datum/mutation/human/cryokinesis
+#define SPIDER_WEB	/datum/mutation/human/webbing
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

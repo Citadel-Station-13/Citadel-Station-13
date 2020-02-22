@@ -296,53 +296,13 @@
 	name = "\improper DNA injector (Anti-Laser Eyes)"
 	remove_mutations = list(LASEREYES)
 
-/obj/item/dnainjector/thermalmut
-	name = "\improper DNA injector (Thermal Vision)"
-	add_mutations = list(THERMAL)
-
-/obj/item/dnainjector/antithermal
-	name = "\improper DNA injector (Anti-Thermal Vision)"
-	remove_mutations = list(THERMAL)
-
-/obj/item/dnainjector/telepathymut
-	name = "\improper DNA injector (Telepathy)"
-	add_mutations = list(TELEPATHY)
-
-/obj/item/dnainjector/antitelepathy
-	name = "\improper DNA injector (Anti-Telepathy)"
-	remove_mutations = list(TELEPATHY)
-
-/obj/item/dnainjector/voidmut
-	name = "\improper DNA injector (Void Magnet)"
+/obj/item/dnainjector/void
+	name = "\improper DNA injector (Void)"
 	add_mutations = list(VOID)
 
 /obj/item/dnainjector/antivoid
-	name = "\improper DNA injector (Anti-Void Magnet)"
+	name = "\improper DNA injector (Anti-Void)"
 	remove_mutations = list(VOID)
-
-/obj/item/dnainjector/firebreathmut
-	name = "\improper DNA injector (Firebreath)"
-	add_mutations = list(FIREBREATH)
-
-/obj/item/dnainjector/antifirebreath
-	name = "\improper DNA injector (Anti-Firebreath)"
-	remove_mutations = list(FIREBREATH)
-
-/obj/item/dnainjector/insulatedmut
-	name = "\improper DNA injector (Insulated)"
-	add_mutations = list(INSULATED)
-
-/obj/item/dnainjector/antiinsulated
-	name = "\improper DNA injector (Anti-Insulated)"
-	remove_mutations = list(INSULATED)
-
-/obj/item/dnainjector/shocktouchmut
-	name = "\improper DNA injector (Shock Touch)"
-	add_mutations = list(SHOCKTOUCH)
-
-/obj/item/dnainjector/antishocktouch
-	name = "\improper DNA injector (Anti-Shock Touch)"
-	remove_mutations = list(SHOCKTOUCH)
 
 /obj/item/dnainjector/antenna
 	name = "\improper DNA injector (Antenna)"
@@ -367,6 +327,133 @@
 /obj/item/dnainjector/antimindread
 	name = "\improper DNA injector (Anti-Mindread)"
 	remove_mutations = list(MINDREAD)
+
+/obj/item/dnainjector/radioactive
+	name = "\improper DNA injector (Radioactive)"
+	add_mutations = list(RADIOACTIVE)
+
+/obj/item/dnainjector/antiradioactive
+	name = "\improper DNA injector (Anti-Radioactive)"
+	remove_mutations = list(RADIOACTIVE)
+/obj/item/dnainjector/olfaction
+	name = "\improper DNA injector (Olfaction)"
+	add_mutations = list(OLFACTION)
+
+/obj/item/dnainjector/antiolfaction
+	name = "\improper DNA injector (Anti-Olfaction)"
+	remove_mutations = list(OLFACTION)
+
+/obj/item/dnainjector/insulated
+	name = "\improper DNA injector (Insulated)"
+	add_mutations = list(INSULATED)
+
+/obj/item/dnainjector/antiinsulated
+	name = "\improper DNA injector (Anti-Insulated)"
+	remove_mutations = list(INSULATED)
+
+/obj/item/dnainjector/shock
+	name = "\improper DNA injector (Shock Touch)"
+	add_mutations = list(SHOCKTOUCH)
+
+/obj/item/dnainjector/antishock
+	name = "\improper DNA injector (Anti-Shock Touch)"
+	remove_mutations = list(SHOCKTOUCH)
+
+/obj/item/dnainjector/spacialinstability
+	name = "\improper DNA injector (Spacial Instability)"
+	add_mutations = list(BADBLINK)
+
+/obj/item/dnainjector/antispacialinstability
+	name = "\improper DNA injector (Anti-Spacial Instability)"
+	remove_mutations = list(BADBLINK)
+
+/obj/item/dnainjector/acidflesh
+	name = "\improper DNA injector (Acid Flesh)"
+	add_mutations = list(ACIDFLESH)
+
+/obj/item/dnainjector/antiacidflesh
+	name = "\improper DNA injector (Acid Flesh)"
+	remove_mutations = list(ACIDFLESH)
+
+/obj/item/dnainjector/gigantism
+	name = "\improper DNA injector (Gigantism)"
+	add_mutations = list(GIGANTISM)
+
+/obj/item/dnainjector/antigigantism
+	name = "\improper DNA injector (Anti-Gigantism)"
+	remove_mutations = list(GIGANTISM)
+
+/obj/item/dnainjector/spastic
+	name = "\improper DNA injector (Spastic)"
+	add_mutations = list(SPASTIC)
+
+/obj/item/dnainjector/antispastic
+	name = "\improper DNA injector (Anti-Spastic)"
+	remove_mutations = list(SPASTIC)
+
+/obj/item/dnainjector/geladikinesis
+	name = "\improper DNA injector (Geladikinesis)"
+	add_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/antigeladikinesis
+	name = "\improper DNA injector (Anti-Geladikinesis)"
+	remove_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/cryokinesis
+	name = "\improper DNA injector (Cryokinesis)"
+	add_mutations = list(CRYOKINESIS)
+
+/obj/item/dnainjector/anticryokinesis
+	name = "\improper DNA injector (Anti-Cryokinesis)"
+	remove_mutations = list(CRYOKINESIS)
+
+/obj/item/dnainjector/thermal
+	name = "\improper DNA injector (Thermal Vision)"
+	add_mutations = list(THERMAL)
+
+/obj/item/dnainjector/antithermal
+	name = "\improper DNA injector (Anti-Thermal Vision)"
+	remove_mutations = list(THERMAL)
+
+/obj/item/dnainjector/glow
+	name = "\improper DNA injector (Glowy)"
+	add_mutations = list(GLOWY)
+
+/obj/item/dnainjector/removeglow
+	name = "\improper DNA injector (Anti-Glowy)"
+	remove_mutations = list(GLOWY)
+
+/obj/item/dnainjector/antiglow
+	name = "\improper DNA injector (Antiglowy)"
+	add_mutations = list(ANTIGLOWY)
+
+/obj/item/dnainjector/removeantiglow
+	name = "\improper DNA injector (Anti-Antiglowy)"
+	remove_mutations = list(ANTIGLOWY)
+
+/obj/item/dnainjector/firebreath
+	name = "\improper DNA injector (Firebreath)"
+	add_mutations = list(FIREBREATH)
+
+/obj/item/dnainjector/antifirebreath
+	name = "\improper DNA injector (Anti-Firebreath)"
+	remove_mutations = list(FIREBREATH)
+
+/obj/item/dnainjector/tonguespike
+	name = "\improper DNA injector (Tongue Spike)"
+	add_mutations = list(TONGUESPIKE)
+
+/obj/item/dnainjector/antitonguespike
+	name = "\improper DNA injector (Anti-Tongue Spike)"
+	remove_mutations = list(TONGUESPIKE)
+
+/obj/item/dnainjector/spiderweb
+	name = "\improper DNA injector (Spider Web)"
+	add_mutations = list(SPIDER_WEB)
+
+/obj/item/dnainjector/antispiderweb
+	name = "\improper DNA injector (Anti-Spider Web)"
+	remove_mutations = list(SPIDER_WEB)
 
 /obj/item/dnainjector/timed
 	var/duration = 600

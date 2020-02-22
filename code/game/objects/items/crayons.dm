@@ -619,7 +619,7 @@
 	is_capped = TRUE
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
-	
+
 	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
 
 	pre_noise = TRUE

@@ -27,3 +27,4 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD, "cold_resistance")
 	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "cold_resistance")
+

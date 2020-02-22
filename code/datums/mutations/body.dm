@@ -246,6 +246,21 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
 
+
+/datum/mutation/human/glow/anti
+	name = "Anti-Glow"
+	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
+	text_gain_indication = "<span class='notice'>Your light around you seems to disappear.</span>"
+	glow = -3.5 //Slightly stronger, since negating light tends to be harder than making it.
+	locked = TRUE
+
+/datum/mutation/human/stimmed
+	name = "Stimmed"
+	desc = "The user's chemical balance is more robust."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
+	difficulty = 16
+
 /datum/mutation/human/paranoia
 	name = "Paranoia"
 	desc = "Subject is easily terrified, and may suffer from hallucinations."
@@ -260,3 +275,91 @@
 		if(prob(25))
 			to_chat(owner,"<span class='warning'>You feel someone creeping in on you...</span>")
 			owner.hallucination += 20
+
+
+/datum/mutation/human/badblink
+	name = "Spatial Instability"
+	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
+	text_lose_indication = "<span class'notice'>The space around you settles back to normal.</span>"
+	difficulty = 18//high so it's hard to unlock and abuse
+	instability = 10
+	synchronizer_coeff = 1
+	energy_coeff = 1
+	power_coeff = 1
+	var/warpchance = 0
+
+/datum/mutation/human/badblink/on_life()
+	if(prob(warpchance))
+		var/warpmessage = pick(
+		"<span class='warning'>With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air.</span>",
+		"<span class='warning'>[owner] does some sort of strange backflip into another dimension. It looks pretty painful.</span>",
+		"<span class='warning'>[owner] does a jump to the left, a step to the right, and warps out of reality.</span>",
+		"<span class='warning'>[owner]'s torso starts folding inside out until it vanishes from reality, taking [owner] with it.</span>",
+		"<span class='warning'>One moment, you see [owner]. The next, [owner] is gone.</span>")
+		owner.visible_message(warpmessage, "<span class='userdanger'>You feel a wave of nausea as you fall through reality!</span>")
+		var/warpdistance = rand(10,15) * GET_MUTATION_POWER(src)
+		do_teleport(owner, get_turf(owner), warpdistance, channel = TELEPORT_CHANNEL_FREE)
+		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * (warpchance * warpdistance))
+		warpchance = 0
+		owner.visible_message("<span class='danger'>[owner] appears out of nowhere!</span>")
+	else
+		warpchance += 0.25 * GET_MUTATION_ENERGY(src)
+
+/datum/mutation/human/acidflesh
+	name = "Acidic Flesh"
+	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
+	text_lose_indication = "<span class'notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
+	difficulty = 18//high so it's hard to unlock and use on others
+	var/msgcooldown = 0
+
+/datum/mutation/human/acidflesh/on_life()
+	if(prob(25))
+		if(world.time > msgcooldown)
+			to_chat(owner, "<span class='danger'>Your acid flesh bubbles...</span>")
+			msgcooldown = world.time + 200
+		if(prob(15))
+			owner.acid_act(rand(30,50), 10)
+			owner.visible_message("<span class='warning'>[owner]'s skin bubbles and pops.</span>", "<span class='userdanger'>Your bubbling flesh pops! It burns!</span>")
+			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
+
+/datum/mutation/human/gigantism
+	name = "Gigantism"//negative version of dwarfism
+	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
+	quality = MINOR_NEGATIVE
+	difficulty = 12
+
+/datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.resize = 1.25
+	owner.update_transform()
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
+
+/datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.resize = 0.8
+	owner.update_transform()
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
+
+/datum/mutation/human/spastic
+	name = "Spastic"
+	desc = "Subject suffers from muscle spasms."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='warning'>You flinch.</span>"
+	text_lose_indication = "<span class'notice'>Your flinching subsides.</span>"
+	difficulty = 16
+
+/datum/mutation/human/spastic/on_acquiring()
+	if(..())
+		return
+	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
+
+/datum/mutation/human/spastic/on_losing()
+	if(..())
+		return
+	owner.remove_status_effect(STATUS_EFFECT_SPASMS)

@@ -19,6 +19,7 @@
 	L.embedded_objects -= I
 	L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class*painmul)//It hurts to rip it out, get surgery you dingus. And if you're ripping it out quickly via resist, it's gonna hurt even more
 	I.forceMove(get_turf(src))
+	I.unembedded()
 	user.put_in_hands(I)
 	user.emote("scream")
 	user.visible_message("[user] rips [I] out of [user.p_their()] [L.name]!","<span class='notice'>You remove [I] from your [L.name].</span>")
