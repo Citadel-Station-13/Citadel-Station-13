@@ -346,6 +346,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		// Pass all the gas related code an empty gas container
 		removed = new()
 
+	damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage) // hardcap any direct damage taken before doing atmos damage
 	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
