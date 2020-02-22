@@ -141,10 +141,8 @@
 /obj/item/kitchen/knife/combat/bone/plastic
 	name = "plastic knife"
 	desc = "A plastic knife. Rather harmless to anything."
-	force = 3
-	throwforce = 0
+	force = 1
 	bayonet = FALSE
-	sharpness = IS_BLUNT
 
 /obj/item/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
