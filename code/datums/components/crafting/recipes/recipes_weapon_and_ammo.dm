@@ -204,7 +204,7 @@
 	result =  /obj/item/gun/ballistic/bow/pipe
 	reqs = list(/obj/item/pipe = 5,
 	/obj/item/stack/sheet/plastic = 15,
-	/obj/item/weaponcrafting/silkstring = 10)
+	/obj/item/weaponcrafting/silkstring = 5)
 	time = 450
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -291,9 +291,9 @@
 /datum/crafting_recipe/arrow
 	name = "Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow
-	time = 40
+	time = 20
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
-				 /obj/item/weaponcrafting/silkstring = 1,
+				 /obj/item/stack/sheet/cloth = 1,
 				 /obj/item/stack/rods = 3) // 1 metal sheet is worth 1.5 arrows
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -301,7 +301,7 @@
 /datum/crafting_recipe/bone_arrow
 	name = "Bone Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/bone
-	time = 40
+	time = 20
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				 /obj/item/stack/sheet/sinew = 1,
@@ -310,7 +310,7 @@
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/ashen_arrow
-	name = "Harden Arrow"
+	name = "Bonfire-Hardened Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/ashen
 	tools = list(/obj/structure/bonfire)
 	time = 20
@@ -318,6 +318,10 @@
 	reqs = list(/obj/item/ammo_casing/caseless/arrow = 1)
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
+
+/datum/crafting_recipe/ashen_arrow/welder
+	name = "Welder-Hardened Arrow"
+	tools = list(TOOL_WELDER)
 
 /datum/crafting_recipe/smartdart
 	name = "Medical smartdart"
