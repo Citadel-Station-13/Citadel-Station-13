@@ -15,8 +15,6 @@
 		if(!silent)
 			to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
 		update_resting(updating)
-		if(has_gravity() && resting)
-			playsound(src, "bodyfall", 20, 1)
 
 /mob/living/proc/update_resting(update_mobility = TRUE)
 	if(update_mobility)
@@ -54,6 +52,8 @@
 	if(ignoretimer)
 		set_resting(FALSE, FALSE)
 		return TRUE
+	else if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
+		to_chat(src, "<span class='warning'>You are unable to stand up right now.</span>")
 	else
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
 		if(getStaminaLoss() >= STAMINA_SOFTCRIT)
@@ -79,7 +79,7 @@
 		var/usernotice = automatic ? "<span class='notice'>You are now getting up. (Auto)</span>" : "<span class='notice'>You are now getting up.</span>"
 		visible_message("<span class='notice'>[standupwarning]</span>", usernotice, vision_distance = 5)
 		if(do_after(src, totaldelay, target = src, required_mobility_flags = MOBILITY_MOVE))
-			set_resting(FALSE, FALSE)
+			set_resting(FALSE, TRUE)
 			attemptingstandup = FALSE
 			return TRUE
 		else
@@ -88,6 +88,7 @@
 			if(has_gravity())
 				playsound(src, "bodyfall", 20, 1)
 			return FALSE
+
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
@@ -134,6 +135,8 @@
 		mobility_flags &= ~MOBILITY_STAND
 		if(!lying) //force them on the ground
 			lying = pick(90, 270)
+			if(has_gravity() && !buckled)
+				playsound(src, "bodyfall", 20, 1)
 	else
 		mobility_flags |= MOBILITY_STAND
 		lying = 0
