@@ -10,6 +10,9 @@
 	icon_state = null
 
 // please make sure they're sorted alphabetically and categorized
+/datum/sprite_accessory/underwear/socks/garter
+	name = "Garter"
+	icon_state = "garter"
 
 /datum/sprite_accessory/underwear/socks/socks_knee
 	name = "Knee-high"

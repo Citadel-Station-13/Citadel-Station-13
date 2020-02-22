@@ -31,3 +31,39 @@
 	path = /obj/item/toy/plush/narplush
 	cost = 5
 	restricted_roles = list("Chaplain")
+
+/datum/gear/timidwmask
+	name = "Timid Woman Mask"
+	category = SLOT_WEAR_MASK
+	path = /obj/item/clothing/mask/gas/timid
+	restricted_roles = list("Mime")
+
+/datum/gear/timidmmask
+	name = "Timid Man Mask"
+	category = SLOT_WEAR_MASK
+	path = /obj/item/clothing/mask/gas/timid/man
+	restricted_roles = list("Mime")
+
+/datum/gear/timidwsuit
+	name = "Timid Woman Hoodie"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/timid
+	restricted_roles = list("Mime")
+
+/datum/gear/timidmsuit
+	name = "Timid Man Hoodie"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/timid/man
+	restricted_roles = list("Mime")
+
+/datum/gear/timidwshoes
+	name = "Timid Woman Boots"
+	category = SLOT_SHOES
+	path = /obj/item/clothing/shoes/timid
+	restricted_roles = list("Mime")
+
+/datum/gear/timidmshoes
+	name = "Timid Man Shoes"
+	category = SLOT_SHOES
+	path = /obj/item/clothing/shoes/timid/man
+	restricted_roles = list("Mime")

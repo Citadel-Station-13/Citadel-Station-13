@@ -109,7 +109,13 @@
 						/obj/item/clothing/ears/headphones = 2,
 						/obj/item/clothing/head/wig/random = 3,
 						/obj/item/clothing/suit/ran = 2,
-						/obj/item/clothing/head/ran = 2)
+						/obj/item/clothing/head/ran = 2,
+						/obj/item/clothing/mask/gas/timid = 2,
+						/obj/item/clothing/suit/hooded/timid = 2,
+						/obj/item/clothing/shoes/timid = 2,
+						/obj/item/clothing/mask/gas/timid/man = 2,
+						/obj/item/clothing/suit/hooded/timid/man = 2,
+						/obj/item/clothing/shoes/timid/man = 2)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 						/obj/item/clothing/head/powdered_wig = 1,
 						/obj/item/gun/magic/wand = 2,

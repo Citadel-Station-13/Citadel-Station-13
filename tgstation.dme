@@ -3161,6 +3161,7 @@
 #include "modular_citadel\code\modules\client\loadout\uniform.dm"
 #include "modular_citadel\code\modules\client\verbs\who.dm"
 #include "modular_citadel\code\modules\clothing\neck.dm"
+#include "modular_citadel\code\modules\clothing\timidpeople.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\flightsuit.dm"
 #include "modular_citadel\code\modules\clothing\suits\polychromic_cloaks.dm"
 #include "modular_citadel\code\modules\clothing\suits\suits.dm"
