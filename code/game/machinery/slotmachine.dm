@@ -292,7 +292,7 @@
 		var/mob/living/target = locate() in range(2, src)
 
 		amount = dispense(amount, cointype, target, 1)
-/*
+
 	return /*amount*/ 0
 
 /obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
