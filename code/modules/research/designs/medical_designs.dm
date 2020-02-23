@@ -396,7 +396,7 @@
 	desc = "Everything a cook or barkeep needs in an arm implant, designed to be installed on subject's arm."
 	id = "ci-service"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list (/datum/material/ironL = 3500, /datum/material/glass = 1500, /datum/material/silver = 1500)
+	materials = list (/datum/material/iron = 3500, /datum/material/glass = 1500, /datum/material/silver = 1500)
 	construction_time = 200
 	build_path = /obj/item/organ/cyberimp/arm/service
 	category = list("Misc", "Medical Designs")
