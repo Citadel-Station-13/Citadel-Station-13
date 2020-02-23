@@ -95,7 +95,7 @@
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
 					qdel(pai)
 		if(href_list["wires"] && pai.radio)
-			pai.radio.wires.cut(wire)
+			pai.radio.wires.cut(href_list["wires"])
 		if(href_list["reset_radio_short"])
 			pai.unshort_radio()
 		if(href_list["setlaws"])
