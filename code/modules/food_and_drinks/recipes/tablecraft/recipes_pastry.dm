@@ -214,6 +214,19 @@
 	result = /obj/item/reagent_containers/food/snacks/cracker
 	subcategory = CAT_PASTRY
 
+/datum/crafting_recipe/food/fortunecookie
+	time = 15
+	name = "Fortune cookie"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/paper = 1
+	)
+	parts =	list(
+		/obj/item/paper = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/fortunecookie
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/honeybun
 	name = "Honey bun"
 	reqs = list(

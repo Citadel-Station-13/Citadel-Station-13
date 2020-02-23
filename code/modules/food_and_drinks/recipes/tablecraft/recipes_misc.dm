@@ -1,7 +1,50 @@
 
 // see code/module/crafting/table.dm
 
-// MISC
+//////////////////Eastern Foods//////////////////////
+
+/datum/crafting_recipe/food/chawanmushi
+	name = "Chawanmushi"
+	reqs = list(
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/reagent_containers/food/snacks/boiledegg = 2,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/chawanmushi
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/khachapuri
+	name = "Khachapuri"
+	reqs = list(
+		/datum/reagent/consumable/eggyolk = 5,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/khachapuri
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/rawkhinkali
+	name = "Raw Khinkali"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/reagent_containers/food/snacks/faggot = 1
+	)
+	result =  /obj/item/reagent_containers/food/snacks/rawkhinkali
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/meatbun
+	name = "Meat bun"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/meatbun
+	subcategory = CAT_MISCFOOD
+
+/////////////////////////////////MISC/////////////////////////////////////
 
 /datum/crafting_recipe/food/beans
 	name = "Beans"

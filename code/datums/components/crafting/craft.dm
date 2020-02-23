@@ -29,7 +29,7 @@
 					CAT_CAKE,
 					CAT_DONUT,
 					CAT_EGG,
-					CAT_EASTERN,
+					CAT_FISH,
 					CAT_ICE,
 					CAT_MEAT,
 					CAT_MEXICAN,
