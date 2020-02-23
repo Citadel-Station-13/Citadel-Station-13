@@ -116,7 +116,7 @@
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 		I.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(I)
 		frozen_items -= I
 		updateUsrDialog()

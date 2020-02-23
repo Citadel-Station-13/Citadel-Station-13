@@ -56,7 +56,7 @@
 			var/mob/living/carbon/human/H = C
 			H.eye_color = old_eye_color
 			if(!special)
-				H.dna.species.handle_body()
+				H.dna.species.handle_body(H)
 		if(!special)
 			C.update_tint()
 			C.update_sight()
