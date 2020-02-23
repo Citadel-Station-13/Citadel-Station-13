@@ -118,3 +118,4 @@
 		var/obj/item/coin/C = new path
 		UNTIL(C.flags_1 & INITIALIZED_1) //we want to make sure the value is calculated and not null.
 		GLOB.coin_values[path] = C.value
+		qdel(C)
