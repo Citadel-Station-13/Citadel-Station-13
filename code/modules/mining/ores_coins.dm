@@ -131,6 +131,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 
+/obj/item/stack/ore/glass/basalt/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.sand_recipes
+	. = ..()
+
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
