@@ -311,7 +311,7 @@
 /datum/barsign/the_hive
 	name = "The Hive"
 	icon = "thehive"
-	desc = "Comb in for some sweet drinks! Not known for serving any sappy drinks."
+	desc = "Comb in for some sweet drinks! Not known for serving any sappy drink."
 
 /datum/barsign/hiddensigns
 	hidden = TRUE
