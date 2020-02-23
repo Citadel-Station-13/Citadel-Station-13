@@ -33,6 +33,7 @@
 	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/slot_machine/Initialize()
+	qdel(src)
 	. = ..()
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
@@ -50,8 +51,8 @@
 		coinvalues["[cointype]"] = initial(C.value)
 
 /obj/machinery/computer/slot_machine/Destroy()
-	if(balance)
-		give_coins(balance)
+	/*if(balance)
+		give_coins(balance)*/
 	return ..()
 
 /obj/machinery/computer/slot_machine/process()
@@ -276,13 +277,13 @@
 	return amountthesame
 
 /obj/machinery/computer/slot_machine/proc/give_money(amount)
-	var/amount_to_give = money >= amount ? amount : money
+	/*var/amount_to_give = money >= amount ? amount : money
 	var/surplus = amount_to_give - give_coins(amount_to_give)
 	money = max(0, money - amount)
-	balance += surplus
+	balance += surplus*/
 
 /obj/machinery/computer/slot_machine/proc/give_coins(amount)
-	var/cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
+	/*var/cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
 
 	if(!(obj_flags & EMAGGED))
 		amount = dispense(amount, cointype, null, 0)
@@ -291,11 +292,11 @@
 		var/mob/living/target = locate() in range(2, src)
 
 		amount = dispense(amount, cointype, target, 1)
-
-	return amount
+/*
+	return /*amount*/ 0
 
 /obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
-	var/value = coinvalues["[cointype]"]
+	/*var/value = coinvalues["[cointype]"]
 
 
 	while(amount >= value)
@@ -305,7 +306,7 @@
 			C.throw_at(target, 3, 10)
 		else
 			random_step(C, 2, 40)
-
+*/
 	return amount
 
 #undef SEVEN
