@@ -24,6 +24,7 @@
 GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("chair", /obj/structure/chair, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = TRUE, on_floor = TRUE), \
 	//CIT CHANGE - adds sofas to metal recipe list
 	new/datum/stack_recipe_list("sofas", list( \
@@ -106,14 +107,14 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	item_state = "sheet-metal"
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/metal
 	grind_results = list(/datum/reagent/iron = 20)
 	point_value = 2
-	material_type = /datum/material/iron
+	tableVariant = /obj/structure/table
 
 /obj/item/stack/sheet/metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -136,13 +137,13 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	amount = 5
 
 /obj/item/stack/sheet/metal/cyborg
-	custom_materials = null
+	materials = list()
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/metal/get_main_recipes()
-	. = ..()
-	. += GLOB.metal_recipes
+/obj/item/stack/sheet/metal/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.metal_recipes
+	return ..()
 
 /obj/item/stack/sheet/metal/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -168,7 +169,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
-	custom_materials = list(/datum/material/iron=2000, /datum/material/plasma=2000)
+	materials = list(MAT_METAL=2000, MAT_PLASMA=2000)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
@@ -177,11 +178,10 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 23
 	tableVariant = /obj/structure/table/reinforced
-	material_flags = MATERIAL_NO_EFFECTS
 
-/obj/item/stack/sheet/plasteel/get_main_recipes()
-	. = ..()
-	. += GLOB.plasteel_recipes
+/obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.plasteel_recipes
+	return ..()
 
 /obj/item/stack/sheet/plasteel/twenty
 	amount = 20
@@ -275,9 +275,9 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	else
 		. = ..()
 
-/obj/item/stack/sheet/mineral/wood/get_main_recipes()
-	. = ..()
-	. += GLOB.wood_recipes
+/obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.wood_recipes
+	return ..()
 
 /obj/item/stack/sheet/mineral/wood/twenty
 	amount = 20
@@ -307,9 +307,9 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
 	grind_results = list(/datum/reagent/carbon = 5)
 
-/obj/item/stack/sheet/mineral/bamboo/get_main_recipes()
-	. = ..()
-	. += GLOB.bamboo_recipes
+/obj/item/stack/sheet/mineral/bamboo/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.bamboo_recipes
+	return ..()
 
 /obj/item/stack/sheet/mineral/bamboo/ten
 	amount = 10
@@ -363,9 +363,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	loom_result = /obj/item/stack/sheet/silk
 	merge_type = /obj/item/stack/sheet/cloth
 
-/obj/item/stack/sheet/cloth/get_main_recipes()
-	. = ..()
-	. += GLOB.cloth_recipes
+/obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.cloth_recipes
+	return ..()
 
 /obj/item/stack/sheet/cloth/ten
 	amount = 10
@@ -393,9 +393,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/silk
 
-/obj/item/stack/sheet/silk/get_main_recipes()
-	. = ..()
-	. += GLOB.silk_recipes
+/obj/item/stack/sheet/silk/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.silk_recipes
+	return ..()
 
 /*
  * Durathread
@@ -418,9 +418,9 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/durathread
 
-/obj/item/stack/sheet/durathread/get_main_recipes()
-	. = ..()
-	. += GLOB.durathread_recipes
+/obj/item/stack/sheet/durathread/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.durathread_recipes
+	return ..()
 
 /*
  * Cardboard
@@ -497,9 +497,9 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cardboard
 	novariants = TRUE
 
-/obj/item/stack/sheet/cardboard/get_main_recipes()
-	. = ..()
-	. += GLOB.cardboard_recipes
+/obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.cardboard_recipes
+	return ..()
 
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
@@ -555,9 +555,9 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return FALSE
 	return ..()
 
-/obj/item/stack/sheet/runed_metal/get_main_recipes()
-	. = ..()
-	. += GLOB.runed_metal_recipes
+/obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.runed_metal_recipes
+	return ..()
 
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
@@ -627,9 +627,11 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 		return
 	..()
 
-/obj/item/stack/tile/brass/get_main_recipes()
+/obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.brass_recipes
 	. = ..()
-	. += GLOB.brass_recipes
+	pixel_x = 0
+	pixel_y = 0
 
 /obj/item/stack/tile/brass/fifty
 	amount = 50
@@ -673,9 +675,11 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 		to_chat(user, "<span class='danger'>Wha... what is this cheap imitation crap? This isn't brass at all!</span>")
 	..()
 
-/obj/item/stack/tile/bronze/get_main_recipes()
+/obj/item/stack/tile/bronze/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.bronze_recipes
 	. = ..()
-	. += GLOB.bronze_recipes
+	pixel_x = 0
+	pixel_y = 0
 
 /obj/item/stack/tile/bronze/thirty
 	amount = 30
@@ -709,6 +713,10 @@ GLOBAL_LIST_INIT(bone_recipes, list(
 	new /datum/stack_recipe("Skull Helmet", /obj/item/clothing/head/helmet/skull, 4, time = 30), \
 	new /datum/stack_recipe("Bone Armor", /obj/item/clothing/suit/armor/bone, 6, time = 30)))
 
+/obj/item/stack/sheet/bone/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.bone_recipes
+	. = ..()
+
 /obj/item/stack/sheet/bone
 	name = "bones"
 	icon = 'icons/obj/mining.dmi'
@@ -724,10 +732,6 @@ GLOBAL_LIST_INIT(bone_recipes, list(
 	throw_range = 3
 	grind_results = list(/datum/reagent/carbon = 10)
 	merge_type = /obj/item/stack/sheet/bone
-
-/obj/item/stack/sheet/bone/get_main_recipes()
-	. = ..()
-	. += GLOB.bone_recipes
 
 	/*
  * Plastic
@@ -746,7 +750,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	item_state = "sheet-plastic"
-	custom_materials = list(/datum/material/plastic=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_PLASTIC=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
 	grind_results = list(/datum/reagent/glitter/white = 60)
 	merge_type = /obj/item/stack/sheet/plastic
@@ -757,9 +761,9 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 /obj/item/stack/sheet/plastic/five
 	amount = 5
 
-/obj/item/stack/sheet/plastic/get_main_recipes()
+/obj/item/stack/sheet/plastic/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.plastic_recipes
 	. = ..()
-	. += GLOB.plastic_recipes
 
 GLOBAL_LIST_INIT(paperframe_recipes, list(
 new /datum/stack_recipe("paper frame separator", /obj/structure/window/paperframe, 2, one_per_turf = TRUE, on_floor = TRUE, time = 10), \
@@ -775,10 +779,9 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/paperframes
 
-/obj/item/stack/sheet/paperframes/get_main_recipes()
+/obj/item/stack/sheet/paperframes/Initialize()
+	recipes = GLOB.paperframe_recipes
 	. = ..()
-	. += GLOB.paperframe_recipes
-
 /obj/item/stack/sheet/paperframes/five
 	amount = 5
 /obj/item/stack/sheet/paperframes/twenty

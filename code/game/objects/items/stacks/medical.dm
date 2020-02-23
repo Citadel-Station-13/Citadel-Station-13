@@ -126,7 +126,7 @@
 	heal_brute = 0
 
 /obj/item/stack/medical/gauze/cyborg
-	custom_materials = null
+	materials = list()
 	is_cyborg = 1
 	cost = 250
 

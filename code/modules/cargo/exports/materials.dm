@@ -15,13 +15,16 @@
 	if(!isitem(O))
 		return 0
 	var/obj/item/I = O
-	if(!(getmaterialref(material_id) in I.custom_materials))
+	if(!(material_id in I.materials))
 		return 0
 
-	var/amount = I.custom_materials[getmaterialref(material_id)]
+	var/amount = I.materials[material_id]
 
-	if(istype(I, /obj/item/stack/ore))
-		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
+	if(istype(I, /obj/item/stack))
+		var/obj/item/stack/S = I
+		amount *= S.amount
+		if(istype(I, /obj/item/stack/ore))
+			amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
 	return round(amount/MINERAL_MATERIAL_AMOUNT)
 
@@ -29,48 +32,48 @@
 
 /datum/export/material/bananium
 	cost = 500
-	material_id = /datum/material/bananium
+	material_id = MAT_BANANIUM
 	message = "cm3 of bananium"
 
 /datum/export/material/diamond
 	cost = 250
-	material_id = /datum/material/diamond
+	material_id = MAT_DIAMOND
 	message = "cm3 of diamonds"
 
 /datum/export/material/plasma
 	cost = 100
-	material_id = /datum/material/plasma
+	material_id = MAT_PLASMA
 	message = "cm3 of plasma"
 
 /datum/export/material/uranium
 	cost = 50
-	material_id = /datum/material/uranium
+	material_id = MAT_URANIUM
 	message = "cm3 of uranium"
 
 /datum/export/material/gold
 	cost = 60
-	material_id = /datum/material/gold
+	material_id = MAT_GOLD
 	message = "cm3 of gold"
 
 /datum/export/material/silver
 	cost = 25
-	material_id = /datum/material/silver
+	material_id = MAT_SILVER
 	message = "cm3 of silver"
 
 /datum/export/material/titanium
 	cost = 60
-	material_id = /datum/material/titanium
+	material_id = MAT_TITANIUM
 	message = "cm3 of titanium"
 
 /datum/export/material/plastic
 	cost = 5
-	material_id = /datum/material/plastic
+	material_id = MAT_PLASTIC
 	message = "cm3 of plastic"
 
 /datum/export/material/metal
 	cost = 3
 	message = "cm3 of metal"
-	material_id = /datum/material/iron
+	material_id = MAT_METAL
 	export_types = list(
 		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
 		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
@@ -78,26 +81,6 @@
 /datum/export/material/glass
 	cost = 3
 	message = "cm3 of glass"
-	material_id = /datum/material/glass
+	material_id = MAT_GLASS
 	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
 		/obj/item/shard)
-
-/datum/export/material/adamantine
-	cost = 300
-	material_id = /datum/material/adamantine
-	message = "cm3 of adamantine"
-
-/datum/export/material/mythril
-	cost = 1000
-	material_id = /datum/material/mythril
-	message = "cm3 of mythril"
-
-/datum/export/material/bscrystal
-	cost = 150
-	message = "cm3 of bluespace crystals"
-	material_id = /datum/material/bluespace
-
-/datum/export/material/runite
-	cost = 300
-	message = "cm3 of runite"
-	material_id = /datum/material/runite

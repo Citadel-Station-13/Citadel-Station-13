@@ -5,7 +5,7 @@
 	icon_state = "tile_plasma"
 	turf_type = /turf/open/floor/mineral/plasma
 	mineralType = "plasma"
-	custom_materials = list(/datum/material/plasma=500)
+	materials = list(MAT_PLASMA=500)
 
 /obj/item/stack/tile/mineral/uranium
 	name = "uranium tile"
@@ -14,7 +14,7 @@
 	icon_state = "tile_uranium"
 	turf_type = /turf/open/floor/mineral/uranium
 	mineralType = "uranium"
-	custom_materials = list(/datum/material/uranium=500)
+	materials = list(MAT_URANIUM=500)
 
 /obj/item/stack/tile/mineral/gold
 	name = "gold tile"
@@ -23,7 +23,7 @@
 	icon_state = "tile_gold"
 	turf_type = /turf/open/floor/mineral/gold
 	mineralType = "gold"
-	custom_materials = list(/datum/material/gold=500)
+	materials = list(MAT_GOLD=500)
 
 /obj/item/stack/tile/mineral/silver
 	name = "silver tile"
@@ -32,7 +32,7 @@
 	icon_state = "tile_silver"
 	turf_type = /turf/open/floor/mineral/silver
 	mineralType = "silver"
-	custom_materials = list(/datum/material/silver=500)
+	materials = list(MAT_SILVER=500)
 
 /obj/item/stack/tile/mineral/diamond
 	name = "diamond tile"
@@ -41,7 +41,7 @@
 	icon_state = "tile_diamond"
 	turf_type = /turf/open/floor/mineral/diamond
 	mineralType = "diamond"
-	custom_materials = list(/datum/material/diamond=500)
+	materials = list(MAT_DIAMOND=500)
 
 /obj/item/stack/tile/mineral/bananium
 	name = "bananium tile"
@@ -50,7 +50,7 @@
 	icon_state = "tile_bananium"
 	turf_type = /turf/open/floor/mineral/bananium
 	mineralType = "bananium"
-	custom_materials = list(/datum/material/bananium=500)
+	materials = list(MAT_BANANIUM=500)
 
 /obj/item/stack/tile/mineral/abductor
 	name = "alien floor tile"
@@ -68,7 +68,7 @@
 	icon_state = "tile_shuttle"
 	turf_type = /turf/open/floor/mineral/titanium
 	mineralType = "titanium"
-	custom_materials = list(/datum/material/titanium=500)
+	materials = list(MAT_TITANIUM=500)
 
 /obj/item/stack/tile/mineral/plastitanium
 	name = "plastitanium tile"
@@ -77,5 +77,4 @@
 	icon_state = "tile_darkshuttle"
 	turf_type = /turf/open/floor/mineral/plastitanium
 	mineralType = "plastitanium"
-	custom_materials = list(/datum/material/titanium=250, /datum/material/plasma=250)
-	material_flags = MATERIAL_NO_EFFECTS
+	materials = list(MAT_TITANIUM=250, MAT_PLASMA=250)

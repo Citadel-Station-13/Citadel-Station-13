@@ -2,7 +2,7 @@
 	name = "playback device"
 	desc = "A small electronic device able to record a voice sample, and repeat that sample when it receive a signal."
 	icon_state = "radio"
-	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
+	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	flags_1 = HEAR_1
 	attachable = TRUE
 	verb_say = "beeps"

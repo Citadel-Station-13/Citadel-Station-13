@@ -68,6 +68,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
+	var/list/materials
 	var/reskinned = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
@@ -110,6 +111,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 /obj/item/Initialize()
+
+	materials =	typelist("materials", materials)
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
@@ -230,9 +233,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	// Extractable materials. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (length(custom_materials))
+	if (materials.len)
 		sep = ""
-		for(var/mat in custom_materials)
+		for(var/mat in materials)
 			research_msg += sep
 			research_msg += CallMaterialName(mat)
 			sep = ", "

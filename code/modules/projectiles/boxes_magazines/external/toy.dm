@@ -64,4 +64,4 @@
 	max_ammo = 24
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	custom_materials = list(/datum/material/iron = 200)
+	materials = list(MAT_METAL = 200)
