@@ -49,7 +49,7 @@
 /datum/design/multitool
 	name = "Multitool"
 	id = "multitool"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
 	build_path = /obj/item/multitool
 	category = list("initial","Tools","Tool Designs")
