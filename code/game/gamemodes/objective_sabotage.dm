@@ -19,6 +19,7 @@
 	var/won = FALSE
 
 /datum/sabotage_objective/processing/New()
+	special_equipment += /obj/item/sbeacondrop/powersink
 	..()
 	START_PROCESSING(SSprocessing, src)
 
