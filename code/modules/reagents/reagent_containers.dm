@@ -133,7 +133,7 @@
 			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
 		log_reagent("SPLASH: [src] mob SplashReagents() onto [key_name(target)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(target, TOUCH)
-		
+
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		transform = initial(transform)
@@ -148,7 +148,7 @@
 		var/throwerstring
 		if(thrownby && thrown)
 			var/turf/AT = get_turf(thrownby)
-			throwerstring = " THROWN BY [key_name(thrownby)] at [AREACOORD(AT])"
+			throwerstring = " THROWN BY [key_name(thrownby)] at ([AREACOORD(AT)])"
 		log_reagent("SPLASH - [src] object SplashReagents() onto [target] at [TT] ([AREACOORD(TT)])[throwerstring] - [reagents.log_list()]")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
