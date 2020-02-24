@@ -1018,11 +1018,11 @@
 		user.client.pixel_y = 0
 
 /obj/item/twohanded/electrostaff
-	icon = 'icons/obj/estaff.dmi'
-	icon_state = "electrostaff_3"
-	item_state = "electrostaff_3"
-	lefthand_file = 'icons/mob/inhands/weapons/estaff_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/estaff_righthand.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "electrostaff"
+	item_state = "electrostaff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	name = "riot suppression electrostaff"
 	desc = "A large quarterstaff, with massive silver electrodes mounted at the end."
 	w_class = WEIGHT_CLASS_HUGE
@@ -1123,9 +1123,11 @@
 
 /obj/item/twohanded/electrostaff/update_icon()
 	. = ..()
-	var/final = wielded? (on? "electrostaff_1" : "electrostaff_3") : "electrostaff"
-	icon_state = final
-	item_state = final
+	if(!wielded)
+		icon_state = "electrostaff"
+		item_state = "electrostaff"
+	else
+		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_3")
 	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
 
 /obj/item/twohanded/electrostaff/examine(mob/living/user)
