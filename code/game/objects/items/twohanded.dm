@@ -1124,7 +1124,7 @@
 /obj/item/twohanded/electrostaff/update_icon()
 	. = ..()
 	if(!wielded)
-		icon_state = "electrostaff"
+		icon_state = "electrostaff_3"
 		item_state = "electrostaff"
 	else
 		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_3")
