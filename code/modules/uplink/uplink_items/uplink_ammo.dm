@@ -58,39 +58,39 @@
 
 /datum/uplink_item/ammo/shotgun/buck
 	name = "12g Buckshot Drum"
-	desc = "An additional 8-round buckshot magazine for use with the Bulldog shotgun. Front towards enemy."
+	desc = "An additional 10-round buckshot magazine for use with the Bulldog shotgun. Front towards enemy."
 	item = /obj/item/ammo_box/magazine/m12g
 
 /datum/uplink_item/ammo/shotgun/dragon
 	name = "12g Dragon's Breath Drum"
-	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
+	desc = "An alternative 10-round dragon's breath magazine for use in the Bulldog shotgun. \
 			'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
-	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
+	desc = "An alternative 10-round meteorslug magazine for use in the Bulldog shotgun. \
 			Great for blasting airlocks off their frames and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/scatter
-	name = "12g Scatter Laser shot Slugs"
-	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
+	name = "12g Scatter Laser Shells"
+	desc = "An alternative 10-round Scatter Laser shell magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/scatter
 	cost = 3 // most armor has less laser protection then bullet
 
 /datum/uplink_item/ammo/shotgun/slug
 	name = "12g Slug Drum"
-	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
-			Now 8 times less likely to shoot your pals."
+	desc = "An additional 10-round slug magazine for use with the Bulldog shotgun. \
+			Now 10 times less likely to shoot your pals. Hopefully."
 	cost = 2
 	item = /obj/item/ammo_box/magazine/m12g/slug
 
 /datum/uplink_item/ammo/shotgun/stun
 	name = "12g Stun Slug Drum"
-	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
+	desc = "An alternative 10-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g/stun
 	include_modes = list(/datum/game_mode/nuclear)

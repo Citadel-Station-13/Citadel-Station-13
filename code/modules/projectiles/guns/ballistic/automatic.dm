@@ -251,7 +251,7 @@
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
-	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 10-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -260,7 +260,7 @@
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	can_suppress = FALSE
 	burst_size = 2
-	burst_shot_delay = 0.5
+	burst_shot_delay = 1
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted
