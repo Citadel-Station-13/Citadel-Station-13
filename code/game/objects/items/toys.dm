@@ -143,7 +143,7 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=10, MAT_GLASS=10)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7
 
@@ -197,7 +197,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL=10, MAT_GLASS=10)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	var/amount_left = 7
 
 /obj/item/toy/ammo/gun/update_icon()
@@ -289,7 +289,7 @@
 	var/light_brightness = 3
 	actions_types = list()
 
-/obj/item/toy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+/obj/item/toy/sword/cx/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
@@ -1014,6 +1014,7 @@
 
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))

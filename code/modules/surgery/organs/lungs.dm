@@ -2,6 +2,7 @@
 
 /obj/item/organ/lungs
 	name = "lungs"
+	desc = "Looking at them makes you start manual breathing."
 	icon_state = "lungs"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
@@ -461,6 +462,10 @@
 	var/obj/S = ..()
 	S.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 5)
 	return S
+
+/obj/item/organ/lungs/ipc
+	name = "ipc lungs"
+	icon_state = "lungs-c"
 
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"

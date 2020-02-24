@@ -11,7 +11,7 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	max_integrity = 250
-	integrity_failure = 50
+	integrity_failure = 0.2
 
 	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum
@@ -20,7 +20,15 @@
 
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
-	Make(S)
+	if(!S)
+		assembly = new /obj/item/solar_assembly
+		assembly.glass_type = new /obj/item/stack/sheet/glass(null, 2)
+		assembly.tracker = TRUE
+		assembly.anchored = TRUE
+	else
+		S.moveToNullspace()
+		assembly = S
+	update_icon()
 	connect_to_network()
 
 /obj/machinery/power/tracker/Destroy()
@@ -40,16 +48,6 @@
 	if(control)
 		control.connected_tracker = null
 	control = null
-
-/obj/machinery/power/tracker/proc/Make(obj/item/solar_assembly/S)
-	if(!S)
-		S = new /obj/item/solar_assembly
-		S.glass_type = new /obj/item/stack/sheet/glass(null, 2)
-		S.tracker = TRUE
-		S.anchored = TRUE
-	else
-		S.moveToNullspace()
-	update_icon()
 
 //updates the tracker icon and the facing angle for the control computer
 /obj/machinery/power/tracker/proc/set_angle(angle)

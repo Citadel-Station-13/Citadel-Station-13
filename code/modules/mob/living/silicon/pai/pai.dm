@@ -2,7 +2,6 @@
 	name = "pAI"
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -11,6 +10,8 @@
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
+	var/obj/item/instrument/piano_synth/internal_instrument
+	silicon_privileges = PRIVILEDGES_PAI
 	var/datum/element/mob_holder/current_mob_holder //because only a few of their chassis can be actually held.
 
 	var/network = "ss13"
@@ -27,6 +28,7 @@
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
+	var/obj/item/radio/headset			// The pAI's headset
 	var/obj/item/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
@@ -54,6 +56,7 @@
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
+	var/encryptmod = FALSE
 	var/holoform = FALSE
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
@@ -74,7 +77,7 @@
 	var/emitteroverloadcd = 100
 
 	var/radio_short = FALSE
-	var/radio_short_cooldown = 5 MINUTES
+	var/radio_short_cooldown = 3 MINUTES
 	var/radio_short_timerid
 
 	canmove = FALSE
@@ -84,6 +87,7 @@
 	var/icon/custom_holoform_icon
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(internal_instrument)
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
@@ -106,7 +110,7 @@
 	card = P
 	signaler = new(src)
 	if(!radio)
-		radio = new /obj/item/radio(src)
+		radio = new /obj/item/radio/headset/silicon/pai(src)
 
 	//PDA
 	pda = new(src)
@@ -295,6 +299,17 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+
+/obj/item/paicard/attackby(obj/item/W, mob/user, params)
+	..()
+	user.set_machine(src)
+	if(pai.encryptmod == TRUE)
+		if(W.tool_behaviour == TOOL_SCREWDRIVER)
+			pai.radio.attackby(W, user, params)
+		else if(istype(W, /obj/item/encryptionkey))
+			pai.radio.attackby(W, user, params)
+	else
+		to_chat(user, "Encryption Key ports not configured.")
 
 /mob/living/silicon/pai/proc/short_radio()
 	if(radio_short_timerid)

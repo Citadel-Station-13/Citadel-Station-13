@@ -8,7 +8,8 @@
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = NONE
 	max_integrity = 250
-	integrity_failure = 25
+	integrity_failure = 0.1
+	custom_materials = list(/datum/material/iron = 2000)
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
@@ -53,8 +54,13 @@
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(buildstacktype && (!(flags_1 & NODECONSTRUCT_1)))
-		new buildstacktype(loc,buildstackamount)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 	..()
 
 /obj/structure/chair/attack_paw(mob/user)
@@ -142,6 +148,15 @@
 	handle_rotation(newdir)
 
 // Chair types
+
+
+///Material chair
+/obj/structure/chair/greyscale
+	icon_state = "chair_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	item_chair = /obj/item/chair/greyscale
+	buildstacktype = null //Custom mats handle this
+
 /obj/structure/chair/wood
 	icon_state = "wooden_chair"
 	name = "wooden chair"
@@ -271,7 +286,8 @@
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
-		var/C = new item_chair(loc)
+		var/obj/item/C = new item_chair(loc)
+		C.set_custom_materials(custom_materials)
 		TransferComponents(C)
 		usr.put_in_hands(C)
 		qdel(src)
@@ -296,7 +312,7 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-	materials = list(MAT_METAL = 2000)
+	custom_materials = list(/datum/material/iron = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -324,6 +340,7 @@
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
+	C.set_custom_materials(custom_materials)
 	TransferComponents(C)
 	C.setDir(dir)
 	qdel(src)
@@ -356,6 +373,12 @@
 			if(C.health < C.maxHealth*0.5)
 				C.Knockdown(20)
 		smash(user)
+
+/obj/item/chair/greyscale
+	icon_state = "chair_greyscale_toppled"
+	item_state = "chair_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool
 	name = "stool"
@@ -482,7 +505,7 @@
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
-	materials = null
+	custom_materials = null
 	break_chance = 50
 
 /obj/item/chair/wood/narsie_act()
