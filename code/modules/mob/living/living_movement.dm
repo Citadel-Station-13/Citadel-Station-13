@@ -13,9 +13,9 @@
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover))
-		if (mover in buckled_mobs)
+		if(mover in buckled_mobs)
 			return TRUE
-	return (!mover.density || !density || lying || (mover.throwing && mover.throwing.thrower == src && !ismob(mover)))
+	return (!mover.density || !density || (mover.throwing && mover.throwing.thrower == src && !ismob(mover)))
 
 /mob/living/toggle_move_intent()
 	. = ..()

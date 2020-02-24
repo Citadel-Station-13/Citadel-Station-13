@@ -47,8 +47,7 @@
 /mob/living/carbon/CanPass(atom/movable/mover, turf/target)
 	. = ..()
 	if(.)
-		var/mob/living/mobdude = mover
-		if(istype(mobdude) && !(mobdude in buckled_mobs))
-			if(CHECK_BITFIELD(mobility_flags, MOBILITY_STAND) && !CHECK_BITFIELD(mobdude.mobility_flags, MOBILITY_STAND))
-				if(!(mobdude.pass_flags & PASSMOB))
-					return FALSE
+		if(isliving(mover))
+			var/mob/living/L = mover
+			if(!lying && L.lying)		//they're down but we're not
+				return (L == buckled) || (L in buckled_mobs)
