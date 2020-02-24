@@ -32,7 +32,7 @@
 			var/turf/UT = get_turf(user)
 			var/turf/MT = get_turf(M)
 			var/turf/OT = get_turf(target)
-			log_reagent("SPLASH: attack(target mob [key_name(M)] at [AREA_COORD(MT)], from user [key_name(user)] at [AREA_COORD(UT)], target object [target] at [AREA_COORD(OT)]) - [R]")
+			log_reagent("SPLASH: attack(target mob [key_name(M)] at [AREACOORD(MT)], from user [key_name(user)] at [AREACOORD(UT)], target object [target] at [AREA_COORD(OT)]) - [R]")
 			reagents.clear_reagents()
 		else
 			var/self_fed = M == user
