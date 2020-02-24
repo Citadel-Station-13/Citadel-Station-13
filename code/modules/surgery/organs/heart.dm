@@ -222,9 +222,8 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 
 /obj/item/organ/heart/ipc
 	name = "IPC heart"
-	desc = "An electronic pump that regulates hydraulic functions, they have an auto-restart after EMPs."
+	desc = "An electronic pump that regulates hydraulic functions, the electronics have EMP shielding."
 	icon_state = "heart-c"
-	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"

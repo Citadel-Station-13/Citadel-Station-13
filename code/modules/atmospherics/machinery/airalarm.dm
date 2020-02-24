@@ -72,7 +72,7 @@
 	power_channel = ENVIRON
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
-	integrity_failure = 80
+	integrity_failure = 0.33
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
@@ -229,7 +229,7 @@
 			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>"
 
 /obj/machinery/airalarm/ui_status(mob/user)
-	if(user.has_unlimited_silicon_privilege && aidisabled)
+	if(hasSiliconAccessInArea(user) && aidisabled)
 		to_chat(user, "AI control has been disabled.")
 	else if(!shorted)
 		return ..()
@@ -245,7 +245,7 @@
 /obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list(
 		"locked" = locked,
-		"siliconUser" = user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user),
+		"siliconUser" = hasSiliconAccessInArea(user),
 		"emagged" = (obj_flags & EMAGGED ? 1 : 0),
 		"danger_level" = danger_level,
 	)
@@ -288,7 +288,7 @@
 								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id] * partial_pressure)
 		))
 
-	if(!locked || user.has_unlimited_silicon_privilege || hasSiliconAccessInArea(user))
+	if(!locked || hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE))
 		data["vents"] = list()
 		for(var/id_tag in A.air_vent_names)
 			var/long_name = A.air_vent_names[id_tag]
@@ -368,12 +368,14 @@
 /obj/machinery/airalarm/ui_act(action, params)
 	if(..() || buildstage != 2)
 		return
-	if((locked && !usr.has_unlimited_silicon_privilege && !hasSiliconAccessInArea(usr)) || (usr.has_unlimited_silicon_privilege && aidisabled))
+	var/silicon_access = hasSiliconAccessInArea(usr)
+	var/bot_priviledges = silicon_access || (usr.silicon_privileges & PRIVILEDGES_DRONE)
+	if((locked && !bot_priviledges) || (silicon_access && aidisabled))
 		return
 	var/device_id = params["id_tag"]
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
+			if(bot_priviledges && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
 		if("power", "toggle_filter", "widenet", "scrubbing")

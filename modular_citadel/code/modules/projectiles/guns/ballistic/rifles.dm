@@ -24,7 +24,7 @@
 	icon_state = "toy9magazine"
 	max_ammo = 30
 	multiple_sprites = 2
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/x9/toy
 	name = "\improper Foam Force X9"
@@ -65,7 +65,7 @@
 	icon_state = "toy9magazine"
 	max_ammo = 30
 	multiple_sprites = 2
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/x9/toy
 	name = "\improper Foam Force X9"
@@ -201,7 +201,7 @@
 	icon_state = "AM4MAG-60"
 	max_ammo = 60
 	multiple_sprites = 0
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/AM4B
 	name = "AM4-B"
@@ -253,7 +253,7 @@
 	icon_state = "AM4MAG-32"
 	max_ammo = 32
 	multiple_sprites = 0
-	materials = list(MAT_METAL = 200)
+	custom_materials = list(/datum/material/iron = 200)
 
 /obj/item/gun/ballistic/automatic/AM4C
 	name = "AM4-C"

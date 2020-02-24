@@ -13,3 +13,9 @@
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "riflestock"
+
+/obj/item/weaponcrafting/silkstring
+	name = "silkstring"
+	desc = "A long piece of silk with some resemblance to cable coil."
+	icon = 'icons/obj/improvised.dmi'
+	icon_state = "silkstring"

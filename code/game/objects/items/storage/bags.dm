@@ -114,6 +114,7 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
@@ -321,11 +322,13 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	materials = list(MAT_METAL=3000)
+	custom_materials = list(/datum/material/iron=3000)
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food, /obj/item/reagent_containers/glass, /datum/reagent/consumable, /obj/item/kitchen/knife, /obj/item/kitchen/rollingpin, /obj/item/kitchen/fork, /obj/item/storage/box)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Kitchen Tools, and ingredient boxes.
 	STR.insert_preposition = "on"
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)

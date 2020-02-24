@@ -56,7 +56,7 @@
 			var/mob/living/carbon/human/H = C
 			H.eye_color = old_eye_color
 			if(!special)
-				H.dna.species.handle_body()
+				H.dna.species.handle_body(H)
 		if(!special)
 			C.update_tint()
 			C.update_sight()
@@ -377,3 +377,7 @@
 	name = "insect eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = -1
+
+/obj/item/organ/eyes/ipc
+	name = "ipc eyes"
+	icon_state = "cybernetic_eyeballs"
