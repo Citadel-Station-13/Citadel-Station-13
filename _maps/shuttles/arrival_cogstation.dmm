@@ -22,9 +22,10 @@
 "v" = (/obj/structure/chair/comfy/shuttle,/obj/machinery/light{dir = 4},/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
 "w" = (/obj/machinery/computer{dir = 1; name = "Shuttle computer"},/obj/machinery/light{dir = 8; light_color = "#e8eaff"},/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
 "x" = (/obj/machinery/computer{dir = 1; name = "Shuttle computer"},/obj/machinery/light{dir = 4},/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
+"y" = (/obj/docking_port/mobile/arrivals{dir = 2; dwidth = 4; height = 12; name = "cog arrivals shuttle"; width = 9},/turf/template_noop,/area/template_noop)
 
 (1,1,1) = {"
-abcdacdba
+abcdycdba
 ceffeffed
 gbhijitbg
 bbkkkkkbb
