@@ -37,7 +37,9 @@
 /obj/item/toy/plush/random_snowflake/Initialize(mapload, set_snowflake_id)
 	. = ..()
 	var/list/configlist = CONFIG_GET(keyed_list/snowflake_plushies)
-	var/id = pick(configlist)
+	var/id = SAFEPICK(configlist)
+	if(!id)
+		return
 	set_snowflake_from_config(id)
 
 /obj/item/toy/plush/Initialize(mapload, set_snowflake_id)
