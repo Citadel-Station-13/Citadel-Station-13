@@ -27,9 +27,6 @@
 	mutatelist = list()
 	rarity = 20
 
-
-
-
 /obj/item/grown/log
 	seed = /obj/item/seeds/tower
 	name = "tower-cap log"
@@ -275,6 +272,10 @@
 		else if(istype(A, /obj/item) && prob(20))
 			var/obj/item/O = A
 			O.microwave_act()
+		else if(istype(A, /obj/item/grown/log))
+			var/C = /obj/item/stack/sheet/mineral/coal
+			qdel(A)
+			new C(src.loc, 1)
 
 /obj/structure/bonfire/process()
 	if(!CheckOxygen())

@@ -439,7 +439,7 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "ia" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket/wood,
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
@@ -517,8 +517,11 @@
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
+/obj/item/seeds/ambrosia/deus, //For healing/torches
+/obj/item/seeds/ambrosia/deus,
 /obj/item/seeds/tower,
 /obj/item/seeds/tower,
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "iJ" = (
@@ -1768,6 +1771,7 @@
 "wm" = (
 /obj/item/seeds/glowshroom,
 /obj/item/seeds/glowshroom,
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
@@ -2470,6 +2474,7 @@
 	dir = 4
 	},
 /obj/item/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/plants,
 /obj/item/seeds/cotton,
 /obj/item/seeds/cotton,
 /turf/open/indestructible/boss,
@@ -2481,10 +2486,9 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "VI" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/well_foundation,
+/obj/item/reagent_containers/glass/bucket/wood,
+/obj/item/reagent_containers/glass/bucket/wood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "VP" = (
