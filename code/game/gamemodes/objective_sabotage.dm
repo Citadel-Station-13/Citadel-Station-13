@@ -19,7 +19,6 @@
 	var/won = FALSE
 
 /datum/sabotage_objective/processing/New()
-	special_equipment += /obj/item/sbeacondrop/powersink
 	..()
 	START_PROCESSING(SSprocessing, src)
 
@@ -37,7 +36,7 @@
 /datum/sabotage_objective/processing/power_sink
 	name = "Drain at least 1 gigajoule of power using a power sink."
 	sabotage_type = "powersink"
-	special_equipment = list(/obj/item/powersink)
+	special_equipment = list(/obj/item/sbeacondrop/powersink)
 	var/sink_found = FALSE
 	var/count = 0
 
