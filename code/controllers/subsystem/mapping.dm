@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(mapping)
 	// Generate station space ruins
 	var/list/station_ruins = levels_by_trait(ZTRAIT_STATION)
 	if (station_ruins.len)
-		seedRuins(station_ruins, CONFIG_GET(number/station_space_budget), /area/space, station_ruins_templates)
+		seedRuins(station_ruins, CONFIG_GET(number/station_space_budget), /area/space/station_ruins, station_ruins_templates)
 	SSmapping.seedStation()
 	loading_ruins = FALSE
 #endif
