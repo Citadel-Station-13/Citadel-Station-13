@@ -170,7 +170,7 @@
 		// Warn Feeder about Witnesses...
 		var/was_unnoticed = TRUE
 		for(var/mob/living/M in viewers(notice_range, owner))
-			if(M != owner && M != target && iscarbon(M) && M.mind && !M.has_unlimited_silicon_privilege && !M.eye_blind && !M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+			if(M != owner && M != target && iscarbon(M) && M.mind && !M.silicon_privileges && !M.eye_blind && !M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 				was_unnoticed = FALSE
 				break
 		if(was_unnoticed)

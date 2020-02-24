@@ -95,7 +95,7 @@
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
-	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
+	var/silicon_privileges = NONE // Can they interact with station electronics
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is

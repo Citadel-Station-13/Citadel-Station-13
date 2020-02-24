@@ -93,8 +93,6 @@
 			taste_description = "something spicy"
 			pH = 6.85
 
-
-
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
 		if(data["blood_DNA"] != mix_data["blood_DNA"])
@@ -131,15 +129,9 @@
 /datum/reagent/blood/synthetics
 	data = list("donor"=null,"viruses"=null,"blood_DNA"="REPLICATED", "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Synthetic Blood"
+	description = "A synthetically produced imitation of blood."
 	taste_description = "oily"
 	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
-
-/datum/reagent/blood/lizard
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_LIZARD, "blood_type"="L","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-	name = "Lizard Blood"
-	taste_description = "spicy"
-	color = BLOOD_COLOR_LIZARD // rgb: 11, 7, 48
-	pH = 6.85
 
 /datum/reagent/blood/jellyblood
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -149,29 +141,6 @@
 	taste_description = "slime"
 	taste_mult = 1.3
 	pH = 4
-
-/datum/reagent/blood/xenomorph
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-	name = "Xenomorph Blood"
-	taste_description = "acidic heresy"
-	color = BLOOD_COLOR_XENO // greenish yellow ooze
-	shot_glass_icon_state = "shotglassgreen"
-	pH = 2.5
-
-/datum/reagent/blood/oil
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-	name = "Hydraulic Blood"
-	taste_description = "burnt oil"
-	color = BLOOD_COLOR_OIL // dark, y'know, expected batman colors.
-	pH = 9.75
-
-/datum/reagent/blood/insect
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_BUG, "blood_type"="BUG","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-	name = "Insectoid Blood"
-	taste_description = "waxy"
-	color = BLOOD_COLOR_BUG // Bug colored, I guess.
-	pH = 7.25
-
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -2139,3 +2108,10 @@
 			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
 
 	..()
+
+/datum/reagent/preservahyde
+	name = "Preservahyde"
+	description = "A powerful preservation agent, utilizing the preservative effects of formaldehyde with significantly less of the histamine."
+	reagent_state = LIQUID
+	color = "#f7685e"
+	metabolization_rate = REAGENTS_METABOLISM * 0.25
