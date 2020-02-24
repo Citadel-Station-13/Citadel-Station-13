@@ -128,7 +128,7 @@
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
 		var/turf/TT = get_turf(target)
 		var/throwerstring
-		if(thrownby)
+		if(thrownby && thrown)
 			log_combat(thrownby, M, "splashed", R)
 			var/turf/AT = get_turf(thrownby)
 			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
@@ -148,7 +148,7 @@
 			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
 		var/turf/T = get_turf(target)
 		var/throwerstring
-		if(thrownby)
+		if(thrownby && thrown)
 			var/turf/AT = get_turf(thrownby)
 			throwerstring = " THROWN BY [key_name(thrownby)] at [AREACOORD(AT])"
 		log_reagent("SPLASH - [src] object SplashReagents() onto [target] at [TT] ([AREACOORD(TT)])[throwerstring] - [reagents.log_list()]")
