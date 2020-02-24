@@ -457,6 +457,10 @@ const ROUTES = {
     component: () => ShuttleManipulator,
     scrollable: true,
   },
+  sleeper: {
+    component: () => Sleeper,
+    scrollable: false,
+  },
   slime_swap_body: {
     component: () => SlimeBodySwapper,
     scrollable: true,
