@@ -57031,6 +57031,10 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"naS" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "ncm" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -61095,6 +61099,13 @@
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
+"wtE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "wun" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -88795,7 +88806,7 @@ bzQ
 ioj
 bsA
 bEw
-bkh
+naS
 bkh
 bId
 bFO
@@ -89566,7 +89577,7 @@ bBc
 bCm
 bDr
 bEz
-bnF
+wtE
 buh
 bIg
 bjc
