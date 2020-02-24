@@ -107,9 +107,7 @@
 	if(P && !ismob(P) && P.density)
 		mob.setDir(turn(mob.dir, 180))
 
-///Process_Grab()
-///Called by client/Move()
-///Checks to see if you are being grabbed and if so attemps to break it
+/// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()
 	if(mob.pulledby)
 		if(mob.incapacitated(ignore_restraints = 1))
@@ -120,7 +118,7 @@
 			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
 			return TRUE
 		else
-			return mob.resist_grab(1)
+			return !mob.attempt_resist_grab(TRUE)
 
 ///Process_Incorpmove
 ///Called by client/Move()

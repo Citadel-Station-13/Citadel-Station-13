@@ -941,7 +941,6 @@
 /obj/mecha/container_resist(mob/living/user)
 	go_out()
 
-
 /obj/mecha/Exited(atom/movable/M, atom/newloc)
 	if(occupant && occupant == M) // The occupant exited the mech without calling go_out()
 		go_out(TRUE, newloc)

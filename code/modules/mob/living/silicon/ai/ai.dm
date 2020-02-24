@@ -989,7 +989,7 @@
 		deployed_shell.undeploy()
 	diag_hud_set_deployed()
 
-/mob/living/silicon/ai/resist()
+/mob/living/silicon/ai/do_resist()
 	return
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)

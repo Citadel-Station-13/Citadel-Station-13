@@ -115,3 +115,6 @@
 	var/drag_slowdown = TRUE //Whether the mob is slowed down when dragging another prone mob
 
 	var/rotate_on_lying = FALSE
+
+	/// Next world.time when we can get the "you can't move while buckled to [thing]" message.
+	var/buckle_message_cooldown = 0

@@ -78,7 +78,7 @@
 				standupwarning = "[src] struggles to stand up."
 		var/usernotice = automatic ? "<span class='notice'>You are now getting up. (Auto)</span>" : "<span class='notice'>You are now getting up.</span>"
 		visible_message("<span class='notice'>[standupwarning]</span>", usernotice, vision_distance = 5)
-		if(do_after(src, totaldelay, target = src, required_mobility_flags = MOBILITY_MOVE))
+		if(do_after(src, totaldelay, target = src, required_mobility_flags = MOBILITY_RESIST))
 			set_resting(FALSE, TRUE)
 			attemptingstandup = FALSE
 			return TRUE
@@ -110,7 +110,7 @@
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/restrained = restrained()
 	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
-	var/canmove = !immobilize && !stun && conscious && !paralyze && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && (has_arms || ignore_legs || has_legs) && !pinned && !recoveringstam
+	var/canmove = !immobilize && !stun && conscious && !paralyze && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && (has_arms || ignore_legs || has_legs) && !pinned && !recoveringstam
 	var/canresist = !stun && conscious && !stat_softcrit && !paralyze && (has_arms || ignore_legs || has_legs) && !recoveringstam
 
 	if(canmove)

@@ -281,19 +281,23 @@
 		return FALSE
 
 /mob/living/carbon/resist_buckle()
+	. = FALSE
 	if(restrained())
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		// too soon.
+		if(last_special > world.time)
+			return
 		var/buckle_cd = 600
 		if(handcuffed)
 			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
+		changeNext_move(min(CLICK_CD_BREAKOUT, buckle_cd))
+		last_special = world.time + min(CLICK_CD_BREAKOUT, buckle_cd)
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
 		if(do_after(src, buckle_cd, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
 			if(!buckled)
 				return
-			buckled.user_unbuckle_mob(src,src)
+			buckled.user_unbuckle_mob(src, src)
 		else
 			if(src && buckled)
 				to_chat(src, "<span class='warning'>You fail to unbuckle yourself!</span>")
@@ -313,9 +317,12 @@
 		ExtinguishMob()
 	return
 
-/mob/living/carbon/resist_restraints()
+/mob/living/carbon/resist_restraints(ignore_delay = FALSE)
 	var/obj/item/I = null
 	var/type = 0
+	if(!ignore_delay && (last_special > world.time))
+		to_chat(src, "<span class='warning'>You don't have the energy to resist your restraints that fast!</span>")
+		return
 	if(handcuffed)
 		I = handcuffed
 		type = 1
@@ -324,13 +331,12 @@
 		type = 2
 	if(I)
 		if(type == 1)
-			changeNext_move(CLICK_CD_BREAKOUT)
+			changeNext_move(min(CLICK_CD_BREAKOUT, I.breakouttime))
 			last_special = world.time + CLICK_CD_BREAKOUT
 		if(type == 2)
-			changeNext_move(CLICK_CD_RANGE)
+			changeNext_move(min(CLICK_CD_RANGE, I.breakouttime))
 			last_special = world.time + CLICK_CD_RANGE
 		cuff_resist(I)
-
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
 	if(I.item_flags & BEING_REMOVED)

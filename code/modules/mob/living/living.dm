@@ -646,66 +646,98 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+	return !((next_move > world.time) || !CHECK_MOBILITY(src, MOBILITY_RESIST))
 
+/// Resist verb for attempting to get out of whatever is restraining your motion. Gives you resist clickdelay if do_resist() returns true.
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
 
 	if(!can_resist())
 		return
-	changeNext_move(CLICK_CD_RESIST)
 
+	if(do_resist())
+		changeNext_move(CLICK_CD_RESIST)
+
+/// The actual proc for resisting. Return TRUE to give clickdelay.
+/mob/living/proc/do_resist()
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
-	if(!restrained(ignore_grab = 1) && pulledby)
-		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
-		log_combat(src, pulledby, "resisted grab")
-		resist_grab()
-		return
+	// only works if you're not cuffed.
+	if(!restrained(ignore_grab = TRUE) && pulledby)
+		var/old_gs = pulledby.grab_state
+		attempt_resist_grab(FALSE)
+		// Return as we should only resist one thing at a time. Give clickdelay if the grab wasn't passive.
+		return old_gs? TRUE : FALSE
 
-	//unbuckling yourself
+	// unbuckling yourself. stops the chain if you try it.
 	if(buckled && last_special <= world.time)
-		resist_buckle()
+		log_combat(src, buckled, "resisted buckle")
+		return resist_buckle()
 
-	// CIT CHANGE - climbing out of a gut
-	if(attempt_vr(src,"vore_process_resist",args)) return TRUE
+	// CIT CHANGE - climbing out of a gut.
+	if(attempt_vr(src,"vore_process_resist",args))
+		//Sure, give clickdelay for anti spam. shouldn't be combat voring anyways.
+		return TRUE
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(isobj(loc))
+	if(isobj(loc))
 		var/obj/C = loc
 		C.container_resist(src)
+		// This shouldn't give clickdelays sometime (e.g. going out of a mech/unwelded and unlocked locker/disposals bin/etc) but there's so many overrides that I am not going to bother right now.
+		return TRUE
 
-	else if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE))
+	if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE))
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
-			return
-		if(resting) //cit change - allows resisting out of resting
-			resist_a_rest() // ditto
-			return
-		if(resist_embedded()) //Citadel Change for embedded removal memes
-			return
-		if(last_special <= world.time)
-			resist_restraints() //trying to remove cuffs.
-			return
+			// Give clickdelay
+			return TRUE
+	if(resting) //cit change - allows resisting out of resting
+		resist_a_rest() // ditto
+		// DO NOT GIVE CLCIKDELAY - resist_a_rest() handles spam prevention. Somewhat.
+		return FALSE
+	if(last_special <= world.time)
+		resist_restraints() //trying to remove cuffs.
+		// DO NOT GIVE CLICKDELAY - last_special handles this.
+		return FALSE
+	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
+		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
+		changeNext_move(CLICK_CD_MELEE)
+		return FALSE
 
+/// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
+/mob/proc/attempt_resist_grab(moving_resist, forced, log = TRUE)
+	if(!pulledby)	//not being grabbed
+		return TRUE
+	var/old_gs = pulledby.grab_state		//how strong the grab is
+	var/old_pulled = pulledby
+	var/success = do_resist_grab(moving_resist, forced)
+	if(log)
+		log_combat(src, old_pulled, "[success? "successfully broke free of" : "failed to resist"] a grab of strength [old_gs][moving_resist? " (moving)":""][forced? " (forced)":""]")
+	return success
 
-/mob/proc/resist_grab(moving_resist)
-	return 1 //returning 0 means we successfully broke free
+	/*!
+	 * Proc that actually does the grab resisting. Return TRUE if successful. Does not check that a grab exists! Use attempt_resist_grab() instead of this in general!
+	 * Forced is if something other than the user mashing movement keys/pressing resist button did it, silent is if it makes messages (like "attempted to resist" and "broken free").
+	 * Forced does NOT force success!
+	 */
 
-/mob/living/resist_grab(moving_resist)
-	. = 1
+/mob/proc/do_resist_grab(moving_resist, forced, silent = FALSE)
+	return FALSE
+
+/mob/living/do_resist_grab(moving_resist, forced, silent = FALSE)
+	. = ..()
 	if(pulledby.grab_state)
 		if(CHECK_BITFIELD(mobility_flags, MOBILITY_STAND) && prob(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
-			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
-			return 0
-		if(moving_resist && client) //we resisted by trying to move
+			return TRUE
+		else if(moving_resist && client) //we resisted by trying to move // this is a horrible system and whoever thought using client instead of mob is okay is not an okay person
 			client.move_delay = world.time + 20
+			visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
 	else
 		pulledby.stop_pulling()
-		return 0
+		return TRUE
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
