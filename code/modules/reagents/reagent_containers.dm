@@ -67,7 +67,6 @@
 				else
 					amount_per_transfer_from_this = possible_transfer_amounts[1]
 				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
-				return
 
 /obj/item/reagent_containers/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
@@ -132,8 +131,7 @@
 			log_combat(thrownby, M, "splashed", R)
 			var/turf/AT = get_turf(thrownby)
 			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
-		log_reagent("SPLASH: [src] mob SplashReagents() onto [key_name(target)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R])
-
+		log_reagent("SPLASH: [src] mob SplashReagents() onto [key_name(target)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(target, TOUCH)
 		
 	else if(bartender_check(target) && thrown)
