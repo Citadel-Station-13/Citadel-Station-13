@@ -29,20 +29,30 @@
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 			reagents.reaction(M, TOUCH)
 			log_combat(user, M, "splashed", R)
+			var/turf/UT = get_turf(user)
+			var/turf/MT = get_turf(M)
+			var/turf/OT = get_turf(target)
+			log_reagent("SPLASH: attack(target mob [key_name(M)] at [AREACOORD(MT)], from user [key_name(user)] at [AREACOORD(UT)], target object [target] at [AREA_COORD(OT)]) - [R]")
 			reagents.clear_reagents()
 		else
 			var/self_fed = M == user
 			if(!self_fed)
 				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
 							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
+				log_combat(user, M, "is attempting to feed", reagents.log_list())
 				if(!do_mob(user, M))
 					return
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
+				var/turf/UT = get_turf(user)		// telekenesis memes
+				var/turf/MT = get_turf(M)
 				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
 				log_combat(user, M, "fed", reagents.log_list())
+				log_reagent("INGESTION: FED BY: [key_name(user)] (loc [user.loc] at [AREA_COORD(UT)]) -> [key_name(M)] (loc [M.loc] at [AREA_COORD(MT)]) - [reagents.log_list()]")
 			else
+				var/turf/T = get_turf(user)
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
+				log_reagent("INGESTION: SELF: [key_name(user)] (loc [user.loc] at [AREA_COORD(T)]) - [reagents.log_list()]")
 			var/fraction = min(5/reagents.total_volume, 1)
 			reagents.reaction(M, INGEST, fraction)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, null, null, null, self_fed? "self swallowed" : "fed by [user]"), 5)
@@ -325,6 +335,8 @@
 	if (slot == SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
+			var/R = reagents.log_list()
+			log_reagent("SPLASH: [user] splashed [src] on their head via bucket/equipped(self, SLOT_HEAD)")
 			reagents.reaction(user, TOUCH)
 			reagents.clear_reagents()
 		reagent_flags = NONE
