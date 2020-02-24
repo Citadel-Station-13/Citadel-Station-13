@@ -4,11 +4,11 @@
 	icon_state = "m12gb"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
-	max_ammo = 8
+	max_ammo = 10
 
 /obj/item/ammo_box/magazine/m12g/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[CEILING(ammo_count(0)/8, 1)*8]"
+	icon_state = "[initial(icon_state)]-[CEILING(ammo_count(0)/10, 1)*10]"
 
 /obj/item/ammo_box/magazine/m12g/stun
 	name = "shotgun magazine (12g taser slugs)"

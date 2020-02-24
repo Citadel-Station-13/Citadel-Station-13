@@ -259,9 +259,9 @@
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	can_suppress = FALSE
-	burst_size = 1
+	burst_size = 2
+	burst_shot_delay = 0.5
 	pin = /obj/item/firing_pin/implant/pindicate
-	actions_types = list()
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin

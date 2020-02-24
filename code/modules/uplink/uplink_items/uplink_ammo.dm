@@ -47,14 +47,14 @@
 	cost = 2
 
 /datum/uplink_item/ammo/shotgun
-	cost = 2
+	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/bag
 	name = "12g Ammo Duffel Bag"
 	desc = "A duffel bag filled with enough 12g ammo to supply an entire team, at a discounted price."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
-	cost = 12
+	cost = 10
 
 /datum/uplink_item/ammo/shotgun/buck
 	name = "12g Buckshot Drum"
@@ -79,13 +79,13 @@
 	name = "12g Scatter Laser shot Slugs"
 	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/scatter
-	cost = 4 // most armor has less laser protection then bullet
+	cost = 3 // most armor has less laser protection then bullet
 
 /datum/uplink_item/ammo/shotgun/slug
 	name = "12g Slug Drum"
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
 			Now 8 times less likely to shoot your pals."
-	cost = 3
+	cost = 2
 	item = /obj/item/ammo_box/magazine/m12g/slug
 
 /datum/uplink_item/ammo/shotgun/stun
