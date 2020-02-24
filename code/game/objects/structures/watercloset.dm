@@ -593,6 +593,7 @@
 	var/steps = 0
 
 /obj/structure/well_foundation/attackby(obj/item/S, mob/user, params)
+	. = ..()
 	if(steps == 0 && S.tool_behaviour == TOOL_SHOVEL)
 		S.use_tool(src, user, 80, volume=100)
 		steps = 1
@@ -649,7 +650,6 @@
 		return
 	else
 		return
-	. = ..()
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
