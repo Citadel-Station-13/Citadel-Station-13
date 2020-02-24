@@ -20,7 +20,7 @@
 	throw_range = 14
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/tennis/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+/obj/item/toy/tennis/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 

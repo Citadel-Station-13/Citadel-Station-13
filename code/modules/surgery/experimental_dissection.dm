@@ -15,7 +15,7 @@
 	requires_tech = FALSE
 	var/value_multiplier = 1
 
-/datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/target)
+/datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/target, obj/item/tool)
 	. = ..()
 	if(HAS_TRAIT_FROM(target, TRAIT_DISSECTED,"[name]"))
 		return FALSE

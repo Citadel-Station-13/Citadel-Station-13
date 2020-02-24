@@ -172,6 +172,10 @@
 			to_chat(user, "[src]-[W] interface initialization failed.")
 		return
 
+	if(istype(W, /obj/item/mecha_ammo))
+		ammo_resupply(W, user)
+		return
+
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()

@@ -12,6 +12,9 @@
 /datum/sabotage_objective/proc/check_conditions()
 	return TRUE
 
+/datum/sabotage_objective/proc/can_run()
+	return TRUE
+
 /datum/sabotage_objective/processing
 	var/won = FALSE
 
@@ -78,6 +81,9 @@
 	for(var/obj/machinery/power/supermatter_crystal/S in supermatters) // you can win this with a wishgranter... lol.
 		won = max(1-((S.get_integrity()-50)/50),won)
 	return FALSE
+
+/datum/sabotage_objective/processing/supermatter/can_run()
+	return (locate(/obj/machinery/power/supermatter_crystal) in GLOB.machines)
 
 /datum/sabotage_objective/station_integrity
 	name = "Make sure the station is at less than 80% integrity by the end. Smash walls, windows etc. to reach this goal."

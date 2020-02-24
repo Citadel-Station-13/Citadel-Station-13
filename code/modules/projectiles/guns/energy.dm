@@ -67,7 +67,8 @@
 /obj/item/gun/energy/Destroy()
 	if(flags_1 & INITIALIZED_1)
 		QDEL_NULL(cell)
-		QDEL_LIST(ammo_type)
+		if(!(flags_1 & HOLOGRAM_1)) //holodeck stuff.
+			QDEL_LIST(ammo_type)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 

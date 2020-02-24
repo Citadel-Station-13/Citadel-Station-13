@@ -9,7 +9,7 @@
 	name = "Beanbag Slug"
 	id = "beanbag_slug"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 250)
+	materials = list(/datum/material/iron = 250)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list("initial", "Security")
 
@@ -17,7 +17,7 @@
 	name = "Rubber Shot"
 	id = "rubber_shot"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
 	category = list("initial", "Security")
 
@@ -25,7 +25,7 @@
 	name = "Speed Loader (.38 rubber)"
 	id = "c38"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 20000)
+	materials = list(/datum/material/iron = 20000)
 	build_path = /obj/item/ammo_box/c38
 	category = list("initial", "Security")
 
@@ -37,7 +37,7 @@
 	name = "Industrial Welding Tool"
 	id = "large_welding_tool"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 70, MAT_GLASS = 60)
+	materials = list(/datum/material/iron = 70, /datum/material/glass = 60)
 	build_path = /obj/item/weldingtool/largetank
 	category = list("hacked", "Tools")
 
@@ -45,7 +45,7 @@
 	name = "Flamethrower"
 	id = "flamethrower"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 500)
+	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/flamethrower/full
 	category = list("hacked", "Security")
 
@@ -53,7 +53,7 @@
 	name = "Rapid Construction Device (RCD)"
 	id = "rcd"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/construction/rcd
 	category = list("hacked", "Construction")
 
@@ -61,7 +61,7 @@
 	name = "Rapid Pipe Dispenser (RPD)"
 	id = "rpd"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 75000, MAT_GLASS = 37500)
+	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)
 	build_path = /obj/item/pipe_dispenser
 	category = list("hacked", "Construction")
 
@@ -69,7 +69,7 @@
 	name = "Handcuffs"
 	id = "handcuffs"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 500)
+	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/restraints/handcuffs
 	category = list("hacked", "Security")
 
@@ -77,7 +77,7 @@
 	name = "Modular Receiver"
 	id = "receiver"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000)
+	materials = list(/datum/material/iron = 15000)
 	build_path = /obj/item/weaponcrafting/receiver
 	category = list("hacked", "Security")
 
@@ -85,7 +85,7 @@
 	name = "Shotgun Slug"
 	id = "shotgun_slug"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun
 	category = list("hacked", "Security")
 
@@ -93,7 +93,7 @@
 	name = "Buckshot Shell"
 	id = "buckshot_shell"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
 	category = list("hacked", "Security")
 
@@ -101,7 +101,7 @@
 	name = "Shotgun Dart"
 	id = "shotgun_dart"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/dart
 	category = list("hacked", "Security")
 
@@ -109,7 +109,7 @@
 	name = "Incendiary Slug"
 	id = "incendiary_slug"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list("hacked", "Security")
 
@@ -117,7 +117,7 @@
 	name = "Foam Riot Dart"
 	id = "riot_dart"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 1125) //Discount for making individually - no box = less metal!
+	materials = list(/datum/material/iron = 1125) //Discount for making individually - no box = less metal!
 	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
 	category = list("hacked", "Security")
 
@@ -125,7 +125,7 @@
 	name = "Foam Riot Dart Box"
 	id = "riot_darts"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 50000) //Comes with 40 darts
+	materials = list(/datum/material/iron = 50000) //Comes with 40 darts
 	build_path = /obj/item/ammo_box/foambox/riot
 	category = list("hacked", "Security")
 
@@ -133,7 +133,7 @@
 	name = "Revolver Bullet (.357)"
 	id = "a357"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_casing/a357
 	category = list("hacked", "Security")
 
@@ -141,7 +141,7 @@
 	name = "Rifle Bullet (7.62mm)"
 	id = "a762"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 5000) //need seclathe for clips
+	materials = list(/datum/material/iron = 5000) //need seclathe for clips
 	build_path = /obj/item/ammo_casing/a762
 	category = list("hacked", "Security")
 
@@ -149,7 +149,7 @@
 	name = "Ammo Box (10mm)"
 	id = "c10mm"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c10mm
 	category = list("hacked", "Security")
 
@@ -157,7 +157,7 @@
 	name = "Ammo Box (.45)"
 	id = "c45"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c45
 	category = list("hacked", "Security")
 
@@ -165,7 +165,7 @@
 	name = "Ammo Box (9mm)"
 	id = "c9mm"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(/datum/material/iron = 30000)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
 
@@ -173,7 +173,7 @@
 	name = "Electropack"
 	id = "electropack"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 2500)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2500)
 	build_path = /obj/item/electropack
 	category = list("hacked", "Security")
 
@@ -181,7 +181,7 @@
 	name = "Butcher's Cleaver"
 	id = "cleaver"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 18000)
+	materials = list(/datum/material/iron = 18000)
 	build_path = /obj/item/kitchen/knife/butcher
 	category = list("hacked", "Dinnerware")
 
@@ -189,6 +189,6 @@
 	name = "Tinfoil Hat"
 	id = "tinfoil_hat"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 5500)
+	materials = list(/datum/material/iron = 5500)
 	build_path = /obj/item/clothing/head/foilhat
 	category = list("hacked", "Misc")
