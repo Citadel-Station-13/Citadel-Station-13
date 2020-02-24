@@ -1090,6 +1090,7 @@
 		"Titanium"		= IC_PINTYPE_NUMBER,
 		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
 		"Biomass"				= IC_PINTYPE_NUMBER,
+		"Plastic"				= IC_PINTYPE_NUMBER
 		)
 	activators = list(
 		"scan" = IC_PINTYPE_PULSE_IN,
@@ -1098,7 +1099,7 @@
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 40
-	var/list/mtypes = list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_BIOMASS)
+	var/list/mtypes = list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/biomass, /datum/material/plastic)
 
 
 /obj/item/integrated_circuit/input/matscan/do_work()
@@ -1108,10 +1109,9 @@
 	if(!mt) //Invalid input
 		return
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
-		for(var/I in 1 to mtypes.len)
-			var/datum/material/M = mt.materials[mtypes[I]]
-			if(M)
-				set_pin_data(IC_OUTPUT, I, M.amount)
+		for(var/I in mtypes)
+			if(I in mt.materials)
+				set_pin_data(IC_OUTPUT, I, mt.materials[I])
 			else
 				set_pin_data(IC_OUTPUT, I, null)
 		push_data()
