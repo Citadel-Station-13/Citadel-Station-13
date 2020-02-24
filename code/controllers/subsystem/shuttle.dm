@@ -649,5 +649,5 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce("The shift has come to an end and the shuttle called. [seclevel2num(get_security_level()) == SEC_LEVEL_RED ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [emergency.timeLeft(600)] minutes.", null, "shuttlecalled", "Priority")
 		log_game("Round end vote passed. Shuttle has been auto-called.")
 		message_admins("Round end vote passed. Shuttle has been auto-called.")
-		emergencyNoRecall = TRUE
-		endvote_passed = TRUE
+	emergencyNoRecall = TRUE
+	endvote_passed = TRUE
