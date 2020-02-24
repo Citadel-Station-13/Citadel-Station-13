@@ -2034,6 +2034,13 @@
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
+"DQ" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/item/book/granter/crafting_recipe/bone_bow,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
 "Ef" = (
 /obj/structure/stone_tile/block/cracked,
 /turf/open/lava/smooth{
@@ -2401,6 +2408,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/kitchen/knife/combat/bone,
+/obj/item/book/granter/crafting_recipe/bone_bow,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "TN" = (
@@ -2506,6 +2514,11 @@
 "Wj" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
 /turf/closed/mineral/volcanic/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"WA" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/item/book/granter/crafting_recipe/bone_bow,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "WL" = (
 /obj/structure/stone_tile{
@@ -57415,7 +57428,7 @@ Ds
 Ds
 KV
 nI
-Ad
+DQ
 Si
 aa
 ab
@@ -57915,7 +57928,7 @@ aa
 aa
 Rk
 Si
-sR
+WA
 rz
 qh
 pq
