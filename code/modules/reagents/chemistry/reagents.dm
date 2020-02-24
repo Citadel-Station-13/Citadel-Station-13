@@ -92,6 +92,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/M = L
+	var/turf/T = get_turf(M)
 	log_reagent("MOB ADD: on_mob_add(): [key_name(M)] at [AREACOORD(T)] - [volume] of [type] with [purity] purity")
 	if (purity == 1)
 		return

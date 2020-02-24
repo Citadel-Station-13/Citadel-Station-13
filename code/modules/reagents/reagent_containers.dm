@@ -148,8 +148,8 @@
 		var/throwerstring
 		if(thrownby && thrown)
 			var/turf/AT = get_turf(thrownby)
-			throwerstring = " THROWN BY [key_name(thrownby)] at ([AREACOORD(AT)])"
-		log_reagent("SPLASH - [src] object SplashReagents() onto [target] at [TT] ([AREACOORD(TT)])[throwerstring] - [reagents.log_list()]")
+			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] ([AREACOORD(AT)])"
+		log_reagent("SPLASH - [src] object SplashReagents() onto [target] at [T] ([AREACOORD(T)])[throwerstring] - [reagents.log_list()]")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 		if(QDELETED(src))
