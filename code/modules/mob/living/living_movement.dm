@@ -12,10 +12,14 @@
 		return (!density || lying)
 	if(buckled == mover)
 		return TRUE
+	if(!ismob(mover))
+		if(mover.throwing?.thrower == src)
+			return TRUE
 	if(ismob(mover))
 		if(mover in buckled_mobs)
 			return TRUE
-	return (!mover.density || !density || (mover.throwing && mover.throwing.thrower == src && !ismob(mover)))
+	var/mob/living/L = mover		//typecast first, check isliving and only check this if living using short circuit
+	return (!density || (isliving(mover) && !mover.density && L.can_move_under_living(src)))
 
 /mob/living/toggle_move_intent()
 	. = ..()
@@ -24,6 +28,10 @@
 /mob/living/update_config_movespeed()
 	update_move_intent_slowdown()
 	return ..()
+
+/// whether or not we can slide under another living mob. defaults to if we're not dense. CanPass should check "overriding circumstances" like buckled mobs/having PASSMOB flag, etc.
+/mob/living/proc/can_move_under_living(mob/living/other)
+	return !density
 
 /mob/living/proc/update_move_intent_slowdown()
 	var/mod = 0

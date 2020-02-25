@@ -44,10 +44,9 @@
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10
 
-/mob/living/carbon/CanPass(atom/movable/mover, turf/target)
+/mob/living/carbon/can_move_under_living(mob/living/other)
 	. = ..()
-	if(.)
-		if(isliving(mover))
-			var/mob/living/L = mover
-			if(!lying && L.lying)		//they're down but we're not
-				return (L == buckled) || (L in buckled_mobs)
+	if(!.)		//we failed earlier don't need to fail again
+		return
+	if(!other.lying && lying)		//they're up, we're down.
+		return FALSE
