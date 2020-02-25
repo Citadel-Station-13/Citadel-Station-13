@@ -121,10 +121,10 @@
 						H.visible_message("<span class='danger'>[H] falls in the water!</span>",
 											"<span class='userdanger'>You fall in the water!</span>")
 						playsound(src, 'sound/effects/splash.ogg', 60, TRUE, 1)
-						H.Knockdown(20)
+						H.DefaultCombatKnockdown(20)
 						return
 					else
-						H.Knockdown(60)
+						H.DefaultCombatKnockdown(60)
 						H.adjustOxyLoss(5)
 						H.emote("cough")
 						H.visible_message("<span class='danger'>[H] falls in and takes a drink!</span>",
@@ -135,19 +135,19 @@
 						H.visible_message("<span class='danger'>[H] falls in the drained pool!</span>",
 													"<span class='userdanger'>You fall in the drained pool!</span>")
 						H.adjustBruteLoss(7)
-						H.Knockdown(80)
+						H.DefaultCombatKnockdown(80)
 						playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 					else
 						H.visible_message("<span class='danger'>[H] falls in the drained pool, and cracks his skull!</span>",
 													"<span class='userdanger'>You fall in the drained pool, and crack your skull!</span>")
 						H.apply_damage(15, BRUTE, "head")
-						H.Knockdown(200) // This should hurt. And it does.
+						H.DefaultCombatKnockdown(200) // This should hurt. And it does.
 						playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 						playsound(src, 'sound/misc/crack.ogg', 100, TRUE)
 				else
 					H.visible_message("<span class='danger'>[H] falls in the drained pool, but had an helmet!</span>",
 										"<span class='userdanger'>You fall in the drained pool, but you had an helmet!</span>")
-					H.Knockdown(40)
+					H.DefaultCombatKnockdown(40)
 					playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 		else if(filled)
 			victim.adjustStaminaLoss(1)
