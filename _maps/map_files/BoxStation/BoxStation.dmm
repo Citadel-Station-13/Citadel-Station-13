@@ -31389,6 +31389,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bzg" = (
@@ -55013,6 +55014,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"jUN" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "jVl" = (
 /obj/structure/cable{
 	icon_state = "4-8"
