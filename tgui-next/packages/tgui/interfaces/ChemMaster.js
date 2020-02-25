@@ -207,6 +207,8 @@ class PackagingControls extends Component {
       patchAmount: 1,
       bottleAmount: 1,
       packAmount: 1,
+      vialAmount: 1,
+      dartAmount: 1,
     };
   }
 
@@ -218,6 +220,8 @@ class PackagingControls extends Component {
       patchAmount,
       bottleAmount,
       packAmount,
+      vialAmount,
+      dartAmount,
     } = this.state;
     const {
       condi,
@@ -286,6 +290,36 @@ class PackagingControls extends Component {
               volume: 'auto',
             })} />
         )}
+        {!condi && (
+          <PackagingControlsItem
+            label="Hypovials"
+            amount={vialAmount}
+            amountUnit="vials"
+            sideNote="max 60u"
+            onChangeAmount={(e, value) => this.setState({
+              vialAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'hypoVial',
+              amount: vialAmount,
+              volume: 'auto',
+            })} />
+        )}
+        {!condi && (
+          <PackagingControlsItem
+            label="Smartdarts"
+            amount={dartAmount}
+            amountUnit="darts"
+            sideNote="max 20u"
+            onChangeAmount={(e, value) => this.setState({
+              dartAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'smartDart',
+              amount: dartAmount,
+              volume: 'auto',
+            })} />
+        )}
         {!!condi && (
           <PackagingControlsItem
             label="Packs"
@@ -320,3 +354,95 @@ class PackagingControls extends Component {
     );
   }
 }
+
+const AnalysisResults = props => {
+  const { state, fermianalyze } = props;
+  const { ref } = state.config;
+  const { analyzeVars } = state.data;
+  return (
+    <Section
+      title="Analysis Results"
+      buttons={(
+        <Button
+          icon="arrow-left"
+          content="Back"
+          onClick={() => act(ref, 'goScreen', {
+            screen: 'home',
+          })} />
+      )}>
+      {!fermianalyze && (
+        <LabeledList>
+          <LabeledList.Item label="Name">
+            {analyzeVars.name}
+          </LabeledList.Item>
+          <LabeledList.Item label="State">
+            {analyzeVars.state}
+          </LabeledList.Item>
+          <LabeledList.Item label="Color">
+            <ColorBox color={analyzeVars.color} mr={1} />
+            {analyzeVars.color}
+          </LabeledList.Item>
+          <LabeledList.Item label="Description">
+            {analyzeVars.description}
+          </LabeledList.Item>
+          <LabeledList.Item label="Metabolization Rate">
+            {analyzeVars.metaRate} u/minute
+          </LabeledList.Item>
+          <LabeledList.Item label="Overdose Threshold">
+            {analyzeVars.overD}
+          </LabeledList.Item>
+          <LabeledList.Item label="Addiction Threshold">
+            {analyzeVars.addicD}
+          </LabeledList.Item>
+        </LabeledList>
+      )}
+      {!!fermianalyze && (
+        <LabeledList>
+          <LabeledList.Item label="Name">
+            {analyzeVars.name}
+          </LabeledList.Item>
+          <LabeledList.Item label="State">
+            {analyzeVars.state}
+          </LabeledList.Item>
+          <LabeledList.Item label="Color">
+            <ColorBox color={analyzeVars.color} mr={1} />
+            {analyzeVars.color}
+          </LabeledList.Item>
+          <LabeledList.Item label="Description">
+            {analyzeVars.description}
+          </LabeledList.Item>
+          <LabeledList.Item label="Metabolization Rate">
+            {analyzeVars.metaRate} u/minute
+          </LabeledList.Item>
+          <LabeledList.Item label="Overdose Threshold">
+            {analyzeVars.overD}
+          </LabeledList.Item>
+          <LabeledList.Item label="Addiction Threshold">
+            {analyzeVars.addicD}
+          </LabeledList.Item>
+          <LabeledList.Item label="Purity">
+            {analyzeVars.purityF}
+          </LabeledList.Item>
+          <LabeledList.Item label="Inverse Ratio">
+            {analyzeVars.inverseRatioF}
+          </LabeledList.Item>
+          <LabeledList.Item label="Purity E">
+            {analyzeVars.purityE}
+          </LabeledList.Item>
+          <LabeledList.Item label="Lower Optimal Temperature">
+            {analyzeVars.minTemp}
+          </LabeledList.Item>
+          <LabeledList.Item label="Upper Optimal Temperature">
+            {analyzeVars.maxTemp}
+          </LabeledList.Item>
+          <LabeledList.Item label="Explosive Temperature">
+            {analyzeVars.eTemp}
+          </LabeledList.Item>
+          <LabeledList.Item label="pH Peak">
+            {analyzeVars.pHpeak}
+          </LabeledList.Item>
+        </LabeledList>
+      )}
+    </Section>
+  );
+};
