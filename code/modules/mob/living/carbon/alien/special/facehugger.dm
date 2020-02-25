@@ -252,7 +252,7 @@
 		return 0
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
 		return 0
-	if(isvamp(M))
+	if(isbloodsucker(M))
 		return 0
 		
 	if(ismonkey(M))
