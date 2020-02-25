@@ -305,17 +305,19 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
+	if(last_special > world.time)
+		return
 	fire_stacks -= 5
 	DefaultCombatKnockdown(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
+	last_special = world.time + 30
 	sleep(30)
 	if(fire_stacks <= 0)
 		visible_message("<span class='danger'>[src] has successfully extinguished [p_them()]self!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")
 		ExtinguishMob()
-	return
 
 /mob/living/carbon/resist_restraints(ignore_delay = FALSE)
 	var/obj/item/I = null
