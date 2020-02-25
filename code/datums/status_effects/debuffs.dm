@@ -609,6 +609,19 @@
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
 
+/datum/status_effect/electrostaff
+	id = "electrostaff"
+	alert_type = null
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/electrostaff/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	owner.add_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF, multiplicative_slowdown = 1, movetypes = GROUND)
+
+/datum/status_effect/electrostaff/on_remove()
+	owner.remove_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF)
 
 //GOLEM GANG
 
