@@ -139,6 +139,7 @@
 				O.name = input
 				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
 				O.renamedByPlayer = TRUE
+				log_game("[user] [key_name(user)] has renamed [O] to [input]")
 
 		if(penchoice == "Change description")
 			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
@@ -146,6 +147,7 @@
 				return
 			O.desc = input
 			to_chat(user, "You have successfully changed \the [O.name]'s description.")
+			log_game("[user] [key_name(user)] has changed [O]'s description to to [input]")
 
 /*
  * Sleepypens

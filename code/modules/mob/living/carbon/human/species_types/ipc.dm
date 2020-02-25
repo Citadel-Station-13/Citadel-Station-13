@@ -13,7 +13,13 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
 	mutanttongue = /obj/item/organ/tongue/robot/ipc
+//Just robo looking parts.
 	mutant_heart = /obj/item/organ/heart/ipc
+	mutantlungs = /obj/item/organ/lungs/ipc
+	mutantliver = /obj/item/organ/liver/ipc
+	mutantstomach = /obj/item/organ/stomach/ipc
+	mutanteyes = /obj/item/organ/eyes/ipc
+
 	exotic_bloodtype = "HF"
 
 	var/datum/action/innate/monitor_change/screen
