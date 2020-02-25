@@ -251,7 +251,7 @@
 	message = "squishes!"
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
-	restraint_check = false
+	restraint_check = FALSE
 	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/squish/run_emote(mob/living/user, params)
