@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
-/turf/closed/mineral/random/high_chance,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space)
 "h" = (
 /obj/effect/decal/remains/human,
@@ -9,9 +9,6 @@
 "t" = (
 /turf/open/floor/plating/asteroid,
 /area/ruin/space)
-"B" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
 "G" = (
 /obj/item/holosign_creator/atmos,
 /turf/open/floor/plating/asteroid,
@@ -58,7 +55,7 @@ b
 b
 b
 b
-B
+R
 K
 K
 R

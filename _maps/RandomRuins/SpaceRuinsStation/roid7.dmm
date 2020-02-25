@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/item/stack/sheet/metal,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /obj/structure/lattice,
 /obj/structure/lattice,
 /obj/item/stack/sheet/metal,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/space/nearstation)
 "c" = (
 /turf/open/floor/plating/asteroid/airless,
@@ -29,8 +29,8 @@
 	dir = 4;
 	icon_state = "singular"
 	},
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "g" = (
 /obj/structure/girder,
 /turf/open/floor/plating/asteroid/airless,
@@ -74,7 +74,7 @@
 /area/ruin/unpowered)
 "o" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/space/nearstation)
 "p" = (
 /obj/structure/fluff/broken_flooring{
@@ -82,7 +82,7 @@
 	icon_state = "plating";
 	name = "broken plating"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/space/nearstation)
 "q" = (
 /obj/machinery/light{
@@ -139,15 +139,15 @@
 /obj/structure/fluff/broken_flooring{
 	icon_state = "singular"
 	},
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "C" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
 	dir = 1;
 	icon_state = "side"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/space/nearstation)
 "D" = (
 /obj/structure/table/wood,
@@ -165,8 +165,8 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/space)
 "G" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "H" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plasteel/airless/cafeteria,
@@ -235,7 +235,7 @@
 "V" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/metal,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/space/nearstation)
 "W" = (
 /obj/structure/lattice,
@@ -244,7 +244,7 @@
 	icon_state = "plating";
 	name = "broken plating"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/space/nearstation)
 "X" = (
 /turf/open/floor/plasteel/airless,
@@ -256,7 +256,7 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/space)
 "Z" = (
-/turf/closed/mineral/random/high_chance,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space)
 
 (1,1,1) = {"
