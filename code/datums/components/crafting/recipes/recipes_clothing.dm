@@ -185,3 +185,12 @@
 	time = 60
 	always_availible = TRUE
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/peacecollar
+	name = "Pacification Collar"
+	result = /obj/item/clothing/neck/petcollar/peacecollar
+	reqs = list(/obj/item/electropack/shockcollar = 1,
+				/obj/item/stack/sheet/plasteel = 3)
+	tools = list(TOOL_WELDER)
+	time = 30
+	category = CAT_CLOTHING

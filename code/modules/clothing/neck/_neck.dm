@@ -269,6 +269,32 @@
 	hasprimary = TRUE
 	primary_color = "#222222"
 
+/obj/item/clothing/neck/petcollar/peacecollar
+	name = "Pacification Collar"
+	desc = "A collar that once worn, causes pacification in it's wearer via pulsing vibrations. The wearer seems unable to remove it via some psychological compulsion."
+	icon_state = "petcollar"
+	item_state = "petcollar"
+
+	hasprimary = TRUE
+	primary_color = "#FF9ECF"
+
+/obj/item/clothing/neck/petcollar/peacecollar/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == SLOT_NECK)
+		ADD_TRAIT(user, TRAIT_PACIFISM, "peacecollar_[REF(src)]")
+
+/obj/item/clothing/neck/petcollar/peacecollar/dropped(mob/living/carbon/human/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_PACIFISM, "peacecollar_[REF(src)]")
+
+/obj/item/clothing/neck/petcollar/peacecollar/attack_hand(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.wear_neck)
+			to_chat(user, "<span class='warning'>You feel at peace. <b style='color:pink'>Why would you want anything else?</b></span>")
+			return
+	return ..()
+
 /obj/item/key/collar
 	name = "Collar Key"
 	desc = "A key for a tiny lock on a collar or bag."
