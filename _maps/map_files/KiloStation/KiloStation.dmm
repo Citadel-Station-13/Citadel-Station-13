@@ -31610,10 +31610,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aXY" = (
-/obj/structure/chair/sofa/right{
-	color = "#c45c57";
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -31625,6 +31621,10 @@
 	c_tag = "Atrium Booths";
 	dir = 4;
 	name = "diner camera"
+	},
+/obj/structure/chair/sofa/left{
+	color = "#c45c57";
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
@@ -44039,7 +44039,7 @@
 "bqK" = (
 /obj/structure/chair/sofa/corner{
 	color = "#c45c57";
-	dir = 1
+	dir = 4
 	},
 /obj/machinery/light{
 	dir = 1
@@ -44642,16 +44642,16 @@
 /turf/closed/wall,
 /area/crew_quarters/toilet/restrooms)
 "brE" = (
-/obj/structure/chair/sofa/left{
-	color = "#c45c57";
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/chair/sofa/right{
+	color = "#c45c57";
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
@@ -44681,10 +44681,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
 "brG" = (
-/obj/structure/chair/sofa/right{
-	color = "#c45c57";
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -44695,6 +44691,10 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -26
+	},
+/obj/structure/chair/sofa/left{
+	color = "#c45c57";
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
@@ -44708,10 +44708,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/bar/atrium)
 "brI" = (
-/obj/structure/chair/sofa/left{
-	color = "#c45c57";
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -44719,6 +44715,10 @@
 /obj/machinery/light,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
+	},
+/obj/structure/chair/sofa/right{
+	color = "#c45c57";
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
