@@ -47,11 +47,14 @@
 
 /obj/machinery/power/tracker/proc/Make(obj/item/solar_assembly/S)
 	if(!S)
-		S = new /obj/item/solar_assembly
-		S.glass_type = new /obj/item/stack/sheet/glass(null, 2)
-		S.tracker = TRUE
-		S.anchored = TRUE
-	S.forceMove(src)
+		assembly = new /obj/item/solar_assembly
+		assembly.glass_type = new /obj/item/stack/sheet/glass(null, 2)
+		assembly.tracker = TRUE
+		assembly.anchored = TRUE
+	else
+		S.moveToNullspace()
+		assembly = S
+	update_icon()
 
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -70,14 +73,14 @@
 /obj/machinery/power/tracker/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.forceMove(loc)
-				S.give_glass(stat & BROKEN)
+			if(assembly)
+				assembly.forceMove(loc)
+				assembly.give_glass(stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, TRUE)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
+			var/shard = assembly?.glass_type ? assembly.glass_type.shard_type : /obj/item/shard
+			new shard(loc)
+			new shard(loc)
 	qdel(src)
 
 // Tracker Electronic
