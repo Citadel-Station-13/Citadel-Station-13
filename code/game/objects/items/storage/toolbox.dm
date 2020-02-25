@@ -3,8 +3,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "toolbox_default"
+	item_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -13,16 +13,16 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	throw_speed = 2
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL = 500)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	custom_materials = list(/datum/material/iron = 500)
+	material_flags = MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	var/can_rubberify = TRUE
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //very protecc too
 
 /obj/item/storage/toolbox/Initialize(mapload)
-	. = ..()
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
@@ -30,6 +30,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 				latches = "triple_latch"
 	if(mapload && can_rubberify && prob(5))
 		rubberify()
+	. = ..()
 	update_icon()
 
 /obj/item/storage/toolbox/update_icon()
@@ -48,6 +49,9 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
+	icon_state = "red"
+	item_state = "toolbox_red"
+	material_flags = NONE
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
@@ -72,6 +76,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	material_flags = NONE
 
 /obj/item/storage/toolbox/mechanical/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -100,6 +105,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
+	material_flags = NONE
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -121,6 +127,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = "A toolbox painted black with a red stripe. It looks more heavier than normal toolboxes."
 	force = 15
 	throwforce = 18
+	material_flags = NONE
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
@@ -140,6 +147,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	material_flags = NONE
 
 /obj/item/storage/toolbox/drone/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -161,6 +169,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("robusted", "crushed", "smashed")
 	can_rubberify = FALSE
+	material_flags = NONE
 	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
 
 /obj/item/storage/toolbox/brass/ComponentInitialize()
@@ -202,6 +211,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	w_class = WEIGHT_CLASS_HUGE		//heyo no bohing this!
 	force = 18		//spear damage
 	can_rubberify = FALSE
+	material_flags = NONE
 
 /obj/item/storage/toolbox/plastitanium/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -217,6 +227,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	icon_state = "green"
 	item_state = "toolbox_green"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+	material_flags = NONE
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
@@ -257,6 +268,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	icon_state = "gold"
 	item_state = "toolbox_gold"
 	has_latches = FALSE
+	material_flags = NONE
 
 /obj/item/storage/toolbox/gold_real/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -282,6 +294,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	force = 0
 	throwforce = 0
 	can_rubberify = FALSE
+	material_flags = NONE
 
 /obj/item/storage/toolbox/proc/rubberify()
 	name = "rubber [name]"
@@ -289,7 +302,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = replacetext(desc, "robust", "safe")
 	desc = replacetext(desc, "heavier", "bouncier")
 	DISABLE_BITFIELD(flags_1, CONDUCT_1)
-	materials = typelist("materials", null)
+	custom_materials = null
 	damtype = STAMINA
 	force += 3 //to compensate the higher stamina K.O. threshold compared to actual health.
 	throwforce += 3
@@ -311,12 +324,13 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "rubber toolbox"
 	desc = "Bouncy. Very safe."
 	flags_1 = null
-	materials = null
+	custom_materials = null
 	damtype = STAMINA
 	force = 15
 	throwforce = 15
 	attack_verb = list("robusted", "bounced")
 	can_rubberify = FALSE //we are already the future.
+	material_flags = NONE
 
 /obj/item/storage/toolbox/rubber/Initialize()
 	icon_state = pick("blue", "red", "yellow", "green")

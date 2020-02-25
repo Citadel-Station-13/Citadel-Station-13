@@ -17,7 +17,7 @@
 
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 50)
 	max_integrity = 100
-	integrity_failure = 50
+	integrity_failure = 0.5
 	var/list/network = list("ss13")
 	var/c_tag = null
 	var/status = TRUE

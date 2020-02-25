@@ -1,4 +1,6 @@
-//////////////////////////Sushi Components///////////////////////
+// see code/module/crafting/table.dm
+
+///////////////////////Sushi Components///////////////////////////
 
 /datum/crafting_recipe/food/sushi_rice
 	name = "Sushi Rice"
@@ -7,7 +9,7 @@
 		/datum/reagent/consumable/rice = 10
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushi_rice
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/sea_weed
 	name = "Sea Weed Sheet"
@@ -17,17 +19,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sea_weed
-	subcategory = CAT_FISH
-
-/datum/crafting_recipe/food/tuna_can
-	name = "Can of Tuna"
-	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 15,
-		/datum/reagent/consumable/cooking_oil = 5,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1,
-	)
-	result = /obj/item/reagent_containers/food/snacks/tuna
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
 
 //////////////////////////Sushi/////////////////////////////////
 
@@ -39,7 +31,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sashimi
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/riceball
 	name = "Onigiri"
@@ -49,7 +41,7 @@
 		/obj/item/reagent_containers/food/snacks/sushi_rice = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/riceball
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/sushie_egg
 	name = "Tobiko"
@@ -59,7 +51,7 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/tobiko
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/sushie_basic
 	name = "Funa Hosomaki"
@@ -70,7 +62,7 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 3,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_basic
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/sushie_adv
 	name = "Funa Nigiri"
@@ -80,7 +72,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_adv
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/sushie_pro
 	name = "Well made Funa Nigiri"
@@ -91,19 +83,19 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_pro
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
 
-///////////////Gaijin junk/////////////////////////////////////
+//////////////////////////////////////////////FISH///////////////////////////////////////////
 
-/datum/crafting_recipe/food/fishfingers
-	name = "Fish fingers"
+/datum/crafting_recipe/food/tuna_can
+	name = "Can of Tuna"
 	reqs = list(
-		/datum/reagent/consumable/flour = 5,
-		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+		/datum/reagent/consumable/sodiumchloride = 15,
+		/datum/reagent/consumable/cooking_oil = 5,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1,
 	)
-	result = /obj/item/reagent_containers/food/snacks/fishfingers
-	subcategory = CAT_FISH
+	result = /obj/item/reagent_containers/food/snacks/tuna
+	subcategory = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/cubancarp
 	name = "Cuban carp"
@@ -113,7 +105,17 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/cubancarp
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD
+
+/datum/crafting_recipe/food/fishfingers
+	name = "Fish fingers"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/fishfingers
+	subcategory = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/fishandchips
 	name = "Fish and chips"
@@ -122,4 +124,4 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/fishandchips
-	subcategory = CAT_FISH
+	subcategory = CAT_SEAFOOD

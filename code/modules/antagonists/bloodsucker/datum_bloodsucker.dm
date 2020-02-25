@@ -286,10 +286,10 @@
 	var/mob/living/L = owner.current
 	level_bloodcost = maxBloodVolume * 0.2
 	//If the blood volume of the bloodsucker is lower than the cost to level up, return and inform the bloodsucker
-	
+
 	//TODO: Make this into a radial, or perhaps a tgui next UI
 		// Purchase Power Prompt
-	var/list/options = list() 
+	var/list/options = list()
 	for(var/pickedpower in typesof(/datum/action/bloodsucker))
 		var/datum/action/bloodsucker/power = pickedpower
 		// If I don't own it, and I'm allowed to buy it.

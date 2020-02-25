@@ -55,7 +55,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-	var/auto_call = 72000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2ish hours plus 15 for the shuttle. So total is 3.
+	var/endvote_passed = FALSE
+
 	var/realtimeofstart = 0
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
@@ -78,7 +79,6 @@ SUBSYSTEM_DEF(shuttle)
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 	realtimeofstart = world.realtime
-	auto_call = CONFIG_GET(number/auto_transfer_delay)
 	return ..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
@@ -643,10 +643,11 @@ SUBSYSTEM_DEF(shuttle)
 
 	QDEL_LIST(remove_images)
 
-/datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end after 2 hours have passed.
-	if((world.realtime - SSshuttle.realtimeofstart) > auto_call && EMERGENCY_IDLE_OR_RECALLED) //2 hours
+/datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end without being a proper shuttle call?
+	if(EMERGENCY_IDLE_OR_RECALLED)
 		SSshuttle.emergency.request(silent = TRUE)
 		priority_announce("The shift has come to an end and the shuttle called. [seclevel2num(get_security_level()) == SEC_LEVEL_RED ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [emergency.timeLeft(600)] minutes.", null, "shuttlecalled", "Priority")
-		log_game("Round time limit reached. Shuttle has been auto-called.")
-		message_admins("Round time limit reached. Shuttle called.")
-		emergencyNoRecall = TRUE
+		log_game("Round end vote passed. Shuttle has been auto-called.")
+		message_admins("Round end vote passed. Shuttle has been auto-called.")
+	emergencyNoRecall = TRUE
+	endvote_passed = TRUE
