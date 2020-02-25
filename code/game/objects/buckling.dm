@@ -36,8 +36,7 @@
 
 //procs that handle the actual buckling and unbuckling
 /atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
-	if(!buckled_mobs)
-		buckled_mobs = list()
+	LAZYINITLIST(buckled_mobs)
 
 	if(!istype(M))
 		return FALSE
