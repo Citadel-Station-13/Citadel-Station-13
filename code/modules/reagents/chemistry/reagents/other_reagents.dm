@@ -27,8 +27,16 @@
 				L.ForceContractDisease(D)
 
 	if(data["blood_type"] == "SY")
-		disgust_bloodsucker(L, FALSE, -5, TRUE)
-	
+		//Synthblood is very disgusting to bloodsuckers. They will puke it out to expel it, unless they have masquarade on
+		if(reac_volume > 3)
+			disgust_bloodsucker(L, 5, FALSE, FALSE, TRUE)
+		//If theres more than 8 units, they will start expelling it, even if they are masquarading.
+		if(reac_volume > 6)
+			disgust_bloodsucker(L, 7, -5, TRUE, TRUE)
+		//If they have too much in them, they will also puke out their blood.
+		else
+			disgust_bloodsucker(L, 3, FALSE, FALSE, FALSE)
+
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/blood_id = C.get_blood_id()
@@ -40,10 +48,8 @@
 		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/on_mob_life(mob/living/carbon/C)	//Because lethals are preferred over stamina. damnifino.
-	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
-		return //We dont want vampires getting toxed from blood
 	var/blood_id = C.get_blood_id()
-	if((blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood))
+	if((blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood) && !HAS_TRAIT(C, TRAIT_NOMARROW))
 		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))	//we only care about bloodtype here because this is where the poisoning should be
 			C.adjustToxLoss(rand(2,8)*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain beneficial toxin as slime person
 	..()
@@ -151,18 +157,6 @@
 	description = "This highly resembles blood, but it doesnt actually function like it, resembling more ketchup, with a more blood-like consistency."
 	taste_description = "sap" //Like tree sap?
 	pH = 7.45
-
-/datum/reagent/blood/tomato/reaction_mob(mob/living/L, method = TOUCH, reac_volume)
-	..()
-	disgust_bloodsucker(L, reac_volume * 2, -5, TRUE)
-
-/datum/reagent/proc/disgust_bloodsucker(mob/living/carbon/C, disgust, blood_change, force)
-	if(isvamp(C))
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if(disgust)
-			bloodsuckerdatum.handle_eat_human_food(disgust, force)
-		if(blood_change)
-			bloodsuckerdatum.AddBloodVolume(blood_change)
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
