@@ -15,6 +15,7 @@
 
 	var/id = 0
 	var/obj/machinery/power/solar_control/control
+	var/obj/item/solar_assembly/assembly
 
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
