@@ -65,7 +65,7 @@
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(has_trait(user, TRAIT_PACIFISM) && L.stat != DEAD)
-			to_chat(user, "You don't want to hurt a living creature!")
+			to_chat(user, "<span class="warning">You don't want to hurt a living creature!</span>")
 			return
 		if(do_mob(user, src, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
