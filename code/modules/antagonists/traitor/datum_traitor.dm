@@ -1,5 +1,4 @@
 #define TRAITOR_HUMAN "human"
-#define TRAITOR_AI	  "AI"
 
 /datum/antagonist/traitor
 	name = "Traitor"
@@ -12,21 +11,42 @@
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
-	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+	var/datum/traitor_class/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	can_hijack = HIJACK_HIJACKER
+
+/datum/antagonist/traitor/New()
+	..()
+	if(!GLOB.traitor_classes.len)//Only need to fill the list when it's needed.
+		for(var/I in subtypesof(/datum/traitor_class))
+			new I
+
+/datum/antagonist/traitor/proc/set_traitor_kind(var/kind)
+	traitor_kind = traitor_classes[kind]
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))
-		traitor_kind = TRAITOR_AI
-
+		set_traitor_kind(TRAITOR_AI)
+	else
+		var/chaos_weight = 0
+		if(istype(SSticker.mode,/datum/game_mode/dynamic))
+			var/datum/game_mode/dynamic/mode = SSticker.mode
+			chaos_weight = (mode.threat - 50)/50
+		var/list/weights = list()
+		for(var/C in traitor_classes)
+			var/datum/traitor_class/class = C
+			var/weight = class.weight/(1+NUM_E**(-chaos_weight*class.chaos)) // just a logistic function
+			weights[C] = weight
+		set_traitor_kind(pickweightAllowZero(weights))
+		traitor_kind.weight /= 2 // less likely this round
 	SSticker.mode.traitors += owner
 	owner.special_role = special_role
 	if(give_objectives)
-		forge_traitor_objectives()
-	finalize_traitor()
+		traitor_kind.forge_objectives(src)
+	traitor_kind.finalize_traitor(src)
 	..()
 
 /datum/antagonist/traitor/apply_innate_effects()
+	traitor_kind.apply_innate_effects(src)
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob && istype(traitor_mob))
@@ -35,6 +55,7 @@
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
 /datum/antagonist/traitor/remove_innate_effects()
+	traitor_kind.remove_innate_effects(src)
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob && istype(traitor_mob))
@@ -42,12 +63,7 @@
 
 /datum/antagonist/traitor/on_removal()
 	//Remove malf powers.
-	if(traitor_kind == TRAITOR_AI && owner.current && isAI(owner.current))
-		var/mob/living/silicon/ai/A = owner.current
-		A.set_zeroth_law("")
-		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-		A.malf_picker.remove_malf_verbs(A)
-		qdel(A.malf_picker)
+	traitor_kind.on_removal(src)
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
@@ -67,6 +83,7 @@
 	objectives -= O
 
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
+	traitor_kind.forge_objectives(src)
 	switch(traitor_kind)
 		if(TRAITOR_AI)
 			forge_ai_objectives()
@@ -141,30 +158,6 @@
 			escape_objective.owner = owner
 			add_objective(escape_objective)
 			return
-
-/datum/antagonist/traitor/proc/forge_ai_objectives()
-	var/objective_count = 0
-
-	if(prob(30))
-		objective_count += forge_single_objective()
-
-	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = owner
-		kill_objective.find_target()
-		add_objective(kill_objective)
-
-	var/datum/objective/survive/exist/exist_objective = new
-	exist_objective.owner = owner
-	add_objective(exist_objective)
-
-
-/datum/antagonist/traitor/proc/forge_single_objective()
-	switch(traitor_kind)
-		if(TRAITOR_AI)
-			return forge_single_AI_objective()
-		else
-			return forge_single_human_objective()
 
 /datum/antagonist/traitor/proc/forge_single_human_objective() //Returns how many objectives are added
 	.=1
@@ -268,32 +261,24 @@
 	set_antag_hud(owner.current, null)
 
 /datum/antagonist/traitor/proc/finalize_traitor()
-	switch(traitor_kind)
-		if(TRAITOR_AI)
-			add_law_zero()
-			owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
-			owner.current.grant_language(/datum/language/codespeak)
-		if(TRAITOR_HUMAN)
-			if(should_equip)
-				equip(silent)
-			owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
+	var/should_base_finalize = traitor_kind.finalize_traitor(src)
+	if(should_base_finalize)
+		if(should_equip)
+			equip(silent)
+		owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	update_traitor_icons_added()
 	var/mob/M = mob_override || owner.current
-	if(isAI(M) && traitor_kind == TRAITOR_AI)
-		var/mob/living/silicon/ai/A = M
-		A.hack_software = TRUE
+	traitor_kind.apply_innate_effects(M)
 	RegisterSignal(M, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	update_traitor_icons_removed()
 	var/mob/M = mob_override || owner.current
-	if(isAI(M) && traitor_kind == TRAITOR_AI)
-		var/mob/living/silicon/ai/A = M
-		A.hack_software = FALSE
+	traitor_kind.remove_innate_effects(M)
 	UnregisterSignal(M, COMSIG_MOVABLE_HEAR)
 
 /datum/antagonist/traitor/proc/give_codewords()
@@ -324,8 +309,7 @@
 	killer.add_malf_picker()
 
 /datum/antagonist/traitor/proc/equip(var/silent = FALSE)
-	if(traitor_kind == TRAITOR_HUMAN)
-		owner.equip_traitor(employer, silent, src)
+	owner.equip_traitor(traitor_kind, silent, src)
 
 /datum/antagonist/traitor/proc/assign_exchange_role()
 	//set faction
