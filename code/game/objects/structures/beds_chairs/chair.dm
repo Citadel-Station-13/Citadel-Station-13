@@ -407,7 +407,7 @@
 	buildstackamount = 1
 
 /obj/structure/chair/stool/bar/alien
-	name = "bronze bar stool"
+	name = "alien bar stool"
 	desc = "A hard bar stool made of advanced alien alloy."
 	icon_state = "baralien"
 	icon = 'icons/obj/abductor.dmi'
