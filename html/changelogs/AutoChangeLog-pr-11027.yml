@@ -1,5 +1,0 @@
-author: "ShadeAware"
-delete-after: True
-changes: 
-  - rscadd: "The Captain's Wardrobe, a special one-of-a-kind and ID-locked wardrobe for the Captain that holds all of their snowflakey gear.
-Remove: Snowflake gear from the Captain's locker, since now it has its own vendor."

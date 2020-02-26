@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - rscdel: "Removed the formal security officer jacket from the secdrobe"
-  - tweak: "formal security jackets are now armor vests"

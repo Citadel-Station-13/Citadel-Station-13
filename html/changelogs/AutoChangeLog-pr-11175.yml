@@ -1,6 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - bugfix: "fixed accelerated regeneration nanites"
-  - bugfix: "fixed mechanical repair nanites"
-  - bugfix: "fixed bio reconstruction nanites"
