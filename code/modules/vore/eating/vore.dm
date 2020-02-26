@@ -108,6 +108,7 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 	digestable = json_from_file["digestable"]
 	devourable = json_from_file["devourable"]
 	feeding = json_from_file["feeding"]
+	licking = json_from_file["licking"]
 	vore_taste = json_from_file["vore_taste"]
 	belly_prefs = json_from_file["belly_prefs"]
 
@@ -133,6 +134,7 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 			"digestable"			= digestable,
 			"devourable"			= devourable,
 			"feeding"				= feeding,
+			"licking"				= licking,
 			"vore_taste"			= vore_taste,
 			"belly_prefs"			= belly_prefs,
 		)
