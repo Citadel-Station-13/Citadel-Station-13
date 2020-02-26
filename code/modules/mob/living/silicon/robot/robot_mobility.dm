@@ -11,4 +11,5 @@
 	mobility_flags = newflags
 	update_transform()
 	update_action_buttons_icon()
+	update_icons()
 	return mobility_flags
