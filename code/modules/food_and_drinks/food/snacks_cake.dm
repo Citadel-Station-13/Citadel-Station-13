@@ -389,7 +389,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 /obj/item/reagent_containers/food/snacks/cakeslice/peach_slice
 	name = "peach cake slice"
 	desc = "A slice of peach cake."
-	icon_state = "peach_slice"
+	icon_state = "peachcake_slice"
 	filling_color = "#00FFFF"
 	tastes = list("cake" = 1, "sugar" = 1, "peachjuice" = 10)
 	foodtype = GRAIN | SUGAR | DAIRY
