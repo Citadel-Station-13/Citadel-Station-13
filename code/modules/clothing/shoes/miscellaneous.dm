@@ -443,6 +443,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "bluespace_charge"
 	item_flags = NOBLUDGEON
+	w_class = WEIGHT_CLASS_TINY
 	var/uses = 6
 
 /obj/item/bluespacerecharge/examine(mob/user)
