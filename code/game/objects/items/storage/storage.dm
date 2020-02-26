@@ -2,10 +2,6 @@
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "box"
-	item_state = "syringe_kit"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	var/component_type = /datum/component/storage/concrete
 
