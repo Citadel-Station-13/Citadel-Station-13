@@ -71,6 +71,12 @@
 	item = /obj/item/compressionkit
 	cost = 5
 
+/datum/uplink_item/device_tools/crushbox
+	name = "Crush Box"
+	desc = "A box that crushes anything you put in it when activated."
+	item = /obj/item/deathbox
+	cost = 4
+
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
 	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to twenty tiles away from the briefcase. \
