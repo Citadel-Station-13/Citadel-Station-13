@@ -120,29 +120,30 @@
 			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
-		last_move = 0
+		last_move = NONE
 		return
 
 	if(.)
+		last_move = direct
+		setDir(direct)
+
+		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
+			return FALSE
+
+		if(pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
+			if(pulling.anchored)
+				stop_pulling()
+			else
+				var/pull_dir = get_dir(src, pulling)
+				//puller and pullee more than one tile away or in diagonal position
+				if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+					pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+					if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+						stop_pulling()
+				if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+					pulledby.stop_pulling()
+
 		Moved(oldloc, direct)
-
-	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
-		if(pulling.anchored)
-			stop_pulling()
-		else
-			var/pull_dir = get_dir(src, pulling)
-			//puller and pullee more than one tile away or in diagonal position
-			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
-				pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-				if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
-					stop_pulling()
-			if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
-				pulledby.stop_pulling()
-
-	last_move = direct
-	setDir(direct)
-	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-		return FALSE
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
