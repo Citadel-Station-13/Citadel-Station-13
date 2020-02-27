@@ -1019,7 +1019,7 @@
 
 /obj/item/twohanded/electrostaff
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "electrostaff"
+	icon_state = "electrostaff_3"
 	item_state = "electrostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
