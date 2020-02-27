@@ -7,7 +7,7 @@
 	button_icon_state = "power_lunge"
 	bloodcost = 10
 	cooldown = 120
-	target_range = 5
+	target_range = 3 // artur was right
 	power_activates_immediately = TRUE
 	message_Trigger = "Whom will you ensnare within your grasp?"
 	must_be_capacitated = TRUE
@@ -61,7 +61,7 @@
 	addtimer(CALLBACK(owner, .proc/_walk, 0), 2 SECONDS)
 	target.playsound_local(get_turf(owner), 'sound/bloodsucker/lunge_warn.ogg', 60, FALSE, pressure_affected = FALSE) // target-only telegraphing
 	owner.playsound_local(owner, 'sound/bloodsucker/lunge_warn.ogg', 60, FALSE, pressure_affected = FALSE) // audio feedback to the user
-	if(do_mob(owner, owner, 6, TRUE, TRUE))
+	if(do_mob(owner, owner, 7, TRUE, TRUE))
 		walk_towards(owner, T, 0.1, 10) // yes i know i shouldn't use this but i don't know how to work in anything better
 		if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && owner.resting)
 			var/send_dir = get_dir(owner, T)
@@ -80,7 +80,7 @@
 				target.grabbedby(owner) // Taken from mutations.dm under changelings
 				target.grippedby(owner, instant = TRUE) //instant aggro grab
 				break
-			sleep(i*3)
+			sleep(3)
 
 /datum/action/bloodsucker/targeted/lunge/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE

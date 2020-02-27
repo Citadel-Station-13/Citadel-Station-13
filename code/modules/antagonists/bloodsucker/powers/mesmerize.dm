@@ -73,7 +73,7 @@
 			to_chat(owner, "<span class='warning'>You're too far outside your victim's view.</span>")
 		return FALSE
 
-	if(target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ?
+	if(target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ignores facing once the windup has started (now i know why i put this here!)
 		return TRUE
 
 	// Check: Facing target?
@@ -97,21 +97,27 @@
 		var/power_time = 138 + level_current * 12
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
 		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
-		if(do_mob(user, target, 30, TRUE, TRUE)) // 3 seconds windup
+		for(var/i in 1 to 6) // this is a test lol
 			success = CheckCanTarget(target)
-			if(success) // target just has to be out of view when it is fully charged in order to avoid
-				PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
-				target.face_atom(user)
-				target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
-				target.Stun(power_time)
-				to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
-				target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
-				target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+			if(success)
+				if(i==6)
+					PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
+					target.face_atom(user)
+					target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
+					target.Stun(power_time)
+					to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
+					target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
+					target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+					break
+				sleep(5)
 			else
 				to_chat(user, "<span class='warning'>[target] has escaped your gaze!</span>")
+				target.remove_status_effect(STATUS_EFFECT_MESMERIZE)
+				user.remove_status_effect(STATUS_EFFECT_MESMERIZE)
 				DeactivatePower()
 				DeactivateRangedAbility()
 				StartCooldown()
+				break
 				// oops! if they knew how they could just spam stun the victim and themselves.
 
 		spawn(power_time)
