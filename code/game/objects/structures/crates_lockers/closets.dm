@@ -359,7 +359,7 @@
 								"<span class='italics'>You hear [welder ? "welding" : "rustling of screws and metal"].</span>")
 				deconstruct(TRUE)
 				return
-		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
+		if(user.a_intent != INTENT_HARM && user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return TRUE
 	else if(istype(W, /obj/item/electronics/airlock))
 		handle_lock_addition(user, W)
