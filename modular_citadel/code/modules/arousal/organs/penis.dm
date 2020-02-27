@@ -11,12 +11,12 @@
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH
 	linked_organ_slot = ORGAN_SLOT_TESTICLES
 	fluid_transfer_factor = 0.5
-	size = 2 //arbitrary value derived from length and girth for sprites.
+	size = 2 //arbitrary value derived from length and diameter for sprites.
 	layer_index = PENIS_LAYER_INDEX
 	var/length = 6 //inches
 	var/prev_length = 6 //really should be renamed to prev_length
-	var/girth = 4.38
-	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
+	var/diameter = 4.38
+	var/diameter_ratio = COCK_DIAMETER_RATIO_DEF //0.25; check citadel_defines.dm
 
 /obj/item/organ/genital/penis/modify_size(modifier, min = -INFINITY, max = INFINITY)
 	var/new_value = CLAMP(length + modifier, min, max)
@@ -68,14 +68,14 @@
 		else if ((round(length) < round(prev_length)) && (length > 0.5))
 			to_chat(owner, "<span class='warning'>Your [pick(GLOB.gentlemans_organ_names)] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(round(length))] inch penis.</b></span>")
 	icon_state = sanitize_text("penis_[shape]_[size]")
-	girth = (length * girth_ratio)//Is it just me or is this ludicous, why not make it exponentially decay?
+	diameter = (length * diameter_ratio)//Is it just me or is this ludicous, why not make it exponentially decay?
 
 
 /obj/item/organ/genital/penis/update_appearance()
 	. = ..()
 	var/string
 	var/lowershape = lowertext(shape)
-	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(girth, 0.25)] inch[round(girth, 0.25) != 1 ? "es" : ""] in girth."
+	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] [name]. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(diameter, 0.25)] inch[round(diameter, 0.25) != 1 ? "es" : ""] in diameter."
 
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
@@ -98,6 +98,6 @@
 	else
 		color = "#[D.features["cock_color"]]"
 	length = D.features["cock_length"]
-	girth_ratio = D.features["cock_girth_ratio"]
+	diameter_ratio = D.features["cock_diameter_ratio"]
 	shape = D.features["cock_shape"]
 	prev_length = length
