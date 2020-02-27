@@ -234,9 +234,9 @@
 		var/old_target = tracking_target
 		possible = list()
 		var/list/prints = sniffed.fingerprints
-		for(var/mob/living/carbon/C in GLOB.carbon_list)
-			if(prints[md5(C.dna.uni_identity)])
-				possible |= C
+		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+			if(md5(H.dna.uni_identity) in sniffed.fingerprints)
+				LAZYOR(possible, H)
 		if(!length(possible))
 			to_chat(user,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
 			return
