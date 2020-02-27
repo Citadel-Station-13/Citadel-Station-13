@@ -16,7 +16,8 @@
 
 /obj/item/implant/radio/antenna/Initialize(mapload)
 	..()
-	radio.name = "internal antenna"
+	if (radio)
+		radio.name = "internal antenna"
 
 /datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
