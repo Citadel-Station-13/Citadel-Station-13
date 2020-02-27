@@ -20,7 +20,7 @@
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/twohanded/shockpaddles/paddles
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/cell/cell
 	var/combat = FALSE //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 	var/healdisk = FALSE // Will we shock people dragging the body?
@@ -35,15 +35,14 @@
 
 /obj/item/defibrillator/Initialize() //starts without a cell for rnd
 	. = ..()
+	if(cell)
+		cell = new cell(src)
 	paddles = make_paddles()
 	update_power()
 	return
 
-/obj/item/defibrillator/loaded/Initialize() //starts with hicap
-	. = ..()
-	cell = new cell(src)
-	update_power()
-	return
+/obj/item/defibrillator/loaded
+	cell = /obj/item/stock_parts/cell/high
 
 /obj/item/defibrillator/proc/update_power()
 	if(!QDELETED(cell))
