@@ -146,7 +146,7 @@
 	..()
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
-		if(O && O in src.cargo)
+		if(O && (O in cargo))
 			occupant_message("<span class='notice'>You unload [O].</span>")
 			O.forceMove(drop_location())
 			cargo -= O

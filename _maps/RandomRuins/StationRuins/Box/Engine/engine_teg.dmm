@@ -189,8 +189,10 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "gA" = (
-/obj/machinery/igniter{
-	id = "TEG_igniter"
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1;
+	injecting = 50;
+	on = 1
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
@@ -390,20 +392,22 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "nc" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
 "nk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Hot to Burn Chamber"
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "nD" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
@@ -461,10 +465,11 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "oQ" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
 "oS" = (
@@ -728,15 +733,15 @@
 /area/engine/engineering)
 "vq" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/box/lights/mixed,
-/obj/item/storage/box/lights/mixed{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "TEG - South West";
 	dir = 4
+	},
+/obj/item/analyzer,
+/obj/item/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -798,16 +803,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "xD" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Mix to Engine"
-	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Atmos to Loop"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -837,11 +835,7 @@
 /area/engine/engineering)
 "zx" = (
 /obj/structure/table/wood,
-/obj/item/electronics/apc,
-/obj/item/electronics/apc{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/analyzer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "zG" = (
@@ -855,8 +849,8 @@
 /turf/open/space/basic,
 /area/space)
 "Am" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
+/obj/machinery/igniter{
+	id = "TEG_igniter"
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
@@ -962,10 +956,11 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "BY" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
 "CH" = (
@@ -1099,7 +1094,8 @@
 /area/engine/engineering)
 "FW" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
+	dir = 1;
+	name = "Burn Chamber to Hot"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -1177,7 +1173,9 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "Hp" = (
-/obj/machinery/atmospherics/components/binary/pump,
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Space Loop Bypass"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "HF" = (
@@ -1204,11 +1202,10 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "IA" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
-/turf/open/floor/engine/vacuum,
+/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "IP" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -1288,11 +1285,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"Kx" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "KA" = (
@@ -1441,6 +1433,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
+	locked = 0;
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -1593,7 +1586,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "SE" = (
-/obj/machinery/atmospherics/components/binary/pump/on,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Mix To Burn Chamber"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ST" = (
@@ -1715,7 +1710,7 @@
 "Vs" = (
 /obj/machinery/atmospherics/components/binary/valve/digital/on{
 	dir = 4;
-	name = "Output Release"
+	name = "Cold to Space Loop"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
@@ -1780,7 +1775,7 @@
 "XD" = (
 /obj/machinery/atmospherics/components/binary/valve/digital/on{
 	dir = 4;
-	name = "Output Release"
+	name = "Space Loop to Cold"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
@@ -1797,6 +1792,9 @@
 /area/engine/engineering)
 "XM" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
@@ -1857,8 +1855,8 @@
 /area/engine/engineering)
 "YP" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "YQ" = (
@@ -1917,7 +1915,7 @@
 /area/engine/engineering)
 "ZC" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible,
-/turf/open/floor/engine/vacuum,
+/turf/open/space/basic,
 /area/engine/engineering)
 "ZT" = (
 /turf/template_noop,
@@ -2531,9 +2529,9 @@ Xe
 aR
 ZY
 QH
-Hp
-Kx
-kS
+nk
+le
+ZC
 oQ
 kS
 kS
@@ -2588,11 +2586,11 @@ sH
 sH
 gq
 FW
-Kx
-kS
+le
+ZC
 BY
 kS
-IA
+kS
 nD
 ek
 Le
@@ -2620,8 +2618,8 @@ yN
 yN
 yN
 yN
-nk
-MP
+yN
+IA
 fO
 Rh
 Rh

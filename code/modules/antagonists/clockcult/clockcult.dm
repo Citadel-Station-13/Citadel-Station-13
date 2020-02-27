@@ -120,7 +120,7 @@
 	hierophant_network.Grant(current)
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	if(G.active && ishuman(current))
+	if(G && G.active && ishuman(current))
 		current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 
 /datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
@@ -174,9 +174,12 @@
 	log_admin("[key_name(admin)] has made [new_owner.current] into a servant of Ratvar.")
 
 /datum/antagonist/clockcult/admin_remove(mob/user)
-	remove_servant_of_ratvar(owner.current, TRUE)
-	message_admins("[key_name_admin(user)] has removed clockwork servant status from [owner.current].")
-	log_admin("[key_name(user)] has removed clockwork servant status from [owner.current].")
+	var/mob/target = owner.current
+	if(!target)
+		return
+	remove_servant_of_ratvar(target, TRUE)
+	message_admins("[key_name_admin(user)] has removed clockwork servant status from [target].")
+	log_admin("[key_name(user)] has removed clockwork servant status from [target].")
 
 /datum/antagonist/clockcult/get_admin_commands()
 	. = ..()

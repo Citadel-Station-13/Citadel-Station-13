@@ -1,3 +1,4 @@
+#define PAI_EMP_SILENCE_DURATION 3 MINUTES
 
 /mob/living/silicon/pai/blob_act(obj/structure/blob/B)
 	return FALSE
@@ -8,7 +9,7 @@
 		return
 	take_holo_damage(50/severity)
 	Knockdown(400/severity)
-	silent = max((3 MINUTES)/severity, silent)
+	silent = max(silent, (PAI_EMP_SILENCE_DURATION) / SSmobs.wait / severity)
 	if(holoform)
 		fold_in(force = TRUE)
 	emitter_next_use = world.time + emitter_emp_cd
@@ -55,7 +56,8 @@
 	if(P.stun)
 		fold_in(force = TRUE)
 		visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")
-	return ..()
+	. = ..()
+	return BULLET_ACT_FORCE_PIERCE
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
 	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")

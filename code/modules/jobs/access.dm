@@ -4,7 +4,7 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return TRUE
-	if(issilicon(M))
+	if(hasSiliconAccessInArea(M))
 		if(ispAI(M))
 			return FALSE
 		return TRUE	//AI can do whatever it wants
@@ -357,7 +357,7 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
+				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist", "Paramedic",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
 
 /proc/get_all_job_icons() //For all existing HUD icons

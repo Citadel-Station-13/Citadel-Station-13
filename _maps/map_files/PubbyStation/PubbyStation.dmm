@@ -2564,7 +2564,7 @@
 "aij" = (
 /obj/structure/closet/secure_closet/contraband/armory,
 /obj/item/poster/random_contraband,
-/obj/item/clothing/suit/security/officer/russian,
+/obj/item/clothing/suit/armor/navyblue/russian,
 /obj/item/grenade/plastic/c4,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
@@ -9830,6 +9830,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "axT" = (
@@ -11162,10 +11163,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-20";
-	pixel_y = 3
-	},
+/obj/machinery/vending/wardrobe/cap_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
 "aBl" = (
@@ -28096,11 +28094,6 @@
 	pixel_y = -6
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/robotics/lab)
-"boY" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/cyborg,
-/turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "boZ" = (
 /obj/structure/table,
@@ -57038,6 +57031,10 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"naS" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "ncm" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -61102,6 +61099,13 @@
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
+"wtE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "wun" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -88802,7 +88806,7 @@ bzQ
 ioj
 bsA
 bEw
-bkh
+naS
 bkh
 bId
 bFO
@@ -89573,7 +89577,7 @@ bBc
 bCm
 bDr
 bEz
-bnF
+wtE
 buh
 bIg
 bjc
@@ -98811,8 +98815,8 @@ beI
 bkt
 blH
 bmO
-boY
-boY
+bnQ
+bnQ
 bqi
 bry
 bsZ
@@ -99068,8 +99072,8 @@ bju
 bkt
 blI
 bmO
-boY
-boY
+bnQ
+bnQ
 bqi
 brz
 bta

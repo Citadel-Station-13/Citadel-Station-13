@@ -24,7 +24,7 @@
  * Twohanded
  */
 /obj/item/twohanded
-	var/wielded = 0
+	var/wielded = FALSE
 	var/force_unwielded // default to null, the number force will be set to on unwield()
 	var/force_wielded // same as above but for wield()
 	var/wieldsound = null
@@ -510,7 +510,7 @@
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
 	return FALSE
 
-/obj/item/twohanded/dualsaber/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+/obj/item/twohanded/dualsaber/hypereutactic/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
@@ -592,7 +592,7 @@
 	throw_speed = 4
 	embedding = list("embedded_impact_pain_multiplier" = 3, "embed_chance" = 90)
 	armour_penetration = 10
-	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
+	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
@@ -708,7 +708,7 @@
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
-	materials = list(MAT_METAL=13000)
+	custom_materials = list(/datum/material/iron=13000)
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
@@ -1016,3 +1016,319 @@
 		C.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
+
+/obj/item/twohanded/electrostaff
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "electrostaff_3"
+	item_state = "electrostaff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	name = "riot suppression electrostaff"
+	desc = "A large quarterstaff, with massive silver electrodes mounted at the end."
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_OCLOTHING
+	force_unwielded = 5
+	force_wielded = 10
+	throwforce = 15			//if you are a madman and finish someone off with this, power to you.
+	throw_speed = 1
+	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
+	block_chance = 30
+	attack_verb = list("struck", "beaten", "thwacked", "pulped")
+	total_mass = 5		//yeah this is a heavy thing, beating people with it while it's off is not going to do you any favors. (to curb stun-kill rampaging without it being on)
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/on = FALSE
+	var/can_block_projectiles = FALSE		//can't block guns
+	var/lethal_cost = 400			//10000/400*20 = 500. decent enough?
+	var/lethal_damage = 20
+	var/lethal_stam_cost = 4
+	var/stun_cost = 333				//10000/333*25 = 750. stunbatons are at time of writing 10000/1000*49 = 490.
+	var/stun_status_effect = STATUS_EFFECT_ELECTROSTAFF			//a small slowdown effect
+	var/stun_stamdmg = 40
+	var/stun_status_duration = 25
+	var/stun_stam_cost = 3.5
+
+/obj/item/twohanded/electrostaff/Initialize(mapload)
+	. = ..()
+	if(ispath(cell))
+		cell = new cell
+
+/obj/item/twohanded/electrostaff/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/twohanded/electrostaff/get_cell()
+	. = cell
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/R = loc
+		. = R.get_cell()
+
+/obj/item/twohanded/electrostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(!on)
+		return FALSE
+	if((attack_type == PROJECTILE_ATTACK) && !can_block_projectiles)
+		return FALSE
+	return ..()
+
+/obj/item/twohanded/electrostaff/proc/min_hitcost()
+	return min(stun_cost, lethal_cost)
+
+/obj/item/twohanded/electrostaff/proc/turn_on(mob/user, silent = FALSE)
+	if(on)
+		return
+	if(!cell)
+		if(user)
+			to_chat(user, "<span class='warning'>[src] has no cell.</span>")
+		return
+	if(cell.charge < min_hitcost())
+		if(user)
+			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
+		return
+	on = TRUE
+	START_PROCESSING(SSobj, src)
+	if(user)
+		to_chat(user, "<span class='warning'>You turn [src] on.</span>")
+	update_icon()
+	if(!silent)
+		playsound(src, "sparks", 75, 1, -1)
+
+/obj/item/twohanded/electrostaff/proc/turn_off(mob/user, silent = FALSE)
+	if(!on)
+		return
+	if(user)
+		to_chat(user, "<span class='warning'>You turn [src] off.</span>")
+	on = FALSE
+	STOP_PROCESSING(SSobj, src)
+	update_icon()
+	if(!silent)
+		playsound(src, "sparks", 75, 1, -1)
+
+/obj/item/twohanded/electrostaff/proc/toggle(mob/user, silent = FALSE)
+	if(on)
+		turn_off(user, silent)
+	else
+		turn_on(user, silent)
+
+/obj/item/twohanded/electrostaff/wield(mob/user)
+	. = ..()
+	if(wielded)
+		turn_on(user)
+	add_fingerprint(user)
+
+/obj/item/twohanded/electrostaff/unwield(mob/user)
+	. = ..()
+	if(!wielded)
+		turn_off(user)
+	add_fingerprint(user)
+
+/obj/item/twohanded/electrostaff/update_icon()
+	. = ..()
+	if(!wielded)
+		icon_state = "electrostaff_3"
+		item_state = "electrostaff"
+	else
+		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_3")
+	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
+
+/obj/item/twohanded/electrostaff/examine(mob/living/user)
+	. = ..()
+	if(cell)
+		. += "<span class='notice'>The cell charge is [round(cell.percent())]%.</span>"
+	else
+		. += "<span class='warning'>There is no cell installed!</span>"
+
+/obj/item/twohanded/electrostaff/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/C = W
+		if(cell)
+			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
+		else
+			if(C.maxcharge < min_hit_cost())
+				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
+				return
+			if(!user.transferItemToLoc(W, src))
+				return
+			cell = C
+			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
+
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(cell)
+			cell.update_icon()
+			cell.forceMove(get_turf(src))
+			cell = null
+			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+			turn_off(user, TRUE)
+	else
+		return ..()
+
+/obj/item/twohanded/electrostaff/process()
+	deductcharge(50)			//Wasteful!
+
+/obj/item/twohanded/electrostaff/proc/min_hit_cost()
+	return min(lethal_cost, stun_cost)
+
+/obj/item/twohanded/electrostaff/proc/deductcharge(amount)
+	var/obj/item/stock_parts/cell/C = get_cell()
+	if(!C)
+		turn_off()
+		return FALSE
+	C.use(min(amount, C.charge))
+	if(QDELETED(src))
+		return FALSE
+	if(C.charge < min_hit_cost())
+		turn_off()
+
+/obj/item/twohanded/electrostaff/attack(mob/living/target, mob/living/user)
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
+	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+		clowning_around(user)			//ouch!
+		return
+	if(iscyborg(target))
+		..()
+		return
+	if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
+		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
+		return FALSE
+	if(user.a_intent != INTENT_HARM)
+		if(stun_act(target, user))
+			user.do_attack_animation(target)
+			user.adjustStaminaLossBuffered(stun_stam_cost)
+		return
+	else if(!harm_act(target, user))
+		return ..()		//if you can't fry them just beat them with it
+	else		//we did harm act them
+		user.do_attack_animation(target)
+		user.adjustStaminaLossBuffered(lethal_stam_cost)
+
+/obj/item/twohanded/electrostaff/proc/stun_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
+	var/stunforce = stun_stamdmg
+	if(!no_charge_and_force)
+		if(!on)
+			target.visible_message("<span class='warning'>[user] has bapped [target] with [src]. Luckily it was off.</span>", \
+							"<span class='warning'>[user] has bapped you with [src]. Luckily it was off</span>")
+			turn_off()			//if it wasn't already off
+			return FALSE
+		var/obj/item/stock_parts/cell/C = get_cell()
+		var/chargeleft = C.charge
+		deductcharge(stun_cost)
+		if(QDELETED(src) || QDELETED(C))		//boom
+			return FALSE
+		if(chargeleft < stun_cost)
+			stunforce *= round(chargeleft/stun_cost, 0.1)
+	target.adjustStaminaLoss(stunforce)
+	target.apply_effect(EFFECT_STUTTER, stunforce)
+	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+	if(user)
+		target.lastattacker = user.real_name
+		target.lastattackerckey = user.ckey
+		target.visible_message("<span class='danger'>[user] has shocked [target] with [src]!</span>", \
+								"<span class='userdanger'>[user] has shocked you with [src]!</span>")
+		log_combat(user, user, "stunned with an electrostaff")
+	playsound(src, 'sound/weapons/staff.ogg', 50, 1, -1)
+	target.apply_status_effect(stun_status_effect, stun_status_duration)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.forcesay(GLOB.hit_appends)
+	return TRUE
+
+/obj/item/twohanded/electrostaff/proc/harm_act(mob/living/target, mob/living/user, no_charge_and_force = FALSE)
+	var/lethal_force = lethal_damage
+	if(!no_charge_and_force)
+		if(!on)
+			return FALSE		//standard item attack
+		var/obj/item/stock_parts/cell/C = get_cell()
+		var/chargeleft = C.charge
+		deductcharge(lethal_cost)
+		if(QDELETED(src) || QDELETED(C))		//boom
+			return FALSE
+		if(chargeleft < stun_cost)
+			lethal_force *= round(chargeleft/lethal_cost, 0.1)
+	target.adjustFireLoss(lethal_force)		//good against ointment spam
+	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+	if(user)
+		target.lastattacker = user.real_name
+		target.lastattackerckey = user.ckey
+		target.visible_message("<span class='danger'>[user] has seared [user] with [src]!</span>", \
+								"<span class='userdanger'>[user] has seared you with [src]!</span>")
+		log_combat(user, user, "burned with an electrostaff")
+	playsound(src, 'sound/weapons/sear.ogg', 50, 1, -1)
+	return TRUE
+
+/obj/item/twohanded/electrostaff/proc/clowning_around(mob/living/user)
+	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
+						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
+	harm_act(user, user, TRUE)
+	stun_act(user, user, TRUE)
+	deductcharge(lethal_cost)
+
+/obj/item/twohanded/electrostaff/emp_act(severity)
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		turn_off()
+		if(!iscyborg(loc))
+			deductcharge(1000 / severity, TRUE, FALSE)
+
+/obj/item/twohanded/broom
+	name = "broom"
+	desc = "This is my BROOMSTICK! It can be used manually or braced with two hands to sweep items as you move. It has a telescopic handle for compact storage." //LIES
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "broom0"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	force = 8
+	throwforce = 10
+	throw_speed = 3
+	throw_range = 7
+	w_class = WEIGHT_CLASS_NORMAL
+	force_unwielded = 8
+	force_wielded = 12
+	attack_verb = list("swept", "brushed off", "bludgeoned", "whacked")
+	resistance_flags = FLAMMABLE
+
+/obj/item/twohanded/broom/update_icon_state()
+	icon_state = "broom[wielded]"
+
+/obj/item/twohanded/broom/wield(mob/user)
+	. = ..()
+	if(!wielded)
+		return
+	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
+
+/obj/item/twohanded/broom/unwield(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+
+/obj/item/twohanded/broom/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	sweep(user, A, FALSE)
+
+/obj/item/twohanded/broom/proc/sweep(mob/user, atom/A, moving = TRUE)
+	var/turf/target
+	if (!moving)
+		if (isturf(A))
+			target = A
+		else
+			target = A.loc
+	else
+		target = user.loc
+	if (locate(/obj/structure/table) in target.contents)
+		return
+	var/i = 0
+	for(var/obj/item/garbage in target.contents)
+		if(!garbage.anchored)
+			garbage.Move(get_step(target, user.dir), user.dir)
+		i++
+		if(i >= 20)
+			break
+	if(i >= 1)
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 5, TRUE, -1)
+
+/obj/item/twohanded/broom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
+	J.put_in_cart(src, user)
+	J.mybroom=src
+	J.update_icon()

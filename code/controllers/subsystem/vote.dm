@@ -89,6 +89,20 @@ SUBSYSTEM_DEF(vote)
 					choices[GLOB.master_mode] += non_voters.len
 					if(choices[GLOB.master_mode] >= greatest_votes)
 						greatest_votes = choices[GLOB.master_mode]
+			else if(mode == "transfer") // austation begin -- Crew autotransfer vote
+				var/factor = 1
+				switch(world.time / (1 MINUTES))
+					if(0 to 60)
+						factor = 0.5
+					if(61 to 120)
+						factor = 0.8
+					if(121 to 240)
+						factor = 1
+					if(241 to 300)
+						factor = 1.2
+					else
+						factor = 1.4
+				choices["Initiate Crew Transfer"] += round(non_voters.len * factor) // austation end
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -149,7 +163,7 @@ SUBSYSTEM_DEF(vote)
 		var/list/this_vote = voted[ckey]
 		var/list/pretty_vote = list()
 		for(var/choice in choices)
-			if("[choice]" in this_vote && "[choice]" in scores_by_choice)
+			if(("[choice]" in this_vote) && ("[choice]" in scores_by_choice))
 				sorted_insert(scores_by_choice["[choice]"],this_vote["[choice]"],/proc/cmp_numeric_asc)
 				// START BALLOT GATHERING
 				pretty_vote += "[choice]"
@@ -160,7 +174,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/score_name in scores_by_choice)
 		var/list/score = scores_by_choice[score_name]
 		for(var/indiv_score in score)
-			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score])) 
+			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score]))
 		if(score.len == 0)
 			scores_by_choice -= score_name
 	while(scores_by_choice.len > 1)
@@ -201,31 +215,34 @@ SUBSYSTEM_DEF(vote)
 		max_score=max(max_score,scores[score_name])
 		min_score=min(min_score,scores[score_name])
 	for(var/score_name in scores)
-		scores[score_name] = (scores[score_name]-min_score)/(max_score-min_score)
+		if(max_score == min_score)
+			scores[score_name] = 1
+		else
+			scores[score_name] = (scores[score_name]-min_score)/(max_score-min_score)
 		SSblackbox.record_feedback("nested tally","voting",scores[score_name],list(blackbox_text,"Total scores",score_name))
 
 /datum/controller/subsystem/vote/proc/get_runoff_results(var/blackbox_text)
 	var/already_lost_runoff = list()
 	var/list/cur_choices = choices.Copy()
 	for(var/ckey in voted)
-		choices[choices[voted[ckey][1]]]++ // jesus christ how horrifying
+		choices["[choices[voted[ckey][1]]]"]++ // jesus christ how horrifying
 	for(var/_this_var_unused_ignore_it in 1 to choices.len) // if it takes more than this something REALLY wrong happened
 		for(var/ckey in voted)
-			cur_choices[cur_choices[voted[ckey][1]]]++ // jesus christ how horrifying
+			cur_choices["[cur_choices[voted[ckey][1]]]]"]++ // jesus christ how horrifying
 		var/least_vote = 100000
-		var/least_voted
+		var/least_voted = 1
 		for(var/i in 1 to cur_choices.len)
 			var/option = cur_choices[i]
-			if(cur_choices[option] > voted.len/2)
-				return list(option)
-			else if(cur_choices[option] < least_vote && !(option in already_lost_runoff))
-				least_vote = cur_choices[option]
+			if(cur_choices["[option]"] > voted.len/2)
+				return list("[option]")
+			else if(cur_choices["[option]"] < least_vote && !("[option]" in already_lost_runoff))
+				least_vote = cur_choices["[option]"]
 				least_voted = i
 		already_lost_runoff += cur_choices[least_voted]
 		for(var/ckey in voted)
 			voted[ckey] -= least_voted
-		for(var/option in cur_choices)
-			cur_choices[option] = 0
+		for(var/i in 1 to cur_choices.len)
+			cur_choices["[cur_choices[i]]"] = 0
 
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/vote_title_text
@@ -252,14 +269,13 @@ SUBSYSTEM_DEF(vote)
 				text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
 			if(vote_system == MAJORITY_JUDGEMENT_VOTING)
 				text += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
-		else
-			for(var/i=1,i<=choices.len,i++)
-				var/votes = choices[choices[i]]
-				if(!votes)
-					votes = 0
-				if(was_roundtype_vote)
-					stored_gamemode_votes[choices[i]] = votes
-				text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
+		for(var/i=1,i<=choices.len,i++)
+			var/votes = choices[choices[i]]
+			if(!votes)
+				votes = 0
+			if(was_roundtype_vote)
+				stored_gamemode_votes[choices[i]] = votes
+			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
 			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes
 				text = "\n<b>Vote Tied Between:</b>"
@@ -363,6 +379,12 @@ SUBSYSTEM_DEF(vote)
 				log_admin("The map has been voted for and will change to: [VM.map_name]")
 				if(SSmapping.changemap(config.maplist[.]))
 					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.map_name] for next round!</span>")
+			if("transfer") // austation begin -- Crew autotransfer vote
+				if(. == "Initiate Crew Transfer")
+					SSshuttle.autoEnd()
+					var/obj/machinery/computer/communications/C = locate() in GLOB.machines
+					if(C)
+						C.post_status("shuttle") // austation end
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
@@ -374,7 +396,7 @@ SUBSYSTEM_DEF(vote)
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
-	
+
 	return .
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote, score = 0)
@@ -442,6 +464,7 @@ SUBSYSTEM_DEF(vote)
 				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!</span>")
 				return 0
 
+		SEND_SOUND(world, sound('sound/misc/notice2.ogg'))
 		reset()
 		obfuscated = hideresults //CIT CHANGE - adds obfuscated votes
 		switch(vote_type)
@@ -463,6 +486,8 @@ SUBSYSTEM_DEF(vote)
 					if(targetmap.max_round_search_span && count_occurences_of_value(lastmaps, M, targetmap.max_round_search_span) >= targetmap.max_rounds_played)
 						continue
 					choices |= M
+			if("transfer") // austation begin -- Crew autotranfer vote
+				choices.Add("Initiate Crew Transfer","Continue Playing") // austation end
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
 			if("mode tiers")
@@ -484,6 +509,8 @@ SUBSYSTEM_DEF(vote)
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
 					return 0
+				var/system_string = input(usr,"Which voting type?",GLOB.vote_type_names[1]) in GLOB.vote_type_names
+				vote_system = GLOB.vote_type_names[system_string]
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
@@ -492,7 +519,7 @@ SUBSYSTEM_DEF(vote)
 			else
 				return 0
 		mode = vote_type
-		initiator = initiator_key
+		initiator = initiator_key ? initiator_key : "the Server" // austation -- Crew autotransfer vote
 		started_time = world.time
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")

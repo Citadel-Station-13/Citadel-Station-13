@@ -194,7 +194,7 @@
 				state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
 			if(authenticated)
-				if((world.realtime - SSshuttle.realtimeofstart) > SSshuttle.auto_call) //Citadel Edit Removing auto_call caused recall.
+				if(SSshuttle.endvote_passed) //Citadel Edit - endvote passing = no recalls
 					say("Warning: Emergency shuttle recalls have been blocked by Central Command due to ongoing crew transfer procedures.")
 				else
 					SSshuttle.cancelEvac(usr)
@@ -449,7 +449,7 @@
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 
-	if(issilicon(user))
+	if(issilicon(user) || (hasSiliconAccessInArea(user) && !in_range(user,src)))
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2

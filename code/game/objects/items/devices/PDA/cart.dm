@@ -100,7 +100,8 @@
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/cartridge/lawyer
-	name = "\improper P.R.O.V.E. cartridge"
+	name = "\improper S.P.A.M. cartridge"
+	desc = "Introducing the Station Public Announcement Messenger cartridge, featuring the unique ability to broadcast-mark messages, designed for lawyers across Nanotrasen to advertise their useful and important services."
 	icon_state = "cart-law"
 	access = CART_SECURITY
 	spam_enabled = 1
@@ -562,22 +563,22 @@ Code:
 		if (53) // Newscaster
 			menu = "<h4>[PDAIMG(notes)] Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=[REF(src)];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
-			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
+			var/datum/news/feed_channel/current
+			for(var/datum/news/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(!current)
 				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
 				return
 			var/i = 1
-			for(var/datum/newscaster/feed_message/msg in current.messages)
+			for(var/datum/news/feed_message/msg in current.messages)
 				menu +="-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 				menu +="<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"
 				if(msg.img)
 					user << browse_rsc(msg.img, "tmp_photo[i].png")
 					menu +="<img src='tmp_photo[i].png' width = '180'><BR>"
 				i++
-				for(var/datum/newscaster/feed_comment/comment in msg.comments)
+				for(var/datum/news/feed_comment/comment in msg.comments)
 					menu +="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 			menu += "<br> <A href='byond://?src=[REF(src)];choice=Newscaster Message'>Post Message</a>"
 
@@ -608,7 +609,7 @@ Code:
 /obj/item/cartridge/Topic(href, href_list)
 	..()
 
-	if(!usr.canUseTopic(src, !issilicon(usr)))
+	if(!usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return
@@ -681,8 +682,8 @@ Code:
 		if("Newscaster Message")
 			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
 			var/message = host_pda.msg_input()
-			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
+			var/datum/news/feed_channel/current
+			for(var/datum/news/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != host_pda_owner_name)

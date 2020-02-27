@@ -63,6 +63,7 @@
 					/obj/item/toy/cards/deck/syndicate,
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe,
 					/obj/item/clothing/under/syndicate/tacticool,
+					/obj/item/clothing/under/syndicate/skirt,
 					/obj/item/clothing/under/syndicate,
 					/obj/item/suppressor,
 					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,

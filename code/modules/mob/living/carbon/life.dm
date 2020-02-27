@@ -357,12 +357,12 @@
 	if(istype(loc, /obj/structure/closet/crate/coffin)|| istype(loc, /obj/structure/closet/body_bag) || istype(loc, /obj/structure/bodycontainer))
 		return
 
-	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || HAS_TRAIT(src, TRAIT_HUSK))
+	// No decay if formaldehyde/preservahyde in corpse or when the corpse is charred
+	if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || HAS_TRAIT(src, TRAIT_HUSK) || reagents.has_reagent(/datum/reagent/preservahyde, 1))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(bodytemperature <= T0C-10 || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
+	if((bodytemperature <= T0C-10) || !(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		return
 
 	// Wait a bit before decaying
@@ -397,7 +397,7 @@
 			if(O)
 				O.on_life()
 	else
-		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
+		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/preservahyde, 1)) // No organ decay if the body contains formaldehyde. Or preservahyde.
 			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
@@ -580,6 +580,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 	if(cultslurring)
 		cultslurring = max(cultslurring-1, 0)
+
+	if(clockcultslurring)
+		clockcultslurring = max(clockcultslurring-1, 0)
 
 	if(silent)
 		silent = max(silent-1, 0)

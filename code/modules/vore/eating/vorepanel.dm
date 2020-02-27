@@ -242,22 +242,13 @@
 	dat += "<a href='?src=\ref[src];applyprefs=1'>Reload Slot Prefs</a>"
 
 	dat += "<HR>"
-	switch(user.digestable)
-		if(TRUE)
-			dat += "<br><a style='background:#173d15;' href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: ON)</a>"
-		if(FALSE)
-			dat += "<br><a style='background:#990000;' href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: OFF)</a>"
-	switch(user.devourable)
-		if(TRUE)
-			dat += "<br><a style='background:#173d15;' href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: ON)</a>"
-		if(FALSE)
-			dat += "<br><a style='background:#990000;' href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: OFF)</a>"
-	switch(user.feeding)
-		if(TRUE)
-			dat += "<br><a style='background:#173d15;' href='?src=\ref[src];toggledfeed=1'>Toggle Feeding (Currently: ON)</a>"
-		if(FALSE)
-			dat += "<br><a style='background:#990000;' href='?src=\ref[src];toggledfeed=1'>Toggle Feeding (Currently: OFF)</a>"
-
+	var/pref_on = "#173d15"
+	var/pref_off = "#990000"
+	dat += "<br><a style='background:[user.digestable ? pref_on : pref_off];' href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: [user.digestable ? "ON" : "OFF"])</a>"
+	dat += "<br><a style='background:[user.devourable ? pref_on : pref_off];' href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: [user.devourable ? "ON" : "OFF"])</a>"
+	dat += "<br><a style='background:[user.feeding ? pref_on : pref_off];' href='?src=\ref[src];toggledfeed=1'>Toggle Feeding (Currently: [user.feeding ? "ON" : "OFF"])</a>"
+	if(user.client.prefs_vr)
+		dat += "<br><a style='background:[user.client.prefs_vr.lickable ? pref_on : pref_off];' href='?src=\ref[src];toggledlickable=1'>Toggle Licking (Currently: [user.client.prefs_vr.lickable ? "ON" : "OFF"])</a>"
 	//Returns the dat html to the vore_look
 	return dat
 
@@ -733,6 +724,17 @@
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.feeding = user.feeding
+
+	if(href_list["toggledlickable"])
+		if(user.client.prefs_vr)
+			var/choice = alert(user, "This button is to toggle your ability to be licked. Being licked is currently: [user.client.prefs_vr.lickable ? "Allowed" : "Prevented"]", "", "Allow Licking", "Cancel", "Prevent Licking")
+			switch(choice)
+				if("Cancel")
+					return FALSE
+				if("Allow Licking")
+					user.client.prefs_vr.lickable = TRUE
+				if("Prevent Licking")
+					user.client.prefs_vr.lickable = FALSE
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return TRUE
