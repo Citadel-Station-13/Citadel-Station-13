@@ -575,12 +575,12 @@
 	name = "Cat, Big"
 	icon_state = "catbig"
 	
-/datum/sprite_accessory/tails/mam__tails/twocat
+/datum/sprite_accessory/tails/mam_tails/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"
 	color_src = MATRIXED
 
-/datum/sprite_accessory/mam_tails_animated/human/twocat
+/datum/sprite_accessory/mam_tails_animated/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"
 	color_src = MATRIXED
