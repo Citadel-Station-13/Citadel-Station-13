@@ -1,0 +1,4 @@
+author: "Kraseo"
+delete-after: True
+changes: 
+  - balance: "If you have the powersink objective, you will now receive a free beacon."

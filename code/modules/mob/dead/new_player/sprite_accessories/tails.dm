@@ -170,6 +170,18 @@
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
+/datum/sprite_accessory/tails/human/twocat
+	name = "Cat, Double"
+	icon_state = "twocat"
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/tails_animated/human/twocat
+	name = "Cat, Double"
+	icon_state = "twocat"
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	color_src = MATRIXED
+
 /datum/sprite_accessory/tails/human/cow
 	name = "Cow"
 	icon_state = "cow"

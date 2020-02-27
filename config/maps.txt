@@ -41,3 +41,6 @@ endmap
 
 map multiz_debug
 endmap
+
+map kilostation
+endmap

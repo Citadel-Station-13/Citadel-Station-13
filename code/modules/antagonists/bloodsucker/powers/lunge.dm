@@ -7,9 +7,9 @@
 	button_icon_state = "power_lunge"
 	bloodcost = 10
 	cooldown = 120
-	target_range = 3
+	target_range = 5
 	power_activates_immediately = TRUE
-	message_Trigger = ""//"Whom will you subvert to your will?"
+	message_Trigger = "Whom will you ensnare within your grasp?"
 	must_be_capacitated = TRUE
 	bloodsucker_can_buy = TRUE
 
@@ -58,25 +58,29 @@
 	var/do_knockdown = !is_A_facing_B(target,owner) || owner.alpha <= 0 || istype(owner.loc, /obj/structure/closet)
 	// CAUSES: Target has their back to me, I'm invisible, or I'm in a Closet
 	// Step One: Heatseek toward Target's Turf
-
-	walk_towards(owner, T, 0.1, 10) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
 	addtimer(CALLBACK(owner, .proc/_walk, 0), 2 SECONDS)
-	if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && owner.resting)
-		var/send_dir = get_dir(owner, T)
-		new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
-		owner.spin(10)
-		 // Step Two: Check if I'm at/adjectent to Target's CURRENT turf (not original...that was just a destination)
-	sleep(1)
-	if(target.Adjacent(owner))
-		// LEVEL 2: If behind target, mute or unconscious!
-		if(do_knockdown) // && level_current >= 1)
-			target.Knockdown(15 + 10 * level_current,1)
-			target.adjustStaminaLoss(40 + 10 * level_current)
-		// Cancel Walk (we were close enough to contact them)
-		walk(owner, 0)
-		target.Stun(10,1) //Without this the victim can just walk away
-		target.grabbedby(owner) 										// Taken from mutations.dm under changelings
-		target.grippedby(owner, instant = TRUE) //instant aggro grab
+	target.playsound_local(get_turf(owner), 'sound/bloodsucker/lunge_warn.ogg', 60, FALSE, pressure_affected = FALSE) // target-only telegraphing
+	owner.playsound_local(owner, 'sound/bloodsucker/lunge_warn.ogg', 60, FALSE, pressure_affected = FALSE) // audio feedback to the user
+	if(do_mob(owner, owner, 6, TRUE, TRUE))
+		walk_towards(owner, T, 0.1, 10) // yes i know i shouldn't use this but i don't know how to work in anything better
+		if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && owner.resting)
+			var/send_dir = get_dir(owner, T)
+			new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
+			owner.spin(10)
+			// Step Two: Check if I'm at/adjectent to Target's CURRENT turf (not original...that was just a destination)
+		for(var/i in 1 to 6)
+			if (target.Adjacent(owner))
+				// LEVEL 2: If behind target, mute or unconscious!
+				if(do_knockdown) // && level_current >= 1)
+					target.Knockdown(15 + 10 * level_current,1)
+					target.adjustStaminaLoss(40 + 10 * level_current)
+				// Cancel Walk (we were close enough to contact them)
+				walk(owner, 0)
+				target.Stun(10,1) //Without this the victim can just walk away
+				target.grabbedby(owner) // Taken from mutations.dm under changelings
+				target.grippedby(owner, instant = TRUE) //instant aggro grab
+				break
+			sleep(i*3)
 
 /datum/action/bloodsucker/targeted/lunge/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..() // activate = FALSE
