@@ -31,6 +31,7 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
+	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
 
 /datum/action/Destroy()
 	if(owner)
@@ -152,6 +153,9 @@
 		return 0
 	var/mob/M = target
 	M.ghostize(1)
+
+/datum/action/proc/OnUpdatedIcon()
+	UpdateButtonIcon()
 
 //Presets for item actions
 /datum/action/item_action
@@ -824,4 +828,4 @@
 	for(var/datum/action/A in M.actions)
 		if(istype(A, action_type))
 			return A
-	return 
+	return
