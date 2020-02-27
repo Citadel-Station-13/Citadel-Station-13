@@ -284,6 +284,7 @@
 	STR.can_hold = typecacheof(list(/obj/item/rollingpaper))
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
+	. = ..()
 	if(!contents.len)
 		. += "[icon_state]_empty"
 
@@ -313,6 +314,7 @@
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
+	. = ..()
 	if(!fancy_open)
 		return
 	var/cigar_position = 0 //to keep track of the pixel_x offset of each new overlay.
