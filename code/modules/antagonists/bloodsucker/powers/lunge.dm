@@ -52,6 +52,7 @@
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
 	var/mob/living/carbon/target = A
 	var/turf/T = get_turf(target)
+	var/mob/living/L = owner
 	// Clear Vars
 	owner.pulling = null
 	// Will we Knock them Down?
@@ -63,7 +64,7 @@
 	owner.playsound_local(owner, 'sound/bloodsucker/lunge_warn.ogg', 60, FALSE, pressure_affected = FALSE) // audio feedback to the user
 	if(do_mob(owner, owner, 6, TRUE, TRUE))
 		walk_towards(owner, T, 0.1, 10) // yes i know i shouldn't use this but i don't know how to work in anything better
-		if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && !CHECK_MOBILITY(owner, MOBILITY_STAND))
+		if(get_turf(owner) != T && !(isliving(target) && target.Adjacent(owner)) && owner.incapacitated() && !CHECK_MOBILITY(L, MOBILITY_STAND))
 			var/send_dir = get_dir(owner, T)
 			new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
 			owner.spin(10)

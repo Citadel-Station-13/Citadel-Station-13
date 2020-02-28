@@ -120,7 +120,7 @@
 	..()
 	update_z(new_z)
 
-/mob/living/proc/canface()
+/mob/living/canface()
 	if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
 		return FALSE
 	return ..()
