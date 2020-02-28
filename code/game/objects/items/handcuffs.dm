@@ -128,9 +128,6 @@
 	item_color = param_color || item_color || pick(cable_colors)
 	if(cable_colors[item_color])
 		item_color = cable_colors[item_color]
-	update_icon()
-
-/obj/item/restraints/handcuffs/cable/update_icon()
 	color = null
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
