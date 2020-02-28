@@ -75,6 +75,12 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
 	mask_type = /obj/item/clothing/mask/breath
 
+/obj/machinery/suit_storage_unit/paramedic
+	name = "paramedic suit storage unit"
+	suit_type = /obj/item/clothing/suit/space/paramedic
+	helmet_type = /obj/item/clothing/head/helmet/space/paramedic
+	mask_type = /obj/item/clothing/mask/breath
+
 /obj/machinery/suit_storage_unit/rd
 	suit_type = /obj/item/clothing/suit/space/hardsuit/rd
 	mask_type = /obj/item/clothing/mask/breath

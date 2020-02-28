@@ -195,3 +195,13 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	mutantrace_variation = STYLE_MUZZLE
+
+
+//Paramedic
+
+/obj/item/clothing/suit/toggle/labcoat/paramedic
+	name = "paramedic vest"
+	desc = "A dark blue vest with reflective strips for emergency medical technicians."
+	icon_state = "paramedic-vest"
+	item_state = "paramedic-vest"
+

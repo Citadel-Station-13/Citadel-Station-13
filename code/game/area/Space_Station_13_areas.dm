@@ -849,6 +849,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
 
+/area/medical/paramedic
+	name = "Paramedic Station"
+	icon_state = "paramedic"
+
 
 //Security
 

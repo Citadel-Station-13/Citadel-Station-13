@@ -161,8 +161,18 @@
 /obj/item/clothing/under/rank/medical/paramedic
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
 	name = "paramedic jumpsuit"
+	icon_state = "paramedic-dark"
+	item_state = "w_suit"
+	item_color = "paramedic-dark"
+	permeability_coefficient = 0.5
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/under/rank/medical/paramedic/light
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
+	name = "paramedic jumpsuit"
 	icon_state = "paramedic"
 	item_state = "w_suit"
+	item_color = "paramedic"
 	permeability_coefficient = 0.5
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
 
@@ -186,6 +196,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/medical
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
 	name = "medical doctor's jumpsuit"
@@ -194,18 +205,21 @@
 	item_color = "medical"
 	permeability_coefficient = 0.5
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+
 /obj/item/clothing/under/rank/medical/blue
 	name = "blue medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
 	icon_state = "scrubsblue"
 	item_color = "scrubsblue"
 	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/medical/green
 	name = "green medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in dark green."
 	icon_state = "scrubsgreen"
 	item_color = "scrubsgreen"
 	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/medical/purple
 	name = "purple medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
@@ -222,3 +236,11 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP 
+
+/obj/item/clothing/under/rank/medical/orderly
+	name = "orderly's uniform"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This neatly-kept uniform is pure white with a red clip-on tie."
+	icon_state = "orderly"
+	item_state = "w_suit"
+	item_color = "orderly"
+	can_adjust = FALSE
