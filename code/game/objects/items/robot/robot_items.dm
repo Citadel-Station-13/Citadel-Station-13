@@ -154,11 +154,7 @@
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
 
-/obj/item/borg/charger/Initialize()
-	. = ..()
-
-/obj/item/borg/charger/update_icon()
-	..()
+/obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
 
 /obj/item/borg/charger/attack_self(mob/user)
@@ -596,7 +592,7 @@
 	update_icon()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] [src].</span>")
 
-/obj/item/borg/projectile_dampen/update_icon()
+/obj/item/borg/projectile_dampen/update_icon_state()
 	icon_state = "[initial(icon_state)][active]"
 
 /obj/item/borg/projectile_dampen/proc/activate_field()

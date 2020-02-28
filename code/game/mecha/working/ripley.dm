@@ -45,16 +45,6 @@
 	..()
 	update_icon()
 
-/obj/mecha/working/ripley/update_icon()
-	..()
-	var/datum/component/armor_plate/C = GetComponent(/datum/component/armor_plate)
-	if (C.amount)
-		cut_overlays()
-		if(C.amount < 3)
-			add_overlay(occupant ? "ripley-g" : "ripley-g-open")
-		else
-			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
-
 /obj/mecha/working/ripley/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 10, "bullet" = 5, "laser" = 5))
