@@ -371,3 +371,21 @@
 	suffix = "roid7.dmm"
 	name = "Mineable Asteroid 5"
 	description = "Mineral asteroid. Ft. Derelict space bar."
+
+/datum/map_template/ruin/spacenearstation/roid8
+	id = "roid8"
+	suffix = "roid8.dmm"
+	name = "Dead wizard Roid"
+	description = "Mineral asteroid. Ft. Dead wizard and toilet paradox bag."
+
+/datum/map_template/ruin/spacenearstation/roid9
+	id = "roid9"
+	suffix = "roid9.dmm"
+	name = "Monitoring Roid"
+	description = "Mineral asteroid. Ft. Station monitoring, syndie toolbox and erp."
+
+/datum/map_template/ruin/spacenearstation/roid10
+	id = "roid10"
+	suffix = "roid10.dmm"
+	name = "Maze Roid"
+	description = "Mineral asteroid. Ft. Brief maze."
