@@ -4,7 +4,10 @@
 	if(ignoretimer)
 		set_resting(FALSE, FALSE)
 		return TRUE
-	else if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
+	if(!lying)				//if they're in a chair or something they don't need to force themselves off the ground.
+		set_resting(FALSE, FALSE)
+		return TRUE
+	else if(!CHECK_MOBILITY(src, MOBILITY_RESIST))
 		to_chat(src, "<span class='warning'>You are unable to stand up right now.</span>")
 	else
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
