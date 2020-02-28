@@ -25,7 +25,7 @@
 		HandleStarving()  // Death
 		HandleDeath() // Standard Update
 		update_hud()// Daytime Sleep in Coffin
-		if (SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
+		if(SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
 			if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 				Torpor_Begin()
 					// Wait before next pass
@@ -82,15 +82,15 @@
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
 	// NOTE: Mult of 0 is just a TEST to see if we are injured and need to go into Torpor!
 	//It is called from your coffin on close (by you only)
-	if(poweron_masquerade == TRUE || owner.current.AmStaked())
+	if(poweron_masquerade == TRUE || owner.current.AmStaked() || owner?.reagents?.has_reagent(/datum/reagent/consumable/garlic)
 		return FALSE
 	owner.current.adjustStaminaLoss(-1.5 + (regenRate * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-0.1 * (regenRate * 2) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 	// No Bleeding
-	if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
+	if(ishuman(owner.current) && bleed_rate => 0) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
 		var/mob/living/carbon/human/H = owner.current
-		H.bleed_rate = 0
+		H.bleed_rate =- 1
 	if(iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		var/mob/living/carbon/C = owner.current
 		var/costMult = 1 // Coffin makes it cheaper
@@ -305,17 +305,17 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /mob/proc/CheckBloodsuckerEatFood(var/food_nutrition)
-	if (!isliving(src))
+	if(!isliving(src))
 		return
 	var/mob/living/L = src
 	if(!L.AmBloodsucker())
 		return
-	// We're a vamp? Try to eat food...
+	// We're a bloodsucker? Try to eat food...
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	bloodsuckerdatum.handle_eat_human_food(food_nutrition)
+	bloodsuckerdatum.bloodsucker_disgust(food_nutrition)
 
 
-/datum/antagonist/bloodsucker/proc/handle_eat_human_food(var/food_nutrition) // Called from snacks.dm and drinks.dm
+/datum/antagonist/bloodsucker/proc/bloodsucker_disgust(var/food_nutrition) // Called from snacks.dm and drinks.dm
 	set waitfor = FALSE
 	if(!owner.current || !iscarbon(owner.current))
 		return

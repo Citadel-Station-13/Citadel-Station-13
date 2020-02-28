@@ -91,28 +91,19 @@
 
 	return ..()
 
-// Checking for ACTUALLY Dead Vamps
-/datum/game_mode/bloodsucker/are_special_antags_dead()
-	// Bloodsucker not Final Dead
-	for(var/datum/mind/bloodsucker in bloodsuckers)
-		if(!bloodsucker.AmFinalDeath())
-			return FALSE
-	return TRUE
-
-
 // Init Sunlight (called from datum_bloodsucker.on_gain(), in case game mode isn't even Bloodsucker
 /datum/game_mode/proc/check_start_sunlight()
 	// Already Sunlight (and not about to cancel)
-	if (istype(bloodsucker_sunlight) && !bloodsucker_sunlight.cancel_me)
+	if(istype(bloodsucker_sunlight) && !bloodsucker_sunlight.cancel_me)
 		return
 	bloodsucker_sunlight = new ()
 
 // End Sun (last bloodsucker removed)
 /datum/game_mode/proc/check_cancel_sunlight()
 	// No Sunlight
-	if (!istype(bloodsucker_sunlight))
+	if(!istype(bloodsucker_sunlight))
 		return
-	if (bloodsuckers.len <= 0)
+	if(bloodsuckers.len <= 0)
 		bloodsucker_sunlight.cancel_me = TRUE
 		qdel(bloodsucker_sunlight)
 		bloodsucker_sunlight = null
@@ -158,14 +149,14 @@
 
 
 /datum/game_mode/proc/make_bloodsucker(datum/mind/bloodsucker, datum/mind/creator = null) // NOTE: This is a game_mode/proc, NOT a game_mode/bloodsucker/proc! We need to access this function despite the game mode.
-	if (!can_make_bloodsucker(bloodsucker))
+	if(!can_make_bloodsucker(bloodsucker))
 		return FALSE
 
 	// Create Datum: Fledgling
 	var/datum/antagonist/bloodsucker/A
 
 	// [FLEDGLING]
-	if (creator)
+	if(creator)
 		A = new (bloodsucker)
 		A.creator = creator
 		bloodsucker.add_antag_datum(A)
@@ -187,7 +178,7 @@
 
 /datum/game_mode/proc/clean_invalid_species(datum/mind/bloodsucker)
 	// Only checking for Humans here
-	if (!ishuman(bloodsucker.current) || !bloodsucker.current.client)
+	if(!ishuman(bloodsucker.current) || !bloodsucker.current.client)
 		return
 	var/am_valid = TRUE
 	var/mob/living/carbon/human/H = bloodsucker.current
@@ -202,7 +193,7 @@
 	// everyone will wonder why you're a human with Plasma clothes (jk they'll know you're antag)
 
 	// Convert to HUMAN (along with ID and PDA)
-	if (!am_valid)
+	if(!am_valid)
 		H.set_species(/datum/species/human)
 		H.real_name = H.client.prefs.custom_names["human"]
 		var/obj/item/card/id/ID = H.wear_id?.GetID()
@@ -211,12 +202,13 @@
 			ID.update_label()
 
 
-/datum/game_mode/proc/can_make_vassal(mob/living/target, datum/mind/creator, display_warning=TRUE)//, check_antag_or_loyal=FALSE)
+/datum/game_mode/proc/can_make_vassal(mob/living/target, datum/mind/creator, display_warning = TRUE)//, check_antag_or_loyal=FALSE)
 	// Not Correct Type: Abort
-	if (!iscarbon(target) || !creator)
+	if(!iscarbon(target) || !creator)
 		return FALSE
-	if (target.stat > UNCONSCIOUS)
+	if(target.stat > UNCONSCIOUS)
 		return FALSE
+	
 				// Check Overdose: Am I even addicted to blood? Do I even have any in me?
 				//if (!target.reagents.addiction_list || !target.reagents.reagent_list)
 					//message_admins("DEBUG2: can_make_vassal() Abort: No reagents")
@@ -233,23 +225,23 @@
 					//message_admins("DEBUG4: can_make_vassal() Abort: No Blood")
 				//	return 0
 	// No Mind!
-	if (!target.mind || !target.mind.key)
-		if (display_warning)
+	if(!target.mind || !target.mind.key)
+		if(display_warning)
 			to_chat(creator, "<span class='danger'>[target] isn't self-aware enough to be made into a Vassal.</span>")
 		return FALSE
 	// Already MY Vassal
 	var/datum/antagonist/vassal/V = target.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-	if (istype(V) && V.master)
-		if (V.master.owner == creator)
-			if (display_warning)
+	if(istype(V) && V.master)
+		if(V.master.owner == creator)
+			if(display_warning)
 				to_chat(creator, "<span class='danger'>[target] is already your loyal Vassal!</span>")
 		else
-			if (display_warning)
+			if(display_warning)
 				to_chat(creator, "<span class='danger'>[target] is the loyal Vassal of another Bloodsucker!</span>")
 		return FALSE
 	// Already Antag or Loyal (Vamp Hunters count as antags)
-	if (target.mind.enslaved_to || AmInvalidAntag(target.mind)) //!VassalCheckAntagValid(target.mind, check_antag_or_loyal)) // HAS_TRAIT(target, TRAIT_MINDSHIELD, "implant") ||
-		if (display_warning)
+	if(target.mind.enslaved_to || AmInvalidAntag(target.mind)) //!VassalCheckAntagValid(target.mind, check_antag_or_loyal)) // HAS_TRAIT(target, TRAIT_MINDSHIELD, "implant") ||
+		if(display_warning)
 			to_chat(creator, "<span class='danger'>[target] resists the power of your blood to dominate their mind!</span>")
 		return FALSE
 	return TRUE
@@ -268,15 +260,15 @@
 		return FALSE
 	// Does even ONE antag appear in this mind that isn't in the list? Then FAIL!
 	for(var/datum/antagonist/antag_datum in M.antag_datums)
-		if (!(antag_datum.type in vassal_allowed_antags))  // vassal_allowed_antags is a list stored in the game mode, above.
+		if(!(antag_datum.type in vassal_allowed_antags))  // vassal_allowed_antags is a list stored in the game mode, above.
 			//message_admins("DEBUG VASSAL: Found Invalid: [antag_datum] // [antag_datum.type]")
 			return TRUE
 	//message_admins("DEBUG VASSAL: Valid Antags! (total of [M.antag_datums.len])")
 	// WHEN YOU DELETE THE ABOVE: Remove the 3 second timer on converting the vassal too.
 	return FALSE
 
-/datum/game_mode/proc/make_vassal(mob/living/target, datum/mind/creator)
-	if (!can_make_vassal(target,creator))
+/datum/game_mode/proc/make_vassal(/mob/living/target, /datum/mind/creator)
+	if(!can_make_vassal(target, creator))
 		return FALSE
 	// Make Vassal
 	var/datum/antagonist/vassal/V = new (target.mind)
@@ -292,3 +284,12 @@
 
 /datum/game_mode/proc/remove_vassal(datum/mind/vassal)
 	vassal.remove_antag_datum(ANTAG_DATUM_VASSAL)
+
+/datum/game_mode/proc/count_vassals(datum/mind/master)
+	var/datum/antagonist/bloodsucker/B = master.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/vassal_amount
+	len(B.vassals)
+	return vassal_amount
+	
+
+	

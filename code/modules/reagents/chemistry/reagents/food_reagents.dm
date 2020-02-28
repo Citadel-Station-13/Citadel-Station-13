@@ -423,6 +423,58 @@
 				M.emote(pick("twitch","giggle"))
 	..()
 
+/datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
+	name = "Garlic Juice"
+	id = "garlic"
+	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
+	color = "#FEFEFE"
+	taste_description = "garlic"
+	metabolization_rate = 0.15 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
+	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
+		if(prob(min(25, current_cycle)))
+			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You can barely think...</span>")
+			M.Paralyze(10)
+			M.Jitter(10)
+			return
+	else if(isbloodsucker(M))
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		switch(method)
+			if(INGEST)
+				if(prob(min(30, current_cycle)))
+					to_chat(M, "<span class='warning'>You cant get the smell of garlic out of your nose! You cant think straight because of it!</span>")
+					M.Jitter(15)
+					return
+				if(prob(min(15, current_cycle)))
+					M.visible_message("<span class='danger'>Something you ate is burning your stomach!</span>", / 
+						"<span class='warning'>[M] clutches their stomach and falls to the ground!</span>"
+					)
+					M.Knockdown(20)
+					M.emote("scream")
+					return
+				if(prob(min(5, current_cycle)))
+					M.vomit()
+					return
+			if(INJECT)
+				if(prob(min(20, current_cycle)))
+					to_chat(M, "<span class='warning'>You feel like your veins are boiling!</span>")
+					M.emote("scream")
+					M.adjustFireLoss(5)
+					return
+				if(prob(min(5, current_cycle)))
+					to_chat(M, "<span class='danger'>You are trying to purge the contaminants from your blood!</span>")
+					M.vomit()
+					return
+
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.job == "Cook")
+			if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
+				H.heal_bodypart_damage(1, 1, 0)
+				. = 1
+	..()
+
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	value = 3

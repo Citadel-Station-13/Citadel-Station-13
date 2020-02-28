@@ -5,7 +5,7 @@
 	name = "Synthetic hat"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "cowboy"
-	desc = "A sythesized hat, you can't seem to take it off. And tips their hat."
+	desc = "A synthesized hat, you can't seem to take it off. And tips their hat."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	//item_flags = NODROP //Tips their hat!
 
@@ -25,7 +25,7 @@
 
 /obj/item/clothing/head/hattip/MouseDrop(atom/over_object)
 	//You sure do love tipping your hat.
-	if(usr)
+	if(user)
 		var/mob/living/carbon/C = usr
 		if(is_ninja(C))
 			to_chat(C, "<span class='notice'>Using your superior ninja reflexes, you take the hat off before tipping.</span>")

@@ -258,7 +258,7 @@
 /obj/structure/bloodsucker/vassalrack/proc/torture_victim(mob/living/user, mob/living/target)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// Check Bloodmob/living/M, force = FALSE, check_loc = TRUE
-	var/convert_cost = 200 + 200 * bloodsuckerdatum.vassals 
+	var/convert_cost = 200 
 	if(user.blood_volume < convert_cost + 5)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
 		return
@@ -321,15 +321,15 @@
 		//	to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		//	useLock = FALSE
 		//	return
-		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, 1) 	// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
-		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, 1) 	// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
-		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) 		// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE) 	
+		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE) 	
+		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 		target.Jitter(25)
 		target.emote("laugh")
 		//remove_victim(target) // Remove on CLICK ONLY!
 	useLock = FALSE
 
-/obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target, mult=1)
+/obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target, mult = 1)
 	var/torture_time = 15 // Fifteen seconds if you aren't using anything. Shorter with weapons and such.
 	var/torture_dmg_brute = 2
 	var/torture_dmg_burn = 0

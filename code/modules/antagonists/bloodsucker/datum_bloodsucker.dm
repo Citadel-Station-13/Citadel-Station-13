@@ -655,13 +655,13 @@
 	var/datum/antagonist/vassal/mob_V = M.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 	// Check 2) If they are a BLOODSUCKER, then are they my Master?
 	if (mob_V && atom_B == mob_V.master)
-		return TRUE // SUCCESS!
+		return TRUE
 	// Check 3) If I am a BLOODSUCKER, then are they my Vassal?
 	if (mob_B && atom_V && (atom_V in mob_B.vassals))
-		return TRUE // SUCCESS!
+		return TRUE 
 	// Check 4) If we are both VASSAL, then do we have the same master?
 	if (atom_V && mob_V && atom_V.master == mob_V.master)
-		return TRUE // SUCCESS!
+		return TRUE 
 	return FALSE
 
 
@@ -719,12 +719,12 @@
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/bloodsucker/proc/update_counter(value, valuecolor)
-	invisibility = 0 // Make Visible
+	invisibility = 0 
 
-/obj/screen/bloodsucker/blood_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
-	icon = 'icons/mob/actions/bloodsucker.dmi'//'icons/mob/screen_gen.dmi'
+/obj/screen/bloodsucker/blood_counter
+	icon = 'icons/mob/actions/bloodsucker.dmi'
 	name = "Blood Consumed"
-	icon_state = "blood_display"//"power_display"
+	icon_state = "blood_display"
 	screen_loc = ui_blood_display
 
 /obj/screen/bloodsucker/blood_counter/update_counter(value, valuecolor)
@@ -749,22 +749,22 @@
 
 /datum/antagonist/bloodsucker/proc/update_sunlight(value, amDay = FALSE)
 	// No Hud? Get out.
-	if (!owner.current.hud_used)
+	if(!owner.current.hud_used)
 		return
 	// Update Sun Time
-	if (owner.current.hud_used.sunlight_display)
+	if(owner.current.hud_used.sunlight_display)
 		var/valuecolor = "#BBBBFF"
-		if (amDay)
+		if(amDay)
 			valuecolor =  "#FF5555"
 		else if(value <= 25)
 			valuecolor =  "#FFCCCC"
 		else if(value < 10)
 			valuecolor =  "#FF5555"
-		var/value_string = (value >= 60) ? "[round(value / 60, 1)] m" : "[round(value,1)] s"
+		var/value_string = (value >= 60) ? "[round(value / 60, 1)] m" : "[round(value, 1)] s"
 		owner.current.hud_used.sunlight_display.update_counter( value_string, valuecolor )
 		owner.current.hud_used.sunlight_display.icon_state = "sunlight_" + (amDay ? "day":"night")
 
 
 /obj/screen/bloodsucker/sunlight_counter/update_counter(value, valuecolor)
 	..()
-	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"
+	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"	

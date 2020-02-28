@@ -67,6 +67,12 @@
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Your victim's blood is not suitable for you to take.</span>")
 			return FALSE
+	if(iscarbon(owner))
+		//We want to check if the target is wearing a garlic necklance.
+		if(istype(owner.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+			if(display_error)
+				to_chat(owner, "<span class='warning'>Your victim is wearing a garlic clove on their neck! Disgusting!</span>")
+			return FALSE
 	return TRUE
 
 // If I'm not grabbing someone, find me someone nearby.
@@ -140,7 +146,7 @@
 		to_chat(user, "<span class='notice'>You lean quietly toward [target] and secretly draw out your fangs...</span>")
 	else
 		to_chat(user, "<span class='warning'>You pull [target] close to you and draw out your fangs...</span>")
-	if(!do_mob(user, target, feed_time,0,1,extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))//sleep(10)
+	if(!do_mob(user, target, feed_time, 0, 1, extra_checks = CALLBACK(src, .proc/ContinueActive, user, target)))//sleep(10)
 		to_chat(user, "<span class='warning'>Your feeding was interrupted.</span>")
 		//DeactivatePower(user,target)
 		return
@@ -166,7 +172,7 @@
 		var/deadmessage = target.stat == DEAD ? "" : " <i>[target.p_they(TRUE)] looks dazed, and will not remember this.</i>"
 		user.visible_message("<span class='notice'>[user] puts [target]'s wrist up to [user.p_their()] mouth.</span>", \
 						 	 "<span class='notice'>You secretly slip your fangs into [target]'s wrist.[deadmessage]</span>", \
-						 	 vision_distance = notice_range, ignored_mobs=target) // Only people who AREN'T the target will notice this action.
+						 	 vision_distance = notice_range, ignored_mobs = target) // Only people who AREN'T the target will notice this action.
 		// Warn Feeder about Witnesses...
 		var/was_unnoticed = TRUE
 		for(var/mob/living/M in viewers(notice_range, owner))
@@ -299,7 +305,7 @@
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankkilled", /datum/mood_event/drankkilled) // BAD // in bloodsucker_life.dm
 
 /datum/action/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
-	return ..()  && target && (!target_grappled || user.pulling == target)// Active, and still Antag,
+	return ..()  && target && (!target_grappled || user.pulling == target) && sucking_checks(target, TRUE, TRUE) // Active, and still Antag,
 	// NOTE: We only care about pulling if target started off that way. Mostly only important for Aggressive feed.
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target)
