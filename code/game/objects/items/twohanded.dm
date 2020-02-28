@@ -608,7 +608,7 @@
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
-	AddComponent(/datum/component/josuting)
+	AddComponent(/datum/component/jousting)
 	AddElement(/datum/element/sword_point)
 
 /obj/item/twohanded/spear/attack_self(mob/user)
