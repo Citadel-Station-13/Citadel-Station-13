@@ -1,4 +1,4 @@
-|/mob/living
+/mob/living
 	var/sprinting = FALSE
 	var/recoveringstam = FALSE
 	var/incomingstammult = 1
