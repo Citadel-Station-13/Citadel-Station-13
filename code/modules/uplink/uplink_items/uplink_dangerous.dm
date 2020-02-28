@@ -262,7 +262,7 @@
 
 /datum/uplink_item/dangerous/lonerevolver
 	name = "Just The Revolver That You Really Shouldn't Be Seeing Here I Mean Dang"
-	desc = "This...shouldn't be here, really. The standard Syndicate revolver, not including the actual magazine."
+	desc = "This...shouldn't be here, really. The standard Syndicate revolver, not including the actual kit with the free speedloader."
 	item = /obj/item/gun/ballistic/revolver
 	include_modes = list()
 	cost = 20
