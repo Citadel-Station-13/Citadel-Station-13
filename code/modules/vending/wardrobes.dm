@@ -50,6 +50,7 @@
 					/obj/item/clothing/under/rank/medical/paramedic/light = 5,
 					/obj/item/clothing/suit/toggle/labcoat = 5,
 					/obj/item/clothing/suit/toggle/labcoat/paramedic = 5,
+					/obj/item/clothing/suit/toggle/labcoat/emt = 5,
 					/obj/item/clothing/shoes/sneakers/white = 5,
 					/obj/item/clothing/head/soft/emt = 5,
 					/obj/item/clothing/suit/apron/surgical = 5,
