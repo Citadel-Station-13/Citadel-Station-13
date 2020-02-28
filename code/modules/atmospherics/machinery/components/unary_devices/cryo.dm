@@ -280,7 +280,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/living/carbon/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !istype(target) || !user.IsAdvancedToolUser())
 		return
-	if(!CHECK_BITFIELD(target.mobility_flags, MOBILITY_MOVE))
+	if(!CHECK_MOBILITY(target, MOBILITY_MOVE))
 		close_machine(target)
 	else
 		user.visible_message("<b>[user]</b> starts shoving [target] inside [src].", "<span class='notice'>You start shoving [target] inside [src].</span>")

@@ -64,16 +64,16 @@
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
 
-/obj/item/holybeacon/proc/beacon_armor(mob/living/M)
+/obj/item/holybeacon/proc/beacon_armor(mob/living/L)
 	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
 	var/list/display_names = list()
 	for(var/V in holy_armor_list)
 		var/atom/A = V
 		display_names += list(initial(A.name) = A)
 
-	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
+	var/choice = input(L,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
 	var/turf/T = get_turf(src)
-	if(!T || QDELETED(src) || !choice || !CHECK_BITFIELD(M.mobility_flags, MOBILITY_USE) || !in_range(M, src) || GLOB.holy_armor_type)
+	if(!T || QDELETED(src) || !choice || !CHECK_MOBILITY(L, MOBILITY_USE) || !in_range(L, src) || GLOB.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)
@@ -86,7 +86,7 @@
 
 	if(holy_armor_box)
 		qdel(src)
-		M.put_in_hands(holy_armor_box)
+		L.put_in_hands(holy_armor_box)
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -244,7 +244,7 @@
 	if(user.mind && (user.mind.isholy) && !reskinned)
 		reskin_holy_weapon(user)
 
-/obj/item/nullrod/proc/reskin_holy_weapon(mob/living/M)
+/obj/item/nullrod/proc/reskin_holy_weapon(mob/living/L)
 	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/holy_weapon
@@ -255,8 +255,8 @@
 		if (initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
 
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || !in_range(M, src) || !CHECK_MOBILITY(M, MOBILITY_USE) || reskinned)
+	var/choice = input(L, "What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+	if(QDELETED(src) || !choice || !in_range(L, src) || !CHECK_MOBILITY(L, MOBILITY_USE) || reskinned)
 		return
 
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
@@ -269,7 +269,7 @@
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
 		qdel(src)
-		M.put_in_active_hand(holy_weapon)
+		L.put_in_active_hand(holy_weapon)
 
 /obj/item/nullrod/proc/jedi_spin(mob/living/user)
 	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))

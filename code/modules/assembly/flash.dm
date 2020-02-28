@@ -197,13 +197,12 @@
 			else
 				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
-
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	. = ..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
-	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdown) && iscarbon(M) && CHECK_BITFIELD(M.mobility_flags, MOBILITY_STAND) && !M.get_eye_protection())
+	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdown) && iscarbon(M) && CHECK_MOBILITY(M, MOBILITY_STAND) && !M.get_eye_protection())
 		M.DefaultCombatKnockdown(80)
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)

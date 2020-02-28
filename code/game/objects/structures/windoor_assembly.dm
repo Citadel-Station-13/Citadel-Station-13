@@ -344,7 +344,7 @@
 	set category = "Object"
 	set src in oview(1)
 	var/mob/living/L = usr
-	if(!CHECK_BITFIELD(L, MOBILITY_PULL))
+	if(!CHECK_MOBILITY(L, MOBILITY_PULL))
 		return
 
 	if(facing == "l")

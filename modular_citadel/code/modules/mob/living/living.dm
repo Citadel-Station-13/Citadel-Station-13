@@ -1,4 +1,4 @@
-/mob/living
+|/mob/living
 	var/sprinting = FALSE
 	var/recoveringstam = FALSE
 	var/incomingstammult = 1
@@ -25,7 +25,7 @@
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
-	if(!CHECK_BITFIELD(mobility_flags, MOBILITY_STAND))
+	if(!CHECK_MOBILITY(src, MOBILITY_STAND))
 		. += 6
 
 /atom

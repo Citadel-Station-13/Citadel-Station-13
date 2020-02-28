@@ -88,7 +88,7 @@
 	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
-		they_can_move = L.mobility_flags & MOBILITY_MOVE
+		they_can_move = CHECK_MOBILITY(L, MOBILITY_MOVE)
 		//Also spread diseases
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
@@ -663,7 +663,7 @@
 		// This shouldn't give clickdelays sometime (e.g. going out of a mech/unwelded and unlocked locker/disposals bin/etc) but there's so many overrides that I am not going to bother right now.
 		return TRUE
 
-	if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE))
+	if(CHECK_MOBILITY(src, MOBILITY_MOVE))
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 			// Give clickdelay
@@ -704,7 +704,7 @@
 /mob/living/do_resist_grab(moving_resist, forced, silent = FALSE)
 	. = ..()
 	if(pulledby.grab_state)
-		if(CHECK_BITFIELD(mobility_flags, MOBILITY_STAND) && prob(30/pulledby.grab_state))
+		if(CHECK_MOBILITY(src, MOBILITY_STAND) && prob(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			pulledby.stop_pulling()
 			return TRUE
@@ -1184,4 +1184,4 @@
 		reagents.add_reagent_list(healing_chems)
 
 /mob/living/canface()
-	return ..() && CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE)
+	return ..() && CHECK_MOBILITY(src, MOBILITY_MOVE)

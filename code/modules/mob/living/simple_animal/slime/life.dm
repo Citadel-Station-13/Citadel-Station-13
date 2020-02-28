@@ -41,7 +41,7 @@
 	AIproc = 1
 
 	while(AIproc && stat != DEAD && (attacked || hungry || rabid || buckled))
-		if(!(mobility_flags & MOBILITY_MOVE)) //also covers buckling. Not sure why buckled is in the while condition if we're going to immediately break, honestly
+		if(!CHECK_MOBILITY(src, MOBILITY_MOVE)) //also covers buckling. Not sure why buckled is in the while condition if we're going to immediately break, honestly
 			break
 
 		if(!Target || client)
@@ -291,7 +291,7 @@
 			Discipline--
 
 	if(!client)
-		if(!CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE))
+		if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
 			return
 
 		if(buckled)
@@ -376,13 +376,13 @@
 			if (Leader)
 				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
-				else if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE) && isturf(loc))
+				else if(CHECK_MOBILITY(src, MOBILITY_MOVE) && isturf(loc))
 					step_to(src, Leader)
 
 			else if(hungry)
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
-				else if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE) && isturf(loc) && prob(50))
+				else if(CHECK_MOBILITY(src, MOBILITY_MOVE) && isturf(loc) && prob(50))
 					step(src, pick(GLOB.cardinals))
 
 			else
@@ -390,7 +390,7 @@
 					holding_still = max(holding_still - 1, 0)
 				else if (docile && pulledby)
 					holding_still = 10
-				else if(CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE) && isturf(loc) && prob(33))
+				else if(CHECK_MOBILITY(src, MOBILITY_MOVE) && isturf(loc) && prob(33))
 					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
 			INVOKE_ASYNC(src, .proc/AIprocess)
