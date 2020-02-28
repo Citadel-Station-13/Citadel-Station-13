@@ -116,7 +116,7 @@
 
 /obj/structure/bloodsucker/vassalrack/examine(mob/user)
 	. = ..()
-	if(isvamp(user) || isobserver(user))
+	if(isbloodsucker(user) || isobserver(user))
 		. += {"<span class='cult'>This is the vassal rack, which allows you to thrall crewmembers into loyal minions in your service.</span>"}
 		. += {"<span class='cult'>You need to first secure the vassal rack by clicking on it while it is in your lair.</span>"}
 		. += {"<span class='cult'>Simply click and hold on a victim, and then drag their sprite on the vassal rack. Alt click on the vassal rack to unbuckle them.</span>"}
@@ -130,7 +130,7 @@
 /obj/structure/bloodsucker/vassalrack/MouseDrop_T(atom/movable/O, mob/user)
 	if(!O.Adjacent(src) || O == user || !isliving(O) || !isliving(user) || useLock || has_buckled_mobs() || user.incapacitated())
 		return
-	if(!anchored && isvamp(user))
+	if(!anchored && isbloodsucker(user))
 		to_chat(user, "<span class='danger'>Until this rack is secured in place, it cannot serve its purpose.</span>")
 		return
 	// PULL TARGET: Remember if I was pullin this guy, so we can restore this
@@ -183,7 +183,7 @@
 
 /obj/structure/bloodsucker/vassalrack/user_unbuckle_mob(mob/living/M, mob/user)
 	// Attempt Unbuckle
-	if(!isvamp(user))
+	if(!isbloodsucker(user))
 		if(M == user)
 			M.visible_message("<span class='danger'>[user] tries to release themself from the rack!</span>",\
 							"<span class='danger'>You attempt to release yourself from the rack!</span>") //  For sound if not seen -->  "<span class='italics'>You hear a squishy wet noise.</span>")
@@ -454,7 +454,7 @@
 
 /obj/structure/bloodsucker/candelabrum/examine(mob/user)
 	. = ..()
-	if((isvamp()) || isobserver(user))
+	if((isbloodsucker()) || isobserver(user))
 		. += {"<span class='cult'>This is a magical candle which drains at the sanity of mortals who are not under your command while it is active.</span>"}
 		. += {"<span class='cult'>You can alt click on it from any range to turn it on remotely, or simply be next to it and click on it to turn it on and off normally.</span>"}
 /*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
@@ -463,12 +463,12 @@
 
 /obj/structure/bloodsucker/candelabrum/attack_hand(mob/user)
 	var/datum/antagonist/vassal/T = user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-	if(isvamp(user) || istype(T))
+	if(isbloodsucker(user) || istype(T))
 		toggle()
 
 /obj/structure/bloodsucker/candelabrum/AltClick(mob/user)
 	// Bloodsuckers can turn their candles on from a distance. SPOOOOKY.
-	if(isvamp(user))
+	if(isbloodsucker(user))
 		toggle()
 
 /obj/structure/bloodsucker/candelabrum/proc/toggle(mob/user)
@@ -485,7 +485,7 @@
 	if(lit)
 		for(var/mob/living/carbon/human/H in viewers(7, src))
 			var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-			if(isvamp(H) || T) //We dont want vassals or vampires affected by this
+			if(isbloodsucker(H) || T) //We dont want vassals or vampires affected by this
 				return
 			H.hallucination = 20
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)

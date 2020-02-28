@@ -9,7 +9,7 @@
 	var/list/vassal_allowed_antags = list(/datum/antagonist/brother, /datum/antagonist/traitor, /datum/antagonist/traitor/internal_affairs, /datum/antagonist/survivalist, \
 										  /datum/antagonist/rev, /datum/antagonist/nukeop, /datum/antagonist/pirate, /datum/antagonist/cult, /datum/antagonist/abductee, /datum/antagonist/valentine, /datum/antagonist/heartbreaker,)
 	// The antags you're allowed to be if turning Vassal.
-/proc/isvamp(mob/living/M)
+/proc/isbloodsucker(mob/living/M)
 	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 
 /datum/game_mode/bloodsucker
@@ -70,25 +70,12 @@
 
 // Gamemode is all done being set up. We have all our Vamps. We now pick objectives and let them know what's happening.
 /datum/game_mode/bloodsucker/post_setup()
-
 	// Sunlight (Creating Bloodsuckers manually will check to create this, too)
 	check_start_sunlight()
-
 	// Vamps
 	for(var/datum/mind/bloodsucker in bloodsuckers)
-		// spawn() --> Run block of code but game continues on past it.
-		// sleep() --> Run block of code and freeze code there (including whoever called us) until it's resolved.
-
-		//Clean Bloodsucker Species (racist?)
-		//clean_invalid_species(bloodsucker)
-		// 			TO-DO !!!
-
-		// Add Bloodsucker Antag Datum (or remove from list on Fail)
-		if (!make_bloodsucker(bloodsucker))
+		if(!make_bloodsucker(bloodsucker))
 			bloodsuckers -= bloodsucker
-
-	// NOTE: Hunters are done in ..() parent proc
-
 	return ..()
 
 // Init Sunlight (called from datum_bloodsucker.on_gain(), in case game mode isn't even Bloodsucker
@@ -151,7 +138,6 @@
 /datum/game_mode/proc/make_bloodsucker(datum/mind/bloodsucker, datum/mind/creator = null) // NOTE: This is a game_mode/proc, NOT a game_mode/bloodsucker/proc! We need to access this function despite the game mode.
 	if(!can_make_bloodsucker(bloodsucker))
 		return FALSE
-
 	// Create Datum: Fledgling
 	var/datum/antagonist/bloodsucker/A
 
@@ -163,18 +149,13 @@
 		// Log
 		message_admins("[bloodsucker] has become a Bloodsucker, and was created by [creator].")
 		log_admin("[bloodsucker] has become a Bloodsucker, and was created by [creator].")
-
 	// [MASTER]
 	else
 		A = bloodsucker.add_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-
-
 	return TRUE
-
 
 /datum/game_mode/proc/remove_bloodsucker(datum/mind/bloodsucker)
 	bloodsucker.remove_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-
 
 /datum/game_mode/proc/clean_invalid_species(datum/mind/bloodsucker)
 	// Only checking for Humans here
@@ -277,7 +258,7 @@
 	target.mind.add_antag_datum(V, V.master.get_team())
 	// Update Bloodsucker Title (we're a daddy now)
 	B.SelectTitle(am_fledgling = FALSE) // Only works if you have no title yet.
-	// Log
+	// lOg it
 	message_admins("[target] has become a Vassal, and is enslaved to [creator].")
 	log_admin("[target] has become a Vassal, and is enslaved to [creator].")
 	return TRUE
