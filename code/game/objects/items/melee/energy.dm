@@ -7,7 +7,6 @@
 	var/brightness_on = 3
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 
-
 /obj/item/melee/transforming/energy/Initialize()
 	. = ..()
 	total_mass_on = (total_mass_on ? total_mass_on : (w_class_on * 0.75))
@@ -104,6 +103,10 @@
 	embedding = list("embed_chance" = 75, "embedded_impact_pain_multiplier" = 10)
 	armour_penetration = 35
 	block_chance = 50
+
+/obj/item/melee/transforming/energy/sword/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/sword_point)
 
 /obj/item/melee/transforming/energy/sword/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
