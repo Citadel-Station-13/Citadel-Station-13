@@ -11,24 +11,25 @@
 	button_icon_state = "power_mez"
 	bloodcost = 30
 	cooldown = 300
-	target_range = 1
-	power_activates_immediately = FALSE
+	target_range = 3
+	power_activates_immediately = TRUE
 	message_Trigger = "Whom will you subvert to your will?"
 	must_be_capacitated = TRUE
 	bloodsucker_can_buy = TRUE
+	var/success
 
 /datum/action/bloodsucker/targeted/mesmerize/CheckCanUse(display_error)
 	. = ..()
 	if(!.)
 		return
-	if (!owner.getorganslot(ORGAN_SLOT_EYES))
+	if(!owner.getorganslot(ORGAN_SLOT_EYES))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You have no eyes with which to mesmerize.</span>")
 		return FALSE
 	// Check: Eyes covered?
 	var/mob/living/L = owner
-	if (istype(L) && L.is_eyes_covered() || !isturf(owner.loc))
-		if (display_error)
+	if(istype(L) && L.is_eyes_covered() || !isturf(owner.loc))
+		if(display_error)
 			to_chat(owner, "<span class='warning'>Your eyes are concealed from sight.</span>")
 		return FALSE
 	return TRUE
@@ -38,46 +39,51 @@
 
 /datum/action/bloodsucker/targeted/mesmerize/CheckCanTarget(atom/A,display_error)
 	// Check: Self
-	if (A == owner)
+	if(A == owner)
 		return FALSE
 	var/mob/living/carbon/target = A // We already know it's carbon due to CheckValidTarget()
+
 	// Bloodsucker
-	if (target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	if(target.mind && target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Bloodsuckers are immune to [src].</span>")
 		return FALSE
 	// Dead/Unconscious
-	if (target.stat > CONSCIOUS)
+	if(target.stat > CONSCIOUS)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your victim is not [(target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))?"alive":"conscious"].</span>")
 		return FALSE
 	// Check: Target has eyes?
-	if (!target.getorganslot(ORGAN_SLOT_EYES))
+	if(!target.getorganslot(ORGAN_SLOT_EYES))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>They have no eyes!</span>")
 		return FALSE
 	// Check: Target blind?
-	if (target.eye_blind > 0)
+	if(target.eye_blind > 0)
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your victim's eyes are glazed over. They cannot perceive you.</span>")
 		return FALSE
 	// Check: Target See Me? (behind wall)
-	if (!(owner in view(target_range, get_turf(target))))
+	if(!(target in view(target_range, get_turf(owner))))
 		// Sub-Check: GET CLOSER
 		//if (!(owner in range(target_range, get_turf(target)))
 		//	if (display_error)
 		//		to_chat(owner, "<span class='warning'>You're too far from your victim.</span>")
-		if (display_error)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You're too far outside your victim's view.</span>")
 		return FALSE
+
+	if(target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ?
+		return TRUE
+
 	// Check: Facing target?
-	if (!is_A_facing_B(owner,target))	// in unsorted.dm
+	if(!is_A_facing_B(owner,target))	// in unsorted.dm
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You must be facing your victim.</span>")
 		return FALSE
 	// Check: Target facing me?
 	if (CHECK_MOBILITY(target, MOBILITY_STAND) && !is_A_facing_B(target,owner))
-		if (display_error)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>Your victim must be facing you to see into your eyes.</span>")
 		return FALSE
 	return TRUE
@@ -88,19 +94,28 @@
 	var/mob/living/user = owner
 
 	if(istype(target))
-		target.Stun(40) //Utterly useless without this, its okay since there are so many checks to go through
-		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 45) //So you cant rotate with combat mode, plus fancy status alert
+		var/power_time = 138 + level_current * 12
+		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
+		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
+		if(do_mob(user, target, 30, TRUE, TRUE)) // 3 seconds windup
+			success = CheckCanTarget(target)
+			if(success) // target just has to be out of view when it is fully charged in order to avoid
+				PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
+				target.face_atom(user)
+				target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
+				target.Stun(power_time)
+				to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
+				target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
+				target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+			else
+				to_chat(user, "<span class='warning'>[target] has escaped your gaze!</span>")
+				DeactivatePower()
+				DeactivateRangedAbility()
+				StartCooldown()
+				// oops! if they knew how they could just spam stun the victim and themselves.
 
-	if(do_mob(user, target, 40, 0, TRUE, extra_checks = CALLBACK(src, .proc/ContinueActive, user, target)))
-		PowerActivatedSuccessfully() // PAY COST! BEGIN COOLDOWN!
-		var/power_time = 90 + level_current * 12
-		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time + 80)
-		to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
-		target.Stun(power_time)
-		target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
-		target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
 		spawn(power_time)
-			if(istype(target))
+			if(istype(target) && success)
 				target.notransform = FALSE
 				// They Woke Up! (Notice if within view)
 				if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )

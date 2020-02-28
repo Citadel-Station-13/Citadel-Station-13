@@ -254,13 +254,13 @@
 	config_entry_value = 1
 
 /datum/config_entry/number/movedelay/sprint_buffer_max
-	config_entry_value = 42
+	config_entry_value = 24
 
 /datum/config_entry/number/movedelay/sprint_stamina_cost
-	config_entry_value = 0.7
+	config_entry_value = 1.4
 
 /datum/config_entry/number/movedelay/sprint_buffer_regen_per_ds
-	config_entry_value = 0.3
+	config_entry_value = 0.4
 
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
@@ -403,10 +403,6 @@
 	value_mode = VALUE_MODE_NUM
 	lowercase = FALSE
 	splitter = ","
-
-/datum/config_entry/number/auto_transfer_delay
-	config_entry_value = 72000
-	min_val = 0
 
 /datum/config_entry/flag/pai_custom_holoforms
 

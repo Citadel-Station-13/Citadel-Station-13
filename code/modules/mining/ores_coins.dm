@@ -94,12 +94,12 @@
 	w_class = WEIGHT_CLASS_TINY
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
-		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50)\
-		))
+	new/datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50),\
+	))
 
-/obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.sand_recipes
+/obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
+	. += GLOB.sand_recipes
 
 /obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
@@ -143,7 +143,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
 	return TRUE
-
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
@@ -327,6 +326,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value
 	var/coinflip
+	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 
 /obj/item/coin/Initialize()
 	. = ..()

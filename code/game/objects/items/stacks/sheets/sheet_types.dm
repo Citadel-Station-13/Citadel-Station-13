@@ -381,12 +381,12 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 4, time = 40), \
 	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 2, time = 40), \
 	null, \
-	new/datum/stack_recipe("silk string", /obj/item/weaponcrafting/silkstring, 2, time = 40), \
+	new/datum/stack_recipe("silk string", /obj/item/weaponcrafting/silkstring, 1, time = 40), \
 	))
 
 /obj/item/stack/sheet/silk
 	name = "silk"
-	desc = "A long soft material. This one is just made out of cotton rather then any spiders or wyrms"
+	desc = "A long, soft material. Made out of refined cotton, instead of relying on the habits of spiders or silkworms."
 	singular_name = "silk sheet"
 	icon_state = "sheet-silk"
 	item_state = "sheet-cloth"
