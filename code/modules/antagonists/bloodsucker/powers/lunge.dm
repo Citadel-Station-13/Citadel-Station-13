@@ -58,7 +58,8 @@
 	var/do_knockdown = !is_A_facing_B(target,owner) || owner.alpha <= 0 || istype(owner.loc, /obj/structure/closet)
 	// CAUSES: Target has their back to me, I'm invisible, or I'm in a Closet
 	// Step One: Heatseek toward Target's Turf
-	addtimer(CALLBACK(owner, .proc/_walk, 0), 2 SECONDS)	target.playsound_local(get_turf(owner), 'sound/bloodsucker/lunge_warn.ogg', 60, FALSE, pressure_affected = FALSE) // target-only telegraphing
+	addtimer(CALLBACK(owner, .proc/_walk, 0), 2 SECONDS)
+	target.playsound_local(get_turf(owner), 'sound/bloodsucker/lunge_warn.ogg', 60, FALSE, pressure_affected = FALSE) // target-only telegraphing
 	owner.playsound_local(owner, 'sound/bloodsucker/lunge_warn.ogg', 60, FALSE, pressure_affected = FALSE) // audio feedback to the user
 	if(do_mob(owner, owner, 6, TRUE, TRUE))
 		walk_towards(owner, T, 0.1, 10) // yes i know i shouldn't use this but i don't know how to work in anything better
