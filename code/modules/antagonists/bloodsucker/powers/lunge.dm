@@ -7,7 +7,7 @@
 	button_icon_state = "power_lunge"
 	bloodcost = 10
 	cooldown = 120
-	target_range = 3 // artur was right
+	target_range = 3
 	power_activates_immediately = TRUE
 	message_Trigger = "Whom will you ensnare within your grasp?"
 	must_be_capacitated = TRUE

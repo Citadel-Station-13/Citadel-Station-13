@@ -73,7 +73,7 @@
 			to_chat(owner, "<span class='warning'>You're too far outside your victim's view.</span>")
 		return FALSE
 
-	if(target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ignores facing once the windup has started (now i know why i put this here!)
+	if(target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ignores facing once the windup has started
 		return TRUE
 
 	// Check: Facing target?
@@ -94,7 +94,7 @@
 
 	var/cancontinue=CheckCanTarget(target)
 	if(!cancontinue)
-		success=FALSE
+		success = FALSE
 		target.remove_status_effect(STATUS_EFFECT_MESMERIZE)
 		user.remove_status_effect(STATUS_EFFECT_MESMERIZE)
 		DeactivatePower()
@@ -109,7 +109,7 @@
 	var/mob/living/user = owner
 
 	if(istype(target))
-		success=TRUE
+		success = TRUE
 		var/power_time = 138 + level_current * 12
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
 		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
