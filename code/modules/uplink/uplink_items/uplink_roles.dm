@@ -14,6 +14,13 @@
 	cost = 20
 	restricted_roles = list("Assistant")
 
+/datum/uplink_item/role_restricted/grey_tide
+	name = "The Grey Tide"
+	desc = "Recovered by - and stolen from - NanoTrasen after fending off a seemingly endless tide of assistants. Perhaps this was the key?"
+	item = /obj/item/twohanded/spear/grey_tide
+	cost = 12
+	restricted_roles = list("Assistant")
+
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"

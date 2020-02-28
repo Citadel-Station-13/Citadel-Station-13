@@ -778,11 +778,11 @@
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
-	var/clonechance = 50
+	var/clonechance = 75
 	var/clonedamage = 12
 	var/clonespeed = 0
-	var/clone_replication_chance = 30
-	var/clone_lifespan = 100
+	var/clone_replication_chance = 40
+	var/clone_lifespan = 120
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()

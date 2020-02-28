@@ -259,3 +259,10 @@
 	item = /obj/item/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
 	surplus = 10
+
+/datum/uplink_item/dangerous/lonerevolver
+	name = "Just The Revolver That You Really Shouldn't Be Seeing Here I Mean Dang"
+	desc = "This...shouldn't be here, really. The standard Syndicate revolver, not including the actual magazine."
+	include_modes = list()
+	cost = 20
+	surplus = 0
