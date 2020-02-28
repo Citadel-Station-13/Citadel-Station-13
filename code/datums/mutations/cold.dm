@@ -14,6 +14,7 @@
 	item_type = /obj/item/stack/sheet/mineral/snow
 	charge_max = 50
 	action_icon_state = "snow"
+	delete_old = FALSE
 
 
 /datum/mutation/human/cryokinesis
