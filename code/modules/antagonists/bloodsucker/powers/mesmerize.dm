@@ -11,7 +11,7 @@
 	button_icon_state = "power_mez"
 	bloodcost = 30
 	cooldown = 300
-	target_range = 3
+	target_range = 2
 	power_activates_immediately = TRUE
 	message_Trigger = "Whom will you subvert to your will?"
 	must_be_capacitated = TRUE
