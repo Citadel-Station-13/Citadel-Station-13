@@ -170,7 +170,7 @@
 /obj/item/clothing/under/rank/medical/paramedic/light
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
 	name = "paramedic jumpsuit"
-	icon_state = "paramedic"
+	icon_state = "paramedic-light"
 	item_state = "w_suit"
 	item_color = "paramedic"
 	permeability_coefficient = 0.5
@@ -181,9 +181,16 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
 	icon_state = "paramedic_skirt"
 	item_state = "w_suit"
+	item_color = "paramedic_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/rank/medical/paramedic/skirt/dark
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a white cross on the chest denoting that the wearer is a trained paramedic."
+	icon_state = "paramedic-dark_skirt"
+	item_state = "w_suit"
+	item_color = "paramedic-dark_skirt"
 
 /obj/item/clothing/under/rank/nursesuit
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
@@ -236,11 +243,3 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP 
-
-/obj/item/clothing/under/rank/medical/orderly
-	name = "orderly's uniform"
-	desc = "It's made of a special fiber that provides minor protection against biohazards. This neatly-kept uniform is pure white with a red clip-on tie."
-	icon_state = "orderly"
-	item_state = "w_suit"
-	item_color = "orderly"
-	can_adjust = FALSE
