@@ -119,3 +119,8 @@
 /mob/living/onTransitZ(old_z,new_z)
 	..()
 	update_z(new_z)
+
+/mob/living/proc/canface()
+	if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
+		return FALSE
+	return ..()

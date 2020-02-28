@@ -665,8 +665,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		return FALSE
 	if(anchored)
 		return FALSE
-	if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
-		return FALSE
 	if(notransform)
 		return FALSE
 	if(restrained())
