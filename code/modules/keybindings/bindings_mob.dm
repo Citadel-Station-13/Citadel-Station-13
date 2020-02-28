@@ -3,6 +3,17 @@
 // Or we can have NPC's send actual keypresses and detect that by seeing no client
 
 /mob/key_down(_key, client/user)
+	if(SSinput.typing_indicator_binds[_key])
+		var/macroset = winget(user, "mainwindow", "macro")
+		var/list/L = SSinput.macro_set_reverse_lookups[macroset]
+		var/valid = TRUE
+		if(length(L) > 1)
+			for(var/modifier in 2 to length(L))
+				if(!client.keys_held[modifier])
+					valid = FALSE
+					break
+		if(valid)
+			display_typing_indicator()
 	switch(_key)
 		if("Delete", "H")
 			if(!pulling)

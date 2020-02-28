@@ -8,6 +8,12 @@ SUBSYSTEM_DEF(input)
 
 	var/list/macro_sets
 	var/list/movement_keys
+	/*! Special thing (until we get custom keybinds that also support clientside macros :weary:) that lets us do stuff like look up "which key is say/me bound to". Special format too, the value of a key should be list(key, modifier1, modifier2, ...). "default" unless override.
+	 *  USE get_key_for_macro_id or get_typing_indicator_binds TO ACCESS!
+	 */
+	var/list/macro_set_reverse_lookups
+	/// cache these for speed.
+	var/list/typing_indicator_binds
 
 /datum/controller/subsystem/input/Initialize()
 	setup_default_macro_sets()
@@ -57,6 +63,32 @@ SUBSYSTEM_DEF(input)
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
 			),
 		)
+
+	macro_set_reverse_lookups = list(
+		"default" = list(
+			"say" = list("T"),
+			"whisper" = list("T", "Ctrl"),
+			"me" = list("M"),
+			"subtle" = list("M", "Ctrl")
+			),
+		"old_default" = list(
+			"say" = list("T", "Ctrl"),
+			),
+		"old_hotkeys" = list(
+			"say" = list("T"),
+			"me" = list("M"),
+			)
+		)
+
+	typing_indicator_binds = list()
+	var/static/list/typing_indicator_verbs = list("me", "say")
+	for(var/check_verb in typing_indicator_verbs)
+		for(var/macro_set in macro_set_reverse_lookups)
+			var/list/keylist = macro_set_reverse_lookups[macro_set][check_verb]
+			if(!keylist)
+				continue
+			var/key = keylist[1]
+			typing_indicator_binds[key] = TRUE
 
 	// Because i'm lazy and don't want to type all these out twice
 	var/list/old_default = default_macro_sets["old_default"]
@@ -117,3 +149,10 @@ SUBSYSTEM_DEF(input)
 	for(var/i in 1 to length(clients))
 		var/client/C = clients[i]
 		C.keyLoop()
+
+/datum/controller/subsystem/input/proc/get_key_for_macro_id(macro_id, macroset)
+	return macro_set_reverse_lookups[macroset][macro_id] || macro_set_reverse_lookups["default"][macro_id]
+
+/// Returns an associative list of keys without modifiers like ctrl. You have to do another lookup, this is for the first check to be faster.
+/datum/controller/subsystem/input/proc/get_typing_indicator_binds(macroset)
+	return typing_indicator_binds[macroset]

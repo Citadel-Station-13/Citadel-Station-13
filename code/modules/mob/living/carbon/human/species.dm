@@ -106,6 +106,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
 	var/should_draw_citadel = FALSE
 
+	/// Our default override for typing indicator state
+	var/typing_indicator_state
+
 ///////////
 // PROCS //
 ///////////
@@ -2218,3 +2221,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
+
+
+/////// TYPING INDICATORS ///////
+/datum/species/proc/get_typing_indicator_state()
+	return typing_indicator_state
