@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - refactor: "A good amount of the blood RGB rework was cleaned up/reverted, with some notable gameplay changes including: Gibs and blood not having max blood by default (no more easy rampages, cultists), infinite gib streaking, etc etc."
