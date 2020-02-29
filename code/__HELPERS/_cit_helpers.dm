@@ -113,7 +113,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	var/new_flavor = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", flavor_text, MAX_FAVOR_LEN, TRUE)
+	var/new_flavor = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", flavor_text, MAX_FLAVOR_LEN, TRUE)
 	if(!isnull(new_flavor))
 		flavor_text = new_flavor
 		to_chat(src, "Your flavor text has been updated.")
@@ -124,7 +124,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	set desc = "Sets a description of your character's current appearance. Use this for emotions, poses etc."
 	set category = "IC"
 
-	var/new_flavor = stripped_multiline_input(usr, "Set the temporary flavor text in your 'examine' verb. This should be used only for things pertaining to the current round!", "Short-Term Flavor Text", flavor_text_2, MAX_FAVOR_LEN, TRUE)
+	var/new_flavor = stripped_multiline_input(usr, "Set the temporary flavor text in your 'examine' verb. This should be used only for things pertaining to the current round!", "Short-Term Flavor Text", flavor_text_2, MAX_FLAVOR_LEN, TRUE)
 	if(!isnull(new_flavor))
 		flavor_text_2 = new_flavor
 		to_chat(src, "Your temporary flavor text has been updated.")

@@ -732,3 +732,11 @@
 		for(var/I in emote_lists[K])
 			dupe.emote_lists[K] += I
 	return dupe
+
+//
+//	Belly searching for simplifying other procs
+//  Mostly redundant now with belly-objects and isbelly(loc)
+//
+/proc/check_belly(atom/movable/A)
+	return isbelly(A.loc)
+
