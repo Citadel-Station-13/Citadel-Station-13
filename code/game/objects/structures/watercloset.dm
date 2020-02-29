@@ -620,17 +620,17 @@
 	if(steps == 3 && S.tool_behaviour == TOOL_SHOVEL)
 		S.use_tool(src, user, 80, volume=100)
 		steps = 4
-		desc = "A deep patch of dirt, needs something to hold a bucket and rope. Just add some planks!"
+		desc = "A deep patch of dirt, needs something to hold a bucket and rope. Just add some wood planks!"
 		icon_state = "well_3"
 		return TRUE
 	if(steps == 4 && istype(S, /obj/item/stack/sheet/mineral/wood))
 		if(S.use(3))
 			steps = 5
-			desc = "A dug out well, A dug out well with out rope. Just add a cloth rope!"
+			desc = "A dug out well, A dug out well with out rope. Just add some cloth!"
 			icon_state = "well_4"
 			return TRUE
 		else
-			to_chat(user, "<span class='warning'>You need at least three pieces planks!</span>")
+			to_chat(user, "<span class='warning'>You need at least three planks!</span>")
 			return
 	if(steps == 5 && istype(S, /obj/item/stack/sheet/cloth))
 		if(S.use(2))
