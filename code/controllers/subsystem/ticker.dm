@@ -707,6 +707,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
 		'sound/roundend/gondolabridge.ogg',
+		'sound/roundend/seeyoulaterokay.ogg',
 		'sound/roundend/haveabeautifultime.ogg'\
 		)
 
