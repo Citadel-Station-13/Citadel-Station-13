@@ -40,13 +40,13 @@
 	.=..()
 	update_icon()
 
-/obj/item/card/data/update_icon()
-	cut_overlays()
+/obj/item/card/data/update_overlays()
+	. = ..()
 	if(detail_color == COLOR_FLOORTILE_GRAY)
 		return
 	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/card.dmi', "[icon_state]-color")
 	detail_overlay.color = detail_color
-	add_overlay(detail_overlay)
+	. += detail_overlay
 
 /obj/item/card/data/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/integrated_electronics/detailer))
@@ -517,10 +517,16 @@ update_label("John Doe", "Clowny")
 //Polychromatic Knight Badge
 
 /obj/item/card/id/knight
-	var/id_color = "#00FF00" //defaults to green
 	name = "knight badge"
 	icon_state = "knight"
 	desc = "A badge denoting the owner as a knight! It has a strip for swiping like an ID"
+	var/id_color = "#00FF00" //defaults to green
+	var/mutable_appearance/id_overlay
+
+/obj/item/card/id/knight/Initialize()
+	. = ..()
+	id_overlay = mutable_appearance(icon, "knight_overlay")
+	update_icon()
 
 /obj/item/card/id/knight/update_label(newname, newjob)
 	if(newname || newjob)
@@ -529,14 +535,10 @@ update_label("John Doe", "Clowny")
 
 	name = "[(!registered_name)	? "knight badge"	: "[registered_name]'s Knight Badge"][(!assignment) ? "" : " ([assignment])"]"
 
-/obj/item/card/id/knight/update_icon()
-	var/mutable_appearance/id_overlay = mutable_appearance(icon, "knight_overlay")
-
-	if(id_color)
-		id_overlay.color = id_color
-	cut_overlays()
-
-	add_overlay(id_overlay)
+/obj/item/card/id/knight/update_overlays()
+	. = ..()
+	id_overlay.color = id_color
+	. += id_overlay
 
 /obj/item/card/id/knight/AltClick(mob/living/user)
 	. = ..()
@@ -555,10 +557,6 @@ update_label("John Doe", "Clowny")
 		id_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 		return TRUE
-
-/obj/item/card/id/knight/Initialize()
-	. = ..()
-	update_icon()
 
 /obj/item/card/id/knight/examine(mob/user)
 	. = ..()

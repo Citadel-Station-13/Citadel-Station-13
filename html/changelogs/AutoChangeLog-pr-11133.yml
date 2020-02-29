@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - balance: "Nerfed the fermenting barrel export industry."
-  - tweak: "Reagent dispensers selling price no longer takes in account the reagents volume. It's already handled by reagents export."

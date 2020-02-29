@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "Cryo now actually transfers reagents at tier 4 on enter rather than every 80 machine fire()-process()s regardless of if it was \"reset\" by open/close."
