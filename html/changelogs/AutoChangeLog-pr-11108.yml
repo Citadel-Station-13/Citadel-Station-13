@@ -1,4 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - rscadd: "hsl instead of sum of rgb for spraycan lum check"

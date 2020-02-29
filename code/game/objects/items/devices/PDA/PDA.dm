@@ -41,6 +41,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 	var/list/overlays_icons = list('icons/obj/pda_alt.dmi' = list("pda-r", "screen_default", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay"))
 	var/current_overlays = PDA_STANDARD_OVERLAYS
+
+	//variables exclusively used on 'update_overlays' (which should never be called directly, and 'update_icon' doesn't use args anyway)
+	var/new_overlays = FALSE
+	var/new_alert = FALSE
+
 	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
 	var/font_mode = "font-family:monospace;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
@@ -123,7 +128,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		inserted_item = new inserted_item(src)
 	else
 		inserted_item =	new /obj/item/pen(src)
-	update_icon(FALSE, TRUE)
+	new_overlays = TRUE
+	update_icon()
 
 /obj/item/pda/CtrlShiftClick(mob/living/user)
 	. = ..()
@@ -144,7 +150,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	icon = new_icon
-	update_icon(FALSE, TRUE)
+	new_overlays = TRUE
+	update_icon()
 	to_chat(M, "[src] is now skinned as '[choice]'.")
 
 /obj/item/pda/proc/set_new_overlays()
@@ -188,7 +195,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/pref_skin = GLOB.pda_reskins[C.prefs.pda_skin]
 	if(icon != pref_skin)
 		icon = pref_skin
-		update_icon(FALSE, TRUE)
+		new_overlays = TRUE
+		update_icon()
 	equipped = TRUE
 
 /obj/item/pda/proc/update_label()
@@ -215,25 +223,27 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return TRUE
 	return FALSE
 
-/obj/item/pda/update_icon(alert = FALSE, new_overlays = FALSE)
+/obj/item/pda/update_overlays()
+	. = ..()
 	if(new_overlays)
 		set_new_overlays()
-	cut_overlays()
-	add_overlay(alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN])
+	. += new_alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN]
 	var/mutable_appearance/overlay = new()
 	overlay.pixel_x = overlays_x_offset
 	if(id)
 		overlay.icon_state = current_overlays[PDA_OVERLAY_ID]
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(inserted_item)
 		overlay.icon_state = current_overlays[PDA_OVERLAY_ITEM]
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(fon)
 		overlay.icon_state = current_overlays[PDA_OVERLAY_LIGHT]
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(pai)
 		overlay.icon_state = "[current_overlays[PDA_OVERLAY_PAI]][pai.pai ? "" : "_off"]"
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
+	new_overlays = FALSE
+	new_alert = FALSE
 
 /obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
@@ -849,6 +859,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>) (<a href='byond://?src=[REF(src)];choice=toggle_block;target=[signal.data["name"]]'>BLOCK/UNBLOCK</a>)")
 
+	new_alert = TRUE
 	update_icon(TRUE)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)

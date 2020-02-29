@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - balance: "Some reagent holders (such as cigarettes, food) are not suitable for reagents export anymore, while unprocessed botany crops will only net 1/3 of the standard reagents values."
-  - bugfix: "Export scanners now include the reagents value in the price report."
