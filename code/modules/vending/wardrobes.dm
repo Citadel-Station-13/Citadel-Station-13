@@ -48,7 +48,7 @@
 					/obj/item/clothing/under/rank/medical/paramedic = 5,
 					/obj/item/clothing/under/rank/medical/paramedic/light = 5,
 					/obj/item/clothing/under/rank/medical/paramedic/skirt = 5,
-					/obj/item/clothing/under/rank/medical/paramedic/skirt/dark = 5,
+					/obj/item/clothing/under/rank/medical/paramedic/skirt/light = 5,
 					/obj/item/clothing/suit/toggle/labcoat = 5,
 					/obj/item/clothing/suit/toggle/labcoat/paramedic = 5,
 					/obj/item/clothing/suit/toggle/labcoat/emt = 5,
