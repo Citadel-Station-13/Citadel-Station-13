@@ -256,8 +256,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	cit_toggles			= sanitize_integer(cit_toggles, 0, 65535, initial(cit_toggles))
 	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 
-	belly_prefs = SANITIZE_LIST(belly_prefs)
-
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -560,7 +558,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lickable						= sanitize_integer(lickable, FALSE, TRUE, initial(lickable))
 	devourable						= sanitize_integer(devourable, FALSE, TRUE, initial(devourable))
 	digestable						= sanitize_integer(digestable, FALSE, TRUE, initial(digestable))
+	feeding							= sanitize_integer(feeding, FALSE, TRUE, initial(feeding))
 	vore_taste						= copytext(vore_taste, 1, MAX_TASTE_LEN)
+	belly_prefs 					= SANITIZE_LIST(belly_prefs)
 
 	cit_character_pref_load(S)
 
