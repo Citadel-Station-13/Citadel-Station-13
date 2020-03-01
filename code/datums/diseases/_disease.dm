@@ -35,7 +35,6 @@
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
 /datum/disease/New(make_typecache = TRUE)
-	..()
 	if(make_typecache && length(viable_mobtypes))
 		viable_mobtypes = typecacheof(viable_mobtypes)
 
