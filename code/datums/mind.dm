@@ -257,11 +257,11 @@
 	remove_rev()
 	SSticker.mode.update_cult_icons_removed(src)
 
-/datum/mind/proc/equip_traitor(traitor_class, silent = FALSE, datum/antagonist/uplink_owner)
+/datum/mind/proc/equip_traitor(datum/traitor_class/traitor_class, silent = FALSE, datum/antagonist/uplink_owner)
 	if(!current)
 		return
 	if(!traitor_class)
-		traitor_class = GLOB.traitor_classes[BASIC_TRAITOR]
+		traitor_class = GLOB.traitor_classes[TRAITOR_HUMAN]
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return

@@ -215,14 +215,6 @@
 			kill_objective.target = target_mind
 			kill_objective.update_explanation_text()
 			add_objective(kill_objective)
-
-		//Optional traitor objective
-		if(prob(PROB_ACTUAL_TRAITOR))
-			employer = "The Syndicate"
-			owner.special_role = TRAITOR_AGENT_ROLE
-			special_role = TRAITOR_AGENT_ROLE
-			syndicate = TRUE
-			forge_single_objective()
 	return
 
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
