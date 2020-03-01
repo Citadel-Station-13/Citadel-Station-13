@@ -1,5 +1,5 @@
 /datum/traitor_class/human/martyr
-	name = "Tiger Cooperative Agent"
+	name = "Tiger Cooperator"
 	employer = "The Tiger Cooperative"
 	weight = 2
 	chaos = 5
