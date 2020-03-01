@@ -350,12 +350,22 @@
 //
 // Clearly super important. Obviously.
 //
-/mob/living/proc/lick(var/mob/living/tasted in oview(1))
+/mob/living/proc/lick()
 	set name = "Lick Someone"
 	set category = "Vore"
 	set desc = "Lick someone nearby!"
 
-	if(!istype(tasted) || !(tasted.client?.prefs.lickable))
+	var/list/choices
+	for(var/mob/living/L in view(1))
+		if(L != src && (!L.ckey || L.client?.prefs.lickable))
+			LAZYADD(choices, L)
+
+	if(!choices)
+		return
+
+	var/mob/living/tasted = input(src, "Who would you like to lick? (Excluding yourself and those with the preference disabled)", "Licking") as null|anything in choices
+
+	if(QDELETED(tasted) || (L.ckey && !(L.client?.prefs.lickable)))
 		return
 
 	setClickCooldown(100)
