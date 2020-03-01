@@ -226,8 +226,14 @@
 /obj/structure/chair/comfy/black
 	color = rgb(167,164,153)
 
+/obj/structure/chair/comfy/green
+	color = rgb(81,173,106)
+
 /obj/structure/chair/comfy/lime
 	color = rgb(255,251,0)
+
+/obj/structure/chair/comfy/purple
+	color = rgb(255,50,230)
 
 /obj/structure/chair/comfy/plywood
 	name = "plywood chair"
