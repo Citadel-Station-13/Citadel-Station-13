@@ -33,6 +33,12 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		new /datum/stack_recipe("sofa (corner)", /obj/structure/chair/sofa/corner, one_per_turf = TRUE, on_floor = TRUE), \
 		)), \
 	//END OF CIT CHANGES
+	new/datum/stack_recipe_list("fancy sofas", list( \
+		new /datum/stack_recipe("sofa (middle)", /obj/structure/chair/corp_sofa, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("sofa (left)", /obj/structure/chair/corp_sofa/left, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("sofa (right)", /obj/structure/chair/corp_sofa/right, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("sofa (corner)", /obj/structure/chair/corp_sofa/corner, one_per_turf = TRUE, on_floor = TRUE), \
+		)), \
 	null, \
 	new/datum/stack_recipe_list("office chairs", list( \
 		new/datum/stack_recipe("dark office chair", /obj/structure/chair/office/dark, 5, one_per_turf = TRUE, on_floor = TRUE), \
@@ -97,6 +103,21 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2), \
 	new/datum/stack_recipe("extinguisher cabinet frame", /obj/item/wallframe/extinguisher_cabinet, 2), \
 	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1), \
+	null, \
+	new /datum/stack_recipe_list("chess pieces", list( \
+		new /datum/stack_recipe("White Pawn", /obj/structure/chess/WhitePawn, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White Rook", /obj/structure/chess/WhiteRook, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White Knight", /obj/structure/chess/WhiteKnight, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White Bishop", /obj/structure/chess/WhiteBishop, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White Queen", /obj/structure/chess/WhiteQueen, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("White King", /obj/structure/chess/WhiteKing, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Pawn", /obj/structure/chess/BlackPawn, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Rook", /obj/structure/chess/BlackRook, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Knight", /obj/structure/chess/BlackKnight, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Bishop", /obj/structure/chess/BlackBishop, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black Queen", /obj/structure/chess/BlackQueen, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("Black King", /obj/structure/chess/BlackKing, 2, time = 10, one_per_turf = 1, on_floor = 1), \
+	)), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_floor = TRUE), \
@@ -349,6 +370,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("black gloves", /obj/item/clothing/gloves/color/black, 3), \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
+	null, \
+	new /datum/stack_recipe("shower curtain", /obj/structure/curtain, 10, time = 10, one_per_turf = 1, on_floor = 1), \
 	))
 
 /obj/item/stack/sheet/cloth
