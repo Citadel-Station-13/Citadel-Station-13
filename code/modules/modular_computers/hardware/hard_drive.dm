@@ -158,8 +158,7 @@
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
 
-// Syndicate variant - very slight better
-/obj/item/computer_hardware/hard_drive/small/syndicate
+/obj/item/computer_hardware/hard_drive/small/syndicate	// Syndicate variant - very slight better
 	desc = "An efficient SSD for portable devices developed by a rival organisation."
 	power_usage = 8
 	max_capacity = 70

@@ -28,8 +28,7 @@
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/printer/mini)
 
-// Given by the syndicate as part of the contract uplink bundle
-/obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()
+/obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()	// Given by the syndicate as part of the contract uplink bundle
 	. = ..()
 	var/obj/item/computer_hardware/hard_drive/small/syndicate/hard_drive = new
 	hard_drive.store_file(new /datum/computer_file/program/contract_uplink)

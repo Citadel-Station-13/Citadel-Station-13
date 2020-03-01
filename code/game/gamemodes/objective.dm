@@ -1161,8 +1161,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/payout_bonus = 0
 	var/area/dropoff = null
 
-// Generate a random valid area on the station that the dropoff will happen.
-/datum/objective/contract/proc/generate_dropoff()
+/datum/objective/contract/proc/generate_dropoff()	// Generate a random valid area on the station that the dropoff will happen.
 	var/found = FALSE
 	while(!found)
 		var/area/dropoff_area = pick(GLOB.sortedAreas)
@@ -1170,8 +1169,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 			dropoff = dropoff_area
 			found = TRUE
 
-// Check if both the contractor and contract target are at the dropoff point.
-/datum/objective/contract/proc/dropoff_check(mob/user, mob/target)
+/datum/objective/contract/proc/dropoff_check(mob/user, mob/target)	// Check if both the contractor and contract target are at the dropoff point.
 	var/area/user_area = get_area(user)
 	var/area/target_area = get_area(target)
 	return (istype(user_area, dropoff) && istype(target_area, dropoff))

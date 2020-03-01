@@ -801,10 +801,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/readable_corrupted_text(text)
 	var/list/corruption_options = list("..", "£%", "~~\"", "!!", "*", "^", "$!", "-", "}", "?")
 	var/corrupted_text = ""
-	// Have every letter have a chance of creating corruption on either side
-	// Small chance of letters being removed in place of corruption - still overall readable
-	for(var/letter_index = 1; letter_index <= length(text); letter_index++)
-		var/letter = text[letter_index]
+	for(var/letter_index = 1; letter_index <= length(text); letter_index++)	// Have every letter have a chance of creating corruption on either side
+		var/letter = text[letter_index]	// Small chance of letters being removed in place of corruption - still overall readable
 		if(prob(15))
 			corrupted_text += pick(corruption_options)
 		if(prob(95))
