@@ -6,13 +6,13 @@
 	name = "Machine Design (AutoBottler)"
 	desc = "Allows for the construction of circuit boards used to build an Autobottler."
 	id = "autobottler"
-	materials = list(MAT_GLASS = 2000)
+	materials = list(/datum/material/glass = 2000)
 	build_path = /obj/item/circuitboard/machine/autobottler
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/bottle
-	materials = list(MAT_GLASS = 1200)
+	materials = list(/datum/material/glass = 1200)
 	build_type = AUTOBOTTLER
 	category = list("Storge")
 
@@ -143,7 +143,7 @@
 	build_path = /obj/item/reagent_containers/food/drinks/bottle/grenadine/empty
 
 /datum/design/bottle/export
-	materials = list(MAT_GLASS = 1200)
+	materials = list(/datum/material/glass = 1200)
 	build_type = AUTOBOTTLER
 	category = list("Brands")
 

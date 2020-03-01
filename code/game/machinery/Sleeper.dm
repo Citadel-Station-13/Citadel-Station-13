@@ -71,7 +71,7 @@
 		reagents.maximum_volume = (500*E)
 
 
-/obj/machinery/sleeper/update_icon()
+/obj/machinery/sleeper/update_icon_state()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "-open"
@@ -264,7 +264,7 @@
 			if(blood_id)
 				data["occupant"]["blood"] = list() // We can start populating this list.
 				var/blood_type = C.dna.blood_type
-				if(blood_id != "blood") // special blood substance
+				if(!(blood_id in GLOB.blood_reagent_types)) // special blood substance
 					var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 					if(R)
 						blood_type = R.name

@@ -95,6 +95,10 @@
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
 
+/obj/item/organ/liver/ipc
+	name = "reagent processing liver"
+	icon_state = "liver-c"
+
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"
 	icon_state = "liver-c"

@@ -10,7 +10,9 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/datum/traitor_class/traitor_kind
+	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	can_hijack = HIJACK_HIJACKER
+	hijack_speed = 0.5				//10 seconds per hijack stage by default
 
 /datum/antagonist/traitor/New()
 	..()
@@ -82,6 +84,7 @@
 	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
 	hearing_args[HEARING_RAW_MESSAGE] = message
 
+// needs to be refactored to base /datum/antagonist sometime..
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
 

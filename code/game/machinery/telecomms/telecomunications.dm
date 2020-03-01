@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 					links |= T
 					T.links |= src
 
-/obj/machinery/telecomms/update_icon()
+/obj/machinery/telecomms/update_icon_state()
 	if(on)
 		if(panel_open)
 			icon_state = "[initial(icon_state)]_o"
