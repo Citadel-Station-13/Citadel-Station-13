@@ -163,8 +163,7 @@
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"
-#define TRAIT_PERMABONER		"permanent_arousal"
-#define TRAIT_NEVERBONER		"never_aroused"
+#define TRAIT_EXHIBITIONIST		"exhibitionist"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
@@ -199,7 +198,6 @@
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 #define GHOSTROLE_TRAIT "ghostrole"
-#define APHRO_TRAIT "aphro"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
