@@ -31,14 +31,26 @@
 	..()
 
 /datum/antagonist/traitor/proc/create_contracts()
-	var/contract_generation_quantity = 6
-	var/lowest_TC_threshold = 28	// We don't want the sum of all the payouts to be under this amount
+	// 6 contracts
+	var/list/to_generate = list(
+		CONTRACT_PAYOUT_LARGE,
+		CONTRACT_PAYOUT_MEDIUM,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL
+	)
+	var/lowest_TC_threshold = 30	// We don't want the sum of all the payouts to be under this amount
 	var/total = 0
 	var/lowest_paying_sum = 0
 	var/datum/syndicate_contract/lowest_paying_contract
-	for(var/i = 1; i <= contract_generation_quantity; i++)
-		var/datum/syndicate_contract/contract_to_add = new(owner)
+
+	to_generate = shuffle(to_generate)	// Randomise order, so we don't have contracts always in payout order.
+	var/list/assigned_targets = list()
+	for (var/i = 1; i <= to_generate.len; i++)	// Generate contracts, and find the lowest paying.
+		var/datum/syndicate_contract/contract_to_add = new(owner, to_generate[i], assigned_targets)
 		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
+		assigned_targets.Add(contract_to_add.contract.target)
 		if(!lowest_paying_contract || (contract_payout_total < lowest_paying_sum))
 			lowest_paying_sum = contract_payout_total
 			lowest_paying_contract = contract_to_add

@@ -35,7 +35,7 @@
 	desc = "The Syndicate have offered you the chance to become a contractor, take on kidnapping contracts for TC and cash payouts. Upon purchase,  \
 			you'll be granted your own contract uplink embedded within the supplied tablet computer. Additionally, you'll be granted \
 			standard contractor gear to help with your mission - comes supplied with the tablet, specialised space suit, chameleon jumpsuit and mask, \
-			agent card, and three randomly selected low cost items. Includes potentially otherwise unobtainable items."
+			specialised contractor baton, and three randomly selected low cost items. Can include otherwise unobtainable items."
 	item = /obj/item/storage/box/syndie_kit/contract_kit
 	cost = 20
 	player_minimum = 20

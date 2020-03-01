@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(objectives)
 		if(M)
 			. += M
 
-/datum/objective/proc/find_target()
+/datum/objective/proc/find_target(blacklist)
 	var/list/datum/mind/owners = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
@@ -96,7 +96,8 @@ GLOBAL_LIST_EMPTY(objectives)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
-			possible_targets += possible_target
+			if(!(possible_target in blacklist))
+				possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
 		for(var/I in all_possible_targets)
