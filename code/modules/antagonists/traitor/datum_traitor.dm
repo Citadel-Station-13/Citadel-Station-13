@@ -10,7 +10,6 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/datum/traitor_class/traitor_kind
-	can_hijack = HIJACK_HIJACKER
 	hijack_speed = 0.5				//10 seconds per hijack stage by default
 
 /datum/antagonist/traitor/New()
