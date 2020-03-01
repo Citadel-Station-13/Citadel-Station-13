@@ -411,7 +411,7 @@
 
 /obj/structure/sign/poster/contraband/buzzfuzz
 	name = "Buzz Fuzz"
-	desc = "A poster advertising the newest drink Buzz Fuzz with its iconic slogan of ~A Hive of Flavour~."
+	desc = "A poster advertising the newest drink \"Buzz Fuzz\" with its iconic slogan of ~A Hive of Flavour~."
 	icon_state = "poster45"
 
 /obj/structure/sign/poster/official
@@ -602,13 +602,12 @@
 
 /obj/structure/sign/poster/official/spiderlings
 	name = "Spiderlings"
-	desc = "This poster helps inform the crew of the dangers of spiderlings."
+	desc = "This poster informs the crew of the dangers of spiderlings."
 	icon_state = "poster36_legit"
 
 /obj/structure/sign/poster/official/duelshotgun
 	name = "Cycler Shotgun Ad"
-	desc = "A advertisement poster of the latest breakthrough in shotgun technology, double barrable combat shotgun. \
-			The poster boasts about how easy it is to swap between the two cyclers."
+	desc = "A poster advertising an advanced dual magazine tubes shotgun, boasting about how easy it is to swap between the two tubes."
 	icon_state = "poster37_legit"
 
 #undef PLACE_SPEED
