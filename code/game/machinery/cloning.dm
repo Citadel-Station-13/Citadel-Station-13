@@ -61,7 +61,7 @@
 	QDEL_LIST(unattached_flesh)
 	. = ..()
 
-/obj/machinery/clonepod/RefreshParts()	
+/obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
 	efficiency = 0
 	for(var/obj/item/stock_parts/scanning_module/S in component_parts)
@@ -471,30 +471,36 @@
 		if(!istype(organ) || (organ.organ_flags & ORGAN_VITAL))
 			continue
 		organ.organ_flags |= ORGAN_FROZEN
-		organ.Remove(H, special=TRUE)
+		organ.Remove(TRUE)
 		organ.forceMove(src)
 		unattached_flesh += organ
 
 	flesh_number = unattached_flesh.len
 
-/obj/machinery/clonepod/update_icon()
-	cut_overlays()
-
+/obj/machinery/clonepod/update_icon_state()
 	if(mess)
 		icon_state = "pod_g"
+	else if(occupant)
+		icon_state = "pod_1"
+	else
+		icon_state = "pod_0"
+
+	if(panel_open)
+		icon_state = "pod_0_maintenance"
+
+/obj/machinery/clonepod/update_overlays()
+	. = ..()
+	if(mess)
 		var/image/gib1 = image(CRYOMOBS, "gibup")
 		var/image/gib2 = image(CRYOMOBS, "gibdown")
 		gib1.pixel_y = 27 + round(sin(world.time) * 3)
 		gib1.pixel_x = round(sin(world.time * 3))
 		gib2.pixel_y = 27 + round(cos(world.time) * 3)
 		gib2.pixel_x = round(cos(world.time * 3))
-		add_overlay(gib2)
-		add_overlay(gib1)
-		add_overlay("cover-on")
-
+		. += gib2
+		. += gib1
+		. += "cover-on"
 	else if(occupant)
-		icon_state = "pod_1"
-
 		var/image/occupant_overlay
 		var/completion = (flesh_number - unattached_flesh.len) / flesh_number
 
@@ -513,15 +519,9 @@
 		occupant_overlay.pixel_y = 27 + round(sin(world.time) * 3)
 		occupant_overlay.pixel_x = round(sin(world.time * 3))
 
-		add_overlay(occupant_overlay)
-		add_overlay("cover-on")
-	else
-		icon_state = "pod_0"
-
-	if(panel_open)
-		icon_state = "pod_0_maintenance"
-
-	add_overlay("panel")
+		. += occupant_overlay
+		. += "cover-on"
+	. += "panel"
 
 /*
  *	Manual -- A big ol' manual.

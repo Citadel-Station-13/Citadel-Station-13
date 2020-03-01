@@ -644,7 +644,7 @@
 	M.nutrition = 700
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
 	to_chat(user, "<span class='notice'>You feed the slime the potion, removing its hunger and calming it.</span>")
-	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+	var/newname = reject_bad_name(stripped_input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime", MAX_NAME_LEN), TRUE)
 
 	if (!newname)
 		newname = "pet slime"
@@ -909,12 +909,15 @@
 		to_chat(user, "<span class='warning'>The potion can only be used on gendered things!</span>")
 		return
 
-	if(L.gender == MALE)
+	if(L.gender == MALE && (L.client?.prefs.cit_toggles & FORCED_FEM))
 		L.gender = FEMALE
 		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
-	else
+	else if(L.gender == FEMALE && (L.client?.prefs.cit_toggles & FORCED_MASC))
 		L.gender = MALE
 		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+	else
+		to_chat(user,"<span class='warning'>It won't work on [L]!</span>")
+		return
 	L.regenerate_icons()
 	qdel(src)
 
@@ -980,7 +983,7 @@
 	icon_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
@@ -996,7 +999,7 @@
 	icon_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28

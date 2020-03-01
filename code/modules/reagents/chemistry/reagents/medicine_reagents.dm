@@ -216,6 +216,14 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/rezadone/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	. = ..()
+	if(iscarbon(M))
+		var/mob/living/carbon/patient = M
+		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
+			patient.cure_husk("burn")
+			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.")
+
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."
@@ -436,6 +444,10 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+			//Has to be at less than THRESHOLD_UNHUSK burn damage and have 100 synthflesh before unhusking. Corpses dont metabolize.
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && M.getFireLoss() < THRESHOLD_UNHUSK && M.reagents.has_reagent(/datum/reagent/medicine/synthflesh, 100))
+				M.cure_husk("burn")
+				M.visible_message("<span class='nicegreen'>Most of [M]'s burnt off or charred flesh has been restored.")
 	..()
 
 /datum/reagent/medicine/synthflesh/overdose_start(mob/living/M)
@@ -583,7 +595,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/salbutamol
 	name = "Salbutamol"
-	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
+	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent. Causes jittering."
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -593,6 +605,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustOxyLoss(-3*REM, 0)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
+	M.Jitter(5)
 	..()
 	. = 1
 
@@ -982,7 +995,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
@@ -1470,14 +1483,14 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
 	name = "Polypyrylium Oligomers"
-	description = "A�purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
+	description = "A purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
 	reagent_state = SOLID
 	color = "#9423FF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 50
 	taste_description = "numbing bitterness"
 
-/datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I w�nted a collection of small positive effects, this is as hard to obtain as coniine after all.
+/datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25)
 	M.adjustBruteLoss(-0.35, 0)
 	if(prob(50))
@@ -1499,4 +1512,3 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
 	. = 1
-

@@ -54,7 +54,7 @@
 	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>")
 	update_icon()
 
-/obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/arm/Remove(special = FALSE)
 	Retract()
 	..()
 
@@ -92,7 +92,7 @@
 	ADD_TRAIT(holder, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
-	holder.materials = null
+	holder.set_custom_materials(null)
 
 	if(istype(holder, /obj/item/assembly/flash/armimplant))
 		var/obj/item/assembly/flash/F = holder

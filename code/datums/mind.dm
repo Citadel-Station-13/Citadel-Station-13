@@ -61,7 +61,6 @@
 	var/late_joiner = FALSE
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
-
 	var/list/learned_recipes //List of learned recipe TYPES.
 
 /datum/mind/New(var/key)
@@ -139,7 +138,7 @@
 	SEND_SIGNAL(new_character, COMSIG_MOB_ON_NEW_MIND)
 
 /datum/mind/proc/store_memory(new_text)
-	if((length(memory) + length(new_text)) <= MAX_MESSAGE_LEN)
+	if((length_char(memory) + length_char(new_text)) <= MAX_MESSAGE_LEN)
 		memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
@@ -409,7 +408,7 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
+		var/new_memo = stripped_multiline_input(usr, "Write new memory", "Memory", memory, MAX_MESSAGE_LEN)
 		if (isnull(new_memo))
 			return
 		memory = new_memo
@@ -458,6 +457,7 @@
 
 			var/list/allowed_types = list(
 				/datum/objective/assassinate,
+				/datum/objective/assassinate/once,
 				/datum/objective/maroon,
 				/datum/objective/debrain,
 				/datum/objective/protect,
@@ -714,6 +714,11 @@
 	if(G)
 		G.reenter_corpse()
 
+/// Sets our can_hijack to the fastest speed our antag datums allow.
+/datum/mind/proc/get_hijack_speed()
+	. = 0
+	for(var/datum/antagonist/A in antag_datums)
+		. = max(., A.hijack_speed())
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)

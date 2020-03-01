@@ -45,16 +45,6 @@
 	..()
 	update_icon()
 
-/obj/mecha/working/ripley/update_icon()
-	..()
-	var/datum/component/armor_plate/C = GetComponent(/datum/component/armor_plate)
-	if (C.amount)
-		cut_overlays()
-		if(C.amount < 3)
-			add_overlay(occupant ? "ripley-g" : "ripley-g-open")
-		else
-			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
-
 /obj/mecha/working/ripley/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 10, "bullet" = 5, "laser" = 5))
@@ -146,11 +136,11 @@
 	..()
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
-		if(O && O in src.cargo)
+		if(O && (O in cargo))
 			occupant_message("<span class='notice'>You unload [O].</span>")
 			O.forceMove(drop_location())
 			cargo -= O
-			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
+			mecha_log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
 

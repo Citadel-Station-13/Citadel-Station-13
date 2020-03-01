@@ -61,7 +61,7 @@
 				trimmed_list.Remove(M)
 				continue
 		if (M.mind)
-			if (restrict_ghost_roles && M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL]) // Are they playing a ghost role?
+			if (restrict_ghost_roles && (M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
 				trimmed_list.Remove(M)
 				continue
 			if (M.mind.assigned_role in restricted_roles) // Does their job allow it?
@@ -494,7 +494,7 @@
 	high_population_requirement = 50
 	repeatable_weight_decrease = 2
 	repeatable = TRUE
-	property_weights = list("story_potential" = 1, "trust" = 1, "extended" = 1, "valid" = 2, "integrity" = 2)
+	property_weights = list("story_potential" = 1, "trust" = 1, "extended" = 1, "valid" = 2, "integrity" = 1)
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()

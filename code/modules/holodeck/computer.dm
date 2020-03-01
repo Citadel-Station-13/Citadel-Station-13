@@ -92,7 +92,7 @@
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = issilicon(user) || IsAdminGhost(user)
+	data["can_toggle_safety"] = hasSiliconAccessInArea(user) || IsAdminGhost(user)
 
 	return data
 
@@ -109,7 +109,7 @@
 			if(A)
 				load_program(A)
 		if("safety")
-			if(!issilicon(usr) && !IsAdminGhost(usr))
+			if(!hasSiliconAccessInArea(usr) && !IsAdminGhost(usr))
 				var/msg = "[key_name(usr)] attempted to emag the holodeck using a href they shouldn't have!"
 				message_admins(msg)
 				log_admin(msg)

@@ -40,14 +40,14 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize()
 	. = ..()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	bananium.insert_amount(max_recharge, MAT_BANANIUM)
+	bananium.insert_amount_mat(max_recharge, /datum/material/bananium)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	var/bananium_amount = bananium.amount(MAT_BANANIUM)
+	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
 	if(bananium_amount < max_recharge)
-		bananium.insert_amount(min(recharge_rate, max_recharge - bananium_amount), MAT_BANANIUM)
+		bananium.insert_amount_mat(min(recharge_rate, max_recharge - bananium_amount), /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/attack_self(mob/user)
 	ui_action_click(user)
@@ -57,10 +57,8 @@
 /obj/item/melee/transforming/energy/sword/bananium
 	name = "bananium sword"
 	desc = "An elegant weapon, for a more civilized age."
-	force = 0
-	throwforce = 0
-	force_on = 0
-	throwforce_on = 0
+	force_on = 15
+	throwforce_on = 15
 	hitsound = null
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
@@ -69,24 +67,26 @@
 	heat = 0
 	light_color = "#ffff00"
 	var/next_trombone_allowed = 0
+	var/datum/component/slippery/slipper
 
 /obj/item/melee/transforming/energy/sword/bananium/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
+	slipper = LoadComponent(/datum/component/slippery, 81, GALOSHES_DONT_HELP)
 	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/attack(mob/living/M, mob/living/user)
 	..()
 	if(active)
-		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-		slipper.Slip(M)
+		slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
+		slipper.Slip(src, M)
+		slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
 
 /obj/item/melee/transforming/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
 	if(active)
-		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-		slipper.Slip(hit_atom)
+		slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
+		slipper.Slip(src, hit_atom)
+		slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
 
 /obj/item/melee/transforming/energy/sword/bananium/attackby(obj/item/I, mob/living/user, params)
 	if((world.time > next_trombone_allowed) && istype(I, /obj/item/melee/transforming/energy/sword/bananium))
@@ -98,7 +98,6 @@
 
 /obj/item/melee/transforming/energy/sword/bananium/transform_weapon(mob/living/user, supress_message_text)
 	..()
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/ignition_effect(atom/A, mob/user)
@@ -108,8 +107,9 @@
 	if(!active)
 		transform_weapon(user, TRUE)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!</span>")
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-	slipper.Slip(user)
+	slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
+	slipper.Slip(src, user)
+	slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
 	return SHAME
 
 //BANANIUM SHIELD
@@ -126,16 +126,15 @@
 	on_force = 0
 	on_throwforce = 0
 	on_throw_speed = 1
+	var/datum/component/slippery/slipper
 
 /obj/item/shield/energy/bananium/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
+	slipper = LoadComponent(/datum/component/slippery, 81, GALOSHES_DONT_HELP)
 	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/attack_self(mob/living/carbon/human/user)
 	..()
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
@@ -149,8 +148,9 @@
 	if(active)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
-			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-			slipper.Slip(hit_atom)
+			slipper.lube_flags |= FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING
+			slipper.Slip(src, hit_atom)
+			slipper.lube_flags &= ~(FLYING_DOESNT_HELP|SLIP_WHEN_CRAWLING)
 		if(thrownby && !caught)
 			throw_at(thrownby, throw_range+2, throw_speed, null, 1)
 	else
@@ -203,24 +203,35 @@
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
 /obj/item/grenade/chem_grenade/teargas/moustache/prime()
-	var/myloc = get_turf(src)
+	var/list/check_later = list()
+	for(var/mob/living/carbon/C in get_turf(src))
+		check_later += C
 	. = ..()
-	for(var/mob/living/carbon/M in view(6, myloc))
-		if(!istype(M.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(M.wear_mask, /obj/item/clothing/mask/gas/mime) )
-			if(!M.wear_mask || M.dropItemToGround(M.wear_mask))
+	if(!.) //grenade did not properly prime.
+		return
+	for(var/M in check_later)
+		var/mob/living/carbon/C = M
+		if(!istype(C.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(C.wear_mask, /obj/item/clothing/mask/gas/mime))
+			if(!C.wear_mask || C.dropItemToGround(C.wear_mask))
 				var/obj/item/clothing/mask/fakemoustache/sticky/the_stash = new /obj/item/clothing/mask/fakemoustache/sticky()
-				M.equip_to_slot_or_del(the_stash, SLOT_WEAR_MASK, TRUE, TRUE, TRUE, TRUE)
+				C.equip_to_slot_or_del(the_stash, SLOT_WEAR_MASK, TRUE, TRUE, TRUE, TRUE)
 
 /obj/item/clothing/mask/fakemoustache/sticky
-	var/unstick_time = 600
+	var/unstick_time = 2 MINUTES
 
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
-	addtimer(CALLBACK(src, .proc/unstick), unstick_time)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT), unstick_time)
 
-/obj/item/clothing/mask/fakemoustache/sticky/proc/unstick()
-	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
+/obj/item/clothing/mask/fakemoustache/sticky/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_MASK)
+		ADD_TRAIT(user, TRAIT_NO_INTERNALS, STICKY_MOUSTACHE_TRAIT)
+
+/obj/item/clothing/mask/fakemoustache/sticky/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_NO_INTERNALS, STICKY_MOUSTACHE_TRAIT)
 
 //DARK H.O.N.K. AND CLOWN MECH WEAPONS
 
@@ -268,7 +279,6 @@
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
 	max_equip = 3
-	spawn_tracked = FALSE
 
 /obj/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
 	..()

@@ -212,7 +212,7 @@
 		emote("deathgasp")
 	ADD_TRAIT(src, TRAIT_FAKEDEATH, source)
 	ADD_TRAIT(src, TRAIT_DEATHCOMA, source)
-	tod = STATION_TIME_TIMESTAMP("hh:mm:ss")
+	tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	update_stat()
 
 /mob/living/proc/unignore_slowdown(list/sources)

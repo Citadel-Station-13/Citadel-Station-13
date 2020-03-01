@@ -40,6 +40,7 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 	var/digestable = FALSE
 	var/devourable = FALSE
 	var/feeding = FALSE
+	var/lickable = FALSE
 //	var/allowmobvore = TRUE
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
@@ -80,7 +81,7 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 //
 /datum/vore_preferences/proc/load_path(ckey,slot,filename="character",ext="json")
 	if(!ckey || !slot)	return
-	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/vore/[filename][slot].[ext]"
+	path = "data/player_saves/[ckey[1]]/[ckey]/vore/[filename][slot].[ext]"
 
 /datum/vore_preferences/proc/load_vore()
 	if(!client || !client_ckey)
@@ -107,6 +108,7 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 	digestable = json_from_file["digestable"]
 	devourable = json_from_file["devourable"]
 	feeding = json_from_file["feeding"]
+	lickable = json_from_file["lickable"]
 	vore_taste = json_from_file["vore_taste"]
 	belly_prefs = json_from_file["belly_prefs"]
 
@@ -117,6 +119,8 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 		devourable = FALSE
 	if(isnull(feeding))
 		feeding = FALSE
+	if(isnull(lickable))
+		lickable = FALSE
 	if(isnull(belly_prefs))
 		belly_prefs = list()
 
@@ -132,6 +136,7 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 			"digestable"			= digestable,
 			"devourable"			= devourable,
 			"feeding"				= feeding,
+			"lickable"				= lickable,
 			"vore_taste"			= vore_taste,
 			"belly_prefs"			= belly_prefs,
 		)

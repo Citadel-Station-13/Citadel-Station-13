@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
+	mats_per_stack = 500
 	var/turf_type = null
 	var/mineralType = null
 	novariants = TRUE
@@ -434,7 +435,7 @@
 	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
 	force = 6
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
@@ -444,6 +445,6 @@
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
-	materials = list() // All other Borg versions of items have no Metal or Glass - RR
+	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125

@@ -1,3 +1,5 @@
+/datum/config_entry/flag/auto_profile // Automatically start profiler on server start
+
 /datum/config_entry/flag/autoadmin  // if autoadmin is enabled
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -78,6 +80,18 @@
 
 /datum/config_entry/number/vote_period  // length of voting period (deciseconds, default 1 minute)
 	config_entry_value = 600
+	min_val = 0
+
+/datum/config_entry/number/vote_autotransfer_initial //length of time before the first autotransfer vote is called (deciseconds, default 2 hours)
+	config_entry_value = 72000
+	min_val = 0
+
+/datum/config_entry/number/vote_autotransfer_interval //length of time to wait before subsequent autotransfer votes (deciseconds, default 30 minutes)
+	config_entry_value = 18000
+	min_val = 0
+
+/datum/config_entry/number/vote_autotransfer_maximum // maximum extensions until the round autoends
+	config_entry_value = 4
 	min_val = 0
 
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
@@ -267,6 +281,9 @@
 
 /datum/config_entry/flag/tgstyle_maprotation
 
+/datum/config_entry/string/map_vote_type
+	config_entry_value = "SCORE"
+
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75
 	min_val = 0
@@ -389,6 +406,13 @@
 	config_entry_value = 50
 
 /datum/config_entry/flag/irc_announce_new_game
+	deprecated_by = /datum/config_entry/string/chat_announce_new_game
+
+/datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
+	return ""	//default broadcast
+
+/datum/config_entry/string/chat_announce_new_game
+	config_entry_value = null
 
 /datum/config_entry/flag/debug_admin_hrefs
 
@@ -431,3 +455,7 @@
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
+
+/datum/config_entry/number/max_bunker_days
+	config_entry_value = 7
+	min_val = 1

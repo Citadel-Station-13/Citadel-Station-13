@@ -7,7 +7,8 @@
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	var/volume = 30
-	var/reagent_flags //used to determine the reagent holder flags on add_initial_reagents()
+	var/reagent_flags = NONE //used to determine the reagent holder flags on add_initial_reagents()
+	var/reagent_value = DEFAULT_REAGENTS_VALUE //same as above but for the holder value multiplier.
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
@@ -22,7 +23,7 @@
 		volume = vol
 	if(container_flags & APTFT_VERB && length(possible_transfer_amounts))
 		verbs += /obj/item/reagent_containers/proc/set_APTFT
-	create_reagents(volume, reagent_flags)
+	create_reagents(volume, reagent_flags, reagent_value)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY","viruses"= list(F))
@@ -134,6 +135,7 @@
 		transform = initial(transform)
 		addtimer(CALLBACK(src, .proc/ForceResetRotation), 1)
 		return
+
 
 	else
 		if(isturf(target) && reagents.reagent_list.len && thrownby)

@@ -97,7 +97,7 @@
 	else
 		var/datum/action/innate/slime/evolve/E = new
 		E.Grant(src)
-	create_reagents(100)
+	create_reagents(100, NONE, NO_REAGENTS_VALUE)
 	set_colour(new_colour)
 	. = ..()
 	nutrition = 700

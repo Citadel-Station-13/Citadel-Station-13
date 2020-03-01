@@ -4,17 +4,31 @@
 	icon_state = "laser"
 	item_state = "laser"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
+	icon_state = "laser-p"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 	item_flags = NONE
+
+/obj/item/gun/energy/laser/practice/hyperburst
+	name = "toy hyper-burst launcher"
+	desc = "A toy laser with a unique beam shaping lens that projects harmless bolts capable of going through objects. Compatible with existing laser tag systems."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/magtag)
+	icon_state = "toyburst"
+	obj_flags = NONE
+	fire_delay = 40
+	weapon_weight = WEAPON_HEAVY
+	selfcharge = EGUN_SELFCHARGE
+	charge_delay = 2
+	recoil = 2
+	cell_type = /obj/item/stock_parts/cell/toymagburst
 
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
@@ -189,7 +203,7 @@
 	if(!ishuman(user) || !ishuman(target))
 		return
 
-	if(semicd)
+	if(on_cooldown())
 		return
 
 	if(user == target)
@@ -199,7 +213,7 @@
 		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
 			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
 
-	semicd = TRUE
+	busy_action = TRUE
 
 	if(!bypass_timer && (!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
@@ -207,10 +221,10 @@
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
 			else if(target && target.Adjacent(user))
 				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
-		semicd = FALSE
+		busy_action = FALSE
 		return
 
-	semicd = FALSE
+	busy_action = FALSE
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 

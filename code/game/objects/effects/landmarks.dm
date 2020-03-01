@@ -151,6 +151,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
 
+/obj/effect/landmark/start/paramedic
+	name = "Paramedic"
+	icon_state = "Paramedic"
+
 /obj/effect/landmark/start/scientist
 	name = "Scientist"
 	icon_state = "Scientist"
@@ -272,6 +276,27 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	..()
 	GLOB.newplayer_start += loc
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/nuclear_equipment
+	name = "bomb or clown beacon spawner"
+	var/nukie_path = /obj/item/sbeacondrop/bomb
+	var/clown_path = /obj/item/sbeacondrop/clownbomb
+
+/obj/effect/landmark/start/nuclear_equipment/after_round_start()
+	var/npath = nukie_path
+	if(istype(SSticker.mode, /datum/game_mode/nuclear/clown_ops))
+		npath = clown_path
+	else if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/D = SSticker.mode
+		if(locate(/datum/dynamic_ruleset/roundstart/nuclear/clown_ops) in D.current_rules)
+			npath = clown_path
+	new npath(loc)
+	return ..()
+
+/obj/effect/landmark/start/nuclear_equipment/minibomb
+	name = "minibomb or bombanana spawner"
+	nukie_path = /obj/item/storage/box/minibombs
+	clown_path = /obj/item/storage/box/bombananas
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
@@ -481,8 +506,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/box/engine/New()
 	. = ..()
 	templates = CONFIG_GET(keyed_list/box_random_engine)
-
-// Landmark for the mining station
-/obj/effect/landmark/stationroom/lavaland/station
-	templates = list("Public Mining Base" = 3)
-	icon = 'icons/rooms/Lavaland/Mining.dmi'

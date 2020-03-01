@@ -1,4 +1,3 @@
-
 //The advanced pea-green monochrome lcd of tomorrow.
 
 GLOBAL_LIST_EMPTY(PDAs)
@@ -42,6 +41,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 	var/list/overlays_icons = list('icons/obj/pda_alt.dmi' = list("pda-r", "screen_default", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay"))
 	var/current_overlays = PDA_STANDARD_OVERLAYS
+
+	//variables exclusively used on 'update_overlays' (which should never be called directly, and 'update_icon' doesn't use args anyway)
+	var/new_overlays = FALSE
+	var/new_alert = FALSE
+
 	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
 	var/font_mode = "font-family:monospace;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
@@ -77,6 +81,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/hidden = FALSE // Is the PDA hidden from the PDA list?
 	var/emped = FALSE
 	var/equipped = FALSE  //used here to determine if this is the first time its been picked up
+	var/allow_emojis = TRUE //if the pda can send emojis and actually have them parsed as such
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -123,7 +128,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		inserted_item = new inserted_item(src)
 	else
 		inserted_item =	new /obj/item/pen(src)
-	update_icon(FALSE, TRUE)
+	new_overlays = TRUE
+	update_icon()
 
 /obj/item/pda/CtrlShiftClick(mob/living/user)
 	. = ..()
@@ -144,7 +150,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	icon = new_icon
-	update_icon(FALSE, TRUE)
+	new_overlays = TRUE
+	update_icon()
 	to_chat(M, "[src] is now skinned as '[choice]'.")
 
 /obj/item/pda/proc/set_new_overlays()
@@ -188,7 +195,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/pref_skin = GLOB.pda_reskins[C.prefs.pda_skin]
 	if(icon != pref_skin)
 		icon = pref_skin
-		update_icon(FALSE, TRUE)
+		new_overlays = TRUE
+		update_icon()
 	equipped = TRUE
 
 /obj/item/pda/proc/update_label()
@@ -215,25 +223,27 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return TRUE
 	return FALSE
 
-/obj/item/pda/update_icon(alert = FALSE, new_overlays = FALSE)
+/obj/item/pda/update_overlays()
+	. = ..()
 	if(new_overlays)
 		set_new_overlays()
-	cut_overlays()
-	add_overlay(alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN])
+	. += new_alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN]
 	var/mutable_appearance/overlay = new()
 	overlay.pixel_x = overlays_x_offset
 	if(id)
 		overlay.icon_state = current_overlays[PDA_OVERLAY_ID]
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(inserted_item)
 		overlay.icon_state = current_overlays[PDA_OVERLAY_ITEM]
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(fon)
 		overlay.icon_state = current_overlays[PDA_OVERLAY_LIGHT]
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
 	if(pai)
 		overlay.icon_state = "[current_overlays[PDA_OVERLAY_PAI]][pai.pai ? "" : "_off"]"
-		add_overlay(new /mutable_appearance(overlay))
+		. += new /mutable_appearance(overlay)
+	new_overlays = FALSE
+	new_alert = FALSE
 
 /obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
@@ -255,10 +265,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
 	assets.send(user)
 
+	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/goonchat)
+	emoji_s.send(user) //Already sent by chat but no harm doing this
+
 	user.set_machine(src)
 
 	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 	dat += assets.css_tag()
+	dat += emoji_s.css_tag()
 
 	dat += "<a href='byond://?src=[REF(src)];choice=Refresh'>[PDAIMG(refresh)]Refresh</a>"
 
@@ -288,7 +302,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
 				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
-				dat += "[STATION_TIME_TIMESTAMP("hh:mm:ss")]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer]"
 
 				dat += "<br><br>"
@@ -338,6 +352,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=54'>[PDAIMG(medbot)]Bots Access</a></li>"
 					if (cartridge.access & CART_JANITOR)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=49'>[PDAIMG(bucket)]Custodial Locator</a></li>"
+					if(cartridge.access & CART_MIME)
+						dat += "<li><a href='byond://?src=[REF(src)];choice=55'>[PDAIMG(emoji)]Emoji Guidebook</a></li>"
 					if (istype(cartridge.radio))
 						dat += "<li><a href='byond://?src=[REF(src)];choice=40'>[PDAIMG(signaler)]Signaler System</a></li>"
 					if (cartridge.access & CART_NEWSCASTER)
@@ -635,13 +651,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text
+				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
 						return
 					else
-						ttone = copytext(sanitize(t), 1, 20)
+						ttone = t
 				else
 					U << browse(null, "window=pda")
 					return
@@ -715,7 +731,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/pda/proc/remove_id(mob/user)
-	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(hasSiliconAccessInArea(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	do_remove_id(user)
 
@@ -753,7 +769,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return
-	var/emoji_message = emoji_parse(message)
 	if(prob(1))
 		message += "\nSent from my PDA"
 	// Send the signal
@@ -782,7 +797,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		"job" = "[ownjob]",
 		"message" = message,
 		"targets" = string_targets,
-		"emoji_message" = emoji_message
+		"emojis" = allow_emojis
 	))
 	if (picture)
 		signal.data["photo"] = picture
@@ -796,15 +811,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 			playsound(src, 'sound/machines/terminal_error.ogg', 15, 1)
 
 	var/target_text = signal.format_target()
+	if(allow_emojis)
+		message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
+		signal.data["message"] = emoji_parse(signal.data["message"])
 	// Log it in our logs
 	tnote += "<i><b>&rarr; To [target_text]:</b></i><br>[signal.format_message()]<br>"
 	// Show it to ghosts
-	var/ghost_message = "<span class='name'>[owner] </span><span class='game say'>PDA Message</span> --> <span class='name'>[target_text]</span>: <span class='message'>[signal.format_message(TRUE)]</span>"
+	var/ghost_message = "<span class='name'>[owner] </span><span class='game say'>PDA Message</span> --> <span class='name'>[target_text]</span>: <span class='message'>[signal.format_message()]</span>"
 	for(var/i in GLOB.dead_mob_list)
 		var/mob/M = i
 		if(M?.client && M.client.prefs.chat_toggles & CHAT_GHOSTPDA)
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
-	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[emoji_message]\"</span>")
+	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text] (BLOCKED:[string_blocked])")
 	if (!silent)
@@ -835,8 +853,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
 			hrefend = "</a>"
 
-		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message(TRUE)] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>) <a href='byond://?src=[REF(src)];choice=toggle_block;target=[signal.data["name"]]'>(BLOCK/UNBLOCK)</a>")
+		var/inbound_message = signal.format_message()
+		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
+			inbound_message = emoji_parse(inbound_message)
 
+		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>) (<a href='byond://?src=[REF(src)];choice=toggle_block;target=[signal.data["name"]]'>BLOCK/UNBLOCK</a>)")
+
+	new_alert = TRUE
 	update_icon(TRUE)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
@@ -904,7 +927,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	remove_pen()
 
 /obj/item/pda/proc/toggle_light()
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+	if(hasSiliconAccessInArea(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(fon)
 		fon = FALSE
@@ -916,7 +939,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/remove_pen()
 
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(hasSiliconAccessInArea(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	if(inserted_item)

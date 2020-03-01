@@ -31,7 +31,8 @@
 			log_combat(user, M, "splashed", R)
 			reagents.clear_reagents()
 		else
-			if(M != user)
+			var/self_fed = M == user
+			if(!self_fed)
 				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
 							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
 				if(!do_mob(user, M))
@@ -44,7 +45,7 @@
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 			var/fraction = min(5/reagents.total_volume, 1)
 			reagents.reaction(M, INGEST, fraction)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5), 5)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, null, null, null, self_fed? "self swallowed" : "fed by [user]"), 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
@@ -61,7 +62,7 @@
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, log = "reagentcontainer-glass afterattack transfer to")
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
@@ -73,7 +74,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, log = "reagentcontainer-glass afterattack fill from")
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 	else if(reagents.total_volume)
@@ -96,7 +97,7 @@
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
 				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-				E.reagents.trans_to(src, E.reagents.total_volume)
+				E.reagents.trans_to(src, E.reagents.total_volume, log = "reagentcontainer-glass break egg in")
 				qdel(E)
 			return
 	..()
@@ -108,7 +109,7 @@
 	volume = 60
 	icon_state = "beaker"
 	item_state = "beaker"
-	materials = list(MAT_GLASS=500)
+	custom_materials = list(/datum/material/glass=500)
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
 	container_flags = PH_WEAK|APTFT_ALTCLICK|APTFT_VERB
 
@@ -158,7 +159,7 @@
 /obj/item/reagent_containers/glass/beaker/glass_dish
 	name = "glass dish"
 	desc = "A tiny glass dish. It can hold up to 3 units. Unable to withstand reagents of an extreme pH."
-	materials = list(MAT_GLASS=500)
+	custom_materials = list(/datum/material/glass = 500)
 	icon_state = "glass_disk"
 	possible_transfer_amounts = list(0.1,0.5,0.75,1,2,3)
 	volume = 3
@@ -166,21 +167,21 @@
 /obj/item/reagent_containers/glass/beaker/flask/large
 	name = "large flask"
 	desc = "A large flask. It can hold up to 80 units. Unable to withstand reagents of an extreme pH."
-	materials = list(MAT_GLASS=2500)
+	custom_materials = list(/datum/material/glass = 2500)
 	icon_state = "flasklarge"
 	volume = 80
 
 /obj/item/reagent_containers/glass/beaker/flask
 	name = "small flask"
 	desc = "A small flask. It can hold up to 40 units. Unable to withstand reagents of an extreme pH."
-	materials = list(MAT_GLASS=1000)
+	custom_materials = list(/datum/material/glass = 1000)
 	icon_state = "flasksmall"
 	volume = 40
 
 /obj/item/reagent_containers/glass/beaker/flask/spouty
 	name = "flask with spout"
 	desc = "A flask with a spout! It can hold up to 120 units. Unable to withstand reagents of an extreme pH."
-	materials = list(MAT_GLASS=2500)
+	custom_materials = list(/datum/material/glass = 2500)
 	icon_state = "flaskspouty"
 	possible_transfer_amounts = list(1,2,3,4,5,10,15,20,25,30,50,100,120)
 	volume = 120
@@ -189,7 +190,7 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 120 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerlarge"
-	materials = list(MAT_GLASS=2500)
+	custom_materials = list(/datum/material/glass=2500)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120)
@@ -199,7 +200,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 180 units. Is able to resist acid and alkaline solutions, but melts at 444 K."
 	icon_state = "beakerwhite"
-	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
+	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
@@ -214,7 +215,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 240 units, and is able to withstand all chemical situations."
 	icon_state = "beakergold"
-	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
+	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000, /datum/material/gold=1000, /datum/material/titanium=1000)
 	volume = 240
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,200,240)
@@ -225,7 +226,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	materials = list(MAT_METAL=3000)
+	custom_materials = list(/datum/material/iron=3000)
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -238,8 +239,9 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerbluespace"
-	materials = list(MAT_GLASS=3000)
+	custom_materials = list(/datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	volume = 300
+	material_flags = MATERIAL_NO_EFFECTS
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 	container_HP = 5
@@ -280,7 +282,7 @@
 	item_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	materials = list(MAT_METAL=200)
+	custom_materials = list(/datum/material/iron=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
@@ -307,7 +309,7 @@
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='warning'>[src] is out of water!</span>")
 		else
-			reagents.trans_to(O, 5)
+			reagents.trans_to(O, 5, log = "reagentcontainer-bucket fill mop")
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 	else if(isprox(O))
@@ -347,7 +349,7 @@
 	icon_state = "smallbottle"
 	item_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	materials = list(MAT_GLASS=0)
+	custom_materials = list(/datum/material/glass=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
@@ -360,7 +362,7 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	materials = list(MAT_GLASS=0)
+	custom_materials = list(/datum/material/glass=0)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20

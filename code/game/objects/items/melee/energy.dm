@@ -259,7 +259,11 @@
 	light_color = "#37FFF7"
 	actions_types = list()
 
-/obj/item/melee/transforming/energy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+/obj/item/melee/transforming/energy/sword/cx/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/melee/transforming/energy/sword/cx/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
@@ -301,7 +305,8 @@
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
-/obj/item/melee/transforming/energy/sword/cx/update_icon()
+/obj/item/melee/transforming/energy/sword/cx/update_overlays()
+	. = ..()
 	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "cxsword_blade")
 	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "cxsword_gem")
 
@@ -309,15 +314,10 @@
 		blade_overlay.color = light_color
 		gem_overlay.color = light_color
 
-	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
-
-	add_overlay(gem_overlay)
+	. += gem_overlay
 
 	if(active)
-		add_overlay(blade_overlay)
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
+		. += blade_overlay
 
 /obj/item/melee/transforming/energy/sword/cx/AltClick(mob/living/user)
 	. = ..()

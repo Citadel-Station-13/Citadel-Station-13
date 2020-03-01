@@ -146,7 +146,7 @@
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
-	radio = new /obj/item/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/silicon/ai(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
 
 	deploy_action.Grant(src)
@@ -315,10 +315,10 @@
 	var/is_anchored = FALSE
 	if(move_resist == MOVE_FORCE_OVERPOWERING)
 		move_resist = MOVE_FORCE_NORMAL
+		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
 	else
 		is_anchored = TRUE
 		move_resist = MOVE_FORCE_OVERPOWERING
-		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")

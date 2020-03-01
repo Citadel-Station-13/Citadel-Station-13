@@ -220,11 +220,11 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 	cost = 15
 	item_path = /obj/item/ammo_box/magazine/sniper_rounds
 
-/datum/gang_item/weapon/ammo/sleeper_ammo
+/*/datum/gang_item/weapon/ammo/sleeper_ammo	//no. absolutely no.
 	name = "Illicit Soporific Cartridges"
 	id = "sniper_ammo"
-	cost = 15
-	item_path = /obj/item/ammo_box/magazine/sniper_rounds/soporific
+	cost = 15	//who the fuck thought a ONE-HIT K.O. for 15 gbp IN AN ENVIRONMENT WHERE WE'RE GETTING RID OF HARDSTUNS is a GOOD IDEA
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds/soporific*/
 
 /datum/gang_item/weapon/machinegun
 	name = "Mounted Machine Gun"
@@ -289,12 +289,6 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 	id = "frag nade"
 	cost = 5
 	item_path = /obj/item/grenade/syndieminibomb/concussion/frag
-
-/datum/gang_item/equipment/stimpack
-	name = "Black Market Stimulants"
-	id = "stimpack"
-	cost = 12
-	item_path = /obj/item/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
