@@ -376,7 +376,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 5
-	cooldown = 30
+	cooldown = 20
 	stam_dmg = 45	//3 hit stamcrit
 	affect_silicon = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'

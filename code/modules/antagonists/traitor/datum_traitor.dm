@@ -13,10 +13,7 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
-	var/datum/syndicate_contract/current_contract
-	var/list/assigned_contracts = list()
-	var/contract_TC_payed_out = 0
-	var/contract_TC_to_redeem = 0
+	var/datum/contractor_hub/contractor_hub
 	hijack_speed = 0.5				//10 seconds per hijack stage by default
 
 /datum/antagonist/traitor/on_gain()
@@ -29,36 +26,6 @@
 		forge_traitor_objectives()
 	finalize_traitor()
 	..()
-
-/datum/antagonist/traitor/proc/create_contracts()
-	// 6 contracts
-	var/list/to_generate = list(
-		CONTRACT_PAYOUT_LARGE,
-		CONTRACT_PAYOUT_MEDIUM,
-		CONTRACT_PAYOUT_SMALL,
-		CONTRACT_PAYOUT_SMALL,
-		CONTRACT_PAYOUT_SMALL,
-		CONTRACT_PAYOUT_SMALL
-	)
-	var/lowest_TC_threshold = 30	// We don't want the sum of all the payouts to be under this amount
-	var/total = 0
-	var/lowest_paying_sum = 0
-	var/datum/syndicate_contract/lowest_paying_contract
-
-	to_generate = shuffle(to_generate)	// Randomise order, so we don't have contracts always in payout order.
-	var/list/assigned_targets = list()
-	for (var/i = 1; i <= to_generate.len; i++)	// Generate contracts, and find the lowest paying.
-		var/datum/syndicate_contract/contract_to_add = new(owner, to_generate[i], assigned_targets)
-		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
-		assigned_targets.Add(contract_to_add.contract.target)
-		if(!lowest_paying_contract || (contract_payout_total < lowest_paying_sum))
-			lowest_paying_sum = contract_payout_total
-			lowest_paying_contract = contract_to_add
-		total += contract_payout_total
-		contract_to_add.id = i
-		assigned_contracts.Add(contract_to_add)
-	if(total < lowest_TC_threshold)	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
-		lowest_paying_contract.contract.payout_bonus += (lowest_TC_threshold - total)
 
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
@@ -447,19 +414,8 @@
 
 	var/special_role_text = lowertext(name)
 
-	var/completed_contracts = 0
-	var/tc_total = contract_TC_payed_out + contract_TC_to_redeem
-	for (var/datum/syndicate_contract/contract in assigned_contracts)
-		if (contract.status == CONTRACT_STATUS_COMPLETE)
-			completed_contracts++
-
-
-	if (completed_contracts > 0)
-		var/pluralCheck = "contract"
-		if (completed_contracts > 1)
-			pluralCheck = "contracts"
-		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
-					<span class='greentext'>[tc_total] TC</span>!<br>"
+	if(contractor_hub)
+		result += contractor_round_end()
 
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
@@ -469,12 +425,44 @@
 
 	return result.Join("<br>")
 
+/// Proc detailing contract kit buys/completed contracts/additional info
+/datum/antagonist/traitor/proc/contractor_round_end()
+	var result = ""
+	var total_spent_rep = 0
+
+	var/completed_contracts = 0
+	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
+	for(var/datum/syndicate_contract/contract in contractor_hub.assigned_contracts)
+		if(contract.status == CONTRACT_STATUS_COMPLETE)
+			completed_contracts++
+
+	var/contractor_item_icons = "<br>" // Icons of purchases
+	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
+
+	for(var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)	// Get all the icons/total cost for all our items bought
+		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
+		total_spent_rep += contractor_purchase.cost
+		if(istype(contractor_purchase, /datum/contractor_item/contractor_partner))	// Special case for reinforcements, we want to show their ckey and name on round end.
+			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
+			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
+	if (contractor_hub.purchased_items.len)
+		result += contractor_item_icons
+		result += "<br>(used [total_spent_rep] Rep)"
+	result += "<br>"
+	if(completed_contracts > 0)
+		var/pluralCheck = "contract"
+		if(completed_contracts > 1)
+			pluralCheck = "contracts"
+		result += "Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
+					<span class='greentext'>[tc_total] TC</span>!<br>"
+	return result
+
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
 	var message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
-								<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
+					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
 
 	return message
 
