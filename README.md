@@ -10,9 +10,9 @@ Based and maintained from Citadel and /tg/station.<BR>
 
 [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-[![Build Status](https://travis-ci.org/ss13-nukeops/nostration.svg?branch=master)](https://travis-ci.org/ss13-nukeops/nostration) [![Krihelimeter](http://www.krihelinator.xyz/badge/ss13-nukeops/nostration)](http://www.krihelinator.xyz)
+[![Build Status](https://travis-ci.org/nuke-ops/ss13-nostration.svg?branch=master)](https://travis-ci.org/nuke-ops/ss13-nostration) [![Krihelimeter](http://www.krihelinator.xyz/badge/nuke-ops/ss13-nostration)](http://www.krihelinator.xyz)
 
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/ss13-nukeops/nostration.svg)](http://isitmaintained.com/project/ss13-nukeops/nostration "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/ss13-nukeops/nostration.svg)](http://isitmaintained.com/project/ss13-nukeops/nostration "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/nuke-ops/ss13-nostration.svg)](http://isitmaintained.com/project/nuke-ops/ss13-nostration "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/nuke-ops/ss13-nostration.svg)](http://isitmaintained.com/project/nuke-ops/ss13-nostration "Average time to resolve an issue")
 
 **Upstream /tg/ Information**  
 **Website:** https://tgstation13.org  
