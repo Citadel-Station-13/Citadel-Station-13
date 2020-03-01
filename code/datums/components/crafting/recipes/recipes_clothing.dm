@@ -42,18 +42,8 @@
 	result = /obj/item/clothing/glasses/hud/security/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	blacklist = list(/obj/item/clothing/glasses/hud/security/prescription)
+	parts = list(obj/item/clothing/glasses/hud/security = 1)
 	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
-				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/hudsunsec_p
-	name = "Security Prescription HUDsunglasses"
-	result = /obj/item/clothing/glasses/hud/security/sunglasses/prescription
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/hud/security/prescription = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
@@ -71,18 +61,8 @@
 	result = /obj/item/clothing/glasses/hud/health/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	blacklist = list(/obj/item/clothing/glasses/hud/health/prescription)
+	parts = list(obj/item/clothing/glasses/hud/health = 1)
 	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
-				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/hudsunmed_p
-	name = "Medical Prescription HUDsunglasses"
-	result = /obj/item/clothing/glasses/hud/health/sunglasses/prescription
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/hud/health/prescription = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
@@ -118,17 +98,8 @@
 	result = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	parts = list(obj/item/clothing/glasses/hud/diagnostic = 1)
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
-				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/diagnostic_sunglasses_prescription
-	name = "Diagnostic Prescription HUDsunglasses"
-	result = /obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
@@ -140,7 +111,6 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses = 1)
 	category = CAT_CLOTHING
-
 
 /* //Kevinz doesn't want it as a recipe for now, leaving it in if anything ever changes to let it in
 /datum/crafting_recipe/stunglasses
@@ -186,7 +156,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 7,
 				/obj/item/stack/sheet/leather = 3)
 	time = 70
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_toolbelt
@@ -195,7 +164,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 5,
 				/obj/item/stack/sheet/leather = 2)
 	time = 30
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_bandolier
@@ -204,7 +172,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 6,
 				/obj/item/stack/sheet/leather = 2)
 	time = 50
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_helmet
@@ -213,7 +180,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 4,
 				/obj/item/stack/sheet/leather = 2)
 	time = 30
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_vest
@@ -222,7 +188,6 @@
 	reqs = list(/obj/item/stack/sheet/durathread = 6,
 				/obj/item/stack/sheet/leather = 3)
 	time = 50
-	always_availible = TRUE
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_wintercoat
@@ -239,5 +204,4 @@
 	reqs = list(/obj/item/clothing/suit/hooded/wintercoat = 1,
 				/obj/item/bedsheet/cosmos = 1)
 	time = 60
-	always_availible = TRUE
 	category = CAT_CLOTHING
