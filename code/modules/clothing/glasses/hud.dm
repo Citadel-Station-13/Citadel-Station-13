@@ -4,6 +4,16 @@
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
 
+/obj/item/clothing/glasses/hud/CheckParts(list/parts_list)
+	. = ..()
+	if(vision_correction)
+		return
+	for(var/obj/item/clothing/glasses/G in parts_list)
+		if(G.vision_correction)
+			vision_correction = TRUE
+			name = "prescription [name]"
+			return
+
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(hud_type && slot == SLOT_GLASSES)
