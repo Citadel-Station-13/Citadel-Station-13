@@ -853,7 +853,7 @@
 		user.adjustBruteLoss(rand(10,16))
 
 /obj/item/clothing/head/hooded/winterhood/narsie
-	desc = "A black winter hood full of whispering secrets that only He shall ever know."
+	desc = "A black winter hood full of whispering secrets that only She shall ever know."
 	icon_state = "winterhood_narsie"
 
 /obj/item/clothing/suit/hooded/wintercoat/ratvar/fake
