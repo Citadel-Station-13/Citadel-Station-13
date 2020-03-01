@@ -499,7 +499,6 @@
 		gib2.pixel_x = round(cos(world.time * 3))
 		. += gib2
 		. += gib1
-		. += "cover-on"
 	else if(occupant)
 		var/image/occupant_overlay
 		var/completion = (flesh_number - unattached_flesh.len) / flesh_number
@@ -520,7 +519,7 @@
 		occupant_overlay.pixel_x = round(sin(world.time * 3))
 
 		. += occupant_overlay
-		. += "cover-on"
+	. += "cover-on"
 	. += "panel"
 
 /*
