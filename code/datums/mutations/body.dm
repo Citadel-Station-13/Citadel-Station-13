@@ -291,6 +291,8 @@
 	var/warpchance = 0
 
 /datum/mutation/human/badblink/on_life()
+	if (!owner)
+		return
 	if(prob(warpchance))
 		var/warpmessage = pick(
 		"<span class='warning'>With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air.</span>",
