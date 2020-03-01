@@ -28,14 +28,15 @@
 
 	if(data["blood_type"] == "SY")
 		//Synthblood is very disgusting to bloodsuckers. They will puke it out to expel it, unless they have masquarade on
-		if(reac_volume > 3)
-			disgust_bloodsucker(L, 5, FALSE, FALSE, TRUE)
-		//If theres more than 8 units, they will start expelling it, even if they are masquarading.
-		if(reac_volume > 6)
-			disgust_bloodsucker(L, 7, -5, TRUE, TRUE)
-		//If they have too much in them, they will also puke out their blood.
-		else
-			disgust_bloodsucker(L, 3, FALSE, FALSE, FALSE)
+		switch(reac_volume)
+			if(0 to 3)
+				disgust_bloodsucker(L, 3, FALSE, FALSE, FALSE)
+			if(3 to 6)
+				//If theres more than 8 units, they will start expelling it, even if they are masquarading.
+				disgust_bloodsucker(L, 5, FALSE, FALSE, TRUE)
+			else
+				//If they have too much in them, they will also puke out their blood.
+				disgust_bloodsucker(L, 7, -5, TRUE, TRUE)
 
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
@@ -49,7 +50,7 @@
 
 /datum/reagent/blood/on_mob_life(mob/living/carbon/C)	//Because lethals are preferred over stamina. damnifino.
 	var/blood_id = C.get_blood_id()
-	if((blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood) && !HAS_TRAIT(C, TRAIT_NOMARROW))
+	if((blood_id in GLOB.blood_reagent_types) && !HAS_TRAIT(C, TRAIT_NOMARROW))
 		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))	//we only care about bloodtype here because this is where the poisoning should be
 			C.adjustToxLoss(rand(2,8)*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain beneficial toxin as slime person
 	..()

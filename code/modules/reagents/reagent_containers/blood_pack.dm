@@ -143,7 +143,7 @@
 /obj/item/reagent_containers/blood/bluespace/attack(mob/living/carbon/C, mob/user, def_zone)
 	if(user.a_intent == INTENT_HELP)
 		if(user != C)
-			to_chat(user, "<span class='notice'>You cant force people to drink from the [src]. Nothing comes out.</span>")
+			to_chat(user, "<span class='notice'>You can't force people to drink from the [src]. Nothing comes out from it.</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You try to suck on the [src], but nothing comes out.</span>")
