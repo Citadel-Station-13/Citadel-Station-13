@@ -1075,7 +1075,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 		var/mob/living/carbon/human/H = owner
 		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK))
 		hoarded_item = I
-	
+
 
 
 GLOBAL_LIST_EMPTY(possible_sabotages)
@@ -1092,7 +1092,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	if(!GLOB.possible_sabotages.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/sabotage_objective))
 			new I
-			
+
 /datum/objective/sabotage/find_target()
 	var/list/datum/mind/owners = get_owners()
 	var/approved_targets = list()
@@ -1155,3 +1155,23 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 
 /datum/objective/flavor/wizard
 	flavor_file = "strings/flavor_objectives/wizard.txt"
+
+/datum/objective/contract
+	var/payout = 0
+	var/payout_bonus = 0
+	var/area/dropoff = null
+
+// Generate a random valid area on the station that the dropoff will happen.
+/datum/objective/contract/proc/generate_dropoff()
+	var/found = FALSE
+	while(!found)
+		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		if(dropoff_area && is_station_level(dropoff_area.z) && dropoff_area.valid_territory)
+			dropoff = dropoff_area
+			found = TRUE
+
+// Check if both the contractor and contract target are at the dropoff point.
+/datum/objective/contract/proc/dropoff_check(mob/user, mob/target)
+	var/area/user_area = get_area(user)
+	var/area/target_area = get_area(target)
+	return (istype(user_area, dropoff) && istype(target_area, dropoff))
