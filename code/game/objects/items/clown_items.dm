@@ -102,7 +102,7 @@
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
-	else if(istype(target, /obj/item/ammo_casing/spent) && bulletclean == TRUE) //No messages otherwise it gives us away
+	else if(bulletclean && istype(target, /obj/item/ammo_casing/spent)) //No messages otherwise it gives us away
 		if(do_after(user, src.cleanspeed, target = target))
 			qdel(target)
 	else
