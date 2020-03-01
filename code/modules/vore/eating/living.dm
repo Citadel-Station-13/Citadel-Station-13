@@ -365,7 +365,7 @@
 
 	var/mob/living/tasted = input(src, "Who would you like to lick? (Excluding yourself and those with the preference disabled)", "Licking") as null|anything in choices
 
-	if(QDELETED(tasted) || (L.ckey && !(L.client?.prefs.lickable)))
+	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.lickable)))
 		return
 
 	setClickCooldown(100)
