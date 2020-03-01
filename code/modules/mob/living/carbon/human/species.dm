@@ -1587,7 +1587,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"<span class='notice'>You slap [user == target ? "yourself" : "\the [target]"] in the face! </span>",\
 			"You hear a slap."
 		)
-	if (!HAS_TRAIT(target, TRAIT_NYMPHO))
+		if (!HAS_TRAIT(target, TRAIT_NYMPHO))
 			stop_wagging_tail(target)
 		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
 		user.adjustStaminaLossBuffered(3)
