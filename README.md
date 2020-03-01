@@ -1,15 +1,20 @@
-## Citadel Station 13
-Based and maintained from /tg/station.
+##[no]St[r]ation 13 <BR>
+Based and maintained from Citadel and /tg/station.<BR>
 
-[![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/pretty-risque.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](http://forthebadge.com)
+
+[![forthebadge](https://forthebadge.com/images/badges/made-with-crayons.svg)](https://forthebadge.com) 
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)](https://forthebadge.com) 
+[![forthebadge](http://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](http://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/mom-made-pizza-rolls.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-pug.svg)](https://forthebadge.com)
 
 [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-[![Build Status](https://api.travis-ci.org/Citadel-Station-13/Citadel-Station-13.png)](https://travis-ci.org/Citadel-Station-13/Citadel-Station-13) [![Krihelimeter](http://www.krihelinator.xyz/badge/Citadel-Station-13/Citadel-Station-13)](http://www.krihelinator.xyz)
+[![Build Status](https://travis-ci.org/ss13-nukeops/nostration.svg?branch=master)](https://travis-ci.org/ss13-nukeops/nostration) [![Krihelimeter](http://www.krihelinator.xyz/badge/ss13-nukeops/nostration)](http://www.krihelinator.xyz)
 
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/ss13-nukeops/nostration.svg)](http://isitmaintained.com/project/ss13-nukeops/nostration "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/ss13-nukeops/nostration.svg)](http://isitmaintained.com/project/ss13-nukeops/nostration "Average time to resolve an issue")
 
-**Upstream Information**  
+**Upstream /tg/ Information**  
 **Website:** https://tgstation13.org  
 **Code:** https://github.com/tgstation/tgstation  
 **Wiki** https://tgstation13.org/wiki/Main_Page  
@@ -21,6 +26,12 @@ Based and maintained from /tg/station.
 **Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8  
 **Code:** https://github.com/Citadel-Station-13/Citadel-Station-13  
 **Discord:**  [Here](https://discord.gg/E6SQuhz)  
+
+**Nostration**
+**Forums:** Not yet
+**Ban Appeals:** Discord for this moment
+**Code:** https://github.com/ss13-nukeops/nostration
+**Discord:**  [Here](https://discordapp.com/invite/bxgeRPq).
   
 ## DOWNLOADING
 
