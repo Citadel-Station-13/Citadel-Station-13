@@ -38,6 +38,7 @@
 	result = /obj/item/clothing/glasses/hud/security/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	blacklist = list(/obj/item/clothing/glasses/hud/security/prescription)
 	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
@@ -56,6 +57,7 @@
 	result = /obj/item/clothing/glasses/hud/health/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	blacklist = list(/obj/item/clothing/glasses/hud/health/prescription)
 	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
