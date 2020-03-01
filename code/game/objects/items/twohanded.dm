@@ -97,9 +97,6 @@
 		return
 	unwield(user)
 
-/obj/item/twohanded/update_icon()
-	return
-
 /obj/item/twohanded/attack_self(mob/user)
 	. = ..()
 	if(wielded) //Trying to unwield it
@@ -241,7 +238,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
-/obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/fireaxe/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
 
@@ -342,7 +339,7 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/twohanded/dualsaber/update_icon()
+/obj/item/twohanded/dualsaber/update_icon_state()
 	if(wielded)
 		icon_state = "dualsaber[item_color][wielded]"
 	else
@@ -492,23 +489,9 @@
 	spinnable = FALSE
 	total_mass_on = 4
 
-/obj/item/twohanded/dualsaber/hypereutactic/chaplain
-	name = "\improper divine lightblade"
-	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
-	force = 5
-	force_unwielded = 5
-	force_wielded = 20
-	block_chance = 50
-	armour_penetration = 0
-	var/chaplain_spawnable = TRUE
-	obj_flags = UNIQUE_RENAME
-
-/obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
+/obj/item/twohanded/dualsaber/hypereutactic/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
-
-/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
-	return FALSE
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/twohanded/dualsaber/hypereutactic/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
@@ -519,7 +502,11 @@
 		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
 	return TRUE
 
-/obj/item/twohanded/dualsaber/hypereutactic/update_icon()
+/obj/item/twohanded/dualsaber/hypereutactic/update_icon_state()
+	return
+
+/obj/item/twohanded/dualsaber/hypereutactic/update_overlays()
+	. = ..()
 	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "hypereutactic_blade")
 	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "hypereutactic_gem")
 
@@ -527,15 +514,10 @@
 		blade_overlay.color = light_color
 		gem_overlay.color = light_color
 
-	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
-
-	add_overlay(gem_overlay)
+	. += gem_overlay
 
 	if(wielded)
-		add_overlay(blade_overlay)
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
+		. += blade_overlay
 
 	clean_blood()
 
@@ -575,6 +557,24 @@
 	. = ..()
 	update_icon()
 	update_light()
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain
+	name = "divine lightblade"
+	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
+	force = 5
+	force_unwielded = 5
+	force_wielded = 20
+	block_chance = 50
+	armour_penetration = 0
+	var/chaplain_spawnable = TRUE
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
+	return FALSE
 
 //spears
 /obj/item/twohanded/spear
@@ -639,7 +639,7 @@
 	if(explosive)
 		. += "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>"
 
-/obj/item/twohanded/spear/update_icon()
+/obj/item/twohanded/spear/update_icon_state()
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
 	else
@@ -717,9 +717,10 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
 
-/obj/item/twohanded/required/chainsaw/Initialize()
+/obj/item/twohanded/required/chainsaw/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
@@ -738,7 +739,7 @@
 	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : force
-	icon_state = "chainsaw_[on ? "on" : "off"]"
+	update_icon()
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 
@@ -747,11 +748,8 @@
 	else
 		hitsound = "swing_hit"
 
-	if(src == user.get_active_held_item()) //update inhands
-		user.update_inv_hands()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+/obj/item/twohanded/required/chainsaw/update_icon_state()
+	icon_state = "chainsaw_[on ? "on" : "off"]"
 
 /obj/item/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
@@ -844,7 +842,7 @@
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
 
-/obj/item/twohanded/pitchfork/update_icon()
+/obj/item/twohanded/pitchfork/update_icon_state()
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/twohanded/pitchfork/suicide_act(mob/user)
@@ -918,7 +916,7 @@
 				return 1
 	return 0
 
-/obj/item/twohanded/vibro_weapon/update_icon()
+/obj/item/twohanded/vibro_weapon/update_icon_state()
 	icon_state = "hfrequency[wielded]"
 
 /*
@@ -930,7 +928,7 @@
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 	force_wielded = 23
 
-/obj/item/twohanded/fireaxe/boneaxe/update_icon()
+/obj/item/twohanded/fireaxe/boneaxe/update_icon_state()
 	icon_state = "bone_axe[wielded]"
 
 /*
@@ -956,7 +954,7 @@
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
 
-/obj/item/twohanded/bonespear/update_icon()
+/obj/item/twohanded/bonespear/update_icon_state()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars
@@ -1120,7 +1118,7 @@
 		turn_off(user)
 	add_fingerprint(user)
 
-/obj/item/twohanded/electrostaff/update_icon()
+/obj/item/twohanded/electrostaff/update_icon_state()
 	. = ..()
 	if(!wielded)
 		icon_state = "electrostaff_3"
@@ -1314,6 +1312,8 @@
 			target = A
 		else
 			target = A.loc
+			if(!isturf(target)) //read: Mob inventories.
+				return
 	else
 		target = user.loc
 	if (locate(/obj/structure/table) in target.contents)

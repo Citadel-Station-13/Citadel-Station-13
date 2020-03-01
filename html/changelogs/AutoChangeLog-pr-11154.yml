@@ -1,4 +1,0 @@
-author: "Kraseo"
-delete-after: True
-changes: 
-  - bugfix: "Nightmares no longer delete entire guns from existence for merely having a light on them."
