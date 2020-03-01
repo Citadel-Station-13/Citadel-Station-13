@@ -42,6 +42,9 @@
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
+		//citadel code
+		if(AROUSAL)
+			adjustArousalLoss(damage_amount)
 	return TRUE
 
 
