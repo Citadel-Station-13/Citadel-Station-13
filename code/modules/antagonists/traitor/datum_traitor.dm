@@ -436,7 +436,7 @@
 		if(contract.status == CONTRACT_STATUS_COMPLETE)
 			completed_contracts++
 
-	var/contractor_item_icons = "<br>" // Icons of purchases
+	var/contractor_item_icons = "" // Icons of purchases
 	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
 
 	for(var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)	// Get all the icons/total cost for all our items bought
@@ -446,8 +446,8 @@
 			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
 			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
 	if (contractor_hub.purchased_items.len)
-		result += contractor_item_icons
 		result += "<br>(used [total_spent_rep] Rep)"
+		result += contractor_item_icons
 	result += "<br>"
 	if(completed_contracts > 0)
 		var/pluralCheck = "contract"
