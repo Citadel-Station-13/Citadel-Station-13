@@ -33,6 +33,10 @@
 				/obj/item/organ/ears/cat = 1)
 	category = CAT_CLOTHING
 
+////////
+//Huds//
+////////
+
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
 	result = /obj/item/clothing/glasses/hud/security/sunglasses
@@ -40,6 +44,16 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	blacklist = list(/obj/item/clothing/glasses/hud/security/prescription)
 	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
+				  /obj/item/clothing/glasses/sunglasses = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/hudsunsec_p
+	name = "Security Prescription HUDsunglasses"
+	result = /obj/item/clothing/glasses/hud/security/sunglasses/prescription
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/security/prescription = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
@@ -59,6 +73,16 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	blacklist = list(/obj/item/clothing/glasses/hud/health/prescription)
 	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
+				  /obj/item/clothing/glasses/sunglasses = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/hudsunmed_p
+	name = "Medical Prescription HUDsunglasses"
+	result = /obj/item/clothing/glasses/hud/health/sunglasses/prescription
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/health/prescription = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
@@ -88,6 +112,36 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/sunglasses/reagent = 1)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/diagnostic_sunglasses
+	name = "Diagnostic HUDsunglasses"
+	result = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
+				  /obj/item/clothing/glasses/sunglasses = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/diagnostic_sunglasses_prescription
+	name = "Diagnostic Prescription HUDsunglasses"
+	result = /obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription = 1,
+				  /obj/item/clothing/glasses/sunglasses = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/diagnostic_singlasses_removal
+	name = "Diagnostic HUDsunglasses removal"
+	result = /obj/item/clothing/glasses/sunglasses
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses = 1)
+	category = CAT_CLOTHING
+
+
 /* //Kevinz doesn't want it as a recipe for now, leaving it in if anything ever changes to let it in
 /datum/crafting_recipe/stunglasses
 	name = "Stunglasses"
