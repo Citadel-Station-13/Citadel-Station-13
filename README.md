@@ -27,11 +27,14 @@ Based and maintained from Citadel and /tg/station.<BR>
 **Code:** https://github.com/Citadel-Station-13/Citadel-Station-13  
 **Discord:**  [Here](https://discord.gg/E6SQuhz)  
 
-**Nostration**
-**Forums:** Not yet
-**Ban Appeals:** Discord for this moment
-**Code:** https://github.com/ss13-nukeops/nostration
-**Discord:**  [Here](https://discordapp.com/invite/bxgeRPq).
+  
+**Nostration**  
+**Website:** http://nukeops.asuscomm.com/ss13  
+**Forums:** Not yet  
+**Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8  
+**Code:** https://github.com/ss13-nukeops/nostration  
+**Discord:**  [Here](https://discord.com/invite/bxgeRPq)  
+
   
 ## DOWNLOADING
 
