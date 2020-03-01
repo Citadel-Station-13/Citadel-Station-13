@@ -21,7 +21,7 @@
 		return FALSE
 
 
-	if(!D.infectable_mobtypes[type])
+	if(!D.viable_mobtypes[type])
 		return FALSE
 
 	return TRUE

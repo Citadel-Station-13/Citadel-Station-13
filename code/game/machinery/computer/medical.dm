@@ -248,7 +248,7 @@
 
 			else if(href_list["vir"])
 				var/type = href_list["vir"]
-				var/datum/disease/Dis = new type(0)
+				var/datum/disease/Dis = new type(FALSE)
 				var/AfS = ""
 				for(var/mob/M in Dis.viable_mobtypes)
 					AfS += " [initial(M.name)];"

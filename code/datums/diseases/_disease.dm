@@ -18,6 +18,7 @@
 	var/stage_prob = 4
 
 	//Other
+	var/list/viable_mobtypes = list() //typecache of viable mobs
 	var/mob/living/carbon/affected_mob = null
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
 	var/infectivity = 65
@@ -29,16 +30,14 @@
 	var/list/required_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
-	var/list/viable_mobtypes //typecache of viable mobs passed down the below variable.
-	var/list/infectable_mobtypes = list()
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
-/datum/disease/New()
+/datum/disease/New(make_typecache = TRUE)
 	..()
-	if(viable_mobtypes)
-		infectable_mobtypes = typecacheof(viable_mobtypes)
+	if(make_typecache && length(viable_mobtypes))
+		viable_mobtypes = typecacheof(viable_mobtypes)
 
 /datum/disease/Destroy()
 	. = ..()
