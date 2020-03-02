@@ -42,7 +42,7 @@
 	result = /obj/item/clothing/glasses/hud/security/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	parts = list(obj/item/clothing/glasses/hud/security = 1)
+	parts = list(/obj/item/clothing/glasses/hud/security = 1)
 	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
@@ -61,9 +61,9 @@
 	result = /obj/item/clothing/glasses/hud/health/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	parts = list(obj/item/clothing/glasses/hud/health = 1)
-	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
+	parts = list(/obj/item/clothing/glasses/hud/health = 1)
 				  /obj/item/clothing/glasses/sunglasses = 1,
+	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
 
@@ -98,7 +98,7 @@
 	result = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	parts = list(obj/item/clothing/glasses/hud/diagnostic = 1)
+	parts = list(/obj/item/clothing/glasses/hud/diagnostic = 1)
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
