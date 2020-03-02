@@ -68,6 +68,9 @@
 					victim_belongings.Add(W)
 			var/obj/structure/closet/supplypod/extractionpod/pod = source
 			pod.send_up(pod)	// Handle the pod returning
+			if(ishuman(M))
+				var/mob/living/carbon/human/target = M	// After we remove items, at least give them what they need to live.
+				target.dna.species.give_important_for_life(target)
 			handleVictimExperience(M)	// After pod is sent we start the victim narrative/heal.
 			var/points_to_check = SSshuttle.points	// This is slightly delayed because of the sleep calls above to handle the narrative. We don't want to tell the station instantly.
 			if(points_to_check >= ransom)
