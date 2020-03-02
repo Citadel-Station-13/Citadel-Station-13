@@ -406,8 +406,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 	return TRUE
 
-/atom/proc/hasSiliconAccessInArea(mob/user)
-	return user && (issilicon(user) || (user.siliconaccesstoggle && (get_area(src) in user.siliconaccessareas)))
+/atom/proc/hasSiliconAccessInArea(mob/user, flags = PRIVILEDGES_SILICON)
+	return user.silicon_privileges & (flags) || (user.siliconaccesstoggle && (get_area(src) in user.siliconaccessareas))
 
 /mob/proc/toggleSiliconAccessArea(area/area)
 	if (area in siliconaccessareas)
@@ -555,4 +555,4 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
+	return stat == DEAD || silicon_privileges //Dead guys and silicons can always see reagents

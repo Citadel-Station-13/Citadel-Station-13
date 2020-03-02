@@ -45,7 +45,7 @@
 			return
 	return ..()
 
-/obj/machinery/jukebox/update_icon()
+/obj/machinery/jukebox/update_icon_state()
 	if(active)
 		icon_state = "[initial(icon_state)]-active"
 	else

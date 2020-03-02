@@ -74,7 +74,7 @@
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-/obj/machinery/telecomms/message_server/update_icon()
+/obj/machinery/telecomms/message_server/update_icon_state()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "server-nopower"
 	else if (!toggled)

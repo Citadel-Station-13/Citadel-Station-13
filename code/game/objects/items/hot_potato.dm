@@ -154,7 +154,7 @@
 	colorize(null)
 	active = FALSE
 
-/obj/item/hot_potato/update_icon()
+/obj/item/hot_potato/update_icon_state()
 	icon_state = active? icon_on : icon_off
 
 /obj/item/hot_potato/syndicate

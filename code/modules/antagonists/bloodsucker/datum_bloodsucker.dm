@@ -286,10 +286,10 @@
 	var/mob/living/L = owner.current
 	level_bloodcost = maxBloodVolume * 0.2
 	//If the blood volume of the bloodsucker is lower than the cost to level up, return and inform the bloodsucker
-	
+
 	//TODO: Make this into a radial, or perhaps a tgui next UI
 		// Purchase Power Prompt
-	var/list/options = list() 
+	var/list/options = list()
 	for(var/pickedpower in typesof(/datum/action/bloodsucker))
 		var/datum/action/bloodsucker/power = pickedpower
 		// If I don't own it, and I'm allowed to buy it.
@@ -379,20 +379,21 @@
 	protege_objective.generate_objective()
 	add_objective(protege_objective)
 
-	if (rand(0,1) == 0)
+	//if (rand(0,1) == 0)
 		// Heart Thief Objective
-		var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
-		heartthief_objective.owner = owner
-		heartthief_objective.generate_objective()
-		add_objective(heartthief_objective)
-
+	var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
+	heartthief_objective.owner = owner
+	heartthief_objective.generate_objective()
+	add_objective(heartthief_objective)
+	/*
 	else
-		// Solars Objective
+	
+		// Solars Objective, doesnt work due to TG updates.
 		var/datum/objective/bloodsucker/solars/solars_objective = new
 		solars_objective.owner = owner
 		solars_objective.generate_objective()
 		add_objective(solars_objective)
-
+*/
 	// Survive Objective
 	var/datum/objective/bloodsucker/survive/survive_objective = new
 	survive_objective.owner = owner

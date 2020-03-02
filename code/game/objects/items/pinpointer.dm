@@ -12,7 +12,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL = 500, MAT_GLASS = 250)
+	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for
@@ -49,29 +49,29 @@
 /obj/item/pinpointer/proc/scan_for_target()
 	return
 
-/obj/item/pinpointer/update_icon()
-	cut_overlays()
+/obj/item/pinpointer/update_overlays()
+	. = ..()
 	if(!active)
 		return
 	if(!target)
-		add_overlay("pinon[alert ? "alert" : ""]null")
+		. += "pinon[alert ? "alert" : ""]null"
 		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
 	if(!here || !there || here.z != there.z)
-		add_overlay("pinon[alert ? "alert" : ""]null")
+		. += "pinon[alert ? "alert" : ""]null"
 		return
 	if(get_dist_euclidian(here,there) <= minimum_range)
-		add_overlay("pinon[alert ? "alert" : ""]direct")
+		. += "pinon[alert ? "alert" : ""]direct"
 	else
 		setDir(get_dir(here, there))
 		switch(get_dist(here, there))
 			if(1 to 8)
-				add_overlay("pinon[alert ? "alert" : "close"]")
+				. += "pinon[alert ? "alert" : "close"]"
 			if(9 to 16)
-				add_overlay("pinon[alert ? "alert" : "medium"]")
+				. += "pinon[alert ? "alert" : "medium"]"
 			if(16 to INFINITY)
-				add_overlay("pinon[alert ? "alert" : "far"]")
+				. += "pinon[alert ? "alert" : "far"]"
 
 /obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"

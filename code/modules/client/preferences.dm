@@ -1474,8 +1474,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("flavor_text")
 					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", features["flavor_text"], MAX_FAVOR_LEN, TRUE)
-					if(msg)
-						features["flavor_text"] = msg
+					if(!isnull(msg))
+						features["flavor_text"] = html_decode(msg)
 
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null

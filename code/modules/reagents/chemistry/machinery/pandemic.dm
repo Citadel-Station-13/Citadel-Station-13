@@ -192,7 +192,7 @@
 			update_icon()
 			var/turf/source_turf = get_turf(src)
 			log_virus("A culture bottle was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
-			
+
 			. = TRUE
 		if("create_vaccine_bottle")
 			wait = TRUE
@@ -202,9 +202,9 @@
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
-			
+
 			update_icon()
-			
+
 			. = TRUE
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
@@ -229,7 +229,7 @@
 
 /obj/machinery/computer/pandemic/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			if(!user.put_in_hands(beaker))
 				beaker.forceMove(drop_location())
 	if(new_beaker)

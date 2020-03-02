@@ -97,7 +97,7 @@
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
 	var/list/data = list()
 	data["locked"] = locked//swipe an ID to unlock
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = hasSiliconAccessInArea(user)
 	data["beaconzone"] = beacon ? get_area(beacon) : ""//where is the beacon located? outputs in the tgui
 	data["usingBeacon"] = usingBeacon //is the mode set to deliver to the beacon or the cargobay?
 	data["canBeacon"] = !usingBeacon || canBeacon //is the mode set to beacon delivery, and is the beacon in a valid location?
@@ -183,6 +183,7 @@
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= SSshuttle.points && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						SSshuttle.points -= SO.pack.cost
+						SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 						new /obj/effect/abstract/DPtarget(LZ, podType, SO)
 						. = TRUE
 						update_icon()
@@ -196,6 +197,7 @@
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						SSshuttle.points -= SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)
+						SSblackbox.record_feedback("nested tally", "cargo_imports", MAX_EMAG_ROCKETS, list("[SO.pack.cost * 0.72]", "[SO.pack.name]"))
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)

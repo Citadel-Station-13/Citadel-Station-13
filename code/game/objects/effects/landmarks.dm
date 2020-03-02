@@ -151,6 +151,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
 
+/obj/effect/landmark/start/paramedic
+	name = "Paramedic"
+	icon_state = "Paramedic"
+
 /obj/effect/landmark/start/scientist
 	name = "Scientist"
 	icon_state = "Scientist"
@@ -502,8 +506,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/box/engine/New()
 	. = ..()
 	templates = CONFIG_GET(keyed_list/box_random_engine)
-
-// Landmark for the mining station
-/obj/effect/landmark/stationroom/lavaland/station
-	templates = list("Public Mining Base" = 3)
-	icon = 'icons/rooms/Lavaland/Mining.dmi'

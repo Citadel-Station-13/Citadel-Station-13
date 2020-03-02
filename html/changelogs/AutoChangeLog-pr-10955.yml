@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "gravity gun repulse and chaos now work in all angles, rather than just basic cardinals and diagonals. fun."

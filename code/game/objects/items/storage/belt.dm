@@ -10,29 +10,32 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
-	var/worn_overlays = FALSE //worn counterpart of the above.
+	var/onmob_overlays = FALSE //worn counterpart of the above.
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/belt/update_icon()
-	cut_overlays()
+/obj/item/storage/belt/update_overlays()
+	. = ..()
 	if(content_overlays)
 		for(var/obj/item/I in contents)
-			var/mutable_appearance/M = I.get_belt_overlay()
-			add_overlay(M)
-	..()
+			. += I.get_belt_overlay()
 
 /obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
-	if(!isinhands && worn_overlays)
+	if(!isinhands && onmob_overlays)
 		for(var/obj/item/I in contents)
 			. += I.get_worn_belt_overlay(icon_file)
 
 /obj/item/storage/belt/Initialize()
 	. = ..()
 	update_icon()
+
+/obj/item/storage/belt/ComponentInitialize()
+	. = ..()
+	if(onmob_overlays)
+		AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
@@ -179,17 +182,23 @@
 		/obj/item/pinpointer/crew
 		))
 
-
 /obj/item/storage/belt/medical/surgery_belt_adv
 	name = "surgical supply belt"
 	desc = "A specialized belt designed for holding surgical equipment. It seems to have specific pockets for each and every surgical tool you can think of."
 	content_overlays = FALSE
+	var/advanced_drapes = FALSE
 
 /obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
 	new /obj/item/scalpel/advanced(src)
 	new /obj/item/retractor/advanced(src)
 	new /obj/item/surgicaldrill/advanced(src)
-	new /obj/item/surgical_drapes(src)
+	if(advanced_drapes)
+		new /obj/item/surgical_drapes/advanced(src)
+	else
+		new /obj/item/surgical_drapes(src)
+
+/obj/item/storage/belt/medical/surgery_belt_adv/cmo
+	advanced_drapes = TRUE
 
 /obj/item/storage/belt/security
 	name = "security belt"
@@ -328,7 +337,7 @@
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
-	materials = list(MAT_GOLD=400)
+	custom_materials = list(/datum/material/gold=400)
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()
@@ -575,6 +584,7 @@
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
+		/obj/item/twohanded/broom,
 		/obj/item/paint/paint_remover,
 		/obj/item/assembly/mousetrap,
 		/obj/item/screwdriver,
@@ -762,7 +772,7 @@
 	item_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
 	content_overlays = TRUE
-	worn_overlays = TRUE
+	onmob_overlays = TRUE
 	var/list/fitting_swords = list(/obj/item/melee/sabre, /obj/item/melee/baton/stunsword)
 	var/starting_sword = /obj/item/melee/sabre
 
@@ -779,12 +789,6 @@
 	. = ..()
 	if(length(contents))
 		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
-
-/obj/item/storage/belt/sabre/update_icon()
-	. = ..()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		L.regenerate_icons()
 
 /obj/item/storage/belt/sabre/PopulateContents()
 	new starting_sword(src)
