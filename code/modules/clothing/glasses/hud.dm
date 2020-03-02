@@ -103,11 +103,6 @@
 	flash_protect = 1
 	tint = 1
 
-/obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription
-	name = "diagnostic HUDSunglasses"
-	desc = "Sunglasses with a diagnostic HUD and a second layer of normal prescription glasses."
-	vision_correction = 1
-
 /obj/item/clothing/glasses/hud/diagnostic/prescription
 	name = "prescription diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits. This one has a prescription lens."
