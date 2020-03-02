@@ -87,7 +87,7 @@
 		var/obj/item/clothing/under/U = H.w_uniform
 
 		// Suit sensors must be on maximum.
-		if(!U.has_sensor || U.sensor_mode < SENSOR_COORDS)
+		if(!U.has_sensor || U.sensor_mode < SENSOR_COORDS && !ignore_suit_sensor_level)
 			return FALSE
 
 		var/turf/there = get_turf(H)
