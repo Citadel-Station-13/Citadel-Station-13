@@ -265,12 +265,15 @@
 	new /obj/item/clothing/head/helmet/alt(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/clothing/suit/armor/bulletproof(src)
+
 /obj/structure/closet/secure_closet/lethalshots
-	name = "shotgun lethal rounds"
+	name = "lethal ammunition and riot staves"
 	req_access = list(ACCESS_ARMORY)
 	icon_state = "tac"
 /obj/structure/closet/secure_closet/lethalshots/PopulateContents()
 	..()
+	new /obj/item/twohanded/electrostaff(src)
+	new /obj/item/twohanded/electrostaff(src)
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/lethalshot(src)
 

@@ -4,7 +4,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
-	mob_biotypes = list(MOB_SPIRIT)
+	mob_biotypes = MOB_SPIRIT
 	attacktext = "raises the hairs on the neck of"
 	response_harm = "disrupts the concentration of"
 	response_disarm = "wafts"

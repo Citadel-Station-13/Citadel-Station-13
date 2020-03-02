@@ -34,7 +34,7 @@
 		if(scan_level >= 3)
 			. += "<span class='notice'>Scanner has been upgraded to support autoprocessing.<span>"
 
-/obj/machinery/dna_scannernew/update_icon()
+/obj/machinery/dna_scannernew/update_icon_state()
 
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))

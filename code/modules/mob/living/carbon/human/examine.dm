@@ -397,7 +397,7 @@
 		var/flavor = print_flavor_text(flavor_text)
 		if(flavor)
 			. += flavor
-		var/temp_flavor = print_flavor_text(flavor_text_2)
+		var/temp_flavor = print_flavor_text(flavor_text_2,TRUE)
 		if(temp_flavor)
 			. += temp_flavor
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)

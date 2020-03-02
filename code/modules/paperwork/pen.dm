@@ -21,7 +21,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=10)
+	custom_materials = list(/datum/material/iron=10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "black"	//what colour the ink is!
@@ -79,7 +79,7 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "crimson"
-	materials = list(MAT_GOLD = 750)
+	custom_materials = list(/datum/material/gold = 750)
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -139,6 +139,7 @@
 				O.name = input
 				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
 				O.renamedByPlayer = TRUE
+				log_game("[user] [key_name(user)] has renamed [O] to [input]")
 
 		if(penchoice == "Change description")
 			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
@@ -146,6 +147,7 @@
 				return
 			O.desc = input
 			to_chat(user, "You have successfully changed \the [O.name]'s description.")
+			log_game("[user] [key_name(user)] has changed [O]'s description to to [input]")
 
 /*
  * Sleepypens

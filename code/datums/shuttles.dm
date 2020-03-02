@@ -287,6 +287,12 @@
 	credit_cost = 4000
 	description = "A fairly standard shuttle, though larger and slightly better equipped than the Box Station variant."
 
+/datum/map_template/shuttle/emergency/kilo
+	suffix = "kilo"
+	name = "Kilo Station Emergency Shuttle"
+	credit_cost = 5000
+	description = "A fully functional shuttle including a complete infirmary, storage facilties and regular amenities."
+
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
@@ -419,6 +425,11 @@
 	name = "fancy transport ferry"
 	description = "At some point, someone upgraded the ferry to have fancier flooring... and less seats."
 
+/datum/map_template/shuttle/ferry/kilo
+	suffix = "kilo"
+	name = "kilo transport ferry"
+	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
@@ -446,6 +457,10 @@
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
+
+/datum/map_template/shuttle/cargo/kilo
+	suffix = "kilo"
+	name = "supply shuttle (Kilo)"
 
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
@@ -481,6 +496,10 @@
 	suffix = "box"
 	name = "labour shuttle (Box)"
 
+/datum/map_template/shuttle/labour/kilo
+	suffix = "kilo"
+	name = "labour shuttle (Kilo)"
+
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
@@ -493,6 +512,10 @@
 	suffix = "delta"
 	name = "mining shuttle (Delta)"
 
+/datum/map_template/shuttle/mining/kilo
+	suffix = "kilo"
+	name = "mining shuttle (Kilo)"
+
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
@@ -501,9 +524,17 @@
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
 
+/datum/map_template/shuttle/labour/kilo
+	suffix = "kilo"
+	name = "labour shuttle (Kilo)"
+
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
 	name = "arrival shuttle (Delta)"
+
+/datum/map_template/shuttle/arrival/kilo
+	suffix = "kilo"
+	name = "arrival shuttle (Kilo)"
 
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"

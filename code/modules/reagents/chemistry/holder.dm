@@ -77,6 +77,8 @@
 
 /datum/reagents/Destroy()
 	. = ..()
+	//We're about to delete all reagents, so lets cleanup
+	addiction_list.Cut()
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -332,9 +334,7 @@
 						if(R.addiction_stage3_end to R.addiction_stage4_end)
 							need_mob_update += R.addiction_act_stage4(C)
 						if(R.addiction_stage4_end to INFINITY)
-							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_addiction")
-							cached_addictions.Remove(R)
+							remove_addiction(R)
 						else
 							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 		addiction_tick++
@@ -343,6 +343,12 @@
 		C.update_canmove()
 		C.update_stamina()
 	update_total()
+
+/datum/reagents/proc/remove_addiction(datum/reagent/R)
+	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
+	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+	addiction_list.Remove(R)
+	qdel(R)
 
 //Signals that metabolization has stopped, triggering the end of trait-based effects
 /datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
@@ -762,6 +768,8 @@
 					R.metabolizing = FALSE
 					R.on_mob_end_metabolize(M)
 				R.on_mob_delete(M)
+			//Clear from relevant lists
+			addiction_list -= R
 			qdel(R)
 			reagent_list -= R
 			update_total()
