@@ -506,6 +506,7 @@
 		if(unattached_flesh.len <= 0)
 			occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
+			. += "cover-on"
 		else
 			occupant_overlay = mutable_appearance(CRYOMOBS, "clone_meat")
 			var/matrix/tform = matrix()
@@ -519,7 +520,7 @@
 		occupant_overlay.pixel_x = round(sin(world.time * 3))
 
 		. += occupant_overlay
-	. += "cover-on"
+		. += "cover-on"
 	. += "panel"
 
 /*
