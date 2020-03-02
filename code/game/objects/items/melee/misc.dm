@@ -345,6 +345,7 @@
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
+	var/list/desc = get_on_description()
 	if(on)
 		to_chat(user, desc["local_on"])
 		icon_state = on_icon_state
@@ -360,7 +361,6 @@
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
 		attack_verb = list("hit", "poked")
-
 	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
 
