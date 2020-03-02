@@ -62,9 +62,9 @@
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	parts = list(/obj/item/clothing/glasses/hud/health = 1)
-				  /obj/item/clothing/glasses/sunglasses = 1,
 	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
-				  /obj/item/stack/cable_coil = 5)
+				/obj/item/clothing/glasses/sunglasses = 1,
+				/obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/hudsunmedremoval
