@@ -40,8 +40,9 @@
 			attemptingstandup = FALSE
 			return TRUE
 		else
-			visible_message("<span class='notice'>[src] falls right back down.</span>", "<span class='notice'>You fall right back down.</span>")
 			attemptingstandup = FALSE
-			if(has_gravity())
-				playsound(src, "bodyfall", 20, 1)
+			if(resting)		//we didn't shove ourselves up or something
+				visible_message("<span class='notice'>[src] falls right back down.</span>", "<span class='notice'>You fall right back down.</span>")
+				if(has_gravity())
+					playsound(src, "bodyfall", 20, 1)
 			return FALSE
