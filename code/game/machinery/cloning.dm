@@ -491,8 +491,8 @@
 /obj/machinery/clonepod/update_overlays()
 	. = ..()
 	if(mess)
-		var/image/gib1 = image(CRYOMOBS, "gibup")
-		var/image/gib2 = image(CRYOMOBS, "gibdown")
+		var/mutable_appearance/gib1 = mutable_appearance(CRYOMOBS, "gibup")
+		var/mutable_appearance/gib2 = mutable_appearance(CRYOMOBS, "gibdown")
 		gib1.pixel_y = 27 + round(sin(world.time) * 3)
 		gib1.pixel_x = round(sin(world.time * 3))
 		gib2.pixel_y = 27 + round(cos(world.time) * 3)
@@ -500,19 +500,19 @@
 		. += gib2
 		. += gib1
 	else if(occupant)
-		var/image/occupant_overlay
+		var/mutable_appearance/occupant_overlay
 		var/completion = (flesh_number - unattached_flesh.len) / flesh_number
 
 		if(unattached_flesh.len <= 0)
-			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
 		else
-			occupant_overlay = image(CRYOMOBS, "clone_meat")
+			occupant_overlay = mutable_appearance(CRYOMOBS, "clone_meat")
 			var/matrix/tform = matrix()
 			tform.Scale(completion)
 			tform.Turn(cos(world.time * 2) * 3)
 			occupant_overlay.transform = tform
-			occupant_overlay.appearance_flags = 0
+			occupant_overlay.appearance_flags = NONE
 
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 27 + round(sin(world.time) * 3)
