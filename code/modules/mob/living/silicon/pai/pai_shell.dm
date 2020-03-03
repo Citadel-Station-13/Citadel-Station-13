@@ -95,12 +95,10 @@
 			dynamic_chassis = choice
 	resist_a_rest(FALSE, TRUE)
 	update_icon()
+	current_mob_holder?.Detach(src)
+	current_mob_holder = null
 	if(possible_chassis[chassis])
 		current_mob_holder = AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', SLOT_HEAD)
-	else
-		current_mob_holder?.Detach(src)
-		current_mob_holder = null
-		return
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
 /mob/living/silicon/pai/lay_down()

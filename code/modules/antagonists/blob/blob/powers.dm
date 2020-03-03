@@ -321,7 +321,7 @@
 	set category = "Blob"
 	set name = "Blob Broadcast"
 	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces."
-	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text
+	var/speak_text = stripped_input(src, "What would you like to say with your minions?", "Blob Broadcast", null)
 	if(!speak_text)
 		return
 	else

@@ -1,8 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "The Ash Walkers' nest on Lavaland now starts with three bowyery slabs."
-  - rscadd: "You can now welder-harden arrows. It might take longer."
-  - balance: "Silkstring's costs adjusted for bows and whatnot."
-  - spellcheck: "Grammar adjusted on a lot of things relating to bows."
-  - bugfix: "Pipe bows' bowstring doesn't look like it replicated itself upon draw."

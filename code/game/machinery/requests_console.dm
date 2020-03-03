@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	..()
 	update_icon()
 
-/obj/machinery/requests_console/update_icon()
+/obj/machinery/requests_console/update_icon_state()
 	if(stat & NOPOWER)
 		set_light(0)
 	else
