@@ -15,6 +15,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\RandomZLevels\VR\snowdin_VR.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\__513_compatibility.dm"
@@ -79,8 +80,8 @@
 #include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
-#include "code\__DEFINES\power.dm"
 #include "code\__DEFINES\pool.dm"
+#include "code\__DEFINES\power.dm"
 #include "code\__DEFINES\preferences.dm"
 #include "code\__DEFINES\procpath.dm"
 #include "code\__DEFINES\profile.dm"
