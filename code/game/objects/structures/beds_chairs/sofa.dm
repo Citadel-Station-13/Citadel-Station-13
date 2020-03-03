@@ -1,3 +1,5 @@
+// Credit for the sprites goes to CEV Eris. The sprites were taken from Hyper Station and modified to fit with armrests which were also added.
+
 /obj/structure/chair/corp_sofa
 	name = "sofa"
 	desc = "Soft, cushy and cozy. These sofas reek of bland faceless corporatism, but they aren't old and ratty at least."
