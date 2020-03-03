@@ -409,6 +409,16 @@
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "poster44"
 
+/obj/structure/sign/poster/contraband/scum
+	name = "Security are Scum"
+	desc = "Anti-security propaganda. Features a human NanoTrasen security officer being shot in the head, with the words 'Scum' and a short inciteful manifesto. Used to anger security."
+	icon_state = "poster45"
+
+/obj/structure/sign/poster/contraband/syndicate
+	name = "Syndicate"
+	desc = "A white 'S' on a red blackground. A classic Syndicate emblem, except the head of 'S' turns into a snake!"
+	icon_state = "poster46"
+
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
@@ -594,5 +604,40 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+/obj/structure/sign/poster/official/fashion
+	name = "Fashion!"
+	desc = "An advertisement for 'Fashion!', a popular fashion magazine, depicting a woman with a black dress with a golden trim, she also has a red poppy in her hair."
+	icon_state = "poster36_legit"
+
+/obj/structure/sign/poster/official/pda_ad600
+	name = "NT PDA600 Ad"
+	desc = "A poster advertising an old discounted Nanotrasen PDA. This is the old 600 model, it has a small screen and suffered from security and networking issues."
+	icon_state = "poster37_legit"
+
+/obj/structure/sign/poster/official/pda_ad800
+	name = "NT PDA800 Ad"
+	desc = "An advertisement on an old Nanotrasen PDA model. The 800 fixed a lot of security flaws that the 600 had; it also had large touchscreen and hot-swappable cartridges."
+	icon_state = "poster38_legit"
+
+/obj/structure/sign/poster/official/hydro_ad
+	name = "Hydroponics Tray"
+	desc = "An advertisement for hydroponics trays. Space Station 13's botanical department uses a slightly newer model, but the principles are the same. From left to right: Green means the plant is done, red means the plant is unhealthy, flashing red means pests or weeds, yellow means the plant needs nutriment and blue means the plant needs water."
+	icon_state = "poster39_legit"
+
+/obj/structure/sign/poster/official/medical_green_cross
+	name = "Medical"
+	desc = "A green cross, one of the interplanetary symbol of health and aid. It has a bunch of common languages at the top with translations." // Didn't the American Heart Foundation trademark red crosses? I'm playing it safe with green, not that they'll notice spacegame13 poster.
+	icon_state = "poster40_legit"
+
+/obj/structure/sign/poster/official/nt_storm_officer
+	name = "NT Storm Ad"
+	desc = "An advertisement for NanoTrasen Storm. A premium infantry helmet, This is the officer variant. I comes with a better radio, better HUD software and better targeting sensors."
+	icon_state = "poster41_legit"
+
+/obj/structure/sign/poster/official/nt_storm
+	name = "NT Storm Ad"
+	desc = "An advertisement for NanoTrasen Storm. A premium infantry helmet, It contains a rebreather and full head coverage for use on harsh environments where the air isn't always safe to breathe."
+	icon_state = "poster42_legit"
 
 #undef PLACE_SPEED
