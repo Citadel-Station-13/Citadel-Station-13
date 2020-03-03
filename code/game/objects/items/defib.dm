@@ -242,10 +242,8 @@
 	if(slot == user.getBeltSlot())
 		return TRUE
 
-/obj/item/defibrillator/compact/loaded/Initialize()
-	. = ..()
-	cell = new(src)
-	update_power()
+/obj/item/defibrillator/compact/loaded
+	cell = /obj/item/stock_parts/cell/high
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"

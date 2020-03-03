@@ -145,7 +145,7 @@
 				if(5)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for(var/Dt in typesof(/datum/disease/))
-						var/datum/disease/Dis = new Dt(0)
+						var/datum/disease/Dis = new Dt(FALSE)
 						if(istype(Dis, /datum/disease/advance))
 							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
 						if(!Dis.desc)
@@ -248,7 +248,7 @@
 
 			else if(href_list["vir"])
 				var/type = href_list["vir"]
-				var/datum/disease/Dis = new type(0)
+				var/datum/disease/Dis = new type(FALSE)
 				var/AfS = ""
 				for(var/mob/M in Dis.viable_mobtypes)
 					AfS += " [initial(M.name)];"

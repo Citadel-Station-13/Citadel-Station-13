@@ -216,7 +216,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/toggle/labcoat(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/suit/toggle/labcoat/emt(src)
+		new /obj/item/clothing/suit/toggle/labcoat/paramedic(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/white(src)
 	for(var/i in 1 to 3)
