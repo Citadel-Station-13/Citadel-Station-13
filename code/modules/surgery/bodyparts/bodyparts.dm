@@ -375,8 +375,8 @@
 			if(Smark)
 				body_markings_icon = Smark.icon
 			if(H.dna.features["mam_body_markings"] != "None")
-				body_markings = lowertext(H.dna.features["mam_body_markings"])
-				aux_marking = lowertext(H.dna.features["mam_body_markings"])
+				body_markings = Smark.icon_state ? Smark.icon_state : lowertext(H.dna.features["mam_body_markings"])
+				aux_marking = Smark.icon_state ? Smark.icon_state : lowertext(H.dna.features["mam_body_markings"])
 			else
 				body_markings = "plain"
 				aux_marking = "plain"
