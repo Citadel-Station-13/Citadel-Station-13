@@ -409,6 +409,11 @@
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "poster44"
 
+/obj/structure/sign/poster/contraband/buzzfuzz
+	name = "Buzz Fuzz"
+	desc = "A poster advertising the newest drink \"Buzz Fuzz\" with its iconic slogan of ~A Hive of Flavour~."
+	icon_state = "poster45"
+
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
@@ -594,5 +599,15 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+/obj/structure/sign/poster/official/spiderlings
+	name = "Spiderlings"
+	desc = "This poster informs the crew of the dangers of spiderlings."
+	icon_state = "poster36_legit"
+
+/obj/structure/sign/poster/official/duelshotgun
+	name = "Cycler Shotgun Ad"
+	desc = "A poster advertising an advanced dual magazine tubes shotgun, boasting about how easy it is to swap between the two tubes."
+	icon_state = "poster37_legit"
 
 #undef PLACE_SPEED
