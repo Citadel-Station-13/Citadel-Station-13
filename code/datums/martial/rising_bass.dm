@@ -70,11 +70,11 @@
 	button_icon_state = "deftswitch"
 	movestreak = "deft"
 
-/datum/martial_art/the_rising_bass/proc/checkfordensity(turf/T)
+/datum/martial_art/the_rising_bass/proc/checkfordensity(turf/T,mob/M)
 	if (T.density)
 		return FALSE
-	for(var/obj/i in T)
-		if(!istype(i,/mob) && i.density)
+	for(var/obj/O in T)
+		if(!O.CanPass(M,T))
 			return FALSE
 	return TRUE
 
@@ -90,7 +90,7 @@
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
 		D.Knockdown(60)
-		var/L = !checkfordensity(H) ? (!checkfordensity(K) ? D.loc : K) : H
+		var/L = !checkfordensity(H,D) ? (!checkfordensity(K,D) ? D.loc : K) : H
 		D.forceMove(L)
 		log_combat(A, D, "side kicked (Rising Bass)")
 		return TRUE
@@ -99,7 +99,7 @@
 /datum/martial_art/the_rising_bass/proc/shoulderFlip(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.IsKnockdown() || !D.lying)
 		var/turf/H = get_step(A, get_dir(D,A))
-		var/L = checkfordensity(H) ? H : A.loc
+		var/L = checkfordensity(H,D) ? H : A.loc
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] flips [D] over their shoulder, slamming them into the ground!</span>", \
 						  "<span class='userdanger'>[A] flips you over their shoulder, slamming you into the ground!</span>")

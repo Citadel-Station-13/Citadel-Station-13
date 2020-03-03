@@ -52,7 +52,7 @@
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) && !skip_throw_mode_check && !in_throw_mode)
 		return
-	if(restrained())
+	if(incapacitated())
 		return
 	if (get_active_held_item())
 		if (HAS_TRAIT_FROM(src, TRAIT_AUTO_CATCH_ITEM,RISING_BASS_TRAIT))

@@ -49,7 +49,7 @@
 		if (mind.martial_art && mind.martial_art.dodge_chance)
 			if(!lying && dna && !dna.check_mutation(HULK))
 				if(prob(mind.martial_art.dodge_chance))
-					var/dodgemessages = list("dodges under",0,-4,"dodges to the right of",-4,0,"dodges to the left of",4,0,"jumps over",0,4)
+					var/static/dodgemessages = list("dodges under",0,-4,"dodges to the right of",-4,0,"dodges to the left of",4,0,"jumps over",0,4)
 					var/pick = pick(1,4,7,10)
 					var/oldx = pixel_x
 					var/oldy = pixel_y
