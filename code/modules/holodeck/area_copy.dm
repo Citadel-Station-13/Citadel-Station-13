@@ -20,7 +20,7 @@ GLOBAL_list_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
 		O = new original.type(newloc)
 
 	if(perfectcopy && O && original)
-		for(var/V in original.vars - GLOB.duplicate_forbidden_vars - duplicate_forbidden_vars_by_type[O.type])
+		for(var/V in original.vars - GLOB.duplicate_forbidden_vars - GLOB.duplicate_forbidden_vars_by_type[O.type])
 			if(islist(original.vars[V]))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
