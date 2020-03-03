@@ -747,7 +747,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/t = stripped_input(U, "Please enter message", name)
 	if (!t || toff)
 		return
-	if(!U.canUseTopic(src, BE_CLOSE))
+	if(!U.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, FALSE))
 		return
 	if(emped)
 		t = Gibberish(t, 100)

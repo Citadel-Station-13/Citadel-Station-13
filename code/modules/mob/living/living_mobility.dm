@@ -82,7 +82,7 @@
 	if(canresist)
 		mobility_flags |= MOBILITY_RESIST
 	else
-		mobility_flags &= !MOBILITY_RESIST
+		mobility_flags &= ~MOBILITY_RESIST
 
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !recoveringstam
 	var/canstand = canstand_involuntary && !resting
@@ -107,7 +107,7 @@
 	else
 		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
 
-	var/canitem_general = !paralyze && !stun && conscious && !chokehold && !restrained && has_arms && !recoveringstam
+	var/canitem_general = !paralyze && !stun && conscious && !(stat_softcrit) && !chokehold && !restrained && has_arms && !recoveringstam
 	if(canitem_general)
 		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE | MOBILITY_HOLD)
 	else
