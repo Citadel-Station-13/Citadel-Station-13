@@ -1,5 +1,6 @@
 //Synth snouts (This is the most important part)
-/datum/sprite_accessory/mam_snouts/synthliz/synthliz_basic
+/datum/sprite_accessory/mam_snouts/synthliz
+	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_snouts.dmi'
 	color_src = MUTCOLORS
 	name = "Synthetic Lizard - Snout"
@@ -24,7 +25,8 @@
 	icon_state = "synthliz_tertunder"
 
 //Synth body markings
-/datum/sprite_accessory/mam_body_markings/synthliz/synthliz_scutes
+/datum/sprite_accessory/mam_body_markings/synthliz
+	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_body_markings.dmi'
 	name = "Synthetic Lizard - Plates"
 	icon_state = "synthlizscutes"
@@ -40,26 +42,23 @@
 	icon_state = "synthlizpecslight"
 
 //Synth tails
-/datum/sprite_accessory/mam_tails/synthliz/synthliz_tail
+/datum/sprite_accessory/mam_tails/synthliz
+	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_tails.dmi'
 	color_src = MUTCOLORS
 	name = "Synthetic Lizard"
 	icon_state = "synthliz"
 
-/datum/sprite_accessory/mam_tails_animated/synthliz/synthliz_tail
+/datum/sprite_accessory/mam_tails_animated/synthliz
+	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_tails.dmi'
 	color_src = MUTCOLORS
 	name = "Synthetic Lizard"
 	icon_state = "synthliz"
 
 //Synth Antennae
-/datum/sprite_accessory/antenna/synthliz/synthliz_none
-	icon = 'modular_citadel/icons/mob/synthliz_antennas.dmi'
-	color_src = MUTCOLORS
-	name = "None"
-	icon_state = "None"
-
-/datum/sprite_accessory/antenna/synthliz/synthliz_antennae
+/datum/sprite_accessory/antenna/synthliz
+	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_antennas.dmi'
 	color_src = MUTCOLORS
 	name = "Synthetic Lizard - Antennae"
