@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(shuttle)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
 
-	if(!(times_fired % (600/wait)))
+	if(!(times_fired % CEILING(600/wait, 1)))
 		points += passive_supply_points_per_minute
 
 	var/esETA = emergency?.getModeStr()
