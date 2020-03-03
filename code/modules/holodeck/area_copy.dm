@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup"
 	))
 
-GLOBAL_list_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
+GLOBAL_LIST_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
 	/obj/item/gun/energy = "ammo_type"
 	)))
 
