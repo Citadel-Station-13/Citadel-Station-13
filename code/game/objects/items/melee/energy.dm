@@ -104,14 +104,14 @@
 	armour_penetration = 35
 	block_chance = 50
 
-/obj/item/melee/transforming/energy/sword/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/sword_point)
-
 /obj/item/melee/transforming/energy/sword/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
-	if(. && active && item_color)
-		icon_state = "sword[item_color]"
+	if(active)
+		if(. && item_color)
+			icon_state = "sword[item_color]"
+		AddElement(/datum/element/sword_point)
+	else
+		RemoveElement(/datum/element/sword_point)
 
 /obj/item/melee/transforming/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(active)
