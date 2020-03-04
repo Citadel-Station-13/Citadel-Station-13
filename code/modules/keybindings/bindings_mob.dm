@@ -3,12 +3,9 @@
 // Or we can have NPC's send actual keypresses and detect that by seeing no client
 
 /mob/key_down(_key, client/user)
-	to_chat(world, "DEBUG: key_down [_key]")
 	if(SSinput.typing_indicator_binds[_key])
 		var/macroset = winget(user, "mainwindow", "macro")
 		var/list/L = SSinput.macro_set_reverse_lookups[macroset]
-		to_chat(world, "DEBUG: Looking up list [macroset] = [english_list(L)]")
-		to_chat(world, "DEBUG: Client.keys_held = [english_list(client.keys_held)]")
 		var/valid = FALSE
 		for(var/the_verb in L)
 			if(the_verb in SSinput.typing_indicator_verbs)
@@ -93,7 +90,6 @@
 	return ..()
 
 /mob/key_up(_key, client/user)
-	to_chat(world, "DEBUG: key_up [_key]")
 	switch(_key)
 		if("Alt")
 			toggle_move_intent()

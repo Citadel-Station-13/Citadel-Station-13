@@ -2,6 +2,7 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
+	clear_typing_indicator()		// clear it immediately!
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
@@ -19,6 +20,7 @@
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
+	clear_typing_indicator()		// clear it immediately!
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
@@ -30,7 +32,7 @@
 /mob/verb/me_verb(message as message)
 	set name = "Me"
 	set category = "IC"
-
+	clear_typing_indicator()		// clear it immediately!
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
