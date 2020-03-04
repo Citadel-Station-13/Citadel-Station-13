@@ -15,62 +15,62 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/chess/WhitePawn
+/obj/structure/chess/whitepawn
 	name = "\improper White Pawn"
 	desc = "A white pawn chess piece. Get accused of cheating when executing a sick En Passant."
 	icon_state = "white_pawn"
 
-/obj/structure/chess/WhiteRook
+/obj/structure/chess/whiterook
 	name = "\improper White Rook"
 	desc = "A white rook chess piece. Also known as a castle. Can move any number of tiles in a straight line. It has a special move called castling."
 	icon_state = "white_rook"
 
-/obj/structure/chess/WhiteKnight
+/obj/structure/chess/whiteknight
 	name = "\improper White Knight"
 	desc = "A white knight chess piece. Hah. It can hop over other pieces, moving in L shapes."
 	icon_state = "white_knight"
 
-/obj/structure/chess/WhiteBishop
+/obj/structure/chess/whitebishop
 	name = "\improper White Bishop"
 	desc = "A white bishop chess piece. It can move any number of tiles in a diagonal line."
 	icon_state = "white_bishop"
 
-/obj/structure/chess/WhiteQueen
+/obj/structure/chess/whitequeen
 	name = "\improper White Queen"
 	desc = "A white queen chess piece. It can move any number of tiles in diagonal and straight lines."
 	icon_state = "white_queen"
 
-/obj/structure/chess/WhiteKing
+/obj/structure/chess/whiteking
 	name = "\improper White King"
 	desc = "A white king chess piece. It can move any tile in one direction."
 	icon_state = "white_king"
 
-/obj/structure/chess/BlackPawn
+/obj/structure/chess/blackpawn
 	name = "\improper Black Pawn"
 	desc = "A black pawn chess piece. Get accused of cheating when executing a sick En Passant."
 	icon_state = "black_pawn"
 
-/obj/structure/chess/BlackRook
+/obj/structure/chess/blackrook
 	name = "\improper Black Rook"
 	desc = "A black rook chess piece. Also known as a castle. Can move any number of tiles in a straight line. It has a special move called castling."
 	icon_state = "black_rook"
 
-/obj/structure/chess/BlackKnight
+/obj/structure/chess/blackknight
 	name = "\improper Black Knight"
 	desc = "A black knight chess piece. It can hop over other pieces, moving in L shapes."
 	icon_state = "black_knight"
 
-/obj/structure/chess/BlackBishop
+/obj/structure/chess/blackbishop
 	name = "\improper Black Bishop"
 	desc = "A black bishop chess piece. It can move any number of tiles in a diagonal line."
 	icon_state = "black_bishop"
 
-/obj/structure/chess/BlackQueen
+/obj/structure/chess/blackqueen
 	name = "\improper Black Queen"
 	desc = "A black queen chess piece. It can move any number of tiles in diagonal and straight lines."
 	icon_state = "black_queen"
 
-/obj/structure/chess/BlackKing
+/obj/structure/chess/blackking
 	name = "\improper Black King"
 	desc = "A black king chess piece. It can move one tile in any direction."
 	icon_state = "black_king"
