@@ -115,11 +115,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/repulsePunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-<<<<<<< HEAD
 	if(CHECK_MOBILITY(D, MOBILITY_STAND) && repulsecool < world.time)
-=======
-	if((!D.IsKnockdown() || !D.lying) && repulsecool > world.time)
->>>>>>> citadel/master
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] smashes [D] in the chest, throwing them away!</span>", \
 						  "<span class='userdanger'>[A] smashes you in the chest, repelling you away!</span>")
