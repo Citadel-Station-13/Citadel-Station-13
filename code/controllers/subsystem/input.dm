@@ -14,6 +14,8 @@ SUBSYSTEM_DEF(input)
 	var/list/macro_set_reverse_lookups
 	/// cache these for speed.
 	var/list/typing_indicator_binds
+	/// same
+	var/static/list/typing_indicator_verbs
 
 /datum/controller/subsystem/input/Initialize()
 	setup_default_macro_sets()
@@ -80,8 +82,8 @@ SUBSYSTEM_DEF(input)
 			)
 		)
 
+	typing_indicator_verbs = list("me", "say")
 	typing_indicator_binds = list()
-	var/static/list/typing_indicator_verbs = list("me", "say")
 	for(var/check_verb in typing_indicator_verbs)
 		for(var/macro_set in macro_set_reverse_lookups)
 			var/list/keylist = macro_set_reverse_lookups[macro_set][check_verb]
