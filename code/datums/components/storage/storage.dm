@@ -409,7 +409,7 @@
 
 /datum/component/storage/proc/check_views()
 	for(var/mob/M in can_see_contents())
-		if(!isobserver(M) && !M.CanReach(src, view_only = TRUE))
+		if(!isobserver(M) && !M.CanReach(parent, view_only = TRUE))
 			close(M)
 
 /datum/component/storage/proc/emp_act(datum/source, severity)
