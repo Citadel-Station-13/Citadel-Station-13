@@ -2221,8 +2221,3 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
-
-
-/////// TYPING INDICATORS ///////
-/datum/species/proc/get_typing_indicator_state()
-	return typing_indicator_state

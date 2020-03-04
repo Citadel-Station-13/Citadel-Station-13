@@ -68,17 +68,17 @@ SUBSYSTEM_DEF(input)
 
 	macro_set_reverse_lookups = list(
 		"default" = list(
-			"say" = list("T"),
+			"say_keybind" = list("T"),
 			"whisper" = list("T", "Ctrl"),
-			"me" = list("M"),
+			"me_keybind" = list("M"),
 			"subtle" = list("M", "Ctrl")
 			),
 		"old_default" = list(
-			"say" = list("T", "Ctrl"),
+			"say_keybind" = list("T", "Ctrl"),
 			),
 		"old_hotkeys" = list(
-			"say" = list("T"),
-			"me" = list("M"),
+			"say_keybind" = list("T"),
+			"me_keybind" = list("M"),
 			)
 		)
 

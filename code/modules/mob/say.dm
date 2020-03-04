@@ -1,7 +1,17 @@
 //Speech verbs.
-/mob/verb/say_verb(message as text)
+// the _keybind verbs uses "as text" versus "as text|null" to force a popup when pressed by a keybind.
+/mob/verb/say_keybind(message as text)
+	set name = "say_keybind"
+	set hidden = TRUE
+	set category = "IC"
+	return say_verb(message)
+
+/mob/verb/say_verb(message as text|null)
 	set name = "Say"
 	set category = "IC"
+	display_typing_indicator()
+	if(!length(message))
+		message = input(usr, "Say something!", "Say") as text|null
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return
@@ -32,9 +42,18 @@
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
-/mob/verb/me_verb(message as message)
+/mob/verb/me_keybind(message as message)
+	set name = "me_keybind"
+	set hidden = TRUE
+	set category = "IC"
+	return me_verb(message)
+
+/mob/verb/me_verb(message as message|null)
 	set name = "Me"
 	set category = "IC"
+	display_typing_indicator()
+	if(!length(message))
+		message = input(usr, "What do you want to emote?" , "Emote") as message|null
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return

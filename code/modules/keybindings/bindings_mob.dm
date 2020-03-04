@@ -19,7 +19,7 @@
 		if(valid)
 			display_typing_indicator()
 	switch(_key)
-		if("Escape")
+		if("Escape")			//escape breaks out of clientside verb text input without executing at all, meaning we can't hook the verb to do this for us.
 			clear_typing_indicator()
 		if("Delete", "H")
 			if(!pulling)
