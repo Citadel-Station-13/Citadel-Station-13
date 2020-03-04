@@ -16376,6 +16376,7 @@
 	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "aAs" = (
@@ -31799,6 +31800,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/storage)
 "aYp" = (
@@ -33389,6 +33391,7 @@
 	dir = 1
 	},
 /obj/item/bedsheet/medical,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "baP" = (
@@ -34233,21 +34236,10 @@
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "bci" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/clothing/gloves/color/latex{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/glasses/science{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/clothing/glasses/science,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -34259,6 +34251,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 28
 	},
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bcj" = (
@@ -57112,9 +57105,6 @@
 /area/crew_quarters/toilet/restrooms)
 "bKV" = (
 /obj/effect/turf_decal/box,
-/obj/structure/toilet{
-	dir = 8
-	},
 /obj/structure/mirror{
 	pixel_x = -28
 	},
@@ -57139,6 +57129,10 @@
 	name = "Unit 1 Privacy Toggle";
 	pixel_x = 24;
 	pixel_y = -8
+	},
+/obj/structure/toilet{
+	contents = newlist(/obj/item/toy/snappop/phoenix);
+	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/toilet/restrooms)
@@ -87853,6 +87847,18 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"jQY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/item/clothing/under/maid,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/starboard/aft)
 "jRw" = (
 /obj/structure/sign/poster/official/high_class_martini,
 /turf/closed/wall/r_wall,
@@ -88330,6 +88336,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"ukP" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/bot/cleanbot{
+	name = "Madam Sweepsky";
+	on = 0
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/starboard/aft)
 "umD" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -88361,6 +88377,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"uqy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/under/janimaid,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/starboard/aft)
 "uxQ" = (
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating,
@@ -125916,8 +125939,8 @@ bEg
 bOl
 bSJ
 bSI
-bGH
-bGr
+ukP
+uqy
 bEg
 bAT
 bOC
@@ -126174,7 +126197,7 @@ bWh
 bTy
 cxB
 ceN
-chZ
+jQY
 cxB
 cjE
 bXb
