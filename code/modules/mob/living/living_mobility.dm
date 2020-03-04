@@ -124,12 +124,12 @@
 		DISABLE_BITFIELD(mobility_flags, MOBILITY_USE)
 
 	//Handle update-effects.
-	if(!(mobility_flags & MOBILITY_HOLD))
+	if(!CHECK_MOBILITY(src, MOBILITY_HOLD))
 		drop_all_held_items()
-	if(!(mobility_flags & MOBILITY_PULL))
+	if(!CHECK_MOBILITY(src, MOBILITY_PULL))
 		if(pulling)
 			stop_pulling()
-	if(!(mobility_flags & MOBILITY_UI))
+	if(!CHECK_MOBILITY(src, MOBILITY_UI))
 		unset_machine()
 
 	if(isliving(pulledby))
@@ -149,7 +149,7 @@
 	lying_prev = lying
 
 	//Handle citadel autoresist
-	if((mobility_flags & MOBILITY_MOVE) && !intentionalresting && canstand_involuntary && iscarbon(src) && client?.prefs?.autostand)//CIT CHANGE - adds autostanding as a preference
+	if(CHECK_MOBILITY(src, MOBILITY_MOVE) && !intentionalresting && canstand_involuntary && iscarbon(src) && client?.prefs?.autostand)//CIT CHANGE - adds autostanding as a preference
 		addtimer(CALLBACK(src, .proc/resist_a_rest, TRUE), 0) //CIT CHANGE - ditto
 
 	return mobility_flags

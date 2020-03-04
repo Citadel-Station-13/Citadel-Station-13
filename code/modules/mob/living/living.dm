@@ -692,12 +692,11 @@
 		log_combat(src, old_pulled, "[success? "successfully broke free of" : "failed to resist"] a grab of strength [old_gs][moving_resist? " (moving)":""][forced? " (forced)":""]")
 	return success
 
-	/*!
-	 * Proc that actually does the grab resisting. Return TRUE if successful. Does not check that a grab exists! Use attempt_resist_grab() instead of this in general!
-	 * Forced is if something other than the user mashing movement keys/pressing resist button did it, silent is if it makes messages (like "attempted to resist" and "broken free").
-	 * Forced does NOT force success!
-	 */
-
+/*!
+ * Proc that actually does the grab resisting. Return TRUE if successful. Does not check that a grab exists! Use attempt_resist_grab() instead of this in general!
+ * Forced is if something other than the user mashing movement keys/pressing resist button did it, silent is if it makes messages (like "attempted to resist" and "broken free").
+ * Forced does NOT force success!
+ */
 /mob/proc/do_resist_grab(moving_resist, forced, silent = FALSE)
 	return FALSE
 
