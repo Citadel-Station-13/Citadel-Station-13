@@ -573,14 +573,14 @@
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
-	var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, loc)
-	if(M)
-		if(!CHECK_MOBILITY(M, MOBILITY_STAND))
-			patient = M
-			return 1
+	var/mob/living/carbon/human/H = locate() in loc
+	if(H)
+		if(!CHECK_MOBILITY(H, MOBILITY_STAND))
+			patient = H
+			return TRUE
 	else
 		patient = null
-		return 0
+		return FALSE
 
 /*
  * Racks
