@@ -1,7 +1,7 @@
 
 #define MUSICIAN_HEARCHECK_MINDELAY 4
 #define MUSIC_MAXLINES 600
-#define MUSIC_MAXLINECHARS 50
+#define MUSIC_MAXLINECHARS 150
 
 /datum/song
 	var/name = "Untitled"
