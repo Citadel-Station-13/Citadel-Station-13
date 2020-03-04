@@ -41,7 +41,6 @@
 	name = "sofa"
 	desc = "Soft, cushy and cozy. These sofas reek of bland faceless corporatism, but they aren't old and ratty at least."
 	icon_state = "corp_sofamiddle"
-	icon = 'icons/obj/sofa.dmi'
 
 /obj/structure/chair/sofa/corp/left
 	icon_state = "corp_sofaend_left"
