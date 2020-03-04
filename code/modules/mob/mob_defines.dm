@@ -136,5 +136,3 @@
 	var/typing_indicator_state = /obj/effect/overlay/typing_indicator
 	/// The timer that will remove our indicator for early aborts (like when an user finishes their message)
 	var/typing_indicator_timerid
-	/// Default typing indicator timeout
-	var/typing_indicator_timeout = 30 SECONDS

@@ -21,11 +21,12 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
   * @param state_override - Sets the state that we will fetch. Defaults to src.get_typing_indicator_icon_state()
   * @param force - shows even if src.typing_indcator_enabled is FALSE.
   */
-/mob/proc/display_typing_indicator(timeout_override = typing_indicator_timeout, state_override = get_typing_indicator_icon_state(), force = FALSE)
-	if(!typing_indicator_enabled && !force)
+/mob/proc/display_typing_indicator(timeout_override = TYPING_INDICATOR_TIMEOUT, state_override = get_typing_indicator_icon_state(), force = FALSE)
+	if((!typing_indicator_enabled && !force) || typing_indicator_timerid)
 		return
+	typing_indicator_timerid = addtimer(CALLBACK(src, .proc/clear_typing_indicator, state_override), timeout_override, TIMER_STOPPABLE)
+	var/overlay = get_indicator_overlay(state_override)
 	add_overlay(get_indicator_overlay(state_override))
-	addtimer(CALLBACK(src, .proc/clear_typing_indicator, state_override), timeout_override, TIMER_STOPPABLE)
 
 /**
   * Removes typing indicator.
