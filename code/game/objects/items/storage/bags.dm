@@ -247,7 +247,7 @@
 	set category = "Object"
 	set desc = "Activate to convert your plants into plantable seeds."
 	var/mob/living/L = usr
-	if(istype(L) && !CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE))
+	if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE))
 		return
 	for(var/obj/item/O in contents)
 		seedify(O, 1)

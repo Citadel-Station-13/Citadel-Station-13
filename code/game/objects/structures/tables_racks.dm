@@ -137,7 +137,7 @@
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/shove_act(mob/living/target, mob/living/user)
-	if(CHECK_BITFIELD(target.mobility_flags, MOBILITY_STAND))
+	if(CHECK_MOBILITY(target, MOBILITY_STAND))
 		target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_TABLE)
 	user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [src]!</span>",
 		"<span class='danger'>You shove [target.name] onto \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -575,7 +575,7 @@
 /obj/structure/table/optable/proc/check_patient()
 	var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, loc)
 	if(M)
-		if(!CHECK_BITFIELD(M.mobility_flags, MOBILITY_STAND))
+		if(!CHECK_MOBILITY(M, MOBILITY_STAND))
 			patient = M
 			return 1
 	else

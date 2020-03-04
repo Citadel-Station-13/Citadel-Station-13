@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 //Mob mobility var flags
 /// any flag
-#define CHECK_MOBILITY(target, flags) CHECK_BITFIELD(target.mobility_flags, flags)
+#define CHECK_MOBILITY(target, flags) CHECK_MOBILITY(target, flags)
 #define CHECK_ALL_MOBILITY(target, flags) CHECK_MULTIPLE_BITFIELDS(target.mobility_flags, flags)
 
 /// can move

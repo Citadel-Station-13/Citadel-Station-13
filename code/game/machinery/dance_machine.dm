@@ -433,5 +433,5 @@
 	. = ..()
 	if(active)
 		for(var/mob/living/M in rangers)
-			if(prob(5+(allowed(M)*4)) && CHECK_BITFIELD(M.mobility_flags, MOBILITY_MOVE))
+			if(prob(5+(allowed(M)*4)) && CHECK_MOBILITY(M, MOBILITY_MOVE))
 				dance(M)
