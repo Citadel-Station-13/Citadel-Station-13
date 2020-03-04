@@ -39,8 +39,6 @@
 					traitor_data.contractor_hub = new
 					traitor_data.contractor_hub.create_hub_items()
 					user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, 0)
-				traitor_data.contractor_hub.create_contracts()
-				hard_drive.traitor_data = traitor_data
 			// Stops any topic exploits such as logging in multiple times on a single system.
 				if(!assigned)
 					traitor_data.contractor_hub.create_contracts(traitor_data.owner)

@@ -43,6 +43,7 @@
 		CONTRACT_PAYOUT_SMALL,
 		CONTRACT_PAYOUT_SMALL
 	)
+
 	var/lowest_TC_threshold = 30 // We don't want the sum of all the payouts to be under this amount
 	var/total = 0
 	var/lowest_paying_sum = 0
