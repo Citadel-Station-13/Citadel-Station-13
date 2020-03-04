@@ -19,6 +19,8 @@
 		if(valid)
 			display_typing_indicator()
 	switch(_key)
+		if("Escape")
+			clear_typing_indicator()
 		if("Delete", "H")
 			if(!pulling)
 				to_chat(src, "<span class='notice'>You are not pulling anything.</span>")

@@ -3,11 +3,12 @@
 	set name = "Say"
 	set category = "IC"
 	clear_typing_indicator()		// clear it immediately!
+	if(!length(message))
+		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	if(message)
-		say(message)
+	say(message)
 
 /mob/say_mod(input, message_mode)
 	var/customsayverb = findtext(input, "*")
@@ -21,6 +22,8 @@
 	set name = "Whisper"
 	set category = "IC"
 	clear_typing_indicator()		// clear it immediately!
+	if(!length(message))
+		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
@@ -33,6 +36,8 @@
 	set name = "Me"
 	set category = "IC"
 	clear_typing_indicator()		// clear it immediately!
+	if(!length(message))
+		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
