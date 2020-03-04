@@ -8,8 +8,8 @@
 		var/list/L = SSinput.macro_set_reverse_lookups[macroset]
 		var/valid = TRUE
 		if(length(L) > 1)
-			for(var/modifier in 2 to length(L))
-				if(!client.keys_held[modifier])
+			for(var/i in 2 to length(L))
+				if(!client.keys_held[L[i]])
 					valid = FALSE
 					break
 		if(valid)
