@@ -25,7 +25,7 @@
 "D" = (
 /obj/structure/toilet/secret{
 	dir = 4;
-	secret_type = /obj/item/shared_storage/red
+	secret_type = /obj/item/gun/magic/wand/arcane
 	},
 /turf/open/floor/grass,
 /area/ruin/space)

@@ -18,9 +18,7 @@
 "g" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/highsecurity{
-	id_tag = DormRoid1
-	},
+/obj/machinery/door/airlock/highsecurity,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav)
 "h" = (
@@ -39,11 +37,6 @@
 /area/ruin/space/has_grav)
 "m" = (
 /obj/structure/table/wood,
-/obj/machinery/button/door{
-	id = DormRoid1;
-	pixel_x = -10;
-	pixel_y = 32
-	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav)
 "n" = (
@@ -163,6 +156,8 @@
 "N" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/multitool,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav)
 "O" = (
