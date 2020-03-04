@@ -52,7 +52,12 @@
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_AUTO_CATCH_ITEM) && !skip_throw_mode_check && !in_throw_mode)
 		return
-	if(get_active_held_item() || restrained())
+	if(incapacitated())
+		return
+	if (get_active_held_item())
+		if (HAS_TRAIT_FROM(src, TRAIT_AUTO_CATCH_ITEM,RISING_BASS_TRAIT))
+			visible_message("<span class='warning'>[src] chops [I] out of the air!</span>")
+			return TRUE
 		return
 	I.attack_hand(src)
 	if(get_active_held_item() == I) //if our attack_hand() picks up the item...

@@ -157,6 +157,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			BM.overmind = null
 			BM.update_icons()
 	GLOB.overminds -= src
+	blob_mobs = null
+	resource_blobs = null
+	blobs_legit = null
 
 	SSshuttle.clearHostileEnvironment(src)
 
