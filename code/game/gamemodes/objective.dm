@@ -86,8 +86,10 @@ GLOBAL_LIST_EMPTY(objectives)
 		if(M)
 			. += M
 
-/datum/objective/proc/find_target(blacklist)
+/datum/objective/proc/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
+	if(!dupe_search_range)
+		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
 	for(var/I in owners)
