@@ -270,11 +270,6 @@
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
-/obj/item/melee/transforming/energy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
-	if(istype(user))
-		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
-	return TRUE
-
 /obj/item/melee/transforming/energy/sword/cx/transform_weapon(mob/living/user, supress_message_text)
 	active = !active				//I'd use a ..() here but it'd inherit from the regular esword's proc instead, so SPAGHETTI CODE
 	if(active)						//also I'd need to rip out the iconstate changing bits
