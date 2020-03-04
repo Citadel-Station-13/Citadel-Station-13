@@ -63,6 +63,9 @@
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
+	/// Color on minimaps, if it's null (which is default) it makes one at random.
+	var/minimap_color
+
 /**
   * These two vars allow for multiple unique areas to be linked to a master area
   * and share some functionalities such as APC powernet nodes, fire alarms etc, without sacrificing
@@ -96,7 +99,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // ===
 
 /area/New()
-	// This interacts with the map loader, so it needs to be set immediately
+	if(!minimap_color) // goes in New() because otherwise it doesn't fucking work
+		// generate one using the icon_state
+		if(icon_state && icon_state != "unknown")
+			var/icon/I = new(icon, icon_state, dir)
+			I.Scale(1,1)
+			minimap_color = I.GetPixel(1,1)
+		else // no icon state? use random.
+			minimap_color = rgb(rand(50,70),rand(50,70),rand(50,70))	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
 	if (unique)
 		GLOB.areas_by_type[type] = src
