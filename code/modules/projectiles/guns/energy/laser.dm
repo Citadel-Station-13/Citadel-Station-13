@@ -24,6 +24,7 @@
 	icon_state = "toyburst"
 	obj_flags = NONE
 	fire_delay = 40
+	w_class = WEIGHT_CLASS_HUGE
 	weapon_weight = WEAPON_HEAVY
 	selfcharge = EGUN_SELFCHARGE
 	charge_delay = 2
