@@ -46,7 +46,7 @@
 /mob/living/simple_animal/pet/cat/update_mobility()
 	. = ..()
 	if(client && stat != DEAD)
-		if(!CHECK_BITFIELD(mobility_flags, MOBILITY_STAND))
+		if(!CHECK_MOBILITY(src, MOBILITY_STAND))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
 		else

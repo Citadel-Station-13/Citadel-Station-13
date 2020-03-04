@@ -580,7 +580,7 @@
 	if(stam > DAMAGE_PRECISION)
 		var/total_health = (health - stam)
 		if(total_health <= crit_threshold && !stat)
-			if(CHECK_BITFIELD(mobility_flags, MOBILITY_STAND))
+			if(CHECK_MOBILITY(src, MOBILITY_STAND))
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			KnockToFloor(TRUE)
 			update_health_hud()

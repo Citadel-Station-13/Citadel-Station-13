@@ -50,7 +50,7 @@
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/IsDeadOrIncap(checkDead = TRUE)
-	if(!CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE))
+	if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
 		return TRUE
 	if(health <= 0 && checkDead)
 		return TRUE

@@ -13,7 +13,7 @@
 
 		if(!client)
 			if(stat == CONSCIOUS)
-				if(on_fire || buckled || restrained() || (!CHECK_BITFIELD(mobility_flags, MOBILITY_STAND) && CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE))) //CIT CHANGE - makes it so monkeys attempt to resist if they're resting)
+				if(on_fire || buckled || restrained() || (!CHECK_MOBILITY(src, MOBILITY_STAND) && CHECK_MOBILITY(src, MOBILITY_MOVE))) //CIT CHANGE - makes it so monkeys attempt to resist if they're resting)
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
 						walk_to(src,0)
@@ -21,7 +21,7 @@
 				else if(resisting)
 					resisting = FALSE
 				else if((mode == MONKEY_IDLE && !pickupTarget && !prob(MONKEY_SHENANIGAN_PROB)) || !handle_combat())
-					if(prob(25) && CHECK_BITFIELD(mobility_flags, MOBILITY_MOVE) && isturf(loc) && !pulledby)
+					if(prob(25) && CHECK_MOBILITY(src, MOBILITY_MOVE) && isturf(loc) && !pulledby)
 						step(src, pick(GLOB.cardinals))
 					else if(prob(1))
 						emote(pick("scratch","jump","roll","tail"))

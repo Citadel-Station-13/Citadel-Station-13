@@ -17,7 +17,7 @@
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
 
-	else if(lying || !CHECK_BITFIELD(mobility_flags, MOBILITY_STAND) || asleep)
+	else if(lying || !CHECK_MOBILITY(src, MOBILITY_STAND) || asleep)
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
