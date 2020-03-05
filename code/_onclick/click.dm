@@ -70,7 +70,7 @@
 	next_click = world.time + world.tick_lag
 
 	// Hide typing indicator if we click
-	hide_typing_indicator_auto()
+	clear_typing_indicator()
 
 	if(check_click_intercept(params,A))
 		return
