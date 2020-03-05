@@ -283,9 +283,9 @@
 
 	if(change_icon_to_default)
 		if(status == BODYPART_ORGANIC)
-			icon = base_bp_icon ? base_bp_icon : DEFAULT_BODYPART_ICON_ORGANIC
+			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
-			icon = base_bp_icon ? base_bp_icon : DEFAULT_BODYPART_ICON_ROBOTIC
+			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ROBOTIC
 
 	if(owner)
 		owner.updatehealth()
@@ -327,7 +327,7 @@
 		color_src = FALSE
 
 		var/datum/species/S = H.dna.species
-		base_bp_icon = S.icon_limbs ? S.icon_limbs : DEFAULT_BODYPART_ICON
+		base_bp_icon = S.icon_limbs || DEFAULT_BODYPART_ICON
 		species_id = S.limbs_id
 		species_flags_list = H.dna.species.species_traits
 
@@ -375,8 +375,8 @@
 			if(Smark)
 				body_markings_icon = Smark.icon
 			if(H.dna.features["mam_body_markings"] != "None")
-				body_markings = Smark.icon_state ? Smark.icon_state : lowertext(H.dna.features["mam_body_markings"])
-				aux_marking = Smark.icon_state ? Smark.icon_state : lowertext(H.dna.features["mam_body_markings"])
+				body_markings = Smark.icon_state || lowertext(H.dna.features["mam_body_markings"])
+				aux_marking = Smark.icon_state || lowertext(H.dna.features["mam_body_markings"])
 			else
 				body_markings = "plain"
 				aux_marking = "plain"
@@ -466,7 +466,7 @@
 		should_draw_gender = FALSE
 
 	if(is_organic_limb())
-		limb.icon = base_bp_icon ? base_bp_icon : 'icons/mob/human_parts.dmi'
+		limb.icon = base_bp_icon || 'icons/mob/human_parts.dmi'
 		if(should_draw_gender)
 			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 		else if (use_digitigrade)
