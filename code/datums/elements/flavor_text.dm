@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 
 /mob/proc/manage_flavor_tests()
 	set name = "Manage Flavor Texts"
-	set name = "Used to manage your various flavor texts."
+	set desc = "Used to manage your various flavor texts."
 	set category = "IC"
 
 	var/list/L = GLOB.mobs_with_editable_flavor_text[src]
