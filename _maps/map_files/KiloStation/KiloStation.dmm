@@ -34862,7 +34862,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/button/door{
 	id = "coldroom";
 	name = "Coldroom Shutter Toggle";
@@ -34870,6 +34869,7 @@
 	pixel_y = 6;
 	req_access_txt = "28"
 	},
+/obj/machinery/food_cart,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bda" = (
@@ -88060,8 +88060,13 @@
 /turf/closed/wall/rust,
 /area/crew_quarters/heads/hor)
 "nJw" = (
-/obj/machinery/smartfridge,
-/turf/closed/wall/rust,
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen";
+	name = "Serving Hatch"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "nNA" = (
 /turf/closed/wall/rust,
