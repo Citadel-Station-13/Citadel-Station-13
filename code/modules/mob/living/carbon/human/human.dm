@@ -9,8 +9,6 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 	verbs += /mob/living/carbon/human/proc/underwear_toggle //fwee
-	verbs += /mob/proc/set_flavor
-	verbs += /mob/proc/set_flavor_2
 
 	//initialize limbs first
 	create_bodyparts()
@@ -40,6 +38,10 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
+	AddElement(/datum/element/flavor_text/carbon)
+	AddElement(/datum/element/flavor_text, null, null, "Temporary Flavor Text",
+				"Sets a description of your character's current appearance. Use this for emotions, poses etc.",
+				"This should be used only for things pertaining to the current round!")
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
