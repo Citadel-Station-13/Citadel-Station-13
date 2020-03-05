@@ -1,15 +1,15 @@
+GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
+
 /datum/element/flavor_text
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 3
 	var/flavor_name = "Flavor Text"
-	var/procpath/verb_instance
-	var/invoke_proc
 	var/list/texts_by_mob = list()
 	var/addendum = "This can also be used for OOC notes and preferences!"
 	var/always_show = FALSE
 	var/max_len = MAX_FAVOR_LEN
 
-/datum/element/flavor_text/Attach(datum/target, text = "", _proc, _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
+/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
 	. = ..()
 
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target)) //no reason why this shouldn't work on atoms too.
@@ -20,8 +20,6 @@
 	texts_by_mob[target] = copytext(text, 1, max_len)
 	if(_name)
 		flavor_name = _name
-	if(_proc)
-		invoke_proc = _proc
 	if(!isnull(addendum))
 		addendum = _addendum
 	always_show = _always_show
@@ -29,16 +27,20 @@
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
 
 	if(can_edit && ismob(target)) //but only mobs receive the proc/verb for the time being
+		LAZYADD(GLOB.mobs_with_editable_flavor_text[target], src)
 		var/mob/M = target
-		if(!verb_instance)
-			verb_instance = new /datum/element/flavor_text/proc/set_flavor (src, "Set [_name]", _desc)
-		M.verbs += verb_instance
+		M.verbs |= /mob/proc/manage_flavor_tests
 
 /datum/element/flavor_text/Detach(atom/A)
 	. = ..()
 	UnregisterSignal(A, COMSIG_PARENT_EXAMINE)
 	texts_by_mob -= A
-	A.verbs -= verb_instance
+	LAZYREMOVE(GLOB.mobs_with_editable_flavor_text[A], src)
+	if(!GLOB.mobs_with_editable_flavor_text[A])
+		GLOB.mobs_with_editable_flavor_text -= A
+		if(ismob(A))
+			var/mob/M = A
+			M.verbs -= /mob/proc/manage_flavor_tests
 
 /datum/element/flavor_text/proc/show_flavor(atom/target, mob/user, list/examine_list)
 	if(!always_show && isliving(target))
@@ -72,23 +74,44 @@
 			onclose(usr, "[target.name]")
 		return TRUE
 
-/datum/element/flavor_text/proc/set_flavor()
+/mob/proc/manage_flavor_tests()
+	set name = "Manage Flavor Texts"
+	set name = "Used to manage your various flavor texts."
 	set category = "IC"
 
-	if(!(usr in texts_by_mob))
+	var/list/L = GLOB.mobs_with_editable_flavor_text[src]
+
+	if(length(L) == 1)
+		var/datum/element/flavor_text/F = L[1]
+		F.set_flavor(src)
 		return
 
+	var/list/choices
+
+	for(var/i in L)
+		var/datum/element/flavor_text/F = i
+		LAZYSET(choices, F.flavor_name, F)
+
+	var/chosen = input(src, "Which flavor text would you like to modify?") as null|anything in choices
+	if(!chosen)
+		return
+	var/datum/element/flavor_text/F = choices[chosen]
+	F.set_flavor(src)
+
+/datum/element/flavor_text/proc/set_flavor(mob/user)
+	if(!(user in texts_by_mob))
+		return FALSE
+
 	var/lower_name = lowertext(flavor_name)
-	var/new_text = stripped_multiline_input(usr, "Set the [lower_name] displayed on 'examine'. [addendum]", flavor_name, texts_by_mob[usr], max_len, TRUE)
-	if(!isnull(new_text) && (usr in texts_by_mob))
-		texts_by_mob[usr] = html_decode(new_text)
+	var/new_text = stripped_multiline_input(user, "Set the [lower_name] displayed on 'examine'. [addendum]", flavor_name, texts_by_mob[usr], max_len, TRUE)
+	if(!isnull(new_text) && (user in texts_by_mob))
+		texts_by_mob[user] = html_decode(new_text)
 		to_chat(src, "Your [lower_name] has been updated.")
-		if(invoke_proc)
-			INVOKE_ASYNC(usr, invoke_proc, new_text)
+		return TRUE
+	return FALSE
 
 //subtypes with additional hooks for DNA and preferences.
 /datum/element/flavor_text/carbon
-	invoke_proc = /mob/living/carbon.proc/update_flavor_text_feature
 
 /datum/element/flavor_text/carbon/Attach(datum/target, text = "", _proc, _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
 	if(!iscarbon(target))
@@ -110,3 +133,8 @@
 
 /datum/element/flavor_text/carbon/proc/update_prefs_flavor_text(mob/living/carbon/human/H, datum/preferences/P, icon_updates = TRUE, roundstart_checks = TRUE)
 	texts_by_mob[H] = P.features["flavor_text"]
+
+/datum/element/flavor_text/carbon/set_flavor(mob/living/carbon/user)
+	. = ..()
+	if(. && user.dna)
+		user.dna.features["flavor_text"] = texts_by_mob[user]

@@ -1010,8 +1010,3 @@
 
 /mob/living/carbon/can_hold_items()
 	return TRUE
-
-/mob/living/carbon/proc/update_flavor_text_feature(new_text)
-	if(!dna)
-		return
-	dna.features["flavor_text"] = new_text
