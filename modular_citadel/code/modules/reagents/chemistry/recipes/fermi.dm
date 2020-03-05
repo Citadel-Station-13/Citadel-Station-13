@@ -303,7 +303,7 @@
 	HIonRelease 			= 0.1
 	RateUpLim 				= 1
 	FermiChem				= TRUE
-	FermiExplode 			= FALSE
+	FermiExplode 			= TRUE
 	PurityMin 				= 0.2
 
 /datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
@@ -348,6 +348,10 @@
 	E.creatorName = B.data["real_name"]
 	E.data["creatorID"] = B.data["ckey"]
 	E.creatorID = B.data["ckey"]
+
+/datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH)
+	R0.clear_reagents()
+	..()
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"
