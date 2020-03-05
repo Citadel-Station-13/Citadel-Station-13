@@ -1,6 +1,8 @@
 /mob/living/Moved()
 	. = ..()
 	update_turf_movespeed(loc)
+	//Hide typing indicator if we move.
+	hide_typing_indicator_auto()
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))

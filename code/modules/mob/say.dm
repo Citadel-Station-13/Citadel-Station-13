@@ -4,14 +4,23 @@
 	set name = "say_keybind"
 	set hidden = TRUE
 	set category = "IC"
-	return say_verb(message)
+	// If they don't type anything just drop the message.
+	clear_typing_indicator()		// clear it immediately!
+	if(!length(message))
+		return
+	return do_sayverb(message)
 
 /mob/verb/say_verb(message as text|null)
 	set name = "Say"
 	set category = "IC"
 	display_typing_indicator()
 	if(!length(message))
-		message = input(usr, "Say something!", "Say") as text|null
+		// We don't use input because that can't be broken out of with ESC key.
+		winset(src, null, "command=\"say_keybind\"")
+	else
+		return do_sayverb(message)
+
+/mob/proc/do_sayverb(message)
 	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return
@@ -19,6 +28,38 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	say(message)
+
+/mob/verb/me_keybind(message as message)
+	set name = "me_keybind"
+	set hidden = TRUE
+	set category = "IC"
+	// If they don't type anything just drop the message.
+	clear_typing_indicator()		// clear it immediately!
+	if(!length(message))
+		return
+	return do_meverb(message)
+
+/mob/verb/me_verb(message as message|null)
+	set name = "Me"
+	set category = "IC"
+	display_typing_indicator()
+	if(!length(message))
+		// Do not use input because it can't be broken out of with ESC key.
+		winset(src, null, "command=\"me_keybind\"")
+	else
+		return do_meverb(message)
+
+/mob/proc/do_meverb(message)
+	clear_typing_indicator()		// clear it immediately!
+	if(!length(message))
+		return
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+
+	usr.emote("me",1,message,TRUE)
 
 /mob/say_mod(input, message_mode)
 	var/customsayverb = findtext(input, "*")
@@ -31,7 +72,6 @@
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
-	clear_typing_indicator()		// clear it immediately!
 	if(!length(message))
 		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
@@ -41,29 +81,6 @@
 
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
-
-/mob/verb/me_keybind(message as message)
-	set name = "me_keybind"
-	set hidden = TRUE
-	set category = "IC"
-	return me_verb(message)
-
-/mob/verb/me_verb(message as message|null)
-	set name = "Me"
-	set category = "IC"
-	display_typing_indicator()
-	if(!length(message))
-		message = input(usr, "What do you want to emote?" , "Emote") as message|null
-	clear_typing_indicator()		// clear it immediately!
-	if(!length(message))
-		return
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
-		return
-
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	usr.emote("me",1,message,TRUE)
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name

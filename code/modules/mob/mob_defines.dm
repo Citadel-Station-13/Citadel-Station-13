@@ -136,3 +136,5 @@
 	var/typing_indicator_state = /obj/effect/overlay/typing_indicator
 	/// The timer that will remove our indicator for early aborts (like when an user finishes their message)
 	var/typing_indicator_timerid
+	/// Current state of our typing indicator. Used for cut overlay, DO NOT RUNTIME ASSIGN OTHER THAN FROM SHOW/CLEAR. Used to absolutely ensure we do not get stuck overlays.
+	var/typing_indicator_current

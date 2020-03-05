@@ -22,19 +22,21 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
   * @param force - shows even if src.typing_indcator_enabled is FALSE.
   */
 /mob/proc/display_typing_indicator(timeout_override = TYPING_INDICATOR_TIMEOUT, state_override = get_typing_indicator_icon_state(), force = FALSE)
-	if((!typing_indicator_enabled && !force) || typing_indicator_timerid)
+	if((!typing_indicator_enabled && !force) || typing_indicator_current)
 		return
-	typing_indicator_timerid = addtimer(CALLBACK(src, .proc/clear_typing_indicator, state_override), timeout_override, TIMER_STOPPABLE)
-	add_overlay(get_indicator_overlay(state_override))
+	typing_indicator_current = state_override
+	add_overlay(state_override)
+	typing_indicator_timerid = addtimer(CALLBACK(src, .proc/clear_typing_indicator), timeout_override, TIMER_STOPPABLE)
 
 /**
   * Removes typing indicator.
-  * @param state_override Sets the state that we will remove. Defaults to src.get_typing_indicator_icon_state()
   */
-/mob/proc/clear_typing_indicator(state_override = get_typing_indicator_icon_state())
-	deltimer(typing_indicator_timerid)
-	typing_indicator_timerid = null
-	cut_overlay(get_indicator_overlay(state_override))
+/mob/proc/clear_typing_indicator()
+	cut_overlay(typing_indicator_current)
+	typing_indicator_current = null
+	if(typing_indicator_timerid)
+		deltimer(typing_indicator_timerid)
+		typing_indicator_timerid = null
 
 /// Default typing indicator
 /obj/effect/overlay/typing_indicator
@@ -42,4 +44,4 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	icon = 'icons/mob/talk.dmi'
 	icon_state = "normal_typing"
 	appearance_flags = RESET_COLOR | TILE_BOUND | PIXEL_SCALE
-	layer = LARGE_MOB_LAYER
+	layer = ABOVE_FLY_LAYER
