@@ -9,19 +9,19 @@
 	var/always_show = FALSE
 	var/max_len = MAX_FAVOR_LEN
 
-/datum/element/flavor_text/Attach(datum/target, text, _proc, _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
+/datum/element/flavor_text/Attach(datum/target, text = "", _proc, _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
 	. = ..()
 
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target)) //no reason why this shouldn't work on atoms too.
 		return ELEMENT_INCOMPATIBLE
 
-	texts_by_mob[target] = text
+	if(_max_len)
+		max_len = _max_len
+	texts_by_mob[target] = copytext(text, 1, max_len)
 	if(_name)
 		flavor_name = _name
 	if(_proc)
 		invoke_proc = _proc
-	if(_max_len)
-		max_len = _max_len
 	if(!isnull(addendum))
 		addendum = _addendum
 	always_show = _always_show
@@ -56,9 +56,9 @@
 		return
 	var/msg = replacetext(text, "\n", " ")
 	if(length_char(msg) <= 40)
-		return "<span class='notice'>[html_encode(msg)]</span>"
+		examine_list += "<span class='notice'>[html_encode(msg)]</span>"
 	else
-		return "<span class='notice'>[html_encode(copytext_char(msg, 1, 37))]... <a href='?src=[REF(src)];show_flavor=[REF(target)]'>More...</span></a>"
+		examine_list += "<span class='notice'>[html_encode(copytext_char(msg, 1, 37))]... <a href='?src=[REF(src)];show_flavor=[REF(target)]'>More...</span></a>"
 
 /datum/element/flavor_text/Topic(href, href_list)
 	. = ..()
@@ -90,7 +90,7 @@
 /datum/element/flavor_text/carbon
 	invoke_proc = /mob/living/carbon.proc/update_flavor_text_feature
 
-/datum/element/flavor_text/carbon/Attach(datum/target, text, _proc, _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
+/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _proc, _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
 	if(!iscarbon(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
@@ -100,7 +100,6 @@
 	if(ishuman(target))
 		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, .proc/update_prefs_flavor_text)
 		RegisterSignal(target, COMSIG_HUMAN_HARDSET_DNA, .proc/update_dna_flavor_text)
-
 
 /datum/element/flavor_text/carbon/Detach(mob/living/carbon/C)
 	. = ..()
