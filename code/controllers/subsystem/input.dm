@@ -41,9 +41,9 @@ SUBSYSTEM_DEF(input)
 			"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 			"O" = "ooc",
 			"Ctrl+O" = "looc",
-			"T" = "say",
+			"T" = "say_keybind",
 			"Ctrl+T" = "whisper",
-			"M" = "me",
+			"M" = "me_keybind",
 			"Ctrl+M" = "subtle",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
@@ -51,15 +51,15 @@ SUBSYSTEM_DEF(input)
 			),
 		"old_default" = list(
 			"Tab" = "\".winset \\\"mainwindow.macro=old_hotkeys map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
-			"Ctrl+T" = "say",
+			"Ctrl+T" = "say_keybind",
 			"Ctrl+O" = "ooc",
 			),
 		"old_hotkeys" = list(
 			"Tab" = "\".winset \\\"mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 			"O" = "ooc",
 			"L" = "looc",
-			"T" = "say",
-			"M" = "me",
+			"T" = "say_keybind",
+			"M" = "me_keybind",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(input)
 			)
 		)
 
-	typing_indicator_verbs = list("me", "say")
+	typing_indicator_verbs = list("me", "say", "say_keybind", "me_keybind")
 	typing_indicator_binds = list()
 	for(var/check_verb in typing_indicator_verbs)
 		for(var/macro_set in macro_set_reverse_lookups)

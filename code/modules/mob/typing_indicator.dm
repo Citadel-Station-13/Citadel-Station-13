@@ -25,7 +25,6 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	if((!typing_indicator_enabled && !force) || typing_indicator_timerid)
 		return
 	typing_indicator_timerid = addtimer(CALLBACK(src, .proc/clear_typing_indicator, state_override), timeout_override, TIMER_STOPPABLE)
-	var/overlay = get_indicator_overlay(state_override)
 	add_overlay(get_indicator_overlay(state_override))
 
 /**
