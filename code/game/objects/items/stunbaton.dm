@@ -161,7 +161,7 @@
 		if(check_martial_counter(L, user))
 			return TRUE
 	if(status)
-		if(baton_stun(M, user, disarming))
+		if(baton_stun(M, user, disarming || (user.a_intent == INTENT_DISARM)))
 			user.do_attack_animation(M)
 			user.adjustStaminaLossBuffered(getweight())		//CIT CHANGE - makes stunbatonning others cost stamina
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
