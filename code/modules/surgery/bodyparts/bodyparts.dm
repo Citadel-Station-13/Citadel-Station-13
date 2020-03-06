@@ -327,7 +327,7 @@
 		color_src = FALSE
 
 		var/datum/species/S = H.dna.species
-		base_bp_icon = S.icon_limbs || DEFAULT_BODYPART_ICON
+		base_bp_icon = S?.icon_limbs || DEFAULT_BODYPART_ICON
 		species_id = S.limbs_id
 		species_flags_list = H.dna.species.species_traits
 
@@ -375,8 +375,8 @@
 			if(Smark)
 				body_markings_icon = Smark.icon
 			if(H.dna.features["mam_body_markings"] != "None")
-				body_markings = Smark.icon_state || lowertext(H.dna.features["mam_body_markings"])
-				aux_marking = Smark.icon_state || lowertext(H.dna.features["mam_body_markings"])
+				body_markings = Smark?.icon_state || lowertext(H.dna.features["mam_body_markings"])
+				aux_marking = Smark?.icon_state || lowertext(H.dna.features["mam_body_markings"])
 			else
 				body_markings = "plain"
 				aux_marking = "plain"
