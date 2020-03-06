@@ -31,10 +31,10 @@
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)
 		if(radiation > RAD_MOB_MUTATE && prob((radiation - RAD_MOB_MUTATE) / 25))
-			gorillize() 
+			gorillize()
 			return
 		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
-			if(!recoveringstam)
+			if(!IS_HARD_STAMCRITTED(src))
 				emote("collapse")
 			DefaultCombatKnockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")

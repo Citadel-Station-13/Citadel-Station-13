@@ -95,7 +95,7 @@
 		SStgui.on_transfer(current, new_character)
 		if(iscarbon(current))
 			var/mob/living/carbon/C = current
-			C.disable_intentonal_combat_mode(TRUE)
+			C.disable_intentional_combat_mode(TRUE)
 	if(!language_holder)
 		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
 		language_holder = mob_holder.copy(src)
