@@ -71,6 +71,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
+	var/datum/outfit/outfit_important_for_life // A path to an outfit that is important for species life e.g. plasmaman outfit
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -1018,6 +1019,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.apply_overlay(BODY_FRONT_LAYER)
 	H.apply_overlay(BODY_TAUR_LAYER) // CITADEL EDIT
 
+
+/*
+ * Equip the outfit required for life. Replaces items currently worn.
+ */
+/datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
+	if(!outfit_important_for_life)
+		return
+	outfit_important_for_life= new()
+	outfit_important_for_life.equip(human_to_equip)
 
 //This exists so sprite accessories can still be per-layer without having to include that layer's
 //number in their sprite name, which causes issues when those numbers change.
