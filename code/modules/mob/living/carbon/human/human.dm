@@ -591,11 +591,11 @@
 		if(R && R.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")
-					return 1 // ordered to arrest
+					BAYES_THEOREM(threat_perc,0.999,0.01) // ordered to arrest, not too likely for mistakes to have been made so 0.01
 				if("Incarcerated")
-					BAYES_THEOREM(threat_perc,0.99,0.05) // EXTREMELY likely scumbag, don't assume mistakes were made
+					BAYES_THEOREM(threat_perc,0.7,0.01) // pretty likely to be a scumbag
 				if("Paroled")
-					BAYES_THEOREM(threat_perc,0.5,0.05) // watching you
+					BAYES_THEOREM(threat_perc,0.3,0.01) // watching you
 
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi))
@@ -607,7 +607,7 @@
 
 	//Agent cards lower threatlevel.
 	if(istype(idcard, /obj/item/card/id/syndicate))
-		BAYES_THEOREM(threat_perc,0.005,0.05) // fools 'em into thinking there's a mindshield, basically
+		BAYES_THEOREM(threat_perc,0.001,0.05) // fooled super hard
 
 	return threat_perc
 
