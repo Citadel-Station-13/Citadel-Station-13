@@ -24,7 +24,7 @@ mob/living/carbon/proc/toggle_vore_mode()
 			setDir(lastmousedir, ismousemovement = TRUE)
 
 /mob/living/carbon/onMouseMove(object, location, control, params)
-	if(!combatmode)
+	if(!IS_COMBAT_ACTIVE(src))
 		return
 	mouse_face_atom(object)
 	lastmousedir = dir

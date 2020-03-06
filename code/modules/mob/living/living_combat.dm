@@ -45,8 +45,8 @@
 	T?.update_icon_state()
 
 /// Enables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
-/mob/living/proc/_enable_intentional_combat_mode(silent = TRUE, visible = FALSE)
-	if(IS_COMBAT_TOGGLED(src))
+/mob/living/proc/enable_intentional_combat_mode(silent = TRUE, visible = FALSE)
+	if(IS_COMBAT_TOGGLED(src) && IS_COMBAT_ACTIVE(src))
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
 	if(!IS_COMBAT_MODE_LOCKED(src) && !IS_COMBAT_ACTIVE(src))
@@ -57,10 +57,10 @@
 	client?.show_popup_menus = FALSE
 
 /// Disables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
-/mob/living/proc/_disable_intentional_combat_mode(silent = TRUE, visible = FALSE)
-	if(!IS_COMBAT_TOGGLED(src))
+/mob/living/proc/disable_intentional_combat_mode(silent = TRUE, visible = FALSE)
+	if(!IS_COMBAT_TOGGLED(src) && !IS_COMBAT_ACTIVE(src))
 		return
-	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
+	DISBLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
 	if(IS_COMBAT_ACTIVE(src))
 		disable_combat_mode(silent, FALSE, visible, FALSE)
 	update_combat_mode_icon()

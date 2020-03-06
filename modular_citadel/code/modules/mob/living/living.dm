@@ -27,18 +27,19 @@
 
 /mob/living/carbon/update_stamina()
 	var/total_health = getStaminaLoss()
+	if(!IS_SOFT_STAMCRITTED(src) && (total_health >= STAMINA_SOFTCRIT))
+		ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
 	if(total_health)
-		if(!recoveringstam && total_health >= STAMINA_CRIT && !stat)
+		if(!IS_HARD_STAMCRITTED(src) && total_health >= STAMINA_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			set_resting(TRUE, FALSE, FALSE)
-			if(combatmode)
-				toggle_combat_mode(TRUE)
-			recoveringstam = TRUE
+			disable_intentional_combat_mode(TRUE, FALSE)
+			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
 			filters += CIT_FILTER_STAMINACRIT
 			update_mobility()
-	if(recoveringstam && total_health <= STAMINA_SOFTCRIT)
+	if(IS_HARD_STAMCRITTED(src) && total_health <= STAMINA_SOFTCRIT)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
-		recoveringstam = FALSE
+		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT | COMBAT_FLAG_SOFT_STAMCRIT)
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
 	update_health_hud()

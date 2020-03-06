@@ -13,7 +13,7 @@
 		return FALSE
 	else
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
-		if(getStaminaLoss() >= STAMINA_SOFTCRIT)
+		if(IS_STAMCRIT(src))
 			to_chat(src, "<span class='warning'>You're too exhausted to get up!")
 			return FALSE
 		combat_flags |= COMBAT_FLAG_RESISTING_REST
