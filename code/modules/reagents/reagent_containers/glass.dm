@@ -346,7 +346,8 @@
 	name = "wooden bucket"
 	desc = "It's a bucket made of wood."
 	icon_state = "bucket_wooden"
-	slot_flags = null
+	custom_materials = null
+	slot_flags = NONE
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/reagent_containers/glass/beaker/waterbottle
