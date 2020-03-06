@@ -113,11 +113,8 @@ SUBSYSTEM_DEF(shuttle)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
 
-	//Cargo stuff start
-	var/fire_time_diff = max(0, world.time - last_fire)		//Don't want this to be below 0, seriously.
-	var/point_gain = (fire_time_diff / 600) * passive_supply_points_per_minute
-	points += point_gain
-	//Cargo stuff end
+	if(!(times_fired % CEILING(600/wait, 1)))
+		points += passive_supply_points_per_minute
 
 	var/esETA = emergency?.getModeStr()
 	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
