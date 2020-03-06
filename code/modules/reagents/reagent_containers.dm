@@ -136,7 +136,7 @@
 		reagents.reaction(target, TOUCH)
 
 	else if(bartender_check(target) && thrown)
-		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
+		visible_message("<span class='notice'>[src] lands without spilling a single drop.</span>")
 		transform = initial(transform)
 		addtimer(CALLBACK(src, .proc/ForceResetRotation), 1)
 
