@@ -531,6 +531,9 @@ LAVALAND_BUDGET 60
 ## Space Ruin Budged
 Space_Budget 16
 
+## Station Ruin Budget
+STATION_SPACE_BUDGET 10
+
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
 ## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55

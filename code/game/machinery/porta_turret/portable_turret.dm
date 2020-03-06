@@ -705,7 +705,7 @@
 
 /obj/machinery/porta_turret/syndicate/energy/pirate
 	max_integrity = 260
-	integrity_failure = 20
+	integrity_failure = 0.08
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 

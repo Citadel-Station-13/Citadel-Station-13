@@ -14,7 +14,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(stat || lockcharge || IsKnockdown() || IsStun() || IsUnconscious())
+	if(stat || locked_down || IsParalyzed() || IsStun() || IsUnconscious())
 		return
 
 	var/list/modifiers = params2list(params)
@@ -66,7 +66,7 @@
 				if(C.user_unbuckle_mob(C.buckled_mobs[1],src))
 					return
 
-	if(!W && get_dist(src,A) <= interaction_range)
+	if(!W && (get_dist(src,A) <= interaction_range))
 		A.attack_robot(src)
 		return
 

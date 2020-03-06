@@ -170,7 +170,7 @@
 	. = ..()
 	if(!fancy_open || !contents.len)
 		return
-	. *= "[icon_state]_open"
+	. += "[icon_state]_open"
 	var/cig_position = 1
 	for(var/C in contents)
 		var/mutable_appearance/inserted_overlay = mutable_appearance(icon)

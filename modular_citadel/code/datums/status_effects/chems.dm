@@ -543,7 +543,7 @@
 			if (statusStrength < 0)
 				status = null
 				owner.remove_movespeed_modifier(MOVESPEED_ID_MKULTRA)
-				owner.Knockdown(50)
+				owner.DefaultCombatKnockdown(50)
 				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else
 				statusStrength -= 1
@@ -638,7 +638,7 @@
 					H.adjust_arousal(5)
 				C.jitteriness += 100
 				C.stuttering += 25
-				C.Knockdown(60)
+				C.DefaultCombatKnockdown(60)
 				C.Stun(60)
 				to_chat(owner, "<span class='warning'><i>Your muscles seize up, then start spasming wildy!</i></span>")
 

@@ -218,10 +218,15 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
 	. = ..()
-	if(!independent) //no pulling people deep into the blob
-		verbs -= /mob/living/verb/pulled
-	else
+	if(independent)
 		pass_flags &= ~PASSBLOB
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
+	if(!independent && ismob(AM))
+		if(!supress_message)
+			to_chat(src, "<span class='warning'>You are unable to grasp people in this form.</span>")
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())

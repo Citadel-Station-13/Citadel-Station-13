@@ -41,20 +41,21 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 ///This proc is called when the material is added to an object specifically.
 /datum/material/proc/on_applied_obj(var/obj/o, amount, material_flags)
-	var/new_max_integrity = CEILING(o.max_integrity * integrity_modifier, 1)
-	o.modify_max_integrity(new_max_integrity)
-	o.force *= strength_modifier
-	o.throwforce *= strength_modifier
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/new_max_integrity = CEILING(o.max_integrity * integrity_modifier, 1)
+		o.modify_max_integrity(new_max_integrity)
+		o.force *= strength_modifier
+		o.throwforce *= strength_modifier
 
-	var/list/temp_armor_list = list() //Time to add armor modifiers!
+		var/list/temp_armor_list = list() //Time to add armor modifiers!
 
-	if(!istype(o.armor))
-		return
-	var/list/current_armor = o.armor?.getList()
+		if(!istype(o.armor))
+			return
+		var/list/current_armor = o.armor?.getList()
 
-	for(var/i in current_armor)
-		temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
-	o.armor = getArmor(arglist(temp_armor_list))
+		for(var/i in current_armor)
+			temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
+		o.armor = getArmor(arglist(temp_armor_list))
 
 ///This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, material_flags)
@@ -71,7 +72,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 ///This proc is called when the material is removed from an object specifically.
 /datum/material/proc/on_removed_obj(var/obj/o, amount, material_flags)
-	var/new_max_integrity = initial(o.max_integrity)
-	o.modify_max_integrity(new_max_integrity)
-	o.force = initial(o.force)
-	o.throwforce = initial(o.throwforce)
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/new_max_integrity = initial(o.max_integrity)
+		o.modify_max_integrity(new_max_integrity)
+		o.force = initial(o.force)
+		o.throwforce = initial(o.throwforce)

@@ -29,7 +29,7 @@
 		/datum/material/plastic,
 		/datum/material/runite
 	), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
-	chosen =  getmaterialref(chosen)
+	chosen =  SSmaterials.GetMaterialRef(chosen)
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
