@@ -363,7 +363,7 @@
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")
 		user.emote("scream")
 		user.drop_all_held_items()
-		user.Knockdown(80)
+		user.DefaultCombatKnockdown(80)
 
 // IMPROVISED REVOLVER //
 //Has 3 calibers - .38 .357 rev762.

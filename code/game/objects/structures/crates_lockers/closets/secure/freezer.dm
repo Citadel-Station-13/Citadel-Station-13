@@ -4,10 +4,10 @@
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
 	recursive_organ_check(src)
-	..()
+	return ..()
 
 /obj/structure/closet/secure_closet/freezer/Initialize()
-	..()
+	. = ..()
 	recursive_organ_check(src)
 
 /obj/structure/closet/secure_closet/freezer/open(mob/living/user)
@@ -17,14 +17,15 @@
 	return ..()
 
 /obj/structure/closet/secure_closet/freezer/close(mob/living/user)
-	if(..())	//if we actually closed the locker
+	. = ..()
+	if(.) //if we actually closed the locker
 		recursive_organ_check(src)
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(!jones)
 		jones = TRUE
 	else
-		..()
+		return ..()
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen Cabinet"

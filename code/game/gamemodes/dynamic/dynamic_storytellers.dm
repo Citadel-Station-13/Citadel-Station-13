@@ -57,7 +57,8 @@ Property weights are:
 							mean += 2.5
 						if(CHAOS_MAX)
 							mean += 5
-			GLOB.dynamic_curve_centre += (mean/voters)
+			if(voters)
+				GLOB.dynamic_curve_centre += (mean/voters)
 		GLOB.dynamic_forced_threat_level = forced_threat_level
 
 /datum/dynamic_storyteller/proc/get_midround_cooldown()

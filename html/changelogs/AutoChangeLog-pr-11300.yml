@@ -1,0 +1,4 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - rscdel: "removed laptops giving slowdown when open"

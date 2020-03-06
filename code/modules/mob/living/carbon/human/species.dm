@@ -1364,9 +1364,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 
 	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
-		if(!H.IsKnockdown())
+		if(CHECK_MOBILITY(H, MOBILITY_STAND))
 			H.emote("collapse")
-		H.Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
+		H.DefaultCombatKnockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
 
 	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
@@ -1514,7 +1514,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
 		if(!target.combatmode && damage < user.dna.species.punchstunthreshold)
 			damage = user.dna.species.punchstunthreshold - 1
-		if(user.resting)
+		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.5
 		if(!user.combatmode)
 			damage *= 0.25
@@ -1632,7 +1632,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			return*/
 		if(!target.combatmode) // CITADEL CHANGE
 			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
-		if(user.resting) //CITADEL CHANGE
+		if(!CHECK_MOBILITY(user, MOBILITY_STAND)) //CITADEL CHANGE
 			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
 		if(!user.combatmode) //CITADEL CHANGE
 			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
@@ -1715,7 +1715,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/mob/living/carbon/tempcarb = user
 		if(!tempcarb.combatmode)
 			totitemdamage *= 0.5
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	if(istype(H))
 		if(!H.combatmode)
@@ -1831,12 +1831,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return
-		if(!user.resting)
+		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
+			to_chat(user, "<span class='warning'>You can't seem to force yourself up right now!</span>")
+			return
+		if(CHECK_MOBILITY(user, MOBILITY_STAND))
 			to_chat(user, "<span class='notice'>You can only force yourself up if you're on the ground.</span>")
 			return
 		user.visible_message("<span class='notice'>[user] forces [p_them()]self up to [p_their()] feet!</span>", "<span class='notice'>You force yourself up to your feet!</span>")
-		user.resting = 0
-		user.update_canmove()
+		user.set_resting(FALSE, TRUE)
 		user.adjustStaminaLossBuffered(user.stambuffer) //Rewards good stamina management by making it easier to instantly get up from resting
 		playsound(user, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
@@ -1849,7 +1851,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		return FALSE
 	else
 		if(user == target)
@@ -1862,7 +1864,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 
-		if(!target.resting)
+		if(CHECK_MOBILITY(target, MOBILITY_STAND))
 			target.adjustStaminaLoss(5)
 
 		if(target.is_shove_knockdown_blocked())
@@ -1876,7 +1878,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		//Thank you based whoneedsspace
 		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
-		if(target_collateral_human && !target_collateral_human.resting)
+		if(target_collateral_human && CHECK_MOBILITY(target_collateral_human, MOBILITY_STAND))
 			shove_blocked = TRUE
 		else
 			target_collateral_human = null
@@ -1887,15 +1889,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/append_message = ""
 		if(shove_blocked && !target.buckled)
 			var/directional_blocked = !target.Adjacent(target_shove_turf)
-			var/targetatrest = target.resting
+			var/targetatrest = !CHECK_MOBILITY(target, MOBILITY_STAND)
 			if((directional_blocked || !(target_collateral_human || target_shove_turf.shove_act(target, user))) && !targetatrest)
-				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "knocking them down")
 			else if(target_collateral_human && !targetatrest)
-				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_HUMAN)
+				target_collateral_human.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
 					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				append_message += ", into [target_collateral_human.name]"
@@ -1924,6 +1926,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!forced && hit_percent <= 0)

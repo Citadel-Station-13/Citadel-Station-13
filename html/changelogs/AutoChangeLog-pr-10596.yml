@@ -1,5 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - rscadd: "hijack implant"
-  - code_imp: "changed mentions of the issilion proc to hasSiliconAccessInArea based on what the proc is used for"

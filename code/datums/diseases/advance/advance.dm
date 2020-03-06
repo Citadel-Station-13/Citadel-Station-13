@@ -80,7 +80,8 @@
 
  */
 
-/datum/disease/advance/New()
+/datum/disease/advance/New(make_typecache = TRUE)
+	..()
 	Refresh()
 
 /datum/disease/advance/Destroy()

@@ -168,8 +168,9 @@
 		set category = "Object"
 		set src in usr
 
-		if(!usr.canmove || usr.stat || usr.restrained())
-			return 0
+		var/mob/living/L = usr
+		if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
+			return FALSE
 
 		switch(unbuttoned)
 			if(0)

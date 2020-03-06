@@ -13,7 +13,7 @@
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 	var/breakout_time = 1200
 	var/message_cooldown
@@ -359,7 +359,7 @@
 								"<span class='italics'>You hear [welder ? "welding" : "rustling of screws and metal"].</span>")
 				deconstruct(TRUE)
 				return
-		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
+		if(user.a_intent != INTENT_HARM && user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return TRUE
 	else if(istype(W, /obj/item/electronics/airlock))
 		handle_lock_addition(user, W)
@@ -431,7 +431,7 @@
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
-				L.Knockdown(40)
+				L.DefaultCombatKnockdown(40)
 			O.forceMove(T)
 			close()
 	else
@@ -474,8 +474,9 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
+		return FALSE
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
 		return attack_hand(usr)
@@ -510,7 +511,7 @@
 	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear banging from [src].</span>")
-	if(do_after(user,(breakout_time), target = src))
+	if(do_after(user,(breakout_time), target = src, required_mobility_flags = MOBILITY_RESIST))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
@@ -603,12 +604,12 @@
 	step_towards(user, T2)
 	T1 = get_turf(user)
 	if(T1 == T2)
-		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		user.set_resting(TRUE, TRUE)
 		if(!close(user))
 			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.resting = FALSE
+			user.set_resting(FALSE, TRUE)
 			return
-		user.resting = FALSE
+		user.set_resting(FALSE, TRUE)
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
 

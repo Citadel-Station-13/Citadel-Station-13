@@ -29,20 +29,30 @@
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 			reagents.reaction(M, TOUCH)
 			log_combat(user, M, "splashed", R)
+			var/turf/UT = get_turf(user)
+			var/turf/MT = get_turf(M)
+			var/turf/OT = get_turf(target)
+			log_reagent("SPLASH: attack(target mob [key_name(M)] at [AREACOORD(MT)], from user [key_name(user)] at [AREACOORD(UT)], target object [target] at [AREACOORD(OT)]) - [R]")
 			reagents.clear_reagents()
 		else
 			var/self_fed = M == user
 			if(!self_fed)
 				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
 							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
+				log_combat(user, M, "is attempting to feed", reagents.log_list())
 				if(!do_mob(user, M))
 					return
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
+				var/turf/UT = get_turf(user)		// telekenesis memes
+				var/turf/MT = get_turf(M)
 				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
 				log_combat(user, M, "fed", reagents.log_list())
+				log_reagent("INGESTION: FED BY: [key_name(user)] (loc [user.loc] at [AREACOORD(UT)]) -> [key_name(M)] (loc [M.loc] at [AREACOORD(MT)]) - [reagents.log_list()]")
 			else
+				var/turf/T = get_turf(user)
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
+				log_reagent("INGESTION: SELF: [key_name(user)] (loc [user.loc] at [AREACOORD(T)]) - [reagents.log_list()]")
 			var/fraction = min(5/reagents.total_volume, 1)
 			reagents.reaction(M, INGEST, fraction)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, null, null, null, self_fed? "self swallowed" : "fed by [user]"), 5)
@@ -109,7 +119,7 @@
 	volume = 60
 	icon_state = "beaker"
 	item_state = "beaker"
-	materials = list(MAT_GLASS=500)
+	custom_materials = list(/datum/material/glass=500)
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,60)
 	container_flags = PH_WEAK|APTFT_ALTCLICK|APTFT_VERB
 
@@ -159,7 +169,7 @@
 /obj/item/reagent_containers/glass/beaker/glass_dish
 	name = "glass dish"
 	desc = "A tiny glass dish. It can hold up to 3 units. Unable to withstand reagents of an extreme pH."
-	materials = list(MAT_GLASS=500)
+	custom_materials = list(/datum/material/glass = 500)
 	icon_state = "glass_disk"
 	possible_transfer_amounts = list(0.1,0.5,0.75,1,2,3)
 	volume = 3
@@ -167,21 +177,21 @@
 /obj/item/reagent_containers/glass/beaker/flask/large
 	name = "large flask"
 	desc = "A large flask. It can hold up to 80 units. Unable to withstand reagents of an extreme pH."
-	materials = list(MAT_GLASS=2500)
+	custom_materials = list(/datum/material/glass = 2500)
 	icon_state = "flasklarge"
 	volume = 80
 
 /obj/item/reagent_containers/glass/beaker/flask
 	name = "small flask"
 	desc = "A small flask. It can hold up to 40 units. Unable to withstand reagents of an extreme pH."
-	materials = list(MAT_GLASS=1000)
+	custom_materials = list(/datum/material/glass = 1000)
 	icon_state = "flasksmall"
 	volume = 40
 
 /obj/item/reagent_containers/glass/beaker/flask/spouty
 	name = "flask with spout"
 	desc = "A flask with a spout! It can hold up to 120 units. Unable to withstand reagents of an extreme pH."
-	materials = list(MAT_GLASS=2500)
+	custom_materials = list(/datum/material/glass = 2500)
 	icon_state = "flaskspouty"
 	possible_transfer_amounts = list(1,2,3,4,5,10,15,20,25,30,50,100,120)
 	volume = 120
@@ -190,7 +200,7 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 120 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerlarge"
-	materials = list(MAT_GLASS=2500)
+	custom_materials = list(/datum/material/glass=2500)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120)
@@ -200,7 +210,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 180 units. Is able to resist acid and alkaline solutions, but melts at 444 K."
 	icon_state = "beakerwhite"
-	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
+	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
@@ -215,7 +225,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 240 units, and is able to withstand all chemical situations."
 	icon_state = "beakergold"
-	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
+	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000, /datum/material/gold=1000, /datum/material/titanium=1000)
 	volume = 240
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,200,240)
@@ -226,7 +236,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	materials = list(MAT_METAL=3000)
+	custom_materials = list(/datum/material/iron=3000)
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -239,8 +249,9 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerbluespace"
-	materials = list(MAT_GLASS=3000)
+	custom_materials = list(/datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	volume = 300
+	material_flags = MATERIAL_NO_EFFECTS
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 	container_HP = 5
@@ -281,7 +292,7 @@
 	item_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	materials = list(MAT_METAL=200)
+	custom_materials = list(/datum/material/iron=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
@@ -324,6 +335,8 @@
 	if (slot == SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
+			var/R = reagents.log_list()
+			log_reagent("SPLASH: [user] splashed [src] on their head via bucket/equipped(self, SLOT_HEAD) - [R]")
 			reagents.reaction(user, TOUCH)
 			reagents.clear_reagents()
 		reagent_flags = NONE
@@ -348,7 +361,7 @@
 	icon_state = "smallbottle"
 	item_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	materials = list(MAT_GLASS=0)
+	custom_materials = list(/datum/material/glass=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
@@ -361,7 +374,7 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	materials = list(MAT_GLASS=0)
+	custom_materials = list(/datum/material/glass=0)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20

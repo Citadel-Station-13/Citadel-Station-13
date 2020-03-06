@@ -7,7 +7,7 @@
 
 /obj/item/weaponcrafting/silkstring
 	name = "silkstring"
-	desc = "A long pice of silk looks like cable coil."
+	desc = "A long piece of silk with some resemblance to cable coil."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "silkstring"
 
@@ -128,5 +128,3 @@
 			new H(user.loc, 1)
 			qdel(src)
 */
-
-
