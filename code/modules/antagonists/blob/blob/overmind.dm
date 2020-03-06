@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	hud_type = /datum/hud/blob_overmind
 	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
-	var/max_blob_points = 100
+	var/max_blob_points = 250
 	var/last_attack = 0
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
@@ -157,6 +157,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			BM.overmind = null
 			BM.update_icons()
 	GLOB.overminds -= src
+	blob_mobs = null
+	resource_blobs = null
+	blobs_legit = null
 
 	SSshuttle.clearHostileEnvironment(src)
 
@@ -203,7 +206,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/blob_talk(message)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
 		return

@@ -36,7 +36,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
@@ -117,7 +117,7 @@
 	color = "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150, MAT_GLASS=75)
+	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
@@ -128,9 +128,6 @@
 	item_color = param_color || item_color || pick(cable_colors)
 	if(cable_colors[item_color])
 		item_color = cable_colors[item_color]
-	update_icon()
-
-/obj/item/restraints/handcuffs/cable/update_icon()
 	color = null
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
@@ -202,7 +199,7 @@
 	item_state = "zipties"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	materials = list()
+	custom_materials = null
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	item_color = "white"
@@ -310,6 +307,7 @@
 	trap_damage = 0
 	item_flags = DROPDEL
 	flags_1 = NONE
+	breakouttime = 50
 
 /obj/item/restraints/legcuffs/beartrap/energy/New()
 	..()
@@ -340,7 +338,7 @@
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
 
-/obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
@@ -351,7 +349,7 @@
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Knockdown(knockdown)
+		C.DefaultCombatKnockdown(knockdown)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
@@ -368,7 +366,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
 
-/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
 		B.Crossed(hit_atom)

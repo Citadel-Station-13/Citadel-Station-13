@@ -1,6 +1,3 @@
-#define PH_WEAK 		(1 << 0)
-#define TEMP_WEAK 		(1 << 1)
-
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -9,14 +6,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
-	var/APTFT_altclick = TRUE //will the set amount_per_transfer_from_this proc be called on AltClick() ?
 	var/volume = 30
-	var/reagent_flags
+	var/reagent_flags = NONE //used to determine the reagent holder flags on add_initial_reagents()
+	var/reagent_value = DEFAULT_REAGENTS_VALUE //same as above but for the holder value multiplier.
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
-	var/beaker_weakness_bitflag = NONE//Bitflag!
+	var/container_flags = APTFT_ALTCLICK|APTFT_VERB //the container item flags
 	var/container_HP = 2
 	var/cached_icon
 
@@ -24,9 +21,9 @@
 	. = ..()
 	if(isnum(vol) && vol > 0)
 		volume = vol
-	if(length(possible_transfer_amounts))
+	if(container_flags & APTFT_VERB && length(possible_transfer_amounts))
 		verbs += /obj/item/reagent_containers/proc/set_APTFT
-	create_reagents(volume, reagent_flags)
+	create_reagents(volume, reagent_flags, reagent_value)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY","viruses"= list(F))
@@ -35,13 +32,14 @@
 
 /obj/item/reagent_containers/examine(mob/user)
 	. = ..()
-	. += "Currently transferring [amount_per_transfer_from_this] units per use."
-	if(possible_transfer_amounts && user.Adjacent(src))
-		. += "<span class='notice'>Alt-click it to set its transfer amount.</span>"
+	if(length(possible_transfer_amounts) > 1)
+		. += "Currently transferring [amount_per_transfer_from_this] units per use."
+		if(container_flags & APTFT_ALTCLICK && user.Adjacent(src))
+			. += "<span class='notice'>Alt-click it to set its transfer amount.</span>"
 
 /obj/item/reagent_containers/AltClick(mob/user)
 	. = ..()
-	if(APTFT_altclick && length(possible_transfer_amounts) > 1 && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(container_flags & APTFT_ALTCLICK && length(possible_transfer_amounts) > 1 && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		set_APTFT()
 		return TRUE
 
@@ -101,16 +99,18 @@
 	reagents.expose_temperature(exposed_temperature)
 	..()
 
-/obj/item/reagent_containers/throw_impact(atom/target)
+/obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	SplashReagents(target, TRUE)
+	SplashReagents(hit_atom, TRUE)
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
-	if(target.CanPass(src, get_turf(src)) && thrownby && thrownby.actions)
-		for(var/datum/action/innate/drink_fling/D in thrownby.actions)
-			if(D.active)
-				return TRUE
+	var/turf/T = get_turf(src)
+	if(!T || !target.CanPass(src, T) || !thrownby || !thrownby.actions)
+		return
+	var/datum/action/innate/D = get_action_of_type(thrownby, /datum/action/innate/drink_fling)
+	if(D?.active)
+		return TRUE
 
 /obj/item/reagent_containers/proc/ForceResetRotation()
 	transform = initial(transform)
@@ -123,28 +123,34 @@
 		if(thrown)
 			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
-		var/R
+		var/R = reagents.log_list()
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
-		for(var/datum/reagent/A in reagents.reagent_list)
-			R += A.type + " ("
-			R += num2text(A.volume) + "),"
-
-		if(thrownby)
+		var/turf/TT = get_turf(target)
+		var/throwerstring
+		if(thrownby && thrown)
 			log_combat(thrownby, M, "splashed", R)
+			var/turf/AT = get_turf(thrownby)
+			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
+		log_reagent("SPLASH: [src] mob SplashReagents() onto [key_name(target)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(target, TOUCH)
 
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		transform = initial(transform)
 		addtimer(CALLBACK(src, .proc/ForceResetRotation), 1)
-		return
 
 	else
 		if(isturf(target) && reagents.reagent_list.len && thrownby)
 			log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
 			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
 			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
+		var/turf/T = get_turf(target)
+		var/throwerstring
+		if(thrownby && thrown)
+			var/turf/AT = get_turf(thrownby)
+			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] ([AREACOORD(AT)])"
+		log_reagent("SPLASH - [src] object SplashReagents() onto [target] at [T] ([AREACOORD(T)])[throwerstring] - [reagents.log_list()]")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 		if(QDELETED(src))
@@ -155,7 +161,7 @@
 //melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
-	if(beaker_weakness_bitflag & TEMP_WEAK)
+	if(container_flags & TEMP_WEAK)
 		var/list/seen = viewers(5, get_turf(src))
 		var/iconhtml = icon2html(src, seen)
 		for(var/mob/H in seen)
@@ -170,13 +176,13 @@
 	temp_check()
 
 /obj/item/reagent_containers/proc/temp_check()
-	if(beaker_weakness_bitflag & TEMP_WEAK)
+	if(container_flags & TEMP_WEAK)
 		if(reagents.chem_temp >= 444)//assuming polypropylene
 			START_PROCESSING(SSobj, src)
 
 //melts glass beakers
 /obj/item/reagent_containers/proc/pH_check()
-	if(beaker_weakness_bitflag & PH_WEAK)
+	if(container_flags & PH_WEAK)
 		if((reagents.pH < 1.5) || (reagents.pH > 12.5))
 			START_PROCESSING(SSobj, src)
 	else if((reagents.pH < -3) || (reagents.pH > 17))
@@ -190,7 +196,7 @@
 		cached_icon = icon_state
 	var/damage
 	var/cause
-	if(beaker_weakness_bitflag & PH_WEAK)
+	if(container_flags & PH_WEAK)
 		if(reagents.pH < 2)
 			damage = (2 - reagents.pH)/20
 			cause = "from the extreme pH"
@@ -201,7 +207,7 @@
 			cause = "from the extreme pH"
 			playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 
-	if(beaker_weakness_bitflag & TEMP_WEAK)
+	if(container_flags & TEMP_WEAK)
 		if(reagents.chem_temp >= 444)
 			if(damage)
 				damage += (reagents.chem_temp/444)/5

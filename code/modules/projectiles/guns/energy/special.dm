@@ -36,7 +36,7 @@
 
 /obj/item/gun/energy/decloner/update_icon()
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("decloner_spin")
 
@@ -85,7 +85,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
@@ -105,13 +105,15 @@
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
-	desc = "A reverse engineered weapon using syndicate technology."
+	desc = "A reverse engineered weapon using syndicate technology. This thing seems incredibly unwieldly, and seems to be using similar internals to the Proto-Kinetic Accelerator. It might not play nice when brought near weapons similar to it."
 	icon_state = "crossbowlarge"
-	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=4000)
+	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+	weapon_weight = WEAPON_HEAVY
 	pin = null
+	unique_frequency = FALSE
 
 /obj/item/gun/energy/plasmacutter
 	name = "plasma cutter"
@@ -183,7 +185,7 @@
 	var/atmos_link = FALSE
 
 /obj/item/gun/energy/wormhole_projector/update_icon()
-	icon_state = "[initial(icon_state)][select]"
+	icon_state = "[initial(icon_state)][current_firemode_index]"
 	item_state = icon_state
 
 /obj/item/gun/energy/wormhole_projector/update_ammo_types()
@@ -318,7 +320,7 @@
 
 /obj/item/gun/energy/emitter/update_icon()
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("emitter_carbine_empty")
 	else

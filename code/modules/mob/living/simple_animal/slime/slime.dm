@@ -97,7 +97,7 @@
 	else
 		var/datum/action/innate/slime/evolve/E = new
 		E.Grant(src)
-	create_reagents(100)
+	create_reagents(100, NONE, NO_REAGENTS_VALUE)
 	set_colour(new_colour)
 	. = ..()
 	nutrition = 700
@@ -220,15 +220,12 @@
 	return ..() //Heals them
 
 /mob/living/simple_animal/slime/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
 	attacked += 10
 	if((Proj.damage_type == BURN))
 		adjustBruteLoss(-abs(Proj.damage)) //fire projectiles heals slimes.
 		Proj.on_hit(src)
-	else
-		..(Proj)
-	return 0
+		return BULLET_ACT_BLOCK
+	return ..()
 
 /mob/living/simple_animal/slime/emp_act(severity)
 	. = ..()
@@ -246,7 +243,7 @@
 /mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
 
-/mob/living/simple_animal/slime/start_pulling(atom/movable/AM)
+/mob/living/simple_animal/slime/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
 /mob/living/simple_animal/slime/attack_ui(slot)
@@ -457,13 +454,13 @@
 
 	SStun = world.time + rand(20,60)
 	spawn(0)
-		canmove = 0
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_MOVE)
 		if(user)
 			step_away(src,user,15)
 		sleep(3)
 		if(user)
 			step_away(src,user,15)
-		update_canmove()
+		update_mobility()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

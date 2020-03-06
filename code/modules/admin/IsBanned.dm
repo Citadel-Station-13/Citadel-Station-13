@@ -7,22 +7,33 @@
 #define STICKYBAN_MAX_ADMIN_MATCHES 2
 
 /world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE)
+	var/static/key_cache = list()
+	if(!real_bans_only)
+		if(key_cache[key])
+			return list("reason"="concurrent connection attempts", "desc"="You are attempting to connect too fast. Try again.")
+		key_cache[key] = 1
+
 	if (!key || !address || !computer_id)
 		if(real_bans_only)
+			key_cache[key] = 0
 			return FALSE
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
+		key_cache[key] = 0
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
 
 	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire
 		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
+		key_cache[key] = 0
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
 
 	if (type == "world")
+		key_cache[key] = 0
 		return ..() //shunt world topic banchecks to purely to byond's internal ban system
 
 	var/ckey = ckey(key)
 	var/client/C = GLOB.directory[ckey]
 	if (C && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
+		key_cache[key] = 0
 		return //don't recheck connected clients.
 
 	var/admin = FALSE
@@ -38,21 +49,25 @@
 				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass the whitelist</span>")
 			else
 				log_access("Failed Login: [key] - Not on whitelist")
+				key_cache[key] = 0
 				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
 
 	//Guest Checking
 	if(!real_bans_only && IsGuestKey(key))
 		if (CONFIG_GET(flag/guest_ban))
 			log_access("Failed Login: [key] - Guests not allowed")
+			key_cache[key] = 0
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 		if (CONFIG_GET(flag/panic_bunker) && SSdbcore.Connect())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
+			key_cache[key] = 0
 			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
 	//Population Cap Checking
 	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
 	if(!real_bans_only && extreme_popcap && living_player_count() >= extreme_popcap && !admin)
 		log_access("Failed Login: [key] - Population cap reached")
+		key_cache[key] = 0
 		return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
 	if(CONFIG_GET(flag/ban_legacy_system))
@@ -66,6 +81,7 @@
 				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [.["key"]]</span>")
 			else
 				log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
+				key_cache[key] = 0
 				return .
 
 	else
@@ -73,6 +89,7 @@
 			var/msg = "Ban database connection failure. Key [ckey] not checked"
 			log_world(msg)
 			message_admins(msg)
+			key_cache[key] = 0
 			return
 
 		var/ipquery = ""
@@ -86,6 +103,7 @@
 		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey), reason, expiration_time, duration, bantime, bantype, id, round_id FROM [format_table_name("ban")] WHERE (ckey = '[ckey]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_ban_check.Execute(async = TRUE))
 			qdel(query_ban_check)
+			key_cache[key] = 0
 			return
 		while(query_ban_check.NextRow())
 			var/pkey = query_ban_check.item[1]
@@ -124,6 +142,7 @@
 
 			log_access("Failed Login: [key] [computer_id] [address] - Banned (#[banid]) [.["reason"]]")
 			qdel(query_ban_check)
+			key_cache[key] = 0
 			return .
 		qdel(query_ban_check)
 
@@ -138,6 +157,7 @@
 
 		//rogue ban in the process of being reverted.
 		if (cachedban && cachedban["reverting"])
+			key_cache[key] = 0
 			return null
 
 		if (cachedban && ckey != bannedckey)
@@ -165,6 +185,7 @@
 				newmatches_admin.len > STICKYBAN_MAX_ADMIN_MATCHES \
 				)
 				if (cachedban["reverting"])
+					key_cache[key] = 0
 					return null
 				cachedban["reverting"] = TRUE
 
@@ -182,6 +203,7 @@
 					cachedban["admin_matches_this_round"] = list()
 					cachedban -= "reverting"
 					world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
+				key_cache[key] = 0
 				return null
 
 		//byond will not trigger isbanned() for "global" host bans,
@@ -191,6 +213,7 @@
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
 			message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
 			addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
+			key_cache[key] = 0
 			return null
 
 		if (C) //user is already connected!.
@@ -200,6 +223,7 @@
 		. = list("reason" = "Stickyban", "desc" = desc)
 		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [ban["message"]] Target Username: [bannedckey] Placed by [ban["admin"]]")
 
+	key_cache[key] = 0
 	return .
 
 

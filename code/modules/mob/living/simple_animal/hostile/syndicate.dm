@@ -22,7 +22,7 @@
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
@@ -128,13 +128,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
 	if(prob(25))
 		return ..()
-	else
-		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-		return 0
+	visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space
 	icon_state = "syndicate_space_sword"
@@ -287,7 +284,7 @@
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE | PASSMOB
 	a_intent = INTENT_HARM
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	health = 25
 	maxHealth = 25
 	melee_damage_lower = 15

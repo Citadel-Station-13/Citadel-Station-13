@@ -10,6 +10,10 @@
 	group = "Medical"
 	crate_type = /obj/structure/closet/crate/medical
 
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// Equipment ////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 /datum/supply_pack/medical/bodybags
 	name = "Bodybags"
 	desc = "For when the bodies hit the floor. Contains 4 boxes of bodybags."
@@ -19,24 +23,6 @@
 					/obj/item/storage/box/bodybags,
 					/obj/item/storage/box/bodybags,)
 	crate_name = "bodybag crate"
-
-/datum/supply_pack/medical/firstaidbruises
-	name = "Bruise Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing bruises and broken bones."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/brute)
-	crate_name = "brute treatment kit crate"
-
-/datum/supply_pack/medical/firstaidburns
-	name = "Burn Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing severe burns."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/fire)
-	crate_name = "burn treatment kit crate"
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
@@ -86,33 +72,12 @@
 					/obj/item/defibrillator/loaded)
 	crate_name = "defibrillator crate"
 
-/datum/supply_pack/medical/firstaid
-	name = "First Aid Kit Crate"
-	desc = "Contains four first aid kits for healing most types of wounds."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular)
-	crate_name = "first aid kit crate"
-
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
 	desc = "Contains a single IV drip stand for intravenous delivery."
 	cost = 800
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
-
-/datum/supply_pack/science/adv_surgery_tools
-	name = "Med-Co Advanced surgery tools"
-	desc = "A full set of Med-Co advanced surgery tools! In addition to that it contains both a can of synthflesh and a can of sterilizine. Requires Surgery access to open."
-	cost = 5500
-	access = ACCESS_SURGERY
-	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
-					/obj/item/reagent_containers/medspray/synthflesh,
-					/obj/item/reagent_containers/medspray/sterilizine)
-	crate_name = "medco newest surgery tools"
-	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/medicalhardsuit
 	name = "Medical Hardsuit"
@@ -123,6 +88,7 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/medical)
 	crate_name = "medical hardsuit"
+	crate_type = /obj/structure/closet/crate/secure/medical
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
@@ -151,13 +117,57 @@
 					/obj/item/storage/pill_bottle/stimulant)
 	crate_name = "medical supplies crate"
 
-/datum/supply_pack/medical/vending
-	name = "Medical Vending Crate"
-	desc = "Contains refills for medical vending machines."
-	cost = 2000
-	contains = list(/obj/item/vending_refill/medical,
-					/obj/item/vending_refill/wallmed)
-	crate_name = "medical vending crate"
+/datum/supply_pack/medical/adv_surgery_tools
+	name = "Med-Co Advanced Surgery Tools"
+	desc = "A full set of Med-Co advanced surgery tools, this crate also comes with a spay of synth flesh as well as a can of . Requires Surgery access to open."
+	cost = 5500
+	access = ACCESS_SURGERY
+	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
+					/obj/item/reagent_containers/medspray/synthflesh,
+					/obj/item/reagent_containers/medspray/sterilizine)
+	crate_name = "medco surgery tools"
+	crate_type = /obj/structure/closet/crate/secure/medical
+
+/datum/supply_pack/medical/surgery
+	name = "Surgical Supplies Crate"
+	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
+	cost = 1300
+	contains = list(/obj/item/storage/backpack/duffelbag/med/surgery,
+					/obj/item/reagent_containers/medspray/sterilizine,
+					/obj/item/roller)
+	crate_name = "surgical supplies crate"
+
+//////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Medical Kits ///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/medical/firstaidbruises
+	name = "Bruise Treatment Kit Crate"
+	desc = "Contains three first aid kits focused on healing bruises and broken bones."
+	cost = 1000
+	contains = list(/obj/item/storage/firstaid/brute,
+					/obj/item/storage/firstaid/brute,
+					/obj/item/storage/firstaid/brute)
+	crate_name = "brute treatment kit crate"
+
+/datum/supply_pack/medical/firstaidburns
+	name = "Burn Treatment Kit Crate"
+	desc = "Contains three first aid kits focused on healing severe burns."
+	cost = 1000
+	contains = list(/obj/item/storage/firstaid/fire,
+					/obj/item/storage/firstaid/fire,
+					/obj/item/storage/firstaid/fire)
+	crate_name = "burn treatment kit crate"
+
+/datum/supply_pack/medical/firstaid
+	name = "First Aid Kit Crate"
+	desc = "Contains four first aid kits for healing most types of wounds."
+	cost = 1000
+	contains = list(/obj/item/storage/firstaid/regular,
+					/obj/item/storage/firstaid/regular,
+					/obj/item/storage/firstaid/regular,
+					/obj/item/storage/firstaid/regular)
+	crate_name = "first aid kit crate"
 
 /datum/supply_pack/medical/sprays
 	name = "Medical Sprays"
@@ -193,6 +203,15 @@
 					/obj/item/storage/firstaid/o2)
 	crate_name = "oxygen deprivation kit crate"
 
+/datum/supply_pack/medical/firstaidtoxins
+	name = "Toxin Treatment Kit Crate"
+	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
+	cost = 1000
+	contains = list(/obj/item/storage/firstaid/toxin,
+					/obj/item/storage/firstaid/toxin,
+					/obj/item/storage/firstaid/toxin)
+	crate_name = "toxin treatment kit crate"
+
 /datum/supply_pack/medical/advrad
 	name = "Radiation Treatment Crate Deluxe"
 	desc = "A crate for when radiation is out of hand... Contains two rad-b-gone kits, one bottle of anti radiation deluxe pills, as well as a radiation treatment deluxe pill bottle!"
@@ -206,23 +225,9 @@
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
 
-/datum/supply_pack/medical/surgery
-	name = "Surgical Supplies Crate"
-	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
-	cost = 1300
-	contains = list(/obj/item/storage/backpack/duffelbag/med/surgery,
-					/obj/item/reagent_containers/medspray/sterilizine,
-					/obj/item/roller)
-	crate_name = "surgical supplies crate"
-
-/datum/supply_pack/medical/firstaidtoxins
-	name = "Toxin Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin)
-	crate_name = "toxin treatment kit crate"
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// Virology ////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"

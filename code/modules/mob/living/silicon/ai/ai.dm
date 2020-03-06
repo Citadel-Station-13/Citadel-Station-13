@@ -16,9 +16,9 @@
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
-	canmove = FALSE
+	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
@@ -101,6 +101,7 @@
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
@@ -145,7 +146,7 @@
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
-	radio = new /obj/item/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/silicon/ai(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
 
 	deploy_action.Grant(src)
@@ -311,13 +312,22 @@
 		return // stop
 	if(incapacitated())
 		return
-	anchored = !anchored // Toggles the anchor
+	var/is_anchored = FALSE
+	if(move_resist == MOVE_FORCE_OVERPOWERING)
+		move_resist = MOVE_FORCE_NORMAL
+		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
+	else
+		is_anchored = TRUE
+		move_resist = MOVE_FORCE_OVERPOWERING
+		ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 
-	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
-/mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
-	return 0
+// AIs are immobile
+/mob/living/silicon/ai/update_mobility()
+	mobility_flags = ALL
+	return ALL
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
@@ -979,7 +989,7 @@
 		deployed_shell.undeploy()
 	diag_hud_set_deployed()
 
-/mob/living/silicon/ai/resist()
+/mob/living/silicon/ai/do_resist()
 	return
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)

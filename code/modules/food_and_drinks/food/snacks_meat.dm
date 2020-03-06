@@ -225,7 +225,7 @@
 	if(iscarbon(M))
 		M.visible_message("[src] bursts out of [M]!</span>")
 		M.emote("scream")
-		M.Knockdown(40)
+		M.DefaultCombatKnockdown(40)
 		M.adjustBruteLoss(60)
 		Expand()
 	return ..()
@@ -325,7 +325,7 @@
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog plate"
 	desc = "A plate with two small corn dogs, with two dimples of ketchup and mustard to dip them in."
-	icon_state = "dorndog"
+	icon_state = "corndog"
 	trash = /obj/item/trash/plate/alt
 	tastes = list("hotdog" = 2, "mustard and ketchup" = 1, "fryed bread" = 1)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/mustard = 5, /datum/reagent/consumable/ketchup = 5)

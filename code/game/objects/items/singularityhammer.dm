@@ -31,7 +31,7 @@
 		charged++
 	return
 
-/obj/item/twohanded/singularityhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/singularityhammer/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
 	return
 
@@ -105,11 +105,11 @@
 		playsound(src.loc, "sparks", 50, 1)
 		shock(M)
 
-/obj/item/twohanded/mjollnir/throw_impact(atom/target)
+/obj/item/twohanded/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(isliving(target))
-		shock(target)
+	if(isliving(hit_atom))
+		shock(hit_atom)
 
-/obj/item/twohanded/mjollnir/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/mjollnir/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
 	return

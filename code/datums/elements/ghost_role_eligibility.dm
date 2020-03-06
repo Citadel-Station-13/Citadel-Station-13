@@ -17,11 +17,14 @@
 			penalty += roundstart_quit_limit - world.time
 		if(penalty)
 			penalty += world.realtime
-			if(penalty - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+			var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
+			if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 				penalty = CANT_REENTER_ROUND
 			if(!(M.ckey in timeouts))
 				timeouts += M.ckey
 				timeouts[M.ckey] = 0
+			else if(timeouts[M.ckey] == CANT_REENTER_ROUND)
+				return
 			timeouts[M.ckey] = max(timeouts[M.ckey],penalty)
 
 /datum/element/ghost_role_eligibility/Detach(mob/M)

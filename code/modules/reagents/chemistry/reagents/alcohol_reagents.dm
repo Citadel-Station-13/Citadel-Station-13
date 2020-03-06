@@ -197,7 +197,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 		if(HAS_TRAIT(M, TRAIT_BLIND))
 			if(eyes)
-				eyes.Remove(M)
+				eyes.Remove()
 				eyes.forceMove(get_turf(M))
 				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
 				M.emote("scream")
@@ -551,7 +551,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = 1
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role in list("Station Engineer", "Atmospheric Technician", "Chief Engineer")) //Engineers lose radiation poisoning at a massive rate.
+	if(M.mind && (M.mind.assigned_role in list("Station Engineer", "Atmospheric Technician", "Chief Engineer"))) //Engineers lose radiation poisoning at a massive rate.
 		M.radiation = max(M.radiation - 25, 0)
 	return ..()
 
@@ -579,8 +579,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	value = 1.3
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/C)
-	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
-		return
+	if(isvamp(C))
+		disgust_bloodsucker(FALSE, 1) //Bloodsuckers get SOME blood from it, for style reasons.
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
 		C.blood_volume = min((BLOOD_VOLUME_NORMAL*C.blood_ratio), C.blood_volume + 3) //Bloody Mary quickly restores blood loss.
 	..()
@@ -725,11 +725,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/dorf_mode
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_metabolize(mob/living/M)
+	var/real_dorf = isdwarf(M) //_species(H, /datum/species/dwarf)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE))
+		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE) || real_dorf)
 			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
-			boozepwr = 5 //We've had worse in the mines
+			if(real_dorf)
+				boozepwr = 100 // Don't want dwarves to die because of a low booze power
+			else
+				boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/M)
@@ -887,7 +891,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/barefoot/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
 		var/mob/living/carbon/human/H = M
-		if(!H.shoes)
+		if(!H.shoes || !(H.shoes.body_parts_covered & FEET))
 			H.adjustBruteLoss(-3, 0)
 			. = 1
 	return ..() || .
@@ -1506,6 +1510,23 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/M)
 	M.cultslurring = min(M.cultslurring + 3, 3)
+	M.stuttering = min(M.stuttering + 3, 3)
+	..()
+
+/datum/reagent/consumable/ethanol/cogchamp
+	name = "CogChamp"
+	description = "Now you can fill yourself with the power of Ratvar!"
+	color = rgb(255, 201, 49)
+	boozepwr = 10
+	quality = DRINK_FANTASTIC
+	taste_description = "a brass taste with a hint of oil"
+	glass_icon_state = "cogchamp"
+	glass_name = "CogChamp"
+	glass_desc = "Not even Ratvar's Four Generals could withstand this!  Qevax Jryy!"
+	value = 8.13
+
+/datum/reagent/consumable/ethanol/cogchamp/on_mob_life(mob/living/carbon/M)
+	M.clockcultslurring = min(M.clockcultslurring + 3, 3)
 	M.stuttering = min(M.stuttering + 3, 3)
 	..()
 

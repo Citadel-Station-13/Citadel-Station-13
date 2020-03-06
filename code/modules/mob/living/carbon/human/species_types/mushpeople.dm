@@ -31,14 +31,15 @@
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(!H.dna.features["caps"])
-			H.dna.features["caps"] = "Round"
-			handle_mutant_bodyparts(H)
-		H.faction |= "mushroom"
-		mush = new()
-		mush.teach(H, TRUE)
+	if(!ishuman(C))
+		return
+	var/mob/living/carbon/human/H = C
+	if(!H.dna.features["caps"])
+		H.dna.features["caps"] = "Round"
+		handle_mutant_bodyparts(H)
+	H.faction |= "mushroom"
+	mush = new()
+	mush.teach(H, TRUE)
 	RegisterSignal(C, COMSIG_MOB_ON_NEW_MIND, .proc/on_new_mind)
 
 /datum/species/mush/proc/on_new_mind(mob/owner)
@@ -56,6 +57,7 @@
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return TRUE
+	return ..()
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	forced_colour = FALSE

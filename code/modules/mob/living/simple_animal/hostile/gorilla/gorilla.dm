@@ -9,7 +9,7 @@
 	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
@@ -71,7 +71,7 @@
 			var/atom/throw_target = get_edge_target_turf(L, dir)
 			L.throw_at(throw_target, rand(1,2), 7, src)
 		else
-			L.Knockdown(20)
+			L.DefaultCombatKnockdown(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)

@@ -9,6 +9,8 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 	verbs += /mob/living/carbon/human/proc/underwear_toggle //fwee
+	verbs += /mob/proc/set_flavor
+	verbs += /mob/proc/set_flavor_2
 
 	//initialize limbs first
 	create_bodyparts()
@@ -25,8 +27,7 @@
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 	physiology = new()
 
-	handcrafting = new()
-
+	AddComponent(/datum/component/personal_crafting)
 	. = ..()
 
 	if(CONFIG_GET(flag/disable_stambuffer))
@@ -44,10 +45,6 @@
 	QDEL_NULL(physiology)
 	QDEL_NULL_LIST(vore_organs) // CITADEL EDIT belly stuff
 	return ..()
-
-
-/mob/living/carbon/human/OpenCraftingMenu()
-	handcrafting.ui_interact(src)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -85,7 +82,7 @@
 		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
 		if(statpanel("SpiderOS"))
 			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
-			stat("Current Time:", "[STATION_TIME_TIMESTAMP("hh:mm:ss")]")
+			stat("Current Time:", "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]")
 			if(SN.s_initialized)
 				//Suit gear
 				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
@@ -439,7 +436,7 @@
 														return
 													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss"))
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time))
 													GLOB.data_core.addMinorCrime(R.fields["id"], crime)
 													investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 													to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
@@ -455,7 +452,7 @@
 														return
 													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss"))
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time))
 													GLOB.data_core.addMajorCrime(R.fields["id"], crime)
 													investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
@@ -488,13 +485,13 @@
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
-											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, STATION_TIME_TIMESTAMP("hh:mm:ss"), time2text(world.realtime, "MMM DD"), GLOB.year_integer, t1)
+											R.fields["com_[counter]"] = "Made by [allowed_access] on [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)] [time2text(world.realtime, "MMM DD")], [GLOB.year_integer]<BR>[t1]"
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
 /mob/living/carbon/human/proc/canUseHUD()
-	return !(src.stat || IsKnockdown() || IsStun() || src.restrained())
+	return CHECK_MOBILITY(src, MOBILITY_UI)
 
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
 	. = 1 // Default to returning true.
@@ -727,8 +724,8 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
-	if(incapacitated() || lying )
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE, check_resting = TRUE)
+	if(incapacitated() || (check_resting && !CHECK_MOBILITY(src, MOBILITY_STAND)))
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
@@ -806,7 +803,7 @@
 		hud_used.staminas?.update_icon_state()
 		hud_used.staminabuffer?.update_icon_state()
 
-/mob/living/carbon/human/fully_heal(admin_revive = 0)
+/mob/living/carbon/human/fully_heal(admin_revive = FALSE)
 	if(admin_revive)
 		regenerate_limbs()
 		regenerate_organs()
@@ -826,9 +823,6 @@
 		. += dna.species.check_weakness(weapon, attacker)
 
 /mob/living/carbon/human/is_literate()
-	return 1
-
-/mob/living/carbon/human/can_hold_items()
 	return TRUE
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
@@ -837,12 +831,12 @@
 	..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
-	if(blood && (NOBLOOD in dna.species.species_traits))
+	if(blood && dna?.species && (NOBLOOD in dna.species.species_traits))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Knockdown(200)
+			DefaultCombatKnockdown(200)
 		return 1
 	..()
 
@@ -876,7 +870,7 @@
 	return (istype(target) && target.stat == CONSCIOUS)
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
-	return (ishuman(target) && target.lying)
+	return (ishuman(target) && !CHECK_MOBILITY(target, MOBILITY_STAND))
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	if(can_be_firemanned(target))
@@ -885,7 +879,7 @@
 		if(do_after(src, 30, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
-				target.resting = FALSE
+				target.set_resting(FALSE, TRUE)
 				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
 				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
@@ -898,7 +892,7 @@
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(can_piggyback(target))
 		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
-		if(do_after(target, 15, target = src))
+		if(do_after(target, 15, target = src, required_mobility_flags = MOBILITY_STAND))
 			if(can_piggyback(target))
 				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")

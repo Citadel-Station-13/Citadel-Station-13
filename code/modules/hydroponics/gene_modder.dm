@@ -105,7 +105,7 @@
 		return
 
 	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
-	if(!(in_range(src, user) || issilicon(user)))
+	if(!(in_range(src, user) || hasSiliconAccessInArea(user)))
 		popup.close()
 		return
 
@@ -234,8 +234,8 @@
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract && G.mutability_flags & PLANT_GENE_EXTRACTABLE)
 						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-						if(G.mutability_flags & PLANT_GENE_REMOVABLE)
-							dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+					if(G.mutability_flags & PLANT_GENE_REMOVABLE)
+						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
@@ -401,7 +401,7 @@
 /obj/machinery/plantgenes/proc/repaint_seed()
 	if(!seed)
 		return
-	if(copytext(seed.name, 1, 13) == "experimental")
+	if(copytext(seed.name, 1, 13) == "experimental")//13 == length("experimental") + 1
 		return // Already modded name and icon
 	seed.name = "experimental " + seed.name
 	seed.icon_state = "seed-x"
@@ -418,7 +418,7 @@
 	name = "plant data disk"
 	desc = "A disk for storing plant genetic data."
 	icon_state = "datadisk_hydro"
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
 	obj_flags = UNIQUE_RENAME

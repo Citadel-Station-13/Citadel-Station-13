@@ -109,10 +109,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else if(current_version < 23) // we are fixing a gamebreaking bug.
 		job_preferences = list() //It loaded null from nonexistant savefile field.
 
-	if(current_version < 24 && S["feature_exhibitionist"])
-		var/datum/quirk/exhibitionism/E
-		var/quirk_name = initial(E.name)
-		all_quirks += quirk_name
 	if(current_version < 25)
 		var/digi
 		S["feature_lizard_legs"] >> digi
@@ -122,7 +118,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
-	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
+	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
@@ -419,7 +415,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_cock_shape"]				>> features["cock_shape"]
 	S["feature_cock_color"]				>> features["cock_color"]
 	S["feature_cock_length"]			>> features["cock_length"]
-	S["feature_cock_girth"]				>> features["cock_girth"]
+	S["feature_cock_diameter"]			>> features["cock_diameter"]
 	S["feature_has_sheath"]				>> features["sheath_color"]
 	//balls features
 	S["feature_has_balls"]				>> features["has_balls"]
@@ -427,13 +423,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_balls_size"]				>> features["balls_size"]
 	S["feature_balls_shape"]			>> features["balls_shape"]
 	S["feature_balls_sack_size"]		>> features["balls_sack_size"]
-	S["feature_balls_fluid"]			>> features["balls_fluid"]
 	//breasts features
 	S["feature_has_breasts"]			>> features["has_breasts"]
 	S["feature_breasts_size"]			>> features["breasts_size"]
 	S["feature_breasts_shape"]			>> features["breasts_shape"]
 	S["feature_breasts_color"]			>> features["breasts_color"]
-	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
 	S["feature_breasts_producing"]		>> features["breasts_producing"]
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
@@ -483,15 +477,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 
-	if(gender == MALE)
-		hair_style					= sanitize_inlist(hair_style, GLOB.hair_styles_male_list)
-		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_male_list)
-	else
-		hair_style					= sanitize_inlist(hair_style, GLOB.hair_styles_female_list)
-		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_female_list)
-	underwear						= sanitize_inlist(underwear, GLOB.underwear_list)
+	hair_style					= sanitize_inlist(hair_style, GLOB.hair_styles_list)
+	facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_list)
+	underwear					= sanitize_inlist(underwear, GLOB.underwear_list)
+	undershirt 					= sanitize_inlist(undershirt, GLOB.undershirt_list)
 	undie_color						= sanitize_hexcolor(undie_color, 3, FALSE, initial(undie_color))
-	undershirt						= sanitize_inlist(undershirt, GLOB.undershirt_list)
 	shirt_color						= sanitize_hexcolor(shirt_color, 3, FALSE, initial(shirt_color))
 	socks							= sanitize_inlist(socks, GLOB.socks_list)
 	socks_color						= sanitize_hexcolor(socks_color, 3, FALSE, initial(socks_color))
@@ -543,6 +533,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
 				all_quirks -= V
 
+	if(features["meat_type"] == "Inesct")
+		features["meat_type"] = "Insect"
 	cit_character_pref_load(S)
 
 	return 1

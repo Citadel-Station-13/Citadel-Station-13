@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
 	if(sanitize)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
 
@@ -99,12 +99,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/in_critical = InCritical()
 
 	if(one_character_prefix[message_mode])
-		message = copytext(message, 2)
+		message = copytext_char(message, 2)
 	else if(message_mode || saymode)
-		message = copytext(message, 3)
-	if(findtext(message, " ", 1, 2))
-		message = copytext(message, 2)
-
+		message = copytext_char(message, 3)
+	message = trim_left(message)
+	if(!message)
+		return
 	if(message_mode == MODE_ADMIN)
 		if(client)
 			client.cmd_admin_say(message)
@@ -135,11 +135,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		// No, you cannot speak in xenocommon just because you know the key
 		if(can_speak_in_language(message_language))
 			language = message_language
-		message = copytext(message, 3)
+		message = copytext_char(message, 3)
 
 		// Trim the space if they said ",0 I LOVE LANGUAGES"
-		if(findtext(message, " ", 1, 2))
-			message = copytext(message, 2)
+		message = trim_left(message)
 
 	if(!language)
 		language = get_default_language()
@@ -167,8 +166,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
-			var/message_len = length(message)
-			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
+			var/message_len = length_char(message)
+			message = copytext_char(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 			message = Ellipsis(message, 10, 1)
 			message_mode = MODE_WHISPER_CRIT
 			succumbed = TRUE
@@ -225,7 +224,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			. = "<span class='small'>[.]</span>"
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
-	. = ..()
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args) //parent calls can't overwrite the current proc args.
 	if(!client)
 		return
 	var/deaf_message
@@ -259,7 +258,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(M.stat != DEAD) //not dead, not important
 			if(yellareas)	//CIT CHANGE - see above. makes yelling penetrate walls
 				var/area/A = get_area(M)	//CIT CHANGE - ditto
-				if(istype(A) && A.ambientsounds != SPACE && A in yellareas)	//CIT CHANGE - ditto
+				if(istype(A) && A.ambientsounds != SPACE && (A in yellareas))	//CIT CHANGE - ditto
 					listening |= M	//CIT CHANGE - ditto
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
@@ -326,13 +325,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/get_key(message)
-	var/key = copytext(message, 1, 2)
+	var/key = message[1]
 	if(key in GLOB.department_radio_prefixes)
-		return lowertext(copytext(message, 2, 3))
+		return lowertext(message[1 + length(key)])
 
 /mob/living/proc/get_message_language(message)
-	if(copytext(message, 1, 2) == ",")
-		var/key = copytext(message, 2, 3)
+	if(message[1] == ",")
+		var/key = message[1 + length(message[1])]
 		for(var/ld in GLOB.all_languages)
 			var/datum/language/LD = ld
 			if(initial(LD.key) == key)
@@ -355,6 +354,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(cultslurring)
 		message = cultslur(message)
+	
+	if(clockcultslurring)
+		message = CLOCK_CULT_SLUR(message)
 
 	message = capitalize(message)
 
@@ -366,7 +368,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(message_mode == MODE_HEADSET)
 			imp.radio.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
-		if(message_mode == MODE_DEPARTMENT || message_mode in GLOB.radiochannels)
+		if(message_mode == MODE_DEPARTMENT || (message_mode in GLOB.radiochannels))
 			imp.radio.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 

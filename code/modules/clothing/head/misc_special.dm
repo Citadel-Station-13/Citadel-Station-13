@@ -19,7 +19,7 @@
 	icon_state = "welding"
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	materials = list(MAT_METAL=1750, MAT_GLASS=400)
+	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = 2
 	tint = 2
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 60)
@@ -86,6 +86,7 @@
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
+	alternate_screams = list('sound/voice/human/cyka1.ogg', 'sound/voice/human/cheekibreeki.ogg')
 	flags_inv = HIDEEARS|HIDEHAIR
 	var/earflaps = 1
 	cold_protection = HEAD
@@ -164,6 +165,7 @@
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
 	flags_cover = HEADCOVERSEYES
+	alternate_screams = list('modular_citadel/sound/voice/scream_silicon.ogg')
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 	dog_fashion = /datum/dog_fashion/head/cardborg

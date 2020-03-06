@@ -7,7 +7,7 @@
 	name = "voice analyzer"
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
-	materials = list(MAT_METAL=500, MAT_GLASS=50)
+	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
 	flags_1 = HEAR_1
 	attachable = TRUE
 	verb_say = "beeps"
@@ -34,9 +34,10 @@
 	if(listening && !radio_freq)
 		record_speech(speaker, raw_message, message_language)
 	else
-		if(message_language == languages) // If it isn't in the same language as the message, don't try to find the message
-			if(check_activation(speaker, raw_message))
-				addtimer(CALLBACK(src, .proc/pulse, 0), 10)
+		if(!istype(speaker, /obj/item/assembly/playback)) // Check if it isn't a playback device to prevent spam and lag
+			if(message_language == languages) // If it isn't in the same language as the message, don't try to find the message
+				if(check_activation(speaker, raw_message)) // Is it the message?
+					addtimer(CALLBACK(src, .proc/pulse, 0), 10)
 
 /obj/item/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message, datum/language/message_language)
 	languages = message_language // Assign the message's language to a variable to use it elsewhere

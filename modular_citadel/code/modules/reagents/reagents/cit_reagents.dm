@@ -1,7 +1,7 @@
 //body bluids
 /datum/reagent/consumable/semen
 	name = "Semen"
-	description = "Sperm from some animal. I bet you'll drink this out of a bucket someday."
+	description = "Sperm from some animal. Useless for anything but insemination, really."
 	taste_description = "something salty"
 	taste_mult = 2 //Not very overpowering flavor
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
@@ -32,15 +32,15 @@
 	icon_state = "semen1"
 	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
 
-/obj/effect/decal/cleanable/semen/New()
-	..()
-	dir = pick(1,2,4,8)
+/obj/effect/decal/cleanable/semen/Initialize(mapload)
+	. = ..()
+	dir = GLOB.cardinals
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
 	if(S.blood_DNA)
-		blood_DNA |= S.blood_DNA.Copy()
-	..()
+		blood_DNA |= S.blood_DNA
+	return ..()
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
@@ -65,15 +65,15 @@
 	blood_state = null
 	bloodiness = null
 
-/obj/effect/decal/cleanable/femcum/New()
-	..()
-	dir = pick(1,2,4,8)
+/obj/effect/decal/cleanable/femcum/Initialize(mapload)
+	. = ..()
+	dir = GLOB.cardinals
 	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
 	if(F.blood_DNA)
-		blood_DNA |= F.blood_DNA.Copy()
-	..()
+		blood_DNA |= F.blood_DNA
+	return ..()
 
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
@@ -97,14 +97,18 @@
 	color = "#FFADFF"//PINK, rgb(255, 173, 255)
 
 /datum/reagent/drug/aphrodisiac/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO))
-		if(prob(33))
-			M.adjustArousalLoss(2)
-		if(prob(5))
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
+		if((prob(min(current_cycle/2,5))))
 			M.emote(pick("moan","blush"))
-		if(prob(5))
+		if(prob(min(current_cycle/4,10)))
 			var/aroused_message = pick("You feel frisky.", "You're having trouble suppressing your urges.", "You feel in the mood.")
 			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/list/genits = H.adjust_arousal(current_cycle, aphro = TRUE) // redundant but should still be here
+			for(var/g in genits)
+				var/obj/item/organ/genital/G = g
+				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus
@@ -118,21 +122,26 @@
 	overdose_threshold = 20
 
 /datum/reagent/drug/aphrodisiacplus/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO))
-		if(prob(33))
-			M.adjustArousalLoss(6)//not quite six times as powerful, but still considerably more powerful.
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
 		if(prob(5))
-			if(M.getArousalLoss() > 75)
+			if(prob(current_cycle))
 				M.say(pick("Hnnnnngghh...", "Ohh...", "Mmnnn..."))
 			else
 				M.emote(pick("moan","blush"))
 		if(prob(5))
 			var/aroused_message
-			if(M.getArousalLoss() > 90)
+			if(current_cycle>25)
 				aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
 			else
 				aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
 			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+			REMOVE_TRAIT(M,TRAIT_NEVERBONER,APHRO_TRAIT)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/list/genits = H.adjust_arousal(100, aphro = TRUE) // redundant but should still be here
+			for(var/g in genits)
+				var/obj/item/organ/genital/G = g
+				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/addiction_act_stage2(mob/living/M)
@@ -150,15 +159,11 @@
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
-	if(M && M.canbearoused && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
-		if(prob(5) && M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
-			if(prob(5)) //Less spam
-				to_chat(M, "<span class='love'>Your libido is going haywire!</span>")
-		if(M.min_arousal < 50)
-			M.min_arousal += 1
-		if(M.min_arousal < M.max_arousal)
-			M.min_arousal += 1
-		M.adjustArousalLoss(2)
+	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO) && prob(33))
+		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.cit_toggles & BIMBOFICATION))
+			if(!HAS_TRAIT(M,TRAIT_PERMABONER))
+				to_chat(M, "<span class='userlove'>Your libido is going haywire!</span>")
+				ADD_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
 	..()
 
 /datum/reagent/drug/anaphrodisiac
@@ -171,8 +176,12 @@
 	reagent_state = SOLID
 
 /datum/reagent/drug/anaphrodisiac/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && prob(33))
-		M.adjustArousalLoss(-2)
+	if(M && M.client?.prefs.arousable && prob(16))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/list/genits = H.adjust_arousal(-100, aphro = TRUE)
+			if(genits.len)
+				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 	..()
 
 /datum/reagent/drug/anaphrodisiacplus
@@ -184,17 +193,20 @@
 	overdose_threshold = 20
 
 /datum/reagent/drug/anaphrodisiacplus/on_mob_life(mob/living/M)
-	if(M && M.canbearoused && prob(33))
-		M.adjustArousalLoss(-4)
+	if(M && M.client?.prefs.arousable)
+		REMOVE_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/list/genits = H.adjust_arousal(-100, aphro = TRUE)
+			if(genits.len)
+				to_chat(M, "<span class='notice'>You no longer feel aroused.")
+
 	..()
 
 /datum/reagent/drug/anaphrodisiacplus/overdose_process(mob/living/M)
-	if(M && M.canbearoused && prob(33))
-		if(M.min_arousal > 0)
-			M.min_arousal -= 1
-		if(M.min_arousal > 50)
-			M.min_arousal -= 1
-		M.adjustArousalLoss(-2)
+	if(M && M.client?.prefs.arousable && prob(5))
+		to_chat(M, "<span class='userlove'>You feel like you'll never feel aroused again...</span>")
+		ADD_TRAIT(M,TRAIT_NEVERBONER,APHRO_TRAIT)
 	..()
 
 //recipes

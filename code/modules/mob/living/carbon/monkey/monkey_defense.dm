@@ -82,7 +82,7 @@
 			if(!IsUnconscious())
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
-					Knockdown(40)
+					DefaultCombatKnockdown(40)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					log_combat(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
@@ -126,7 +126,7 @@
 		var/obj/item/I = null
 		playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 		if(prob(95))
-			Knockdown(20)
+			DefaultCombatKnockdown(20)
 			visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 		else
@@ -189,18 +189,18 @@
 	..()
 
 	switch (severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			gib()
 			return
 
-		if (2)
+		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
 			damage_clothes(200, BRUTE, "bomb")
 			adjustEarDamage(30, 120)
 			if(prob(70))
 				Unconscious(200)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_overall_damage(30, 0)
 			damage_clothes(50, BRUTE, "bomb")
 			adjustEarDamage(15,60)

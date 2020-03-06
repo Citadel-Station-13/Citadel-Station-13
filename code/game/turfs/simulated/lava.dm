@@ -23,6 +23,10 @@
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
+/turf/open/lava/Melt()
+	to_be_destroyed = FALSE
+	return src
+
 /turf/open/lava/acid_act(acidpwr, acid_volume)
 	return
 
@@ -36,7 +40,7 @@
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
-/turf/open/lava/hitby(atom/movable/AM)
+/turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 

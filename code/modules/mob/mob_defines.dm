@@ -26,7 +26,7 @@
 
 	var/computer_id = null
 	var/list/logging = list()
-	var/obj/machinery/machine = null
+	var/atom/machine = null
 
 	var/next_move = null
 	var/create_area_cooldown
@@ -38,7 +38,6 @@
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
-	var/canmove = 1
 
 	//MOVEMENT SPEED
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
@@ -95,7 +94,7 @@
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
-	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
+	var/silicon_privileges = NONE // Can they interact with station electronics
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
@@ -120,3 +119,11 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
+	var/siliconaccessareas = list()
+	var/siliconaccesstoggle = FALSE
+
+	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
+
+	var/flavor_text = ""
+	var/flavor_text_2 = "" //version of the above that only lasts for the current round.

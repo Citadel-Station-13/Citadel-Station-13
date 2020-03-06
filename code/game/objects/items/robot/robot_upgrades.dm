@@ -203,7 +203,7 @@
 		var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA = new (R.module)
 		R.module.basic_modules += KA
 		R.module.add_module(KA, FALSE, TRUE)
-		
+
 
 /obj/item/borg/upgrade/advcutter
 	name = "mining cyborg advanced plasma cutter"
@@ -335,7 +335,6 @@
 	var/msg_cooldown = 0
 	var/on = FALSE
 	var/powercost = 10
-	var/mob/living/silicon/robot/cyborg
 	var/datum/action/toggle_action
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R, user = usr)
@@ -346,7 +345,6 @@
 			to_chat(user, "<span class='warning'>This unit is already equipped with a self-repair module.</span>")
 			return FALSE
 
-		cyborg = R
 		icon_state = "selfrepair_off"
 		toggle_action = new /datum/action/item_action/toggle(src)
 		toggle_action.Grant(R)
@@ -354,40 +352,28 @@
 /obj/item/borg/upgrade/selfrepair/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		toggle_action.Remove(cyborg)
+		toggle_action.Remove(R)
 		QDEL_NULL(toggle_action)
-		cyborg = null
-		deactivate_sr()
-
-/obj/item/borg/upgrade/selfrepair/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/check_dropped), 1)
-
-/obj/item/borg/upgrade/selfrepair/proc/check_dropped()
-	if(loc != cyborg)
-		toggle_action.Remove(cyborg)
-		QDEL_NULL(toggle_action)
-		cyborg = null
 		deactivate_sr()
 
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
-	on = !on
 	if(on)
-		to_chat(cyborg, "<span class='notice'>You activate the self-repair module.</span>")
-		START_PROCESSING(SSobj, src)
+		to_chat(toggle_action.owner, "<span class='notice'>You deactivate the self-repair module.</span>")
+		deactivate_sr()
 	else
-		to_chat(cyborg, "<span class='notice'>You deactivate the self-repair module.</span>")
-		STOP_PROCESSING(SSobj, src)
-	update_icon()
+		to_chat(toggle_action.owner, "<span class='notice'>You activate the self-repair module.</span>")
+		activate_sr()
 
-/obj/item/borg/upgrade/selfrepair/update_icon()
-	if(cyborg)
+/obj/item/borg/upgrade/selfrepair/update_icon_state()
+	if(toggle_action)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
+
+/obj/item/borg/upgrade/selfrepair/proc/activate_sr()
+	START_PROCESSING(SSobj, src)
+	on = TRUE
+	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate_sr()
 	STOP_PROCESSING(SSobj, src)
@@ -399,7 +385,9 @@
 		repair_tick = 1
 		return
 
-	if(cyborg && (cyborg.stat != DEAD) && on)
+	var/mob/living/silicon/robot/cyborg = toggle_action.owner
+
+	if(istype(cyborg) && (cyborg.stat != DEAD) && on)
 		if(!cyborg.cell)
 			to_chat(cyborg, "<span class='warning'>Self-repair module deactivated. Please, insert the power cell.</span>")
 			deactivate_sr()
@@ -589,7 +577,7 @@
 			return FALSE
 
 		R.notransform = TRUE
-		var/prev_lockcharge = R.lockcharge
+		var/prev_locked_down = R.locked_down
 		R.SetLockdown(1)
 		R.anchored = TRUE
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -599,7 +587,7 @@
 		for(var/i in 1 to 4)
 			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 			sleep(12)
-		if(!prev_lockcharge)
+		if(!prev_locked_down)
 			R.SetLockdown(0)
 		R.anchored = FALSE
 		R.notransform = FALSE

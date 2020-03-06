@@ -34,7 +34,9 @@
 
 /obj/item/paperplane/handle_atom_del(atom/A)
 	if(A == internalPaper)
+		var/obj/item/paper/P = internalPaper
 		internalPaper = null
+		P.moveToNullspace() //So we're not deleting it twice when deleting our contents.
 		if(!QDELETED(src))
 			qdel(src)
 	return ..()
@@ -99,7 +101,7 @@
 /obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
-/obj/item/paperplane/throw_impact(atom/hit_atom)
+/obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/C = hit_atom
 		if(!C.get_active_held_item() && !C.restrained())
@@ -118,7 +120,7 @@
 		H.adjust_blurriness(6)
 		if(eyes)
 			eyes.applyOrganDamage(rand(6,8))
-		H.Knockdown(40)
+		H.DefaultCombatKnockdown(40)
 		H.emote("scream")
 
 /obj/item/paper/examine(mob/user)

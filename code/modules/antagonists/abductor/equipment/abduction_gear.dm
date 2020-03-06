@@ -29,6 +29,11 @@
 	var/stealth_armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 15, "bomb" = 15, "bio" = 15, "rad" = 15, "fire" = 70, "acid" = 70)
 	var/combat_armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 90, "acid" = 90)
 
+/obj/item/clothing/suit/armor/abductor/vest/Initialize()
+	. = ..()
+	stealth_armor = getArmor(arglist(stealth_armor))
+	combat_armor = getArmor(arglist(combat_armor))
+
 /obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT))
 		REMOVE_TRAIT(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
@@ -111,14 +116,13 @@
 		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
 		M.SetUnconscious(0)
-		M.SetStun(0)
-		M.SetKnockdown(0)
+		M.SetAllImmobility(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
-	if(combat_cooldown==initial(combat_cooldown))
+	if(combat_cooldown == initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/Destroy()
@@ -507,7 +511,7 @@
 	L.lastattackerckey = user.ckey
 
 	L.adjustStaminaLoss(35) //because previously it took 5-6 hits to actually "incapacitate" someone for the purposes of the sleep inducement
-	L.Knockdown(140)
+	L.DefaultCombatKnockdown(140)
 	L.apply_effect(EFFECT_STUTTER, 7)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
@@ -629,14 +633,11 @@
 	icon_state = "abductor_headset"
 	item_state = "abductor_headset"
 	keyslot2 = new /obj/item/encryptionkey/heads/captain
+	bowman = TRUE
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
 	make_syndie()
-
-/obj/item/radio/headset/abductor/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)

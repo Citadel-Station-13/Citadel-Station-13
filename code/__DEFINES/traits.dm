@@ -1,3 +1,5 @@
+#define SIGNAL_TRAIT(trait_ref) "trait [trait_ref]"
+
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
 	do { \
@@ -6,12 +8,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
+			SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 			} \
 		} \
 	} while (0)
@@ -31,7 +35,8 @@
 				} \
 			};\
 			if (!length(_L[trait])) { \
-				_L -= trait \
+				_L -= trait; \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_REMOVE_TRAIT); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -46,7 +51,8 @@
 			for (var/_T in _L) { \
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
-					_L -= _T } \
+					_L -= _T ; \
+					SEND_SIGNAL(target, SIGNAL_TRAIT(_T), COMPONENT_REMOVE_TRAIT); } \
 				};\
 				if (!length(_L)) { \
 					target.status_traits = null\
@@ -55,6 +61,7 @@
 	} while (0)
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
 //mob traits
 #define TRAIT_BLIND 			"blind"
@@ -110,6 +117,7 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_HIJACKER			"hijacker"
 #define TRAIT_SIXTHSENSE		"sixthsense"
 #define TRAIT_DISSECTED			"dissected"
 #define TRAIT_FEARLESS			"fearless"
@@ -136,6 +144,19 @@
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
 
+// mobility flag traits
+// IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
+// BUT FOR NOW, THESE ARE HOOKED TO DO update_mobility() VIA COMSIG IN living_mobility.dm
+// SO IF YOU ADD MORE, BESURE TO UPDATE IT THERE.
+
+/// Disallow movement
+#define TRAIT_MOBILITY_NOMOVE		"mobility_nomove"
+/// Disallow pickup
+#define TRAIT_MOBILITY_NOPICKUP		"mobility_nopickup"
+/// Disallow item use
+#define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
+
+#define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -161,9 +182,10 @@
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"
+#define TRAIT_PERMABONER		"permanent_arousal"
+#define TRAIT_NEVERBONER		"never_aroused"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
-#define TRAIT_EXHIBITIONIST		"exhibitionist"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
 #define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"
@@ -172,6 +194,8 @@
 #define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
 #define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
+#define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
+#define TRAIT_NO_INTERNALS		"no-internals"
 #define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
 
 // common trait sources
@@ -194,6 +218,7 @@
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 #define GHOSTROLE_TRAIT "ghostrole"
+#define APHRO_TRAIT "aphro"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
@@ -229,7 +254,9 @@
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define RISING_BASS_TRAIT "rising_bass"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
-#define NUKEOP_ANTAGONIST "nukeop-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
+#define TIMESTOP_TRAIT "timestop"
 #define NUKEOP_TRAIT "nuke-op"
+#define CLOWNOP_TRAIT "clown-op"
+#define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"

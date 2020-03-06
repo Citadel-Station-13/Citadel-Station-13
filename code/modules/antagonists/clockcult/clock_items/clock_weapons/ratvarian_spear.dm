@@ -45,10 +45,10 @@
 			bonus_damage *= 3 //total 30 damage on cultists, 50 with ratvar
 		GLOB.clockwork_vitality += target.adjustFireLoss(bonus_damage) //adds the damage done to existing vitality
 
-/obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/target)
-	var/turf/T = get_turf(target)
-	if(isliving(target))
-		var/mob/living/L = target
+/obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/turf/T = get_turf(hit_atom)
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(is_servant_of_ratvar(L))
 			if(L.put_in_active_hand(src))
 				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
@@ -57,15 +57,15 @@
 		else if(!..())
 			if(!L.anti_magic_check())
 				if(issilicon(L))
-					L.Knockdown(100)
+					L.DefaultCombatKnockdown(100)
 				else if(iscultist(L))
 					L.confused += CLAMP(10 - L.confused, 0, 5) // Spearthrow now confuses enemy cultists + just deals extra damage / sets on fire instead of hardstunning + damage
 					to_chat(L, "<span class ='userdanger'>[src] crashes into you with burning force, sending you reeling!</span>")
 					L.adjust_fire_stacks(2)
-					L.Knockdown(1)
+					L.DefaultCombatKnockdown(1)
 					L.IgniteMob()
 				else
-					L.Knockdown(40)
+					L.DefaultCombatKnockdown(40)
 				GLOB.clockwork_vitality += L.adjustFireLoss(bonus_burn * 3) //normally a total of 40 damage, 70 with ratvar
 			break_spear(T)
 	else

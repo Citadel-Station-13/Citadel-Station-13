@@ -29,9 +29,8 @@
 			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
-	Stun(22, ignore_canstun = TRUE)
+	notransform = TRUE
+	Stun(INFINITY, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
@@ -42,8 +41,8 @@
 
 	// hash the original name?
 	if(tr_flags & TR_HASHNAME)
-		O.name = "monkey ([copytext(md5(real_name), 2, 6)])"
-		O.real_name = "monkey ([copytext(md5(real_name), 2, 6)])"
+		O.name = "monkey ([copytext_char(md5(real_name), 2, 6)])"
+		O.real_name = "monkey ([copytext_char(md5(real_name), 2, 6)])"
 
 	//handle DNA and other attributes
 	dna.transfer_identity(O)
@@ -90,7 +89,7 @@
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
 			var/obj/item/organ/I = X
-			I.Remove(O, 1)
+			I.Remove(TRUE)
 
 		if(mind)
 			mind.transfer_to(O)
@@ -103,7 +102,7 @@
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
 			int_organs += I
-			I.Remove(src, 1)
+			I.Remove(TRUE)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
@@ -187,8 +186,7 @@
 
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
 	Stun(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -202,7 +200,7 @@
 	dna.transfer_identity(O)
 	O.updateappearance(mutcolor_update=1)
 
-	if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
+	if(findtext(O.dna.real_name, "monkey", 1, 7)) //7 == length("monkey") + 1
 		O.real_name = random_unique_name(O.gender)
 		O.dna.generate_unique_enzymes(O)
 	else
@@ -250,7 +248,7 @@
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
 			var/obj/item/organ/I = X
-			I.Remove(O, 1)
+			I.Remove(TRUE)
 
 		if(mind)
 			mind.transfer_to(O)
@@ -262,7 +260,7 @@
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
 			int_organs += I
-			I.Remove(src, 1)
+			I.Remove(TRUE)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
@@ -316,13 +314,13 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
@@ -365,8 +363,8 @@
 		else
 			dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -408,7 +406,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
-	canmove = 0
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -441,7 +439,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
-	canmove = 0
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -485,8 +483,8 @@
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)	//this really should not be necessary
@@ -516,7 +514,7 @@
 
 	regenerate_icons()
 	notransform = TRUE
-	canmove = FALSE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
@@ -545,7 +543,7 @@
 
 	regenerate_icons()
 	notransform = TRUE
-	canmove = FALSE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 

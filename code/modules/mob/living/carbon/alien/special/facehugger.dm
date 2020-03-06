@@ -115,7 +115,7 @@
 	if(icon_state == "[initial(icon_state)]_thrown")
 		icon_state = "[initial(icon_state)]"
 
-/obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
+/obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]"
@@ -252,7 +252,9 @@
 		return 0
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
 		return 0
-
+	if(isvamp(M))
+		return 0
+		
 	if(ismonkey(M))
 		return 1
 

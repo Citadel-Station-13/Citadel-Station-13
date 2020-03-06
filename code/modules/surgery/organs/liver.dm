@@ -58,11 +58,12 @@
 	return S
 
 //Just in case
-/obj/item/organ/liver/Remove(mob/living/carbon/M, special = 0)
-	..()
-	M.remove_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY)
-	M.ResetBloodVol() //At the moment, this shouldn't allow application twice. You either have this OR a thirsty ferret.
-	sizeMoveMod(1, M)
+/obj/item/organ/liver/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		owner.remove_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY)
+		owner.ResetBloodVol() //At the moment, this shouldn't allow application twice. You either have this OR a thirsty ferret.
+		sizeMoveMod(1, owner)
+	return ..()
 
 //Applies some of the effects to the patient.
 /obj/item/organ/liver/proc/pharmacokinesis()
@@ -93,6 +94,10 @@
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
+
+/obj/item/organ/liver/ipc
+	name = "reagent processing liver"
+	icon_state = "liver-c"
 
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"

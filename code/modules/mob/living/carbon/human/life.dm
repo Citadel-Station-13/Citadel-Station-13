@@ -39,10 +39,6 @@
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 
-	if(stat != DEAD)
-		//process your dick energy
-		handle_arousal(times_fired)
-
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 

@@ -139,9 +139,9 @@
 
 /datum/world_topic/status/Run(list/input, addr)
 	if(!key_valid) //If we have a key, then it's safe to trust that this isn't a malicious packet. Also prevents the extra info from leaking
-		if(GLOB.topic_status_lastcache <= world.time + 5)
+		if(GLOB.topic_status_lastcache >= world.time)
 			return GLOB.topic_status_cache
-		GLOB.topic_status_lastcache = world.time
+		GLOB.topic_status_lastcache = world.time + 5
 	. = list()
 	.["version"] = GLOB.game_version
 	.["mode"] = "hidden"	//CIT CHANGE - hides the gamemode in topic() calls to prevent meta'ing the gamemode
@@ -172,7 +172,7 @@
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
-	
+
 	//Time dilation stats.
 	.["time_dilation_current"] = SStime_track.time_dilation_current
 	.["time_dilation_avg"] = SStime_track.time_dilation_avg
@@ -187,3 +187,4 @@
 
 	if(!key_valid)
 		GLOB.topic_status_cache = .
+

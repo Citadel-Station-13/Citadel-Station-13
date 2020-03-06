@@ -17,7 +17,7 @@
 
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 50)
 	max_integrity = 100
-	integrity_failure = 50
+	integrity_failure = 0.5
 	var/list/network = list("ss13")
 	var/c_tag = null
 	var/status = TRUE
@@ -319,7 +319,8 @@
 	if(status)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
-		addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+		if(!QDELETED(src)) //We'll be doing it anyway in destroy
+			addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")

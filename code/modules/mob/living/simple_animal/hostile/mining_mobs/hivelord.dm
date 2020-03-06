@@ -7,7 +7,7 @@
 	icon_aggro = "Hivelord_alert"
 	icon_dead = "Hivelord_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC)
+	mob_biotypes = MOB_ORGANIC
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
 	ranged = 1
@@ -81,11 +81,13 @@
 	throw_message = "falls right through the strange body of the"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB //they shouldn't get stuck behind hivelords.
+	density = FALSE
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
+	AddComponent(/datum/component/swarming) //oh god not the bees
 	addtimer(CALLBACK(src, .proc/death), 100)
 
 //Legion
@@ -98,7 +100,7 @@
 	icon_aggro = "legion"
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -134,6 +136,11 @@
 	move_to_delay = 10 //actually faster!
 	crusher_drop_mod = 20
 	dwarf_mob = TRUE
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/beegion
+	name = "beegion"
+	desc = "You can still see what was once a human under the shifting mass of - oh my God, those are bees."
+	brood_type = /mob/living/simple_animal/hostile/poison/bees/toxin
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
@@ -174,7 +181,6 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "is shrugged off by"
-	pass_flags = PASSTABLE
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -217,7 +223,7 @@
 	can_infest_dead = TRUE
 
 //Legion that spawns Legions
-/mob/living/simple_animal/hostile/spawner/legion
+/mob/living/simple_animal/hostile/big_legion
 	name = "legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
@@ -226,10 +232,6 @@
 	icon_dead = "legion"
 	health = 450
 	maxHealth = 450
-	max_mobs = 3
-	spawn_time = 200
-	spawn_text = "peels itself off from"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	anchored = FALSE
@@ -251,6 +253,10 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+/mob/living/simple_animal/hostile/big_legion/Initialize()
+	.=..()
+	AddComponent(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, faction, "peels itself off from", 3)
 
 //Tendril-spawned Legion remains, the charred skeletons of those whose bodies sank into laval or fell into chasms.
 /obj/effect/mob_spawn/human/corpse/charredskeleton

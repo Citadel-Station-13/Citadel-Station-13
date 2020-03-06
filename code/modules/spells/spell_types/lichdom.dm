@@ -135,7 +135,7 @@
 	lich.hardset_dna(null,null,lich.real_name,null, new /datum/species/skeleton/space)
 	to_chat(lich, "<span class='warning'>Your bones clatter and shudder as you are pulled back into this world!</span>")
 	var/turf/body_turf = get_turf(old_body)
-	lich.Knockdown(200 + 200*resurrections)
+	lich.DefaultCombatKnockdown(200 + 200*resurrections)
 	resurrections++
 	if(old_body && old_body.loc)
 		if(iscarbon(old_body))
@@ -144,7 +144,7 @@
 				C.dropItemToGround(W)
 			for(var/X in C.internal_organs)
 				var/obj/item/organ/I = X
-				I.Remove(C)
+				I.Remove()
 				I.forceMove(body_turf)
 		var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))
 		if(wheres_wizdo)

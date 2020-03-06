@@ -90,7 +90,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user) || IsAdminGhost(user))
 		dat += text({"<BR> Auto Patrol: []"},
 
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
@@ -139,7 +139,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/item/projectile/Proj)
 	if((istype(Proj,/obj/item/projectile/beam)) || (istype(Proj,/obj/item/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
 		retaliate(Proj.firer)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A)
 	if(!on)
@@ -156,7 +156,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		bike_horn(A)
 
 
-/mob/living/simple_animal/bot/honkbot/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+/mob/living/simple_animal/bot/honkbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		playsound(src, honksound, 50, TRUE, -1)
 		var/obj/item/I = AM
@@ -196,7 +196,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			C.stuttering = 20
 			C.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
 			C.Jitter(50)
-			C.Knockdown(60)
+			C.DefaultCombatKnockdown(60)
 			var/mob/living/carbon/human/H = C
 			if(client) //prevent spam from players..
 				spam_flag = TRUE
@@ -215,7 +215,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 					"<span class='userdanger'>[src] has honked you!</span>")
 		else
 			C.stuttering = 20
-			C.Knockdown(80)
+			C.DefaultCombatKnockdown(80)
 			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntime)
 
 
@@ -358,7 +358,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						  	"[C] trips over [src] and falls!", \
 						  	"[C] topples over [src]!", \
 						  	"[C] leaps out of [src]'s way!")]</span>")
-			C.Knockdown(10)
+			C.DefaultCombatKnockdown(10)
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1, -1)
 			if(!client)
 				speak("Honk!")

@@ -19,7 +19,7 @@
 
 /obj/machinery/recycler/Initialize()
 	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), INFINITY, FALSE, null, null, null, TRUE)
+	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/plasma, /datum/material/gold, /datum/material/diamond, /datum/material/plastic, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, FALSE, null, null, null, TRUE)
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
@@ -41,9 +41,10 @@
 
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
-	. += "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	. += "The safety-mode light is [safety_mode ? "on" : "off"]."
-	. += "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."
+	. += "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.</span>"
+	. += {"The power light is [(stat & NOPOWER) ? "off" : "on"].
+	The safety-mode light is [safety_mode ? "on" : "off"].
+	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -76,8 +77,7 @@
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
 	return TRUE
 
-/obj/machinery/recycler/update_icon()
-	..()
+/obj/machinery/recycler/update_icon_state()
 	var/is_powered = !(stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE

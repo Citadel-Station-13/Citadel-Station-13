@@ -64,28 +64,29 @@
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
 
-/obj/item/holybeacon/proc/beacon_armor(mob/M)
+/obj/item/holybeacon/proc/beacon_armor(mob/living/L)
 	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
 	var/list/display_names = list()
 	for(var/V in holy_armor_list)
 		var/atom/A = V
 		display_names += list(initial(A.name) = A)
 
-	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
+	var/choice = input(L,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
+	var/turf/T = get_turf(src)
+	if(!T || QDELETED(src) || !choice || !CHECK_MOBILITY(L, MOBILITY_USE) || !in_range(L, src) || GLOB.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)
 	var/A = holy_armor_list[index]
 
 	GLOB.holy_armor_type = A
-	var/holy_armor_box = new A
+	var/holy_armor_box = new A(T)
 
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 
 	if(holy_armor_box)
 		qdel(src)
-		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
+		L.put_in_hands(holy_armor_box)
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -243,7 +244,7 @@
 	if(user.mind && (user.mind.isholy) && !reskinned)
 		reskin_holy_weapon(user)
 
-/obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
+/obj/item/nullrod/proc/reskin_holy_weapon(mob/living/L)
 	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/holy_weapon
@@ -254,8 +255,8 @@
 		if (initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
 
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+	var/choice = input(L, "What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+	if(QDELETED(src) || !choice || !in_range(L, src) || !CHECK_MOBILITY(L, MOBILITY_USE) || reskinned)
 		return
 
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
@@ -268,7 +269,7 @@
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
 		qdel(src)
-		M.put_in_active_hand(holy_weapon)
+		L.put_in_active_hand(holy_weapon)
 
 /obj/item/nullrod/proc/jedi_spin(mob/living/user)
 	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
@@ -673,7 +674,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
-		user.Knockdown(60)
+		user.DefaultCombatKnockdown(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)

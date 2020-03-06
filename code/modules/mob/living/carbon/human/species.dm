@@ -71,12 +71,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
+	var/datum/outfit/outfit_important_for_life // A path to an outfit that is important for species life e.g. plasmaman outfit
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
-	var/list/inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
 	var/attack_verb = "punch"	// punch-specific attack verb
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
@@ -189,21 +190,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(brain && (replace_current || !should_have_brain))
 		if(!brain.decoy_override)//Just keep it if it's fake
-			brain.Remove(C,TRUE,TRUE)
+			brain.Remove(TRUE,TRUE)
 			QDEL_NULL(brain)
 	if(should_have_brain && !brain)
 		brain = new mutant_brain()
 		brain.Insert(C, TRUE, TRUE)
 
 	if(heart && (!should_have_heart || replace_current))
-		heart.Remove(C,1)
+		heart.Remove(TRUE)
 		QDEL_NULL(heart)
 	if(should_have_heart && !heart)
 		heart = new mutant_heart()
 		heart.Insert(C)
 
 	if(lungs && (!should_have_lungs || replace_current))
-		lungs.Remove(C,1)
+		lungs.Remove(TRUE)
 		QDEL_NULL(lungs)
 	if(should_have_lungs && !lungs)
 		if(mutantlungs)
@@ -213,7 +214,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		lungs.Insert(C)
 
 	if(liver && (!should_have_liver || replace_current))
-		liver.Remove(C,1)
+		liver.Remove(TRUE)
 		QDEL_NULL(liver)
 	if(should_have_liver && !liver)
 		if(mutantliver)
@@ -223,7 +224,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		liver.Insert(C)
 
 	if(stomach && (!should_have_stomach || replace_current))
-		stomach.Remove(C,1)
+		stomach.Remove(TRUE)
 		QDEL_NULL(stomach)
 	if(should_have_stomach && !stomach)
 		if(mutantstomach)
@@ -233,14 +234,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		stomach.Insert(C)
 
 	if(appendix && (!should_have_appendix || replace_current))
-		appendix.Remove(C,1)
+		appendix.Remove(TRUE)
 		QDEL_NULL(appendix)
 	if(should_have_appendix && !appendix)
 		appendix = new()
 		appendix.Insert(C)
 
 	if(tail && (!should_have_tail || replace_current))
-		tail.Remove(C,1)
+		tail.Remove(TRUE)
 		QDEL_NULL(tail)
 	if(should_have_tail && !tail)
 		tail = new mutanttail()
@@ -248,21 +249,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(C.get_bodypart(BODY_ZONE_HEAD))
 		if(eyes && (replace_current || !should_have_eyes))
-			eyes.Remove(C,1)
+			eyes.Remove(TRUE)
 			QDEL_NULL(eyes)
 		if(should_have_eyes && !eyes)
 			eyes = new mutanteyes
 			eyes.Insert(C, TRUE)
 
 		if(ears && (replace_current || !should_have_ears))
-			ears.Remove(C,1)
+			ears.Remove(TRUE)
 			QDEL_NULL(ears)
 		if(should_have_ears && !ears)
 			ears = new mutantears
 			ears.Insert(C)
 
 		if(tongue && (replace_current || !should_have_tongue))
-			tongue.Remove(C,1)
+			tongue.Remove(TRUE)
 			QDEL_NULL(tongue)
 		if(should_have_tongue && !tongue)
 			tongue = new mutanttongue
@@ -272,7 +273,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/mutantorgan in old_species.mutant_organs)
 			var/obj/item/organ/I = C.getorgan(mutantorgan)
 			if(I)
-				I.Remove(C)
+				I.Remove()
 				QDEL_NULL(I)
 
 	for(var/path in mutant_organs)
@@ -323,12 +324,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
-//CITADEL EDIT
-	if(NOAROUSAL in species_traits)
-		C.canbearoused = FALSE
-	else
-		if(C.client)
-			C.canbearoused = C.client.prefs.arousable
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(NOGENITALS in H.dna.species.species_traits)
@@ -1025,6 +1020,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.apply_overlay(BODY_TAUR_LAYER) // CITADEL EDIT
 
 
+/*
+ * Equip the outfit required for life. Replaces items currently worn.
+ */
+/datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
+	if(!outfit_important_for_life)
+		return
+	outfit_important_for_life= new()
+	outfit_important_for_life.equip(human_to_equip)
+
 //This exists so sprite accessories can still be per-layer without having to include that layer's
 //number in their sprite name, which causes issues when those numbers change.
 /datum/species/proc/mutant_bodyparts_layertext(layer)
@@ -1270,10 +1274,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.update_mutant_bodyparts()
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == exotic_blood)
+	if(chem.type == exotic_blood && !istype(exotic_blood, /datum/reagent/blood))
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
-		return 1
+		return TRUE
 	return FALSE
 
 /datum/species/proc/check_weakness(obj/item, mob/living/attacker)
@@ -1370,9 +1374,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 
 	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
-		if(!H.IsKnockdown())
+		if(CHECK_MOBILITY(H, MOBILITY_STAND))
 			H.emote("collapse")
-		H.Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
+		H.DefaultCombatKnockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
 
 	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
@@ -1520,7 +1524,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
 		if(!target.combatmode && damage < user.dna.species.punchstunthreshold)
 			damage = user.dna.species.punchstunthreshold - 1
-		if(user.resting)
+		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.5
 		if(!user.combatmode)
 			damage *= 0.25
@@ -1586,30 +1590,28 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"<span class='notice'>You slap [user == target ? "yourself" : "\the [target]"] in the face! </span>",\
 			"You hear a slap."
 		)
-		if (!HAS_TRAIT(target, TRAIT_NYMPHO))
-			stop_wagging_tail(target)
 		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
 		user.adjustStaminaLossBuffered(3)
+		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
+			stop_wagging_tail(target)
 		return FALSE
-	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+	else if(!(user.client?.prefs.cit_toggles & NO_ASS_SLAP) && aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
 		if(target.client?.prefs.cit_toggles & NO_ASS_SLAP)
 			to_chat(user,"A force stays your hand, preventing you from slapping \the [target]'s ass!")
 			return FALSE
 		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
 		user.adjustStaminaLossBuffered(3)
+		target.adjust_arousal(20,maso = TRUE)
+		if (ishuman(target) && HAS_TRAIT(target, TRAIT_MASO) && target.has_dna() && prob(10))
+			target.mob_climax(forced_climax=TRUE)
+		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
+			stop_wagging_tail(target)
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message(\
 			"<span class='danger'>\The [user] slaps \the [target]'s ass!</span>",\
 			"<span class='notice'>You slap [user == target ? "your" : "\the [target]'s"] ass!</span>",\
 			"You hear a slap."
 		)
-		if (target.canbearoused)
-			target.adjustArousalLoss(5)
-		if (target.getArousalLoss() >= 100 && ishuman(target) && HAS_TRAIT(target, TRAIT_MASO) && target.has_dna())
-			target.mob_climax(forced_climax=TRUE)
-		if (!HAS_TRAIT(target, TRAIT_NYMPHO))
-			stop_wagging_tail(target)
-
 		return FALSE
 	else if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
@@ -1640,7 +1642,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			return*/
 		if(!target.combatmode) // CITADEL CHANGE
 			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
-		if(user.resting) //CITADEL CHANGE
+		if(!CHECK_MOBILITY(user, MOBILITY_STAND)) //CITADEL CHANGE
 			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
 		if(!user.combatmode) //CITADEL CHANGE
 			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
@@ -1723,7 +1725,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/mob/living/carbon/tempcarb = user
 		if(!tempcarb.combatmode)
 			totitemdamage *= 0.5
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	if(istype(H))
 		if(!H.combatmode)
@@ -1839,12 +1841,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return
-		if(!user.resting)
+		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
+			to_chat(user, "<span class='warning'>You can't seem to force yourself up right now!</span>")
+			return
+		if(CHECK_MOBILITY(user, MOBILITY_STAND))
 			to_chat(user, "<span class='notice'>You can only force yourself up if you're on the ground.</span>")
 			return
 		user.visible_message("<span class='notice'>[user] forces [p_them()]self up to [p_their()] feet!</span>", "<span class='notice'>You force yourself up to your feet!</span>")
-		user.resting = 0
-		user.update_canmove()
+		user.set_resting(FALSE, TRUE)
 		user.adjustStaminaLossBuffered(user.stambuffer) //Rewards good stamina management by making it easier to instantly get up from resting
 		playsound(user, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
@@ -1857,7 +1861,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		return FALSE
 	else
 		if(user == target)
@@ -1870,7 +1874,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 
-		if(!target.resting)
+		if(CHECK_MOBILITY(target, MOBILITY_STAND))
 			target.adjustStaminaLoss(5)
 
 		if(target.is_shove_knockdown_blocked())
@@ -1884,7 +1888,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		//Thank you based whoneedsspace
 		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
-		if(target_collateral_human && !target_collateral_human.resting)
+		if(target_collateral_human && CHECK_MOBILITY(target_collateral_human, MOBILITY_STAND))
 			shove_blocked = TRUE
 		else
 			target_collateral_human = null
@@ -1892,48 +1896,47 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(get_turf(target) == target_oldturf)
 				shove_blocked = TRUE
 
+		var/append_message = ""
 		if(shove_blocked && !target.buckled)
 			var/directional_blocked = !target.Adjacent(target_shove_turf)
-			var/targetatrest = target.resting
+			var/targetatrest = !CHECK_MOBILITY(target, MOBILITY_STAND)
 			if((directional_blocked || !(target_collateral_human || target_shove_turf.shove_act(target, user))) && !targetatrest)
-				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "knocking them down")
 			else if(target_collateral_human && !targetatrest)
-				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_HUMAN)
+				target_collateral_human.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
 					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
+				append_message += ", into [target_collateral_human.name]"
 
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			var/target_held_item = target.get_active_held_item()
-			var/knocked_item = FALSE
-			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
-				target_held_item = null
-			if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
-				target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
-				if(target_held_item)
+		var/obj/item/target_held_item = target.get_active_held_item()
+		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
+			target_held_item = null
+		if(!target.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
+			target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+			if(target_held_item)
+				if(!HAS_TRAIT(target_held_item, TRAIT_NODROP))
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
 						"<span class='danger'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
-				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
-			else if(target_held_item)
-				target.dropItemToGround(target_held_item)
-				knocked_item = TRUE
+					append_message += ", loosening their grip on [target_held_item]"
+				else
+					append_message += ", but couldn't loose their grip on [target_held_item]"
+			addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+		else if(target_held_item)
+			if(target.dropItemToGround(target_held_item))
 				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
 					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
-			var/append_message = ""
-			if(target_held_item)
-				if(knocked_item)
-					append_message = "causing them to drop [target_held_item]"
-				else
-					append_message = "loosening their grip on [target_held_item]"
-			log_combat(user, target, "shoved", append_message)
+				append_message += ", causing them to drop [target_held_item]"
+		log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!forced && hit_percent <= 0)
@@ -1962,10 +1965,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(BP)
 				if(damage > 0 ? BP.receive_damage(damage_amount, 0) : BP.heal_damage(abs(damage_amount), 0))
 					H.update_damage_overlays()
-					if(HAS_TRAIT(H, TRAIT_MASO))
-						H.adjustArousalLoss(damage_amount, 0)
-						if (H.getArousalLoss() >= 100 && ishuman(H) && H.has_dna())
-							H.mob_climax(forced_climax=TRUE)
+					if(HAS_TRAIT(H, TRAIT_MASO) && prob(damage_amount))
+						H.mob_climax(forced_climax=TRUE)
 
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)
@@ -1996,8 +1997,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(BRAIN)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
-		if(AROUSAL)											//Citadel edit - arousal
-			H.adjustArousalLoss(damage * hit_percent)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
@@ -2010,7 +2009,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 /datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit
-	return 0
+	return
 
 /////////////
 //BREATHING//

@@ -9,12 +9,10 @@
 			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
 		if(legcuffed)
 			. += legcuffed.slowdown
-	if(stat == SOFT_CRIT)
-		. += SOFTCRIT_ADD_SLOWDOWN
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
-	if(movement_type & FLYING)
-		return 0
+	if(movement_type & FLYING && !(lube & FLYING_DOESNT_HELP))
+		return FALSE
 	if(!(lube&SLIDE_ICE))
 		log_combat(src, (O ? O : get_turf(src)), "slipped on the", null, ((lube & SLIDE) ? "(LUBE)" : null))
 	return loc.handle_slip(src, knockdown_amount, O, lube)
@@ -43,3 +41,10 @@
 			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10
+
+/mob/living/carbon/can_move_under_living(mob/living/other)
+	. = ..()
+	if(!.)		//we failed earlier don't need to fail again
+		return
+	if(!other.lying && lying)		//they're up, we're down.
+		return FALSE

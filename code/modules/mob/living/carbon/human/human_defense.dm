@@ -20,7 +20,7 @@
 
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
-	if(!d_type)
+	if(!d_type || !def_zone)
 		return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
@@ -49,9 +49,14 @@
 		if (mind.martial_art && mind.martial_art.dodge_chance)
 			if(!lying && dna && !dna.check_mutation(HULK))
 				if(prob(mind.martial_art.dodge_chance))
-					var/dodgemessage = pick("dodges under the projectile!","dodges to the right of the projectile!","jumps over the projectile!")
-					visible_message("<span class='danger'>[src] [dodgemessage]</span>", "<span class='userdanger'>You dodge the projectile!</span>")
-					return -1
+					var/static/dodgemessages = list("dodges under",0,-4,"dodges to the right of",-4,0,"dodges to the left of",4,0,"jumps over",0,4)
+					var/pick = pick(1,4,7,10)
+					var/oldx = pixel_x
+					var/oldy = pixel_y
+					animate(src,pixel_x = pixel_x + dodgemessages[pick+1],pixel_y = pixel_y + dodgemessages[pick+2],time=3)
+					animate(src,pixel_x = oldx,pixel_y = oldy,time=2)
+					visible_message("<span class='danger'>[src] [dodgemessages[pick]] the projectile!</span>", "<span class='userdanger'>You dodge the projectile!</span>")
+					return BULLET_ACT_FORCE_PIERCE
 		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
@@ -60,12 +65,10 @@
 					else
 						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-					if(!mind.martial_art.reroute_deflection)
-						return FALSE
-					else
+					if(mind.martial_art.reroute_deflection)
 						P.firer = src
 						P.setAngle(rand(0, 360))//SHING
-						return FALSE
+					return BULLET_ACT_FORCE_PIERCE
 
 	return ..()
 
@@ -104,7 +107,7 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	return dna?.species?.spec_hitby(AM, src) || ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
@@ -176,7 +179,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			Knockdown(100)
+			DefaultCombatKnockdown(100)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -225,9 +228,9 @@
 		else
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(!lying)				//CITADEL EDIT
-				Knockdown(100, TRUE, FALSE, 30, 25)
+				DefaultCombatKnockdown(100, TRUE, FALSE, 30, 25)
 			else
-				Knockdown(100)
+				DefaultCombatKnockdown(100)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -294,10 +297,10 @@
 			switch(M.damtype)
 				if("brute")
 					if(M.force > 35) // durand and other heavy mechas
-						Knockdown(50)
+						DefaultCombatKnockdown(50)
 						src.throw_at(throw_target, rand(1,5), 7)
-					else if(M.force >= 20 && !IsKnockdown()) // lightweight mechas like gygax
-						Knockdown(30)
+					else if(M.force >= 20 && CHECK_MOBILITY(src, MOBILITY_STAND)) // lightweight mechas like gygax
+						DefaultCombatKnockdown(30)
 						src.throw_at(throw_target, rand(1,3), 7)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
@@ -326,38 +329,50 @@
 	..()
 	if (!severity)
 		return
-	var/b_loss = 0
-	var/f_loss = 0
-	var/bomb_armor = max(0,(100-getarmor(null, "bomb"))/100)
+	var/brute_loss = 0
+	var/burn_loss = 0
+	var/bomb_armor = getarmor(null, "bomb")
+
+	//200 max knockdown for EXPLODE_HEAVY
+	//160 max knockdown for EXPLODE_LIGHT
 
 	switch (severity)
-		if (1)
-			if(bomb_armor)
-				b_loss = (350*bomb_armor)+150
-				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
-				throw_at(throw_target, 200, 4)
-				damage_clothes(400*bomb_armor, BRUTE, "bomb")
-			else
-				damage_clothes(400,BRUTE,"bomb")
+		if (EXPLODE_DEVASTATE)
+			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
+				for(var/I in contents)
+					var/atom/A = I
+					if(!QDELETED(A))
+						A.ex_act(severity)
 				gib()
 				return
+			else
+				brute_loss = 500
+				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+				throw_at(throw_target, 200, 4)
+				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
 
-		if (2)
-			b_loss = 60*bomb_armor
-			f_loss = 60*bomb_armor
-			damage_clothes(200*bomb_armor, BRUTE, "bomb")
+		if (EXPLODE_HEAVY)
+			brute_loss = 60
+			burn_loss = 60
+			if(bomb_armor)
+				brute_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
+				burn_loss = brute_loss				//damage gets reduced from 120 to up to 60 combined brute+burn
+			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			Unconscious(200*bomb_armor)
+			Unconscious(20)							//short amount of time for follow up attacks against elusive enemies like wizards
+			Knockdown(200 - (bomb_armor * 1.6)) 	//between ~4 and ~20 seconds of knockdown depending on bomb armor
 
-		if(3)
-			b_loss = 30*bomb_armor
+		if(EXPLODE_LIGHT)
+			brute_loss = 30
+			if(bomb_armor)
+				brute_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			Unconscious(100*bomb_armor)
+			Knockdown(160 - (bomb_armor * 1.6))		//100 bomb armor will prevent knockdown altogether
 
-	take_overall_damage(b_loss,f_loss)
+	take_overall_damage(brute_loss,burn_loss)
 
 	//attempt to dismember bodyparts
 	if(severity <= 2 || !bomb_armor)

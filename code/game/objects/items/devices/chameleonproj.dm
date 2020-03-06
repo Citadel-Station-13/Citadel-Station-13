@@ -49,6 +49,10 @@
 		return
 	if(istype(target, /obj/structure/falsewall))
 		return
+	if(target.alpha != 255)
+		return
+	if(target.invisibility != 0)
+		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
 			return
@@ -146,7 +150,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	..()
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)
