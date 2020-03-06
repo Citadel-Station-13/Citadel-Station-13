@@ -185,10 +185,12 @@
 	name = "electron blast"
 	icon_state = "stunjectile"
 	color = null
-	nodamage = 1
+	nodamage = TRUE
 	knockdown = 100
 	stamina = 5
 	stutter = 5
 	jitter = 20
+	strong_tase = FALSE
+	tase_duration = 0
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
