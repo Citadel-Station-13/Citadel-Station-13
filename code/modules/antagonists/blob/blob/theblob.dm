@@ -237,7 +237,7 @@
 	else
 		return ..()
 
-/obj/structure/blob/proc/chemeffectreport()
+/obj/structure/blob/proc/chemeffectreport(mob/user)
 	RETURN_TYPE(/list)
 	. = list()
 	if(overmind)
