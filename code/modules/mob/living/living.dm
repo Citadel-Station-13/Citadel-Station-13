@@ -370,7 +370,7 @@
 
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
-	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || recoveringstam || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || IS_HARD_STAMCRITTED(src) || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
 		return TRUE
 
 /mob/living/canUseStorage()
