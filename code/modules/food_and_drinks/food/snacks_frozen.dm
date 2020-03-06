@@ -223,7 +223,7 @@
 	tastes = list("ice" = 1, "water" = 1, "cola" = 5)
 
 /obj/item/reagent_containers/food/snacks/snowcones/spacemountainwind
-	name = "space mountain wind snowcone"
+	name = "\improper Space Mountain Wind snowcone"
 	desc = "Space Mountain Wind drizzled over a snowball in a paper cup."
 	icon_state = "kiwi_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/spacemountainwind = 5)
