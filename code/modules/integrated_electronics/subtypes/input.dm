@@ -353,6 +353,7 @@
 			var/msg = H.examine(D)
 			if(msg)
 				set_pin_data(IC_OUTPUT, 2, msg)
+			unset_busy_human_dummy(DUMMY_HUMAN_SLOT_EXAMINER)
 
 		set_pin_data(IC_OUTPUT, 3, H.x-T.x)
 		set_pin_data(IC_OUTPUT, 4, H.y-T.y)
