@@ -642,8 +642,7 @@
 			to_chat(user, "<span class='warning'>You need at least two pieces of cloth!</span>")
 			return
 	if(steps == 6 && istype(S, /obj/item/reagent_containers/glass/bucket/wood))
-		var/W = /obj/structure/sink/well
-		new W(src.loc, 1)
+		new /obj/structure/sink/well(loc)
 		qdel(S)
 		qdel(src)
 		return
