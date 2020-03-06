@@ -562,11 +562,11 @@
 		update_icon()
 
 /obj/item/gun/proc/getinaccuracy(mob/living/user)
-	if(!iscarbon(user))
+	if(!isliving(user))
 		return FALSE
 	else
-		var/mob/living/carbon/holdingdude = user
-		if(istype(holdingdude) && holdingdude.combatmode)
+		var/mob/living/holdingdude = user
+		if(istype(holdingdude) && IS_COMBAT_ACTIVE(holdingdude))
 			return 0
 		else
 			return ((weapon_weight * 25) * inaccuracy_modifier)

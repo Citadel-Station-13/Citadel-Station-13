@@ -19,7 +19,7 @@
 /mob/living/carbon/human/Move(NewLoc, direct)
 	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
-	if(. && IS_SPRINT_ACTIVE(src) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && !pulledby)
+	if(. && IS_SPRINTING(src) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && !pulledby)
 		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
 			doSprintLossTiles(1)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
@@ -30,7 +30,7 @@
 
 /mob/living/carbon/human/movement_delay()
 	. = 0
-	if(CHECK_MOBILITY(src, MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && IS_SPRINT_ACTIVE(src))
+	if(CHECK_MOBILITY(src, MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && IS_SPRINTING(src))
 		var/static/datum/config_entry/number/movedelay/sprint_speed_increase/SSI
 		if(!SSI)
 			SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
@@ -73,3 +73,33 @@
 	if(!CHECK_MOBILITY(src, MOBILITY_STAND))
 		. += 6
 
+/mob/living/silicon/robot/Move(NewLoc, direct)
+	. = ..()
+	if(. && IS_SPRINTING(src) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_STAND | MOBILITY_MOVE))
+		if(!(cell?.use(25)))
+			togglesprint(TRUE)
+
+/mob/living/silicon/robot/movement_delay()
+	. = ..()
+	if(!resting && !IS_SPRINTING(src))
+		. += 1
+	. += speed
+
+/mob/living/silicon/robot/proc/togglesprint(shutdown = FALSE) //Basically a copypaste of the proc from /mob/living/carbon/human
+	if(!shutdown && (!cell || cell.charge < 25) || !cansprint)
+		return FALSE
+	sprinting = shutdown ? FALSE : !sprinting
+	if(CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE))
+		if(sprinting)
+			playsound_local(src, 'sound/misc/sprintactivate.ogg', 50, FALSE, pressure_affected = FALSE)
+		else
+			if(shutdown)
+				playsound_local(src, 'sound/effects/light_flicker.ogg', 50, FALSE, pressure_affected = FALSE)
+			playsound_local(src, 'sound/misc/sprintdeactivate.ogg', 50, FALSE, pressure_affected = FALSE)
+	var/obj/screen/sprintbutton/S = locate() in hud_used?.static_inventory
+	S?.update_icon_state()
+	return TRUE
+
+/mob/living/silicon/robot/proc/sprint_hotkey(targetstatus)
+	if(targetstatus != sprinting)
+		togglesprint()

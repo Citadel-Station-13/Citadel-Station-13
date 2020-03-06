@@ -52,19 +52,19 @@
 	if(!IS_COMBAT_MODE_LOCKED(src) && !IS_COMBAT_ACTIVE(src))
 		enable_combat_mode(silent, FALSE, visible, FALSE)
 	update_combat_mode_icon()
-	if(voremode)
-		toggle_vore_mode()
 	client?.show_popup_menus = FALSE
+	return TRUE
 
 /// Disables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
 /mob/living/proc/disable_intentional_combat_mode(silent = TRUE, visible = FALSE)
 	if(!IS_COMBAT_TOGGLED(src) && !IS_COMBAT_ACTIVE(src))
 		return
-	DISBLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
+	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
 	if(IS_COMBAT_ACTIVE(src))
 		disable_combat_mode(silent, FALSE, visible, FALSE)
 	update_combat_mode_icon()
 	client?.show_popup_menus = TRUE
+	return TRUE
 
 /// Toggles whether the user is intentionally in combat mode. THIS should be the proc you generally use! Has built in visual/to other player feedback, as well as an audible cue to ourselves.
 /mob/living/proc/user_toggle_intentional_combat_mode(visible = TRUE)
