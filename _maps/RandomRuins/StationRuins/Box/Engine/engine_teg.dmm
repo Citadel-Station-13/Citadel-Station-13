@@ -1545,21 +1545,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"RK" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/effect/turf_decal/delivery,
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "RQ" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
@@ -2237,7 +2222,7 @@ yf
 "}
 (12,1,1) = {"
 cS
-RK
+QS
 uy
 PK
 iZ
