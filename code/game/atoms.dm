@@ -28,7 +28,6 @@
 	var/list/managed_overlays
 
 	var/datum/proximity_monitor/proximity_monitor
-	var/buckle_message_cooldown = 0
 	var/fingerprintslast
 
 	var/list/filter_data //For handling persistent filters
@@ -361,11 +360,12 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
-/atom/proc/relaymove(mob/user)
-	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
+/atom/proc/relaymove(mob/living/user)
+	if(!istype(user))
+		return				//why are you buckling nonliving mobs to atoms?
+	if(user.buckle_message_cooldown <= world.time)
+		user.buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
-	return
 
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected

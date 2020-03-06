@@ -1078,8 +1078,13 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+/obj/item/toy/cards/singlecard/attack_self(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if(!ishuman(user))
+		return
+	if(!CHECK_MOBILITY(user, MOBILITY_USE))
 		return
 	Flip()
 

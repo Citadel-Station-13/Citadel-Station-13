@@ -110,7 +110,7 @@
 		user.visible_message("<span class='notice'>[user] pulls [src] out from under [poordude].</span>", "<span class='notice'>You pull [src] out from under [poordude].</span>")
 		var/C = new item_chair(loc)
 		user.put_in_hands(C)
-		poordude.Knockdown(20)//rip in peace
+		poordude.DefaultCombatKnockdown(20)//rip in peace
 		user.adjustStaminaLoss(5)
 		unbuckle_all_mobs(TRUE)
 		qdel(src)
@@ -377,7 +377,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
-				C.Knockdown(20)
+				C.DefaultCombatKnockdown(20)
 		smash(user)
 
 /obj/item/chair/greyscale

@@ -272,7 +272,7 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Knockdown(60 * power_multiplier)
+			L.DefaultCombatKnockdown(60 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
@@ -492,10 +492,10 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(L.resting)
-				L.lay_down() //aka get up
-			L.SetStun(0)
-			L.SetKnockdown(0)
-			L.SetUnconscious(0) //i said get up i don't care if you're being tased
+				L.set_resting(FALSE, FALSE, FALSE)
+			L.SetAllImmobility(0, FALSE)
+			L.SetUnconscious(0, FALSE) //i said get up i don't care if you're being tased
+			L.update_mobility()
 
 	//SIT
 	else if((findtext(message, sit_words)))
@@ -1205,7 +1205,7 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-					L.Knockdown(30 * power_multiplier * E.phase)
+					L.DefaultCombatKnockdown(30 * power_multiplier * E.phase)
 					E.cooldown += 8
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You suddenly drop to the ground!</b></span>"), 5)
 					to_chat(user, "<span class='notice'><i>You encourage [L] to drop down to the ground.</i></span>")
@@ -1422,10 +1422,8 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(3 to INFINITY)//Tier 3 only
-					if(L.resting)
-						L.lay_down() //aka get up
-					L.SetStun(0)
-					L.SetKnockdown(0)
+					L.set_resting(FALSE, TRUE, FALSE)
+					L.SetAllImmobility(0)
 					L.SetUnconscious(0) //i said get up i don't care if you're being tased
 					E.cooldown += 10 //This could be really strong
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You jump to your feet from sheer willpower!</b></span>"), 5)

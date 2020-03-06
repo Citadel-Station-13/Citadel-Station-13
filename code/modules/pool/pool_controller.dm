@@ -109,9 +109,11 @@
 		to_chat(user, "<span class='warning'>The interface on [src] is already too damaged to short it again.</span>")
 		return
 
-/obj/machinery/pool/controller/AltClick(mob/user)
+/obj/machinery/pool/controller/AltClick(mob/living/user)
 	. = ..()
-	if(!isliving(user) || !user.Adjacent(src) || !user.CanReach(src) || user.IsStun() || user.IsKnockdown() || user.incapacitated())
+	if(!istype(user))
+		return FALSE
+	if(!user.Adjacent(src) || !user.CanReach(src) || !CHECK_MOBILITY(user, MOBILITY_USE))
 		return FALSE
 	visible_message("<span class='boldwarning'>[user] starts to drain [src]!</span>")
 	draining = TRUE
