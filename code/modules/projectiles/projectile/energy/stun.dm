@@ -43,7 +43,6 @@
 	knockdown_stamoverride = 0
 	knockdown_stam_max = 0
 	strong_tase = FALSE
-	range = 12
 
 /obj/item/projectile/energy/electrode/security/hos
 	knockdown = 100
