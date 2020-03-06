@@ -25,7 +25,7 @@
 
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Right click attack while in combat mode to disarm instead of stun.</span>"
+	. += "<span class='notice'>Right click attack while in combat mode or attack while in disarm intent to disarm instead of stun.</span>"
 
 /obj/item/melee/baton/get_cell()
 	. = cell
@@ -149,6 +149,8 @@
 
 //return TRUE to interrupt attack chain.
 /obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
+	if(user.a_intent == INTENT_DISARM)
+		disarming = TRUE			//override if they're in disarm intent.
 	if(iscyborg(M) || !isliving(M))		//can't baton cyborgs
 		return FALSE
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -161,7 +163,7 @@
 		if(check_martial_counter(L, user))
 			return TRUE
 	if(status)
-		if(baton_stun(M, user, disarming || (user.a_intent == INTENT_DISARM)))
+		if(baton_stun(M, user, disarming))
 			user.do_attack_animation(M)
 			user.adjustStaminaLossBuffered(getweight())		//CIT CHANGE - makes stunbatonning others cost stamina
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
