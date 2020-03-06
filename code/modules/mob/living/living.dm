@@ -295,7 +295,7 @@
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
-			M.LAssailant = usr
+			M.LAssailant = WEAKREF(src)
 		if(isliving(M))
 			var/mob/living/L = M
 			//Share diseases that are spread by touch

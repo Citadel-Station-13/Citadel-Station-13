@@ -233,7 +233,7 @@
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
-				target.LAssailant = user
+				target.LAssailant = WEAKREF(user)
 			last_hit = world.time + cooldown
 			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
 

@@ -952,3 +952,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/setMovetype(newval)
 	. = ..()
 	update_movespeed(FALSE)
+
+/mob/proc/getLAssailant()
+	return LAssailant?.resolve()
