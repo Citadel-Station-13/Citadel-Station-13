@@ -86,6 +86,15 @@
 		if(prob(10) && owner.health > owner.crit_threshold)
 			owner.emote("snore")
 
+/datum/status_effect/staggered
+	id = "staggered"
+	blocks_sprint = TRUE
+
+/datum/status_effect/staggered/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."

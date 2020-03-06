@@ -24,7 +24,7 @@
 	if(visible)
 		visible_message("<span class='warning'>[src] goes limp.</span>", "<span class='warning'>Your muscles are forceibly relaxed!</span>")
 	else if(!silent)
-			to_chat(src, was_forced? "<span class='warning'>Your muscles are forceibly relaxed!</span>" : "<span class='warning'>You relax your muscles.</span>")
+		to_chat(src, was_forced? "<span class='warning'>Your muscles are forceibly relaxed!</span>" : "<span class='warning'>You relax your muscles.</span>")
 	update_combat_mode_icon()
 
 /mob/living/proc/enable_combat_mode(silent = TRUE, was_forced = FALSE, visible = FALSE, update_icon = TRUE)
@@ -60,7 +60,7 @@
 /mob/living/proc/_disable_intentional_combat_mode(silent = TRUE, visible = FALSE)
 	if(!IS_COMBAT_TOGGLED(src))
 		return
-	DISBLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
+	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
 	if(IS_COMBAT_ACTIVE(src))
 		disable_combat_mode(silent, FALSE, visible, FALSE)
 	update_combat_mode_icon()

@@ -1,7 +1,6 @@
 /mob/living/carbon
 	var/lastmousedir
 	var/wrongdirmovedelay
-	var/combatmessagecooldown
 
 	//oh no vore time
 	var/voremode = FALSE

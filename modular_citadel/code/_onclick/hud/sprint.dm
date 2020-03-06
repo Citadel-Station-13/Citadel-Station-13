@@ -16,10 +16,12 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(user.sprinting)
-		icon_state = "act_sprint_on"
-	else
+	if(!IS_SPRINT_TOGGLED(user))
 		icon_state = "act_sprint"
+	else if(IS_SPRINT_LOCKED(user))
+		icon_state = "act_sprint_locked"
+	else
+		icon_state = "act_sprint_on"
 
 //Sprint buffer onscreen code.
 /datum/hud/var/obj/screen/sprint_buffer/sprint_buffer

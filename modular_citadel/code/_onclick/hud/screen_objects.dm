@@ -16,16 +16,18 @@
 /obj/screen/combattoggle/Click()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		C.toggle_combat_mode()
+		C.user_toggle_intentional_combat_mode()
 
 /obj/screen/combattoggle/update_icon_state()
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(user.combatmode)
-		icon_state = "combat"
-	else
+	if(!IS_COMBAT_TOGGLED(user))
 		icon_state = "combat_off"
+	else if(IS_COMBAT_MODE_LOCKED(user))
+		icon_state = "combat_locked"
+	else
+		icon_state = "combat"
 
 /obj/screen/voretoggle
 	name = "toggle vore mode"
