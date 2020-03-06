@@ -19,7 +19,7 @@
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	implements = list(/obj/item/reagent_containers/syringe = 100, /obj/item/pen = 30)
 	time = 50
-	chems_needed = list("zombiepowder", "rezadone")
+	chems_needed = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 	require_all_chems = FALSE
 
 /datum/surgery_step/bionecrosis/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

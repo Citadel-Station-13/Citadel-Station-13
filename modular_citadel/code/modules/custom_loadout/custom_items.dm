@@ -1,7 +1,7 @@
 
 //For custom items.
 
-// Unless there's a digitigrade version make sure you add mutantrace_variation = NO_MUTANTRACE_VARIATION to all clothing/under and shoes - Pooj
+// Unless there's a digitigrade version make sure you add mutantrace_variation = NONE to all clothing/under and shoes - Pooj
 // Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in icons/mob
 
 /obj/item/custom/ceb_soap
@@ -85,7 +85,7 @@
 	item_state = "darkcarapace"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 
@@ -118,7 +118,7 @@
 	icon_state = "labred"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "labred"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/toggle/labcoat/labredblack
 	name = "Black and Red Coat"
@@ -127,7 +127,7 @@
 	icon_state = "labredblack"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "labredblack"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/toy/plush/carrot
 	name = "carrot plushie"
@@ -233,7 +233,7 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/reagent_containers/food/drinks/flask/russian
 	name = "russian flask"
@@ -277,14 +277,14 @@
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = 0
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/shoes/sneakers/pink
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "pink"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "pink"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/neck/tie/bloodred
 	name = "Blood Red Tie"
@@ -301,7 +301,7 @@
 	icon_state = "puffydress"
 	item_state = "puffydress"
 	body_parts_covered = CHEST|GROIN|LEGS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/vermillion
 	name = "vermillion clothing"
@@ -311,11 +311,11 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/bb_sweater/black/naomi
 	name = "worn black sweater"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 	desc = "A well-loved sweater, showing signs of several cleanings and re-stitchings. And a few stains. Is that cat fur?"
 
 /obj/item/clothing/neck/petcollar/naomi
@@ -345,7 +345,7 @@
 	icon_state = "rdcoat"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "rdcoat"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/custom/leechjar
 	name = "Jar of Leeches"
@@ -379,7 +379,7 @@
 	desc = "Comfy Lucky Jackboots with the word Luck on them."
 	item_state = "luckyjack"
 	icon_state = "luckyjack"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/lunasune
 	name = "Divine Robes"
@@ -388,7 +388,7 @@
 	desc = "Heavenly robes of the kitsune Luna Pumpkin,you can feel radiance coming from them."
 	item_state = "Divine_robes"
 	icon_state = "Divine_robes"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/leoskimpy
 	name = "Leon's Skimpy Outfit"
@@ -397,7 +397,7 @@
 	desc =  "A rather skimpy outfit."
 	item_state = "shark_cloth"
 	icon_state = "shark_cloth"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/mimeoveralls
 	name = "Mime's Overalls"
@@ -406,7 +406,7 @@
 	desc = "A less-than-traditional mime's attire, completed by a set of dorky-looking overalls."
 	item_state = "moveralls"
 	icon_state = "moveralls"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/hooded/cloak/zuliecloak
 	name = "Project: Zul-E"
@@ -418,7 +418,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/zuliecloak
 	body_parts_covered = CHEST|GROIN|ARMS
 	slot_flags = SLOT_WEAR_SUIT | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/hooded/cloakhood/zuliecloak
 	name = "NT Special Issue"
@@ -428,7 +428,7 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	flags_inv = HIDEEARS|HIDEHAIR
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/blackredgold
 	name = "Multicolor Coat"
@@ -438,7 +438,7 @@
 	icon_state = "redgoldjacket"
 	item_state = "redgoldjacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/kimono
 	name = "Blue Kimono"
@@ -448,7 +448,7 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/commjacket
 	name = "Dusty Commisar's Cloak"
@@ -458,7 +458,7 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/mw2_russian_para
 	name = "Russian Paratrooper Jumper"
@@ -467,7 +467,7 @@
 	item_state = "mw2_russian_para"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/gloves/longblackgloves
 	name = "Luna's Gauntlets"
@@ -484,7 +484,7 @@
 	item_state = "trendy_fit"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/blueberet
 	name = "Atmos Beret"
@@ -518,7 +518,7 @@
 	item_state = "mikubikini"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/mikujacket
 	name = "starlight singer jacket"
@@ -527,7 +527,7 @@
 	item_state = "mikujacket"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/mikuhair
 	name = "starlight singer hair"
@@ -536,7 +536,7 @@
 	item_state = "mikuhair"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 	flags_inv = HIDEHAIR
 
 /obj/item/clothing/gloves/mikugloves
@@ -546,7 +546,7 @@
 	item_state = "mikugloves"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/shoes/sneakers/mikuleggings
 	name = "starlight singer leggings"
@@ -555,4 +555,4 @@
 	item_state = "mikuleggings"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE

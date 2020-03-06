@@ -141,9 +141,9 @@
 	. = ..()
 	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
 	var/amount = 0
-	if(reagents.has_reagent("morphine")) // morphine slows slimes down
+	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
-	if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
+	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
 		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
@@ -253,33 +253,34 @@
 	return
 
 /mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime attack
-		if(M == src)
-			return
-		if(buckled)
-			Feedstop(silent = TRUE)
-			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
-			return
-		attacked += 5
-		if(nutrition >= 100) //steal some nutrition. negval handled in life()
-			nutrition -= (50 + (40 * M.is_adult))
-			M.add_nutrition(50 + (40 * M.is_adult))
-		if(health > 0)
-			M.adjustBruteLoss(-10 + (-10 * M.is_adult))
-			M.updatehealth()
+	. = ..()
+	if(!. || M == src) //unsuccessful slime shock
+		return
+	if(buckled)
+		Feedstop(silent = TRUE)
+		visible_message("<span class='danger'>[M] pulls [src] off!</span>")
+		return
+	attacked += 5
+	if(nutrition >= 100) //steal some nutrition. negval handled in life()
+		nutrition -= (50 + (40 * M.is_adult))
+		M.add_nutrition(50 + (40 * M.is_adult))
+	if(health > 0)
+		M.adjustBruteLoss(-10 + (-10 * M.is_adult))
+		M.updatehealth()
 
 /mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
 		attacked += 10
 
-
 /mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M)
-	if(..()) //successful monkey bite.
+	. = ..()
+	if(.)//successful monkey bite.
 		attacked += 10
 
 /mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L)
-	if(..()) //successful larva bite.
+	. = ..()
+	if(.) //successful larva bite.
 		attacked += 10
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
@@ -321,9 +322,11 @@
 			attacked += 10
 
 /mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent.
-		attacked += 10
-		discipline_slime(M)
+	. = ..()
+	if(!.) // the attack was blocked or was help/grab intent
+		return
+	attacked += 10
+	discipline_slime(M)
 
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)

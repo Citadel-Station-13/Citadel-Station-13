@@ -353,7 +353,7 @@
 		update_light()
 	return TRUE
 
-/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file)
+/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(active)
 		if(isinhands)

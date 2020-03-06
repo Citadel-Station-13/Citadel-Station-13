@@ -11,7 +11,7 @@
 	var/size_name = "average"
 	shape = "Single"
 	var/sack_size = BALLS_SACK_SIZE_DEF
-	fluid_id = "semen"
+	fluid_id = /datum/reagent/consumable/semen
 	masturbation_verb = "massage"
 	layer_index = TESTICLES_LAYER_INDEX
 

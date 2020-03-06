@@ -13,7 +13,7 @@
 	icon_grow = "peach-grow"
 	icon_dead = "peach-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/peach
 	seed = /obj/item/seeds/peach
@@ -23,5 +23,5 @@
 	filling_color = "#FF4500"
 	bitesize = 25
 	foodtype = FRUIT
-	juice_results = list("peachjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/peachjuice = 0)
 	tastes = list("peach" = 1)

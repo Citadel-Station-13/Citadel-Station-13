@@ -131,3 +131,15 @@
 
 /obj/item/disk/nanite_program/stun
 	program_type = /datum/nanite_program/triggered/stun
+
+/obj/item/disk/nanite_program/dermal_button
+	program_type = /datum/nanite_program/dermal_button
+
+/obj/item/disk/nanite_program/research
+	program_type = /datum/nanite_program/research
+
+/obj/item/disk/nanite_program/researchplus
+	program_type = /datum/nanite_program/researchplus
+
+/obj/item/disk/nanite_program/reduced_diagnostics
+	program_type = /datum/nanite_program/reduced_diagnostics

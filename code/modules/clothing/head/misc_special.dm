@@ -28,7 +28,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = FIRE_PROOF
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -206,7 +206,7 @@
 		M.color = hair_color
 		add_overlay(M)
 
-/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
+/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]

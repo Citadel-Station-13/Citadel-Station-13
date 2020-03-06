@@ -14,6 +14,7 @@
 	var/list/modes			// allowed modes
 	var/list/gamemode_cache
 	var/list/votable_modes		// votable modes
+	var/list/storyteller_cache
 	var/list/mode_names
 	var/list/mode_reports
 	var/list/mode_false_report_weight
@@ -37,6 +38,7 @@
 		CRASH("/datum/controller/configuration/Load() called more than once!")
 	InitEntries()
 	LoadModes()
+	storyteller_cache = typecacheof(/datum/dynamic_storyteller, TRUE)
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
 		var/list/legacy_configs = list("game_options.txt", "dbconfig.txt", "comms.txt")
 		for(var/I in legacy_configs)
@@ -227,13 +229,13 @@
 	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
+		// for future reference: just use initial() lol
 		var/datum/game_mode/M = new T()
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
-				probabilities[M.config_tag] = M.probability
 				mode_reports[M.config_tag] = M.generate_report()
 				if(probabilities[M.config_tag]>0)
 					mode_false_report_weight[M.config_tag] = M.false_report_weight
@@ -317,6 +319,14 @@
 			return new T
 	return new /datum/game_mode/extended()
 
+/datum/controller/configuration/proc/pick_storyteller(storyteller_name)
+	for(var/T in storyteller_cache)
+		var/datum/dynamic_storyteller/S = T
+		var/name = initial(S.name)
+		if(name && name == storyteller_name)
+			return T
+	return /datum/dynamic_storyteller/classic
+
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
 	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
@@ -329,6 +339,9 @@
 			qdel(M)
 			continue
 		if(probabilities[M.config_tag]<=0)
+			qdel(M)
+			continue
+		if(M.config_tag in SSvote.stored_modetier_results && SSvote.stored_modetier_results[M.config_tag] < Get(/datum/config_entry/number/dropped_modes))
 			qdel(M)
 			continue
 		if(min_pop[M.config_tag])

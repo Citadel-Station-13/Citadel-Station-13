@@ -65,7 +65,7 @@
 
 
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
-				var/efficiency = 0.00025 + (hot_air.reaction_results["fire"]*0.01)
+				var/efficiency = 0.45
 
 				var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 

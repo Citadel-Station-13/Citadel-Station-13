@@ -31,9 +31,9 @@
 
 //picky up the drone c:
 /mob/living/simple_animal/drone/attack_hand(mob/user)
-	..()
-	if(user.a_intent == INTENT_HELP)
-		mob_try_pickup(user)
+	if(user.a_intent != INTENT_HELP)
+		return ..() // TODO: convert picking up mobs into an element or component.
+	mob_try_pickup(user)
 
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
 	var/mob/dead/observer/G = get_ghost()

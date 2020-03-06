@@ -22,11 +22,14 @@
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
 
+	C.bleed(40)
+
+	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
+		return TRUE
 	if(dam_type == BURN)
 		burn()
-		return 1
+		return TRUE
 	add_mob_blood(C)
-	C.bleed(40)
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -38,7 +41,7 @@
 		if(new_turf.density)
 			break
 	throw_at(target_turf, throw_range, throw_speed)
-	return 1
+	return TRUE
 
 
 /obj/item/bodypart/chest/dismember()
@@ -149,7 +152,6 @@
 		LB.brainmob = brainmob
 		brainmob = null
 		LB.brainmob.forceMove(LB)
-		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
 /obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)

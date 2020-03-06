@@ -56,7 +56,7 @@
 	pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 
 /obj/machinery/meter/process_atmos()
-	if(!target)
+	if(!(target?.flags_1 & INITIALIZED_1))
 		icon_state = "meterX"
 		return 0
 

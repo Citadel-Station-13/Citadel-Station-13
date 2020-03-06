@@ -69,9 +69,9 @@
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
-	name = "holo firelock"
-	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
-	icon_state = "holo_firelock"
+	name = "holo fan"
+	desc = "A holographic barrier resembling a tiny fan. Though it does not prevent solid objects from passing through, gas is kept out. Somehow."
+	icon_state = "holo_fan"
 	density = FALSE
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
@@ -80,6 +80,18 @@
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
+
+/obj/structure/holosign/barrier/firelock
+	name = "holo firelock"
+	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects or gas from passing through, temperature changes are kept out."
+	icon_state = "holo_firelock"
+	density = FALSE
+	anchored = TRUE
+	alpha = 150
+	resistance_flags = FIRE_PROOF
+
+/obj/structure/holosign/barrier/firelock/blocksTemperature()
+	return TRUE
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"

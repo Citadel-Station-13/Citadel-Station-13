@@ -54,10 +54,8 @@
 			var/blocked = FALSE
 			if(hasmatchingsummoner(A)) //if the summoner matches don't hurt them
 				blocked = TRUE
-			if(ishuman(A))
-				var/mob/living/carbon/human/H = A
-				if(H.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
-					blocked = TRUE
+			if(L.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
+				blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()
 				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")

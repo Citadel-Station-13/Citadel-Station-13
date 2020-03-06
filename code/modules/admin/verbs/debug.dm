@@ -492,7 +492,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
 	var/mob/adminmob = src.mob
-	M.ckey = src.ckey
+	adminmob.transfer_ckey(M, send_signal = FALSE)
 	if( isobserver(adminmob) )
 		qdel(adminmob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

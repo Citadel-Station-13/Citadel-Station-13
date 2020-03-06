@@ -473,3 +473,15 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 21x15
+
+### FAIL2TOPIC:
+### Automated IP bans for world/Topic() spammers
+## Enabled
+FAIL2TOPIC_ENABLED
+## Minimum wait time in deciseconds between valid requests 
+FAIL2TOPIC_RATE_LIMIT 10
+## Number of requests after breaching rate limit that triggers a ban
+FAIL2TOPIC_MAX_FAILS 5
+## Firewall rule name used on physical server
+FAIL2TOPIC_RULE_NAME _dd_fail2topic
+

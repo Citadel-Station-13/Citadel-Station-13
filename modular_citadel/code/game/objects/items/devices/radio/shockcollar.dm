@@ -11,6 +11,7 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+
 	var/tagname = null
 
 /datum/design/electropack/shockcollar
@@ -25,18 +26,17 @@
 	if(loc == user && user.get_item_by_slot(SLOT_NECK))
 		to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
 		return
-	..()
+	return ..()
 
 /obj/item/electropack/shockcollar/receive_signal(datum/signal/signal)
 	if(!signal || signal.data["code"] != code)
 		return
 
 	if(isliving(loc) && on)
-		if(shock_cooldown != 0)
+		if(shock_cooldown == TRUE)
 			return
-		shock_cooldown = 1
-		spawn(100)
-			shock_cooldown = 0
+		shock_cooldown = TRUE
+		addtimer(VARSET_CALLBACK(src, shock_cooldown, FALSE), 100)
 		var/mob/living/L = loc
 		step(L, pick(GLOB.cardinals))
 
@@ -51,33 +51,27 @@
 		master.receive_signal()
 	return
 
-/obj/item/electropack/shockcollar/attack_self(mob/user) //Turns out can't fully source this from the parent item, spritepath gets confused if power toggled. Will come back to this when I know how to code better and readd powertoggle..
-	var/option = "Change Name"
-	option = input(user, "What do you want to do?", "[src]", option) as null|anything in list("Change Name", "Change Frequency")
-	switch(option)
-		if("Change Name")
-			var/t = input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot") as null|text
-			if(t)
-				tagname = copytext(sanitize(t), 1, MAX_NAME_LEN)
-				name = "[initial(name)] - [tagname]"
-		if("Change Frequency")
-			if(!ishuman(user))
-				return
-			user.set_machine(src)
-			var/dat = {"<SK><BR>
-		<B>Frequency/Code</B> for shock collar:<BR>
-		Frequency:
-		<A href='byond://?src=\ref[src];freq=-10'>-</A>
-		<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
-		<A href='byond://?src=\ref[src];freq=2'>+</A>
-		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-		Code:
-		<A href='byond://?src=\ref[src];code=-5'>-</A>
-		<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
-		<A href='byond://?src=\ref[src];code=1'>+</A>
-		<A href='byond://?src=\ref[src];code=5'>+</A><BR>
-		</SK>"}
+/obj/item/electropack/shockcollar/attackby(obj/item/W, mob/user, params) //moves it here because on_click is being bad
+	if(istype(W, /obj/item/pen))
+		var/t = input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot") as null|text
+		if(t)
+			tagname = copytext(sanitize(t), 1, MAX_NAME_LEN)
+			name = "[initial(name)] - [tagname]"
+	else
+		return ..()
 
-			user << browse(dat, "window=radio")
-			onclose(user, "radio")
-			return
+/obj/item/electropack/shockcollar/ui_interact(mob/user) //on_click calls this 
+	var/dat = {"
+<TT>
+<B>Frequency/Code</B> for shock collar:<BR>
+Frequency:
+[format_frequency(src.frequency)]
+<A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
+
+Code:
+[src.code]
+<A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
+</TT>"}
+	user << browse(dat, "window=radio")
+	onclose(user, "radio")
+	return

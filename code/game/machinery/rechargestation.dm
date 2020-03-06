@@ -18,6 +18,28 @@
 	. = ..()
 	update_icon()
 
+/obj/machinery/recharge_station/upgraded
+
+/obj/machinery/recharge_station/upgraded/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/cyborgrecharger(null)
+	component_parts += new /obj/item/stock_parts/capacitor/super(null)
+	component_parts += new /obj/item/stock_parts/manipulator/pico(null)
+	component_parts += new /obj/item/stock_parts/cell/hyper(null)
+	RefreshParts()
+
+/obj/machinery/recharge_station/fullupgrade
+
+/obj/machinery/recharge_station/fullupgrade/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/cyborgrecharger(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()
+
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
 	repairs = 0

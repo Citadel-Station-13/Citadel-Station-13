@@ -47,7 +47,7 @@
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		GLOB._preloader.load(src)
+		world.preloader_load(src)
 
 	if(datum_flags & DF_USE_TAG)
 		GenerateTag()
@@ -166,7 +166,7 @@
 
 	return FALSE
 
-/atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)
 		user.changeNext_move(CLICK_CD_MELEE)

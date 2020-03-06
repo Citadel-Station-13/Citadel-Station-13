@@ -177,6 +177,7 @@
 #define COMSIG_MOB_PRE_PLAYER_CHANGE "mob_pre_player_change"	//sent to the target mob from base of /mob/transfer_ckey() and /mind/transfer_to(): (our_character, their_character)
 //	#define COMPONENT_STOP_MIND_TRANSFER 1
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"				//from base of /mob/update_sight(): ()
+#define COMSIG_MOB_ON_NEW_MIND "mob_on_new_mind"			//called when a new mind is assigned to a mob: ()
 #define COMSIG_MOB_SAY "mob_say" // from /mob/living/say(): (proc args list)
 	#define COMPONENT_UPPERCASE_SPEECH 1
 	// used to access COMSIG_MOB_SAY argslist

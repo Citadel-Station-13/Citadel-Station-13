@@ -103,6 +103,45 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripeddress
 
+/datum/gear/sundresswhite
+	name = "White Sundress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/sundresswhite
+
+/datum/gear/sundress
+	name = "Sundress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/sundress
+
+/datum/gear/greendress
+	name = "Green Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/greendress
+
+/datum/gear/pinkdress
+	name = "Pink Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pinkdress
+/datum/gear/flowerdress
+	name = "Flower Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/flowerdress
+
+/datum/gear/sweptskirt
+	name = "Swept skirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/sweptskirt
+
+/datum/gear/croptop
+	name = "Croptop"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/croptop
+
+/datum/gear/yoga
+	name = "Yoga Pants"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/yoga
+
 /datum/gear/kilt
 	name = "Kilt"
 	category = SLOT_W_UNIFORM
@@ -116,7 +155,7 @@
 /datum/gear/athleticshorts
 	name = "Athletic Shorts"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/shorts
+	path = /obj/item/clothing/under/shorts/red
 
 /datum/gear/bjeans
 	name = "Black Jeans"
@@ -152,6 +191,26 @@
 	name = "Track Pants"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/pants/track
+
+/datum/gear/rippedjeans
+	name = "Ripped Jeans"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/jeanripped
+
+/datum/gear/jeanshort
+	name = "Jean Shorts"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/jeanshort
+
+/datum/gear/denimskirt
+	name = "Denim Skirt"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/denimskirt
+
+/datum/gear/yoga
+	name = "Yoga Pants"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/pants/yoga
 
 // Pantsless Sweaters
 
@@ -362,4 +421,4 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/stripper_green
 	cost = 3
-	
+

@@ -18,7 +18,7 @@
 
 /obj/effect/baseturf_helper/LateInitialize()
 	if(!baseturf_to_replace)
-		baseturf_to_replace = typecacheof(/turf/open/space)
+		baseturf_to_replace = typecacheof(list(/turf/open/space,/turf/baseturf_bottom))
 	else if(!length(baseturf_to_replace))
 		baseturf_to_replace = list(baseturf_to_replace = TRUE)
 	else if(baseturf_to_replace[baseturf_to_replace[1]] != TRUE) // It's not associative
@@ -45,7 +45,6 @@
 			thing.PlaceOnBottom(null, baseturf)
 	else if(baseturf_to_replace[thing.baseturfs])
 		thing.assemble_baseturfs(baseturf)
-		return
 	else
 		thing.PlaceOnBottom(null, baseturf)
 
@@ -107,16 +106,16 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		log_world("### MAP WARNING, [src] spawned outside of mapload!")
+		log_mapping("[src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(airlock)
 		if(airlock.cyclelinkeddir)
-			log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+			log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
 		else
 			airlock.cyclelinkeddir = dir
 	else
-		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 
 
 /obj/effect/mapping_helpers/airlock/locked
@@ -126,16 +125,16 @@
 /obj/effect/mapping_helpers/airlock/locked/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		log_world("### MAP WARNING, [src] spawned outside of mapload!")
+		log_mapping("[src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(airlock)
 		if(airlock.locked)
-			log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
+			log_mapping("[src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
 		else
 			airlock.locked = TRUE
 	else
-		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 
 /obj/effect/mapping_helpers/airlock/unres
 	name = "airlock unresctricted side helper"
@@ -144,13 +143,13 @@
 /obj/effect/mapping_helpers/airlock/unres/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		log_world("### MAP WARNING, [src] spawned outside of mapload!")
+		log_mapping("[src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(airlock)
 		airlock.unres_sides ^= dir
 	else
-		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 
 
 //needs to do its thing before spawn_rivers() is called
@@ -163,17 +162,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.flags_1 |= NO_LAVA_GEN_1
-
-/// Adds the map it is on to the z_is_planet list
-/obj/effect/mapping_helpers/planet_z
-	name = "planet z helper"
-	layer = POINT_LAYER
-
-/obj/effect/mapping_helpers/planet_z/Initialize()
-	. = ..()
-	var/datum/space_level/S = SSmapping.get_level(z)
-	S.traits[ZTRAIT_PLANET] = TRUE
-
 
 //This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/component_injector

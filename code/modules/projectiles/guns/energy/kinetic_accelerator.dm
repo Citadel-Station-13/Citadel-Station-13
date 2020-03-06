@@ -112,7 +112,10 @@
 /obj/item/gun/energy/kinetic_accelerator/cyborg
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	max_mod_capacity = 80
+
+/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg
+	holds_charge = TRUE
+	unique_frequency = TRUE
 
 /obj/item/gun/energy/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -280,7 +283,7 @@
 	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/gun/energy/kinetic_accelerator) && !issilicon(user))
+	if(istype(A, /obj/item/gun/energy/kinetic_accelerator))
 		install(A, user)
 	else
 		..()

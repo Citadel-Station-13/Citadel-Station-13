@@ -69,7 +69,6 @@
 	item_state = "lb_suit"
 	item_color = "cargo"
 	body_parts_covered = CHEST|GROIN|ARMS
-	mutantrace_variation = MUTANTRACE_VARIATION
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/cargotech/skirt
@@ -132,7 +131,7 @@
 	item_color = "blueclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/rank/greenclown
 	name = "green clown suit"
@@ -142,7 +141,7 @@
 	item_color = "greenclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/rank/yellowclown
 	name = "yellow clown suit"
@@ -152,7 +151,7 @@
 	item_color = "yellowclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/rank/purpleclown
 	name = "purple clown suit"
@@ -162,7 +161,7 @@
 	item_color = "purpleclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/rank/orangeclown
 	name = "orange clown suit"
@@ -172,7 +171,7 @@
 	item_color = "orangeclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/rank/rainbowclown
 	name = "rainbow clown suit"
@@ -182,7 +181,7 @@
 	item_color = "rainbowclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/under/rank/clown/Initialize()
 	. = ..()

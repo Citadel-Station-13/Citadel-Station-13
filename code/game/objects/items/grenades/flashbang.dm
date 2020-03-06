@@ -20,10 +20,10 @@
 /obj/item/grenade/flashbang/proc/flashbang_mobs(turf/source, range)
 	var/list/banged = get_hearers_in_view(range, source)
 	var/list/flashed = viewers(range, source)
-	for(var/i in banged)
-		bang(i, source)
-	for(var/i in flashed)
-		flash(i, source)
+	for(var/mob/living/l in banged)
+		bang(l, source)
+	for(var/mob/living/l in flashed)
+		flash(l, source)
 
 /obj/item/grenade/flashbang/proc/bang(mob/living/M, turf/source)
 	if(M.stat == DEAD)	//They're dead!

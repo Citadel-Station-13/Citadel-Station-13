@@ -1,13 +1,13 @@
 //hypovials used with the MkII hypospray. See hypospray.dm.
 
-/obj/item/reagent_containers/glass/bottle/vial
+/obj/item/reagent_containers/glass/bottle/vial // these have literally no fucking right to just be better beakers that you can shit out of a chemmaster
 	name = "broken hypovial"
 	desc = "A hypovial compatible with most hyposprays."
 	icon_state = "hypovial"
 	spillable = FALSE
-	var/comes_with = list() //Easy way of doing this.
 	volume = 10
 	possible_transfer_amounts = list(1,2,5,10)
+	APTFT_altclick = FALSE
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("hypovial" = "hypovial",
 						"red hypovial" = "hypovial-b",
@@ -24,9 +24,9 @@
 	. = ..()
 	if(!icon_state)
 		icon_state = "hypovial"
-	for(var/R in comes_with)
-		reagents.add_reagent(R,comes_with[R])
 	update_icon()
+//	beaker_weakness_bitflag |= PH_WEAK // fuck you if you're using these like beakers
+//	beaker_weakness_bitflag |= TEMP_WEAK
 
 
 /obj/item/reagent_containers/glass/bottle/vial/on_reagent_change()
@@ -60,11 +60,11 @@
 /obj/item/reagent_containers/glass/bottle/vial/small
 	name = "hypovial"
 	volume = 60
-	possible_transfer_amounts = list(5,10)
+	possible_transfer_amounts = list(1,2,5,10,20)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/bluespace
 	volume = 120
-	possible_transfer_amounts = list(5,10)
+	possible_transfer_amounts = list(1,2,5,10,20)
 	name = "bluespace hypovial"
 	icon_state = "hypovialbs"
 	unique_reskin = null
@@ -74,7 +74,7 @@
 	desc = "A large hypovial, for deluxe hypospray models."
 	icon_state = "hypoviallarge"
 	volume = 120
-	possible_transfer_amounts = list(5,10,15,20)
+	possible_transfer_amounts = list(1,2,5,10,20)
 	unique_reskin = list("large hypovial" = "hypoviallarge",
 						"large red hypovial" = "hypoviallarge-b",
 						"large blue hypovial" = "hypoviallarge-d",
@@ -106,94 +106,94 @@
 		add_overlay(filling)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/bluespace
-	possible_transfer_amounts = list(5,10,15,20)
+	possible_transfer_amounts = list(1,2,5,10,20)
 	name = "bluespace large hypovial"
 	volume = 240
 	icon_state = "hypoviallargebs"
 	unique_reskin = null
 
 
-/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine
+/obj/item/reagent_containers/glass/bottle/vial/small/bicaridine
 	name = "red hypovial (bicaridine)"
 	icon_state = "hypovial-b"
-	comes_with = list("bicaridine" = 30)
+	list_reagents = list(/datum/reagent/medicine/bicaridine = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin
+/obj/item/reagent_containers/glass/bottle/vial/small/antitoxin
 	name = "green hypovial (Anti-Tox)"
 	icon_state = "hypovial-a"
-	comes_with = list("antitoxin" = 30)
+	list_reagents = list(/datum/reagent/medicine/antitoxin = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane
+/obj/item/reagent_containers/glass/bottle/vial/small/kelotane
 	name = "orange hypovial (kelotane)"
 	icon_state = "hypovial-k"
-	comes_with = list("kelotane" = 30)
+	list_reagents = list(/datum/reagent/medicine/kelotane = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin
+/obj/item/reagent_containers/glass/bottle/vial/small/dexalin
 	name = "blue hypovial (dexalin)"
 	icon_state = "hypovial-d"
-	comes_with = list("dexalin" = 30)
+	list_reagents = list(/datum/reagent/medicine/dexalin = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord
+/obj/item/reagent_containers/glass/bottle/vial/small/tricord
 	name = "hypovial (tricordrazine)"
 	icon_state = "hypovial"
-	comes_with = list("tricordrazine" = 30)
+	list_reagents = list(/datum/reagent/medicine/tricordrazine = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction
+/obj/item/reagent_containers/glass/bottle/vial/small/breastreduction
 	name = "pink hypovial (breast treatment)"
 	icon_state = "hypovial-pink"
-	comes_with = list("BEsmaller_hypo" = 30)
+	list_reagents = list(/datum/reagent/fermi/BEsmaller_hypo = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction
+/obj/item/reagent_containers/glass/bottle/vial/small/penisreduction
 	name = "pink hypovial (penis treatment)"
 	icon_state = "hypovial-pink"
-	comes_with = list("PEsmaller_hypo" = 30)
+	list_reagents = list(/datum/reagent/fermi/PEsmaller_hypo = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/CMO
+/obj/item/reagent_containers/glass/bottle/vial/large/CMO
 	name = "deluxe hypovial"
 	icon_state = "hypoviallarge-cmos"
-	comes_with = list("omnizine" = 20, "leporazine" = 20, "atropine" = 20)
+	list_reagents = list(/datum/reagent/medicine/omnizine = 20, /datum/reagent/medicine/leporazine = 20, /datum/reagent/medicine/atropine = 20)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/bicaridine
+/obj/item/reagent_containers/glass/bottle/vial/large/bicaridine
 	name = "large red hypovial (bicaridine)"
 	icon_state = "hypoviallarge-b"
-	comes_with = list("bicaridine" = 60)
+	list_reagents = list(/datum/reagent/medicine/bicaridine = 60)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/antitoxin
+/obj/item/reagent_containers/glass/bottle/vial/large/antitoxin
 	name = "large green hypovial (anti-tox)"
 	icon_state = "hypoviallarge-a"
-	comes_with = list("antitoxin" = 60)
+	list_reagents = list(/datum/reagent/medicine/antitoxin = 60)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/kelotane
+/obj/item/reagent_containers/glass/bottle/vial/large/kelotane
 	name = "large orange hypovial (kelotane)"
 	icon_state = "hypoviallarge-k"
-	comes_with = list("kelotane" = 60)
+	list_reagents = list(/datum/reagent/medicine/kelotane = 60)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/dexalin
+/obj/item/reagent_containers/glass/bottle/vial/large/dexalin
 	name = "large blue hypovial (dexalin)"
 	icon_state = "hypoviallarge-d"
-	comes_with = list("dexalin" = 60)
+	list_reagents = list(/datum/reagent/medicine/dexalin = 60)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/charcoal
+/obj/item/reagent_containers/glass/bottle/vial/large/charcoal
 	name = "large black hypovial (charcoal)"
 	icon_state = "hypoviallarge-t"
-	comes_with = list("charcoal" = 60)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 60)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/tricord
+/obj/item/reagent_containers/glass/bottle/vial/large/tricord
 	name = "large hypovial (tricord)"
 	icon_state = "hypoviallarge"
-	comes_with = list("tricordrazine" = 60)
+	list_reagents = list(/datum/reagent/medicine/tricordrazine = 60)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/salglu
+/obj/item/reagent_containers/glass/bottle/vial/large/salglu
 	name = "large green hypovial (salglu)"
 	icon_state = "hypoviallarge-a"
-	comes_with = list("salglu_solution" = 60)
+	list_reagents = list(/datum/reagent/medicine/salglu_solution = 60)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/synthflesh
+/obj/item/reagent_containers/glass/bottle/vial/large/synthflesh
 	name = "large orange hypovial (synthflesh)"
 	icon_state = "hypoviallarge-k"
-	comes_with = list("synthflesh" = 60)
+	list_reagents = list(/datum/reagent/medicine/synthflesh = 60)
 
-/obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat
+/obj/item/reagent_containers/glass/bottle/vial/large/combat
 	name = "combat hypovial"
 	icon_state = "hypoviallarge-t"
-	comes_with = list("epinephrine" = 3, "omnizine" = 19, "leporazine" = 19, "atropine" = 19) //Epinephrine's main effect here is to kill suff damage, so we don't need much given atropine
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 3, /datum/reagent/medicine/omnizine = 19, /datum/reagent/medicine/leporazine = 19, /datum/reagent/medicine/atropine = 19) //Epinephrine's main effect here is to kill suff damage, so we don't need much given atropine

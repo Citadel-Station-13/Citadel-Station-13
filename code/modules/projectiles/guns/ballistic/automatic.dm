@@ -267,6 +267,7 @@
 	fire_delay = 0
 	pin = /obj/item/firing_pin/implant/pindicate
 	actions_types = list()
+	pb_knockback = 2
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
