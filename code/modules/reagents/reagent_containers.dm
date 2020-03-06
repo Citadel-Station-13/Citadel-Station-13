@@ -139,6 +139,7 @@
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		transform = initial(transform)
 		addtimer(CALLBACK(src, .proc/ForceResetRotation), 1)
+		return FALSE
 
 	else
 		if(isturf(target) && reagents.reagent_list.len && thrownby)
