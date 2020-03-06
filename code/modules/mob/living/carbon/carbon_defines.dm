@@ -4,6 +4,7 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,RAD_HUD)
 	has_limbs = 1
+	hasFov = 1
 	held_items = list(null, null)
 	var/list/stomach_contents		= list()
 	var/list/internal_organs		= list()	//List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.

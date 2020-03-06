@@ -73,10 +73,10 @@
 
 /obj/screen/fullscreen/proc/update_for_view(client_view)
 	if (screen_loc == "CENTER-7,CENTER-7" && view != client_view)
+
 		var/list/actualview = getviewsize(client_view)
 		view = client_view
 		transform = matrix(actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, 0)
-
 /obj/screen/fullscreen/proc/should_show_to(mob/mymob)
 	if(!show_when_dead && mymob.stat == DEAD)
 		return FALSE
@@ -179,3 +179,9 @@
 	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
+
+/obj/screen/fullscreen/fov
+	icon = 'icons/mob/vision_cone.dmi'
+	mouse_opacity = 0
+	layer = HUD_LAYER
+	plane = HUD_PLANE

@@ -39,7 +39,9 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
-
+	var/isVentcrawling = 0
+	var/hasFov = 0
+	var/insideContainer = 0 //for removing fov
 	//MOVEMENT SPEED
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
 	var/cached_multiplicative_slowdown

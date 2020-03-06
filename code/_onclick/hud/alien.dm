@@ -132,3 +132,5 @@
 		for(var/obj/item/I in H.held_items)
 			I.screen_loc = null
 			H.client.screen -= I
+
+	usr.fov = usr.overlay_fullscreen("vc",/obj/screen/fullscreen/fov)
