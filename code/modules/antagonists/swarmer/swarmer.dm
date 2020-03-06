@@ -191,7 +191,7 @@
 	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(custom_materials[getmaterialref(/datum/material/iron)] || custom_materials[getmaterialref(/datum/material/glass)])
+	if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 		return 1
 	return ..()
 
@@ -586,7 +586,7 @@
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
 			L.electrocute_act(0, src, 1, 1, 1)
 			if(iscyborg(L))
-				L.Knockdown(100)
+				L.DefaultCombatKnockdown(100)
 			qdel(src)
 	..()
 

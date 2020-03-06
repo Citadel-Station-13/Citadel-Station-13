@@ -433,5 +433,5 @@
 	. = ..()
 	if(active)
 		for(var/mob/living/M in rangers)
-			if(prob(5+(allowed(M)*4)) && M.canmove)
+			if(prob(5+(allowed(M)*4)) && CHECK_MOBILITY(M, MOBILITY_MOVE))
 				dance(M)

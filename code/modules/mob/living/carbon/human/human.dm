@@ -491,7 +491,7 @@
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
 /mob/living/carbon/human/proc/canUseHUD()
-	return !(src.stat || IsKnockdown() || IsStun() || src.restrained())
+	return CHECK_MOBILITY(src, MOBILITY_UI)
 
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
 	. = 1 // Default to returning true.
@@ -724,8 +724,8 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
-	if(incapacitated() || lying )
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE, check_resting = TRUE)
+	if(incapacitated() || (check_resting && !CHECK_MOBILITY(src, MOBILITY_STAND)))
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
@@ -836,7 +836,7 @@
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Knockdown(200)
+			DefaultCombatKnockdown(200)
 		return 1
 	..()
 
@@ -870,7 +870,7 @@
 	return (istype(target) && target.stat == CONSCIOUS)
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
-	return (ishuman(target) && target.lying)
+	return (ishuman(target) && !CHECK_MOBILITY(target, MOBILITY_STAND))
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	if(can_be_firemanned(target))
@@ -879,7 +879,7 @@
 		if(do_after(src, 30, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
-				target.resting = FALSE
+				target.set_resting(FALSE, TRUE)
 				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
 				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
@@ -892,7 +892,7 @@
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(can_piggyback(target))
 		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
-		if(do_after(target, 15, target = src))
+		if(do_after(target, 15, target = src, required_mobility_flags = MOBILITY_STAND))
 			if(can_piggyback(target))
 				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")

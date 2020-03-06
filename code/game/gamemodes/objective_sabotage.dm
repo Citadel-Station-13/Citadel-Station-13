@@ -23,18 +23,18 @@
 	START_PROCESSING(SSprocessing, src)
 
 /datum/sabotage_objective/processing/proc/check_condition_processing()
-	return 100
+	return 1
 
 /datum/sabotage_objective/processing/process()
 	check_condition_processing()
-	if(won >= 100)
+	if(won >= 1)
 		STOP_PROCESSING(SSprocessing,src)
 
 /datum/sabotage_objective/processing/check_conditions()
 	return won
 
 /datum/sabotage_objective/processing/power_sink
-	name = "Drain at least 1 gigajoule of power using a power sink."
+	name = "Drain at least 100 megajoules of power using a power sink."
 	sabotage_type = "powersink"
 	special_equipment = list(/obj/item/sbeacondrop/powersink)
 	var/sink_found = FALSE
@@ -47,7 +47,7 @@
 		for(var/datum/powernet/PN in GLOB.powernets)
 			for(var/obj/item/powersink/sink in PN.nodes)
 				sink_found_this_time = TRUE
-				won = max(won,sink.power_drained/1e9)
+				won = max(won,sink.power_drained/1e8)
 		sink_found = sink_found_this_time
 		count = 0
 	return FALSE

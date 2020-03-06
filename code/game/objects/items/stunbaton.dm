@@ -191,7 +191,7 @@
 
 	if(!disarming)
 		if(knockdown)
-			L.Knockdown(50, override_stamdmg = 0)		//knockdown
+			L.DefaultCombatKnockdown(50, override_stamdmg = 0)		//knockdown
 		L.adjustStaminaLoss(stunpwr)
 	else
 		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
@@ -218,7 +218,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.Knockdown(stamforce*6)
+	user.DefaultCombatKnockdown(stamforce*6)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 

@@ -37,7 +37,7 @@
 	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.IsStun() && !D.IsKnockdown())
+	if(CHECK_MOBILITY(D, MOBILITY_USE))
 		log_combat(A, D, "wrist wrenched (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
@@ -46,19 +46,19 @@
 		D.emote("scream")
 		D.dropItemToGround(D.get_active_held_item())
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		D.Knockdown(60)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
+		D.DefaultCombatKnockdown(60)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
 		return TRUE
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.IsKnockdown())
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		if(A.dir == D.dir)
 			log_combat(A, D, "back-kicked (Sleeping Carp)")
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 			D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
 							  "<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
 			step_to(D,get_step(D,D.dir),1)
-			D.Knockdown(80)
+			D.DefaultCombatKnockdown(80)
 			playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 			return TRUE
 		else
@@ -68,20 +68,20 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.IsKnockdown())
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		log_combat(A, D, "stomach kneed (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
 		D.audible_message("<b>[D]</b> gags!")
 		D.losebreath += 3
-		D.Knockdown(40)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
+		D.DefaultCombatKnockdown(40)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return TRUE
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.IsKnockdown())
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		log_combat(A, D, "head kicked (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
@@ -89,12 +89,12 @@
 		D.apply_damage(20, BRUTE, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
-		D.Knockdown(80)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
+		D.DefaultCombatKnockdown(80)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
 		return TRUE
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(D.IsKnockdown() || D.resting || D.stat)
+	if(!CHECK_MOBILITY(D, MOBILITY_STAND))
 		log_combat(A, D, "elbow dropped (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
@@ -134,7 +134,7 @@
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
 	if(prob(D.getBruteLoss()) && !D.lying)
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
-		D.Knockdown(80)
+		D.DefaultCombatKnockdown(80)
 	log_combat(A, D, "[atk_verb] (Sleeping Carp)")
 	return TRUE
 
@@ -192,7 +192,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
-		user.Knockdown(60)
+		user.DefaultCombatKnockdown(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -226,7 +226,7 @@
 		if(prob(10))
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 								   "<span class='userdanger'>Your legs give out!</span>")
-			H.Knockdown(80)
+			H.DefaultCombatKnockdown(80)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)

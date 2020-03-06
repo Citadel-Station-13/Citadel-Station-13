@@ -124,8 +124,8 @@
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = 1
-	M.canmove = 0
+	M.notransform = TRUE
+	M.Paralyze(INFINITY)
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
@@ -529,7 +529,7 @@
 	else
 		used = 1
 		victim.take_overall_damage(30,30)
-		victim.Knockdown(60)
+		victim.DefaultCombatKnockdown(60)
 		explosion(src, -1, -1, -1, -1, FALSE, FALSE, 5)
 	return BULLET_ACT_HIT
 
