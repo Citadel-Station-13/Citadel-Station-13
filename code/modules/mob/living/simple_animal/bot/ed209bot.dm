@@ -32,6 +32,7 @@
 	var/mob/living/carbon/target
 	var/oldtarget_name
 	var/threatlevel = 0
+	var/attack_threshold = 0.8
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
 	var/declare_arrests = TRUE //When making an arrest, should it notify everyone wearing sechuds?
@@ -118,15 +119,17 @@ Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
 <BR>
 Operating Mode: []<BR>
-Report Arrests[]<BR>
-Auto Patrol[]"},
+Report Arrests: []<BR>
+Auto Patrol: []<BR>
+Arrest Threshold: []"},
 
 "<A href='?src=[REF(src)];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
 "<A href='?src=[REF(src)];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
-"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>", 
+"<A href='?src=[REF(src)];operation=threshold'>[PERCENT(attack_threshold)]%</A>" )
 
 	return dat
 
@@ -156,6 +159,9 @@ Auto Patrol[]"},
 		if("declarearrests")
 			declare_arrests = !declare_arrests
 			update_controls()
+		if("threshold")
+			attack_threshold = CLAMP((input(usr,"Enter new value for arrest probability threshold (50-90).","Threshold Setting") as num)/100,0.5,0.9)
+			update_controls()
 
 /mob/living/simple_animal/bot/ed209/proc/judgement_criteria()
 	var/final = FALSE
@@ -174,8 +180,8 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/proc/retaliate(mob/living/carbon/human/H)
 	var/judgement_criteria = judgement_criteria()
 	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
-	threatlevel += 6
-	if(threatlevel >= 4)
+	BAYES_THEOREM(threatlevel,0.999,0.001)
+	if(threatlevel >= attack_threshold)
 		target = H
 		mode = BOT_HUNT
 
@@ -227,7 +233,7 @@ Auto Patrol[]"},
 			continue
 		threatlevel = C.assess_threat(judgement_criteria, lasercolor, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 		//speak(C.real_name + text(": threat: []", threatlevel))
-		if(threatlevel < 4 )
+		if(threatlevel < attack_threshold )
 			continue
 
 		var/dst = get_dist(src, C)
@@ -355,7 +361,7 @@ Auto Patrol[]"},
 		if(!threatlevel)
 			continue
 
-		else if(threatlevel >= 4)
+		else if(threatlevel > attack_threshold)
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
@@ -542,7 +548,7 @@ Auto Patrol[]"},
 	icon_state = "[lasercolor]ed209-c"
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
-	var/threat = 5
+	var/threat = 0.7
 	C.Knockdown(100)
 	C.stuttering = 5
 	if(ishuman(C))
@@ -552,7 +558,7 @@ Auto Patrol[]"},
 	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
-		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
+		speak("[arrest_type ? "Detaining" : "Arresting"] [PERCENT(threat)]% scumbag <b>[C]</b> in [location].", radio_channel)
 	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
 							"<span class='userdanger'>[src] has stunned you!</span>")
 

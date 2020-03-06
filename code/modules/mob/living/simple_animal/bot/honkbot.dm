@@ -35,6 +35,8 @@
 	var/check_records = TRUE
 	var/arrest_type = FALSE
 	var/weaponscheck = TRUE
+	var/honk_threshold = 0.5
+	var/arrest_threshold = 0.75
 	var/bikehorn = /obj/item/bikehorn
 
 /mob/living/simple_animal/bot/honkbot/Initialize()
@@ -107,8 +109,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/proc/retaliate(mob/living/carbon/human/H)
 	var/judgement_criteria = judgement_criteria()
 	threatlevel = H.assess_threat(judgement_criteria)
-	threatlevel += 6
-	if(threatlevel >= 4)
+	BAYES_THEOREM(threatlevel,0.9,0.1)
+	if(threatlevel >= honk_threshold)
 		target = H
 		mode = BOT_HUNT
 
@@ -203,10 +205,10 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			if (emagged <= 1) //HONK once, then leave
 				var/judgement_criteria = judgement_criteria()
 				threatlevel = H.assess_threat(judgement_criteria)
-				threatlevel -= 6
+				BAYES_THEOREM(threatlevel,0.05,0.95)
 				target = oldtarget_name
 			else // you really don't want to hit an emagged honkbot
-				threatlevel = 6 // will never let you go
+				threatlevel = 1 // will never let you go
 			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntime)
 
 			log_combat(src,C,"honked")
@@ -243,14 +245,13 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			if(target)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc))
 
-					if(threatlevel <= 4)
+					if(threatlevel <= honk_threshold)
 						honk_attack(target)
-					else
-						if(threatlevel >= 6)
-							set waitfor = 0
-							stun_attack(target)
-							anchored = FALSE
-							target_lastloc = target.loc
+					else if(threatlevel >= arrest_threshold)
+						set waitfor = 0
+						stun_attack(target)
+						anchored = FALSE
+						target_lastloc = target.loc
 					return
 
 				else	// not next to perp
@@ -300,15 +301,15 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		var/judgement_criteria = judgement_criteria()
 		threatlevel = C.assess_threat(judgement_criteria)
 
-		if(threatlevel <= 3)
+		if(threatlevel <= 0.4)
 			if(C in view(4,src)) //keep the range short for patrolling
 				if(!spam_flag)
 					bike_horn()
 
-		else if(threatlevel >= 10)
+		else if(threatlevel >= 0.8)
 			bike_horn() //just spam the shit outta this
 
-		else if(threatlevel >= 4)
+		else if(threatlevel >= honk_threshold)
 			if(!spam_flag)
 				target = C
 				oldtarget_name = C.name

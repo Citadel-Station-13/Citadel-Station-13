@@ -123,37 +123,37 @@
 	if(judgement_criteria & JUDGE_EMAGGED)
 		return 10 //Everyone is a criminal!
 
-	var/threatcount = 0
+	var/threat_perc = 0.05
 
 	//Securitrons can't identify monkeys
 	if( !(judgement_criteria & JUDGE_IGNOREMONKEYS) && (judgement_criteria & JUDGE_IDCHECK) )
-		threatcount += 4
+		BAYES_THEOREM(threat_perc,0.25,0.05)
 
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 			if(is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
-				threatcount += 4
+				BAYES_THEOREM(threat_perc,0.9,0.1)
 
 		if(lasercolor == "r")
 			if(is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
-				threatcount += 4
+				BAYES_THEOREM(threat_perc,0.9,0.1)
 
-		return threatcount
+		return threat_perc
 
 	//Check for weapons
 	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck )
 		for(var/obj/item/I in held_items) //if they're holding a gun
 			if(weaponcheck.Invoke(I))
-				threatcount += 4
+				BAYES_THEOREM(threat_perc,0.7,0.05)
 		if(weaponcheck.Invoke(back)) //if a weapon is present in the back slot
-			threatcount += 4 //trigger look_for_perp() since they're nonhuman and very likely hostile
+			BAYES_THEOREM(threat_perc,0.7,0.05) //trigger look_for_perp() since they're nonhuman and very likely hostile
 
 	//mindshield implants imply trustworthyness
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
-		threatcount -= 1
+		BAYES_THEOREM(threat_perc,0.005,0.05)
 
-	return threatcount
+	return threat_perc
 
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot(ORGAN_SLOT_LUNGS))

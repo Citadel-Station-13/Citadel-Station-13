@@ -112,10 +112,10 @@
 		if(!threatlevel)
 			continue
 
-		else if(threatlevel >= 4)
+		else if(threatlevel >= arrest_threshold)
 			target = C
 			oldtarget_name = C.name
-			speak("Level [threatlevel] infraction alert!")
+			speak("Scumbag chance: [PERCENT(threatlevel)]%!")
 			playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 			playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
 			visible_message("[src] ignites his energy swords!")

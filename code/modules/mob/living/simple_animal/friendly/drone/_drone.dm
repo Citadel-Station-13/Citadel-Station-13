@@ -211,7 +211,7 @@
 
 
 /mob/living/simple_animal/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
-	return -10
+	return 0
 
 
 /mob/living/simple_animal/drone/emp_act(severity)

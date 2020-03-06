@@ -546,43 +546,43 @@
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)
-		return 10 //Everyone is a criminal!
+		return 1 //Everyone is a criminal!
 
-	var/threatcount = 0
+	var/threat_perc = 0.05 // If your prior is 0, then nobody is EVER a criminal! Let's say 1/20 are to start.
 
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
-				threatcount += 4
+				BAYES_THEOREM(threat_perc,0.9,0.1) // 90% enemy if wearing red, 10% if not
 			if(is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
-				threatcount += 4
+				BAYES_THEOREM(threat_perc,0.9,0.1)
 			if(istype(belt, /obj/item/gun/energy/laser/redtag))
-				threatcount += 2
+				BAYES_THEOREM(threat_perc,0.9,0.1)
 
 		if(lasercolor == "r")
 			if(istype(wear_suit, /obj/item/clothing/suit/bluetag))
-				threatcount += 4
+				BAYES_THEOREM(threat_perc,0.9,0.1)
 			if(is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
-				threatcount += 4
+				BAYES_THEOREM(threat_perc,0.9,0.1)
 			if(istype(belt, /obj/item/gun/energy/laser/bluetag))
-				threatcount += 2
+				BAYES_THEOREM(threat_perc,0.9,0.1)
 
-		return threatcount
+		return threat_perc
 
 	//Check for ID
 	var/obj/item/card/id/idcard = get_idcard(FALSE)
 	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
-		threatcount += 4
+		BAYES_THEOREM(threat_perc,0.25,0.05) // 25% scumbag given unknown, 5% scumbag if not unknown
 
 	//Check for weapons
 	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck)
 		if(!idcard || !(ACCESS_WEAPONS in idcard.access))
 			for(var/obj/item/I in held_items) //if they're holding a gun
 				if(weaponcheck.Invoke(I))
-					threatcount += 4
-			if(weaponcheck.Invoke(belt) || weaponcheck.Invoke(back)) //if a weapon is present in the belt or back slot
-				threatcount += 2 //not enough to trigger look_for_perp() on it's own unless they also have criminal status.
+					BAYES_THEOREM(threat_perc,0.7,0.05) // 70% scumbag if holding a gun, 5% if not
+			if(weaponcheck.Invoke(belt) || weaponcheck.Invoke(back))
+				BAYES_THEOREM(threat_perc,0.3,0.05) // 30% scumbag if holding a gun, 5% if not (seeing a pattern?)
 
 	//Check for arrest warrant
 	if(judgement_criteria & JUDGE_RECORDCHECK)
@@ -591,25 +591,25 @@
 		if(R && R.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")
-					threatcount += 5
+					return 1 // ordered to arrest
 				if("Incarcerated")
-					threatcount += 2
+					BAYES_THEOREM(threat_perc,0.99,0.05) // EXTREMELY likely scumbag, don't assume mistakes were made
 				if("Paroled")
-					threatcount += 2
+					BAYES_THEOREM(threat_perc,0.5,0.05) // watching you
 
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi))
-		threatcount += 4 //fuk u antags <3			//no you
+		BAYES_THEOREM(threat_perc,0.7,0.04) // 70% they're wearing it if scumbag; 4% they're wearing it if not. Slightly lower because non-antags usually don't wear antag wear. Usually.
 
 	//mindshield implants imply trustworthyness
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
-		threatcount -= 1
+		BAYES_THEOREM(threat_perc,0.005,0.05) // mindshielded people HIGHLY unlikely to be scumbags
 
 	//Agent cards lower threatlevel.
 	if(istype(idcard, /obj/item/card/id/syndicate))
-		threatcount -= 2
+		BAYES_THEOREM(threat_perc,0.005,0.05) // fools 'em into thinking there's a mindshield, basically
 
-	return threatcount
+	return threat_perc
 
 
 //Used for new human mobs created by cloning/goleming/podding

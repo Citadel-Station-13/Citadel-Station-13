@@ -32,6 +32,7 @@
 	var/weaponscheck = FALSE //If true, arrest people for weapons if they lack access
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
+	var/arrest_threshold = 0.7 // If there's this probability that individual is scumbag, arrest 'em.'
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -116,15 +117,17 @@ Arrest Unidentifiable Persons: []<BR>
 Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
 Operating Mode: []<BR>
-Report Arrests[]<BR>
-Auto Patrol: []"},
+Report Arrests: []<BR>
+Auto Patrol: []<BR>
+Arrest Threshold: []"},
 
 "<A href='?src=[REF(src)];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
 "<A href='?src=[REF(src)];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
-"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>", 
+"<A href='?src=[REF(src)];operation=threshold'>[PERCENT(arrest_threshold)]%</A>")
 
 	return	dat
 
@@ -149,12 +152,15 @@ Auto Patrol: []"},
 		if("declarearrests")
 			declare_arrests = !declare_arrests
 			update_controls()
+		if("threshold")
+			arrest_threshold = CLAMP((input(usr,"Enter new value for arrest probability threshold (50-90).","Threshold Setting") as num)/100,0.5,0.9)
+			update_controls()
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
 	var/judgement_criteria = judgement_criteria()
 	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
-	threatlevel += 6
-	if(threatlevel >= 4)
+	BAYES_THEOREM(threatlevel,0.99,0.01) // If they're attacking you, they're almost definitely not good!
+	if(threatlevel >= arrest_threshold)
 		target = H
 		mode = BOT_HUNT
 
@@ -251,7 +257,7 @@ Auto Patrol: []"},
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "secbot-c"
 	addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
-	var/threat = 5
+	var/threat = 0.5
 	if(ishuman(C))
 		C.stuttering = 5
 		C.Knockdown(100)
@@ -265,7 +271,7 @@ Auto Patrol: []"},
 	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
-		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
+		speak("[arrest_type ? "Detaining" : "Arresting"] [PERCENT(threat)]% scumbag <b>[C]</b> in [location].", radio_channel)
 	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
 							"<span class='userdanger'>[src] has stunned you!</span>")
 
@@ -384,13 +390,13 @@ Auto Patrol: []"},
 
 		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 
-		if(!threatlevel)
+		if(!threatlevel) // not like this'll happen...
 			continue
 
-		else if(threatlevel >= 4)
+		else if(threatlevel >= arrest_threshold)
 			target = C
 			oldtarget_name = C.name
-			speak("Level [threatlevel] infraction alert!")
+			speak("[PERCENT(threatlevel)]% chance of scumbag!")
 			playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
