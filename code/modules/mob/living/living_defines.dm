@@ -121,7 +121,7 @@
 
 	//// CITADEL STATION COMBAT ////
 	/// See __DEFINES/combat.dm
-	var/combat_flags = COMBAT_FLAGS_DEFAULT
+	var/combat_flags = COMBAT_FLAGS_STAMSYSTEM_EXEMPT
 	/// Next world.time when we will show a visible message on entering combat mode voluntarily again.
 	var/combatmessagecooldown = 0
 

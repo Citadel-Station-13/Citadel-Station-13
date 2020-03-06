@@ -47,8 +47,12 @@
 #define IS_COMBAT_MODE_LOCKED(mob)			HAS_TRAIT(mob, TRAIT_COMBAT_MODE_LOCKED)
 #define IS_SPRINT_LOCKED(mob)				HAS_TRAIT(mob, TRAIT_SPRINT_LOCKED)
 
+/// Default combat flags for those affected by ((stamina combat))
 #define COMBAT_FLAGS_DEFAULT					NONE
-#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED
+/// Default combat flags for everyone else (so literally everyone but humans)
+#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED)
+/// Default combat flags for those only affected by sprint (so just silicons)
+#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED)
 
 /// The user wants combat mode on
 #define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
@@ -81,12 +85,10 @@
 #define CHECK_STAMCRIT(mob)					(IS_HARD_STAMCRITTED(mob)? HARD_STAMCRIT : (IS_SOFT_STAMCRITTED(mob)? SOFT_STAMCRIT : NOT_STAMCRIT))
 
 //stamina stuff
-/*
 #define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
 #define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
 #define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
-*/
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 

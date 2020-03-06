@@ -43,7 +43,7 @@
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(user.voremode && !user.combatmode)
+	if(user.voremode && !IS_COMBAT_ACTIVE(user))
 		icon_state = "nom"
 	else
 		icon_state = "nom_off"

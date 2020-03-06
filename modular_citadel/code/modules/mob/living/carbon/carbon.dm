@@ -15,7 +15,6 @@
 	return TRUE
 
 /mob/living/carbon/Move(atom/newloc, direct = 0)
-	var/currentdirection = dir
 	. = ..()
 	wrongdirmovedelay = FALSE
 	if(IS_COMBAT_ACTIVE(src) && client && lastmousedir)
