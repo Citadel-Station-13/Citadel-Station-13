@@ -6,8 +6,8 @@
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,NOTRANSSTING,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
-	mutant_bodyparts = list("ipc_antenna","mam_tail", "mam_snouts","legs", "mam_body_markings")
-	default_features = list("ipc_antenna" = "Synthetic Lizard - Antennae","mam_tail" = "Synthetic Lizard", "mam_snouts" = "Synthetic Lizard - Snout", "legs" = "Digitigrade", "mam_body_markings" = "Synthetic Lizard - Plates")
+	mutant_bodyparts = list("ipc_antenna","mam_tail", "mam_snouts","legs", "mam_body_markings", "taur")
+	default_features = list("ipc_antenna" = "Synthetic Lizard - Antennae","mam_tail" = "Synthetic Lizard", "mam_snouts" = "Synthetic Lizard - Snout", "legs" = "Digitigrade", "mam_body_markings" = "Synthetic Lizard - Plates", "taur" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
 	mutanttongue = /obj/item/organ/tongue/robot/ipc
@@ -17,6 +17,8 @@
 	mutantliver = /obj/item/organ/liver/ipc
 	mutantstomach = /obj/item/organ/stomach/ipc
 	mutanteyes = /obj/item/organ/eyes/ipc
+
+	exotic_bloodtype = "S"
 
 
 /datum/species/synthliz/qualifies_for_rank(rank, list/features)
