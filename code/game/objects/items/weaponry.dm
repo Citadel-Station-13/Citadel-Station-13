@@ -74,6 +74,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 105)
+	AddElement(/datum/element/sword_point)
 
 /obj/item/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

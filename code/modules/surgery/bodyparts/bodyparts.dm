@@ -256,7 +256,7 @@
 	disabled = new_disabled
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
-	owner.update_canmove()
+	owner.update_mobility()
 	if(!disabled)
 		incoming_stam_mult = 1
 	return TRUE

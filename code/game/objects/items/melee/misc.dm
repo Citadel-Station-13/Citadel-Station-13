@@ -73,6 +73,7 @@
 /obj/item/melee/sabre/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+	AddElement(/datum/element/sword_point)
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -199,7 +200,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
-		user.Knockdown(60 * force)
+		user.DefaultCombatKnockdown(60 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -224,7 +225,7 @@
 				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
 			log_combat(user, target, "stunned", src)
 			src.add_fingerprint(user)
 			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \

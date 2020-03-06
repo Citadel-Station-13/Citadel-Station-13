@@ -49,7 +49,7 @@
 		else
 			creamoverlay.icon_state = "creampie_human"
 		if(stunning)
-			H.Knockdown(20) //splat!
+			H.DefaultCombatKnockdown(20) //splat!
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
@@ -83,7 +83,7 @@
 				A.throw_at(T, 1, 1)
 				M.visible_message("[src] bursts out of [M]!</span>")
 			M.emote("scream")
-			M.Knockdown(40)
+			M.DefaultCombatKnockdown(40)
 			M.adjustBruteLoss(60)
 	return ..()
 

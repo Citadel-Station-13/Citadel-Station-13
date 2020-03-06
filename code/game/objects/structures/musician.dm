@@ -1,7 +1,7 @@
 
 #define MUSICIAN_HEARCHECK_MINDELAY 4
 #define MUSIC_MAXLINES 600
-#define MUSIC_MAXLINECHARS 50
+#define MUSIC_MAXLINECHARS 150
 
 /datum/song
 	var/name = "Untitled"
@@ -82,7 +82,7 @@
 
 /datum/song/proc/shouldStopPlaying(mob/user)
 	if(instrumentObj)
-		if(!user.canUseTopic(instrumentObj))
+		if(!user.canUseTopic(instrumentObj, TRUE, FALSE, FALSE, FALSE))
 			return TRUE
 		return !instrumentObj.anchored		// add special cases to stop in subclasses
 	else
@@ -220,7 +220,7 @@
 		updateDialog(usr)		// make sure updates when complete
 
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(instrumentObj))
+	if(!usr.canUseTopic(instrumentObj, TRUE, FALSE, FALSE, FALSE))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return

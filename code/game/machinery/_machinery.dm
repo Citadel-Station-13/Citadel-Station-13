@@ -185,7 +185,7 @@ Class Procs:
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
-			L.update_canmove()
+			L.update_mobility()
 	if(occupant)
 		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
 		occupant = null

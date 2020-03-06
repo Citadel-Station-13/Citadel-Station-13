@@ -529,7 +529,7 @@
 			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
 				var/stunforce = B.stamforce
-				user.Knockdown(stunforce * 2)
+				user.DefaultCombatKnockdown(stunforce * 2)
 				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)
 				user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!</span>", \
@@ -616,9 +616,10 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "open"
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
-	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
+	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through <- No longer necessary unless you don't want to see through it no matter what.
 	layer = SIGN_LAYER
 	anchored = TRUE
+	max_integrity = 25 //This makes cloth shower curtains as durable as a directional glass window. 300 integrity buildable shower curtains as a cover mechanic is a meta I don't want to see.
 	opacity = 0
 	density = FALSE
 	var/open = TRUE
@@ -633,12 +634,14 @@
 		layer = WALL_OBJ_LAYER
 		density = TRUE
 		open = FALSE
+		opacity = TRUE
 
 	else
 		icon_state = "open"
 		layer = SIGN_LAYER
 		density = FALSE
 		open = TRUE
+		opacity = FALSE
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
