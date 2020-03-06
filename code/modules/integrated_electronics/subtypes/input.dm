@@ -349,8 +349,8 @@
 		set_pin_data(IC_OUTPUT, 2, H.desc)
 
 		if(istype(H, /mob/living))
-			var/mob/living/M = H
-			var/msg = M.examine()
+			var/mob/living/carbon/human/D = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_EXAMINER)
+			var/msg = H.examine(D)
 			if(msg)
 				set_pin_data(IC_OUTPUT, 2, msg)
 
