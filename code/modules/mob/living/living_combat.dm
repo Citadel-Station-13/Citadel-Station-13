@@ -1,0 +1,86 @@
+/mob/living/ComponentInitialize()
+	. = ..()
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_COMBAT_MODE_LOCKED), .proc/update_combat_lock)
+
+/mob/living/proc/update_combat_lock()
+	var/locked = IS_COMBAT_MODE_LOCKED(src)
+	var/desired = IS_COMBAT_TOGGLED(src)
+	var/actual = IS_COMBAT_ACTIVE(src)
+	if(actual)
+		if(locked)
+			disable_combat_mode(FALSE, TRUE)
+		else if(!desired)
+			disable_combat_mode(TRUE, FALSE)
+	else
+		if(desired && !locked)
+			enable_combat_mode(FALSE, TRUE)
+
+/mob/living/proc/disable_combat_mode(silent = TRUE, was_forced = FALSE, visible = FALSE)
+	if(!IS_COMBAT_ACTIVE(src))
+		return
+	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE)
+	SEND_SIGNAL(src, COMSIG_LIVING_COMBAT_DISABLED, was_forced)
+	update_combat_mode_icon()
+	if(visible)
+		visible_message("<span class='warning'>[src] goes limp.</span>", "<span class='warning'>Your muscles are forceibly relaxed!</span>")
+	else if(!silent)
+			to_chat(src, was_forced? "<span class='warning'>Your muscles are forceibly relaxed!</span>" : "<span class='warning'>You relax your muscles.</span>")
+	update_combat_mode_icon()
+
+/mob/living/proc/enable_combat_mode(silent = TRUE, was_forced = FALSE, visible = FALSE, update_icon = TRUE)
+	if(IS_COMBAT_ACTIVE(src))
+		return
+	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE)
+	SEND_SIGNAL(src, COMSIG_LIVING_COMBAT_ENABLED, was_forced)
+	if(update_icon)
+		update_combat_mode_icon()
+	if(visible)
+		visible_message("<span class='warning'>[src] drops into a combative stance!</span>", "<span class='warning'>You drop into a combative stance!</span>")
+	else if(!silent)
+		to_chat(src, was_forced? "<span class='warning'>Your muscles reflexively tignten!</span>" : "<span class='warning'>You tense your muscles.</span>")
+
+/// Updates the combat mode HUD icon.
+/mob/living/proc/update_combat_mode_icon()
+	var/obj/screen/combattoggle/T = locate() in hud_used?.static_inventory
+	T?.update_icon_state()
+
+/// Enables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
+/mob/living/proc/_enable_intentional_combat_mode(silent = TRUE, visible = FALSE)
+	if(IS_COMBAT_TOGGLED(src))
+		return
+	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
+	if(!IS_COMBAT_MODE_LOCKED(src) && !IS_COMBAT_ACTIVE(src))
+		enable_combat_mode(silent, FALSE, visible, FALSE)
+	update_combat_mode_icon()
+	if(voremode)
+		toggle_vore_mode()
+	client?.show_popup_menus = FALSE
+
+/// Disables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
+/mob/living/proc/_disable_intentional_combat_mode(silent = TRUE, visible = FALSE)
+	if(!IS_COMBAT_TOGGLED(src))
+		return
+	DISBLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
+	if(IS_COMBAT_ACTIVE(src))
+		disable_combat_mode(silent, FALSE, visible, FALSE)
+	update_combat_mode_icon()
+	client?.show_popup_menus = TRUE
+
+/// Toggles whether the user is intentionally in combat mode. THIS should be the proc you generally use! Has built in visual/to other player feedback, as well as an audible cue to ourselves.
+/mob/living/proc/user_toggle_intentional_combat_mode(visible = TRUE)
+	var/old = IS_COMBAT_TOGGLED(src)
+	if(old)
+		disable_intentional_combat_mode()
+		playsound_local(src, 'sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above!
+	else
+		enable_intentional_combat_mode()
+		playsound_local(src, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
+	var/current = IS_COMBAT_ACTIVE(src)		//because we could be locked
+	if(visible)
+		if(current)
+			if(world.time >= combatmessagecooldown)
+				combatmessagecooldown = world.time + 10 SECONDS
+				if(a_intent != INTENT_HELP)
+					visible_message("<span class='warning'>[src] [resting ? "tenses up" : (prob(95)? "drops into a combative stance" : (prob(95)? "poses aggressively" : "asserts dominance with their pose"))].</span>")
+				else
+					visible_message("<span class='notice'>[src] [pick("looks","seems","goes")] [pick("alert","attentive","vigilant")].</span>")

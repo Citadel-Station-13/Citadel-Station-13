@@ -813,12 +813,12 @@
 			stat = UNCONSCIOUS
 			blind_eyes(1)
 			if(combatmode)
-				toggle_combat_mode(TRUE, TRUE)
+				disable_intentional_combat_mode(FALSE)
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
 				if(combatmode)
-					toggle_combat_mode(TRUE, TRUE)
+					disable_intentional_combat_mode(FALSE)
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
@@ -1002,7 +1002,7 @@
 
 /mob/living/carbon/transfer_ckey(mob/new_mob, send_signal = TRUE)
 	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
+		disable_intentional_combat_mode(TRUE)
 	return ..()
 
 /mob/living/carbon/can_see_reagents()

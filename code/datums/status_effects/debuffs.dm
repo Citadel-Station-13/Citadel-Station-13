@@ -101,10 +101,6 @@
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		if(C.combatmode)
-			C.toggle_combat_mode(TRUE)
 
 /datum/status_effect/no_combat_mode/mesmerize
 	id = "Mesmerize"
@@ -142,8 +138,6 @@
 	last_tick = world.time
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		if(C.combatmode)
-			C.toggle_combat_mode(TRUE)
 		C.add_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]", TRUE, priority = slowdown_priority, override = TRUE, multiplicative_slowdown = slowdown, blacklisted_movetypes = affect_crawl? NONE : CRAWLING)
 
 /datum/status_effect/electrode/on_remove()
@@ -167,13 +161,6 @@
 	slowdown_priority = 100
 	nextmove_modifier = 2
 	blocks_combatmode = TRUE
-
-/datum/status_effect/electrode/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		if(C.combatmode)
-			C.toggle_combat_mode(TRUE)
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace

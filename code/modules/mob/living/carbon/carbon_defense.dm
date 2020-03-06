@@ -349,7 +349,7 @@
 		AdjustAllImmobility(-60, FALSE)
 		AdjustUnconscious(-60, FALSE)
 		AdjustSleeping(-100, FALSE)
-		if(IS_HARD_STAMCRIT(src))
+		if(IS_HARD_STAMCRITTED(src))
 			adjustStaminaLoss(-15)
 		else
 			set_resting(FALSE, FALSE)

@@ -1,16 +1,5 @@
 /mob/living
 
-/mob/living/update_config_movespeed()
-	. = ..()
-	sprint_buffer_max = CONFIG_GET(number/movedelay/sprint_buffer_max)
-	sprint_buffer_regen_ds = CONFIG_GET(number/movedelay/sprint_buffer_regen_per_ds)
-	sprint_stamina_cost = CONFIG_GET(number/movedelay/sprint_stamina_cost)
-
-/mob/living/movement_delay(ignorewalk = 0)
-	. = ..()
-	if(!CHECK_MOBILITY(src, MOBILITY_STAND))
-		. += 6
-
 /atom
 	var/pseudo_z_axis
 
@@ -53,7 +42,3 @@
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
 	update_health_hud()
-
-/mob/living/proc/update_hud_sprint_bar()
-	if(hud_used && hud_used.sprint_buffer)
-		hud_used.sprint_buffer.update_to_mob(src)

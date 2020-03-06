@@ -11,7 +11,10 @@
 	var/on_remove_on_mob_delete = FALSE //if we call on_remove() when the mob is deleted
 	var/examine_text //If defined, this text will appear when the mob is examined - to use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
-	var/blocks_combatmode //Does this status effect prevent the user from toggling combat mode?
+	/// If this is TRUE, the user will have combt mode forcefully disabled while this is active.
+	var/blocks_combatmode = FALSE
+	/// If this is TRUE, the user will have sprint forcefully disabled while this is active.
+	var/blocks_sprint = FALSE
 	var/obj/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
 
 /datum/status_effect/New(list/arguments)
@@ -55,9 +58,18 @@
 		qdel(src)
 
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
+	if(blocks_combatmode)
+		ADD_TRAIT(owner, TRAIT_COMBAT_MODE_LOCK, src)
+	if(blocks_sprint)
+		ADD_TRAIT(owner, TRAIT_SPRINT_LOCK, src)
 	return TRUE
+
 /datum/status_effect/proc/tick() //Called every tick.
+
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
+	REMOVE_TRAIT(owner, TRAIT_COMBAT_MODE_LOCK, src)
+	REMOVE_TRAIT(owner, TRAIT_SPRINT_LOCK, src)
+
 /datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself or when a status effect with on_remove_on_mob_delete = FALSE has its mob deleted
 	owner.clear_alert(id)
 	LAZYREMOVE(owner.status_effects, src)

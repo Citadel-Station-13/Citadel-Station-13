@@ -75,8 +75,8 @@
 #define HARD_STAMCRIT 2
 
 // Stamcrit check helpers
-#define IS_HARD_STAMCRIT(mob)			(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
-#define IS_SOFT_STAMCRIT(mob)			(mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
+#define IS_HARD_STAMCRITTED(mob)			(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+#define IS_SOFT_STAMCRITTED(mob)			(mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
 #define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
 #define CHECK_STAMCRIT(mob)					(IS_HARD_STAMCRITTED(mob)? HARD_STAMCRIT : (IS_SOFT_STAMCRITTED(mob)? SOFT_STAMCRIT : NOT_STAMCRIT))
 
