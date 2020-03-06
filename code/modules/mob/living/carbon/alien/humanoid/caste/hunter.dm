@@ -31,7 +31,7 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if(!canmove || leaping)
+	if(!CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || leaping)
 		return
 
 	if(pounce_cooldown > world.time)
@@ -65,21 +65,21 @@
 			var/mob/living/L = hit_atom
 			if(!L.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(100)
+				L.DefaultCombatKnockdown(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Knockdown(40, 1, 1)
+				DefaultCombatKnockdown(40, 1, 1)
 
 			toggle_leap(0)
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [hit_atom]!</span>", "<span class ='alertalien'>[src] smashes into [hit_atom]!</span>")
-			Knockdown(40, 1, 1)
+			Paralyze(40, TRUE, TRUE)
 
 		if(leaping)
 			leaping = 0
 			update_icons()
-			update_canmove()
+			update_mobility()
 
 
 /mob/living/carbon/alien/humanoid/float(on)

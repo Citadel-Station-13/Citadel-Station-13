@@ -100,8 +100,8 @@
 	var/mob/living/simple_animal/SA = pick(/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse,/mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/retaliate/bat) //prob(300) /mob/living/simple_animal/mouse,
 	new SA (owner.loc)
 	// TELEPORT: Move to Coffin & Close it!
+	user.set_resting(TRUE, TRUE, FALSE)
 	do_teleport(owner, bloodsuckerdatum.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
-	user.resting = TRUE
 	user.Stun(30,1)
 	// CLOSE LID: If fail, force me in.
 	if(!bloodsuckerdatum.coffin.close(owner))

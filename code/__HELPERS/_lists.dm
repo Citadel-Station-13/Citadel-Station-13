@@ -174,6 +174,15 @@
 						L[T] = TRUE
 		return L
 
+/proc/typecacheof_assoc_list(list/pathlist, ignore_root_path = FALSE)
+	. = list()
+	if(!istype(pathlist))
+		return
+	for(var/P in pathlist)
+		var/value = pathlist[P]
+		for(var/T in (ignore_root_path ? subtypesof(P) : typesof(P)))
+			.[T] = value
+
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
 	if(istype(list))

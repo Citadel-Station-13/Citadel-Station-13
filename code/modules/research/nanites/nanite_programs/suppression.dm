@@ -50,9 +50,11 @@
 	trigger_cooldown = 300
 	rogue_types = list(/datum/nanite_program/shocking, /datum/nanite_program/nerve_decay)
 
-/datum/nanite_program/stun/on_trigger(comm_message)
+/datum/nanite_program/triggered/stun/trigger(delayed)
+	if(!..())
+		return
+	host_mob.DefaultCombatKnockdown(80)
 	playsound(host_mob, "sparks", 75, TRUE, -1)
-	host_mob.Knockdown(80)
 
 /datum/nanite_program/pacifying
 	name = "Pacification"
