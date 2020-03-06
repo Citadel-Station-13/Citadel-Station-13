@@ -724,14 +724,14 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	if(pixel_y >= 16)
+	if(pixel_y <= 16)
 		pixel_y++
 
 /mob/verb/southshift()
 	set hidden = TRUE
 	if(!canface())
 		return FALSE
-	if(pixel_y <= -16)
+	if(pixel_y >= -16)
 		pixel_y--
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
