@@ -48,3 +48,4 @@
 	knockdown = 100
 	knockdown_stamoverride = 30
 	knockdown_stam_max = null
+	tase_duration = 10
