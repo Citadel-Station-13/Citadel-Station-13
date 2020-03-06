@@ -273,9 +273,8 @@
 			var/obj/item/O = A
 			O.microwave_act()
 		else if(istype(A, /obj/item/grown/log))
-			var/C = /obj/item/stack/sheet/mineral/coal
 			qdel(A)
-			new C(src.loc, 1)
+			new /obj/item/stack/sheet/mineral/coal(loc, 1)
 
 /obj/structure/bonfire/process()
 	if(!CheckOxygen())
