@@ -11,7 +11,7 @@
 	if(item_flags & NO_ATTACK_CHAIN_SOFT_STAMCRIT)
 		if(isliving(user))
 			var/mob/living/L = user
-			if(L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+			if(IS_STAMCRIT(L))
 				to_chat(L, "<span class='warning'>You are too exhausted to swing [src]!</span>")
 				return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
@@ -58,7 +58,7 @@
 	if(item_flags & NOBLUDGEON)
 		return
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+	if(IS_STAMCRIT(user)) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 
@@ -88,7 +88,7 @@
 		return
 	if(item_flags & NOBLUDGEON)
 		return
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+	if(IS_STAMCRIT(user)) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 	user.adjustStaminaLossBuffered(getweight()*1.2)//CIT CHANGE - makes attacking things cause stamina loss

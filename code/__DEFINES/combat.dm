@@ -30,7 +30,6 @@
 #define EFFECT_JITTER		"jitter"
 
 // /mob/living/combat_flags
-// /mob/living/combat_flags
 // Heleprs, need to have mob casted to /mob/living, for easier replacements later.
 #define IS_COMBAT_ACTIVE(mob)				(mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 #define IS_SPRINTING(mob)					(mob.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
@@ -40,8 +39,6 @@
 #define IS_SPRINT_TOGGLED(mob)				(mob.combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
 
 // Self documenting defines
-#define IS_HARD_STAMCRITTED(mob)			(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
-#define IS_SOFT_STAMCRITTED(mob)			(mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
 #define IS_RESISTING_REST(mob)				(mob.combat_flags & COMBAT_FLAG_RESISTING_REST)
 #define IS_INTENTIONALLY_RESTING(mob)		(mob.combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING)
 #define IS_ATTEMPTING_CRAWL(mob)			(mob.combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
@@ -50,7 +47,8 @@
 #define IS_COMBAT_MODE_LOCKED(mob)			HAS_TRAIT(mob, TRAIT_COMBAT_MODE_LOCKED)
 #define IS_SPRINT_LOCKED(mob)				HAS_TRAIT(mob, TRAIT_SPRINT_LOCKED)
 
-#define COMBAT_FLAGS_DEFAULT NONE
+#define COMBAT_FLAGS_DEFAULT					NONE
+#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED
 
 /// The user wants combat mode on
 #define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
@@ -69,14 +67,18 @@
 /// Intentionally resting
 #define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
 /// Currently stamcritted but not as violently
-#define COMBAT_FLAG_SOFT_STAMCRIT
+#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
 #define SOFT_STAMCRIT 1
 #define HARD_STAMCRIT 2
 
-#define CHECK_STAMCRIT(mob) (IS_HARD_STAMCRITTED(mob)? HARD_STAMCRIT : (IS_SOFT_STAMCRITTED(mob)? SOFT_STAMCRIT : NOT_STAMCRIT))
+// Stamcrit check helpers
+#define IS_HARD_STAMCRIT(mob)			(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+#define IS_SOFT_STAMCRIT(mob)			(mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
+#define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
+#define CHECK_STAMCRIT(mob)					(IS_HARD_STAMCRITTED(mob)? HARD_STAMCRIT : (IS_SOFT_STAMCRITTED(mob)? SOFT_STAMCRIT : NOT_STAMCRIT))
 
 //stamina stuff
 /*

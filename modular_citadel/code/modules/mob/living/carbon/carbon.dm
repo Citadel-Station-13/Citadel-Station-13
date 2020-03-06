@@ -52,8 +52,6 @@ mob/living/carbon/proc/toggle_vore_mode()
 		if(lastmousedir != dir)
 			wrongdirmovedelay = TRUE
 			setDir(lastmousedir, ismousemovement = TRUE)
-	if(currentdirection != dir)
-		lastdirchange = world.time
 
 /mob/living/carbon/onMouseMove(object, location, control, params)
 	if(!combatmode)
