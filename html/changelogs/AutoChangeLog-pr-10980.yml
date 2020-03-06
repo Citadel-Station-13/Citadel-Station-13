@@ -1,7 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - rscadd: "Medical locked crates"
-  - balance: "Russian gear crates have less gear in some cases but all will cost more"
-  - bugfix: "Medical locked crates that were not locked"
-  - spellcheck: "Crates that were out of date are corrected"

@@ -99,8 +99,7 @@
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
-/obj/machinery/porta_turret/update_icon()
-	cut_overlays()
+/obj/machinery/porta_turret/update_icon_state()
 	if(!anchored)
 		icon_state = "turretCover"
 		return
@@ -706,7 +705,7 @@
 
 /obj/machinery/porta_turret/syndicate/energy/pirate
 	max_integrity = 260
-	integrity_failure = 20
+	integrity_failure = 0.08
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 
@@ -970,8 +969,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/turretid/update_icon()
-	..()
+/obj/machinery/turretid/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "control_off"
 	else if (enabled)

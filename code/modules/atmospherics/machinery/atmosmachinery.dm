@@ -314,10 +314,6 @@
 		user.forceMove(loc)
 		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.")
 
-	user.canmove = FALSE
-	addtimer(VARSET_CALLBACK(user, canmove, TRUE), 1)
-
-
 /obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(is_type_in_typecache(src, GLOB.ventcrawl_machinery))
 		return L.handle_ventcrawl(src)

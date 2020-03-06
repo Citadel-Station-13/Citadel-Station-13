@@ -17,7 +17,6 @@
 		return FALSE
 
 	emitter_next_use = world.time + emittercd
-	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
@@ -37,6 +36,7 @@
 		C.push_data()
 	forceMove(get_turf(card))
 	card.forceMove(src)
+	update_mobility()
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
@@ -63,12 +63,11 @@
 	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
-	canmove = FALSE
 	density = FALSE
 	set_light(0)
 	holoform = FALSE
-	if(resting)
-		lay_down()
+	set_resting(FALSE, TRUE, FALSE)
+	update_mobility()
 
 /mob/living/silicon/pai/proc/choose_chassis()
 	if(!isturf(loc) && loc != card)
@@ -96,12 +95,10 @@
 			dynamic_chassis = choice
 	resist_a_rest(FALSE, TRUE)
 	update_icon()
+	current_mob_holder?.Detach(src)
+	current_mob_holder = null
 	if(possible_chassis[chassis])
-		current_mob_holder = AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', SLOT_HEAD)
-	else
-		current_mob_holder?.Detach(src)
-		current_mob_holder = null
-		return
+		current_mob_holder = AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
 /mob/living/silicon/pai/lay_down()

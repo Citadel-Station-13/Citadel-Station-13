@@ -28,7 +28,6 @@
 	var/list/managed_overlays
 
 	var/datum/proximity_monitor/proximity_monitor
-	var/buckle_message_cooldown = 0
 	var/fingerprintslast
 
 	var/list/filter_data //For handling persistent filters
@@ -98,7 +97,7 @@
 
 	var/temp_list = list()
 	for(var/i in custom_materials)
-		temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
+		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
 	custom_materials = null //Null the list to prepare for applying the materials properly
 	set_custom_materials(temp_list)
 
@@ -334,9 +333,11 @@
 /atom/proc/update_icon()
 	// I expect we're going to need more return flags and options in this proc
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	. = FALSE
 
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
 		update_icon_state()
+		. = TRUE
 
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
 		var/list/new_overlays = update_overlays()
@@ -346,6 +347,9 @@
 		if(length(new_overlays))
 			managed_overlays = new_overlays
 			add_overlay(new_overlays)
+		. = TRUE
+
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
 
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
@@ -356,11 +360,12 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
-/atom/proc/relaymove(mob/user)
-	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
+/atom/proc/relaymove(mob/living/user)
+	if(!istype(user))
+		return				//why are you buckling nonliving mobs to atoms?
+	if(user.buckle_message_cooldown <= world.time)
+		user.buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
-	return
 
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
@@ -899,7 +904,7 @@ Proc for attack log creation, because really why not
 
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = getmaterialref(i)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	if(!length(materials))
@@ -908,7 +913,7 @@ Proc for attack log creation, because really why not
 	custom_materials = list() //Reset the list
 
 	for(var/x in materials)
-		var/datum/material/custom_material = getmaterialref(x)
+		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
 
 		if(!(material_flags & MATERIAL_NO_EFFECTS))
 			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)

@@ -13,7 +13,7 @@
 	shot_glass_icon_state = "shotglassred"
 	pH = 7.4
 
-/datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+/datum/reagent/blood/reaction_mob(mob/living/L, method = TOUCH, reac_volume)
 	if(data && data["viruses"])
 		for(var/thing in data["viruses"])
 			var/datum/disease/D = thing
@@ -26,6 +26,18 @@
 			else //ingest, patch or inject
 				L.ForceContractDisease(D)
 
+	if(data["blood_type"] == "SY")
+		//Synthblood is very disgusting to bloodsuckers. They will puke it out to expel it, unless they have masquarade on
+		switch(reac_volume)
+			if(0 to 3)
+				disgust_bloodsucker(L, 3, FALSE, FALSE, FALSE)
+			if(3 to 6)
+				//If theres more than 8 units, they will start expelling it, even if they are masquarading.
+				disgust_bloodsucker(L, 5, FALSE, FALSE, TRUE)
+			else
+				//If they have too much in them, they will also puke out their blood.
+				disgust_bloodsucker(L, 7, -5, TRUE, TRUE)
+
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/blood_id = C.get_blood_id()
@@ -37,10 +49,8 @@
 		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/on_mob_life(mob/living/carbon/C)	//Because lethals are preferred over stamina. damnifino.
-	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
-		return //We dont want vampires getting toxed from blood
 	var/blood_id = C.get_blood_id()
-	if((blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood))
+	if((blood_id in GLOB.blood_reagent_types) && !HAS_TRAIT(C, TRAIT_NOMARROW))
 		if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))	//we only care about bloodtype here because this is where the poisoning should be
 			C.adjustToxLoss(rand(2,8)*REM, TRUE, TRUE)	//forced to ensure people don't use it to gain beneficial toxin as slime person
 	..()
@@ -117,7 +127,7 @@
 					if(!istype(D, /datum/disease/advance))
 						preserve += D
 				data["viruses"] = preserve
-	return 1
+	return TRUE
 
 /datum/reagent/blood/proc/get_diseases()
 	. = list()
@@ -141,6 +151,13 @@
 	taste_description = "slime"
 	taste_mult = 1.3
 	pH = 4
+
+/datum/reagent/blood/tomato
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Tomato Blood"
+	description = "This highly resembles blood, but it doesnt actually function like it, resembling more ketchup, with a more blood-like consistency."
+	taste_description = "sap" //Like tree sap?
+	pH = 7.45
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -374,22 +391,21 @@
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustUnconscious(-20, 0)
-		M.AdjustStun(-40, 0)
-		M.AdjustKnockdown(-40, 0)
-		M.adjustStaminaLoss(-10, 0)
-		M.adjustToxLoss(-2, 0, TRUE)
-		M.adjustOxyLoss(-2, 0)
-		M.adjustBruteLoss(-2, 0)
-		M.adjustFireLoss(-2, 0)
+		M.AdjustUnconscious(-20, FALSE)
+		M.AdjustAllImmobility(-40, FALSE)
+		M.adjustStaminaLoss(-10, FALSE)
+		M.adjustToxLoss(-2, FALSE, TRUE)
+		M.adjustOxyLoss(-2, FALSE)
+		M.adjustBruteLoss(-2, FALSE)
+		M.adjustFireLoss(-2, FALSE)
 		if(ishuman(M) && M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 			M.blood_volume += 3
 	else  // Will deal about 90 damage when 50 units are thrown
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
-		M.adjustToxLoss(2, 0)
-		M.adjustFireLoss(2, 0)
-		M.adjustOxyLoss(2, 0)
-		M.adjustBruteLoss(2, 0)
+		M.adjustToxLoss(2, FALSE)
+		M.adjustFireLoss(2, FALSE)
+		M.adjustOxyLoss(2, FALSE)
+		M.adjustBruteLoss(2, FALSE)
 	holder.remove_reagent(type, 1)
 	return TRUE
 
@@ -401,8 +417,8 @@
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
-	M.adjustToxLoss(1, 0)
-	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
+	M.adjustToxLoss(1, FALSE)
+	M.adjustFireLoss(1, FALSE)		//Hence the other damages... ain't I a bastard?
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 150)
 	holder.remove_reagent(type, 1)
 	pH = 0.1
@@ -415,23 +431,23 @@
 /datum/reagent/fuel/holyoil/on_mob_life(mob/living/carbon/M)
 	if(is_servant_of_ratvar(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustUnconscious(-60, 0)
-		M.AdjustStun(-30, 0)
-		M.AdjustKnockdown(-70, 0)
-		M.adjustStaminaLoss(-15, 0)
-		M.adjustToxLoss(-5, 0, TRUE)
-		M.adjustOxyLoss(-3, 0)
-		M.adjustBruteLoss(-3, 0)
-		M.adjustFireLoss(-5, 0)
+		M.AdjustUnconscious(-60, FALSE)
+		M.AdjustAllImmobility(-30, FALSE)
+		M.AdjustKnockdown(-40, FALSE)
+		M.adjustStaminaLoss(-15, FALSE)
+		M.adjustToxLoss(-5, FALSE, TRUE)
+		M.adjustOxyLoss(-3, FALSE)
+		M.adjustBruteLoss(-3, FALSE)
+		M.adjustFireLoss(-5, FALSE)
 	if(iscultist(M))
-		M.AdjustUnconscious(1, 0)
-		M.AdjustStun(10, 0)
-		M.AdjustKnockdown(20, 0)
-		M.adjustStaminaLoss(15, 0)
+		M.AdjustUnconscious(1, FALSE)
+		M.AdjustAllImmobility(10, FALSE)
+		M.AdjustKnockdown(10, FALSE)
+		M.adjustStaminaLoss(15, FALSE)
 	else
-		M.adjustToxLoss(3, 0)
-		M.adjustOxyLoss(2, 0)
-		M.adjustStaminaLoss(10, 0)
+		M.adjustToxLoss(3, FALSE)
+		M.adjustOxyLoss(2, FALSE)
+		M.adjustStaminaLoss(10, FALSE)
 		holder.remove_reagent(type, 1)
 	return TRUE
 
@@ -584,7 +600,7 @@
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Knockdown(60)
+	H.DefaultCombatKnockdown(60)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
 	return
 
@@ -890,7 +906,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/carbon/M)
-	if(M.canmove && !isspaceturf(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -970,7 +986,7 @@
 	pH = 11.3
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M)
-	if(M.canmove && !isspaceturf(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))

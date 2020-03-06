@@ -261,7 +261,7 @@
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Knockdown(40)
+			target.DefaultCombatKnockdown(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
@@ -377,7 +377,10 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.canmove = TRUE
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOMOVE, src)
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOUSE, src)
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOPICKUP, src)
+	user.update_mobility()
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
@@ -390,7 +393,10 @@
 	on_cooldown = TRUE
 	last_user = user
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
-	user.canmove = FALSE
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOMOVE, src)
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOUSE, src)
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOPICKUP, src)
+	user.update_mobility()
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
@@ -412,7 +418,6 @@
 			return
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
-			user.canmove = 0
 			T = potential_T
 			break
 		breakout += 1

@@ -207,7 +207,7 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/Knockdown, 20))
+			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/DefaultCombatKnockdown, 20))
 	log_combat(A, D, "has thrown with wrestling")
 	return 0
 
@@ -303,7 +303,7 @@
 		playsound(A.loc, "swing_hit", 50, 1)
 		if (!D.stat)
 			D.emote("scream")
-			D.Knockdown(40)
+			D.DefaultCombatKnockdown(40)
 
 			switch(rand(1,3))
 				if (2)
@@ -361,7 +361,7 @@
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
-		D.Knockdown(20)
+		D.DefaultCombatKnockdown(20)
 		D.throw_at(T, 3, 2)
 	log_combat(A, D, "roundhouse-kicked")
 
@@ -400,7 +400,7 @@
 			if (falling == 1)
 				A.visible_message("<span class = 'danger'><B>...and dives head-first into the ground, ouch!</b></span>")
 				A.adjustBruteLoss(rand(10,20))
-				A.Knockdown(60)
+				A.DefaultCombatKnockdown(60)
 			to_chat(A, "[D] is too far away!")
 			return 0
 
@@ -429,7 +429,7 @@
 		else
 			D.adjustBruteLoss(rand(20,30))
 
-		D.Knockdown(40)
+		D.DefaultCombatKnockdown(40)
 
 		A.pixel_y = 0
 

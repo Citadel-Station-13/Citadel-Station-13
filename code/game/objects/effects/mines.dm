@@ -48,7 +48,7 @@
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
-		victim.Knockdown(stun_time)
+		victim.DefaultCombatKnockdown(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"

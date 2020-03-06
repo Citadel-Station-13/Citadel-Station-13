@@ -364,12 +364,9 @@
 		to_chat(toggle_action.owner, "<span class='notice'>You activate the self-repair module.</span>")
 		activate_sr()
 
-/obj/item/borg/upgrade/selfrepair/update_icon()
+/obj/item/borg/upgrade/selfrepair/update_icon_state()
 	if(toggle_action)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
 
@@ -580,7 +577,7 @@
 			return FALSE
 
 		R.notransform = TRUE
-		var/prev_lockcharge = R.lockcharge
+		var/prev_locked_down = R.locked_down
 		R.SetLockdown(1)
 		R.anchored = TRUE
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -590,7 +587,7 @@
 		for(var/i in 1 to 4)
 			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 			sleep(12)
-		if(!prev_lockcharge)
+		if(!prev_locked_down)
 			R.SetLockdown(0)
 		R.anchored = FALSE
 		R.notransform = FALSE

@@ -71,7 +71,7 @@
 		reagents.maximum_volume = (500*E)
 
 
-/obj/machinery/sleeper/update_icon()
+/obj/machinery/sleeper/update_icon_state()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "-open"

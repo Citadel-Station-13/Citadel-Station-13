@@ -393,6 +393,39 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cyberimp_shield
+	name = "Riot Shield Arm Implant"
+	desc = "An implanted riot shield, designed to be installed on subject's arm."
+	id = "ci-shield"
+	build_type = PROTOLATHE
+	materials = list (/datum/material/iron = 8500, /datum/material/glass = 8500, /datum/material/silver = 1800, /datum/material/titanium = 600)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/shield
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/cyberimp_janitor
+	name = "Janitor Arm Implant"
+	desc = "A set of janitor tools fitted into an arm implant, designed to be installed on subject's arm."
+	id = "ci-janitor"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (/datum/material/iron = 3500, /datum/material/glass = 1500, /datum/material/silver = 1500)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/janitor
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cyberimp_service
+	name = "Service Arm Implant"
+	desc = "Everything a cook or barkeep needs in an arm implant, designed to be installed on subject's arm."
+	id = "ci-service"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (/datum/material/iron = 3500, /datum/material/glass = 1500, /datum/material/silver = 1500)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/service
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD Implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."

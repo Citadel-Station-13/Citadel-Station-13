@@ -137,6 +137,11 @@
 	crusher_drop_mod = 20
 	dwarf_mob = TRUE
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/beegion
+	name = "beegion"
+	desc = "You can still see what was once a human under the shifting mass of - oh my God, those are bees."
+	brood_type = /mob/living/simple_animal/hostile/poison/bees/toxin
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	var/turf/T = get_turf(src)

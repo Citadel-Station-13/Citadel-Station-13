@@ -128,9 +128,6 @@
 	item_color = param_color || item_color || pick(cable_colors)
 	if(cable_colors[item_color])
 		item_color = cable_colors[item_color]
-	update_icon()
-
-/obj/item/restraints/handcuffs/cable/update_icon()
 	color = null
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
@@ -352,7 +349,7 @@
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Knockdown(knockdown)
+		C.DefaultCombatKnockdown(knockdown)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"

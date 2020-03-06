@@ -306,7 +306,7 @@
 	// Bloodsuckers not affected by "the Kiss" of another vampire
 	if(!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		target.Unconscious(50,0)
-		target.Knockdown(40 + 5 * level_current,1)
+		target.DefaultCombatKnockdown(40 + 5 * level_current,1)
 		// NOTE: THis is based on level of power!
 		if(ishuman(target))
 			target.adjustStaminaLoss(5, forced = TRUE)// Base Stamina Damage
@@ -321,4 +321,4 @@
 	// My mouth is no longer full
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "bloodsucker_feed")
 	// Let me move immediately
-	user.update_canmove()
+	user.update_mobility()
