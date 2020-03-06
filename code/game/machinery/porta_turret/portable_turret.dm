@@ -408,7 +408,7 @@
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target non downed carbons
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.recoveringstam))//CIT CHANGE - replaces check for lying with check for recoveringstam
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || IS_HARD_STAMCRITTED(C)))//CIT CHANGE - replaces check for lying with check for recoveringstam
 				continue
 
 			//If emagged, target all but dead carbons

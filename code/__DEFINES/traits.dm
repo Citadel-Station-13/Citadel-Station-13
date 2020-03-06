@@ -158,6 +158,15 @@
 
 #define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
 
+/**
+  * COMBAT MODE/SPRINT MODE TRAITS
+  */
+
+/// Prevents combat mode from being active.
+#define TRAIT_COMBAT_MODE_LOCKED		"combatmode_locked"
+/// Prevents sprinting from being active.
+#define TRAIT_SPRINT_LOCKED				"sprint_locked"
+
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
 

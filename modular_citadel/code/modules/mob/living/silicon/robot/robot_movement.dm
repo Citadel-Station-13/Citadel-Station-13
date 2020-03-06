@@ -1,12 +1,12 @@
 /mob/living/silicon/robot/Move(NewLoc, direct)
 	. = ..()
-	if(. && sprinting && !(movement_type & FLYING) && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND | MOBILITY_MOVE))
+	if(. && IS_SPRINT_ACTIVE(src) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_STAND | MOBILITY_MOVE))
 		if(!(cell?.use(25)))
 			togglesprint(TRUE)
 
 /mob/living/silicon/robot/movement_delay()
 	. = ..()
-	if(!resting && !sprinting)
+	if(!resting && !IS_SPRINT_ACTIVE(src))
 		. += 1
 	. += speed
 
@@ -26,5 +26,5 @@
 	return TRUE
 
 /mob/living/silicon/robot/proc/sprint_hotkey(targetstatus)
-	if(targetstatus ? !sprinting : sprinting)
+	if(targetstatus != sprinting)
 		togglesprint()

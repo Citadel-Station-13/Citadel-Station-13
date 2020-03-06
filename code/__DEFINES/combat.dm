@@ -29,6 +29,65 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
+// /mob/living/combat_flags
+// /mob/living/combat_flags
+// Heleprs, need to have mob casted to /mob/living, for easier replacements later.
+#define IS_COMBAT_ACTIVE(mob)				(mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+#define IS_SPRINTING(mob)					(mob.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
+
+// These are for if the USER wants them to be on, for stuff like interface icon updates and right click interaction settings..
+#define IS_COMBAT_TOGGLED(mob)				(mob.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
+#define IS_SPRINT_TOGGLED(mob)				(mob.combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
+
+// Self documenting defines
+#define IS_HARD_STAMCRITTED(mob)			(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+#define IS_SOFT_STAMCRITTED(mob)			(mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
+#define IS_RESISTING_REST(mob)				(mob.combat_flags & COMBAT_FLAG_RESISTING_REST)
+#define IS_INTENTIONALLY_RESTING(mob)		(mob.combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING)
+#define IS_ATTEMPTING_CRAWL(mob)			(mob.combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
+
+// Kind of bad file to put this in but it goes int othe same thing, I guess.
+#define IS_COMBAT_MODE_LOCKED(mob)			HAS_TRAIT(mob, TRAIT_COMBAT_MODE_LOCKED)
+#define IS_SPRINT_LOCKED(mob)				HAS_TRAIT(mob, TRAIT_SPRINT_LOCKED)
+
+#define COMBAT_FLAGS_DEFAULT NONE
+
+/// The user wants combat mode on
+#define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
+/// The user wants sprint mode on
+#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<1)
+/// Combat mode is currently active
+#define COMBAT_FLAG_COMBAT_ACTIVE			(1<<2)
+/// Sprint is currently active
+#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<3)
+/// Currently attempting to crawl under someone
+#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<4)
+/// Currently stamcritted
+#define COMBAT_FLAG_HARD_STAMCRIT			(1<<5)
+/// Currently attempting to resist up from the ground
+#define COMBAT_FLAG_RESISTING_REST			(1<<6)
+/// Intentionally resting
+#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
+/// Currently stamcritted but not as violently
+#define COMBAT_FLAG_SOFT_STAMCRIT
+
+// Helpers for getting someone's stamcrit state. Cast to living.
+#define NOT_STAMCRIT 0
+#define SOFT_STAMCRIT 1
+#define HARD_STAMCRIT 2
+
+#define CHECK_STAMCRIT(mob) (IS_HARD_STAMCRITTED(mob)? HARD_STAMCRIT : (IS_SOFT_STAMCRITTED(mob)? SOFT_STAMCRIT : NOT_STAMCRIT))
+
+//stamina stuff
+/*
+#define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
+*/
+
+#define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
+
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN			(1<<0)
 #define CANKNOCKDOWN	(1<<1)
@@ -203,3 +262,5 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
+
+

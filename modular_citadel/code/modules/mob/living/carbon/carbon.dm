@@ -1,8 +1,6 @@
 /mob/living/carbon
-	var/combatmode = FALSE //literally lifeweb
 	var/lastmousedir
 	var/wrongdirmovedelay
-	var/lastdirchange
 	var/combatmessagecooldown
 
 	//oh no vore time
@@ -50,24 +48,15 @@ mob/living/carbon/proc/toggle_vore_mode()
 	var/currentdirection = dir
 	. = ..()
 	wrongdirmovedelay = FALSE
-	if(combatmode && client && lastmousedir)
+	if(IS_COMBAT_ACTIVE(src) && client && lastmousedir)
 		if(lastmousedir != dir)
 			wrongdirmovedelay = TRUE
 			setDir(lastmousedir, ismousemovement = TRUE)
 	if(currentdirection != dir)
 		lastdirchange = world.time
 
-
 /mob/living/carbon/onMouseMove(object, location, control, params)
 	if(!combatmode)
 		return
 	mouse_face_atom(object)
 	lastmousedir = dir
-
-/mob/living/carbon/setDir(newdir, ismousemovement = FALSE)
-	if(!combatmode || ismousemovement)
-		if(dir != newdir)
-			lastdirchange = world.time
-		. = ..()
-	else
-		return
