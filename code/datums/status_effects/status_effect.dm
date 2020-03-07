@@ -35,11 +35,11 @@
 		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A.attached_effect = src //so the alert can reference us, if it needs to
 		linked_alert = A //so we can reference the alert, if we need to
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSstatus_effects, src)
 	return TRUE
 
 /datum/status_effect/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSstatus_effects, src)
 	if(owner)
 		owner.clear_alert(id)
 		LAZYREMOVE(owner.status_effects, src)

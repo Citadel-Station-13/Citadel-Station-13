@@ -22,12 +22,12 @@
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(!IS_COMBAT_TOGGLED(user))
-		icon_state = "combat_off"
+	if(IS_COMBAT_TOGGLED(user))
+		icon_state = "combat"
 	else if(IS_COMBAT_MODE_LOCKED(user))
 		icon_state = "combat_locked"
 	else
-		icon_state = "combat"
+		icon_state = "combat_off"
 
 /obj/screen/voretoggle
 	name = "toggle vore mode"
