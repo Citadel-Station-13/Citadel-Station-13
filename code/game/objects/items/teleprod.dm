@@ -16,7 +16,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.Knockdown(stamforce * 6)
+	user.DefaultCombatKnockdown(stamforce * 6)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))
 		deductcharge(hitcost)

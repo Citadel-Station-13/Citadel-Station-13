@@ -82,7 +82,7 @@
 		var/mob/living/carbon/tempcarb = user
 		if(!tempcarb.combatmode)
 			totitemdamage *= 0.5
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	if(!combatmode)
 		totitemdamage *= 1.5
@@ -193,7 +193,7 @@
 
 			do_sparks(5, TRUE, src)
 			var/power = M.powerlevel + rand(0,3)
-			Knockdown(power*20)
+			DefaultCombatKnockdown(power*20)
 			if(stuttering < power)
 				stuttering = power
 			if (prob(stunprob) && M.powerlevel >= 8)
@@ -267,7 +267,7 @@
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-			Knockdown(60)
+			DefaultCombatKnockdown(60)
 	if(override)
 		return override
 	else
@@ -287,13 +287,13 @@
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
 
-		else if(check_zone(M.zone_selected) == "mouth") // I ADDED BOOP-EH-DEH-NOSEH - Jon
+		else if(M.zone_selected == BODY_ZONE_PRECISE_MOUTH) // I ADDED BOOP-EH-DEH-NOSEH - Jon
 			M.visible_message( \
 				"<span class='notice'>[M] boops [src]'s nose.</span>", \
 				"<span class='notice'>You boop [src] on the nose.</span>", )
 			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
 
-		else if(check_zone(M.zone_selected) == "head")
+		else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD)
 			var/datum/species/S
 			if(ishuman(src))
 				S = dna.species
@@ -327,7 +327,7 @@
 			else
 				return
 
-		else if(check_zone(M.zone_selected) == "r_arm" || check_zone(M.zone_selected) == "l_arm")
+		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
 			M.visible_message( \
 				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
 				"<span class='notice'>You shake [src]'s hand.</span>", )
@@ -346,16 +346,14 @@
 				else if (mood.sanity >= SANITY_DISTURBED)
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 
-		AdjustStun(-60)
-		AdjustKnockdown(-60)
-		AdjustUnconscious(-60)
-		AdjustSleeping(-100)
+		AdjustAllImmobility(-60, FALSE)
+		AdjustUnconscious(-60, FALSE)
+		AdjustSleeping(-100, FALSE)
 		if(recoveringstam)
 			adjustStaminaLoss(-15)
-		else if(resting)
-			resting = 0
-			update_canmove()
-
+		else
+			set_resting(FALSE, FALSE)
+		update_mobility()
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 
@@ -419,7 +417,7 @@
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
-			Knockdown(stun_pwr*effect_amount)
+			DefaultCombatKnockdown(stun_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount

@@ -659,8 +659,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 
 // facing verbs
 /mob/proc/canface()
-	if(!canmove)
-		return FALSE
 	if(world.time < client.last_turn)
 		return FALSE
 	if(stat == DEAD || stat == UNCONSCIOUS)
@@ -762,7 +760,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
@@ -770,7 +768,7 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 //Default buckling shift visual for mobs

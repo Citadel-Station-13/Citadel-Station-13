@@ -18,7 +18,7 @@
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
-	canmove = FALSE
+	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
@@ -324,8 +324,10 @@
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
-/mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
-	return 0
+// AIs are immobile
+/mob/living/silicon/ai/update_mobility()
+	mobility_flags = ALL
+	return ALL
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
@@ -987,7 +989,7 @@
 		deployed_shell.undeploy()
 	diag_hud_set_deployed()
 
-/mob/living/silicon/ai/resist()
+/mob/living/silicon/ai/do_resist()
 	return
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)

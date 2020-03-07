@@ -109,8 +109,7 @@
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
-	pushed_mob.resting = TRUE
-	pushed_mob.update_canmove()
+	pushed_mob.set_resting(TRUE, FALSE)
 	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
 	log_combat(user, pushed_mob, "placed")
@@ -128,7 +127,7 @@
 		pushed_mob.pass_flags &= ~PASSTABLE
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Knockdown(40)
+	pushed_mob.DefaultCombatKnockdown(40)
 	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto [src]!</span>", \
 								"<span class='userdanger'>[user] slams you onto [src]!</span>")
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
@@ -138,11 +137,11 @@
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/shove_act(mob/living/target, mob/living/user)
-	if(!target.resting)
-		target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+	if(CHECK_MOBILITY(target, MOBILITY_STAND))
+		target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_TABLE)
 	user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [src]!</span>",
 		"<span class='danger'>You shove [target.name] onto \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	target.forceMove(src.loc)
+	target.forceMove(loc)
 	log_combat(user, target, "shoved", "onto [src] (table)")
 	return TRUE
 
@@ -212,7 +211,7 @@
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
 	icon_state = "table"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 
 /*
@@ -270,7 +269,7 @@
 		debris -= AM
 		if(istype(AM, /obj/item/shard))
 			AM.throw_impact(L)
-	L.Knockdown(100)
+	L.DefaultCombatKnockdown(100)
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -568,23 +567,20 @@
 			break
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
-	pushed_mob.resting = 1
-	pushed_mob.update_canmove()
+	pushed_mob.forceMove(loc)
+	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
-	var/mob/M = locate(/mob/living/carbon/human, loc)
-	if(M)
-		if(M.resting)
-			patient = M
-			return 1
+	var/mob/living/carbon/human/H = locate() in loc
+	if(H)
+		if(!CHECK_MOBILITY(H, MOBILITY_STAND))
+			patient = H
+			return TRUE
 	else
 		patient = null
-		return 0
-
-
+		return FALSE
 
 /*
  * Racks
@@ -644,7 +640,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.IsKnockdown() || user.resting || user.lying || user.get_num_legs() < 2)
+	if(CHECK_MULTIPLE_BITFIELDS(user.mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) || user.get_num_legs() < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)

@@ -121,7 +121,7 @@
 	return ..()
 
 /obj/machinery/autoylathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
-	if(item_inserted.custom_materials?.len && item_inserted.custom_materials[getmaterialref(/datum/material/glass)])
+	if(item_inserted.custom_materials?.len && item_inserted.custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 		flick("autolathe_r",src)//plays glass insertion animation by default otherwise
 	else
 		flick("autolathe_o",src)//plays metal insertion animation

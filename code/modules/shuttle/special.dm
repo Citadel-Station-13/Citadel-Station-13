@@ -186,7 +186,7 @@
 		// No climbing on the bar please
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Knockdown(40)
+		M.DefaultCombatKnockdown(40)
 		M.throw_at(throwtarget, 5, 1)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
