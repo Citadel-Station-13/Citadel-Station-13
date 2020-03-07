@@ -156,8 +156,6 @@
 		reagents.clear_reagents()
 		if(QDELETED(src))
 			return
-	if (!bartender_check(target)) // Needs to check for Bartender Slide before spilling.
-		reagents.clear_reagents() // Clear reagents of thrown container.
 
 //melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
