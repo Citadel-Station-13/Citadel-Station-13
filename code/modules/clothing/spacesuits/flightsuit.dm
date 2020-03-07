@@ -101,16 +101,14 @@
 	var/datum/component/mobhook
 
 /obj/item/flightpack/proc/changeWearer(mob/changeto)
-	if(wearer)
-		LAZYREMOVE(wearer.user_movement_hooks, src)
-	wearer = null
-	QDEL_NULL(mobhook)
+	UnregisterSignal(changeto, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(changeto, COMSIG_MOB_CLIENT_INTENTIONALLY_MOVED)
 	cached_pull = null
+	wearer = changeto
 	if(istype(changeto))
-		wearer = changeto
-		LAZYADD(wearer.user_movement_hooks, src)
+		RegisterSignal(changeto, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+		RegisterSignal(changeto, COMSIG_MOB_CLIENT_INTENTIONALLY_MOVED, .proc/intercept_user_move)
 		cached_pull = changeto.pulling
-		mobhook = changeto.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move, changeto))
 
 /obj/item/flightpack/Initialize()
 	ion_trail = new
@@ -119,7 +117,7 @@
 	update_parts()
 	sync_processing(SSflightpacks)
 	update_icon()
-	..()
+	return ..()
 
 /obj/item/flightpack/full/Initialize()
 	part_manip = new /obj/item/stock_parts/manipulator/pico(src)
@@ -127,7 +125,7 @@
 	part_cap = new /obj/item/stock_parts/capacitor/super(src)
 	part_laser = new /obj/item/stock_parts/micro_laser/ultra(src)
 	part_bin = new /obj/item/stock_parts/matter_bin/super(src)
-	..()
+	return ..()
 
 /obj/item/flightpack/proc/usermessage(message, span = "boldnotice", mob/mob_override = null)
 	var/mob/targ = wearer
@@ -238,7 +236,7 @@
 	if(prob(emp_damage * 15))
 		step(wearer, pick(GLOB.alldirs))
 
-/obj/item/flightpack/proc/on_mob_move(mob/mob, turf/oldLoc, dir, forced)
+/obj/item/flightpack/proc/on_mob_move(atom/oldLoc, dir, forced)
 	if(forced)
 		if(cached_pull && istype(oldLoc) && (get_dist(oldLoc, loc) <= 1) && !oldLoc.density)
 			cached_pull.forceMove(oldLoc)
@@ -257,8 +255,8 @@
 	if(flight)
 		ion_trail.generate_effect()
 
-/obj/item/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
-	if(!flight)
+/obj/item/flightpack/intercept_user_move(newLoc, dir, success)
+	if(!flight || !success)
 		return
 	var/momentum_increment = momentum_gain
 	if(boost)
@@ -335,17 +333,17 @@
 		if(flight)
 			disable_flight(TRUE)
 
-/obj/item/flightpack/update_icon()
+/obj/item/flightpack/update_icon_state()
+	var/state
 	if(!flight)
-		icon_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_OFF_APPEND]"
-		item_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_OFF_APPEND]"
+		state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_OFF_APPEND]"
 	if(flight)
 		if(!boost)
-			icon_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_ON_APPEND]"
-			item_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_ON_APPEND]"
+			state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_ON_APPEND]"
 		else
-			icon_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_BOOST_APPEND]"
-			item_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_BOOST_APPEND]"
+			state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_BOOST_APPEND]"
+	icon_state = state
+	item_state = state
 	if(wearer)
 		wearer.update_inv_wear_suit()
 		wearer.update_inv_back()
@@ -540,8 +538,7 @@
 		return FALSE
 
 /obj/item/flightpack/proc/enable_safe()
-	if(override_safe)
-		override_safe = FALSE
+	override_safe = FALSE
 
 /obj/item/flightpack/dropped(mob/wearer)
 	changeWearer()
@@ -719,7 +716,7 @@
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	pack = null
 	wearer = null
-	suit = null
+	delink_suit()
 	. = ..()
 
 /obj/item/clothing/shoes/flightshoes/proc/toggle(toggle)
@@ -734,13 +731,12 @@
 	return slot == SLOT_SHOES
 
 /obj/item/clothing/shoes/flightshoes/proc/delink_suit()
-	if(suit)
-		if(suit.shoes && suit.shoes == src)
-			suit.shoes = null
+	if(suit?.shoes == src)
+		suit.shoes = null
 	suit = null
 
 /obj/item/clothing/shoes/flightshoes/proc/relink_suit(obj/item/clothing/suit/space/hardsuit/flightsuit/F)
-	if(suit && suit == F)
+	if(suit == F)
 		return FALSE
 	else
 		delink_suit()
@@ -805,7 +801,6 @@
 	. += "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>"
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
-	dropped()
 	QDEL_NULL(pack)
 	QDEL_NULL(shoes)
 	return ..()

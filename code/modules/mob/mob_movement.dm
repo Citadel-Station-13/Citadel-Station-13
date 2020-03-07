@@ -100,8 +100,7 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	for(var/obj/O in mob.user_movement_hooks)
-		O.intercept_user_move(direction, mob, n, oldloc)
+	SEND_SIGNAL(mob, COMSIG_MOB_PLAYER_CLIENT_INTENTIONALLY_MOVED, n, dir, .)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
