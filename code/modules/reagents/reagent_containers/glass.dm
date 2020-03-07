@@ -354,6 +354,14 @@
 		return
 	return ..()
 
+/obj/item/reagent_containers/glass/bucket/wood
+	name = "wooden bucket"
+	desc = "It's a bucket made of wood."
+	icon_state = "bucket_wooden"
+	custom_materials = null
+	slot_flags = NONE
+	item_flags = NO_MAT_REDEMPTION
+
 /obj/item/reagent_containers/glass/beaker/waterbottle
 	name = "bottle of water"
 	desc = "A bottle of water filled at an old Earth bottling facility."
