@@ -1,7 +1,7 @@
 /datum/traitor_class/human/freeform
 	name = "Waffle Co Agent"
 	employer = "Waffle Company"
-	weight = 4
+	weight = 16
 	chaos = 0
 
 /datum/traitor_class/human/freeform/forge_objectives(datum/antagonist/traitor/T)

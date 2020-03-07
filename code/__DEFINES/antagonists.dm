@@ -1,4 +1,4 @@
-#define TRAITOR_HUMAN /datum/traitor_class/human
+#define TRAITOR_HUMAN /datum/traitor_class/human/freeform
 #define TRAITOR_AI /datum/traitor_class/ai
 
 #define NUKE_RESULT_FLUKE 0

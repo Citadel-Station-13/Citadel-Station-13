@@ -38,13 +38,13 @@
 		var/list/weights = list()
 		for(var/C in GLOB.traitor_classes)
 			var/datum/traitor_class/class = GLOB.traitor_classes[C]
-			var/weight = class.weight/(1+NUM_E**(-chaos_weight*class.chaos)) // just a logistic function
+			var/weight = (1.5*class.weight)/(0.5+NUM_E**(-chaos_weight*class.chaos)) // just a logistic function
 			weights[C] = weight
 		var/choice = pickweightAllowZero(weights)
 		if(!choice)
 			choice = GLOB.traitor_classes[TRAITOR_HUMAN]
 		set_traitor_kind(pickweightAllowZero(weights))
-		traitor_kind.weight /= 2 // less likely this round
+		traitor_kind.weight *= 0.8 // less likely this round
 	SSticker.mode.traitors += owner
 	owner.special_role = special_role
 	if(give_objectives)
