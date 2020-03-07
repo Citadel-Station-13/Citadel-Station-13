@@ -43884,7 +43884,6 @@
 /area/maintenance/port)
 "buN" = (
 /obj/machinery/vending/boozeomat{
-	step_x = 0
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/port)
