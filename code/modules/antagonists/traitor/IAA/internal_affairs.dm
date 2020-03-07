@@ -120,7 +120,7 @@
 
 /datum/antagonist/traitor/internal_affairs/reinstate_escape_objective()
 	..()
-	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive
+	var/objtype = !istype(traitor_kind,TRAITOR_AI) ? /datum/objective/escape : /datum/objective/survive
 	var/datum/objective/escape_objective = new objtype
 	escape_objective.owner = owner
 	add_objective(escape_objective)
@@ -220,7 +220,7 @@
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
 	forge_iaa_objectives()
 
-	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive
+	var/objtype = !istype(traitor_kind,TRAITOR_AI) ? /datum/objective/escape : /datum/objective/survive
 	var/datum/objective/escape_objective = new objtype
 	escape_objective.owner = owner
 	add_objective(escape_objective)
