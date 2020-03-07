@@ -5,6 +5,8 @@
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
 	focus = null
+	LAssailant = null
+	movespeed_modification = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
