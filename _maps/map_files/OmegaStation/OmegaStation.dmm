@@ -37094,6 +37094,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"dci" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/chair/office/dark{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/library)
 "ddI" = (
 /obj/machinery/air_sensor/atmos/toxin_tank,
 /turf/open/floor/engine/plasma,
@@ -37170,6 +37189,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"dwa" = (
+/obj/machinery/bookbinder,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/wood,
+/area/library)
 "dEa" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -37215,6 +37241,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "dQC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -37251,6 +37278,22 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
+=======
+"dOl" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/westright{
+	dir = 4;
+	name = "interior door";
+	req_access_txt = "48; 50"
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+>>>>>>> parent of bb4df4213a... commit
 "dYC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -37609,13 +37652,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
-"fFd" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/tcommsat/server)
 "fFw" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -37842,19 +37878,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
-"gVH" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/library)
 "gVX" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
 	dir = 8
@@ -37872,6 +37895,7 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
+<<<<<<< HEAD
 <<<<<<< HEAD
 "gYi" = (
 /obj/structure/lattice/catwalk,
@@ -37896,6 +37920,15 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 >>>>>>> parent of a500474457... commit
+=======
+"gXd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/tcommsat/server)
+>>>>>>> parent of bb4df4213a... commit
 "hhM" = (
 /turf/closed/mineral/random/labormineral,
 /area/science/test_area)
@@ -38112,6 +38145,7 @@
 /turf/closed/wall,
 /area/science/mixing)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "iiW" = (
 /obj/effect/turf_decal/stripes/line{
@@ -38123,10 +38157,40 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
+=======
+"iqh" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock{
+	id_tag = "Dorm5";
+	name = "Room Four"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+>>>>>>> parent of bb4df4213a... commit
 "iqC" = (
 /obj/machinery/air_sensor/atmos/carbon_tank,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
+"ivp" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock{
+	id_tag = "Dorm3";
+	name = "Room Two"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "ixk" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38198,6 +38262,7 @@
 /turf/open/floor/engine,
 /area/science/mixing)
 <<<<<<< HEAD
+<<<<<<< HEAD
 "iUW" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -38225,6 +38290,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 >>>>>>> parent of a500474457... commit
+=======
+>>>>>>> parent of bb4df4213a... commit
 "iVy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -38357,25 +38424,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"juC" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/chair/office/dark{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/library)
 "juT" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -38449,6 +38497,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/engine/atmos)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "jIk" = (
 /obj/item/assembly/signaler{
@@ -38462,6 +38511,11 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
+=======
+"jKX" = (
+/turf/open/floor/wood,
+/area/library)
+>>>>>>> parent of bb4df4213a... commit
 "jLF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -38481,6 +38535,7 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "jRe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -38496,6 +38551,22 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
+=======
+"jOt" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock{
+	id_tag = "Dorm2";
+	name = "Room One"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+>>>>>>> parent of bb4df4213a... commit
 "kaA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -38536,13 +38607,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"krR" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/tcommsat/server)
 "kwF" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -38654,13 +38718,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"lnV" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/engine/engineering)
 "low" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -38930,6 +38987,7 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 <<<<<<< HEAD
+<<<<<<< HEAD
 "mIo" = (
 /turf/open/floor/wood,
 /area/library)
@@ -38953,6 +39011,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
 >>>>>>> parent of a500474457... commit
+=======
+"mzQ" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+>>>>>>> parent of bb4df4213a... commit
 "mJP" = (
 /obj/machinery/igniter{
 	id = "Incinerator"
@@ -39039,6 +39103,16 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"nJz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/command{
+	name = "Chief Engineer's Office";
+	req_access_txt = "56"
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/heads/chief)
 "nKi" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -39105,20 +39179,6 @@
 	},
 /turf/open/floor/plasteel/dark/corner,
 /area/engine/atmos)
-"nVm" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/westright{
-	dir = 4;
-	name = "interior door";
-	req_access_txt = "48; 50"
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "oaV" = (
 /obj/structure/grille,
 /obj/machinery/meter,
@@ -39223,20 +39283,6 @@
 "oyD" = (
 /turf/closed/wall,
 /area/crew_quarters/toilet/restrooms)
-"oAK" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/door/airlock{
-	id_tag = "Dorm2";
-	name = "Room One"
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 "oCy" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/structure/cable{
@@ -39320,20 +39366,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"paK" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/door/airlock{
-	id_tag = "Dorm5";
-	name = "Room Four"
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 "pbT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -39540,6 +39572,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"pSA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/tcommsat/server)
 "pXH" = (
 /obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel,
@@ -39643,16 +39682,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"qDr" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/engine/engineering)
 "qEl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -39764,6 +39793,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 <<<<<<< HEAD
+<<<<<<< HEAD
 "rxY" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -39777,6 +39807,8 @@
 /turf/closed/wall,
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
+=======
+>>>>>>> parent of bb4df4213a... commit
 "rzn" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
@@ -39873,16 +39905,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"shw" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/door/airlock/command{
-	name = "Chief Engineer's Office";
-	req_access_txt = "56"
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/heads/chief)
 "soC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -42823,6 +42845,16 @@
 	dir = 1
 	},
 /area/engine/atmos)
+"tES" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "tFk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -43125,6 +43157,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"uRC" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "uSs" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
@@ -43430,6 +43469,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/fore)
 <<<<<<< HEAD
+<<<<<<< HEAD
 "vZD" = (
 /obj/machinery/bookbinder,
 /obj/structure/cable/white{
@@ -43459,6 +43499,8 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/aft)
 >>>>>>> parent of a500474457... commit
+=======
+>>>>>>> parent of bb4df4213a... commit
 "wdt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -43492,6 +43534,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"wmV" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/marker_beacon{
+	anchored = 1;
+	icon_state = "markerburgundy-on";
+	light_power = 3;
+	light_range = 3;
+	name = "Docking Beacon";
+	picked_color = "Burgundy"
+	},
+/turf/open/space/basic,
+/area/space)
 "wqL" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
@@ -43806,6 +43860,7 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "yeE" = (
 /obj/machinery/door/window/brigdoor{
@@ -43827,6 +43882,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
+=======
+"yeh" = (
+>>>>>>> parent of bb4df4213a... commit
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -43837,6 +43895,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "yeO" = (
@@ -43849,6 +43908,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft)
 >>>>>>> parent of a500474457... commit
+=======
+/turf/open/floor/wood,
+/area/library)
+>>>>>>> parent of bb4df4213a... commit
 "yhg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -73036,6 +73099,7 @@ amH
 aHi
 aSs
 aWp
+<<<<<<< HEAD
 shw
 =======
 uok
@@ -73045,6 +73109,9 @@ abu
 afL
 sII
 >>>>>>> parent of a500474457... commit
+=======
+nJz
+>>>>>>> parent of bb4df4213a... commit
 aJm
 aKv
 aLJ
@@ -73052,6 +73119,7 @@ aMM
 aNW
 aOx
 buC
+<<<<<<< HEAD
 <<<<<<< HEAD
 fFd
 sJP
@@ -73061,6 +73129,11 @@ bxp
 sJP
 aPG
 >>>>>>> parent of a500474457... commit
+=======
+pSA
+sJP
+gXd
+>>>>>>> parent of bb4df4213a... commit
 buG
 buI
 buK
@@ -76396,7 +76469,7 @@ aIp
 bkr
 bmL
 aQJ
-qDr
+tES
 aBD
 aSU
 aQJ
@@ -76669,7 +76742,7 @@ blE
 bkr
 bmL
 bmY
-lnV
+uRC
 aBD
 aSV
 aQJ
@@ -78228,7 +78301,7 @@ aNd
 sHV
 <<<<<<< HEAD
 aAo
-juC
+dci
 aWE
 aVQ
 =======
@@ -78755,10 +78828,14 @@ aTe
 aUf
 aUX
 <<<<<<< HEAD
+<<<<<<< HEAD
 gVH
 =======
 aVQ
 >>>>>>> parent of a500474457... commit
+=======
+yeh
+>>>>>>> parent of bb4df4213a... commit
 aWD
 iUq
 aQW
@@ -79017,7 +79094,11 @@ sJX
 aUX
 aVR
 <<<<<<< HEAD
+<<<<<<< HEAD
 gVH
+=======
+yeh
+>>>>>>> parent of bb4df4213a... commit
 bgy
 aZB
 bbm
@@ -79294,6 +79375,7 @@ aQW
 aRY
 aTg
 <<<<<<< HEAD
+<<<<<<< HEAD
 vZD
 bxS
 aVS
@@ -79304,6 +79386,12 @@ bxS
 aVS
 aWE
 >>>>>>> parent of a500474457... commit
+=======
+dwa
+bxS
+aVS
+jKX
+>>>>>>> parent of bb4df4213a... commit
 aXh
 aQW
 bbg
@@ -81597,10 +81685,14 @@ azD
 aAH
 aBQ
 <<<<<<< HEAD
+<<<<<<< HEAD
 oAK
 =======
 azD
 >>>>>>> parent of a500474457... commit
+=======
+jOt
+>>>>>>> parent of bb4df4213a... commit
 aDG
 aEO
 sDl
@@ -82369,6 +82461,7 @@ awQ
 axJ
 ayB
 <<<<<<< HEAD
+<<<<<<< HEAD
 paK
 aAH
 aBS
@@ -82379,6 +82472,12 @@ aAH
 aBS
 azD
 >>>>>>> parent of a500474457... commit
+=======
+iqh
+aAH
+aBS
+ivp
+>>>>>>> parent of bb4df4213a... commit
 ayz
 aEQ
 sDl
@@ -83208,6 +83307,7 @@ bgU
 bgU
 <<<<<<< HEAD
 sNM
+<<<<<<< HEAD
 rxY
 rxY
 rxY
@@ -83219,6 +83319,12 @@ aaa
 aaa
 aaa
 >>>>>>> parent of a500474457... commit
+=======
+mzQ
+mzQ
+mzQ
+wmV
+>>>>>>> parent of bb4df4213a... commit
 aaa
 aaa
 aaa
@@ -83987,6 +84093,7 @@ bgU
 bgU
 <<<<<<< HEAD
 sNM
+<<<<<<< HEAD
 rxY
 rxY
 rxY
@@ -83998,6 +84105,12 @@ aaa
 aaa
 aaa
 >>>>>>> parent of a500474457... commit
+=======
+mzQ
+mzQ
+mzQ
+wmV
+>>>>>>> parent of bb4df4213a... commit
 aaa
 aaa
 aaa
@@ -90085,10 +90198,14 @@ ahk
 ado
 aiI
 <<<<<<< HEAD
+<<<<<<< HEAD
 nVm
 =======
 ajI
 >>>>>>> parent of a500474457... commit
+=======
+dOl
+>>>>>>> parent of bb4df4213a... commit
 akL
 alA
 amv
