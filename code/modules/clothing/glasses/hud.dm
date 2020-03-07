@@ -80,8 +80,7 @@
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
 /obj/item/clothing/glasses/hud/health/sunglasses/prescription
-	name = "medical prescription HUDSunglasses"
-	desc = "Sunglasses with a medical HUD and a second layer of normal prescription glasses."
+	name = "prescription medical HUDSunglasses"
 	vision_correction = 1
 
 ///////////////////
@@ -112,8 +111,7 @@
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription
-	name = "diagnostic prescription HUDSunglasses"
-	desc = "Sunglasses with a diagnostic HUD and a second layer of normal prescription glasses."
+	name = "prescription diagnostic HUDSunglasses"
 	vision_correction = 1
 
 /obj/item/clothing/glasses/hud/diagnostic/night
@@ -182,8 +180,7 @@
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
 /obj/item/clothing/glasses/hud/security/sunglasses/prescription
-	name = "security HUDSunglasses"
-	desc = "Sunglasses with a security HUD and a second layer of normal prescription glasses.."
+	name = "prescription security HUDSunglasses"
 	vision_correction = 1
 
 /obj/item/clothing/glasses/hud/security/night
