@@ -334,9 +334,9 @@
 					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
-			++Friends[user]
+			BAYES_THEOREM(Friends[user],0.5,0.1)
 		else
-			Friends[user] = 1
+			Friends[user] = 0.5
 		to_chat(user, "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>")
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
@@ -350,12 +350,16 @@
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
+		if(user in Friends)
+			BAYES_THEOREM(Friends[user],0.5,0.6)
 	if(W.force >= 3)
 		var/force_effect = 2 * W.force
 		if(is_adult)
 			force_effect = round(W.force/2)
 		if(prob(10 + force_effect))
 			discipline_slime(user)
+		if(user in Friends)
+			BAYES_THEOREM(Friends[user],0.4,0.6)
 	if(istype(W, /obj/item/storage/bag/bio))
 		var/obj/item/storage/P = W
 		if(!effectmod)

@@ -189,9 +189,9 @@
 				if(M.LAssailant && M.LAssailant != M)
 					if(prob(50))
 						if(!(M.LAssailant in Friends))
-							Friends[M.LAssailant] = 1
+							Friends[M.LAssailant] = 0.5
 						else
-							++Friends[M.LAssailant]
+							BAYES_THEOREM(Friends[M.LAssailant],rand(4,7),3) // second and third arguments can be interpreted as an odds ratio too, fun fact
 		else
 			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 
@@ -316,7 +316,8 @@
 		if(hungry == 2 && !client) // if a slime is starving, it starts losing its friends
 			if(Friends.len > 0 && prob(1))
 				var/mob/nofriend = pick(Friends)
-				--Friends[nofriend]
+				BAYES_THEOREM(Friends[nofriend],rand(1,5),6)
+				// average of 3 : 6, or 1 : 2, or -1 bits, but can be more or less, slimes are funny that way
 
 		if(!Target)
 			if(will_hunt() && hungry || attacked || rabid) // Only add to the list if we need to
@@ -327,7 +328,7 @@
 					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
-					if(L in Friends) // No eating friends!
+					if(L in Friends && Friends[L] < SLIME_FRIENDSHIP_NOEAT) // No eating friends!
 						continue
 
 					var/ally = FALSE
@@ -488,7 +489,7 @@
 						to_say = "No... keep follow..."
 				else
 					if (Friends[who] >= SLIME_FRIENDSHIP_STAY)
-						holding_still = Friends[who] * 10
+						holding_still = ODDS(Friends[who]) * 10
 						to_say = "Yes... stay..."
 					else
 						to_say = "No... won't stay..."
@@ -502,14 +503,18 @@
 						if (findtext(phrase, lowertext(L.name)))
 							if (isslime(L))
 								to_say = "NO... [L] slime friend"
-								--Friends[who] //Don't ask a slime to attack its friend
-							else if(!Friends[L] || Friends[L] < 1)
+								var/numerator = rand(1,3) // second arg shows up twice in macro, haha!
+								BAYES_THEOREM(Friends[who],numerator,4) //Don't ask a slime to attack its friend
+								// 2/4 odds on average of not-friend if asked to attack friend, could be 1/4 or 3/4 though
+								// slimes are protean, you see. capricious and all.
+							else if(!Friends[L] || Friends[L] < 0.5)
 								Target = L
 								AIprocess()//Wake up the slime's Target AI, needed otherwise this doesn't work
 								to_say = "Ok... I attack [Target]"
 							else
+								var/numerator = rand(1,3)
 								to_say = "No... like [L] ..."
-								--Friends[who] //Don't ask a slime to attack its friend
+								BAYES_THEOREM(Friends[who],numerator,4) //Don't ask a slime to attack its friend
 							break
 				else
 					to_say = "No... no listen"

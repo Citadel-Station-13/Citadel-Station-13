@@ -204,6 +204,10 @@
 #define MANHATTAN_DISTANCE(a, b) (abs(a.x - b.x) + abs(a.y - b.y))
 
 // bayesian updating on probability
-#define BAYES_THEOREM(a,b_a,b_na) a=((b_a*a)/(b_a*a+b_na*(1-a)))
+#define BAYES_THEOREM(a,b_a,b_na) (a=((b_a*a)/(b_a*a+b_na*(1-a))))
 
-#define SIMPLE_BAYES_THEOREM(a,b,b_a) a=((b_a*a)/b)
+#define SIMPLE_BAYES_THEOREM(a,b,b_a) (a=((b_a*a)/b))
+
+#define ODDS(p) (p / (1-p))
+
+#define PROBABILITY(o) (o / (o+1))
