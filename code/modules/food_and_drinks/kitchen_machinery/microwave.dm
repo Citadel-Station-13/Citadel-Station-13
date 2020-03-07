@@ -310,7 +310,7 @@
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
 		if(O.custom_materials?.len)
-			metal += O.custom_materials[getmaterialref(/datum/material/iron)]
+			metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 	if(metal)
 		spark()

@@ -260,7 +260,7 @@
 	blocks["max_space"] = assembly.max_components
 
 	// Start keeping track of total metal cost
-	blocks["metal_cost"] = assembly.custom_materials[getmaterialref(/datum/material/iron)]
+	blocks["metal_cost"] = assembly.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 
 	// Block 2. Components.
@@ -291,7 +291,7 @@
 		// Update estimated assembly complexity, taken space and material cost
 		blocks["complexity"] += component.complexity
 		blocks["used_space"] += component.size
-		blocks["metal_cost"] += component.custom_materials[getmaterialref(/datum/material/iron)]
+		blocks["metal_cost"] += component.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 		// Check if the assembly requires printer upgrades
 		if(!(component.spawn_flags & IC_SPAWN_DEFAULT))

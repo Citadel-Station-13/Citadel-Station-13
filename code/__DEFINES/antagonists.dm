@@ -37,6 +37,21 @@
 #define HIJACK_HIJACKER 1 //Needs to be present for shuttle to be hijacked
 #define HIJACK_PREVENT 2 //Prevents hijacking same way as non-antags
 
+//Syndicate Contracts
+#define CONTRACT_STATUS_INACTIVE 1
+#define CONTRACT_STATUS_ACTIVE 2
+#define CONTRACT_STATUS_BOUNTY_CONSOLE_ACTIVE 3
+#define CONTRACT_STATUS_EXTRACTING 4
+#define CONTRACT_STATUS_COMPLETE 5
+#define CONTRACT_STATUS_ABORTED 6
+
+#define CONTRACT_PAYOUT_LARGE 1
+#define CONTRACT_PAYOUT_MEDIUM 2
+#define CONTRACT_PAYOUT_SMALL 3
+
+#define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
+#define CONTRACT_UPLINK_PAGE_HUB "HUB"
+
 //Overthrow time to update heads obj
 #define OBJECTIVE_UPDATING_TIME 300
 

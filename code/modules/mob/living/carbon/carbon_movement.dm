@@ -9,8 +9,6 @@
 			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
 		if(legcuffed)
 			. += legcuffed.slowdown
-	if(stat == SOFT_CRIT)
-		. += SOFTCRIT_ADD_SLOWDOWN
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING && !(lube & FLYING_DOESNT_HELP))
@@ -43,3 +41,10 @@
 			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10
+
+/mob/living/carbon/can_move_under_living(mob/living/other)
+	. = ..()
+	if(!.)		//we failed earlier don't need to fail again
+		return
+	if(!other.lying && lying)		//they're up, we're down.
+		return FALSE

@@ -17,7 +17,7 @@
 	if(gibs_reagent_id)
 		reagents.add_reagent(gibs_reagent_id, 5)
 	if(gibs_bloodtype)
-		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype, diseases))
+		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype), diseases)
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()

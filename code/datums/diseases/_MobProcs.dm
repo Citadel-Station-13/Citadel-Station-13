@@ -21,7 +21,7 @@
 		return FALSE
 
 
-	if(!(type in D.viable_mobtypes))
+	if(!D.viable_mobtypes[type])
 		return FALSE
 
 	return TRUE

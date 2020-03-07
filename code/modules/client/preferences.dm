@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"has_cock" = FALSE,
 		"cock_shape" = "Human",
 		"cock_length" = 6,
-		"cock_girth_ratio" = COCK_GIRTH_RATIO_DEF,
+		"cock_diameter_ratio" = COCK_DIAMETER_RATIO_DEF,
 		"cock_color" = "fff",
 		"has_sheath" = FALSE,
 		"sheath_color" = "fff",
