@@ -298,18 +298,14 @@
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/ashen_arrow
-	name = "Bonfire-Hardened Arrow"
+	name = "Fire Hardened Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/ashen
-	tools = list(/obj/structure/bonfire)
+	tools = list(TOOL_WELDER)
 	time = 30
 	always_availible = FALSE
 	reqs = list(/obj/item/ammo_casing/caseless/arrow = 1)
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
-
-/datum/crafting_recipe/ashen_arrow/welder
-	name = "Welder-Hardened Arrow"
-	tools = list(TOOL_WELDER)
 
 /datum/crafting_recipe/smartdart
 	name = "Medical smartdart"
