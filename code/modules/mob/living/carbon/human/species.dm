@@ -1296,12 +1296,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
+			H.remove_movespeed_modifier(MOVESPEED_ID_FAT)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration >= 100)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
 			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
+			H.add_movespeed_modifier(MOVESPEED_ID_FAT, multiplicative_slowdown = 1.5)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
@@ -1352,6 +1354,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
 		H.metabolism_efficiency = 1
 
+	//Hunger slowdown for if mood isn't enabled
+	if(CONFIG_GET(flag/disable_human_mood))
+		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
+			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
+			if(hungry >= 70)
+				H.add_movespeed_modifier(MOVESPEED_ID_HUNGRY, override = TRUE, multiplicative_slowdown = (hungry / 50))
+			else
+				H.remove_movespeed_modifier(MOVESPEED_ID_HUNGRY)
+
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			H.throw_alert("nutrition", /obj/screen/alert/fat)
@@ -1400,59 +1411,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.facial_hair_style = "Shaved"
 	H.hair_style = "Bald"
 	H.update_hair()
-
-////////////////
-// MOVE SPEED //
-////////////////
-
-/datum/species/proc/movement_delay(mob/living/carbon/human/H)
-	. = 0	//We start at 0.
-	var/flight = 0	//Check for flight and flying items
-	var/gravity = 0
-	if(H.movement_type & FLYING)
-		flight = 1
-
-	gravity = H.has_gravity()
-
-	if (H.m_intent == MOVE_INTENT_WALK && HAS_TRAIT(H, TRAIT_SPEEDY_STEP))
-		. -= 1.5
-
-	if(!HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN) && gravity)
-		if(H.wear_suit)
-			. += H.wear_suit.slowdown
-		if(H.shoes)
-			. += H.shoes.slowdown
-		if(H.back)
-			. += H.back.slowdown
-		for(var/obj/item/I in H.held_items)
-			if(I.item_flags & SLOWS_WHILE_IN_HAND)
-				. += I.slowdown
-		var/stambufferinfluence = (H.bufferedstam*(100/H.stambuffer))*0.2 //CIT CHANGE - makes stamina buffer influence movedelay
-		var/health_deficiency = ((100 + stambufferinfluence) - H.health + (H.getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss on movement speed and makes stamina buffer influence movedelay
-		if(health_deficiency >= 40)
-			if(flight)
-				. += ((health_deficiency-39) / 75) // CIT CHANGE - adds -39 to health deficiency penalty to make the transition to low health movement a little less jarring
-			else
-				. += ((health_deficiency-39) / 25) // CIT CHANGE - ditto
-		if(CONFIG_GET(flag/disable_human_mood))
-			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
-			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
-				. += hungry / 50
-
-		//Moving in high gravity is very slow (Flying too)
-		if(gravity > STANDARD_GRAVITY)
-			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
-			. += 1 + grav_force
-
-		if(HAS_TRAIT(H, TRAIT_FAT))
-			. += (1.5 - flight)
-		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
-			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
-	return .
-
-//////////////////
-// ATTACK PROCS //
-//////////////////
 
 //////////////////
 // ATTACK PROCS //
@@ -2070,6 +2028,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
+		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+
 		var/burn_damage
 		var/firemodifier = H.fire_stacks / 50
 		if (H.on_fire)
@@ -2085,6 +2045,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+		//Sorry for the nasty oneline but I don't want to assign a variable on something run pretty frequently
+		H.add_movespeed_modifier(MOVESPEED_ID_COLD, override = TRUE, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
@@ -2094,6 +2056,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
 
 	else
+		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 

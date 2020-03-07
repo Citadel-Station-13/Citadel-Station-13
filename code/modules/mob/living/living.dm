@@ -727,6 +727,7 @@
 	return name
 
 /mob/living/update_gravity(has_gravity,override = 0)
+	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
