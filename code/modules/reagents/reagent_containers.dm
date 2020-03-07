@@ -153,9 +153,9 @@
 		log_reagent("SPLASH - [src] object SplashReagents() onto [target] at [T] ([AREACOORD(T)])[throwerstring] - [reagents.log_list()]")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
 		if(QDELETED(src))
 			return
-
 	if (!bartender_check(target)) // Needs to check for Bartender Slide before spilling.
 		reagents.clear_reagents() // Clear reagents of thrown container.
 
