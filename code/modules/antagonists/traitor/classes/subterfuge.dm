@@ -7,11 +7,9 @@
 /datum/traitor_class/human/subterfuge/forge_single_objective(datum/antagonist/traitor/T)
 	.=1
 	var/assassin_prob = 30
-	var/is_dynamic = FALSE
 	var/datum/game_mode/dynamic/mode
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
-		is_dynamic = TRUE
 		assassin_prob = max(0,mode.threat_level-40)
 	if(prob(assassin_prob))
 		if(prob(assassin_prob))
