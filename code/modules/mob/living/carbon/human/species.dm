@@ -1825,6 +1825,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return
+		if(!IS_COMBAT_ACTIVE(user))
+			to_chat(user, "<span class='warning'>Your muscles need to be tensed to do that!</span>")
+			return
 		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
 			to_chat(user, "<span class='warning'>You can't seem to force yourself up right now!</span>")
 			return

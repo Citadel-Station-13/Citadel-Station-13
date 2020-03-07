@@ -16,7 +16,7 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(IS_SPRINT_TOGGLED(user))
+	if(IS_SPRINT_ACTIVE(user))
 		icon_state = "act_sprint_on"
 	else if(IS_SPRINT_LOCKED(user))
 		icon_state = "act_sprint_locked"

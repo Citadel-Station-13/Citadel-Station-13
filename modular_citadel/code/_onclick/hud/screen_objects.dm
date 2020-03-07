@@ -22,7 +22,7 @@
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(IS_COMBAT_TOGGLED(user))
+	if(IS_COMBAT_ACTIVE(user))
 		icon_state = "combat"
 	else if(IS_COMBAT_MODE_LOCKED(user))
 		icon_state = "combat_locked"

@@ -27,8 +27,12 @@
 
 /mob/living/carbon/update_stamina()
 	var/total_health = getStaminaLoss()
-	if(!IS_SOFT_STAMCRITTED(src) && (total_health >= STAMINA_SOFTCRIT))
-		ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
+	if(total_health >= STAMINA_SOFTCRIT)
+		if(!IS_SOFT_STAMCRITTED(src))
+			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
+	else
+		if(IS_SOFT_STAMCRITTED(src))
+			DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
 	if(total_health)
 		if(!IS_HARD_STAMCRITTED(src) && total_health >= STAMINA_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
