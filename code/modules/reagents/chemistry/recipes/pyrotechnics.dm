@@ -115,8 +115,8 @@
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
 	// 100 multiplier = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
-	// 200 multiplier = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, round(multiplier / 12), round(multiplier / 7), 1)
+	// 200 multiplier = used to be 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades. Shouldn't be all that much higher now.
+	empulse(location, round(log(2.25, multiplier)), round(log(1.75, multiplier)), 1)
 	holder.clear_reagents()
 
 
