@@ -150,6 +150,15 @@
 	result = /obj/item/reagent_containers/food/snacks/burger/chicken
 	subcategory = CAT_BURGER
 
+/datum/crafting_recipe/food/crabburger
+	name = "Crab Burger"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/meat/crab = 2,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/crab
+	subcategory = CAT_BURGER
+
 /datum/crafting_recipe/food/fishburger
 	name = "Fish burger"
 	reqs = list(

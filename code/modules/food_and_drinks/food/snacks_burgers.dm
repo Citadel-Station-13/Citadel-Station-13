@@ -331,6 +331,14 @@
 	tastes = list("bun" = 2, "assistant" = 4)
 	foodtype = GRAIN | MEAT | DAIRY
 
+/obj/item/reagent_containers/food/snacks/burger/crab
+	name = "crab burger"
+	desc = "A delicious patty of the crabby kind, slapped in between a bun."
+	icon_state = "crabburger"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("bun" = 2, "crab meat" = 4)
+	foodtype = GRAIN | MEAT
+
 /obj/item/reagent_containers/food/snacks/burger/rib
 	name = "mcrib"
 	desc = "An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it."
