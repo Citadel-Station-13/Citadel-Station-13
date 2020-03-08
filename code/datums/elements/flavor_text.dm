@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 //subtypes with additional hooks for DNA and preferences.
 /datum/element/flavor_text/carbon
 
-/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _proc, _name = "Flavor Text", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
+/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
 	if(!iscarbon(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
