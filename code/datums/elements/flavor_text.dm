@@ -4,12 +4,13 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 3
 	var/flavor_name = "Flavor Text"
-	var/list/texts_by_mob = list()
+	var/list/texts_by_atom = list()
 	var/addendum = "This can also be used for OOC notes and preferences!"
 	var/always_show = FALSE
 	var/max_len = MAX_FAVOR_LEN
+	var/can_edit = TRUE
 
-/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
+/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, _edit = TRUE)
 	. = ..()
 
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target)) //no reason why this shouldn't work on atoms too.
@@ -17,12 +18,13 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 
 	if(_max_len)
 		max_len = _max_len
-	texts_by_mob[target] = copytext(text, 1, max_len)
+	texts_by_atom[target] = copytext(text, 1, max_len)
 	if(_name)
 		flavor_name = _name
 	if(!isnull(addendum))
 		addendum = _addendum
 	always_show = _always_show
+	can_edit = _edit
 
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
 
@@ -34,12 +36,12 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 /datum/element/flavor_text/Detach(atom/A)
 	. = ..()
 	UnregisterSignal(A, COMSIG_PARENT_EXAMINE)
-	texts_by_mob -= A
-	LAZYREMOVE(GLOB.mobs_with_editable_flavor_text[A], src)
-	if(!GLOB.mobs_with_editable_flavor_text[A])
-		GLOB.mobs_with_editable_flavor_text -= A
-		if(ismob(A))
-			var/mob/M = A
+	texts_by_atom -= A
+	if(can_edit && ismob(A))
+		var/mob/M = A
+		LAZYREMOVE(GLOB.mobs_with_editable_flavor_text[M], src)
+		if(!GLOB.mobs_with_editable_flavor_text[M])
+			GLOB.mobs_with_editable_flavor_text -= M
 			M.verbs -= /mob/proc/manage_flavor_tests
 
 /datum/element/flavor_text/proc/show_flavor(atom/target, mob/user, list/examine_list)
@@ -113,7 +115,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 //subtypes with additional hooks for DNA and preferences.
 /datum/element/flavor_text/carbon
 
-/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
+/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, _edit = TRUE)
 	if(!iscarbon(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
