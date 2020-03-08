@@ -12,7 +12,6 @@
 	sight = SEE_SELF
 	move_on_shuttle = FALSE
 
-/mob/camera/Initialize()
 /mob/camera/experience_pressure_difference()
 	return
 
