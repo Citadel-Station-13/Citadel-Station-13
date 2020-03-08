@@ -37242,6 +37242,7 @@
 /area/maintenance/disposal/incinerator)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "dQC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -37279,6 +37280,8 @@
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
 =======
+=======
+>>>>>>> parent of bb4df4213a... commit
 "dOl" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/westright{
@@ -37293,6 +37296,9 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+<<<<<<< HEAD
+>>>>>>> parent of bb4df4213a... commit
+=======
 >>>>>>> parent of bb4df4213a... commit
 "dYC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -37897,6 +37903,7 @@
 /area/engine/atmos)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "gYi" = (
 /obj/structure/lattice/catwalk,
 /obj/item/stack/marker_beacon{
@@ -37920,6 +37927,15 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 >>>>>>> parent of a500474457... commit
+=======
+"gXd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/tcommsat/server)
+>>>>>>> parent of bb4df4213a... commit
 =======
 "gXd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -38146,6 +38162,7 @@
 /area/science/mixing)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "iiW" = (
 /obj/effect/turf_decal/stripes/line{
@@ -38158,6 +38175,8 @@
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
 =======
+=======
+>>>>>>> parent of bb4df4213a... commit
 "iqh" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -38172,6 +38191,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+<<<<<<< HEAD
+>>>>>>> parent of bb4df4213a... commit
+=======
 >>>>>>> parent of bb4df4213a... commit
 "iqC" = (
 /obj/machinery/air_sensor/atmos/carbon_tank,
@@ -38263,6 +38285,7 @@
 /area/science/mixing)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "iUW" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -38290,6 +38313,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 >>>>>>> parent of a500474457... commit
+=======
+>>>>>>> parent of bb4df4213a... commit
 =======
 >>>>>>> parent of bb4df4213a... commit
 "iVy" = (
@@ -38498,6 +38523,7 @@
 /area/engine/atmos)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "jIk" = (
 /obj/item/assembly/signaler{
@@ -38511,6 +38537,11 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
+=======
+"jKX" = (
+/turf/open/floor/wood,
+/area/library)
+>>>>>>> parent of bb4df4213a... commit
 =======
 "jKX" = (
 /turf/open/floor/wood,
@@ -38536,6 +38567,7 @@
 /area/science/mixing)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "jRe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -38552,6 +38584,8 @@
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
 =======
+=======
+>>>>>>> parent of bb4df4213a... commit
 "jOt" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -38566,6 +38600,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+<<<<<<< HEAD
+>>>>>>> parent of bb4df4213a... commit
+=======
 >>>>>>> parent of bb4df4213a... commit
 "kaA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -38988,6 +39025,7 @@
 /area/science/mixing)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "mIo" = (
 /turf/open/floor/wood,
 /area/library)
@@ -39012,10 +39050,15 @@
 /area/hallway/primary/port/fore)
 >>>>>>> parent of a500474457... commit
 =======
+=======
+>>>>>>> parent of bb4df4213a... commit
 "mzQ" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
+<<<<<<< HEAD
+>>>>>>> parent of bb4df4213a... commit
+=======
 >>>>>>> parent of bb4df4213a... commit
 "mJP" = (
 /obj/machinery/igniter{
@@ -39794,6 +39837,7 @@
 /area/hallway/primary/aft)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "rxY" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -39807,6 +39851,8 @@
 /turf/closed/wall,
 /area/science/mixing)
 >>>>>>> parent of a500474457... commit
+=======
+>>>>>>> parent of bb4df4213a... commit
 =======
 >>>>>>> parent of bb4df4213a... commit
 "rzn" = (
@@ -43470,6 +43516,7 @@
 /area/hallway/primary/starboard/fore)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "vZD" = (
 /obj/machinery/bookbinder,
 /obj/structure/cable/white{
@@ -43499,6 +43546,8 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/aft)
 >>>>>>> parent of a500474457... commit
+=======
+>>>>>>> parent of bb4df4213a... commit
 =======
 >>>>>>> parent of bb4df4213a... commit
 "wdt" = (
@@ -43861,6 +43910,7 @@
 /area/science/mixing)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 "yeE" = (
 /obj/machinery/door/window/brigdoor{
@@ -43885,6 +43935,9 @@
 =======
 "yeh" = (
 >>>>>>> parent of bb4df4213a... commit
+=======
+"yeh" = (
+>>>>>>> parent of bb4df4213a... commit
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -43895,6 +43948,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 <<<<<<< HEAD
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
@@ -43908,6 +43962,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft)
 >>>>>>> parent of a500474457... commit
+=======
+/turf/open/floor/wood,
+/area/library)
+>>>>>>> parent of bb4df4213a... commit
 =======
 /turf/open/floor/wood,
 /area/library)
@@ -73100,6 +73158,7 @@ aHi
 aSs
 aWp
 <<<<<<< HEAD
+<<<<<<< HEAD
 shw
 =======
 uok
@@ -73112,6 +73171,9 @@ sII
 =======
 nJz
 >>>>>>> parent of bb4df4213a... commit
+=======
+nJz
+>>>>>>> parent of bb4df4213a... commit
 aJm
 aKv
 aLJ
@@ -73119,6 +73181,7 @@ aMM
 aNW
 aOx
 buC
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 fFd
@@ -73129,6 +73192,11 @@ bxp
 sJP
 aPG
 >>>>>>> parent of a500474457... commit
+=======
+pSA
+sJP
+gXd
+>>>>>>> parent of bb4df4213a... commit
 =======
 pSA
 sJP
@@ -78829,10 +78897,14 @@ aUf
 aUX
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 gVH
 =======
 aVQ
 >>>>>>> parent of a500474457... commit
+=======
+yeh
+>>>>>>> parent of bb4df4213a... commit
 =======
 yeh
 >>>>>>> parent of bb4df4213a... commit
@@ -79095,7 +79167,11 @@ aUX
 aVR
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 gVH
+=======
+yeh
+>>>>>>> parent of bb4df4213a... commit
 =======
 yeh
 >>>>>>> parent of bb4df4213a... commit
@@ -79376,6 +79452,7 @@ aRY
 aTg
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 vZD
 bxS
 aVS
@@ -79386,6 +79463,12 @@ bxS
 aVS
 aWE
 >>>>>>> parent of a500474457... commit
+=======
+dwa
+bxS
+aVS
+jKX
+>>>>>>> parent of bb4df4213a... commit
 =======
 dwa
 bxS
@@ -81686,10 +81769,14 @@ aAH
 aBQ
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 oAK
 =======
 azD
 >>>>>>> parent of a500474457... commit
+=======
+jOt
+>>>>>>> parent of bb4df4213a... commit
 =======
 jOt
 >>>>>>> parent of bb4df4213a... commit
@@ -82462,6 +82549,7 @@ axJ
 ayB
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 paK
 aAH
 aBS
@@ -82472,6 +82560,12 @@ aAH
 aBS
 azD
 >>>>>>> parent of a500474457... commit
+=======
+iqh
+aAH
+aBS
+ivp
+>>>>>>> parent of bb4df4213a... commit
 =======
 iqh
 aAH
@@ -83308,6 +83402,7 @@ bgU
 <<<<<<< HEAD
 sNM
 <<<<<<< HEAD
+<<<<<<< HEAD
 rxY
 rxY
 rxY
@@ -83320,10 +83415,15 @@ aaa
 aaa
 >>>>>>> parent of a500474457... commit
 =======
+=======
+>>>>>>> parent of bb4df4213a... commit
 mzQ
 mzQ
 mzQ
 wmV
+<<<<<<< HEAD
+>>>>>>> parent of bb4df4213a... commit
+=======
 >>>>>>> parent of bb4df4213a... commit
 aaa
 aaa
@@ -84094,6 +84194,7 @@ bgU
 <<<<<<< HEAD
 sNM
 <<<<<<< HEAD
+<<<<<<< HEAD
 rxY
 rxY
 rxY
@@ -84106,10 +84207,15 @@ aaa
 aaa
 >>>>>>> parent of a500474457... commit
 =======
+=======
+>>>>>>> parent of bb4df4213a... commit
 mzQ
 mzQ
 mzQ
 wmV
+<<<<<<< HEAD
+>>>>>>> parent of bb4df4213a... commit
+=======
 >>>>>>> parent of bb4df4213a... commit
 aaa
 aaa
@@ -90199,10 +90305,14 @@ ado
 aiI
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 nVm
 =======
 ajI
 >>>>>>> parent of a500474457... commit
+=======
+dOl
+>>>>>>> parent of bb4df4213a... commit
 =======
 dOl
 >>>>>>> parent of bb4df4213a... commit
