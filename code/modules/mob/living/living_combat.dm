@@ -72,10 +72,11 @@
 	if(old)
 		disable_intentional_combat_mode()
 		playsound_local(src, 'sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above!
-	else
+	else if(!IS_HARD_STAMCRITTED(src))
 		enable_intentional_combat_mode()
-		playsound_local(src, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
 	var/current = IS_COMBAT_ACTIVE(src)		//because we could be locked
+	if((current != old) && current)		//only sound effect if you succeeded. Could have the feedback system be better but shrug, someone else can do it.
+		playsound_local(src, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
 	if(visible)
 		if(current)
 			if(world.time >= combatmessagecooldown)
