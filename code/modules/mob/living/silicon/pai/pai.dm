@@ -140,6 +140,9 @@
 	AL.Grant(src)
 	ALM.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
+
+/mob/living/silicon/pai/ComponentInitialize()
+	. = ..()
 	if(possible_chassis[chassis])
 		AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 
