@@ -16,7 +16,10 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 			if(istext(argument) || isnum(argument))
 				fullid += "[argument]"
 			else
-				fullid += "[REF(argument)]"
+				if(islist(argument))
+					fullid += deep_list2params(argument)
+				else
+					fullid += "[REF(argument)]"
 		element_id = fullid.Join("&")
 
 	. = elements_by_type[element_id]
