@@ -12,7 +12,6 @@
 	layer = BELOW_MOB_LAYER
 	var/obj/item/instrument/piano_synth/internal_instrument
 	silicon_privileges = PRIVILEDGES_PAI
-	var/datum/element/mob_holder/current_mob_holder //because only a few of their chassis can be actually held.
 
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
@@ -141,6 +140,11 @@
 	AL.Grant(src)
 	ALM.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
+
+/mob/living/silicon/pai/ComponentInitialize()
+	. = ..()
+	if(possible_chassis[chassis])
+		AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 
 /mob/living/silicon/pai/Life()
 	if(hacking)
@@ -302,11 +306,11 @@
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	..()
 	user.set_machine(src)
-	if(pai.encryptmod == TRUE)
-		if(W.tool_behaviour == TOOL_SCREWDRIVER)
-			pai.radio.attackby(W, user, params)
-		else if(istype(W, /obj/item/encryptionkey))
-			pai.radio.attackby(W, user, params)
+	var/encryption_key_stuff = W.tool_behaviour == TOOL_SCREWDRIVER || istype(W, /obj/item/encryptionkey)
+	if(!encryption_key_stuff)
+		return
+	if(pai?.encryptmod)
+		pai.radio.attackby(W, user, params)
 	else
 		to_chat(user, "Encryption Key ports not configured.")
 
