@@ -250,7 +250,7 @@
 				return 0
 			if(user.voremode && user.grab_state == GRAB_AGGRESSIVE)
 				return 0
-		user.grab_state++
+		user.setGrabState(user.grab_state + 1)
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
 				var/add_log = ""

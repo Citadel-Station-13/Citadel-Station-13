@@ -9,8 +9,8 @@
 
 /mob/living/carbon/human/movement_delay()
 	. = ..()
-	if(dna && dna.species)
-		. += dna.species.movement_delay(src)
+	if (m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_SPEEDY_STEP))
+		. -= 1.5
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
