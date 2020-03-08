@@ -420,7 +420,7 @@
 			return
 		if(I == legcuffed)
 			legcuffed.forceMove(drop_location())
-			legcuffed.dropped()
+			legcuffed.dropped(src)
 			legcuffed = null
 			update_inv_legcuffed()
 			return
