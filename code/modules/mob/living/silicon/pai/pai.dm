@@ -12,7 +12,6 @@
 	layer = BELOW_MOB_LAYER
 	var/obj/item/instrument/piano_synth/internal_instrument
 	silicon_privileges = PRIVILEDGES_PAI
-	var/datum/element/mob_holder/current_mob_holder //because only a few of their chassis can be actually held.
 
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
@@ -141,6 +140,8 @@
 	AL.Grant(src)
 	ALM.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
+	if(possible_chassis[chassis])
+		AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 
 /mob/living/silicon/pai/Life()
 	if(hacking)
