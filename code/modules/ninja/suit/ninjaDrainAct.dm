@@ -264,7 +264,6 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		electrocute_act(15, H)
 
 		DefaultCombatKnockdown(G.stunforce)
-		adjustStaminaLoss(G.stunforce*0.1, affected_zone = (istype(H) ? H.zone_selected : BODY_ZONE_CHEST))
 		apply_effect(EFFECT_STUTTER, G.stunforce)
 		SEND_SIGNAL(src, COMSIG_LIVING_MINOR_SHOCK)
 

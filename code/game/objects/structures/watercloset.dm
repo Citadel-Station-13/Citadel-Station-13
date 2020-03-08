@@ -444,17 +444,12 @@
 		C.adjustFireLoss(5)
 		to_chat(C, "<span class='danger'>The water is searing!</span>")
 
-
-
-
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
-
-
 
 /obj/structure/sink
 	name = "sink"
@@ -464,7 +459,6 @@
 	anchored = TRUE
 	var/busy = FALSE 	//Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
-
 
 /obj/structure/sink/attack_hand(mob/living/user)
 	. = ..()
@@ -578,12 +572,82 @@
 	new /obj/item/stack/sheet/metal (loc, 3)
 	qdel(src)
 
-
-
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
 	icon_state = "sink_alt"
 
+/obj/structure/sink/well
+	name = "well"
+	desc = "A well, used to get water from an underground reservoir."
+	icon_state = "well"
+
+//The making of the well
+/obj/structure/well_foundation
+	name = "well foundation"
+	desc = "A small patch of dirt, ready for a well to be made over it. Just use a shovel!"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "well_1"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 1000
+	var/steps = 0
+
+/obj/structure/well_foundation/attackby(obj/item/S, mob/user, params)
+	if(steps == 0 && S.tool_behaviour == TOOL_SHOVEL)
+		S.use_tool(src, user, 80, volume=100)
+		steps = 1
+		desc = "A deep patch of dirt, ready for a well to be made over it. Just add some sandstone!"
+		icon_state = "well_1"
+		return TRUE
+	if(steps == 1 && istype(S, /obj/item/stack/sheet/mineral/sandstone))
+		if(S.use(15))
+			steps = 2
+			desc = "A patch of dirt and bricks. Just add some more sandstone!"
+			icon_state = "well_2"
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>You need at least fifteen pieces of sandstone!</span>")
+			return
+	if(steps == 2 && istype(S, /obj/item/stack/sheet/mineral/sandstone))
+		if(S.use(25))
+			steps = 3
+			desc = "A large well foundation ready to be dug out. Just use a shovel!"
+			icon_state = "well_3"
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>You need at least tweenty-five pieces of sandstone!</span>")
+			return
+	if(steps == 3 && S.tool_behaviour == TOOL_SHOVEL)
+		S.use_tool(src, user, 80, volume=100)
+		steps = 4
+		desc = "A deep patch of dirt, needs something to hold a bucket and rope. Just add some wood planks!"
+		icon_state = "well_3"
+		return TRUE
+	if(steps == 4 && istype(S, /obj/item/stack/sheet/mineral/wood))
+		if(S.use(3))
+			steps = 5
+			desc = "A dug out well, A dug out well with out rope. Just add some cloth!"
+			icon_state = "well_4"
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>You need at least three planks!</span>")
+			return
+	if(steps == 5 && istype(S, /obj/item/stack/sheet/cloth))
+		if(S.use(2))
+			steps = 6
+			desc = "A dug out well with a rope. Just add a wooden bucket!"
+			icon_state = "well_5"
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>You need at least two pieces of cloth!</span>")
+			return
+	if(steps == 6 && istype(S, /obj/item/reagent_containers/glass/bucket/wood))
+		new /obj/structure/sink/well(loc)
+		qdel(S)
+		qdel(src)
+		return
+	else
+		return ..()
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"

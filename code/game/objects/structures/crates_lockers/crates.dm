@@ -83,9 +83,12 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
+	can_weld_shut = FALSE
+	breakout_time = 200
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
+	var/pryLidTimer = 250
 
 /obj/structure/closet/crate/coffin/examine(mob/user)
 	. = ..()

@@ -173,6 +173,32 @@
 "aay" = (
 /turf/open/floor/plating,
 /area/security/prison)
+"aaz" = (
+/obj/machinery/disposal/bin,
+/obj/structure/sign/plaques/deempisi{
+	pixel_x = -28;
+	pixel_y = -4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "barShutters";
+	name = "bar shutters";
+	pixel_x = 4;
+	pixel_y = 28
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/light_switch{
+	name = "Bar Lights";
+	pixel_x = -6;
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "aaA" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/plasteel,
@@ -11918,8 +11944,8 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aDr" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
@@ -11944,8 +11970,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
@@ -12442,6 +12468,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aEP" = (
@@ -12902,6 +12929,7 @@
 "aGa" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
 "aGb" = (
@@ -12932,6 +12960,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
 "aGd" = (
@@ -13603,6 +13632,7 @@
 /area/storage/primary)
 "aHF" = (
 /obj/structure/sign/warning/securearea,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/nuke_storage)
 "aHG" = (
@@ -16497,27 +16527,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"aPw" = (
-/obj/machinery/disposal/bin,
-/obj/structure/sign/plaques/deempisi{
-	pixel_x = -28;
-	pixel_y = -4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "barShutters";
-	name = "bar shutters";
-	pixel_x = 4;
-	pixel_y = 28
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
 "aPx" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1
@@ -27589,6 +27598,7 @@
 /area/hallway/primary/central)
 "bqF" = (
 /obj/machinery/vending/cigarette/beach,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bqG" = (
@@ -28249,10 +28259,6 @@
 "bsc" = (
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-"bsf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/dark,
-/area/hallway/primary/central)
 "bsg" = (
 /obj/structure/table,
 /obj/item/hand_labeler,
@@ -52552,6 +52558,12 @@
 /obj/structure/sign/poster/official/cohiba_robusto_ad,
 /turf/closed/wall,
 /area/lawoffice)
+"cIw" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
 "cMC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -55407,6 +55419,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"luR" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "lva" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -55590,6 +55606,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"mvZ" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
 "myh" = (
 /obj/structure/piano,
 /obj/structure/window/reinforced,
@@ -55655,6 +55677,13 @@
 	dir = 1
 	},
 /area/hallway/primary/starboard)
+"mOi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
 "mOB" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -55763,6 +55792,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
+"mVY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/circuit,
+/area/ai_monitored/nuke_storage)
 "naI" = (
 /turf/open/space,
 /area/space/station_ruins)
@@ -55858,6 +55891,17 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"nyZ" = (
+/obj/structure/sign/warning/securearea,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/ai_monitored/nuke_storage)
+"nFC" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
 "nGf" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light{
@@ -55939,10 +55983,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"nXE" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel/dark,
-/area/hallway/primary/central)
 "nYe" = (
 /obj/structure/safe,
 /obj/item/clothing/head/bearpelt,
@@ -56925,6 +56965,11 @@
 /obj/item/gun/energy/laser/practice,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"saN" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/fore)
 "saU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -80067,7 +80112,7 @@ aqQ
 aqQ
 awa
 axq
-ayD
+saN
 azI
 rjQ
 aBU
@@ -87299,7 +87344,7 @@ aBa
 bqD
 bsa
 vCn
-bsa
+mOi
 bsa
 nbT
 byS
@@ -87550,13 +87595,13 @@ xUL
 aBb
 gpD
 aDr
-aEM
+mVY
 aGa
 aHF
 bqF
-bsa
-nXE
 buQ
+buQ
+nFC
 buQ
 bxI
 bwa
@@ -88066,11 +88111,11 @@ xEB
 aDt
 aEO
 aGc
-aHF
+nyZ
 aKG
-bsf
 dml
 dml
+mvZ
 dml
 bxK
 bwh
@@ -88327,7 +88372,7 @@ aBa
 bqG
 bsa
 eih
-bsa
+cIw
 bsa
 nbT
 bwb
@@ -95500,7 +95545,7 @@ aLU
 aKQ
 aNu
 aJC
-aPw
+aaz
 egt
 aQc
 aSZ
@@ -104481,7 +104526,7 @@ hHQ
 feE
 hHQ
 kGJ
-avI
+luR
 asA
 apE
 dPk
