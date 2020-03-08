@@ -1,0 +1,5 @@
+author: "actioninja, ninjanomnom"
+delete-after: True
+changes: 
+  - tweak: "Being fat is no longer lessened by flying."
+  - bugfix: "The slowdown from grabbing someone no longer applies when you're floating."

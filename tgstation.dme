@@ -153,7 +153,6 @@
 #include "code\__HELPERS\text_vr.dm"
 #include "code\__HELPERS\time.dm"
 #include "code\__HELPERS\type2type.dm"
-#include "code\__HELPERS\type2type_vr.dm"
 #include "code\__HELPERS\typelists.dm"
 #include "code\__HELPERS\unsorted.dm"
 #include "code\__HELPERS\vector.dm"
