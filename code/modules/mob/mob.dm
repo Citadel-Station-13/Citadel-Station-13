@@ -955,6 +955,9 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	. = ..()
 	update_movespeed(FALSE)
 
+/mob/proc/getLAssailant()
+	return LAssailant?.resolve()
+
 /// Updates the grab state of the mob and updates movespeed
 /mob/setGrabState(newstate)
 	. = ..()
