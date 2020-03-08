@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/fixed_mut_color3 = ""
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
-	var/should_draw_citadel = FALSE
+	var/icon_limbs //Overrides the icon used for the limbs of this species. Mainly for downstream, and also because hardcoded icons disgust me. Implemented and maintained as a favor in return for a downstream's implementation of synths.
 
 ///////////
 // PROCS //
