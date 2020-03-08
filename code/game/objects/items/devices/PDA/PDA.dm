@@ -226,7 +226,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = ..()
 	if(new_overlays)
 		set_new_overlays()
-	. += new_alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN]
 	var/screen_state = new_alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN]
 	var/mutable_appearance/overlay = mutable_appearance(icon, screen_state)
 	overlay.pixel_x = overlays_x_offset
