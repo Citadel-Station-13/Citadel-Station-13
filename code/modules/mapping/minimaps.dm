@@ -67,7 +67,10 @@
 /datum/minimap_group
 	var/list/minimaps = list()
 	var/static/next_id = 0
-	var/id = ++next_id
+	var/id
+
+/datum/minimap_group/New()
+	id = ++next_id
 
 /datum/minimap_group/proc/show(mob/user)
 	if(!length(minimaps))
@@ -75,11 +78,12 @@
 		return
 	var/list/datas = list()
 	var/list/info = list()
+	var/datum/minimap/first_map = minimaps[1]
 	for(var/i in 1 to length(minimaps))
 		var/datum/minimap/M = minimaps[i]
 		M.send(user)
-		info += "<img src='minimap-[map.id].png' id='map-[i]'><img src='minimap-[map.id]-meta.png' style='display: none' id='map-[i]-meta'><div id='label-[i]'></div>"
-		datas += json_encode(map.color_area_names);
+		info += "<img src='minimap-[M.id].png' id='map-[i]'><img src='minimap-[M.id]-meta.png' style='display: none' id='map-[i]-meta'><div id='label-[i]'></div>"
+		datas += json_encode(M.color_area_names);
 	info = info.Join()
 
 	var/html = {"
@@ -144,3 +148,5 @@ window.onload = function() {
 </HTML>"}
 
 	user << browse(html, "window=minimap_[id];size=768x[round(768 / first_map.map_icon.Width() * first_map.map_icon.Height() + 50)]")
+
+#warn WIP: GRAB COLORS FROM https://github.com/yogstation13/Yogstation/pull/7133/files!
