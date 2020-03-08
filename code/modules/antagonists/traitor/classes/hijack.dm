@@ -4,7 +4,7 @@
 	weight = 1
 	chaos = 5
 	cost = 5
-	uplink_filters = list(/datum/uplink_item/stealthy_weapons/romerol_kit,/datum/uplink_item/bundles_TC/contract_kit)
+	uplink_filters = list(/datum/uplink_item/stealthy_weapons/romerol_kit)
 
 /datum/traitor_class/human/hijack/forge_objectives(datum/antagonist/traitor/T)
 	var/datum/objective/hijack/O = new
@@ -12,3 +12,6 @@
 	O.owner = T.owner
 	T.add_objective(O)
 	return
+
+/datum/traitor_class/human/hijack/finalize_traitor(datum/antagonist/traitor/T)
+	T.hijack_speed=1
