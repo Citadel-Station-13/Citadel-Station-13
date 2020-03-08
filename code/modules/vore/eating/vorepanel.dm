@@ -574,7 +574,7 @@
 		if(new_bulge == 0) //Disable.
 			selected.bulge_size = 0
 			to_chat(user,"<span class='notice'>Your stomach will not be seen on examine.</span>")
-		else if (!IsInRange(new_bulge,25,200))
+		else if (!ISINRANGE(new_bulge,25,200))
 			selected.bulge_size = 0.25 //Set it to the default.
 			to_chat(user,"<span class='notice'>Invalid size.</span>")
 		else if(new_bulge)

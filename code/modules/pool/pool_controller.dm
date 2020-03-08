@@ -79,6 +79,7 @@
 	linked_filter = null
 	linked_turfs.Cut()
 	mobs_in_pool.Cut()
+	mist_off()
 	return ..()
 
 /obj/machinery/pool/controller/proc/scan_things()
@@ -411,6 +412,7 @@
 /obj/machinery/pool/controller/proc/mist_on() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
 	if(mist_state)
 		return
+	mist_off()			//make sure it cycles and deletes everything 
 	mist_state = TRUE
 	for(var/X in linked_turfs)
 		var/turf/open/pool/W = X
@@ -419,6 +421,5 @@
 			linked_mist += M
 
 /obj/machinery/pool/controller/proc/mist_off() //Delete all /obj/effect/mist from all linked pool tiles.
-	for(var/M in linked_mist)
-		qdel(M)
+	QDEL_LIST(linked_mist)
 	mist_state = FALSE

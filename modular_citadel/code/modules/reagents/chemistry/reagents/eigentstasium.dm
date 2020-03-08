@@ -155,7 +155,7 @@
 		M.Sleeping(100, 0)
 		M.Jitter(50)
 		M.DefaultCombatKnockdown(100)
-		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
+		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself.</span>")
 		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 		log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
 		M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
