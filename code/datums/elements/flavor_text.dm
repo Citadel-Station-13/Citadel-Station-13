@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 			if(!("...?" in examine_list)) //can't think of anything better in case of multiple flavor texts.
 				examine_list += "...?"
 			return
-	var/text = texts_by_mob[target]
+	var/text = texts_by_atom[target]
 	if(!text)
 		return
 	var/msg = replacetext(text, "\n", " ")
@@ -70,9 +70,9 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		return
 	if(href_list["show_flavor"])
 		var/atom/target = href_list["show_flavor"]
-		var/text = texts_by_mob[target]
+		var/text = texts_by_atom[target]
 		if(text)
-			usr << browse("<HTML><HEAD><TITLE>[target.name]</TITLE></HEAD><BODY><TT>[replacetext(texts_by_mob[target], "\n", "<BR>")]</TT></BODY></HTML>", "window=[target.name];size=500x200")
+			usr << browse("<HTML><HEAD><TITLE>[target.name]</TITLE></HEAD><BODY><TT>[replacetext(texts_by_atom[target], "\n", "<BR>")]</TT></BODY></HTML>", "window=[target.name];size=500x200")
 			onclose(usr, "[target.name]")
 		return TRUE
 
@@ -101,13 +101,13 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	F.set_flavor(src)
 
 /datum/element/flavor_text/proc/set_flavor(mob/user)
-	if(!(user in texts_by_mob))
+	if(!(user in texts_by_atom))
 		return FALSE
 
 	var/lower_name = lowertext(flavor_name)
-	var/new_text = stripped_multiline_input(user, "Set the [lower_name] displayed on 'examine'. [addendum]", flavor_name, texts_by_mob[usr], max_len, TRUE)
-	if(!isnull(new_text) && (user in texts_by_mob))
-		texts_by_mob[user] = html_decode(new_text)
+	var/new_text = stripped_multiline_input(user, "Set the [lower_name] displayed on 'examine'. [addendum]", flavor_name, texts_by_atom[usr], max_len, TRUE)
+	if(!isnull(new_text) && (user in texts_by_atom))
+		texts_by_atom[user] = html_decode(new_text)
 		to_chat(src, "Your [lower_name] has been updated.")
 		return TRUE
 	return FALSE
@@ -131,12 +131,12 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	UnregisterSignal(C, list(COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, COMSIG_HUMAN_PREFS_COPIED_TO, COMSIG_HUMAN_HARDSET_DNA))
 
 /datum/element/flavor_text/carbon/proc/update_dna_flavor_text(mob/living/carbon/C)
-	texts_by_mob[C] = C.dna.features["flavor_text"]
+	texts_by_atom[C] = C.dna.features["flavor_text"]
 
 /datum/element/flavor_text/carbon/proc/update_prefs_flavor_text(mob/living/carbon/human/H, datum/preferences/P, icon_updates = TRUE, roundstart_checks = TRUE)
-	texts_by_mob[H] = P.features["flavor_text"]
+	texts_by_atom[H] = P.features["flavor_text"]
 
 /datum/element/flavor_text/carbon/set_flavor(mob/living/carbon/user)
 	. = ..()
 	if(. && user.dna)
-		user.dna.features["flavor_text"] = texts_by_mob[user]
+		user.dna.features["flavor_text"] = texts_by_atom[user]
