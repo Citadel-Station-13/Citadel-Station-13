@@ -34,7 +34,6 @@
 	var/restricted = FALSE
 	req_access = list()
 
-	var/update = 0
 	var/static/list/label2types = list(
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -213,61 +212,26 @@
 	air_contents.gases[/datum/gas/oxygen] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define HOLDING		(1<<0)
-#define CONNECTED	(1<<1)
-#define EMPTY		(1<<2)
-#define LOW			(1<<3)
-#define MEDIUM		(1<<4)
-#define FULL		(1<<5)
-#define DANGER		(1<<6)
-/obj/machinery/portable_atmospherics/canister/update_icon()
+/obj/machinery/portable_atmospherics/canister/update_icon_state()
 	if(stat & BROKEN)
-		cut_overlays()
 		icon_state = "[icon_state]-1"
-		return
 
-	var/last_update = update
-	update = 0
+/obj/machinery/portable_atmospherics/canister/update_overlays()
+	. = ..()
 
 	if(holding)
-		update |= HOLDING
+		. += "can-open"
 	if(connected_port)
-		update |= CONNECTED
+		. += "can-connector"
 	var/pressure = air_contents.return_pressure()
-	if(pressure < 10)
-		update |= EMPTY
-	else if(pressure < 5 * ONE_ATMOSPHERE)
-		update |= LOW
-	else if(pressure < 10 * ONE_ATMOSPHERE)
-		update |= MEDIUM
-	else if(pressure < 40 * ONE_ATMOSPHERE)
-		update |= FULL
-	else
-		update |= DANGER
-
-	if(update == last_update)
-		return
-
-	cut_overlays()
-	if(update & HOLDING)
-		add_overlay("can-open")
-	if(update & CONNECTED)
-		add_overlay("can-connector")
-	if(update & LOW)
-		add_overlay("can-o0")
-	else if(update & MEDIUM)
-		add_overlay("can-o1")
-	else if(update & FULL)
-		add_overlay("can-o2")
-	else if(update & DANGER)
-		add_overlay("can-o3")
-#undef HOLDING
-#undef CONNECTED
-#undef EMPTY
-#undef LOW
-#undef MEDIUM
-#undef FULL
-#undef DANGER
+	if(pressure >= 40 * ONE_ATMOSPHERE)
+		. += "can-o3"
+	else if(pressure >= 10 * ONE_ATMOSPHERE)
+		. += "can-o2"
+	else if(pressure >= 5 * ONE_ATMOSPHERE)
+		. += "can-o1"
+	else if(pressure >= 10)
+		. += "can-o0"
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
