@@ -61,6 +61,10 @@
 			sound = pick(user.alternate_screams)
 		playsound(user.loc, sound, 50, 1, 4, 1.2)
 		message = "screams!"
+
+		if(isNightmare(user))
+			sound = 'sound/voice/scream/nightmare__onderwish__ghost-scream.ogg'
+		message = "screeches!"
 	else if(miming)
 		message = "acts out a scream."
 	else
