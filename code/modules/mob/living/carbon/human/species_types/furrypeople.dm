@@ -2,7 +2,7 @@
 	name = "Anthromorph"
 	id = "mammal"
 	default_color = "4B4B4B"
-	should_draw_citadel = TRUE
+	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,HORNCOLOR,WINGCOLOR)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BEAST
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "deco_wings", "taur", "horns", "legs")
@@ -55,7 +55,7 @@
 	id = "xeno"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	should_draw_citadel = TRUE
+	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "mam_body_markings", "taur", "legs")
 	default_features = list("xenotail"="Xenomorph Tail","xenohead"="Standard","xenodorsal"="Standard", "mam_body_markings" = "Xeno","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None", "legs" = "Digitigrade")

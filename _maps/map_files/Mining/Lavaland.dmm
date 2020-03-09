@@ -655,7 +655,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "ia" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket/wood,
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
@@ -750,8 +750,23 @@
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
-/obj/item/seeds/tower,
-/obj/item/seeds/tower,
+/obj/item/seeds/ambrosia/deus{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/ambrosia/deus{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/tower{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/tower{
+	yield = 5
+	potency = 50
+	},
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "iJ" = (
@@ -2179,8 +2194,15 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "wm" = (
-/obj/item/seeds/glowshroom,
-/obj/item/seeds/glowshroom,
+/obj/item/seeds/glowshroom{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/glowshroom{
+	yield = 5
+	potency = 50
+	},
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
@@ -3327,8 +3349,15 @@
 	dir = 4
 	},
 /obj/item/storage/bag/plants/portaseeder,
-/obj/item/seeds/cotton,
-/obj/item/seeds/cotton,
+/obj/item/storage/bag/plants,
+/obj/item/seeds/cotton{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/cotton{
+	yield = 5
+	potency = 50
+	},
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "Vj" = (
@@ -3355,10 +3384,9 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "VI" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/well_foundation,
+/obj/item/reagent_containers/glass/bucket/wood,
+/obj/item/reagent_containers/glass/bucket/wood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "VP" = (

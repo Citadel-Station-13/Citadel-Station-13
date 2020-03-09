@@ -73,6 +73,7 @@
 /obj/item/melee/sabre/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+	AddElement(/datum/element/sword_point)
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -180,13 +181,60 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
-	var/cooldown = 13
-	var/on = TRUE
-	var/last_hit = 0
 	var/stun_stam_cost_coeff = 1.25
-	var/hardstun_ds = 1
+	var/hardstun_ds = TRUE
 	var/softstun_ds = 0
 	var/stam_dmg = 30
+	var/cooldown_check = 0 // Used internally, you don't want to modify
+	var/cooldown = 13 // Default wait time until can stun again.
+	var/stun_time_silicon = 60 // How long it stuns silicons for - 6 seconds.
+	var/affect_silicon = FALSE // Does it stun silicons.
+	var/on_sound // "On" sound, played when switching between able to stun or not.
+	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
+	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
+	var/on = TRUE // Are we on or off
+	var/on_icon_state // What is our sprite when turned on
+	var/off_icon_state // What is our sprite when turned off
+	var/on_item_state // What is our in-hand sprite when turned on
+	var/force_on // Damage when on - not stunning
+	var/force_off // Damage when off - not stunning
+	var/weight_class_on // What is the new size class when turned on
+
+/obj/item/melee/classic_baton/Initialize()
+	. = ..()
+
+// Description for trying to stun when still on cooldown.
+/obj/item/melee/classic_baton/proc/get_wait_description()
+	return
+
+// Description for when turning their baton "on"
+/obj/item/melee/classic_baton/proc/get_on_description()
+	. = list()
+	.["local_on"] = "<span class ='warning'>You extend the baton.</span>"
+	.["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
+	return .
+
+// Default message for stunning mob.
+/obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
+	. = list()
+	.["visible"] =  "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	.["local"] = "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	return .
+
+// Default message for stunning a silicon.
+/obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
+	. = list()
+	.["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with the baton!</span>"
+	.["local"] = "<span class='danger'>You pulse [target]'s sensors with the baton!</span>"
+	return .
+
+// Are we applying any special effects when we stun to carbon
+/obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
+	return
+
+// Are we applying any special effects when we stun to silicon
+/obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
+	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
@@ -199,7 +247,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
-		user.Knockdown(60 * force)
+		user.DefaultCombatKnockdown(60 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -207,15 +255,28 @@
 			user.take_bodypart_damage(2*force)
 		return
 	if(iscyborg(target))
-		..()
+		if(user.a_intent != INTENT_HARM)	// We don't stun if we're on harm.
+			if(affect_silicon)
+				var/list/desc = get_silicon_stun_description(target, user)
+				target.flash_act(affect_silicon = TRUE)
+				target.Stun(stun_time_silicon)
+				additional_effects_silicon(target, user)
+				user.visible_message(desc["visible"], desc["local"])
+				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
+				if(stun_animation)
+					user.do_attack_animation(target)
+			else
+				..()
+		else
+			..()
 		return
 	if(!isliving(target))
 		return
-	if (user.a_intent == INTENT_HARM)
+	if(user.a_intent == INTENT_HARM)
 		if(!..() || !iscyborg(target))
 			return
 	else
-		if(last_hit < world.time)
+		if(cooldown_check < world.time)
 			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
@@ -223,18 +284,25 @@
 				var/mob/living/carbon/human/H = target
 				if(check_martial_counter(H, user))
 					return
-			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+			var/list/desc = get_stun_description(target, user)
+			if(stun_animation)
+				user.do_attack_animation(target)
+			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
+			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+			additional_effects_carbon(target, user)
 			log_combat(user, target, "stunned", src)
-			src.add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+			add_fingerprint(user)
+			target.visible_message(desc["visible"], desc["local"])
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
-				target.LAssailant = user
-			last_hit = world.time + cooldown
+				target.LAssailant = WEAKREF(user)
+			cooldown_check = world.time + cooldown
 			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
+		else
+			var/wait_desc = get_wait_description()
+			if(wait_desc)
+				to_chat(user, wait_desc)
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -249,6 +317,13 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
+	on_sound = 'sound/weapons/batonextend.ogg'
+	on_icon_state = "telebaton_1"
+	off_icon_state = "telebaton_0"
+	on_item_state = "nullrod"
+	force_on = 10
+	force_off = 0
+	weight_class_on = WEIGHT_CLASS_BULKY
 	total_mass = TOTAL_MASS_NORMAL_ITEM
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
@@ -259,7 +334,7 @@
 	if(!on)
 		src.attack_self(user)
 	else
-		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
+		playsound(loc, on_sound, 50, 1)
 		add_fingerprint(user)
 	sleep(3)
 	if (H && !QDELETED(H))
@@ -271,24 +346,56 @@
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
+	var/list/desc = get_on_description()
 	if(on)
-		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
-		icon_state = "telebaton_1"
-		item_state = "nullrod"
-		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
-		force = 10 //stunbaton damage
+		to_chat(user, desc["local_on"])
+		icon_state = on_icon_state
+		item_state = on_item_state
+		w_class = weight_class_on
+		force = force_on
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
-		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
-		icon_state = "telebaton_0"
+		to_chat(user, desc["local_off"])
+		icon_state = off_icon_state
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
-		force = 0 //not so robust now
+		force = force_off
 		attack_verb = list("hit", "poked")
-
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
+
+/obj/item/melee/classic_baton/telescopic/contractor_baton
+	name = "contractor baton"
+	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "contractor_baton_0"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	item_state = null
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NONE
+	force = 5
+	cooldown = 20
+	stam_dmg = 45	//4 hit stamcrit
+	affect_silicon = TRUE
+	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
+	on_icon_state = "contractor_baton_1"
+	off_icon_state = "contractor_baton_0"
+	on_item_state = "contractor_baton"
+	force_on = 16
+	force_off = 5
+	weight_class_on = WEIGHT_CLASS_NORMAL
+
+/obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
+	return "<span class='danger'>The baton is still charging!</span>"
+
+/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_carbon(mob/living/target, mob/living/user)
+	target.Jitter(20)
+	target.apply_effect(EFFECT_STUTTER, 20)
+	target.apply_status_effect(/datum/status_effect/electrostaff, 30)	//knockdown, disarm, and slowdown, the unholy triumvirate of stam combat
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
@@ -514,7 +621,7 @@
 	item_state = "mace_greyscale"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR //Material type changes the prefix as well as the color.
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
 	force = 14

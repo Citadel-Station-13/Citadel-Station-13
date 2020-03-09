@@ -113,11 +113,8 @@ SUBSYSTEM_DEF(shuttle)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
 
-	//Cargo stuff start
-	var/fire_time_diff = max(0, world.time - last_fire)		//Don't want this to be below 0, seriously.
-	var/point_gain = (fire_time_diff / 600) * passive_supply_points_per_minute
-	points += point_gain
-	//Cargo stuff end
+	if(!(times_fired % CEILING(600/wait, 1)))
+		points += passive_supply_points_per_minute
 
 	var/esETA = emergency?.getModeStr()
 	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
@@ -185,14 +182,13 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
 			shuttle was called. Using the backup shuttle instead.")
 		if(!backup_shuttle)
-			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
+			CRASH("requestEvac(): There is no emergency shuttle, \
 			or backup shuttle! The game will be unresolvable. This is \
 			possibly a mapping error, more likely a bug with the shuttle \
 			manipulation system, or badminry. It is possible to manually \
 			resolve this problem by loading an emergency shuttle template \
 			manually, and then calling register() on the mobile docking port. \
 			Good luck.")
-			return
 		emergency = backup_shuttle
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < srd)
@@ -420,7 +416,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
-		throw EXCEPTION("[M] is not a mobile docking port")
+		CRASH("[M] is not a mobile docking port")
 
 	if(M.assigned_transit)
 		return

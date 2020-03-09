@@ -322,3 +322,70 @@
 	suffix = "advancedlab.dmm"
 	name = "Abductor Replication Lab"
 	description = "Some scientists tried and almost succeeded to recreate abductor tools. Somewhat slower and a bit less modern than their originals, these tools are the best you can get if you aren't an alien."
+
+//Space ruins for the station z
+/datum/map_template/ruin/spacenearstation
+	prefix = "_maps/RandomRuins/SpaceRuinsStation/"
+	cost = 1
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/spacenearstation/roid1
+	id = "roid1"
+	suffix = "roid1.dmm"
+	name = "Mineable Asteroid 1"
+	description = "Mineral asteroid 1."
+	allow_duplicates = TRUE
+
+/datum/map_template/ruin/spacenearstation/roid2
+	id = "roid2"
+	suffix = "roid2.dmm"
+	name = "Crab Roid"
+	description = "Mineral asteroid. Ft. Crabs."
+
+/datum/map_template/ruin/spacenearstation/roid3
+	id = "roid3"
+	suffix = "roid3.dmm"
+	name = "Dorm Roid"
+	description = "Mineral asteroid. Ft. Dorm."
+
+/datum/map_template/ruin/spacenearstation/roid4
+	id = "roid4"
+	suffix = "roid4.dmm"
+	name = "Mineable Asteroid 2"
+	description = "Mineral asteroid 2."
+
+/datum/map_template/ruin/spacenearstation/roid5
+	id = "roid5"
+	suffix = "roid5.dmm"
+	name = "Mineable Asteroid 3"
+	description = "Mineral asteroid. Ft. Holofans."
+
+/datum/map_template/ruin/spacenearstation/roid6
+	id = "roid6"
+	suffix = "roid6.dmm"
+	name = "Mineable Asteroid 4"
+	description = "Mineral asteroid. Ft. Crashed escape pod."
+
+/datum/map_template/ruin/spacenearstation/roid7
+	id = "roid7"
+	suffix = "roid7.dmm"
+	name = "Mineable Asteroid 5"
+	description = "Mineral asteroid. Ft. Derelict space bar."
+
+/datum/map_template/ruin/spacenearstation/roid8
+	id = "roid8"
+	suffix = "roid8.dmm"
+	name = "Dead wizard Roid"
+	description = "Mineral asteroid. Ft. Dead wizard and toilet paradox bag."
+
+/datum/map_template/ruin/spacenearstation/roid9
+	id = "roid9"
+	suffix = "roid9.dmm"
+	name = "Monitoring Roid"
+	description = "Mineral asteroid. Ft. Station monitoring, syndie toolbox and erp."
+
+/datum/map_template/ruin/spacenearstation/roid10
+	id = "roid10"
+	suffix = "roid10.dmm"
+	name = "Maze Roid"
+	description = "Mineral asteroid. Ft. Brief maze."
