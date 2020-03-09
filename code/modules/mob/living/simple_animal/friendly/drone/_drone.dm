@@ -277,7 +277,7 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return 0 //So they don't die trying to fix wiring
 
 /mob/living/simple_animal/drone/can_see_reagents()
