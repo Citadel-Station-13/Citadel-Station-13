@@ -91,6 +91,13 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
+	using = new /obj/screen/craft
+	using.icon = ui_style
+	if(!widescreenlayout) // CIT CHANGE
+		using.screen_loc = ui_boxcraft // CIT CHANGE
+	using.hud = src
+	static_inventory += using
+
 	using = new/obj/screen/language_menu
 	using.icon = ui_style
 	if(!widescreenlayout) // CIT CHANGE
@@ -330,21 +337,24 @@
 	healths.hud = src
 	infodisplay += healths
 
+	staminas = new /obj/screen/staminas()
+	staminas.hud = src
+	infodisplay += staminas
+
 	//CIT CHANGE - adds arousal and stamina to hud
 	arousal = new /obj/screen/arousal()
 	arousal.icon_state = (owner.canbearoused == 1 ? "arousal0" : "")
 	arousal.hud = src
 	infodisplay += arousal
-	
-	staminas = new /obj/screen/staminas()
-	staminas.hud = src
-	infodisplay += staminas
 
 	if(!CONFIG_GET(flag/disable_stambuffer))
 		staminabuffer = new /obj/screen/staminabuffer()
 		staminabuffer.hud = src
 		infodisplay += staminabuffer
 	//END OF CIT CHANGES
+
+	usr.fov = usr.overlay_fullscreen("vc",/obj/screen/fullscreen/fov)
+
 
 	healthdoll = new /obj/screen/healthdoll()
 	healthdoll.hud = src

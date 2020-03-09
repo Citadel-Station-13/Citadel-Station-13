@@ -128,6 +128,7 @@
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
+	usr.fov = usr.overlay_fullscreen("vc",/obj/screen/fullscreen/fov)
 
 /datum/hud/monkey/persistent_inventory_update()
 	if(!mymob)

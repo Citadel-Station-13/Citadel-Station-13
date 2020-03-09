@@ -40,6 +40,7 @@
 	QDEL_LIST(diseases)
 	return ..()
 
+
 /mob/living/onZImpact(turf/T, levels)
 	if(!isgroundlessturf(T))
 		ZImpactDamage(T, levels)
@@ -436,7 +437,6 @@
 /mob/living/proc/lay_down()
 	set name = "Rest"
 	set category = "IC"
-
 	resting = !resting
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
@@ -529,6 +529,7 @@
 	fire_stacks = 0
 	confused = 0
 	update_canmove()
+
 	//Heal all organs
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -536,6 +537,7 @@
 			for(var/organ in C.internal_organs)
 				var/obj/item/organ/O = organ
 				O.setOrganDamage(0)
+
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -575,6 +577,12 @@
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
+
+	for(var/mob/M in oview(src))
+		if(M.client && (src in cone(M, OPPOSITE_DIR(M.dir), view(10, M))))
+			M.update_vision_cone()
+
+	update_vision_cone()
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -1094,10 +1102,12 @@
 			fall(forced = 1)
 	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
 	density = !lying
+
 	if(resting)
 		ENABLE_BITFIELD(movement_type, CRAWLING)
 	else
 		DISABLE_BITFIELD(movement_type, CRAWLING)
+
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
 			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
@@ -1105,6 +1115,7 @@
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
+	update_vision_cone()
 	if(!lying && lying_prev)
 		if(client)
 			client.move_delay = world.time + movement_delay()
@@ -1199,8 +1210,11 @@
 		if(client.eye && client.eye != src)
 			var/atom/AT = client.eye
 			AT.get_remote_view_fullscreens(src)
+			hide_cone()
+			insideContainer = 1
 		else
 			clear_fullscreen("remote_view", 0)
+			insideContainer = 0
 		update_pipe_vision()
 
 /mob/living/update_mouse_pointer()
@@ -1279,3 +1293,7 @@
 	update_canmove()
 	if(healing_chems)
 		reagents.add_reagent_list(healing_chems)
+
+/mob/living/setDir(newdir)
+	..()
+	update_vision_cone()

@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 				client.images += A.pipe_vision_img
 				pipes_shown += A.pipe_vision_img
 		setMovetype(movement_type | VENTCRAWLING)
-
+		isVentcrawling = TRUE
 
 /mob/living/proc/remove_ventcrawl()
 	if(client)
@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 			client.images -= current_image
 	pipes_shown.len = 0
 	setMovetype(movement_type & ~VENTCRAWLING)
-
+	isVentcrawling = FALSE
 
 
 
