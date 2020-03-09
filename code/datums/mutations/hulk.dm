@@ -9,22 +9,22 @@
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
 	instability = 40
-	locked = TRUE
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_HULK)
 	ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	ADD_TRAIT(owner, TRAIT_CHUNKYFINGERS, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
-/datum/mutation/human/hulk/on_attack_hand(atom/target, proximity)
+/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner,atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
 		return target.attack_hulk(owner)
 
-/datum/mutation/human/hulk/on_life()
+/datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
 		on_losing(owner)
 		to_chat(owner, "<span class='danger'>You suddenly feel very weak.</span>")
@@ -34,6 +34,7 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_HULK)
 	REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	REMOVE_TRAIT(owner, TRAIT_CHUNKYFINGERS, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "hulk")
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
