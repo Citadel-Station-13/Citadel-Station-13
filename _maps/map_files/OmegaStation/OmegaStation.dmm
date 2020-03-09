@@ -12691,7 +12691,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/clothing/shoes/magboots/atmos,
+/obj/item/clothing/shoes/magboots,
 /turf/open/floor/plasteel/dark/corner,
 /area/engine/atmos)
 "atJ" = (
