@@ -4,12 +4,13 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 3
 	var/flavor_name = "Flavor Text"
-	var/list/texts_by_mob = list()
+	var/list/texts_by_atom = list()
 	var/addendum = "This can also be used for OOC notes and preferences!"
 	var/always_show = FALSE
 	var/max_len = MAX_FAVOR_LEN
+	var/can_edit = TRUE
 
-/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
+/datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, _edit = TRUE)
 	. = ..()
 
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target)) //no reason why this shouldn't work on atoms too.
@@ -17,12 +18,13 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 
 	if(_max_len)
 		max_len = _max_len
-	texts_by_mob[target] = copytext(text, 1, max_len)
+	texts_by_atom[target] = copytext(text, 1, max_len)
 	if(_name)
 		flavor_name = _name
 	if(!isnull(addendum))
 		addendum = _addendum
 	always_show = _always_show
+	can_edit = _edit
 
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
 
@@ -34,12 +36,12 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 /datum/element/flavor_text/Detach(atom/A)
 	. = ..()
 	UnregisterSignal(A, COMSIG_PARENT_EXAMINE)
-	texts_by_mob -= A
-	LAZYREMOVE(GLOB.mobs_with_editable_flavor_text[A], src)
-	if(!GLOB.mobs_with_editable_flavor_text[A])
-		GLOB.mobs_with_editable_flavor_text -= A
-		if(ismob(A))
-			var/mob/M = A
+	texts_by_atom -= A
+	if(can_edit && ismob(A))
+		var/mob/M = A
+		LAZYREMOVE(GLOB.mobs_with_editable_flavor_text[M], src)
+		if(!GLOB.mobs_with_editable_flavor_text[M])
+			GLOB.mobs_with_editable_flavor_text -= M
 			M.verbs -= /mob/proc/manage_flavor_tests
 
 /datum/element/flavor_text/proc/show_flavor(atom/target, mob/user, list/examine_list)
@@ -53,7 +55,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 			if(!("...?" in examine_list)) //can't think of anything better in case of multiple flavor texts.
 				examine_list += "...?"
 			return
-	var/text = texts_by_mob[target]
+	var/text = texts_by_atom[target]
 	if(!text)
 		return
 	var/msg = replacetext(text, "\n", " ")
@@ -68,9 +70,9 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		return
 	if(href_list["show_flavor"])
 		var/atom/target = locate(href_list["show_flavor"])
-		var/text = texts_by_mob[target]
+		var/text = texts_by_atom[target]
 		if(text)
-			usr << browse("<HTML><HEAD><TITLE>[target.name]</TITLE></HEAD><BODY><TT>[replacetext(texts_by_mob[target], "\n", "<BR>")]</TT></BODY></HTML>", "window=[target.name];size=500x200")
+			usr << browse("<HTML><HEAD><TITLE>[target.name]</TITLE></HEAD><BODY><TT>[replacetext(texts_by_atom[target], "\n", "<BR>")]</TT></BODY></HTML>", "window=[target.name];size=500x200")
 			onclose(usr, "[target.name]")
 		return TRUE
 
@@ -86,11 +88,11 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		F.set_flavor(src)
 		return
 
-	var/list/choices
+	var/list/choices = list()
 
 	for(var/i in L)
 		var/datum/element/flavor_text/F = i
-		LAZYSET(choices, F.flavor_name, F)
+		choices[F.flavor_name] = F
 
 	var/chosen = input(src, "Which flavor text would you like to modify?") as null|anything in choices
 	if(!chosen)
@@ -99,13 +101,13 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	F.set_flavor(src)
 
 /datum/element/flavor_text/proc/set_flavor(mob/user)
-	if(!(user in texts_by_mob))
+	if(!(user in texts_by_atom))
 		return FALSE
 
 	var/lower_name = lowertext(flavor_name)
-	var/new_text = stripped_multiline_input(user, "Set the [lower_name] displayed on 'examine'. [addendum]", flavor_name, texts_by_mob[usr], max_len, TRUE)
-	if(!isnull(new_text) && (user in texts_by_mob))
-		texts_by_mob[user] = html_decode(new_text)
+	var/new_text = stripped_multiline_input(user, "Set the [lower_name] displayed on 'examine'. [addendum]", flavor_name, texts_by_atom[usr], max_len, TRUE)
+	if(!isnull(new_text) && (user in texts_by_atom))
+		texts_by_atom[user] = html_decode(new_text)
 		to_chat(src, "Your [lower_name] has been updated.")
 		return TRUE
 	return FALSE
@@ -113,7 +115,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 //subtypes with additional hooks for DNA and preferences.
 /datum/element/flavor_text/carbon
 
-/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _proc, _name = "Flavor Text", _desc = "Sets an extended description of your character's features.", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, can_edit = TRUE)
+/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FAVOR_LEN, _always_show = FALSE, _edit = TRUE)
 	if(!iscarbon(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
@@ -129,12 +131,12 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	UnregisterSignal(C, list(COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, COMSIG_HUMAN_PREFS_COPIED_TO, COMSIG_HUMAN_HARDSET_DNA))
 
 /datum/element/flavor_text/carbon/proc/update_dna_flavor_text(mob/living/carbon/C)
-	texts_by_mob[C] = C.dna.features["flavor_text"]
+	texts_by_atom[C] = C.dna.features["flavor_text"]
 
 /datum/element/flavor_text/carbon/proc/update_prefs_flavor_text(mob/living/carbon/human/H, datum/preferences/P, icon_updates = TRUE, roundstart_checks = TRUE)
-	texts_by_mob[H] = P.features["flavor_text"]
+	texts_by_atom[H] = P.features["flavor_text"]
 
 /datum/element/flavor_text/carbon/set_flavor(mob/living/carbon/user)
 	. = ..()
 	if(. && user.dna)
-		user.dna.features["flavor_text"] = texts_by_mob[user]
+		user.dna.features["flavor_text"] = texts_by_atom[user]

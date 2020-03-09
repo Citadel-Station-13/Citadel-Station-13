@@ -39,9 +39,7 @@
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
 	AddElement(/datum/element/flavor_text/carbon)
-	AddElement(/datum/element/flavor_text, "", "Temporary Flavor Text",
-				"Sets a description of your character's current appearance. Use this for emotions, poses etc.",
-				"This should be used only for things pertaining to the current round!")
+	AddElement(/datum/element/flavor_text, "", "Temporary Flavor Text", "This should be used only for things pertaining to the current round!")
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
