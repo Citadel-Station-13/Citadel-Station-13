@@ -330,7 +330,7 @@
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
 	w_class = WEIGHT_CLASS_BULKY
-	brightness_on = 4
+	brightness_on = 6 //When on were like a lantern
 	light_color = "#FAA44B"
 	icon_state = "torch"
 	item_state = "torch"
