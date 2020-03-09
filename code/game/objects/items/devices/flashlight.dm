@@ -170,7 +170,7 @@
 	flags_1 = CONDUCT_1
 	brightness_on = 2
 	light_color = "#FFDDCC"
-	flashlight_power = 0.3
+	flashlight_power = 0.5
 	var/holo_cooldown = 0
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
@@ -207,6 +207,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
 	brightness_on = 5 // A little better than the standard flashlight.
+	total_mass = 0.4
 	light_color = "#CDDDFF"
 	flashlight_power = 0.9
 	hitsound = 'sound/weapons/genhit1.ogg'
@@ -227,14 +228,11 @@
 	custom_materials = null
 	on = TRUE
 
-
 // green-shaded desk lamp
 /obj/item/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-
-
 
 /obj/item/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
@@ -258,12 +256,13 @@
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 7 // Pretty bright.
+	total_mass = 0.2
 	light_color = "#FA421A"
 	icon_state = "flare"
 	item_state = "flare"
 	actions_types = list()
 	var/fuel = 0
-	var/on_damage = 7
+	var/on_damage = 9
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
@@ -338,7 +337,8 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	light_color = LIGHT_COLOR_ORANGE
-	on_damage = 10
+	total_mass = 0.5
+	on_damage = 12 //Its a log thats on fire
 	slot_flags = null
 
 /obj/item/flashlight/lantern
@@ -348,10 +348,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
-	brightness_on = 6			// luminosity when on
+	brightness_on = 6	// luminosity when on
 	light_color = "#FFAA44"
-	flashlight_power = 0.75
-
+	flashlight_power = 0.9
 
 /obj/item/flashlight/slime
 	gender = PLURAL
@@ -371,7 +370,6 @@
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
-
 
 /obj/item/flashlight/emp/New()
 	..()
@@ -435,7 +433,7 @@
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize()
-	fuel = rand(1600, 2000)
+	fuel = rand(1000, 1500)
 	light_color = color
 	. = ..()
 
@@ -540,7 +538,7 @@
 /obj/item/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
-	brightness_on = 15
+	brightness_on = 10
 	flags_1 = CONDUCT_1
 	item_flags = DROPDEL
 	actions_types = list()
