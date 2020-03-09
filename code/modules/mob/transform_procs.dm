@@ -29,9 +29,8 @@
 			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
-	Stun(22, ignore_canstun = TRUE)
+	notransform = TRUE
+	Stun(INFINITY, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
@@ -186,8 +185,7 @@
 
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
 	Stun(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -314,13 +312,13 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
@@ -363,8 +361,8 @@
 		else
 			dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -406,7 +404,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
-	canmove = 0
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -439,7 +437,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
-	canmove = 0
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -483,8 +481,8 @@
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)	//this really should not be necessary
@@ -514,7 +512,7 @@
 
 	regenerate_icons()
 	notransform = TRUE
-	canmove = FALSE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
@@ -543,7 +541,7 @@
 
 	regenerate_icons()
 	notransform = TRUE
-	canmove = FALSE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 

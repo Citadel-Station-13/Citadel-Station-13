@@ -414,7 +414,7 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	set_pin_data(IC_OUTPUT, 2, materials.total_amount)
 	for(var/I in 1 to mtypes.len)
-		var/datum/material/M = materials.materials[getmaterialref(I)]
+		var/datum/material/M = materials.materials[SSmaterials.GetMaterialRef(I)]
 		var/amount = materials[M]
 		if(M)
 			set_pin_data(IC_OUTPUT, I+2, amount)
@@ -452,7 +452,7 @@
 						continue
 					if(!mt) //Invalid input
 						if(U>0)
-							if(materials.retrieve_sheets(U, getmaterialref(mtypes[I]), T))
+							if(materials.retrieve_sheets(U, SSmaterials.GetMaterialRef(mtypes[I]), T))
 								suc = TRUE
 					else
 						if(mt.transer_amt_to(materials, U, mtypes[I]))

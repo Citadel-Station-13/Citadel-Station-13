@@ -63,7 +63,7 @@
 			else
 				D = new virus_type()
 		else
-			D = new /datum/disease/advance/random(max_severity, max_severity)
+			D = new /datum/disease/advance/random(TRUE, max_severity, max_severity)
 		D.carrier = TRUE
 		H.ForceContractDisease(D, FALSE, TRUE)
 

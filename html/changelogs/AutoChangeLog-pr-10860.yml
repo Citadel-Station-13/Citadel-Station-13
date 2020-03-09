@@ -1,4 +1,0 @@
-author: "Bhijn"
-delete-after: True
-changes: 
-  - tweak: "Click-dragging will now only perform the quick item usage behavior if you're in combat mode."

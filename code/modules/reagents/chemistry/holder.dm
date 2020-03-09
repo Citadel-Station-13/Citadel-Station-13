@@ -303,6 +303,8 @@
 					if(R.overdose_threshold)
 						if(R.volume > R.overdose_threshold && !R.overdosed)
 							R.overdosed = 1
+							var/turf/CT = get_turf(C)
+							log_reagent("OVERDOSE START: [key_name(C)] at [AREACOORD(CT)] started overdosing on [R.volume] units of [R].")
 							need_mob_update += R.overdose_start(C)
 					if(R.addiction_threshold)
 						if(R.volume > R.addiction_threshold && !is_type_in_list(R, cached_addictions))
@@ -340,13 +342,16 @@
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
-		C.update_canmove()
+		C.update_mobility()
 		C.update_stamina()
 	update_total()
 
 /datum/reagents/proc/remove_addiction(datum/reagent/R)
 	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
 	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+	if(ismob(my_atom))
+		var/turf/T = get_turf(my_atom)
+		log_reagent("OVERDOSE STOP: [key_name(my_atom)] at [AREACOORD(T)] got over their need for [R].")
 	addiction_list.Remove(R)
 	qdel(R)
 

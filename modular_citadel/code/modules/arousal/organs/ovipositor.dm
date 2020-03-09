@@ -11,6 +11,6 @@
 	layer_index = PENIS_LAYER_INDEX
 	var/length = 6								//inches
 	var/girth  = 0
-	var/girth_ratio = COCK_GIRTH_RATIO_DEF 		//citadel_defines.dm for these defines
+	var/girth_ratio = COCK_DIAMETER_RATIO_DEF 		//citadel_defines.dm for these defines
 	var/knot_girth_ratio = KNOT_GIRTH_RATIO_DEF
 	var/list/oviflags = list()

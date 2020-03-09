@@ -3,7 +3,7 @@
 	id = "insect"
 	default_color = "00FF00"
 	species_traits = list(LIPS,EYECOLOR,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR,WINGCOLOR)
-	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("mam_ears","mam_tail", "taur", "insect_wings","mam_snout", "mam_snouts", "insect_fluff","insect_markings")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None",
 							"insect_wings" = "None", "insect_fluff" = "None", "mam_snouts" = "None", "taur" = "None", "insect_markings" = "None")
@@ -13,7 +13,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
-	should_draw_citadel = TRUE
+	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

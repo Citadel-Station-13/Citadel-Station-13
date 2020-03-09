@@ -83,6 +83,7 @@
 	button_icon_state = "slimeheal"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
+	required_mobility_flags = NONE
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
 	if(..())

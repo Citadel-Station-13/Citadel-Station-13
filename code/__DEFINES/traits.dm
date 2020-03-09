@@ -1,3 +1,5 @@
+#define SIGNAL_TRAIT(trait_ref) "trait [trait_ref]"
+
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
 	do { \
@@ -6,12 +8,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
+			SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 			} \
 		} \
 	} while (0)
@@ -31,7 +35,8 @@
 				} \
 			};\
 			if (!length(_L[trait])) { \
-				_L -= trait \
+				_L -= trait; \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_REMOVE_TRAIT); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -46,7 +51,8 @@
 			for (var/_T in _L) { \
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
-					_L -= _T } \
+					_L -= _T ; \
+					SEND_SIGNAL(target, SIGNAL_TRAIT(_T), COMPONENT_REMOVE_TRAIT); } \
 				};\
 				if (!length(_L)) { \
 					target.status_traits = null\
@@ -137,6 +143,19 @@
 #define TRAIT_NOMARROW			"nomarrow"		// You don't make blood, with chemicals or nanites.
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
+
+// mobility flag traits
+// IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
+// BUT FOR NOW, THESE ARE HOOKED TO DO update_mobility() VIA COMSIG IN living_mobility.dm
+// SO IF YOU ADD MORE, BESURE TO UPDATE IT THERE.
+
+/// Disallow movement
+#define TRAIT_MOBILITY_NOMOVE		"mobility_nomove"
+/// Disallow pickup
+#define TRAIT_MOBILITY_NOPICKUP		"mobility_nopickup"
+/// Disallow item use
+#define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
+
 #define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
 
  //non-mob traits

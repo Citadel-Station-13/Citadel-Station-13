@@ -170,7 +170,7 @@
 	if(!..())
 		return
 
-	if(IsStun())
+	if(IsStun() || IsParalyzed())
 		old_target_fire = target_fire
 		target_fire = null
 		mode = BOT_IDLE
@@ -287,7 +287,7 @@
 	if(!on)
 		icon_state = "firebot0"
 		return
-	if(IsStun())
+	if(IsStun() || IsParalyzed())
 		icon_state = "firebots1"
 	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
 		icon_state = "firebots1"

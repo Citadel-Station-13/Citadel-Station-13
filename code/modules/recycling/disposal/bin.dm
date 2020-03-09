@@ -137,7 +137,7 @@
 		else
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			log_combat(user, target, "stuffed", addition="into [src]")
-			target.LAssailant = user
+			target.LAssailant = WEAKREF(user)
 		update_icon()
 
 /obj/machinery/disposal/proc/can_stuff_mob_in(mob/living/target, mob/living/user, pushing = FALSE)
@@ -372,7 +372,7 @@
 /obj/machinery/disposal/bin/shove_act(mob/living/target, mob/living/user)
 	if(!can_stuff_mob_in(target, user, TRUE))
 		return FALSE
-	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
 	target.forceMove(src)
 	user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
 		"<span class='danger'>You shove [target.name] into \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)

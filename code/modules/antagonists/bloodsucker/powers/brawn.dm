@@ -72,8 +72,7 @@
 		if(rand(5 + powerlevel) >= 5)
 			target.visible_message("<span class='danger'>[user] lands a vicious punch, sending [target] away!</span>", \
 							  "<span class='userdanger'>[user] has landed a horrifying punch on you, sending you flying!!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.Knockdown(min(5, rand(10, 10 * powerlevel)) )
-			
+			target.DefaultCombatKnockdown(min(5, rand(10, 10 * powerlevel)) )
 		// Attack!
 		playsound(get_turf(target), 'sound/weapons/punch4.ogg', 60, 1, -1)
 		user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
@@ -145,7 +144,7 @@
 	// Knock Down (if Living)
 	if (isliving(M))
 		var/mob/living/L = M
-		L.Knockdown(pull_power * 10 + 20)
+		L.DefaultCombatKnockdown(pull_power * 10 + 20)
 	// Knock Back (before Knockdown, which probably cancels pull)
 	var/send_dir = get_dir(owner, M)
 	var/turf/T = get_ranged_target_turf(M, send_dir, pull_power)

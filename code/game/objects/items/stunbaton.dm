@@ -25,7 +25,7 @@
 
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Right click attack while in combat mode to disarm instead of stun.</span>"
+	. += "<span class='notice'>Right click attack while in combat mode or attack while in disarm intent to disarm instead of stun.</span>"
 
 /obj/item/melee/baton/get_cell()
 	. = cell
@@ -84,7 +84,7 @@
 /obj/item/melee/baton/process()
 	deductcharge(round(hitcost * STUNBATON_DEPLETION_RATE), FALSE, FALSE)
 
-/obj/item/melee/baton/update_icon()
+/obj/item/melee/baton/update_icon_state()
 	if(status)
 		icon_state = "[initial(name)]_active"
 	else if(!cell)
@@ -149,6 +149,8 @@
 
 //return TRUE to interrupt attack chain.
 /obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
+	if(user.a_intent == INTENT_DISARM)
+		disarming = TRUE			//override if they're in disarm intent.
 	if(iscyborg(M) || !isliving(M))		//can't baton cyborgs
 		return FALSE
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -191,11 +193,11 @@
 
 	if(!disarming)
 		if(knockdown)
-			L.Knockdown(50, override_stamdmg = 0)		//knockdown
+			L.DefaultCombatKnockdown(50, override_stamdmg = 0)		//knockdown
 		L.adjustStaminaLoss(stunpwr)
 	else
 		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
-	
+
 	L.apply_effect(EFFECT_STUTTER, stamforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
@@ -218,7 +220,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.Knockdown(stamforce*6)
+	user.DefaultCombatKnockdown(stamforce*6)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 

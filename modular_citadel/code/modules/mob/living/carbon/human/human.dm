@@ -4,7 +4,7 @@
 /mob/living/carbon/human/resist_embedded()
 	if(handcuffed || legcuffed || (wear_suit && wear_suit.breakouttime))
 		return
-	if(canmove && !on_fire)
+	if(CHECK_MOBILITY(src, MOBILITY_MOVE) && !on_fire)
 		for(var/obj/item/bodypart/L in bodyparts)
 			if(istype(L) && L.embedded_objects.len)
 				for(var/obj/item/I in L.embedded_objects)
@@ -26,4 +26,3 @@
 	if(!has_embedded_objects())
 		clear_alert("embeddedobject")
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	return

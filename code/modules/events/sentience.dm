@@ -24,7 +24,7 @@
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates
-	candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
+	candidates = get_candidates(ROLE_SENTIENCE, null, ROLE_SENTIENCE)
 
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless and on station

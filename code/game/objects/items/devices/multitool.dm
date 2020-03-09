@@ -67,7 +67,7 @@
 		to_chat(user, "<span class='notice'>You clear the wired connection from the multitool.</span>")
 	update_icon()
 
-/obj/item/multitool/update_icon()
+/obj/item/multitool/update_icon_state()
 	if(selected_io)
 		icon_state = "multitool_red"
 	else
@@ -149,7 +149,7 @@
 /obj/item/multitool/ai_detect/ui_action_click()
 	return
 
-/obj/item/multitool/ai_detect/update_icon()
+/obj/item/multitool/ai_detect/update_icon_state()
 	if(selected_io)
 		icon_state = "multitool_red"
 	else
