@@ -202,9 +202,6 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	if(self_message)
 		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
-/mob/proc/Life()
-	set waitfor = FALSE
-
 /mob/proc/get_item_by_slot(slot_id)
 	return null
 
