@@ -15,6 +15,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\map_files\OmegaStation\OmegaStation.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\__513_compatibility.dm"
@@ -79,8 +80,8 @@
 #include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
-#include "code\__DEFINES\power.dm"
 #include "code\__DEFINES\pool.dm"
+#include "code\__DEFINES\power.dm"
 #include "code\__DEFINES\preferences.dm"
 #include "code\__DEFINES\procpath.dm"
 #include "code\__DEFINES\profile.dm"
@@ -2112,6 +2113,7 @@
 #include "code\modules\mob\status_procs.dm"
 #include "code\modules\mob\transform_procs.dm"
 #include "code\modules\mob\update_icons.dm"
+#include "code\modules\mob\vision_cone.dm"
 #include "code\modules\mob\camera\camera.dm"
 #include "code\modules\mob\dead\dead.dm"
 #include "code\modules\mob\dead\new_player\login.dm"
