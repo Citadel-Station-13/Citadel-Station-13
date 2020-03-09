@@ -11,7 +11,6 @@
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF
 	move_on_shuttle = FALSE
-	
 
 /mob/camera/experience_pressure_difference()
 	return
