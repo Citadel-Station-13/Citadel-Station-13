@@ -49,7 +49,7 @@
 	owner.special_role = special_role
 	if(give_objectives)
 		traitor_kind.forge_objectives(src)
-	traitor_kind.finalize_traitor(src)
+	finalize_traitor()
 	..()
 
 /datum/antagonist/traitor/apply_innate_effects()
