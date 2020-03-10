@@ -67,7 +67,7 @@
 	send_asset_list(user, list("minimap-[id].png" = map_icon, "minimap-[id]-meta.png" = meta_icon), verify=FALSE)
 
 /datum/minimap_group
-	var/list/minimaps = list()
+	var/list/minimaps
 	var/static/next_id = 0
 	var/id
 	var/name
@@ -75,7 +75,7 @@
 /datum/minimap_group/New(list/maps, name)
 	id = ++next_id
 	src.name = name
-	minimaps = SANITIZELIST(maps)
+	minimaps = maps || list()
 
 /datum/minimap_group/proc/show(mob/user)
 	if(!length(minimaps))

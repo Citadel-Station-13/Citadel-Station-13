@@ -1651,6 +1651,7 @@
 #include "code\modules\client\verbs\aooc.dm"
 #include "code\modules\client\verbs\etips.dm"
 #include "code\modules\client\verbs\looc.dm"
+#include "code\modules\client\verbs\minimap.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
 #include "code\modules\client\verbs\suicide.dm"
