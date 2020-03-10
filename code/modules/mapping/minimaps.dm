@@ -1,4 +1,5 @@
 /datum/minimap
+	var/name
 	var/icon/map_icon
 	var/icon/meta_icon
 	var/icon/overlay_icon
@@ -11,7 +12,8 @@
 	var/id = 0
 	var/static/next_id = 0
 
-/datum/minimap/New(z, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
+/datum/minimap/New(z, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy, name)
+	src.name = name
 	id = ++next_id
 	z_level = z
 
@@ -68,9 +70,12 @@
 	var/list/minimaps = list()
 	var/static/next_id = 0
 	var/id
+	var/name
 
-/datum/minimap_group/New()
+/datum/minimap_group/New(list/maps, name)
 	id = ++next_id
+	src.name = name
+	minimaps = SANITIZELIST(maps)
 
 /datum/minimap_group/proc/show(mob/user)
 	if(!length(minimaps))
