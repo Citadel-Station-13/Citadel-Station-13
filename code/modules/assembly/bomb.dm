@@ -101,10 +101,10 @@
 		bombassembly.setDir(dir)
 		bombassembly.Move()
 
-/obj/item/onetankbomb/dropped()
+/obj/item/onetankbomb/dropped(mob/user)
 	. = ..()
 	if(bombassembly)
-		bombassembly.dropped()
+		bombassembly.dropped(user)
 
 
 

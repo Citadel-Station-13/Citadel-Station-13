@@ -357,7 +357,7 @@
 /obj/item/borg/lollipop/equipped()
 	check_amount()
 
-/obj/item/borg/lollipop/dropped()
+/obj/item/borg/lollipop/dropped(mob/user)
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
@@ -620,7 +620,7 @@
 			return host.loc
 	return null
 
-/obj/item/borg/projectile_dampen/dropped()
+/obj/item/borg/projectile_dampen/dropped(mob/user)
 	. = ..()
 	host = loc
 
