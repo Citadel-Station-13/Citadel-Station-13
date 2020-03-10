@@ -153,5 +153,3 @@ window.onload = function() {
 </HTML>"}
 
 	user << browse(html, "window=minimap_[id];size=768x[round(768 / first_map.map_icon.Width() * first_map.map_icon.Height() + 50)]")
-
-#warn WIP: GRAB COLORS FROM https://github.com/yogstation13/Yogstation/pull/7133/files!
