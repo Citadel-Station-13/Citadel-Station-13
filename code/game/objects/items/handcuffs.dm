@@ -342,15 +342,25 @@
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	var/mob/living/carbon/C = hit_atom
+	ensnare(hit_atom)
+
+/**
+  * Attempts to legcuff someone with the bola
+  *
+  * Arguments:
+  * * C - the carbon that we will try to ensnare
+  */
+/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		forceMove(C)
+		C.update_equipment_speed_mods()
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.DefaultCombatKnockdown(knockdown)
+		C.Knockdown(knockdown)
+		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
