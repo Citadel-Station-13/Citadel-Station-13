@@ -191,7 +191,7 @@
 	var/datum/component/nanites/N = C.GetComponent(/datum/component/nanites)
 	if(prob(5))
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
-		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
+		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(10))
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
@@ -218,7 +218,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 /datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	if(prob(15))
 		to_chat(C, "<span class='warning'>The residual voltage in your system causes you to seize up!</b></span>")
-		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
+		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(50))
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
