@@ -142,5 +142,5 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(. && user.dna)
 		user.dna.features["flavor_text"] = texts_by_atom[user]
 
-/datum/element/flavor_text/carbon/unset_flavor(mob/living/carbon/user)
+/datum/element/flavor_text/carbon/proc/unset_flavor(mob/living/carbon/user)
 	texts_by_atom[user] = ""
