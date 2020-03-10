@@ -89,7 +89,7 @@
 /datum/chemical_reaction/uraniumsolidification
 	name = "Solid Uranium"
 	id = "soliduranium"
-	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/iron = 1)
+	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/bromine = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/uraniumsolidification/on_reaction(datum/reagents/holder, multiplier)
