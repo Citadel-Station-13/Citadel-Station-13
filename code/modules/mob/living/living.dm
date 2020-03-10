@@ -49,7 +49,7 @@
 /mob/living/proc/ZImpactDamage(turf/T, levels)
 	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>")
 	adjustBruteLoss((levels * 5) ** 1.5)
-	Knockdown(levels * 50)
+	DefaultCombatKnockdown(levels * 50)
 
 
 /mob/living/proc/OpenCraftingMenu()
@@ -89,7 +89,7 @@
 	var/they_can_move = TRUE
 	if(isliving(M))
 		var/mob/living/L = M
-		they_can_move = L.canmove //L.mobility_flags & MOBILITY_MOVE
+		they_can_move = CHECK_MOBILITY(L, MOBILITY_MOVE)
 		//Also spread diseases
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
@@ -116,7 +116,7 @@
 					return 1
 
 	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
-		if(resting && !L.resting)
+		if(!CHECK_MOBILITY(src, MOBILITY_STAND) && CHECK_MOBILITY(L, MOBILITY_STAND))
 			var/origtargetloc = L.loc
 			if(!pulledby)
 				if(attemptingcrawl)
@@ -126,7 +126,7 @@
 					return TRUE
 				attemptingcrawl = TRUE
 				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>", "<span class='notice'>You are now attempting to crawl under [L].</span>")
-				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || !resting)
+				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || CHECK_MOBILITY(src, MOBILITY_STAND))
 					attemptingcrawl = FALSE
 					return TRUE
 			var/src_passmob = (pass_flags & PASSMOB)
@@ -250,7 +250,7 @@
 	var/current_dir
 	if(isliving(AM))
 		current_dir = AM.dir
-	if(step(AM, t))
+	if(step(AM, t) && Process_Spacemove(t))
 		step(src, t)
 	if(current_dir)
 		AM.setDir(current_dir)
@@ -296,7 +296,7 @@
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
-			M.LAssailant = usr
+			M.LAssailant = WEAKREF(usr)
 		if(isliving(M))
 			var/mob/living/L = M
 			//Share diseases that are spread by touch
@@ -370,8 +370,8 @@
 		death()
 
 
-/mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
+/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
+	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || recoveringstam || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
 		return TRUE
 
 /mob/living/canUseStorage()
@@ -429,7 +429,6 @@
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(400) //Short nap
-	update_canmove()
 
 /mob/proc/get_contents()
 
@@ -493,7 +492,7 @@
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
 		updatehealth() //then we check if the mob should wake up.
-		update_canmove()
+		update_mobility()
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
@@ -512,8 +511,7 @@
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
 	set_disgust(0)
-	SetStun(0, FALSE)
-	SetKnockdown(0, FALSE)
+	SetAllImmobility(0, FALSE)
 	SetSleeping(0, FALSE)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
@@ -529,6 +527,9 @@
 	fire_stacks = 0
 	confused = 0
 	update_canmove()
+
+
+	update_mobility()
 
 	//Heal all organs
 	if(iscarbon(src))
@@ -553,6 +554,7 @@
 	for(var/i in get_equipped_items())
 		var/obj/item/item = i
 		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM)
+
 
 /mob/living/Move(atom/newloc, direct)
 	if (buckled && buckled.loc != newloc) //not updating position
@@ -583,6 +585,7 @@
 			M.update_vision_cone()
 
 	update_vision_cone()
+
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -656,66 +659,97 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+	return !((next_move > world.time) || !CHECK_MOBILITY(src, MOBILITY_RESIST))
 
+/// Resist verb for attempting to get out of whatever is restraining your motion. Gives you resist clickdelay if do_resist() returns true.
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
 
 	if(!can_resist())
 		return
-	changeNext_move(CLICK_CD_RESIST)
 
+	if(do_resist())
+		changeNext_move(CLICK_CD_RESIST)
+
+/// The actual proc for resisting. Return TRUE to give clickdelay.
+/mob/living/proc/do_resist()
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
-	if(!restrained(ignore_grab = 1) && pulledby)
-		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
-		log_combat(src, pulledby, "resisted grab")
-		resist_grab()
-		return
+	// only works if you're not cuffed.
+	if(!restrained(ignore_grab = TRUE) && pulledby)
+		var/old_gs = pulledby.grab_state
+		attempt_resist_grab(FALSE)
+		// Return as we should only resist one thing at a time. Give clickdelay if the grab wasn't passive.
+		return old_gs? TRUE : FALSE
 
-	//unbuckling yourself
+	// unbuckling yourself. stops the chain if you try it.
 	if(buckled && last_special <= world.time)
-		resist_buckle()
+		log_combat(src, buckled, "resisted buckle")
+		return resist_buckle()
 
-	// CIT CHANGE - climbing out of a gut
-	if(attempt_vr(src,"vore_process_resist",args)) return TRUE
+	// CIT CHANGE - climbing out of a gut.
+	if(attempt_vr(src,"vore_process_resist",args))
+		//Sure, give clickdelay for anti spam. shouldn't be combat voring anyways.
+		return TRUE
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(isobj(loc))
+	if(isobj(loc))
 		var/obj/C = loc
 		C.container_resist(src)
+		// This shouldn't give clickdelays sometime (e.g. going out of a mech/unwelded and unlocked locker/disposals bin/etc) but there's so many overrides that I am not going to bother right now.
+		return TRUE
 
-	else if(canmove)
+	if(CHECK_MOBILITY(src, MOBILITY_MOVE))
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
-			return
-		if(resting) //cit change - allows resisting out of resting
-			resist_a_rest() // ditto
-			return
-		if(resist_embedded()) //Citadel Change for embedded removal memes
-			return
-		if(last_special <= world.time)
-			resist_restraints() //trying to remove cuffs.
-			return
+			// Give clickdelay
+			return TRUE
+	if(resting) //cit change - allows resisting out of resting
+		resist_a_rest() // ditto
+		// DO NOT GIVE CLCIKDELAY - resist_a_rest() handles spam prevention. Somewhat.
+		return FALSE
+	if(last_special <= world.time)
+		resist_restraints() //trying to remove cuffs.
+		// DO NOT GIVE CLICKDELAY - last_special handles this.
+		return FALSE
+	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
+		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
+		changeNext_move(CLICK_CD_MELEE)
+		return FALSE
 
+/// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
+/mob/proc/attempt_resist_grab(moving_resist, forced, log = TRUE)
+	if(!pulledby)	//not being grabbed
+		return TRUE
+	var/old_gs = pulledby.grab_state		//how strong the grab is
+	var/old_pulled = pulledby
+	var/success = do_resist_grab(moving_resist, forced)
+	if(log)
+		log_combat(src, old_pulled, "[success? "successfully broke free of" : "failed to resist"] a grab of strength [old_gs][moving_resist? " (moving)":""][forced? " (forced)":""]")
+	return success
 
-/mob/proc/resist_grab(moving_resist)
-	return 1 //returning 0 means we successfully broke free
+/*!
+ * Proc that actually does the grab resisting. Return TRUE if successful. Does not check that a grab exists! Use attempt_resist_grab() instead of this in general!
+ * Forced is if something other than the user mashing movement keys/pressing resist button did it, silent is if it makes messages (like "attempted to resist" and "broken free").
+ * Forced does NOT force success!
+ */
+/mob/proc/do_resist_grab(moving_resist, forced, silent = FALSE)
+	return FALSE
 
-/mob/living/resist_grab(moving_resist)
-	. = 1
+/mob/living/do_resist_grab(moving_resist, forced, silent = FALSE)
+	. = ..()
 	if(pulledby.grab_state)
-		if(!resting && prob(30/pulledby.grab_state))
+		if(CHECK_MOBILITY(src, MOBILITY_STAND) && prob(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
-			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
-			return 0
-		if(moving_resist && client) //we resisted by trying to move
+			return TRUE
+		else if(moving_resist && client) //we resisted by trying to move // this is a horrible system and whoever thought using client instead of mob is okay is not an okay person
 			client.move_delay = world.time + 20
+		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
 	else
 		pulledby.stop_pulling()
-		return 0
+		return TRUE
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
@@ -730,6 +764,7 @@
 	return name
 
 /mob/living/update_gravity(has_gravity,override = 0)
+	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
@@ -795,6 +830,13 @@
 					if(!can_hold_items() || !put_in_hands(what))
 						what.forceMove(drop_location())
 					log_combat(src, who, "stripped [what] off")
+
+	if(Adjacent(who)) //update inventory window
+		who.show_inv(src)
+	else
+		src << browse(null,"window=mob[REF(who)]")
+
+	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
@@ -1056,7 +1098,7 @@
 						"[C] trips over [src] and falls!", \
 						"[C] topples over [src]!", \
 						"[C] leaps out of [src]'s way!")]</span>")
-	C.Knockdown(40)
+	C.DefaultCombatKnockdown(40)
 
 /mob/living/ConveyorMove()
 	if((movement_type & FLYING) && !stat)
@@ -1151,42 +1193,6 @@
 		return LINGHIVE_LINK
 	return LINGHIVE_NONE
 
-/mob/living/forceMove(atom/destination)
-	stop_pulling()
-	if(buckled)
-		buckled.unbuckle_mob(src, force = TRUE)
-	if(has_buckled_mobs())
-		unbuckle_all_mobs(force = TRUE)
-	. = ..()
-	if(.)
-		if(client)
-			reset_perspective()
-		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
-
-/mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
-	if(isnull(new_z) && audiovisual_redirect)
-		return
-	if (registered_z != new_z)
-		if (registered_z)
-			SSmobs.clients_by_zlevel[registered_z] -= src
-		if (client || audiovisual_redirect)
-			if (new_z)
-				SSmobs.clients_by_zlevel[new_z] += src
-				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
-					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
-					if (SA)
-						SA.toggle_ai(AI_ON) // Guarantees responsiveness for when appearing right next to mobs
-					else
-						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
-
-			registered_z = new_z
-		else
-			registered_z = null
-
-/mob/living/onTransitZ(old_z,new_z)
-	..()
-	update_z(new_z)
-
 /mob/living/MouseDrop(mob/over)
 	. = ..()
 	var/mob/living/user = usr
@@ -1236,14 +1242,6 @@
 				GLOB.dead_mob_list += src
 	. = ..()
 	switch(var_name)
-		if("knockdown")
-			SetKnockdown(var_value)
-		if("stun")
-			SetStun(var_value)
-		if("unconscious")
-			SetUnconscious(var_value)
-		if("sleeping")
-			SetSleeping(var_value)
 		if("eye_blind")
 			set_blindness(var_value)
 		if("eye_damage")
@@ -1275,25 +1273,24 @@
 		SetSleeping(clamp_unconscious_to)
 	if(AmountUnconscious() > clamp_unconscious_to)
 		SetUnconscious(clamp_unconscious_to)
-	if(AmountStun() > clamp_immobility_to)
-		SetStun(clamp_immobility_to)
-	if(AmountKnockdown() > clamp_immobility_to)
-		SetKnockdown(clamp_immobility_to)
+	HealAllImmobilityUpTo(clamp_immobility_to)
 	adjustStaminaLoss(min(0, -stamina_boost))
 	adjustStaminaLossBuffered(min(0, -stamina_buffer_boost))
 	if(scale_stamina_loss_recovery)
 		adjustStaminaLoss(min(-((getStaminaLoss() - stamina_loss_recovery_bypass) * scale_stamina_loss_recovery), 0))
 	if(put_on_feet)
-		resting = FALSE
-		lying = FALSE
+		set_resting(FALSE, TRUE, FALSE)
 	if(reset_misc)
 		stuttering = 0
 	updatehealth()
 	update_stamina()
-	update_canmove()
+	update_mobility()
 	if(healing_chems)
 		reagents.add_reagent_list(healing_chems)
 
 /mob/living/setDir(newdir)
 	..()
 	update_vision_cone()
+
+/mob/living/canface()
+	return ..() && CHECK_MOBILITY(src, MOBILITY_MOVE)

@@ -44,7 +44,7 @@
 	var/mob/living/carbon/L = .
 	if(istype(L))
 		if(prob(25))
-			L.Knockdown(20)
+			L.DefaultCombatKnockdown(20)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
 

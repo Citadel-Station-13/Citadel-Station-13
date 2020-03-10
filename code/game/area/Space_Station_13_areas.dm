@@ -48,6 +48,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "space_near"
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
+/area/space/station_ruins //Paint this area where you want station ruins to be allowed to spawn
+
 /area/start
 	name = "start area"
 	icon_state = "start"
@@ -848,6 +850,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/sleeper
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
+
+/area/medical/paramedic
+	name = "Paramedic Station"
+	icon_state = "paramedic"
 
 
 //Security

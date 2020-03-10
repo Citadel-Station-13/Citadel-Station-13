@@ -370,7 +370,7 @@ SUBSYSTEM_DEF(vote)
 				var/list/runnable_storytellers = config.get_runnable_storytellers()
 				for(var/T in runnable_storytellers)
 					var/datum/dynamic_storyteller/S = T
-					runnable_storytellers[S] *= scores[initial(S.name)]
+					runnable_storytellers[S] *= stored_gamemode_votes[initial(S.name)]
 				var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
 				GLOB.dynamic_storyteller_type = S
 			if("map")
@@ -499,10 +499,11 @@ SUBSYSTEM_DEF(vote)
 				modes_to_add -= "traitor" // makes it so that traitor is always available
 				choices.Add(modes_to_add)
 			if("dynamic")
+				var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T
-					var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
-					if(probabilities[initial(S.config_tag)] > 0)
+					var/probability = ((initial(S.config_tag) in probabilities) ? probabilities[initial(S.config_tag)] : initial(S.weight))
+					if(probability > 0)
 						choices.Add(initial(S.name))
 						choice_descs.Add(initial(S.desc))
 			if("custom")

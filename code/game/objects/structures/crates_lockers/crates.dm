@@ -33,12 +33,13 @@
 				return 1
 	return !density
 
-/obj/structure/closet/crate/update_icon()
+/obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	cut_overlays()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
-		add_overlay("manifest")
+		. += "manifest"
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	. = ..()
@@ -83,9 +84,12 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
+	can_weld_shut = FALSE
+	breakout_time = 200
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
+	var/pryLidTimer = 250
 
 /obj/structure/closet/crate/coffin/examine(mob/user)
 	. = ..()

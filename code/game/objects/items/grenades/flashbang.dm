@@ -31,7 +31,7 @@
 	M.show_message("<span class='warning'>BANG</span>", MSG_AUDIBLE)
 	var/distance = get_dist(get_turf(M), source)
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
-		M.Knockdown(200)
+		M.DefaultCombatKnockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
 	else
 		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))
@@ -41,4 +41,4 @@
 		return
 	var/distance = get_dist(get_turf(M), source)
 	if(M.flash_act(affect_silicon = 1))
-		M.Knockdown(max(200/max(1,distance), 60))
+		M.DefaultCombatKnockdown(max(200/max(1,distance), 60))
