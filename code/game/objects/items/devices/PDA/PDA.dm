@@ -230,7 +230,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mutable_appearance/overlay = mutable_appearance(icon, screen_state)
 	overlay.pixel_x = overlays_x_offset
 	overlay.pixel_y = overlays_y_offset
-	. += overlay
+	. += new /mutable_appearance(overlay)
 	if(id)
 		overlay.icon_state = current_overlays[PDA_OVERLAY_ID]
 		. += new /mutable_appearance(overlay)
@@ -242,7 +242,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		. += new /mutable_appearance(overlay)
 	if(pai)
 		overlay.icon_state = "[current_overlays[PDA_OVERLAY_PAI]][pai.pai ? "" : "_off"]"
-		. += new /mutable_appearance(overlay)
+		. += overlay
 	new_overlays = FALSE
 	new_alert = FALSE
 
