@@ -37,6 +37,7 @@
 // These are for if the USER wants them to be on, for stuff like interface icon updates and right click interaction settings..
 #define IS_COMBAT_TOGGLED(mob)				(mob.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
 #define IS_SPRINT_TOGGLED(mob)				(mob.combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
+#define CAN_TOGGLE_COMBAT_MODE(mob)				((mob.stat == CONSCIOUS) && !IS_HARD_STAMCRITTED(mob))
 
 // Self documenting defines
 #define IS_RESISTING_REST(mob)				(mob.combat_flags & COMBAT_FLAG_RESISTING_REST)

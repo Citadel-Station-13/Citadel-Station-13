@@ -73,7 +73,7 @@
 	if(old)
 		disable_intentional_combat_mode()
 		playsound_local(src, 'sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above!
-	else if(!IS_HARD_STAMCRITTED(src))
+	else if(!CAN_TOGGLE_COMBAT_MODE(src))
 		enable_intentional_combat_mode()
 	var/current = IS_COMBAT_ACTIVE(src)		//because we could be locked
 	if((current != old) && current)		//only sound effect if you succeeded. Could have the feedback system be better but shrug, someone else can do it.
