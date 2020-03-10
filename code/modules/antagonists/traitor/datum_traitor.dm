@@ -52,22 +52,6 @@
 	finalize_traitor()
 	..()
 
-/datum/antagonist/traitor/apply_innate_effects()
-	traitor_kind.apply_innate_effects(src)
-	if(owner.assigned_role == "Clown")
-		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob && istype(traitor_mob))
-			if(!silent)
-				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-			traitor_mob.dna.remove_mutation(CLOWNMUT)
-
-/datum/antagonist/traitor/remove_innate_effects()
-	traitor_kind.remove_innate_effects(src)
-	if(owner.assigned_role == "Clown")
-		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob && istype(traitor_mob))
-			traitor_mob.dna.add_mutation(CLOWNMUT)
-
 /datum/antagonist/traitor/on_removal()
 	//Remove malf powers.
 	traitor_kind.on_removal(src)
@@ -111,8 +95,7 @@
 	set_antag_hud(owner.current, null)
 
 /datum/antagonist/traitor/proc/finalize_traitor()
-	var/should_base_finalize = traitor_kind.finalize_traitor(src)
-	if(should_base_finalize)
+	if(traitor_kind.finalize_traitor(src))
 		if(should_equip)
 			equip(silent)
 		owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -122,6 +105,12 @@
 	update_traitor_icons_added()
 	var/mob/M = mob_override || owner.current
 	traitor_kind.apply_innate_effects(M)
+	if(owner.assigned_role == "Clown")
+		var/mob/living/carbon/human/H = M
+		if(istype(H))
+			if(!silent)
+				to_chat(H, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+			H.dna.remove_mutation(CLOWNMUT)
 	RegisterSignal(M, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
@@ -129,6 +118,10 @@
 	update_traitor_icons_removed()
 	var/mob/M = mob_override || owner.current
 	traitor_kind.remove_innate_effects(M)
+	if(owner.assigned_role == "Clown")
+		var/mob/living/carbon/human/H = M
+		if(istype(H))
+			H.dna.add_mutation(CLOWNMUT)
 	UnregisterSignal(M, COMSIG_MOVABLE_HEAR)
 
 /datum/antagonist/traitor/proc/give_codewords()
