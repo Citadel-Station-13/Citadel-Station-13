@@ -987,7 +987,7 @@
 	item_color = "winterhood_poly"
 	item_state = "winterhood_poly"
 
-/obj/item/clothing/head/hooded/winterhood/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
+/obj/item/clothing/head/hooded/winterhood/polychromic/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)	//this is where the main magic happens.
 	. = ..()
 	if(suit.hasprimary | suit.hassecondary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
@@ -1000,7 +1000,7 @@
 				secondary_worn.color = suit.secondary_color
 				. += secondary_worn
 
-/obj/item/clothing/suit/hooded/wintercoat/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
+/obj/item/clothing/suit/hooded/wintercoat/polychromic/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)	//this is where the main magic happens.
 	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them

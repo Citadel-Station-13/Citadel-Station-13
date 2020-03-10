@@ -67,7 +67,7 @@
 		var/datum/action/A=X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands && on)
 		. += mutable_appearance(icon_file, light_overlay)

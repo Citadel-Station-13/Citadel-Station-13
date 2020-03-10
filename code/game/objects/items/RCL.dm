@@ -113,7 +113,7 @@
 	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
 	. += cable_overlay
 
-/obj/item/twohanded/rcl/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/twohanded/rcl/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands || !(loaded?.amount))
 		return

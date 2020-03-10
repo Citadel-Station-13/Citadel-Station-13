@@ -208,7 +208,7 @@
 		M.color = hair_color
 		add_overlay(M)
 
-/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
+/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]

@@ -793,7 +793,7 @@
 			var/mob/living/carbon/human/C = loc
 			C.update_inv_wear_suit()
 
-/obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
 		var/file2use = style_flags & STYLE_ALL_TAURIC ? 'modular_citadel/icons/mob/64x32_effects.dmi' : 'icons/effects/effects.dmi'
@@ -956,7 +956,7 @@
 
 	add_overlay(helm_overlay)
 
-/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
 		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
@@ -993,7 +993,7 @@
 
 	add_overlay(suit_overlay)
 
-/obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
+/obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
 		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)

@@ -27,7 +27,7 @@
 	can_adjust = FALSE
 	mutantrace_variation = NONE //Not all clothes are currently digi-compatible (only the shorts are as of time of writing)
 
-/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
+/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)	//this is where the main magic happens.
 	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
