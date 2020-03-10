@@ -428,7 +428,7 @@
 	else
 		return FALSE
 
-/obj/machinery/door/airlock/update_icon_state(state=0, override=0)
+/obj/machinery/door/airlock/update_icon(state=0, override=0)
 	if(operating && !override)
 		return
 	switch(state)
