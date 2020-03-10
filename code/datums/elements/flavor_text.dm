@@ -29,8 +29,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
 
 	if(can_edit && ismob(target)) //but only mobs receive the proc/verb for the time being
-		LAZYADD(GLOB.mobs_with_editable_flavor_text[target], src)
 		var/mob/M = target
+		LAZYOR(GLOB.mobs_with_editable_flavor_text[M], src)
 		M.verbs |= /mob/proc/manage_flavor_tests
 
 /datum/element/flavor_text/Detach(atom/A)
