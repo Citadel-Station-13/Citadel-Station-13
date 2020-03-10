@@ -56,6 +56,12 @@
 		if("F2") // Screenshot. Hold shift to choose a name and location to save in
 			winset(src, null, "command=.screenshot [!keys_held["shift"] ? "auto" : ""]")
 			return
+		if("F3")
+			if(keys_held["Ctrl"] && keys_held["Shift"]) //So we cant spam
+				winset(src, null, "command=.options")
+			else
+				get_mentorhelp()
+			return
 		if("F12") // Toggles minimal HUD
 			mob.button_pressed_F12()
 			return
