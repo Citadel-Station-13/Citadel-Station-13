@@ -61,8 +61,8 @@
 			D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
 			D.DefaultCombatKnockdown(60)
 		if(7,8)
-			basic_hit(A,D)
+			return FALSE
 
 	if(atk_verb)
 		log_combat(A, D, "[atk_verb] (Psychotic Brawling)")
-	return 1
+	return TRUE
