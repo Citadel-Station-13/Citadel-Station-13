@@ -253,15 +253,31 @@ Property weights are:
 	name = "Calm"
 	config_tag = "calm"
 	desc = "Low-chaos round. Few antags. No conversion."
-	curve_centre = -5
+	curve_centre = -3
 	curve_width = 0.5
 	flags = NO_ASSASSIN
 	weight = 1
 	pop_antag_ratio = 10
 	property_weights = list("extended" = 1, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
 
-/datum/dynamic_storyteller/extended
+/datum/dynamic_storyteller/no_antag
 	name = "Extended"
+	config_tag = "semiextended"
+	desc = "No standard antags. Threatening events may still spawn."
+	curve_centre = -5
+	curve_width = 0.5
+	flags = NO_ASSASSIN
+	weight = 1
+	property_weights = list("extended" = 2)
+
+/datum/dynamic_storyteller/no_antag/roundstart_draft()
+	return list()
+
+/datum/dynamic_storyteller/no_antag/get_injection_chance(dry_run)
+	return 0
+
+/datum/dynamic_storyteller/extended
+	name = "Super Extended"
 	config_tag = "extended"
 	desc = "No antags. No dangerous events."
 	curve_centre = -20
