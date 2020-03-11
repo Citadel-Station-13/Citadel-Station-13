@@ -623,8 +623,7 @@
 	config_tag = "clownops"
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
-	requirements = list(100,90,80,70,60,50,50,50,50,50)
-	high_population_requirement = 50
+	weight = 1
 	property_weights = list("trust" = 2, "chaos" = 2, "extended" = -2, "story_potential" = 2, "valid" = 2)
 
 
