@@ -229,7 +229,6 @@ Difficulty: Hard
 	attacktext = "pierces"
 	color = "#C80000"
 	density = FALSE
-	swarming = FALSE
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 
