@@ -53392,8 +53392,7 @@
 /area/crew_quarters/cryopod)
 "dzQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
@@ -56130,8 +56129,7 @@
 /area/crew_quarters/locker)
 "oyz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -57552,8 +57550,7 @@
 /area/maintenance/bar)
 "tWj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	pixel_y = 0
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
