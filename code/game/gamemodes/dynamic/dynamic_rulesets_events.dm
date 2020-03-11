@@ -168,7 +168,7 @@
 	property_weights = list("extended" = -2)
 
 /datum/dynamic_ruleset/event/meteor_wave/ready()
-	if(world.time-SSticker.round_start_time > 35 MINUTES && mode.threat_level > 40 && mode.threat >= 25 && prob(20))
+	if(world.time-SSticker.round_start_time > 35 MINUTES && mode.threat_level > 40 && mode.threat >= 25 && prob(30))
 		name = "Meteor Wave: Threatening"
 		cost = 25
 		typepath = /datum/round_event/meteor_wave/threatening
