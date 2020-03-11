@@ -63,7 +63,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if((D.mobility_flags & MOBILITY_STAND))
 		D.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
-		D.DefaultCombatKnockdown(50) //Not much can really be done about the knockdown being so strong without a refactor
+		D.DefaultCombatKnockdown(50)
 		D.adjustStaminaLoss(40) //A cit specific change form the tg port to really punish anyone who tries to stand up
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
@@ -117,7 +117,7 @@
 	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
 		return BULLET_ACT_HIT
 	if(A.in_throw_mode)
-		A.visible_message("<span class='danger'>[A] effortlessly swats the projectile aside! They can block bullets with their bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+		A.visible_message("<span class='danger'>[A] effortlessly swats the projectile aside! They can deflect projectile with their bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
 		P.setAngle(rand(0, 360))//SHING

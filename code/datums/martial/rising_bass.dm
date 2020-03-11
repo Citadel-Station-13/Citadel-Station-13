@@ -187,10 +187,8 @@
 		return BULLET_ACT_HIT
 	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
 		return BULLET_ACT_HIT
-	A.visible_message("<span class='danger'>[A] dodges the bullet cleanly, they're immune to ranged weapons!</span>", "<span class='userdanger'>You dodge out of the way of the projectile!</span>")
+	A.visible_message("<span class='danger'>[A] dodges the projectile cleanly, they're immune to ranged weapons!</span>", "<span class='userdanger'>You dodge out of the way of the projectile!</span>")
 	playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-	P.firer = A
-	P.setAngle(rand(0, 360))//SHING
 	return BULLET_ACT_FORCE_PIERCE
 
 /mob/living/carbon/human/proc/rising_bass_help()
