@@ -79,7 +79,6 @@
 /obj/item/clothing/head/helmet/space/syndicate/contract
 	name = "contractor helmet"
 	desc = "A specialised black and gold helmet that's more compact than its standard Syndicate counterpart. Can be ultra-compressed into even the tightest of spaces."
-	slowdown = 0.55
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract-helm"
 	item_state = "syndicate-contract-helm"
@@ -91,6 +90,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract"
 	item_state = "syndicate-contract"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
 //Black-green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/green
