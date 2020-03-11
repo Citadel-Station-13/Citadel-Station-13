@@ -84,7 +84,7 @@
 	pass_flags = PASSTABLE | PASSMOB //they shouldn't get stuck behind hivelords.
 	density = FALSE
 	del_on_death = 1
-	var/swarming = TRUE
+	var/swarming = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
@@ -186,6 +186,7 @@
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
+	swarming = TRUE
 	var/can_infest_dead = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
