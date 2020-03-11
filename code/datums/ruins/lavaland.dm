@@ -176,8 +176,8 @@
 	id = "fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	suffix = "lavaland_surface_fountain_hall.dmm"
-	allow_duplicates = FALSE
 	cost = 5
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/survivalcapsule
 	name = "Survival Capsule Ruins"
