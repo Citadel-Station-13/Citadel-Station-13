@@ -426,3 +426,29 @@
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement =  5
 	property_weights = list("extended" = -2)
+
+/datum/dynamic_ruleset/event/sentient_disease
+	name = "Sentient Disease"
+	config_tag = "sentient_disease"
+	typepath = /datum/round_event/ghost_role/sentient_disease
+	enemy_roles = list("Virologist","Chief Medical Officer","Captain","Chemist")
+	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 5
+	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
+	property_weights = list("story_potential" = 1, "extended" = 1, "valid" = -2)
+	high_population_requirement = 5
+
+/datum/dynamic_ruleset/event/revenant
+	name = "Revenant"
+	config_tag = "revenant"
+	typepath = /datum/round_event/ghost_role/revenant
+	enemy_roles = list("Chief Engineer","Station Engineer","Captain","Chaplain","AI")
+	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 5
+	requirements = list(30,30,30,30,20,15,15,15,15,15)
+	high_population_requirement = 15
+	property_weights = list("story_potential" = -2, "extended" = -1)

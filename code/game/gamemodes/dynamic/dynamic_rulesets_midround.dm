@@ -525,88 +525,6 @@
 
 //////////////////////////////////////////////
 //                                          //
-//            SENTIENT DISEASE              //
-//                                          //
-//////////////////////////////////////////////
-
-
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
-	name = "Sentient Disease"
-	config_tag = "sentient_disease"
-	antag_flag = ROLE_ALIEN
-	enemy_roles = list("Virologist","Chief Medical Officer","Captain","Chemist")
-	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
-	required_candidates = 1
-	weight = 4
-	cost = 5
-	requirements = list(30,30,20,20,15,10,10,10,10,5) // yes, it can even happen in "extended"!
-	property_weights = list("story_potential" = 1, "extended" = 1, "valid" = -2)
-	high_population_requirement = 5
-
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
-	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
-	applicant.transfer_ckey(virus, FALSE)
-	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
-	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")
-	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
-	return virus
-
-//////////////////////////////////////////////
-//                                          //
-//                REVENANT                  //
-//                                          //
-//////////////////////////////////////////////
-
-
-/datum/dynamic_ruleset/midround/from_ghosts/revenant
-	name = "Revenant"
-	config_tag = "revenant"
-	antag_flag = ROLE_REVENANT
-	enemy_roles = list("Chief Engineer","Station Engineer","Captain","Chaplain","AI")
-	required_enemies = list(2,1,1,1,0,0,0,0,0,0)
-	required_candidates = 1
-	weight = 4
-	cost = 5
-	requirements = list(30,30,30,30,20,15,15,15,15,15)
-	high_population_requirement = 15
-	property_weights = list("story_potential" = -2, "extended" = -1)
-	var/list/spawn_locs = list()
-
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population = 0,threat = 0)
-	var/deadMobs = 0
-	for(var/mob/M in GLOB.dead_mob_list)
-		deadMobs++
-	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
-		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/ready(forced = FALSE)
-	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
-		var/turf/T = get_turf(L)
-		if(T && is_station_level(T.z))
-			spawn_locs += T
-	if(!spawn_locs.len || spawn_locs.len < 15) //look for any morgue trays, crematoriums, ect if there weren't alot of dead bodies on the station to pick from
-		for(var/obj/structure/bodycontainer/bc in GLOB.bodycontainers)
-			var/turf/T = get_turf(bc)
-			if(T && is_station_level(T.z))
-				spawn_locs += T
-	if(!spawn_locs.len) //If we can't find any valid spawnpoints, try the carp spawns
-		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
-			if(isturf(L.loc))
-				spawn_locs += L.loc
-	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
-		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/generate_ruleset_body(mob/applicant)
-	var/mob/living/simple_animal/revenant/revvie = new(pick(spawn_locs))
-	applicant.transfer_ckey(revvie, FALSE)
-	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by the midround ruleset.")
-	log_game("[key_name(revvie)] was spawned as a revenant by the midround ruleset.")
-	return revvie
-
-//////////////////////////////////////////////
-//                                          //
 //            SLAUGHTER DEMON               //
 //                                          //
 //////////////////////////////////////////////
@@ -668,11 +586,11 @@
 	required_candidates = 2
 	weight = 8
 	cost = 10
-	requirements = list(101,101,70,50,40,30,30,20,15,15)
+	requirements = list(101,101,70,50,40,30,30,30,30,30)
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/nuclear,/datum/dynamic_ruleset/midround/from_ghosts/nuclear)
 	high_population_requirement = 15
 	var/datum/team/abductor_team/team
-	property_weights = list("story_potential" = 1, "extended" = -2, "valid" = 1, "trust" = -1, "chaos" = 2)
+	property_weights = list("extended" = -2, "valid" = 1, "trust" = -1, "chaos" = 2)
 	repeatable_weight_decrease = 4
 	repeatable = TRUE
 
@@ -742,7 +660,8 @@
 	var/datum/antagonist/ninja/ninjadatum = new
 	ninjadatum.helping_station = pick(TRUE,FALSE)
 	if(ninjadatum.helping_station)
-		mode.refund_threat(5)
+		mode.refund_threat(cost+5)
+		mode.log_threat("Ninja was helping station; [cost+5] cost refunded.")
 	Mind.add_antag_datum(ninjadatum)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
