@@ -17,27 +17,27 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
+	mats_per_stack = MINERAL_MATERIAL_AMOUNT
 	var/list/stack_overlays
 
-/obj/item/stack/ore/update_icon()
+/obj/item/stack/ore/update_overlays()
+	. = ..()
 	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
 	if(difference == 0)
 		return
 	else if(difference < 0 && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
-		cut_overlays()
 		if (LAZYLEN(stack_overlays)-difference <= 0)
-			stack_overlays = null;
+			stack_overlays = null
 		else
 			stack_overlays.len += difference
 	else if(difference > 0)			//amount > stack_overlays, add some.
-		cut_overlays()
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
 			newore.pixel_x = rand(-8,8)
 			newore.pixel_y = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
 	if (stack_overlays)
-		add_overlay(stack_overlays)
+		. += stack_overlays
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	if(!refined_type)
@@ -69,7 +69,8 @@
 	item_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
-	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
+	material_flags = MATERIAL_NO_EFFECTS
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/stack/ore/iron
@@ -78,7 +79,7 @@
 	item_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/ore/glass
@@ -87,17 +88,17 @@
 	item_state = "Glass ore"
 	singular_name = "sand pile"
 	points = 1
-	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
-		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50)\
-		))
+	new/datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50),\
+	))
 
-/obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.sand_recipes
+/obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
+	. += GLOB.sand_recipes
 
 /obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
@@ -135,13 +136,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
 	points = 15
-	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
 	return TRUE
-
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Silver ore"
 	singular_name = "silver ore chunk"
 	points = 16
-	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/stack/ore/gold
@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
-	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/stack/ore/diamond
@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Diamond ore"
 	singular_name = "diamond ore chunk"
 	points = 50
-	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/stack/ore/bananium
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Bananium ore"
 	singular_name = "bananium ore chunk"
 	points = 60
-	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/stack/ore/titanium
@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Titanium ore"
 	singular_name = "titanium ore chunk"
 	points = 50
-	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 
 /obj/item/stack/ore/slag
@@ -313,17 +313,33 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "coin__heads"
+	icon_state = "coin"
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron = 400)
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
-	var/cmineral = null
 	var/cooldown = 0
-	var/value = 1
+	var/value
 	var/coinflip
+	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
+
+/obj/item/coin/Initialize()
+	. = ..()
+	coinflip = pick(sideslist)
+	icon_state = "coin_[coinflip]"
+	pixel_x = rand(0,16)-8
+	pixel_y = rand(0,8)-8
+
+/obj/item/coin/set_custom_materials(list/materials, multiplier = 1)
+	. = ..()
+	value = 0
+	for(var/i in custom_materials)
+		var/datum/material/M = i
+		value += M.value_per_unit * custom_materials[M]
 
 /obj/item/coin/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
@@ -342,101 +358,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	else
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
 
-/obj/item/coin/Initialize()
-	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
-
 /obj/item/coin/examine(mob/user)
 	. = ..()
-	if(value)
-		. += "<span class='info'>It's worth [value] credit\s.</span>"
-
-/obj/item/coin/gold
-	name = "gold coin"
-	cmineral = "gold"
-	icon_state = "coin_gold_heads"
-	value = 50
-	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/gold = 4)
-
-/obj/item/coin/silver
-	name = "silver coin"
-	cmineral = "silver"
-	icon_state = "coin_silver_heads"
-	value = 20
-	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/silver = 4)
-
-/obj/item/coin/diamond
-	name = "diamond coin"
-	cmineral = "diamond"
-	icon_state = "coin_diamond_heads"
-	value = 500
-	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/carbon = 4)
-
-/obj/item/coin/iron
-	name = "iron coin"
-	cmineral = "iron"
-	icon_state = "coin_iron_heads"
-	value = 1
-	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/iron = 4)
-
-/obj/item/coin/plasma
-	name = "plasma coin"
-	cmineral = "plasma"
-	icon_state = "coin_plasma_heads"
-	value = 100
-	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/toxin/plasma = 4)
-
-/obj/item/coin/uranium
-	name = "uranium coin"
-	cmineral = "uranium"
-	icon_state = "coin_uranium_heads"
-	value = 80
-	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/uranium = 4)
-
-/obj/item/coin/bananium
-	name = "bananium coin"
-	cmineral = "bananium"
-	icon_state = "coin_bananium_heads"
-	value = 1000 //makes the clown cry
-	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/consumable/banana = 4)
-
-/obj/item/coin/adamantine
-	name = "adamantine coin"
-	cmineral = "adamantine"
-	icon_state = "coin_adamantine_heads"
-	value = 1500
-
-/obj/item/coin/mythril
-	name = "mythril coin"
-	cmineral = "mythril"
-	icon_state = "coin_mythril_heads"
-	value = 3000
-
-/obj/item/coin/twoheaded
-	cmineral = "iron"
-	icon_state = "coin_iron_heads"
-	desc = "Hey, this coin's the same on both sides!"
-	sideslist = list("heads")
-	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
-	value = 1
-	grind_results = list(/datum/reagent/iron = 4)
-
-/obj/item/coin/antagtoken
-	name = "antag token"
-	icon_state = "coin_valid_valid"
-	cmineral = "valid"
-	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
-	sideslist = list("valid", "salad")
-	value = 0
-	grind_results = list(/datum/reagent/consumable/sodiumchloride = 4)
+	. += "<span class='info'>It's worth [value] credit\s.</span>"
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -470,10 +394,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
 			return FALSE//do not flip the coin
-		coinflip = pick(sideslist)
 		cooldown = world.time + 15
-		flick("coin_[cmineral]_flip", src)
-		icon_state = "coin_[cmineral]_[coinflip]"
+		flick("coin_[coinflip]_flip", src)
+		coinflip = pick(sideslist)
+		icon_state = "coin_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
 		var/oldloc = loc
 		sleep(15)
@@ -483,5 +407,51 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
 	return TRUE//did the coin flip? useful for suicide_act
 
+/obj/item/coin/gold
+	custom_materials = list(/datum/material/gold = 400)
+
+/obj/item/coin/silver
+	custom_materials = list(/datum/material/silver = 400)
+
+/obj/item/coin/diamond
+	custom_materials = list(/datum/material/diamond = 400)
+
+/obj/item/coin/plasma
+	custom_materials = list(/datum/material/plasma = 400)
+
+/obj/item/coin/uranium
+	custom_materials = list(/datum/material/uranium = 400)
+
+/obj/item/coin/titanium
+	custom_materials = list(/datum/material/titanium = 400)
+
+/obj/item/coin/bananium
+	custom_materials = list(/datum/material/bananium = 400)
+
+/obj/item/coin/adamantine
+	custom_materials = list(/datum/material/adamantine = 400)
+
+/obj/item/coin/mythril
+	custom_materials = list(/datum/material/mythril = 400)
+
+/obj/item/coin/plastic
+	custom_materials = list(/datum/material/plastic = 400)
+
+/obj/item/coin/runite
+	custom_materials = list(/datum/material/runite = 400)
+
+/obj/item/coin/twoheaded
+	desc = "Hey, this coin's the same on both sides!"
+	sideslist = list("heads")
+
+/obj/item/coin/antagtoken
+	name = "antag token"
+	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
+	icon_state = "coin_valid"
+	custom_materials = list(/datum/material/plastic = 400)
+	sideslist = list("valid", "salad")
+	material_flags = NONE
+
+/obj/item/coin/iron
 
 #undef ORESTACK_OVERLAYS_MAX

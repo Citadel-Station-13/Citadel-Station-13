@@ -158,7 +158,7 @@
 		swallow_time = istype(prey, /mob/living/carbon/human) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
 
 	//Timer and progress bar
-	if(!do_after(user, swallow_time, prey))
+	if(!do_after(user, swallow_time, TRUE, prey))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
@@ -382,6 +382,9 @@
 	set desc = "Lick someone nearby!"
 
 	if(!istype(tasted))
+		return
+
+	if(!tasted.client?.prefs_vr.lickable)
 		return
 
 	if(src == stat)

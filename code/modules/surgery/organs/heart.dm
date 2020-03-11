@@ -22,7 +22,7 @@
 	var/failed = FALSE		//to prevent constantly running failing code
 	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
 
-/obj/item/organ/heart/update_icon()
+/obj/item/organ/heart/update_icon_state()
 	if(beating)
 		icon_state = "[icon_base]-on"
 	else
@@ -222,9 +222,8 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 
 /obj/item/organ/heart/ipc
 	name = "IPC heart"
-	desc = "An electronic pump that regulates hydraulic functions, they have an auto-restart after EMPs."
+	desc = "An electronic pump that regulates hydraulic functions, the electronics have EMP shielding."
 	icon_state = "heart-c"
-	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"

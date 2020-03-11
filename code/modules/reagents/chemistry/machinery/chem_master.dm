@@ -67,14 +67,16 @@
 		bottle = null
 		update_icon()
 
-/obj/machinery/chem_master/update_icon()
-	cut_overlays()
-	if (stat & BROKEN)
-		add_overlay("waitlight")
+/obj/machinery/chem_master/update_icon_state()
 	if(beaker)
 		icon_state = "mixer1"
 	else
 		icon_state = "mixer0"
+
+/obj/machinery/chem_master/update_overlays()
+	. = ..()
+	if (stat & BROKEN)
+		. += "waitlight"
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
@@ -129,7 +131,7 @@
 	if(beaker)
 		var/obj/item/reagent_containers/B = beaker
 		B.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
@@ -139,7 +141,7 @@
 	if(bottle)
 		var/obj/item/storage/pill_bottle/B = bottle
 		B.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(B)
 		else
 			adjust_item_drop_location(B)

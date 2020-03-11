@@ -123,7 +123,8 @@
 		emagged = TRUE
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
+		if(user)
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(src, "sparks", 100, FALSE)
 
@@ -180,7 +181,7 @@
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = hasSiliconAccessInArea(user)
 	data["mode"] = mode ? mode_name[mode] : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
@@ -205,11 +206,12 @@
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
-	if(..() || (locked && !usr.has_unlimited_silicon_privilege))
+	var/silicon_access = hasSiliconAccessInArea(usr)
+	if(..() || (locked && silicon_access))
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(silicon_access)
 				locked = !locked
 				. = TRUE
 		if("power")
@@ -660,7 +662,7 @@
 				if(!paicard)
 					log_combat(src, L, "knocked down")
 					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Knockdown(160)
+					L.DefaultCombatKnockdown(160)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -745,8 +747,8 @@
 	else
 		return null
 
-/mob/living/simple_animal/bot/mulebot/resist()
-	..()
+/mob/living/simple_animal/bot/mulebot/do_resist()
+	. = ..()
 	if(load)
 		unload()
 
@@ -766,4 +768,3 @@
 
 /obj/machinery/bot_core/mulebot
 	req_access = list(ACCESS_CARGO)
-	

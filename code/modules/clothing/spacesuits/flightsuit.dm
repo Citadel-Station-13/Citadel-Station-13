@@ -481,7 +481,7 @@
 				adjust_momentum(0, 0, 10)
 		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
 		if(knockdown)
-			wearer.Knockdown(80)
+			wearer.DefaultCombatKnockdown(80)
 	momentum_x = 0
 	momentum_y = 0
 	calculate_momentum_speed()

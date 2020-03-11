@@ -334,7 +334,7 @@
 			L.death()				//Die, powergamers.
 		if(DUEL_HUGBOX_NONLETHAL)
 			L.adjustStaminaLoss(200, forced = TRUE)		//Die, powergamers x 2
-			L.Knockdown(100, override_hardstun = 100)	//For good measure.
+			L.Paralyze(100)	//For good measure.
 
 //Storage case.
 /obj/item/storage/lockbox/dueling

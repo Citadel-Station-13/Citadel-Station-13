@@ -12,6 +12,9 @@
 /datum/sabotage_objective/proc/check_conditions()
 	return TRUE
 
+/datum/sabotage_objective/proc/can_run()
+	return TRUE
+
 /datum/sabotage_objective/processing
 	var/won = FALSE
 
@@ -20,20 +23,20 @@
 	START_PROCESSING(SSprocessing, src)
 
 /datum/sabotage_objective/processing/proc/check_condition_processing()
-	return 100
+	return 1
 
 /datum/sabotage_objective/processing/process()
 	check_condition_processing()
-	if(won >= 100)
+	if(won >= 1)
 		STOP_PROCESSING(SSprocessing,src)
 
 /datum/sabotage_objective/processing/check_conditions()
 	return won
 
 /datum/sabotage_objective/processing/power_sink
-	name = "Drain at least 1 gigajoule of power using a power sink."
+	name = "Drain at least 100 megajoules of power using a power sink."
 	sabotage_type = "powersink"
-	special_equipment = list(/obj/item/powersink)
+	special_equipment = list(/obj/item/sbeacondrop/powersink)
 	var/sink_found = FALSE
 	var/count = 0
 
@@ -44,7 +47,7 @@
 		for(var/datum/powernet/PN in GLOB.powernets)
 			for(var/obj/item/powersink/sink in PN.nodes)
 				sink_found_this_time = TRUE
-				won = max(won,sink.power_drained/1e9)
+				won = max(won,sink.power_drained/1e8)
 		sink_found = sink_found_this_time
 		count = 0
 	return FALSE
@@ -78,6 +81,9 @@
 	for(var/obj/machinery/power/supermatter_crystal/S in supermatters) // you can win this with a wishgranter... lol.
 		won = max(1-((S.get_integrity()-50)/50),won)
 	return FALSE
+
+/datum/sabotage_objective/processing/supermatter/can_run()
+	return (locate(/obj/machinery/power/supermatter_crystal) in GLOB.machines)
 
 /datum/sabotage_objective/station_integrity
 	name = "Make sure the station is at less than 80% integrity by the end. Smash walls, windows etc. to reach this goal."

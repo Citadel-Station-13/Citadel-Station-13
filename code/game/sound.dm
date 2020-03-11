@@ -1,7 +1,6 @@
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, soundenvwet = -10000, soundenvdry = 0)
 	if(isarea(source))
-		throw EXCEPTION("playsound(): source is an area")
-		return
+		CRASH("playsound(): source is an area")
 
 	var/turf/turf_source = get_turf(source)
 
@@ -184,6 +183,8 @@
 				soundin = pick('sound/items/bikehorn.ogg', 'sound/items/AirHorn2.ogg', 'sound/misc/sadtrombone.ogg', 'sound/items/AirHorn.ogg', 'sound/effects/reee.ogg',  'sound/items/WEEOO1.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/creep.ogg','sound/magic/Fireball.ogg' ,'sound/effects/pray.ogg', 'sound/voice/hiss1.ogg','sound/machines/buzz-sigh.ogg', 'sound/machines/ping.ogg', 'sound/weapons/flashbang.ogg', 'sound/weapons/bladeslice.ogg')
 			if("goose")
 				soundin = pick('sound/creatures/goose1.ogg', 'sound/creatures/goose2.ogg', 'sound/creatures/goose3.ogg', 'sound/creatures/goose4.ogg')
+			if("water_wade")
+				soundin = pick('sound/effects/water_wade1.ogg', 'sound/effects/water_wade2.ogg', 'sound/effects/water_wade3.ogg', 'sound/effects/water_wade4.ogg')
 			//START OF CIT CHANGES - adds random vore sounds
 			if ("struggle_sound")
 				soundin = pick( 'sound/vore/pred/struggle_01.ogg','sound/vore/pred/struggle_02.ogg','sound/vore/pred/struggle_03.ogg',

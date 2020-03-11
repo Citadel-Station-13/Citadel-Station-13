@@ -446,7 +446,7 @@
 						var/atom/throw_target = get_edge_target_turf(L, user.dir)
 						L.throw_at(throw_target, 7, 1, user)
 			else if(!iscultist(L))
-				L.Knockdown(160)
+				L.DefaultCombatKnockdown(160)
 				L.adjustStaminaLoss(140) //Ensures hard stamcrit
 				L.flash_act(1,1)
 				if(issilicon(target))

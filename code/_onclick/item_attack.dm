@@ -113,7 +113,7 @@
 		var/mob/living/carbon/tempcarb = user
 		if(!tempcarb.combatmode)
 			totitemdamage *= 0.5
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))

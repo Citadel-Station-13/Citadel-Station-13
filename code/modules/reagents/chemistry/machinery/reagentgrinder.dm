@@ -66,7 +66,7 @@
 		AM.forceMove(drop_location())
 	holdingitems = list()
 
-/obj/machinery/reagentgrinder/update_icon()
+/obj/machinery/reagentgrinder/update_icon_state()
 	if(beaker)
 		icon_state = "juicer1"
 	else
@@ -75,7 +75,7 @@
 /obj/machinery/reagentgrinder/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(beaker)
 	if(new_beaker)
 		beaker = new_beaker

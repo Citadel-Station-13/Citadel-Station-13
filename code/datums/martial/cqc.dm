@@ -42,19 +42,19 @@
 /datum/martial_art/cqc/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
 		return FALSE
-	if(!D.stat || !D.IsKnockdown())
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		D.visible_message("<span class='warning'>[A] slams [D] into the ground!</span>", \
 						  	"<span class='userdanger'>[A] slams you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
 		D.apply_damage(10, BRUTE)
-		D.Knockdown(120)
+		D.DefaultCombatKnockdown(120)
 		log_combat(A, D, "slammed (CQC)")
 	return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
 		return FALSE
-	if(!D.stat || !D.IsKnockdown())
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		D.visible_message("<span class='warning'>[A] kicks [D] back!</span>", \
 							"<span class='userdanger'>[A] kicks you back!</span>")
 		playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
@@ -62,7 +62,7 @@
 		D.throw_at(throw_target, 1, 14, A)
 		D.apply_damage(10, BRUTE)
 		log_combat(A, D, "kicked (CQC)")
-	if(D.IsKnockdown() && !D.stat)
+	if(!CHECK_MOBILITY(D, MOBILITY_STAND) && CHECK_MOBILITY(D, MOBILITY_USE))
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking [D.p_them()] out!</span>", \
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
@@ -119,7 +119,7 @@
 		D.grabbedby(A, 1)
 		if(old_grab_state == GRAB_PASSIVE)
 			D.drop_all_held_items()
-			A.grab_state = GRAB_AGGRESSIVE //Instant agressive grab if on grab intent
+			A.setGrabState(GRAB_AGGRESSIVE) //Instant agressive grab if on grab intent
 			log_combat(A, D, "grabbed", addition="aggressively")
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 								"<span class='userdanger'>[A] violently grabs you!</span>")
@@ -136,7 +136,7 @@
 	A.do_attack_animation(D)
 	var/picked_hit_type = pick("CQC'd", "Big Bossed")
 	var/bonus_damage = 13
-	if(D.IsKnockdown() || D.resting || D.lying)
+	if(!CHECK_MOBILITY(D, MOBILITY_STAND))
 		bonus_damage += 5
 		picked_hit_type = "stomps on"
 	D.apply_damage(bonus_damage, BRUTE)
@@ -147,12 +147,12 @@
 	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
 					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
 	log_combat(A, D, "[picked_hit_type] (CQC)")
-	if(A.resting && !D.stat && !D.IsKnockdown())
+	if(!CHECK_MOBILITY(A, MOBILITY_STAND) && !D.stat && CHECK_MOBILITY(D, MOBILITY_STAND))
 		D.visible_message("<span class='warning'>[A] leg sweeps [D]!", \
 							"<span class='userdanger'>[A] leg sweeps you!</span>")
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 		D.apply_damage(10, BRUTE)
-		D.Knockdown(60)
+		D.DefaultCombatKnockdown(60)
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
 
@@ -164,7 +164,7 @@
 	if(check_streak(A,D))
 		return TRUE
 	if(prob(65))
-		if(!D.stat || !D.IsKnockdown() || !restraining)
+		if(CHECK_MOBILITY(D, MOBILITY_MOVE) || !restraining)
 			I = D.get_active_held_item()
 			D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand!</span>", \
 								"<span class='userdanger'>[A] strikes your jaw, disorienting you!</span>")
@@ -185,7 +185,7 @@
 		D.SetSleeping(400)
 		restraining = FALSE
 		if(A.grab_state < GRAB_NECK)
-			A.grab_state = GRAB_NECK
+			A.setGrabState(GRAB_NECK)
 	else
 		restraining = FALSE
 		return FALSE
