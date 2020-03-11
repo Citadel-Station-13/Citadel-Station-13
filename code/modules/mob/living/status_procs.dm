@@ -284,7 +284,7 @@
 		return I
 
 ///////////////////////////////// STAGGERED ////////////////////////////////////
-/mob/living/proc/Staggered() //If we're Staggered
+/mob/living/proc/IsStaggered() //If we're Staggered
 	return has_status_effect(STATUS_EFFECT_STAGGERED)
 
 /mob/living/proc/AmountStaggered() //How many deciseconds remain in our Staggered status effect
@@ -299,7 +299,7 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/staggered/I = IsStaggered()
+		var/datum/status_effect/staggered/I = IsStaggered()
 		if(I)
 			I.duration = max(world.time + amount, I.duration)
 		else if(amount > 0)
@@ -310,7 +310,7 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/staggered/I = IsStaggered()
+		var/datum/status_effect/staggered/I = IsStaggered()
 		if(amount <= 0)
 			if(I)
 				qdel(I)
@@ -329,7 +329,7 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/staggered/I = IsStaggered()
+		var/datum/status_effect/staggered/I = IsStaggered()
 		if(I)
 			I.duration += amount
 		else if(amount > 0)
