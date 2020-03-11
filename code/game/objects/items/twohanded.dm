@@ -246,7 +246,7 @@
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/living/user, proximity)
 	. = ..()
 	if(!proximity || (user.getStaminaLoss() > STAMINA_SOFTCRIT))
 		return
