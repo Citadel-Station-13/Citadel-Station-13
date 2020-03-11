@@ -248,9 +248,9 @@
 
 /obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity || (user.getStaminaLoss() > STAMINA_SOFTCRIT))
 		return
-	if(wielded) //destroys windows and grilles in one hit
+	if(wielded) //destroys windows and grilles in one hit (or more if it has a ton of health like plasmaglass)
 		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
 			W.take_damage(200, BRUTE, "melee", 0)
