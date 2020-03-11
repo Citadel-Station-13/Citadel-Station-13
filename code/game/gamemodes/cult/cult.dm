@@ -96,7 +96,7 @@
 		add_cultist(cult_mind, 0, equip=TRUE)
 		if(!main_cult)
 			var/datum/antagonist/cult/C = cult_mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(C && C.cult_team)
+			if(C?.cult_team)
 				main_cult = C.cult_team
 	..()
 

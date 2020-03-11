@@ -87,8 +87,8 @@ This file contains the cult dagger and rune list code
 			to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
 			return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
-		var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives
+		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team?.objectives
+		var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team?.objectives
 		if(!summon_objective)
 			to_chat(user, "<span class='warning'>Nar'Sie does not wish to be summoned!</span>")
 			return

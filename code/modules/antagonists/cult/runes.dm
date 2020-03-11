@@ -485,6 +485,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!user_antag.cult_team)
+		to_chat(user, "<span class='cultlarge'>You can't seem to make the arcane links to your fellows that you'd need to use this.</span>")
+		return
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	var/area/place = get_area(src)
 	if(!(place in summon_objective.summon_spots))
@@ -955,6 +958,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/area/place = get_area(src)
 	var/mob/living/user = invokers[1]
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!user_antag.cult_team)
+		to_chat(user, "<span class='cultlarge'>You can't seem to make the arcane links to your fellows that you'd need to use this.</span>")
+		return
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	if(summon_objective.summon_spots.len <= 1)
 		to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")

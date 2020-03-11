@@ -439,7 +439,7 @@
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
 		else // cult doesn't stun any longer when halos are out, instead it does burn damage + knockback!
 			var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(user_antag.cult_team.cult_ascendent)
+			if(user_antag.cult_team?.cult_ascendent)
 				if(!iscultist(L))
 					L.adjustFireLoss(20)
 					if(L.move_resist < MOVE_FORCE_STRONG)
