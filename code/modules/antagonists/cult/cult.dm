@@ -10,8 +10,9 @@
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
+	var/make_team = TRUE
 	var/give_equipment = FALSE
-	var/datum/team/cult/cult_team
+	var/datum/team/cult/_cult_team
 	var/neutered = FALSE			//can not use round ending, gibbing, converting, or similar things with unmatched round impact
 	var/ignore_eligibility_checks = FALSE
 	var/ignore_holy_water = FALSE
@@ -22,12 +23,14 @@
 /datum/antagonist/cult/neutered/traitor
 	ignore_eligibility_checks = TRUE
 	ignore_holy_water = TRUE
+	show_in_roundend = FALSE
+	make_team = FALSE
 
 /datum/antagonist/cult/get_team()
 	return cult_team
 
 /datum/antagonist/cult/create_team(datum/team/cult/new_team)
-	if(!new_team)
+	if(!new_team && make_team)
 		//todo remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/cult/H in GLOB.antagonists)
 			if(!H.owner)
@@ -38,7 +41,7 @@
 		cult_team = new /datum/team/cult
 		cult_team.setup_objectives()
 		return
-	if(!istype(new_team))
+	if(make_team && !istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	cult_team = new_team
 
