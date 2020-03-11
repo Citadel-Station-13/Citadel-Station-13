@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - balance: "Particle Defender is now a much more sane weapon."
+  - balance: "Tasers are no longer ignoring stimulants."
