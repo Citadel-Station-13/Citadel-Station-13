@@ -229,6 +229,7 @@ Property weights are:
 	desc = "No special weights attached. Anything goes."
 	weight = 4
 	curve_width = 4
+	pop_antag_ratio = 7
 	flags = USE_PREF_WEIGHTS
 
 /datum/dynamic_storyteller/memes
