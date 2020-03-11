@@ -283,6 +283,59 @@
 			I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
 		return I
 
+///////////////////////////////// STAGGERED ////////////////////////////////////
+/mob/living/proc/Staggered() //If we're Staggered
+	return has_status_effect(STATUS_EFFECT_STAGGERED)
+
+/mob/living/proc/AmountStaggered() //How many deciseconds remain in our Staggered status effect
+	var/datum/status_effect/staggered/I = IsStaggered()
+	if(I)
+		return I.duration - world.time
+	return 0
+
+/mob/living/proc/Stagger(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		var/datum/status_effect/incapacitating/staggered/I = IsStaggered()
+		if(I)
+			I.duration = max(world.time + amount, I.duration)
+		else if(amount > 0)
+			I = apply_status_effect(STATUS_EFFECT_STAGGERED, amount, updating)
+		return I
+
+/mob/living/proc/SetStaggered(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		var/datum/status_effect/incapacitating/staggered/I = IsStaggered()
+		if(amount <= 0)
+			if(I)
+				qdel(I)
+		else
+			if(absorb_stun(amount, ignore_canstun))
+				return
+			if(I)
+				I.duration = world.time + amount
+			else
+				I = apply_status_effect(STATUS_EFFECT_STAGGERED, amount, updating)
+		return I
+
+/mob/living/proc/AdjustStaggered(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		var/datum/status_effect/incapacitating/staggered/I = IsStaggered()
+		if(I)
+			I.duration += amount
+		else if(amount > 0)
+			I = apply_status_effect(STATUS_EFFECT_STAGGERED, amount, updating)
+		return I
+
 //Blanket
 /mob/living/proc/AllImmobility(amount, updating, ignore_canstun = FALSE)
 	Paralyze(amount, FALSE, ignore_canstun)
@@ -290,6 +343,7 @@
 	Stun(amount, FALSE, ignore_canstun)
 	Immobilize(amount, FALSE, ignore_canstun)
 	Daze(amount, FALSE, ignore_canstun)
+	Stagger(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -299,6 +353,7 @@
 	SetStun(amount, FALSE, ignore_canstun)
 	SetImmobilized(amount, FALSE, ignore_canstun)
 	SetDazed(amount, FALSE, ignore_canstun)
+	SetStaggered(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -308,6 +363,7 @@
 	AdjustStun(amount, FALSE, ignore_canstun)
 	AdjustImmobilized(amount, FALSE, ignore_canstun)
 	AdjustDazed(amount, FALSE, ignore_canstun)
+	AdjustStaggered(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -323,11 +379,13 @@
 		SetImmobilized(amount, FALSE, ignore_canstun)
 	if(AmountDazed() > amount)
 		SetImmobilized(amount, FALSE, ignore_canstun)
+	if(AmountStaggered() > amount)
+		SetStaggered(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
 /mob/living/proc/HighestImmobilityAmount()
-	return max(max(max(max(AmountStun(), AmountKnockdown()), AmountParalyzed()), AmountImmobilized()), AmountDazed())
+	return max(AmountStun(), AmountKnockdown(), AmountParalyzed(), AmountImmobilized(), AmountDazed(), AmountStaggered())
 
 //////////////////UNCONSCIOUS
 /mob/living/proc/IsUnconscious() //If we're unconscious

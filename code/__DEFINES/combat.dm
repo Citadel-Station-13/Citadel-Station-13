@@ -94,6 +94,7 @@
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
 //Bitflags defining which status effects could be or are inflicted on a mob
+// This is a bit out of date/inaccurate in light of all the new status effects and is probably pending rework.
 #define CANSTUN			(1<<0)
 #define CANKNOCKDOWN	(1<<1)
 #define CANUNCONSCIOUS	(1<<2)
