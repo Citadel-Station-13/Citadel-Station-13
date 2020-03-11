@@ -1,0 +1,4 @@
+author: "Ragolution"
+delete-after: True
+changes: 
+  - tweak: "Adjusted Bartender's Drink Flinging print message to not include name of target turf and save immersion."

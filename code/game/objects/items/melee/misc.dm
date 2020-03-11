@@ -296,7 +296,7 @@
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
-				target.LAssailant = user
+				target.LAssailant = WEAKREF(user)
 			cooldown_check = world.time + cooldown
 			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
 		else
@@ -378,7 +378,7 @@
 	item_flags = NONE
 	force = 5
 	cooldown = 20
-	stam_dmg = 45	//3 hit stamcrit
+	stam_dmg = 45	//4 hit stamcrit
 	affect_silicon = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'

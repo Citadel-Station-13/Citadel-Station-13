@@ -181,7 +181,7 @@
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked
-	data["siliconUser"] = hasSiliconAccessInArea(usr)
+	data["siliconUser"] = hasSiliconAccessInArea(user)
 	data["mode"] = mode ? mode_name[mode] : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)

@@ -499,10 +499,11 @@ SUBSYSTEM_DEF(vote)
 				modes_to_add -= "traitor" // makes it so that traitor is always available
 				choices.Add(modes_to_add)
 			if("dynamic")
+				var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T
-					var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
-					if(probabilities[initial(S.config_tag)] > 0)
+					var/probability = ((initial(S.config_tag) in probabilities) ? probabilities[initial(S.config_tag)] : initial(S.weight))
+					if(probability > 0)
 						choices.Add(initial(S.name))
 						choice_descs.Add(initial(S.desc))
 			if("custom")
