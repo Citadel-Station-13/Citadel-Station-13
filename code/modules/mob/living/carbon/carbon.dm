@@ -813,7 +813,8 @@
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
-			blind_eyes(1)
+			if(!eye_blind)
+				blind_eyes(1)
 			if(combatmode)
 				toggle_combat_mode(TRUE, TRUE)
 		else
