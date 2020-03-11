@@ -84,10 +84,12 @@
 	pass_flags = PASSTABLE | PASSMOB //they shouldn't get stuck behind hivelords.
 	density = FALSE
 	del_on_death = 1
+	var/swarming = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
-	AddComponent(/datum/component/swarming) //oh god not the bees
+	if(swarming)
+		AddComponent(/datum/component/swarming) //oh god not the bees
 	addtimer(CALLBACK(src, .proc/death), 100)
 
 //Legion
