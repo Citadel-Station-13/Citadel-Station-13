@@ -20,8 +20,8 @@
 /datum/element/spellcasting/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_MOB_SPELL_CAST_CHECK))
-	if(users_by_item[source])
-		var/mob/user = users_by_item[source]
+	if(users_by_item[target])
+		var/mob/user = users_by_item[target]
 		UnregisterSignal(user, COMSIG_MOB_SPELL_CAST_CHECK)
 
 /datum/element/spellcasting/proc/on_equip(datum/source, mob/equipper, slot)
