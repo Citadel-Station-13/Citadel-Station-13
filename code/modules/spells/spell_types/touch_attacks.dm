@@ -54,7 +54,6 @@
 
 	school = "evocation"
 	charge_max = 600
-	clothes_req = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "gib"
@@ -66,7 +65,6 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
@@ -79,7 +77,7 @@
 
 	school = "evocation"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = NONE
 	cooldown_min = 20
 
 	action_icon_state = "nuclearfist"
