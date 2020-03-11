@@ -490,7 +490,8 @@
 		GLOB.alive_mob_list += src
 		suiciding = 0
 		stat = UNCONSCIOUS //the mob starts unconscious,
-		blind_eyes(1)
+		if(!blind_eyes)
+			blind_eyes(1)
 		updatehealth() //then we check if the mob should wake up.
 		update_mobility()
 		update_sight()
