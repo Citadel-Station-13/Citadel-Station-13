@@ -3,6 +3,7 @@
 	id_arg_index = 2
 	var/cast_flags
 	var/cast_slots
+	var/list/users_by_item = list()
 
 /datum/element/spellcasting/Attach(datum/target, _flags, _slots)
 	. = ..()
@@ -19,13 +20,18 @@
 /datum/element/spellcasting/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_MOB_SPELL_CAST_CHECK))
+	if(users_by_item[source])
+		var/mob/user = users_by_item[source]
+		UnregisterSignal(user, COMSIG_MOB_SPELL_CAST_CHECK)
 
 /datum/element/spellcasting/proc/on_equip(datum/source, mob/equipper, slot)
 	if(slot in cast_slots)
 		RegisterSignal(equipper, COMSIG_MOB_SPELL_CAST_CHECK, .proc/on_cast)
+		users_by_item[source] = equipper
 
 /datum/element/spellcasting/proc/on_drop(datum/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOB_SPELL_CAST_CHECK)
+	users_by_item -= source
 
 /datum/element/spellcasting/proc/on_cast(mob/caster, obj/effect/proc_holder/spell)
 	return cast_flags
