@@ -58,30 +58,40 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	cut_overlays()
-	if(opened & icon_door_override)
-		add_overlay("[icon_door]_open")
+	. = ..()
+	if(!opened)
 		layer = OBJ_LAYER
-		return
-	else if(opened)
-		add_overlay("[icon_state]_open")
-		return
-	if(icon_door)
-		add_overlay("[icon_door]_door")
 	else
 		layer = BELOW_OBJ_LAYER
-		add_overlay("[icon_state]_door")
-	if(welded)
-		add_overlay("welded")
-	if(!secure)
-		return
-	if(broken)
-		add_overlay("off")
-		add_overlay("sparking")
-	else if(locked)
-		add_overlay("locked")
+
+/obj/structure/closet/update_overlays()
+	. = ..()
+	closet_update_overlays(.)
+
+/obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(!opened)
+		if(icon_door)
+			. += "[icon_door]_door"
+		else
+			. += "[icon_state]_door"
+		if(welded)
+			. += "welded"
+		if(!secure)
+			return
+		if(broken)
+			. += "off"
+			. += "sparking"
+		else if(locked)
+			. += "locked"
+		else
+			. += "unlocked"
 	else
-		add_overlay("unlocked")
+		if(icon_door_override)
+			. += "[icon_door]_open"
+		else
+			. += "[icon_state]_open"
+
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()

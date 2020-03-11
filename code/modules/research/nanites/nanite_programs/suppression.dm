@@ -40,7 +40,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/shocking/on_trigger(comm_message)
-	host_mob.electrocute_act(rand(5,10), "shock nanites", TRUE, TRUE)
+	host_mob.electrocute_act(rand(5,10), "shock nanites", 1, SHOCK_NOGLOVES)
 
 /datum/nanite_program/stun
 	name = "Neural Shock"
