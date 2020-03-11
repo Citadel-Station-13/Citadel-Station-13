@@ -84,7 +84,7 @@
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		if(!C.cult_team)
 			to_chat(owner, "<span class='cult bold'>Do you not alreaady lead yourself?</span>")
-			returns
+			return
 		pollCultists(owner,C.cult_team)
 
 /proc/pollCultists(var/mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
@@ -340,7 +340,7 @@
 /datum/action/innate/cult/ghostmark/Activate()
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C.cult_team)
-		to_chat(owmer, "<span class='cultbold'>You are alone. You do not have a team.</span>")
+		to_chat(owner, "<span class='cultbold'>You are alone. You do not have a team.</span>")
 		return
 	if(C.cult_team.blood_target)
 		if(cooldown > world.time)
