@@ -227,16 +227,16 @@ Property weights are:
 	name = "Random"
 	config_tag = "random"
 	desc = "No special weights attached. Anything goes."
-	weight = 6
-	flags = USE_PREF_WEIGHTS
+	weight = 4
 	curve_width = 4
+	flags = USE_PREF_WEIGHTS
 
 /datum/dynamic_storyteller/memes
 	name = "Story"
 	config_tag = "story"
 	desc = "Antags with options for loadouts and gimmicks. Traitor, wizard, nukies."
-	weight = 4
-	curve_width = 4
+	weight = 2
+	curve_width = 2
 	pop_antag_ratio = 7
 	property_weights = list("story_potential" = 10)
 
@@ -244,8 +244,8 @@ Property weights are:
 	name = "Intrigue"
 	config_tag = "intrigue"
 	desc = "Antags that instill distrust in the crew. Traitors, bloodsuckers."
-	weight = 4
-	curve_width = 4
+	weight = 2
+	curve_width = 2
 	pop_antag_ratio = 7
 	property_weights = list("trust" = -5)
 
@@ -256,7 +256,7 @@ Property weights are:
 	curve_centre = -5
 	curve_width = 0.5
 	flags = NO_ASSASSIN
-	weight = 2
+	weight = 1
 	pop_antag_ratio = 10
 	property_weights = list("extended" = 1, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
 
