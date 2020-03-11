@@ -18,6 +18,7 @@
 	screen_on = 0 		// Starts closed
 	var/start_open = TRUE	// unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
+	display_overlays = FALSE
 	var/w_class_open = WEIGHT_CLASS_BULKY
 
 /obj/item/modular_computer/laptop/examine(mob/user)
@@ -31,12 +32,11 @@
 	if(start_open && !screen_on)
 		toggle_open()
 
-/obj/item/modular_computer/laptop/update_icon()
-	if(screen_on)
-		..()
-	else
-		cut_overlays()
+/obj/item/modular_computer/laptop/update_icon_state()
+	if(!screen_on)
 		icon_state = icon_state_closed
+	else
+		. = ..()
 
 /obj/item/modular_computer/laptop/attack_self(mob/user)
 	if(!screen_on)
@@ -97,6 +97,7 @@
 		w_class = w_class_open
 
 	screen_on = !screen_on
+	display_overlays = screen_on
 	update_icon()
 
 

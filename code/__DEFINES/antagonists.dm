@@ -72,3 +72,8 @@
 #define CAT_STRUCTURE	"Structures"
 
 #define MARTIALART_HUNTER "hunter-fu"
+
+//Blob
+/// blob gets a free reroll every X time
+#define BLOB_REROLL_TIME 2400
+#define BLOB_REFLECTOR_COST 15

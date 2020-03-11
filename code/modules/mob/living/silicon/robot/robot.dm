@@ -968,7 +968,8 @@
 		if(IsUnconscious() || IsStun() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				blind_eyes(1)
+				if(!eye_blind)
+					blind_eyes(1)
 				update_mobility()
 				update_headlamp()
 		else

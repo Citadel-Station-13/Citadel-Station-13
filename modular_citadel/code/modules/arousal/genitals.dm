@@ -312,7 +312,7 @@
 
 			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][dna.species.use_skintones ? "_s" : ""]_[aroused_state]_[layertext]"
 
-			if(layer == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
+			if(layers_num[layer] == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
 				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
 				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
 			else

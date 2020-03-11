@@ -119,7 +119,7 @@
 			reagents.add_reagent_list(list_reagents)
 			update_icon()
 
-/obj/item/reagent_containers/hypospray/medipen/update_icon()
+/obj/item/reagent_containers/hypospray/medipen/update_icon_state()
 	if(reagents.total_volume > 0)
 		icon_state = initial(icon_state)
 	else
@@ -282,13 +282,12 @@
 		vial = new start_vial
 	update_icon()
 
-/obj/item/hypospray/mkii/update_icon()
-	..()
+/obj/item/hypospray/mkii/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/hypospray/mkii/update_icon_state()
 	icon_state = "[initial(icon_state)][vial ? "" : "-e"]"
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-	return
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()

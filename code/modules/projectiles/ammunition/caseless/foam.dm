@@ -9,8 +9,7 @@
 	harmful = FALSE
 	var/modified = FALSE
 
-/obj/item/ammo_casing/caseless/foam_dart/update_icon()
-	..()
+/obj/item/ammo_casing/caseless/foam_dart/update_icon_state()
 	if (modified)
 		icon_state = "foamdart_empty"
 		desc = "It's nerf or nothing! ... Although, this one doesn't look too safe."

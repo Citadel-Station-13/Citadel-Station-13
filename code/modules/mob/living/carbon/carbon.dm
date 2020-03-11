@@ -397,6 +397,7 @@
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
 		changeNext_move(0)
+	update_equipment_speed_mods() // In case cuffs ever change speed
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
@@ -812,8 +813,9 @@
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
-			blind_eyes(1)
 			disable_intentional_combat_mode(FALSE, FALSE)
+			if(!eye_blind)
+				blind_eyes(1)
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT

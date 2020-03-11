@@ -84,7 +84,7 @@
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
-/obj/structure/displaycase/update_icon()
+/obj/structure/displaycase/update_icon_state()
 	var/icon/I
 	if(open)
 		I = icon('icons/obj/stationobjs.dmi',"glassbox_open")

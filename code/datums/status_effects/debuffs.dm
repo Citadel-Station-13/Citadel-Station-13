@@ -134,6 +134,7 @@
 
 /datum/status_effect/electrode
 	id = "tased"
+	alert_type = null
 	var/slowdown = 1.5
 	var/slowdown_priority = 50		//to make sure the stronger effect overrides
 	var/affect_crawl = FALSE
@@ -159,7 +160,11 @@
 /datum/status_effect/electrode/tick()
 	var/diff = world.time - last_tick
 	if(owner)
-		owner.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+		var/mob/living/carbon/C = owner
+		if(HAS_TRAIT(C, TRAIT_TASED_RESISTANCE))
+			qdel(src)
+		else
+			C.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 	last_tick = world.time
 
 /datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
