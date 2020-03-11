@@ -73,16 +73,16 @@
 	if(old)
 		disable_intentional_combat_mode()
 		playsound_local(src, 'sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above!
-	else if(!CAN_TOGGLE_COMBAT_MODE(src))
+	else if(CAN_TOGGLE_COMBAT_MODE(src))
 		enable_intentional_combat_mode()
 	var/current = IS_COMBAT_ACTIVE(src)		//because we could be locked
-	if((current != old) && current)		//only sound effect if you succeeded. Could have the feedback system be better but shrug, someone else can do it.
-		playsound_local(src, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
-	if(visible)
+	if(current != old)		//only sound effect if you succeeded. Could have the feedback system be better but shrug, someone else can do it.
 		if(current)
-			if(world.time >= combatmessagecooldown)
-				combatmessagecooldown = world.time + 10 SECONDS
-				if(a_intent != INTENT_HELP)
-					visible_message("<span class='warning'>[src] [resting ? "tenses up" : (prob(95)? "drops into a combative stance" : (prob(95)? "poses aggressively" : "asserts dominance with their pose"))].</span>")
-				else
-					visible_message("<span class='notice'>[src] [pick("looks","seems","goes")] [pick("alert","attentive","vigilant")].</span>")
+			playsound_local(src, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
+			if(visible)
+				if(world.time >= combatmessagecooldown)
+					combatmessagecooldown = world.time + 10 SECONDS
+					if(a_intent != INTENT_HELP)
+						visible_message("<span class='warning'>[src] [resting ? "tenses up" : (prob(95)? "drops into a combative stance" : (prob(95)? "poses aggressively" : "asserts dominance with their pose"))].</span>")
+					else
+						visible_message("<span class='notice'>[src] [pick("looks","seems","goes")] [pick("alert","attentive","vigilant")].</span>")
