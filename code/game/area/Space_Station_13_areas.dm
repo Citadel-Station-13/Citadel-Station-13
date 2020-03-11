@@ -49,7 +49,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
 /area/space/station_ruins //Paint this area where you want station ruins to be allowed to spawn
-
+	icon_state ="station_ruins"
 /area/start
 	name = "start area"
 	icon_state = "start"
