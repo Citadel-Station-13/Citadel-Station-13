@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/lizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/mob_holder, "lizard", null, null, null, ITEM_SLOT_HEAD) //you can hold lizards now.
+	AddElement(/datum/element/mob_holder, worn_state = "lizard", inv_slots = ITEM_SLOT_HEAD) //you can hold lizards now.
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
