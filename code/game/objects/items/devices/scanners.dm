@@ -326,8 +326,8 @@ SLIME SCANNER
 				breathes = FALSE
 			if(NOBLOOD in C.dna.species.species_traits)
 				blooded = FALSE
-		var/has_liver = (!(NOLIVER in C.dna.species.species_traits))
-		var/has_stomach = (!(NOSTOMACH in C.dna.species.species_traits))
+		var/has_liver = C.dna && !(NOLIVER in C.dna.species.species_traits)
+		var/has_stomach = C.dna && !(NOSTOMACH in C.dna.species.species_traits)
 		if(!M.getorganslot(ORGAN_SLOT_EYES))
 			msg += "\t<span class='alert'><b>Subject does not have eyes.</b></span>\n"
 		if(!M.getorganslot(ORGAN_SLOT_EARS))
