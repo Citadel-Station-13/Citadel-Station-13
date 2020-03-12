@@ -183,7 +183,7 @@
 
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user)
 	set waitfor = FALSE
-	if(!CHECK_BITFIELD(target.status_flags & CANSTAGGER))
+	if(!CHECK_BITFIELD(target.status_flags, CANSTAGGER))
 		return FALSE
 	. = TRUE
 	target.Stagger(melee_stagger_duration())
