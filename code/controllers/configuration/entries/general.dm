@@ -82,7 +82,9 @@
 	config_entry_value = 600
 	min_val = 0
 
-/datum/config_entry/number/vote_autotransfer_initial //length of time before the first autotransfer vote is called (deciseconds, default 2 hours)
+/// Length of time before the first autotransfer vote is called (deciseconds, default 2 hours)
+/// Set to 0 to disable the subsystem altogether.
+/datum/config_entry/number/vote_autotransfer_initial
 	config_entry_value = 72000
 	min_val = 0
 
@@ -90,7 +92,7 @@
 	config_entry_value = 18000
 	min_val = 0
 
-/datum/config_entry/number/vote_autotransfer_maximum // maximum extensions until the round autoends
+/datum/config_entry/number/vote_autotransfer_maximum // maximum extensions until the round autoends, set to 0 to disable.
 	config_entry_value = 4
 	min_val = 0
 
