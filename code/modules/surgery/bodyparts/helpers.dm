@@ -161,6 +161,7 @@
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
 			I.forceMove(T)
+			I.unembedded()
 
 	clear_alert("embeddedobject")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
