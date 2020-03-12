@@ -20,7 +20,6 @@ SUBSYSTEM_DEF(autotransfer)
 	targettime = starttime + init_vote
 	voteinterval = CONFIG_GET(number/vote_autotransfer_interval)
 	maxvotes = CONFIG_GET(number/vote_autotransfer_maximum)
-	curvotes = 0
 	return ..()
 
 /datum/controller/subsystem/autotransfer/Recover()
