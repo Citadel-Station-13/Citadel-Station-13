@@ -246,11 +246,11 @@
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/living/user, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity || (user.getStaminaLoss() > STAMINA_SOFTCRIT))
 		return
-	if(wielded) //destroys windows and grilles in one hit
+	if(wielded) //destroys windows and grilles in one hit (or more if it has a ton of health like plasmaglass)
 		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
 			W.take_damage(200, BRUTE, "melee", 0)
