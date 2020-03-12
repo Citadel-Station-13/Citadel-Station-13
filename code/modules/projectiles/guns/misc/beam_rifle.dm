@@ -47,18 +47,18 @@
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
 
-	var/structure_piercing = 1
+	var/structure_piercing = 0
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
-	var/aoe_structure_damage = 35
+	var/aoe_structure_damage = 15
 	var/aoe_fire_range = 1
-	var/aoe_fire_chance = 100
+	var/aoe_fire_chance = 50
 	var/aoe_mob_range = 1
-	var/aoe_mob_damage = 20
-	var/impact_structure_damage = 75
-	var/projectile_damage = 40
+	var/aoe_mob_damage = 10
+	var/impact_structure_damage = 58
+	var/projectile_damage = 20
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
 	var/delay = 30
