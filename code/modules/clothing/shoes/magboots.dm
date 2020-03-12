@@ -56,7 +56,10 @@
 /obj/item/clothing/shoes/magboots/advance/debug
 
 /obj/item/clothing/shoes/magboots/advance/debug/Initialize()
-	attack_self(src)
+	. = ..()
+	var/mob/living/L = loc
+	if(istype(L))
+		attack_self(L)
 
 /obj/item/clothing/shoes/magboots/paramedic
 	desc = "A pair of magboots decked in colors matching the equipment of an emergency medical technician."

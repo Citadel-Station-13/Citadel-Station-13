@@ -4,6 +4,16 @@
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
 
+/obj/item/clothing/glasses/hud/CheckParts(list/parts_list)
+	. = ..()
+	if(vision_correction)
+		return
+	for(var/obj/item/clothing/glasses/G in parts_list)
+		if(G.vision_correction)
+			vision_correction = TRUE
+			name = "prescription [name]"
+			return
+
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(hud_type && slot == SLOT_GLASSES)
@@ -31,6 +41,10 @@
 	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 	desc = "[desc] The display is flickering slightly."
 	return TRUE
+
+////////////
+//Med Huds//
+////////////
 
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
@@ -65,12 +79,28 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
+/obj/item/clothing/glasses/hud/health/sunglasses/prescription
+	name = "prescription medical HUDSunglasses"
+	vision_correction = 1
+
+///////////////////
+//Diagnostic Huds//
+///////////////////
+
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
 	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
+
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	name = "diagnostic HUDSunglasses"
+	desc = "Sunglasses with a diagnostic HUD."
+	icon_state = "sunhuddiagnostic"
+	darkness_view = 1
+	flash_protect = 1
+	tint = 1
 
 /obj/item/clothing/glasses/hud/diagnostic/prescription
 	name = "prescription diagnostic HUD"
@@ -80,6 +110,10 @@
 	vision_correction = 1
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription
+	name = "prescription diagnostic HUDSunglasses"
+	vision_correction = 1
+
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "night vision diagnostic HUD"
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
@@ -88,6 +122,10 @@
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+////////////
+//Sec Huds//
+////////////
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
@@ -127,7 +165,6 @@
 		return
 	chameleon_action.emp_randomise()
 
-
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	name = "eyepatch HUD"
 	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
@@ -141,6 +178,10 @@
 	flash_protect = 1
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
+
+/obj/item/clothing/glasses/hud/security/sunglasses/prescription
+	name = "prescription security HUDSunglasses"
+	vision_correction = 1
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
@@ -170,6 +211,8 @@
 	force = 12
 	throwforce = 12
 
+//Hud Toggle
+
 /obj/item/clothing/glasses/hud/toggle
 	name = "Toggle HUD"
 	desc = "A hud with multiple functions."
@@ -196,6 +239,8 @@
 	if (hud_type)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
+
+//Thermal Huds
 
 /obj/item/clothing/glasses/hud/toggle/thermal
 	name = "thermal HUD scanner"

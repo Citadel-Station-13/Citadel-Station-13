@@ -107,10 +107,9 @@
 		check_stability()
 
 
-/obj/machinery/am_shielding/update_icon()
+/obj/machinery/am_shielding/update_icon_state()
 	dirs = 0
 	coredirs = 0
-	cut_overlays()
 	for(var/direction in GLOB.alldirs)
 		var/turf/T = get_step(loc, direction)
 		for(var/obj/machinery/machine in T)
@@ -137,8 +136,10 @@
 
 	icon_state = "[prefix]shield_[icondirs]"
 
+/obj/machinery/am_shielding/update_overlays()
+	. = ..()
 	if(core_check())
-		add_overlay("core[control_unit && control_unit.active]")
+		. += "core[control_unit?.active]"
 		if(!processing)
 			setup_core()
 	else if(processing)

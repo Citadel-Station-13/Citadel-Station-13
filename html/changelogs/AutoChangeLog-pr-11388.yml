@@ -1,0 +1,9 @@
+author: "Owai-Seek"
+delete-after: True
+changes: 
+  - rscadd: "Butter Bear"
+  - rscadd: "Crab Burger, Bisque, Crab Rangoon, French Onion Soup, Empowered Burger, Chicken Nugget box."
+  - tweak: "+++ Spider Eggs to Exotic Meat crate. --- Bacon from Exotic Meat crate."
+  - tweak: "Tweaked Crab Recipes"
+  - imageadd: "Butter Bear aka Terrygold"
+  - balance: "Food Crafting is now 5 deciseconds instead of 30."

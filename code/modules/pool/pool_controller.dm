@@ -297,8 +297,7 @@
 			mist_on()
 	update_icon()
 
-/obj/machinery/pool/controller/update_icon()
-	. = ..()
+/obj/machinery/pool/controller/update_icon_state()
 	icon_state = "poolc_[temperature]"
 
 /obj/machinery/pool/controller/proc/CanUpTemp(mob/user)
@@ -412,7 +411,7 @@
 /obj/machinery/pool/controller/proc/mist_on() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
 	if(mist_state)
 		return
-	mist_off()			//make sure it cycles and deletes everything 
+	mist_off()			//make sure it cycles and deletes everything
 	mist_state = TRUE
 	for(var/X in linked_turfs)
 		var/turf/open/pool/W = X

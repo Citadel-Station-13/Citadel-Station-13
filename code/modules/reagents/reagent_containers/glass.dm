@@ -133,13 +133,13 @@
 /obj/item/reagent_containers/glass/beaker/on_reagent_change(changetype)
 	update_icon()
 
-/obj/item/reagent_containers/glass/beaker/update_icon()
+/obj/item/reagent_containers/glass/beaker/update_overlays()
+	. = ..()
 	if(!cached_icon)
 		cached_icon = icon_state
-	cut_overlays()
 
 	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[cached_icon]10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[cached_icon]10", color = mix_color_from_reagents(reagents.reagent_list))
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -157,9 +157,7 @@
 				filling.icon_state = "[cached_icon]80"
 			if(91 to INFINITY)
 				filling.icon_state = "[cached_icon]100"
-
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
+		. += filling
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
@@ -215,11 +213,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,40,50,60,120,180)
 	container_flags = TEMP_WEAK|APTFT_ALTCLICK|APTFT_VERB
-
-/obj/item/reagent_containers/glass/beaker/plastic/update_icon()
-	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
-	..()
-	icon_state = "beakerwhite"
+	cached_icon = "beakerlarge"
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
