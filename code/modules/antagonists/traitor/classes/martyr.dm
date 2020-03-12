@@ -1,7 +1,7 @@
 /datum/traitor_class/human/martyr
 	name = "Tiger Cooperator"
 	employer = "The Tiger Cooperative"
-	weight = 1
+	weight = 2
 	chaos = 5
 	cost = 5
 	uplink_filters = list(/datum/uplink_item/stealthy_weapons/romerol_kit,/datum/uplink_item/bundles_TC/contract_kit)

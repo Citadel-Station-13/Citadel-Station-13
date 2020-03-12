@@ -1,7 +1,7 @@
 /datum/traitor_class/human/hijack
 	name = "Gorlex Marauder"
 	employer = "The Gorlex Marauders"
-	weight = 1
+	weight = 3
 	chaos = 5
 	cost = 5
 	uplink_filters = list(/datum/uplink_item/stealthy_weapons/romerol_kit)
