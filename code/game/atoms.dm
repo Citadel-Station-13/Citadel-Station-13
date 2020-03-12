@@ -552,8 +552,8 @@
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 
-/atom/proc/emag_act()
-	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
+/atom/proc/emag_act(mob/user)
+	return SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user)
 
 /atom/proc/rad_act(strength)
 	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
@@ -964,3 +964,67 @@ Proc for attack log creation, because really why not
 				max_grav = max(G.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
+
+/atom/proc/updateUsrDialog()
+	if((flags_1 & IN_USE_1) && !(flags_1 & USES_TGUI_1))
+		var/is_in_use = FALSE
+		var/list/nearby = viewers(1, src)
+		for(var/mob/M in nearby)
+			if ((M.client && M.machine == src))
+				is_in_use = TRUE
+				ui_interact(M)
+		if(isAI(usr) || iscyborg(usr) || IsAdminGhost(usr) || hasSiliconAccessInArea(usr))
+			if (!(usr in nearby))
+				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
+					is_in_use = TRUE
+					ui_interact(usr)
+
+		// check for TK users
+
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if(!(usr in nearby))
+				if(usr.client && usr.machine==src)
+					if(H.dna.check_mutation(TK))
+						is_in_use = TRUE
+						ui_interact(usr)
+		if (is_in_use)
+			flags_1 |= IN_USE_1
+		else
+			flags_1 &= ~ IN_USE_1
+
+/atom/proc/updateDialog(update_viewers = TRUE, update_ais = TRUE)
+	// Check that people are actually using the machine. If not, don't update anymore.
+	if(flags_1 & IN_USE_1)
+		var/is_in_use = FALSE
+		if(update_viewers)
+			for(var/mob/M in viewers(1, src))
+				if ((M.client && M.machine == src))
+					is_in_use = TRUE
+					src.interact(M, TRUE)
+		var/ai_in_use = FALSE
+		if(update_ais)
+			for(var/A in GLOB.ai_list)
+				var/mob/living/silicon/ai/AI = A
+				if ((AI.client && AI.machine == src))
+					is_in_use = TRUE
+					attack_ai(AI)
+
+		if(update_viewers && update_ais) //State change is sure only if we check both
+			if(!ai_in_use && !is_in_use)
+				flags_1 &= ~IN_USE_1
+
+/mob/proc/unset_machine()
+	if(machine)
+		machine.on_unset_machine(src)
+		machine = null
+
+//called when the user unsets the machine.
+/atom/proc/on_unset_machine(mob/user)
+	return
+
+/mob/proc/set_machine(atom/A)
+	if(machine)
+		unset_machine()
+	machine = A
+	A.flags_1 |= IN_USE_1

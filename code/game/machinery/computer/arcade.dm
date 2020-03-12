@@ -1,8 +1,3 @@
-#define ARCADE_WEIGHT_TRICK 4
-#define ARCADE_WEIGHT_USELESS 2
-#define ARCADE_WEIGHT_RARE 1
-#define ARCADE_RATIO_PLUSH 0.20 // average 1 out of 6 wins is a plush.
-
 /obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
@@ -10,6 +5,7 @@
 	icon_keyboard = null
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
+	var/arcade_comptype //component typepath
 	var/list/prizes = list(
 		/obj/item/toy/balloon = ARCADE_WEIGHT_USELESS,
 		/obj/item/toy/beach_ball = ARCADE_WEIGHT_USELESS,
@@ -74,9 +70,6 @@
 
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/machinery/computer/arcade/proc/Reset()
-	return
-
 /obj/machinery/computer/arcade/Initialize()
 	. = ..()
 	// If it's a generic arcade machine, pick a random arcade
@@ -94,9 +87,16 @@
 	//The below object acts as a spawner with a wide array of possible picks, most being uninspired references to past/current player characters.
 	//Nevertheless, this keeps its ratio constant with the sum of all the others prizes.
 	prizes[/obj/item/toy/plush/random] = counterlist_sum(prizes) * ARCADE_RATIO_PLUSH
-	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend(mob/user, list/rarity_classes)
+/obj/machinery/computer/arcade/ComponentInitialize()
+	. = ..()
+	if(arcade_comptype)
+		AddComponent(/datum/component/arcade/battle, CALLBACK(src, .proc/new_game), CALLBACK(src, .proc/victory), CALLBACK(src, .proc/loss))
+
+/obj/machinery/computer/arcade/proc/new_game(mob/user, emagged = FALSE)
+	return
+
+/obj/machinery/computer/arcade/proc/victory(mob/user, emagged = FALSE, list/rarity_classes)
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 
 	if(prob(1) && prob(1) && prob(1)) //Proper 1 in a million
@@ -119,6 +119,9 @@
 
 	prize.forceMove(get_turf(src))
 
+/obj/machinery/computer/arcade/proc/loss(mob/user, emagged = FALSE)
+	return
+
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
 
@@ -136,3 +139,4 @@
 		empprize = pickweight(prizes)
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+

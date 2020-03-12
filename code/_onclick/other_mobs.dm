@@ -68,11 +68,14 @@
 	if(!anchored && (interaction_flags_atom & INTERACT_ATOM_REQUIRES_ANCHORED))
 		return FALSE
 
-/atom/proc/interact(mob/user)
+/atom/proc/interact(mob/user, update = FALSE)
 	if(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_INTERACT)
 		add_hiddenprint(user)
 	else
 		add_fingerprint(user)
+	var/signal = SEND_SIGNAL(src, COMSIG_ATOM_INTERACT, user, update)
+	if(signal & COMPONENT_STOP_INTERACT)
+		return (signal & COMPONENT_INTERACT_TRUE_ANYWAY)
 	if(interaction_flags_atom & INTERACT_ATOM_UI_INTERACT)
 		return ui_interact(user)
 	return FALSE

@@ -28,11 +28,11 @@
 	pet_moodlet = pet_mood
 	punt_moodlet = punt_mood
 
-	RegisterSignal(target, COMSIG_MOB_ATTACK_HAND, .proc/on_attack_hand)
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 
 /datum/element/wuv/Detach(datum/source, force)
 	. = ..()
-	UnregisterSignal(source, COMSIG_MOB_ATTACK_HAND)
+	UnregisterSignal(source, COMSIG_ATOM_ATTACK_HAND)
 
 /datum/element/wuv/proc/on_attack_hand(datum/source, mob/user)
 	var/mob/living/L = source

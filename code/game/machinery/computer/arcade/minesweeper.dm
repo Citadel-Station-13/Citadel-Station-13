@@ -264,7 +264,7 @@
 				DISABLE_BITFIELD(obj_flags, EMAGGED)
 			else
 				var/dope_prizes = (area >= 480) ? list(ARCADE_WEIGHT_RARE) : (area >= 256) ? list(ARCADE_WEIGHT_RARE, ARCADE_WEIGHT_TRICK) : null
-				prizevend(user, dope_prizes)
+				victory(user, obj_flags & EMAGGED, dope_prizes)
 
 	if(game_status == MINESWEEPER_GAME_WON)
 		web += "[(rows < 10 || columns < 10) ? "<font size='4'>You won, but your board was too small! Pick a bigger board next time!" : "<font size='6'>Congratulations, you have won!"]<br><font size='3'>Want to play again?<br><b><a href='byond://?src=[REF(src)];Easy=1'><font color='#cc66ff'>Easy (9x9 board, 10 mines)</font></a><br><a href='byond://?src=[REF(src)];Intermediate=1'><font color='#cc66ff'>Intermediate (16x16 board, 40 mines)</font></a><br><a href='byond://?src=[REF(src)];Hard=1'><font color='#cc66ff'>Hard (16x30 board, 99 mines)</font></a><br><a href='byond://?src=[REF(src)];Custom=1'><font color='#cc66ff'>Custom</font></a></b><br><a href='byond://?src=[REF(src)];same_board=1'><font color='#cc66ff'>Play on the same board</font></a><br><a href='byond://?src=[REF(src)];Main_Menu=1'><font color='#cc66ff'>Return to Main Menu</font></a></b><br>"

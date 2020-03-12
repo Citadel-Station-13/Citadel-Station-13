@@ -33,11 +33,11 @@
 	. = ..()
 	if(.)
 		return
-	if(obj_flags & IN_USE)
+	if(flags_1 & IN_USE_1)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
 	else
-		obj_flags |= IN_USE
+		flags_1 |= IN_USE_1
 		icon_state = icon_state_inuse
 		user.setDir(SOUTH)
 		user.Stun(80)
@@ -47,7 +47,7 @@
 		AnimateMachine(user)
 
 		playsound(user, 'sound/machines/click.ogg', 60, 1)
-		obj_flags &= ~IN_USE
+		flags_1 &= ~IN_USE_1
 		user.pixel_y = 0
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "exercise", /datum/mood_event/exercise)
