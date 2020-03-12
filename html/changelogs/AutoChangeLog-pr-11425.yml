@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - bugfix: "synthflesh and rezadone now take total amounts of both applied and existing reagents rather than only existing and only applied respectively."

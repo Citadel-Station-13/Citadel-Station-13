@@ -250,7 +250,7 @@
 	. = ..()
 	if(!proximity || IS_STAMCRIT(user))		//don't make stamcrit message they'll already have gotten one from the primary attack.
 		return
-	if(wielded) //destroys windows and grilles in one hit
+	if(wielded) //destroys windows and grilles in one hit (or more if it has a ton of health like plasmaglass)
 		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
 			W.take_damage(200, BRUTE, "melee", 0)
@@ -1217,7 +1217,7 @@
 		target.lastattackerckey = user.ckey
 		target.visible_message("<span class='danger'>[user] has shocked [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has shocked you with [src]!</span>")
-		log_combat(user, user, "stunned with an electrostaff")
+		log_combat(user, target, "stunned with an electrostaff")
 	playsound(src, 'sound/weapons/staff.ogg', 50, 1, -1)
 	target.apply_status_effect(stun_status_effect, stun_status_duration)
 	if(ishuman(user))
@@ -1242,9 +1242,9 @@
 	if(user)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
-		target.visible_message("<span class='danger'>[user] has seared [user] with [src]!</span>", \
+		target.visible_message("<span class='danger'>[user] has seared [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has seared you with [src]!</span>")
-		log_combat(user, user, "burned with an electrostaff")
+		log_combat(user, target, "burned with an electrostaff")
 	playsound(src, 'sound/weapons/sear.ogg', 50, 1, -1)
 	return TRUE
 
