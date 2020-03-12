@@ -8,7 +8,7 @@
 
 /datum/traitor_class/human/hijack/forge_objectives(datum/antagonist/traitor/T)
 	var/datum/objective/hijack/O = new
-	O.explanation_text = "The Gorlex Marauders are letting you do what you want, with one condition: the shuttle must be hijacked."
+	O.explanation_text = "The Gorlex Marauders are letting you do what you want, with one condition: the shuttle must be hijacked by hacking its navigational protocols through the control console (alt click emergency shuttle console)."
 	O.owner = T.owner
 	T.add_objective(O)
 	return
