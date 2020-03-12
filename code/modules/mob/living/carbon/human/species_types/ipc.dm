@@ -3,7 +3,7 @@
 	id = "ipc"
 	say_mod = "beeps"
 	default_color = "00FF00"
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
+	should_draw_citadel = TRUE
 	blacklisted = 0
 	sexes = 0
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING)

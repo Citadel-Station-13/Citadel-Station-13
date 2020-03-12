@@ -22,17 +22,17 @@
 				break
 	update_icon()
 
-/obj/structure/guncase/update_overlays()
-	. = ..()
+/obj/structure/guncase/update_icon()
+	cut_overlays()
 	if(case_type && LAZYLEN(contents))
 		var/mutable_appearance/gun_overlay = mutable_appearance(icon, case_type)
 		for(var/i in 1 to contents.len)
 			gun_overlay.pixel_x = 3 * (i - 1)
-			. += gun_overlay
+			add_overlay(gun_overlay)
 	if(open)
-		. += "[icon_state]_open"
+		add_overlay("[icon_state]_open")
 	else
-		. += "[icon_state]_door"
+		add_overlay("[icon_state]_door")
 
 /obj/structure/guncase/attackby(obj/item/I, mob/user, params)
 	if(iscyborg(user) || isalien(user))

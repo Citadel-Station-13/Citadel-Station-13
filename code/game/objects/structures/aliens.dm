@@ -234,7 +234,8 @@
 	if(status == BURST)
 		obj_integrity = integrity_failure * max_integrity
 
-/obj/structure/alien/egg/update_icon_state()
+/obj/structure/alien/egg/update_icon()
+	..()
 	switch(status)
 		if(GROWING)
 			icon_state = "[base_icon]_growing"

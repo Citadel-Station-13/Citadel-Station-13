@@ -109,16 +109,16 @@
 	update_icon()
 	playsound(loc, 'sound/machines/ping.ogg', 30, 1)
 
-/obj/machinery/computer/pandemic/update_icon_state()
+/obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)
 		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
-	else
-		icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+		return
 
-/obj/machinery/computer/pandemic/update_overlays()
-	. = ..()
-	if(!(stat & BROKEN) && wait)
-		. += "waitlight"
+	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+	if(wait)
+		add_overlay("waitlight")
+	else
+		cut_overlays()
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

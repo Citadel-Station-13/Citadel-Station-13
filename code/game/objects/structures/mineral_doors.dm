@@ -118,7 +118,7 @@
 	update_icon()
 	isSwitchingStates = 0
 
-/obj/structure/mineral_door/update_icon_state()
+/obj/structure/mineral_door/update_icon()
 	if(state)
 		icon_state = "[initial_state]open"
 	else

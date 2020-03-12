@@ -51,7 +51,7 @@
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
+		
 	else
 		. = ..()
 
@@ -125,16 +125,14 @@
 		. += "It doesn't contain anything."
 
 
-/obj/item/paper_bin/update_icon_state()
+/obj/item/paper_bin/update_icon()
 	if(total_paper < 1)
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
-
-/obj/item/paper_bin/update_overlays()
-	. = ..()
+	cut_overlays()
 	if(bin_pen)
-		. += mutable_appearance(bin_pen.icon, bin_pen.icon_state)
+		add_overlay(mutable_appearance(bin_pen.icon, bin_pen.icon_state))
 
 /obj/item/paper_bin/construction
 	name = "construction paper bin"

@@ -197,19 +197,16 @@
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/head/wig/update_icon_state()
+/obj/item/clothing/head/wig/update_icon()
+	cut_overlays()
 	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
 	if(!S)
-		icon = 'icons/obj/clothing/hats.dmi'
 		icon_state = "pwig"
-
-/obj/item/clothing/head/wig/update_overlays()
-	. = ..()
-	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
-	if(S)
-		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state, color = hair_color)
+	else
+		var/mutable_appearance/M = mutable_appearance(S.icon,S.icon_state)
 		M.appearance_flags |= RESET_COLOR
-		. += M
+		M.color = hair_color
+		add_overlay(M)
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()

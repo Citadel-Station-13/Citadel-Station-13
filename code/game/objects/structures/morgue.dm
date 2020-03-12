@@ -45,6 +45,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	..()
 	update_icon()
 
+/obj/structure/bodycontainer/update_icon()
+	return
+
 /obj/structure/bodycontainer/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
 		return
@@ -171,7 +174,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
 	return TRUE
 
-/obj/structure/bodycontainer/morgue/update_icon_state()
+/obj/structure/bodycontainer/morgue/update_icon()
 	if (!connected || connected.loc != src) // Open or tray is gone.
 		icon_state = "morgue0"
 	else
@@ -225,17 +228,20 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums.Add(src)
 	..()
 
-/obj/structure/bodycontainer/crematorium/update_icon_state()
+/obj/structure/bodycontainer/crematorium/update_icon()
 	if(!connected || connected.loc != src)
 		icon_state = "crema0"
 	else
-		if(contents.len > 1)
-			icon_state = "crema2"
+
+		if(src.contents.len > 1)
+			src.icon_state = "crema2"
 		else
-			icon_state = "crema1"
+			src.icon_state = "crema1"
 
 		if(locked)
-			icon_state = "crema_active"
+			src.icon_state = "crema_active"
+
+	return
 
 /obj/structure/bodycontainer/crematorium/proc/cremate(mob/user)
 	if(locked)

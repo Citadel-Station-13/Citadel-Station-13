@@ -30,15 +30,19 @@
 	SSair.atmos_machinery -= src
 	return ..()
 
-/obj/machinery/power/generator/update_overlays()
-	. = ..()
-	if(!(stat & (NOPOWER|BROKEN)))
+/obj/machinery/power/generator/update_icon()
+
+	if(stat & (NOPOWER|BROKEN))
+		cut_overlays()
+	else
+		cut_overlays()
+
 		var/L = min(round(lastgenlev/100000),11)
 		if(L != 0)
-			. += image('icons/obj/power.dmi', "teg-op[L]")
+			add_overlay(image('icons/obj/power.dmi', "teg-op[L]"))
 
 		if(hot_circ && cold_circ)
-			. += "teg-oc[lastcirc]"
+			add_overlay("teg-oc[lastcirc]")
 
 
 #define GENRATE 800		// generator output coefficient from Q

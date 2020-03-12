@@ -22,7 +22,7 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/chem_heater/update_icon_state()
+/obj/machinery/chem_heater/update_icon()
 	if(beaker)
 		icon_state = "mixer1b"
 	else

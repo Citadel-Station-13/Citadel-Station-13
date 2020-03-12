@@ -43,10 +43,10 @@
 		return list()
 	return ..()
 
-/obj/item/wallframe/picture/update_overlays()
-	. = ..()
+/obj/item/wallframe/picture/update_icon()
+	cut_overlays()
 	if(displayed)
-		. += image(displayed)
+		add_overlay(image(displayed))
 
 /obj/item/wallframe/picture/after_attach(obj/O)
 	..()
@@ -145,10 +145,10 @@
 	if(framed)
 		framed.show(user)
 
-/obj/structure/sign/picture_frame/update_overlays()
-	. = ..()
+/obj/structure/sign/picture_frame/update_icon()
+	cut_overlays()
 	if(framed)
-		. += image(framed)
+		add_overlay(image(framed))
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

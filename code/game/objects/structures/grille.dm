@@ -22,7 +22,7 @@
 	. = ..()
 	update_icon()
 
-/obj/structure/grille/update_icon_state()
+/obj/structure/grille/update_icon()
 	if(QDELETED(src) || broken)
 		return
 

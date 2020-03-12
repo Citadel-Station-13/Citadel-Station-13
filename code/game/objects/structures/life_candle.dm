@@ -46,7 +46,7 @@
 		STOP_PROCESSING(SSobj, src)
 		set_light(0)
 
-/obj/structure/life_candle/update_icon_state()
+/obj/structure/life_candle/update_icon()
 	if(linked_minds.len)
 		icon_state = icon_state_active
 	else

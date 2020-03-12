@@ -15,11 +15,14 @@
 	var/has_variants = TRUE
 	var/finish_color = null
 
-/obj/item/modular_computer/tablet/update_icon_state()
+/obj/item/modular_computer/tablet/update_icon()
+	..()
 	if(has_variants)
 		if(!finish_color)
 			finish_color = pick("red","blue","brown","green","black")
-		icon_state = icon_state_powered = icon_state_unpowered = "tablet-[finish_color]"
+		icon_state = "tablet-[finish_color]"
+		icon_state_unpowered = "tablet-[finish_color]"
+		icon_state_powered = "tablet-[finish_color]"
 
 /obj/item/modular_computer/tablet/syndicate_contract_uplink
 	name = "contractor tablet"

@@ -112,7 +112,7 @@
 	QDEL_NULL(sparks)
 	return ..()
 
-/obj/machinery/power/emitter/update_icon_state()
+/obj/machinery/power/emitter/update_icon()
 	if (active && powernet && avail(active_power_usage))
 		icon_state = icon_state_on
 	else

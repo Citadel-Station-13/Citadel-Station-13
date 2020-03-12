@@ -10,14 +10,10 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
-	if(always_noslip)
-		clothing_flags |= NOSLIP
-
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 200000, TRUE, /obj/item/stack)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
+	if(always_noslip)
+		clothing_flags |= NOSLIP
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	. = ..()
@@ -59,5 +55,12 @@
 	else
 		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon_state()
-	icon_state = "clown_prototype_[on? "on" : "off"]"
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon()
+	if(on)
+		icon_state = "clown_prototype_on"
+	else
+		icon_state = "clown_prototype_off"
+	usr.update_inv_shoes()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()

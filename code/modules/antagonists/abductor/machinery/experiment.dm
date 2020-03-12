@@ -223,7 +223,7 @@
 	return
 
 
-/obj/machinery/abductor/experiment/update_icon_state()
+/obj/machinery/abductor/experiment/update_icon()
 	if(state_open)
 		icon_state = "experiment-open"
 	else

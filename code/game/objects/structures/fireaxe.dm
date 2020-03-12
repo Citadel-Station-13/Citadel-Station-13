@@ -140,30 +140,30 @@
 		update_icon()
 		return
 
-/obj/structure/fireaxecabinet/update_overlays()
-	. = ..()
+/obj/structure/fireaxecabinet/update_icon()
+	cut_overlays()
 	if(fireaxe)
-		. += "axe"
+		add_overlay("axe")
 	if(!open)
 		var/hp_percent = obj_integrity/max_integrity * 100
 		if(broken)
-			. += "glass4"
+			add_overlay("glass4")
 		else
 			switch(hp_percent)
 				if(-INFINITY to 40)
-					. += "glass3"
+					add_overlay("glass3")
 				if(40 to 60)
-					. += "glass2"
+					add_overlay("glass2")
 				if(60 to 80)
-					. += "glass1"
+					add_overlay("glass1")
 				if(80 to INFINITY)
-					. += "glass"
+					add_overlay("glass")
 		if(locked)
-			. += "locked"
+			add_overlay("locked")
 		else
-			. += "unlocked"
+			add_overlay("unlocked")
 	else
-		. += "glass_raised"
+		add_overlay("glass_raised")
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, "<span class = 'caution'> Resetting circuitry...</span>")

@@ -157,7 +157,7 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon_state()
+/obj/machinery/shuttle_scrambler/update_icon()
 	if(active)
 		icon_state = "dominator-blue"
 	else

@@ -161,20 +161,20 @@
 	updateUsrDialog()
 
 
-/obj/structure/janitorialcart/update_overlays()
-	. = ..()
+/obj/structure/janitorialcart/update_icon()
+	cut_overlays()
 	if(mybag)
-		. += "cart_garbage"
+		add_overlay("cart_garbage")
 	if(mymop)
-		. += "cart_mop"
+		add_overlay("cart_mop")
 	if(mybroom)
-		. += "cart_broom"
+		add_overlay("cart_broom")
 	if(myspray)
-		. += "cart_spray"
+		add_overlay("cart_spray")
 	if(myreplacer)
-		. += "cart_replacer"
+		add_overlay("cart_replacer")
 	if(signs)
-		. += "cart_sign[signs]"
+		add_overlay("cart_sign[signs]")
 	if(reagents.total_volume > 0)
-		. += "cart_water"
+		add_overlay("cart_water")
 

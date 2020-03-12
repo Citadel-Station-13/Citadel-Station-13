@@ -28,10 +28,11 @@
 	icon_state = "folder_white"
 
 
-/obj/item/folder/update_overlays()
-	. = ..()
+/obj/item/folder/update_icon()
+	cut_overlays()
 	if(contents.len)
-		. += "folder_paper"
+		add_overlay("folder_paper")
+
 
 /obj/item/folder/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/paper) || istype(W, /obj/item/photo) || istype(W, /obj/item/documents))

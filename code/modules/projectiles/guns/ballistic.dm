@@ -19,7 +19,8 @@
 	chamber_round()
 	update_icon()
 
-/obj/item/gun/ballistic/update_icon_state()
+/obj/item/gun/ballistic/update_icon()
+	..()
 	if(current_skin)
 		icon_state = "[unique_reskin[current_skin]][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
 	else

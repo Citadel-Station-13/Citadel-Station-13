@@ -5,7 +5,6 @@
 
 	var/on = FALSE
 	var/volume_rate = 1000
-	var/use_overlays = TRUE
 	volume = 1000
 
 	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor)
@@ -16,17 +15,14 @@
 	air_update_turf()
 	return ..()
 
-/obj/machinery/portable_atmospherics/scrubber/update_icon_state()
+/obj/machinery/portable_atmospherics/scrubber/update_icon()
 	icon_state = "pscrubber:[on]"
 
-/obj/machinery/portable_atmospherics/scrubber/update_overlays()
-	. = ..()
-	if(!use_overlays)
-		return
+	cut_overlays()
 	if(holding)
-		. += "scrubber-open"
+		add_overlay("scrubber-open")
 	if(connected_port)
-		. += "scrubber-connector"
+		add_overlay("scrubber-connector")
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	..()
@@ -121,12 +117,11 @@
 	volume = 50000
 
 	var/movable = FALSE
-	use_overlays = FALSE
 
 /obj/machinery/portable_atmospherics/scrubber/huge/movable
 	movable = TRUE
 
-/obj/machinery/portable_atmospherics/scrubber/huge/update_icon_state()
+/obj/machinery/portable_atmospherics/scrubber/huge/update_icon()
 	icon_state = "scrubber:[on]"
 
 /obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()
