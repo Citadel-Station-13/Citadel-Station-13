@@ -117,7 +117,7 @@
 	. = ..()
 	if(!isinhands || !(loaded?.amount))
 		return
-	var/mutable_appearance/cable_overlay = mutable_appearance(icon, "rcl-[CEILING(loaded.amount/(max_amount/3), 1)]")
+	var/mutable_appearance/cable_overlay = mutable_appearance(icon_file, "rcl-[CEILING(loaded.amount/(max_amount/3), 1)]")
 	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
 	. += cable_overlay
 
