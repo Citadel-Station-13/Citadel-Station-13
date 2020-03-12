@@ -24,5 +24,5 @@
 		return
 	H.dna.add_mutation(HULK)
 	H.dna.add_mutation(XRAY)
-	H.dna.add_mutation(COLDRES)
+	H.dna.add_mutation(SPACEMUT)
 	H.dna.add_mutation(TK)
