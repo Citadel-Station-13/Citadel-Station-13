@@ -1695,8 +1695,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	H.send_item_attack_message(I, user, hit_area)
 
-	if(status_flags & CANSTAGGER)
-		I.do_stagger_action(src, user)
+	I.do_stagger_action(src, user)
 
 	if(!I.force)
 		return 0 //item force is zero

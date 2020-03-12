@@ -116,8 +116,7 @@
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 		return FALSE
 	send_item_attack_message(I, user)
-	if(status_flags & CANSTAGGER)
-		I.do_stagger_action(src, user)
+	I.do_stagger_action(src, user)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW))
@@ -183,6 +182,10 @@
 	return (1.5 + (w_class/7.5)) * force
 
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user)
+	set waitfor = FALSE
+	if(!CHECK_BITFIELD(target.status_flags & CANSTAGGER))
+		return FALSE
+	. = TRUE
 	target.Stagger(melee_stagger_duration())
 	if(IS_SPRINTING(target))
 		animate(target, pixel_x = -2, pixel_y = -2, time = 1, flags = ANIMATION_RELATIVE)
