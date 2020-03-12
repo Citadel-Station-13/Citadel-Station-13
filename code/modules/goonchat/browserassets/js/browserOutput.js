@@ -611,8 +611,6 @@ $(function() {
 		'sfontSize': getCookie('fontsize'),
 		'slineHeight': getCookie('lineheight'),
 		'spingDisabled': getCookie('pingdisabled'),
-		'shighlightTerms': getCookie('highlightterms'),
-		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
 		'smessagecombining': getCookie('messagecombining'),
 		'scolorPreset': getCookie('colorpreset'),
@@ -632,20 +630,6 @@ $(function() {
 			$('#ping').hide();
 		}
 		internalOutput('<span class="internal boldnshit">Loaded ping display of: '+(opts.pingDisabled ? 'hidden' : 'visible')+'</span>', 'internal');
-	}
-	if (savedConfig.shighlightTerms) {
-		var savedTerms = $.parseJSON(savedConfig.shighlightTerms);
-		var actualTerms = '';
-		for (var i = 0; i < savedTerms.length; i++) {
-			if (savedTerms[i]) {
-				actualTerms += savedTerms[i] + ', ';
-			}
-		}
-		if (actualTerms) {
-			actualTerms = actualTerms.substring(0, actualTerms.length - 2);
-			internalOutput('<span class="internal boldnshit">Loaded highlight strings of: ' + actualTerms+'</span>', 'internal');
-			opts.highlightTerms = savedTerms;
-		}
 	}
 	if (savedConfig.shighlightColor) {
 		opts.highlightColor = savedConfig.shighlightColor;
@@ -984,7 +968,6 @@ $(function() {
 		var $popup = $('#highlightPopup').closest('.popup');
 		$popup.remove();
 
-		setCookie('highlightterms', JSON.stringify(opts.highlightTerms), 365);
 		setCookie('highlightcolor', opts.highlightColor, 365);
 	});
 
