@@ -1450,15 +1450,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		target.grabbedby(user)
 		return 1
 
-
-
-
-
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(!attacker_style && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
+	if(IS_STAMCRIT(user)) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") //CITADEL CHANGE - ditto
 		return FALSE //CITADEL CHANGE - ditto
 	if(target.check_block())
@@ -1487,11 +1483,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
-		if(!target.combatmode && damage < user.dna.species.punchstunthreshold)
+		if(!IS_COMBAT_ACTIVE(target) && damage < user.dna.species.punchstunthreshold)
 			damage = user.dna.species.punchstunthreshold - 1
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.5
-		if(!user.combatmode)
+		if(!IS_COMBAT_ACTIVE(user))
 			damage *= 0.25
 		//END OF CITADEL CHANGES
 
@@ -1540,11 +1536,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/aim_for_groin  = user.zone_selected == "groin"
 	var/target_aiming_for_groin = target.zone_selected == "groin"
 
-	if(target.check_block()) //END EDIT
-		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
-		return 0
-	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+	if(IS_STAMCRIT(user))
 		to_chat(user, "<span class='warning'>You're too exhausted!</span>")
+		return FALSE
+	else if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
 		return FALSE
 
 	else if(aim_for_mouth && ( target_on_help || target_restrained || target_aiming_for_mouth))
@@ -1605,11 +1601,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.forcesay(GLOB.hit_appends)
 			log_combat(user, target, "pushed over")
 			return*/
-		if(!target.combatmode) // CITADEL CHANGE
+		if(!IS_COMBAT_ACTIVE(target)) // CITADEL CHANGE
 			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND)) //CITADEL CHANGE
 			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
-		if(!user.combatmode) //CITADEL CHANGE
+		if(!IS_COMBAT_ACTIVE(target)) //CITADEL CHANGE
 			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
 		if(user.pulling == target)
 			randn += -20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
@@ -1686,14 +1682,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(iscarbon(user))
-		var/mob/living/carbon/tempcarb = user
-		if(!tempcarb.combatmode)
-			totitemdamage *= 0.5
+	if(!IS_COMBAT_ACTIVE(user))
+		totitemdamage *= 0.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	if(istype(H))
-		if(!H.combatmode)
+		if(!IS_COMBAT_ACTIVE(H))
 			totitemdamage *= 1.5
 	//CIT CHANGES END HERE
 	var/weakness = H.check_weakness(I, user)
@@ -1803,8 +1797,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 /datum/species/proc/althelp(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(user == target && istype(user))
-		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
+			return
+		if(!IS_COMBAT_ACTIVE(user))
+			to_chat(user, "<span class='warning'>Your muscles need to be tensed to do that!</span>")
 			return
 		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
 			to_chat(user, "<span class='warning'>You can't seem to force yourself up right now!</span>")
@@ -1818,7 +1815,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		playsound(user, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 /datum/species/proc/altdisarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+	if(IS_STAMCRIT(user))
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
 		return FALSE
 	if(target.check_block())

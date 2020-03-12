@@ -27,7 +27,7 @@
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS
-				if(!recoveringstam)
+				if(!IS_HARD_STAMCRITTED(src))
 					set_resting(FALSE, TRUE)
 				adjust_blindness(-1)
 				update_mobility()

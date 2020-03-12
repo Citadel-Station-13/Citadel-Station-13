@@ -10,14 +10,16 @@
 /obj/screen/sprintbutton/Click()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.togglesprint()
+		H.default_toggle_sprint()
 
 /obj/screen/sprintbutton/update_icon_state()
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(user.sprinting)
+	if(IS_SPRINTING(user))
 		icon_state = "act_sprint_on"
+	else if(IS_SPRINT_LOCKED(user))
+		icon_state = "act_sprint_locked"
 	else
 		icon_state = "act_sprint"
 

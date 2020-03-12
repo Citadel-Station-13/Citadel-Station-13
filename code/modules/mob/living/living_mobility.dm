@@ -33,9 +33,9 @@
 	set name = "Rest"
 	set category = "IC"
 	if(client?.prefs?.autostand)
-		intentionalresting = !intentionalresting
-		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!resting ? "lay down and ": ""]stay down" : "[resting ? "get up and ": ""]stay up"].</span>")
-		if(intentionalresting && !resting)
+		TOGGLE_BITFIELD(combat_flags, COMBAT_FLAG_INTENTIONALLY_RESTING)
+		to_chat(src, "<span class='notice'>You are now attempting to [IS_INTENTIONALLY_RESTING(src) ? "[!resting ? "lay down and ": ""]stay down" : "[resting ? "get up and ": ""]stay up"].</span>")
+		if(IS_INTENTIONALLY_RESTING(src) && !resting)
 			set_resting(TRUE, FALSE)
 		else
 			resist_a_rest()
@@ -71,8 +71,8 @@
 	var/restrained = restrained()
 	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
 	var/has_limbs = has_arms || ignore_legs || has_legs
-	var/canmove = !immobilize && !stun && conscious && !paralyze && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && has_limbs && !pinned && !recoveringstam
-	var/canresist = !stun && conscious && !stat_softcrit && !paralyze && has_limbs && !recoveringstam
+	var/canmove = !immobilize && !stun && conscious && !paralyze && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && has_limbs && !pinned && !IS_HARD_STAMCRITTED(src)
+	var/canresist = !stun && conscious && !stat_softcrit && !paralyze && has_limbs && !IS_HARD_STAMCRITTED(src)
 
 	if(canmove)
 		mobility_flags |= MOBILITY_MOVE
@@ -84,7 +84,7 @@
 	else
 		mobility_flags &= ~MOBILITY_RESIST
 
-	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !recoveringstam
+	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !IS_HARD_STAMCRITTED(src)
 	var/canstand = canstand_involuntary && !resting
 
 	var/should_be_lying = !canstand
@@ -107,7 +107,7 @@
 	else
 		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
 
-	var/canitem_general = !paralyze && !stun && conscious && !(stat_softcrit) && !chokehold && !restrained && has_arms && !recoveringstam
+	var/canitem_general = !paralyze && !stun && conscious && !(stat_softcrit) && !chokehold && !restrained && has_arms && !IS_HARD_STAMCRITTED(src)
 	if(canitem_general)
 		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE | MOBILITY_HOLD)
 	else
@@ -149,7 +149,7 @@
 	lying_prev = lying
 
 	//Handle citadel autoresist
-	if(CHECK_MOBILITY(src, MOBILITY_MOVE) && !intentionalresting && canstand_involuntary && iscarbon(src) && client?.prefs?.autostand)//CIT CHANGE - adds autostanding as a preference
+	if(CHECK_MOBILITY(src, MOBILITY_MOVE) && !IS_INTENTIONALLY_RESTING(src) && canstand_involuntary && iscarbon(src) && client?.prefs?.autostand)//CIT CHANGE - adds autostanding as a preference
 		addtimer(CALLBACK(src, .proc/resist_a_rest, TRUE), 0) //CIT CHANGE - ditto
 
 	// Movespeed mods based on arms/legs quantity

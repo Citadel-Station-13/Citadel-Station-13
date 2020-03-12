@@ -17,6 +17,7 @@
 				owner.update_stat()
 
 /datum/status_effect/incapacitating/on_remove()
+	. = ..()
 	owner.update_mobility()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
@@ -86,6 +87,15 @@
 		if(prob(10) && owner.health > owner.crit_threshold)
 			owner.emote("snore")
 
+/datum/status_effect/staggered
+	id = "staggered"
+	blocks_sprint = TRUE
+
+/datum/status_effect/staggered/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
@@ -101,10 +111,6 @@
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		if(C.combatmode)
-			C.toggle_combat_mode(TRUE)
 
 /datum/status_effect/no_combat_mode/mesmerize
 	id = "Mesmerize"
@@ -143,8 +149,6 @@
 	last_tick = world.time
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		if(C.combatmode)
-			C.toggle_combat_mode(TRUE)
 		C.add_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]", TRUE, priority = slowdown_priority, override = TRUE, multiplicative_slowdown = slowdown, blacklisted_movetypes = affect_crawl? NONE : CRAWLING)
 
 /datum/status_effect/electrode/on_remove()
@@ -172,15 +176,6 @@
 	slowdown_priority = 100
 	nextmove_modifier = 2
 	blocks_combatmode = TRUE
-
-/datum/status_effect/electrode/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		if(HAS_TRAIT(C, TRAIT_TASED_RESISTANCE))
-			return
-		if(C.combatmode)
-			C.toggle_combat_mode(TRUE)
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace

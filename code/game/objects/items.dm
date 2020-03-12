@@ -399,7 +399,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		if(C.combatmode && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
+		if(IS_COMBAT_ACTIVE(C) && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
 			if(!C.get_active_held_item())
 				C.UnarmedAttack(src, TRUE)
 				if(C.get_active_held_item() == src)
@@ -496,7 +496,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
