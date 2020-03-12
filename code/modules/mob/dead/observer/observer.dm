@@ -292,7 +292,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
 	if(world.time < roundstart_quit_limit)
 		penalty += roundstart_quit_limit - world.time
-	if(SSautotransfer.can_fire && SSautotransfer.max_votes)
+	if(SSautotransfer.can_fire && SSautotransfer.maxvotes)
 		var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
 		if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 			penalty = CANT_REENTER_ROUND
@@ -328,7 +328,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
 	if(world.time < roundstart_quit_limit)
 		penalty += roundstart_quit_limit - world.time
-	if(SSautotransfer.can_fire && SSautotransfer.max_votes)
+	if(SSautotransfer.can_fire && SSautotransfer.maxvotes)
 		var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
 		if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 			penalty = CANT_REENTER_ROUND
