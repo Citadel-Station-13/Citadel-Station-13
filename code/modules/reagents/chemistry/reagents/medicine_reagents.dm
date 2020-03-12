@@ -46,8 +46,7 @@
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetKnockdown(0, 0)
-	M.SetStun(0, 0)
+	M.SetAllImmobility(0, 0)
 	M.SetUnconscious(0, 0)
 	M.silent = FALSE
 	M.dizziness = 0
@@ -87,8 +86,7 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
+	M.AdjustAllImmobility(-20, 0)
 	M.AdjustUnconscious(-20, 0)
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
@@ -637,10 +635,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 12
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
-	M.AdjustUnconscious(-20, 0)
-	M.adjustStaminaLoss(-4.5*REM, 0)
+	M.AdjustAllImmobility(-20, FALSE)
+	M.AdjustUnconscious(-20, FALSE)
+	M.adjustStaminaLoss(-4.5*REM, FALSE)
 	M.Jitter(10)
 	if(prob(50))
 		M.confused = max(M.confused, 1)
@@ -848,8 +845,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustStun(-20, 0)
-		M.AdjustKnockdown(-20, 0)
+		M.AdjustAllImmobility(-20, 0)
 		M.AdjustUnconscious(-20, 0)
 	..()
 
@@ -996,28 +992,29 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/M)
 	if(M.health < 50 && M.health > 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustStun(-60, 0)
-	M.AdjustKnockdown(-60, 0)
-	M.AdjustUnconscious(-60, 0)
-	M.adjustStaminaLoss(-20*REM, 0)
+		M.adjustOxyLoss(-1*REM, FALSE)
+		M.adjustToxLoss(-1*REM, FALSE)
+		M.adjustBruteLoss(-1*REM, FALSE)
+		M.adjustFireLoss(-1*REM, FALSE)
+	M.AdjustAllImmobility(-60, FALSE)
+	M.AdjustUnconscious(-60, FALSE)
+	M.adjustStaminaLoss(-20*REM, FALSE)
 	..()
 	. = 1
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/M)
 	if(prob(33))
-		M.adjustStaminaLoss(2.5*REM, 0)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustStaminaLoss(2.5*REM, FALSE)
+		M.adjustToxLoss(1*REM, FALSE)
 		M.losebreath++
 		. = 1
 	..()
@@ -1046,12 +1043,12 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 5
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2*REM, 0)
+	M.adjustBruteLoss(-2*REM, FALSE)
 	..()
 	. = 1
 
 /datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
-	M.adjustBruteLoss(4*REM, 0)
+	M.adjustBruteLoss(4*REM, FALSE)
 	..()
 	. = 1
 
@@ -1064,12 +1061,12 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 9.7
 
 /datum/reagent/medicine/dexalin/on_mob_life(mob/living/carbon/M)
-	M.adjustOxyLoss(-2*REM, 0)
+	M.adjustOxyLoss(-2*REM, FALSE)
 	..()
 	. = 1
 
 /datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
-	M.adjustOxyLoss(4*REM, 0)
+	M.adjustOxyLoss(4*REM, FALSE)
 	..()
 	. = 1
 
@@ -1082,12 +1079,12 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 9
 
 /datum/reagent/medicine/kelotane/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM, 0)
+	M.adjustFireLoss(-2*REM, FALSE)
 	..()
 	. = 1
 
 /datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
-	M.adjustFireLoss(4*REM, 0)
+	M.adjustFireLoss(4*REM, FALSE)
 	..()
 	. = 1
 
@@ -1101,14 +1098,14 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 10
 
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-2*REM, 0)
+	M.adjustToxLoss(-2*REM, FALSE)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
 	..()
 	. = 1
 
 /datum/reagent/medicine/antitoxin/overdose_process(mob/living/M)
-	M.adjustToxLoss(4*REM, 0) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
+	M.adjustToxLoss(4*REM, FALSE) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
 	..()
 	. = 1
 
@@ -1134,18 +1131,18 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
+		M.adjustBruteLoss(-1*REM, FALSE)
+		M.adjustFireLoss(-1*REM, FALSE)
+		M.adjustOxyLoss(-1*REM, FALSE)
+		M.adjustToxLoss(-1*REM, FALSE)
 		. = 1
 	..()
 
 /datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
-	M.adjustToxLoss(2*REM, 0)
-	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
-	M.adjustFireLoss(2*REM, 0)
+	M.adjustToxLoss(2*REM, FALSE)
+	M.adjustOxyLoss(2*REM, FALSE)
+	M.adjustBruteLoss(2*REM, FALSE)
+	M.adjustFireLoss(2*REM, FALSE)
 	..()
 	. = 1
 
@@ -1157,9 +1154,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	taste_description = "jelly"
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, 0)
-	M.adjustFireLoss(-1.5*REM, 0)
-	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustBruteLoss(-1.5*REM, FALSE)
+	M.adjustFireLoss(-1.5*REM, FALSE)
+	M.adjustOxyLoss(-1.5*REM, FALSE)
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
 	. = 1
 	..()
@@ -1172,13 +1169,13 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
-	M.adjustFireLoss(-5*REM, 0)
-	M.adjustOxyLoss(-15, 0)
-	M.adjustToxLoss(-5*REM, 0)
+	M.adjustBruteLoss(-5*REM, FALSE) //A ton of healing - this is a 50 telecrystal investment.
+	M.adjustFireLoss(-5*REM, FALSE)
+	M.adjustOxyLoss(-15, FALSE)
+	M.adjustToxLoss(-5*REM, FALSE)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
-	M.adjustCloneLoss(-3*REM, 0)
-	M.adjustStaminaLoss(-25*REM,0)
+	M.adjustCloneLoss(-3*REM, FALSE)
+	M.adjustStaminaLoss(-25*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.blood_volume += 40 // blood fall out man bad
 	..()
@@ -1192,13 +1189,13 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11
 
 /datum/reagent/medicine/lesser_syndicate_nanites/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3*REM, 0) // hidden gold shh
-	M.adjustFireLoss(-3*REM, 0)
-	M.adjustOxyLoss(-15, 0)
-	M.adjustToxLoss(-3*REM, 0)
+	M.adjustBruteLoss(-3*REM, FALSE) // hidden gold shh
+	M.adjustFireLoss(-3*REM, FALSE)
+	M.adjustOxyLoss(-15, FALSE)
+	M.adjustToxLoss(-3*REM, FALSE)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
-	M.adjustCloneLoss(-3*REM, 0)
-	M.adjustStaminaLoss(-20*REM,0)
+	M.adjustCloneLoss(-3*REM, FALSE)
+	M.adjustStaminaLoss(-20*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.blood_volume += 20 // blood fall out man bad
 	..()
@@ -1215,17 +1212,17 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11.8
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, 0)
-	M.adjustFireLoss(-1.5*REM, 0)
-	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustBruteLoss(-1.5*REM, FALSE)
+	M.adjustFireLoss(-1.5*REM, FALSE)
+	M.adjustOxyLoss(-1.5*REM, FALSE)
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
 	. = 1
 	..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-	M.adjustOxyLoss(2.6*REM, 0)
-	M.adjustBruteLoss(3.5*REM, 0)
-	M.adjustFireLoss(3.5*REM, 0)
+	M.adjustOxyLoss(2.6*REM, FALSE)
+	M.adjustBruteLoss(3.5*REM, FALSE)
+	M.adjustFireLoss(3.5*REM, FALSE)
 	..()
 	. = 1
 
@@ -1237,13 +1234,13 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	pH = 11
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3 * REM, 0)
-	M.adjustFireLoss(-3 * REM, 0)
-	M.adjustOxyLoss(-15 * REM, 0)
-	M.adjustToxLoss(-3 * REM, 0, TRUE) //Heals TOXINLOVERS
+	M.adjustBruteLoss(-3 * REM, FALSE)
+	M.adjustFireLoss(-3 * REM, FALSE)
+	M.adjustOxyLoss(-15 * REM, FALSE)
+	M.adjustToxLoss(-3 * REM, FALSE, TRUE) //Heals TOXINLOVERS
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
-	M.adjustCloneLoss(-1 * REM, 0)
-	M.adjustStaminaLoss(-13 * REM, 0)
+	M.adjustCloneLoss(-1 * REM, FALSE)
+	M.adjustStaminaLoss(-13 * REM, FALSE)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above
 	..()
@@ -1251,7 +1248,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
-	M.adjustToxLoss(8 * REM, 0, TRUE) //Hurts TOXINLOVERS
+	M.adjustToxLoss(8 * REM, FALSE, TRUE) //Hurts TOXINLOVERS
 	..()
 	. = 1
 
@@ -1304,10 +1301,17 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	color = "#918e53"
 	overdose_threshold = 30
 
+/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	..()
+
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	M.AdjustUnconscious(-20, 0)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
+	M.AdjustAllImmobility(-20, 0)
 	M.AdjustSleeping(-20, 0)
 	M.adjustStaminaLoss(-30, 0)
 	..()
@@ -1390,8 +1394,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M)
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
-		M.AdjustStun(-5, 0)
-		M.AdjustKnockdown(-5, 0)
+		M.AdjustAllImmobility(-5, 0)
 		M.AdjustUnconscious(-5, 0)
 		M.adjustStaminaLoss(-1*REM, 0)
 		M.Jitter(1)
@@ -1423,7 +1426,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 			if(prob(20))
 				to_chat(M, "You have a sudden fit!")
 				M.emote("moan")
-				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
+				M.DefaultCombatKnockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
 			M.adjustOxyLoss(0.1*REM, 0)

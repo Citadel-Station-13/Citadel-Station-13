@@ -30,12 +30,14 @@
 	var/taur_mode = NONE //Must be a single specific tauric suit variation bitflag. Don't do FLAG_1|FLAG_2
 	var/alt_taur_mode = NONE //Same as above.
 	color_src = MATRIXED
+	recommended_species = list("human", "lizard", "insect", "mammal", "xeno", "jelly", "slimeperson", "podweak")
 
 /datum/sprite_accessory/taur/none
 	dimension_x = 32
 	center = FALSE
 	name = "None"
 	icon_state = "None"
+	recommended_species = null
 
 /datum/sprite_accessory/taur/cow
 	name = "Cow"

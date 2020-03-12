@@ -18,7 +18,6 @@
 	var/obj/item/stack/sheet/glass_type = /obj/item/stack/sheet/glass
 	var/cleanable_type = /obj/effect/decal/cleanable/glass
 	var/glass_amount = 1
-	var/mutable_appearance/crack_overlay
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
@@ -337,22 +336,19 @@
 		queue_smooth_neighbors(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_icon()
-	if(!QDELETED(src))
-		if(!fulltile)
-			return
+/obj/structure/window/update_overlays()
+	. = ..()
+	if(QDELETED(src) || !fulltile)
+		return
+	var/ratio = obj_integrity / max_integrity
+	ratio = CEILING(ratio*4, 1) * 25
 
-		var/ratio = obj_integrity / max_integrity
-		ratio = CEILING(ratio*4, 1) * 25
+	if(smooth)
+		queue_smooth(src)
 
-		if(smooth)
-			queue_smooth(src)
-
-		cut_overlay(crack_overlay)
-		if(ratio > 75)
-			return
-		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-		add_overlay(crack_overlay)
+	if(ratio > 75)
+		return
+	. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 

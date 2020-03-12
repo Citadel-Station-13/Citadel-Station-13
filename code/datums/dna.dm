@@ -51,9 +51,10 @@
 	if(ishuman(destination))
 		var/mob/living/carbon/human/H = destination
 		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
-	destination.flavor_text = destination.dna.features["flavor_text"] //Update the flavor_text to use new dna text
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
+
+	SEND_SIGNAL(destination, COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, src, transfer_SE)
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -218,7 +219,7 @@
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()
-	features = random_features()
+	features = random_features(species?.id)
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
@@ -284,7 +285,6 @@
 
 	if(newfeatures)
 		dna.features = newfeatures
-		flavor_text = dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 	if(mrace)
 		var/datum/species/newrace = new mrace.type
@@ -305,6 +305,8 @@
 	if(se)
 		dna.struc_enzymes = se
 		domutcheck()
+
+	SEND_SIGNAL(src, COMSIG_HUMAN_HARDSET_DNA, ui, se, newreal_name, newblood_type, mrace, newfeatures)
 
 	if(mrace || newfeatures || ui)
 		update_body()

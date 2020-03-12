@@ -150,7 +150,7 @@
 		var/mob/living/silicon/robot/R = M
 		log_combat(user, R, "flashed", src)
 		update_icon(1)
-		R.Knockdown(rand(80,120))
+		R.DefaultCombatKnockdown(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 		R.confused += min(5, diff)
 		R.flash_act(affect_silicon = 1)
@@ -197,14 +197,13 @@
 			else
 				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
-
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	. = ..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
-	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdown) && iscarbon(M) && !M.resting && !M.get_eye_protection())
-		M.Knockdown(80)
+	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdown) && iscarbon(M) && CHECK_MOBILITY(M, MOBILITY_STAND) && !M.get_eye_protection())
+		M.DefaultCombatKnockdown(80)
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
 	..()

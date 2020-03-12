@@ -71,6 +71,9 @@
 
 	//for snowflake/donor specific sprites
 	var/list/ckeys_allowed
+	
+	//For soft-restricting markings to species IDs
+	var/list/recommended_species
 
 /datum/sprite_accessory/underwear
 	icon = 'icons/mob/underwear.dmi'

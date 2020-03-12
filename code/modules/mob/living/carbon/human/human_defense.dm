@@ -179,7 +179,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			Knockdown(100)
+			DefaultCombatKnockdown(100)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -228,9 +228,9 @@
 		else
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(!lying)				//CITADEL EDIT
-				Knockdown(100, TRUE, FALSE, 30, 25)
+				DefaultCombatKnockdown(100, TRUE, FALSE, 30, 25)
 			else
-				Knockdown(100)
+				DefaultCombatKnockdown(100)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -297,10 +297,10 @@
 			switch(M.damtype)
 				if("brute")
 					if(M.force > 35) // durand and other heavy mechas
-						Knockdown(50)
+						DefaultCombatKnockdown(50)
 						src.throw_at(throw_target, rand(1,5), 7)
-					else if(M.force >= 20 && !IsKnockdown()) // lightweight mechas like gygax
-						Knockdown(30)
+					else if(M.force >= 20 && CHECK_MOBILITY(src, MOBILITY_STAND)) // lightweight mechas like gygax
+						DefaultCombatKnockdown(30)
 						src.throw_at(throw_target, rand(1,3), 7)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
@@ -397,8 +397,8 @@
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock)
+/mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(flags & SHOCK_TESLA)
 		var/total_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
@@ -413,20 +413,20 @@
 		siemens_coeff = total_coeff
 		if(flags_1 & TESLA_IGNORE_1)
 			siemens_coeff = 0
-	else if(!safety)
+	else if(!(flags & SHOCK_NOGLOVES))
 		var/gloves_siemens_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
 			gloves_siemens_coeff = G.siemens_coefficient
 		siemens_coeff = gloves_siemens_coeff
-	if(undergoing_cardiac_arrest() && !illusion)
+	if(undergoing_cardiac_arrest() && !(flags & SHOCK_ILLUSION))
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	siemens_coeff *= physiology.siemens_coeff
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
+	. = ..()
 	if(.)
 		electrocution_animation(40)
 

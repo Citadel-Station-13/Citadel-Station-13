@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	picture = null
 	return ..()
 
-/obj/machinery/newscaster/update_icon()
+/obj/machinery/newscaster/update_icon_state()
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = "newscaster_off"
 	else
@@ -657,8 +657,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else
-		throw EXCEPTION("Invalid user for this proc")
-		return
+		CRASH("Invalid user for this proc")
 
 /obj/machinery/newscaster/proc/print_paper()
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)

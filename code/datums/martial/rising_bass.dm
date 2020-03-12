@@ -79,7 +79,7 @@
 	return TRUE
 
 /datum/martial_art/the_rising_bass/proc/sideKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || D.lying == 0)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		var/dir = A.dir & (NORTH | SOUTH) ? pick(EAST, WEST) : pick(NORTH, SOUTH)
 		var/oppdir = dir == NORTH ? SOUTH : dir == SOUTH ? NORTH : dir == EAST ? WEST : EAST
 		var/turf/H = get_step(D, dir)
@@ -89,7 +89,7 @@
 						  "<span class='userdanger'>[A] kicks you in the side, forcing you to step away!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
-		D.Knockdown(60)
+		D.DefaultCombatKnockdown(60)
 		var/L = !checkfordensity(H,D) ? (!checkfordensity(K,D) ? D.loc : K) : H
 		D.forceMove(L)
 		log_combat(A, D, "side kicked (Rising Bass)")
@@ -97,7 +97,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/shoulderFlip(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		var/turf/H = get_step(A, get_dir(D,A))
 		var/L = checkfordensity(H,D) ? H : A.loc
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
@@ -108,14 +108,14 @@
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 		D.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 		D.Sleeping(60)
-		D.Knockdown(300)
+		D.DefaultCombatKnockdown(300)
 		D.forceMove(L)
 		log_combat(A, D, "shoulder flipped (Rising Bass)")
 		return TRUE
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/repulsePunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if((!D.IsKnockdown() || !D.lying) && repulsecool > world.time)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND) && repulsecool < world.time)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] smashes [D] in the chest, throwing them away!</span>", \
 						  "<span class='userdanger'>[A] smashes you in the chest, repelling you away!</span>")
@@ -123,14 +123,14 @@
 		var/atom/F = get_edge_target_turf(D, get_dir(A, get_step_away(D, A)))
 		D.throw_at(F, 10, 1)
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
-		D.Knockdown(90)
+		D.DefaultCombatKnockdown(90)
 		log_combat(A, D, "repulse punched (Rising Bass)")
 		repulsecool = world.time + 3 SECONDS
 		return TRUE
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/footSmash(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] smashes their foot down on [D]'s foot!</span>", \
 						  "<span class='userdanger'>[A] smashes your foot!</span>")
@@ -142,7 +142,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_rising_bass/proc/deftSwitch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		if (D.get_active_held_item())
 			var/obj/item/G = D.get_active_held_item()
 			if (G && !(G.item_flags & (ABSTRACT|DROPDEL)) && D.temporarilyRemoveItemFromInventory(G))

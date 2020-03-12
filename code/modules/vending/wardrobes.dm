@@ -190,17 +190,21 @@
 	name = "CuraDrobe"
 	desc = "A lowstock vendor only capable of vending clothing for curators and librarians."
 	icon_state = "curadrobe"
-	product_ads = "Our clothes are endorsed by treasure hunters everywhere!"
+	product_ads = "Glasses for your eyes and literature for your soul, Curadrobe has it all!; Impress & enthrall your library guests with Curadrobe's extended line of pens!"
 	vend_reply = "Thank you for using the CuraDrobe!"
-	products = list(/obj/item/clothing/head/fedora/curator = 2,
-					/obj/item/clothing/suit/curator = 2,
+	products = list(/obj/item/pen = 4,
+					/obj/item/pen/red = 2,
+					/obj/item/pen/blue = 2,
+					/obj/item/pen/fourcolor = 1,
+					/obj/item/pen/fountain = 2,
+					/obj/item/clothing/accessory/pocketprotector = 2,
 					/obj/item/clothing/under/rank/curator/skirt = 2,
 					/obj/item/clothing/under/gimmick/rank/captain/suit/skirt = 2,
 					/obj/item/clothing/under/gimmick/rank/head_of_personnel/suit/skirt = 2,
-					/obj/item/clothing/under/rank/curator/treasure_hunter = 2,
-					/obj/item/clothing/shoes/workboots/mining = 2,
-					/obj/item/storage/backpack/satchel/explorer = 2,
-					/obj/item/storage/bag/books = 2)
+					/obj/item/storage/backpack/satchel/explorer = 1,
+					/obj/item/clothing/glasses/regular = 2,
+					/obj/item/clothing/glasses/regular/jamjar = 1,
+					/obj/item/storage/bag/books = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 
 /obj/item/vending_refill/wardrobe/curator_wardrobe
@@ -327,7 +331,7 @@
 	icon_state = "chapdrobe"
 	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
 	vend_reply = "Thank you for using the ChapDrobe!"
-	products = list(/obj/item/holybeacon = 1,
+	products = list(/obj/item/choice_beacon/holy = 1,
 					/obj/item/storage/backpack/cultpack = 2,
 					/obj/item/clothing/accessory/pocketprotector/cosmetology = 2,
 					/obj/item/clothing/under/rank/chaplain = 2,
@@ -415,7 +419,7 @@
 	req_access = list(ACCESS_CAPTAIN)
 	vend_reply = "A wonderful day to you, great leader."
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/captain = 1,
-					/obj/item/storage/backpack/captain = 1, 
+					/obj/item/storage/backpack/captain = 1,
 					/obj/item/storage/backpack/satchel/cap = 1,
 					/obj/item/storage/backpack/duffelbag/captain = 1,
 					/obj/item/clothing/neck/cloak/cap = 1,
@@ -436,4 +440,3 @@
 /obj/item/vending_refill/wardrobe/cap_wardrobe
 	machine_name = "Captain's Wardrobe"
 	icon_state = "refill_caps"
-	
