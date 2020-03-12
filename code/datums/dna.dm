@@ -390,7 +390,7 @@
 		dna.mutation_index = mutation_index.Copy()
 		domutcheck()
 
-	SEND_SIGNAL(src, COMSIG_HUMAN_HARDSET_DNA, ui, se, newreal_name, newblood_type, mrace, newfeatures)
+	SEND_SIGNAL(src, COMSIG_HUMAN_HARDSET_DNA, ui, mutation_index, newreal_name, newblood_type, mrace, newfeatures)
 
 	if(mrace || newfeatures || ui)
 		update_body()
