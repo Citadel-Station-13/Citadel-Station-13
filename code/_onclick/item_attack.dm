@@ -182,12 +182,15 @@
 	return (1.5 + (w_class/7.5)) * force
 
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user)
-	set waitfor = FALSE
 	if(!CHECK_BITFIELD(target.status_flags, CANSTAGGER))
 		return FALSE
-	. = TRUE
 	if(IS_SPRINTING(target))
-		animate(target, pixel_x = -2, pixel_y = -2, time = 1, flags = ANIMATION_RELATIVE)
-		animate(target, pixel_x = 4, pixel_y = 4, time = 1, flags = ANIMATION_RELATIVE)
-		animate(target, pixel_x = -2, pixel_y = -2, time = 0.5, flags = ANIMATION_RELATIVE)
+		target.do_staggered_animation()
 	target.Stagger(melee_stagger_duration())
+	return TRUE
+
+/mob/proc/do_staggered_animation()
+	set waitfor = FALSE
+	animate(src, pixel_x = -2, pixel_y = -2, time = 1, flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+	animate(pixel_x = 4, pixel_y = 4, time = 1, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = -2, pixel_y = -2, time = 0.5, flags = ANIMATION_RELATIVE)
