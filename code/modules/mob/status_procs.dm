@@ -27,10 +27,10 @@
   * Sets a mob's blindness to an amount if it was not above it already, similar to how status effects work 
   */
 /mob/proc/blindness(amount)
-	var/old = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
+	var/old_blind = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
 	eye_blind = max(eye_blind, amount)
-	var/new = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
-	if(old != new)
+	var/new_blind = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
+	if(old_blind != new_blind)
 		update_blindness()
 
 /**
