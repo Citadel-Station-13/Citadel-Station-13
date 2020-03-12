@@ -63,10 +63,10 @@
 	if(attached_device)
 		attached_device.holder_movement()
 
-/obj/item/transfer_valve/dropped(mob/user)
+/obj/item/transfer_valve/dropped()
 	. = ..()
 	if(attached_device)
-		attached_device.dropped(user)
+		attached_device.dropped()
 
 /obj/item/transfer_valve/on_found(mob/finder)
 	if(attached_device)

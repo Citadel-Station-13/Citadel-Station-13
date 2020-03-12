@@ -138,7 +138,7 @@
 			destination = get_turf(loc)
 		AM.forceMove(destination)
 
-/obj/item/clothing/head/mob_holder/dropped(mob/user)
+/obj/item/clothing/head/mob_holder/dropped()
 	. = ..()
 	if(held_mob && isturf(loc))//don't release on soft-drops
 		release()

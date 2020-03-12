@@ -8,10 +8,15 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
-/obj/item/clothing/head/helmet/space/chronos/dropped(mob/user)
+/obj/item/clothing/head/helmet/space/chronos/dropped()
 	if(suit)
 		suit.deactivate(1, 1)
 	..()
+
+/obj/item/clothing/head/helmet/space/chronos/Destroy()
+	dropped()
+	return ..()
+
 
 /obj/item/clothing/suit/space/chronos
 	name = "Chronosuit"
@@ -52,10 +57,14 @@
 		else
 			deactivate()
 
-/obj/item/clothing/suit/space/chronos/dropped(mob/user)
+/obj/item/clothing/suit/space/chronos/dropped()
 	if(activated)
 		deactivate()
 	..()
+
+/obj/item/clothing/suit/space/chronos/Destroy()
+	dropped()
+	return ..()
 
 /obj/item/clothing/suit/space/chronos/emp_act(severity)
 	. = ..()

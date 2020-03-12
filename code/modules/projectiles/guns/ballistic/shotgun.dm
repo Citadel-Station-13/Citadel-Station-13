@@ -171,7 +171,7 @@
 	pump()
 	gun_type = type
 
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/dropped(mob/user)
+/obj/item/gun/ballistic/shotgun/boltaction/enchanted/dropped()
 	..()
 	guns_left = 0
 
