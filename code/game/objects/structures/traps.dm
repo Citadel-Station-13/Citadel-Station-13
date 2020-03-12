@@ -82,7 +82,7 @@
 	icon_state = "trap-shock"
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
-	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
+	L.electrocute_act(30, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
 	L.DefaultCombatKnockdown(100)
 
 /obj/structure/trap/fire
@@ -146,7 +146,7 @@
 
 /obj/structure/trap/cult/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>With a crack, the hostile constructs come out of hiding, stunning you!</B></span>")
-	L.electrocute_act(10, src, safety = TRUE) // electrocute act does a message.
+	L.electrocute_act(10, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
 	L.DefaultCombatKnockdown(20)
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)

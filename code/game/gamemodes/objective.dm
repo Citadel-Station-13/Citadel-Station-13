@@ -1168,7 +1168,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/found = FALSE
 	while(!found)
 		var/area/dropoff_area = pick(GLOB.sortedAreas)
-		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors)
+		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors && !istype(dropoff_area, /area/shuttle/))
 			dropoff = dropoff_area
 			found = TRUE
 

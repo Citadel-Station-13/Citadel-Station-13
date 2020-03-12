@@ -41,9 +41,9 @@
 	var/skin_tone = ""
 	var/body_gender = ""
 	var/species_id = ""
-	var/should_draw_citadel = FALSE
+	var/color_src
+	var/base_bp_icon //Overrides the icon being used for this limb. This is mainly for downstreams, implemented and maintained as a favor in return for implementing synths. And also because should_draw_* for icon overrides was pretty messy. You're welcome.
 	var/should_draw_gender = FALSE
-	var/should_draw_greyscale = FALSE
 	var/species_color = ""
 	var/mutation_color = ""
 	var/no_update = 0
@@ -283,9 +283,9 @@
 
 	if(change_icon_to_default)
 		if(status == BODYPART_ORGANIC)
-			icon = DEFAULT_BODYPART_ICON_ORGANIC
+			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
-			icon = DEFAULT_BODYPART_ICON_ROBOTIC
+			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ROBOTIC
 
 	if(owner)
 		owner.updatehealth()
@@ -313,7 +313,8 @@
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
-		should_draw_greyscale = FALSE
+		color_src = FALSE
+		base_bp_icon = DEFAULT_BODYPART_ICON
 		no_update = TRUE
 		body_markings = "husk" // reeee
 		aux_marking = "husk"
@@ -323,11 +324,11 @@
 
 	if(!animal_origin)
 		var/mob/living/carbon/human/H = C
-		should_draw_greyscale = FALSE
+		color_src = FALSE
 
 		var/datum/species/S = H.dna.species
+		base_bp_icon = S?.icon_limbs || DEFAULT_BODYPART_ICON
 		species_id = S.limbs_id
-		should_draw_citadel = S.should_draw_citadel // Citadel Addition
 		species_flags_list = H.dna.species.species_traits
 
 		//body marking memes
@@ -342,7 +343,7 @@
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
-			should_draw_greyscale = TRUE
+			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			skin_tone = ""
 
@@ -354,9 +355,12 @@
 				species_color = S.fixed_mut_color
 			else
 				species_color = H.dna.features["mcolor"]
-			should_draw_greyscale = TRUE
+			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			species_color = ""
+		
+		if(base_bp_icon != DEFAULT_BODYPART_ICON)
+			color_src = MUTCOLORS //TODO - Add color matrix support to base limbs
 
 		if("legs" in S.default_features)
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
@@ -371,8 +375,8 @@
 			if(Smark)
 				body_markings_icon = Smark.icon
 			if(H.dna.features["mam_body_markings"] != "None")
-				body_markings = lowertext(H.dna.features["mam_body_markings"])
-				aux_marking = lowertext(H.dna.features["mam_body_markings"])
+				body_markings = Smark?.icon_state || lowertext(H.dna.features["mam_body_markings"])
+				aux_marking = Smark?.icon_state || lowertext(H.dna.features["mam_body_markings"])
 			else
 				body_markings = "plain"
 				aux_marking = "plain"
@@ -462,32 +466,16 @@
 		should_draw_gender = FALSE
 
 	if(is_organic_limb())
-		if(should_draw_greyscale)
-			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
-			if(should_draw_gender)
-				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
-			else if(use_digitigrade)
+		limb.icon = base_bp_icon || 'icons/mob/human_parts.dmi'
+		if(should_draw_gender)
+			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
+		else if (use_digitigrade)
+			if(base_bp_icon == DEFAULT_BODYPART_ICON_ORGANIC) //Compatibility hack for the current iconset.
 				limb.icon_state = "[digitigrade_type]_[use_digitigrade]_[body_zone]"
 			else
-				limb.icon_state = "[species_id]_[body_zone]"
+				limb.icon_state = "[species_id]_[digitigrade_type]_[use_digitigrade]_[body_zone]"
 		else
-			limb.icon = 'icons/mob/human_parts.dmi'
-			if(should_draw_gender)
-				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
-			else if(use_digitigrade)
-				limb.icon_state = "[species_id]_[digitigrade_type]_[use_digitigrade]_[body_zone]"
-			else
-				limb.icon_state = "[species_id]_[body_zone]"
-
-		// Citadel Start
-		if(should_draw_citadel)
-			limb.icon = 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
-			if(should_draw_gender)
-				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
-			else if(use_digitigrade)
-				limb.icon_state = "[species_id]_[digitigrade_type]_[use_digitigrade]_[body_zone]"
-			else
-				limb.icon_state = "[species_id]_[body_zone]"
+			limb.icon_state = "[species_id]_[body_zone]"
 
 		// Body markings
 		if(!isnull(body_markings))
@@ -555,7 +543,7 @@
 			. += marking
 		return
 
-	if(should_draw_greyscale)
+	if(color_src) //TODO - add color matrix support for base species limbs
 		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"
