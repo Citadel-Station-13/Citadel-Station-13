@@ -12,16 +12,16 @@
 	if(findtext(streak,TORNADO_COMBO))
 		streak = ""
 		Tornado(A,D)
-		return TRUE
+		return 1
 	if(findtext(streak,THROWBACK_COMBO))
 		streak = ""
 		Throwback(A,D)
-		return TRUE
+		return 1
 	if(findtext(streak,PLASMA_COMBO))
 		streak = ""
 		Plasma(A,D)
-		return TRUE
-	return FALSE
+		return 1
+	return 0
 
 /datum/martial_art/plasma_fist/proc/TornadoAnimate(mob/living/carbon/human/A)
 	set waitfor = FALSE
@@ -66,20 +66,23 @@
 /datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
 	if(check_streak(A,D))
-		return TRUE
-	return FALSE
+		return 1
+	basic_hit(A,D)
+	return 1
 
 /datum/martial_art/plasma_fist/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
 	if(check_streak(A,D))
-		return TRUE
-	return FALSE
+		return 1
+	basic_hit(A,D)
+	return 1
 
 /datum/martial_art/plasma_fist/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
 	if(check_streak(A,D))
-		return TRUE
-	return FALSE
+		return 1
+	basic_hit(A,D)
+	return 1
 
 /mob/living/carbon/human/proc/plasma_fist_help()
 	set name = "Recall Teachings"

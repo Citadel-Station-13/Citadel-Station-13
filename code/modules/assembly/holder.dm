@@ -83,9 +83,9 @@
 /obj/item/assembly_holder/dropped(mob/user)
 	. = ..()
 	if(a_left)
-		a_left.dropped(user)
+		a_left.dropped()
 	if(a_right)
-		a_right.dropped(user)
+		a_right.dropped()
 
 /obj/item/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	. = ..()

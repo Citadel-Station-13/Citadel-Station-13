@@ -122,9 +122,9 @@
 	update_inv_wear_mask()
 
 /mob/living/carbon/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
-	if(isclothing(C) && (C.tint || initial(C.tint)))
+	if(C.tint || initial(C.tint))
 		update_tint()
-	return ..()
+	update_inv_wear_mask()
 
 //handle stuff to update when a mob equips/unequips a headgear.
 /mob/living/carbon/proc/head_update(obj/item/I, forced)

@@ -40,9 +40,9 @@
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
 		if(prob(98))
-			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+			M.randmutb()
 		else
-			M.easy_randmut(POSITIVE)
+			M.randmutg()
 		M.updateappearance()
 		M.domutcheck()
 	..()
