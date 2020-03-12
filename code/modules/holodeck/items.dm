@@ -196,7 +196,7 @@
 	if(numbuttons == numready)
 		begin_event()
 
-/obj/machinery/readybutton/update_icon_state()
+/obj/machinery/readybutton/update_icon()
 	if(ready)
 		icon_state = "auth_on"
 	else

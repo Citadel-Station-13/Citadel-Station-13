@@ -48,28 +48,26 @@
 	if(cpu)
 		. |= cpu.emag_act(user)
 
-/obj/machinery/modular_computer/update_icon_state()
-	if(cpu?.enabled)
-		icon_state = icon_state_powered
-	else if(stat & NOPOWER || !(cpu?.use_power()))
-		icon_state = icon_state_unpowered
+/obj/machinery/modular_computer/update_icon()
+	cut_overlays()
+	icon_state = icon_state_powered
 
-/obj/machinery/modular_computer/update_overlays()
-	. = ..()
 	if(!cpu || !cpu.enabled)
 		if (!(stat & NOPOWER) && (cpu && cpu.use_power()))
-			. += screen_icon_screensaver
+			add_overlay(screen_icon_screensaver)
+		else
+			icon_state = icon_state_unpowered
 		set_light(0)
 	else
 		set_light(light_strength)
 		if(cpu.active_program)
-			. += cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu
+			add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 		else
-			. += screen_icon_state_menu
+			add_overlay(screen_icon_state_menu)
 
 	if(cpu && cpu.obj_integrity <= cpu.integrity_failure * cpu.max_integrity)
-		. += "bsod"
-		. += "broken"
+		add_overlay("bsod")
+		add_overlay("broken")
 
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/machinery/modular_computer/proc/eject_id()

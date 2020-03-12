@@ -202,6 +202,9 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	if(self_message)
 		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
+/mob/proc/Life()
+	set waitfor = FALSE
+
 /mob/proc/get_item_by_slot(slot_id)
 	return null
 
@@ -704,38 +707,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	setDir(SOUTH)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
-
-/mob/verb/eastshift()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	if(pixel_x <= 16)
-		pixel_x++
-		is_shifted = TRUE
-
-/mob/verb/westshift()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	if(pixel_x >= -16)
-		pixel_x--
-		is_shifted = TRUE
-
-/mob/verb/northshift()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	if(pixel_y <= 16)
-		pixel_y++
-		is_shifted = TRUE
-
-/mob/verb/southshift()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	if(pixel_y >= -16)
-		pixel_y--
-		is_shifted = TRUE
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return FALSE

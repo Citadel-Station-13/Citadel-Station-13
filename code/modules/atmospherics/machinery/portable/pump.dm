@@ -29,16 +29,14 @@
 	QDEL_NULL(pump)
 	return ..()
 
-/obj/machinery/portable_atmospherics/pump/update_icon_state()
+/obj/machinery/portable_atmospherics/pump/update_icon()
 	icon_state = "psiphon:[on]"
 
-
-/obj/machinery/portable_atmospherics/pump/update_overlays()
-	. = ..()
+	cut_overlays()
 	if(holding)
-		. += "siphon-open"
+		add_overlay("siphon-open")
 	if(connected_port)
-		. += "siphon-connector"
+		add_overlay("siphon-connector")
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()

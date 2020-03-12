@@ -305,17 +305,17 @@
 /obj/item/electronic_assembly/proc/can_move()
 	return FALSE
 
-/obj/item/electronic_assembly/update_icon_state()
+/obj/item/electronic_assembly/update_icon()
 	if(opened)
 		icon_state = initial(icon_state) + "-open"
 	else
 		icon_state = initial(icon_state)
-
-/obj/item/electronic_assembly/update_overlays()
-	. = ..()
+	cut_overlays()
 	if(detail_color == COLOR_ASSEMBLY_BLACK) //Black colored overlay looks almost but not exactly like the base sprite, so just cut the overlay and avoid it looking kinda off.
 		return
-	. += mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color", color = detail_color)
+	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color")
+	detail_overlay.color = detail_color
+	add_overlay(detail_overlay)
 
 /obj/item/electronic_assembly/proc/return_total_complexity()
 	. = 0

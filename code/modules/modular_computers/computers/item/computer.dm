@@ -26,7 +26,6 @@
 	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
 	var/icon_state_powered = null							// Icon state when the computer is turned on.
 	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/display_overlays = TRUE								// If FALSE, don't draw overlays on this device at all
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
@@ -209,26 +208,20 @@
 	else if(obj_integrity < max_integrity)
 		. += "<span class='warning'>It is damaged.</span>"
 
-/obj/item/modular_computer/update_icon_state()
+/obj/item/modular_computer/update_icon()
+	cut_overlays()
 	if(!enabled)
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
-
-
-/obj/item/modular_computer/update_overlays()
-	. = ..()
-	if(!display_overlays)
-		return
-	if(enabled)
 		if(active_program)
-			. += active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu
+			add_overlay(active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu)
 		else
-			. += icon_state_menu
+			add_overlay(icon_state_menu)
 
 	if(obj_integrity <= integrity_failure * max_integrity)
-		. += "bsod"
-		. += "broken"
+		add_overlay("bsod")
+		add_overlay("broken")
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.

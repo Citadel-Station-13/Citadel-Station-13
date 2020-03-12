@@ -39,7 +39,7 @@
 /obj/machinery/power/port_gen/proc/handleInactive()
 	return
 
-/obj/machinery/power/port_gen/update_icon_state()
+/obj/machinery/power/port_gen/update_icon()
 	icon_state = "[base_icon]_[active]"
 
 /obj/machinery/power/port_gen/process()

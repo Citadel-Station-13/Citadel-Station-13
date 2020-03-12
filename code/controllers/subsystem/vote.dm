@@ -370,7 +370,7 @@ SUBSYSTEM_DEF(vote)
 				var/list/runnable_storytellers = config.get_runnable_storytellers()
 				for(var/T in runnable_storytellers)
 					var/datum/dynamic_storyteller/S = T
-					runnable_storytellers[S] *= stored_gamemode_votes[initial(S.name)]
+					runnable_storytellers[S] *= scores[initial(S.name)]
 				var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
 				GLOB.dynamic_storyteller_type = S
 			if("map")

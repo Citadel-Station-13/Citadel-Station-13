@@ -44,14 +44,14 @@ field_generator power level display
 	var/list/obj/machinery/field/generator/connected_gens
 	var/clean_up = 0
 
-/obj/machinery/field/generator/update_overlays()
-	. = ..()
+/obj/machinery/field/generator/update_icon()
+	cut_overlays()
 	if(warming_up)
-		. += "+a[warming_up]"
+		add_overlay("+a[warming_up]")
 	if(fields.len)
-		. += "+on"
+		add_overlay("+on")
 	if(power_level)
-		. += "+p[power_level]"
+		add_overlay("+p[power_level]")
 
 
 /obj/machinery/field/generator/Initialize()

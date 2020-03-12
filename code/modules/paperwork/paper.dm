@@ -78,7 +78,8 @@
 		return get_dist(src, target) < 2
 	return ..()
 
-/obj/item/paper/update_icon_state()
+/obj/item/paper/update_icon()
+
 	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
 		return
@@ -378,9 +379,8 @@
 	icon_state = "scrap"
 	slot_flags = null
 
-/obj/item/paper/crumpled/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+/obj/item/paper/crumpled/update_icon()
+	return
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"

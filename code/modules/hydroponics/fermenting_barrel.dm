@@ -64,7 +64,7 @@
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
 	update_icon()
 
-/obj/structure/fermenting_barrel/update_icon_state()
+/obj/structure/fermenting_barrel/update_icon()
 	if(open)
 		icon_state = "barrel_open"
 	else

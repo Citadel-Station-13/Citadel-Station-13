@@ -86,10 +86,12 @@
 
 		update_icon()
 
-/obj/item/reagent_containers/dropper/update_overlays()
-	. = ..()
+/obj/item/reagent_containers/dropper/update_icon()
+	cut_overlays()
 	if(reagents.total_volume)
-		. += mutable_appearance('icons/obj/reagentfillings.dmi', "dropper", color = mix_color_from_reagents(reagents.reagent_list))
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling)
 
 /obj/item/reagent_containers/dropper/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")

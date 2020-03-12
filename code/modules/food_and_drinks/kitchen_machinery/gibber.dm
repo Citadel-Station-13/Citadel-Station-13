@@ -21,12 +21,12 @@
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
-	gibtime = 40
-	meat_produced = 0
+	var/gib_time = 40
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gibtime -= 5 * M.rating
+		gib_time -= 5 * M.rating
+		gibtime = gib_time
 		if(M.rating >= 2)
 			ignore_clothing = TRUE
 
@@ -38,18 +38,18 @@
 			if(M.rating >= 2)
 				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
-/obj/machinery/gibber/update_overlays()
-	. = ..()
+/obj/machinery/gibber/update_icon()
+	cut_overlays()
 	if (dirty)
-		. += "grbloody"
+		add_overlay("grbloody")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		. += "grjam"
+		add_overlay("grjam")
 	else if (operating)
-		. += "gruse"
+		add_overlay("gruse")
 	else
-		. += "gridle"
+		add_overlay("gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return attack_hand(user)

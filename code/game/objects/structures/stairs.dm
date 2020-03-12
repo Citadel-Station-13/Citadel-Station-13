@@ -54,7 +54,7 @@
 		return FALSE
 	return ..()
 
-/obj/structure/stairs/update_icon_state()
+/obj/structure/stairs/update_icon()
 	if(isTerminator())
 		icon_state = "stairs_t"
 	else

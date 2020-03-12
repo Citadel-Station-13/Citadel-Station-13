@@ -255,7 +255,7 @@
 					return
 	return ..()
 
-/obj/structure/AIcore/update_icon_state()
+/obj/structure/AIcore/update_icon()
 	switch(state)
 		if(EMPTY_CORE)
 			icon_state = "0"

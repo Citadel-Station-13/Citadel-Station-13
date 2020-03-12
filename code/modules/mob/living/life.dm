@@ -1,5 +1,4 @@
-/mob/living/proc/Life(seconds, times_fired)
-	set waitfor = FALSE
+/mob/living/Life(seconds, times_fired)
 	set invisibility = 0
 
 	if(digitalinvis)

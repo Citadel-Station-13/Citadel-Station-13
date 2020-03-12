@@ -129,13 +129,14 @@
 	. = ..()
 	update_icon()
 
-/obj/item/organ/regenerative_core/update_icon_state()
+/obj/item/organ/regenerative_core/update_icon()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
-
-/obj/item/organ/regenerative_core/update_overlays()
-	. = ..()
+	cut_overlays()
 	if(!inert && !preserved)
-		. += "legion_soul_crackle"
+		add_overlay("legion_soul_crackle")
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/organ/regenerative_core/legion/go_inert()
 	..()

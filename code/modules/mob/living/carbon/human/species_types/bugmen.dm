@@ -13,7 +13,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
+	should_draw_citadel = TRUE
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

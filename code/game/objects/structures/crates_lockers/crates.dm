@@ -33,13 +33,12 @@
 				return 1
 	return !density
 
-/obj/structure/closet/crate/update_icon_state()
+/obj/structure/closet/crate/update_icon()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
-	. = new_overlays
+	cut_overlays()
 	if(manifest)
-		. += "manifest"
+		add_overlay("manifest")
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	. = ..()

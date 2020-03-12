@@ -204,14 +204,14 @@
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
 		stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
-/obj/machinery/power/rad_collector/update_overlays()
-	. = ..()
+/obj/machinery/power/rad_collector/update_icon()
+	cut_overlays()
 	if(loaded_tank)
-		. += "ptank"
+		add_overlay("ptank")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		. += "on"
+		add_overlay("on")
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()

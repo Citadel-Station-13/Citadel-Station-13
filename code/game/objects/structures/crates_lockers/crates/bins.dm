@@ -14,15 +14,15 @@
 	..()
 	update_icon()
 
-/obj/structure/closet/crate/bin/closet_update_overlays(list/new_overlays)
-	. = new_overlays
+/obj/structure/closet/crate/bin/update_icon()
+	..()
 	cut_overlays()
 	if(contents.len == 0)
-		. += "largebing"
+		add_overlay("largebing")
 	else if(contents.len >= storage_capacity)
-		. += "largebinr"
+		add_overlay("largebinr")
 	else
-		. += "largebino"
+		add_overlay("largebino")
 
 /obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage/bag/trash))

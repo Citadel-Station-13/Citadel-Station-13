@@ -151,11 +151,10 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/update_icon_state()
+/obj/machinery/power/am_control_unit/update_icon()
 	if(active)
 		icon_state = "control_on"
-	else
-		icon_state = "control"
+	else icon_state = "control"
 	//No other icons for it atm
 
 

@@ -14,20 +14,20 @@
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
-/obj/item/mmi/update_icon_state()
+/obj/item/mmi/update_icon()
 	if(!brain)
 		icon_state = "mmi_off"
-	else if(istype(brain, /obj/item/organ/brain/alien))
+		return
+	if(istype(brain, /obj/item/organ/brain/alien))
 		icon_state = "mmi_brain_alien"
+		braintype = "Xenoborg" //HISS....Beep.
 	else
 		icon_state = "mmi_brain"
-
-/obj/item/mmi/update_overlays()
-	. = ..()
+		braintype = "Cyborg"
 	if(brainmob && brainmob.stat != DEAD)
-		. += "mmi_alive"
+		add_overlay("mmi_alive")
 	else
-		. += "mmi_dead"
+		add_overlay("mmi_dead")
 
 /obj/item/mmi/Initialize()
 	. = ..()
@@ -68,10 +68,6 @@
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
-		if(istype(brain, /obj/item/organ/brain/alien))
-			braintype = "Xenoborg" //HISS....Beep.
-		else
-			braintype = "Cyborg"
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
@@ -89,7 +85,7 @@
 		to_chat(user, "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>")
 		eject_brain(user)
 		update_icon()
-		name = initial(name)
+		name = "Man-Machine Interface"
 
 /obj/item/mmi/proc/eject_brain(mob/user)
 	brainmob.container = null //Reset brainmob mmi var.
@@ -133,10 +129,7 @@
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	update_icon()
-	if(istype(brain, /obj/item/organ/brain/alien))
-		braintype = "Xenoborg" //HISS....Beep.
-	else
-		braintype = "Cyborg"
+	return
 
 /obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name

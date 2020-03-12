@@ -61,28 +61,16 @@
 	if(client.keys_held["Ctrl"])
 		switch(SSinput.movement_keys[_key])
 			if(NORTH)
-				if(client.keys_held["Shift"])
-					northshift()
-				else
-					northface()
+				northface()
 				return
 			if(SOUTH)
-				if(client.keys_held["Shift"])
-					southshift()
-				else
-					southface()
+				southface()
 				return
 			if(WEST)
-				if(client.keys_held["Shift"])
-					westshift()
-				else
-					westface()
+				westface()
 				return
 			if(EAST)
-				if(client.keys_held["Shift"])
-					eastshift()
-				else
-					eastface()
+				eastface()
 				return
 	return ..()
 

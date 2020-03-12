@@ -199,25 +199,29 @@
 		stat |= BROKEN
 
 
-/obj/machinery/power/smes/update_overlays()
-	. = ..()
-	if((stat & BROKEN) || panel_open)
+/obj/machinery/power/smes/update_icon()
+	cut_overlays()
+	if(stat & BROKEN)
+		return
+
+	if(panel_open)
 		return
 
 	if(outputting)
-		. += "smes-op1"
+		add_overlay("smes-op1")
 	else
-		. += "smes-op0"
+		add_overlay("smes-op0")
 
 	if(inputting)
-		. += "smes-oc1"
+		add_overlay("smes-oc1")
 	else
 		if(input_attempt)
-			. += "smes-oc0"
+			add_overlay("smes-oc0")
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		. += "smes-og[clevel]"
+		add_overlay("smes-og[clevel]")
+
 
 /obj/machinery/power/smes/proc/chargedisplay()
 	return CLAMP(round(5.5*charge/capacity),0,5)

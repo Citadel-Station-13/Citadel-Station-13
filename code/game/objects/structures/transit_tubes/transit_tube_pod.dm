@@ -19,7 +19,7 @@
 	empty_pod()
 	return ..()
 
-/obj/structure/transit_tube_pod/update_icon_state()
+/obj/structure/transit_tube_pod/update_icon()
 	if(contents.len)
 		icon_state = "pod_occupied"
 	else

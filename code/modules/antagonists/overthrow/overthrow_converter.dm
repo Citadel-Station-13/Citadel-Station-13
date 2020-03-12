@@ -49,7 +49,7 @@
 		else
 			to_chat(user, "<span class='warning'>[user] fails to implant [M].</span>")
 
-/obj/item/overthrow_converter/update_icon_state()
+/obj/item/overthrow_converter/update_icon()
 	if(uses)
 		icon_state = "implanter1"
 	else

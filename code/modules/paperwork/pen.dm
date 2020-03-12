@@ -179,10 +179,9 @@
 	sharpness = IS_SHARP
 	var/on = FALSE
 
-/obj/item/pen/edagger/ComponentInitialize()
+/obj/item/pen/edagger/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg')
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/pen/edagger/get_sharpness()
 	return on * sharpness
@@ -210,9 +209,10 @@
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	update_icon()
 
-/obj/item/pen/edagger/update_icon_state()
+/obj/item/pen/edagger/update_icon()
 	if(on)
-		icon_state = item_state = "edagger"
+		icon_state = "edagger"
+		item_state = "edagger"
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	else
