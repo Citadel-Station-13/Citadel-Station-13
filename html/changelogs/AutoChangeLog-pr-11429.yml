@@ -1,0 +1,12 @@
+author: "Putnam"
+delete-after: True
+changes: 
+  - tweak: "Swarmers, portal storm, wormholes are now controlled by dynamic."
+  - tweak: "Dynamic-controlled events can now have a minimum start time."
+  - balance: "Threatening meteors are more common (though still have pretty strict requirements)"
+  - balance: "Different storytellers now balance around different expected players-per-antag; default was 5, now intrigue/story/random have 7 and calm has 10."
+  - rscadd: "Clown ops is now available as a roundstart antag in dynamic."
+  - balance: "Sentient disease and revenant are now in the event pool rather than the antag pool (with the logic that they're both completely useless and unfun to play if people are actually playing against them)."
+  - rscadd: "A new formulation of extended was added to the storytellers; no antags, but still spending threat on events."
+  - bugfix: "Fixed a runtime in dynamic due to my misunderstanding pickweightAllowZero"
+  - rscdel: "Made conversion storyteller 0-weight-by-default."
