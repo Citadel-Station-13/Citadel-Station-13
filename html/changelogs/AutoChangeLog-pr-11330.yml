@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Allowed blobbernauts to drag objects (but not mobs) again."

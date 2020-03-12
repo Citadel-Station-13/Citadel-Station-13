@@ -33,7 +33,7 @@
 	. = ..()
 	AddElement(/datum/element/wuv, "bzzs!")
 
-/mob/living/simple_animal/pet/bumbles/update_canmove()
+/mob/living/simple_animal/pet/bumbles/update_mobility()
 	. = ..()
 	if(client && stat != DEAD)
 		if (resting)

@@ -84,10 +84,12 @@
 	pass_flags = PASSTABLE | PASSMOB //they shouldn't get stuck behind hivelords.
 	density = FALSE
 	del_on_death = 1
+	var/swarming = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
-	AddComponent(/datum/component/swarming) //oh god not the bees
+	if(swarming)
+		AddComponent(/datum/component/swarming) //oh god not the bees
 	addtimer(CALLBACK(src, .proc/death), 100)
 
 //Legion
@@ -184,6 +186,7 @@
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
+	swarming = TRUE
 	var/can_infest_dead = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
@@ -275,7 +278,7 @@
 	H.dna.add_mutation(DWARFISM)
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
-	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist", "Lavaknight")) = 4)) //CIT CHANGE: Lavaknights
+	var/type = pickweight(list("Miner" = 45, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist", "Lavaknight")) = 4, "Assistant" = 20, "Beelegion" = 1))
 	switch(type)
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
@@ -374,13 +377,47 @@
 			l_pocket = /obj/item/melee/cultblade/dagger
 			glasses =  /obj/item/clothing/glasses/hud/health/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
-		if("Lavaknight") //START OF CIT CHANGE
+		if("Lavaknight")
 			uniform = /obj/item/clothing/under/assistantformal
 			mask = /obj/item/clothing/mask/breath
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			r_pocket = /obj/item/melee/transforming/energy/sword/cx/broken
 			suit = /obj/item/clothing/suit/space/hardsuit/lavaknight
 			suit_store = /obj/item/tank/internals/oxygen
-			id = /obj/item/card/id/knight //END OF CIT CHANGE
+			id = /obj/item/card/id/knight
 			id_job = "Knight"
+		if("Assistant")
+			uniform = /obj/item/clothing/under/color/grey
+			belt = /obj/item/tank/internals/emergency_oxygen
+			mask = /obj/item/clothing/mask/gas
+			ears = /obj/item/radio/headset
+			gloves = /obj/item/clothing/gloves/color/fyellow
+			id = /obj/item/card/id/silver/reaper //looks cool and has a fancy name but only a 1% chance
+			back = /obj/item/storage/backpack
+			backpack_contents = list(/obj/item/stack/cable_coil = 12, /obj/item/assembly/flash = 1, /obj/item/storage/fancy/donut_box = 1, /obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 1, /obj/item/lighter = 1)
+			if(prob(99))
+				id = /obj/item/card/id
+				id_job = "Assisant"
+			if(prob(95))
+				head = /obj/item/clothing/head/hardhat/red
+			if(prob(5))
+				gloves = /obj/item/clothing/gloves/color/yellow
+			if(prob(10))
+				back = /obj/item/twohanded/spear
+				backpack_contents = null
+			if(prob(90))
+				r_pocket = /obj/item/kitchen/knife
+			if(prob(60))
+				l_pocket = /obj/item/soap/homemade
+		if("Beelegion")
+			uniform = /obj/item/clothing/under/color/yellow
+			suit = /obj/item/clothing/suit/hooded/bee_costume
+			shoes = /obj/item/clothing/shoes/sneakers/yellow
+			gloves = /obj/item/clothing/gloves/color/yellow
+			ears = /obj/item/radio/headset
+			belt = /obj/item/storage/belt/fannypack/yellow
+			id_job = "Assisant"
+			id = /obj/item/card/id
+			l_pocket = /obj/item/reagent_containers/food/drinks/soda_cans/buzz_fuzz
+			mask = /obj/item/clothing/mask/rat/bee
 	. = ..()

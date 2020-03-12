@@ -28,6 +28,34 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
 
+/obj/item/mmi/posibrain/Initialize()
+	. = ..()
+	brainmob = new(src)
+	var/new_name
+	if(!LAZYLEN(possible_names))
+		new_name = pick(GLOB.posibrain_names)
+	else
+		new_name = pick(possible_names)
+	brainmob.name = "[new_name]-[rand(100, 999)]"
+	brainmob.real_name = brainmob.name
+	brainmob.forceMove(src)
+	brainmob.container = src
+	if(autoping)
+		ping_ghosts("created", TRUE)
+	GLOB.poi_list |= src
+	LAZYADD(GLOB.mob_spawners[name], src)
+
+/obj/item/mmi/posibrain/Destroy()
+	latejoin_remove()
+	return ..()
+
+/obj/item/mmi/posibrain/proc/latejoin_remove()
+	GLOB.poi_list -= src
+	var/init_name = initial(name)
+	LAZYREMOVE(GLOB.mob_spawners[init_name], src)
+	if(!LAZYLEN(GLOB.mob_spawners[init_name]))
+		GLOB.mob_spawners -= init_name
+
 /obj/item/mmi/posibrain/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
@@ -97,15 +125,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	transfer_personality(user)
 	latejoin_remove()
 
-/obj/item/mmi/posibrain/Destroy()
-	latejoin_remove()
-	return ..()
-
-/obj/item/mmi/posibrain/proc/latejoin_remove()
-	GLOB.poi_list -= src
-	LAZYREMOVE(GLOB.mob_spawners[name], src)
-	if(!LAZYLEN(GLOB.mob_spawners[name]))
-		GLOB.mob_spawners -= name
 
 /obj/item/mmi/posibrain/transfer_identity(mob/living/carbon/C)
 	name = "[initial(name)] ([C])"
@@ -163,32 +182,14 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 	. += msg
 
-/obj/item/mmi/posibrain/Initialize()
-	. = ..()
-	brainmob = new(src)
-	var/new_name
-	if(!LAZYLEN(possible_names))
-		new_name = pick(GLOB.posibrain_names)
-	else
-		new_name = pick(possible_names)
-	brainmob.name = "[new_name]-[rand(100, 999)]"
-	brainmob.real_name = brainmob.name
-	brainmob.forceMove(src)
-	brainmob.container = src
-	if(autoping)
-		ping_ghosts("created", TRUE)
-	GLOB.poi_list |= src
-	LAZYADD(GLOB.mob_spawners[name], src)
-
 /obj/item/mmi/posibrain/attackby(obj/item/O, mob/user)
 	return
 
 
-/obj/item/mmi/posibrain/update_icon()
+/obj/item/mmi/posibrain/update_icon_state()
 	if(searching)
 		icon_state = "[initial(icon_state)]-searching"
-		return
-	if(brainmob && brainmob.key)
+	else if(brainmob && brainmob.key)
 		icon_state = "[initial(icon_state)]-occupied"
 	else
 		icon_state = initial(icon_state)

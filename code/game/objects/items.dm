@@ -175,14 +175,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	set category = "Object"
 	set src in oview(1)
 
-	if(!isturf(loc) || usr.stat || usr.restrained() || !usr.canmove)
+	var/mob/living/L = usr
+	if(!istype(L) || !isturf(loc) || !CHECK_MOBILITY(L, MOBILITY_USE))
 		return
 
-	var/turf/T = src.loc
-
-	src.loc = null
-
-	src.loc = T
+	var/turf/T = loc
+	loc = null
+	loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
@@ -378,6 +377,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
+	user.update_equipment_speed_mods()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -423,6 +423,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
+	user.update_equipment_speed_mods()
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/A)
@@ -544,7 +545,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
-			M.Knockdown(40)
+			M.DefaultCombatKnockdown(40)
 		if (prob(eyes.damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
@@ -849,3 +850,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
+
+/obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
+	return
+
+/obj/item/proc/unembedded()
+	return

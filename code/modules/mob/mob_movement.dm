@@ -62,7 +62,7 @@
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direction)
 
-	if(!mob.canmove)
+	if(!CHECK_MOBILITY(L, MOBILITY_MOVE))
 		return FALSE
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
@@ -107,9 +107,7 @@
 	if(P && !ismob(P) && P.density)
 		mob.setDir(turn(mob.dir, 180))
 
-///Process_Grab()
-///Called by client/Move()
-///Checks to see if you are being grabbed and if so attemps to break it
+/// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()
 	if(mob.pulledby)
 		if(mob.incapacitated(ignore_restraints = 1))
@@ -120,7 +118,7 @@
 			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
 			return TRUE
 		else
-			return mob.resist_grab(1)
+			return !mob.attempt_resist_grab(TRUE)
 
 ///Process_Incorpmove
 ///Called by client/Move()
@@ -251,8 +249,12 @@
 /mob/proc/slip(s_amount, w_amount, obj/O, lube)
 	return
 
-/mob/proc/update_gravity()
-	return
+/mob/proc/update_gravity(has_gravity, override=FALSE)
+	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
+	if(!speed_change)
+		remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAVITY, update=TRUE)
+	else
+		add_movespeed_modifier(MOVESPEED_ID_MOB_GRAVITY, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=speed_change, blacklisted_movetypes=FLOATING)
 
 //bodypart selection - Cyberboss
 //8 toggles through head - eyes - mouth

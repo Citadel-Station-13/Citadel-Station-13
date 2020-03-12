@@ -123,34 +123,39 @@
 		if(thrown)
 			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
-		var/R
+		var/R = reagents.log_list()
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
-		for(var/datum/reagent/A in reagents.reagent_list)
-			R += "[A.type] ([A.volume]),"
-
-		if(thrownby)
+		var/turf/TT = get_turf(target)
+		var/throwerstring
+		if(thrownby && thrown)
 			log_combat(thrownby, M, "splashed", R)
+			var/turf/AT = get_turf(thrownby)
+			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
+		log_reagent("SPLASH: [src] mob SplashReagents() onto [key_name(target)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(target, TOUCH)
-		
+
 	else if(bartender_check(target) && thrown)
-		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
+		visible_message("<span class='notice'>[src] lands without spilling a single drop.</span>")
 		transform = initial(transform)
 		addtimer(CALLBACK(src, .proc/ForceResetRotation), 1)
-		return
-
 
 	else
 		if(isturf(target) && reagents.reagent_list.len && thrownby)
 			log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
 			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
 			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
+		var/turf/T = get_turf(target)
+		var/throwerstring
+		if(thrownby && thrown)
+			var/turf/AT = get_turf(thrownby)
+			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] ([AREACOORD(AT)])"
+		log_reagent("SPLASH - [src] object SplashReagents() onto [target] at [T] ([AREACOORD(T)])[throwerstring] - [reagents.log_list()]")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
 		if(QDELETED(src))
 			return
-
-	reagents.clear_reagents()
 
 //melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)

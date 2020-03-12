@@ -77,6 +77,8 @@
 	name = "cloning data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	var/list/fields = list()
+	var/list/mutations = list()
+	var/max_mutations = 6
 	var/read_only = 0 //Well,it's still a floppy disk
 
 //Disk stuff.
@@ -129,7 +131,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -165,8 +167,9 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
-	H.randmutb() //100% bad mutation. Can be cured with mutadone.
+	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
+
+	H.easy_randmut(NEGATIVE+MINOR_NEGATIVE) //100% bad mutation. Can be cured with mutadone.
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
@@ -491,29 +494,29 @@
 /obj/machinery/clonepod/update_overlays()
 	. = ..()
 	if(mess)
-		var/image/gib1 = image(CRYOMOBS, "gibup")
-		var/image/gib2 = image(CRYOMOBS, "gibdown")
+		var/mutable_appearance/gib1 = mutable_appearance(CRYOMOBS, "gibup")
+		var/mutable_appearance/gib2 = mutable_appearance(CRYOMOBS, "gibdown")
 		gib1.pixel_y = 27 + round(sin(world.time) * 3)
 		gib1.pixel_x = round(sin(world.time * 3))
 		gib2.pixel_y = 27 + round(cos(world.time) * 3)
 		gib2.pixel_x = round(cos(world.time * 3))
 		. += gib2
 		. += gib1
-		. += "cover-on"
 	else if(occupant)
-		var/image/occupant_overlay
+		var/mutable_appearance/occupant_overlay
 		var/completion = (flesh_number - unattached_flesh.len) / flesh_number
 
 		if(unattached_flesh.len <= 0)
-			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
+			. += "cover-on"
 		else
-			occupant_overlay = image(CRYOMOBS, "clone_meat")
+			occupant_overlay = mutable_appearance(CRYOMOBS, "clone_meat")
 			var/matrix/tform = matrix()
 			tform.Scale(completion)
 			tform.Turn(cos(world.time * 2) * 3)
 			occupant_overlay.transform = tform
-			occupant_overlay.appearance_flags = 0
+			occupant_overlay.appearance_flags = NONE
 
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 27 + round(sin(world.time) * 3)

@@ -52,21 +52,20 @@
 		return 0
 
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || H.IsStun() || H.IsKnockdown())
-		return 0
+	if(!CHECK_MOBILITY(H, MOBILITY_MOVE))
+		return FALSE
 	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 		to_chat(H, "Your suit blocks your wings from extending!")
-		return 0
+		return FALSE
 	var/turf/T = get_turf(H)
 	if(!T)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && !(environment.return_pressure() > 30))
 		to_chat(H, "<span class='warning'>The atmosphere is too thin for you to fly!</span>")
-		return 0
-	else
-		return 1
+		return FALSE
+	return TRUE
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
@@ -81,12 +80,12 @@
 		if(H.movement_type & FLYING)
 			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
 			A.ToggleFlight(H,0)
-			H.update_canmove()
+			H.update_mobility()
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
-			H.resting = 0
+			H.set_resting(FALSE, TRUE)
 			A.ToggleFlight(H,1)
-			H.update_canmove()
+			H.update_mobility()
 
 /datum/species/angel/proc/flyslip(mob/living/carbon/human/H)
 	var/obj/buckled_obj

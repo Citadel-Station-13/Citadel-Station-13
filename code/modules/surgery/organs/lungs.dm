@@ -350,7 +350,7 @@
 
 				//Miasma sickness
 				if(prob(0.05 * miasma_pp))
-					var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+					var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(TRUE, 2,3)
 					miasma_disease.name = "Unknown"
 					miasma_disease.try_infect(owner)
 

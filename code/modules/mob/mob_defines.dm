@@ -38,7 +38,7 @@
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
-	var/canmove = 1
+	var/is_shifted = FALSE
 
 	//MOVEMENT SPEED
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
@@ -81,8 +81,8 @@
 	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/move_on_shuttle = 1 // Can move on the shuttle.
 
-//The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
-	var/mob/living/carbon/LAssailant = null
+	/// The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
+	var/datum/weakref/LAssailant
 
 	var/list/obj/user_movement_hooks	//Passes movement in client/Move() to these!
 
@@ -125,6 +125,3 @@
 	var/siliconaccesstoggle = FALSE
 
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
-
-	var/flavor_text = ""
-	var/flavor_text_2 = "" //version of the above that only lasts for the current round.

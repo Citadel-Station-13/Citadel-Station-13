@@ -11,7 +11,7 @@
 
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
-	if(do_after(user,50, user))
+	if(do_after(user,50, TRUE, user))
 		if(remarks.len)
 			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		else
@@ -53,7 +53,7 @@
 				on_reading_stopped()
 				reading = FALSE
 				return
-		if(do_after(user,50, user))
+		if(do_after(user,50, TRUE, user))
 			on_reading_finished(user)
 		reading = FALSE
 	return TRUE
@@ -294,7 +294,7 @@
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Knockdown(40)
+	user.DefaultCombatKnockdown(40)
 
 /obj/item/book/granter/spell/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse

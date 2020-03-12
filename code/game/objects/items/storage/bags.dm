@@ -132,7 +132,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
 	listeningTo = user
 
-/obj/item/storage/bag/ore/dropped()
+/obj/item/storage/bag/ore/dropped(mob/user)
 	. = ..()
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
@@ -246,7 +246,8 @@
 	set name = "Activate Seed Extraction"
 	set category = "Object"
 	set desc = "Activate to convert your plants into plantable seeds."
-	if(usr.stat || !usr.canmove || usr.restrained())
+	var/mob/living/L = usr
+	if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE))
 		return
 	for(var/obj/item/O in contents)
 		seedify(O, 1)
@@ -353,7 +354,7 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Knockdown(40)
+			M.DefaultCombatKnockdown(40)
 	update_icon()
 
 /obj/item/storage/bag/tray/update_overlays()
