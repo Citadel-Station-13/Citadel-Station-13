@@ -481,7 +481,7 @@
 				adjust_momentum(0, 0, 10)
 		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
 		if(knockdown)
-			wearer.Knockdown(80)
+			wearer.DefaultCombatKnockdown(80)
 	momentum_x = 0
 	momentum_y = 0
 	calculate_momentum_speed()
@@ -805,7 +805,8 @@
 	. += "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>"
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
-	dropped()
+	if(ismob(loc))
+		dropped(loc)
 	QDEL_NULL(pack)
 	QDEL_NULL(shoes)
 	return ..()
@@ -834,7 +835,7 @@
 			return FALSE
 	return ..()
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/dropped()
+/obj/item/clothing/suit/space/hardsuit/flightsuit/dropped(mob/the_user)
 	if(deployedpack)
 		retract_flightpack(TRUE)
 	if(deployedshoes)

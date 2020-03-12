@@ -18,14 +18,10 @@
 /obj/item/chrono_eraser/proc/pass_mind(datum/mind/M)
 	erased_minds += M
 
-/obj/item/chrono_eraser/dropped()
+/obj/item/chrono_eraser/dropped(mob/user)
 	..()
 	if(PA)
 		qdel(PA)
-
-/obj/item/chrono_eraser/Destroy()
-	dropped()
-	return ..()
 
 /obj/item/chrono_eraser/ui_action_click(mob/user)
 	if(iscarbon(user))

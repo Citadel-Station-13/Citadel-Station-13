@@ -11,7 +11,7 @@
 	button_icon_state = "power_mez"
 	bloodcost = 30
 	cooldown = 300
-	target_range = 3
+	target_range = 2
 	power_activates_immediately = TRUE
 	message_Trigger = "Whom will you subvert to your will?"
 	must_be_capacitated = TRUE
@@ -73,7 +73,7 @@
 			to_chat(owner, "<span class='warning'>You're too far outside your victim's view.</span>")
 		return FALSE
 
-	if(target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ?
+	if(target.has_status_effect(STATUS_EFFECT_MESMERIZE)) // ignores facing once the windup has started
 		return TRUE
 
 	// Check: Facing target?
@@ -82,11 +82,26 @@
 			to_chat(owner, "<span class='warning'>You must be facing your victim.</span>")
 		return FALSE
 	// Check: Target facing me?
-	if(!target.resting && !is_A_facing_B(target,owner))
+	if (CHECK_MOBILITY(target, MOBILITY_STAND) && !is_A_facing_B(target,owner))
 		if(display_error)
 			to_chat(owner, "<span class='warning'>Your victim must be facing you to see into your eyes.</span>")
 		return FALSE
 	return TRUE
+
+/datum/action/bloodsucker/targeted/mesmerize/proc/ContinueTarget(atom/A)
+	var/mob/living/carbon/target = A
+	var/mob/living/user = owner
+
+	var/cancontinue=CheckCanTarget(target)
+	if(!cancontinue)
+		success = FALSE
+		target.remove_status_effect(STATUS_EFFECT_MESMERIZE)
+		user.remove_status_effect(STATUS_EFFECT_MESMERIZE)
+		DeactivatePower()
+		DeactivateRangedAbility()
+		StartCooldown()
+		to_chat(user, "<span class='warning'>[target] has escaped your gaze!</span>")
+		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
 /datum/action/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/A)
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
@@ -94,33 +109,29 @@
 	var/mob/living/user = owner
 
 	if(istype(target))
+		success = TRUE
 		var/power_time = 138 + level_current * 12
 		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
 		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
-		if(do_mob(user, target, 30, TRUE, TRUE)) // 3 seconds windup
-			success = CheckCanTarget(target)
-			if(success) // target just has to be out of view when it is fully charged in order to avoid
-				PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
-				target.face_atom(user)
-				target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
-				target.Stun(power_time)
-				to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
-				target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
-				target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
-			else
-				to_chat(user, "<span class='warning'>[target] has escaped your gaze!</span>")
-				DeactivatePower()
-				DeactivateRangedAbility()
-				StartCooldown()
-				// oops! if they knew how they could just spam stun the victim and themselves.
+		
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/ContinueTarget)
 
-		spawn(power_time)
-			if(istype(target) && success)
-				target.notransform = FALSE
-				// They Woke Up! (Notice if within view)
-				if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
-					to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
-
+		// 3 second windup
+		sleep(30)
+		if(success)
+			PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
+			target.face_atom(user)
+			target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
+			target.Stun(power_time)
+			to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
+			target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
+			target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+			spawn(power_time)
+				if(istype(target) && success)
+					target.notransform = FALSE
+					// They Woke Up! (Notice if within view)
+					if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
+						to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)
 	return ..() && CheckCanUse() && CheckCanTarget(target)

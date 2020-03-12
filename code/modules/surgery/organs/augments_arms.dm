@@ -31,7 +31,7 @@
 		else
 			CRASH("Invalid zone for [type]")
 
-/obj/item/organ/cyberimp/arm/update_icon()
+/obj/item/organ/cyberimp/arm/update_icon_state()
 	if(zone == BODY_ZONE_R_ARM)
 		transform = null
 	else // Mirroring the icon
@@ -140,6 +140,88 @@
 	else
 		Retract()
 
+/obj/item/organ/cyberimp/arm/medibeam
+	name = "integrated medical beamgun"
+	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
+	contents = newlist(/obj/item/gun/medbeam)
+
+///////////////
+//Tools  Arms//
+///////////////
+
+/obj/item/organ/cyberimp/arm/toolset
+	name = "integrated toolset implant"
+	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
+	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
+		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
+
+/obj/item/organ/cyberimp/arm/toolset/emag_act()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
+	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
+	return TRUE
+
+/obj/item/organ/cyberimp/arm/surgery
+	name = "surgical toolset implant"
+	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
+	contents = newlist(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
+
+/obj/item/organ/cyberimp/arm/surgery/emag_act()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
+	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
+	return TRUE
+
+/obj/item/organ/cyberimp/arm/janitor
+	name = "janitorial tools implant"
+	desc = "A set of janitorial tools on the user's arm."
+	contents = newlist(/obj/item/lightreplacer, /obj/item/holosign_creator, /obj/item/soap/nanotrasen, /obj/item/reagent_containers/spray/cyborg_drying, /obj/item/mop/advanced, /obj/item/paint/paint_remover, /obj/item/reagent_containers/glass/beaker/large, /obj/item/reagent_containers/spray/cleaner) //Beaker if for refilling sprays
+
+/obj/item/organ/cyberimp/arm/janitor/emag_act()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated deluxe cleaning supplies!</span>")
+	items_list += new /obj/item/soap/syndie(src) //We add not replace.
+	items_list += new /obj/item/reagent_containers/spray/cyborg_lube(src)
+	return TRUE
+
+/obj/item/organ/cyberimp/arm/service
+	name = "service toolset implant"
+	desc = "A set of miscellaneous gadgets hidden behind a concealed panel on the user's arm."
+	contents = newlist(/obj/item/extinguisher/mini, /obj/item/kitchen/knife/combat/bone/plastic, /obj/item/hand_labeler, /obj/item/pen, /obj/item/reagent_containers/dropper, /obj/item/kitchen/rollingpin, /obj/item/reagent_containers/glass/beaker/large, /obj/item/reagent_containers/syringe,/obj/item/reagent_containers/food/drinks/shaker, /obj/item/radio/off, /obj/item/camera, /obj/item/modular_computer/tablet/preset/cargo)
+
+/obj/item/organ/cyberimp/arm/service/emag_act()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated real knife!</span>")
+	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
+	return TRUE
+
+///////////////
+//Combat Arms//
+///////////////
+
+/obj/item/organ/cyberimp/arm/gun/laser
+	name = "arm-mounted laser implant"
+	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
+	icon_state = "arm_laser"
+	contents = newlist(/obj/item/gun/energy/laser/mounted)
+
+/obj/item/organ/cyberimp/arm/gun/taser
+	name = "arm-mounted taser implant"
+	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
+	icon_state = "arm_taser"
+	contents = newlist(/obj/item/gun/energy/e_gun/advtaser/mounted)
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	. = ..()
@@ -155,54 +237,6 @@
 		owner.adjustFireLoss(25)
 		crit_fail = 1
 		organ_flags |= ORGAN_FAILING
-
-
-/obj/item/organ/cyberimp/arm/gun/laser
-	name = "arm-mounted laser implant"
-	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
-	icon_state = "arm_laser"
-	contents = newlist(/obj/item/gun/energy/laser/mounted)
-
-/obj/item/organ/cyberimp/arm/gun/laser/l
-	zone = BODY_ZONE_L_ARM
-
-
-/obj/item/organ/cyberimp/arm/gun/taser
-	name = "arm-mounted taser implant"
-	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
-	icon_state = "arm_taser"
-	contents = newlist(/obj/item/gun/energy/e_gun/advtaser/mounted)
-
-/obj/item/organ/cyberimp/arm/gun/taser/l
-	zone = BODY_ZONE_L_ARM
-
-/obj/item/organ/cyberimp/arm/toolset
-	name = "integrated toolset implant"
-	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
-	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
-		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
-
-/obj/item/organ/cyberimp/arm/toolset/l
-	zone = BODY_ZONE_L_ARM
-
-/obj/item/organ/cyberimp/arm/toolset/emag_act()
-	. = ..()
-	if(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list)
-		return
-	to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
-	items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
-	return TRUE
-
-/obj/item/organ/cyberimp/arm/esword
-	name = "arm-mounted energy blade"
-	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
-	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight)
-
-/obj/item/organ/cyberimp/arm/medibeam
-	name = "integrated medical beamgun"
-	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
-	contents = newlist(/obj/item/gun/medbeam)
-
 
 /obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
@@ -231,7 +265,22 @@
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
 
-/obj/item/organ/cyberimp/arm/surgery
-	name = "surgical toolset implant"
-	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
-	contents = newlist(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
+/obj/item/organ/cyberimp/arm/esword
+	name = "arm-mounted energy blade"
+	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
+	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight)
+
+/obj/item/organ/cyberimp/arm/shield
+	name = "arm-mounted riot shield"
+	desc = "A deployable riot shield to help deal with civil unrest."
+	contents = newlist(/obj/item/shield/riot/implant)
+
+/obj/item/organ/cyberimp/arm/shield/emag_act()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(usr, "<span class='notice'>You unlock [src]'s high-power flash!</span>")
+	var/obj/item/assembly/flash/armimplant/F = new(src)
+	items_list += F
+	F.I = src

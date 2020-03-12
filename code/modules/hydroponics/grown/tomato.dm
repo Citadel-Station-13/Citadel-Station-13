@@ -36,7 +36,7 @@
 	plantname = "Blood-Tomato Plants"
 	product = /obj/item/reagent_containers/food/snacks/grown/tomato/blood
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/blood = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/blood/tomato = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/tomato/blood
@@ -47,7 +47,7 @@
 	splat_type = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
 	foodtype = FRUIT | GROSS
-	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
+	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood/tomato = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
 
 // Blue Tomato

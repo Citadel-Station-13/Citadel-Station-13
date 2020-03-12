@@ -85,7 +85,7 @@
 		. += "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>"
 		. += "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>"
 
-/obj/machinery/microwave/update_icon()
+/obj/machinery/microwave/update_icon_state()
 	if(broken)
 		icon_state = "mwb"
 	else if(dirty_anim_playing)
@@ -310,7 +310,7 @@
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
 		if(O.custom_materials?.len)
-			metal += O.custom_materials[getmaterialref(/datum/material/iron)]
+			metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 	if(metal)
 		spark()

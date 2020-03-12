@@ -42,25 +42,18 @@
 /obj/structure/closet/crate
 	var/mob/living/resident	// This lets bloodsuckers claim any "closet" as a Coffin, so long as they could get into it and close it. This locks it in place, too.
 
-/obj/structure/closet/crate/coffin
-	var/pryLidTimer = 250
-	can_weld_shut = FALSE
-	breakout_time = 200
-
-
 /obj/structure/closet/crate/coffin/blackcoffin
 	name = "black coffin"
 	desc = "For those departed who are not so dear."
 	icon_state = "coffin"
 	icon = 'icons/obj/vamp_obj.dmi'
-	can_weld_shut = FALSE
-	resistance_flags = 0			// Start off with no bonuses.
 	open_sound = 'sound/bloodsucker/coffin_open.ogg'
 	close_sound = 'sound/bloodsucker/coffin_close.ogg'
 	breakout_time = 600
 	pryLidTimer = 400
 	resistance_flags = NONE
-	integrity_failure = 70
+	max_integrity = 100
+	integrity_failure = 0.5
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 30, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 
 /obj/structure/closet/crate/coffin/meatcoffin
@@ -68,8 +61,6 @@
 	desc = "When you're ready to meat your maker, the steaks can never be too high."
 	icon_state = "meatcoffin"
 	icon = 'icons/obj/vamp_obj.dmi'
-	can_weld_shut = FALSE
-	resistance_flags = 0			// Start off with no bonuses.
 	open_sound = 'sound/effects/footstep/slime1.ogg'
 	close_sound = 'sound/effects/footstep/slime1.ogg'
 	breakout_time = 200
@@ -77,24 +68,23 @@
 	resistance_flags = NONE
 	material_drop = /obj/item/reagent_containers/food/snacks/meat/slab
 	material_drop_amount = 3
-	integrity_failure = 40
+	integrity_failure = 0.57
 	armor = list("melee" = 70, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
-	
+
 /obj/structure/closet/crate/coffin/metalcoffin
 	name = "metal coffin"
 	desc = "A big metal sardine can inside of another big metal sardine can, in space."
 	icon_state = "metalcoffin"
 	icon = 'icons/obj/vamp_obj.dmi'
-	can_weld_shut = FALSE
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	open_sound = 'sound/effects/pressureplate.ogg'
 	close_sound = 'sound/effects/pressureplate.ogg'
 	breakout_time = 300
 	pryLidTimer = 200
-	resistance_flags = NONE
 	material_drop = /obj/item/stack/sheet/metal
 	material_drop_amount = 5
-	integrity_failure = 60
+	max_integrity = 200
+	integrity_failure = 0.25
 	armor = list("melee" = 40, "bullet" = 15, "laser" = 50, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 
 //////////////////////////////////////////////

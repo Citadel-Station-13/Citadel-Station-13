@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(autotransfer)
 /datum/controller/subsystem/autotransfer/fire()
 	if(maxvotes > curvotes)
 		if(world.time > targettime)
-			SSvote.initiate_vote("transfer",null) //TODO figure out how to not use null as the user
+			SSvote.initiate_vote("transfer","server")
 			targettime = targettime + voteinterval
 			curvotes += 1
 	else

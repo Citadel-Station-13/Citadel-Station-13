@@ -463,30 +463,45 @@
 	if(cooldown < world.time)
 		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
 		cooldown = world.time + 600
-		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a hole in [user.p_their()] place!</span>")
-		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
-		Z.name = "hole in reality"
-		Z.desc = "It's shaped an awful lot like [user.name]."
-		Z.setDir(user.dir)
-		user.forceMove(Z)
-		user.notransform = 1
-		user.status_flags |= GODMODE
-		addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
+		new /obj/effect/immortality_talisman(get_turf(user), user)
 	else
 		to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 
-/obj/item/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
-	user.status_flags &= ~GODMODE
-	user.notransform = 0
-	user.forceMove(get_turf(Z))
-	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
-	Z.can_destroy = TRUE
-	qdel(Z)
-
 /obj/effect/immortality_talisman
+	name = "hole in reality"
+	desc = "It's shaped an awful lot like a person."
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
-	var/can_destroy = FALSE
+	var/vanish_description = "vanishes from reality"
+	var/can_destroy = TRUE
+
+/obj/effect/immortality_talisman/Initialize(mapload, mob/new_user)
+	. = ..()
+	if(new_user)
+		vanish(new_user)
+
+/obj/effect/immortality_talisman/proc/vanish(mob/user)
+	user.visible_message("<span class='danger'>[user] [vanish_description], leaving a hole in [user.p_their()] place!</span>")
+
+	desc = "It's shaped an awful lot like [user.name]."
+	setDir(user.dir)
+
+	user.forceMove(src)
+	user.notransform = TRUE
+	user.status_flags |= GODMODE
+
+	can_destroy = FALSE
+
+	addtimer(CALLBACK(src, .proc/unvanish, user), 10 SECONDS)
+
+/obj/effect/immortality_talisman/proc/unvanish(mob/user)
+	user.status_flags &= ~GODMODE
+	user.notransform = FALSE
+	user.forceMove(get_turf(src))
+
+	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
+	can_destroy = TRUE
+	qdel(src)
 
 /obj/effect/immortality_talisman/attackby()
 	return
@@ -502,6 +517,9 @@
 		return QDEL_HINT_LETMELIVE
 	else
 		. = ..()
+
+/obj/effect/immortality_talisman/void
+	vanish_description = "is dragged into the void"
 
 
 //Shared Bag
@@ -561,7 +579,7 @@
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/reagent_containers/glass/bottle/potion/update_icon()
+/obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
 	if(reagents.total_volume)
 		icon_state = "potionflask"
 	else
@@ -957,7 +975,7 @@
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
-			new /obj/item/blood_contract(src)
+			new /obj/item/gun/ballistic/revolver/doublebarrel/super(src)
 		if(3)
 			new /obj/item/gun/magic/staff/spellblade(src)
 
@@ -1028,6 +1046,17 @@
 	log_combat(user, L, "took out a blood contract on", src)
 	qdel(src)
 
+/obj/item/gun/ballistic/revolver/doublebarrel/super
+	name = "super combat shotgun"
+	desc = "From the belly of the beast - or rather, demon. Twice as lethal as a less-than-super shotgun, but a tad bulkier."
+	icon_state = "heckgun"
+	slot_flags = null
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/heck
+	burst_size = 2
+	burst_shot_delay = 0
+	unique_reskin = null
+	sawn_off = TRUE
+
 //Colossus
 /obj/structure/closet/crate/necropolis/colossus
 	name = "colossus chest"
@@ -1071,6 +1100,10 @@
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
 	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
+
+/obj/item/hierophant_club/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()
@@ -1134,13 +1167,8 @@
 		chaser_speed = max(chaser_speed + health_percent, 0.5) //one tenth of a second faster for each missing 10% of health
 		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
 
-/obj/item/hierophant_club/update_icon()
-	icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
-	item_state = icon_state
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-		M.update_inv_back()
+/obj/item/hierophant_club/update_icon_state()
+	icon_state = item_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/proc/prepare_icon_update()
 	update_icon()

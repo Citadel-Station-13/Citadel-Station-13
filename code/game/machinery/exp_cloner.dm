@@ -9,7 +9,7 @@
 	internal_radio = FALSE
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/experimental/growclone(ckey, clonename, ui, se, datum/species/mrace, list/features, factions)
+/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, last_death, blood_type, datum/species/mrace, list/features, factions, list/quirks)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -20,15 +20,15 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, mutation_index, H.real_name, blood_type, mrace, features)
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
 		H.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
-		H.randmutvg()
+		H.easy_randmut(POSITIVE)
 	if(efficiency < 3 && prob(50))
-		var/mob/M = H.randmutb()
+		var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		if(ismob(M))
 			H = M
 
@@ -42,18 +42,17 @@
 	icon_state = "pod_1"
 	//Get the clone body ready
 	maim_clone(H)
-	ADD_TRAIT(H, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_MUTE, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_NOBREATH, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
+	ADD_TRAIT(H, TRAIT_STABLEHEART, "cloning")
+	ADD_TRAIT(H, TRAIT_EMOTEMUTE, "cloning")
+	ADD_TRAIT(H, TRAIT_MUTE, "cloning")
+	ADD_TRAIT(H, TRAIT_NOBREATH, "cloning")
+	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, "cloning")
 	H.Unconscious(80)
 
-	var/list/candidates = pollCandidatesForMob("Do you want and agree to play as a [clonename]'s defective clone, respect their character and not engage in ERP without permission from the original?", null, null, null, 100, H, POLL_IGNORE_CLONE)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone?", null, null, null, 100, H)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		C.transfer_ckey(H)
+		H.key = C.key
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		H.grab_ghost()
@@ -293,6 +292,7 @@
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 	else
-		pod.growclone(null, mob_occupant.real_name, dna.uni_identity, dna.struc_enzymes, clone_species, dna.features, mob_occupant.faction)
+		pod.growclone(mob_occupant.real_name, dna.uni_identity, dna.mutation_index, null, null, dna.blood_type, clone_species, dna.features, mob_occupant.faction)
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning data sent to pod.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+

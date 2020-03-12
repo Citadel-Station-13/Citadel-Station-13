@@ -1,0 +1,7 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "Well contruction, grubs to ash walker home, more seeds for ash walkers."
+  - rscadd: "Wooden buckets can be made from 2 planks of wood, Tower caps also can be used on a fire to make coal"
+  - tweak: "Makes all ashwalker round start seeds 5 yield and 50 harvest so that they can get good crops in rather then failing after 1 harvest"
+  - bugfix: "arrow crafting has been fixed"
