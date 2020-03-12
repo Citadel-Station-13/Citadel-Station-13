@@ -257,6 +257,8 @@
 /datum/symptom/heal/coma/End(datum/disease/advance/A)
 	if(!..())
 		return
+	if(active_coma)
+		uncoma()
 	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
@@ -277,7 +279,7 @@
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	if(deathgasp)
 		M.emote("deathgasp")
-	M.fakedeath("regenerative_coma")
+	M.fakedeath("regenerative_coma", TRUE)
 	M.update_stat()
 	M.update_mobility()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
