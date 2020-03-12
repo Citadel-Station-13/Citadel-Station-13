@@ -68,7 +68,7 @@
 /datum/status_effect/proc/tick() //Called every tick.
 
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
-	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	REMOVE_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, src)
 	REMOVE_TRAIT(owner, TRAIT_SPRINT_LOCKED, src)
 	return TRUE
