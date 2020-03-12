@@ -214,6 +214,7 @@
 	alerttooltipstyle = "clockcult"
 
 /datum/status_effect/belligerent/on_apply()
+	. = ..()
 	return do_movement_toggle(TRUE)
 
 /datum/status_effect/belligerent/tick()
@@ -343,6 +344,7 @@
 	alert_type = null
 
 /datum/status_effect/cultghost/on_apply()
+	. = ..()
 	owner.see_invisible = SEE_INVISIBLE_OBSERVER
 	owner.see_in_dark = 2
 
@@ -364,6 +366,7 @@
 		hammer_synced = new_hammer_synced
 
 /datum/status_effect/crusher_mark/on_apply()
+	. = ..()
 	if(owner.mob_size >= MOB_SIZE_LARGE)
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
@@ -445,6 +448,7 @@
 		qdel(src)
 
 /datum/status_effect/saw_bleed/on_remove()
+	. = ..()
 	if(needs_to_bleed)
 		var/turf/T = get_turf(owner)
 		new /obj/effect/temp_visual/bleed/explode(T)
@@ -503,6 +507,7 @@
 	return ..()
 
 /datum/status_effect/necropolis_curse/on_remove()
+	. = ..()
 	remove_curse(curse_flags)
 
 /datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
@@ -592,6 +597,7 @@
 	old_oxyloss = owner.getOxyLoss()
 
 /datum/status_effect/kindle/on_remove()
+	. = ..()
 	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
 	"<span class='boldannounce'>You snap out of your daze!</span>")
 
@@ -611,11 +617,13 @@
 	alert_type = /obj/screen/alert/status_effect/ichorial_stain
 
 /datum/status_effect/ichorial_stain/on_apply()
+	. = ..()
 	owner.visible_message("<span class='danger'>[owner] gets back up, [owner.p_their()] body dripping blue ichor!</span>", \
 	"<span class='userdanger'>Thick blue ichor covers your body; you can't be revived like this again until it dries!</span>")
 	return TRUE
 
 /datum/status_effect/ichorial_stain/on_remove()
+	. = ..()
 	owner.visible_message("<span class='danger'>The blue ichor on [owner]'s body dries out!</span>", \
 	"<span class='boldnotice'>The ichor on your body is dry - you can now be revived by vitality matrices again!</span>")
 
@@ -637,6 +645,7 @@
 	owner.add_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF, multiplicative_slowdown = 1, movetypes = GROUND)
 
 /datum/status_effect/electrostaff/on_remove()
+	. = ..()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF)
 
 //GOLEM GANG
@@ -688,6 +697,7 @@ datum/status_effect/pacify
 
 /datum/status_effect/pacify/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	return ..()
 
 /datum/status_effect/trance
 	id = "trance"
@@ -709,6 +719,7 @@ datum/status_effect/pacify
 	owner.dizziness = 20
 
 /datum/status_effect/trance/on_apply()
+	. = ..()
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
@@ -729,6 +740,7 @@ datum/status_effect/pacify
 	owner.dizziness = 0
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
+	return ..()
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	if(!owner.can_hear())

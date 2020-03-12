@@ -71,6 +71,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	REMOVE_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, src)
 	REMOVE_TRAIT(owner, TRAIT_SPRINT_LOCKED, src)
+	return TRUE
 
 /datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself or when a status effect with on_remove_on_mob_delete = FALSE has its mob deleted
 	owner.clear_alert(id)
