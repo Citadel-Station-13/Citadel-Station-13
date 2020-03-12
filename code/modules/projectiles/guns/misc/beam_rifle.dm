@@ -58,7 +58,7 @@
 	var/aoe_mob_range = 1
 	var/aoe_mob_damage = 20
 	var/impact_structure_damage = 20
-	var/projectile_damage = 20
+	var/projectile_damage = 40
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
 	var/delay = 30
@@ -325,16 +325,16 @@
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
-	var/aoe_structure_damage = 30
+	var/aoe_structure_damage = 10
 	var/aoe_fire_range = 2
 	var/aoe_fire_chance = 66
 	var/aoe_mob_range = 1
 	var/aoe_mob_damage = 20
-	var/impact_structure_damage = 50
+	var/impact_structure_damage = 20
 	var/projectile_damage = 40
 	var/projectile_stun = 0
-	var/structure_piercing = 2
-	var/structure_bleed_coeff = 0.7
+	var/structure_piercing = 0
+	var/structure_bleed_coeff = 0.5
 	var/do_pierce = TRUE
 	var/obj/item/gun/energy/beam_rifle/host
 
@@ -402,7 +402,7 @@
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
-	e_cost = 5000
+	e_cost = 10000
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/item/projectile/beam/beam_rifle
@@ -414,6 +414,7 @@
 	flag = "energy"
 	range = 150
 	jitter = 10
+	is_reflectable = TRUE
 	var/obj/item/gun/energy/beam_rifle/gun
 	var/structure_pierce_amount = 0				//All set to 0 so the gun can manually set them during firing.
 	var/structure_bleed_coeff = 0
