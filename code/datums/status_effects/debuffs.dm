@@ -245,6 +245,7 @@
 /datum/status_effect/belligerent/on_remove()
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
+	return ..()
 
 /datum/status_effect/maniamotor
 	id = "maniamotor"
