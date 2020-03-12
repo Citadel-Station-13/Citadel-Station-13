@@ -151,7 +151,7 @@
 	spawn(30)
 		if(!QDELETED(src))
 			var/mob/living/simple_animal/banana_spider/S = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
-			S.speed += round(10 / seed.potency)
+			S.speed += round(10 / max(seed.potency, 1), 1)
 			S.visible_message("<span class='notice'>The banana spider chitters as it stretches its legs.</span>")
 			qdel(src)
 

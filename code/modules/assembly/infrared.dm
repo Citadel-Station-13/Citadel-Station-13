@@ -74,7 +74,7 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/infra/dropped()
+/obj/item/assembly/infra/dropped(mob/user)
 	. = ..()
 	if(holder)
 		holder_movement() //sync the dir of the device as well if it's contained in a TTV or an assembly holder
