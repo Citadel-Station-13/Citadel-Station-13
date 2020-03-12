@@ -185,6 +185,6 @@
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user)
 	target.Stagger(melee_stagger_duration())
 	if(IS_SPRINTING(target))
-		animate(target, pixel_x = -2, pixel_y = -2, time = 2, flags = ANIMATION_RELATIVE)
-		animate(target, pixel_x = 4, pixel_y = 4, time = 2, flags = ANIMATION_RELATIVE)
 		animate(target, pixel_x = -2, pixel_y = -2, time = 1, flags = ANIMATION_RELATIVE)
+		animate(target, pixel_x = 4, pixel_y = 4, time = 1, flags = ANIMATION_RELATIVE)
+		animate(target, pixel_x = -2, pixel_y = -2, time = 0.5, flags = ANIMATION_RELATIVE)
