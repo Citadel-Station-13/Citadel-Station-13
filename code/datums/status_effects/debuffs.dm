@@ -245,6 +245,7 @@
 /datum/status_effect/belligerent/on_remove()
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
+	return ..()
 
 /datum/status_effect/maniamotor
 	id = "maniamotor"
@@ -826,6 +827,7 @@ datum/status_effect/pacify
 		return
 	var/mob/living/carbon/human/H = owner
 	H.something_horrible(kill_either_way)
+	return ..()
 
 /obj/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
