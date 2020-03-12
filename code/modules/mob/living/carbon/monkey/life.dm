@@ -42,7 +42,7 @@
 		if(radiation > RAD_MOB_MUTATE)
 			if(prob(1))
 				to_chat(src, "<span class='danger'>You mutate!</span>")
-				easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+				randmutb()
 				emote("gasp")
 				domutcheck()
 		if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))

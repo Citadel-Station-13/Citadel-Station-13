@@ -805,8 +805,7 @@
 	. += "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>"
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
-	if(ismob(loc))
-		dropped(loc)
+	dropped()
 	QDEL_NULL(pack)
 	QDEL_NULL(shoes)
 	return ..()
@@ -835,7 +834,7 @@
 			return FALSE
 	return ..()
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/dropped(mob/the_user)
+/obj/item/clothing/suit/space/hardsuit/flightsuit/dropped()
 	if(deployedpack)
 		retract_flightpack(TRUE)
 	if(deployedshoes)

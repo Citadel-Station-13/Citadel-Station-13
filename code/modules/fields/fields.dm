@@ -312,7 +312,7 @@
 	else if(!operating)
 		QDEL_NULL(current)
 
-/obj/item/multitool/field_debug/dropped(mob/user)
+/obj/item/multitool/field_debug/dropped()
 	. = ..()
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
