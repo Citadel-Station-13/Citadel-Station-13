@@ -1,3 +1,5 @@
+#define NO_MAXVOTES_CAP -1
+
 SUBSYSTEM_DEF(autotransfer)
 	name = "Autotransfer Vote"
 	flags = SS_KEEP_TIMING | SS_BACKGROUND
@@ -11,7 +13,7 @@ SUBSYSTEM_DEF(autotransfer)
 
 /datum/controller/subsystem/autotransfer/Initialize(timeofday)
 	var/init_vote = CONFIG_GET(number/vote_autotransfer_initial)
-	if(init_vote == 0) //Autotransfer voting disabled.
+	if(!init_vote) //Autotransfer voting disabled.
 		can_fire = FALSE
 		return ..()
 	starttime = world.time
@@ -27,10 +29,13 @@ SUBSYSTEM_DEF(autotransfer)
 	curvotes = SSautotransfer.curvotes
 
 /datum/controller/subsystem/autotransfer/fire()
-	if(!maxvotes || maxvotes > curvotes)
-		if(world.time > targettime)
-			SSvote.initiate_vote("transfer","server")
-			targettime = targettime + voteinterval
-			curvotes += 1
+	if(world.time < targettime)
+		return
+	if(maxvotes == NO_MAXVOTES_CAP || maxvotes > curvotes)
+		SSvote.initiate_vote("transfer","server")
+		targettime = targettime + voteinterval
+		curvotes++
 	else
 		SSshuttle.autoEnd()
+
+#undef NO_MAXVOTES_CAP
