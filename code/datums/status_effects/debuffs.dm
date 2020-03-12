@@ -827,6 +827,7 @@ datum/status_effect/pacify
 		return
 	var/mob/living/carbon/human/H = owner
 	H.something_horrible(kill_either_way)
+	return ..()
 
 /obj/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
