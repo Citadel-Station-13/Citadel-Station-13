@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - balance: "hand teleporters now require 30 deciseconds of still movement by the user to dispel portals. there's a beam effect too."

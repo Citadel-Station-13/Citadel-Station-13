@@ -15,7 +15,7 @@
 	maxbodytemp = INFINITY
 	minbodytemp = 0
 	blood_volume = 0
-	has_unlimited_silicon_privilege = 1
+	silicon_privileges = PRIVILEDGES_BOT
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	verb_say = "states"
@@ -115,7 +115,7 @@
 	if(stat)
 		return FALSE
 	on = TRUE
-	canmove = TRUE
+	update_mobility()
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
@@ -123,7 +123,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
-	canmove = FALSE
+	update_mobility()
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
@@ -160,11 +160,11 @@
 		path_hud.add_to_hud(src)
 		path_hud.add_hud_to(src)
 
-/mob/living/simple_animal/bot/update_canmove()
+/mob/living/simple_animal/bot/update_mobility()
 	. = ..()
 	if(!on)
-		. = 0
-	canmove = .
+		. = NONE
+		mobility_flags = .
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
@@ -194,10 +194,12 @@
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = FALSE
 		emagged = 1
-		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
+		if(user)
+			to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
 		return TRUE
 	if(!open)
-		to_chat(user, "<span class='warning'>You need to open maintenance panel first!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>You need to open maintenance panel first!</span>")
 		return
 	emagged = 2
 	remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
@@ -205,7 +207,8 @@
 	bot_reset()
 	turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	to_chat(src, "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>")
-	log_combat(user, src, "emagged")
+	if(user)
+		log_combat(user, src, "emagged")
 	return TRUE
 
 /mob/living/simple_animal/bot/examine(mob/user)

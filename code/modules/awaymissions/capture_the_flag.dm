@@ -379,7 +379,7 @@
 	force = 75
 	mag_type = /obj/item/ammo_box/magazine/m50/ctf
 
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped(mob/user)
 	. = ..()
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
@@ -402,14 +402,14 @@
 	desc = "This looks like it could really hurt in melee."
 	force = 50
 
-/obj/item/gun/ballistic/automatic/laser/ctf/dropped()
+/obj/item/gun/ballistic/automatic/laser/ctf/dropped(mob/user)
 	. = ..()
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
-/obj/item/ammo_box/magazine/recharge/ctf/dropped()
+/obj/item/ammo_box/magazine/recharge/ctf/dropped(mob/user)
 	. = ..()
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
@@ -475,7 +475,7 @@
 		return TRUE
 	return ..()
 
-/obj/item/claymore/ctf/dropped()
+/obj/item/claymore/ctf/dropped(mob/user)
 	. = ..()
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 

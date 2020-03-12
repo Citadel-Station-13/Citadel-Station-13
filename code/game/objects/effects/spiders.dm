@@ -28,6 +28,7 @@
 		take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	var/genetic = FALSE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/Initialize()
@@ -36,6 +37,8 @@
 	. = ..()
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
+	if (genetic)
+		return
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return TRUE
 	else if(isliving(mover))
@@ -47,6 +50,27 @@
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
 	return TRUE
+
+/obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
+	genetic = TRUE
+	var/mob/living/allowed_mob
+
+/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
+	allowed_mob = allowedmob
+	. = ..()
+
+/obj/structure/spider/stickyweb/genetic/CanPass(atom/movable/mover, turf/target)
+	. = ..() //this is the normal spider web return aka a spider would make this TRUE
+	if(mover == allowed_mob)
+		return TRUE
+	else if(isliving(mover)) //we change the spider to not be able to go through here
+		if(mover.pulledby == allowed_mob)
+			return TRUE
+		if(prob(50))
+			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
+			return FALSE
+	else if(istype(mover, /obj/item/projectile))
+		return prob(30)
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"

@@ -4,6 +4,7 @@
 	var/name = "team"
 	var/member_name = "member"
 	var/list/objectives = list() //common objectives, these won't be added or removed automatically, subtypes handle this, this is here for bookkeeping purposes.
+	var/show_roundend_report = TRUE
 
 /datum/team/New(starting_members)
 	. = ..()
@@ -25,6 +26,8 @@
 
 //Display members/victory/failure/objectives for the team
 /datum/team/proc/roundend_report()
+	if(!show_roundend_report)
+		return
 	var/list/report = list()
 
 	report += "<span class='header'>[name]:</span>"

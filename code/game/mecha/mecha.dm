@@ -755,7 +755,7 @@
 	AI.cancel_camera()
 	AI.controlled_mech = src
 	AI.remote_control = src
-	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
+	AI.mobility_flags = MOBILITY_FLAGS_DEFAULT //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
 		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
@@ -927,7 +927,7 @@
 	brainmob.forceMove(src) //should allow relaymove
 	brainmob.reset_perspective(src)
 	brainmob.remote_control = src
-	brainmob.update_canmove()
+	brainmob.update_mobility()
 	brainmob.update_mouse_pointer()
 	icon_state = initial(icon_state)
 	update_icon()
@@ -940,7 +940,6 @@
 
 /obj/mecha/container_resist(mob/living/user)
 	go_out()
-
 
 /obj/mecha/Exited(atom/movable/M, atom/newloc)
 	if(occupant && occupant == M) // The occupant exited the mech without calling go_out()
@@ -993,7 +992,7 @@
 				L.reset_perspective()
 			mmi.mecha = null
 			mmi.update_icon()
-			L.canmove = 0
+			L.mobility_flags = NONE
 		icon_state = initial(icon_state)+"-open"
 		setDir(dir_in)
 
@@ -1070,3 +1069,53 @@
 	if(occupant_sight_flags)
 		if(user == occupant)
 			user.sight |= occupant_sight_flags
+
+///////////////////////
+////// Ammo stuff /////
+///////////////////////
+
+/obj/mecha/proc/ammo_resupply(var/obj/item/mecha_ammo/A, mob/user,var/fail_chat_override = FALSE)
+	if(!A.rounds)
+		if(!fail_chat_override)
+			to_chat(user, "<span class='warning'>This box of ammo is empty!</span>")
+		return FALSE
+	var/ammo_needed
+	var/found_gun
+	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in equipment)
+		ammo_needed = 0
+
+		if(istype(gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic) && gun.ammo_type == A.ammo_type)
+			found_gun = TRUE
+			if(A.direct_load)
+				ammo_needed = initial(gun.projectiles) - gun.projectiles
+			else
+				ammo_needed = gun.projectiles_cache_max - gun.projectiles_cache
+
+			if(ammo_needed)
+				if(ammo_needed < A.rounds)
+					if(A.direct_load)
+						gun.projectiles = gun.projectiles + ammo_needed
+					else
+						gun.projectiles_cache = gun.projectiles_cache + ammo_needed
+					playsound(get_turf(user),A.load_audio,50,1)
+					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
+					A.rounds = A.rounds - ammo_needed
+					A.update_name()
+					return TRUE
+
+				else
+					if(A.direct_load)
+						gun.projectiles = gun.projectiles + A.rounds
+					else
+						gun.projectiles_cache = gun.projectiles_cache + A.rounds
+					playsound(get_turf(user),A.load_audio,50,1)
+					to_chat(user, "<span class='notice'>You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]</span>")
+					A.rounds = 0
+					A.update_name()
+					return TRUE
+	if(!fail_chat_override)
+		if(found_gun)
+			to_chat(user, "<span class='notice'>You can't fit any more ammo of this type!</span>")
+		else
+			to_chat(user, "<span class='notice'>None of the equipment on this exosuit can use this ammo!</span>")
+	return FALSE

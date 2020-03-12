@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - balance: "Projectiles now always hit chest if targeting chest, snipers have 100% targeting zone accuracy. All other cases are unchanged."

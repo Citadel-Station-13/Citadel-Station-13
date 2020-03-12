@@ -12,12 +12,12 @@
 		else
 			icon_state = "alien[caste]_dead"
 
-	else if((stat == UNCONSCIOUS && !asleep) || stat == SOFT_CRIT || IsKnockdown())
+	else if((stat == UNCONSCIOUS && !asleep) || stat == SOFT_CRIT || IsParalyzed())
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
 
-	else if(lying || resting || asleep)
+	else if(lying || !CHECK_MOBILITY(src, MOBILITY_STAND) || asleep)
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"

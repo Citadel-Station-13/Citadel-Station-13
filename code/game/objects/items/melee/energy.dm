@@ -7,7 +7,6 @@
 	var/brightness_on = 3
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 
-
 /obj/item/melee/transforming/energy/Initialize()
 	. = ..()
 	total_mass_on = (total_mass_on ? total_mass_on : (w_class_on * 0.75))
@@ -107,8 +106,12 @@
 
 /obj/item/melee/transforming/energy/sword/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
-	if(. && active && item_color)
-		icon_state = "sword[item_color]"
+	if(active)
+		if(. && item_color)
+			icon_state = "sword[item_color]"
+		AddElement(/datum/element/sword_point)
+	else
+		RemoveElement(/datum/element/sword_point)
 
 /obj/item/melee/transforming/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(active)
@@ -259,13 +262,12 @@
 	light_color = "#37FFF7"
 	actions_types = list()
 
-/obj/item/melee/transforming/energy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
-	altafterattack(A, user, TRUE, params)
-	return TRUE
+/obj/item/melee/transforming/energy/sword/cx/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/melee/transforming/energy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
-	if(istype(user))
-		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+/obj/item/melee/transforming/energy/sword/cx/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
 	return TRUE
 
 /obj/item/melee/transforming/energy/sword/cx/transform_weapon(mob/living/user, supress_message_text)
@@ -301,7 +303,8 @@
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
-/obj/item/melee/transforming/energy/sword/cx/update_icon()
+/obj/item/melee/transforming/energy/sword/cx/update_overlays()
+	. = ..()
 	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "cxsword_blade")
 	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "cxsword_gem")
 
@@ -309,15 +312,10 @@
 		blade_overlay.color = light_color
 		gem_overlay.color = light_color
 
-	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
-
-	add_overlay(gem_overlay)
+	. += gem_overlay
 
 	if(active)
-		add_overlay(blade_overlay)
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
+		. += blade_overlay
 
 /obj/item/melee/transforming/energy/sword/cx/AltClick(mob/living/user)
 	. = ..()

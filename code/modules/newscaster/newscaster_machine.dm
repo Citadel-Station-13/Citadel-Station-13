@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
-	materials = list(MAT_METAL=14000, MAT_GLASS=8000)
+	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
 	result_path = /obj/machinery/newscaster
 
 /obj/machinery/newscaster
@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	verb_exclaim = "beeps"
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -53,8 +53,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	picture = null
 	return ..()
 
-/obj/machinery/newscaster/update_icon()
-	cut_overlays()
+/obj/machinery/newscaster/update_icon_state()
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = "newscaster_off"
 	else
@@ -62,19 +61,23 @@ GLOBAL_LIST_EMPTY(allCasters)
 			icon_state = "newscaster_wanted"
 		else
 			icon_state = "newscaster_normal"
-			if(alert)
-				add_overlay("newscaster_alert")
+
+/obj/machinery/newscaster/update_overlays()
+	. = ..()
+
+	if(!(stat & (NOPOWER|BROKEN)) && !GLOB.news_network.wanted_issue.active && alert)
+		. += "newscaster_alert"
+
 	var/hp_percent = obj_integrity * 100 /max_integrity
 	switch(hp_percent)
 		if(75 to 100)
 			return
 		if(50 to 75)
-			add_overlay("crack1")
+			. += "crack1"
 		if(25 to 50)
-			add_overlay("crack2")
+			. += "crack2"
 		else
-			add_overlay("crack3")
-
+			. += "crack3"
 
 /obj/machinery/newscaster/power_change()
 	if(stat & BROKEN)
@@ -654,8 +657,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else
-		throw EXCEPTION("Invalid user for this proc")
-		return
+		CRASH("Invalid user for this proc")
 
 /obj/machinery/newscaster/proc/print_paper()
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)

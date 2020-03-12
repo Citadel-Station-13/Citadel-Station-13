@@ -18,7 +18,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "bzzs"
 	verb_ask = "bzzs inquisitively"
@@ -33,15 +33,13 @@
 	. = ..()
 	AddElement(/datum/element/wuv, "bzzs!")
 
-/mob/living/simple_animal/pet/bumbles/update_canmove()
-	..()
+/mob/living/simple_animal/pet/bumbles/update_mobility()
+	. = ..()
 	if(client && stat != DEAD)
 		if (resting)
 			icon_state = "[icon_living]_rest"
-			collar_type = "[initial(collar_type)]_rest"
 		else
 			icon_state = "[icon_living]"
-			collar_type = "[initial(collar_type)]"
 	regenerate_icons()
 
 /mob/living/simple_animal/pet/bumbles/bee_friendly()

@@ -170,6 +170,18 @@
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
+/datum/sprite_accessory/tails/human/twocat
+	name = "Cat, Double"
+	icon_state = "twocat"
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/tails_animated/human/twocat
+	name = "Cat, Double"
+	icon_state = "twocat"
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	color_src = MATRIXED
+
 /datum/sprite_accessory/tails/human/cow
 	name = "Cow"
 	icon_state = "cow"
@@ -489,10 +501,12 @@
 /datum/sprite_accessory/mam_tails
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	recommended_species = list("mammal", "slimeperson", "podweak", "felinid", "insect")
 
 /datum/sprite_accessory/mam_tails/none
 	name = "None"
 	icon_state = "none"
+	recommended_species = null
 
 /datum/sprite_accessory/mam_tails_animated
 	color_src = MATRIXED
@@ -562,6 +576,14 @@
 /datum/sprite_accessory/mam_tails_animated/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
+	
+/datum/sprite_accessory/mam_tails/twocat
+	name = "Cat, Double"
+	icon_state = "twocat"
+
+/datum/sprite_accessory/mam_tails_animated/twocat
+	name = "Cat, Double"
+	icon_state = "twocat"
 
 /datum/sprite_accessory/mam_tails/corvid
 	name = "Corvid"

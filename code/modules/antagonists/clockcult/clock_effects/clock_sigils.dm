@@ -80,7 +80,7 @@
 	if(iscultist(L)) //No longer stuns cultists, instead sets them on fire and burns them
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustFireLoss(10)
-		L.Knockdown(20, FALSE)
+		L.DefaultCombatKnockdown(20, FALSE)
 		L.adjust_fire_stacks(5) //Burn!
 		L.IgniteMob()
 	else
@@ -155,7 +155,7 @@
 		if(brutedamage || burndamage)
 			L.adjustBruteLoss(-(brutedamage * 0.25))
 			L.adjustFireLoss(-(burndamage * 0.25))
-	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
+	L.DefaultCombatKnockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
@@ -251,6 +251,7 @@
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/update_icon()
+	. = ..()
 	var/power_charge = get_clockwork_power()
 	if(GLOB.ratvar_awakens)
 		alpha = 255

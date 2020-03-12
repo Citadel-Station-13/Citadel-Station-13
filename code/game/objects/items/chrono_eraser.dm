@@ -18,14 +18,10 @@
 /obj/item/chrono_eraser/proc/pass_mind(datum/mind/M)
 	erased_minds += M
 
-/obj/item/chrono_eraser/dropped()
+/obj/item/chrono_eraser/dropped(mob/user)
 	..()
 	if(PA)
 		qdel(PA)
-
-/obj/item/chrono_eraser/Destroy()
-	dropped()
-	return ..()
 
 /obj/item/chrono_eraser/ui_action_click(mob/user)
 	if(iscarbon(user))
@@ -65,8 +61,9 @@
 		TED = new(src.loc)
 		return INITIALIZE_HINT_QDEL
 
-/obj/item/gun/energy/chrono_gun/update_icon()
-	return
+/obj/item/gun/energy/chrono_gun/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(field)

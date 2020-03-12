@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - tweak: "Storage now caches max screen size and only stores when being opened by a non ghost, meaning ghosts will no longer distort living player screens when viewing storage."

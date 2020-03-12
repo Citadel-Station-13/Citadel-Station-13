@@ -24,7 +24,7 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	toolspeed = 1
 	tool_behaviour = TOOL_MULTITOOL
@@ -67,7 +67,7 @@
 		to_chat(user, "<span class='notice'>You clear the wired connection from the multitool.</span>")
 	update_icon()
 
-/obj/item/multitool/update_icon()
+/obj/item/multitool/update_icon_state()
 	if(selected_io)
 		icon_state = "multitool_red"
 	else
@@ -149,7 +149,7 @@
 /obj/item/multitool/ai_detect/ui_action_click()
 	return
 
-/obj/item/multitool/ai_detect/update_icon()
+/obj/item/multitool/ai_detect/update_icon_state()
 	if(selected_io)
 		icon_state = "multitool_red"
 	else
