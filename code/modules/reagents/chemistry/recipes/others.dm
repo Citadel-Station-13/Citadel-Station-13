@@ -75,17 +75,6 @@
 	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
-/datum/chemical_reaction/silversolidification
-	name = "Solid Silver"
-	id = "solidsilver"
-	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/silver = 20, /datum/reagent/iron = 1)
-	mob_react = FALSE
-
-/datum/chemical_reaction/silversolidification/on_reaction(datum/reagents/holder, multiplier)
-	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= multiplier, i++)
-		new /obj/item/stack/sheet/mineral/silver(location)
-
 /datum/chemical_reaction/uraniumsolidification
 	name = "Solid Uranium"
 	id = "soliduranium"
