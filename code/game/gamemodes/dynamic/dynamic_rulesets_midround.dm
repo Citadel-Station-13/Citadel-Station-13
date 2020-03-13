@@ -273,10 +273,14 @@
 	var/ion_announce = 33
 	var/removeDontImproveChance = 10
 
+/datum/dynamic_ruleset/midround/malf/ready()
+	if(!candidates || !candidates.len)
+		return FALSE
+	return ..()
+
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	living_players = candidates[CURRENT_LIVING_PLAYERS]
-	for(var/mob/living/player in candidates)
+	for(var/mob/living/player in living_players)
 		if(!isAI(player))
 			candidates -= player
 			continue
@@ -287,8 +291,6 @@
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/malf/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
 	var/mob/living/silicon/ai/M = pick_n_take(candidates)
 	assigned += M.mind
 	var/datum/antagonist/traitor/AI = new
@@ -337,6 +339,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
 	..()
 	new_character.forceMove(pick(GLOB.wizardstart))
+	wizard = new_character.mind
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/rule_process() // i can literally copy this from are_special_antags_dead it's great
 	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
