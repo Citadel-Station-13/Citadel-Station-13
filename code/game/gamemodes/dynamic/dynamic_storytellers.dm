@@ -224,7 +224,7 @@ Property weights are:
 	flags = USE_PREF_WEIGHTS
 	curve_width = 4
 
-/datum/dynamic_storyteller/memes
+/datum/dynamic_storyteller/story
 	name = "Story"
 	config_tag = "story"
 	desc = "Chaos: varies. Variation: high. Likely antags: abductors, nukies, wizard, traitor."
