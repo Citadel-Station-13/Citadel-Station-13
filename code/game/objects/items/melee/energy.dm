@@ -212,6 +212,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 30 //Normal attacks deal esword damage
+	faction_bonus_force = 15
 	hitsound = 'sound/weapons/blade1.ogg'
 	active = 1
 	throwforce = 1 //Throwing or dropping the item deletes it.
