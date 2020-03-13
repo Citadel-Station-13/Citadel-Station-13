@@ -90,6 +90,7 @@
 	user.dropItemToGround(src, TRUE) //user.drop_item() // "drop item" doesn't seem to exist anymore. New proc is user.dropItemToGround() but it doesn't seem like it's needed now?
 	var/obj/item/bodypart/B = C.get_bodypart("chest")  // This was all taken from hitby() in human_defense.dm
 	B.embedded_objects |= src
+	embedded()
 	add_mob_blood(target)//Place blood on the stake
 	loc = C // Put INSIDE the character
 	B.receive_damage(w_class * embedding.embedded_impact_pain_multiplier)

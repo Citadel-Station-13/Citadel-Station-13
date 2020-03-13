@@ -89,20 +89,6 @@ SUBSYSTEM_DEF(vote)
 					choices[GLOB.master_mode] += non_voters.len
 					if(choices[GLOB.master_mode] >= greatest_votes)
 						greatest_votes = choices[GLOB.master_mode]
-			else if(mode == "transfer") // austation begin -- Crew autotransfer vote
-				var/factor = 1
-				switch(world.time / (1 MINUTES))
-					if(0 to 60)
-						factor = 0.5
-					if(61 to 120)
-						factor = 0.8
-					if(121 to 240)
-						factor = 1
-					if(241 to 300)
-						factor = 1.2
-					else
-						factor = 1.4
-				choices["Initiate Crew Transfer"] += round(non_voters.len * factor) // austation end
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -370,7 +356,7 @@ SUBSYSTEM_DEF(vote)
 				var/list/runnable_storytellers = config.get_runnable_storytellers()
 				for(var/T in runnable_storytellers)
 					var/datum/dynamic_storyteller/S = T
-					runnable_storytellers[S] *= stored_gamemode_votes[initial(S.name)]
+					runnable_storytellers[S] *= round(stored_gamemode_votes[initial(S.name)]*100000,1)
 				var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
 				GLOB.dynamic_storyteller_type = S
 			if("map")
