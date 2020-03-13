@@ -125,11 +125,7 @@
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
-				if(iscarbon(src))
-					var/mob/living/carbon/C = src
-					C.bleed(totitemdamage)
-				else
-					add_splatter_floor(location)
+				add_splatter_floor(location)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 		return TRUE //successful attack
