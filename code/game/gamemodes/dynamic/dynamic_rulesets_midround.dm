@@ -450,9 +450,7 @@
 	property_weights = list("story_potential" = -1, "trust" = 1, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/list/vents = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
-	// 50% chance of being incremented by one
-	required_candidates += prob(50)
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		if(QDELETED(temp_vent))
 			continue
@@ -466,6 +464,12 @@
 				vents += temp_vent
 	if(!vents.len)
 		return FALSE
+	return ..()
+
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
+	// 50% chance of being incremented by one
+	required_candidates += prob(50)
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/generate_ruleset_body(mob/applicant)
@@ -500,7 +504,7 @@
 	property_weights = list("story_potential" = 1, "trust" = 1, "extended" = 1, "valid" = 2, "integrity" = 1)
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/ready()
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
 		var/light_amount = T.get_lumcount()
@@ -508,7 +512,7 @@
 			spawn_locs += T
 	if(!spawn_locs.len)
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/generate_ruleset_body(mob/applicant)
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
