@@ -10,7 +10,7 @@
 	hud_used?.sprint_buffer?.update_to_mob(src)
 
 /mob/living/proc/update_sprint_lock()
-	var/locked = HAS_TRAIT(TRAIT_SPRINT_LOCKED)
+	var/locked = HAS_TRAIT(src, TRAIT_SPRINT_LOCKED)
 	var/current = (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 	var/desired = (combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
 	if(locked)
