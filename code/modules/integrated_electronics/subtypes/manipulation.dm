@@ -402,11 +402,22 @@
 	power_draw_per_use = 40
 	ext_cooldown = 1
 	cooldown_per_use = 10
-	var/list/mtypes = list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/uranium, /datum/material/plasma, /datum/material/bluespace, /datum/material/bananium, /datum/material/titanium, /datum/material/plastic)
+	var/static/list/mtypes = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/uranium,
+		/datum/material/plasma,
+		/datum/material/bluespace,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/plastic
+		)
 
-/obj/item/integrated_circuit/manipulation/matman/Initialize()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-	mtypes, 100000, FALSE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+/obj/item/integrated_circuit/manipulation/matman/ComponentInitialize()
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, mtypes, 100000, FALSE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
 	.=..()
 
