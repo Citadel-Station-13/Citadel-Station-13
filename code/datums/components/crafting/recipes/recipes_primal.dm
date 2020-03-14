@@ -119,7 +119,7 @@
 /datum/crafting_recipe/ashen_stablizer
 	name = "Herbal Stabilizing Bowl"
 	result = /obj/item/hivelordstabilizer/ashen
-	parts = /obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1
+	parts = list(/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings = 5,
 				/obj/item/seeds/lavaland/ember = 3,
 				/obj/item/seeds/lavaland/cactus = 5)
