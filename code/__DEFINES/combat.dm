@@ -31,22 +31,22 @@
 
 // /mob/living/combat_flags
 // Heleprs, need to have mob casted to /mob/living, for easier replacements later.
-#define IS_COMBAT_ACTIVE(mob)				(mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
-#define IS_SPRINTING(mob)					(mob.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
+#define IS_COMBAT_ACTIVE(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+#define IS_SPRINTING(mob)					FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 
 // These are for if the USER wants them to be on, for stuff like interface icon updates and right click interaction settings..
-#define IS_COMBAT_TOGGLED(mob)				(mob.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
-#define IS_SPRINT_TOGGLED(mob)				(mob.combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
-#define CAN_TOGGLE_COMBAT_MODE(mob)				((mob.stat == CONSCIOUS) && !IS_HARD_STAMCRITTED(mob))
+#define IS_COMBAT_TOGGLED(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
+#define IS_SPRINT_TOGGLED(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
+#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !IS_HARD_STAMCRITTED(mob))
 
 // Self documenting defines
-#define IS_RESISTING_REST(mob)				(mob.combat_flags & COMBAT_FLAG_RESISTING_REST)
-#define IS_INTENTIONALLY_RESTING(mob)		(mob.combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING)
-#define IS_ATTEMPTING_CRAWL(mob)			(mob.combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
+#define IS_RESISTING_REST(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_RESISTING_REST)
+#define IS_INTENTIONALLY_RESTING(mob)		FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING)
+#define IS_ATTEMPTING_CRAWL(mob)			FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
 
 // Kind of bad file to put this in but it goes int othe same thing, I guess.
-#define IS_COMBAT_MODE_LOCKED(mob)			HAS_TRAIT(mob, TRAIT_COMBAT_MODE_LOCKED)
-#define IS_SPRINT_LOCKED(mob)				HAS_TRAIT(mob, TRAIT_SPRINT_LOCKED)
+#define IS_COMBAT_MODE_LOCKED(mob)			FORCE_BOOLEANHAS_TRAIT(mob, TRAIT_COMBAT_MODE_LOCKED)
+#define IS_SPRINT_LOCKED(mob)				FORCE_BOOLEANHAS_TRAIT(mob, TRAIT_SPRINT_LOCKED)
 
 /// Default combat flags for those affected by ((stamina combat))
 #define COMBAT_FLAGS_DEFAULT					NONE
@@ -80,9 +80,9 @@
 #define HARD_STAMCRIT 2
 
 // Stamcrit check helpers
-#define IS_HARD_STAMCRITTED(mob)			(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
-#define IS_SOFT_STAMCRITTED(mob)			(mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
-#define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
+#define IS_HARD_STAMCRITTED(mob)			FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+#define IS_SOFT_STAMCRITTED(mob)			FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
+#define IS_STAMCRIT(mob)					FORCE_BOOLEAN(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
 #define CHECK_STAMCRIT(mob)					(IS_HARD_STAMCRITTED(mob)? HARD_STAMCRIT : (IS_SOFT_STAMCRITTED(mob)? SOFT_STAMCRIT : NOT_STAMCRIT))
 
 //stamina stuff
