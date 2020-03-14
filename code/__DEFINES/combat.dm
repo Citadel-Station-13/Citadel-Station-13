@@ -31,7 +31,7 @@
 
 // /mob/living/combat_flags
 // Heleprs, need to have mob casted to /mob/living, for easier replacements later.
-#define IS_COMBAT_ACTIVE(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+#define (mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 #define IS_SPRINTING(mob)					FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 
 // These are for if the USER wants them to be on, for stuff like interface icon updates and right click interaction settings..

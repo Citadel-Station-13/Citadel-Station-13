@@ -5,7 +5,7 @@
 /mob/living/proc/update_combat_lock()
 	var/locked = IS_COMBAT_MODE_LOCKED(src)
 	var/desired = IS_COMBAT_TOGGLED(src)
-	var/actual = IS_COMBAT_ACTIVE(src)
+	var/actual = (combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 	if(actual)
 		if(locked)
 			disable_combat_mode(FALSE, TRUE, FALSE, FALSE)
@@ -17,7 +17,7 @@
 	update_combat_mode_icon()
 
 /mob/living/proc/disable_combat_mode(silent = TRUE, was_forced = FALSE, visible = FALSE, update_icon = TRUE)
-	if(!IS_COMBAT_ACTIVE(src))
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE)
 	SEND_SIGNAL(src, COMSIG_LIVING_COMBAT_DISABLED, was_forced)
@@ -29,7 +29,7 @@
 		update_combat_mode_icon()
 
 /mob/living/proc/enable_combat_mode(silent = TRUE, was_forced = FALSE, visible = FALSE, update_icon = TRUE)
-	if(IS_COMBAT_ACTIVE(src))
+	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE)
 	SEND_SIGNAL(src, COMSIG_LIVING_COMBAT_ENABLED, was_forced)
@@ -47,10 +47,10 @@
 
 /// Enables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
 /mob/living/proc/enable_intentional_combat_mode(silent = TRUE, visible = FALSE)
-	if(IS_COMBAT_TOGGLED(src) && IS_COMBAT_ACTIVE(src))
+	if(IS_COMBAT_TOGGLED(src) && (combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
-	if(!IS_COMBAT_MODE_LOCKED(src) && !IS_COMBAT_ACTIVE(src))
+	if(!IS_COMBAT_MODE_LOCKED(src) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		enable_combat_mode(silent, FALSE, visible, FALSE)
 	update_combat_mode_icon()
 	client?.show_popup_menus = FALSE
@@ -58,10 +58,10 @@
 
 /// Disables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
 /mob/living/proc/disable_intentional_combat_mode(silent = TRUE, visible = FALSE)
-	if(!IS_COMBAT_TOGGLED(src) && !IS_COMBAT_ACTIVE(src))
+	if(!IS_COMBAT_TOGGLED(src) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
-	if(IS_COMBAT_ACTIVE(src))
+	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		disable_combat_mode(silent, FALSE, visible, FALSE)
 	update_combat_mode_icon()
 	client?.show_popup_menus = TRUE
@@ -75,7 +75,7 @@
 		playsound_local(src, 'sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above!
 	else if(CAN_TOGGLE_COMBAT_MODE(src))
 		enable_intentional_combat_mode()
-	var/current = IS_COMBAT_ACTIVE(src)		//because we could be locked
+	var/current = (combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)		//because we could be locked
 	if(current != old)		//only sound effect if you succeeded. Could have the feedback system be better but shrug, someone else can do it.
 		if(current)
 			playsound_local(src, 'sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!

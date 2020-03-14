@@ -17,13 +17,13 @@
 /mob/living/carbon/Move(atom/newloc, direct = 0)
 	. = ..()
 	wrongdirmovedelay = FALSE
-	if(IS_COMBAT_ACTIVE(src) && client && lastmousedir)
+	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && client && lastmousedir)
 		if(lastmousedir != dir)
 			wrongdirmovedelay = TRUE
 			setDir(lastmousedir, ismousemovement = TRUE)
 
 /mob/living/carbon/onMouseMove(object, location, control, params)
-	if(!IS_COMBAT_ACTIVE(src))
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	mouse_face_atom(object)
 	lastmousedir = dir
