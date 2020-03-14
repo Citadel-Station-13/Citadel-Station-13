@@ -22,7 +22,7 @@
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE)
 	SEND_SIGNAL(src, COMSIG_LIVING_COMBAT_DISABLED, was_forced)
 	if(visible)
-		visible_message("<span class='warning'>[src] goes limp.</span>", "<span class='warning'>Your muscles are forceibly relaxed!</span>")
+		visible_message("<span class='warning'>[src] goes limp.</span>", "<span class='warning'>Your muscles are forcibly relaxed!</span>")
 	else if(!silent)
 		to_chat(src, was_forced? "<span class='warning'>Your muscles are forceibly relaxed!</span>" : "<span class='warning'>You relax your muscles.</span>")
 	if(update_icon)
