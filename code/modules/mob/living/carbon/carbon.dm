@@ -448,7 +448,7 @@
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	//CIT CHANGES START HERE
-	else if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	else if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 		modifier += 50
 
 	if(modifier < 100)

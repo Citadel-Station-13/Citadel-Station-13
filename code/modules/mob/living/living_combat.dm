@@ -29,7 +29,7 @@
 		update_combat_mode_icon()
 
 /mob/living/proc/enable_combat_mode(silent = TRUE, was_forced = FALSE, visible = FALSE, update_icon = TRUE)
-	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE)
 	SEND_SIGNAL(src, COMSIG_LIVING_COMBAT_ENABLED, was_forced)
@@ -61,7 +61,7 @@
 	if(!(combat_flags & COMBAT_FLAG_COMBAT_TOGGLED) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
-	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 		disable_combat_mode(silent, FALSE, visible, FALSE)
 	update_combat_mode_icon()
 	client?.show_popup_menus = TRUE

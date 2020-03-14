@@ -31,7 +31,7 @@
 		if(!(combat_flags & COMBAT_FLAG_SOFT_STAMCRIT))
 			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
 	else
-		if((combat_flags & COMBAT_FLAG_SOFT_STAMCRIT))
+		if(combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
 			DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
 	if(total_health)
 		if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health >= STAMINA_CRIT && !stat)

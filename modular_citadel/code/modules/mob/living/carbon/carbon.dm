@@ -9,7 +9,7 @@
 	voremode = !voremode
 	var/obj/screen/voretoggle/T = locate() in hud_used?.static_inventory
 	T?.update_icon_state()
-	if((combat_flags & COMBAT_FLAG_COMBAT_TOGGLED))
+	if(combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
 		return FALSE //let's not override the main draw of the game these days
 	SEND_SIGNAL(src, COMSIG_VORE_TOGGLED, src, voremode)
 	return TRUE

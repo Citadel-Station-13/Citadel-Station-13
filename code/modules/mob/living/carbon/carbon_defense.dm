@@ -346,7 +346,7 @@
 		AdjustAllImmobility(-60, FALSE)
 		AdjustUnconscious(-60, FALSE)
 		AdjustSleeping(-100, FALSE)
-		if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+		if(combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 			adjustStaminaLoss(-15)
 		else
 			set_resting(FALSE, FALSE)
