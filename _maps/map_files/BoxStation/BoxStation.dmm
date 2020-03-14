@@ -4738,16 +4738,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
-"aiG" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/security/processing)
 "aiH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/red,
@@ -84877,7 +84867,7 @@ aiV
 aiV
 aiV
 aiV
-aiG
+aiV
 anP
 aiT
 arP
