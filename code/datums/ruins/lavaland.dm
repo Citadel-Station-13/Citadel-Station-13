@@ -168,7 +168,8 @@
 	id = "alien-nest"
 	description = "Not even Necropolis is safe from alien infestation. The competition for hosts has locked the legion and aliens in an endless conflict that can only be resolved by a PKA."
 	suffix = "lavaland_surface_alien_nest.dmm"
-	cost = 20
+	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
@@ -176,6 +177,7 @@
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	suffix = "lavaland_surface_fountain_hall.dmm"
 	cost = 5
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/survivalcapsule
 	name = "Survival Capsule Ruins"
@@ -198,7 +200,7 @@
 	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily. A demonic laugh echoes throughout the caverns"
 	suffix = "lavaland_surface_cultaltar.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/hermit
 	name = "Makeshift Shelter"
@@ -244,6 +246,7 @@
 	description = "A strange tumor which houses a powerful beast..."
 	suffix = "lavaland_surface_elite_tumor.dmm"
 	cost = 5
+	placement_weight = 3
 	always_place = TRUE
 	allow_duplicates = TRUE
 
