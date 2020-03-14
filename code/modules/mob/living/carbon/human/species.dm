@@ -69,6 +69,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/inert_mutation = DWARFISM
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
 	var/datum/outfit/outfit_important_for_life // A path to an outfit that is important for species life e.g. plasmaman outfit
@@ -355,6 +356,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		C.type_of_meat = GLOB.meat_types[C.dna.features["meat_type"]]
 	else
 		C.type_of_meat = initial(meat)
+
+	//If their inert mutation is not the same, swap it out
+	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
+		C.dna.remove_mutation(inert_mutation)
+		//keep it at the right spot, so we can't have people taking shortcuts
+		var/location = C.dna.mutation_index.Find(inert_mutation)
+		C.dna.mutation_index[location] = new_species.inert_mutation
+		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -816,9 +825,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
 			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail" || bodypart == "xenotail")
 				bodypart = "tail"
-			else if(bodypart == "waggingtail_lizard")
-				bodypart = "waggingtail"
-			if(bodypart == "mam_waggingtail" || bodypart == "waggingtail_human")
+			if(bodypart == "mam_waggingtail" || bodypart == "waggingtail_human" || bodypart == "waggingtail_lizard")
 				bodypart = "tailwag"
 			if(bodypart == "mam_ears" || bodypart == "ears")
 				bodypart = "ears"
@@ -1396,7 +1403,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
 			to_chat(H, "<span class='danger'>You mutate!</span>")
-			H.randmutb()
+			H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 			H.emote("gasp")
 			H.domutcheck()
 
@@ -1712,7 +1719,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				bloody = 1
 				var/turf/location = H.loc
 				if(istype(location))
-					H.bleed(totitemdamage)
+					H.add_splatter_floor(location)
 				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(H)
 

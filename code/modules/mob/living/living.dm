@@ -490,7 +490,8 @@
 		GLOB.alive_mob_list += src
 		suiciding = 0
 		stat = UNCONSCIOUS //the mob starts unconscious,
-		blind_eyes(1)
+		if(!eye_blind)
+			blind_eyes(1)
 		updatehealth() //then we check if the mob should wake up.
 		update_mobility()
 		update_sight()
@@ -793,6 +794,13 @@
 					if(!can_hold_items() || !put_in_hands(what))
 						what.forceMove(drop_location())
 					log_combat(src, who, "stripped [what] off")
+
+	if(Adjacent(who)) //update inventory window
+		who.show_inv(src)
+	else
+		src << browse(null,"window=mob[REF(who)]")
+
+	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)

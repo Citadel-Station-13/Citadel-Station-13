@@ -44,7 +44,7 @@
 		to_chat(user, "<span class='notice'>You notch the arrow.</span>")
 		update_icon()
 
-/obj/item/gun/ballistic/bow/update_icon()
+/obj/item/gun/ballistic/bow/update_icon_state()
 	icon_state = "[initial(icon_state)]_[get_ammo() ? (chambered ? "firing" : "loaded") : "unloaded"]"
 
 /obj/item/gun/ballistic/bow/can_shoot()

@@ -71,6 +71,7 @@
 	L.embedded_objects |= I
 	I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 	I.forceMove(src)
+	I.embedded()
 	L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
 	visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
@@ -104,7 +105,8 @@
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
 				I.add_mob_blood(src)
-				bleed(totitemdamage)
+				var/turf/location = get_turf(src)
+				add_splatter_floor(location)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 
@@ -238,19 +240,19 @@
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
+/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if((flags & SHOCK_TESLA) && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
-	if(shock_damage<1 && !override)
+	if(shock_damage < 1)
 		return 0
 	if(reagents.has_reagent(/datum/reagent/teslium))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
-	if(illusion)
+	if((flags & SHOCK_ILLUSION))
 		adjustStaminaLoss(shock_damage)
 	else
 		take_overall_damage(0,shock_damage)
@@ -262,16 +264,13 @@
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
+	if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && (flags & SHOCK_NOSTUN))
 		Stun(40)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
+		if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && (flags & SHOCK_NOSTUN))
 			DefaultCombatKnockdown(60)
-	if(override)
-		return override
-	else
-		return shock_damage
+	return shock_damage
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)

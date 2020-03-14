@@ -2429,6 +2429,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		character.Digitigrade_Leg_Swap(TRUE)
 
+	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_COPIED_TO, src, icon_updates, roundstart_checks)
+
 	//let's be sure the character updates
 	if(icon_updates)
 		character.update_body()

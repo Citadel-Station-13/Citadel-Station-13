@@ -109,7 +109,7 @@
 			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
-						M.electrocute_act(5, "[user]", safety = 1)
+						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
 					else
@@ -357,7 +357,7 @@
 /obj/item/borg/lollipop/equipped()
 	check_amount()
 
-/obj/item/borg/lollipop/dropped()
+/obj/item/borg/lollipop/dropped(mob/user)
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
@@ -620,7 +620,7 @@
 			return host.loc
 	return null
 
-/obj/item/borg/projectile_dampen/dropped()
+/obj/item/borg/projectile_dampen/dropped(mob/user)
 	. = ..()
 	host = loc
 

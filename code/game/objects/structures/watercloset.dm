@@ -72,7 +72,7 @@
 		update_icon()
 
 
-/obj/structure/toilet/update_icon()
+/obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
 
 
@@ -216,8 +216,6 @@
 	density = FALSE
 	use_power = NO_POWER_USE
 	var/on = FALSE
-	var/obj/effect/mist/mymist = null
-	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/datum/looping_sound/showering/soundloop
 
@@ -240,6 +238,7 @@
 /obj/machinery/shower/interact(mob/M)
 	on = !on
 	update_icon()
+	handle_mist()
 	add_fingerprint(M)
 	if(on)
 		START_PROCESSING(SSmachines, src)
@@ -280,31 +279,30 @@
 	return TRUE
 
 
-/obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
-	if(mymist)
-		qdel(mymist)
-
+/obj/machinery/shower/update_overlays()
+	. = ..()
 	if(on)
-		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
-		if(watertemp == "freezing")
-			return
-		if(!ismist)
-			spawn(50)
-				if(src && on)
-					ismist = 1
-					mymist = new /obj/effect/mist(loc)
-		else
-			ismist = 1
-			mymist = new /obj/effect/mist(loc)
-	else if(ismist)
-		ismist = 1
-		mymist = new /obj/effect/mist(loc)
-		spawn(250)
-			if(!on && mymist)
-				qdel(mymist)
-				ismist = 0
+		. += mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 
+/obj/machinery/shower/proc/handle_mist()
+	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
+	// If there was already mist, and the shower was turned off (or made cold): remove the existing mist in 25 sec
+	var/obj/effect/mist/mist = locate() in loc
+	if(!mist && on && watertemp != "freezing")
+		addtimer(CALLBACK(src, .proc/make_mist), 5 SECONDS)
+
+	if(mist && (!on || watertemp == "freezing"))
+		addtimer(CALLBACK(src, .proc/clear_mist), 25 SECONDS)
+
+/obj/machinery/shower/proc/make_mist()
+	var/obj/effect/mist/mist = locate() in loc
+	if(!mist && on && watertemp != "freezing")
+		new /obj/effect/mist(loc)
+
+/obj/machinery/shower/proc/clear_mist()
+	var/obj/effect/mist/mist = locate() in loc
+	if(mist && (!on || watertemp == "freezing"))
+		qdel(mist)
 
 /obj/machinery/shower/Crossed(atom/movable/AM)
 	..()
@@ -692,7 +690,7 @@
 	open = !open
 	update_icon()
 
-/obj/structure/curtain/update_icon()
+/obj/structure/curtain/update_icon_state()
 	if(!open)
 		icon_state = "closed"
 		layer = WALL_OBJ_LAYER

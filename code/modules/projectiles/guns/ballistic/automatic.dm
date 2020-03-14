@@ -39,7 +39,6 @@
 				magazine = AM
 				if(oldmag)
 					to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>")
-					oldmag.dropped()
 					oldmag.forceMove(get_turf(src.loc))
 					oldmag.update_icon()
 				else

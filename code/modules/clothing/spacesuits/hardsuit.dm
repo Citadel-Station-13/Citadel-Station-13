@@ -275,7 +275,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDAMAGE
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon_state()
 	icon_state = "hardsuit[on]-[item_color]"
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize()
@@ -336,7 +336,7 @@
 		linkedsuit.update_icon()
 		user.update_inv_wear_suit()
 		user.update_inv_w_uniform()
-
+		user.update_equipment_speed_mods()
 
 /obj/item/clothing/suit/space/hardsuit/syndi
 	name = "blood-red hardsuit"
@@ -362,9 +362,6 @@
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 50, "energy" = 25, "bomb" = 55, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	visor_flags_inv = 0
-	visor_flags = 0
-	on = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
@@ -705,7 +702,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
 	listeningTo = user
 
-/obj/item/clothing/suit/space/hardsuit/ancient/dropped()
+/obj/item/clothing/suit/space/hardsuit/ancient/dropped(mob/user)
 	. = ..()
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
@@ -946,15 +943,9 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/helm_overlay = mutable_appearance(icon, "knight_cydonia_overlay")
-
-	if(energy_color)
-		helm_overlay.color = energy_color
-
-	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
-
-	add_overlay(helm_overlay)
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/update_overlays()
+	. = ..()
+	. += mutable_appearance(icon, "knight_cydonia_overlay", color = energy_color)
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = ..()
@@ -983,15 +974,9 @@
 	set_light(1)
 	update_icon()
 
-/obj/item/clothing/suit/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/suit_overlay = mutable_appearance(icon, "knight_cydonia_overlay")
-
-	if(energy_color)
-		suit_overlay.color = energy_color
-
-	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
-
-	add_overlay(suit_overlay)
+/obj/item/clothing/suit/space/hardsuit/lavaknight/update_overlays()
+	. = ..()
+	. += mutable_appearance(icon, "knight_cydonia_overlay", color = energy_color)
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = ..()

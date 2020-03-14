@@ -75,6 +75,28 @@
 	for(var/i = 1, i <= multiplier, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
+/datum/chemical_reaction/uraniumsolidification
+	name = "Solid Uranium"
+	id = "soliduranium"
+	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/bromine = 1)
+	mob_react = FALSE
+
+/datum/chemical_reaction/uraniumsolidification/on_reaction(datum/reagents/holder, multiplier)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= multiplier, i++)
+		new /obj/item/stack/sheet/mineral/uranium(location)
+
+/datum/chemical_reaction/bluespacecrystalifaction
+	name = "Crystal Bluespace"
+	id = "crystalbluespace"
+	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/bluespace = 20, /datum/reagent/iron = 1)
+	mob_react = FALSE
+
+/datum/chemical_reaction/bluespacecrystalifaction/on_reaction(datum/reagents/holder, multiplier)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= multiplier, i++)
+		new /obj/item/stack/sheet/bluespace_crystal(location)
+
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
 	id = /datum/reagent/consumable/condensedcapsaicin
