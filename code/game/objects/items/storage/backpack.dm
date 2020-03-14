@@ -47,6 +47,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	var/max_weight_class = 35
 
 /obj/item/storage/backpack/holding/satchel
 	name = "satchel of holding"
@@ -54,14 +55,21 @@
 	icon_state = "holdingsat"
 	item_state = "holdingsat"
 	species_exception = list(/datum/species/angel)
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+
+/obj/item/storage/backpack/holding/duffel
+	name = "duffel bag of holding"
+	desc = "A duffel bag that opens into a localized pocket of Blue Space."
+	icon_state = "holdingduffel"
+	item_state = "holdingduffel"
+	max_weight_class = 50 //gotten from ratio of duffelbag max to bag max * 35 (BoH storage) ie (30/21)*35 = 50
+	slowdown = 1
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_big_nesting = TRUE
 	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.max_combined_w_class = 35
+	STR.max_combined_w_class = max_weight_class
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
