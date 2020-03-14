@@ -48,16 +48,16 @@
 	var/list/obj/effect/projectile/tracer/current_tracers
 
 	var/structure_piercing = 0
-	var/structure_bleed_coeff = 0.5
+	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
-	var/aoe_structure_damage = 10
+	var/aoe_structure_damage = 35
 	var/aoe_fire_range = 1
 	var/aoe_fire_chance = 100
 	var/aoe_mob_range = 1
 	var/aoe_mob_damage = 20
-	var/impact_structure_damage = 20
+	var/impact_structure_damage = 75
 	var/projectile_damage = 40
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
@@ -325,16 +325,16 @@
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
-	var/aoe_structure_damage = 10
+	var/aoe_structure_damage = 30
 	var/aoe_fire_range = 2
 	var/aoe_fire_chance = 66
 	var/aoe_mob_range = 1
 	var/aoe_mob_damage = 20
-	var/impact_structure_damage = 20
+	var/impact_structure_damage = 50
 	var/projectile_damage = 40
 	var/projectile_stun = 0
 	var/structure_piercing = 0
-	var/structure_bleed_coeff = 0.5
+	var/structure_bleed_coeff = 0.7
 	var/do_pierce = TRUE
 	var/obj/item/gun/energy/beam_rifle/host
 
@@ -483,7 +483,7 @@
 	if(istype(target, /obj/structure/window))
 		return 0.5
 	if(istype(target, /obj/structure/blob))
-		return 0.65			//CIT CHANGE.
+		return 0.4			//CIT CHANGE.
 	return 1
 
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
