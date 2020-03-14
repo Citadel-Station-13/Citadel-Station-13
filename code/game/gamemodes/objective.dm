@@ -1167,7 +1167,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 														/area/solar/,
 														/area/ruin/,	//thank you station space ruins
 														/area/science/test_area/,
-														/area/shuttle))
+														/area/shuttle/))
 
 /datum/objective/contract/proc/generate_dropoff()	// Generate a random valid area on the station that the dropoff will happen.
 	var/found = FALSE
