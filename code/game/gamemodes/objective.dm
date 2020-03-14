@@ -1166,7 +1166,8 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/static/list/blacklisted_areas = typecacheof(list(/area/ai_monitored/turret_protected,
 														/area/solar/,
 														/area/ruin/,	//thank you station space ruins
-														/area/science/test_area/))
+														/area/science/test_area/,
+														/area/shuttle))
 
 /datum/objective/contract/proc/generate_dropoff()	// Generate a random valid area on the station that the dropoff will happen.
 	var/found = FALSE
