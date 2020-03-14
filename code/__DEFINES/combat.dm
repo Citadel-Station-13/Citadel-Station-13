@@ -30,7 +30,7 @@
 #define EFFECT_JITTER		"jitter"
 
 // /mob/living/combat_flags
-#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !IS_HARD_STAMCRITTED(mob))
+#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
 
 /// Default combat flags for those affected by ((stamina combat))
 #define COMBAT_FLAGS_DEFAULT					NONE
@@ -65,7 +65,7 @@
 
 // Stamcrit check helpers
 #define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
-#define CHECK_STAMCRIT(mob)					(IS_HARD_STAMCRITTED(mob)? HARD_STAMCRIT : (IS_SOFT_STAMCRITTED(mob)? SOFT_STAMCRIT : NOT_STAMCRIT))
+#define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
 
 //stamina stuff
 #define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
