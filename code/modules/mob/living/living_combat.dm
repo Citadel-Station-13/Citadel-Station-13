@@ -24,7 +24,7 @@
 	if(visible)
 		visible_message("<span class='warning'>[src] goes limp.</span>", "<span class='warning'>Your muscles are forcibly relaxed!</span>")
 	else if(!silent)
-		to_chat(src, was_forced? "<span class='warning'>Your muscles are forceibly relaxed!</span>" : "<span class='warning'>You relax your muscles.</span>")
+		to_chat(src, was_forced? "<span class='warning'>Your muscles are forcibly relaxed!</span>" : "<span class='warning'>You relax your muscles.</span>")
 	if(update_icon)
 		update_combat_mode_icon()
 
