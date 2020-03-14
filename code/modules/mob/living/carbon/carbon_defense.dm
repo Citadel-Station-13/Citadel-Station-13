@@ -264,11 +264,11 @@
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && (flags & SHOCK_NOSTUN))
+	if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN))
 		Stun(40)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && (flags & SHOCK_NOSTUN))
+		if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN))
 			DefaultCombatKnockdown(60)
 	return shock_damage
 
