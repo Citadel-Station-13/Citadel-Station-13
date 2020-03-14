@@ -73,6 +73,9 @@
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/ashen_arrow)
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/quiver)
 	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/bow_tablet)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/sandstone_sharpener)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/diamond_grit)
+	new_spawn.mind.teach_crafting_recipe(/datum/crafting_recipe/ashen_stablizer)
 
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn

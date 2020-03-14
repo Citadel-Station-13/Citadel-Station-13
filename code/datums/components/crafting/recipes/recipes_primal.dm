@@ -109,6 +109,24 @@
 				 /obj/item/stack/sheet/sinew = 4)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/mushroom_bowl
+	name = "Mushroom Bowl"
+	result = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings = 5)
+	time = 30
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/ashen_stablizer
+	name = "Herbal Stabilizing Bowl"
+	result = /obj/item/hivelordstabilizer/ashen
+	parts = /obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings = 5,
+				/obj/item/seeds/lavaland/ember = 3,
+				/obj/item/seeds/lavaland/cactus = 5)
+	time = 90
+	always_availible = FALSE
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/bow_tablet
 	name = "Sandstone Bow Making Manual"
 	result = /obj/item/book/granter/crafting_recipe/bone_bow
@@ -116,4 +134,22 @@
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/rods = 1,
 				 /obj/item/stack/sheet/mineral/sandstone = 4)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/sandstone_sharpener
+	name = "Sandstone Sharpener"
+	result = /obj/item/sharpener/sandstone
+	time = 100 //grinding
+	always_availible = FALSE
+	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 12,
+				/obj/item/stack/sheet/bone = 1)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/sandstone_sharpener
+	name = "Gem Encrusted Sandstone Sharpener"
+	result = /obj/item/sharpener/gem
+	time = 200 //refining
+	always_availible = FALSE
+	reqs = list(/obj/item/stack/ore/diamond = 12,
+				/obj/item/sharpener/sandstone = 1)
 	category = CAT_PRIMAL

@@ -17,6 +17,12 @@
 	to_chat(user, "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>")
 	qdel(src)
 
+/obj/item/hivelordstabilizer/ashen
+	name = "herbal stabilizing bowl"
+	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon_state = "stabilizing_soup"
+	desc = "A bowl of herbs, fruits and gibs to keep certain types of moster organs healing powers indefinitely."
+
 /************************Hivelord core*******************/
 /obj/item/organ/regenerative_core
 	name = "regenerative core"

@@ -10,6 +10,17 @@
 	var/prefix = "sharpened"
 	var/requires_sharpness = 1
 
+/obj/item/sharpener/sandstone
+	name = "sandstone whetstone"
+	desc = "A block of sandstone that makes things sharp."
+	icon_state = "sandstone_sharpener"
+	prefix = "refined"
+
+/obj/item/sharpener/gem
+	name = "sandstone gem crusted whetstone"
+	desc = "A block of sandstone and diamond ore that makes things sharp."
+	icon_state = "diamondgrit_sharpener"
+	increment = 6
 
 /obj/item/sharpener/attackby(obj/item/I, mob/user, params)
 	if(used)
