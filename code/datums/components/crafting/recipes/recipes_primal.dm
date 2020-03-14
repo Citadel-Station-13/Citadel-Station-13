@@ -142,10 +142,10 @@
 	time = 100 //grinding
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 12,
-				/obj/item/stack/sheet/bone = 1)
+				/obj/item/stack/sheet/bone = 2)
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/sandstone_sharpener
+/datum/crafting_recipe/diamond_grit
 	name = "Gem Encrusted Sandstone Sharpener"
 	result = /obj/item/sharpener/gem
 	time = 200 //refining
