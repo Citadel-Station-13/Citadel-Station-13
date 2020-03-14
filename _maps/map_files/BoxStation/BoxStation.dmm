@@ -3566,10 +3566,16 @@
 /area/ai_monitored/security/armory)
 "agT" = (
 /obj/structure/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -4743,12 +4749,18 @@
 /turf/closed/wall/r_wall,
 /area/security/processing)
 "aiH" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Brig Central";
+	dir = 8;
+	network = list("ss13")
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -5255,8 +5267,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -5439,6 +5451,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ajZ" = (
@@ -5515,6 +5528,7 @@
 /area/security/brig)
 "akg" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "akh" = (
@@ -5567,9 +5581,11 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "akm" = (
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -5664,15 +5680,16 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aku" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Brig Central";
-	dir = 8;
-	network = list("ss13")
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1;
+	pixel_x = 0
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -5713,13 +5730,18 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "akz" = (
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -26
+	},
 /obj/structure/cable{
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "akA" = (
@@ -5759,18 +5781,17 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "akD" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/machinery/firealarm{
+/obj/machinery/computer/security/telescreen/interrogation{
 	dir = 1;
-	pixel_x = 0;
-	pixel_y = -26
+	pixel_y = -32
 	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -6612,16 +6633,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 1;
-	pixel_y = -32
-	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "amg" = (
@@ -85358,7 +85370,7 @@ ahS
 aiI
 afn
 aly
-amf
+akD
 agj
 amO
 and
@@ -85615,7 +85627,7 @@ ahZ
 aiL
 ajv
 akg
-agT
+amf
 amq
 amL
 anq
@@ -87667,7 +87679,7 @@ agk
 agF
 agP
 ajJ
-all
+agT
 all
 all
 akh
@@ -87924,7 +87936,7 @@ agi
 agD
 afN
 ajK
-aku
+aiH
 akF
 aiy
 aki
@@ -88440,7 +88452,7 @@ afT
 ahy
 aij
 aiR
-aiH
+ajc
 akm
 amm
 akQ
@@ -90240,7 +90252,7 @@ ahR
 aiv
 adg
 ajI
-akz
+aku
 ala
 alN
 amW
@@ -91011,7 +91023,7 @@ ahG
 aik
 cBV
 ajY
-akD
+akz
 agn
 amb
 ant
