@@ -21,11 +21,11 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "e" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -51,20 +51,18 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "j" = (
-/obj/machinery/light{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/emergency,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "k" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/vending/wallmed,
@@ -117,36 +115,16 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"v" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/toolbox/emergency,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
-"w" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Infirmary"
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"x" = (
-/obj/structure/chair/comfy/brown{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
-"y" = (
+"u" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"z" = (
+"v" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -155,48 +133,61 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/radio,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"A" = (
+"w" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Infirmary"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"x" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"B" = (
-/turf/open/floor/mineral/plastitanium,
+"y" = (
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"C" = (
+"z" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"D" = (
+"A" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /obj/machinery/light/small,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"E" = (
+"B" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
 /obj/item/storage/firstaid/regular,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"F" = (
+"C" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
 /obj/structure/window/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"D" = (
+/obj/machinery/light,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "H" = (
 /obj/structure/chair/comfy/shuttle{
@@ -333,8 +324,8 @@ d
 d
 "}
 (6,1,1) = {"
-a
 d
+t
 t
 r
 s
@@ -342,25 +333,25 @@ s
 s
 r
 s
+s
 d
-a
 "}
 (7,1,1) = {"
-a
 g
 r
 r
+r
 s
 s
 s
 r
 s
+s
 m
-a
 "}
 (8,1,1) = {"
-a
 m
+r
 r
 Q
 d
@@ -368,11 +359,10 @@ m
 d
 V
 s
+s
 m
-a
 "}
 (9,1,1) = {"
-a
 g
 r
 r
@@ -380,33 +370,34 @@ r
 r
 r
 r
+r
+s
 s
 m
-a
 "}
 (10,1,1) = {"
-a
 m
+r
+r
+s
 s
 s
 s
 r
-s
 r
-s
+r
 m
-a
 "}
 (11,1,1) = {"
 d
 d
+r
+s
 s
 s
 s
 r
-s
 r
-s
 d
 d
 "}
@@ -425,20 +416,20 @@ m
 "}
 (13,1,1) = {"
 d
-d
 e
 s
 s
+s
 r
 s
 s
-k
-d
+s
+D
 d
 "}
 (14,1,1) = {"
-a
 m
+s
 s
 s
 s
@@ -446,25 +437,25 @@ r
 s
 s
 s
+s
 m
-a
 "}
 (15,1,1) = {"
-a
 o
 r
 r
 r
 r
+r
+s
 s
 s
 s
 m
-a
 "}
 (16,1,1) = {"
-a
 m
+r
 r
 s
 s
@@ -472,44 +463,44 @@ r
 s
 s
 s
+s
 m
-a
 "}
 (17,1,1) = {"
-a
 g
+r
 r
 r
 i
 r
-j
-s
-s
+i
+r
+r
+r
 d
-a
 "}
 (18,1,1) = {"
-a
+d
 d
 d
 m
 d
-A
+x
 f
 m
 d
 d
-a
+d
 "}
 (19,1,1) = {"
 a
 a
 m
-v
-x
-B
-x
-F
+j
+k
+y
+k
+C
 m
 a
 a
@@ -519,9 +510,9 @@ a
 a
 d
 d
-y
-x
-D
+u
+k
+A
 d
 d
 a
@@ -532,9 +523,9 @@ a
 a
 a
 m
+v
 z
-C
-E
+B
 m
 a
 a
