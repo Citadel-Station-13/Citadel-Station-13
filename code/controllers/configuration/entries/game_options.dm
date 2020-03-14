@@ -234,6 +234,7 @@
 
 /datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
 	abstract_type = /datum/config_entry/number/movedelay
+	integer = FALSE
 
 /datum/config_entry/number/movedelay/ValidateAndSet()
 	. = ..()
@@ -253,13 +254,13 @@
 	config_entry_value = 1
 
 /datum/config_entry/number/movedelay/sprint_buffer_max
-	config_entry_value = 42
+	config_entry_value = 24
 
 /datum/config_entry/number/movedelay/sprint_stamina_cost
-	config_entry_value = 0.7
+	config_entry_value = 1.4
 
 /datum/config_entry/number/movedelay/sprint_buffer_regen_per_ds
-	config_entry_value = 0.3
+	config_entry_value = 0.4
 
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
@@ -334,6 +335,10 @@
 	config_entry_value = 16
 	min_val = 0
 
+/datum/config_entry/number/station_space_budget
+	config_entry_value = 10
+	min_val = 0
+
 /datum/config_entry/flag/allow_random_events	// Enables random events mid-round when set
 
 /datum/config_entry/number/events_min_time_mul	// Multipliers for random events minimal starting time and minimal players amounts
@@ -402,10 +407,6 @@
 	value_mode = VALUE_MODE_NUM
 	lowercase = FALSE
 	splitter = ","
-
-/datum/config_entry/number/auto_transfer_delay
-	config_entry_value = 72000
-	min_val = 0
 
 /datum/config_entry/flag/pai_custom_holoforms
 

@@ -549,7 +549,7 @@
 	name = "chocolate"
 	desc = "A tiny and sweet chocolate. Has a 'strawberry' filling!"
 	icon_state = "tiny_chocolate"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/coco = 1, /datum/reagent/drug/aphrodisiac = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/coco = 1)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
@@ -578,6 +578,16 @@
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
 	tastes = list("peaches" = 1, "tin" = 7)
+
+/obj/item/reagent_containers/food/snacks/crab_rangoon
+	name = "Crab Rangoon"
+	desc = "Has many names, like crab puffs, cheese wontons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
+	icon_state = "crabrangoon"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	filling_color = "#f2efdc"
+	w_class = WEIGHT_CLASS_SMALL
+	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
+	foodtype = MEAT | DAIRY | GRAIN
 
 /obj/item/reagent_containers/food/snacks/chocolatestrawberry
 	name = "Chocolate dipped strawberries"
@@ -674,3 +684,26 @@
 		if (7000 to INFINITY)
 			burn()
 	..()
+
+//Easter Stuff
+
+/obj/item/reagent_containers/food/snacks/chocolatebunny
+	name = "chocolate bunny"
+	desc = "Contains less than 10% real rabbit!"
+	icon_state = "chocolatebunny"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
+	filling_color = "#A0522D"
+
+/obj/item/reagent_containers/food/snacks/soup/mammi
+	name = "Mammi"
+	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
+	icon_state = "mammi"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
+
+/obj/item/reagent_containers/food/snacks/hotcrossbun
+	bitesize = 2
+	name = "hot-cross bun"
+	desc = "The Cross represents the Assistants that died for your sins."
+	icon_state = "hotcrossbun"

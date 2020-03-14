@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(garbage)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = INIT_ORDER_GARBAGE
 
-	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(15 SECONDS, 30 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
 	var/delslasttick = 0			// number of del()'s we've done this tick
@@ -27,6 +27,7 @@ SUBSYSTEM_DEF(garbage)
 
 	#ifdef TESTING
 	var/list/reference_find_on_fail = list()
+	var/list/reference_find_on_fail_types = list()
 	#endif
 
 
@@ -97,9 +98,6 @@ SUBSYSTEM_DEF(garbage)
 				if (state == SS_PAUSED) //make us wait again before the next run.
 					state = SS_RUNNING
 				break
-
-
-
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
@@ -183,12 +181,32 @@ SUBSYSTEM_DEF(garbage)
 	var/gctime = world.time
 	var/refid = "\ref[D]"
 
+#ifdef TESTING
+	if(reference_find_on_fail_types[D.type])
+		reference_find_on_fail["\ref[D]"] = TRUE
+#endif
+
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
 	if (queue[refid])
 		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 
 	queue[refid] = gctime
+
+#ifdef TESTING
+/datum/controller/subsystem/garbage/proc/add_type_to_findref(type)
+	if(!ispath(type))
+		return "NOT A VAILD PATH"
+	reference_find_on_fail_types |= typecacheof(type)
+
+/datum/controller/subsystem/garbage/proc/remove_type_from_findref(type)
+	if(!ispath(type))
+		return "NOT A VALID PATH"
+	reference_find_on_fail_types -= typesof(type)
+
+/datum/controller/subsystem/garbage/proc/clear_findref_types()
+	reference_find_on_fail_types = list()
+#endif
 
 //this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
@@ -244,7 +262,7 @@ SUBSYSTEM_DEF(garbage)
 
 #ifdef TESTING
 /proc/qdel_and_find_ref_if_fail(datum/D, force = FALSE)
-	SSgarbage.reference_find_on_fail[REF(D)] = TRUE
+	SSgarbage.reference_find_on_fail["\ref[D]"] = TRUE
 	qdel(D, force)
 #endif
 
@@ -309,7 +327,7 @@ SUBSYSTEM_DEF(garbage)
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
 				SSgarbage.Queue(D)
 				#ifdef TESTING
-				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
+				SSgarbage.reference_find_on_fail["\ref[D]"] = TRUE
 				#endif
 			else
 				#ifdef TESTING

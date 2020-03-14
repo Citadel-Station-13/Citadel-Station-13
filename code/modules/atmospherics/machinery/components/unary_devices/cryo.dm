@@ -244,13 +244,14 @@
 		M.forceMove(get_turf(src))
 		if(isliving(M))
 			var/mob/living/L = M
-			L.update_canmove()
+			L.update_mobility()
 	occupant = null
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
+		reagent_transfer = 0
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
@@ -276,10 +277,10 @@
 	else
 		. += "[src] seems empty."
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/living/carbon/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !istype(target) || !user.IsAdvancedToolUser())
 		return
-	if (target.IsKnockdown() || target.IsStun() || target.IsSleeping() || target.IsUnconscious())
+	if(!CHECK_MOBILITY(target, MOBILITY_MOVE))
 		close_machine(target)
 	else
 		user.visible_message("<b>[user]</b> starts shoving [target] inside [src].", "<span class='notice'>You start shoving [target] inside [src].</span>")

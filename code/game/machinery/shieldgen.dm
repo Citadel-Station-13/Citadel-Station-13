@@ -124,7 +124,7 @@
 	. = ..()
 	if(.)
 		return
-	if(locked && !issilicon(user))
+	if(locked && !hasSiliconAccessInArea(user))
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
 	if(panel_open)
@@ -208,7 +208,7 @@
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 	return TRUE
 
-/obj/machinery/shieldgen/update_icon()
+/obj/machinery/shieldgen/update_icon_state()
 	if(active)
 		icon_state = (stat & BROKEN) ? "shieldonbr":"shieldon"
 	else
@@ -370,7 +370,7 @@
 	if(!anchored)
 		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
 		return
-	if(locked && !issilicon(user))
+	if(locked && !hasSiliconAccessInArea(user))
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return
 	if(!power)

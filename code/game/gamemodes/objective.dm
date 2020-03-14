@@ -86,8 +86,10 @@ GLOBAL_LIST_EMPTY(objectives)
 		if(M)
 			. += M
 
-/datum/objective/proc/find_target()
+/datum/objective/proc/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
+	if(!dupe_search_range)
+		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
 	for(var/I in owners)
@@ -96,7 +98,8 @@ GLOBAL_LIST_EMPTY(objectives)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
-			possible_targets += possible_target
+			if(!(possible_target in blacklist))
+				possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
 		for(var/I in all_possible_targets)
@@ -314,9 +317,11 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/hijack
 	name = "hijack"
-	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
-	team_explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody. Leave no team member behind."
+	explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console (alt click emergency shuttle console)."
+	team_explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console (alt click emergency shuttle console). Leave no team member behind."
 	martyr_compatible = 0 //Technically you won't get both anyway.
+	/// Overrides the hijack speed of any antagonist datum it is on ONLY, no other datums are impacted.
+	var/hijack_speed_override = 1
 
 /datum/objective/hijack/check_completion() // Requires all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
@@ -1073,7 +1078,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 		var/mob/living/carbon/human/H = owner
 		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK))
 		hoarded_item = I
-	
+
 
 
 GLOBAL_LIST_EMPTY(possible_sabotages)
@@ -1090,13 +1095,13 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	if(!GLOB.possible_sabotages.len)//Only need to fill the list when it's needed.
 		for(var/I in subtypesof(/datum/sabotage_objective))
 			new I
-			
+
 /datum/objective/sabotage/find_target()
 	var/list/datum/mind/owners = get_owners()
 	var/approved_targets = list()
 	check_sabotages:
 		for(var/datum/sabotage_objective/possible_sabotage in GLOB.possible_sabotages)
-			if(!is_unique_objective(possible_sabotage.sabotage_type) || possible_sabotage.check_conditions())
+			if(!is_unique_objective(possible_sabotage.sabotage_type) || possible_sabotage.check_conditions() || !possible_sabotage.can_run())
 				continue
 			for(var/datum/mind/M in owners)
 				if(M.current.mind.assigned_role in possible_sabotage.excludefromjob)
@@ -1153,3 +1158,21 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 
 /datum/objective/flavor/wizard
 	flavor_file = "strings/flavor_objectives/wizard.txt"
+
+/datum/objective/contract
+	var/payout = 0
+	var/payout_bonus = 0
+	var/area/dropoff = null
+
+/datum/objective/contract/proc/generate_dropoff()	// Generate a random valid area on the station that the dropoff will happen.
+	var/found = FALSE
+	while(!found)
+		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors && !istype(dropoff_area, /area/shuttle/))
+			dropoff = dropoff_area
+			found = TRUE
+
+/datum/objective/contract/proc/dropoff_check(mob/user, mob/target)	// Check if both the contractor and contract target are at the dropoff point.
+	var/area/user_area = get_area(user)
+	var/area/target_area = get_area(target)
+	return (istype(user_area, dropoff) && istype(target_area, dropoff))

@@ -109,16 +109,16 @@
 	update_icon()
 	playsound(loc, 'sound/machines/ping.ogg', 30, 1)
 
-/obj/machinery/computer/pandemic/update_icon()
+/obj/machinery/computer/pandemic/update_icon_state()
 	if(stat & BROKEN)
 		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
-		return
-
-	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
-	if(wait)
-		add_overlay("waitlight")
 	else
-		cut_overlays()
+		icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+
+/obj/machinery/computer/pandemic/update_overlays()
+	. = ..()
+	if(!(stat & BROKEN) && wait)
+		. += "waitlight"
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -170,7 +170,7 @@
 			if(!A.mutable)
 				return
 			if(A)
-				var/new_name = stripped_input(usr, "Name the disease", "New name", "", MAX_NAME_LEN)
+				var/new_name = sanitize_name(html_encode(params["name"]))
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)
@@ -181,27 +181,30 @@
 			if(!istype(A) || !A.mutable)
 				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
 				return
+			wait = TRUE
+			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			A = A.Copy()
 			var/list/data = list("blood_DNA" = "UNKNOWN DNA", "blood_type" = "SY", "viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
-			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
-			wait = TRUE
+			B.reagents.add_reagent(/datum/reagent/blood/synthetics, 10, data)
 			update_icon()
 			var/turf/source_turf = get_turf(src)
 			log_virus("A culture bottle was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
-			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
+
 			. = TRUE
 		if("create_vaccine_bottle")
+			wait = TRUE
+			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 400)
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
-			wait = TRUE
+
 			update_icon()
-			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)
+
 			. = TRUE
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
@@ -226,7 +229,7 @@
 
 /obj/machinery/computer/pandemic/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			if(!user.put_in_hands(beaker))
 				beaker.forceMove(drop_location())
 	if(new_beaker)

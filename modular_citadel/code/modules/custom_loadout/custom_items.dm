@@ -557,3 +557,13 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NONE
+
+/obj/item/toy/plush/mammal/dog/fritz
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "fritz"
+	item_state = "fritz"
+	attack_verb = list("barked", "boofed", "shotgun'd")
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
+	mutantrace_variation = NONE
+

@@ -55,6 +55,8 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 			heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie)
 		if("Medical Doctor")
 			heirloom_type = /obj/item/healthanalyzer/advanced
+		if("Paramedic")
+			heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
 		if("Station Engineer")
 			heirloom_type = /obj/item/wirecutters/brass
 		if("Atmospheric Technician")
@@ -144,9 +146,8 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
-	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
-	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
+	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES))
+		H.put_in_hands(glasses)
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"

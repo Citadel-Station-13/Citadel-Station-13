@@ -19,7 +19,7 @@
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	force = 15
-	materials = list()
+	custom_materials = null
 	recoil = 4
 	ammo_x_offset = 3
 	ammo_y_offset = 3
@@ -299,27 +299,17 @@
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	process_aim()
-	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
+	if(aiming_time_left <= aiming_time_fire_threshold && check_user() && ((lastfire + delay) <= world.time))
 		sync_ammo()
-		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
+		do_fire(M.client.mouseObject, M, FALSE, M.client.mouseParams, M.zone_selected)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
 	return ..()
 
-/obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(target in user.contents) //can't shoot stuff inside us.
-			return
-		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
-			return
-		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
-			return
-	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
-		return
-	if(lastfire > world.time + delay)
-		return
-	lastfire = world.time
+/obj/item/gun/energy/beam_rifle/do_fire(atom/target, mob/living/user, message = TRUE, params, zone_override = "", bonus_spread = 0)
 	. = ..()
+	if(.)
+		lastfire = world.time
 	stop_aiming()
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()

@@ -12,12 +12,12 @@
 	. = ..()
 	if(.)
 		if(updating_canmove)
-			owner.update_canmove()
+			owner.update_mobility()
 			if(needs_update_stat || issilicon(owner))
 				owner.update_stat()
 
 /datum/status_effect/incapacitating/on_remove()
-	owner.update_canmove()
+	owner.update_mobility()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
 
@@ -29,10 +29,21 @@
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
-/datum/status_effect/incapacitating/knockdown/tick()
+//IMMOBILIZED
+/datum/status_effect/incapacitating/immobilized
+	id = "immobilized"
+
+//PARALYZED
+/datum/status_effect/incapacitating/paralyzed
+	id = "paralyzed"
+
+/datum/status_effect/incapacitating/paralyzed/tick()
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
+//DAZED
+/datum/status_effect/incapacitating/dazed
+	id = "dazed"
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
@@ -80,11 +91,11 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-/datum/status_effect/no_combat_mode/
+/datum/status_effect/no_combat_mode
 	id = "no_combat_mode"
-	blocks_combatmode = TRUE
 	alert_type = null
 	status_type = STATUS_EFFECT_REPLACE
+	blocks_combatmode = TRUE
 
 /datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -102,42 +113,74 @@
 /datum/status_effect/no_combat_mode/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+	owner.add_movespeed_modifier("[STATUS_EFFECT_MESMERIZE]_[id]", TRUE, priority = 64, override = TRUE, multiplicative_slowdown = 5, blacklisted_movetypes = FALSE? NONE : CRAWLING)
 
 /datum/status_effect/no_combat_mode/mesmerize/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+	owner.remove_movespeed_modifier("[STATUS_EFFECT_MESMERIZE]_[id]")
 
 /obj/screen/alert/status_effect/mesmerized
 	name = "Mesmerized"
-	desc = "You cant tear your sight from who is in front of you...Their gaze is simply too enthralling.."
+	desc = "You cant tear your sight from who is in front of you... their gaze is simply too enthralling.."
 	icon = 'icons/mob/actions/bloodsucker.dmi'
 	icon_state = "power_mez"
 
-/datum/status_effect/no_combat_mode/electrode
+/datum/status_effect/electrode
 	id = "tased"
+	alert_type = null
+	var/slowdown = 1.5
+	var/slowdown_priority = 50		//to make sure the stronger effect overrides
+	var/affect_crawl = FALSE
+	var/nextmove_modifier = 1
+	var/stamdmg_per_ds = 1		//a 20 duration would do 20 stamdmg, disablers do 24 or something
+	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
 
-/datum/status_effect/no_combat_mode/electrode/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration)) //TODO, figure out how to grab from subtype
 		duration = set_duration
 	. = ..()
+	last_tick = world.time
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		if(C.combatmode)
 			C.toggle_combat_mode(TRUE)
-		C.add_movespeed_modifier(MOVESPEED_ID_TASED_STATUS, TRUE, override = TRUE, multiplicative_slowdown = 8)
+		C.add_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]", TRUE, priority = slowdown_priority, override = TRUE, multiplicative_slowdown = slowdown, blacklisted_movetypes = affect_crawl? NONE : CRAWLING)
 
-/datum/status_effect/no_combat_mode/electrode/on_remove()
+/datum/status_effect/electrode/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.remove_movespeed_modifier(MOVESPEED_ID_TASED_STATUS)
+		C.remove_movespeed_modifier("[MOVESPEED_ID_TASED_STATUS]_[id]")
 	. = ..()
 
-/datum/status_effect/no_combat_mode/electrode/tick()
+/datum/status_effect/electrode/tick()
+	var/diff = world.time - last_tick
 	if(owner)
-		owner.adjustStaminaLoss(5) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+		var/mob/living/carbon/C = owner
+		if(HAS_TRAIT(C, TRAIT_TASED_RESISTANCE))
+			qdel(src)
+		else
+			C.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+	last_tick = world.time
 
-/datum/status_effect/no_combat_mode/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
-	return 2
+/datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
+	return nextmove_modifier
+
+/datum/status_effect/electrode/no_combat_mode
+	id = "tased_strong"
+	slowdown = 8
+	slowdown_priority = 100
+	nextmove_modifier = 2
+	blocks_combatmode = TRUE
+
+/datum/status_effect/electrode/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(HAS_TRAIT(C, TRAIT_TASED_RESISTANCE))
+			return
+		if(C.combatmode)
+			C.toggle_combat_mode(TRUE)
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
@@ -187,7 +230,7 @@
 	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check(chargecost = 0) && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
-				owner.Knockdown(20)
+				owner.DefaultCombatKnockdown(20)
 			if(iscultist(owner))
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, BODY_ZONE_L_LEG)
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, BODY_ZONE_R_LEG)
@@ -534,7 +577,7 @@
 	var/old_oxyloss
 
 /datum/status_effect/kindle/tick()
-	owner.Knockdown(15, TRUE, FALSE, 15)
+	owner.DefaultCombatKnockdown(15, TRUE, FALSE, 15)
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.silent = max(2, C.silent)
@@ -587,6 +630,19 @@
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
 
+/datum/status_effect/electrostaff
+	id = "electrostaff"
+	alert_type = null
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/electrostaff/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	owner.add_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF, multiplicative_slowdown = 1, movetypes = GROUND)
+
+/datum/status_effect/electrostaff/on_remove()
+	owner.remove_movespeed_modifier(MOVESPEED_ID_ELECTROSTAFF)
 
 //GOLEM GANG
 
@@ -745,3 +801,26 @@ datum/status_effect/pacify
 					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
 					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
 					owner.throw_item(pick(targets))
+
+/datum/status_effect/dna_melt
+	id = "dna_melt"
+	duration = 600
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/dna_melt
+	var/kill_either_way = FALSE //no amount of removing mutations is gonna save you now
+
+/datum/status_effect/dna_melt/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+	. = ..()
+	to_chat(new_owner, "<span class='boldwarning'>My body can't handle the mutations! I need to get my mutations removed fast!</span>")
+
+/datum/status_effect/dna_melt/on_remove()
+	if(!ishuman(owner))
+		owner.gib() //fuck you in particular
+		return
+	var/mob/living/carbon/human/H = owner
+	H.something_horrible(kill_either_way)
+
+/obj/screen/alert/status_effect/dna_melt
+	name = "Genetic Breakdown"
+	desc = "I don't feel so good. Your body can't handle the mutations! You have one minute to remove your mutations, or you will be met with a horrible fate."
+	icon_state = "dna_melt"

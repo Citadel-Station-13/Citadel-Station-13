@@ -315,7 +315,7 @@
 	bloodsuckerdatum.handle_eat_human_food(food_nutrition)
 
 
-/datum/antagonist/bloodsucker/proc/handle_eat_human_food(var/food_nutrition) // Called from snacks.dm and drinks.dm
+/datum/antagonist/bloodsucker/proc/handle_eat_human_food(food_nutrition, puke_blood = TRUE, masquerade_override) // Called from snacks.dm and drinks.dm
 	set waitfor = FALSE
 	if(!owner.current || !iscarbon(owner.current))
 		return
@@ -324,14 +324,14 @@
 	C.nutrition -= food_nutrition
 	foodInGut += food_nutrition
 	// Already ate some bad clams? Then we can back out, because we're already sick from it.
-	if (foodInGut != food_nutrition)
+	if(foodInGut != food_nutrition)
 		return
 	// Haven't eaten, but I'm in a Human Disguise.
-	else if (poweron_masquerade)
+	else if(poweron_masquerade && !masquerade_override)
 		to_chat(C, "<span class='notice'>Your stomach turns, but your \"human disguise\" keeps the food down...for now.</span>")
 	// Keep looping until we purge. If we have activated our Human Disguise, we ignore the food. But it'll come up eventually...
 	var/sickphase = 0
-	while (foodInGut)
+	while(foodInGut)
 		sleep(50)
 		C.adjust_disgust(10 * sickphase)
 		// Wait an interval...
@@ -340,24 +340,29 @@
 		if(C.stat == DEAD)
 			return
 		// Put up disguise? Then hold off the vomit.
-		if(poweron_masquerade)
+		if(poweron_masquerade && !masquerade_override)
 			if(sickphase > 0)
 				to_chat(C, "<span class='notice'>Your stomach settles temporarily. You regain your composure...for now.</span>")
 			sickphase = 0
 			continue
 		switch(sickphase)
-			if (1)
+			if(1)
 				to_chat(C, "<span class='warning'>You feel unwell. You can taste ash on your tongue.</span>")
 				C.Stun(10)
-			if (2)
+			if(2)
 				to_chat(C, "<span class='warning'>Your stomach turns. Whatever you ate tastes of grave dirt and brimstone.</span>")
 				C.Dizzy(15)
 				C.Stun(13)
-			if (3)
+			if(3)
 				to_chat(C, "<span class='warning'>You purge the food of the living from your viscera! You've never felt worse.</span>")
-				C.vomit(foodInGut * 4, foodInGut * 2, 0)  // (var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
-				C.blood_volume = max(0, C.blood_volume - foodInGut * 2)
+				 //Puke blood only if puke_blood is true, and loose some blood, else just puke normally.
+				if(puke_blood)
+					C.blood_volume = max(0, C.blood_volume - foodInGut * 2)
+					C.vomit(foodInGut * 4, foodInGut * 2, 0) 
+				else 
+					C.vomit(foodInGut * 4, FALSE, 0)
 				C.Stun(30)
 				//C.Dizzy(50)
 				foodInGut = 0
+				SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "vampdisgust", /datum/mood_event/bloodsucker_disgust)
 		sickphase ++

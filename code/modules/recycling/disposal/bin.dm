@@ -79,12 +79,12 @@
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
-		if(istype(I, /obj/item/screwdriver))
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			panel_open = !panel_open
 			I.play_tool_sound(src)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
-		else if(istype(I, /obj/item/weldingtool) && panel_open)
+		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
@@ -99,7 +99,7 @@
 			return
 		place_item_in_disposal(I, user)
 		update_icon()
-		return 1 //no afterattack
+		return TRUE //no afterattack
 	else
 		return ..()
 
@@ -137,7 +137,7 @@
 		else
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			log_combat(user, target, "stuffed", addition="into [src]")
-			target.LAssailant = user
+			target.LAssailant = WEAKREF(user)
 		update_icon()
 
 /obj/machinery/disposal/proc/can_stuff_mob_in(mob/living/target, mob/living/user, pushing = FALSE)
@@ -190,10 +190,6 @@
 		AM.forceMove(T)
 		AM.pipe_eject(0)
 	update_icon()
-
-// update the icon & overlays to reflect mode & status
-/obj/machinery/disposal/update_icon()
-	return
 
 /obj/machinery/disposal/proc/flush()
 	flushing = TRUE
@@ -288,32 +284,16 @@
 	var/datum/oracle_ui/themed/nano/ui
 	obj_flags = CAN_BE_HIT | USES_TGUI | SHOVABLE_ONTO
 
-
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
-	if(!pressure_charging && !full_pressure && !flush)
-		if(I.tool_behaviour == TOOL_SCREWDRIVER)
-			panel_open = !panel_open
-			I.play_tool_sound(src)
-			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
-			return
-		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!I.tool_start_check(user, amount=0))
-				return
-
-			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
-			if(I.use_tool(src, user, 20, volume=100) && panel_open)
-				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
-				deconstruct()
-			return
-
-	if(user.a_intent != INTENT_HARM)
-		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
-			return
-		place_item_in_disposal(I, user)
+	if(istype(I, /obj/item/storage/bag/trash))	//Not doing component overrides because this is a specific type.
+		var/obj/item/storage/bag/trash/T = I
+		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
+		to_chat(user, "<span class='warning'>You empty the bag.</span>")
+		for(var/obj/item/O in T.contents)
+			STR.remove_from_storage(O,src)
+		T.update_icon()
 		update_icon()
-		return TRUE //no afterattack
 	else
 		return ..()
 
@@ -388,7 +368,7 @@
 /obj/machinery/disposal/bin/shove_act(mob/living/target, mob/living/user)
 	if(!can_stuff_mob_in(target, user, TRUE))
 		return FALSE
-	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_SOLID)
 	target.forceMove(src)
 	user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [src]!</span>",
 		"<span class='danger'>You shove [target.name] into \the [src]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -402,8 +382,8 @@
 	pressure_charging = TRUE
 	update_icon()
 
-/obj/machinery/disposal/bin/update_icon()
-	cut_overlays()
+/obj/machinery/disposal/bin/update_overlays()
+	. = ..()
 	if(stat & BROKEN)
 		pressure_charging = FALSE
 		flush = FALSE
@@ -411,7 +391,7 @@
 
 	//flush handle
 	if(flush)
-		add_overlay("dispover-handle")
+		. += "dispover-handle"
 
 	//only handle is shown if no power
 	if(stat & NOPOWER || panel_open)
@@ -419,13 +399,13 @@
 
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay("dispover-full")
+		. += "dispover-full"
 
 	//charging and ready light
 	if(pressure_charging)
-		add_overlay("dispover-charge")
+		. += "dispover-charge"
 	else if(full_pressure)
-		add_overlay("dispover-ready")
+		. += "dispover-ready"
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
