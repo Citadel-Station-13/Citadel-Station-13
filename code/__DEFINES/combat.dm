@@ -30,15 +30,6 @@
 #define EFFECT_JITTER		"jitter"
 
 // /mob/living/combat_flags
-// Self documenting defines
-#define IS_RESISTING_REST(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_RESISTING_REST)
-#define IS_INTENTIONALLY_RESTING(mob)		FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING)
-#define IS_ATTEMPTING_CRAWL(mob)			FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
-
-// Kind of bad file to put this in but it goes int othe same thing, I guess.
-#define IS_COMBAT_MODE_LOCKED(mob)			FORCE_BOOLEANHAS_TRAIT(mob, TRAIT_COMBAT_MODE_LOCKED)
-#define IS_SPRINT_LOCKED(mob)				FORCE_BOOLEANHAS_TRAIT(mob, TRAIT_SPRINT_LOCKED)
-
 #define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !IS_HARD_STAMCRITTED(mob))
 
 /// Default combat flags for those affected by ((stamina combat))
