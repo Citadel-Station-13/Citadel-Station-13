@@ -3,7 +3,7 @@
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_COMBAT_MODE_LOCKED), .proc/update_combat_lock)
 
 /mob/living/proc/update_combat_lock()
-	var/locked = IS_COMBAT_MODE_LOCKED(src)
+	var/locked = HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCKED)
 	var/desired = (combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
 	var/actual = (combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 	if(actual)
@@ -50,7 +50,7 @@
 	if((combat_flags & COMBAT_FLAG_COMBAT_TOGGLED) && (combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
-	if(!IS_COMBAT_MODE_LOCKED(src) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(!HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCKED) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		enable_combat_mode(silent, FALSE, visible, FALSE)
 	update_combat_mode_icon()
 	client?.show_popup_menus = FALSE

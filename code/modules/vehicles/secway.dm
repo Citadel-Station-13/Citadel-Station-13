@@ -29,7 +29,7 @@
 	var/new_speed = normalspeed
 	if(isliving(user))
 		var/mob/living/L = user
-		if(IS_SPRINT_TOGGLED(L) && charge)
+		if((L.combat_flags & COMBAT_FLAG_SPRINT_TOGGLED) && charge)
 			charge--
 			new_speed = chargespeed
 	var/datum/component/riding/D = GetComponent(/datum/component/riding)

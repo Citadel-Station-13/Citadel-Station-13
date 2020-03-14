@@ -34,8 +34,8 @@
 	set category = "IC"
 	if(client?.prefs?.autostand)
 		TOGGLE_BITFIELD(combat_flags, COMBAT_FLAG_INTENTIONALLY_RESTING)
-		to_chat(src, "<span class='notice'>You are now attempting to [IS_INTENTIONALLY_RESTING(src) ? "[!resting ? "lay down and ": ""]stay down" : "[resting ? "get up and ": ""]stay up"].</span>")
-		if(IS_INTENTIONALLY_RESTING(src) && !resting)
+		to_chat(src, "<span class='notice'>You are now attempting to [(combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING) ? "[!resting ? "lay down and ": ""]stay down" : "[resting ? "get up and ": ""]stay up"].</span>")
+		if((combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING) && !resting)
 			set_resting(TRUE, FALSE)
 		else
 			resist_a_rest()
@@ -149,7 +149,7 @@
 	lying_prev = lying
 
 	//Handle citadel autoresist
-	if(CHECK_MOBILITY(src, MOBILITY_MOVE) && !IS_INTENTIONALLY_RESTING(src) && canstand_involuntary && iscarbon(src) && client?.prefs?.autostand)//CIT CHANGE - adds autostanding as a preference
+	if(CHECK_MOBILITY(src, MOBILITY_MOVE) && !(combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING) && canstand_involuntary && iscarbon(src) && client?.prefs?.autostand)//CIT CHANGE - adds autostanding as a preference
 		addtimer(CALLBACK(src, .proc/resist_a_rest, TRUE), 0) //CIT CHANGE - ditto
 
 	// Movespeed mods based on arms/legs quantity

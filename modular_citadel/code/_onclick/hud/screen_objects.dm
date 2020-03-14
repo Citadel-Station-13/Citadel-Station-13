@@ -24,7 +24,7 @@
 		return
 	if((user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		icon_state = "combat"
-	else if(IS_COMBAT_MODE_LOCKED(user))
+	else if(HAS_TRAIT(user, TRAIT_COMBAT_MODE_LOCKED))
 		icon_state = "combat_locked"
 	else
 		icon_state = "combat_off"

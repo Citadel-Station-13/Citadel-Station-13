@@ -10,7 +10,7 @@
 	hud_used?.sprint_buffer?.update_to_mob(src)
 
 /mob/living/proc/update_sprint_lock()
-	var/locked = IS_SPRINT_LOCKED(src)
+	var/locked = HAS_TRAIT(TRAIT_SPRINT_LOCKED)
 	var/current = (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 	var/desired = (combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
 	if(locked)
@@ -43,7 +43,7 @@
 	if((combat_flags & COMBAT_FLAG_SPRINT_TOGGLED) && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_TOGGLED)
-	if(!IS_SPRINT_LOCKED(src) && !(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
+	if(!HAS_TRAIT(src, TRAIT_SPRINT_LOCKED) && !(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		enable_sprint_mode(FALSE)
 	update_sprint_icon()
 	return TRUE
@@ -68,7 +68,7 @@
 			playsound_local(src, 'sound/misc/sprintactivate.ogg', 50, FALSE, pressure_affected = FALSE)
 
 /mob/living/proc/sprint_hotkey(targetstatus)
-	if(targetstatus != (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
+	if(targetstatus != FORCE_BOOLEAN(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		default_toggle_sprint()
 
 /mob/living/proc/doSprintLossTiles(amount)
