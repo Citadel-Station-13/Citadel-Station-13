@@ -1,5 +1,5 @@
 /mob/living/carbon/human/resist_a_rest(automatic = FALSE, ignoretimer = FALSE)
-	if(!resting || stat || IS_RESISTING_REST(src))
+	if(!resting || stat || (combat_flags & COMBAT_FLAG_RESISTING_REST))
 		return FALSE
 	if(ignoretimer)
 		set_resting(FALSE, FALSE)

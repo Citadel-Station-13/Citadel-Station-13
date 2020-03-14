@@ -9,7 +9,7 @@
 	voremode = !voremode
 	var/obj/screen/voretoggle/T = locate() in hud_used?.static_inventory
 	T?.update_icon_state()
-	if(IS_COMBAT_TOGGLED(src))
+	if(combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
 		return FALSE //let's not override the main draw of the game these days
 	SEND_SIGNAL(src, COMSIG_VORE_TOGGLED, src, voremode)
 	return TRUE
@@ -17,13 +17,13 @@
 /mob/living/carbon/Move(atom/newloc, direct = 0)
 	. = ..()
 	wrongdirmovedelay = FALSE
-	if(IS_COMBAT_ACTIVE(src) && client && lastmousedir)
+	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && client && lastmousedir)
 		if(lastmousedir != dir)
 			wrongdirmovedelay = TRUE
 			setDir(lastmousedir, ismousemovement = TRUE)
 
 /mob/living/carbon/onMouseMove(object, location, control, params)
-	if(!IS_COMBAT_ACTIVE(src))
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	mouse_face_atom(object)
 	lastmousedir = dir

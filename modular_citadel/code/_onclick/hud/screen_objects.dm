@@ -22,9 +22,9 @@
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(IS_COMBAT_ACTIVE(user))
+	if((user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		icon_state = "combat"
-	else if(IS_COMBAT_MODE_LOCKED(user))
+	else if(HAS_TRAIT(user, TRAIT_COMBAT_MODE_LOCKED))
 		icon_state = "combat_locked"
 	else
 		icon_state = "combat_off"
@@ -43,7 +43,7 @@
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(user.voremode && !IS_COMBAT_ACTIVE(user))
+	if(user.voremode && !(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		icon_state = "nom"
 	else
 		icon_state = "nom_off"

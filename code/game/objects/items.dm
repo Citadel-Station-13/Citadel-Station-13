@@ -404,7 +404,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		if(IS_COMBAT_ACTIVE(C) && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
+		if((C.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
 			if(!C.get_active_held_item())
 				C.UnarmedAttack(src, TRUE)
 				if(C.get_active_held_item() == src)

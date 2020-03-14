@@ -10,9 +10,9 @@
 	hud_used?.sprint_buffer?.update_to_mob(src)
 
 /mob/living/proc/update_sprint_lock()
-	var/locked = IS_SPRINT_LOCKED(src)
-	var/current = IS_SPRINTING(src)
-	var/desired = IS_SPRINT_TOGGLED(src)
+	var/locked = HAS_TRAIT(src, TRAIT_SPRINT_LOCKED)
+	var/current = (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
+	var/desired = (combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
 	if(locked)
 		if(current)
 			disable_sprint_mode(FALSE)
@@ -26,38 +26,38 @@
 	update_sprint_icon()
 
 /mob/living/proc/enable_sprint_mode(update_icon = TRUE)
-	if(IS_SPRINTING(src))
+	if(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
 	if(update_icon)
 		update_sprint_icon()
 
 /mob/living/proc/disable_sprint_mode(update_icon = TRUE)
-	if(!IS_SPRINTING(src))
+	if(!(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
 	if(update_icon)
 		update_sprint_icon()
 
 /mob/living/proc/enable_intentional_sprint_mode()
-	if(IS_SPRINT_TOGGLED(src) && IS_SPRINTING(src))
+	if((combat_flags & COMBAT_FLAG_SPRINT_TOGGLED) && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_TOGGLED)
-	if(!IS_SPRINT_LOCKED(src) && !IS_SPRINTING(src))
+	if(!HAS_TRAIT(src, TRAIT_SPRINT_LOCKED) && !(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		enable_sprint_mode(FALSE)
 	update_sprint_icon()
 	return TRUE
 
 /mob/living/proc/disable_intentional_sprint_mode()
-	if(!IS_SPRINT_TOGGLED(src) && !IS_SPRINTING(src))
+	if(!(combat_flags & COMBAT_FLAG_SPRINT_TOGGLED) && !(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_TOGGLED)
-	if(IS_SPRINTING(src))
+	if(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		disable_sprint_mode(FALSE)
 	update_sprint_icon()
 
 /mob/living/proc/user_toggle_intentional_sprint_mode()
-	var/old = IS_SPRINT_TOGGLED(src)
+	var/old = (combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
 	if(old)
 		disable_intentional_sprint_mode()
 		if((m_intent == MOVE_INTENT_RUN) && CHECK_ALL_MOBILITY(src, MOBILITY_STAND|MOBILITY_MOVE))
@@ -68,7 +68,7 @@
 			playsound_local(src, 'sound/misc/sprintactivate.ogg', 50, FALSE, pressure_affected = FALSE)
 
 /mob/living/proc/sprint_hotkey(targetstatus)
-	if(targetstatus != IS_SPRINTING(src))
+	if(targetstatus != FORCE_BOOLEAN(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		default_toggle_sprint()
 
 /mob/living/proc/doSprintLossTiles(amount)

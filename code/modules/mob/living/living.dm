@@ -118,7 +118,7 @@
 		if(!CHECK_MOBILITY(src, MOBILITY_STAND) && CHECK_MOBILITY(L, MOBILITY_STAND))
 			var/origtargetloc = L.loc
 			if(!pulledby)
-				if(IS_ATTEMPTING_CRAWL(src))
+				if(combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
 					return TRUE
 				if(IS_STAMCRIT(src))
 					to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
@@ -369,7 +369,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
-	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || IS_HARD_STAMCRITTED(src) || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
 		return TRUE
 
 /mob/living/canUseStorage()

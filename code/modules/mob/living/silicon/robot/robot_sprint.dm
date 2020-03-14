@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/default_toggle_sprint(shutdown = FALSE)
-	var/current = IS_SPRINTING(src)
+	var/current = (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 	if(current || shutdown || !cell || (cell.charge < 25) || !cansprint)
 		disable_intentional_sprint_mode()
 		if(CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE))

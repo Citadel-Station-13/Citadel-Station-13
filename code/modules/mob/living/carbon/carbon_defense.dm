@@ -79,11 +79,11 @@
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(!IS_COMBAT_ACTIVE(user))
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 0.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
-	if(!IS_COMBAT_ACTIVE(src))
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 1.5
 	//CIT CHANGES END HERE
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
@@ -347,7 +347,7 @@
 		AdjustAllImmobility(-60, FALSE)
 		AdjustUnconscious(-60, FALSE)
 		AdjustSleeping(-100, FALSE)
-		if(IS_HARD_STAMCRITTED(src))
+		if(combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 			adjustStaminaLoss(-15)
 		else
 			set_resting(FALSE, FALSE)

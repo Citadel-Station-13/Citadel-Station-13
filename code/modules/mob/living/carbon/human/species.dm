@@ -1483,11 +1483,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
-		if(!IS_COMBAT_ACTIVE(target) && damage < user.dna.species.punchstunthreshold)
+		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && damage < user.dna.species.punchstunthreshold)
 			damage = user.dna.species.punchstunthreshold - 1
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.5
-		if(!IS_COMBAT_ACTIVE(user))
+		if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 			damage *= 0.25
 		//END OF CITADEL CHANGES
 
@@ -1601,11 +1601,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.forcesay(GLOB.hit_appends)
 			log_combat(user, target, "pushed over")
 			return*/
-		if(!IS_COMBAT_ACTIVE(target)) // CITADEL CHANGE
+		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)) // CITADEL CHANGE
 			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND)) //CITADEL CHANGE
 			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
-		if(!IS_COMBAT_ACTIVE(target)) //CITADEL CHANGE
+		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)) //CITADEL CHANGE
 			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
 		if(user.pulling == target)
 			randn += -20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
@@ -1682,12 +1682,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(!IS_COMBAT_ACTIVE(user))
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 0.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	if(istype(H))
-		if(!IS_COMBAT_ACTIVE(H))
+		if(!(H.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 			totitemdamage *= 1.5
 	//CIT CHANGES END HERE
 	var/weakness = H.check_weakness(I, user)
@@ -1802,7 +1802,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return
-		if(!IS_COMBAT_ACTIVE(user))
+		if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 			to_chat(user, "<span class='warning'>You need combat mode to be active to that!</span>")
 			return
 		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
