@@ -74,6 +74,7 @@
 #define MARTIALART_HUNTER "hunter-fu"
 
 //Blob
-/// blob gets a free reroll every X time
-#define BLOB_REROLL_TIME 2400
+#define BLOB_REROLL_TIME 2400 // blob gets a free reroll every X time
+#define BLOB_SPREAD_COST 4
+#define BLOB_ATTACK_REFUND 2 //blob refunds this much if it attacks and doesn't spread
 #define BLOB_REFLECTOR_COST 15

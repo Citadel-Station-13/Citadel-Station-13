@@ -232,7 +232,7 @@ Property weights are:
 	pop_antag_ratio = 7
 	flags = USE_PREF_WEIGHTS
 
-/datum/dynamic_storyteller/memes
+/datum/dynamic_storyteller/story
 	name = "Story"
 	config_tag = "story"
 	desc = "Antags with options for loadouts and gimmicks. Traitor, wizard, nukies."
