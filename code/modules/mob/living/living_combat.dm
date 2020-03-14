@@ -4,7 +4,7 @@
 
 /mob/living/proc/update_combat_lock()
 	var/locked = IS_COMBAT_MODE_LOCKED(src)
-	var/desired = IS_COMBAT_TOGGLED(src)
+	var/desired = (combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
 	var/actual = (combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 	if(actual)
 		if(locked)
@@ -47,7 +47,7 @@
 
 /// Enables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
 /mob/living/proc/enable_intentional_combat_mode(silent = TRUE, visible = FALSE)
-	if(IS_COMBAT_TOGGLED(src) && (combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if((combat_flags & COMBAT_FLAG_COMBAT_TOGGLED) && (combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
 	if(!IS_COMBAT_MODE_LOCKED(src) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
@@ -58,7 +58,7 @@
 
 /// Disables intentionally being in combat mode. Please try not to use this proc for feedback whenever possible.
 /mob/living/proc/disable_intentional_combat_mode(silent = TRUE, visible = FALSE)
-	if(!IS_COMBAT_TOGGLED(src) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_TOGGLED) && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_TOGGLED)
 	if((combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
@@ -69,7 +69,7 @@
 
 /// Toggles whether the user is intentionally in combat mode. THIS should be the proc you generally use! Has built in visual/to other player feedback, as well as an audible cue to ourselves.
 /mob/living/proc/user_toggle_intentional_combat_mode(visible = TRUE)
-	var/old = IS_COMBAT_TOGGLED(src)
+	var/old = (combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
 	if(old)
 		disable_intentional_combat_mode()
 		playsound_local(src, 'sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above!

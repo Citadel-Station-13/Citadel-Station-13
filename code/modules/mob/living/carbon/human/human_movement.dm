@@ -9,7 +9,7 @@
 
 /mob/living/carbon/human/movement_delay()
 	. = ..()
-	if(CHECK_MOBILITY(src, MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && IS_SPRINTING(src))
+	if(CHECK_MOBILITY(src, MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		var/static/datum/config_entry/number/movedelay/sprint_speed_increase/SSI
 		if(!SSI)
 			SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
@@ -53,7 +53,7 @@
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
-	if(. && IS_SPRINTING(src) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && !pulledby)
+	if(. && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && !pulledby)
 		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
 			doSprintLossTiles(1)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)

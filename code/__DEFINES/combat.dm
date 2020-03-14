@@ -30,15 +30,6 @@
 #define EFFECT_JITTER		"jitter"
 
 // /mob/living/combat_flags
-// Heleprs, need to have mob casted to /mob/living, for easier replacements later.
-#define (mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
-#define IS_SPRINTING(mob)					FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
-
-// These are for if the USER wants them to be on, for stuff like interface icon updates and right click interaction settings..
-#define IS_COMBAT_TOGGLED(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED)
-#define IS_SPRINT_TOGGLED(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
-#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !IS_HARD_STAMCRITTED(mob))
-
 // Self documenting defines
 #define IS_RESISTING_REST(mob)				FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_RESISTING_REST)
 #define IS_INTENTIONALLY_RESTING(mob)		FORCE_BOOLEAN(mob.combat_flags & COMBAT_FLAG_INTENTIONALLY_RESTING)
@@ -47,6 +38,8 @@
 // Kind of bad file to put this in but it goes int othe same thing, I guess.
 #define IS_COMBAT_MODE_LOCKED(mob)			FORCE_BOOLEANHAS_TRAIT(mob, TRAIT_COMBAT_MODE_LOCKED)
 #define IS_SPRINT_LOCKED(mob)				FORCE_BOOLEANHAS_TRAIT(mob, TRAIT_SPRINT_LOCKED)
+
+#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !IS_HARD_STAMCRITTED(mob))
 
 /// Default combat flags for those affected by ((stamina combat))
 #define COMBAT_FLAGS_DEFAULT					NONE
