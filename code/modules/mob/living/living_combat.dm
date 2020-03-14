@@ -36,7 +36,7 @@
 	if(visible)
 		visible_message("<span class='warning'>[src] drops into a combative stance!</span>", "<span class='warning'>You drop into a combative stance!</span>")
 	else if(!silent)
-		to_chat(src, was_forced? "<span class='warning'>Your muscles reflexively tignten!</span>" : "<span class='warning'>You tighten your muscles.</span>")
+		to_chat(src, was_forced? "<span class='warning'>Your muscles reflexively tighten!</span>" : "<span class='warning'>You tighten your muscles.</span>")
 	if(update_icon)
 		update_combat_mode_icon()
 
