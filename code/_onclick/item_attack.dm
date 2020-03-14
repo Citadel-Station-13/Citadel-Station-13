@@ -179,14 +179,20 @@
 	if(!isnull(stagger_force))
 		return stagger_force
 	/// totally not an untested, arbitrary equation.
-	return (1.5 + (w_class/7.5)) * force
+	return clamp((1.5 + (w_class/7.5)) * (force / 2), 0, 10 SECONDS)
 
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user)
 	if(!CHECK_BITFIELD(target.status_flags, CANSTAGGER))
 		return FALSE
 	if(IS_SPRINTING(target))
 		target.do_staggered_animation()
-	target.Stagger(melee_stagger_duration())
+	var/duration = melee_stagger_duration()
+	if(!duration)		//0
+		return FALSE
+	else if(duration > 0)
+		target.Stagger(duration)
+	else				//negative
+		target.AdjustStaggered(duration)
 	return TRUE
 
 /mob/proc/do_staggered_animation()
