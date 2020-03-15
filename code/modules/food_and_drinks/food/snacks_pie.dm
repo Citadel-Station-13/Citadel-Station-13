@@ -44,7 +44,7 @@
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
-		if((dna.species.default_features["mam_snouts"] && dna.features["mam_snouts"] != "None") || (dna.species.default_features["snout"] && dna.features["snout"] != "None"))
+		if((("mam_snouts" in H.dna.species.default_features) && H.dna.features["mam_snouts"] != "None") || (("snout" in H.dna.species.default_features) && H.dna.features["snout"] != "None"))
 			creamoverlay.icon_state = "creampie_snout"
 		else
 			creamoverlay.icon_state = "creampie_human"
