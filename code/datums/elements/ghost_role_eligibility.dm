@@ -17,9 +17,10 @@
 			penalty += roundstart_quit_limit - world.time
 		if(penalty)
 			penalty += world.realtime
-			var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
-			if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
-				penalty = CANT_REENTER_ROUND
+			if(SSautotransfer.can_fire && SSautotransfer.maxvotes)
+				var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
+				if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+					penalty = CANT_REENTER_ROUND
 			if(!(M.ckey in timeouts))
 				timeouts += M.ckey
 				timeouts[M.ckey] = 0
@@ -41,7 +42,7 @@
 	return candidates
 
 /mob/proc/can_reenter_round(silent = FALSE)
-	var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+	var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(list(/datum/element/ghost_role_eligibility))
 	return eli.can_reenter_round(src,silent)
 
 /datum/element/ghost_role_eligibility/proc/can_reenter_round(var/mob/M,silent = FALSE)

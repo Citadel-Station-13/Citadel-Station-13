@@ -34,7 +34,7 @@
 	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
 	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
-	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(list(/datum/element/ghost_role_eligibility))
 	ghost_eligible = trim_list(eligibility.get_all_ghost_role_eligible())
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
@@ -273,10 +273,14 @@
 	var/ion_announce = 33
 	var/removeDontImproveChance = 10
 
+/datum/dynamic_ruleset/midround/malf/ready()
+	if(!candidates || !candidates.len)
+		return FALSE
+	return ..()
+
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	living_players = candidates[CURRENT_LIVING_PLAYERS]
-	for(var/mob/living/player in candidates)
+	for(var/mob/living/player in living_players)
 		if(!isAI(player))
 			candidates -= player
 			continue
@@ -287,8 +291,6 @@
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/malf/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
 	var/mob/living/silicon/ai/M = pick_n_take(candidates)
 	assigned += M.mind
 	var/datum/antagonist/traitor/AI = new
@@ -337,6 +339,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
 	..()
 	new_character.forceMove(pick(GLOB.wizardstart))
+	wizard = new_character.mind
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/rule_process() // i can literally copy this from are_special_antags_dead it's great
 	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
@@ -447,9 +450,7 @@
 	property_weights = list("story_potential" = -1, "trust" = 1, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/list/vents = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
-	// 50% chance of being incremented by one
-	required_candidates += prob(50)
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		if(QDELETED(temp_vent))
 			continue
@@ -463,6 +464,12 @@
 				vents += temp_vent
 	if(!vents.len)
 		return FALSE
+	return ..()
+
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
+	// 50% chance of being incremented by one
+	required_candidates += prob(50)
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/generate_ruleset_body(mob/applicant)
@@ -497,7 +504,7 @@
 	property_weights = list("story_potential" = 1, "trust" = 1, "extended" = 1, "valid" = 2, "integrity" = 1)
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/ready()
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
 		var/light_amount = T.get_lumcount()
@@ -505,7 +512,7 @@
 			spawn_locs += T
 	if(!spawn_locs.len)
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/generate_ruleset_body(mob/applicant)
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
