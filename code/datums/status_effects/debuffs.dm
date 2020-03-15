@@ -128,6 +128,7 @@
 
 /datum/status_effect/electrode
 	id = "tased"
+	alert_type = null
 	var/slowdown = 1.5
 	var/slowdown_priority = 50		//to make sure the stronger effect overrides
 	var/affect_crawl = FALSE
@@ -155,7 +156,11 @@
 /datum/status_effect/electrode/tick()
 	var/diff = world.time - last_tick
 	if(owner)
-		owner.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
+		var/mob/living/carbon/C = owner
+		if(HAS_TRAIT(C, TRAIT_TASED_RESISTANCE))
+			qdel(src)
+		else
+			C.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 	last_tick = world.time
 
 /datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
@@ -172,6 +177,8 @@
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
+		if(HAS_TRAIT(C, TRAIT_TASED_RESISTANCE))
+			return
 		if(C.combatmode)
 			C.toggle_combat_mode(TRUE)
 
@@ -794,3 +801,26 @@ datum/status_effect/pacify
 					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
 					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
 					owner.throw_item(pick(targets))
+
+/datum/status_effect/dna_melt
+	id = "dna_melt"
+	duration = 600
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/dna_melt
+	var/kill_either_way = FALSE //no amount of removing mutations is gonna save you now
+
+/datum/status_effect/dna_melt/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+	. = ..()
+	to_chat(new_owner, "<span class='boldwarning'>My body can't handle the mutations! I need to get my mutations removed fast!</span>")
+
+/datum/status_effect/dna_melt/on_remove()
+	if(!ishuman(owner))
+		owner.gib() //fuck you in particular
+		return
+	var/mob/living/carbon/human/H = owner
+	H.something_horrible(kill_either_way)
+
+/obj/screen/alert/status_effect/dna_melt
+	name = "Genetic Breakdown"
+	desc = "I don't feel so good. Your body can't handle the mutations! You have one minute to remove your mutations, or you will be met with a horrible fate."
+	icon_state = "dna_melt"

@@ -8,18 +8,18 @@
 	var/inv_slots
 	var/proctype //if present, will be invoked on headwear generation.
 
-/datum/element/mob_holder/Attach(datum/target, _worn_state, _alt_worn, _right_hand, _left_hand, _inv_slots = NONE, _proctype)
+/datum/element/mob_holder/Attach(datum/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE, proctype)
 	. = ..()
 
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	worn_state = _worn_state
-	alt_worn = _alt_worn
-	right_hand = _right_hand
-	left_hand = _left_hand
-	inv_slots = _inv_slots
-	proctype = _proctype
+	src.worn_state = worn_state
+	src.alt_worn = alt_worn
+	src.right_hand = right_hand
+	src.left_hand = left_hand
+	src.inv_slots = inv_slots
+	src.proctype = proctype
 
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -138,7 +138,7 @@
 			destination = get_turf(loc)
 		AM.forceMove(destination)
 
-/obj/item/clothing/head/mob_holder/dropped()
+/obj/item/clothing/head/mob_holder/dropped(mob/user)
 	. = ..()
 	if(held_mob && isturf(loc))//don't release on soft-drops
 		release()

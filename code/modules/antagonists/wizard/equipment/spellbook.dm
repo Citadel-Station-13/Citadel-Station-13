@@ -375,6 +375,8 @@
 	desc = "A collection of wands that allow for a wide variety of utility. Wands have a limited number of charges, so be conservative in use. Comes in a handy belt."
 	item_path = /obj/item/storage/belt/wands/full
 	category = "Defensive"
+	dynamic_requirement = 60
+	dynamic_cost = 10
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"

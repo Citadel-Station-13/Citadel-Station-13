@@ -218,7 +218,8 @@
 	. = ..()
 	if(iscarbon(M))
 		var/mob/living/carbon/patient = M
-		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
+		var/vol = reac_volume + M.reagents.get_reagent_amount(/datum/reagent/medicine/rezadone)
+		if(vol >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
 			patient.cure_husk("burn")
 			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.")
 
@@ -425,7 +426,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	overdose_threshold = 40
 	value = 6
 
-/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if (M.stat == DEAD)
 			show_message = 0
@@ -442,8 +443,9 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+			var/vol = reac_volume + M.reagents.get_reagent_amount(/datum/reagent/medicine/synthflesh)
 			//Has to be at less than THRESHOLD_UNHUSK burn damage and have 100 synthflesh before unhusking. Corpses dont metabolize.
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && M.getFireLoss() < THRESHOLD_UNHUSK && M.reagents.has_reagent(/datum/reagent/medicine/synthflesh, 100))
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && M.getFireLoss() < THRESHOLD_UNHUSK && (vol > 100))
 				M.cure_husk("burn")
 				M.visible_message("<span class='nicegreen'>Most of [M]'s burnt off or charred flesh has been restored.")
 	..()
@@ -957,7 +959,7 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = 0
 	if(M.has_dna())
-		M.dna.remove_all_mutations()
+		M.dna.remove_all_mutations(mutadone = TRUE)
 	if(!QDELETED(M)) //We were a monkey, now a human
 		..()
 
@@ -992,9 +994,11 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/M)
@@ -1298,6 +1302,14 @@ datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#918e53"
 	overdose_threshold = 30
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	..()
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	M.AdjustUnconscious(-20, 0)

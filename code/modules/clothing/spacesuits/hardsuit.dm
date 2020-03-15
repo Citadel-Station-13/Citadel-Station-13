@@ -707,7 +707,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
 	listeningTo = user
 
-/obj/item/clothing/suit/space/hardsuit/ancient/dropped()
+/obj/item/clothing/suit/space/hardsuit/ancient/dropped(mob/user)
 	. = ..()
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
