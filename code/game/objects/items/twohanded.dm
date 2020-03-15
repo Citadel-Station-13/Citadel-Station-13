@@ -1055,11 +1055,9 @@
 		var/mob/living/silicon/robot/R = loc
 		. = R.get_cell()
 
-/obj/item/twohanded/electrostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!on)
-		return FALSE
-	if((attack_type == PROJECTILE_ATTACK) && !can_block_projectiles)
-		return FALSE
+/obj/item/twohanded/electrostaff/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+	if(!on) || (!can_block_projectiles && (attack_type & PROJECTILE_ATTACK)))
+		return BLOCK_NONE
 	return ..()
 
 /obj/item/twohanded/electrostaff/proc/min_hitcost()
