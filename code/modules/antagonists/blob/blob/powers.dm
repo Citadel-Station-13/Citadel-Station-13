@@ -71,7 +71,7 @@
 		var/list/nodes = list()
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
-			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blobstrain.name]":"No Strain"])"] = B
+			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
@@ -120,13 +120,13 @@
 /mob/camera/blob/proc/create_shield(turf/T)
 	var/obj/structure/blob/shield/S = locate(/obj/structure/blob/shield) in T
 	if(S)
-		if(!can_buy(15))
+		if(!can_buy(BLOB_REFLECTOR_COST))
 			return
 		if(S.obj_integrity < S.max_integrity * 0.5)
 			add_points(BLOB_REFLECTOR_COST)
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified properly!</span>")
 			return
-		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced intregrity.</span>")
+		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity.</span>")
 		S.change_to(/obj/structure/blob/shield/reflective, src)
 	else
 		createSpecial(15, /obj/structure/blob/shield, 0, 0, T)
@@ -247,8 +247,8 @@
 
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
-	set name = "Expand/Attack Blob (4)"
-	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear, instead attacks it, damaging mobs and objects."
+	set name = "Expand/Attack Blob ([BLOB_SPREAD_COST])"
+	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear, instead attacks it, damaging mobs and objects and refunding [BLOB_ATTACK_REFUND] points."
 	var/turf/T = get_turf(src)
 	expand_blob(T)
 
@@ -261,7 +261,7 @@
 	if(!possibleblobs.len)
 		to_chat(src, "<span class='warning'>There is no blob adjacent to the target tile!</span>")
 		return
-	if(can_buy(4))
+	if(can_buy(BLOB_SPREAD_COST))
 		var/attacksuccess = FALSE
 		for(var/mob/living/L in T)
 			if(ROLE_BLOB in L.faction) //no friendly/dead fire
@@ -271,11 +271,11 @@
 			blobstrain.attack_living(L)
 		var/obj/structure/blob/B = locate() in T
 		if(B)
-			if(attacksuccess) //if we successfully attacked a turf with a blob on it, don't refund shit
+			if(attacksuccess) //if we successfully attacked a turf with a blob on it, only give an attack refund
 				B.blob_attack_animation(T, src)
 			else
 				to_chat(src, "<span class='warning'>There is a blob there!</span>")
-				add_points(4) //otherwise, refund all of the cost
+				add_points(BLOB_SPREAD_COST) //otherwise, refund all of the cost
 		else
 			var/list/cardinalblobs = list()
 			var/list/diagonalblobs = list()
@@ -288,14 +288,15 @@
 			var/obj/structure/blob/OB
 			if(cardinalblobs.len)
 				OB = pick(cardinalblobs)
-				OB.expand(T, src)
+				if(!OB.expand(T, src))
+					add_points(BLOB_ATTACK_REFUND) //assume it's attacked SOMETHING, possibly a structure
 			else
 				OB = pick(diagonalblobs)
 				if(attacksuccess)
 					OB.blob_attack_animation(T, src)
 					playsound(OB, 'sound/effects/splat.ogg', 50, 1)
 				else
-					add_points(4) //if we're attacking diagonally and didn't hit anything, refund
+					add_points(BLOB_SPREAD_COST) //if we're attacking diagonally and didn't hit anything, refund
 		if(attacksuccess)
 			last_attack = world.time + CLICK_CD_MELEE
 		else

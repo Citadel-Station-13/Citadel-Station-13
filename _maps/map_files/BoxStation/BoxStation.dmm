@@ -260,6 +260,11 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aaK" = (
+/obj/structure/table/wood,
+/mob/living/simple_animal/pet/fox/Renault,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/captain)
 "aaN" = (
 /obj/structure/chair/sofa/right,
 /turf/open/floor/plasteel,
@@ -21528,10 +21533,6 @@
 /obj/structure/table,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
-"bbZ" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/captain)
 "bca" = (
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
@@ -90412,7 +90413,7 @@ aYo
 aZV
 bao
 baP
-bbZ
+aaK
 bcP
 cBo
 bgS

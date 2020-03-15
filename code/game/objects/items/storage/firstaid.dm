@@ -525,14 +525,6 @@
 	desc = "A kit containing a Deluxe hypospray and Vials."
 	icon_state = "tactical-mini"
 
-/obj/item/storage/hypospraykit/cmo/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.can_hold = typecacheof(list(
-	/obj/item/hypospray/mkii,
-	/obj/item/reagent_containers/glass/bottle/vial))
-
 /obj/item/storage/hypospraykit/cmo/PopulateContents()
 	if(empty)
 		return

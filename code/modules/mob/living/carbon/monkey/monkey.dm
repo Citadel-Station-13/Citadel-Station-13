@@ -43,7 +43,7 @@
 
 /mob/living/carbon/monkey/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/mob_holder, "monkey", null, null, null, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/mob_holder, worn_state = "monkey", inv_slots = ITEM_SLOT_HEAD)
 
 
 /mob/living/carbon/monkey/Destroy()
