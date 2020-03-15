@@ -13,7 +13,8 @@
 
 /obj/item/clothing/head/wizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_HEAD)
+	if(magic_flags)
+		AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -41,7 +42,7 @@
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
-	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	magic_flags = NONE
 
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
@@ -82,7 +83,8 @@
 
 /obj/item/clothing/suit/wizrobe/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_OCLOTHING)
+	if(magic_flags)
+		AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -135,18 +137,21 @@
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/head/wizard/marisa/fake
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/suit/wizrobe/paper
 	name = "papier-mache robe" // no non-latin characters!
