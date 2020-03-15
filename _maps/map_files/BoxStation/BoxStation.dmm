@@ -55982,11 +55982,6 @@
 	icon_state = "carpetsymbol"
 	},
 /area/crew_quarters/theatre)
-"iob" = (
-/obj/structure/table/wood,
-/mob/living/simple_animal/pet/fox/Renault,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/captain)
 "iou" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
@@ -56373,6 +56368,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"jHQ" = (
+/obj/structure/table/wood,
+/mob/living/simple_animal/pet/fox/Renault,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/captain)
 "jIs" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -91733,7 +91733,7 @@ aYo
 aZV
 bao
 baP
-iob
+jHQ
 bcP
 cBo
 bgS
