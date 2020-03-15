@@ -36,21 +36,6 @@
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return BULLET_ACT_HIT
 
-/mob/living/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
-	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/I in held_items)
-		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-				return TRUE
-	return FALSE
-
-/mob/living/proc/check_reflect(def_zone) //Reflection checks for anything in your hands, based on the reflection chance of the object(s)
-	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone))
-			return TRUE
-	return FALSE
-
 /mob/living/proc/reflect_bullet_check(obj/item/projectile/P, def_zone)
 	if(P.is_reflectable && check_reflect(def_zone)) // Checks if you've passed a reflection% check
 		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \

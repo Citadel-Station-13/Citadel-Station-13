@@ -66,12 +66,17 @@
 //slowdown when in softcrit
 #define SOFTCRIT_ADD_SLOWDOWN 6
 
-//Attack types for checking shields/hit reactions
-#define MELEE_ATTACK 1
-#define UNARMED_ATTACK 2
-#define PROJECTILE_ATTACK 3
-#define THROWN_PROJECTILE_ATTACK 4
-#define LEAP_ATTACK 5
+/// Attack types for check_block()/run_block(). Flags, combinable.
+/// Attack was melee, whether or not armed.
+#define ATTACK_TYPE_MELEE			(1<<0)
+/// Attack was with a gun or something that should count as a gun (but not if a gun shouldn't count for a gun, crazy right?)
+#define ATTACK_TYPE_PROJECTILE		(1<<1)
+/// Attack was unarmed.. this usually means hand to hand combat.
+#define ATTACK_TYPE_UNARMED			(1<<2)
+/// Attack was a thrown atom hitting the victim.
+#define ATTACK_TYPE_THROWN			(1<<3)
+/// Attack was a bodyslam/leap/tackle. See: Xenomorph leap tackles.
+#define ATTACK_TYPE_TACKLE			(1<<4)
 
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH		"punch"
@@ -203,3 +208,24 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
+
+/// Bitflags for check_block() and handle_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
+/// Attack was not blocked
+#define BLOCK_NONE						NONE
+/// Attack was blocked, do not do damage. THIS FLAG MUST BE THERE FOR DAMAGE/EFFECT PREVENTION!
+#define BLOCK_SUCCESS					(1<<1)
+
+/// The below are for "metadata" on "how" the attack was blocked.
+
+/// Attack was and should be reflected (NOTE: the SHOULD here is important, as it says "the thing blocking isn't handling the reflecting for you so do it yourself"!)
+#define BLOCK_SHOULD_REFLECT			(1<<2)
+/// Attack was manually redirected (including reflected) by any means by the defender. For when YOU are handling the reflection, rather than the thing hitting you. (see sleeping carp)
+#define BLOCK_REDIRECTED				(1<<3)
+/// Attack was blocked by something like a shield.
+#define BLOCK_PHYSICAL_EXTERNAL			(1<<4)
+/// Attack was blocked by something worn on you.
+#define BLOCK_PHYSICAL_INTERNAL			(1<<5)
+/// Attack should pass through. Like SHOULD_REFLECT but for.. well, passing through harmlessly.
+#define BLOCK_SHOULD_PASSTHROUGH		(1<<6)
+/// Attack outright missed because the target dodged. Should usually be combined with SHOULD_PASSTHROUGH or something (see martial arts)
+#define BLOCK_TARGET_DODGED				(1<<7)
