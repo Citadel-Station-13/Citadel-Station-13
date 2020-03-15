@@ -261,8 +261,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaK" = (
-<<<<<<< HEAD
-/obj/machinery/computer/arcade/battle{
+<<<<<<< HEAD/obj/machinery/computer/arcade/battle{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -293,12 +292,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
-=======
-/obj/structure/table/wood,
-/mob/living/simple_animal/pet/fox/Renault,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/captain)
->>>>>>> 2de1395e6bc9f920a9a445047f296be03e0ffb97
 "aaN" = (
 /obj/structure/chair/sofa/right,
 /turf/open/floor/plasteel,
