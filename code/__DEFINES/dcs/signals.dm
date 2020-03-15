@@ -176,7 +176,7 @@
 //	#define SPEECH_IGNORE_SPAM 6
 //	#define SPEECH_FORCED 7
 
-#define COMSIG_MOB_SPELL_CAST_CHECK "mob_cast_check"			//called from base of /obj/effect/proc_holder/spell/cast_check(): (spell)
+#define COMSIG_MOB_SPELL_CAST_CHECK "spell_cast_check"			//called from base of /obj/effect/proc_holder/spell/cast_check(): (spell)
 
 // /mob/living signals
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regenerate_limbs"	//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
