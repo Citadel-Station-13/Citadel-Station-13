@@ -17,8 +17,6 @@
 		if(!SSI)
 			SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
 		. -= SSI.config_entry_value
-	if(wrongdirmovedelay)
-		. += 1
 	. += ..()
 
 /mob/living/carbon/human/proc/togglesprint() // If you call this proc outside of hotkeys or clicking the HUD button, I'll be disappointed in you.
