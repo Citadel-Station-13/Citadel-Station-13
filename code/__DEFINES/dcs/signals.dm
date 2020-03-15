@@ -175,21 +175,8 @@
 	#define SPEECH_LANGUAGE 5
 //	#define SPEECH_IGNORE_SPAM 6
 //	#define SPEECH_FORCED 7
-#define COMSIG_MOB_SPELL_CAST_CHECK "mob_cast_check"			//called from base of /obj/effect/proc_holder/spell/cast_check(): (spell)
-	#define SPELL_SKIP_ALL_REQS		(1<<0)
-	#define SPELL_SKIP_CENTCOM		(1<<1)
-	#define SPELL_SKIP_STAT			(1<<2)
-	#define SPELL_SKIP_CLOTHES		(1<<3)
-	#define SPELL_SKIP_ANTIMAGIC	(1<<4)
-	#define SPELL_SKIP_VOCAL		(1<<5)
-	#define SPELL_SKIP_MOBTYPE		(1<<6)
-	#define SPELL_WIZARD_HAT		(1<<7)
-	#define SPELL_WIZARD_ROBE		(1<<8)
-	#define SPELL_CULT_HELMET		(1<<9)
-	#define SPELL_CULT_ARMOR		(1<<10)
-	#define SPELL_WIZARD_GARB		(SPELL_WIZARD_HAT|SPELL_WIZARD_ROBE)
-	#define SPELL_CULT_GARB			(SPELL_CULT_HELMET|SPELL_CULT_ARMOR)
 
+#define COMSIG_MOB_SPELL_CAST_CHECK "mob_cast_check"			//called from base of /obj/effect/proc_holder/spell/cast_check(): (spell)
 
 // /mob/living signals
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regenerate_limbs"	//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
