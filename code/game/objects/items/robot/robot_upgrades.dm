@@ -462,7 +462,7 @@
 	desc = "An upgrade to the Medical module's hypospray, containing \
 		stronger versions of existing chemicals."
 	additional_reagents = list(/datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
-								/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid)
+								/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid, /datum/reagent/medicine/prussian_blue)
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"
