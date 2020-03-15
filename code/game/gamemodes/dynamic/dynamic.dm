@@ -54,9 +54,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	// Current storyteller
 	var/datum/dynamic_storyteller/storyteller = null
 	// Threat logging vars
-	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
+	/// Target threat level right now. Events and antags will try to keep the round at this level.
 	var/threat_level = 0
-	/// Set at the beginning of the round. Spent by the mode to "purchase" rules.
+	/// The current antag threat. Recalculated every time a ruletype starts or ends.
 	var/threat = 0 
 	/// Starting threat level, for things that increase it but can bring it back down.
 	var/initial_threat_level = 0
@@ -511,7 +511,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	starting_rule.trim_candidates()
 	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
 	if (starting_rule.pre_execute())
-		spend_threat(starting_rule.cost + added_threat)
 		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> -[starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat", verbose = TRUE)
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
@@ -534,8 +533,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 /datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if(rule.execute())
-		if(rule.persistent)
-			current_rules += rule
+		current_rules += rule
 		SSblackbox.record_feedback("associative","dynamic_rulesets",1,rule.get_blackbox_info())
 		return TRUE
 	rule.clean_up()	// Refund threat, delete teams and so on.
@@ -607,7 +605,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	if ((forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= threat)))
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
-			spend_threat(new_rule.cost)
 			log_threat("[new_rule.ruletype] - <b>[new_rule.name]</b> -[new_rule.cost] threat", verbose = TRUE)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGHLANDER_RULESET)
@@ -617,8 +614,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				log_game("DYNAMIC: Making a call to a specific ruleset...[new_rule.name]!")
 				SSblackbox.record_feedback("associative","dynamic_rulesets",1,new_rule.get_blackbox_info())
 				executed_rules += new_rule
-				if (new_rule.persistent)
-					current_rules += new_rule
+				current_rules += new_rule
 				return TRUE
 		else if (forced)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of eligible players.")
@@ -629,7 +625,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
-		spend_threat(rule.cost)
 		log_threat("[rule.ruletype] [rule.name] spent [rule.cost]", verbose = TRUE)
 		if(rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
@@ -647,8 +642,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		return TRUE
 	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
 	return FALSE
-
+		
 /datum/game_mode/dynamic/process()
+	threat = 0
 	if (pop_last_updated < world.time - (60 SECONDS))
 		pop_last_updated = world.time
 		update_playercounts()
@@ -658,7 +654,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			current_rules -= rule
 			SSblackbox.record_feedback("tally","dynamic",1,"Rulesets finished")
 			SSblackbox.record_feedback("associative","dynamic_rulesets_finished",1,rule.get_blackbox_info())
-	
+		else
+			threat += rule.cost
+
 	storyteller.do_process()
 	
 	if (midround_injection_cooldown < world.time)
@@ -767,23 +765,27 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			SSblackbox.record_feedback("tally","dynamic",1,"Successful latejoin injections")
 			latejoin_injection_cooldown = storyteller.get_latejoin_cooldown() + world.time
 
-/// Refund threat, but no more than threat_level.
+/// Refund threat, giving more room for other threats to fill.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
-	threat = min(threat_level,threat+regain)
+	threat -= regain
 	SSblackbox.record_feedback("tally","dynamic_threat",regain,"Refunded threat")
 	log_threat("[regain] refunded. Threat is now [threat].", verbose = TRUE)
 
-/// Generate threat and increase the threat_level if it goes beyond, capped at 100
+/// Increase the threat level.
 /datum/game_mode/dynamic/proc/create_threat(gain)
-	threat = min(100, threat+gain)
-	if(threat > threat_level)
-		threat_level = threat
+	threat_level += gain
 	SSblackbox.record_feedback("tally","dynamic_threat",gain,"Created threat")
-	log_threat("[gain] created. Threat is now [threat] and threat level is now [threat_level].", verbose = TRUE)
+	log_threat("[gain] created. Threat level is now [threat_level].", verbose = TRUE)
 
-/// Expend threat, can't fall under 0.
+/// Decrease the threat level.
+/datum/game_mode/dynamic/proc/remove_threat(loss)
+	threat_level -= gain
+	SSblackbox.record_feedback("tally","dynamic_threat",gain,"Removed threat")
+	log_threat("[loss] removed. Threat level is now [threat_level].", verbose = TRUE)
+
+/// Fill up more of the threat level.
 /datum/game_mode/dynamic/proc/spend_threat(cost)
-	threat = max(threat-cost,0)
+	threat += cost
 	SSblackbox.record_feedback("tally","dynamic_threat",cost,"Threat spent")
 	log_threat("[cost] spent. Threat is now [threat].", verbose = TRUE)
 

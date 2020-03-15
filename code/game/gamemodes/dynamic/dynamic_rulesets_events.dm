@@ -1,6 +1,7 @@
 /datum/dynamic_ruleset/event
 	ruletype = "Event"
 	var/typepath // typepath of the event
+	var/datum/round_event/E
 	var/triggering
 	var/earliest_start = 20 MINUTES
 
@@ -16,7 +17,7 @@
 	return ruleset_data
 
 /datum/dynamic_ruleset/event/execute()
-	var/datum/round_event/E = new typepath()
+	E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	// E.control = src // can't be done! we just don't use events that require these, those can be from_ghost almost always
 
@@ -25,6 +26,12 @@
 	log_game("Random Event triggering: [name] ([typepath])")
 
 	return E
+
+/datum/dynamic_ruleset/event/rule_process()
+	if(E in SSevents.running)
+		return FALSE
+	else
+		return RULESET_STOP_PROCESSING
 
 /datum/dynamic_ruleset/event/ready(forced = FALSE)
 	if (!forced)

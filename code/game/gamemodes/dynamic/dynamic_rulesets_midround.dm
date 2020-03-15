@@ -315,7 +315,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	config_tag = "midround_wizard"
-	persistent = TRUE
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
@@ -342,9 +341,8 @@
 	wizard = new_character.mind
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/rule_process() // i can literally copy this from are_special_antags_dead it's great
-	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+	if(!..())
 		return FALSE
-
 	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
 		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
 			return FALSE

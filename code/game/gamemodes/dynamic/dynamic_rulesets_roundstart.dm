@@ -8,7 +8,6 @@
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
 	config_tag = "traitor"
-	persistent = TRUE
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor/
 	minimum_required_age = 0
@@ -33,6 +32,9 @@
 		M.mind.special_role = ROLE_TRAITOR
 		M.mind.restricted_roles = restricted_roles
 	return TRUE
+
+/datum/dynamic_ruleset/roundstart/traitor/calculate_cost()
+	
 
 /datum/dynamic_ruleset/roundstart/traitor/rule_process()
 	if (autotraitor_cooldown > 0)
@@ -153,7 +155,6 @@
 /datum/dynamic_ruleset/roundstart/wizard
 	name = "Wizard"
 	config_tag = "wizard"
-	persistent = TRUE
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
 	minimum_required_age = 14
@@ -363,7 +364,6 @@
 /datum/dynamic_ruleset/roundstart/revs
 	name = "Revolution"
 	config_tag = "revolution"
-	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
 	antag_flag_override = ROLE_REV
 	antag_datum = /datum/antagonist/rev/head
@@ -765,7 +765,6 @@
 /datum/dynamic_ruleset/roundstart/meteor
 	name = "Meteor"
 	config_tag = "meteor"
-	persistent = TRUE
 	required_candidates = 0
 	weight = 3
 	cost = 0
@@ -802,7 +801,6 @@
 /datum/dynamic_ruleset/roundstart/bloodsucker
 	name = "Bloodsuckers"
 	config_tag = "bloodsucker"
-	persistent = TRUE
 	antag_flag = ROLE_BLOODSUCKER
 	antag_datum = ANTAG_DATUM_BLOODSUCKER
 	minimum_required_age = 0

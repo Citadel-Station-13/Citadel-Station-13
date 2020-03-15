@@ -15,7 +15,6 @@
 	var/weight = 3 // Weights for randomly picking storyteller. Multiplied by score after voting.
 	var/event_frequency_lower = 6 MINUTES // How rare events will be, at least.
 	var/event_frequency_upper = 20 MINUTES // How rare events will be, at most.
-	var/pop_antag_ratio = 5 // How many non-antags there should be vs antags.
 	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
@@ -83,25 +82,7 @@ Property weights are:
 	if(mode.forced_injection)
 		mode.forced_injection = !dry_run
 		return 100
-	var/chance = 0
-	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
-	var/high_pop_factor = (mode.current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
-	var/max_pop_per_antag = max(pop_antag_ratio,15 - round(mode.threat_level/10) - round(mode.current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))
-	if (!mode.current_players[CURRENT_LIVING_ANTAGS].len)
-		chance += 80 // No antags at all? let's boost those odds!
-	else
-		var/current_pop_per_antag = mode.current_players[CURRENT_LIVING_PLAYERS].len / mode.current_players[CURRENT_LIVING_ANTAGS].len
-		if (current_pop_per_antag > max_pop_per_antag)
-			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
-		else
-			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
-	if (mode.current_players[CURRENT_DEAD_PLAYERS].len > mode.current_players[CURRENT_LIVING_PLAYERS].len)
-		chance -= 30 // More than half the crew died? ew, let's calm down on antags
-	if (mode.threat > 70)
-		chance += 15
-	if (mode.threat < 30)
-		chance -= 15
-	return round(max(0,chance))
+	return round(max(0, ((mode.threat_level-mode.threat)*100)/mode.threat_level))
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
@@ -121,7 +102,7 @@ Property weights are:
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/midround/rule in mode.midround_rules)
 		// if there are antags OR the rule is an antag rule, antag_acceptable will be true.
-		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && mode.threat >= rule.cost)
+		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level - mode.threat))
 			// Classic secret : only autotraitor/minor roles
 			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 				continue
@@ -132,14 +113,12 @@ Property weights are:
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
 				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
-		else if(mode.threat < rule.cost)
-			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/latejoin_draft(mob/living/carbon/human/newPlayer)
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/latejoin/rule in mode.latejoin_rules)
-		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && mode.threat >= rule.cost)
+		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level - mode.threat))
 			// Classic secret : only autotraitor/minor roles
 			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 				continue
@@ -156,22 +135,18 @@ Property weights are:
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
 				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
-		else if(mode.threat < rule.cost)
-			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/event_draft()
 	var/list/drafted_rules = list()
 	for(var/datum/dynamic_ruleset/event/rule in mode.events)
-		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && mode.threat >= rule.cost)
+		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && (mode.threat_level - mode.threat) >= rule.cost)
 			if(rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
 				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
-		else if(mode.threat < rule.cost)
-			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough threat to spend")
 	return drafted_rules
 
 
@@ -180,12 +155,11 @@ Property weights are:
 	config_tag = "chaotic"
 	curve_centre = 10
 	desc = "High chaos modes. Revs, wizard, clock cult. Multiple antags at once. Chaos is kept up all round."
-	property_weights = list("extended" = -1, "chaos" = 10)
+	property_weights = list("extended" = -1, "chaos" = 2)
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
 	flags = WAROPS_ALWAYS_ALLOWED
-	pop_antag_ratio = 4
 	var/refund_cooldown = 0
 	
 /datum/dynamic_storyteller/cowabunga/get_midround_cooldown()
@@ -193,12 +167,6 @@ Property weights are:
 	
 /datum/dynamic_storyteller/cowabunga/get_latejoin_cooldown()
 	return ..() / 4
-
-/datum/dynamic_storyteller/cowabunga/do_process()
-	if(refund_cooldown < world.time)
-		mode.refund_threat(40)
-		mode.log_threat("Chaotic storyteller refunded 40 threat. Threat is now [mode.threat].")
-		refund_cooldown = world.time + 1200 SECONDS
 
 /datum/dynamic_storyteller/team
 	name = "Teamwork"
@@ -229,7 +197,6 @@ Property weights are:
 	desc = "No special weights attached. Anything goes."
 	weight = 4
 	curve_width = 4
-	pop_antag_ratio = 7
 	flags = USE_PREF_WEIGHTS
 
 /datum/dynamic_storyteller/story
@@ -238,7 +205,6 @@ Property weights are:
 	desc = "Antags with options for loadouts and gimmicks. Traitor, wizard, nukies."
 	weight = 2
 	curve_width = 2
-	pop_antag_ratio = 7
 	property_weights = list("story_potential" = 10)
 
 /datum/dynamic_storyteller/suspicion
@@ -247,7 +213,6 @@ Property weights are:
 	desc = "Antags that instill distrust in the crew. Traitors, bloodsuckers."
 	weight = 2
 	curve_width = 2
-	pop_antag_ratio = 7
 	property_weights = list("trust" = -5)
 
 /datum/dynamic_storyteller/liteextended
@@ -258,7 +223,6 @@ Property weights are:
 	curve_width = 0.5
 	flags = NO_ASSASSIN
 	weight = 1
-	pop_antag_ratio = 10
 	property_weights = list("extended" = 1, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
 
 /datum/dynamic_storyteller/no_antag
