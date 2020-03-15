@@ -180,7 +180,7 @@
 /obj/item/proc/do_stagger_action(mob/living/target, mob/living/user)
 	if(!CHECK_BITFIELD(target.status_flags, CANSTAGGER))
 		return FALSE
-	if(IS_SPRINTING(target))
+	if(target.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		target.do_staggered_animation()
 	var/duration = melee_stagger_duration()
 	if(!duration)		//0
