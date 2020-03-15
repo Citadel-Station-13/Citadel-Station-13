@@ -122,7 +122,10 @@
 	parts = list(/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1)
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings = 5,
 				/obj/item/seeds/lavaland/ember = 3,
-				/obj/item/seeds/lavaland/cactus = 5)
+				/obj/item/seeds/lavaland/cactus = 5,
+				/datum/reagent/liquidgibs = 15,
+				/datum/reagent/consumable/milk = 10,
+				/obj/item/stack/ore/glass = 20)
 	time = 90
 	always_availible = FALSE
 	category = CAT_PRIMAL
