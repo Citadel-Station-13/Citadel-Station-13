@@ -3234,6 +3234,7 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/book/manual/wiki/security_space_law,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "agq" = (
@@ -4810,6 +4811,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "aiL" = (
@@ -5116,7 +5118,8 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "innerbrig";
 	name = "Brig Infirmary";
-	req_access_txt = "63"
+	req_access_txt = "2";
+	req_one_access_txt = "0"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -5334,6 +5337,9 @@
 "ajL" = (
 /obj/machinery/computer/security,
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "ajM" = (
@@ -5606,6 +5612,9 @@
 "akj" = (
 /obj/structure/chair{
 	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -6281,7 +6290,7 @@
 "alq" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Evidence Storage";
-	req_access_txt = "63"
+	req_access_txt = "1"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -7279,7 +7288,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	name = "Evidence Storage";
-	req_access = "3"
+	req_access = null;
+	req_access_txt = "3"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -7489,7 +7499,7 @@
 "anP" = (
 /obj/machinery/door/airlock/security{
 	name = "Interrogation";
-	req_access_txt = "63"
+	req_access_txt = "2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
@@ -7742,7 +7752,7 @@
 /obj/item/electropack,
 /obj/structure/closet/secure_closet{
 	name = "Persuasion Storage";
-	req_access = "list(63)"
+	req_access = "list(2)"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -28520,16 +28530,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "boX" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hopqueue";
-	name = "HoP Queue Shutters"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "boY" = (
@@ -54818,6 +54819,10 @@
 	},
 /turf/closed/wall,
 /area/science/circuit)
+"dxs" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
 "dyS" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -57099,6 +57104,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
+"mOG" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "mOO" = (
 /obj/structure/chair/sofa/left{
 	dir = 1
@@ -57592,6 +57610,13 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"oKK" = (
+/obj/machinery/door/window/southleft{
+	name = "Brig Operations";
+	req_one_access_txt = "4; 1"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "oLl" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -57834,6 +57859,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"pNu" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "pPi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57867,6 +57899,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"pRl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "pRs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -58322,6 +58364,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge/meeting_room)
+"rTU" = (
+/obj/machinery/door/window/northleft{
+	dir = 4;
+	name = "Brig Operations";
+	req_access_txt = "0";
+	req_one_access_txt = "4; 1"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "rXl" = (
 /obj/structure/chair/office/light,
 /obj/machinery/firealarm{
@@ -86291,7 +86342,7 @@ abM
 acG
 adI
 aem
-aeO
+pRl
 afG
 aim
 afL
@@ -87067,8 +87118,8 @@ aeS
 ahw
 ajg
 afM
-afM
-afM
+akU
+oKK
 alf
 alA
 akP
@@ -87324,8 +87375,8 @@ ahE
 aim
 ajL
 akj
-afM
-akU
+rTU
+pNu
 alg
 alB
 akV
@@ -89126,7 +89177,7 @@ aaZ
 aaZ
 aaZ
 alm
-akz
+mOG
 akW
 alv
 amI
@@ -90912,7 +90963,7 @@ aaf
 aaa
 adR
 abO
-abO
+dxs
 abO
 abV
 ags
