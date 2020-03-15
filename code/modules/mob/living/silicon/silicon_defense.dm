@@ -114,9 +114,10 @@
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		if(reflect_bullet_check(P, def_zone))
 			return -1 // complete projectile permutation
-		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
+#warn implement blocktypes
+		if(run_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration) & BLOCK_SUCCESS)
 			P.on_hit(src, 100, def_zone)
-			return 2
+			return BULLET_ACT_BLOCKED
 	if((P.damage_type == BRUTE || P.damage_type == BURN))
 		adjustBruteLoss(P.damage)
 		if(prob(P.damage*1.5))

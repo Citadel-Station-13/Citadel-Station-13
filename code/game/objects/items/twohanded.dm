@@ -1180,7 +1180,7 @@
 	if(iscyborg(target))
 		..()
 		return
-	if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
+	if(target.run_block(src, 0, "[user]'s [name]", MELEE_ATTACK, 0, user) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)

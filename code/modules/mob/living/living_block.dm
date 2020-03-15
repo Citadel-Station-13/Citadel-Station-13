@@ -25,14 +25,14 @@
 
 ///Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields. Wrapper for do_run_block(). The arguments on that means the same as for this.
 /mob/living/proc/check_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone)
-	return do_run_block(FALSE, object, damage, attack_Text, attack_type, armour_penetration, attacker, def_zone)
+	return do_run_block(FALSE, object, damage, attack_Text, attack_type, armour_penetration, attacker, check_zone(def_zone))
 
 /// Runs a block "sequence", effectively checking and then doing effects if necessary. Wrapper for do_run_block(). The arguments on that means the same as for this.
 /mob/living/proc/run_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone)
-	return do_run_block(TRUE, object, damage, attack_Text, attack_type, armour_penetration, attacker, def_zone)
+	return do_run_block(TRUE, object, damage, attack_Text, attack_type, armour_penetration, attacker, check_zone(def_zone))
 
 /** The actual proc for block checks. DO NOT USE THIS DIRECTLY UNLESS YOU HAVE VERY GOOD REASON TO. To reduce copypaste for differences between handling for real attacks and virtual checks.
-  * Automatically checks all held items for /obj/item/proc/do_run_block() with the same parameters.
+  * Automatically checks all held items for /obj/item/proc/run_block() with the same parameters.
   * @params
   * real_attack - If this attack is real
   * object - Whatever /atom is actually hitting us, in essence. For example, projectile if gun, item if melee, structure/whatever if it's a thrown, etc.
@@ -44,9 +44,17 @@
   * def_zone - The zone this'll impact.
   */
 /mob/living/proc/do_run_block(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone)
+	// Component signal block runs have highest priority.. for now.
+	. = SEND_SIGNAL(src, COMSIG_MOB_RUN_BLOCK, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone)
+	if(. & BLOCK_INTERRUPT_CHAIN)
+		return
+	for(var/obj/item/I in held_items)
+		if(istype(I, /obj/item/clothing))			//yeah usually this shouldn't.. uh, work. This is a bad check and should be removed though.
+			continue
 
 
-/mob/living/proc/_check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+
+/mob/living/proc/_check_shields()
 	var/block_chance_modifier = round(damage / -3)
 	for(var/obj/item/I in held_items)
 		if(!istype(I, /obj/item/clothing))
@@ -62,19 +70,42 @@
 	return FALSE
 
 /obj/item
-	var/hit_reaction_chance = 0			//The base chance at which hit_reaction() will be called.
+	/// The 0% to 100% chance for the default implementation of random block rolls.
+	var/block_chance = 0
 
-/obj/item/
+/obj/item/proc/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 
-
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/proc/_hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
 	return 0
 
-/obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
+/obj/item/proc/_IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return 0
 
-	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
+
+/mob/living/carbon/human/check_reflect(def_zone)
+	if(wear_suit?.IsReflect(def_zone))
+		return TRUE
+	return ..()
+
+/mob/living/carbon/human/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+	. = ..()
+	if(.)
+		return
+	var/block_chance_modifier = round(damage / -3)
+	if(wear_suit)
+		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+			return TRUE
+	if(w_uniform)
+		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+			return TRUE
+	if(wear_neck)
+		var/final_block_chance = wear_neck.block_chance - (CLAMP((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+			return TRUE
+	return FALSE

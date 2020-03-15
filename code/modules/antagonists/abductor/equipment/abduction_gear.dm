@@ -493,7 +493,7 @@
 
 	user.do_attack_animation(L)
 
-	if(L.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+	if(L.run_block(src, 0, "[user]'s [src]", MELEE_ATTACK, 0, user, check_zone(user.zone_selected)) & BLOCK_SUCCESS)
 		playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return FALSE
 

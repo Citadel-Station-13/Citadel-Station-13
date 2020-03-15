@@ -89,7 +89,6 @@
 		totitemdamage *= 1.5
 	//CIT CHANGES END HERE
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
-#warn Implement passthrough/reflect/blocktypes.
 	if((user != src) && (run_block(I, totitemdamage, "the [I]", MELEE_ATTACK, I.armour_penetration, user, impacting_zone) & BLOCK_SUCCESS))
 		return FALSE
 	var/obj/item/bodypart/affecting = get_bodypart(impacting_zone)

@@ -87,7 +87,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
 
-	var/block_chance = 0
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.

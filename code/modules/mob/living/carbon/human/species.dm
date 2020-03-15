@@ -1668,7 +1668,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
-		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
+		if(H.run_block(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration, user, affecting.body_zone) & BLOCK_SUCCESS)
 			return 0
 	if(H.check_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
@@ -1786,7 +1786,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 	if(M.mind)
 		attacker_style = M.mind.martial_art
-	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.a_intent != INTENT_HELP && (H.run_block(M, 0, "[M]", UNARMED_ATTACK, 0, M, M.zone_selected) & BLOCK_SUCCESS))
 		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return TRUE
