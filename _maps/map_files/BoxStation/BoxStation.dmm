@@ -9600,6 +9600,10 @@
 "asC" = (
 /turf/open/floor/plasteel/airless,
 /area/space/nearstation)
+"asD" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/captain)
 "asE" = (
 /turf/closed/wall,
 /area/hallway/secondary/entry)
@@ -9607,6 +9611,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"asG" = (
+/obj/structure/bed/dogbed/renault,
+/mob/living/simple_animal/pet/fox/Renault,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
 "asH" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/tile/yellow{
@@ -56368,11 +56377,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"jHQ" = (
-/obj/structure/table/wood,
-/mob/living/simple_animal/pet/fox/Renault,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/captain)
 "jIs" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -90706,7 +90710,7 @@ aZV
 bbo
 bch
 bdi
-bbw
+asG
 bfy
 bgS
 bik
@@ -91733,7 +91737,7 @@ aYo
 aZV
 bao
 baP
-jHQ
+asD
 bcP
 cBo
 bgS
