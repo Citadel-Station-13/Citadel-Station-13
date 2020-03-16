@@ -43,7 +43,7 @@
 		set_APTFT()
 		return TRUE
 
-/obj/item/reagent_containers/proc/set_APTFT(mob/user) //set amount_per_transfer_from_this
+/obj/item/reagent_containers/proc/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set Transfer Amount"
 	set category = "Object"
 	set waitfor = FALSE
