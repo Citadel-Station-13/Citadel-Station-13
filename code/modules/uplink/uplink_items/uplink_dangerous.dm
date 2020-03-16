@@ -147,7 +147,7 @@
 
 /datum/uplink_item/dangerous/rapier
 	name = "Rapier"
-	desc = "An elegant plastitanium foil with a diamond tip and coated in a specialized knockout poison. \
+	desc = "An elegant plastitanium rapier with a diamond tip and coated in a specialized knockout poison. \
 			The rapier comes with its own sheath, and is capable of puncturing through almost any defense. \
 			However, due to the size of the blade and obvious nature of the sheath, the weapon stands out as being obviously nefarious."
 	item = /obj/item/storage/belt/sabre/rapier
