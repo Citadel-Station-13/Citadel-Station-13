@@ -1119,7 +1119,7 @@
 		icon_state = "electrostaff"
 		item_state = "electrostaff"
 	else
-		icon_state = item_state = (on? "electrostaff_1" : "electrostaff")
+		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_0")
 	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
 
 /obj/item/twohanded/electrostaff/examine(mob/living/user)
