@@ -117,11 +117,11 @@
 
 /obj/item/grenade/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	if(real_attack && (attack_type == ATTACK_TYPE_PROJECTILE))
-		var/obj/item/projectile/P = hitby
+		var/obj/item/projectile/P = object
 		if(damage && !P.nodamage && (P.damage_type != STAMINA) && prob(15))
 			owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 			prime()
-			return BLOCK_SUCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_INTERRUPT_CHAIN
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_INTERRUPT_CHAIN
 	return ..()
 
 /obj/item/proc/grenade_prime_react(obj/item/grenade/nade)

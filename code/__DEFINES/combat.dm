@@ -217,17 +217,26 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// The below are for "metadata" on "how" the attack was blocked.
 
-/// Attack was and should be reflected (NOTE: the SHOULD here is important, as it says "the thing blocking isn't handling the reflecting for you so do it yourself"!)
-#define BLOCK_SHOULD_REFLECT			(1<<2)
+/// Attack was and should be redirected according to list argument REDIRECT_METHOD (NOTE: the SHOULD here is important, as it says "the thing blocking isn't handling the reflecting for you so do it yourself"!)
+#define BLOCK_SHOULD_REDIRECT			(1<<2)
 /// Attack was manually redirected (including reflected) by any means by the defender. For when YOU are handling the reflection, rather than the thing hitting you. (see sleeping carp)
 #define BLOCK_REDIRECTED				(1<<3)
 /// Attack was blocked by something like a shield.
 #define BLOCK_PHYSICAL_EXTERNAL			(1<<4)
 /// Attack was blocked by something worn on you.
 #define BLOCK_PHYSICAL_INTERNAL			(1<<5)
-/// Attack should pass through. Like SHOULD_REFLECT but for.. well, passing through harmlessly.
-#define BLOCK_SHOULD_PASSTHROUGH		(1<<6)
 /// Attack outright missed because the target dodged. Should usually be combined with SHOULD_PASSTHROUGH or something (see martial arts)
 #define BLOCK_TARGET_DODGED				(1<<7)
 /// Meta-flag for run_block/do_run_block : Whatever triggered this has completely blocked the attack (or failed so miserably hard it wants us to stop for when that's implemented), do not keep checking. Most methods of block should probably use this.
-#define BLOCK_INTERRUPT_CHAIN				(1<<8)
+#define BLOCK_INTERRUPT_CHAIN			(1<<8)
+
+/// For keys in associative list/block_return as we don't want to saturate our (somewhat) limited flags.
+#define BLOCK_RETURN_REDIRECT_METOHD			"REDIRECT_METHOD"
+	/// Pass through victim
+	#define REDIRECT_MODE_PASSTHROUGH			"passthrough"
+	/// Reflect using normal angular/mirrorlike reflection
+	#define REDIRECT_MODE_REFLECT				"reflect"
+	/// Deflect at randomish angle
+	#define REDIRECT_MODE_DEFLECT				"deflect"
+	/// do not taser the bad man with the desword
+	#define REDIRECT_MODE_RETURN_TO_SENDER		"no_you"

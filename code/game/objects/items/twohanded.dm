@@ -897,19 +897,19 @@
 	AddComponent(/datum/component/butchering, 20, 105)
 	AddElement(/datum/element/sword_point)
 
-/obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/vibro_weapon/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	if(wielded)
 		final_block_chance *= 2
-	if(wielded || attack_type != PROJECTILE_ATTACK)
+	if(wielded || attack_type != ATTACK_TYPE_PROJECTILE)
 		if(prob(final_block_chance))
-			if(attack_type == PROJECTILE_ATTACK)
+			if(attack_type == ATTACK_TYPE_PROJECTILE)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-				return 1
+				return BLOCK_SUCCESS | BLOCK_SHOULD_DEFLECT | BLOCK_PHYSICAL_EXTERNAL
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-				return 1
-	return 0
+				return BLOCK_SUCCESS | BLOCK_PARRY
+	return NONE
 
 /obj/item/twohanded/vibro_weapon/update_icon_state()
 	icon_state = "hfrequency[wielded]"
