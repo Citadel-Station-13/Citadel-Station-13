@@ -42,7 +42,7 @@
 	return candidates
 
 /mob/proc/can_reenter_round(silent = FALSE)
-	var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+	var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(list(/datum/element/ghost_role_eligibility))
 	return eli.can_reenter_round(src,silent)
 
 /datum/element/ghost_role_eligibility/proc/can_reenter_round(var/mob/M,silent = FALSE)

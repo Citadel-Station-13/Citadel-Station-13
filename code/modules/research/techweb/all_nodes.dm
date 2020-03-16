@@ -278,7 +278,7 @@
 	display_name = "Bluespace Pockets"
 	description = "Studies into the mysterious alternate dimension known as bluespace and how to place items in the threads of reality."
 	prereq_ids = list("adv_power", "adv_bluespace", "adv_biotech", "adv_plasma")
-	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag")
+	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag", "duffelbag_holding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5500)
 
 /datum/techweb_node/bluespace_portal
