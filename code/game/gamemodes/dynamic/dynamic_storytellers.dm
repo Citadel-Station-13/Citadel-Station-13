@@ -38,6 +38,19 @@ Property weights are:
 	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
 	mode.event_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
 
+/datum/dynamic_storyteller/proc/calculate_threat()
+	var/threat = 0
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(A && A.owner && A.owner.current && A.owner.current.stat != DEAD)
+			threat += A.threat()
+	for(var/datum/round_event/R in SSevents.running)
+		threat += R.threat()
+	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
+		if (M.stat != DEAD && M.mind && M.mind.assigned_role)
+			threat += GLOB.threats_by_role[M.mind.assigned_role]
+	threat -= mode.current_players[CURRENT_DEAD_PLAYERS].len
+	return threat
+
 /datum/dynamic_storyteller/proc/do_process()
 	return
 

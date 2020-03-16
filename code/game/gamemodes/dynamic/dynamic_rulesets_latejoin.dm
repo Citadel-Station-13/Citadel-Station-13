@@ -82,6 +82,7 @@
 
 /datum/dynamic_ruleset/latejoin/provocateur
 	name = "Provocateur"
+	persistent = TRUE
 	config_tag = "latejoin_revolution"
 	antag_datum = /datum/antagonist/rev/head
 	antag_flag = ROLE_REV_HEAD

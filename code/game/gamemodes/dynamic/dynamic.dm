@@ -644,18 +644,16 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	return FALSE
 		
 /datum/game_mode/dynamic/process()
-	threat = 0
 	if (pop_last_updated < world.time - (60 SECONDS))
 		pop_last_updated = world.time
 		update_playercounts()
+		threat = storyteller.calculate_threat()
 
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
 			SSblackbox.record_feedback("tally","dynamic",1,"Rulesets finished")
 			SSblackbox.record_feedback("associative","dynamic_rulesets_finished",1,rule.get_blackbox_info())
-		else
-			threat += rule.cost
 
 	storyteller.do_process()
 	

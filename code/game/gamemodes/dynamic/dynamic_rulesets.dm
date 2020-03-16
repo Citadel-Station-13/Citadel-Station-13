@@ -11,6 +11,8 @@
 	var/ruletype = ""
 	/// For config purposes, similar to config_tag for secret game modes.
 	var/config_tag = null
+	/// If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every time it ticks.
+	var/persistent = FALSE
 	/// If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
 	var/repeatable = FALSE
 	/// If set higher than 0 decreases weight by itself causing the ruleset to appear less often the more it is repeated.
@@ -172,17 +174,8 @@
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
-	var/all_antags_other_antags_now = TRUE
-	for(var/datum/mind/M in assigned)
-		if(M.current && M.current.stat != DEAD && (!antag_datum || (antag_datum && M.has_antag_datum(antag_datum))))
-			return FALSE
-
-	return RULESET_STOP_PROCESSING
-
-/// Called to determine threat level. Should be overridden for things like traitor etc. with multiple antags.
-/datum/dynamic_ruleset/proc/calculate_cost()
-	return cost
-
+	return TRUE
+	
 /// Called on game mode pre_setup for roundstart rulesets.
 /// Do everything you need to do before job is assigned here.
 /// IMPORTANT: ASSIGN special_role HERE
