@@ -417,7 +417,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(current_charges)
 		block_return[BLOCK_RETURN_GENERAL_BLOCK_CHANCE] = 100
-		block_return[BLOCK_RETURN_BLOCK_CAPACITY] = block_return[BLOCK_RETURN_BLOCK_CAPACITY] || 0) + current_charges
+		block_return[BLOCK_RETURN_BLOCK_CAPACITY] = (block_return[BLOCK_RETURN_BLOCK_CAPACITY] || 0) + current_charges
 	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
