@@ -16,12 +16,12 @@
 	fakeable = FALSE
 
 /datum/round_event/mass_hallucination/start()
-	var/datum/round_event_control/mass_hallucination/C = control
-	if(C.forced_hallucination)
+	var/datum/round_event_control/mass_hallucination/M = control
+	if(M.forced_hallucination)
 		for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 			if (HAS_TRAIT(C,TRAIT_EXEMPT_HEALTH_EVENTS))
 				continue
-			new picked_hallucination(C, TRUE)
+			new M.forced_hallucination(C, TRUE)
 	else
 		switch(rand(1,4))
 			if(1) //same sound for everyone
