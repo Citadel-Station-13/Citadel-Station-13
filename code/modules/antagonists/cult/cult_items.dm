@@ -725,19 +725,19 @@
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
 
-/obj/item/twohanded/cult_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/cult_spear/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
-		if(attack_type & PROJECTILE_ATTACK)
+		if(attack_type & ATTACK_TYPE_PROJECTILE)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-			return TRUE
+			return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_REDIRECTED | BLOCK_PHYSICAL_EXTERNAL
 		else
 			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-			return TRUE
-	return FALSE
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return BLOCK_NONE
 
 /datum/action/innate/cult/spear
 	name = "Bloody Bond"
@@ -936,10 +936,13 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	var/illusions = 2
 
-/obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/mirror/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!real_attack)
+		block_return[BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE] = final_block_chance
+		return ..()
 	if(iscultist(owner))
-		if(istype(hitby, /obj/item/projectile))
-			var/obj/item/projectile/P = hitby
+		if(istype(object, /obj/item/projectile) && (attack_type == ATTACK_TYPE_PROJECTILE))
+			var/obj/item/projectile/P = object
 			if(P.damage >= 30)
 				var/turf/T = get_turf(owner)
 				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
@@ -947,11 +950,13 @@
 				playsound(T, 'sound/effects/glassbr3.ogg', 100)
 				owner.DefaultCombatKnockdown(25)
 				qdel(src)
-				return FALSE
+				return BLOCK_NONE
 			if(P.is_reflectable)
-				return FALSE //To avoid reflection chance double-dipping with block chance
+				if(prob(final_block_chance))
+					return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED
+				return BLOCK_NONE	//To avoid reflection chance double-dipping with block chance
 		. = ..()
-		if(.)
+		if(. & BLOCK_SUCCESS)
 			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
 			if(illusions > 0)
 				illusions--
@@ -966,7 +971,7 @@
 					E.Copy_Parent(owner, 70, 10)
 					E.GiveTarget(owner)
 					E.Goto(owner, owner.movement_delay(), E.minimum_distance)
-			return TRUE
+			return
 	else
 		if(prob(50))
 			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
@@ -975,7 +980,7 @@
 			H.GiveTarget(owner)
 			H.move_to_delay = owner.movement_delay()
 			to_chat(owner, "<span class='danger'><b>[src] betrays you!</b></span>")
-		return FALSE
+		return BLOCK_NONE
 
 /obj/item/shield/mirror/proc/readd()
 	illusions++

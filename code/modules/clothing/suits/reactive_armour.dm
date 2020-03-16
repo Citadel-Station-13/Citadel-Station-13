@@ -4,7 +4,6 @@
 	icon_state = "reactiveoff"
 	icon = 'icons/obj/clothing/suits.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	var/hit_reaction_chance = 50
 
 /obj/item/reactive_armour_shell/attackby(obj/item/I, mob/user, params)
 	..()
@@ -39,6 +38,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hit_reaction_chance = 50 // Only on the chest yet blocks all attacks?
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	var/hit_reaction_chance = 50
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !(active)

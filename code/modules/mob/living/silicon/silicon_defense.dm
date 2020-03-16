@@ -115,7 +115,7 @@
 		if(reflect_bullet_check(P, def_zone))
 			return -1 // complete projectile permutation
 #warn implement blocktypes
-		if(run_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration) & BLOCK_SUCCESS)
+		if(run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration) & BLOCK_SUCCESS)
 			P.on_hit(src, 100, def_zone)
 			return BULLET_ACT_BLOCK
 	if((P.damage_type == BRUTE || P.damage_type == BURN))

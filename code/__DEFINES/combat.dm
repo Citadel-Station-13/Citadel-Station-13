@@ -228,21 +228,27 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Attack outright missed because the target dodged. Should usually be combined with redirection passthrough or something (see martial arts)
 #define BLOCK_TARGET_DODGED				(1<<7)
 /// Meta-flag for run_block/do_run_block : By default, BLOCK_SUCCESS tells do_run_block() to assume the attack is completely blocked and not continue the block chain. If this is present, it will continue to check other items in the chain rather than stopping.
-#define BLOCK_cONTINUE_CHAIN			(1<<8)
+#define BLOCK_CONTINUE_CHAIN			(1<<8)
 
 /// For keys in associative list/block_return as we don't want to saturate our (somewhat) limited flags.
 #define BLOCK_RETURN_REDIRECT_METHOD			"REDIRECT_METHOD"
 	/// Pass through victim
 	#define REDIRECT_METHOD_PASSTHROUGH			"passthrough"
-	/// Reflect using normal angular/mirrorlike reflection
-	#define REDIRECT_METHOD_REFLECT				"reflect"
 	/// Deflect at randomish angle
 	#define REDIRECT_METHOD_DEFLECT				"deflect"
-	/// do not taser the bad man with the desword
+	/// reverse 180 angle, basically (as opposed to "realistic" wall reflections)
+	#define REDIRECT_METHOD_REFLECT				"reflect"
+	/// "do not taser the bad man with the desword" - actually aims at the firer/attacker rather than just reversing
 	#define REDIRECT_METHOD_RETURN_TO_SENDER		"no_you"
 
+/// These keys are generally only applied to the list if real_attack is FALSE. Used incase we want to make "smarter" mob AI in the future or something.
+/// Tells the caller how likely from 0 (none) to 100 (always) we are to reflect energy projectiles
+#define BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE
+/// Tells the caller how likely we are to block attacks from 0 to 100 in general
+#define BLOCK_RETURN_NORMAL_BLOCK_CHANCE
+
 /// Default if the above isn't set in the list.
-#define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_REFLECT
+#define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_DEFLECT
 
 /// Block priorities
 #define BLOCK_PRIORITY_HELD_ITEM				100

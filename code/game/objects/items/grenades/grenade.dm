@@ -121,7 +121,7 @@
 		if(damage && !P.nodamage && (P.damage_type != STAMINA) && prob(15))
 			owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 			prime()
-			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_INTERRUPT_CHAIN
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return ..()
 
 /obj/item/proc/grenade_prime_react(obj/item/grenade/nade)

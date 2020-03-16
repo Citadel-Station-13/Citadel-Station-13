@@ -755,7 +755,7 @@
 	if(real_attack && (attack_type & ATTACK_TYPE_PROJECTILE))
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-		return BLOCK_SUCCESS | BLOCK_INTERRUPT_CHAIN | BLOCK_PHYSICAL_EXTERNAL
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return ..()
 
 //GREY TIDE
@@ -908,7 +908,7 @@
 				return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-				return BLOCK_SUCCESS | BLOCK_PARRY
+				return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return NONE
 
 /obj/item/twohanded/vibro_weapon/update_icon_state()

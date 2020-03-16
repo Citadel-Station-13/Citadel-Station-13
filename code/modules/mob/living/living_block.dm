@@ -76,9 +76,15 @@
 	/// Block priority, higher means we check this higher in the "chain".
 	var/block_priority = BLOCK_PRIORITY_DEFAULT
 
+/// Runs block and returns flag for do_run_block to process.
 /obj/item/proc/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	SEND_SIGNAL(src, COMSIG_ITEM_RUN_BLOCK, args)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return BLOCK_NONE
+
+/// Returns block information using list/block_return. Used for check_block() on mobs.
+/obj/item/proc/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	SEND_SIGNAL(src, COMSIG_ITEM_CHECK_BLOCK, args)
+	block_return[BLOCK_RETURN_NORMAL_BLOCK_CHANCE] = final_block_chance
