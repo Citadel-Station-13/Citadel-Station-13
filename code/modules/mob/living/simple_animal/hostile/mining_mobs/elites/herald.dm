@@ -266,7 +266,7 @@
 	H.firer = owner
 	H.fire(set_angle)
 
-/obj/item/clothing/neck/cloak/herald_cloak/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/clothing/neck/cloak/herald_cloak/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	. = ..()
 	if(!real_attack)
 		return

@@ -375,7 +375,7 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/twohanded/dualsaber/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/twohanded/dualsaber/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!wielded)
 		return NONE
 	if(can_reflect && is_energy_reflectable_projectile(object) && (attack_type & ATTACK_TYPE_PROJECTILE))
@@ -751,7 +751,7 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/twohanded/required/chainsaw/doomslayer/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/twohanded/required/chainsaw/doomslayer/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(real_attack && (attack_type & ATTACK_TYPE_PROJECTILE))
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
@@ -896,7 +896,7 @@
 	AddComponent(/datum/component/butchering, 20, 105)
 	AddElement(/datum/element/sword_point)
 
-/obj/item/twohanded/vibro_weapon/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/twohanded/vibro_weapon/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(wielded)
 		final_block_chance *= 2
 	if(wielded || !(attack_type & ATTACK_TYPE_PROJECTILE))
@@ -1055,7 +1055,7 @@
 		var/mob/living/silicon/robot/R = loc
 		. = R.get_cell()
 
-/obj/item/twohanded/electrostaff/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/twohanded/electrostaff/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!on || (!can_block_projectiles && (attack_type & PROJECTILE_ATTACK)))
 		return BLOCK_NONE
 	return ..()

@@ -26,7 +26,7 @@
 	transparent = TRUE
 	max_integrity = 75
 
-/obj/item/shield/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(transparent && (object.pass_flags & PASSGLASS))
 		return FALSE
 	if(attack_type & ATTACK_TYPE_THROWN)
@@ -69,7 +69,7 @@
 	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
 	new /obj/item/shard((get_turf(src)))
 
-/obj/item/shield/riot/on_shield_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/shield/riot/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(obj_integrity <= damage)
 		var/turf/T = get_turf(owner)
 		T.visible_message("<span class='warning'>[attack_text] destroys [src]!</span>")
@@ -139,7 +139,7 @@
 	. = ..()
 	icon_state = "[base_icon_state]0"
 
-/obj/item/shield/energy/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/shield/energy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if((attack_type & ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_REFLECT
 		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
@@ -182,7 +182,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/active = 0
 
-/obj/item/shield/riot/tele/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/shield/riot/tele/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!active)
 		return BLOCK_NONE
 	return ..()
@@ -249,7 +249,7 @@
 	transparent = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
 
-/obj/item/shield/riot/implant/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/shield/riot/implant/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(attack_type & ATTACK_TYPE_PROJECTILE)
 		final_block_chance = 60 //Massive shield
 	return ..()
