@@ -134,9 +134,9 @@
 	result = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	parts = list(/obj/item/clothing/glasses/hud/security = 1,
+	parts = list(/obj/item/clothing/glasses/hud/security/sunglasses = 1,
 				/obj/item/clothing/glasses/eyepatch = 1)
-	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
+	reqs = list(/obj/item/clothing/glasses/hud/security/sunglasses = 1,
 				/obj/item/clothing/glasses/eyepatch = 1)
 	category = CAT_CLOTHING
 
