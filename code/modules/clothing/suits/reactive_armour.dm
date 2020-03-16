@@ -65,7 +65,7 @@
 /obj/item/clothing/suit/armor/reactive/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!active)
 		return BLOCK_NONE
-	return block_action(owner, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	return block_action(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 
 /obj/item/clothing/suit/armor/reactive/proc/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	return BLOCK_NONE
@@ -107,7 +107,7 @@
 		radiation_pulse(src, rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_PASSTHROUGH
-		return BLOCK_SUCCESS | BLOCK_REDIRECT | BLOCK_SHOULD_REDIRECT | BLOCK_TARGET_DODGED
+		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT | BLOCK_TARGET_DODGED
 	return BLOCK_NONE
 
 //Fire

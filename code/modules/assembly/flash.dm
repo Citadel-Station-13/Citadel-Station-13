@@ -313,8 +313,7 @@
 		holder.update_icon()
 
 /obj/item/assembly/flash/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(real_attack)
-		activate()
+	activate()
 	return ..()
 
 //ported from tg - check to make sure it can't appear where it's not supposed to.

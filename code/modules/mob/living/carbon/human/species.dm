@@ -1441,7 +1441,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			to_chat(user, "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>")
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>")
 		return 0
 	if(attacker_style && attacker_style.grab_act(user,target))
@@ -1461,7 +1461,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") //CITADEL CHANGE - ditto
 		return FALSE //CITADEL CHANGE - ditto
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
 		return FALSE
 	if(attacker_style && attacker_style.harm_act(user,target))
@@ -1540,7 +1540,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/aim_for_groin  = user.zone_selected == "groin"
 	var/target_aiming_for_groin = target.zone_selected == "groin"
 
-	if(target.check_block()) //END EDIT
+	if(target.check_martial_melee_block()) //END EDIT
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
 		return 0
 	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
@@ -1670,7 +1670,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(user != H)
 		if(H.run_block(I, I.force, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone) & BLOCK_SUCCESS)
 			return 0
-	if(H.check_block())
+	if(H.check_martial_melee_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
 		return 0
 
@@ -1821,7 +1821,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
 		return FALSE
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s shoving attempt!</span>")
 		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
