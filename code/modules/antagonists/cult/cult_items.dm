@@ -162,14 +162,10 @@
 	jaunt.Remove(user)
 	user.update_icons()
 
-/obj/item/twohanded/required/cult_bastard/IsReflect()
-	if(spinning)
-		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-		return TRUE
-	else
-		..()
-
 /obj/item/twohanded/required/cult_bastard/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(spinning && is_energy_reflectable_projectile(object) && (attack_type & ATTACK_TYPE_PROJECTILE))
+		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
 	if(prob(final_block_chance))
 		if(attack_type & ATTACK_TYPE_PROJECTILE)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
