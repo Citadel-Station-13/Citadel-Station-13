@@ -63,6 +63,8 @@
 
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit, instead placing the items into the player's backpack.
 	var/dresscodecompliant = TRUE
+	// How much threat this job is worth in dynamic.
+	var/threat = 0
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
