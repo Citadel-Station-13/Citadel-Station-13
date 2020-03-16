@@ -4,6 +4,7 @@
 	icon_state = "reactiveoff"
 	icon = 'icons/obj/clothing/suits.dmi'
 	w_class = WEIGHT_CLASS_BULKY
+	var/hit_reaction_chance = 50
 
 /obj/item/reactive_armour_shell/attackby(obj/item/I, mob/user, params)
 	..()
