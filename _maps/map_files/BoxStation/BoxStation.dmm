@@ -54762,6 +54762,11 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"jga" = (
+/obj/machinery/vending/snack/random,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
 "jgm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -88110,7 +88115,7 @@ aDt
 aEO
 aGc
 vOU
-aKG
+jga
 dml
 dml
 oNz
