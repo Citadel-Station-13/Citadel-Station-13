@@ -19,6 +19,10 @@ Contents:
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	modifies_speech = TRUE
 
+/obj/item/clothing/mask/gas/space_ninja/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
+
 /obj/item/clothing/mask/gas/space_ninja/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
