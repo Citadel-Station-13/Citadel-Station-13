@@ -363,7 +363,7 @@
 	qdel(src)
 
 /obj/item/chair/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(attack_type != ATTACK_TYPE_UNARMED)
+	if(!(attack_type & ATTACK_TYPE_UNARMED))
 		return NONE
 	return ..()
 

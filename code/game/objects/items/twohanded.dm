@@ -378,7 +378,7 @@
 /obj/item/twohanded/dualsaber/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!wielded)
 		return NONE
-	if(can_reflect && is_energy_reflectable_projectile(object) && (attack_type == ATTACK_TYPE_PROJECTILE))
+	if(can_reflect && is_energy_reflectable_projectile(object) && (attack_type & ATTACK_TYPE_PROJECTILE))
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER			//no you
 		return BLOCK_SHOULD_REDIRECT | BLOCK_SUCCESS | BLOCK_REDIRECTED
 	return ..()
@@ -752,7 +752,7 @@
 	force_on = 30
 
 /obj/item/twohanded/required/chainsaw/doomslayer/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(real_attack && (attack_type == ATTACK_TYPE_PROJECTILE))
+	if(real_attack && (attack_type & ATTACK_TYPE_PROJECTILE))
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 		return BLOCK_SUCCESS | BLOCK_INTERRUPT_CHAIN | BLOCK_PHYSICAL_EXTERNAL
@@ -899,9 +899,9 @@
 /obj/item/twohanded/vibro_weapon/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(wielded)
 		final_block_chance *= 2
-	if(wielded || attack_type != ATTACK_TYPE_PROJECTILE)
+	if(wielded || !(attack_type & ATTACK_TYPE_PROJECTILE))
 		if(prob(final_block_chance))
-			if(attack_type == ATTACK_TYPE_PROJECTILE)
+			if(attack_type & ATTACK_TYPE_PROJECTILE)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 				block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT

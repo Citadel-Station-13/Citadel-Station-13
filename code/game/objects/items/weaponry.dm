@@ -156,7 +156,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	to_chat(user, "<span class='danger'>[src] thrums and points to the [dir2text(get_dir(user, closest_victim))].</span>")
 
 /obj/item/claymore/highlander/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if((attack_type == ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
+	if((attack_type & ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
 		return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECT
 	return ..()
 

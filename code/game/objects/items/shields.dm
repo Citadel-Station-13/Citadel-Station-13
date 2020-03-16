@@ -29,9 +29,9 @@
 /obj/item/shield/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(transparent && (object.pass_flags & PASSGLASS))
 		return FALSE
-	if(attack_type == ATTACK_TYPE_THROWN)
+	if(attack_type & ATTACK_TYPE_THROWN)
 		final_block_chance += 30
-	if(attack_type == ATTACK_TYPE_TACKLE)
+	if(attack_type & ATTACK_TYPE_TACKLE)
 		final_block_chance = 100
 	. = ..()
 	if(. & BLOCK_SUCCESS)
@@ -140,7 +140,7 @@
 	icon_state = "[base_icon_state]0"
 
 /obj/item/shield/energy/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if((attack_type == ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
+	if((attack_type & ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_REFLECT
 		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
 	return ..()
@@ -250,6 +250,6 @@
 	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/shield/riot/implant/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(attack_type == ATTACK_TYPE_PROJECTILE)
+	if(attack_type & ATTACK_TYPE_PROJECTILE)
 		final_block_chance = 60 //Massive shield
 	return ..()

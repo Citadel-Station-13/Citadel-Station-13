@@ -171,7 +171,7 @@
 
 /obj/item/twohanded/required/cult_bastard/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(prob(final_block_chance))
-		if(attack_type == ATTACK_TYPE_PROJECTILE)
+		if(attack_type & ATTACK_TYPE_PROJECTILE)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
 			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECT | BLOCK_SHOULD_REDIRECT
@@ -729,7 +729,7 @@
 	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
-		if(attack_type == PROJECTILE_ATTACK)
+		if(attack_type & PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
 			return TRUE
