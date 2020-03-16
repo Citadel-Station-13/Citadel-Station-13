@@ -243,3 +243,11 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Default if the above isn't set in the list.
 #define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_REFLECT
+
+/// Block priorities
+#define BLOCK_PRIORITY_HELD_ITEM				100
+#define BLOCK_PRIORITY_CLOTHING					50
+#define BLOCK_PRIORITY_WEAR_SUIT				75
+#define BLOCK_PRIORITY_UNIFORM					25
+
+#define BLOCK_PRIORITY_DEFAULT BLOCK_PRIORITY_HELD_ITEM

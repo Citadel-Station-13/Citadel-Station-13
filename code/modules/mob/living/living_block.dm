@@ -50,6 +50,7 @@
 	if((. & BLOCK_SUCCESS) && !(. & BLOCK_CONTINUE_CHAIN))
 		return
 	var/list/obj/item/tocheck = get_blocking_items()
+	sortTim(tocheck, /proc/cmp_item_block_priority_asc)
 	// i don't like this
 	var/block_chance_modifier = round(damage / -3)
 	for(var/obj/item/I in tocheck)
@@ -72,6 +73,8 @@
 /obj/item
 	/// The 0% to 100% chance for the default implementation of random block rolls.
 	var/block_chance = 0
+	/// Block priority, higher means we check this higher in the "chain".
+	var/block_priority = BLOCK_PRIORITY_DEFAULT
 
 /obj/item/proc/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	SEND_SIGNAL(src, COMSIG_ITEM_RUN_BLOCK, args)

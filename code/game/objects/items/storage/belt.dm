@@ -807,7 +807,7 @@
 	starting_sword = /obj/item/melee/rapier
 
 /obj/item/storage/belt/sabre/rapier/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(attack_type & PROJECTILE_ATTACK)		// No blocking bullets.
+	if(attack_type & ATTACK_TYPE_PROJECTILE)		// No blocking bullets.
 		return BLOCK_NONE
 	return ..()
 
