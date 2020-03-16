@@ -277,7 +277,7 @@
 			return
 	else
 		if(cooldown_check < world.time)
-			if(target.run_block(src, 0, "[user]'s [name]", MELEE_ATTACK, 0, user) & BLOCK_SUCCESS)
+			if(target.run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
 			if(ishuman(target))

@@ -148,8 +148,8 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.7
 
-/obj/item/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
+/obj/item/melee/transforming/energy/sword/cyborg/saw/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+	return NONE
 
 /obj/item/melee/transforming/energy/sword/saber
 	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)

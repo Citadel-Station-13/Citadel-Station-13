@@ -59,6 +59,7 @@
 	return FALSE
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
+#warn implement blocktypes
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		if(reflect_bullet_check(P, def_zone))
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
@@ -99,7 +100,7 @@
 		I = AM
 		throwpower = I.throwforce
 	var/impacting_zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	if(run_block(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, throwningdatum.thrower, impacting_zone) & BLOCK_SUCCESS)
+	if(run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, throwningdatum.thrower, impacting_zone) & BLOCK_SUCCESS)
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE

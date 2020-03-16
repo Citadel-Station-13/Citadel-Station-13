@@ -1668,7 +1668,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
-		if(H.run_block(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration, user, affecting.body_zone) & BLOCK_SUCCESS)
+		if(H.run_block(I, I.force, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user, affecting.body_zone) & BLOCK_SUCCESS)
 			return 0
 	if(H.check_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")

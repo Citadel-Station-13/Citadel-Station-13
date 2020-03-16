@@ -752,12 +752,12 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
+/obj/item/twohanded/required/chainsaw/doomslayer/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+	if(real_attack && (attack_type == PROJECTILE_ATTACK))
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-		return 1
-	return 0
+		return BLOCK_SUCCESS | BLOCK_INTERRUPT_CHAIN | BLOCK_PHYSICAL_EXTERNAL
+	return ..()
 
 //GREY TIDE
 /obj/item/twohanded/spear/grey_tide
@@ -1056,7 +1056,7 @@
 		. = R.get_cell()
 
 /obj/item/twohanded/electrostaff/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
-	if(!on) || (!can_block_projectiles && (attack_type & PROJECTILE_ATTACK)))
+	if(!on || (!can_block_projectiles && (attack_type & PROJECTILE_ATTACK)))
 		return BLOCK_NONE
 	return ..()
 
@@ -1178,7 +1178,7 @@
 	if(iscyborg(target))
 		..()
 		return
-	if(target.run_block(src, 0, "[user]'s [name]", MELEE_ATTACK, 0, user) & BLOCK_SUCCESS) //No message; check_shields() handles that
+	if(target.run_block(src, 0, "[user]'s [name]", BLOCK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)
