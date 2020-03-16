@@ -24,12 +24,12 @@
 */
 
 ///Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields. Wrapper for do_run_block(). The arguments on that means the same as for this.
-/mob/living/proc/check_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone)
-	return do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone))
+/mob/living/proc/check_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
+	return do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
 
 /// Runs a block "sequence", effectively checking and then doing effects if necessary. Wrapper for do_run_block(). The arguments on that means the same as for this.
-/mob/living/proc/run_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone)
-	return do_run_block(TRUE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone))
+/mob/living/proc/run_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
+	return do_run_block(TRUE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
 
 /** The actual proc for block checks. DO NOT USE THIS DIRECTLY UNLESS YOU HAVE VERY GOOD REASON TO. To reduce copypaste for differences between handling for real attacks and virtual checks.
   * Automatically checks all held items for /obj/item/proc/run_block() with the same parameters.
@@ -42,10 +42,11 @@
   * armour_penetration - 0-100 value of how effectively armor penetrating the attack should be.
   * attacker - Set to the mob attacking IF KNOWN. Do not expect this to always be set!
   * def_zone - The zone this'll impact.
+  * return_list - If something wants to grab things from what items/whatever put into list/block_return on obj/item/run_block and the comsig, pass in a list so you can grab anything put in it after block runs.
   */
-/mob/living/proc/do_run_block(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone)
+/mob/living/proc/do_run_block(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 	// Component signal block runs have highest priority.. for now.
-	. = SEND_SIGNAL(src, COMSIG_MOB_RUN_BLOCK, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone)
+	. = SEND_SIGNAL(src, COMSIG_MOB_RUN_BLOCK, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
 	if(. & BLOCK_INTERRUPT_CHAIN)
 		return
 	for(var/obj/item/I in held_items)
@@ -73,7 +74,7 @@
 	/// The 0% to 100% chance for the default implementation of random block rolls.
 	var/block_chance = 0
 
-/obj/item/proc/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+/obj/item/proc/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 
 /obj/item/proc/_hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)

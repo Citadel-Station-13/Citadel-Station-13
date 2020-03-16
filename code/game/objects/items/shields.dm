@@ -26,7 +26,7 @@
 	transparent = TRUE
 	max_integrity = 75
 
-/obj/item/shield/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+/obj/item/shield/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
 	if(attack_type == ATTACK_TYPE_THROWN)
@@ -183,7 +183,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/active = 0
 
-/obj/item/shield/riot/tele/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+/obj/item/shield/riot/tele/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!active)
 		return BLOCK_NONE
 	return ..()
@@ -250,7 +250,7 @@
 	transparent = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
 
-/obj/item/shield/riot/implant/hit_reaction(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+/obj/item/shield/riot/implant/hit_reaction(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(attack_type == ATTACK_TYPE_PROJECTILE)
 		final_block_chance = 60 //Massive shield
 	return ..()
