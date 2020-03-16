@@ -373,10 +373,13 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
-		return ..()
-	return 0
+/obj/item/twohanded/dualsaber/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!wielded)
+		return NONE
+	if(is_energy_reflectable_projectile(object) && (attack_type == ATTACK_TYPE_PROJECTILE))
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER			//no you
+		return BLOCK_SHOULD_REDIRECT | BLOCK_SUCCESS | BLOCK_REDIRECTED
+	return ..()
 
 /obj/item/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
@@ -418,10 +421,6 @@
 
 /obj/item/twohanded/dualsaber/proc/rainbow_process()
 	light_color = pick(rainbow_colors)
-
-/obj/item/twohanded/dualsaber/IsReflect()
-	if(wielded)
-		return 1
 
 /obj/item/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
 	// same as /obj/item/melee/transforming/energy, mostly
@@ -753,7 +752,7 @@
 	force_on = 30
 
 /obj/item/twohanded/required/chainsaw/doomslayer/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(real_attack && (attack_type == PROJECTILE_ATTACK))
+	if(real_attack && (attack_type == ATTACK_TYPE_PROJECTILE))
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 		return BLOCK_SUCCESS | BLOCK_INTERRUPT_CHAIN | BLOCK_PHYSICAL_EXTERNAL
