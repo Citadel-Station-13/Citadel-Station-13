@@ -195,9 +195,9 @@
 		H.drowsyness += 60
 		H.Dizzy(10)
 		H.adjustStaminaLoss(30)
-			if(prob(getStaminaLoss))
-				to_chat(H, "<span class='warning'>Your legs give out and you buckle over, unable to remain awake...</span>")
-				H.Sleeping(180)
+		if(prob(H.getStaminaLoss()))
+			to_chat(H, "<span class='warning'>Your legs give out and you buckle over, unable to remain awake...</span>")
+			H.Sleeping(180)
 
 /obj/item/melee/classic_baton
 	name = "police baton"
