@@ -68,7 +68,7 @@
 		return BLOCK_NONE
 	return block_action(owner, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 
-/obj/item/clothing/suit/armor/reactive/block_action(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/clothing/suit/armor/reactive/proc/block_action(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	return BLOCK_NONE
 
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)

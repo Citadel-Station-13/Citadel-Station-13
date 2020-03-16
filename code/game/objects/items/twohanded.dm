@@ -289,6 +289,8 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
 	var/hacked = FALSE
+	/// Can this reflect all energy projectiles?
+	var/can_reflect = TRUE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 	var/list/rainbow_colors = list(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
@@ -376,7 +378,7 @@
 /obj/item/twohanded/dualsaber/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!wielded)
 		return NONE
-	if(is_energy_reflectable_projectile(object) && (attack_type == ATTACK_TYPE_PROJECTILE))
+	if(can_reflect && is_energy_reflectable_projectile(object) && (attack_type == ATTACK_TYPE_PROJECTILE))
 		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER			//no you
 		return BLOCK_SHOULD_REDIRECT | BLOCK_SUCCESS | BLOCK_REDIRECTED
 	return ..()
@@ -559,14 +561,12 @@
 	block_chance = 50
 	armour_penetration = 0
 	var/chaplain_spawnable = TRUE
+	can_reflect = FALSE
 	obj_flags = UNIQUE_RENAME
 
 /obj/item/twohanded/dualsaber/hypereutactic/chaplain/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
-
-/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
-	return FALSE
 
 //spears
 /obj/item/twohanded/spear
@@ -905,7 +905,7 @@
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 				block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
-				return BLOCK_SUCCESS | BLOCK_REDIRECT | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL
+				return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return BLOCK_SUCCESS | BLOCK_PARRY

@@ -227,8 +227,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BLOCK_PHYSICAL_INTERNAL			(1<<5)
 /// Attack outright missed because the target dodged. Should usually be combined with redirection passthrough or something (see martial arts)
 #define BLOCK_TARGET_DODGED				(1<<7)
-/// Meta-flag for run_block/do_run_block : Whatever triggered this has completely blocked the attack (or failed so miserably hard it wants us to stop for when that's implemented), do not keep checking. Most methods of block should probably use this.
-#define BLOCK_INTERRUPT_CHAIN			(1<<8)
+/// Meta-flag for run_block/do_run_block : By default, BLOCK_SUCCESS tells do_run_block() to assume the attack is completely blocked and not continue the block chain. If this is present, it will continue to check other items in the chain rather than stopping.
+#define BLOCK_cONTINUE_CHAIN			(1<<8)
 
 /// For keys in associative list/block_return as we don't want to saturate our (somewhat) limited flags.
 #define BLOCK_RETURN_REDIRECT_METHOD			"REDIRECT_METHOD"

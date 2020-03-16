@@ -47,7 +47,7 @@
 /mob/living/proc/do_run_block(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 	// Component signal block runs have highest priority.. for now.
 	. = SEND_SIGNAL(src, COMSIG_LIVING_RUN_BLOCK, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
-	if(. & BLOCK_INTERRUPT_CHAIN)
+	if((. & BLOCK_SUCCESS) && !(. & BLOCK_CONTINUE_CHAIN))
 		return
 	var/list/obj/item/tocheck = get_blocking_items()
 	// i don't like this
@@ -57,7 +57,7 @@
 		var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 		var/results = I.run_block(src, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
 		. |= results
-		if(results & BLOCK_INTERRUPT_CHAIN)
+		if((results & BLOCK_SUCCESS) && !(results & BLOCK_CONTINUE_CHAIN))
 			break
 
 /// Gets an unsortedlist of objects to run block checks on.
@@ -74,10 +74,8 @@
 	var/block_chance = 0
 
 /obj/item/proc/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-
-/obj/item/proc/_hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
+	SEND_SIGNAL(src, COMSIG_ITEM_RUN_BLOCK, args)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return 1
-	return 0
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return BLOCK_NONE
