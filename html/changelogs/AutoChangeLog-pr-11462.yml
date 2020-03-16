@@ -1,0 +1,7 @@
+author: "Qustinnus/floyd, Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "To save costs, Nanotrasen has removed the emergency battery ejection systems in modular computers. We realized saving the batteries isn't really important."
+  - bugfix: "You can squash spiderlings with your bare hands now."
+  - bugfix: "Being deafened properly stops jukebox music from playing."
+  - bugfix: "admin multicam toggles no longer tells everyone but only admins and AIs"
