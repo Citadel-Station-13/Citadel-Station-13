@@ -243,9 +243,11 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// These keys are generally only applied to the list if real_attack is FALSE. Used incase we want to make "smarter" mob AI in the future or something.
 /// Tells the caller how likely from 0 (none) to 100 (always) we are to reflect energy projectiles
-#define BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE
+#define BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE					"reflect_projectile_chance"
 /// Tells the caller how likely we are to block attacks from 0 to 100 in general
-#define BLOCK_RETURN_NORMAL_BLOCK_CHANCE
+#define BLOCK_RETURN_NORMAL_BLOCK_CHANCE						"normal_block_chance"
+/// Tells the caller about how many hits we can soak on average before our blocking fails.
+#define BLOCK_RETURN_BLOCK_CAPACITY								"block_capacity"
 
 /// Default if the above isn't set in the list.
 #define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_DEFLECT

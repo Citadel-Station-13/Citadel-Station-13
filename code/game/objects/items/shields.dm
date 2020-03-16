@@ -35,7 +35,7 @@
 		final_block_chance = 100
 	. = ..()
 	if(. & BLOCK_SUCCESS)
-		on_shield_block(owner, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+		on_shield_block(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
