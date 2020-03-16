@@ -173,37 +173,6 @@
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
-/obj/item/borg/upgrade/premiumka
-	name = "mining cyborg premium KA"
-	desc = "A premium kinetic accelerator replacement for the mining module's standard kinetic accelerator."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = list(/obj/item/robot_module/miner)
-
-/obj/item/borg/upgrade/premiumka/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module)
-			for(var/obj/item/borg/upgrade/modkit/M in KA.modkits)
-				M.uninstall(src)
-			R.module.remove_module(KA, TRUE)
-
-		var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA = new /obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg(R.module)
-		R.module.basic_modules += PKA
-		R.module.add_module(PKA, FALSE, TRUE)
-
-/obj/item/borg/upgrade/premiumka/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA in R.module)
-			for(var/obj/item/borg/upgrade/modkit/M in PKA.modkits)
-				M.uninstall(src)
-			R.module.remove_module(PKA, TRUE)
-
-		var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA = new (R.module)
-		R.module.basic_modules += KA
-		R.module.add_module(KA, FALSE, TRUE)
-
 
 /obj/item/borg/upgrade/advcutter
 	name = "mining cyborg advanced plasma cutter"
