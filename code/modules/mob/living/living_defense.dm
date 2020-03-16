@@ -63,7 +63,8 @@
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
 		if(reflect_bullet_check(P, def_zone))
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
-		if(run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone) & BLOCK_SUCCESS)
+		var/returned = run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone)
+		if(returned & BLOCK_SUCCESS)
 			P.on_hit(src, 100, def_zone)
 			return BULLET_ACT_BLOCK
 	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
@@ -100,7 +101,7 @@
 		I = AM
 		throwpower = I.throwforce
 	var/impacting_zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	if(run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, throwningdatum.thrower, impacting_zone) & BLOCK_SUCCESS)
+	if(run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, throwingdatum.thrower, impacting_zone) & BLOCK_SUCCESS)
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
