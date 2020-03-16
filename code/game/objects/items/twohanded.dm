@@ -904,7 +904,8 @@
 			if(attack_type == ATTACK_TYPE_PROJECTILE)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-				return BLOCK_SUCCESS | BLOCK_SHOULD_DEFLECT | BLOCK_PHYSICAL_EXTERNAL
+				block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
+				return BLOCK_SUCCESS | BLOCK_REDIRECT | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return BLOCK_SUCCESS | BLOCK_PARRY
@@ -1177,7 +1178,7 @@
 	if(iscyborg(target))
 		..()
 		return
-	if(target.run_block(src, 0, "[user]'s [name]", BLOCK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS) //No message; check_shields() handles that
+	if(target.run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)

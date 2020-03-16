@@ -233,10 +233,13 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// For keys in associative list/block_return as we don't want to saturate our (somewhat) limited flags.
 #define BLOCK_RETURN_REDIRECT_METHOD			"REDIRECT_METHOD"
 	/// Pass through victim
-	#define REDIRECT_MODE_PASSTHROUGH			"passthrough"
+	#define REDIRECT_METHOD_PASSTHROUGH			"passthrough"
 	/// Reflect using normal angular/mirrorlike reflection
-	#define REDIRECT_MODE_REFLECT				"reflect"
+	#define REDIRECT_METHOD_REFLECT				"reflect"
 	/// Deflect at randomish angle
-	#define REDIRECT_MODE_DEFLECT				"deflect"
+	#define REDIRECT_METHOD_DEFLECT				"deflect"
 	/// do not taser the bad man with the desword
-	#define REDIRECT_MODE_RETURN_TO_SENDER		"no_you"
+	#define REDIRECT_METHOD_RETURN_TO_SENDER		"no_you"
+
+/// Default if the above isn't set in the list.
+#define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_REFLECT

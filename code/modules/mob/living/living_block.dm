@@ -46,29 +46,28 @@
   */
 /mob/living/proc/do_run_block(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 	// Component signal block runs have highest priority.. for now.
-	. = SEND_SIGNAL(src, COMSIG_MOB_RUN_BLOCK, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+	. = SEND_SIGNAL(src, COMSIG_LIVING_RUN_BLOCK, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
 	if(. & BLOCK_INTERRUPT_CHAIN)
 		return
-	for(var/obj/item/I in held_items)
-		if(istype(I, /obj/item/clothing))			//yeah usually this shouldn't.. uh, work. This is a bad check and should be removed though.
-			continue
-
-
-
-/mob/living/proc/_check_shields()
+	var/list/obj/item/tocheck = get_blocking_items()
+	// i don't like this
 	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/I in held_items)
-		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-				return TRUE
-	return FALSE
+	for(var/obj/item/I in tocheck)
+		// i don't like this too
+		var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+		var/results = I.run_block(src, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
+		. |= results
+		if(results & BLOCK_INTERRUPT_CHAIN)
+			break
 
-/mob/living/proc/_check_reflect(def_zone) //Reflection checks for anything in your hands, based on the reflection chance of the object(s)
+/// Gets an unsortedlist of objects to run block checks on.
+/mob/living/proc/get_blocking_items()
+	. = list()
 	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone))
-			return TRUE
-	return FALSE
+		// this is a bad check but i am not removing it until a better catchall is made
+		if(istype(I, /obj/item/clothing))
+			continue
+		. |= I
 
 /obj/item
 	/// The 0% to 100% chance for the default implementation of random block rolls.
@@ -85,6 +84,7 @@
 
 /obj/item/proc/_IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return 0
+
 
 
 /mob/living/carbon/human/check_reflect(def_zone)

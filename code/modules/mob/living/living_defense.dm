@@ -302,7 +302,7 @@
 	var/damage = rand(5, 35)
 	if(M.is_adult)
 		damage = rand(20, 40)
-	if(run_block(M, damage, "the [M.name]", ATTACK_TYPE_MELEE, null, M, check_zone(user.zone_selected)) & BLOCK_SUCCESS)
+	if(run_block(M, damage, "the [M.name]", ATTACK_TYPE_MELEE, null, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS)
 		return FALSE
 
 	if (stat != DEAD)

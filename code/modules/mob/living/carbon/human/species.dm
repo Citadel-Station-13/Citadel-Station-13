@@ -1786,7 +1786,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return TRUE
 	if(M.mind)
 		attacker_style = M.mind.martial_art
-	if((M != H) && M.a_intent != INTENT_HELP && (H.run_block(M, 0, "[M]", UNARMED_ATTACK, 0, M, M.zone_selected) & BLOCK_SUCCESS))
+	if((M != H) && M.a_intent != INTENT_HELP && (H.run_block(M, 0, "[M]", ATTACK_TYPE_UNARMED, 0, M, M.zone_selected) & BLOCK_SUCCESS))
 		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return TRUE
