@@ -948,7 +948,8 @@
 			if(is_energy_reflectable_projectile(object))
 				if(prob(final_block_chance))
 					return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED
-				return BLOCK_NONE	//To avoid reflection chance double-dipping with block chance			var/obj/item/projectile/P = object
+				return BLOCK_NONE	//To avoid reflection chance double-dipping with block chance
+			var/obj/item/projectile/P = object
 			if(P.damage >= 30)
 				var/turf/T = get_turf(owner)
 				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
