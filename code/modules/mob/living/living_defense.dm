@@ -36,34 +36,43 @@
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return BULLET_ACT_HIT
 
-/mob/living/proc/_reflect_bullet_check(obj/item/projectile/P, def_zone)
-	if(P.is_reflectable && check_reflect(def_zone)) // Checks if you've passed a reflection% check
-		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
-						"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
-		// Find a turf near or on the original location to bounce to
-		if(P.starting)
-			var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-			var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-			var/turf/curloc = get_turf(src)
-			// redirect the projectile
-			P.original = locate(new_x, new_y, P.z)
-			P.starting = curloc
-			P.firer = src
-			P.yo = new_y - curloc.y
-			P.xo = new_x - curloc.x
-			var/new_angle_s = P.Angle + rand(120,240)
-			while(new_angle_s > 180)	// Translate to regular projectile degrees
-				new_angle_s -= 360
-			P.setAngle(new_angle_s)
-		return TRUE
-	return FALSE
+/mob/living/proc/handle_projectile_attack_redirection(obj/item/projectile/P, redirection_mode, silent = FALSE)
+	P.ignore_sourcE_check = TRUE
+	switch(redirection_mode)
+		if(REDIRECT_MODE_DEFLECT)
+			P.setAngle(SIMPLIFY_DEGREES(P.Angle + rand(120, 240)))
+			if(!silent)
+				visible_message("<span class='danger'>[P] gets deflected by [src]!</span>", \
+					"<span class='userdanger'>[P] gets deflected by [src]!</span>")
+		if(REDIRECT_MODE_REFLECT)
+			P.setAngle(SIMPLIFY_DEGREES(P.Angle + 180))
+			if(!silent)
+				visible_message("<span class='danger'>[P] gets reflected by [src]!</span>", \
+					"<span class='userdanger'>[P] gets reflected by [src]!</span>")
+		if(REDIRECT_MODE_PASSTHROUGH)
+			if(!silent)
+				visible_message("<span class='danger'>[P] passes through [src]!</span>", \
+					"<span class='userdanger'>[P] passes through [src]!</span>")
+			return
+		if(REDIRECT_MODE_RETURN_TO_SENDER)
+			if(!silent)
+				visible_message("<span class='danger'>[src] deflects [P] back at their attacker!</span>", \
+					"<span class='userdanger'>[src] deflects [P] back at their attacker!</span>")
+			if(P.firer)
+				P.setAngle(Get_Angle(src, P.firer))
+			else
+				P.setAngle(SIMPLIFY_DEGREES(P.Angle + 180))
+		else
+			CRASH("Invalid rediretion mode [redirection_mode]")
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-#warn implement blocktypes
 	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
-		if(reflect_bullet_check(P, def_zone))
-			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
-		var/returned = run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone)
+		var/list/returnlist = list()
+		var/returned = run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
+		if(returned & BLOCK_SHOULD_REDIRECT)
+			handle_projectile_attack_redirection(P, returnlist[BLOCK_RETURN_REDIRECT_METHOD])
+		if(returned & BLOCK_REDIRECTED)
+			return BULLET_ACT_FORCE_PIERCE
 		if(returned & BLOCK_SUCCESS)
 			P.on_hit(src, 100, def_zone)
 			return BULLET_ACT_BLOCK
