@@ -229,5 +229,5 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BLOCK_SHOULD_PASSTHROUGH		(1<<6)
 /// Attack outright missed because the target dodged. Should usually be combined with SHOULD_PASSTHROUGH or something (see martial arts)
 #define BLOCK_TARGET_DODGED				(1<<7)
-/// Meta-flag for run_block/do_run_block : Whatever triggered this has completely blocked the attack (or failed so miserably hard it wants us to stop for when that's implemented), do not keep checking.
-#define BLOCK_STOP_CHAIN				(1<<8)
+/// Meta-flag for run_block/do_run_block : Whatever triggered this has completely blocked the attack (or failed so miserably hard it wants us to stop for when that's implemented), do not keep checking. Most methods of block should probably use this.
+#define BLOCK_INTERRUPT_CHAIN				(1<<8)

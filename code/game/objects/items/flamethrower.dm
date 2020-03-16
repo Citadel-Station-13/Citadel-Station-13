@@ -235,7 +235,7 @@
 	create_with_tank = TRUE
 
 /obj/item/flamethrower/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
-	if(real_attack && (attack_type == ATTACK_TYPE_PROJECTILE
+	if(real_attack && (attack_type == ATTACK_TYPE_PROJECTILE))
 		var/obj/item/projectile/P = hitby
 		if(istype(P) && (P.damage_type != STAMINA) && damage && !P.nodamage && prob(15))
 			owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")

@@ -5,7 +5,7 @@
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/transparent = FALSE	// makes beam projectiles pass through the shield
 
-/obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/proc/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	return TRUE
 
 /obj/item/shield/riot
@@ -26,15 +26,16 @@
 	transparent = TRUE
 	max_integrity = 75
 
-/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
+	if(attack_type == ATTACK_TYPE_THROWN)
 		final_block_chance += 30
-	if(attack_type == LEAP_ATTACK)
+	if(attack_type == ATTACK_TYPE_LEAP)
 		final_block_chance = 100
 	. = ..()
-	if(.)
+	if(. & BLOCK_SUCCESS)
+		on_shield_block
 		on_shield_block(owner, hitby, attack_text, damage, attack_type)
 
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
@@ -249,7 +250,7 @@
 	transparent = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
 
-/obj/item/shield/riot/implant/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
+/obj/item/shield/riot/implant/hit_reaction(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+	if(attack_type == ATTACK_TYPE_PROJECTILE)
 		final_block_chance = 60 //Massive shield
 	return ..()
