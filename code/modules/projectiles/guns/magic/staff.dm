@@ -90,7 +90,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
 
-/obj/item/gun/magic/staff/spellblade/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+/obj/item/gun/magic/staff/spellblade/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	// Do not block projectiles.
 	if(attack_type & PROJECTILE_ATTACK)
 		return BLOCK_NONE

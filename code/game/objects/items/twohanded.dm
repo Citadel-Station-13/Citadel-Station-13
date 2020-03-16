@@ -752,7 +752,7 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/twohanded/required/chainsaw/doomslayer/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+/obj/item/twohanded/required/chainsaw/doomslayer/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	if(real_attack && (attack_type == PROJECTILE_ATTACK))
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
@@ -1055,7 +1055,7 @@
 		var/mob/living/silicon/robot/R = loc
 		. = R.get_cell()
 
-/obj/item/twohanded/electrostaff/run_block(real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
+/obj/item/twohanded/electrostaff/run_block(mob/living/owner, real_attack, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	if(!on || (!can_block_projectiles && (attack_type & PROJECTILE_ATTACK)))
 		return BLOCK_NONE
 	return ..()
