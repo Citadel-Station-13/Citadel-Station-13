@@ -812,6 +812,7 @@
 		/obj/item/borg/sight/meson,
 		/obj/item/storage/bag/ore/cyborg,
 		/obj/item/pickaxe/drill/cyborg,
+		/obj/item/twohanded/kinetic_crusher/cyborg,
 		/obj/item/weldingtool/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
 		/obj/item/t_scanner/adv_mining_scanner,
@@ -820,7 +821,6 @@
 		/obj/item/gps/cyborg,
 		/obj/item/weapon/gripper/mining,
 		/obj/item/cyborg_clamp,
-		/obj/item/card/id/miningborg,
 		/obj/item/stack/marker_beacon,
 		/obj/item/destTagger,
 		/obj/item/stack/packageWrap)
