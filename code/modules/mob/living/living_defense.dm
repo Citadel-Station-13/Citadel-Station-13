@@ -37,24 +37,24 @@
 	return BULLET_ACT_HIT
 
 /mob/living/proc/handle_projectile_attack_redirection(obj/item/projectile/P, redirection_mode, silent = FALSE)
-	P.ignore_sourcE_check = TRUE
+	P.ignore_source_check = TRUE
 	switch(redirection_mode)
-		if(REDIRECT_MODE_DEFLECT)
+		if(REDIRECT_METHOD_DEFLECT)
 			P.setAngle(SIMPLIFY_DEGREES(P.Angle + rand(120, 240)))
 			if(!silent)
 				visible_message("<span class='danger'>[P] gets deflected by [src]!</span>", \
 					"<span class='userdanger'>[P] gets deflected by [src]!</span>")
-		if(REDIRECT_MODE_REFLECT)
+		if(REDIRECT_METHOD_REFLECT)
 			P.setAngle(SIMPLIFY_DEGREES(P.Angle + 180))
 			if(!silent)
 				visible_message("<span class='danger'>[P] gets reflected by [src]!</span>", \
 					"<span class='userdanger'>[P] gets reflected by [src]!</span>")
-		if(REDIRECT_MODE_PASSTHROUGH)
+		if(REDIRECT_METHOD_PASSTHROUGH)
 			if(!silent)
 				visible_message("<span class='danger'>[P] passes through [src]!</span>", \
 					"<span class='userdanger'>[P] passes through [src]!</span>")
 			return
-		if(REDIRECT_MODE_RETURN_TO_SENDER)
+		if(REDIRECT_METHOD_RETURN_TO_SENDER)
 			if(!silent)
 				visible_message("<span class='danger'>[src] deflects [P] back at their attacker!</span>", \
 					"<span class='userdanger'>[src] deflects [P] back at their attacker!</span>")
