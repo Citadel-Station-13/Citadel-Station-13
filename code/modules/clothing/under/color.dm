@@ -81,7 +81,7 @@
 
 /obj/item/clothing/under/color/grey/glorf/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	. = ..()
-	if(real_attack && ishuman(owner))
+	if(ishuman(owner))
 		var/mob/living/human/H = owner
 		H.forcesay(GLOB.hit_appends)
 

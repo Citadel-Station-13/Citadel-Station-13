@@ -588,7 +588,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(is_energy_reflectable_projectile(object) && (attack_type == ATTACK_TYPE_PROJECTILE))
 		var/turf = get_turf(src)
 		playsound(turf, pick('sound/weapons/effects/batreflect1.ogg', 'sound/weapons/effects/batreflect2.ogg'), 50, 1)
-		return BLOCK_SUCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED
+		return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED
 	return ..()
 
 /obj/item/melee/baseball_bat/ablative/syndi

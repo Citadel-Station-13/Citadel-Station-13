@@ -412,7 +412,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(current_charges)
-		block_return[BLOCK_RETURN_GENERAL_BLOCK_CHANCE] = 100
+		block_return[BLOCK_RETURN_NORMAL_BLOCK_CHANCE] = 100
 		block_return[BLOCK_RETURN_BLOCK_CAPACITY] = (block_return[BLOCK_RETURN_BLOCK_CAPACITY] || 0) + current_charges
 	return ..()
 
@@ -945,7 +945,10 @@
 /obj/item/shield/mirror/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(iscultist(owner))
 		if(istype(object, /obj/item/projectile) && (attack_type == ATTACK_TYPE_PROJECTILE))
-			var/obj/item/projectile/P = object
+			if(is_energy_reflectable_projectile(object))
+				if(prob(final_block_chance))
+					return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED
+				return BLOCK_NONE	//To avoid reflection chance double-dipping with block chance			var/obj/item/projectile/P = object
 			if(P.damage >= 30)
 				var/turf/T = get_turf(owner)
 				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
@@ -954,10 +957,6 @@
 				owner.DefaultCombatKnockdown(25)
 				qdel(src)
 				return BLOCK_NONE
-			if(P.is_reflectable)
-				if(prob(final_block_chance))
-					return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED
-				return BLOCK_NONE	//To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(. & BLOCK_SUCCESS)
 			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
@@ -990,11 +989,6 @@
 	if(illusions == initial(illusions) && isliving(loc))
 		var/mob/living/holder = loc
 		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
-
-/obj/item/shield/mirror/IsReflect()
-	if(prob(block_chance))
-		return TRUE
-	return FALSE
 
 /obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)

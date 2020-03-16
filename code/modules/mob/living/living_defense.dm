@@ -377,7 +377,7 @@
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if((M != src) && M.a_intent != INTENT_HELP && (run_block(M, 0, "the [M.name]", MELEE_ATTACK | ATTACK_TYPE_UNARMED, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS))
+	if((M != src) && M.a_intent != INTENT_HELP && (run_block(M, 0, "the [M.name]", ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED, M, check_zone(M.zone_selected)) & BLOCK_SUCCESS))
 		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
 		return FALSE
 	switch(M.a_intent)
