@@ -158,6 +158,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_-
 	attack_verb = list("stabs", "punctures", "pierces", "pokes")
+	hitsound = 'sound/weapons/rapierhit.ogg'
 	total_mass = 0.4
 
 /obj/item/melee/rapier/Initialize()
