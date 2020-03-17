@@ -43,14 +43,14 @@
 		set_APTFT()
 		return TRUE
 
-/obj/item/reagent_containers/proc/set_APTFT(mob/user) //set amount_per_transfer_from_this
+/obj/item/reagent_containers/proc/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set Transfer Amount"
 	set category = "Object"
 	set waitfor = FALSE
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if(N)
 		amount_per_transfer_from_this = N
-		to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
+		to_chat(usr, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)

@@ -242,6 +242,12 @@
 				return
 
 		if(href_list["pockets"])
+			var/strip_mod = 1
+			var/strip_silence = FALSE
+			var/obj/item/clothing/gloves/g = gloves
+			if (istype(g))
+				strip_mod = g.strip_mod
+				strip_silence = g.strip_silence
 			var/pocket_side = href_list["pockets"]
 			var/pocket_id = (pocket_side == "right" ? SLOT_R_STORE : SLOT_L_STORE)
 			var/obj/item/pocket_item = (pocket_id == SLOT_R_STORE ? r_store : l_store)
@@ -258,7 +264,7 @@
 			else
 				return
 
-			if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator, ignorehelditem = TRUE)) //placing an item into the pocket is 4 times faster
+			if(do_mob(usr, src, max(round(POCKET_STRIP_DELAY/(delay_denominator*strip_mod)),1), ignorehelditem = TRUE)) //placing an item into the pocket is 4 times faster (and the strip_mod too)
 				if(pocket_item)
 					if(pocket_item == (pocket_id == SLOT_R_STORE ? r_store : l_store)) //item still in the pocket we search
 						dropItemToGround(pocket_item)
@@ -276,7 +282,8 @@
 					show_inv(usr)
 			else
 				// Display a warning if the user mocks up
-				to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
+				if (!strip_silence)
+					to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
 	..()	//CITADEL CHANGE - removes a tab from behind this ..() so that flavortext can actually be examined
 

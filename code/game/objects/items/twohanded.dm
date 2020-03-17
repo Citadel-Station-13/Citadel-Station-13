@@ -1012,7 +1012,7 @@
 
 /obj/item/twohanded/electrostaff
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "electrostaff_3"
+	icon_state = "electrostaff"
 	item_state = "electrostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -1116,10 +1116,10 @@
 /obj/item/twohanded/electrostaff/update_icon_state()
 	. = ..()
 	if(!wielded)
-		icon_state = "electrostaff_3"
+		icon_state = "electrostaff"
 		item_state = "electrostaff"
 	else
-		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_3")
+		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_0")
 	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
 
 /obj/item/twohanded/electrostaff/examine(mob/living/user)
