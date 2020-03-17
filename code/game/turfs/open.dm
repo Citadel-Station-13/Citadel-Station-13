@@ -272,7 +272,7 @@
 
 	var/olddir = C.dir
 	if(!(lube & SLIDE_ICE))
-		C.Knockdown(knockdown_amount)
+		C.DefaultCombatKnockdown(knockdown_amount)
 		C.stop_pulling()
 	else
 		C.Stun(20)

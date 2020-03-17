@@ -25,6 +25,7 @@
 				objects++
 				I.forceMove(get_turf(H))
 				L.embedded_objects -= I
+				I.unembedded()
 			if(!H.has_embedded_objects())
 				H.clear_alert("embeddedobject")
 				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "embedded")

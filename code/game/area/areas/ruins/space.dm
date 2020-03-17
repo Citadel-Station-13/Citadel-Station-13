@@ -3,6 +3,8 @@
 /area/ruin/space
 	has_gravity = FALSE
 	blob_allowed = FALSE //Nope, no winning in space as a blob. Gotta eat the station.
+	outdoors = TRUE
+	ambientsounds = SPACE
 
 /area/ruin/space/has_grav
 	has_gravity = STANDARD_GRAVITY

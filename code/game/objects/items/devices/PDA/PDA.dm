@@ -9,7 +9,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SCANNER_HALOGEN		4
 #define PDA_SCANNER_GAS			5
 #define PDA_SPAM_DELAY		    2 MINUTES
-#define PDA_STANDARD_OVERLAYS list("pda-r", "blank", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay")
 
 //pda icon overlays list defines
 #define PDA_OVERLAY_ALERT		1
@@ -33,14 +32,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-
 	//Main variables
 	var/owner = null // String name of owner
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 	var/list/overlays_icons = list('icons/obj/pda_alt.dmi' = list("pda-r", "screen_default", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay"))
-	var/current_overlays = PDA_STANDARD_OVERLAYS
+	var/static/list/standard_overlays_icons = list("pda-r", "blank", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay")
+	var/list/current_overlays //set on Initialize.
 
 	//variables exclusively used on 'update_overlays' (which should never be called directly, and 'update_icon' doesn't use args anyway)
 	var/new_overlays = FALSE
@@ -164,7 +163,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			overlays_x_offset = new_offsets[1]
 			overlays_y_offset = new_offsets[2]
 	if(!(icon in overlays_icons))
-		current_overlays = PDA_STANDARD_OVERLAYS
+		current_overlays = standard_overlays_icons
 		return
 	current_overlays = overlays_icons[icon]
 
@@ -227,9 +226,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = ..()
 	if(new_overlays)
 		set_new_overlays()
-	. += new_alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN]
-	var/mutable_appearance/overlay = new()
+	var/screen_state = new_alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN]
+	var/mutable_appearance/overlay = mutable_appearance(icon, screen_state)
 	overlay.pixel_x = overlays_x_offset
+	overlay.pixel_y = overlays_y_offset
+	. += new /mutable_appearance(overlay)
 	if(id)
 		overlay.icon_state = current_overlays[PDA_OVERLAY_ID]
 		. += new /mutable_appearance(overlay)
@@ -241,7 +242,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		. += new /mutable_appearance(overlay)
 	if(pai)
 		overlay.icon_state = "[current_overlays[PDA_OVERLAY_PAI]][pai.pai ? "" : "_off"]"
-		. += new /mutable_appearance(overlay)
+		. += overlay
 	new_overlays = FALSE
 	new_alert = FALSE
 
@@ -469,7 +470,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
-	if(usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !href_list["close"])
+	if(usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, FALSE) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
 
@@ -757,7 +758,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/t = stripped_input(U, "Please enter message", name)
 	if (!t || toff)
 		return
-	if(!U.canUseTopic(src, BE_CLOSE))
+	if(!U.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, FALSE))
 		return
 	if(emped)
 		t = Gibberish(t, 100)
@@ -1223,7 +1224,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
 #undef PDA_SPAM_DELAY
-#undef PDA_STANDARD_OVERLAYS
 
 #undef PDA_OVERLAY_ALERT
 #undef PDA_OVERLAY_SCREEN

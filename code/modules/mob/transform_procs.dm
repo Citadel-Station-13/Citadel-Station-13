@@ -29,9 +29,8 @@
 			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
-	Stun(22, ignore_canstun = TRUE)
+	notransform = TRUE
+	Stun(INFINITY, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
@@ -50,9 +49,8 @@
 	O.updateappearance(icon_update=0)
 
 	if(tr_flags & TR_KEEPSE)
-		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
+		O.dna.mutation_index = dna.mutation_index
+		O.dna.set_se(1, GET_INITIALIZED_MUTATION(RACEMUT))
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -187,8 +185,7 @@
 
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
 	Stun(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -210,9 +207,8 @@
 	O.name = O.real_name
 
 	if(tr_flags & TR_KEEPSE)
-		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
+		O.dna.mutation_index = dna.mutation_index
+		O.dna.set_se(0, GET_INITIALIZED_MUTATION(RACEMUT))
 		O.domutcheck()
 
 	if(suiciding)
@@ -316,13 +312,13 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (notransform)
+	if(notransform)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
@@ -365,8 +361,8 @@
 		else
 			dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -408,7 +404,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
-	canmove = 0
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -441,7 +437,7 @@
 		dropItemToGround(W)
 	regenerate_icons()
 	notransform = 1
-	canmove = 0
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -485,8 +481,8 @@
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)	//this really should not be necessary
@@ -516,7 +512,7 @@
 
 	regenerate_icons()
 	notransform = TRUE
-	canmove = FALSE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
@@ -545,7 +541,7 @@
 
 	regenerate_icons()
 	notransform = TRUE
-	canmove = FALSE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 

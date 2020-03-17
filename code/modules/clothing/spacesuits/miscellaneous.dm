@@ -465,3 +465,16 @@ Contains:
 		torn = TRUE
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+
+/obj/item/clothing/suit/space/eva/paramedic
+	name = "paramedic EVA suit"
+	icon_state = "paramedic-eva"
+	item_state = "paramedic-eva"
+	desc = "A deep blue space suit decorated with red and white crosses to indicate that the wearer is trained emergency medical personnel."
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/roller)
+
+/obj/item/clothing/head/helmet/space/eva/paramedic
+	name = "paramedic EVA helmet"
+	desc = "A deep blue space helmet with a large red cross on the faceplate to designate the wearer as trained emergency medical personnel."
+	icon_state = "paramedic-eva-helmet"
+	item_state = "paramedic-eva-helmet"

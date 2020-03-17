@@ -21,6 +21,7 @@
 	C.emote("scream")
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
+	C.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 
 	C.bleed(40)
 
@@ -102,6 +103,7 @@
 	for(var/obj/item/I in embedded_objects)
 		embedded_objects -= I
 		I.forceMove(src)
+		I.unembedded()
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
 		SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
@@ -111,7 +113,7 @@
 			for(var/X in C.dna.mutations) //some mutations require having specific limbs to be kept.
 				var/datum/mutation/human/MT = X
 				if(MT.limb_req && MT.limb_req == body_zone)
-					MT.force_lose(C)
+					C.dna.force_lose(MT)
 
 		for(var/X in C.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X
@@ -124,7 +126,7 @@
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
 	C.update_hair()
-	C.update_canmove()
+	C.update_mobility()
 
 	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
@@ -298,7 +300,7 @@
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
-	C.update_canmove()
+	C.update_mobility()
 
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)

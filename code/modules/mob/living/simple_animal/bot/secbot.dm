@@ -213,7 +213,7 @@ Auto Patrol: []"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.canmove || arrest_type) // CIT CHANGE - makes sentient secbots check for canmove rather than !isstun.
+		if(CHECK_MOBILITY(C, MOBILITY_MOVE|MOBILITY_USE|MOBILITY_STAND) || arrest_type) // CIT CHANGE - makes sentient secbots check for canmove rather than !isstun.
 			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
@@ -254,11 +254,11 @@ Auto Patrol: []"},
 	var/threat = 5
 	if(ishuman(C))
 		C.stuttering = 5
-		C.Knockdown(100)
+		C.DefaultCombatKnockdown(100)
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 	else
-		C.Knockdown(100)
+		C.DefaultCombatKnockdown(100)
 		C.stuttering = 5
 		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 

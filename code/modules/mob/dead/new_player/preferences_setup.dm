@@ -22,7 +22,7 @@
 	if(!pref_species)
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
-	features = random_features()
+	features = random_features(pref_species?.id)
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon(equip_job = TRUE)

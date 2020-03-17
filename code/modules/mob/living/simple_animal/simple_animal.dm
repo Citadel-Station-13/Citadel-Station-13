@@ -153,7 +153,7 @@
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
-		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if((isturf(src.loc) || allow_movement_on_non_turfs) && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
@@ -418,20 +418,19 @@
 	else
 		..()
 
-/mob/living/simple_animal/update_canmove(value_otherwise = TRUE)
-	if(IsUnconscious() || IsStun() || IsKnockdown() || stat || resting)
+/mob/living/simple_animal/update_mobility(value_otherwise = MOBILITY_FLAGS_DEFAULT)
+	if(IsUnconscious() || IsStun() || IsParalyzed() || stat || resting)
 		drop_all_held_items()
-		canmove = FALSE
+		mobility_flags = NONE
 	else if(buckled)
-		canmove = FALSE
+		mobility_flags = ~MOBILITY_MOVE
 	else
-		canmove = value_otherwise
-	if(!canmove) // !(mobility_flags & MOBILITY_MOVE)
+		mobility_flags = MOBILITY_FLAGS_DEFAULT
+	if(!CHECK_MOBILITY(src, MOBILITY_MOVE)) // !(mobility_flags & MOBILITY_MOVE)
 		walk(src, 0) //stop mid walk
-
 	update_transform()
 	update_action_buttons_icon()
-	return canmove
+	return mobility_flags
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

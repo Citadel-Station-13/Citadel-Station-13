@@ -1,4 +1,4 @@
-/proc/get_uplink_items(datum/game_mode/gamemode, allow_sales = TRUE, allow_restricted = TRUE)
+/proc/get_uplink_items(datum/game_mode/gamemode, allow_sales = TRUE, allow_restricted = TRUE, other_filter = list())
 	var/list/filtered_uplink_items = GLOB.uplink_categories.Copy() // list of uplink categories without associated values.
 	var/list/sale_items = list()
 
@@ -18,7 +18,8 @@
 			continue
 		if (I.restricted && !allow_restricted)
 			continue
-
+		if (I.type in other_filter)
+			continue
 		LAZYSET(filtered_uplink_items[I.category], I.name, I)
 
 		if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)

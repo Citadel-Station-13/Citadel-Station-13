@@ -16,6 +16,7 @@
 	QDEL_LIST(stomach_contents)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
+	hand_bodyparts = null		//Just references out bodyparts, don't need to delete twice.
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
@@ -103,7 +104,7 @@
 			hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
-			Knockdown(20)
+			DefaultCombatKnockdown(20)
 			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
@@ -112,8 +113,8 @@
 		if(hurt)
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
-			victim.Knockdown(20)
-			Knockdown(20)
+			victim.DefaultCombatKnockdown(20)
+			DefaultCombatKnockdown(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
 				"<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
@@ -281,19 +282,23 @@
 		return FALSE
 
 /mob/living/carbon/resist_buckle()
+	. = FALSE
 	if(restrained())
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		// too soon.
+		if(last_special > world.time)
+			return
 		var/buckle_cd = 600
 		if(handcuffed)
 			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
+		changeNext_move(min(CLICK_CD_BREAKOUT, buckle_cd))
+		last_special = world.time + min(CLICK_CD_BREAKOUT, buckle_cd)
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
-		if(do_after(src, buckle_cd, 0, target = src))
+		if(do_after(src, buckle_cd, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
 			if(!buckled)
 				return
-			buckled.user_unbuckle_mob(src,src)
+			buckled.user_unbuckle_mob(src, src)
 		else
 			if(src && buckled)
 				to_chat(src, "<span class='warning'>You fail to unbuckle yourself!</span>")
@@ -301,21 +306,26 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
+	if(last_special > world.time)
+		return
 	fire_stacks -= 5
-	Knockdown(60, TRUE, TRUE)
+	DefaultCombatKnockdown(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
+	last_special = world.time + 30
 	sleep(30)
 	if(fire_stacks <= 0)
 		visible_message("<span class='danger'>[src] has successfully extinguished [p_them()]self!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")
 		ExtinguishMob()
-	return
 
-/mob/living/carbon/resist_restraints()
+/mob/living/carbon/resist_restraints(ignore_delay = FALSE)
 	var/obj/item/I = null
 	var/type = 0
+	if(!ignore_delay && (last_special > world.time))
+		to_chat(src, "<span class='warning'>You don't have the energy to resist your restraints that fast!</span>")
+		return
 	if(handcuffed)
 		I = handcuffed
 		type = 1
@@ -324,13 +334,12 @@
 		type = 2
 	if(I)
 		if(type == 1)
-			changeNext_move(CLICK_CD_BREAKOUT)
+			changeNext_move(min(CLICK_CD_BREAKOUT, I.breakouttime))
 			last_special = world.time + CLICK_CD_BREAKOUT
 		if(type == 2)
-			changeNext_move(CLICK_CD_RANGE)
+			changeNext_move(min(CLICK_CD_RANGE, I.breakouttime))
 			last_special = world.time + CLICK_CD_RANGE
 		cuff_resist(I)
-
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
 	if(I.item_flags & BEING_REMOVED)
@@ -341,7 +350,7 @@
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src))
+		if(do_after(src, breakouttime, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -388,6 +397,7 @@
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
 		changeNext_move(0)
+	update_equipment_speed_mods() // In case cuffs ever change speed
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
@@ -403,16 +413,16 @@
 	else
 		if(I == handcuffed)
 			handcuffed.forceMove(drop_location())
-			handcuffed.dropped(src)
 			handcuffed = null
+			I.dropped(src)
 			if(buckled && buckled.buckle_requires_restraints)
 				buckled.unbuckle_mob(src)
 			update_handcuffed()
 			return
 		if(I == legcuffed)
 			legcuffed.forceMove(drop_location())
-			legcuffed.dropped()
 			legcuffed = null
+			I.dropped(src)
 			update_inv_legcuffed()
 			return
 		else
@@ -488,7 +498,7 @@
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Knockdown(200)
+			DefaultCombatKnockdown(200)
 		return 1
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -572,9 +582,9 @@
 	if(stam > DAMAGE_PRECISION)
 		var/total_health = (health - stam)
 		if(total_health <= crit_threshold && !stat)
-			if(!IsKnockdown())
+			if(CHECK_MOBILITY(src, MOBILITY_STAND))
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Knockdown(100)
+			KnockToFloor(TRUE)
 			update_health_hud()
 
 /mob/living/carbon/update_sight()
@@ -622,6 +632,13 @@
 			if(M.name == XRAY)
 				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 				see_in_dark = max(see_in_dark, 8)
+	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
+		sight |= (SEE_MOBS)
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+
+	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
 		see_invisible = see_override
@@ -803,7 +820,8 @@
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
-			blind_eyes(1)
+			if(!eye_blind)
+				blind_eyes(1)
 			if(combatmode)
 				toggle_combat_mode(TRUE, TRUE)
 		else
@@ -814,7 +832,7 @@
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
-		update_canmove()
+		update_mobility()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()

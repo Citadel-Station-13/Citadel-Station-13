@@ -47,7 +47,7 @@
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
 
-	var/structure_piercing = 1
+	var/structure_piercing = 0
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
@@ -60,7 +60,7 @@
 	var/impact_structure_damage = 75
 	var/projectile_damage = 40
 	var/projectile_stun = 0
-	var/projectile_setting_pierce = TRUE
+	var/projectile_setting_pierce = FALSE
 	var/delay = 30
 	var/lastfire = 0
 
@@ -160,6 +160,9 @@
 		add_overlay(drained_overlay)
 
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
+	if(!structure_piercing)
+		projectile_setting_pierce = FALSE
+		return
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 	aiming_beam()
@@ -402,7 +405,7 @@
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
-	e_cost = 5000
+	e_cost = 10000
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/item/projectile/beam/beam_rifle
@@ -557,9 +560,4 @@
 	hitscan_light_color_override = "#99ff99"
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
-	qdel(src)
 	return FALSE
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
-	qdel(src)
-	return BULLET_ACT_HIT

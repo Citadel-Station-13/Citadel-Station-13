@@ -1,0 +1,5 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - balance: "removed (mostly aesthetic) requirement to become hulk"
+  - bugfix: "changed add to remove on crit"

@@ -220,8 +220,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /obj/effect/hallucination/simple/xeno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	update_icon("alienh_pounce")
-	if(hit_atom == target && target.stat!=DEAD)
-		target.Knockdown(100)
+	if(hit_atom == target && target.stat != DEAD)
+		target.DefaultCombatKnockdown(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
 /datum/hallucination/xeno_attack
@@ -308,7 +308,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		shake_camera(target, 2, 1)
 		if(bubblegum.Adjacent(target) && !charged)
 			charged = TRUE
-			target.Knockdown(80)
+			target.DefaultCombatKnockdown(80)
 			target.adjustStaminaLoss(40)
 			step_away(target, bubblegum)
 			shake_camera(target, 4, 3)
@@ -1106,7 +1106,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(istype(target, /obj/effect/dummy/phased_mob))
 			return
 		to_chat(target, "<span class='userdanger'>You fall into the chasm!</span>")
-		target.Knockdown(40)
+		target.DefaultCombatKnockdown(40)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, target, "<span class='notice'>It's surprisingly shallow.</span>"), 15)
 		QDEL_IN(src, 30)
 
@@ -1245,7 +1245,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/shock/proc/shock_drop()
 	target.jitteriness = max(target.jitteriness - 990, 10) //Still jittery, but vastly less
-	target.Knockdown(60)
+	target.DefaultCombatKnockdown(60)
 
 /datum/hallucination/husks
 
@@ -1318,7 +1318,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 						  "<span class='userdanger'>[G] grabs your wrist and violently wrenches it to the side!</span>")
 		C.emote("scream")
 		C.dropItemToGround(C.get_active_held_item())
-		C.Knockdown(60)
+		C.DefaultCombatKnockdown(60)
 	else
 		to_chat(C,"<span class='userdanger'>[G] violently grabs you!</span>")
 	qdel(src)

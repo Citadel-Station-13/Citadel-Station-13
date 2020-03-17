@@ -34,15 +34,11 @@
 		else
 			name = "blood pack"
 
-/obj/item/reagent_containers/blood/update_icon()
-	cut_overlays()
-
+/obj/item/reagent_containers/blood/update_overlays()
+	. = ..()
 	var/v = min(round(reagents.total_volume / volume * 10), 10)
 	if(v > 0)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "bloodpack1")
-		filling.icon_state = "bloodpack[v]"
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
+		. += mutable_appearance('icons/obj/reagentfillings.dmi', "bloodpack[v]", color = mix_color_from_reagents(reagents.reagent_list))
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
@@ -120,7 +116,7 @@
 		else
 			if(!do_mob(user, C, 10))
 				return
-			
+
 			to_chat(user, "<span class='notice'>You take a sip from the [src].</span>")
 			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>")
 		if(reagents.total_volume <= 0) // Safety: In case you spam clicked the blood bag on yourself, and it is now empty (below will divide by zero)

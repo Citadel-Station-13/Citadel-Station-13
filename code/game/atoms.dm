@@ -28,7 +28,6 @@
 	var/list/managed_overlays
 
 	var/datum/proximity_monitor/proximity_monitor
-	var/buckle_message_cooldown = 0
 	var/fingerprintslast
 
 	var/list/filter_data //For handling persistent filters
@@ -98,7 +97,7 @@
 
 	var/temp_list = list()
 	for(var/i in custom_materials)
-		temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
+		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
 	custom_materials = null //Null the list to prepare for applying the materials properly
 	set_custom_materials(temp_list)
 
@@ -361,11 +360,12 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
-/atom/proc/relaymove(mob/user)
-	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
+/atom/proc/relaymove(mob/living/user)
+	if(!istype(user))
+		return				//why are you buckling nonliving mobs to atoms?
+	if(user.buckle_message_cooldown <= world.time)
+		user.buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
-	return
 
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
@@ -904,7 +904,7 @@ Proc for attack log creation, because really why not
 
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = getmaterialref(i)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	if(!length(materials))
@@ -913,8 +913,54 @@ Proc for attack log creation, because really why not
 	custom_materials = list() //Reset the list
 
 	for(var/x in materials)
-		var/datum/material/custom_material = getmaterialref(x)
+		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
 
 		if(!(material_flags & MATERIAL_NO_EFFECTS))
 			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
 		custom_materials[custom_material] += materials[x] * multiplier
+
+/**
+  * Returns true if this atom has gravity for the passed in turf
+  *
+  * Sends signals COMSIG_ATOM_HAS_GRAVITY and COMSIG_TURF_HAS_GRAVITY, both can force gravity with
+  * the forced gravity var
+  *
+  * Gravity situations:
+  * * No gravity if you're not in a turf
+  * * No gravity if this atom is in is a space turf
+  * * Gravity if the area it's in always has gravity
+  * * Gravity if there's a gravity generator on the z level
+  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
+  * * otherwise no gravity
+  */
+/atom/proc/has_gravity(turf/T)
+	if(!T || !isturf(T))
+		T = get_turf(src)
+
+	if(!T)
+		return 0
+
+	var/list/forced_gravity = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
+	if(!forced_gravity.len)
+		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(forced_gravity.len)
+		var/max_grav
+		for(var/i in forced_gravity)
+			max_grav = max(max_grav, i)
+		return max_grav
+
+	if(isspaceturf(T)) // Turf never has gravity
+		return 0
+
+	var/area/A = get_area(T)
+	if(A.has_gravity) // Areas which always has gravity
+		return A.has_gravity
+	else
+		// There's a gravity generator on our z level
+		if(GLOB.gravity_generators["[T.z]"])
+			var/max_grav = 0
+			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
+				max_grav = max(G.setting,max_grav)
+			return max_grav
+	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)

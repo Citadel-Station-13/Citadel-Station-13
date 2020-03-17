@@ -89,20 +89,6 @@ SUBSYSTEM_DEF(vote)
 					choices[GLOB.master_mode] += non_voters.len
 					if(choices[GLOB.master_mode] >= greatest_votes)
 						greatest_votes = choices[GLOB.master_mode]
-			else if(mode == "transfer") // austation begin -- Crew autotransfer vote
-				var/factor = 1
-				switch(world.time / (1 MINUTES))
-					if(0 to 60)
-						factor = 0.5
-					if(61 to 120)
-						factor = 0.8
-					if(121 to 240)
-						factor = 1
-					if(241 to 300)
-						factor = 1.2
-					else
-						factor = 1.4
-				choices["Initiate Crew Transfer"] += round(non_voters.len * factor) // austation end
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -370,7 +356,7 @@ SUBSYSTEM_DEF(vote)
 				var/list/runnable_storytellers = config.get_runnable_storytellers()
 				for(var/T in runnable_storytellers)
 					var/datum/dynamic_storyteller/S = T
-					runnable_storytellers[S] *= scores[initial(S.name)]
+					runnable_storytellers[S] *= round(stored_gamemode_votes[initial(S.name)]*100000,1)
 				var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
 				GLOB.dynamic_storyteller_type = S
 			if("map")
@@ -457,7 +443,7 @@ SUBSYSTEM_DEF(vote)
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
-			if(GLOB.admin_datums[ckey])
+			if(GLOB.admin_datums[ckey] || initiator_key == "server")
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
@@ -499,10 +485,11 @@ SUBSYSTEM_DEF(vote)
 				modes_to_add -= "traitor" // makes it so that traitor is always available
 				choices.Add(modes_to_add)
 			if("dynamic")
+				var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
 				for(var/T in config.storyteller_cache)
 					var/datum/dynamic_storyteller/S = T
-					var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
-					if(probabilities[initial(S.config_tag)] > 0)
+					var/probability = ((initial(S.config_tag) in probabilities) ? probabilities[initial(S.config_tag)] : initial(S.weight))
+					if(probability > 0)
 						choices.Add(initial(S.name))
 						choice_descs.Add(initial(S.desc))
 			if("custom")
