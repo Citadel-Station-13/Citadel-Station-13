@@ -821,7 +821,6 @@
 		/obj/item/gps/cyborg,
 		/obj/item/weapon/gripper/mining,
 		/obj/item/cyborg_clamp,
-		/obj/item/card/id/miningborg,
 		/obj/item/stack/marker_beacon,
 		/obj/item/destTagger,
 		/obj/item/stack/packageWrap)

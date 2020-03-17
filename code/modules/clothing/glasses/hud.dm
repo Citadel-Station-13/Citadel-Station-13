@@ -97,7 +97,8 @@
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	name = "diagnostic HUDSunglasses"
 	desc = "Sunglasses with a diagnostic HUD."
-	icon_state = "sunhuddiagnostic"
+	icon_state = "sunhuddiag"
+	item_state = "glasses"
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1

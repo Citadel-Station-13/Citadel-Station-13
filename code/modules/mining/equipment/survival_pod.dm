@@ -139,6 +139,9 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "sleeper"
 
+/obj/machinery/sleeper/survival_pod/update_icon_state()
+	return
+
 /obj/machinery/sleeper/survival_pod/update_overlays()
 	. = ..()
 	if(!state_open)
@@ -189,7 +192,7 @@
 	flags_1 = NODECONSTRUCT_1
 	var/empty = FALSE
 
-/obj/machinery/stasis/survival_pod/ComponentInitialize()
+/obj/machinery/smartfridge/survival_pod/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
