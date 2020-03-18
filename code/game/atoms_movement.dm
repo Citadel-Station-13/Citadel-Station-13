@@ -113,6 +113,17 @@
 		Moved(oldloc, direct)
 */
 
+/atom/movable/proc/pixelMove(direction, pixels)
+	var/old_step_size = step_size
+	step_size = pixels
+	step(src, direction, pixels)
+	if(step_size != pixels)
+		var/static/list/warned = list()
+		if(!warned[type])
+			warned[type] = TRUE
+			stack_trace("WARNING - step_size was changed during a move in /atom/movable/pixelMove(). This probably means that the laziness behind this system is catching up to it and it's time to standaridze how step_size changes are done.")
+	step_size = old_step_size
+
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
@@ -134,7 +145,6 @@
 		update_parallax_contents()
 
 	return TRUE
-
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
@@ -179,17 +189,28 @@
 
 ///////////// FORCED MOVEMENT /////////////
 
-/atom/movable/proc/forceMove(atom/destination)
+/**
+  * Moves this to the target destination and step x/y values, no matter what, while invoking the usual crosses/uncrosses.
+  *
+  * Params
+  * * atom/destination - Where to move to
+  * * sx - new step_x
+  * * sy - new step_y
+  */
+/atom/movable/proc/forceMove(atom/destination, sx = 0, sy = 0)
 	. = FALSE
 	if(destination)
-		. = doMove(destination)
+		. = doMove(destination, sx, sy)
 	else
 		CRASH("No valid destination passed into forceMove")
 
+/**
+  * Moves this to nullspace, that's about it.
+  */
 /atom/movable/proc/moveToNullspace()
-	return doMove(null)
+	return doMove(null, 0, 0)
 
-/atom/movable/proc/doMove(atom/destination)
+/atom/movable/proc/doMove(atom/destination, sx, sy)
 	. = FALSE
 	if(destination)
 		if(pulledby)
@@ -200,6 +221,7 @@
 		var/area/destarea = get_area(destination)
 
 		loc = destination
+		reset_pixel_step(sx, sy)
 		moving_diagonally = 0
 
 		if(!same_loc)
@@ -272,3 +294,10 @@
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
 	return 1
+
+/**
+  * Resets our step_x/y values to target.
+  */
+/atom/movable/proc/reset_pixel_step(x = 0, y = 0)
+	step_x = x
+	step_y = y

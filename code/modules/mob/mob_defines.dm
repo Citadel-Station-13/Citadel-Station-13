@@ -15,6 +15,11 @@
 	bound_y = 8
 	///
 
+	/// Pixel movement ///
+	/// The extra pixels we "missed out on" last move because we can't move a decimal amount.
+	var/pixel_decimal_overflow = 0
+	///
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()

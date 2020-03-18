@@ -1,4 +1,5 @@
 #define BASE_PIXEL_TICK_MOVESPEED 32
+#define MAX_PIXEL_MOVE_PER_MOVE 64		//do not ever let anyone move more pixels than this in a single move.
 
 //DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
 //See mob_movespeed.dm
@@ -485,3 +486,12 @@
 
 /mob/proc/canZMove(direction, turf/target)
 	return FALSE
+
+/// by default we aren't doing anything.
+/mob/proc/pixelMovement(direction, step_size)
+	set_pixel_step(0, 0)
+	step(src, direction, 32)
+
+/mob/set_pixel_step(x = 0, y = 0)
+	. = ..()
+	pixel_decimal_overflow = 0

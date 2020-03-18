@@ -128,3 +128,9 @@
 	if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
 		return FALSE
 	return ..()
+
+/mob/living/pixelMovement(direction, pixels)
+	var/ptrunc = pixels % 1
+	var/otrunc = pixel_decimal_overflow % 1
+	var/amt = clamp((pixels - ptrunc) + (pixel_decimal_overflow - otrunc), 0, MAX_PIXEL_MOVE_PER_MOVE)
+	return pixelMove(direction, pixels)
