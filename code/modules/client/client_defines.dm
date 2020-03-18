@@ -4,6 +4,10 @@
 		//BLACK MAGIC THINGS//
 		//////////////////////
 	parent_type = /datum
+
+	/// Last world.time we moved. Mostly to enforce one-move-per-tick.
+	var/last_move
+
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -21,7 +25,6 @@
 		/////////
 	var/datum/preferences/prefs = null
 	var/last_turn = 0
-	var/move_delay = 0
 	var/area			= null
 
 		///////////////

@@ -1,4 +1,4 @@
-#define BASE_TICK_MOVESPEED 32
+#define BASE_PIXEL_TICK_MOVESPEED 32
 
 //DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
 //See mob_movespeed.dm
@@ -7,7 +7,7 @@
 
 /// Gets our current pixel speed per tick. Probably replace with a cached var if this takes off.
 /mob/proc/movement_speed_pixels()
-	return BASE_TICK_MOVESPEED / (max(world.tick_lag, movement_delay()) / world.tick_lag)
+	return BASE_PIXEL_TICK_MOVESPEED / (max(world.tick_lag, movement_delay()) / world.tick_lag)
 
 /client/verb/drop_item()
 	set hidden = 1
@@ -25,6 +25,87 @@
 		else
 			mob.control_object.forceMove(get_step(mob.control_object,direction))
 
+/client/pixelMovement(direction)
+	if(world.time <= last_move)
+		return FALSE
+	last_move = world.time
+
+
+	next_move_dir_add = next_move_dir_sub = NONE
+	if(!n || !direction || !mob?.loc)
+		return FALSE
+	//GET RID OF THIS SOON AS MOBILITY FLAGS IS DONE
+	if(mob.notransform)
+		return FALSE
+
+	if(mob.control_object)
+		return Move_object(direction)
+	if(!isliving(mob))
+		return mob.Move(n, direction)
+	if(mob.stat == DEAD)
+		mob.ghostize()
+		return FALSE
+	if(mob.force_moving)
+		return FALSE
+
+	var/mob/living/L = mob  //Already checked for isliving earlier
+	if(L.incorporeal_move)	//Move though walls
+		Process_Incorpmove(direction)
+		return FALSE
+
+	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
+		return mob.remote_control.relaymove(mob, direction)
+
+	if(isAI(mob))
+		return AIMove(n,direction,mob)
+
+	if(Process_Grab()) //are we restrained by someone's grip?
+		return
+
+	if(mob.buckled)							//if we're buckled to something, tell it we moved.
+		return mob.buckled.relaymove(mob, direction)
+
+	if(!CHECK_MOBILITY(L, MOBILITY_MOVE))
+		return FALSE
+
+	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
+		var/atom/O = mob.loc
+		return O.relaymove(mob, direction)
+
+	if(!mob.Process_Spacemove(direction))
+		return FALSE
+	//We are now going to move
+	var/oldloc = mob.loc
+
+	if(L.confused)
+		var/newdir = 0
+		if(L.confused > 40)
+			newdir = pick(GLOB.alldirs)
+		else if(prob(L.confused * 1.5))
+			newdir = angle2dir(dir2angle(direction) + pick(90, -90))
+		else if(prob(L.confused * 3))
+			newdir = angle2dir(dir2angle(direction) + pick(45, -45))
+		if(newdir)
+			direction = newdir
+			n = get_step(L, direction)
+
+	. = ..()
+
+	if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
+		add_delay *= 2
+
+	if(.) // If mob is null here, we deserve the runtime
+		if(mob.throwing)
+			mob.throwing.finalize(FALSE)
+
+	for(var/obj/O in mob.user_movement_hooks)
+		O.intercept_user_move(direction, mob, n, oldloc)
+
+	var/atom/movable/P = mob.pulling
+	if(P && !ismob(P) && P.density)
+		mob.setDir(turn(mob.dir, 180))
+
+/*
 #define MOVEMENT_DELAY_BUFFER 0.75
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
 
@@ -112,6 +193,7 @@
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.setDir(turn(mob.dir, 180))
+*/
 
 /// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()

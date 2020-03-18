@@ -81,7 +81,7 @@
 		direction = get_dir(T, destination)
 	if(direction != UP && direction != DOWN)
 		return FALSE
-	if(!destination)s
+	if(!destination)
 		destination = get_step_multiz(src, direction)
 		if(!destination)
 			return FALSE
