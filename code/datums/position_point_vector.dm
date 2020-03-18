@@ -134,8 +134,8 @@
 	return MODULUS(y, world.icon_size) - 16 - 1
 
 /datum/point/vector
-	var/speed = 32				//steps per iteration
-	var/iteration = 0
+	/// Pixels "travelled"
+	var/travelled = 0
 	var/angle = 0
 	var/mpx = 0					//calculated x/y movement amounts to prevent having to do trig every step.
 	var/mpy = 0
@@ -143,9 +143,9 @@
 	var/starting_y = 0
 	var/starting_z = 0
 
-/datum/point/vector/New(_x, _y, _z, _step_x = 0, _step_y = 0, _angle, _speed, initial_increment = 0)
+/datum/point/vector/New(_x, _y, _z, _step_x = 0, _step_y = 0, _angle, initial_increment = 0)
 	..()
-	initialize_trajectory(_speed, _angle)
+	initialize_trajectory(_angle)
 	if(initial_increment)
 		increment(initial_increment)
 
@@ -157,8 +157,7 @@
 
 /datum/point/vector/copy_to(datum/point/vector/v = new)
 	..(v)
-	v.speed = speed
-	v.iteration = iteration
+	v.travelled = travelled
 	v.angle = angle
 	v.mpx = mpx
 	v.mpy = mpy
@@ -167,9 +166,7 @@
 	v.starting_z = starting_z
 	return v
 
-/datum/point/vector/proc/initialize_trajectory(step_speed, new_angle)
-	if(!isnull(step_speed))
-		speed = step_speed
+/datum/point/vector/proc/initialize_trajectory(new_angle)
 	set_angle(new_angle)
 
 /datum/point/vector/proc/set_angle(new_angle)		//calculations use "byond angle" where north is 0 instead of 90, and south is 180 instead of 270.
@@ -179,27 +176,17 @@
 	update_offsets()
 
 /datum/point/vector/proc/update_offsets()
-	mpx = sin(angle) * speed
-	mpy = cos(angle) * speed
+	mpx = sin(angle)
+	mpy = cos(angle)
 
-/datum/point/vector/proc/set_speed(new_speed)
-	if(isnull(new_speed) || speed == new_speed)
-		return
-	speed = new_speed
-	update_offsets()
+/datum/point/vector/proc/increment(pixels = world.icon_size)
+	travelled += pixels
+	x += mpx * pixels
+	y += mpy * pixels
 
-/datum/point/vector/proc/increment(multiplier = 1)
-	iteration++
-	x += mpx * (multiplier)
-	y += mpy * (multiplier)
-
-/datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
+/datum/point/vector/proc/return_vector_after_increment(pixels = world.icon_size * 7)
 	var/datum/point/vector/v = copy_to()
-	if(force_simulate)
-		for(var/i in 1 to amount)
-			v.increment(multiplier)
-	else
-		v.increment(multiplier * amount)
+	v.increment(pixels)
 	return v
 
 /datum/point/vector/proc/on_z_change()

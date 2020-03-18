@@ -7,7 +7,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
 	density = FALSE
-	anchored = TRUE
+	anchored = FALSE
 	item_flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -38,7 +38,8 @@
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
-	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
+	/// Amount of deciseconds it takes us to travel one tile (so world.icon_size pixels)
+	var/speed = 0.8
 	var/Angle = 0
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -336,7 +337,7 @@
 	if(!current)
 		var/turf/T = get_turf(src)
 		current = new(T.x, T.y, T.z, step_x, step_y, isnull(forced_angle)? Angle : forced_angle, 32)
-	var/datum/point/vector/v = current.return_vector_after_increments(moves)
+	var/datum/point/vector/v = current.return_vector_after_increment(moves * world.icon_size)
 	return v.return_turf()
 
 /obj/item/projectile/proc/return_pathing_turfs_in_moves(moves, forced_angle)
@@ -346,6 +347,9 @@
 
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
+
+/obj/item/projectile/proc/pixels_to_move(deciseconds_elapsed, speed)
+	return (deciseconds_elapsed / speed) * world.icon_size
 
 /obj/item/projectile/process()
 	last_process = world.time
@@ -357,18 +361,8 @@
 		return
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
-	var/required_moves = speed > 0? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
-	if(required_moves == MOVES_HITSCAN)
-		required_moves = SSprojectiles.global_max_tick_moves
-	else
-		if(required_moves > SSprojectiles.global_max_tick_moves)
-			var/overrun = required_moves - SSprojectiles.global_max_tick_moves
-			required_moves = SSprojectiles.global_max_tick_moves
-			time_offset += overrun * speed
-		time_offset += MODULUS(elapsed_time_deciseconds, speed)
-
-	for(var/i in 1 to required_moves)
-		pixel_move(1, FALSE)
+	var/pixels = pixels_to_move(elapsed_time_deciseconds, speed)
+	pixel_move(pixels, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	if(fired_from)
@@ -452,12 +446,6 @@
 		else
 			return ..()
 
-/obj/item/projectile/proc/set_pixel_speed(new_speed)
-	if(trajectory)
-		trajectory.set_speed(new_speed)
-		return TRUE
-	return FALSE
-
 /obj/item/projectile/proc/record_hitscan_start(datum/point/pcache)
 	if(pcache)
 		beam_segments = list()
@@ -479,7 +467,7 @@
 			return	//Kill!
 		pixel_move(1, TRUE)
 
-/obj/item/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
+/obj/item/projectile/proc/pixel_move(pixels, hitscanning = FALSE)
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
@@ -489,7 +477,7 @@
 		transform = M
 	if(homing)
 		process_homing()
-	trajectory.increment(trajectory_multiplier)
+	trajectory.increment(pixels)
 	var/turf/T = trajectory.return_turf()
 	var/sx = trajectory.return_sx()
 	var/sy = trajectory.return_sy()
@@ -620,7 +608,7 @@
 		if(can_hit_target(L, permutated, (AM == original)))
 			Bump(AM)
 
-/obj/item/projectile/Move(atom/newloc, dir = NONE)
+/obj/item/projectile/Move(atom/newloc, dir = NONE, step_x = 0, step_y = 0)
 	. = ..()
 	if(.)
 		if(temporary_unstoppable_movement)
