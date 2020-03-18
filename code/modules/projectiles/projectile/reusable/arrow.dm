@@ -5,7 +5,7 @@
 	icon_state = "arrow"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/wood
 
-/obj/item/projectile/bullet/reusable/arrow/ashen
+/obj/item/projectile/bullet/reusable/arrow/ash
 	name = "ashen arrow"
 	desc = "Fire harderned arrow."
 	damage = 25

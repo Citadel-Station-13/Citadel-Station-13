@@ -15,7 +15,7 @@
 	name = "ashen arrow"
 	desc = "An arrow made of wood, hardened by fire."
 	icon_state = "ashenarrow"
-	projectile_type = /obj/item/projectile/bullet/reusable/arrow/ashen
+	projectile_type = /obj/item/projectile/bullet/reusable/arrow/ash
 
 /obj/item/ammo_casing/caseless/arrow/bone
 	name = "bone arrow"
