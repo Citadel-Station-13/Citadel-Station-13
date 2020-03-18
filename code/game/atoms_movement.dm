@@ -237,7 +237,7 @@
 /atom/movable/proc/pixelMove(direction, pixels)
 	var/old_step_size = step_size
 	step_size = pixels
-	step(src, direction, pixels)
+	. = step(src, direction, pixels)
 	if(step_size != pixels)
 		var/static/list/warned = list()
 		if(!warned[type])
