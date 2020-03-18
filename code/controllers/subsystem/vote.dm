@@ -443,7 +443,7 @@ SUBSYSTEM_DEF(vote)
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
-			if(GLOB.admin_datums[ckey])
+			if(GLOB.admin_datums[ckey] || initiator_key == "server")
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)

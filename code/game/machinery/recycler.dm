@@ -8,7 +8,7 @@
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/recycler
-	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
+	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob, or upon deconstruction.
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
@@ -23,6 +23,10 @@
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
+
+/obj/machinery/recycler/deconstruct(disassembled = TRUE)
+	safety_mode = TRUE //to stop stock parts and circuit from being deleted.
+	return ..()
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
@@ -97,18 +101,14 @@
 	. = ..()
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & (BROKEN|NOPOWER) || safety_mode)
 		return
-	if(safety_mode)
-		return
+
 	var/list/to_eat
-	if(isitem(AM0))
-		to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
-	else
-		to_eat = list(AM0)
+
+	to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
 
 	var/items_recycled = 0
-
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
