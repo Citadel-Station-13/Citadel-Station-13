@@ -644,10 +644,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	return FALSE
 		
 /datum/game_mode/dynamic/process()
-	if (pop_last_updated < world.time - (60 SECONDS))
+	if (pop_last_updated < world.time - (120 SECONDS))
 		pop_last_updated = world.time
 		update_playercounts()
-		threat = storyteller.calculate_threat()
 
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
@@ -713,6 +712,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 					current_players[CURRENT_OBSERVERS].Add(M)
 					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
+	threat = storyteller.calculate_threat()
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
