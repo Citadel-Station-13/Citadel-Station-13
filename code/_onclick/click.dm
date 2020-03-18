@@ -185,10 +185,6 @@
 
 	var/list/closed = list()
 	var/list/checking = list(ultimate_target)
-	if(tool)
-		reach = tool.reach
-	else
-		reach = 32
 	while (checking.len && depth > 0)
 		var/list/next = list()
 		--depth
