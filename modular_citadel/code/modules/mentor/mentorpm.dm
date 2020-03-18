@@ -38,8 +38,9 @@
 	if(!msg)
 		msg = input(src,"Message:", "Private message") as text|null
 
-		if(!msg && is_mentor(whom))
-			to_chat(GLOB.admins | GLOB.mentors, "<span class='purple'>[src] has stopped their reply to [whom]'s mhelp.</span>")
+		if(!msg)
+			if (is_mentor(whom))
+				to_chat(GLOB.admins | GLOB.mentors, "<span class='purple'>[src] has stopped their reply to [whom]'s mhelp.</span>")
 			return
 
 		if(!C)
