@@ -1,3 +1,5 @@
+#define MAX_PIXELS_TO_CONSIDER_ADJACENT 32		//setting this super high won't do anything because it still only checks locs adjacency to target vs just drawing a line.
+
 /*
 	Adjacency proc for determining touch range
 
@@ -16,7 +18,6 @@
 // Not a sane use of the function and (for now) indicative of an error elsewhere
 /area/Adjacent(var/atom/neighbor)
 	CRASH("Call to /area/Adjacent(), unimplemented proc")
-
 
 /*
 	Adjacency (to turf):
@@ -43,7 +44,6 @@
 	var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
 	var/d1 = in_dir&3		     // eg. north	  (1+8)&3 (0000 0011) = 1 (0000 0001)
 	var/d2 = in_dir&12			 // eg. west	  (1+8)&12 (0000 1100) = 8 (0000 1000)
-
 	for(var/d in list(d1,d2))
 		if(!T0.ClickCross(d, border_only = 1, target_atom = target, mover = mover))
 			continue // could not leave T0 in that direction
@@ -65,24 +65,25 @@
 	Adjacency (to anything else):
 	* Must be on a turf
 */
-/atom/movable/Adjacent(var/atom/neighbor)
+/atom/movable/Adjacent(atom/neighbor)
 	if(neighbor == loc)
 		return TRUE
-	var/turf/T = loc
-	if(!istype(T))
+	if(bounds_dist(src, neighbor) > MAX_PIXELS_TO_CONSIDER_ADJACENT)
 		return FALSE
-	if(T.Adjacent(neighbor, neighbor, src))
-		return TRUE
+	for(var/i in locs)
+		var/turf/T = i
+		if(T.Adjacent(neighbor, neighbor, src))
+			return TRUE
 	return FALSE
 
 // This is necessary for storage items not on your person.
-/obj/item/Adjacent(var/atom/neighbor, var/recurse = 1)
+/obj/item/Adjacent(atom/neighbor, recurse = 1)
 	if(neighbor == loc)
-		return 1
+		return TRUE
 	if(isitem(loc))
 		if(recurse > 0)
-			return loc.Adjacent(neighbor,recurse - 1)
-		return 0
+			return loc.Adjacent(neighbor, recurse - 1)
+		return FALSE
 	return ..()
 
 /*

@@ -684,15 +684,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 0
 	throwforce = 5
-	reach = 2
+	reach = 64
 
 /obj/item/extendohand/acme
 	name = "\improper ACME Extendo-Hand"
 	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
 /obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user)
-	var/dist = get_dist(M, user)
-	if(dist < reach)
+	var/dist = bounds_dist(M, user)
+	if(dist < (reach + user.))
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)

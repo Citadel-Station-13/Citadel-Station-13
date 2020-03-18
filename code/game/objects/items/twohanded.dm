@@ -940,7 +940,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 11
 	force_wielded = 20					//I have no idea how to balance
-	reach = 2
+	reach = 64
 	throwforce = 22
 	throw_speed = 4
 	embedding = list("embedded_impact_pain_multiplier" = 3)

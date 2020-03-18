@@ -27,107 +27,10 @@
 		return FALSE
 
 	var/pullee = pulling
-	var/diagonal = (direct & (direct - 1))
-
-/*
-	var/atom/oldloc = loc
-
-	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
-			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			moving_diagonally = FIRST_DIAG_STEP
-			var/first_step_dir
-			// The `&& moving_diagonally` checks are so that a forceMove taking
-			// place due to a Crossed, Bumped, etc. call will interrupt
-			// the second half of the diagonal movement, or the second attempt
-			// at a first half if step() fails because we hit something.
-			if (direct & NORTH)
-				if (direct & EAST)
-					if (step(src, NORTH) && moving_diagonally)
-						first_step_dir = NORTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (moving_diagonally && step(src, EAST))
-						first_step_dir = EAST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-				else if (direct & WEST)
-					if (step(src, NORTH) && moving_diagonally)
-						first_step_dir = NORTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (moving_diagonally && step(src, WEST))
-						first_step_dir = WEST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-			else if (direct & SOUTH)
-				if (direct & EAST)
-					if (step(src, SOUTH) && moving_diagonally)
-						first_step_dir = SOUTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (moving_diagonally && step(src, EAST))
-						first_step_dir = EAST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-				else if (direct & WEST)
-					if (step(src, SOUTH) && moving_diagonally)
-						first_step_dir = SOUTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (moving_diagonally && step(src, WEST))
-						first_step_dir = WEST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-			if(moving_diagonally == SECOND_DIAG_STEP)
-				if(!.)
-					setDir(first_step_dir)
-				else if (!inertia_moving)
-					inertia_next_move = world.time + inertia_move_delay
-					newtonian_move(direct)
-			moving_diagonally = 0
-			return
-*/
 
 	var/atom/oldLoc = loc
 
 	. = ..()
-
-/*
-	// Diagonal sliding
-	#warn This is janky as shit and double bumps, get rid of this ASAP.
-	if(!. && diagonal)
-		var/first
-		var/second
-		if(direct & NORTH)
-			first = NORTH
-			if(direct & EAST)
-				second = EAST
-			else if(direct & WEST)
-				second = WEST
-		if(direct & SOUTH)
-			first = SOUTH
-			if(direct & EAST)
-				second = EAST
-			else if(direct & WEST)
-				second = WEST
-		if(first && second)
-			if(!(. = step(src, first)))
-				. = step(src, second)
-				if(.)
-					return
-*/
-
-		/*
-			else
-				var/turf/ft = get_step(src, first)
-				var/turf/st = get_step(src, second)
-				if(ft.Enter(src))
-					return step(src, first)
-				else if(st.Enter(src))
-					return step(src, second)
-		*/
 
 	last_move = direct
 	setDir(direct)
@@ -247,7 +150,7 @@
 
 /atom/movable/proc/pixelMoveAngle(angle, pixels)
 	var/sx = step_x + cos(angle) * pixels
-	var/sy = step_y + cos(angle) * pixels
+	var/sy = step_y + sin(angle) * pixels
 	var/old_step_size = step_size
 	var/ss = max(sx, sy, 1)
 	. = Move(loc, get_dir(loc, loc), sx, sy)

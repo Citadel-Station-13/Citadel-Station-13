@@ -185,6 +185,10 @@
 
 	var/list/closed = list()
 	var/list/checking = list(ultimate_target)
+	if(tool)
+		reach = tool.reach
+	else
+		reach = 32
 	while (checking.len && depth > 0)
 		var/list/next = list()
 		--depth
@@ -228,24 +232,21 @@
 /proc/CheckToolReach(atom/movable/here, atom/movable/there, reach)
 	if(!here || !there)
 		return
-	switch(reach)
-		if(0)
-			return FALSE
-		if(1)
-			return FALSE //here.Adjacent(there)
-		if(2 to INFINITY)
-			var/obj/dummy = new(get_turf(here))
-			dummy.pass_flags |= PASSTABLE
-			dummy.invisibility = INVISIBILITY_ABSTRACT
-			for(var/i in 1 to reach) //Limit it to that many tries
-				var/turf/T = get_step(dummy, get_dir(dummy, there))
-				if(dummy.CanReach(there))
-					qdel(dummy)
-					return TRUE
-				if(!dummy.Move(T)) //we're blocked!
-					qdel(dummy)
-					return
+	if(bounds_dist(here, there) > reach)
+		return FALSE
+	var/obj/dummy = new(get_turf(here))
+	dummy.pass_flags |= PASSTABLE
+	dummy.invisibility = INVISIBILITY_ABSTRACT
+	for(var/i in 1 to (get_dist(here, there) + 1))
+		var/turf/T = get_step(dummy, get_dir(dummy, there))
+		if(dummy.CanReach(there))
 			qdel(dummy)
+			return TRUE
+		if(!dummy.Move(T))
+			qdel(dummy)
+			return FALSE
+		qdel(dummy)
+	return FALSE
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)

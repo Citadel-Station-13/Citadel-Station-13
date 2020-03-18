@@ -89,7 +89,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
-	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
+	/// How many pixels of reach we grant. Overrides a mob's base reach when they use us.
+	var/reach = 32
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 	var/list/slot_equipment_priority = null // for default list, see /mob/proc/equip_to_appropriate_slot()
@@ -444,11 +445,20 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
 
 /obj/item/verb/verb_pickup()
-	set src in oview(1)
+	set src in oview(3)
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
+	if(!isliving(usr))
+		return
+
+	var/mob/living/L = usr
+	if(!CHECK_MOBILITY(L, MOBILITY_PICKUP))
+		to_chat(L, "<span class='warning'>You cannot do that right now!</span>")
+		return
+
+	if(!L.Adjacent(src))
+		to_chat(L, "<span class='warning'>You are too far away!</span>")
 		return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
