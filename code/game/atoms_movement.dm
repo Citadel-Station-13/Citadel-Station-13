@@ -17,6 +17,7 @@
 	if(!loc || !newloc || anchored)
 		return FALSE
 
+	var/pullee = pulling
 	var/diagonal = (direct & (direct - 1))
 
 /*
@@ -121,6 +122,7 @@
 
 GLOBAL_VAR_INIT(method1, TRUE)
 
+
 /*
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = NONE
@@ -149,6 +151,46 @@ GLOBAL_VAR_INIT(method1, TRUE)
 		Moved(oldloc, direct)
 */
 
+	if(. && pulling)
+		var/distance = get_pixel_dist_euclidean(src, pulling)
+		if(distance > max(MAX_PULL_SEPARATION_BREAK_MINIMUM, (MAX_PULL_SEPARATION_BREAK_FACTOR * step_size)))
+			stop_pulling()
+		else if(distance > OPTIMAL_PULL_DISTANCE)
+			var/diff = distance - OPTIMAL_PULL_DISTANCE
+			pulling.pixelMoveAngleSeekTowards(src, diff)
+
+/*
+		var/distance = bounds_dist(src, pulling)
+		if(pulling.anchored)
+			stop_pulling()
+		else if(distance > 16) // If we could move something in an angle this would be so much easier
+			step_towards(pulling, src, distance-16)
+			var/turf/myT = get_turf(src)
+			var/turf/theirT = get_turf(pulling)
+			var/x_dist = ((theirT.x - myT.x) * 32) - step_x + pulling.step_x
+			var/y_dist = ((theirT.y - myT.y) * 32) - step_y + pulling.step_y
+
+			var/pull_dir = get_dir(src, pulling)
+			var/move_dir
+			if(!(pull_dir in GLOB.diagonals)) // We want to slowly move it to the same axis of movement as us
+				if(pull_dir & (NORTH | SOUTH))
+					switch(x_dist)
+						if(-INFINITY to -1)
+							move_dir = EAST
+						if(1 to INFINITY)
+							move_dir = WEST
+				else if(pull_dir & (EAST | WEST))
+					switch(y_dist)
+						if(-INFINITY to -1)
+							move_dir = NORTH
+						if(1 to INFINITY)
+							move_dir = SOUTH
+			if(move_dir)
+				var/old_pulling_dir = pulling.dir
+				step(pulling, move_dir, 1)
+				pulling.dir = old_pulling_dir
+*/
+
 /atom/movable/proc/pixelMove(direction, pixels)
 	var/old_step_size = step_size
 	step_size = pixels
@@ -161,12 +203,16 @@ GLOBAL_VAR_INIT(method1, TRUE)
 	step_size = old_step_size
 
 /atom/movable/proc/pixelMoveAngle(angle, pixels)
+	return Move(loc, get_dir(loc, loc), step_x + cos(angle) * pixels, step_y + sin(angle) * pixels)
+
+	/*
 	var/dx = cos(angle) * pixels + step_x
 	var/dy = cos(angle) * pixels + step_y
 	var/tx = FLOOR(dx, world.icon_size)
 	var/ty = FLOOR(dy, world.icon_size)
 	var/turf/destination = locate(x + tx, y + ty, z)
-	return Move(destination, get_dir(src, destination), dx % world.icon_size, dy % world.icon_size)
+	return Move(destination, get_dir(src, destination), MODULUS(dx, world.icon_size), MODULUS(dy, world.icon_size))
+	*/
 
 /atom/movable/proc/pixelMoveAngleSeekTowards(atom/target, pixels)
 	return pixelMoveAngle(get_angle(src, target), pixels)

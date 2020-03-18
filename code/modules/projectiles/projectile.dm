@@ -146,12 +146,18 @@
 
 	var/hitx
 	var/hity
+	var/tsx = 0
+	var/tsy = 0
+	if(ismovableatom(target))
+		var/atom/movable/AM = target
+		tsx = AM.step_x
+		tsy = AM.step_y
 	if(target == original)
-		hitx = target.pixel_x + p_x - 16
-		hity = target.pixel_y + p_y - 16
+		hitx = target.pixel_x + tsy + p_x - 16
+		hity = target.pixel_y + tsx + p_y - 16
 	else
-		hitx = target.pixel_x + rand(-8, 8)
-		hity = target.pixel_y + rand(-8, 8)
+		hitx = target.pixel_x + tsx + rand(-8, 8)
+		hity = target.pixel_y + tsy + rand(-8, 8)
 
 	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
@@ -361,7 +367,7 @@
 		return
 	var/elapsed_time_deciseconds = max(0, world.time - last_projectile_move)
 	var/pixels = pixels_to_move(elapsed_time_deciseconds, speed)
-	last_projectile_move = world.time
+	to_chat(world, "DEBUG: elapsed [elapsed_time_deciseconds] moving [pixels]")
 	pixel_move(pixels, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
@@ -392,7 +398,7 @@
 		M.Turn(Angle)
 		transform = M
 	trajectory_ignore_forcemove = TRUE
-	forceMove(starting)
+	forceMove(starting, step_x, step_y)
 	trajectory_ignore_forcemove = FALSE
 	trajectory = new(starting.x, starting.y, starting.z, step_x, step_y, Angle, 32)
 	last_projectile_move = world.time

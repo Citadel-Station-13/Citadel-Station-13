@@ -80,45 +80,6 @@
 
 	. = ..()
 
-	if(. && pulling)
-		var/distance = get_pixel_dist_euclidean(src, pulling)
-		if(distance > max(MAX_PULL_SEPARATION_BREAK_MINIMUM, (MAX_PULL_SEPARATION_BREAK_FACTOR * step_size)))
-			stop_pulling()
-		else if(distance > OPTIMAL_PULL_DISTANCE)
-			var/diff = distance - OPTIMAL_PULL_DISTANCE
-			pulling.pixelMoveAngleSeekTowards(src, diff)
-
-/*
-		var/distance = bounds_dist(src, pulling)
-		if(pulling.anchored)
-			stop_pulling()
-		else if(distance > 16) // If we could move something in an angle this would be so much easier
-			step_towards(pulling, src, distance-16)
-			var/turf/myT = get_turf(src)
-			var/turf/theirT = get_turf(pulling)
-			var/x_dist = ((theirT.x - myT.x) * 32) - step_x + pulling.step_x
-			var/y_dist = ((theirT.y - myT.y) * 32) - step_y + pulling.step_y
-
-			var/pull_dir = get_dir(src, pulling)
-			var/move_dir
-			if(!(pull_dir in GLOB.diagonals)) // We want to slowly move it to the same axis of movement as us
-				if(pull_dir & (NORTH | SOUTH))
-					switch(x_dist)
-						if(-INFINITY to -1)
-							move_dir = EAST
-						if(1 to INFINITY)
-							move_dir = WEST
-				else if(pull_dir & (EAST | WEST))
-					switch(y_dist)
-						if(-INFINITY to -1)
-							move_dir = NORTH
-						if(1 to INFINITY)
-							move_dir = SOUTH
-			if(move_dir)
-				var/old_pulling_dir = pulling.dir
-				step(pulling, move_dir, 1)
-				pulling.dir = old_pulling_dir
-*/
 
 	if(pulledby && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
