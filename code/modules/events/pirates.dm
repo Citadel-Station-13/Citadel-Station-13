@@ -15,7 +15,7 @@
 
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
-	var/datum/comm_message/threat
+	var/datum/comm_message/threat_message
 	var/payoff = 0
 	var/paid_off = FALSE
 	var/ship_name = "Space Privateers Association"
@@ -28,16 +28,16 @@
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 	if(fake)
 		return
-	threat = new
+	threat_message = new
 	payoff = round(SSshuttle.points * 0.80)
-	threat.title = "Business proposition"
-	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
-	threat.possible_answers = list("We'll pay.","No way.")
-	threat.answer_callback = CALLBACK(src,.proc/answered)
-	SScommunications.send_message(threat,unique = TRUE)
+	threat_message.title = "Business proposition"
+	threat_message.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
+	threat_message.possible_answers = list("We'll pay.","No way.")
+	threat_message.answer_callback = CALLBACK(src,.proc/answered)
+	SScommunications.send_message(threat_message,unique = TRUE)
 
 /datum/round_event/pirates/proc/answered()
-	if(threat && threat.answered == 1)
+	if(threat_message && threat_message.answered == 1)
 		if(SSshuttle.points >= payoff)
 			SSshuttle.points -= payoff
 			priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)

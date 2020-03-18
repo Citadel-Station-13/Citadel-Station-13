@@ -46,11 +46,15 @@ Property weights are:
 			threat += A.threat()
 	for(var/datum/round_event/R in SSevents.running)
 		threat += R.threat()
+	for(var/mob/living/simple_animal/hostile/H in GLOB.mob_living_list)
+		var/turf/T = get_turf(H)
+		if(H.stat != DEAD && is_station_level(T.z))
+			threat += H.threat()
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (M.stat != DEAD && M.mind && M.mind.assigned_role)
 			threat += SSjob.GetJob(M.mind.assigned_role).threat
 	threat += (mode.current_players[CURRENT_DEAD_PLAYERS].len)*dead_player_weight
-	return threat
+	return round(threat,0.1)
 
 /datum/dynamic_storyteller/proc/do_process()
 	return
@@ -96,7 +100,9 @@ Property weights are:
 	if(mode.forced_injection)
 		mode.forced_injection = !dry_run
 		return 100
-	return round(max(0, ((mode.threat_level-mode.threat)*100)/mode.threat_level))
+	var/threat_perc = mode.threat/mode.threat_level
+
+	return round(max(0,100*(1-(threat_perc*threat_perc*threat_perc))))
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
@@ -116,17 +122,28 @@ Property weights are:
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/midround/rule in mode.midround_rules)
 		// if there are antags OR the rule is an antag rule, antag_acceptable will be true.
-		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level - mode.threat))
+		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
 			// Classic secret : only autotraitor/minor roles
 			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 				continue
 			rule.trim_candidates()
+			var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+			/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
+				pick this particular ruleset. 
+				Let's use a toy example: there's 60 threat level and 10 threat spent.
+				We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
+				Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
+				When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
+				is 2.26 times as likely to be picked, all other things considered.
+				Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
+			*/
+			var/threat_weight = 1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = (rule.get_weight() * property_weight)*rule.weight_mult
+				drafted_rules[rule] = round(((rule.get_weight() * property_weight)*rule.weight_mult*threat_weight)*1000,1)
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/latejoin_draft(mob/living/carbon/human/newPlayer)
@@ -143,12 +160,14 @@ Property weights are:
 
 			rule.candidates = list(newPlayer)
 			rule.trim_candidates()
+			var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+			var/threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = (rule.get_weight() * property_weight)*rule.weight_mult
+				drafted_rules[rule] = round(((rule.get_weight() * property_weight)*rule.weight_mult*threat_weight)*1000,1)
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/event_draft()
@@ -214,6 +233,7 @@ Property weights are:
 /datum/dynamic_storyteller/random
 	name = "Random"
 	config_tag = "random"
+	weight = 1
 	desc = "No weighting at all; every ruleset has the same chance of happening. Cooldowns vary wildly. As random as it gets."
 	forced_threat_level = 100
 
@@ -282,10 +302,21 @@ Property weights are:
 /datum/dynamic_storyteller/story
 	name = "Story"
 	config_tag = "story"
-	desc = "Antags with options for loadouts and gimmicks. Traitor, wizard, nukies."
+	desc = "Antags with options for loadouts and gimmicks. Traitor, wizard, nukies. Has a buildup-climax-falling action threat curve."
 	weight = 2
 	curve_width = 2
-	property_weights = list("story_potential" = 3)
+	property_weights = list("story_potential" = 2)
+
+
+/datum/dynamic_storyteller/story/do_process()
+	var/current_time = (world.time / SSautotransfer.targettime)*180
+	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+1),0.1)
+
+/datum/dynamic_storyteller/classic
+	name = "Classic"
+	config_tag = "classic"
+	desc = "No special antagonist weights. Good variety, but not like random. Uses your chaos preference to weight."
+	flags = USE_PREF_WEIGHTS
 
 /datum/dynamic_storyteller/suspicion
 	name = "Intrigue"
@@ -293,6 +324,7 @@ Property weights are:
 	desc = "Antags that instill distrust in the crew. Traitors, bloodsuckers."
 	weight = 2
 	curve_width = 2
+	dead_player_weight = 2
 	property_weights = list("trust" = -3)
 
 /datum/dynamic_storyteller/liteextended
@@ -303,6 +335,7 @@ Property weights are:
 	curve_width = 0.5
 	flags = NO_ASSASSIN
 	weight = 1
+	dead_player_weight = 5
 	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
 
 /datum/dynamic_storyteller/no_antag

@@ -6,7 +6,7 @@
 	roundend_category = "bloodsuckers"
 	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
-
+	threat = 5
 	// NAME
 	var/vampname						// My Dracula name
 	var/vamptitle						// My Dracula title
@@ -91,8 +91,8 @@
 	// Refill with Blood
 	owner.current.blood_volume = max(owner.current.blood_volume,BLOOD_VOLUME_SAFE)
 
-
-
+/datum/antagonist/bloodsucker/threat()
+	return threat+3*vamplevel
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -12,6 +12,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
+	threat = 1
 	harm_intent_damage = 5
 	obj_damage = 0
 	melee_damage_lower = 1

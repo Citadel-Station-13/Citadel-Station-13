@@ -509,7 +509,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	drafted_rules -= starting_rule
 
 	starting_rule.trim_candidates()
-	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
+	starting_rule.scale_up(extra_rulesets_amount, threat)
 	if (starting_rule.pre_execute())
 		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> -[starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat", verbose = TRUE)
 		if(starting_rule.flags & HIGHLANDER_RULESET)
@@ -763,12 +763,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			SSblackbox.record_feedback("tally","dynamic",1,"Successful latejoin injections")
 			latejoin_injection_cooldown = storyteller.get_latejoin_cooldown() + world.time
 
-/// Refund threat, giving more room for other threats to fill.
-/datum/game_mode/dynamic/proc/refund_threat(regain)
-	threat -= regain
-	SSblackbox.record_feedback("tally","dynamic_threat",regain,"Refunded threat")
-	log_threat("[regain] refunded. Threat is now [threat].", verbose = TRUE)
-
 /// Increase the threat level.
 /datum/game_mode/dynamic/proc/create_threat(gain)
 	threat_level += gain
@@ -777,8 +771,8 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
 /// Decrease the threat level.
 /datum/game_mode/dynamic/proc/remove_threat(loss)
-	threat_level -= gain
-	SSblackbox.record_feedback("tally","dynamic_threat",gain,"Removed threat")
+	threat_level -= loss
+	SSblackbox.record_feedback("tally","dynamic_threat",loss,"Removed threat")
 	log_threat("[loss] removed. Threat level is now [threat_level].", verbose = TRUE)
 
 /// Fill up more of the threat level.

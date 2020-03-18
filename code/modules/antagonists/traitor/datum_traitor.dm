@@ -15,6 +15,7 @@
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/contractor_hub/contractor_hub
 	hijack_speed = 0.5				//10 seconds per hijack stage by default
+	threat = 5
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))
@@ -469,3 +470,14 @@
 
 /datum/antagonist/traitor/is_gamemode_hero()
 	return SSticker.mode.name == "traitor"
+
+/datum/antagonist/traitor/threat()
+	var/final_threat = threat
+	for(var/o in objectives)
+		var/datum/objective/O = o
+		switch(O.type)
+			if(/datum/objective/hijack)
+				threat += 3
+			if(/datum/objective/martyr)
+				threat += 5
+	return final_threat

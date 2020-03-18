@@ -202,3 +202,5 @@
 // )
 
 #define MANHATTAN_DISTANCE(a, b) (abs(a.x - b.x) + abs(a.y - b.y))
+
+#define LOGISTIC_FUNCTION(L,k,x,x_0) (L/(1+(NUM_E**(-k*(x-x_0)))))

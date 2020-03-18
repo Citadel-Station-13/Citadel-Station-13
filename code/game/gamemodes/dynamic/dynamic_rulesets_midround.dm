@@ -664,9 +664,6 @@
 	Mind.transfer_to(Ninja)
 	var/datum/antagonist/ninja/ninjadatum = new
 	ninjadatum.helping_station = pick(TRUE,FALSE)
-	if(ninjadatum.helping_station)
-		mode.refund_threat(cost+5)
-		mode.log_threat("Ninja was helping station; [cost+5] cost refunded.")
 	Mind.add_antag_datum(ninjadatum)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!

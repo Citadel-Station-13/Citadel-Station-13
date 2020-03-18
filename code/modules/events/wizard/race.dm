@@ -5,6 +5,7 @@
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
 	can_be_midround_wizard = FALSE
+	threat = 10
 
 /datum/round_event/wizard/race
 	var/list/stored_name
