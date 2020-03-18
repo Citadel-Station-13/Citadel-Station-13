@@ -102,16 +102,24 @@
 			else if(direct & WEST)
 				second = WEST
 		if(first && second)
-			var/turf/ft = get_step(src, first)
-			var/turf/st = get_step(src, second)
-			if(ft.Enter(src))
-				return Move(ft, first, step_x, step_y)
-			else if(st.Enter(src))
-				return Move(st, second, step_x, step_y)
+			if(GLOB.method1)
+				if(!(. = step(src, first)))
+					. = step(src, second)
+					if(.)
+						return
+			else
+				var/turf/ft = get_step(src, first)
+				var/turf/st = get_step(src, second)
+				if(ft.Enter(src))
+					return step(src, first)
+				else if(st.Enter(src))
+					return step(src, second)
 
 	last_move = direct
 	setDir(direct)
 	Moved(oldLoc, direct)
+
+GLOBAL_VAR_INIT(method1, TRUE)
 
 /*
 	if(!loc || (loc == oldloc && oldloc != newloc))

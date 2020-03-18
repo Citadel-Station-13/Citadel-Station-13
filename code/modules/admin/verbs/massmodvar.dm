@@ -46,12 +46,6 @@
 	if(variable in GLOB.VVicon_edit_lock)
 		if(!check_rights(R_FUN|R_DEBUG))
 			return
-	if(variable in GLOB.VVpixelmovement)
-		if(!check_rights(R_DEBUG))
-			return
-		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
-		if (prompt != "Continue")
-			return
 
 	default = vv_get_class(variable, var_value)
 

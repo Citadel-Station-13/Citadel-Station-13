@@ -34,7 +34,6 @@
 	var/paused = FALSE	//for suspending the projectile midair
 	var/last_projectile_move = 0
 	var/last_process = 0
-	var/time_offset = 0
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
@@ -352,16 +351,17 @@
 	return (deciseconds_elapsed / speed) * world.icon_size
 
 /obj/item/projectile/process()
+	var/time_since_process = world.time - last_process
 	last_process = world.time
 	if(!loc || !fired || !trajectory)
 		fired = FALSE
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
-		last_projectile_move += world.time - last_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
+		last_projectile_move += world.time - time_since_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
 		return
-	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
-	time_offset = 0
+	var/elapsed_time_deciseconds = max(0, world.time - last_projectile_move)
 	var/pixels = pixels_to_move(elapsed_time_deciseconds, speed)
+	last_projectile_move = world.time
 	pixel_move(pixels, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
@@ -547,7 +547,13 @@
 	var/turf/curloc = get_turf(source)
 	var/turf/targloc = get_turf(target)
 	trajectory_ignore_forcemove = TRUE
-	forceMove(get_turf(source))
+	var/step_x = 0
+	var/step_y = 0
+	if(ismovableatom(source))
+		var/atom/movable/AM = source
+		step_x = AM.step_x
+		step_y = AM.step_y
+	forceMove(get_turf(source), step_x, step_y)
 	trajectory_ignore_forcemove = FALSE
 	starting = get_turf(source)
 	original = target
