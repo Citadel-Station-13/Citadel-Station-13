@@ -9,10 +9,10 @@
 	throwforce = 10
 
 	/// Bounding ///
-	bound_width = 16
-	bound_height = 16
-	bound_x = 8
-	bound_y = 8
+	bound_width = 24
+	bound_height = 24
+	bound_x = 4
+	bound_y = 4
 	///
 
 	/// Pixel movement ///
