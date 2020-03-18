@@ -23,7 +23,7 @@
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
-		if(!M.stat && M.client && M.mind && !HAS_TRAIT(M, INVALID_MIDROUND_ANTAG))
+		if(!M.stat && M.client && M.mind && !HAS_TRAIT(M, TRAIT_NO_MIDROUND_ANTAG))
 			valentines |= M
 
 
