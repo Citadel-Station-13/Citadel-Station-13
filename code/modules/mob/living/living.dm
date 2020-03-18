@@ -596,7 +596,7 @@
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	if(buckled)
 		return
-	if(client && client.move_delay >= world.time + world.tick_lag*2)
+	if(client && (client.last_move >= world.time - world.tick_lag*2))
 		pressure_resistance_prob_delta -= 30
 
 	var/list/turfs_to_check = list()
@@ -709,7 +709,7 @@
 			pulledby.stop_pulling()
 			return TRUE
 		else if(moving_resist && client) //we resisted by trying to move // this is a horrible system and whoever thought using client instead of mob is okay is not an okay person
-			client.move_delay = world.time + 20
+			//client.move_delay = world.time + 20
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
 	else
 		pulledby.stop_pulling()

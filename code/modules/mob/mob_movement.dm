@@ -25,7 +25,7 @@
 		else
 			mob.control_object.forceMove(get_step(mob.control_object,direction))
 
-/client/pixelMovement(direction)
+/client/proc/pixelMovement(direction)
 	if(world.time <= last_move)
 		return FALSE
 	last_move = world.time
@@ -44,7 +44,7 @@
 		return Move_object(direction)
 
 	if(!isliving(mob))
-		return mob.Move(n, direction)
+		return mob.Move(null, direction)
 
 	if(mob.stat == DEAD)
 		mob.ghostize()
@@ -80,7 +80,7 @@
 	if(!mob.Process_Spacemove(direction))
 		return FALSE
 
-	var/pixel_speed = movement_speed_pixels()
+	var/pixel_speed = mob.movement_speed_pixels()
 
 	if(L.confused)
 		var/newdir = NONE
@@ -203,10 +203,10 @@
 /client/proc/Process_Grab()
 	if(mob.pulledby)
 		if(mob.incapacitated(ignore_restraints = 1))
-			move_delay = world.time + 10
+			//move_delay = world.time + 10
 			return TRUE
 		else if(mob.restrained(ignore_grab = 1))
-			move_delay = world.time + 10
+			//move_delay = world.time + 10
 			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
 			return TRUE
 		else
