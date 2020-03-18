@@ -83,6 +83,11 @@
 	name = "prescription medical HUDSunglasses"
 	vision_correction = 1
 
+/obj/item/clothing/glasses/hud/health/eyepatch
+	name = "eyepatch medHUD"
+	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "medpatch"
+
 ///////////////////
 //Diagnostic Huds//
 ///////////////////
@@ -123,6 +128,11 @@
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/hud/diagnostic/eyepatch
+	name = "eyepatch diagnostic HUD"
+	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "diagpatch"
 
 ////////////
 //Sec Huds//
@@ -166,11 +176,6 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
-	name = "eyepatch HUD"
-	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
-	icon_state = "hudpatch"
-
 /obj/item/clothing/glasses/hud/security/sunglasses
 	name = "security HUDSunglasses"
 	desc = "Sunglasses with a security HUD."
@@ -179,6 +184,11 @@
 	flash_protect = 1
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
+
+/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch // why was this defined *before* the sunglasses it is a subtype of.
+	name = "eyepatch HUD"
+	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "hudpatch"
 
 /obj/item/clothing/glasses/hud/security/sunglasses/prescription
 	name = "prescription security HUDSunglasses"
