@@ -33,7 +33,7 @@
 //#define BYOND_DISTANCE(a, b)					BYOND_METRIC(a.x - b.x, a.y - b.y)			NO USE get_dist() NOT THIS
 
 /// Either both have to be atoms OR atom/movables or both have to be numbers. If they're numbers, source is x, target is y.
-/proc/get_angle(atom/source, atom/target)
+/proc/get_angle(atom/movable/source, atom/movable/target)
 	if(!isnum(source))		//assume both are either numbers or not numbers if it ain't then get memed.
 		var/dx = ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target) - ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target)
 		var/dy = ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target) - ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target)
@@ -47,7 +47,7 @@
 	else
 		if(!target)
 			return (source >= 0)? 90 : 270
-		. = arctan(x/y)
+		. = arctan(source/target)
 		if(target < 0)
 			. += 180
 		else if(source < 0)

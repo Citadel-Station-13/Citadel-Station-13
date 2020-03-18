@@ -81,9 +81,9 @@
 	. = ..()
 
 	if(. && pulling)
-		var/distance = get_pixel_distance_euclidean(src, pulling)
+		var/distance = get_pixel_dist_euclidean(src, pulling)
 		if(distance > max(MAX_PULL_SEPARATION_BREAK_MINIMUM, (MAX_PULL_SEPARATION_BREAK_FACTOR * step_size)))
-			stop_pulling
+			stop_pulling()
 		else if(distance > OPTIMAL_PULL_DISTANCE)
 			var/diff = distance - OPTIMAL_PULL_DISTANCE
 			pulling.pixelMoveAngleSeekTowards(src, diff)
