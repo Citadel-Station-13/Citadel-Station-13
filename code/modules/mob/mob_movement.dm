@@ -1,7 +1,13 @@
+#define BASE_TICK_MOVESPEED 32
+
 //DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
 //See mob_movespeed.dm
 /mob/proc/movement_delay()	//update /living/movement_delay() if you change this
 	return cached_multiplicative_slowdown
+
+/// Gets our current pixel speed per tick. Probably replace with a cached var if this takes off.
+/mob/proc/movement_speed_pixels()
+	return BASE_TICK_MOVESPEED / (max(world.tick_lag, movement_delay()) / world.tick_lag)
 
 /client/verb/drop_item()
 	set hidden = 1
