@@ -18,7 +18,7 @@
 	P.z = a.z
 	return P
 
-/proc/step_length_between_points(datum/point/a, datum/point/b)
+/proc/pixel_length_between_points(datum/point/a, datum/point/b)
 	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
 
 /proc/angle_between_points(datum/point/a, datum/point/b)
@@ -97,8 +97,10 @@
 		_x = A.x
 		_y = A.y
 		_z = A.z
-		_step_x = A.step_x
-		_step_y = A.step_y
+		if(ismovableatom(A))
+			var/atom/movable/AM = A
+			_step_x = AM.step_x
+			_step_y = AM.step_y
 	initialize_location(_x, _y, _z, _step_x, _step_y)
 
 /datum/point/proc/initialize_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
