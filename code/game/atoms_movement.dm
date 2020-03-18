@@ -1,4 +1,7 @@
 // File for movement procs for atom/movable
+#define OPTIMAL_PULL_DISTANCE 16
+#define MAX_PULL_SEPARATION_BREAK_MINIMUM world.icon_size * 1.5
+#define MAX_PULL_SEPARATION_BREAK_FACTOR 2
 
 /atom/movable/Move(atom/newloc, direct, step_x = 0, step_y = 0)
 
@@ -12,6 +15,12 @@
 		if(pullee && pullee.loc != loc && !isturf(pullee.loc) ) //to be removed once all code that changes an object's loc uses forceMove().
 			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
 			stop_pulling()
+*/
+
+/*
+	if(pulling && !handle_pulled_premove(newloc, direct, _step_x, _step_y))
+		handle_pulled_movement()
+		return FALSE
 */
 
 	if(!loc || !newloc || anchored)
@@ -85,8 +94,9 @@
 
 	. = ..()
 
+/*
 	// Diagonal sliding
-	#warn This is janky as shit
+	#warn This is janky as shit and double bumps, get rid of this ASAP.
 	if(!. && diagonal)
 		var/first
 		var/second
@@ -103,11 +113,13 @@
 			else if(direct & WEST)
 				second = WEST
 		if(first && second)
-			if(GLOB.method1)
-				if(!(. = step(src, first)))
-					. = step(src, second)
-					if(.)
-						return
+			if(!(. = step(src, first)))
+				. = step(src, second)
+				if(.)
+					return
+*/
+
+		/*
 			else
 				var/turf/ft = get_step(src, first)
 				var/turf/st = get_step(src, second)
@@ -115,13 +127,19 @@
 					return step(src, first)
 				else if(st.Enter(src))
 					return step(src, second)
+		*/
 
 	last_move = direct
 	setDir(direct)
 	Moved(oldLoc, direct)
 
-GLOBAL_VAR_INIT(method1, TRUE)
-
+	if(. && pulling)
+		var/distance = get_pixel_dist_euclidean(src, pulling)
+		if(distance > max(MAX_PULL_SEPARATION_BREAK_MINIMUM, (MAX_PULL_SEPARATION_BREAK_FACTOR * step_size)))
+			stop_pulling()
+		else if(distance > OPTIMAL_PULL_DISTANCE)
+			var/diff = distance - OPTIMAL_PULL_DISTANCE
+			pulling.pixelMoveAngleSeekTowards(src, diff)
 
 /*
 	if(!loc || (loc == oldloc && oldloc != newloc))
@@ -151,13 +169,6 @@ GLOBAL_VAR_INIT(method1, TRUE)
 		Moved(oldloc, direct)
 */
 
-	if(. && pulling)
-		var/distance = get_pixel_dist_euclidean(src, pulling)
-		if(distance > max(MAX_PULL_SEPARATION_BREAK_MINIMUM, (MAX_PULL_SEPARATION_BREAK_FACTOR * step_size)))
-			stop_pulling()
-		else if(distance > OPTIMAL_PULL_DISTANCE)
-			var/diff = distance - OPTIMAL_PULL_DISTANCE
-			pulling.pixelMoveAngleSeekTowards(src, diff)
 
 /*
 		var/distance = bounds_dist(src, pulling)
@@ -189,6 +200,38 @@ GLOBAL_VAR_INIT(method1, TRUE)
 				var/old_pulling_dir = pulling.dir
 				step(pulling, move_dir, 1)
 				pulling.dir = old_pulling_dir
+*/
+
+/*
+#define ANGLE_ADJUST 10
+/atom/movable/proc/handle_pulled_movement()
+	if(!pulling)
+		return FALSE
+	if(pulling.anchored)
+		return FALSE
+	if(pulling.move_resist > move_force)
+		return FALSE
+	var/distance = bounds_dist(src, pulling)
+	if(distance < 8)
+		return FALSE
+	var/angle = get_deg(pulling, src)
+	if((angle % 45) > 1) // We arent directly on a cardinal from the thing
+		var/tempA = WRAP(angle, 0, 45)
+		if(tempA >= 22.5)
+			angle += min(ANGLE_ADJUST, 45-tempA)
+		else
+			angle -= min(ANGLE_ADJUST, tempA)
+	angle = SIMPLIFY_DEGREES(angle)
+
+	if(!degstep(pulling, angle, distance-8))
+		return step_to(pulling, src, 0, step_size)
+	return TRUE
+#undef ANGLE_ADJUST
+
+/atom/movable/proc/handle_pulled_premove(atom/newloc, direct, _step_x, _step_y)
+	if((bounds_dist(src, pulling) > 16 + step_size) && !(direct & get_pixeldir(src, pulling)))
+		return FALSE
+	return TRUE
 */
 
 /atom/movable/proc/pixelMove(direction, pixels)
@@ -302,55 +345,59 @@ GLOBAL_VAR_INIT(method1, TRUE)
 /atom/movable/proc/moveToNullspace()
 	return doMove(null, 0, 0)
 
-/atom/movable/proc/doMove(atom/destination, sx, sy)
+/atom/movable/proc/doMove(atom/destination, _step_x=0, _step_y=0)
 	. = FALSE
-	if(destination)
-		if(pulledby)
-			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		var/same_loc = oldloc == destination
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
 
-		loc = destination
-		reset_pixel_step(sx, sy)
-		moving_diagonally = 0
+	NORMALIZE_STEP(destination, _step_x, _step_y)
 
-		if(!same_loc)
-			if(oldloc)
-				oldloc.Exited(src, destination)
-				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
-			for(var/atom/movable/AM in oldloc)
-				AM.Uncrossed(src)
-			var/turf/oldturf = get_turf(oldloc)
-			var/turf/destturf = get_turf(destination)
-			var/old_z = (oldturf ? oldturf.z : null)
-			var/dest_z = (destturf ? destturf.z : null)
-			if (old_z != dest_z)
-				onTransitZ(old_z, dest_z)
-			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
+	if(destination == loc && _step_x == step_x && _step_y == step_y) // Force move in place?
+		Moved(loc, NONE, TRUE)
+		return TRUE
 
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src, oldloc)
+	var/atom/oldloc = loc
+	var/area/oldarea = get_area(oldloc)
+	var/area/destarea = get_area(destination)
+	var/list/old_bounds = obounds()
 
-		Moved(oldloc, NONE, TRUE)
-		. = TRUE
+	loc = destination
+	step_x = _step_x
+	step_y = _step_y
 
-	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
-	else
-		. = TRUE
-		if (loc)
-			var/atom/oldloc = loc
-			var/area/old_area = get_area(oldloc)
-			oldloc.Exited(src, null)
-			if(old_area)
-				old_area.Exited(src, null)
-		loc = null
+	if(oldloc && oldloc != loc)
+		oldloc.Exited(src, destination)
+		if(oldarea && oldarea != destarea)
+			oldarea.Exited(src, destination)
+
+	var/list/new_bounds = obounds()
+
+	for(var/i in old_bounds)
+		if(i in new_bounds)
+			continue
+		var/atom/thing = i
+		thing.Uncrossed(src)
+
+	if(!loc) // I hope you know what you're doing
+		return TRUE
+
+	var/turf/oldturf = get_turf(oldloc)
+	var/turf/destturf = get_turf(destination)
+	var/oldz = (oldturf ? oldturf.z : null)
+	var/newz = (destturf ? destturf.z : null)
+	if(oldz != newz)
+		onTransitZ(oldz, newz)
+
+	destination.Entered(src, oldloc)
+	if(destarea && oldarea != destarea)
+		destarea.Entered(src, oldloc)
+
+	for(var/i in new_bounds)
+		if(i in old_bounds)
+			continue
+		var/atom/thing = i
+		thing.Crossed(src, oldloc)
+
+	Moved(oldloc, NONE, TRUE)
+	return TRUE
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -393,3 +440,40 @@ GLOBAL_VAR_INIT(method1, TRUE)
 /atom/movable/proc/reset_pixel_step(x = 0, y = 0)
 	step_x = x
 	step_y = y
+
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
+
+/atom/Exit(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
+		return FALSE
+
+/atom/Exited(atom/movable/AM, atom/newLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
+
+/atom/movable/setDir(direct)
+	var/old_dir = dir
+	. = ..()
+	update_bounds(olddir=old_dir, newdir=direct)
+
+// Unless you have some really weird rotation try to implement a generic version of your rotation here and make a flag for it
+/atom/movable/proc/update_bounds(olddir, newdir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_BOUNDS, args)
+
+	if(newdir == olddir) // the direction hasn't changed
+		return
+	if(bound_width == bound_height && !bound_x && !bound_y) // We're a square and have no offset
+		return
+
+	if(bounds_rotation_mode & BOUNDS_SIMPLE_ROTATE)
+		var/rot = SIMPLIFY_DEGREES(dir2angle(newdir) - dir2angle(olddir))
+		for(var/i in 90 to rot step 90)
+			var/tempwidth = bound_width
+			var/eastgap = CEILING(bound_width, 32) - bound_width - bound_x
+
+			bound_width = bound_height
+			bound_height = tempwidth
+
+			bound_x = bound_y
+			bound_y = eastgap

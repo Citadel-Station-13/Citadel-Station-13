@@ -8,6 +8,12 @@
 	anchored = TRUE //initially is 0 for tile smoothing
 	flags_1 = ON_BORDER_1
 	max_integrity = 25
+
+	bound_height = 7
+	bound_width = 32
+	bound_x = 0
+	bound_y = 25
+
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
@@ -100,6 +106,20 @@
 		..()
 	else
 		..(FULLTILE_WINDOW_DIR)
+
+/obj/structure/window/update_bounds(olddir, newdir)
+	if(newdir == FULLTILE_WINDOW_DIR)
+		bound_width = 32
+		bound_height = 32
+		bound_x = 0
+		bound_y = 0
+	else if(olddir == FULLTILE_WINDOW_DIR)
+		olddir = dir = initial(dir)
+		bound_width = initial(bound_width)
+		bound_height = initial(bound_height)
+		bound_x = initial(bound_x)
+		bound_y = initial(bound_y)
+	return ..()
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))

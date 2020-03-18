@@ -7,6 +7,12 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
 	density = FALSE
+	/// PROJECTILE BOUNDING BOX
+	bound_height = 8
+	bound_width = 8
+	bound_x = 12
+	bound_y = 12
+	///
 	anchored = FALSE
 	item_flags = ABSTRACT
 	pass_flags = PASSTABLE

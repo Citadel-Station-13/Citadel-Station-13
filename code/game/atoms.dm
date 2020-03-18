@@ -615,6 +615,7 @@
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir, ismousemovement=FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
@@ -708,17 +709,6 @@
 	if(!L)
 		return null
 	return L.AllowDrop() ? L : L.drop_location()
-
-/atom/Entered(atom/movable/AM, atom/oldLoc)
-	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
-
-/atom/Exit(atom/movable/AM, atom/newLoc)
-	. = ..()
-	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
-		return FALSE
-
-/atom/Exited(atom/movable/AM, atom/newLoc)
-	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
 
 /atom/proc/return_temperature()
 	return

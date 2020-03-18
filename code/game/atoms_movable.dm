@@ -4,7 +4,10 @@
 
 	/// PIXEL MOVEMENT
 	step_size = 8
+	/// How should we rotate our bounding box
+	var/bounds_rotation_mode = BOUNDS_SIMPLE_ROTATE
 	var/walking = NONE
+	/// The direction in which we last moved
 	var/last_move = NONE
 	///
 

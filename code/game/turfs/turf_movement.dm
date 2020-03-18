@@ -5,7 +5,7 @@
 		return FALSE
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
-		return !(density && mover.density)
+		return !density
 
 	stack_trace("Non movable passed to turf CanPass : [mover]")
 	return FALSE

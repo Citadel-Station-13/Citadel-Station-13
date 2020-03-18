@@ -64,10 +64,6 @@
 /mob/living/canZMove(dir, turf/target)
 	return can_zTravel(target, dir) && (movement_type & FLYING)
 
-#define OPTIMAL_PULL_DISTANCE 16
-#define MAX_PULL_SEPARATION_BREAK_MINIMUM world.icon_size * 1.5
-#define MAX_PULL_SEPARATION_BREAK_FACTOR 2
-
 /mob/living/Move(atom/newloc, direct)
 	if(buckled)
 		return buckled.Move(newloc, direct)
