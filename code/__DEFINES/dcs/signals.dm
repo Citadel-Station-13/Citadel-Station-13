@@ -137,6 +137,8 @@
 	#define HEARING_MESSAGE_MODE 7
 	#define HEARING_SOURCE 8*/
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
+#define COMSIG_MOVABLE_UPDATE_BOUNDS "movable_boundup"			//from base of atom/movable/update_bounds(): (list/args)
+#define COMSIG_MOVABLE_UPDATE_BOUNDS "movable_boundup"			//from base of atom/movable/update_bounds(): (list/args)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
 
 // /mind signals

@@ -79,8 +79,11 @@
 /obj/structure/grille/Bumped(atom/movable/AM)
 	if(!ismob(AM))
 		return
-	var/mob/M = AM
-	shock(M, 70)
+	var/thingdir = get_dir(src, AM)
+	for(var/obj/O in OBOUNDS_EDGE(src, thingdir))
+		if(O.density)		//protected them from us
+			return
+	shock(AM, 70)
 
 /obj/structure/grille/attack_animal(mob/user)
 	. = ..()
