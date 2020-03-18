@@ -1,8 +1,13 @@
 /atom/movable
 	layer = OBJ_LAYER
-	step_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
-	var/last_move = null
+
+	/// PIXEL MOVEMENT
+	step_size = 8
+	var/walking = NONE
+	var/last_move = NONE
+	///
+
 	var/last_move_time = 0
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
@@ -76,19 +81,13 @@
 		direction = get_dir(T, destination)
 	if(direction != UP && direction != DOWN)
 		return FALSE
-	if(!destination)
+	if(!destination)s
 		destination = get_step_multiz(src, direction)
 		if(!destination)
 			return FALSE
 	return T.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, T)
 
 /atom/movable/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
-	var/static/list/careful_edits = list("bound_x", "bound_y", "bound_width", "bound_height")
-	if(var_name in banned_edits)
-		return FALSE	//PLEASE no.
-	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
-		return FALSE
 	switch(var_name)
 		if("x")
 			var/turf/T = locate(var_value, y, z)

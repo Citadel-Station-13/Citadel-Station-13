@@ -307,3 +307,14 @@
 		air.gases[/datum/gas/oxygen]=max(air.gases[/datum/gas/oxygen]-(pulse_strength/2000),0)
 		air.gases[/datum/gas/pluoxium]+=(pulse_strength/4000)
 		GAS_GARBAGE_COLLECT(air.gases)
+
+/turf/open/Entered(atom/movable/AM)
+	..()
+	//melting
+	if(isobj(AM) && air && air.temperature > T0C)
+		var/obj/O = AM
+		if(O.obj_flags & FROZEN)
+			O.make_unfrozen()
+
+	if(!AM.zfalling)
+		zFall(AM)

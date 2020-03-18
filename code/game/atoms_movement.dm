@@ -1,54 +1,8 @@
 // File for movement procs for atom/movable
 
-
-////////////////////////////////////////
-// Here's where we rewrite how byond handles movement except slightly different
-// To be removed on step_ conversion
-// All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direct=0)
-	. = FALSE
-	if(!newloc || newloc == loc)
-		return
-
-	if(!direct)
-		direct = get_dir(src, newloc)
-	setDir(direct)
-
-	if(!loc.Exit(src, newloc))
-		return
-
-	if(!newloc.Enter(src, src.loc))
-		return
-
-	// Past this is the point of no return
-	var/atom/oldloc = loc
-	var/area/oldarea = get_area(oldloc)
-	var/area/newarea = get_area(newloc)
-	loc = newloc
-	. = TRUE
-	oldloc.Exited(src, newloc)
-	if(oldarea != newarea)
-		oldarea.Exited(src, newloc)
-
-	for(var/i in oldloc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Uncrossed(src)
-
-	newloc.Entered(src, oldloc)
-	if(oldarea != newarea)
-		newarea.Entered(src, oldloc)
-
-	for(var/i in loc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Crossed(src)
-//
-////////////////////////////////////////
-
 /atom/movable/Move(atom/newloc, direct)
+
+/*
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(pulling)
@@ -58,8 +12,12 @@
 		if(pullee && pullee.loc != loc && !isturf(pullee.loc) ) //to be removed once all code that changes an object's loc uses forceMove().
 			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
 			stop_pulling()
-	if(!loc || !newloc)
+*/
+
+	if(!loc || !newloc || anchored)
 		return FALSE
+
+/*
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -118,7 +76,16 @@
 					newtonian_move(direct)
 			moving_diagonally = 0
 			return
+*/
 
+	var/atom/oldLoc = loc
+	. = ..()
+
+	last_move = direct
+	setDir(direct)
+	Moved(oldLoc, direct)
+
+/*
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = NONE
 		return
@@ -144,6 +111,7 @@
 					pulledby.stop_pulling()
 
 		Moved(oldloc, direct)
+*/
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
@@ -177,7 +145,7 @@
 
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM, oldloc)
 
 /atom/movable/Uncross(atom/movable/AM, atom/newloc)
 	. = ..()
@@ -193,7 +161,6 @@
 	if(!A)
 		CRASH("Bump was called with no argument.")
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
-	. = ..()
 	if(!QDELETED(throwing))
 		throwing.hit_atom(A)
 		. = TRUE

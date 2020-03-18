@@ -2,17 +2,43 @@
 // Only way to do that is to tie the behavior into the focus's keyLoop().
 
 /atom/movable/keyLoop(client/user)
-	if(!user.keys_held["Ctrl"])
-		var/movement_dir = NONE
-		for(var/_key in user.keys_held)
-			movement_dir = movement_dir | SSinput.movement_keys[_key]
-		if(user.next_move_dir_add)
-			movement_dir |= user.next_move_dir_add
-		if(user.next_move_dir_sub)
-			movement_dir &= ~user.next_move_dir_sub
-		// Sanity checks in case you hold left and right and up to make sure you only go up
-		if((movement_dir & NORTH) && (movement_dir & SOUTH))
-			movement_dir &= ~(NORTH|SOUTH)
-		if((movement_dir & EAST) && (movement_dir & WEST))
-			movement_dir &= ~(EAST|WEST)
-		user.Move(get_step(src, movement_dir), movement_dir)
+	if(user.keys_held["Ctrl"])
+		return ..()
+	var/movement_dir = NONE
+	for(var/_key in user.keys_held)
+		movement_dir = movement_dir | SSinput.movement_keys[_key]
+	if(user.next_move_dir_add)
+		movement_dir |= user.next_move_dir_add
+	if(user.next_move_dir_sub)
+		movement_dir &= ~user.next_move_dir_sub
+	// Sanity checks in case you hold left and right and up to make sure you only go up
+	if((movement_dir & NORTH) && (movement_dir & SOUTH))
+		movement_dir &= ~(NORTH|SOUTH)
+	if((movement_dir & EAST) && (movement_dir & WEST))
+		movement_dir &= ~(EAST|WEST)
+	user.pixelMovement(movement_dir)
+	//user.Move(get_step(src, movement_dir), movement_dir)
+
+/*
+/atom/movable/key_down(_key, client/user)
+	if(_key == "Ctrl")
+		walk(src, NONE)
+		return
+	var/new_walk = SSinput.movement_keys[_key]
+	if(new_walk)
+		walking |= new_walk
+		walk(src, walking)
+		return
+	return ..()
+
+/atom/movable/key_up(_key, client/user)
+	if(_key == "Ctrl")
+		walk(src, walking)
+		return
+	var/new_walk = SSinput.movement_keys[_key]
+	if(new_walk)
+		walking &= ~new_walk
+		walk(src, walking)
+		return
+	return ..()
+*/
