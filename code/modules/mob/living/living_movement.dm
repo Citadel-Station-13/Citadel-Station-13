@@ -178,6 +178,7 @@
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
+	to_chat(world, "DEBUG: Bumping [A]")
 	if(..()) //we are thrown onto something
 		return
 	if (buckled || now_pushing)
