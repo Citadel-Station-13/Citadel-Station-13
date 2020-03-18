@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - bugfix: "being stunned no longer stops an ai from undeploying from a shell."

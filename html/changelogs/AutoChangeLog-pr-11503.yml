@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - balance: "You can no longer acquire stun bullets in the .45 calibre. You can get the 30 damage version out of the autolathe instead."
+  - balance: "KITCHEN GUN (TM) is a lot stronger. Cleaning bullets are a whole 40 damage!"

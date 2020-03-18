@@ -677,6 +677,9 @@
 	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by dynamic.")
 	log_game("[key_name(Ninja)] was spawned as a ninja by dynamic.")
 	return Ninja
+	
+/datum/dynamic_ruleset/midround/from_ghosts/ninja/finish_setup(mob/new_character, index)
+	return
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD
