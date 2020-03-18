@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(MAX_PIXELS_TO_CONSIDER_ADJACENT, 24)		//setting this super high 
 /atom/movable/Adjacent(atom/neighbor)
 	if(neighbor == loc)
 		return TRUE
-	if(bounds_dist(src, neighbor) > MAX_PIXELS_TO_CONSIDER_ADJACENT)
+	if(bounds_dist(src, neighbor) > GLOB.MAX_PIXELS_TO_CONSIDER_ADJACENT)
 		return FALSE
 	for(var/i in locs)
 		var/turf/T = i
