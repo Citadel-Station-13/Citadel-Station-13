@@ -124,6 +124,17 @@
 			stack_trace("WARNING - step_size was changed during a move in /atom/movable/pixelMove(). This probably means that the laziness behind this system is catching up to it and it's time to standaridze how step_size changes are done.")
 	step_size = old_step_size
 
+/atom/movable/proc/pixelMoveAngle(angle, pixels)
+	var/dx = cos(angle) * pixels + step_x
+	var/dy = cos(angle) * pixels + step_y
+	var/tx = FLOOR(dx, world.icon_size)
+	var/ty = FLOOR(dy, world.icon_size)
+	var/turf/destination = locate(x + tx, y + ty, z)
+	return Move(destination, get_dir(src, destination), dx % world.icon_size, dy % world.icon_size)
+
+/atom/movable/proc/pixelMoveAngleSeekTowards(atom/target, pixels)
+	return pixelMoveAngle(get_angle(src, target), pixels)
+
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
@@ -143,7 +154,6 @@
 		newtonian_move(Dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
-
 	return TRUE
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.

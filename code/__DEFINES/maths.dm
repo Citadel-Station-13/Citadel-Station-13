@@ -200,5 +200,3 @@
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 // )
-
-#define MANHATTAN_DISTANCE(a, b) (abs(a.x - b.x) + abs(a.y - b.y))
