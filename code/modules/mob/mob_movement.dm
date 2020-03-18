@@ -94,9 +94,11 @@
 		if(newdir)
 			direction = newdir
 
+	if(direction & (direction - 1))
+		pixel_speed *= 0.5
+
 	. = mob.pixelMovement(direction, pixel_speed)
 
-	#warn TODO: diagonal speed penalty??
 	/*
 	if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
