@@ -72,7 +72,7 @@
 	if(proximity_flag)
 		apply_healing_core(target, user)
 
-/obj/item/organ/regenerative_core/apply_healing_core(atom/target, mob/user)
+/obj/item/organ/regenerative_core/proc/apply_healing_core(atom/target, mob/user)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)

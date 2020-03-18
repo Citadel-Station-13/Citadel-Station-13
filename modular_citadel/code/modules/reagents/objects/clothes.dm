@@ -25,7 +25,7 @@
 
 /obj/item/clothing/head/hattip/MouseDrop(atom/over_object)
 	//You sure do love tipping your hat.
-	if(user)
+	if(usr)
 		var/mob/living/carbon/C = usr
 		if(is_ninja(C))
 			to_chat(C, "<span class='notice'>Using your superior ninja reflexes, you take the hat off before tipping.</span>")

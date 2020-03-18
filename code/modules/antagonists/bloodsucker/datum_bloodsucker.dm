@@ -341,10 +341,10 @@
 	// Assign True Reputation
 	if(vamplevel == 4)
 		SelectReputation(am_fledgling = FALSE, forced = TRUE)
-	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, health, feed rate, regen rate, and maximum blood have all increased!</span>")
+	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, health, feed rate, regen rate, can have up to [vamplevel - count_vassals()] vassals, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
 	update_hud(TRUE)
-	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, TRUE, pressure_affected = FALSE)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -768,3 +768,8 @@
 /obj/screen/bloodsucker/sunlight_counter/update_counter(value, valuecolor)
 	..()
 	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"	
+
+/datum/antagonist/bloodsucker/proc/count_vassals(datum/mind/master)
+	var/datum/antagonist/bloodsucker/B = master.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/vassal_amount = B.vassals.len
+	return vassal_amount

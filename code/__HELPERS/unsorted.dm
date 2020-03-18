@@ -1566,16 +1566,16 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 //Checks to see if either the victim has a garlic necklace or garlic in their blood
 /proc/sucking_checks(var/mob/living/carbon/target, check_neck, check_blood)
-	//Byppass this if the target isnt carbon.
-	if(!iscarbon)
+	//Bypass this if the target isnt carbon.
+	if(!iscarbon(target))
 		return TRUE 
 	if(check_neck)
 		if(istype(target.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
-			to_chat(owner, "<span class='notice'>[victim] is wearing a garlic clove around their neck! You cant drink from them while it is on them!</span>")
+			to_chat(src, "<span class='notice'>[target] is wearing a garlic clove around their neck! You cant drink from them while it is on them!</span>")
 			return FALSE
 	if(check_blood)
 		if(target.reagents.has_reagent(/datum/reagent/consumable/garlic))
-			to_chat(target, "<span class='warning'>[H] tries to bite you, but recoils in disgust!</span>")
-			to_chat(owner, "<span class='warning'>[victim] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
+			to_chat(target, "<span class='warning'>[src] tries to bite you, but recoils in disgust!</span>")
+			to_chat(src, "<span class='warning'>[target] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
 			return FALSE
 	return TRUE

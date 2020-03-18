@@ -185,8 +185,8 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "garlicbread"
 	item_state = "garlicbread"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/vitamin = 4, /datum/reagent/consumable/garlic = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin= 4, /datum/reagent/consumable/garlic = 2)
 	bitesize = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
 	foodtype = GRAIN

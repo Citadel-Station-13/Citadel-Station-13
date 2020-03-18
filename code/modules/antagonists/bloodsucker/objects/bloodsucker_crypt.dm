@@ -115,13 +115,15 @@
 	qdel(src)
 
 /obj/structure/bloodsucker/vassalrack/examine(mob/user)
+	var/datum/antagonist/bloodsucker/B = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	. = ..()
-	if(isbloodsucker(user) || isobserver(user))
+	if(B || isobserver(user))
 		. += {"<span class='cult'>This is the vassal rack, which allows you to thrall crewmembers into loyal minions in your service.</span>"}
 		. += {"<span class='cult'>You need to first secure the vassal rack by clicking on it while it is in your lair.</span>"}
 		. += {"<span class='cult'>Simply click and hold on a victim, and then drag their sprite on the vassal rack. Alt click on the vassal rack to unbuckle them.</span>"}
 		. += {"<span class='cult'>Make sure that the victim is handcuffed, or else they can simply run away or resist, as the process is not instant.</span>"}
 		. += {"<span class='cult'>To convert the victim, simply click on the vassal rack itself. Sharp weapons work faster than other tools.</span>"}
+		. += {"<span class='cult'> You have only the power for [B.vamplevel - B.count_vassals(user.mind)] vassals</span>"}
 /*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 	. += {"<span class='cult'>This is the vassal rack, which allows your master to thrall crewmembers into his minions.\n
 	Aid your master in bringing their victims here and keeping them secure.\n
@@ -222,15 +224,15 @@
 	// Go away. Torturing.
 	if(useLock)
 		return
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/datum/antagonist/bloodsucker/B = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// CHECK ONE: Am I claiming this? Is it in the right place?
-	if(istype(bloodsuckerdatum) && !owner)
-		if(!bloodsuckerdatum.lair)
+	if(istype(B) && !owner)
+		if(!B.lair)
 			to_chat(user, "<span class='danger'>You don't have a lair. Claim a coffin to make that location your lair.</span>")
-		if(bloodsuckerdatum.lair != get_area(src))
-			to_chat(user, "<span class='danger'>You may only activate this structure in your lair: [bloodsuckerdatum.lair].</span>")
+		if(B.lair != get_area(src))
+			to_chat(user, "<span class='danger'>You may only activate this structure in your lair: [B.lair].</span>")
 			return
-		switch(alert(user,"Do you wish to afix this structure here? Be aware you wont be able to unsecure it anymore","Secure [src]","Yes", "No"))
+		switch(alert(user,"Do you wish to afix this structure here? Be aware you wont be able to unsecure it anymore", "Secure [src]", "Yes", "No"))
 			if("Yes")
 				owner = user
 				density = FALSE
@@ -241,26 +243,30 @@
 		return
 	// CHECK TWO: Am I a non-bloodsucker?
 	var/mob/living/carbon/C = pick(buckled_mobs)
-	if(!istype(bloodsuckerdatum))
+	if(!istype(B))
 		// Try to release this guy
 		user_unbuckle_mob(C, user)
 		return
 	// Bloodsucker Owner! Let the boy go.
 	if(C.mind)
-		var/datum/antagonist/vassal/vassaldatum = C.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-		if(istype(vassaldatum) && vassaldatum.master == bloodsuckerdatum || C.stat >= DEAD)
+		var/datum/antagonist/vassal/V = C.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+		if(istype(V) && V.master == B || C.stat >= DEAD)
 			unbuckle_mob(C)
 			useLock = FALSE // Failsafe
 			return
 	// Just torture the boy
 	torture_victim(user, C)
 
+#define CONVERT_COST 150
+
 /obj/structure/bloodsucker/vassalrack/proc/torture_victim(mob/living/user, mob/living/target)
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/datum/antagonist/bloodsucker/B = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// Check Bloodmob/living/M, force = FALSE, check_loc = TRUE
-	var/convert_cost = 200 
-	if(user.blood_volume < convert_cost + 5)
+	if(user.blood_volume < CONVERT_COST + 5)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
+		return
+	if(B.count_vassals(user.mind) > B.vamplevel)
+		to_chat(user, "<span class='notice'>Your power is yet too weak to bring more vassals under your control....</span>")
 		return
 	// Prep...
 	useLock = TRUE
@@ -302,12 +308,13 @@
 		useLock = FALSE
 		return
 	// Check: Blood
-	if(user.blood_volume < convert_cost)
-		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target], you need [convert_cost - user.blood_volume] units more!</span>")
+	if(user.blood_volume < CONVERT_COST)
+		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target], you need [CONVERT_COST - user.blood_volume] units more!</span>")
 		useLock = FALSE
 		return
-	bloodsuckerdatum.AddBloodVolume(-convert_cost)
-	target.add_mob_blood(user)
+	B.AddBloodVolume(-CONVERT_COST)
+	target.add_mob_blood(user, "<span class='danger'>Youve used [CONVERT_COST] amount of blood to gain a new vassal!</span>")
+	to_chat(user, )
 	user.visible_message("<span class='notice'>[user] marks a bloody smear on [target]'s forehead and puts a wrist up to [target.p_their()] mouth!</span>", \
 				  	  "<span class='notice'>You paint a bloody marking across [target]'s forehead, place your wrist to [target.p_their()] mouth, and subject [target.p_them()] to the Dark Communion.</span>")
 	if(!do_mob(user, src, 50))
@@ -315,7 +322,7 @@
 		useLock = FALSE
 		return
 	// Convert to Vassal!
-	if(bloodsuckerdatum && bloodsuckerdatum.attempt_turn_vassal(target))
+	if(B && B.attempt_turn_vassal(target))
 		//remove_loyalties(target) // In case of Mindshield, or appropriate Antag (Traitor, Internal, etc)
 		//if (!target.buckled)
 		//	to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
@@ -329,6 +336,7 @@
 		//remove_victim(target) // Remove on CLICK ONLY!
 	useLock = FALSE
 
+#undef CONVERT_COST
 /obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/target, mult = 1)
 	var/torture_time = 15 // Fifteen seconds if you aren't using anything. Shorter with weapons and such.
 	var/torture_dmg_brute = 2

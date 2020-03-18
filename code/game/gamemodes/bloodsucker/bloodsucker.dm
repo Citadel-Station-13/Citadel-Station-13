@@ -248,11 +248,11 @@
 	// WHEN YOU DELETE THE ABOVE: Remove the 3 second timer on converting the vassal too.
 	return FALSE
 
-/datum/game_mode/proc/make_vassal(/mob/living/target, /datum/mind/creator)
+/datum/game_mode/proc/make_vassal(var/mob/living/target, var/datum/mind/creator)
 	if(!can_make_vassal(target, creator))
 		return FALSE
 	// Make Vassal
-	var/datum/antagonist/vassal/V = new (target.mind)
+	var/datum/antagonist/vassal/V = new(target.mind)
 	var/datum/antagonist/bloodsucker/B = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	V.master = B
 	target.mind.add_antag_datum(V, V.master.get_team())
@@ -265,12 +265,6 @@
 
 /datum/game_mode/proc/remove_vassal(datum/mind/vassal)
 	vassal.remove_antag_datum(ANTAG_DATUM_VASSAL)
-
-/datum/game_mode/proc/count_vassals(datum/mind/master)
-	var/datum/antagonist/bloodsucker/B = master.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	var/vassal_amount
-	len(B.vassals)
-	return vassal_amount
 	
 
 	

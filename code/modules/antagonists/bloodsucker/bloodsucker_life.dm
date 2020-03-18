@@ -82,15 +82,16 @@
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
 	// NOTE: Mult of 0 is just a TEST to see if we are injured and need to go into Torpor!
 	//It is called from your coffin on close (by you only)
-	if(poweron_masquerade == TRUE || owner.current.AmStaked() || owner?.reagents?.has_reagent(/datum/reagent/consumable/garlic)
+	if(poweron_masquerade == TRUE || owner.current.AmStaked() || owner.current.reagents?.has_reagent(/datum/reagent/consumable/garlic))
 		return FALSE
 	owner.current.adjustStaminaLoss(-1.5 + (regenRate * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-0.1 * (regenRate * 2) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 	// No Bleeding
-	if(ishuman(owner.current) && bleed_rate => 0) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
+	if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
 		var/mob/living/carbon/human/H = owner.current
-		H.bleed_rate =- 1
+		if(H.bleed_rate > 0) //Only heal bleeding if we are actually bleeding
+			H.bleed_rate =- 0.5 + regenRate * mult
 	if(iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		var/mob/living/carbon/C = owner.current
 		var/costMult = 1 // Coffin makes it cheaper
