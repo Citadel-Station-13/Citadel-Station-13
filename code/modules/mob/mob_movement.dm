@@ -30,21 +30,26 @@
 		return FALSE
 	last_move = world.time
 
-
 	next_move_dir_add = next_move_dir_sub = NONE
-	if(!n || !direction || !mob?.loc)
+
+	if(!mob?.loc || !direction)
 		return FALSE
+
 	//GET RID OF THIS SOON AS MOBILITY FLAGS IS DONE
+	//hecc off.
 	if(mob.notransform)
 		return FALSE
 
 	if(mob.control_object)
 		return Move_object(direction)
+
 	if(!isliving(mob))
 		return mob.Move(n, direction)
+
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
+
 	if(mob.force_moving)
 		return FALSE
 
@@ -57,7 +62,7 @@
 		return mob.remote_control.relaymove(mob, direction)
 
 	if(isAI(mob))
-		return AIMove(n,direction,mob)
+		return AIMove(null, direction, mob)
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
@@ -74,11 +79,11 @@
 
 	if(!mob.Process_Spacemove(direction))
 		return FALSE
-	//We are now going to move
-	var/oldloc = mob.loc
+
+	var/pixel_speed = movement_speed_pixels()
 
 	if(L.confused)
-		var/newdir = 0
+		var/newdir = NONE
 		if(L.confused > 40)
 			newdir = pick(GLOB.alldirs)
 		else if(prob(L.confused * 1.5))
@@ -87,19 +92,18 @@
 			newdir = angle2dir(dir2angle(direction) + pick(45, -45))
 		if(newdir)
 			direction = newdir
-			n = get_step(L, direction)
 
-	. = ..()
+	. = mob.pixelMovement(direction, pixel_speed)
 
+	#warn TODO: diagonal speed penalty??
+	/*
 	if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
+	*/
 
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
-
-	for(var/obj/O in mob.user_movement_hooks)
-		O.intercept_user_move(direction, mob, n, oldloc)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
