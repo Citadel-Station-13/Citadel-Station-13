@@ -98,4 +98,4 @@
 	return BYOND_METRIC(dx, dy)
 
 /// Use this instead of get_dir when things can be on the same turf
-#define get_pixeldir(thingA, thingB) (get_dir(thingA, thingB) || angle2dir(get_deg(thingA, thingB)))
+#define get_pixeldir(thingA, thingB) (get_dir(thingA, thingB) || angle2dir(get_angle(thingA, thingB)))
