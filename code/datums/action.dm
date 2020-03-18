@@ -676,7 +676,8 @@
 
 //Preset for general and toggled actions
 /datum/action/innate
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	var/active = 0
 
 /datum/action/innate/Trigger()
