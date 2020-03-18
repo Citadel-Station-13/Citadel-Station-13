@@ -4,9 +4,6 @@ GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "under
 GLOBAL_PROTECT(VVicon_edit_lock)
 GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey"))
 GLOBAL_PROTECT(VVckey_edit)
-GLOBAL_LIST_INIT(VVpixelmovement, list("step_x", "step_y", "bound_height", "bound_width", "bound_x", "bound_y"))
-GLOBAL_PROTECT(VVpixelmovement)
-
 
 /client/proc/vv_get_class(var/var_name, var/var_value)
 	if(isnull(var_value))
@@ -527,14 +524,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(param_var_name in GLOB.VVicon_edit_lock)
 		if(!check_rights(R_FUN|R_DEBUG))
 			return FALSE
-	if(param_var_name in GLOB.VVpixelmovement)
-		if(!check_rights(R_DEBUG))
-			return FALSE
-		var/prompt = alert(usr, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
-		if (prompt != "Continue")
-			return FALSE
 	return TRUE
-
 
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))
