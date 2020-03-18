@@ -21,7 +21,7 @@
 	var/image/I
 	var/angle
 	if(!self)
-		get_visual_angle(src, A)
+		angle = get_visual_angle(src, A)
 	if(visual_effect_icon)
 		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
 	else if(used_item)
@@ -46,3 +46,25 @@
 
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+
+/obj/item/proc/do_pickup_animation(atom/target)
+	set waitfor = FALSE
+	if(!istype(loc, /turf))
+		return
+	var/image/I = image(icon = src, loc = loc, layer = layer + 0.1)
+	I.plane = GAME_PLANE
+	I.transform *= 0.75
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	var/turf/T = get_turf(src)
+	var/angle = get_angle(src, target)
+	var/to_x = 0
+	var/to_y = 16
+	if(get_dir(T, target) & (NORTH|SOUTH|EAST|WEST))
+		to_x = 32 * sin(angle)
+		to_y = 32 * cos(angle)
+	flick_overlay(I, GLOB.clients, 6)
+	var/matrix/M = new
+	M.Turn(pick(-30, 30))
+	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
+	sleep(1)
+	animate(I, alpha = 0, transform = matrix(), time = 1)

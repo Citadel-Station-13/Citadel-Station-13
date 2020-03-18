@@ -96,3 +96,6 @@
 	var/dx = (ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target))
 	var/dy = (ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target))
 	return BYOND_METRIC(dx, dy)
+
+/// Use this instead of get_dir when things can be on the same turf
+#define get_pixeldir(thingA, thingB) (get_dir(thingA, thingB) || angle2dir(get_deg(thingA, thingB)))

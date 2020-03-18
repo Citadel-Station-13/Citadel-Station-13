@@ -17,16 +17,14 @@
 			stop_pulling()
 */
 
-/*
-	if(pulling && !handle_pulled_premove(newloc, direct, _step_x, _step_y))
+	if(pulling && !handle_pulled_premove(newloc, direct, step_x, step_y))
 		handle_pulled_movement()
 		return FALSE
-*/
 
 	if(!loc || !newloc || anchored)
 		return FALSE
 
-	var/pullee = pulling
+	//var/pullee = pulling
 
 	var/atom/oldLoc = loc
 
@@ -34,8 +32,17 @@
 
 	last_move = direct
 	setDir(direct)
-	Moved(oldLoc, direct)
+	if(.)
+		Moved(oldLoc, direct)
+		if(pulling) //we were pulling a thing and didn't lose it during our move.
+			handle_pulled_movement()
+			check_pulling()
+		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, step_x, step_y))
+			return FALSE
+	else
+		walk(src, NONE)
 
+/*
 	if(. && pulling)
 		var/distance = get_pixel_dist_euclidean(src, pulling)
 		if(distance > max(MAX_PULL_SEPARATION_BREAK_MINIMUM, (MAX_PULL_SEPARATION_BREAK_FACTOR * step_size)))
@@ -43,6 +50,7 @@
 		else if(distance > OPTIMAL_PULL_DISTANCE)
 			var/diff = distance - OPTIMAL_PULL_DISTANCE
 			pulling.pixelMoveAngleSeekTowards(src, diff)
+*/
 
 /*
 	if(!loc || (loc == oldloc && oldloc != newloc))
@@ -72,40 +80,6 @@
 		Moved(oldloc, direct)
 */
 
-
-/*
-		var/distance = bounds_dist(src, pulling)
-		if(pulling.anchored)
-			stop_pulling()
-		else if(distance > 16) // If we could move something in an angle this would be so much easier
-			step_towards(pulling, src, distance-16)
-			var/turf/myT = get_turf(src)
-			var/turf/theirT = get_turf(pulling)
-			var/x_dist = ((theirT.x - myT.x) * 32) - step_x + pulling.step_x
-			var/y_dist = ((theirT.y - myT.y) * 32) - step_y + pulling.step_y
-
-			var/pull_dir = get_dir(src, pulling)
-			var/move_dir
-			if(!(pull_dir in GLOB.diagonals)) // We want to slowly move it to the same axis of movement as us
-				if(pull_dir & (NORTH | SOUTH))
-					switch(x_dist)
-						if(-INFINITY to -1)
-							move_dir = EAST
-						if(1 to INFINITY)
-							move_dir = WEST
-				else if(pull_dir & (EAST | WEST))
-					switch(y_dist)
-						if(-INFINITY to -1)
-							move_dir = NORTH
-						if(1 to INFINITY)
-							move_dir = SOUTH
-			if(move_dir)
-				var/old_pulling_dir = pulling.dir
-				step(pulling, move_dir, 1)
-				pulling.dir = old_pulling_dir
-*/
-
-/*
 #define ANGLE_ADJUST 10
 /atom/movable/proc/handle_pulled_movement()
 	if(!pulling)
@@ -117,7 +91,7 @@
 	var/distance = bounds_dist(src, pulling)
 	if(distance < 8)
 		return FALSE
-	var/angle = get_deg(pulling, src)
+	var/angle = get_angle(pulling, src)
 	if((angle % 45) > 1) // We arent directly on a cardinal from the thing
 		var/tempA = WRAP(angle, 0, 45)
 		if(tempA >= 22.5)
@@ -126,7 +100,7 @@
 			angle -= min(ANGLE_ADJUST, tempA)
 	angle = SIMPLIFY_DEGREES(angle)
 
-	if(!degstep(pulling, angle, distance-8))
+	if(!pulling.pixelMoveAngle(angle, distance-8))
 		return step_to(pulling, src, 0, step_size)
 	return TRUE
 #undef ANGLE_ADJUST
@@ -135,7 +109,6 @@
 	if((bounds_dist(src, pulling) > 16 + step_size) && !(direct & get_pixeldir(src, pulling)))
 		return FALSE
 	return TRUE
-*/
 
 /atom/movable/proc/pixelMove(direction, pixels)
 	var/old_step_size = step_size
@@ -160,15 +133,6 @@
 			warned[type] = TRUE
 			stack_trace("WARNING - step_size was changed during a move in /atom/movable/pixelMove(). This probably means that the laziness behind this system is catching up to it and it's time to standaridze how step_size changes are done.")
 	step_size = old_step_size
-
-	/*
-	var/dx = cos(angle) * pixels + step_x
-	var/dy = cos(angle) * pixels + step_y
-	var/tx = FLOOR(dx, world.icon_size)
-	var/ty = FLOOR(dy, world.icon_size)
-	var/turf/destination = locate(x + tx, y + ty, z)
-	return Move(destination, get_dir(src, destination), MODULUS(dx, world.icon_size), MODULUS(dy, world.icon_size))
-	*/
 
 /atom/movable/proc/pixelMoveAngleSeekTowards(atom/target, pixels)
 	return pixelMoveAngle(get_angle(src, target), pixels)
