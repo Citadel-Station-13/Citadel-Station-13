@@ -94,34 +94,20 @@
 		if(newdir)
 			direction = newdir
 
-	var/diagonal = direction & (direction - 1)
+	var/diagonal = (direction & (direction - 1))
+
 /*
 	if(diagonal)
 		pixel_speed *= 0.5
 */
 
-	. = mob.pixelMovement(direction, pixel_speed)
+	. = mob.pixelMovement(direction, diagonal? (pixel_speed / 2) : pixel_speed)
 
 	if(!. && diagonal)
-		var/first
-		var/second
-		if(direction & NORTH)
-			first = NORTH
-			if(direction & EAST)
-				second = EAST
-			else if(direction & WEST)
-				second = WEST
-		if(direction & SOUTH)
-			first = SOUTH
-			if(direction & EAST)
-				second = EAST
-			else if(direction & WEST)
-				second = WEST
-		if(first && second)
-			if(!(. = step(src, first)))
-				. = step(src, second)
-				if(.)
-					return
+		var/first = (direction & (NORTH|SOUTH))
+		var/second = (direction & (EAST|WEST))
+		if(!(. = mob.pixelMovement(first, pixel_speed)))
+			. = mob.pixelMovement(second, pixel_speed)
 
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)

@@ -282,7 +282,7 @@
 	return
 
 //Called when we want to push an atom/movable
-/mob/living/proc/PushAM(atom/movable/AM, force = move_force)
+/mob/living/proc/PushAM(atom/movable/AM, force = move_force, pixels = step_size, follow_through = FALSE)
 	if(now_pushing)
 		return TRUE
 	if(moving_diagonally)// no pushing during diagonal moves.
@@ -290,7 +290,8 @@
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE
-	var/t = get_dir(src, AM)
+	var/push_degrees = get_angle(src, AM)
+	var/t = angle2dir(push_degrees)
 	var/push_anchored = FALSE
 	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
 		if(move_crush(AM, move_force, t))
@@ -312,8 +313,9 @@
 	var/current_dir
 	if(isliving(AM))
 		current_dir = AM.dir
-	if(AM.pixelMove(t, step_size) && Process_Spacemove(t))
-		pixelMove(t, bounds_dist(src, AM))
+	var/success = AM.pixelMoveAngle(push_degrees, pixels)
+	if(success && follow_through && Process_Spacemove())
+		pixelMoveAngle(push_degrees, pixels)
 	if(current_dir)
 		AM.setDir(current_dir)
 	now_pushing = FALSE

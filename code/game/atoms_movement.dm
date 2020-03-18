@@ -246,7 +246,17 @@
 	step_size = old_step_size
 
 /atom/movable/proc/pixelMoveAngle(angle, pixels)
-	return Move(loc, get_dir(loc, loc), step_x + cos(angle) * pixels, step_y + sin(angle) * pixels)
+	var/sx = step_x + cos(angle) * pixels
+	var/sy = step_y + cos(angle) * pixels
+	var/old_step_size = step_size
+	var/ss = max(sx, sy, 1)
+	. = Move(loc, get_dir(loc, loc), sx, sy)
+	if(step_size != ss)
+		var/static/list/warned = list()
+		if(!warned[type])
+			warned[type] = TRUE
+			stack_trace("WARNING - step_size was changed during a move in /atom/movable/pixelMove(). This probably means that the laziness behind this system is catching up to it and it's time to standaridze how step_size changes are done.")
+	step_size = old_step_size
 
 	/*
 	var/dx = cos(angle) * pixels + step_x
