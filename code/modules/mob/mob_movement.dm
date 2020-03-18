@@ -489,9 +489,9 @@
 
 /// by default we aren't doing anything.
 /mob/proc/pixelMovement(direction, step_size)
-	set_pixel_step(0, 0)
+	reset_pixel_step(0, 0)
 	step(src, direction, 32)
 
-/mob/set_pixel_step(x = 0, y = 0)
+/mob/reset_pixel_step(x = 0, y = 0)
 	. = ..()
 	pixel_decimal_overflow = 0

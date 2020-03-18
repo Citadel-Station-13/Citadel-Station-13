@@ -133,4 +133,4 @@
 	var/ptrunc = pixels % 1
 	var/otrunc = pixel_decimal_overflow % 1
 	var/amt = clamp((pixels - ptrunc) + (pixel_decimal_overflow - otrunc), 0, MAX_PIXEL_MOVE_PER_MOVE)
-	return pixelMove(direction, pixels)
+	return pixelMove(direction, amt)
