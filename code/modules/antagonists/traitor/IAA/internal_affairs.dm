@@ -62,7 +62,7 @@
 	if(here.z != there.z)
 		linked_alert.icon_state = "pinonnull"
 		return
-	if(get_dist_euclidian(here,there)<=minimum_range + rand(0, range_fuzz_factor))
+	if(EUCLIDEAN_DISTANCE(here,there)<=minimum_range + rand(0, range_fuzz_factor))
 		linked_alert.icon_state = "pinondirect"
 	else
 		linked_alert.setDir(get_dir(here, there))

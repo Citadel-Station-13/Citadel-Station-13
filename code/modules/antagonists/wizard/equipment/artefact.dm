@@ -416,7 +416,7 @@
 		if(!potential_T)
 			end_effect(user)
 			return
-		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
+		if(T.z != potential_T.z || abs(EUCLIDEAN_DISTANCE(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
 			T = potential_T
 			break

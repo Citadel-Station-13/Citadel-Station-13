@@ -67,32 +67,32 @@
 
 /// Distance procs ///
 
-/proc/get_pixel_dist_euclidean(atom/source, atom/target)
+/proc/get_pixel_dist_euclidean(atom/movable/source, atom/movable/target)
 	var/dx = ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target) - ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target)
 	var/dy = ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target) - ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target)
 	return EUCLIDEAN_METRIC(dx, dy)
 
-/proc/get_visual_pixel_dist_euclidean(atom/source, atom/target)
+/proc/get_visual_pixel_dist_euclidean(atom/movable/source, atom/movable/target)
 	var/dx = ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target)
 	var/dy = ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target)
 	return EUCLIDEAN_METRIC(dx, dy)
 
-/proc/get_pixel_dist_manhattan(atom/source, atom/target)
+/proc/get_pixel_dist_manhattan(atom/movable/source, atom/movable/target)
 	var/dx = ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target) - ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target)
 	var/dy = ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target) - ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target)
 	return MANHATTAN_METRIC(dx, dy)
 
-/proc/get_visual_pixel_dist_manhattan(atom/source, atom/target)
+/proc/get_visual_pixel_dist_manhattan(atom/movable/source, atom/movable/target)
 	var/dx = ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target)
 	var/dy = ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target)
 	return MANHATTAN_METRIC(dx, dy)
 
-/proc/get_pixel_dist(atom/source, atom/target)
+/proc/get_pixel_dist(atom/movable/source, atom/movable/target)
 	var/dx = ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target) - ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target)
 	var/dy = ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target) - ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target)
 	return BYOND_METRIC(dx, dy)
 
-/proc/get_visual_pixel_dist(atom/source, atom/target)
+/proc/get_visual_pixel_dist(atom/movable/source, atom/movable/target)
 	var/dx = ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target)
 	var/dy = ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target)
 	return BYOND_METRIC(dx, dy)

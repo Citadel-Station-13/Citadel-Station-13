@@ -62,7 +62,7 @@
 	if(!here || !there || here.z != there.z)
 		. += "pinon[alert ? "alert" : ""]null"
 		return
-	if(get_dist_euclidian(here,there) <= minimum_range)
+	if(EUCLIDEAN_DISTANCE(here,there) <= minimum_range)
 		. += "pinon[alert ? "alert" : ""]direct"
 	else
 		setDir(get_dir(here, there))
