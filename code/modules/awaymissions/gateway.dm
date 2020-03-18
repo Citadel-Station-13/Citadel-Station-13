@@ -139,11 +139,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	if(awaygate.calibrated)
 		AM.forceMove(get_step(awaygate.loc, SOUTH))
 		AM.setDir(SOUTH)
+		/*
 		if (ismob(AM))
 			var/mob/M = AM
 			if (M.client)
 				M.client.move_delay = max(world.time + 5, M.client.move_delay)
 		return
+		*/
 	else
 		var/obj/effect/landmark/dest = pick(randomspawns)
 		if(dest)
@@ -223,11 +225,12 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
 	AM.setDir(SOUTH)
+	/*
 	if (ismob(AM))
 		var/mob/M = AM
 		if (M.client)
 			M.client.move_delay = max(world.time + 5, M.client.move_delay)
-
+	*/
 
 /obj/machinery/gateway/centeraway/admin
 	desc = "A mysterious gateway built by unknown hands, this one seems more compact."

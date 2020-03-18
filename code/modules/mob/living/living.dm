@@ -708,7 +708,7 @@
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			pulledby.stop_pulling()
 			return TRUE
-		else if(moving_resist && client) //we resisted by trying to move // this is a horrible system and whoever thought using client instead of mob is okay is not an okay person
+		//else if(moving_resist && client) //we resisted by trying to move // this is a horrible system and whoever thought using client instead of mob is okay is not an okay person
 			//client.move_delay = world.time + 20
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
 	else
