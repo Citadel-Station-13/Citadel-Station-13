@@ -590,6 +590,7 @@
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
 #include "code\game\atoms_movement.dm"
+#include "code\game\attack_animation.dm"
 #include "code\game\communications.dm"
 #include "code\game\data_huds.dm"
 #include "code\game\say.dm"

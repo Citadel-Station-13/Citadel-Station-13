@@ -149,8 +149,8 @@
 	step_size = old_step_size
 
 /atom/movable/proc/pixelMoveAngle(angle, pixels)
-	var/sx = step_x + cos(angle) * pixels
-	var/sy = step_y + sin(angle) * pixels
+	var/sx = step_x + sin(angle) * pixels
+	var/sy = step_y + cos(angle) * pixels
 	var/old_step_size = step_size
 	var/ss = max(sx, sy, 1)
 	. = Move(loc, get_dir(loc, loc), sx, sy)

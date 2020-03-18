@@ -182,8 +182,8 @@
 		return ..()
 
 /obj/structure/table/alt_attack_hand(mob/user)
-	if(user && Adjacent(user) && !user.incapacitated())
-		user.setClickCooldown(4)
+	if(!user.incapacitated())
+		user.setClickCooldown(CLICK_CD_RANGE)
 		if(istype(user) && user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'>[user] slams [user.p_their()] palms down on [src].</span>", "<span class='warning'>You slam your palms down on [src].</span>")
 			playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)

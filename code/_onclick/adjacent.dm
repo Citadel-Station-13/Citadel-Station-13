@@ -1,4 +1,4 @@
-#define MAX_PIXELS_TO_CONSIDER_ADJACENT 32		//setting this super high won't do anything because it still only checks locs adjacency to target vs just drawing a line.
+GLOBAL_VAR_INIT(MAX_PIXELS_TO_CONSIDER_ADJACENT, 24)		//setting this super high won't do anything because it still only checks locs adjacency to target vs just drawing a line.
 
 /*
 	Adjacency proc for determining touch range
