@@ -656,11 +656,11 @@
 
 /datum/techweb_node/adv_beam_weapons
 	id = "adv_beam_weapons"
-	display_name = "Advanced Beam Weaponry"
+	display_name = "DISABLED - ADVANCED BEAM WEAPONS"
 	description = "Various advanced beam weapons"
 	prereq_ids = list("beam_weapons")
-	design_ids = list("beamrifle")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3250) // Sniper
+	design_ids = list()
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 33333333333333250) // Sniper
 
 /datum/techweb_node/explosive_weapons
 	id = "explosive_weapons"
