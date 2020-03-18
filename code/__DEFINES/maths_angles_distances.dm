@@ -26,17 +26,17 @@
 #define MANHATTAN_METRIC(dx, dy)				(abs(dx) + abs(dy))
 #define EUCLIDEAN_METRIC(dx, dy)				sqrt((dx) ** 2 + (dy) ** 2)
 
-#define MANHATTAN_DISTANCE(a, b)				MANHATTAN_METRIC(a.x - b.x, a.y- b.y)
-#define EUCLIDEAN_DISTANCE(a, b)				EUCLIDEAN_METRIC(a.x - b.x, a.y - b.y)
+#define MANHATTAN_DISTANCE(a, b)				MANHATTAN_METRIC(b.x - a.x, b.y - b.y)
+#define EUCLIDEAN_DISTANCE(a, b)				EUCLIDEAN_METRIC(b.x - a.x, b.y - a.y)
 
 #define BYOND_METRIC(dx, dy)					max(dx, dy)
-//#define BYOND_DISTANCE(a, b)					BYOND_METRIC(a.x - b.x, a.y - b.y)			NO USE get_dist() NOT THIS
+//#define BYOND_DISTANCE(a, b)					BYOND_METRIC(b.x - a.x, b.y - a.y)			NO USE get_dist() NOT THIS
 
 /// Either both have to be atoms OR atom/movables or both have to be numbers. If they're numbers, source is x, target is y.
 /proc/get_angle(atom/movable/source, atom/movable/target)
 	if(!isnum(source))		//assume both are either numbers or not numbers if it ain't then get memed.
-		var/dx = ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target) - ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target)
-		var/dy = ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target) - ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target)
+		var/dx = (ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target))
+		var/dy = (ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target))
 		if(!dy)
 			return (dx >= 0)? 90 : 270
 		. = arctan(dx/dy)
@@ -55,8 +55,8 @@
 
 /// Either both have to be atoms OR atom/movables. If they're numbers, source is x, target is y.
 /proc/get_visual_angle(atom/movable/source, atom/movable/target)
-	var/dx = ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target)
-	var/dy = ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target)
+	var/dx = (ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target))
+	var/dy = (ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target))
 	if(!dy)
 		return (dx >= 0)? 90 : 270
 	. = arctan(dx/dy)
@@ -68,31 +68,31 @@
 /// Distance procs ///
 
 /proc/get_pixel_dist_euclidean(atom/movable/source, atom/movable/target)
-	var/dx = ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target) - ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target)
-	var/dy = ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target) - ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target)
+	var/dx = (ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target))
+	var/dy = (ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target))
 	return EUCLIDEAN_METRIC(dx, dy)
 
 /proc/get_visual_pixel_dist_euclidean(atom/movable/source, atom/movable/target)
-	var/dx = ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target)
-	var/dy = ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target)
+	var/dx = (ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target))
+	var/dy = (ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target))
 	return EUCLIDEAN_METRIC(dx, dy)
 
 /proc/get_pixel_dist_manhattan(atom/movable/source, atom/movable/target)
-	var/dx = ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target) - ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target)
-	var/dy = ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target) - ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target)
+	var/dx = (ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target))
+	var/dy = (ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target))
 	return MANHATTAN_METRIC(dx, dy)
 
 /proc/get_visual_pixel_dist_manhattan(atom/movable/source, atom/movable/target)
-	var/dx = ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target)
-	var/dy = ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target)
+	var/dx = (ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target))
+	var/dy = (ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target))
 	return MANHATTAN_METRIC(dx, dy)
 
 /proc/get_pixel_dist(atom/movable/source, atom/movable/target)
-	var/dx = ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target) - ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target)
-	var/dy = ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target) - ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target)
+	var/dx = (ismovableatom(target)? ABSOLUTE_PX_MOVABLE(target) : ABSOLUTE_PX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_PX_MOVABLE(source) : ABSOLUTE_PX_ATOM(target))
+	var/dy = (ismovableatom(target)? ABSOLUTE_PY_MOVABLE(target) : ABSOLUTE_PY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_PY_MOVABLE(source) : ABSOLUTE_PY_ATOM(target))
 	return BYOND_METRIC(dx, dy)
 
 /proc/get_visual_pixel_dist(atom/movable/source, atom/movable/target)
-	var/dx = ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target)
-	var/dy = ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target) - ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target)
+	var/dx = (ismovableatom(target)? ABSOLUTE_VPX_MOVABLE(target) : ABSOLUTE_VPX_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPX_MOVABLE(source) : ABSOLUTE_VPX_ATOM(target))
+	var/dy = (ismovableatom(target)? ABSOLUTE_VPY_MOVABLE(target) : ABSOLUTE_VPY_ATOM(target)) - (ismovableatom(source)? ABSOLUTE_VPY_MOVABLE(source) : ABSOLUTE_VPY_ATOM(target))
 	return BYOND_METRIC(dx, dy)

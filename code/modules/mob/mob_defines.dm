@@ -16,6 +16,7 @@
 	///
 
 	/// Pixel movement ///
+	step_size = 8
 	/// The extra pixels we "missed out on" last move because we can't move a decimal amount.
 	var/pixel_decimal_overflow = 0
 	///

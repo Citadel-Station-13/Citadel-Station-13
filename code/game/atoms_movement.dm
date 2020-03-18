@@ -1,6 +1,6 @@
 // File for movement procs for atom/movable
 
-/atom/movable/Move(atom/newloc, direct)
+/atom/movable/Move(atom/newloc, direct, step_x = 0, step_y = 0)
 
 /*
 	var/atom/movable/pullee = pulling
@@ -16,6 +16,8 @@
 
 	if(!loc || !newloc || anchored)
 		return FALSE
+
+	var/diagonal = (direct & (direct - 1))
 
 /*
 	var/atom/oldloc = loc
@@ -79,7 +81,33 @@
 */
 
 	var/atom/oldLoc = loc
+
 	. = ..()
+
+	// Diagonal sliding
+	#warn This is janky as shit
+	if(!. && diagonal)
+		var/first
+		var/second
+		if(direct & NORTH)
+			first = NORTH
+			if(direct & EAST)
+				second = EAST
+			else if(direct & WEST)
+				second = WEST
+		if(direct & SOUTH)
+			first = SOUTH
+			if(direct & EAST)
+				second = EAST
+			else if(direct & WEST)
+				second = WEST
+		if(first && second)
+			var/turf/ft = get_step(src, first)
+			var/turf/st = get_step(src, second)
+			if(ft.Enter(src))
+				return Move(ft, first, step_x, step_y)
+			else if(st.Enter(src))
+				return Move(st, second, step_x, step_y)
 
 	last_move = direct
 	setDir(direct)

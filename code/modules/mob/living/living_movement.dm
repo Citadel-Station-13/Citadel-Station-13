@@ -65,8 +65,8 @@
 	return can_zTravel(target, dir) && (movement_type & FLYING)
 
 #define OPTIMAL_PULL_DISTANCE 16
-#define MAX_PULL_SEPARATION_BREAK_MINIMUM 32
-#define MAX_PULL_SEPARATION_BREAK_FACTOR 1.5
+#define MAX_PULL_SEPARATION_BREAK_MINIMUM world.icon_size * 1.5
+#define MAX_PULL_SEPARATION_BREAK_FACTOR 2
 
 /mob/living/Move(atom/newloc, direct)
 	if(buckled)
@@ -355,9 +355,8 @@
 	var/current_dir
 	if(isliving(AM))
 		current_dir = AM.dir
-	var/speed = movement_speed_pixels()
-	if(AM.pixelMove(t, speed) && Process_Spacemove(t))
-		pixelMove(t, speed)
+	if(AM.pixelMove(t, step_size) && Process_Spacemove(t))
+		pixelMove(t, bounds_dist(src, AM))
 	if(current_dir)
 		AM.setDir(current_dir)
 	now_pushing = FALSE
