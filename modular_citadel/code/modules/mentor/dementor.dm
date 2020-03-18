@@ -8,7 +8,7 @@
 		mentor_unfollow()
 	GLOB.mentors -= src
 	verbs += /client/proc/cmd_mentor_rementor()
-
+	
 /client/proc/cmd_mentor_rementor()
 	set category = "Mentor"
 	set name = "rementor"
@@ -17,4 +17,3 @@
 	add_mentor_verbs()
 	GLOB.mentors += src
 	verbs -= /client/proc/cmd_mentor_rementor()
-
