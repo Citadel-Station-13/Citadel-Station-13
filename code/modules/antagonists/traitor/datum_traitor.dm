@@ -297,12 +297,4 @@
 	return SSticker.mode.name == "traitor"
 
 /datum/antagonist/traitor/threat()
-	var/final_threat = threat
-	for(var/o in objectives)
-		var/datum/objective/O = o
-		switch(O.type)
-			if(/datum/objective/hijack)
-				threat += 3
-			if(/datum/objective/martyr)
-				threat += 5
-	return final_threat
+	return threat+traitor_kind.threat
