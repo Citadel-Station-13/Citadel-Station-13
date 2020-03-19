@@ -35,7 +35,7 @@
 	if(gun_B)
 		gun_B.duel = null
 		gun_B = null
-	STOP_PROCESSING(SSobjs, duel)
+	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
 /datum/duel/proc/try_begin()
@@ -58,7 +58,7 @@
 	START_PROCESSING(SSobj, src)
 
 /datum/duel/proc/get_duelist(obj/item/gun/energy/dueling/G)
-	var/mob/living/L = gun.loc
+	var/mob/living/L = G.loc
 	if(!istype(L) || !L.is_holding(G))
 		return
 	return L
