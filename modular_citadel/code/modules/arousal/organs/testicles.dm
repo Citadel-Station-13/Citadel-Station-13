@@ -12,7 +12,6 @@
 	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION
 	var/size_name = "average"
 	shape = "Single"
-	var/sack_size = BALLS_SACK_SIZE_DEF
 	fluid_id = /datum/reagent/consumable/semen
 	masturbation_verb = "massage"
 	layer_index = TESTICLES_LAYER_INDEX

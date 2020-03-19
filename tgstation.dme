@@ -3213,8 +3213,6 @@
 #include "modular_citadel\code\modules\arousal\genitals.dm"
 #include "modular_citadel\code\modules\arousal\genitals_sprite_accessories.dm"
 #include "modular_citadel\code\modules\arousal\organs\breasts.dm"
-#include "modular_citadel\code\modules\arousal\organs\eggsack.dm"
-#include "modular_citadel\code\modules\arousal\organs\ovipositor.dm"
 #include "modular_citadel\code\modules\arousal\organs\penis.dm"
 #include "modular_citadel\code\modules\arousal\organs\testicles.dm"
 #include "modular_citadel\code\modules\arousal\organs\vagina.dm"
