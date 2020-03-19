@@ -633,15 +633,6 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_premiumka
-	name = "Cyborg Upgrade (Premium Kinetic Accelerator)"
-	id = "borg_upgrade_premiumka"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/premiumka
-	materials = list(/datum/material/iron=8000, /datum/material/glass=4000, /datum/material/titanium=2000)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
 /datum/design/borg_upgrade_lavaproof
 	name = "Cyborg Upgrade (Lavaproof Tracks)"
 	id = "borg_upgrade_lavaproof"

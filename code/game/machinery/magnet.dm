@@ -316,7 +316,7 @@
 			if("togglemoving")
 				moving = !moving
 				if(moving)
-					spawn() MagnetMove()
+					INVOKE_ASYNC(src, .proc/MagnetMove)
 
 
 	updateUsrDialog()
@@ -325,7 +325,7 @@
 	if(looping)
 		return
 
-	while(moving && rpath.len >= 1)
+	while(moving && length(rpath) >= 1)
 
 		if(stat & (BROKEN|NOPOWER))
 			break

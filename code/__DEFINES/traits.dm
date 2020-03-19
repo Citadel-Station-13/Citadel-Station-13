@@ -222,6 +222,7 @@
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 #define GHOSTROLE_TRAIT "ghostrole"
 #define APHRO_TRAIT "aphro"
+#define BLOODSUCKER_TRAIT "bloodsucker"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"

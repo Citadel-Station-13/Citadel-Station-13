@@ -480,6 +480,12 @@
 	admin_notes = "Comes with turrets that will target any simplemob."
 	credit_cost = 12500
 
+/datum/map_template/shuttle/emergency/cog
+	suffix = "cog"
+	name = "NES Classic"
+	description = "A blast from the past! This recreation of the Nanotrasen Emergency Shuttle Port features the same focus on seating as the original, but on a slightly longer frame to better accommodate modern shuttle docks."
+	credit_cost = 750
+
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
@@ -499,6 +505,10 @@
 /datum/map_template/shuttle/labour/kilo
 	suffix = "kilo"
 	name = "labour shuttle (Kilo)"
+
+/datum/map_template/shuttle/labour/cog
+	suffix = "cog"
+	name = "labour shuttle (Cog)"
 
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
@@ -543,6 +553,10 @@
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
+
+/datum/map_template/shuttle/arrival/cog
+	suffix = "cog"
+	name = "arrival shuttle (Cog)"
 
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
