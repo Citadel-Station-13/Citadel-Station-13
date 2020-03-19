@@ -557,4 +557,5 @@
 	hitscan_light_color_override = "#99ff99"
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
+	qdel(src)
 	return FALSE
