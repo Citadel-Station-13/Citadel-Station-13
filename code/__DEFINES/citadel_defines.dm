@@ -36,12 +36,19 @@
 #define CAN_CLIMAX_WITH			(1<<7)
 #define GENITAL_CAN_AROUSE		(1<<8)
 
+#define BREASTS_SIZE_DEF	"c" //lowercase cause those sprite accessory don't use uppercased letters.
+
+#define DEF_BREASTS_SHAPE	"Pair"
+
 #define COCK_SIZE_MIN		1
+#define COCK_SIZE_DEF		6
 #define COCK_SIZE_MAX		20
 
 #define COCK_DIAMETER_RATIO_MAX		0.42
 #define COCK_DIAMETER_RATIO_DEF		0.25
 #define COCK_DIAMETER_RATIO_MIN		0.15
+
+#define DEF_COCK_SHAPE		"Human"
 
 #define KNOT_GIRTH_RATIO_MAX		3
 #define KNOT_GIRTH_RATIO_DEF		2.1
@@ -49,6 +56,8 @@
 
 #define BALLS_VOLUME_BASE	25
 #define BALLS_VOLUME_MULT	1
+
+#define DEF_BALLS_SHAPE		"Single"
 
 #define BALLS_SIZE_MIN		1
 #define BALLS_SIZE_DEF		2
