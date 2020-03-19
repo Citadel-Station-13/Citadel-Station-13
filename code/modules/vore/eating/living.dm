@@ -356,7 +356,7 @@
 	set desc = "Lick someone nearby!"
 
 	if(incapacitated(ignore_restraints = TRUE))
-		to_chat(user, "<span class='warning'>You can't do that while incapacitated.</span>")
+		to_chat(src, "<span class='warning'>You can't do that while incapacitated.</span>")
 		return
 
 	var/list/choices
