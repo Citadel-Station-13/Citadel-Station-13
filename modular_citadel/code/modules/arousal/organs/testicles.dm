@@ -63,7 +63,6 @@
 		color = "#[skintone2hex(H.skin_tone)]"
 	else
 		color = "#[D.features["balls_color"]]"
-	sack_size = D.features["balls_sack_size"]
 	shape = D.features["balls_shape"]
 	if(D.features["balls_shape"] == "Hidden")
 		ENABLE_BITFIELD(genital_flags, GENITAL_INTERNAL)
