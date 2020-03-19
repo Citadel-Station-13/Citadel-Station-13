@@ -355,9 +355,12 @@
 	set category = "Vore"
 	set desc = "Lick someone nearby!"
 
+	if(incapacitated(ignore_restraints = TRUE))
+		to_chat(user, "<span class='warning'>You can't do that while incapacitated.</span>")
+
 	var/list/choices
 	for(var/mob/living/L in view(1))
-		if(L != src && (!L.ckey || L.client?.prefs.lickable))
+		if(L != src && (!L.ckey || L.client?.prefs.lickable) && Adjacent(L))
 			LAZYADD(choices, L)
 
 	if(!choices)
@@ -365,7 +368,7 @@
 
 	var/mob/living/tasted = input(src, "Who would you like to lick? (Excluding yourself and those with the preference disabled)", "Licking") as null|anything in choices
 
-	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.lickable)))
+	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.lickable)) || !Adjacent(tasted) || incapacitated(ignore_restraints = TRUE))
 		return
 
 	setClickCooldown(100)
