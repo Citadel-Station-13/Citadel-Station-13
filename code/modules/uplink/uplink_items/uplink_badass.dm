@@ -75,3 +75,11 @@
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
 	illegal_tech = FALSE
+
+/datum/uplink_item/badass/shades
+	name = "Big Sunglasses"
+	desc = "Prevents flashes and looks badbass with some Smokes."
+	item = /obj/item/clothing/glasses/sunglasses/big
+	cost = 1
+	surplus = 5
+	illegal_tech = FALSE
