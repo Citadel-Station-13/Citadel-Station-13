@@ -44,7 +44,8 @@ Property weights are:
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(A && A.owner && A.owner.current && A.owner.current.stat != DEAD)
 			threat += A.threat()
-	for(var/datum/round_event/R in SSevents.running)
+	for(var/r in SSevents.running)
+		var/datum/round_event/R = r
 		threat += R.threat()
 	for(var/mob/living/simple_animal/hostile/H in GLOB.mob_living_list)
 		var/turf/T = get_turf(H)
