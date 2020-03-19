@@ -40,6 +40,8 @@
 
 #define DEF_BREASTS_SHAPE	"Pair"
 
+#define DEF_VAGINA_SHAPE	"Human"
+
 #define COCK_SIZE_MIN		1
 #define COCK_SIZE_DEF		6
 #define COCK_SIZE_MAX		20

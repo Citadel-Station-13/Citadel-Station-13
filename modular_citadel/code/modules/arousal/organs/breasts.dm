@@ -8,10 +8,10 @@
 	icon = 'modular_citadel/icons/obj/genitals/breasts.dmi'
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_BREASTS
-	size = "c" //refer to the breast_values static list below for the cups associated number values
+	size = BREASTS_SIZE_DEF // "c". Refer to the breast_values static list below for the cups associated number values
 	fluid_id = /datum/reagent/consumable/milk
 	fluid_rate = MILK_RATE
-	shape = "pair"
+	shape = DEF_BREASTS_SHAPE
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_FUID_PRODUCTION|GENITAL_CAN_AROUSE
 	masturbation_verb = "massage"
 	arousal_verb = "Your breasts start feeling sensitive"
