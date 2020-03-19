@@ -341,7 +341,7 @@
 	// Assign True Reputation
 	if(vamplevel == 4)
 		SelectReputation(am_fledgling = FALSE, forced = TRUE)
-	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, health, feed rate, regen rate, can have up to [vamplevel - count_vassals()] vassals, and maximum blood have all increased!</span>")
+	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, health, feed rate, regen rate, can have up to [vamplevel - count_vassals(owner.current.mind)] vassals, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
 	update_hud(TRUE)
 	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, TRUE, pressure_affected = FALSE)
