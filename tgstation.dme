@@ -3183,7 +3183,6 @@
 #include "code\modules\vore\eating\bellymodes.dm"
 #include "code\modules\vore\eating\digest_act.dm"
 #include "code\modules\vore\eating\living.dm"
-#include "code\modules\vore\eating\vore.dm"
 #include "code\modules\vore\eating\voreitems.dm"
 #include "code\modules\vore\eating\vorepanel.dm"
 #include "code\modules\VR\vr_mob.dm"

@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	25
+#define SAVEFILE_VERSION_MAX	26
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -114,6 +114,36 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["feature_lizard_legs"] >> digi
 		if(digi == "Digitigrade Legs")
 			WRITE_FILE(S["feature_lizard_legs"], "Digitigrade")
+
+	if(current_version < 26)
+		var/vr_path = "data/player_saves/[parent.ckey[1]]/[parent.ckey]/vore/character[default_slot].json"
+		if(fexists(vr_path))
+			var/list/json_from_file = json_decode(file2text(vr_path))
+			if(json_from_file)
+				digestable = json_from_file["digestable"]
+				devourable = json_from_file["devourable"]
+				feeding = json_from_file["feeding"]
+				lickable = json_from_file["lickable"]
+				belly_prefs = json_from_file["belly_prefs"]
+				vore_taste = json_from_file["vore_taste"]
+
+		for(var/V in all_quirks) // quirk migration
+			switch(V)
+				if("Acute hepatic pharmacokinesis")
+					DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
+					DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
+					ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
+					ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
+					all_quirks -= V
+				if("Crocin Immunity")
+					ENABLE_BITFIELD(cit_toggles,NO_APHRO)
+					all_quirks -= V
+				if("Buns of Steel")
+					ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
+					all_quirks -= V
+
+		if(features["meat_type"] == "Inesct")
+			features["meat_type"] = "Insect"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -446,6 +476,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
+	S["digestable"]						>> digestable
+	S["devourable"]						>> devourable
+	S["feeding"]						>> feeding
+	S["vore_taste"]						>> vore_taste
+	S["lickable"]						>> lickable
+	S["belly_prefs"]					>> belly_prefs
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -509,6 +545,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["insect_fluff"]		= sanitize_inlist(features["insect_fluff"], GLOB.insect_fluffs_list)
 	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
 	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
+	features["flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -518,23 +555,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	for(var/V in all_quirks) // quirk migration
-		switch(V)
-			if("Acute hepatic pharmacokinesis")
-				DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
-				DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
-				ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
-				ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
-				all_quirks -= V
-			if("Crocin Immunity")
-				ENABLE_BITFIELD(cit_toggles,NO_APHRO)
-				all_quirks -= V
-			if("Buns of Steel")
-				ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
-				all_quirks -= V
+	lickable						= sanitize_integer(lickable, FALSE, TRUE, initial(lickable))
+	devourable						= sanitize_integer(devourable, FALSE, TRUE, initial(devourable))
+	digestable						= sanitize_integer(digestable, FALSE, TRUE, initial(digestable))
+	feeding							= sanitize_integer(feeding, FALSE, TRUE, initial(feeding))
+	vore_taste						= copytext(vore_taste, 1, MAX_TASTE_LEN)
+	belly_prefs 					= SANITIZE_LIST(belly_prefs)
 
-	if(features["meat_type"] == "Inesct")
-		features["meat_type"] = "Insect"
 	cit_character_pref_load(S)
 
 	return 1
@@ -612,6 +639,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	WRITE_FILE(S["all_quirks"]			, all_quirks)
+
+	WRITE_FILE(S["digestable"]			, digestable)
+	WRITE_FILE(S["devourable"]			, devourable)
+	WRITE_FILE(S["feeding"]				, feeding)
+	WRITE_FILE(S["vore_taste"]			, vore_taste)
+	WRITE_FILE(S["lickable"]			, lickable)
+	WRITE_FILE(S["belly_prefs"]			, belly_prefs)
 
 	cit_character_pref_save(S)
 
