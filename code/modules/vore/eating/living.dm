@@ -357,6 +357,7 @@
 
 	if(incapacitated(ignore_restraints = TRUE))
 		to_chat(user, "<span class='warning'>You can't do that while incapacitated.</span>")
+		return
 
 	var/list/choices
 	for(var/mob/living/L in view(1))
