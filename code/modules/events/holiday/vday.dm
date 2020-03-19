@@ -18,8 +18,8 @@
 		H.put_in_hands(new /obj/item/valentine)
 		var/obj/item/storage/backpack/B = locate() in H.contents
 		if(B)
-			new /obj/item/reagent_containers/food/snacks/candyheart(b)
-			new /obj/item/storage/fancy/heart_box(b)
+			new /obj/item/reagent_containers/food/snacks/candyheart(B)
+			new /obj/item/storage/fancy/heart_box(B)
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
