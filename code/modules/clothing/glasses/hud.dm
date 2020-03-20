@@ -73,7 +73,7 @@
 	
 /obj/item/clothing/glasses/hud/health/night/syndicate
 	name = "combat night vision health scanner HUD"
-	desc = "An advanced shielded medical heads-up display that allows soldiers to approximate how much lead poisoning their allies have suffered in complete darkness."'
+	desc = "An advanced shielded medical heads-up display that allows soldiers to approximate how much lead poisoning their allies have suffered in complete darkness."
 	flash_protect = 1
 	vision_correction = 1
 
