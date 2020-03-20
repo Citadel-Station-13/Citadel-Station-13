@@ -29,7 +29,28 @@
 	item = /obj/item/storage/toolbox/infiltrator
 	cost = 3
 	limited_stock = 1 //you only get one so you don't end up with too many gun cases
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/padding
+	name = "Soft Padding"
+	desc = "An inconspicious soft padding meant to be worn underneath jumpsuits, will cushion the user from melee harm."
+	item = /obj/item/clothing/accessory/padding
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/kevlar
+	name = "Kevlar Padding"
+	desc = "An inconspicious kevlar padding meant to be worn underneath jumpsuits, will cushion the wearer from ballistic harm."
+	item = /obj/item/clothing/accessory/kevlar
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/plastic
+	name = "Ablative Padding"
+	desc = "An inconspicious ablative padding meant to be worn underneath jumpsuits, will cushion the wearer from energy lasers harm."
+	item = /obj/item/clothing/accessory/plastics
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
