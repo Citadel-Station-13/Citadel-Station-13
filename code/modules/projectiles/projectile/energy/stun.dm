@@ -9,7 +9,8 @@
 	stutter = 10
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 7
+	range = 14
+	speed = 0.6
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun
@@ -42,7 +43,6 @@
 	knockdown_stamoverride = 0
 	knockdown_stam_max = 0
 	strong_tase = FALSE
-	range = 12
 
 /obj/item/projectile/energy/electrode/security/hos
 	knockdown = 100
