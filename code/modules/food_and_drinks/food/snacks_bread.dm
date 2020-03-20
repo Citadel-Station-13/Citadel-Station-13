@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			name = "the physical manifestation of the very concept of fried foods"
 			desc = "A heavily-fried...something.  Who can tell anymore?"
 	filling_color = color
-	foodtype |= FRIED
+	foodtype |= FRIED | TOXIC
 
 /obj/item/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"
