@@ -8,6 +8,12 @@
   *afterattack. The return value does not matter.
   */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
+	if(item_flags & NO_ATTACK_CHAIN_SOFT_STAMCRIT)
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+				to_chat(L, "<span class='warning'>You are too exhausted to swing [src]!</span>")
+				return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return
 	if(pre_attack(target, user, params))
@@ -107,7 +113,7 @@
 		var/mob/living/carbon/tempcarb = user
 		if(!tempcarb.combatmode)
 			totitemdamage *= 0.5
-	if(user.resting)
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
@@ -119,11 +125,7 @@
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
-				if(iscarbon(src))
-					var/mob/living/carbon/C = src
-					C.bleed(totitemdamage)
-				else
-					add_splatter_floor(location)
+				add_splatter_floor(location)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 		return TRUE //successful attack

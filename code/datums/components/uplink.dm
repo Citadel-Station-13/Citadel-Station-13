@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/compact_mode = FALSE
 	var/debug = FALSE
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate)
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate, datum/traitor_class/traitor_class)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -47,7 +47,11 @@ GLOBAL_LIST_EMPTY(uplinks)
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
 	GLOB.uplinks += src
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	var/list/filters = list()
+	if(istype(traitor_class))
+		filters = traitor_class.uplink_filters
+		starting_tc = traitor_class.TC
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted, filters)
 
 	if(_owner)
 		owner = _owner

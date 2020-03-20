@@ -20,7 +20,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
+	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
@@ -106,7 +106,7 @@
 	item_state = "buckler"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	materials = list()
+	custom_materials = null
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
@@ -217,7 +217,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	item_state = "metal"
 	icon_state = "makeshift_shield"
-	materials = list(MAT_METAL = 18000)
+	custom_materials = list(/datum/material/iron = 18000)
 	slot_flags = null
 	block_chance = 35
 	force = 10
@@ -236,3 +236,20 @@
 	throwforce = 15 //Massive pice of metal
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = SLOWS_WHILE_IN_HAND
+	transparent = FALSE
+
+/obj/item/shield/riot/implant
+	name = "riot tower shield"
+	desc = "A massive shield that can block a lot of attacks and can take a lot of abuse before breaking." //It cant break unless it is removed from the implant
+	item_state = "metal"
+	icon_state = "metal"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	block_chance = 30 //May be big but hard to move around to block.
+	slowdown = 1
+	transparent = FALSE
+	item_flags = SLOWS_WHILE_IN_HAND
+
+/obj/item/shield/riot/implant/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 60 //Massive shield
+	return ..()

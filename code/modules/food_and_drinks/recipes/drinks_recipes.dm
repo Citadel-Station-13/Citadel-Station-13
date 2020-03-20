@@ -591,7 +591,7 @@
 	results = list(/datum/reagent/consumable/ethanol/cogchamp = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/cognac = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol/screwdrivercocktail = 1)
 	mix_message = "You hear faint sounds of gears turning as it mixes."
-	mix_sound = 'sound/effects/clockcult_gateway_closing.ogg'
+	mix_sound = 'sound/machines/clockcult/steam_whoosh.ogg'
 
 /datum/chemical_reaction/quadruplesec
 	name = "Quadruple Sec"
@@ -620,7 +620,7 @@
 	results = list(/datum/reagent/consumable/ethanol/quintuple_sec = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/quadruple_sec = 5, /datum/reagent/consumable/clownstears = 5, /datum/reagent/consumable/ethanol/syndicatebomb = 5)
 	mix_message = "Judgement is upon you."
-	mix_message = 'sound/items/airhorn2.ogg'
+	mix_sound = 'sound/items/airhorn2.ogg'
 
 /datum/chemical_reaction/bastion_bourbon
 	name = "Bastion Bourbon"

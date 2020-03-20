@@ -109,7 +109,7 @@
 // Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = 1 + (potency * rate)
 /datum/plant_gene/reagent
 	name = "Nutriment"
-	var/reagent_id = "nutriment"
+	var/reagent_id = /datum/reagent/consumable/nutriment
 	var/rate = 0.04
 
 /datum/plant_gene/reagent/get_name()
@@ -250,14 +250,14 @@
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate
 	if(prob(power))
-		C.electrocute_act(round(power), G, 1, 1)
+		C.electrocute_act(round(power), G, 1, SHOCK_NOGLOVES)
 
 /datum/plant_gene/trait/cell_charge/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		var/power = G.seed.potency*rate
 		if(prob(power))
-			C.electrocute_act(round(power), G, 1, 1)
+			C.electrocute_act(round(power), G, 1, SHOCK_NOGLOVES)
 
 /datum/plant_gene/trait/cell_charge/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	if(!G.reagents.total_volume)

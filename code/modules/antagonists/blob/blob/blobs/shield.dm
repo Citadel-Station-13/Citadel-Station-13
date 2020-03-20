@@ -47,7 +47,7 @@
 	icon_state = "blob_glow"
 	flags_1 = CHECK_RICOCHET_1
 	point_return = 8
-	max_integrity = 50
+	max_integrity = 100
 	brute_resist = 1
 	explosion_block = 2
 

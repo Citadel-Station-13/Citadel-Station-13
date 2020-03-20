@@ -185,7 +185,7 @@ Class Procs:
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
-			L.update_canmove()
+			L.update_mobility()
 	if(occupant)
 		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
 		occupant = null
@@ -242,7 +242,7 @@ Class Procs:
 	else
 		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
 			return FALSE
-		if(!Adjacent(user) && !isobserver(user))
+		if(!Adjacent(user))
 			var/mob/living/carbon/H = user
 			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
 				return FALSE

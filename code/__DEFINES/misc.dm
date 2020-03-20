@@ -406,6 +406,8 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define DUMMY_HUMAN_SLOT_HOLOFORM			"dummy_holoform_generation"
 #define DUMMY_HUMAN_SLOT_ADMIN "admintools"
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
+#define DUMMY_HUMAN_SLOT_HALLUCINATION "dummy_hallucination"
+#define DUMMY_HUMAN_SLOT_EXAMINER "dummy_examiner"
 
 #define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
@@ -520,3 +522,5 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define NIGHTSHIFT_AREA_RECREATION			2		//dorms common areas, etc
 #define NIGHTSHIFT_AREA_DEPARTMENT_HALLS	3		//interior hallways, etc
 #define NIGHTSHIFT_AREA_NONE				4		//default/highest.
+
+#define UNTIL(X) while(!(X)) stoplag()

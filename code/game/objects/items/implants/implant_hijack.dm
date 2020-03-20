@@ -37,18 +37,18 @@
 			eye_color = H.eye_color
 		return TRUE
 
-/obj/item/implant/hijack/removed(mob/target, silent = FALSE, special = 0)
+/obj/item/implant/hijack/removed(mob/living/source, silent = FALSE, special = 0)
 	if(..())
-		REMOVE_TRAIT(target, TRAIT_HIJACKER, "implant")
-		for (var/area/area in imp_in.siliconaccessareas)
-			imp_in.toggleSiliconAccessArea(area)
+		REMOVE_TRAIT(source, TRAIT_HIJACKER, "implant")
+		for (var/area/area in source.siliconaccessareas)
+			source.toggleSiliconAccessArea(area)
 			var/obj/machinery/power/apc/apc = area.get_apc()
 			if (apc)
 				apc.hijacker = null
 				apc.set_hijacked_lighting()
 				apc.update_icon()
-		if (ishuman(target))
-			var/mob/living/carbon/human/H = target
+		if (ishuman(source))
+			var/mob/living/carbon/human/H = source
 			H.eye_color = eye_color
 		return TRUE
 

@@ -23,7 +23,7 @@
 	else
 		return ..()
 
-/obj/structure/mopbucket/update_icon()
-	cut_overlays()
+/obj/structure/mopbucket/update_overlays()
+	. = ..()
 	if(reagents.total_volume > 0)
-		add_overlay("mopbucket_water")
+		. += "mopbucket_water"

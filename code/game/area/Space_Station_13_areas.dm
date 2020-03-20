@@ -48,6 +48,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "space_near"
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
+/area/space/station_ruins //Paint this area where you want station ruins to be allowed to spawn
+
 /area/start
 	name = "start area"
 	icon_state = "start"
@@ -849,6 +851,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
 
+/area/medical/paramedic
+	name = "Paramedic Station"
+	icon_state = "paramedic"
+
 
 //Security
 
@@ -1245,6 +1251,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "storage_wing"
 
 
+// Vacant Rooms
+
+/area/vacant_room
+	name = "Vacant Room"
+	ambientsounds = MAINTENANCE
+	icon_state = "vacant_room"
+
+/area/vacant_room/office
+	name = "Vacant Office"
+	icon_state = "vacant_room"
+
+/area/vacant_room/commissary
+	name = "Vacant Commissary"
+	icon_state = "vacant_room"
+
+
 //AI
 
 /area/ai_monitored/security/armory
@@ -1367,3 +1389,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/lounge
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
+
+/area/crew_quarters/fitness/pool
+	name = "Pool Area"
+	icon_state = "pool"

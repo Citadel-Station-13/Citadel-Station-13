@@ -32,7 +32,7 @@
 	if(setdesc && P.picture_desc)
 		desc = P.picture_desc
 
-/obj/item/photo/update_icon()
+/obj/item/photo/update_icon_state()
 	if(!istype(picture) || !picture.picture_image)
 		return
 	var/icon/I = picture.get_small_icon()
@@ -84,8 +84,12 @@
 	set category = "Object"
 	set src in usr
 
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
 	var/n_name = stripped_input(usr, "What would you like to label the photo?", "Photo Labelling", "", MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && usr.canmove && !usr.restrained())
+	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && CHECK_MOBILITY(L, MOBILITY_USE))
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)

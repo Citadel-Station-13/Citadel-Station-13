@@ -223,20 +223,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			new /datum/admins(localhost_rank, ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
-	prefs_vr = GLOB.vore_preferences_datums[ckey] //CITADEL EDIT bypassing a failing hook
 
 	if(prefs)
 		prefs.parent = src
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-
-	if(prefs_vr)		//CITADEL EDIT bypassing a failing hook START
-		prefs_vr.client = src
-	else
-		prefs_vr = new/datum/vore_preferences(src)
-		GLOB.vore_preferences_datums[ckey] = prefs_vr
-						//CITADEL EDIT bypassing a failing hook END
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
@@ -737,13 +729,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
-/client/Click(atom/object, atom/location, control, params)
+/client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
 	var/ab = FALSE
 	var/list/L = params2list(params)
 	if (object && object == middragatom && L["left"])
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 	var/mcl = CONFIG_GET(number/minute_click_limit)
-	if (!holder && mcl)
+	if (!holder && !ignore_spam && mcl)
 		var/minute = round(world.time, 600)
 		if (!clicklimiter)
 			clicklimiter = new(LIMITER_SIZE)
@@ -768,7 +760,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			return
 
 	var/scl = CONFIG_GET(number/second_click_limit)
-	if (!holder && scl)
+	if (!holder && !ignore_spam && scl)
 		var/second = round(world.time, 10)
 		if (!clicklimiter)
 			clicklimiter = new(LIMITER_SIZE)

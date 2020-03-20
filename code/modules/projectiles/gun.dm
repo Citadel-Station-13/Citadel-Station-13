@@ -9,13 +9,13 @@
 	item_state = "gun"
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	item_flags = NEEDS_PERMIT
+	item_flags = NEEDS_PERMIT | NO_ATTACK_CHAIN_SOFT_STAMCRIT
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -167,6 +167,9 @@
 	if(!target)
 		return
 	if(firing)
+		return
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)			//respect stamina softcrit
+		to_chat(user, "<span class='warning'>You are too exhausted to fire [src]!</span>")
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.

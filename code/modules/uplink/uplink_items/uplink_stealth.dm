@@ -48,7 +48,7 @@
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Sleeping Carp Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
-			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
+			gain skin as hard as steel and swat bullets from the air, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	cost = 17
 	surplus = 0

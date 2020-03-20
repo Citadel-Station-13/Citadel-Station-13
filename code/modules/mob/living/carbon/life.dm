@@ -280,7 +280,7 @@
 		if(miasma_partialpressure > MINIMUM_MOLES_DELTA_TO_MOVE)
 
 			if(prob(0.05 * miasma_partialpressure))
-				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(TRUE, 2,3)
 				miasma_disease.name = "Unknown"
 				ForceContractDisease(miasma_disease, TRUE, TRUE)
 
@@ -357,12 +357,12 @@
 	if(istype(loc, /obj/structure/closet/crate/coffin)|| istype(loc, /obj/structure/closet/body_bag) || istype(loc, /obj/structure/bodycontainer))
 		return
 
-	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || HAS_TRAIT(src, TRAIT_HUSK))
+	// No decay if formaldehyde/preservahyde in corpse or when the corpse is charred
+	if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || HAS_TRAIT(src, TRAIT_HUSK) || reagents.has_reagent(/datum/reagent/preservahyde, 1))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(bodytemperature <= T0C-10 || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
+	if((bodytemperature <= T0C-10) || !(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		return
 
 	// Wait a bit before decaying
@@ -397,7 +397,7 @@
 			if(O)
 				O.on_life()
 	else
-		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
+		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/preservahyde, 1)) // No organ decay if the body contains formaldehyde. Or preservahyde.
 			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
@@ -427,7 +427,6 @@
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
-		var/datum/mutation/human/HM
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -450,9 +449,9 @@
 						dna.previous.Remove("blood_type")
 					dna.temporary_mutations.Remove(mut)
 					continue
-				HM = GLOB.mutations_list[mut]
-				HM.force_lose(src)
-				dna.temporary_mutations.Remove(mut)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			if(HM && HM.timed)
+				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
@@ -509,7 +508,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 /mob/living/carbon/handle_status_effects()
 	..()
 	if(getStaminaLoss() && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
-		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
+		adjustStaminaLoss(!CHECK_MOBILITY(src, MOBILITY_STAND) ? (recoveringstam ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
 	if(!recoveringstam && incomingstammult != 1)
 		incomingstammult = max(0.01, incomingstammult)
@@ -521,7 +520,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		bufferedstam = max(bufferedstam - drainrate, 0)
 	//END OF CIT CHANGES
 
-	var/restingpwr = 1 + 4 * resting
+	var/restingpwr = 1 + 4 * !CHECK_MOBILITY(src, MOBILITY_STAND)
 
 	//Dizziness
 	if(dizziness)

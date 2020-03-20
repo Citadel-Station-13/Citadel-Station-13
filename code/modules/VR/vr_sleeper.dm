@@ -63,7 +63,7 @@
 		addtimer(CALLBACK(src, .proc/emagNotify), 150)
 		return TRUE
 
-/obj/machinery/vr_sleeper/update_icon()
+/obj/machinery/vr_sleeper/update_icon_state()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
 
 /obj/machinery/vr_sleeper/open_machine()

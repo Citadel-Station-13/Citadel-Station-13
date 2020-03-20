@@ -107,28 +107,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
 
-//Flavor Text
-/mob/living/carbon/human/verb/set_flavor()
-	set name = "Set Flavor Text"
-	set desc = "Sets an extended description of your character's features."
-	set category = "IC"
-
-	var/new_flavor = input(src, "Enter your new flavor text:", "Flavor text", null) as message|null
-	if(!isnull(new_flavor))
-		flavor_text = sanitize(new_flavor)
-		to_chat(src, "Your flavor text has been updated.")
-
-//Flavor Text
-/mob/living/carbon/human/verb/set_flavor_2()
-	set name = "Set Temporary Flavor Text"
-	set desc = "Sets a description of your character's current appearance. Use this for emotions, poses etc."
-	set category = "IC"
-
-	var/new_flavor = input(src, "Enter your new temporary flavor text:", "Temporary flavor text", null) as message|null
-	if(!isnull(new_flavor))
-		flavor_text_2 = sanitize(new_flavor)
-		to_chat(src, "Your temporary flavor text has been updated.")
-
 //LOOC toggles
 /client/verb/listen_looc()
 	set name = "Show/Hide LOOC"

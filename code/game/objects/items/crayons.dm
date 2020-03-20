@@ -96,7 +96,7 @@
 		charges_left = charges
 
 	if(!reagents)
-		create_reagents(charges_left * volume_multiplier)
+		create_reagents(charges_left * volume_multiplier, NONE, NO_REAGENTS_VALUE)
 	reagents.clear_reagents()
 
 	var/total_weight = 0
@@ -577,8 +577,8 @@
 	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
-/obj/item/storage/crayons/update_icon()
-	cut_overlays()
+/obj/item/storage/crayons/update_overlays()
+	. = ..()
 	for(var/obj/item/toy/crayon/crayon in contents)
 		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.item_color))
 
@@ -619,7 +619,7 @@
 	is_capped = TRUE
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
-	
+
 	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
 
 	pre_noise = TRUE
@@ -694,7 +694,7 @@
 			C.blind_eyes(1)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
-			C.Knockdown(60)
+			C.DefaultCombatKnockdown(60)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
@@ -710,7 +710,8 @@
 
 	if(isobj(target))
 		if(actually_paints)
-			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
+			var/list/hsl = rgb2hsl(hex2num(copytext(paint_color,2,4)),hex2num(copytext(paint_color,4,6)),hex2num(copytext(paint_color,6,8)))
+			if(hsl[3] < 0.25 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
 				return FALSE
 
@@ -734,13 +735,15 @@
 
 	. = ..()
 
-/obj/item/toy/crayon/spraycan/update_icon()
+/obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped
+
+/obj/item/toy/crayon/spraycan/update_overlays()
+	. = ..()
 	if(use_overlays)
-		cut_overlays()
 		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
-		add_overlay(spray_overlay)
+		. += spray_overlay
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"

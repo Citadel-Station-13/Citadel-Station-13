@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - balance: "Shields will no longer block lasers, and will break if they take too much damage."

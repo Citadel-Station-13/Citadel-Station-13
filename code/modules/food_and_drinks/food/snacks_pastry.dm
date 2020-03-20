@@ -201,10 +201,10 @@
 /obj/item/reagent_containers/food/snacks/donut/jelly/choco
 	name = "chocolate jelly donut"
 	desc = "Goes great with a glass of warm milk."
-	icon_state = "jelly_choc"
+	icon_state = "jelly_choco"
 	bonus_reagents = list(/datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //the coco reagent is just bitter.
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
-	decorated_icon = "jelly_choc_sprinkles"
+	decorated_icon = "jelly_choco_sprinkles"
 	filling_color = "#4F230D"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/blumpkin

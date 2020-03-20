@@ -63,7 +63,7 @@ Buildable meters
 	if(make_from.flipped)
 		do_a_flip()
 
-/obj/item/pipe/dropped()
+/obj/item/pipe/dropped(mob/user)
 	if(loc)
 		setPipingLayer(piping_layer)
 	return ..()
@@ -90,7 +90,8 @@ Buildable meters
 	set name = "Flip Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() || !usr.canmove )
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
 		return
 
 	do_a_flip()
@@ -224,7 +225,7 @@ Buildable meters
 	to_chat(user, "<span class='notice'>You fasten the meter to the [loc.name].</span>")
 	qdel(src)
 
-/obj/item/pipe_meter/dropped()
+/obj/item/pipe_meter/dropped(mob/user)
 	. = ..()
 	if(loc)
 		setAttachLayer(piping_layer)

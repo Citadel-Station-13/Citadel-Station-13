@@ -8,7 +8,7 @@
 	strip_delay = 20
 	equip_delay_other = 25
 	resistance_flags = NONE
-	materials = list(MAT_GLASS = 250)
+	custom_materials = list(/datum/material/glass = 250)
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING	//admin only for now
@@ -96,6 +96,11 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+
+/obj/item/clothing/glasses/meson/eyepatch
+	name = "eyepatch mesons"
+	desc = "A meson system that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "mesonpatch"
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
@@ -286,7 +291,7 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	actions_types = list(/datum/action/item_action/toggle)
-	materials = list(MAT_METAL = 250)
+	custom_materials = list(/datum/material/iron = 250)
 	flash_protect = 2
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT

@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "STOP_PROCESSING now removes from currentrun to prevent another process cycle from happening where it shouldn't."

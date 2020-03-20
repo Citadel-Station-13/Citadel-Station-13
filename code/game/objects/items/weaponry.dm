@@ -74,10 +74,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 105)
+	AddElement(/datum/element/sword_point)
 
 /obj/item/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
+
+/obj/item/claymore/purified
+	name = "purified longsword"
+	desc = "A hastily-purified longsword. While not as holy as it could be, it's still a formidable weapon against those who would rather see you dead."
+	force = 25
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
@@ -247,7 +253,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 9
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=1150, MAT_GLASS=75)
+	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
@@ -291,7 +297,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
-	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
 
 
@@ -307,7 +313,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
-	materials = list(MAT_METAL=12000)
+	custom_materials = list(/datum/material/iron=12000)
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
@@ -341,25 +347,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/switchblade/crafted
-	icon_state = "switchblade_ms"
-	desc = "A concealable spring-loaded knife."
-	force = 2
-	throwforce = 3
-	extended_force = 15
-	extended_throwforce = 18
-	extended_icon_state = "switchblade_ext_ms"
-	retracted_icon_state = "switchblade_ms"
-
-/obj/item/switchblade/crafted/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	if(istype(I, /obj/item/stack/sheet/mineral/silver))
-		icon_state = extended ? "switchblade_ext_msf" : "switchblade_msf"
-		extended_icon_state = "switchblade_ext_msf"
-		retracted_icon_state = "switchblade_msf"
-		icon_state = "switchblade_msf"
-		to_chat(user, "<span class='notice'>You use part of the silver to improve your Switchblade. Stylish!</span>")
-
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
@@ -391,7 +378,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=50)
+	custom_materials = list(/datum/material/iron=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/staff

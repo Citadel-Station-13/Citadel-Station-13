@@ -107,7 +107,7 @@
 	icon_door = "black"
 
 /obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
-	new /obj/item/holybeacon(src)
+	new /obj/item/choice_beacon/holy(src)
 	new /obj/item/clothing/accessory/pocketprotector/cosmetology(src)
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -216,7 +216,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/toggle/labcoat(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/suit/toggle/labcoat/emt(src)
+		new /obj/item/clothing/suit/toggle/labcoat/paramedic(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/white(src)
 	for(var/i in 1 to 3)
