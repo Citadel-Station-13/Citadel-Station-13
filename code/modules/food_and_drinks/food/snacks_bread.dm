@@ -191,9 +191,9 @@ GLOBAL_VAR_INIT(frying_bad_chem_add_volume, TRUE)
 GLOBAL_LIST_INIT(frying_bad_chems, list(
 /datum/reagent/toxin/bad_food = 3,
 /datum/reagent/drug/aranesp = 2,
-/datum/reagent/lithium = 2
+/datum/reagent/lithium = 2,
 /datum/reagent/toxin = 2,
-/datum/reagent/mercury = 2
+/datum/reagent/mercury = 2,
 ))
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
