@@ -10,6 +10,7 @@
 		NO_ASSASSIN: Will not have permanent assassination targets.
 		WAROPS_ALWAYS_ALLOWED: Can always do warops, regardless of threat level.
 		USE_PREF_WEIGHTS: Will use peoples' preferences to change the threat centre.
+		FORCE_IF_WON: If this mode won the vote, forces it
 	*/
 	var/flags = 0
 	var/dead_player_weight = 1 // How much dead players matter for threat calculation
@@ -193,7 +194,7 @@ Property weights are:
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
-	flags = WAROPS_ALWAYS_ALLOWED
+	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
 	var/refund_cooldown = 0
 	
 /datum/dynamic_storyteller/chaotic/do_process()
@@ -334,7 +335,7 @@ Property weights are:
 	desc = "Low-chaos round. Few antags. No conversion."
 	curve_centre = -3
 	curve_width = 0.5
-	flags = NO_ASSASSIN
+	flags = NO_ASSASSIN | FORCE_IF_WON
 	weight = 1
 	dead_player_weight = 5
 	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "story_potential" = 1, "conversion" = -10)
@@ -345,7 +346,7 @@ Property weights are:
 	desc = "No standard antags. Threatening events may still spawn."
 	curve_centre = -5
 	curve_width = 0.5
-	flags = NO_ASSASSIN
+	flags = NO_ASSASSIN | FORCE_IF_WON
 	weight = 1
 	property_weights = list("extended" = 2)
 
