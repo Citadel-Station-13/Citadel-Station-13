@@ -21,7 +21,7 @@
 
 /obj/item/clothing/under/syndicate/bloodred
 	name = "blood-red sneaksuit"
-	desc = "It still counts as stealth if there are no witnesses."
+	desc = "An insidious armored jumpsuit lined with Syndicate nanofibers and prototype platings, slightly resistant to most forms of damage, but is far too bulky to have anything attached to it. It still counts as stealth if there are no witnesses."
 	icon_state = "bloodred_pajamas"
 	item_state = "bl_suit"
 	item_color = "bloodred_pajamas"
