@@ -311,7 +311,7 @@ Property weights are:
 
 /datum/dynamic_storyteller/story/do_process()
 	var/current_time = (world.time / SSautotransfer.targettime)*180
-	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+1),0.1)
+	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.5),0.1)
 
 /datum/dynamic_storyteller/classic
 	name = "Classic"
