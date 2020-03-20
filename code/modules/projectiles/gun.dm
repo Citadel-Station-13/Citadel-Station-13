@@ -566,6 +566,8 @@
 		return FALSE
 	else
 		var/mob/living/carbon/holdingdude = user
+		if(item_flags & PRECISION_WEAPON)
+			return 0
 		if(istype(holdingdude) && holdingdude.combatmode)
 			return (max((holdingdude.lastdirchange + weapon_weight * 25) - world.time,0) * inaccuracy_modifier)
 		else

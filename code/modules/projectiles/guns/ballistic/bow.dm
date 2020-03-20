@@ -9,7 +9,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	fire_sound = 'sound/weapons/bowfire.wav'
 	slot_flags = ITEM_SLOT_BACK
-	item_flags = NONE
+	item_flags = PRECISION_WEAPON
 	casing_ejector = FALSE
 	inaccuracy_modifier = 0.33 //to counteract the innaccuracy from WEAPON_HEAVY, bows are supposed to be accurate but only able to be fired with both hands
 	pin = null

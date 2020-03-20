@@ -90,6 +90,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
 	obj_flags = 0
+	item_flags = PRECISION_WEAPON
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE
@@ -124,6 +125,7 @@
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
+	item_flags = PRECISION_WEAPON //It would be criminal if this wasn't.
 	sharpness = IS_SHARP
 	can_charge = 0
 
@@ -180,6 +182,7 @@
 	item_state = null
 	icon_state = "wormhole_projector"
 	pin = null
+	item_flags = PRECISION_WEAPON
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
@@ -278,6 +281,7 @@
 	item_state = "instagib"
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
+	item_flags = PRECISION_WEAPON
 	force = 60
 
 /obj/item/gun/energy/laser/instakill/red
@@ -315,6 +319,7 @@
 	icon_state = "emitter_carbine"
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = PRECISION_WEAPON //might as well make it stand out somehow
 	cell_type = /obj/item/stock_parts/cell/super
 	ammo_type = list(/obj/item/ammo_casing/energy/emitter)
 

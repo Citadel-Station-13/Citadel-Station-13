@@ -10,6 +10,7 @@
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = null
+	item_flags = PRECISION_WEAPON //NO RECOIL BABY THIS IS A RAILGUN
 	fire_delay = 3
 	spread = 0
 	recoil = 0.1

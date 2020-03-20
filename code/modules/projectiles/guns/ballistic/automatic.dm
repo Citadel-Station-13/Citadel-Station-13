@@ -364,6 +364,7 @@
 	burst_size = 1
 	can_unsuppress = TRUE
 	can_suppress = TRUE
+	item_flags = PRECISION_WEAPON //You can't quickscope, but you can 360 noscope
 	w_class = WEIGHT_CLASS_NORMAL
 	zoomable = TRUE
 	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.

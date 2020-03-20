@@ -7,6 +7,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
+	item_flags = PRECISION_WEAPON
 	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
@@ -66,6 +67,7 @@
 	name = "rapid syringe gun"
 	desc = "A modification of the syringe gun design, using a rotating cylinder to store up to six syringes."
 	icon_state = "rapidsyringegun"
+	item_flags = NONE
 	max_syringes = 6
 
 /obj/item/gun/syringe/syndicate

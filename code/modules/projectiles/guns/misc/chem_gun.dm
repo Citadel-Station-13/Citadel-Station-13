@@ -11,6 +11,7 @@
 	force = 4
 	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = FALSE
+	item_flags = PRECISION_WEAPON
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/time_per_syringe = 250
 	var/syringes_left = 4

@@ -30,6 +30,7 @@
 #define SURGICAL_TOOL						(1<<10)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
 #define NO_UNIFORM_REQUIRED					(1<<11) //Can be worn on certain slots (currently belt and id) that would otherwise require an uniform.
 #define NO_ATTACK_CHAIN_SOFT_STAMCRIT		(1<<12)		//Entirely blocks melee_attack_chain() if user is soft stamcritted. Uses getStaminaLoss() to check at this point in time. THIS DOES NOT BLOCK RANGED AFTERATTACK()S, ONLY MELEE RANGE AFTERATTACK()S.
+#define PRECISION_WEAPON					(1<<13)	//Allows you to shoot the weapon without inaccuracy penalties from being in or out of combat mode OR turning on the spot.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

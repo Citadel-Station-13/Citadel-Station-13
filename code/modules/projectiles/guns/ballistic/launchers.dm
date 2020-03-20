@@ -6,6 +6,7 @@
 	name = "grenade launcher"
 	icon_state = "dshotgun-sawn"
 	item_state = "gun"
+	item_flags = PRECISION_WEAPON //so you don't fire into the wall with your grenade launcher which has ONE SHOT
 	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -86,6 +87,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
 	fire_delay = 0
+	item_flags = PRECISION_WEAPON
 	inaccuracy_modifier = 0.7
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
