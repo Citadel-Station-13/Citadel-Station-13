@@ -185,7 +185,7 @@
 	var/diff = abs(aiming_lastangle - lastangle)
 	if(!check_user())
 		return
-	if(((diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD) || ((last_aimbeam + 2) > world.time)) && !force_update)
+	if(((diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD) || ((last_aimbeam + 1) > world.time)) && !force_update)
 		return
 	aiming_lastangle = lastangle
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
