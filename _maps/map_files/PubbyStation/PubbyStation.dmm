@@ -22504,14 +22504,6 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"bbe" = (
-/obj/structure/chair/stool,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "bbg" = (
 /obj/effect/landmark/start/cook,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -59851,6 +59843,15 @@
 	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"ttS" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "tue" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -90071,7 +90072,7 @@ aRN
 aXZ
 aYQ
 aXS
-bbe
+ttS
 bcd
 bdo
 ben

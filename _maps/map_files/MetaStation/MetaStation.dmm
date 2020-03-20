@@ -82724,6 +82724,14 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"soe" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "soh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -117831,7 +117839,7 @@ bSV
 bUk
 bVv
 bWQ
-bWQ
+soe
 bWQ
 caL
 ccv

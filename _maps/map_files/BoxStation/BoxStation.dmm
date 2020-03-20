@@ -60113,6 +60113,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
+"wGL" = (
+/obj/item/reagent_containers/glass/bucket,
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "wHk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -102201,7 +102206,7 @@ aSU
 aXo
 aXo
 aXo
-aYO
+wGL
 bap
 ikm
 aYV

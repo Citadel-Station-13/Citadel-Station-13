@@ -43879,18 +43879,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"bqG" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "bqH" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -88232,6 +88220,19 @@
 "whw" = (
 /turf/closed/wall/rust,
 /area/medical/surgery)
+"whZ" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "wmX" = (
 /turf/closed/wall/rust,
 /area/quartermaster/qm)
@@ -122394,7 +122395,7 @@ aZd
 bqh
 bnJ
 bpl
-bqG
+whZ
 bsL
 buw
 bwH
