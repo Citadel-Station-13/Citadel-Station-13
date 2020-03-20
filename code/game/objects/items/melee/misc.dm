@@ -193,12 +193,9 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
 		var/loss = H.getStaminaLoss()
-		to_chat(H, "<span class='warning'>You feel extremely tired...</span>")
-		H.drowsyness += 60
 		H.Dizzy(10)
 		H.adjustStaminaLoss(30)
 		if((loss > 40) && prob(loss)) // if above 40, roll for sleep using 1% every 1 stamina damage
-			to_chat(H, "<span class='warning'>Your legs give out and you buckle over, unable to remain awake...</span>")
 			H.Sleeping(180)
 
 /obj/item/melee/classic_baton
