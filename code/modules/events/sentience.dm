@@ -44,7 +44,7 @@
 	var/spawned_animals = 0
 	while(spawned_animals < animals && candidates.len && potential.len)
 		var/mob/living/simple_animal/SA = pick_n_take(potential)
-		var/mob/dead/observer/SG = pick_n_take(candidates)
+		var/mob/SG = pick_n_take(candidates)
 
 		spawned_animals++
 
