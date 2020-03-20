@@ -226,10 +226,12 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			var/bad_chem = GLOB.frying_bad_chems[R]
 			var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
 			if(GLOB.frying_bad_chem_add_volume)
-				reagents.maximum_volume += bad_chem_amount + 4 //Added room for condensed cooking oil
+				reagents.maximum_volume += bad_chem_amount + 2 //Added room for condensed cooking oil
 			reagents.add_reagent(bad_chem, bad_chem_amount)
 			//All fried inedible items also get condensed cooking oil added, which induces minor vomiting and heart damage
-			reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 4)
+			reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 2)
+			//They're also toxic, because who eats a fried fire extinguisher?
+			foodtype |= TOXIC
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(trash)
@@ -260,7 +262,7 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			name = "the physical manifestation of the very concept of fried foods"
 			desc = "A heavily-fried...something.  Who can tell anymore?"
 	filling_color = color
-	foodtype |= FRIED | TOXIC
+	foodtype |= FRIED
 
 /obj/item/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"
