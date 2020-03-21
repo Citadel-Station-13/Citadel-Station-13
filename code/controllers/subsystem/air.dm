@@ -275,7 +275,7 @@ SUBSYSTEM_DEF(air)
 	if(istype(T) && T.air)
 		turf_react_queue[T] = TRUE
 		if(currentpart == SSAIR_REACTQUEUE)
-			currentrun[T] = T
+			currentrun[T] = TRUE
 
 /datum/controller/subsystem/air/proc/remove_from_react_queue(turf/open/T)
 	turf_react_queue -= T
