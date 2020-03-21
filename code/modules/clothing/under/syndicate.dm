@@ -19,6 +19,25 @@
 	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP
 
+/obj/item/clothing/under/syndicate/bloodred
+	name = "blood-red sneaksuit"
+	desc = "An insidious armored jumpsuit lined with Syndicate nanofibers and prototype platings, slightly resistant to most forms of damage, but is far too bulky to have anything attached to it. It still counts as stealth if there are no witnesses."
+	icon_state = "bloodred_pajamas"
+	item_state = "bl_suit"
+	item_color = "bloodred_pajamas"
+	dummy_thick = TRUE
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10,"energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 50, "acid" = 40)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/bloodred/sleepytime
+	name = "blood-red pajamas"
+	desc = "Do operatives dream of nuclear sheep?"
+	icon_state = "bloodred_pajamas"
+	item_state = "bl_suit"
+	item_color = "bloodred_pajamas"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
+
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
@@ -75,7 +94,7 @@
 	item_color = "rus_under"
 	can_adjust = FALSE
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	resistance_flags = NONE 
+	resistance_flags = NONE
 
 /obj/item/clothing/under/syndicate/baseball
 	name = "major league, number unknown"

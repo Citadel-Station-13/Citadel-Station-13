@@ -79,13 +79,11 @@
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(iscarbon(user))
-		var/mob/living/carbon/tempcarb = user
-		if(!tempcarb.combatmode)
-			totitemdamage *= 0.5
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		totitemdamage *= 0.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
-	if(!combatmode)
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 1.5
 	//CIT CHANGES END HERE
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
@@ -345,7 +343,7 @@
 		AdjustAllImmobility(-60, FALSE)
 		AdjustUnconscious(-60, FALSE)
 		AdjustSleeping(-100, FALSE)
-		if(recoveringstam)
+		if(combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 			adjustStaminaLoss(-15)
 		else
 			set_resting(FALSE, FALSE)

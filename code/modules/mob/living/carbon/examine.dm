@@ -90,7 +90,7 @@
 		if(digitalcamo)
 			. += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner."
 
-	if(combatmode)
+	if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 		. += "[t_He] [t_is] visibly tense[CHECK_MOBILITY(src, MOBILITY_STAND) ? "." : ", and [t_is] standing in combative stance."]"
 
 	var/trait_exam = common_trait_examine()

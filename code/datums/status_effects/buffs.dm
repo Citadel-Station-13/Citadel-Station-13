@@ -20,10 +20,10 @@
 	owner.adjustFireLoss(-15)
 
 /datum/status_effect/shadow_mend/on_remove()
+	. = ..()
 	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
 	playsound(owner, 'sound/magic/teleport_diss.ogg', 50, 1)
 	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
-
 
 /datum/status_effect/void_price
 	id = "void_price"
@@ -84,6 +84,7 @@
 	progbar.update(duration - world.time)
 
 /datum/status_effect/vanguard_shield/on_remove()
+	. = ..()
 	var/vanguard = owner.stun_absorption["vanguard"]
 	var/stuns_blocked = 0
 	if(vanguard)
@@ -106,7 +107,6 @@
 			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
 		owner.log_message("lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]", LOG_ATTACK)
-
 
 /datum/status_effect/inathneqs_endowment
 	id = "inathneqs_endowment"
@@ -133,11 +133,11 @@
 	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
+	. = ..()
 	owner.log_message("lost Inath-neq's invulnerability", LOG_ATTACK)
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, 1)
-
 
 /datum/status_effect/cyborg_power_regen
 	id = "power_regen"
@@ -210,10 +210,10 @@
 	owner.adjustStaminaLoss(-(grace_heal * 25))
 
 /datum/status_effect/his_grace/on_remove()
+	. = ..()
 	owner.log_message("lost His Grace's stun immunity", LOG_ATTACK)
 	if(islist(owner.stun_absorption) && owner.stun_absorption["hisgrace"])
 		owner.stun_absorption -= "hisgrace"
-
 
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
 	id = "wish_granters_gift"
@@ -225,6 +225,7 @@
 	return ..()
 
 /datum/status_effect/wish_granters_gift/on_remove()
+	. = ..()
 	owner.revive(full_heal = TRUE, admin_revive = TRUE)
 	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
 
@@ -366,6 +367,7 @@
 	last_health = owner.health
 
 /datum/status_effect/blooddrunk/on_remove()
+	. = ..()
 	tick()
 	owner.maxHealth *= 0.1
 	owner.bruteloss *= 0.1
@@ -404,7 +406,6 @@
 	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
 	return ..()
 
-
 /datum/status_effect/sword_spin/tick()
 	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
 	var/obj/item/slashy
@@ -413,8 +414,8 @@
 		slashy.attack(M, owner)
 
 /datum/status_effect/sword_spin/on_remove()
+	. = ..()
 	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
-
 
 //Used by changelings to rapidly heal
 //Heals 10 brute and oxygen damage every second, and 5 fire
@@ -472,6 +473,7 @@
 	return ..()
 
 /datum/status_effect/hippocraticOath/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)

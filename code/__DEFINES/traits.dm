@@ -131,6 +131,8 @@
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
+#define TRAIT_QUICK_CARRY		"quick-carry"
+#define TRAIT_QUICKER_CARRY		"quicker-carry"
 #define TRAIT_STRONG_GRABBER	"strong_grabber"
 #define TRAIT_CALCIUM_HEALER	"calcium_healer"
 #define TRAIT_MAGIC_CHOKE		"magic_choke"
@@ -159,6 +161,15 @@
 #define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
 
 #define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
+
+/**
+  * COMBAT MODE/SPRINT MODE TRAITS
+  */
+
+/// Prevents combat mode from being active.
+#define TRAIT_COMBAT_MODE_LOCKED		"combatmode_locked"
+/// Prevents sprinting from being active.
+#define TRAIT_SPRINT_LOCKED				"sprint_locked"
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -224,6 +235,7 @@
 #define GHOSTROLE_TRAIT "ghostrole"
 #define APHRO_TRAIT "aphro"
 #define BLOODSUCKER_TRAIT "bloodsucker"
+#define CLOTHING_TRAIT "clothing" //used for quirky carrygloves
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
