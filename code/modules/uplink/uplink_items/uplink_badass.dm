@@ -76,6 +76,7 @@
 	cost = 2
 	illegal_tech = FALSE
 
+<<<<<<< HEAD
 /datum/uplink_item/badass/tactical_naptime
 	name = "Sleepy Time Pajama Bundle"
 	desc = "Even soldiers need to get a good nights rest. Comes with some cozy as heck sleeping wear, a blankie to keep yourself warm in deep space, a hot mug of cocoa for you and your fuzzy friend."
@@ -84,3 +85,12 @@
 	limited_stock = 1
 	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
+=======
+/datum/uplink_item/badass/shades
+	name = "Big Sunglasses"
+	desc = "Prevents flashes and looks badbass with some Smokes."
+	item = /obj/item/clothing/glasses/sunglasses/big
+	cost = 1
+	surplus = 5
+	illegal_tech = FALSE
+>>>>>>> 9c40389e4f970e47f7fdcf5962be0a661b7932f0

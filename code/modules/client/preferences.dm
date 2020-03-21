@@ -125,28 +125,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"cock_length" = 6,
 		"cock_diameter_ratio" = COCK_DIAMETER_RATIO_DEF,
 		"cock_color" = "fff",
-		"has_sheath" = FALSE,
-		"sheath_color" = "fff",
 		"has_balls" = FALSE,
 		"balls_internal" = FALSE,
 		"balls_color" = "fff",
-		"balls_amount" = 2,
-		"balls_sack_size" = BALLS_SACK_SIZE_DEF,
 		"balls_shape" = "Single",
 		"balls_size" = BALLS_SIZE_DEF,
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
 		"balls_efficiency" = CUM_EFFICIENCY,
-		"has_ovi" = FALSE,
-		"ovi_shape" = "knotted",
-		"ovi_length" = 6,
-		"ovi_color" = "fff",
-		"has_eggsack" = FALSE,
-		"eggsack_internal" = TRUE,
-		"eggsack_color" = "fff",
-		"eggsack_size" = BALLS_SACK_SIZE_DEF,
-		"eggsack_egg_color" = "fff",
-		"eggsack_egg_size" = EGG_GIRTH_DEF,
 		"has_breasts" = FALSE,
 		"breasts_color" = "fff",
 		"breasts_size" = "C",
@@ -1924,6 +1910,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_dors = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in GLOB.xeno_dorsal_list
 					if(new_dors)
 						features["xenodorsal"] = new_dors
+
 				//Genital code
 				if("cock_color")
 					var/new_cockcolor = input(user, "Penis color:", "Character Preference") as color|null
@@ -1963,22 +1950,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_shape = input(user, "Testicle Type:", "Character Preference") as null|anything in GLOB.balls_shapes_list
 					if(new_shape)
 						features["balls_shape"] = new_shape
-
-				if("egg_size")
-					var/new_size
-					var/list/egg_sizes = list(1,2,3)
-					new_size = input(user, "Egg Diameter(inches):", "Egg Size") as null|anything in egg_sizes
-					if(new_size)
-						features["eggsack_egg_size"] = new_size
-
-				if("egg_color")
-					var/new_egg_color = input(user, "Egg Color:", "Character Preference") as color|null
-					if(new_egg_color)
-						var/temp_hsv = RGBtoHSV(new_egg_color)
-						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
-							features["eggsack_egg_color"] = sanitize_hexcolor(new_egg_color)
-						else
-							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("breasts_size")
 					var/new_size
@@ -2113,14 +2084,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["has_balls"] = FALSE
 				if("has_balls")
 					features["has_balls"] = !features["has_balls"]
-				if("has_ovi")
-					features["has_ovi"] = !features["has_ovi"]
-				if("has_eggsack")
-					features["has_eggsack"] = !features["has_eggsack"]
 				if("balls_internal")
 					features["balls_internal"] = !features["balls_internal"]
-				if("eggsack_internal")
-					features["eggsack_internal"] = !features["eggsack_internal"]
 				if("has_breasts")
 					features["has_breasts"] = !features["has_breasts"]
 					if(features["has_breasts"] == FALSE)

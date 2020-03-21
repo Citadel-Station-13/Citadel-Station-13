@@ -1,0 +1,6 @@
+author: "Ghommie (plus a fix originally done by Skogol)"
+delete-after: True
+changes: 
+  - bugfix: "Drinks dispensers now only show the container they are holding."
+  - bugfix: "Ghost cafe patrons are warded against a few more events now."
+  - bugfix: "Fixed RnD machineries UI displaying designs' required reagents' typepaths instead of names."
