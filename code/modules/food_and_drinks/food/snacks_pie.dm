@@ -44,8 +44,8 @@
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
-		if(H.dna.species.limbs_id == "lizard")
-			creamoverlay.icon_state = "creampie_lizard"
+		if((("mam_snouts" in H.dna.species.default_features) && H.dna.features["mam_snouts"] != "None") || (("snout" in H.dna.species.default_features) && H.dna.features["snout"] != "None"))
+			creamoverlay.icon_state = "creampie_snout"
 		else
 			creamoverlay.icon_state = "creampie_human"
 		if(stunning)
@@ -53,7 +53,7 @@
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
-		if(!H.is_mouth_covered())	
+		if(!H.is_mouth_covered())
 			reagents.trans_to(H,15) //Cream pie combat
 		if(!H.creamed) // one layer at a time
 			H.add_overlay(creamoverlay)

@@ -28,6 +28,16 @@
 /datum/duel/New()
 	id = next_id++
 
+/datum/duel/Destroy()
+	if(gun_A)
+		gun_A.duel = null
+		gun_A = null
+	if(gun_B)
+		gun_B.duel = null
+		gun_B = null
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
 /datum/duel/proc/try_begin()
 	//Check if both guns are held and if so begin.
 	var/mob/living/A = get_duelist(gun_A)
@@ -45,13 +55,13 @@
 
 	message_duelists("<span class='notice'>Set your gun setting and move [required_distance] steps away from your opponent.</span>")
 
-	START_PROCESSING(SSobj,src)
+	START_PROCESSING(SSobj, src)
 
-/datum/duel/proc/get_duelist(obj/gun)
-	var/mob/living/G = gun.loc
-	if(!istype(G) || !G.is_holding(gun))
-		return null
-	return G
+/datum/duel/proc/get_duelist(obj/item/gun/energy/dueling/G)
+	var/mob/living/L = G.loc
+	if(!istype(L) || !L.is_holding(G))
+		return
+	return L
 
 /datum/duel/proc/message_duelists(message)
 	var/mob/living/LA = get_duelist(gun_A)
@@ -66,7 +76,7 @@
 
 /datum/duel/proc/end()
 	message_duelists("<span class='notice'>Duel finished. Re-engaging safety.</span>")
-	STOP_PROCESSING(SSobj,src)
+	STOP_PROCESSING(SSobj, src)
 	state = DUEL_IDLE
 
 /datum/duel/process()
@@ -129,10 +139,11 @@
 		return FALSE
 	if(!isturf(A.loc) || !isturf(B.loc))
 		return FALSE
-	if(get_dist(A,B) != required_distance)
+	if(get_dist(A, B) != required_distance)
 		return FALSE
-	for(var/turf/T in getline(get_turf(A),get_turf(B)))
-		if(is_blocked_turf(T,TRUE))
+	for(var/i in getline(A.loc, B.loc))
+		var/turf/T = i
+		if(is_blocked_turf(T, TRUE))
 			return FALSE
 	return TRUE
 
@@ -180,7 +191,6 @@
 	return "duel_red"
 
 /obj/item/gun/energy/dueling/attack_self(mob/living/user)
-	. = ..()
 	if(duel.state == DUEL_IDLE)
 		duel.try_begin()
 	else
@@ -205,12 +215,9 @@
 		add_overlay(setting_overlay)
 
 /obj/item/gun/energy/dueling/Destroy()
-	. = ..()
-	if(duel.gun_A == src)
-		duel.gun_A = null
-	if(duel.gun_B == src)
-		duel.gun_B = null
-	duel = null
+	if(duel)
+		qdel(duel)
+	return ..()
 
 /obj/item/gun/energy/dueling/can_trigger_gun(mob/living/user)
 	. = ..()
@@ -234,10 +241,8 @@
 	if(duel.state == DUEL_READY)
 		duel.confirmations[src] = TRUE
 		to_chat(user,"<span class='notice'>You confirm your readiness.</span>")
-		return
 	else if(!is_duelist(target)) //I kinda want to leave this out just to see someone shoot a bystander or missing.
 		to_chat(user,"<span class='warning'>[src] safety system prevents shooting anyone but your designated opponent.</span>")
-		return
 	else
 		duel.fired[src] = TRUE
 		. = ..()

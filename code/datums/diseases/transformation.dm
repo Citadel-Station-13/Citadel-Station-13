@@ -32,16 +32,16 @@
 	..()
 	switch(stage)
 		if(1)
-			if (prob(stage_prob) && stage1)
+			if (prob(stage_prob) && length(stage1))
 				to_chat(affected_mob, pick(stage1))
 		if(2)
-			if (prob(stage_prob) && stage2)
+			if (prob(stage_prob) && length(stage2))
 				to_chat(affected_mob, pick(stage2))
 		if(3)
-			if (prob(stage_prob*2) && stage3)
+			if (prob(stage_prob*2) && length(stage3))
 				to_chat(affected_mob, pick(stage3))
 		if(4)
-			if (prob(stage_prob*2) && stage4)
+			if (prob(stage_prob*2) && length(stage4))
 				to_chat(affected_mob, pick(stage4))
 		if(5)
 			do_disease_transformation(affected_mob)
@@ -162,7 +162,7 @@
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= list()
+	stage1	= null
 	stage2	= list("Your joints feel stiff.", "<span class='danger'>Beep...boop..</span>")
 	stage3	= list("<span class='danger'>Your joints feel very stiff.</span>", "Your skin feels loose.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4	= list("<span class='danger'>Your skin feels very loose.</span>", "<span class='danger'>You can feel... something...inside you.</span>")
@@ -195,7 +195,7 @@
 	desc = "This disease changes the victim into a xenomorph."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= list()
+	stage1	= null
 	stage2	= list("Your throat feels scratchy.", "<span class='danger'>Kill...</span>")
 	stage3	= list("<span class='danger'>Your throat feels very scratchy.</span>", "Your skin feels tight.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4	= list("<span class='danger'>Your skin feels very tight.</span>", "<span class='danger'>Your blood boils!</span>", "<span class='danger'>You can feel... something...inside you.</span>")

@@ -1116,6 +1116,7 @@
 	desc = "Stop controlling your shell and resume normal core operations."
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
+	required_mobility_flags = NONE
 
 /datum/action/innate/undeployment/Trigger()
 	if(!..())

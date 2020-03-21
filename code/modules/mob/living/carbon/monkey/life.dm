@@ -35,7 +35,7 @@
 				gorillize()
 				return
 		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
-			if(!recoveringstam)
+			if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
 				emote("collapse")
 			DefaultCombatKnockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")

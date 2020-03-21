@@ -803,7 +803,7 @@ SLIME SCANNER
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE)) //no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT_NOT_FROM(M, TRAIT_RADIMMUNE,BLOODSUCKER_TRAIT)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] analyzes [M]'s genetic sequence.</span>", \
 							"<span class='notice'>You analyze [M]'s genetic sequence.</span>")
 		gene_scan(M, user)
