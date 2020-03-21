@@ -17,7 +17,7 @@ Buildable meters
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	level = 2
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/RPD_type
