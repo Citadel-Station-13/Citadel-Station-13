@@ -97,6 +97,11 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 
+/obj/item/clothing/glasses/meson/eyepatch
+	name = "eyepatch mesons"
+	desc = "A meson system that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "mesonpatch"
+
 /obj/item/clothing/glasses/science
 	name = "science goggles"
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."

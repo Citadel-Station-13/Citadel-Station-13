@@ -43,14 +43,14 @@
 		set_APTFT()
 		return TRUE
 
-/obj/item/reagent_containers/proc/set_APTFT(mob/user) //set amount_per_transfer_from_this
+/obj/item/reagent_containers/proc/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set Transfer Amount"
 	set category = "Object"
 	set waitfor = FALSE
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if(N)
 		amount_per_transfer_from_this = N
-		to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
+		to_chat(usr, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
@@ -134,6 +134,7 @@
 			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
 		log_reagent("SPLASH: [src] mob SplashReagents() onto [key_name(target)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
 
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands without spilling a single drop.</span>")
@@ -154,8 +155,6 @@
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
-		if(QDELETED(src))
-			return
 
 //melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)

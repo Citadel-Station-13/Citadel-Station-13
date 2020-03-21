@@ -795,19 +795,13 @@
 
 /obj/item/storage/belt/sabre/rapier
 	name = "rapier sheath"
-	desc = "A black, thin sheath that looks to house only a long thin blade. Feels like its made of metal."
+	desc = "A sinister, thin sheath, suitable for a rapier."
 	icon_state = "rsheath"
 	item_state = "rsheath"
 	force = 5
 	throwforce = 15
-	block_chance = 30
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed", "slashes", "prods", "pokes")
 	fitting_swords = list(/obj/item/melee/rapier)
 	starting_sword = /obj/item/melee/rapier
-
-/obj/item/storage/belt/sabre/rapier/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(attack_type & ATTACK_TYPE_PROJECTILE)		// No blocking bullets.
-		return BLOCK_NONE
-	return ..()
 

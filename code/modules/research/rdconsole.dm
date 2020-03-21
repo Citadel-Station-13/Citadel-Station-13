@@ -55,6 +55,10 @@ Nothing else in the console has ID requirements.
 	if (istype(ID, /datum/material))
 		var/datum/material/material = ID
 		return material.name
+
+	else if(GLOB.chemical_reagents_list[ID])
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
+		return reagent.name
 	return ID
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
