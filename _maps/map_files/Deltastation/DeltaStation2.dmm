@@ -99195,7 +99195,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/light/small,
 /obj/structure/bedsheetbin,
-/obj/item/gun/syringe,
+/obj/item/gun/syringe/dart,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1

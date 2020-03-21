@@ -61843,7 +61843,7 @@
 "csa" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/white,
-/obj/item/gun/syringe,
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "csb" = (
