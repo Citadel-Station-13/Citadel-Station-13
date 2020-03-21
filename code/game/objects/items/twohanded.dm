@@ -58,7 +58,7 @@
 	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
-	slowdown -= slowdown_wielded
+	set_slowdown(slowdown - slowdown_wielded)
 
 /obj/item/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -88,7 +88,7 @@
 	O.desc = "Your second grip on [src]."
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
-	slowdown += slowdown_wielded
+	set_slowdown(slowdown + slowdown_wielded)
 
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()
