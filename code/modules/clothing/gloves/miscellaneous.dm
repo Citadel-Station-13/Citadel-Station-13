@@ -73,7 +73,7 @@
 
 	var/mob/living/M = loc
 	M.changeNext_move(CLICK_CD_RAPID)
-	M.adjustStaminaLoss(-3.5) // used to be -2 with some comment about stamina buffer management but *shrug -hatterhat
+	M.adjustStaminaLoss(-7.5) // used to be -2, then -3.5
 	if(warcry)
 		M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
 
