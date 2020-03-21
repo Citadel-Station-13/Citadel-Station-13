@@ -856,3 +856,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/unembedded()
 	return
+
+/**
+  * Sets our slowdown and updates equipment slowdown of any mob we're equipped on.
+  */
+/obj/item/proc/set_slowdown(new_slowdown)
+	slowdown = new_slowdown
+	if(CHECK_BITFIELD(item_flags, IN_INVENTORY))
+		var/mob/living/L = loc
+		if(istype(L))
+			L.update_equipment_speed_mods()
+
+/obj/item/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, slowdown))
+		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.

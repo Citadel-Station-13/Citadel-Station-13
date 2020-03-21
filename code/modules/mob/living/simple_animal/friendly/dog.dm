@@ -363,10 +363,8 @@
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
-		var/datum/element/mob_holder/ele = SSdcs.GetElement(/datum/element/mob_holder, held_icon)
-		if(ele)
-			ele.Detach(src)
-			AddElement(/datum/element/mob_holder, "old_corgi")
+		RemoveElement(/datum/element/mob_holder, held_icon)
+		AddElement(/datum/element/mob_holder, "old_corgi")
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -447,7 +445,7 @@
 				sleep(3)
 				step_to(src,movement_target,1)
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+				if(movement_target?.loc)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
 						setDir(WEST)
 					else if (movement_target.loc.x > src.x)

@@ -16,13 +16,14 @@
 	..()
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		H.put_in_hands(new /obj/item/valentine)
-		var/obj/item/storage/backpack/b = locate() in H.contents
-		new /obj/item/reagent_containers/food/snacks/candyheart(b)
-		new /obj/item/storage/fancy/heart_box(b)
+		var/obj/item/storage/backpack/B = locate() in H.contents
+		if(B)
+			new /obj/item/reagent_containers/food/snacks/candyheart(B)
+			new /obj/item/storage/fancy/heart_box(B)
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
-		if(!M.stat && M.client && M.mind)
+		if(!M.stat && M.client && M.mind && !HAS_TRAIT(M, TRAIT_NO_MIDROUND_ANTAG))
 			valentines |= M
 
 

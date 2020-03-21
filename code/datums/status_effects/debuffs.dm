@@ -139,7 +139,7 @@
 	var/slowdown_priority = 50		//to make sure the stronger effect overrides
 	var/affect_crawl = FALSE
 	var/nextmove_modifier = 1
-	var/stamdmg_per_ds = 1		//a 20 duration would do 20 stamdmg, disablers do 24 or something
+	var/stamdmg_per_ds = 0		//a 20 duration would do 20 stamdmg, disablers do 24 or something
 	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
 
 /datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)
@@ -176,6 +176,7 @@
 	slowdown_priority = 100
 	nextmove_modifier = 2
 	blocks_combatmode = TRUE
+	stamdmg_per_ds = 1
 
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace

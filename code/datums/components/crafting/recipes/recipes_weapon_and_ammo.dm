@@ -278,7 +278,7 @@
 
 /datum/crafting_recipe/arrow
 	name = "Arrow"
-	result = /obj/item/ammo_casing/caseless/arrow
+	result = /obj/item/ammo_casing/caseless/arrow/wood
 	time = 30
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
 				 /obj/item/stack/sheet/silk = 1,
@@ -293,17 +293,17 @@
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				 /obj/item/stack/sheet/sinew = 1,
-				 /obj/item/ammo_casing/caseless/arrow/ashen = 1)
+				 /obj/item/ammo_casing/caseless/arrow/ash = 1)
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/ashen_arrow
 	name = "Fire Hardened Arrow"
-	result = /obj/item/ammo_casing/caseless/arrow/ashen
+	result = /obj/item/ammo_casing/caseless/arrow/ash
 	tools = list(TOOL_WELDER)
 	time = 30
 	always_availible = FALSE
-	reqs = list(/obj/item/ammo_casing/caseless/arrow = 1)
+	reqs = list(/obj/item/ammo_casing/caseless/arrow/wood = 1)
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 

@@ -152,6 +152,16 @@
 	else
 		..()
 
+/obj/structure/spider/spiderling/attack_hand(mob/user)
+	. = ..()
+	if(user.a_intent != INTENT_HELP)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		user.visible_message("<span class='warning'>[user] splats [src].</span>", "<span class='warning'>You splat [src].</span>", "<span class='italics'>You hear a splat...</span>")
+		playsound(loc, 'sound/effects/snap.ogg', 25)
+		qdel(src)
+		return TRUE
+
 /obj/structure/spider/spiderling/process()
 	if(travelling_in_vent)
 		if(isturf(loc))
