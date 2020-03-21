@@ -100,7 +100,7 @@
 	..()
 	if(istype(H))
 		color = H.hair_color
-		H.dna.species.mutant_bodyparts |= "ears"
+		H.dna.species.mutant_bodyparts["ears"] = "Cat"
 		H.dna.features["ears"] = "Cat"
 		H.update_body()
 

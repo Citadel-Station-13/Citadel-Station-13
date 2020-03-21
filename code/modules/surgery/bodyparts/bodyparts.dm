@@ -358,18 +358,18 @@
 			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			species_color = ""
-		
+
 		if(base_bp_icon != DEFAULT_BODYPART_ICON)
 			color_src = MUTCOLORS //TODO - Add color matrix support to base limbs
 
-		if("legs" in S.default_features)
+		if(S.mutant_bodyparts["legs"])
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
 				if(DIGITIGRADE in S.species_traits)
 					digitigrade_type = lowertext(H.dna.features["legs"])
 			else
 				digitigrade_type = null
 
-		if("mam_body_markings" in S.default_features)
+		if(S.mutant_bodyparts["mam_body_markings"])
 			var/datum/sprite_accessory/Smark
 			Smark = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 			if(Smark)
