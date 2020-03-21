@@ -293,8 +293,6 @@
 /datum/reagent/water/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
 	if(!istype(M))
 		return
-	if(method == INGEST)
-		M.adjustStaminaLoss(-0.2*REM, 0)
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
@@ -302,11 +300,6 @@
 
 /datum/reagent/water/overdose_start(mob/living/M)
 	metabolization_rate = 45 * REAGENTS_METABOLISM
-	M.adjustBruteLoss(4*REM, 0) //Your cells start to explode
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.applyLiverDamage(2)
-	..()
 	. = 1
 
 /datum/reagent/water/holywater
@@ -424,11 +417,6 @@
 
 /datum/reagent/fuel/unholywater/overdose_start(mob/living/M)
 	metabolization_rate = 60 * REAGENTS_METABOLISM
-	M.adjustBruteLoss(1*REM, 0)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.applyLiverDamage(3)
-	..()
 	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
