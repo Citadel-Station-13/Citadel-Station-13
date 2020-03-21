@@ -20,8 +20,8 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
-	verb_say = "bzzs"
-	verb_ask = "bzzes inquisitively"
+	verb_say = "buzzs"
+	verb_ask = "buzzes inquisitively"
 	verb_exclaim = "bzzes intensely"
 	verb_yell = "bzzes intensely"
 	emote_see = list("buzzes.", "makes a loud buzz.", "rolls several times.", "buzzes happily.")
@@ -47,18 +47,21 @@
 /mob/living/simple_animal/pet/bumbles/bee_friendly()
 	return TRUE //treaty signed at the Beeneeva convention
 
-/mob/living/simple_animal/pet/bumbles/Life()
-	if(!stat && !buckled && !client)
-		if(prob(1))
-			emote("me", EMOTE_VISIBLE, pick("curls up on the surface below ", "is looking very sleepy.", "buzzes softly ", "looks around for a flower nap "))
+/mob/living/simple_animal/pet/bumbles/handle_automated_movement()
+	. = ..()
+	if(!isturf(loc) || !CHECK_MOBILITY(src, MOBILITY_MOVE)  || buckled)
+		return
+	if(!resting && prob(1))
+		emote("me", EMOTE_VISIBLE, pick("curls up on the surface below ", "is looking very sleepy.", "buzzes softly ", "looks around for a flower nap "))
+		set_resting(TRUE)
+	else if (resting && prob(1))
+		emote("me", EMOTE_VISIBLE, pick("wakes up with a smiling buzz.", "rolls upside down before waking up.", "stops resting."))
+		set_resting(FALSE)
+/mob/living/simple_animal/pet/bumbles/update_mobility()
+	. = ..()
+	if(stat != DEAD)
+		if(!CHECK_MOBILITY(src, MOBILITY_STAND))
 			icon_state = "[icon_living]_rest"
-			collar_type = "[initial(collar_type)]_rest"
-			set_resting(TRUE)
-		else if (prob(1))
-			if (resting)
-				emote("me", EMOTE_VISIBLE, pick("wakes up with a smiling buzz.", "rolls upside down before waking up.", "stops resting."))
-				icon_state = "[icon_living]"
-				collar_type = "[initial(collar_type)]"
-				set_resting(FALSE)
-			else
-				emote("me", EMOTE_VISIBLE, pick("buzzes.", "makes a loud buzz.", "rolls several times.", "buzzes happily "))
+		else
+			icon_state = "[icon_living]"
+		regenerate_icons()
