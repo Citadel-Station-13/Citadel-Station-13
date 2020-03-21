@@ -134,6 +134,7 @@
 			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
 		log_reagent("SPLASH: [src] mob SplashReagents() onto [key_name(target)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
 		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
 
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands without spilling a single drop.</span>")
@@ -154,8 +155,6 @@
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
-		if(QDELETED(src))
-			return
 
 //melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)

@@ -237,7 +237,7 @@
 		return /datum/reagent/blood/jellyblood
 	if(dna?.species?.exotic_blood)
 		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.species_traits) || (HAS_TRAIT(src, TRAIT_NOCLONE)))
+	else if((dna && (NOBLOOD in dna.species.species_traits)) || HAS_TRAIT(src, TRAIT_NOCLONE))
 		return
 	else
 		return /datum/reagent/blood
