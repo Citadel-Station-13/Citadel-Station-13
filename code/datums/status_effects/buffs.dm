@@ -82,6 +82,7 @@
 
 /datum/status_effect/vanguard_shield/tick()
 	progbar.update(duration - world.time)
+	owner.adjustStaminaLoss(-2)
 
 /datum/status_effect/vanguard_shield/on_remove()
 	var/vanguard = owner.stun_absorption["vanguard"]
