@@ -8,7 +8,7 @@
 	response_help = "pets"
 	response_disarm = "brushes aside"
 	response_harm = "squashes"
-	speak_emote = list("bzzes")
+	speak_emote = list("buzzes")
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 1
@@ -22,8 +22,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "buzzs"
 	verb_ask = "buzzes inquisitively"
-	verb_exclaim = "bzzes intensely"
-	verb_yell = "bzzes intensely"
+	verb_exclaim = "buzzes intensely"
+	verb_yell = "buzzes intensely"
 	emote_see = list("buzzes.", "makes a loud buzz.", "rolls several times.", "buzzes happily.")
 	speak_chance = 1
 
