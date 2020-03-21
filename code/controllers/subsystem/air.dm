@@ -273,7 +273,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/add_to_react_queue(turf/open/T)
 	if(istype(T) && T.air)
-		turf_react_queue[T] = T
+		turf_react_queue[T] = TRUE
 		if(currentpart == SSAIR_REACTQUEUE)
 			currentrun[T] = T
 
