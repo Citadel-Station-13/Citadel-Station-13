@@ -43,10 +43,6 @@
 #define COCK_DIAMETER_RATIO_DEF		0.25
 #define COCK_DIAMETER_RATIO_MIN		0.15
 
-#define KNOT_GIRTH_RATIO_MAX		3
-#define KNOT_GIRTH_RATIO_DEF		2.1
-#define KNOT_GIRTH_RATIO_MIN		1.25
-
 #define BALLS_VOLUME_BASE	25
 #define BALLS_VOLUME_MULT	1
 
@@ -54,17 +50,9 @@
 #define BALLS_SIZE_DEF		2
 #define BALLS_SIZE_MAX		3
 
-#define BALLS_SACK_SIZE_MIN 1
-#define BALLS_SACK_SIZE_DEF	8
-#define BALLS_SACK_SIZE_MAX 40
-
 #define CUM_RATE			2 // holy shit what a really shitty define name - relates to units per arbitrary measure of time?
 #define CUM_RATE_MULT		1
 #define CUM_EFFICIENCY		1 //amount of nutrition required per life()
-
-#define EGG_GIRTH_MIN		1//inches
-#define EGG_GIRTH_DEF		6
-#define EGG_GIRTH_MAX		16
 
 #define BREASTS_VOLUME_BASE	50	//base volume for the reagents in the breasts, multiplied by the size then multiplier. 50u for A cups, 850u for HH cups.
 #define BREASTS_VOLUME_MULT	1	//global multiplier for breast volume.
@@ -82,8 +70,6 @@
 
 //Citadel istypes
 #define isgenital(A) (istype(A, /obj/item/organ/genital))
-
-#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 
