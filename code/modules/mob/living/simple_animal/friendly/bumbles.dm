@@ -24,6 +24,8 @@
 	verb_ask = "bzzes inquisitively"
 	verb_exclaim = "bzzes intensely"
 	verb_yell = "bzzes intensely"
+	emote_see = list("buzzes.", "makes a loud buzz.", "rolls several times.", "buzzes happily.")
+	speak_chance = 1
 
 /mob/living/simple_animal/pet/bumbles/Initialize()
 	. = ..()
