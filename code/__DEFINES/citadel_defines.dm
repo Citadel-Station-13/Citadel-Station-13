@@ -41,7 +41,7 @@
 
 #define COCK_SIZE_MIN		1
 #define COCK_SIZE_DEF		6
-#define COCK_SIZE_MAX		20
+#define COCK_SIZE_MAX		14
 
 #define COCK_DIAMETER_RATIO_MAX		0.42
 #define COCK_DIAMETER_RATIO_DEF		0.25
