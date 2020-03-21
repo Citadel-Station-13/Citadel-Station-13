@@ -16,14 +16,16 @@
 /obj/screen/combattoggle/Click()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		C.toggle_combat_mode()
+		C.user_toggle_intentional_combat_mode()
 
 /obj/screen/combattoggle/update_icon_state()
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(user.combatmode)
+	if((user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		icon_state = "combat"
+	else if(HAS_TRAIT(user, TRAIT_COMBAT_MODE_LOCKED))
+		icon_state = "combat_locked"
 	else
 		icon_state = "combat_off"
 
@@ -41,7 +43,7 @@
 	var/mob/living/carbon/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(user.voremode && !user.combatmode)
+	if(user.voremode && !(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		icon_state = "nom"
 	else
 		icon_state = "nom_off"

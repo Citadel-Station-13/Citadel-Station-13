@@ -312,7 +312,7 @@ Auto Patrol: []"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if( !Adjacent(target) || !isturf(target.loc) || target.getStaminaLoss() <= 120 || !target.recoveringstam) //CIT CHANGE - replaces amountknockdown with checks for stamina so secbots dont run into an infinite loop
+			if( !Adjacent(target) || !isturf(target.loc) || target.getStaminaLoss() <= 120 || !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)) //CIT CHANGE - replaces amountknockdown with checks for stamina so secbots dont run into an infinite loop
 				back_to_hunt()
 				return
 
@@ -339,7 +339,7 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss check
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss check
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.

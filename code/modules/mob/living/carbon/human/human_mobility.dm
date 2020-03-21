@@ -1,5 +1,5 @@
 /mob/living/carbon/human/resist_a_rest(automatic = FALSE, ignoretimer = FALSE)
-	if(!resting || stat || attemptingstandup)
+	if(!resting || stat || (combat_flags & COMBAT_FLAG_RESISTING_REST))
 		return FALSE
 	if(ignoretimer)
 		set_resting(FALSE, FALSE)
@@ -13,10 +13,10 @@
 		return FALSE
 	else
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
-		if(getStaminaLoss() >= STAMINA_SOFTCRIT)
+		if(IS_STAMCRIT(src))
 			to_chat(src, "<span class='warning'>You're too exhausted to get up!")
 			return FALSE
-		attemptingstandup = TRUE
+		combat_flags |= COMBAT_FLAG_RESISTING_REST
 		var/health_deficiency = max((maxHealth - (health - getStaminaLoss()))*0.5, 0)
 		if(!has_gravity())
 			health_deficiency = health_deficiency*0.2
@@ -37,10 +37,11 @@
 		visible_message("<span class='notice'>[standupwarning]</span>", usernotice, vision_distance = 5)
 		if(do_after(src, totaldelay, target = src, required_mobility_flags = MOBILITY_RESIST))
 			set_resting(FALSE, TRUE)
-			attemptingstandup = FALSE
+
+			combat_flags &= ~COMBAT_FLAG_RESISTING_REST
 			return TRUE
 		else
-			attemptingstandup = FALSE
+			combat_flags &= ~COMBAT_FLAG_RESISTING_REST
 			if(resting)		//we didn't shove ourselves up or something
 				visible_message("<span class='notice'>[src] falls right back down.</span>", "<span class='notice'>You fall right back down.</span>")
 				if(has_gravity())

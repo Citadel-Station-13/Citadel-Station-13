@@ -29,7 +29,7 @@
 	. = ..()
 
 	if(CONFIG_GET(flag/disable_stambuffer))
-		togglesprint()
+		enable_intentional_sprint_mode()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 
