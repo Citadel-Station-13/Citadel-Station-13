@@ -139,7 +139,7 @@
 	name = "Headset Upgrader"
 	desc = "A device that can be used to make one headset immune to flashbangs."
 	item = /obj/item/headsetupgrader
-	cost = 3
+	cost = 1
 
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"

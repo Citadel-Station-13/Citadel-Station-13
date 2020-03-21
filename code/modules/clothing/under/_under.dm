@@ -12,6 +12,7 @@
 	var/can_adjust = TRUE
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
+	var/dummy_thick = FALSE // is able to hold accessories on its item
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
 	mutantrace_variation = STYLE_DIGITIGRADE
@@ -81,6 +82,10 @@
 		if(attached_accessory)
 			if(user)
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
+			return
+		if(dummy_thick)
+			if(user)
+				to_chat(user, "<span class='warning'>[src] is too bulky and cannot have accessories attached to it!</span>")
 			return
 		else
 			if(user && !user.temporarilyRemoveItemFromInventory(I))
