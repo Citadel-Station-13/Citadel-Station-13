@@ -257,7 +257,7 @@ SUBSYSTEM_DEF(air)
 		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
 		#endif
 		T.excited = TRUE
-		active_turfs[T] = SSair_turfs.currentrun[T] = T
+		active_turfs[T] = SSair_turfs.currentrun[T] = TRUE
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
 		add_to_react_queue(T)
