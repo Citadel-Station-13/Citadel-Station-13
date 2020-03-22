@@ -54,7 +54,12 @@
 	icon_state = "holdingsat"
 	item_state = "holdingsat"
 	species_exception = list(/datum/species/angel)
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+
+/obj/item/storage/backpack/holding/duffel
+	name = "duffel bag of holding"
+	desc = "A duffel bag that opens into a localized pocket of Blue Space."
+	icon_state = "holdingduffel"
+	item_state = "holdingduffel"
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()

@@ -1,3 +1,6 @@
+#define TRAITOR_HUMAN /datum/traitor_class/human/freeform
+#define TRAITOR_AI /datum/traitor_class/ai
+
 #define NUKE_RESULT_FLUKE 0
 #define NUKE_RESULT_NUKE_WIN 1
 #define NUKE_RESULT_CREW_WIN 2

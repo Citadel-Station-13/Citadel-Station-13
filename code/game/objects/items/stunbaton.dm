@@ -25,7 +25,7 @@
 
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Right click attack while in combat mode or attack while in disarm intent to disarm instead of stun.</span>"
+	. += "<span class='notice'>Right click attack while in combat mode to disarm instead of stun.</span>"
 
 /obj/item/melee/baton/get_cell()
 	. = cell
@@ -149,8 +149,6 @@
 
 //return TRUE to interrupt attack chain.
 /obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
-	if(user.a_intent == INTENT_DISARM)
-		disarming = TRUE			//override if they're in disarm intent.
 	if(iscyborg(M) || !isliving(M))		//can't baton cyborgs
 		return FALSE
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
