@@ -55502,6 +55502,11 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
+"iLJ" = (
+/obj/item/reagent_containers/glass/bucket,
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "iMv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -102179,7 +102184,7 @@ aSU
 aXo
 aXo
 aXo
-aYO
+iLJ
 bap
 ikm
 aYV
