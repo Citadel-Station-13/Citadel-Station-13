@@ -54133,7 +54133,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/gun/syringe,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -54146,6 +54145,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cds" = (
@@ -59207,13 +59207,13 @@
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
-/obj/item/gun/syringe,
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/storage/belt/medical{
 	pixel_y = 2
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "cnu" = (
@@ -61843,7 +61843,7 @@
 "csa" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/white,
-/obj/item/gun/syringe,
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "csb" = (
@@ -82724,6 +82724,14 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"soe" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "soh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -117831,7 +117839,7 @@ bSV
 bUk
 bVv
 bWQ
-bWQ
+soe
 bWQ
 caL
 ccv

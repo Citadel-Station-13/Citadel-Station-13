@@ -27696,12 +27696,12 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe,
 /obj/item/reagent_containers/hypospray/CMO,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/neck/stethoscope,
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXR" = (
