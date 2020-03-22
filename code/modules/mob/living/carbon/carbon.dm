@@ -153,7 +153,7 @@
 		return
 
 	//CIT CHANGES - makes it impossible to throw while in stamina softcrit
-	if(getStaminaLoss() >= STAMINA_SOFTCRIT)
+	if(IS_STAMCRIT(src))
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
 	var/random_turn = a_intent == INTENT_HARM
@@ -448,7 +448,7 @@
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	//CIT CHANGES START HERE
-	else if(combatmode)
+	else if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 		modifier += 50
 
 	if(modifier < 100)
@@ -820,15 +820,13 @@
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
+			disable_intentional_combat_mode(FALSE, FALSE)
 			if(!eye_blind)
 				blind_eyes(1)
-			if(combatmode)
-				toggle_combat_mode(TRUE, TRUE)
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
-				if(combatmode)
-					toggle_combat_mode(TRUE, TRUE)
+				disable_intentional_combat_mode(FALSE, FALSE)
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
@@ -1011,8 +1009,7 @@
 			return TRUE
 
 /mob/living/carbon/transfer_ckey(mob/new_mob, send_signal = TRUE)
-	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
+	disable_intentional_combat_mode(TRUE, FALSE)
 	return ..()
 
 /mob/living/carbon/can_see_reagents()

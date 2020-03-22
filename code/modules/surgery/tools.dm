@@ -289,7 +289,7 @@
 
 /obj/item/surgical_drapes/advanced
 	name = "smart surgical drapes"
-	desc = "A quite quirky set of drapes with wireless synchronization to the station's research networks, with an integrated display allowing users to execute advanced surgeries without the aid of an operating computer."
+	desc = "A smart set of drapes with wireless synchronization to the station's research networks, with an integrated display allowing users to execute advanced surgeries without the aid of an operating computer."
 	var/datum/techweb/linked_techweb
 
 /obj/item/surgical_drapes/advanced/Initialize(mapload)
