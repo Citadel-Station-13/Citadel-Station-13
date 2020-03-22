@@ -545,9 +545,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
 	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
 
-	var/static/list/B_sizes = CONFIG_GET(keyed_list/breasts_cups_prefs)
-	var/static/min_D = CONFIG_GET(number/penis_min_inches_prefs)
-	var/static/max_D = CONFIG_GET(number/penis_max_inches_prefs)
+	var/static/list/B_sizes
+	if(!B_sizes)
+		B_sizes = CONFIG_GET(keyed_list/breasts_cups_prefs)
+	var/static/min_D
+	if(!min_D)
+		min_D = CONFIG_GET(number/penis_min_inches_prefs)
+	var/static/max_D
+	if(!max_D)
+		max_D = CONFIG_GET(number/penis_max_inches_prefs)
 
 	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], B_sizes, BREASTS_SIZE_DEF)
 	features["cock_length"]			= sanitize_integer(features["cock_length"], min_D, max_D, COCK_SIZE_DEF)
