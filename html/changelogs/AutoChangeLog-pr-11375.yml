@@ -1,0 +1,4 @@
+author: "Auris456852"
+delete-after: True
+changes: 
+  - balance: "Made EMP reaction growth logarithmic."

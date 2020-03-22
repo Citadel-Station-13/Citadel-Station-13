@@ -30,45 +30,48 @@
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
-		if(S)
-			S.duration = max(world.time + amount, S.duration)
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
-		return S
+	if(!ignore_canstun && (!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/stun/S = IsStun()
+	if(S)
+		S.duration = max(world.time + amount, S.duration)
+	else if(amount > 0)
+		S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
+	return S
 
 /mob/living/proc/SetStun(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
-		if(amount <= 0)
-			if(S)
-				qdel(S)
+	if(!ignore_canstun && (!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	var/datum/status_effect/incapacitating/stun/S = IsStun()
+	if(amount <= 0)
+		if(S)
+			qdel(S)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(S)
+			S.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(S)
-				S.duration = world.time + amount
-			else
-				S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
-		return S
+			S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
+	return S
 
 /mob/living/proc/AdjustStun(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/stun/S = IsStun()
-		if(S)
-			S.duration += amount
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
-		return S
+	if(!ignore_canstun && (!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/stun/S = IsStun()
+	if(S)
+		S.duration += amount
+	else if(amount > 0)
+		S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
+	return S
 
 ///////////////////////////////// KNOCKDOWN /////////////////////////////////////
 
@@ -84,45 +87,48 @@
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(K)
-			K.duration = max(world.time + amount, K.duration)
-		else if(amount > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
-		return K
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+	if(K)
+		K.duration = max(world.time + amount, K.duration)
+	else if(amount > 0)
+		K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
+	return K
 
 /mob/living/proc/SetKnockdown(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(amount <= 0)
-			if(K)
-				qdel(K)
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+	if(amount <= 0)
+		if(K)
+			qdel(K)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(K)
+			K.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(K)
-				K.duration = world.time + amount
-			else
-				K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
-		return K
+			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
+	return K
 
 /mob/living/proc/AdjustKnockdown(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
-		if(K)
-			K.duration += amount
-		else if(amount > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
-		return K
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
+	if(K)
+		K.duration += amount
+	else if(amount > 0)
+		K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
+	return K
 
 ///////////////////////////////// IMMOBILIZED ////////////////////////////////////
 /mob/living/proc/IsImmobilized() //If we're immobilized
@@ -137,45 +143,48 @@
 /mob/living/proc/Immobilize(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
-		if(I)
-			I.duration = max(world.time + amount, I.duration)
-		else if(amount > 0)
-			I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount, updating)
-		return I
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
+	if(I)
+		I.duration = max(world.time + amount, I.duration)
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount, updating)
+	return I
 
 /mob/living/proc/SetImmobilized(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
-		if(amount <= 0)
-			if(I)
-				qdel(I)
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
+	if(amount <= 0)
+		if(I)
+			qdel(I)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(I)
+			I.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(I)
-				I.duration = world.time + amount
-			else
-				I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount, updating)
-		return I
+			I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount, updating)
+	return I
 
 /mob/living/proc/AdjustImmobilized(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
-		if(I)
-			I.duration += amount
-		else if(amount > 0)
-			I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount, updating)
-		return I
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/immobilized/I = IsImmobilized()
+	if(I)
+		I.duration += amount
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount, updating)
+	return I
 
 ///////////////////////////////// PARALYZED //////////////////////////////////
 /mob/living/proc/IsParalyzed() //If we're immobilized
@@ -190,45 +199,48 @@
 /mob/living/proc/Paralyze(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
-		if(P)
-			P.duration = max(world.time + amount, P.duration)
-		else if(amount > 0)
-			P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
-		return P
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
+	if(P)
+		P.duration = max(world.time + amount, P.duration)
+	else if(amount > 0)
+		P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
+	return P
 
 /mob/living/proc/SetParalyzed(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
-		if(amount <= 0)
-			if(P)
-				qdel(P)
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
+	if(amount <= 0)
+		if(P)
+			qdel(P)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(P)
+			P.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(P)
-				P.duration = world.time + amount
-			else
-				P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
-		return P
+			P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
+	return P
 
 /mob/living/proc/AdjustParalyzed(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
-		if(P)
-			P.duration += amount
-		else if(amount > 0)
-			P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
-		return P
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
+	if(P)
+		P.duration += amount
+	else if(amount > 0)
+		P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
+	return P
 
 ///////////////////////////////// DAZED ////////////////////////////////////
 /mob/living/proc/IsDazed() //If we're Dazed
@@ -243,45 +255,104 @@
 /mob/living/proc/Daze(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		if(absorb_stun(amount, ignore_canstun))
-			return
-		var/datum/status_effect/incapacitating/dazed/I = IsDazed()
-		if(I)
-			I.duration = max(world.time + amount, I.duration)
-		else if(amount > 0)
-			I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
-		return I
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/dazed/I = IsDazed()
+	if(I)
+		I.duration = max(world.time + amount, I.duration)
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
+	return I
 
 /mob/living/proc/SetDazed(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/dazed/I = IsDazed()
-		if(amount <= 0)
-			if(I)
-				qdel(I)
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	var/datum/status_effect/incapacitating/dazed/I = IsDazed()
+	if(amount <= 0)
+		if(I)
+			qdel(I)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(I)
+			I.duration = world.time + amount
 		else
-			if(absorb_stun(amount, ignore_canstun))
-				return
-			if(I)
-				I.duration = world.time + amount
-			else
-				I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
-		return I
+			I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
+	return I
 
 /mob/living/proc/AdjustDazed(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/dazed/I = IsDazed()
+	if(I)
+		I.duration += amount
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
+	return I
+
+///////////////////////////////// STAGGERED ////////////////////////////////////
+/mob/living/proc/IsStaggered() //If we're Staggered
+	return has_status_effect(STATUS_EFFECT_STAGGERED)
+
+/mob/living/proc/AmountStaggered() //How many deciseconds remain in our Staggered status effect
+	var/datum/status_effect/staggered/I = IsStaggered()
+	if(I)
+		return I.duration - world.time
+	return 0
+
+/mob/living/proc/Stagger(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/staggered/I = IsStaggered()
+	if(I)
+		I.duration = max(world.time + amount, I.duration)
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_STAGGERED, amount, updating)
+	return I
+
+/mob/living/proc/SetStaggered(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	var/datum/status_effect/staggered/I = IsStaggered()
+	if(amount <= 0)
+		if(I)
+			qdel(I)
+	else
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/dazed/I = IsDazed()
 		if(I)
-			I.duration += amount
-		else if(amount > 0)
-			I = apply_status_effect(STATUS_EFFECT_DAZED, amount, updating)
-		return I
+			I.duration = world.time + amount
+		else
+			I = apply_status_effect(STATUS_EFFECT_STAGGERED, amount, updating)
+	return I
+
+/mob/living/proc/AdjustStaggered(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/staggered/I = IsStaggered()
+	if(I)
+		I.duration += amount
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_STAGGERED, amount, updating)
+	return I
 
 //Blanket
 /mob/living/proc/AllImmobility(amount, updating, ignore_canstun = FALSE)
@@ -290,6 +361,7 @@
 	Stun(amount, FALSE, ignore_canstun)
 	Immobilize(amount, FALSE, ignore_canstun)
 	Daze(amount, FALSE, ignore_canstun)
+	Stagger(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -299,6 +371,7 @@
 	SetStun(amount, FALSE, ignore_canstun)
 	SetImmobilized(amount, FALSE, ignore_canstun)
 	SetDazed(amount, FALSE, ignore_canstun)
+	SetStaggered(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -308,6 +381,7 @@
 	AdjustStun(amount, FALSE, ignore_canstun)
 	AdjustImmobilized(amount, FALSE, ignore_canstun)
 	AdjustDazed(amount, FALSE, ignore_canstun)
+	AdjustStaggered(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
@@ -323,11 +397,13 @@
 		SetImmobilized(amount, FALSE, ignore_canstun)
 	if(AmountDazed() > amount)
 		SetImmobilized(amount, FALSE, ignore_canstun)
+	if(AmountStaggered() > amount)
+		SetStaggered(amount, FALSE, ignore_canstun)
 	if(updating)
 		update_mobility()
 
 /mob/living/proc/HighestImmobilityAmount()
-	return max(max(max(max(AmountStun(), AmountKnockdown()), AmountParalyzed()), AmountImmobilized()), AmountDazed())
+	return max(AmountStun(), AmountKnockdown(), AmountParalyzed(), AmountImmobilized(), AmountDazed(), AmountStaggered())
 
 //////////////////UNCONSCIOUS
 /mob/living/proc/IsUnconscious() //If we're unconscious

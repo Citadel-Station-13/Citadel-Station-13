@@ -24,4 +24,4 @@
 	if(ranged_ability)
 		ranged_ability.add_ranged_ability(src, "<span class='notice'>You currently have <b>[ranged_ability]</b> active!</span>")
 	if(vore_init && !vorepref_init) //Vore's been initialized, voreprefs haven't. If this triggers then that means that voreprefs failed to load due to the client being missing.
-		apply_vore_prefs()
+		copy_from_prefs_vr()

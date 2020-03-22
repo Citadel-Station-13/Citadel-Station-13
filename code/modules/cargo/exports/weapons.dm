@@ -211,7 +211,7 @@
 /datum/export/weapon/arrows
 	cost = 150
 	unit_name = "arrow"
-	export_types = list(/obj/item/ammo_casing/caseless/arrow, /obj/item/ammo_casing/caseless/arrow/bone, /obj/item/ammo_casing/caseless/arrow/ashen)
+	export_types = list(/obj/item/ammo_casing/caseless/arrow, /obj/item/ammo_casing/caseless/arrow/bone, /obj/item/ammo_casing/caseless/arrow/ash)
 
 /datum/export/weapon/bow_teaching
 	cost = 500
