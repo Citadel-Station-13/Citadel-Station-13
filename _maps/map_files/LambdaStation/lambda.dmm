@@ -39659,11 +39659,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "bsU" = (
-/obj/machinery/computer/scan_consolenew,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	icon_state = "trimline_fill";
 	dir = 5
 	},
+/obj/machinery/computer/cloning,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "bsV" = (
@@ -65390,6 +65390,14 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/delivery,
+/obj/item/clothing/mask/gas{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 5;
+	pixel_y = -2
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "coa" = (
@@ -65468,12 +65476,11 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "cof" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/dark/visible{
-	dir = 6
-	},
+/obj/structure/closet/secure_closet/atmospherics,
+/obj/effect/turf_decal/bot,
+/obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel,
-/area/maintenance/disposal/incinerator)
+/area/engine/atmos)
 "cog" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
@@ -66408,7 +66415,11 @@
 /area/engine/atmos)
 "cpV" = (
 /obj/structure/closet/secure_closet/atmospherics,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/effect/turf_decal/bot,
+/obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cpW" = (
@@ -66664,13 +66675,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "cqx" = (
-/obj/structure/closet/secure_closet/atmospherics,
-/obj/machinery/light{
-	dir = 1
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 6
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
-/area/engine/atmos)
+/area/maintenance/disposal/incinerator)
 "cqy" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal/fifty,
@@ -83692,7 +83703,9 @@
 /area/engine/engineering)
 "cWC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/unary/tank/toxins{
+	dir = 4
+	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/sign/warning/nosmoking{
@@ -135950,7 +135963,7 @@ cTG
 cly
 cni
 cnf
-cpV
+cof
 cKQ
 cLg
 chu
@@ -136207,7 +136220,7 @@ cdx
 clz
 cNp
 cnf
-cpV
+cof
 cKQ
 cLe
 coW
@@ -136464,7 +136477,7 @@ cmu
 ckc
 cnY
 cnf
-cqx
+cpV
 cKQ
 cLe
 coW
@@ -141861,7 +141874,7 @@ cTu
 bQh
 cRm
 cnn
-cof
+cqx
 cpf
 cWC
 crb
