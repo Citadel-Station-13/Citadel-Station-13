@@ -494,10 +494,6 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 	taste_description = "bad cooking"
-	
-	
-
-
 
 /datum/reagent/toxin/condensed_cooking_oil
 	name = "Condensed Cooking Oil"
