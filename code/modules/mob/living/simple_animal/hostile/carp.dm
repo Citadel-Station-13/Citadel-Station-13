@@ -62,6 +62,22 @@
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
 
+/mob/living/simple_animal/hostile/carp/tigercarp
+	name = "tiger carp"
+	desc = "A rare patterned offshoot of the typical space carp. Reports of significant aggression.."
+	icon_state = "tigercarp"
+	icon_living = "tigercarp"
+	icon_dead = "tigercarp_dead"
+	icon_gib = "tigercarp_gib"
+	maxHealth = 50
+	health = 50
+	turns_per_move = 6
+
+	obj_damage = 65
+	melee_damage_lower = 17
+	melee_damage_upper = 17
+	attacktext = "thrashes"
+
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/broadMobs.dmi'
 	name = "Mega Space Carp"
