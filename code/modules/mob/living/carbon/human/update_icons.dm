@@ -648,12 +648,11 @@ generate/load female uniform sprites matching all previously decided variables
 	else
 		. += "-not_coloured"
 
-	. += "-[gender]"
+	. += "-[dna.features["body_model"]]"
 
 
 	var/is_taur = FALSE
-	var/mob/living/carbon/human/H = src
-	if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
+	if(("taur" in dna.species.mutant_bodyparts) && (dna.features["taur"] != "None"))
 		is_taur = TRUE
 
 
