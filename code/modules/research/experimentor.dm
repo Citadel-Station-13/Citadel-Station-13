@@ -82,6 +82,11 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
 
+/obj/machinery/rnd/experimentor/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Malfunction probability reduced by <b>[badThingCoeff]%</b>.<br>Cooldown interval between experiments at <b>[resetTime*0.1]</b> seconds.</span>"
+
 /obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
 	if(istype(O, /obj/item/transfer_valve))
@@ -271,7 +276,7 @@
 				if(!T.density)
 					if(prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-						reagentdecal.reagents.add_reagent("radium", 7)
+						reagentdecal.reagents.add_reagent(/datum/reagent/radium, 7)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
@@ -291,7 +296,9 @@
 			new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,src))))
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] destroys [exp_on], leaking dangerous gas!</span>")
-			chosenchem = pick("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
+			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/radium,/datum/reagent/toxin,
+							/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,
+							/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/ethanol/beepsky_smash)
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
@@ -304,7 +311,7 @@
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s chemical chamber has sprung a leak!</span>")
-			chosenchem = pick("mutationtoxin","nanomachines","sacid")
+			chosenchem = pick(/datum/reagent/mutationtoxin,/datum/reagent/nanomachines,/datum/reagent/toxin/acid)
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
@@ -331,7 +338,7 @@
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			var/obj/item/reagent_containers/food/drinks/coffee/C = new /obj/item/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
-			chosenchem = pick("plasma","capsaicin","ethanol")
+			chosenchem = pick(/datum/reagent/toxin/plasma,/datum/reagent/consumable/capsaicin,/datum/reagent/consumable/ethanol)
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
@@ -380,7 +387,7 @@
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
 			var/obj/item/reagent_containers/food/drinks/coffee/C = new /obj/item/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			playsound(src, 'sound/machines/ding.ogg', 50, 1) //Ding! Your death coffee is ready!
-			chosenchem = pick("uranium","frostoil","ephedrine")
+			chosenchem = pick(/datum/reagent/uranium,/datum/reagent/consumable/frostoil,/datum/reagent/medicine/ephedrine)
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
@@ -390,7 +397,7 @@
 			visible_message("<span class='danger'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
-			R.add_reagent("frostoil" , 50)
+			R.add_reagent(/datum/reagent/consumable/frostoil, 50)
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = TRUE)
@@ -423,8 +430,8 @@
 		visible_message("<span class='warning'>[exp_on] activates the crushing mechanism, [exp_on] is destroyed!</span>")
 		if(linked_console.linked_lathe)
 			var/datum/component/material_container/linked_materials = linked_console.linked_lathe.GetComponent(/datum/component/material_container)
-			for(var/material in exp_on.materials)
-				linked_materials.insert_amount( min((linked_materials.max_amount - linked_materials.total_amount), (exp_on.materials[material])), material)
+			for(var/material in exp_on.custom_materials)
+				linked_materials.insert_amount_mat( min((linked_materials.max_amount - linked_materials.total_amount), (exp_on.custom_materials[material])), material)
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
@@ -507,7 +514,7 @@
 	update_icon()
 	recentlyExperimented = FALSE
 
-/obj/machinery/rnd/experimentor/update_icon()
+/obj/machinery/rnd/experimentor/update_icon_state()
 	icon_state = "h_lathe"
 
 /obj/machinery/rnd/experimentor/proc/warn_admins(user, ReactionName)
@@ -566,7 +573,8 @@
 		else if(loc == user)
 			cooldown = TRUE
 			call(src,realProc)(user)
-			addtimer(CALLBACK(src, .proc/cd), cooldownMax)
+			if(!QDELETED(src))
+				addtimer(CALLBACK(src, .proc/cd), cooldownMax)
 	else
 		to_chat(user, "<span class='notice'>You aren't quite sure what to do with this yet.</span>")
 

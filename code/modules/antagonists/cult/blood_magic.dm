@@ -143,7 +143,7 @@
 //Cult Blood Spells
 /datum/action/innate/cult/blood_spell/stun
 	name = "Stun"
-	desc = "A potent spell that will stun and mute victims upon contact."
+	desc = "A potent spell that will stun and mute victims upon contact.  When the cult ascends, so does the spell, it burns and throws back the victim!"
 	button_icon_state = "hand"
 	magic_path = "/obj/item/melee/blood_magic/stun"
 	health_cost = 10
@@ -343,7 +343,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NO_ATTACK_CHAIN_SOFT_STAMCRIT
 
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -437,22 +437,35 @@
 			else
 				target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
-		else
-			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] falls to the ground!</span>")
-			L.Knockdown(160)
-			L.adjustStaminaLoss(140) //Ensures hard stamcrit
-			L.flash_act(1,1)
-			if(issilicon(target))
-				var/mob/living/silicon/S = L
-				S.emp_act(EMP_HEAVY)
-			else if(iscarbon(target))
-				var/mob/living/carbon/C = L
-				C.silent += 6
-				C.stuttering += 15
-				C.cultslurring += 15
-				C.Jitter(15)
-			if(is_servant_of_ratvar(L))
+		else // cult doesn't stun any longer when halos are out, instead it does burn damage + knockback!
+			var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if(user_antag.cult_team.cult_ascendent)
+				if(!iscultist(L))
+					L.adjustFireLoss(20)
+					if(L.move_resist < MOVE_FORCE_STRONG)
+						var/atom/throw_target = get_edge_target_turf(L, user.dir)
+						L.throw_at(throw_target, 7, 1, user)
+			else if(!iscultist(L))
+				L.DefaultCombatKnockdown(160)
+				L.adjustStaminaLoss(140) //Ensures hard stamcrit
+				L.flash_act(1,1)
+				if(issilicon(target))
+					var/mob/living/silicon/S = L
+					S.emp_act(EMP_HEAVY)
+				else if(iscarbon(target))
+					var/mob/living/carbon/C = L
+					C.silent += CLAMP(12 - C.silent, 0, 6)
+					C.stuttering += CLAMP(30 - C.stuttering, 0, 15)
+					C.cultslurring += CLAMP(30 - C.cultslurring, 0, 15)
+					C.Jitter(15)
+			else					// cultstun no longer hardstuns + damages hostile cultists, instead debuffs them hard + deals some damage; debuffs for a bit longer since they don't add the clockie belligerent debuff
+				if(iscarbon(target))
+					var/mob/living/carbon/C = L
+					C.stuttering = max(10, C.stuttering)
+					C.drowsyness = max(10, C.drowsyness)
+					C.confused += CLAMP(20 - C.confused, 0, 10)
 				L.adjustBruteLoss(15)
+			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [iscultist(L) ? "writhes in pain" : "falls to the ground!"]</span>")
 		uses--
 	..()
 
@@ -578,6 +591,12 @@
 				uses --
 				new /obj/item/stack/sheet/runed_metal(T,quantity)
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around the plasteel, transforming it into runed metal!</span>")
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+		if(istype(target, /obj/item/clothing/suit/hooded/wintercoat) && target.type != /obj/item/clothing/suit/hooded/wintercoat/narsie)
+			if (do_after(user,30,target=target))
+				new /obj/item/clothing/suit/hooded/wintercoat/narsie(T)
+				qdel(target)
+				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [target], transforming it into a narsian winter coat!</span>")
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
@@ -741,7 +760,7 @@
 	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
-			if(B.blood_state == "blood")
+			if(B.blood_state == BLOOD_STATE_BLOOD)
 				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 					temp += 30
 				else

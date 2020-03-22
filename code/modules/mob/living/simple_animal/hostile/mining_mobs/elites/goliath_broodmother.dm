@@ -37,7 +37,7 @@
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathmessage = "explodes into gore!"
 	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
@@ -178,7 +178,7 @@
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
@@ -201,7 +201,7 @@
 		mother.children_list -= src
 	visible_message("<span class='warning'>[src] explodes!</span>")
 	explosion(get_turf(loc),0,0,0,flame_range = 3, adminlog = FALSE)
-	gib()
+	qdel()
 
 //Tentacles have less stun time compared to regular variant, to balance being able to use them much more often.  Also, 10 more damage.
 /obj/effect/temp_visual/goliath_tentacle/broodmother/trip()

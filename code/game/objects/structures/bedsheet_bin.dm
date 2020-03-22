@@ -252,7 +252,7 @@ LINEN BINS
 	add_overlay(g_mouth)
 	add_overlay(g_eyes)
 
-/obj/item/bedsheet/gondola/worn_overlays(isinhands = FALSE, icon_file)
+/obj/item/bedsheet/gondola/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
 		. += mutable_appearance(icon_file, g_mouth)
@@ -303,7 +303,7 @@ LINEN BINS
 		. += "There are [amount] sheets in the bin."
 
 
-/obj/structure/bedsheetbin/update_icon()
+/obj/structure/bedsheetbin/update_icon_state()
 	switch(amount)
 		if(0)
 			icon_state = "linenbin-empty"

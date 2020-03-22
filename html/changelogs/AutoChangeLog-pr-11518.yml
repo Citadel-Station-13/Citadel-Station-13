@@ -1,0 +1,4 @@
+author: "NecromancerAnne and goldnharl"
+delete-after: True
+changes: 
+  - imageadd: "Sprite cleanups and animations for energy guns."

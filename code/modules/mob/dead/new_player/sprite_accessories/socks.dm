@@ -2,6 +2,9 @@
 // Socks Definitions //
 ///////////////////////
 
+/datum/sprite_accessory/underwear/socks
+	has_digitigrade = TRUE
+
 /datum/sprite_accessory/underwear/socks/nude
 	name = "Nude"
 	icon_state = null

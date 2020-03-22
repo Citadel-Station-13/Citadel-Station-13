@@ -37,6 +37,8 @@
 			continue
 		if(!H.client)
 			continue
+		if(HAS_TRAIT(H,TRAIT_EXEMPT_HEALTH_EVENTS))
+			continue
 		if(H.stat == DEAD)
 			continue
 		if(HAS_TRAIT(H, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
@@ -57,11 +59,11 @@
 				var/datum/disease/dnaspread/DS = D
 				DS.strain_data["name"] = H.real_name
 				DS.strain_data["UI"] = H.dna.uni_identity
-				DS.strain_data["SE"] = H.dna.struc_enzymes
+				DS.strain_data["SE"] = H.dna.mutation_index
 			else
 				D = new virus_type()
 		else
-			D = new /datum/disease/advance/random(max_severity, max_severity)
+			D = new /datum/disease/advance/random(TRUE, max_severity, max_severity)
 		D.carrier = TRUE
 		H.ForceContractDisease(D, FALSE, TRUE)
 

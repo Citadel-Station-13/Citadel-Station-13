@@ -7,7 +7,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
@@ -108,7 +108,7 @@
 	desc = "A compressed air gun, designed to fit medicinal darts for application of medicine for those patients just out of reach."
 	icon_state = "dartgun"
 	item_state = "dartgun"
-	materials = list(MAT_METAL=2000, MAT_GLASS=500)
+	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE
 

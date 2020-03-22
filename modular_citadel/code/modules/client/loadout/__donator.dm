@@ -305,7 +305,7 @@ datum/gear/darksabresheath
 /datum/gear/flagcape
 	name = "US Flag Cape"
 	category = SLOT_IN_BACKPACK
-	path = /obj/item/bedsheet/custom/flagcape
+	path = /obj/item/clothing/neck/flagcape
 	ckeywhitelist = list("darnchacha")
 
 /datum/gear/luckyjack
@@ -458,3 +458,39 @@ datum/gear/darksabresheath
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/necklace/onion
 	ckeywhitelist = list("cdrcross")
+
+/datum/gear/mikubikini
+	name = "starlight singer bikini"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/mikubikini
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikujacket
+	name = "starlight singer jacket"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/mikujacket
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikuhair
+	name = "starlight singer hair"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/head/mikuhair
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikugloves
+	name = "starlight singer gloves"
+	category = SLOT_GLOVES
+	path = /obj/item/clothing/gloves/mikugloves
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/mikuleggings
+	name = "starlight singer leggings"
+	category = SLOT_SHOES
+	path = /obj/item/clothing/shoes/sneakers/mikuleggings
+	ckeywhitelist = list("grandvegeta")
+
+/datum/gear/cosmos
+	name = "cosmic space bedsheet"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/bedsheet/cosmos
+	ckeywhitelist = list("grunnyyy")

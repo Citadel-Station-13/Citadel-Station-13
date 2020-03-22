@@ -174,7 +174,7 @@
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
-	if(H.mind != null && H.ckey != null)
+	if(H.mind != null && (H.voluntary_ghosted || (H.ckey != null)))
 		LAZYINITLIST(abductee_minds)
 		LAZYADD(history, H)
 		LAZYADD(abductee_minds, H.mind)
@@ -223,7 +223,7 @@
 	return
 
 
-/obj/machinery/abductor/experiment/update_icon()
+/obj/machinery/abductor/experiment/update_icon_state()
 	if(state_open)
 		icon_state = "experiment-open"
 	else

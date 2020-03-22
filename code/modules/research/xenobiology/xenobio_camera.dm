@@ -236,7 +236,7 @@
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc, TRUE, owner)
 			if (!QDELETED(food))
-				food.LAssailant = C
+				food.LAssailant = WEAKREF(C)
 				X.monkeys --
 				to_chat(owner, "<span class='notice'>[X] now has [X.monkeys] monkey(s) left.</span>")
 		else
@@ -474,7 +474,7 @@
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(T, TRUE, C)
 			if (!QDELETED(food))
-				food.LAssailant = C
+				food.LAssailant = WEAKREF(C)
 				X.monkeys--
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 				to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkey(s) stored.</span>")
@@ -486,7 +486,7 @@
 	if(!(upgradetier & XENOBIO_UPGRADE_MONKEYS)) // CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
 		to_chat(user, "<span class='warning'>This console does not have the monkey upgrade.</span>")
 		return
-	if(!GLOB.cameranet.checkTurfVis(M.loc))
+	if(!isturf(M.loc) || !GLOB.cameranet.checkTurfVis(M.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
 	var/mob/living/C = user

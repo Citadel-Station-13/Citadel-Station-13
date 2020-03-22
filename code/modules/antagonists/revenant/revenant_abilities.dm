@@ -213,7 +213,7 @@
 			continue
 		L.Beam(M,icon_state="purple_lightning",time=5)
 		if(!M.anti_magic_check(FALSE, TRUE))
-			M.electrocute_act(shock_damage, L, safety=TRUE)
+			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
@@ -353,7 +353,7 @@
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)
-					mob.reagents.add_reagent("plasma", 5)
+					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)
 		else
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.

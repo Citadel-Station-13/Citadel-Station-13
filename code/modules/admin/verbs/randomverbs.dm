@@ -75,7 +75,7 @@
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(H)]'s [sender] request.")
 		return
 
-	log_directed_talk(src, H, input, LOG_ADMIN, "reply")
+	log_directed_talk(mob, H, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(H)]'s [sender] message with: \"[input]\"")
 	to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"].  Message as follows[sender == "Syndicate" ? ", agent." : ":"] <span class='bold'>[input].</span> Message ends.\"")
 
@@ -419,7 +419,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.fields["name"]
-		new_character.gender = record_found.fields["sex"]
+		new_character.gender = record_found.fields["gender"]
 		new_character.age = record_found.fields["age"]
 		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
@@ -1249,7 +1249,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_PIE, ADMIN_PUNISHMENT_CUSTOM_PIE, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_ROD)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1314,6 +1314,19 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(ADMIN_PUNISHMENT_PIE)
 			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/creamy = new(get_turf(target))
 			creamy.splat(target)
+		if (ADMIN_PUNISHMENT_CUSTOM_PIE)
+			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/A = new()
+			if(!A.reagents)
+				var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num|null
+				if(amount)
+					A.create_reagents(amount)
+			if(A.reagents)
+				var/chosen_id = choose_reagent_id(usr)
+				if(chosen_id)
+					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num|null
+					if(amount)
+						A.reagents.add_reagent(chosen_id, amount)
+						A.splat(target)
 
 	punish_log(target, punishment)
 

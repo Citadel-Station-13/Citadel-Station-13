@@ -12,6 +12,7 @@
  *		Cigarette Box
  *		Cigar Case
  *		Heart Shaped Box w/ Chocolates
+ *		Ring Box
  */
 
 /obj/item/storage/fancy
@@ -29,7 +30,7 @@
 	for(var/i = 1 to STR.max_items)
 		new spawn_type(src)
 
-/obj/item/storage/fancy/update_icon()
+/obj/item/storage/fancy/update_icon_state()
 	if(fancy_open)
 		icon_state = "[icon_type]box[contents.len]"
 	else
@@ -159,30 +160,31 @@
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 	return TRUE
 
-/obj/item/storage/fancy/cigarettes/update_icon()
-	if(fancy_open || !contents.len)
-		cut_overlays()
-		if(!contents.len)
-			icon_state = "[initial(icon_state)]_empty"
+/obj/item/storage/fancy/cigarettes/update_icon_state()
+	if(!contents.len)
+		icon_state = "[initial(icon_state)]_empty"
+	else if(fancy_open)
+		icon_state = initial(icon_state)
+
+/obj/item/storage/fancy/cigarettes/update_overlays()
+	. = ..()
+	if(!fancy_open || !contents.len)
+		return
+	. += "[icon_state]_open"
+	var/cig_position = 1
+	for(var/C in contents)
+		var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+
+		if(istype(C, /obj/item/lighter/greyscale))
+			inserted_overlay.icon_state = "lighter_in"
+		else if(istype(C, /obj/item/lighter))
+			inserted_overlay.icon_state = "zippo_in"
 		else
-			icon_state = initial(icon_state)
-			add_overlay("[icon_state]_open")
-			var/cig_position = 1
-			for(var/C in contents)
-				var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+			inserted_overlay.icon_state = "cigarette"
 
-				if(istype(C, /obj/item/lighter/greyscale))
-					inserted_overlay.icon_state = "lighter_in"
-				else if(istype(C, /obj/item/lighter))
-					inserted_overlay.icon_state = "zippo_in"
-				else
-					inserted_overlay.icon_state = "cigarette"
-
-				inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[cig_position]"
-				add_overlay(inserted_overlay)
-				cig_position++
-	else
-		cut_overlays()
+		inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[cig_position]"
+		. += inserted_overlay
+		cig_position++
 
 /obj/item/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!ismob(M))
@@ -281,10 +283,10 @@
 	STR.max_items = 10
 	STR.can_hold = typecacheof(list(/obj/item/rollingpaper))
 
-/obj/item/storage/fancy/rollingpapers/update_icon()
-	cut_overlays()
+/obj/item/storage/fancy/rollingpapers/update_overlays()
+	. = ..()
 	if(!contents.len)
-		add_overlay("[icon_state]_empty")
+		. += "[icon_state]_empty"
 
 /////////////
 //CIGAR BOX//
@@ -305,20 +307,22 @@
 	STR.max_items = 5
 	STR.can_hold = typecacheof(list(/obj/item/clothing/mask/cigarette/cigar))
 
-/obj/item/storage/fancy/cigarettes/cigars/update_icon()
-	cut_overlays()
+/obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	if(fancy_open)
 		icon_state = "[initial(icon_state)]_open"
-
-		var/cigar_position = 0 //to keep track of the pixel_x offset of each new overlay.
-		for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
-			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]")
-			cigar_overlay.pixel_x = 3 * cigar_position
-			add_overlay(cigar_overlay)
-			cigar_position++
-
 	else
 		icon_state = "[initial(icon_state)]"
+
+/obj/item/storage/fancy/cigarettes/cigars/update_overlays()
+	. = ..()
+	if(!fancy_open)
+		return
+	var/cigar_position = 0 //to keep track of the pixel_x offset of each new overlay.
+	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
+		var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]")
+		cigar_overlay.pixel_x = 3 * cigar_position
+		. += cigar_overlay
+		cigar_position++
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba
 	name = "\improper Cohiba Robusto cigar case"
@@ -352,3 +356,47 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 8
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/tinychocolate))
+
+/obj/item/storage/fancy/nugget_box
+	name = "nugget box"
+	desc = "A cardboard box used for holding chicken nuggies."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "nuggetbox"
+	icon_type = "nugget"
+	spawn_type = /obj/item/reagent_containers/food/snacks/nugget
+
+/obj/item/storage/fancy/nugget_box/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
+
+/*
+ * Ring Box
+ */
+
+/obj/item/storage/fancy/ringbox
+	name = "ring box"
+	desc = "A tiny box covered in soft red felt made for holding rings."
+	icon = 'icons/obj/ring.dmi'
+	icon_state = "gold ringbox"
+	icon_type = "gold ring"
+	w_class = WEIGHT_CLASS_TINY
+	spawn_type = /obj/item/clothing/gloves/ring
+
+/obj/item/storage/fancy/ringbox/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 1
+	STR.can_hold = typecacheof(list(/obj/item/clothing/gloves/ring))
+
+/obj/item/storage/fancy/ringbox/diamond
+	icon_state = "diamond ringbox"
+	icon_type = "diamond ring"
+	spawn_type = /obj/item/clothing/gloves/ring/diamond
+
+/obj/item/storage/fancy/ringbox/silver
+	icon_state = "silver ringbox"
+	icon_type = "silver ring"
+	spawn_type = /obj/item/clothing/gloves/ring/silver
+

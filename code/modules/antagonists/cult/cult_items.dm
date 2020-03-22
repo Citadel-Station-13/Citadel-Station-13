@@ -46,10 +46,11 @@
 /obj/item/melee/cultblade/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 100)
+	AddElement(/datum/element/sword_point)
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
-		user.Knockdown(100)
+		user.DefaultCombatKnockdown(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
@@ -148,7 +149,7 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			user.dropItemToGround(src, TRUE)
-			user.Knockdown(50)
+			user.DefaultCombatKnockdown(50)
 			return
 	force = initial(force)
 	jaunt.Grant(user, src)
@@ -263,9 +264,9 @@
 /obj/item/restraints/legcuffs/bola/cult/pickup(mob/living/user)
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
-		throw_impact(user)
+		ensnare(user)
 
-/obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscultist(hit_atom))
 		return
 	. = ..()
@@ -331,7 +332,7 @@
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"
@@ -371,7 +372,7 @@
 	max = 40
 	prefix = "darkened"
 
-/obj/item/sharpener/cult/update_icon()
+/obj/item/sharpener/cult/update_icon_state()
 	var/old_state = icon_state
 	icon_state = "cult_sharpener[used ? "_used" : ""]"
 	if(old_state != icon_state)
@@ -405,7 +406,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
-			user.Knockdown(100)
+			user.DefaultCombatKnockdown(100)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The armor squeezes at your body!</span>")
@@ -424,7 +425,7 @@
 		return 1
 	return 0
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands && current_charges)
 		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
@@ -457,7 +458,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
-			user.Knockdown(100)
+			user.DefaultCombatKnockdown(100)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The robes squeeze at your body!</span>")
@@ -478,7 +479,7 @@
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
 		user.dropItemToGround(src, TRUE)
 		user.Dizzy(30)
-		user.Knockdown(100)
+		user.DefaultCombatKnockdown(100)
 		user.blind_eyes(30)
 
 /obj/item/reagent_containers/glass/beaker/unholywater
@@ -487,7 +488,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "holyflask"
 	color = "#333333"
-	list_reagents = list("unholywater" = 50)
+	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
 /obj/item/shuttle_curse
 	name = "cursed orb"
@@ -499,7 +500,7 @@
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
-		user.Knockdown(100)
+		user.DefaultCombatKnockdown(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
 		return
 	if(curselimit > 1)
@@ -687,13 +688,13 @@
 		qdel(spear_act)
 	..()
 
-/obj/item/twohanded/cult_spear/update_icon()
+/obj/item/twohanded/cult_spear/update_icon_state()
 	icon_state = "bloodspear[wielded]"
 
-/obj/item/twohanded/cult_spear/throw_impact(atom/target)
-	var/turf/T = get_turf(target)
-	if(isliving(target))
-		var/mob/living/L = target
+/obj/item/twohanded/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/turf/T = get_turf(hit_atom)
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(iscultist(L))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			if(L.put_in_active_hand(src))
@@ -703,9 +704,12 @@
 		else if(!..())
 			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
-					L.Knockdown(100)
+					to_chat(L, "<span class='cultlarge'>\"Kneel for me, scum\"</span>")
+					L.confused += CLAMP(10 - L.confused, 0, 5) //confuses and lightly knockdowns + damages hostile cultists instead of hardstunning like before
+					L.DefaultCombatKnockdown(15)
+					L.adjustBruteLoss(10)
 				else
-					L.Knockdown(50)
+					L.DefaultCombatKnockdown(50)
 			break_spear(T)
 	else
 		..()
@@ -794,7 +798,7 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stat != DEAD)
-				H.reagents.add_reagent("unholywater", 4)
+				H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
 		if(isshade(target) || isconstruct(target))
 			var/mob/living/simple_animal/M = target
 			if(M.health+5 < M.maxHealth)
@@ -840,7 +844,7 @@
 		INVOKE_ASYNC(src, .proc/pewpew, user, params)
 		var/obj/structure/emergency_shield/invoker/N = new(user.loc)
 		if(do_after(user, 90, target = user))
-			user.Knockdown(40)
+			user.DefaultCombatKnockdown(40)
 			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
 		firing = FALSE
 		if(N)
@@ -895,7 +899,7 @@
 					if(ishuman(target))
 						var/mob/living/carbon/human/H = target
 						if(H.stat != DEAD)
-							H.reagents.add_reagent("unholywater", 7)
+							H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
 					if(isshade(target) || isconstruct(target))
 						var/mob/living/simple_animal/M = target
 						if(M.health+15 < M.maxHealth)
@@ -905,7 +909,7 @@
 				else
 					var/mob/living/L = target
 					if(L.density)
-						L.Knockdown(20)
+						L.DefaultCombatKnockdown(20)
 						L.adjustBruteLoss(45)
 						playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
 						L.emote("scream")
@@ -941,7 +945,7 @@
 				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
 				new /obj/effect/temp_visual/cult/sparks(T)
 				playsound(T, 'sound/effects/glassbr3.ogg', 100)
-				owner.Knockdown(25)
+				owner.DefaultCombatKnockdown(25)
 				qdel(src)
 				return FALSE
 			if(P.is_reflectable)
@@ -984,11 +988,11 @@
 		return TRUE
 	return FALSE
 
-/obj/item/shield/mirror/throw_impact(atom/target, throwingdatum)
-	var/turf/T = get_turf(target)
+/obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/turf/T = get_turf(hit_atom)
 	var/datum/thrownthing/D = throwingdatum
-	if(isliving(target))
-		var/mob/living/L = target
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(iscultist(L))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			if(L.put_in_active_hand(src))
@@ -998,9 +1002,9 @@
 		else if(!..())
 			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
-					L.Knockdown(60)
+					L.DefaultCombatKnockdown(60)
 				else
-					L.Knockdown(30)
+					L.DefaultCombatKnockdown(30)
 				if(D.thrower)
 					for(var/mob/living/Next in orange(2, T))
 						if(!Next.density || iscultist(Next))

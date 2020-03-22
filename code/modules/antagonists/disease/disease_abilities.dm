@@ -5,49 +5,49 @@ is currently following.
 */
 
 GLOBAL_LIST_INIT(disease_ability_singletons, list(
-	new /datum/disease_ability/action/cough,
-	new /datum/disease_ability/action/sneeze,
-	new /datum/disease_ability/action/infect,
-	new /datum/disease_ability/symptom/mild/cough,
-	new /datum/disease_ability/symptom/mild/sneeze,
-	new /datum/disease_ability/symptom/medium/shedding,
-	new /datum/disease_ability/symptom/medium/beard,
-	new /datum/disease_ability/symptom/medium/hallucigen,
-	new /datum/disease_ability/symptom/medium/choking,
-	new /datum/disease_ability/symptom/medium/confusion,
-	new /datum/disease_ability/symptom/medium/vomit,
-	new /datum/disease_ability/symptom/medium/voice_change,
-	new /datum/disease_ability/symptom/medium/visionloss,
-	new /datum/disease_ability/symptom/medium/deafness,
-	new /datum/disease_ability/symptom/powerful/narcolepsy,
-	new /datum/disease_ability/symptom/medium/fever,
-	new /datum/disease_ability/symptom/medium/shivering,
-	new /datum/disease_ability/symptom/medium/headache,
-	new /datum/disease_ability/symptom/medium/nano_boost,
-	new /datum/disease_ability/symptom/medium/nano_destroy,
-	new /datum/disease_ability/symptom/medium/viraladaptation,
-	new /datum/disease_ability/symptom/medium/viralevolution,
-	new /datum/disease_ability/symptom/medium/vitiligo,
-	new /datum/disease_ability/symptom/medium/revitiligo,
-	new /datum/disease_ability/symptom/medium/itching,
-	new /datum/disease_ability/symptom/medium/heal/weight_loss,
-	new /datum/disease_ability/symptom/medium/heal/sensory_restoration,
-	new /datum/disease_ability/symptom/medium/heal/mind_restoration,
-	new /datum/disease_ability/symptom/powerful/fire,
-	new /datum/disease_ability/symptom/powerful/flesh_eating,
-//	new /datum/disease_ability/symptom/powerful/genetic_mutation,
-	new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
-	new /datum/disease_ability/symptom/powerful/heal/starlight,
-	new /datum/disease_ability/symptom/powerful/heal/oxygen,
-	new /datum/disease_ability/symptom/powerful/heal/chem,
-	new /datum/disease_ability/symptom/powerful/heal/metabolism,
-	new /datum/disease_ability/symptom/powerful/heal/dark,
-	new /datum/disease_ability/symptom/powerful/heal/water,
-	new /datum/disease_ability/symptom/powerful/heal/plasma,
-	new /datum/disease_ability/symptom/powerful/heal/radiation,
-	new /datum/disease_ability/symptom/powerful/heal/coma,
-	new /datum/disease_ability/symptom/powerful/youth
-	))
+new /datum/disease_ability/action/cough,
+new /datum/disease_ability/action/sneeze,
+new /datum/disease_ability/action/infect,
+new /datum/disease_ability/symptom/mild/cough,
+new /datum/disease_ability/symptom/mild/sneeze,
+new /datum/disease_ability/symptom/medium/shedding,
+new /datum/disease_ability/symptom/medium/beard,
+new /datum/disease_ability/symptom/medium/hallucigen,
+new /datum/disease_ability/symptom/medium/choking,
+new /datum/disease_ability/symptom/medium/confusion,
+new /datum/disease_ability/symptom/medium/vomit,
+new /datum/disease_ability/symptom/medium/voice_change,
+new /datum/disease_ability/symptom/medium/visionloss,
+new /datum/disease_ability/symptom/medium/deafness,
+new /datum/disease_ability/symptom/powerful/narcolepsy,
+new /datum/disease_ability/symptom/medium/fever,
+new /datum/disease_ability/symptom/medium/shivering,
+new /datum/disease_ability/symptom/medium/headache,
+new /datum/disease_ability/symptom/medium/nano_boost,
+new /datum/disease_ability/symptom/medium/nano_destroy,
+new /datum/disease_ability/symptom/medium/viraladaptation,
+new /datum/disease_ability/symptom/medium/viralevolution,
+new /datum/disease_ability/symptom/medium/disfiguration,
+new /datum/disease_ability/symptom/medium/polyvitiligo,
+new /datum/disease_ability/symptom/medium/itching,
+new /datum/disease_ability/symptom/medium/heal/weight_loss,
+new /datum/disease_ability/symptom/medium/heal/sensory_restoration,
+new /datum/disease_ability/symptom/medium/heal/mind_restoration,
+new /datum/disease_ability/symptom/powerful/fire,
+new /datum/disease_ability/symptom/powerful/flesh_eating,
+new /datum/disease_ability/symptom/powerful/genetic_mutation,
+new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
+new /datum/disease_ability/symptom/powerful/heal/starlight,
+new /datum/disease_ability/symptom/powerful/heal/oxygen,
+new /datum/disease_ability/symptom/powerful/heal/chem,
+new /datum/disease_ability/symptom/powerful/heal/metabolism,
+new /datum/disease_ability/symptom/powerful/heal/dark,
+new /datum/disease_ability/symptom/powerful/heal/water,
+new /datum/disease_ability/symptom/powerful/heal/plasma,
+new /datum/disease_ability/symptom/powerful/heal/radiation,
+new /datum/disease_ability/symptom/powerful/heal/coma,
+new /datum/disease_ability/symptom/powerful/youth
+))
 
 /datum/disease_ability
 	var/name
@@ -106,10 +106,8 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 			for(var/T in symptoms)
 				var/datum/symptom/S = new T()
 				SD.symptoms += S
-				S.OnAdd(SD)
 				if(SD.processing)
-					if(S.Start(SD))
-						S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
+					S.Start(SD)
 			SD.Refresh()
 	for(var/T in actions)
 		var/datum/action/A = new T()
@@ -136,7 +134,6 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 				var/datum/symptom/S = locate(T) in SD.symptoms
 				if(S)
 					SD.symptoms -= S
-					S.OnRemove(SD)
 					if(SD.processing)
 						S.End(SD)
 					qdel(S)
@@ -296,7 +293,6 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 	cost = 8
 	category = "Symptom (Strong+)"
 
-
 /******MILD******/
 
 /datum/disease_ability/symptom/mild/cough
@@ -377,11 +373,11 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 /datum/disease_ability/symptom/medium/viralevolution
 	symptoms = list(/datum/symptom/viralevolution)
 
-/datum/disease_ability/symptom/medium/vitiligo
-	symptoms = list(/datum/symptom/vitiligo)
+/datum/disease_ability/symptom/medium/polyvitiligo
+	symptoms = list(/datum/symptom/polyvitiligo)
 
-/datum/disease_ability/symptom/medium/revitiligo
-	symptoms = list(/datum/symptom/revitiligo)
+/datum/disease_ability/symptom/medium/disfiguration
+	symptoms = list(/datum/symptom/disfiguration)
 
 /datum/disease_ability/symptom/medium/itching
 	symptoms = list(/datum/symptom/itching)
@@ -409,11 +405,9 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 /datum/disease_ability/symptom/powerful/flesh_eating
 	symptoms = list(/datum/symptom/flesh_eating)
 
-/*
 /datum/disease_ability/symptom/powerful/genetic_mutation
 	symptoms = list(/datum/symptom/genetic_mutation)
 	cost = 8
-*/
 
 /datum/disease_ability/symptom/powerful/inorganic_adaptation
 	symptoms = list(/datum/symptom/inorganic_adaptation)

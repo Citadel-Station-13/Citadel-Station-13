@@ -50,20 +50,16 @@
 	WRITE_FILE(S["feature_cock_color"], features["cock_color"])
 	WRITE_FILE(S["feature_cock_length"], features["cock_length"])
 	WRITE_FILE(S["feature_cock_girth"], features["cock_girth"])
-	WRITE_FILE(S["feature_has_sheath"], features["sheath_color"])
 	//balls features
 	WRITE_FILE(S["feature_has_balls"], features["has_balls"])
 	WRITE_FILE(S["feature_balls_color"], features["balls_color"])
 	WRITE_FILE(S["feature_balls_size"], features["balls_size"])
 	WRITE_FILE(S["feature_balls_shape"], features["balls_shape"])
-	WRITE_FILE(S["feature_balls_sack_size"], features["balls_sack_size"])
-	WRITE_FILE(S["feature_balls_fluid"], features["balls_fluid"])
 	//breasts features
 	WRITE_FILE(S["feature_has_breasts"], features["has_breasts"])
 	WRITE_FILE(S["feature_breasts_size"], features["breasts_size"])
 	WRITE_FILE(S["feature_breasts_shape"], features["breasts_shape"])
 	WRITE_FILE(S["feature_breasts_color"], features["breasts_color"])
-	WRITE_FILE(S["feature_breasts_fluid"], features["breasts_fluid"])
 	WRITE_FILE(S["feature_breasts_producing"], features["breasts_producing"])
 	//vagina features
 	WRITE_FILE(S["feature_has_vag"], features["has_vag"])

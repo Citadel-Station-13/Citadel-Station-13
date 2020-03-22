@@ -18,6 +18,9 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight/lantern,
 /obj/item/card/id/mining,
+/obj/item/gps/mining{
+	tracking = 0
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "d" = (
@@ -31,6 +34,9 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight/lantern,
 /obj/item/card/id/mining,
+/obj/item/gps/mining{
+	tracking = 0
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "e" = (
@@ -150,6 +156,9 @@
 "x" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
+/obj/item/gps/mining{
+	tracking = 0
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "z" = (

@@ -67,14 +67,16 @@
 		bottle = null
 		update_icon()
 
-/obj/machinery/chem_master/update_icon()
-	cut_overlays()
-	if (stat & BROKEN)
-		add_overlay("waitlight")
+/obj/machinery/chem_master/update_icon_state()
 	if(beaker)
 		icon_state = "mixer1"
 	else
 		icon_state = "mixer0"
+
+/obj/machinery/chem_master/update_overlays()
+	. = ..()
+	if (stat & BROKEN)
+		. += "waitlight"
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
@@ -129,7 +131,7 @@
 	if(beaker)
 		var/obj/item/reagent_containers/B = beaker
 		B.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker
@@ -139,7 +141,7 @@
 	if(bottle)
 		var/obj/item/storage/pill_bottle/B = bottle
 		B.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(B)
 		else
 			adjust_item_drop_location(B)
@@ -148,8 +150,8 @@
 
 /obj/machinery/chem_master/on_deconstruction()
 	var/atom/A = drop_location()
-	beaker.forceMove(A)
-	bottle.forceMove(A)
+	beaker?.forceMove(A)
+	bottle?.forceMove(A)
 	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -186,13 +188,13 @@
 	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
 		data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
+			bufferContents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
 
 	//Calculated at init time as it never changes
@@ -214,34 +216,34 @@
 
 		if("transferToBuffer")
 			if(beaker)
-				var/id = params["id"]
+				var/reagent = GLOB.name2reagent[params["id"]]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
 					end_fermi_reaction()
-					beaker.reagents.trans_id_to(src, id, amount)
+					beaker.reagents.trans_id_to(src, reagent, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
 						end_fermi_reaction()
-						beaker.reagents.trans_id_to(src, id, useramount)
+						beaker.reagents.trans_id_to(src, reagent, useramount)
 						. = TRUE
 
 		if("transferFromBuffer")
-			var/id = params["id"]
+			var/reagent = GLOB.name2reagent[params["id"]]
 			var/amount = text2num(params["amount"])
 			if (amount > 0)
 				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
+					reagents.trans_id_to(beaker, reagent, amount)
 					. = TRUE
 				else
-					reagents.remove_reagent(id, amount)
+					reagents.remove_reagent(reagent, amount)
 					. = TRUE
 			else if (amount == -1) // -1 means custom amount
 				useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 				if (useramount > 0)
 					end_fermi_reaction()
-					reagents.trans_id_to(beaker, id, useramount)
+					reagents.trans_id_to(beaker, reagent, useramount)
 					. = TRUE
 
 		if("toggleMode")
@@ -260,8 +262,8 @@
 					if(!amount)
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
-				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				var/name = html_decode(stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
 				var/target_loc = drop_location()
@@ -287,8 +289,8 @@
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
 			else
-				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				var/name = html_decode(stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 
@@ -313,8 +315,8 @@
 				if(!amount)
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
-			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+			var/name = html_decode(stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 				return
 			var/obj/item/reagent_containers/pill/P
 
@@ -331,8 +333,8 @@
 				return
 
 			if(condi)
-				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				var/name = html_decode(stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
@@ -344,8 +346,8 @@
 				if(text2num(many))
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = ((reagents.total_volume*1000) % 30000) / 1000 //% operator doesn't support decimals.
-				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				var/name = html_decode(stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 					return
 
 				var/obj/item/reagent_containers/glass/bottle/P
@@ -372,8 +374,8 @@
 			if(text2num(many))
 				amount_full = round(reagents.total_volume / 60)
 				vol_part = reagents.total_volume % 60
-			var/name = stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+			var/name = html_decode(stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 				return
 
 			var/obj/item/reagent_containers/glass/bottle/vial/small/P
@@ -407,8 +409,8 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 20)
 
-			var/name = stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+			var/name = html_decode(stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
 				return
 
 			var/obj/item/reagent_containers/syringe/dart/D
@@ -423,7 +425,7 @@
 
 		//END CITADEL ADDITIONS
 		if("analyzeBeak")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)
@@ -434,11 +436,11 @@
 					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R)
 				if(Rcr && Rcr.FermiChem)
 					fermianalyze = TRUE
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					var/datum/reagent/targetReagent = beaker.reagents.has_reagent("[R.id]")
+					var/datum/reagent/targetReagent = beaker.reagents.has_reagent(R)
 
 					if(!targetReagent)
 						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
@@ -450,7 +452,7 @@
 				return
 
 		if("analyzeBuff")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)
@@ -463,9 +465,9 @@
 				var/T = initial(R.metabolization_rate) * (60 / P)
 				if(istype(R, /datum/reagent/fermi))
 					fermianalyze = TRUE
-					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.id)
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R)
 					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					var/datum/reagent/targetReagent = reagents.has_reagent("[R.id]")
+					var/datum/reagent/targetReagent = reagents.has_reagent(R)
 
 					if(!targetReagent)
 						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
@@ -483,7 +485,7 @@
 
 
 /obj/machinery/chem_master/proc/end_fermi_reaction()//Ends any reactions upon moving.
-	if(beaker.reagents.fermiIsReacting)
+	if(beaker && beaker.reagents.fermiIsReacting)
 		beaker.reagents.fermiEnd()
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)

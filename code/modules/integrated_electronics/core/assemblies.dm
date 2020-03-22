@@ -9,7 +9,7 @@
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
 	item_flags = NOBLUDGEON
-	materials = list()		// To be filled later
+	custom_materials = null		// To be filled later
 	datum_flags = DF_USE_TAG
 	var/list/assembly_components = list()
 	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.
@@ -95,9 +95,9 @@
 			D.open()
 
 /obj/item/electronic_assembly/Initialize()
+	LAZYSET(custom_materials, /datum/material/iron, round((max_complexity + max_components) * 0.25) * SScircuit.cost_multiplier)
 	.=..()
 	START_PROCESSING(SScircuit, src)
-	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
 	//sets up diagnostic hud view
 	prepare_huds()
@@ -305,17 +305,17 @@
 /obj/item/electronic_assembly/proc/can_move()
 	return FALSE
 
-/obj/item/electronic_assembly/update_icon()
+/obj/item/electronic_assembly/update_icon_state()
 	if(opened)
 		icon_state = initial(icon_state) + "-open"
 	else
 		icon_state = initial(icon_state)
-	cut_overlays()
+
+/obj/item/electronic_assembly/update_overlays()
+	. = ..()
 	if(detail_color == COLOR_ASSEMBLY_BLACK) //Black colored overlay looks almost but not exactly like the base sprite, so just cut the overlay and avoid it looking kinda off.
 		return
-	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color")
-	detail_overlay.color = detail_color
-	add_overlay(detail_overlay)
+	. += mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color", color = detail_color)
 
 /obj/item/electronic_assembly/proc/return_total_complexity()
 	. = 0

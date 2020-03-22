@@ -83,7 +83,7 @@
 			return
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
 		return
 	src.log_talk(message, LOG_SAY, tag="clockwork eminence")

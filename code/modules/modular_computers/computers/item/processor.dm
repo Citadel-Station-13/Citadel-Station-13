@@ -16,15 +16,15 @@
 		machinery_computer.cpu = null
 	machinery_computer = null
 
-/obj/item/modular_computer/processor/New(comp)
+/obj/item/modular_computer/processor/Initialize(mapload)
 	. = ..()
-	if(!comp || !istype(comp, /obj/machinery/modular_computer))
+	if(!loc || !istype(loc, /obj/machinery/modular_computer))
 		CRASH("Inapropriate type passed to obj/item/modular_computer/processor/New()! Aborting.")
 		return
 	// Obtain reference to machinery computer
 	all_components = list()
 	idle_threads = list()
-	machinery_computer = comp
+	machinery_computer = loc
 	machinery_computer.cpu = src
 	hardware_flag = machinery_computer.hardware_flag
 	max_hardware_size = machinery_computer.max_hardware_size
@@ -34,13 +34,10 @@
 	integrity_failure = machinery_computer.integrity_failure
 	base_active_power_usage = machinery_computer.base_active_power_usage
 	base_idle_power_usage = machinery_computer.base_idle_power_usage
+	machinery_computer.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /atom/proc/update_icon) //when we update_icon, also update the computer
 
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)
-
-/obj/item/modular_computer/processor/update_icon()
-	if(machinery_computer)
-		return machinery_computer.update_icon()
 
 // This thing is not meant to be used on it's own, get topic data from our machinery owner.
 //obj/item/modular_computer/processor/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)

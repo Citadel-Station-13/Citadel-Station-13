@@ -117,13 +117,13 @@ Difficulty: Very Hard
 
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.mind)
-			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
+			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp) & istype(H.mind.martial_art, /datum/martial_art/the_rising_bass))
 				. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
@@ -244,8 +244,9 @@ Difficulty: Very Hard
 	var/list/stored_items = list()
 	var/list/blacklist = list()
 
-/obj/machinery/smartfridge/black_box/update_icon()
-	return
+/obj/machinery/smartfridge/black_box/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
@@ -395,7 +396,7 @@ Difficulty: Very Hard
 	..()
 
 /obj/machinery/anomalous_crystal/bullet_act(obj/item/projectile/P, def_zone)
-	..()
+	. = ..()
 	if(istype(P, /obj/item/projectile/magic))
 		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
 		return
@@ -432,6 +433,7 @@ Difficulty: Very Hard
 			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)
+		C.after_spawn(H, H, TRUE)
 		qdel(C)
 		affected_targets.Add(H)
 
@@ -479,34 +481,33 @@ Difficulty: Very Hard
 			NewTerrainTables = /obj/structure/table/abductor
 
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
-	if(..())
-		var/area/A = get_area(src)
-		if(!A.outdoors && !(A in affected_targets))
-			for(var/atom/Stuff in A)
-				if(isturf(Stuff))
-					var/turf/T = Stuff
-					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
-						if(O.air)
-							var/datum/gas_mixture/G = O.air
-							G.copy_from_turf(O)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
-							var/atom/Picked = pick(NewFlora)
-							new Picked(O)
-						continue
-					if(iswallturf(T) && NewTerrainWalls)
-						T.ChangeTurf(NewTerrainWalls)
-						continue
-				if(istype(Stuff, /obj/structure/chair) && NewTerrainChairs)
-					var/obj/structure/chair/Original = Stuff
-					var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
-					C.setDir(Original.dir)
-					qdel(Stuff)
-					continue
-				if(istype(Stuff, /obj/structure/table) && NewTerrainTables)
-					new NewTerrainTables(Stuff.loc)
-					continue
-			affected_targets += A
+	. = ..()
+	if(!.)
+		return
+	for(var/i in get_sub_areas(src))
+		var/area/A = i
+		if(A.outdoors || (A in affected_targets))
+			continue
+		affected_targets += A
+		for(var/stuff in A)
+			var/atom/target = stuff
+			if(isturf(target))
+				var/turf/T = target
+				if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
+					var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
+					if(NewFlora.len && prob(florachance) && !is_blocked_turf(O, TRUE))
+						var/atom/Picked = pick(NewFlora)
+						new Picked(O)
+				else if(iswallturf(T) && NewTerrainWalls)
+					T.ChangeTurf(NewTerrainWalls)
+			else if(NewTerrainChairs && istype(target, /obj/structure/chair))
+				var/obj/structure/chair/Original = target
+				var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
+				C.setDir(Original.dir)
+				qdel(target)
+			else if(NewTerrainTables && istype(target, /obj/structure/table))
+				new NewTerrainTables(target.loc)
+				qdel(target)
 
 /obj/machinery/anomalous_crystal/emitter //Generates a projectile when interacted with
 	observer_desc = "This crystal generates a projectile when activated."
@@ -651,7 +652,7 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
+/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
 	. = ..()
 	if(.)
 		death()

@@ -20,10 +20,10 @@
 /obj/item/grenade/flashbang/proc/flashbang_mobs(turf/source, range)
 	var/list/banged = get_hearers_in_view(range, source)
 	var/list/flashed = viewers(range, source)
-	for(var/i in banged)
-		bang(i, source)
-	for(var/i in flashed)
-		flash(i, source)
+	for(var/mob/living/l in banged)
+		bang(l, source)
+	for(var/mob/living/l in flashed)
+		flash(l, source)
 
 /obj/item/grenade/flashbang/proc/bang(mob/living/M, turf/source)
 	if(M.stat == DEAD)	//They're dead!
@@ -31,7 +31,7 @@
 	M.show_message("<span class='warning'>BANG</span>", MSG_AUDIBLE)
 	var/distance = get_dist(get_turf(M), source)
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
-		M.Knockdown(200)
+		M.DefaultCombatKnockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
 	else
 		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))
@@ -41,4 +41,4 @@
 		return
 	var/distance = get_dist(get_turf(M), source)
 	if(M.flash_act(affect_silicon = 1))
-		M.Knockdown(max(200/max(1,distance), 60))
+		M.DefaultCombatKnockdown(max(200/max(1,distance), 60))

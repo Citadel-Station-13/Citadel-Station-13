@@ -1,0 +1,7 @@
+author: "NecromancerAnne and zawo and zeroisthebiggay and carlarctg"
+delete-after: True
+changes: 
+  - rscadd: "The Infiltrator Bundle, an armor kit for 3TC. Murder people in style!"
+  - rscadd: "Some pajamas for nukies to get plenty of bed rest."
+  - rscadd: "halved firefight carry delay with latex or nitrile gloves"
+  - tweak: "headset upgrade is cheaper"

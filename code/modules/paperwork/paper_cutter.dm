@@ -34,13 +34,13 @@
 		return (BRUTELOSS)
 
 
-/obj/item/papercutter/update_icon()
-	..()
-	cut_overlays()
+/obj/item/papercutter/update_icon_state()
 	icon_state = (storedcutter ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
-	if(storedpaper)
-		add_overlay("paper")
 
+/obj/item/papercutter/update_overlays()
+	. = ..()
+	if(storedpaper)
+		. += "paper"
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) && !storedpaper)

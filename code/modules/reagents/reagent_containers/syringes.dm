@@ -12,7 +12,8 @@
 	var/mode = SYRINGE_DRAW
 	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
-	materials = list(MAT_METAL=10, MAT_GLASS=20)
+	var/show_filling = TRUE
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
 
 /obj/item/reagent_containers/syringe/Initialize()
@@ -20,6 +21,10 @@
 	if(list_reagents) //syringe starts in inject mode if its already got something inside
 		mode = SYRINGE_INJECT
 		update_icon()
+
+/obj/item/reagent_containers/syringe/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/reagent_containers/syringe/on_reagent_change(changetype)
 	update_icon()
@@ -152,66 +157,69 @@
 				mode = SYRINGE_DRAW
 				update_icon()
 
-
-/obj/item/reagent_containers/syringe/update_icon()
-	cut_overlays()
-	var/rounded_vol
-	if(reagents && reagents.total_volume)
-		rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
-		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
-		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling_overlay)
-	else
-		rounded_vol = 0
+/obj/item/reagent_containers/syringe/update_icon_state()
+	var/rounded_vol = get_rounded_vol()
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
+
+/obj/item/reagent_containers/syringe/update_overlays()
+	. = ..()
+	if(show_filling)
+		var/rounded_vol = get_rounded_vol()
+		if(reagents && reagents.total_volume)
+			. += mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]", color = mix_color_from_reagents(reagents.reagent_list))
 	if(ismob(loc))
-		var/mob/M = loc
 		var/injoverlay
 		switch(mode)
 			if (SYRINGE_DRAW)
 				injoverlay = "draw"
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
-		add_overlay(injoverlay)
-		M.update_inv_hands()
+		. += injoverlay
+
+///Used by update_icon() and update_overlays()
+/obj/item/reagent_containers/syringe/proc/get_rounded_vol()
+	if(reagents && reagents.total_volume)
+		return CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
+	else
+		return 0
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
 	desc = "Contains epinephrine - used to stabilize patients."
-	list_reagents = list("epinephrine" = 15)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 15)
 
 /obj/item/reagent_containers/syringe/charcoal
 	name = "syringe (charcoal)"
 	desc = "Contains charcoal."
-	list_reagents = list("charcoal" = 15)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 15)
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
-	list_reagents = list("spaceacillin" = 15)
+	list_reagents = list(/datum/reagent/medicine/spaceacillin = 15)
 
 /obj/item/reagent_containers/syringe/bioterror
 	name = "bioterror syringe"
 	desc = "Contains several paralyzing reagents."
-	list_reagents = list("neurotoxin" = 5, "mutetoxin" = 5, "sodium_thiopental" = 5)
+	list_reagents = list(/datum/reagent/consumable/ethanol/neurotoxin = 5, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/toxin/sodium_thiopental = 5)
 
 /obj/item/reagent_containers/syringe/stimulants
 	name = "Stimpack"
 	desc = "Contains stimulants."
 	amount_per_transfer_from_this = 50
 	volume = 50
-	list_reagents = list("stimulants" = 50)
+	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
 
 /obj/item/reagent_containers/syringe/calomel
 	name = "syringe (calomel)"
 	desc = "Contains calomel."
-	list_reagents = list("calomel" = 15)
+	list_reagents = list(/datum/reagent/medicine/calomel = 15)
 
 /obj/item/reagent_containers/syringe/plasma
 	name = "syringe (plasma)"
 	desc = "Contains plasma."
-	list_reagents = list("plasma" = 15)
+	list_reagents = list(/datum/reagent/toxin/plasma = 15)
 
 /obj/item/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
@@ -220,24 +228,24 @@
 	volume = 50
 
 /obj/item/reagent_containers/syringe/lethal/choral
-	list_reagents = list("chloralhydrate" = 50)
+	list_reagents = list(/datum/reagent/toxin/chloralhydrate = 50)
 
 /obj/item/reagent_containers/syringe/lethal/execution
-	list_reagents = list("amatoxin" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10) //Citadel edit, changing out plasma from lethals
+	list_reagents = list(/datum/reagent/toxin/amatoxin = 15, /datum/reagent/toxin/formaldehyde = 15, /datum/reagent/toxin/cyanide = 10, /datum/reagent/toxin/acid/fluacid = 10) //Citadel edit, changing out plasma from lethals
 
 /obj/item/reagent_containers/syringe/mulligan
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
 	amount_per_transfer_from_this = 1
 	volume = 1
-	list_reagents = list("mulligan" = 1)
+	list_reagents = list(/datum/reagent/mulligan = 1)
 
 /obj/item/reagent_containers/syringe/gluttony
 	name = "Gluttony's Blessing"
 	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
 	volume = 1
-	list_reagents = list("gluttonytoxin" = 1)
+	list_reagents = list(/datum/reagent/gluttonytoxin = 1)
 
 /obj/item/reagent_containers/syringe/bluespace
 	name = "bluespace syringe"
@@ -267,6 +275,7 @@
 	amount_per_transfer_from_this = 20
 	icon_state = "empty"
 	item_state = "syringe_empty"
+	show_filling = FALSE
 	var/emptrig = FALSE
 
 /obj/item/reagent_containers/syringe/dart/afterattack(atom/target, mob/user , proximity)
@@ -317,28 +326,13 @@
 /obj/item/reagent_containers/syringe/dart/attack_self(mob/user)
 	return
 
-/obj/item/reagent_containers/syringe/dart/update_icon()
-	cut_overlays()
-	var/rounded_vol
-
-	rounded_vol = "empty"
-	if(reagents && reagents.total_volume)
-		if(volume/round(reagents.total_volume, 1) == 1)
-			rounded_vol="full"
-			mode = SYRINGE_INJECT
-
-	icon_state = "[rounded_vol]"
-	item_state = "syringe_[rounded_vol]"
-	if(ismob(loc))
-		var/mob/M = loc
-		var/injoverlay
-		switch(mode)
-			if (SYRINGE_DRAW)
-				injoverlay = "draw"
-			if (SYRINGE_INJECT)
-				injoverlay = "ready"
-		add_overlay(injoverlay)
-		M.update_inv_hands()
+/obj/item/reagent_containers/syringe/dart/update_icon_state()
+	var/empty_full = "empty"
+	if(round(reagents.total_volume, 1) == reagents.maximum_volume)
+		empty_full = "full"
+		mode = SYRINGE_INJECT
+	icon_state = "[empty_full]"
+	item_state = "syringe_[empty_full]"
 
 /obj/item/reagent_containers/syringe/dart/emp_act(severity)
 	emptrig = TRUE

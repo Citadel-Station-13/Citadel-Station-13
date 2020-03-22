@@ -11,6 +11,7 @@ Contains:
  - ERT hardsuit: Command, Sec, Engi, Med
  - ERT High Alarm - Command, Sec, Engi, Med
  - EVA spacesuit
+ - Radiation Spacesuit
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
 */
@@ -53,6 +54,7 @@ Contains:
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 20, "fire" = 100, "acid" = 100)
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/head/helmet/space/beret
 	name = "officer's beret"
@@ -65,7 +67,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
@@ -81,6 +83,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
@@ -95,6 +98,7 @@ Contains:
 	item_state = "void"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "Engineering Void Helmet"
@@ -116,7 +120,7 @@ Contains:
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 	flags_cover = HEADCOVERSEYES
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 	dog_fashion = /datum/dog_fashion/head/santa
 
@@ -127,6 +131,7 @@ Contains:
 	item_state = "santa"
 	slowdown = 0
 	allowed = list(/obj/item) //for stuffing exta special presents
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 
 	//Space pirate outfit
@@ -140,14 +145,14 @@ Contains:
 	strip_delay = 40
 	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
 	name = "royal bandana"
 	desc = "A space-proof bandanna crafted with reflective kevlar."
 	icon_state = "bandana"
 	item_state = "bandana"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/pirate
 	name = "royal waistcoat "
@@ -161,6 +166,7 @@ Contains:
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
 	strip_delay = 40
 	equip_delay_other = 20
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 	//Emergency Response Team suits
 /obj/item/clothing/head/helmet/space/hardsuit/ert
@@ -189,7 +195,6 @@ Contains:
 	slowdown = 0
 	strip_delay = 130
 	resistance_flags = ACID_PROOF
-	tauric = TRUE	//Citadel Add for tauric hardsuits
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
@@ -251,6 +256,7 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert
 	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
@@ -298,7 +304,6 @@ Contains:
 	item_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/head/helmet/space/eva
 	name = "EVA helmet"
@@ -307,6 +312,28 @@ Contains:
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
+
+//Radiation
+/obj/item/clothing/head/helmet/space/rad
+	name = "radiation voidsuit helmet"
+	desc = "A special helmet that protects against radiation and space. Not much else unfortunately."
+	icon_state = "cespace_helmet"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	item_color = "engineering"
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	actions_types = list()
+
+/obj/item/clothing/suit/space/rad
+	name = "radiation voidsuit"
+	desc = "A special suit that protects against radiation and space. Not much else unfortunately."
+	icon_state = "hardsuit-rad"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
@@ -317,7 +344,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"
@@ -330,6 +357,7 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	slowdown = 0
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 //Carpsuit, bestsuit, lovesuit
 /obj/item/clothing/head/helmet/space/hardsuit/carp
@@ -340,7 +368,7 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
 	. = ..()
@@ -356,6 +384,7 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75) //As whimpy whimpy whoo
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	name = "paranormal response unit helmet"
@@ -366,7 +395,7 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()
@@ -380,7 +409,6 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()
@@ -427,10 +455,9 @@ Contains:
 	slowdown = 2
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 0, "acid" = 0)
 	strip_delay = 65
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!torn && prob(50))
+	if(!torn && prob(50) && damage >= 5)
 		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
 		clothing_flags &= ~STOPSPRESSUREDAMAGE
 		name = "torn [src]."
@@ -438,3 +465,16 @@ Contains:
 		torn = TRUE
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+
+/obj/item/clothing/suit/space/eva/paramedic
+	name = "paramedic EVA suit"
+	icon_state = "paramedic-eva"
+	item_state = "paramedic-eva"
+	desc = "A deep blue space suit decorated with red and white crosses to indicate that the wearer is trained emergency medical personnel."
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/roller)
+
+/obj/item/clothing/head/helmet/space/eva/paramedic
+	name = "paramedic EVA helmet"
+	desc = "A deep blue space helmet with a large red cross on the faceplate to designate the wearer as trained emergency medical personnel."
+	icon_state = "paramedic-eva-helmet"
+	item_state = "paramedic-eva-helmet"

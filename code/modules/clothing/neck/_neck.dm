@@ -6,7 +6,7 @@
 	strip_delay = 40
 	equip_delay_other = 40
 
-/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/neck/worn_overlays(isinhands = FALSE, icon_flag, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
@@ -189,10 +189,10 @@
 	var/tagname = null
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
-	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
-/obj/item/clothing/neck/petcollar/worn_overlays(isinhands, icon_file)
+/obj/item/clothing/neck/petcollar/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
@@ -291,3 +291,36 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bling"
 	item_color = "bling"
+
+//////////////////////////////////
+//VERY SUPER BADASS NECKERCHIEFS//
+//////////////////////////////////
+
+obj/item/clothing/neck/neckerchief
+	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
+	w_class = WEIGHT_CLASS_TINY
+	var/sourceBandanaType
+
+/obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
+	. = ..()
+	if(!isinhands)
+		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/mask.dmi', icon_state)
+		realOverlay.pixel_y = -3
+		. += realOverlay
+
+/obj/item/clothing/neck/neckerchief/AltClick(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.get_item_by_slot(SLOT_NECK) == src)
+			to_chat(user, "<span class='warning'>You can't untie [src] while wearing it!</span>")
+			return
+		if(user.is_holding(src))
+			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
+			var/currentHandIndex = user.get_held_index_of_item(src)
+			var/oldName = src.name
+			qdel(src)
+			user.put_in_hand(newBand, currentHandIndex)
+			user.visible_message("You untie [oldName] back into a [newBand.name]", "[user] unties [oldName] back into a [newBand.name]")
+		else
+			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!")

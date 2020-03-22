@@ -14,12 +14,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
-	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
+	var/hijack_speed = 0
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
+	var/list/blacklisted_quirks = list(/datum/quirk/nonviolent,/datum/quirk/mute) // Quirks that will be removed upon gaining this antag. Pacifist and mute are default.
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -70,6 +72,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			greet()
 		apply_innate_effects()
 		give_antag_moodies()
+		remove_blacklisted_quirks()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 
@@ -81,9 +84,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
+	var/list/mob/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
@@ -117,6 +120,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	SEND_SIGNAL(owner.current, COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
 
+/datum/antagonist/proc/remove_blacklisted_quirks()
+	var/mob/living/L = owner.current
+	if(istype(L))
+		var/list/my_quirks = L.client?.prefs.all_quirks.Copy()
+		SSquirks.filter_quirks(my_quirks,blacklisted_quirks)
+		for(var/q in L.roundstart_quirks)
+			var/datum/quirk/Q = q
+			if(!(SSquirks.quirk_name_by_path(Q.type) in my_quirks))
+				if(initial(Q.antag_removal_text))
+					to_chat(L, "<span class='boldannounce'>[initial(Q.antag_removal_text)]</span>")
+				L.remove_quirk(Q.type)
+
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
 	return
@@ -134,7 +149,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(objectives.len)
 		report += printobjectives(objectives)
 		for(var/datum/objective/objective in objectives)
-			if(!objective.check_completion())
+			if(objective.completable && !objective.check_completion())
 				objectives_complete = FALSE
 				break
 
@@ -210,10 +225,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 			return
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = copytext(trim(input(user,"Write new memory", "Memory", antag_memory) as null|message),1,MAX_MESSAGE_LEN)
+	var/new_memo = stripped_multiline_input(user, "Write new memory", "Memory", antag_memory, MAX_MESSAGE_LEN)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
+
+/// Gets how fast we can hijack the shuttle, return 0 for can not hijack. Defaults to hijack_speed var, override for custom stuff like buffing hijack speed for hijack objectives or something.
+/datum/antagonist/proc/hijack_speed()
+	var/datum/objective/hijack/H = locate() in objectives
+	if(!isnull(H?.hijack_speed_override))
+		return H.hijack_speed_override
+	return hijack_speed
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
