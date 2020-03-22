@@ -22793,9 +22793,6 @@
 	pixel_y = 4
 	},
 /obj/item/storage/box/beakers,
-/obj/item/gun/syringe{
-	pixel_y = 5
-	},
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -22804,6 +22801,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aKZ" = (
