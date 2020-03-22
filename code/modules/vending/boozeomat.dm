@@ -26,6 +26,7 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/cola = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/sodawater = 15,
+					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 8,
 					/obj/item/reagent_containers/food/drinks/drinkingglass = 30,
 					/obj/item/reagent_containers/food/drinks/ice = 10,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,

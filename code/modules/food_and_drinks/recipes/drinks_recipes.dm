@@ -234,6 +234,12 @@
 	results = list(/datum/reagent/consumable/ethanol/black_russian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 3, /datum/reagent/consumable/ethanol/kahlua = 2)
 
+/datum/chemical_reaction/hiveminderaser
+	name = "Hivemind Eraser"
+	id = /datum/reagent/consumable/ethanol/hiveminderaser
+	results = list(/datum/reagent/consumable/ethanol/hiveminderaser = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 2, /datum/reagent/consumable/ethanol/thirteenloko = 1, /datum/reagent/consumable/grenadine = 1)
+
 /datum/chemical_reaction/manhattan
 	name = "Manhattan"
 	id = /datum/reagent/consumable/ethanol/manhattan
@@ -299,6 +305,13 @@
 	id = /datum/reagent/consumable/ethanol/barefoot
 	results = list(/datum/reagent/consumable/ethanol/barefoot = 3)
 	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/consumable/ethanol/vermouth = 1)
+
+/datum/chemical_reaction/moscow_mule
+	name = "Moscow Mule"
+	id = /datum/reagent/consumable/ethanol/moscow_mule
+	results = list(/datum/reagent/consumable/ethanol/moscow_mule = 10)
+	required_reagents = list(/datum/reagent/consumable/sol_dry = 5, /datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ice = 1)
+	mix_sound = 'sound/effects/bubbles2.ogg'
 
 /datum/chemical_reaction/painkiller
 	name = "Painkiller"
@@ -832,6 +845,12 @@
 	id = /datum/reagent/consumable/red_queen
 	results = list(/datum/reagent/consumable/red_queen = 10)
 	required_reagents = list(/datum/reagent/consumable/tea = 6, /datum/reagent/mercury = 2, /datum/reagent/consumable/blackpepper = 1, /datum/reagent/growthserum = 1)
+
+/datum/chemical_reaction/mauna_loa
+	name = "Mauna Loa"
+	id = /datum/reagent/consumable/ethanol/mauna_loa
+	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
+	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
 
 /datum/chemical_reaction/catnip_tea
 	name = "Catnip Tea"
