@@ -619,4 +619,4 @@ BREASTS_CUPS_PREFS e
 
 ## Minimum and maximum limits for penis length from the character creation menu.
 PENIS_MIN_INCHES_PREFS 1
-PENIS_MIN_INCHES_PREFS 20
+PENIS_MAX_INCHES_PREFS 20
