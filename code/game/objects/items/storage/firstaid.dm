@@ -189,7 +189,7 @@
 	new /obj/item/reagent_containers/medspray/silver_sulf(src)
 	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
-	new /obj/item/clothing/glasses/hud/health/night(src)
+	new /obj/item/clothing/glasses/hud/health/night/syndicate(src)
 
 /obj/item/storage/firstaid/tactical/nukeop
 	name = "improved combat medical kit"
@@ -204,7 +204,7 @@
 	new /obj/item/reagent_containers/medspray/silver_sulf(src)
 	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
-	new /obj/item/clothing/glasses/hud/health/night(src)
+	new /obj/item/clothing/glasses/hud/health/night/syndicate(src)
 
 /*
  * Pill Bottles

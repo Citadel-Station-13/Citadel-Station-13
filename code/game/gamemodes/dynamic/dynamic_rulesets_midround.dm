@@ -43,7 +43,7 @@
 		if (!istype(M, required_type))
 			trimmed_list.Remove(M)
 			continue
-		if (M.GetComponent(/datum/component/virtual_reality))
+		if (HAS_TRAIT(M, TRAIT_NO_MIDROUND_ANTAG))
 			trimmed_list.Remove(M)
 			continue
 		if (!M.client) // Are they connected?

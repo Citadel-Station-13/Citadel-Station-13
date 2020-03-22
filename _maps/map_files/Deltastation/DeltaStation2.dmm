@@ -90569,7 +90569,6 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe,
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
@@ -90581,6 +90580,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel,
 /area/medical/storage)
 "cWv" = (
@@ -99195,7 +99195,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/light/small,
 /obj/structure/bedsheetbin,
-/obj/item/gun/syringe,
+/obj/item/gun/syringe/dart,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -106576,11 +106576,11 @@
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/gun/syringe,
 /obj/item/clothing/glasses/eyepatch,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dyE" = (
@@ -126360,6 +126360,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"jwo" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "jBE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -160698,7 +160712,7 @@ bjt
 bli
 bnk
 boB
-bnj
+jwo
 bnj
 bnh
 bvB

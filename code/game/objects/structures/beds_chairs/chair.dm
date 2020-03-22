@@ -101,7 +101,7 @@
 		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 			return TRUE
-		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return TRUE
 		var/mob/living/poordude = buckled_mobs[1]

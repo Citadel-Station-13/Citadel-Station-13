@@ -153,7 +153,7 @@
 		return FALSE
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)			//CIT CHANGE - makes it impossible to baton in stamina softcrit
+	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
 		return TRUE
 	if(ishuman(M))
@@ -282,7 +282,6 @@
 	throwforce = 5
 	stamforce = 25
 	hitcost = 1000
-	knockdown = FALSE
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	var/obj/item/assembly/igniter/sparkler

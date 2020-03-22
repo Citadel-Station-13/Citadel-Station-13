@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - refactor: "combat mode/sprint/resisting lying down/attempting to crawl under all refactored, added combat/sprint mode lockouts, being locked out of combat mode no longer disables it and allows right click interactions etc etc"
