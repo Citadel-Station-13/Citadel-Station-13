@@ -136,6 +136,12 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/strawberryjuice
+	name = "Strawberry Juice"
+	description = "No, you're not getting dosed."
+	color = "#E50D31"
+	taste_description = "strawberry"
+
 /datum/reagent/consumable/nothing
 	name = "Nothing"
 	description = "Absolutely nothing."
@@ -811,6 +817,14 @@
 	color = "#E78108"
 	taste_description = "peaches"
 	glass_name = "glass of peach juice"
+
+/datum/reagent/consumable/pineapplejuice
+	name = "Pineapple Juice"
+	description = "Tart, tropical, and hotly debated."
+	color = "#F7D435"
+	taste_description = "pineapple"
+	glass_name = "glass of pineapple juice"
+	glass_desc = "Tart, tropical, and hotly debated."
 
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"

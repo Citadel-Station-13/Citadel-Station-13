@@ -259,10 +259,10 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/sodawater = 1, /datum/reagent/consumable/limejuice = 1)
 
 /datum/chemical_reaction/bahama_mama
-	name = "Bahama mama"
+	name = "Bahama Mama"
 	id = /datum/reagent/consumable/ethanol/bahama_mama
-	results = list(/datum/reagent/consumable/ethanol/bahama_mama = 6)
-	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/orangejuice = 2, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ice = 1)
+	results = list(/datum/reagent/consumable/ethanol/bahama_mama = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_coconut = 1, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/pineapplejuice = 1)
 
 /datum/chemical_reaction/singulo
 	name = "Singulo"
@@ -300,6 +300,17 @@
 	results = list(/datum/reagent/consumable/ethanol/barefoot = 3)
 	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/consumable/ethanol/vermouth = 1)
 
+/datum/chemical_reaction/painkiller
+	name = "Painkiller"
+	id = /datum/reagent/consumable/ethanol/painkiller
+	results = list(/datum/reagent/consumable/ethanol/painkiller = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_coconut = 5, /datum/reagent/consumable/pineapplejuice = 4, /datum/reagent/consumable/orangejuice = 1)
+
+/datum/chemical_reaction/pina_colada
+	name = "Pina Colada"
+	id = /datum/reagent/consumable/ethanol/pina_colada
+	results = list(/datum/reagent/consumable/ethanol/pina_colada = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_coconut = 1, /datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/limejuice = 1)
 
 ////DRINKS THAT REQUIRED IMPROVED SPRITES BELOW:: -Agouri/////
 
@@ -729,14 +740,14 @@
 /datum/chemical_reaction/pinkmilk
 	name = "Strawberry Milk"
 	id = /datum/reagent/consumable/pinkmilk
-	results = list(/datum/reagent/consumable/pinkmilk = 5)
-	required_reagents = list(/datum/reagent/drug/aphrodisiacplus = 1, /datum/reagent/consumable/milk = 1)
+	results = list(/datum/reagent/consumable/pinkmilk = 2)
+	required_reagents = list(/datum/reagent/consumable/strawberryjuice = 1, /datum/reagent/consumable/milk = 1)
 
 /datum/chemical_reaction/pinktea
 	name = "Strawberry Tea"
 	id = /datum/reagent/consumable/pinktea
 	results = list(/datum/reagent/consumable/pinktea = 5)
-	required_reagents = list(/datum/reagent/drug/aphrodisiac = 1, /datum/reagent/consumable/tea/arnold_palmer = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/consumable/strawberryjuice = 1, /datum/reagent/consumable/tea/arnold_palmer = 1, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/blank_paper
 	name = "Blank Paper"
