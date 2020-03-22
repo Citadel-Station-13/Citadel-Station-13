@@ -55,7 +55,7 @@
 		if(istype(H.ears, /obj/item/radio/headset))
 			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Item request received. Your package is inbound, please stand back from the landing site.</span> Message ends.\""
 	to_chat(M, msg)
-	
+
 /obj/item/choice_beacon/ingredients
 	name = "ingredient box delivery beacon"
 	desc = "Summon a box of ingredients from a wide selection!"
@@ -64,13 +64,12 @@
 /obj/item/choice_beacon/ingredients/generate_display_names()
 	var/static/list/ingredientboxes
 	if(!ingredientboxes)
-		instruments = list()
+		ingredientboxes = list()
 		var/list/templist = typesof(/obj/item/storage/box/ingredients)
 		for(var/V in templist)
 			var/atom/A = V
 			ingredientboxes[initial(A.name)] = A
 	return ingredientboxes
-	new /obj/effect/abstract/DPtarget(get_turf(src), pod)
 
 /obj/item/choice_beacon/hero
 	name = "heroic beacon"
