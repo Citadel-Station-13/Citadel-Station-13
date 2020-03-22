@@ -26,7 +26,7 @@
 	item_state = "bl_suit"
 	item_color = "bloodred_pajamas"
 	dummy_thick = TRUE
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10,"energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 30, "acid" = 30)
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10,"energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 50, "acid" = 40)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_adjust = FALSE
 
