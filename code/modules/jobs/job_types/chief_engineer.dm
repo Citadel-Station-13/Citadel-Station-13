@@ -29,7 +29,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/paraplegic, /datum/quirk/insanity)
-	threat = 3
+	threat = 2
 
 /datum/outfit/job/ce
 	name = "Chief Engineer"

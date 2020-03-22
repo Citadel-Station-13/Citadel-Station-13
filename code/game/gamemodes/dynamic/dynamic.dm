@@ -261,11 +261,11 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				. += "<b>Uncharted Space</b></center><BR>"
 				. += "Congratulations and thank you for participating in the NT 'Frontier' space program! Your station is actively orbiting a high value system far from the nearest support stations. Little is known about your region of space, and the opportunity to encounter the unknown invites greater glory. You are encouraged to elevate security as necessary to protect Nanotrasen assets."
 				set_security_level(SEC_LEVEL_BLUE)
-		if(80 to 99)
+		if(80 to 95)
 			. += "<b>Black Orbit</b></center><BR>"
 			. += "As part of a mandatory security protocol, we are required to inform you that as a result of your orbital pattern directly behind an astrological body (oriented from our nearest observatory), your station will be under decreased monitoring and support. It is anticipated that your extreme location and decreased surveillance could pose security risks. Avoid unnecessary risks and attempt to keep your station in one piece."
 			set_security_level(SEC_LEVEL_AMBER)
-		if(100)
+		if(96 to 100)
 			. += "<b>Impending Doom</b></center><BR>"
 			. += "Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station.<BR>"
 			. += "Good luck."
@@ -330,7 +330,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
-	threat = threat_level
 	SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Initial threat level")
 	SSblackbox.record_feedback("tally","dynamic_threat",GLOB.dynamic_curve_centre,"Curve centre")
 	SSblackbox.record_feedback("tally","dynamic_threat",GLOB.dynamic_curve_width,"Curve width")
@@ -463,7 +462,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				log_game("DYNAMIC: Additional ruleset picked successfully, now [executed_rules.len] picked. [extra_rulesets_amount] remaining.")
 	else
 
-		if(threat >= 50)
+		if(threat_level >= 50)
 			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
 		log_game("DYNAMIC: Picking first roundstart ruleset failed. drafted_rules.len = [drafted_rules.len] and threat = [threat]/[threat_level]")
 		return FALSE
@@ -712,7 +711,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 					current_players[CURRENT_OBSERVERS].Add(M)
 					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
-	threat = storyteller.calculate_threat()
+	threat = storyteller.calculate_threat() + 50 // 50 is the centerpoint, so we want it to be around 50
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
