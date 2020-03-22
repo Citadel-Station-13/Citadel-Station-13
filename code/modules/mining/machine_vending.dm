@@ -303,7 +303,7 @@
 
 /obj/item/storage/backpack/duffelbag/mining_cloned/PopulateContents()
 	new /obj/item/pickaxe/mini(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/implanter/tracking/gps(src)

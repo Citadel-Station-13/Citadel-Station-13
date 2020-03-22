@@ -27,7 +27,7 @@
 /datum/outfit/tournament/gangster
 	name = "tournament gangster"
 
-	uniform = /obj/item/clothing/under/rank/det
+	uniform = /obj/item/clothing/under/rank/security/detective
 	suit = /obj/item/clothing/suit/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	head = /obj/item/clothing/head/fedora/det_hat
@@ -38,7 +38,7 @@
 /datum/outfit/tournament/janitor
 	name = "tournament janitor"
 
-	uniform = /obj/item/clothing/under/rank/janitor
+	uniform = /obj/item/clothing/under/rank/civilian/janitor
 	back = /obj/item/storage/backpack
 	suit = null
 	head = null
@@ -80,7 +80,7 @@
 /datum/outfit/pirate
 	name = "Space Pirate"
 
-	uniform = /obj/item/clothing/under/pirate
+	uniform = /obj/item/clothing/under/costume/pirate
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/pirate
 	head = /obj/item/clothing/head/bandana
@@ -113,7 +113,7 @@
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
 
-	uniform = /obj/item/clothing/under/rank/clown
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas/clown_hat
@@ -138,7 +138,7 @@
 /datum/outfit/psycho
 	name = "Masked Killer"
 
-	uniform = /obj/item/clothing/under/overalls
+	uniform = /obj/item/clothing/under/misc/overalls
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	gloves = /obj/item/clothing/gloves/color/latex
 	mask = /obj/item/clothing/mask/surgical
@@ -160,7 +160,7 @@
 /datum/outfit/assassin
 	name = "Assassin"
 
-	uniform = /obj/item/clothing/under/suit_jacket
+	uniform = /obj/item/clothing/under/suit/black
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/radio/headset
@@ -202,7 +202,7 @@
 /datum/outfit/centcom_commander
 	name = "CentCom Commander"
 
-	uniform = /obj/item/clothing/under/rank/centcom_commander
+	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
@@ -313,7 +313,7 @@
 /datum/outfit/soviet
 	name = "Soviet Admiral"
 
-	uniform = /obj/item/clothing/under/soviet
+	uniform = /obj/item/clothing/under/costume/soviet
 	head = /obj/item/clothing/head/pirate/captain
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
@@ -340,7 +340,7 @@
 /datum/outfit/mobster
 	name = "Mobster"
 
-	uniform = /obj/item/clothing/under/suit_jacket/really_black
+	uniform = /obj/item/clothing/under/suit/black_really
 	head = /obj/item/clothing/head/fedora
 	shoes = /obj/item/clothing/shoes/laceup
 	gloves = /obj/item/clothing/gloves/color/black
@@ -426,7 +426,7 @@
 
 /datum/outfit/debug //Debug objs plus hardsuit
 	name = "Debug outfit"
-	uniform = /obj/item/clothing/under/patriotsuit
+	uniform = /obj/item/clothing/under/misc/patriotsuit
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	glasses = /obj/item/clothing/glasses/debug
 	ears = /obj/item/radio/headset/headset_cent/commander

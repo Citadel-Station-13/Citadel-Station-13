@@ -35,3 +35,27 @@
 	name = "purple athletic shorts"
 	icon_state = "purpleshorts"
 	item_color = "purpleshorts"
+
+/obj/item/clothing/under/shorts/polychromic
+	name = "polychromic athletic shorts"
+	desc = "95% Polychrome, 5% Spandex!"
+	icon_state = "polyshortpants"
+	item_color = "polyshortpants"
+	item_state = "rainbow"
+	hasprimary = TRUE
+	hassecondary = TRUE
+	primary_color = "#FFFFFF"
+	secondary_color = "#F08080"
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/shorts/polychromic/pantsu
+	name = "polychromic panties"
+	desc = "Topless striped panties. Now with 120% more polychrome!"
+	icon_state = "polypantsu"
+	item_color = "polypantsu"
+	item_state = "rainbow"
+	hastertiary = FALSE
+	primary_color = "#FFFFFF"
+	secondary_color = "#8CC6FF"
+	body_parts_covered = GROIN
+	mutantrace_variation = NONE

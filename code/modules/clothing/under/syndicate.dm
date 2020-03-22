@@ -55,6 +55,16 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
 	fitted = FEMALE_UNIFORM_TOP
 
+/obj/item/clothing/under/syndicate/cosmetic
+	name = "tactitool turtleneck"
+	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
+	icon_state = "tactifool"
+	item_state = "bl_suit"
+	item_color = "tactifool"
+	has_sensor = TRUE
+	mutantrace_variation = NONE
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"
 	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."

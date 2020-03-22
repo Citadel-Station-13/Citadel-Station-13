@@ -49,7 +49,7 @@
 			new /obj/item/grenade/plastic/c4(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/clothing/under/suit_jacket/really_black(src)
+			new /obj/item/clothing/under/suit/black_really(src)
 			new /obj/item/screwdriver/power(src) //2 tc item
 
 		if("murder") // 35 tc
@@ -130,7 +130,7 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/clothing/under/suit_jacket/really_black(src)
+			new /obj/item/clothing/under/suit/black_really(src)
 
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
@@ -343,7 +343,7 @@
 	new /obj/item/implanter/radio/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
-	new /obj/item/clothing/under/rank/centcom_officer/syndicate(src)
+	new /obj/item/clothing/under/rank/centcom/officer/syndicate(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/radio/headset/headset_cent/empty(src)
