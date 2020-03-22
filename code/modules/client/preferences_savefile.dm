@@ -548,6 +548,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/static/list/B_sizes
 	if(!B_sizes)
 		B_sizes = CONFIG_GET(keyed_list/breasts_cups_prefs)
+		B_sizes = B_sizes.Copy()
 	var/static/min_D
 	if(!min_D)
 		min_D = CONFIG_GET(number/penis_min_inches_prefs)
