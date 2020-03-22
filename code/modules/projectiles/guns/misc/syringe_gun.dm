@@ -117,11 +117,19 @@
 	chambered = new /obj/item/ammo_casing/syringegun/dart(src)
 
 /obj/item/gun/syringe/dart/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
-	if(istype(A, /obj/item/reagent_containers/syringe/dart))
+	if(istype(A, /obj/item/reagent_containers/syringe/dart) || (istype(A, /obj/item/reagent_containers/syringe) && obj_flags & EMAGGED))
 		..()
+	else if(istype(A, /obj/item/card/emag))
+		emag_act(user)
+		return TRUE
 	else
 		to_chat(user, "<span class='notice'>You can't put the [A] into \the [src]!</span>")
 		return FALSE
+
+/obj/item/gun/syringe/dart/emag_act(mob/living/user)
+	to_chat(user, "<span class='warning'>\the [src] will now accept any type of syringe.</span>")
+	playsound(user.loc, "sparks", 50, 1)
+	obj_flags |= EMAGGED
 
 /obj/item/gun/syringe/dart/rapiddart
 	name = "Repeating dart gun"
