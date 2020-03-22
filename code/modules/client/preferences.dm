@@ -150,7 +150,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
-		"meat_type" = "Mammalian"
+		"meat_type" = "Mammalian",
+		"body_model" = MALE
 		)
 
 	var/list/custom_names = list()
@@ -343,6 +344,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
+			if(gender != NEUTER && pref_species.sexes)
+				dat += "<b>Body Model:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=body_model'>[features["body_model"] == MALE ? "Masculine" : "Feminine"]</a><BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
 			dat += "<b>Random Body:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Randomize!</A><BR>"
@@ -2126,15 +2129,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
-					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) in list(MALE,FEMALE,"nonbinary","object")
+					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) as null|anything in list(MALE,FEMALE,"nonbinary","object")
 					switch(chosengender)
 						if("nonbinary")
 							chosengender = PLURAL
+							features["body_model"] = pick(MALE, FEMALE)
 						if("object")
 							chosengender = NEUTER
+							features["body_model"] = MALE
+						else
+							features["body_model"] = chosengender
 					gender = chosengender
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
+
+				if("body_model")
+					features["body_model"] = features["body_model"] == MALE ? FEMALE : MALE
 
 				if("hotkeys")
 					hotkeys = !hotkeys

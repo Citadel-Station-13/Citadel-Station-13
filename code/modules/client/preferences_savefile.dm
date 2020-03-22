@@ -375,6 +375,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"]	>> be_random_name
 	S["body_is_always_random"]	>> be_random_body
 	S["gender"]					>> gender
+	S["body_model"]				>> features["body_model"]
 	S["age"]					>> age
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
@@ -490,6 +491,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	real_name	= reject_bad_name(real_name)
 	gender		= sanitize_gender(gender, TRUE, TRUE)
+	features["body_model"] = sanitize_gender(features["body_model"], FALSE, FALSE, gender == FEMALE ? FEMALE : MALE)
 	if(!real_name)
 		real_name	= random_unique_name(gender)
 	custom_species	= reject_bad_name(custom_species)
@@ -599,6 +601,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["name_is_always_random"]	, be_random_name)
 	WRITE_FILE(S["body_is_always_random"]	, be_random_body)
 	WRITE_FILE(S["gender"]					, gender)
+	WRITE_FILE(S["body_model"]				, features["body_model"])
 	WRITE_FILE(S["age"]						, age)
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)
