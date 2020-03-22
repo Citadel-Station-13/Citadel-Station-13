@@ -289,6 +289,19 @@
 	repeatable = TRUE
 	property_weights = list("extended" = 1)
 
+/datum/dynamic_ruleset/event/sigercarp_migration
+	name = "Tiger carp Migration"
+	config_tag = "tigercarp_migration"
+	typepath = /datum/round_event/tigercarp_migration
+	weight = 7
+	repeatable_weight_decrease = 3
+	cost = 4
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	high_population_requirement = 10
+	earliest_start = 15 MINUTES
+	repeatable = TRUE
+	property_weights = list("extended" = 1)
+
 /datum/dynamic_ruleset/event/communications_blackout
 	name = "Communications Blackout"
 	config_tag = "communications_blackout"
