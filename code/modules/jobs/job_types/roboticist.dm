@@ -17,6 +17,7 @@
 	minimal_access = list(ACCESS_ROBOTICS, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
+	threat = 1
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

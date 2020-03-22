@@ -27,7 +27,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
-	threat = -3
+	threat = 3
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"

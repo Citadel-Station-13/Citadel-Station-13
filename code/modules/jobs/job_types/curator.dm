@@ -15,6 +15,7 @@
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION, ACCESS_MINING_STATION)
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
+	threat = 0.3
 
 /datum/outfit/job/curator
 	name = "Curator"

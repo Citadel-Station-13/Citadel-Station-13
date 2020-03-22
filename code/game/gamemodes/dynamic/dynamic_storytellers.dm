@@ -54,7 +54,10 @@ Property weights are:
 			threat += H.threat()
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (M.stat != DEAD && M.mind && M.mind.assigned_role)
-			threat += SSjob.GetJob(M.mind.assigned_role).threat
+			if(length(M.mind.antag_datums))
+				threat += SSjob.GetJob(M.mind.assigned_role).GetThreat()
+			else
+				threat -= SSjob.GetJob(M.mind.assigned_role).GetThreat()
 	threat += (mode.current_players[CURRENT_DEAD_PLAYERS].len)*dead_player_weight
 	return round(threat,0.1)
 

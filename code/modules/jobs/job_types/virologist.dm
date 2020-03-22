@@ -18,6 +18,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
 
+	threat = 1.5
+
 /datum/outfit/job/virologist
 	name = "Virologist"
 	jobtype = /datum/job/virologist

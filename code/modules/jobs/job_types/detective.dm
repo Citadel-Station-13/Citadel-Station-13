@@ -22,6 +22,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/nonviolent, /datum/quirk/paraplegic)
+	threat = 1
 
 /datum/outfit/job/detective
 	name = "Detective"
