@@ -485,7 +485,7 @@
 		/obj/item/clothing/gloves/krav_maga/combatglovesplus,
 		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
 		/obj/item/reagent_containers/syringe/stimulants,
-		/obj/item/storage/box/syndie_kit/imp_freedom
+		/obj/item/storage/box/syndie_kit/imp_freedom,
 		/obj/item/storage/toolbox/infiltrator
 	)
 	var/obj/item1 = pick_n_take(item_list)
