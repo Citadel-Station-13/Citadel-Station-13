@@ -39,15 +39,14 @@
 
 #define DEF_VAGINA_SHAPE	"Human"
 
-#define COCK_SIZE_MIN		1
 #define COCK_SIZE_DEF		6
-#define COCK_SIZE_MAX		20
 
 #define COCK_DIAMETER_RATIO_MAX		0.42
 #define COCK_DIAMETER_RATIO_DEF		0.25
 #define COCK_DIAMETER_RATIO_MIN		0.15
 
 #define DEF_COCK_SHAPE		"Human"
+
 #define BALLS_VOLUME_BASE	25
 #define BALLS_VOLUME_MULT	1
 
