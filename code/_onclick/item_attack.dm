@@ -14,6 +14,9 @@
 			if(L.getStaminaLoss() >= STAMINA_SOFTCRIT)
 				to_chat(L, "<span class='warning'>You are too exhausted to swing [src]!</span>")
 				return
+			if(!CHECK_MOBILITY(L, MOBILITY_USE))
+				to_chat(L, "<span class='warning'>You are unable to swing [src] right now!</span>")
+				return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return
 	if(pre_attack(target, user, params))
@@ -23,6 +26,15 @@
 	if(QDELETED(src) || QDELETED(target))
 		return
 	afterattack(target, user, TRUE, params)
+
+/// Like melee_attack_chain but for ranged.
+/obj/item/proc/ranged_attack_chain(mob/user, atom/target, params)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!CHECK_MOBILITY(L, MOBILITY_USE))
+			to_chat(L, "<span class='warning'>You are unable to raise [src] right now!</span>")
+			return
+	afterattack(target, user, FALSE, params)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)

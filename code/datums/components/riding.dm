@@ -212,7 +212,7 @@
 	if(!length(H.buckled_mobs))
 		H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
 	if(!fireman_carrying)
-		M.Daze(10)
+		M.Daze(25)
 	REMOVE_TRAIT(M, TRAIT_MOBILITY_NOUSE, src)
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
@@ -257,7 +257,7 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.DefaultCombatKnockdown(60)
-	user.Daze(40)
+	user.Daze(50)
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
