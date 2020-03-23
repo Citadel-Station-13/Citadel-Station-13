@@ -228,6 +228,7 @@
 		M.DefaultCombatKnockdown(40)
 		M.adjustBruteLoss(60)
 		Expand()
+		return TRUE
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
