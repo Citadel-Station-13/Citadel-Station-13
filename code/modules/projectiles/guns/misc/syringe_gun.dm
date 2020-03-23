@@ -119,9 +119,6 @@
 /obj/item/gun/syringe/dart/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	if(istype(A, /obj/item/reagent_containers/syringe/dart) || (istype(A, /obj/item/reagent_containers/syringe) && obj_flags & EMAGGED))
 		..()
-	else if(istype(A, /obj/item/card/emag))
-		emag_act(user)
-		return TRUE
 	else
 		to_chat(user, "<span class='notice'>You can't put the [A] into \the [src]!</span>")
 		return FALSE
