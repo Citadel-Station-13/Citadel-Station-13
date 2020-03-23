@@ -410,16 +410,18 @@
 	var/obj/item/grinded
 
 /obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
+	. = ..()
 	if(grinded)
 		grinded.forceMove(drop_location())
 		grinded = null
 		to_chat(user, "<span class='notice'>You eject the item inside.</span>")
+		return TRUE
 
 /obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
 	..()
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
-			if(user.getStaminaLoss() > 50)
+			if(IS_STAMCRIT(user))
 				to_chat(user, "<span class='warning'>You are too tired to work!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start grinding...</span>")
