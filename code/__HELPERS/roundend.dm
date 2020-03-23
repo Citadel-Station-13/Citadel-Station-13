@@ -181,7 +181,7 @@
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
-	var/speedround = FALSE
+	var/speed_round = FALSE
 	if(world.time - SSticker.round_start_time <= 300 SECONDS)
 		speed_round = TRUE
 

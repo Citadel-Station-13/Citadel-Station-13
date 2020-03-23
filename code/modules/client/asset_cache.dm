@@ -381,6 +381,32 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/i in icons)
 		..(i)
 
+/datum/asset/spritesheet/simple/achievements
+	name ="achievements"
+	assets = list(
+		"default" = 'icons/UI_Icons/Achievements/default.png',
+		"basemisc" = 'icons/UI_Icons/Achievements/basemisc.png',
+		"baseboss" = 'icons/UI_Icons/Achievements/baseboss.png',
+		"baseskill" = 'icons/UI_Icons/Achievements/baseskill.png',
+		"bbgum" = 'icons/UI_Icons/Achievements/Boss/bbgum.png',
+		"colossus" = 'icons/UI_Icons/Achievements/Boss/colossus.png',
+		"hierophant" = 'icons/UI_Icons/Achievements/Boss/hierophant.png',
+		"legion" = 'icons/UI_Icons/Achievements/Boss/legion.png',
+		"miner" = 'icons/UI_Icons/Achievements/Boss/miner.png',
+		"swarmer" = 'icons/UI_Icons/Achievements/Boss/swarmer.png',
+		"tendril" = 'icons/UI_Icons/Achievements/Boss/tendril.png',
+		"featofstrength" = 'icons/UI_Icons/Achievements/Misc/featofstrength.png',
+		"helbital" = 'icons/UI_Icons/Achievements/Misc/helbital.png',
+		"jackpot" = 'icons/UI_Icons/Achievements/Misc/jackpot.png',
+		"meteors" = 'icons/UI_Icons/Achievements/Misc/meteors.png',
+		"timewaste" = 'icons/UI_Icons/Achievements/Misc/timewaste.png',
+		"upgrade" = 'icons/UI_Icons/Achievements/Misc/upgrade.png',
+		"clownking" = 'icons/UI_Icons/Achievements/Misc/clownking.png',
+		"clownthanks" = 'icons/UI_Icons/Achievements/Misc/clownthanks.png',
+		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
+		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
+		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
+	)
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
@@ -529,7 +555,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
-	
+
 /datum/asset/simple/IRV
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',

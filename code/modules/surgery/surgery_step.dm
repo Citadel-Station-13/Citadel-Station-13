@@ -58,6 +58,7 @@
 		return FALSE
 	if(tool)
 		speed_mod = tool.toolspeed
+	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 	if(do_after(user, time * speed_mod, target = target))
 		var/prob_chance = 100
 		if(implement_type)	//this means it isn't a require hand or any item step.
