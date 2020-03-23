@@ -40,6 +40,7 @@
 	owner.adjust_bodytemperature(100)
 	owner.update_mobility()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	return ..()
 
 /datum/status_effect/freon/watcher
 	duration = 8

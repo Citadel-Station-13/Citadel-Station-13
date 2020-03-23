@@ -161,7 +161,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				INVOKE_ASYNC(src, .proc/arena_checks)
 			if(TUMOR_INACTIVE)
 				activity = TUMOR_ACTIVE
-				var/mob/dead/observer/elitemind = null
+				var/mob/elitemind = null
 				visible_message("<span class='boldwarning'>[src] begins to convulse.  Your instincts tell you to step back.</span>")
 				activator = user
 				if(!boosted)

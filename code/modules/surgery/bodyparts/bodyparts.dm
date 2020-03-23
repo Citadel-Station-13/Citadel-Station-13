@@ -347,7 +347,7 @@
 		else
 			skin_tone = ""
 
-		body_gender = H.gender
+		body_gender = H.dna.features["body_model"]
 		should_draw_gender = S.sexes
 
 		if(MUTCOLORS in S.species_traits)

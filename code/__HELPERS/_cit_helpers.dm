@@ -60,7 +60,6 @@ GLOBAL_LIST_EMPTY(genitals_list)
 GLOBAL_LIST_EMPTY(cock_shapes_list)
 GLOBAL_LIST_EMPTY(gentlemans_organ_names)
 GLOBAL_LIST_EMPTY(balls_shapes_list)
-GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
 GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
@@ -136,18 +135,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 
 /mob/living/carbon/proc/has_breasts()
 	if(getorganslot(ORGAN_SLOT_BREASTS))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/proc/has_ovipositor()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
-	if(G && istype(G, /obj/item/organ/genital/ovipositor))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/has_eggsack()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(G && istype(G, /obj/item/organ/genital/eggsack))
 		return TRUE
 	return FALSE
 

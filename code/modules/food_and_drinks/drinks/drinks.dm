@@ -375,6 +375,11 @@
 				name = "grape juice box"
 				desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
 				foodtype = FRUIT | BREAKFAST
+			if(/datum/reagent/consumable/pineapplejuice)
+				icon_state = "pineapplebox"
+				name = "pineapple juice box"
+				desc = "Why would you even want this?"
+				foodtype = FRUIT | PINEAPPLE
 			if("chocolate_milk")
 				icon_state = "chocolatebox"
 				name = "carton of chocolate milk"
@@ -497,6 +502,13 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
 	. = ..()
 	name = "lemon-lime soda"
+
+/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry
+	name = "Sol Dry"
+	desc = "Maybe this will help your tummy feel better. Maybe not."
+	icon_state = "ginger_ale"
+	list_reagents = list(/datum/reagent/consumable/sol_dry = 30)
+	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_up
 	name = "Space-Up!"

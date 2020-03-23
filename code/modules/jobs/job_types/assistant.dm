@@ -35,9 +35,9 @@ Assistant
 		if(suited)
 			uniform = /obj/item/clothing/under/color/grey
 		else
-			uniform = /obj/item/clothing/under/skirt/color/grey
+			uniform = /obj/item/clothing/under/color/jumpskirt/grey
 	else
 		if(suited)
 			uniform = /obj/item/clothing/under/color/random
 		else
-			uniform = /obj/item/clothing/under/skirt/color/random
+			uniform = /obj/item/clothing/under/color/jumpskirt/random

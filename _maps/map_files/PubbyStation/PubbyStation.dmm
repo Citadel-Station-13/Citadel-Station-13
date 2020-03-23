@@ -18191,7 +18191,7 @@
 /obj/structure/chair/wood/normal{
 	dir = 8
 	},
-/obj/item/clothing/under/janimaid,
+/obj/item/clothing/under/rank/civilian/janitor/maid,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -20830,7 +20830,7 @@
 /area/janitor)
 "aXP" = (
 /obj/structure/table,
-/obj/item/clothing/under/maid,
+/obj/item/clothing/under/costume/maid,
 /obj/item/key/janitor,
 /obj/item/grenade/clusterbuster/cleaner,
 /obj/item/grenade/chem_grenade/cleaner,
@@ -22504,14 +22504,6 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"bbe" = (
-/obj/structure/chair/stool,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "bbg" = (
 /obj/effect/landmark/start/cook,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -22599,9 +22591,9 @@
 "bbt" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/wood,
-/obj/item/clothing/under/sundress,
-/obj/item/clothing/under/waiter,
-/obj/item/clothing/under/blacktango,
+/obj/item/clothing/under/dress/sundress,
+/obj/item/clothing/under/suit/waiter,
+/obj/item/clothing/under/dress/blacktango,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "bbu" = (
@@ -22661,7 +22653,7 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
-/obj/item/clothing/under/rank/mailman,
+/obj/item/clothing/under/misc/mailman,
 /obj/item/clothing/head/mailman,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -35727,7 +35719,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/closet,
-/obj/item/clothing/under/rank/nursesuit,
+/obj/item/clothing/under/rank/medical/doctor/nurse,
 /obj/item/clothing/head/nursehat,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/airalarm{
@@ -39520,7 +39512,6 @@
 "bMK" = (
 /obj/item/soap/nanotrasen,
 /obj/item/clothing/neck/stethoscope,
-/obj/item/gun/syringe,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -39529,6 +39520,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bMM" = (
@@ -51429,10 +51421,10 @@
 /turf/open/floor/carpet,
 /area/chapel/main/monastery)
 "cwz" = (
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -55848,7 +55840,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "klV" = (
-/obj/item/clothing/under/rank/clown/sexy,
+/obj/item/clothing/under/rank/civilian/clown/sexy,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
 "kmd" = (
@@ -59851,6 +59843,15 @@
 	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"ttS" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "tue" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -90071,7 +90072,7 @@ aRN
 aXZ
 aYQ
 aXS
-bbe
+ttS
 bcd
 bdo
 ben
