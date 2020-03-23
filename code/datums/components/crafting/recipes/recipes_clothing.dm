@@ -8,7 +8,7 @@
 
 /datum/crafting_recipe/mummy/body
 	name = "Mummification Bandages (Body)"
-	result = /obj/item/clothing/under/mummy
+	result = /obj/item/clothing/under/costume/mummy
 	reqs = list(/obj/item/stack/sheet/cloth = 5)
 
 /datum/crafting_recipe/lizardhat

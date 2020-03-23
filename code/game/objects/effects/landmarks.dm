@@ -506,3 +506,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/stationroom/box/engine/New()
 	. = ..()
 	templates = CONFIG_GET(keyed_list/box_random_engine)
+
+// Landmark for the mining station
+/obj/effect/landmark/stationroom/lavaland/station
+	templates = list("Public Mining Base" = 3)
+	icon = 'icons/rooms/Lavaland/Mining.dmi'

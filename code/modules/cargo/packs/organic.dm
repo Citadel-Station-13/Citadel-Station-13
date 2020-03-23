@@ -380,7 +380,7 @@
 					/obj/item/reagent_containers/food/drinks/bottle/cognac,
 					/obj/item/storage/fancy/cigarettes/cigars/havana,
 					/obj/item/clothing/gloves/color/white,
-					/obj/item/clothing/under/rank/curator,
+					/obj/item/clothing/under/rank/civilian/curator,
 					/obj/item/gun/ballistic/shotgun/lethal)
 	access = ACCESS_ARMORY
 	crate_name = "sporting crate"

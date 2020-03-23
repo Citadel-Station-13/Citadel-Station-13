@@ -188,7 +188,7 @@
 					/obj/item/clothing/shoes/russian,
 					/obj/item/clothing/gloves/combat,
 					/obj/item/clothing/under/syndicate/rus_army,
-					/obj/item/clothing/under/soviet,
+					/obj/item/clothing/under/costume/soviet,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,

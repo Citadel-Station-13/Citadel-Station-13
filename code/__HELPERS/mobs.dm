@@ -194,7 +194,7 @@
 		"balls_efficiency"	= CUM_EFFICIENCY,
 		"has_breasts" 		= FALSE,
 		"breasts_color" 	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		"breasts_size" 		= pick(GLOB.breasts_size_list),
+		"breasts_size" 		= pick(CONFIG_GET(keyed_list/breasts_cups_prefs)),
 		"breasts_shape"		= DEF_BREASTS_SHAPE,
 		"breasts_producing" = FALSE,
 		"has_vag"			= FALSE,
@@ -210,7 +210,8 @@
 		"ipc_screen"		= snowflake_ipc_antenna_list ? pick(snowflake_ipc_antenna_list) : "None",
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
-		"meat_type"			= "Mammalian"
+		"meat_type"			= "Mammalian",
+		"body_model"		= MALE
 		))
 
 /proc/random_hair_style(gender)

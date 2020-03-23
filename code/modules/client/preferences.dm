@@ -150,7 +150,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
-		"meat_type" = "Mammalian"
+		"meat_type" = "Mammalian",
+		"body_model" = MALE
 		)
 
 	var/list/custom_names = list()
@@ -343,6 +344,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
+			if(gender != NEUTER && pref_species.sexes)
+				dat += "<b>Body Model:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=body_model'>[features["body_model"] == MALE ? "Masculine" : "Feminine"]</a><BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
 			dat += "<b>Random Body:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Randomize!</A><BR>"
@@ -1924,9 +1927,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("cock_length")
-					var/new_length = input(user, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Character Preference") as num|null
+					var/min_D = CONFIG_GET(number/penis_min_inches_prefs)
+					var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
+					var/new_length = input(user, "Penis length in inches:\n([min_D]-[max_D])", "Character Preference") as num|null
 					if(new_length)
-						features["cock_length"] = max(min( round(text2num(new_length)), COCK_SIZE_MAX),COCK_SIZE_MIN)
+						features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
 
 				if("cock_shape")
 					var/new_shape
@@ -1952,8 +1957,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["balls_shape"] = new_shape
 
 				if("breasts_size")
-					var/new_size
-					new_size = input(user, "Breast Size", "Character Preference") as null|anything in GLOB.breasts_size_list
+					var/new_size = input(user, "Breast Size", "Character Preference") as null|anything in CONFIG_GET(keyed_list/breasts_cups_prefs)
 					if(new_size)
 						features["breasts_size"] = new_size
 
@@ -2126,15 +2130,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
-					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) in list(MALE,FEMALE,"nonbinary","object")
+					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) as null|anything in list(MALE,FEMALE,"nonbinary","object")
 					switch(chosengender)
 						if("nonbinary")
 							chosengender = PLURAL
+							features["body_model"] = pick(MALE, FEMALE)
 						if("object")
 							chosengender = NEUTER
+							features["body_model"] = MALE
+						else
+							features["body_model"] = chosengender
 					gender = chosengender
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
+
+				if("body_model")
+					features["body_model"] = features["body_model"] == MALE ? FEMALE : MALE
 
 				if("hotkeys")
 					hotkeys = !hotkeys

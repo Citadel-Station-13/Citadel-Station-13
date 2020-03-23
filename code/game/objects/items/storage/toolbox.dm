@@ -177,7 +177,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	STR.max_items = 28
 
 /obj/item/storage/toolbox/brass/prefilled/PopulateContents()
-	new fabricator_type(src)
+	if(fabricator_type)
+		new fabricator_type(src)
 	new /obj/item/screwdriver/brass(src)
 	new /obj/item/wirecutters/brass(src)
 	new /obj/item/wrench/brass(src)
