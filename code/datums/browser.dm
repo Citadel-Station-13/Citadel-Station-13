@@ -52,10 +52,6 @@
 	scripts["[ckey(name)].js"] = file
 	register_asset("[ckey(name)].js", file)
 
-/datum/browser/proc/add_script(name, file)
-	scripts["[ckey(name)].js"] = file
-	register_asset("[ckey(name)].js", file)
-
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
 
