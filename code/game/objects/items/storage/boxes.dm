@@ -986,7 +986,6 @@
 							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
 							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
 							  /obj/item/reagent_containers/food/snacks/egg,
-
 							  /obj/item/reagent_containers/food/snacks/grown/eggplant)
 		new randomFood(src)
 
