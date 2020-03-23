@@ -38,6 +38,7 @@
 	var/achievement_type
 	var/crusher_achievement_type
 	var/score_achievement_type
+	var/true_spawn = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -132,7 +133,7 @@
 			continue
 		L.client.give_award(/datum/award/achievement/boss/boss_killer, L)
 		L.client.give_award(achievement_type, L)
-		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/kinetic_crusher))
+		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
 			L.client.give_award(crusher_achievement_type, L)
 		L.client.give_award(/datum/award/score/boss_score, L) //Score progression for bosses killed in general
 		L.client.give_award(score_achievement_type, L) //Score progression for specific boss killed
