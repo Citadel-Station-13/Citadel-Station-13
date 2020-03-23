@@ -19,6 +19,7 @@
 #define MEDAL_CLEANBOSS			"Cleanboss"
 #define MEDAL_RULE8				"Rule 8"
 #define MEDAL_LONGSHIFT			"longshift"
+#define MEDAL_SPEEDROUND		"Speed Round"
 #define MEDAL_SNAIL				"KKKiiilll mmmeee"
 
 //Skill medal hub IDs

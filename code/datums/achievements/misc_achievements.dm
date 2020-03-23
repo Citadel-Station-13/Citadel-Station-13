@@ -40,3 +40,48 @@
 	name = "Getting an upgrade"
 	desc = "Make your first unique material item!"
 	hub_id = MEDAL_MATERIALCRAFT
+
+/datum/award/achievement/misc/rocket_holdup
+	name = "Disk, Please!"
+	desc = "Is the man currently pointing a loaded rocket launcher at your head point blank really dumb enough to pull the trigger? Do you really want to find out?"
+	hub_id = MEDAL_DISKPLEASE
+
+/datum/award/achievement/misc/gamer
+	name = "My Watchlist Status is Not Important"
+	desc = "You may be under the impression that violent video games are a harmless pastime, but the security and medical personnel swarming your location with batons and knockout gas look like they disagree."
+	hub_id = MEDAL_GAMER
+
+/datum/award/achievement/misc/vendor_squish
+	name = "I Was a Teenage Anarchist"
+	desc = "You were doing a great job sticking it to the system until that vending machine decided to fight back."
+	hub_id = MEDAL_VENDORSQUISH
+
+/datum/award/achievement/misc/swirlie
+	name = "A Bowl-d New World"
+	desc = "There's a lot of grisly ways to kick it on the Spinward Periphery, but drowning to death in a toilet probably wasn't what you had in mind. Probably."
+	hub_id = MEDAL_SWIRLIE
+
+/datum/award/achievement/misc/selfouch
+	name = "How Do I Switch Hands???"
+	desc = "If you saw someone casually club themselves upside the head with a toolbox anywhere in the galaxy but here, you'd probably be pretty concerned for them."
+	hub_id = MEDAL_SELFOUCH
+
+/datum/award/achievement/misc/sandman
+	name = "Mister Sandman"
+	desc = "Mechanically speaking, there's no real benefit to being unconscious during surgery. Weird how insistent this doctor is about using the N2O anyway though, huh?"
+	hub_id = MEDAL_SANDMAN
+
+/datum/award/achievement/misc/cleanboss
+	name = "One Lean, Mean, Cleaning Machine"
+	desc = "How does it feel to know that your workplace values a mop bucket on wheels more than you?" // i can do better than this give me time
+	hub_id = MEDAL_CLEANBOSS
+
+/datum/award/achievement/misc/rule8
+	name = "Rule 8"
+	desc = "You ERP? You get ding dong bannu."
+	hub_id = MEDAL_RULE8
+
+/datum/award/achievement/misc/speed_round
+	name = "Speed Round"
+	desc = "Gas, gas, gas!"
+	hub_id = MEDAL_SPEEDROUND
