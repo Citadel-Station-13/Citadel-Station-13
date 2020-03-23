@@ -127,9 +127,13 @@
 		return FALSE
 
 /obj/item/gun/syringe/dart/emag_act(mob/living/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
 	to_chat(user, "<span class='warning'>\the [src] will now accept any type of syringe.</span>")
 	playsound(user.loc, "sparks", 50, 1)
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/gun/syringe/dart/rapiddart
 	name = "Repeating dart gun"
