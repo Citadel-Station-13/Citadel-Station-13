@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	job_rank = ROLE_DEVIL
 	//Don't delete upon mind destruction, otherwise soul re-selling will break.
 	delete_on_mind_deletion = FALSE
-	threat = 30
+	threat = 5
 	var/obligation
 	var/ban
 	var/bane
@@ -113,6 +113,9 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		/obj/effect/proc_holder/spell/targeted/summon_dancefloor))
 	var/ascendable = FALSE
 
+/datum/antagonist/devil/threat()
+	return threat + form * 10
+
 /datum/antagonist/devil/can_be_owned(datum/mind/new_owner)
 	. = ..()
 	return . && (ishuman(new_owner.current) || iscyborg(new_owner.current))
@@ -120,7 +123,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil/get_admin_commands()
 	. = ..()
 	.["Toggle ascendable"] = CALLBACK(src,.proc/admin_toggle_ascendable)
-
 
 /datum/antagonist/devil/proc/admin_toggle_ascendable(mob/admin)
 	ascendable = !ascendable
