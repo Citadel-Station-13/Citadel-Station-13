@@ -267,7 +267,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		player_details = GLOB.player_details[ckey]
 		player_details.byond_version = full_version
 	else
-		player_details = new
+		player_details = new(ckey)
 		player_details.byond_version = full_version
 		GLOB.player_details[ckey] = player_details
 
@@ -454,6 +454,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
+
+	player_details.achievements.save()
 
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
@@ -910,4 +912,4 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	char_render_holders = null
 
 /client/proc/give_award(achievement_type, mob/user)
-	return	player_details.achievements.unlock(achievement_type, user)
+	return	player_details.achievements.unlock(achievement_type, mob/user)

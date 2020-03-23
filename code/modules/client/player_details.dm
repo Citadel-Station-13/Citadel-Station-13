@@ -5,3 +5,6 @@
 	var/list/post_logout_callbacks = list()
 	var/byond_version = "Unknown"
 	var/datum/achievement_data/achievements
+
+/datum/player_details/New(key)
+	achievements = new(key)

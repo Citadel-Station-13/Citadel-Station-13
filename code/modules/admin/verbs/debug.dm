@@ -1099,3 +1099,18 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		return
 	if(alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", "No", "Yes") == "Yes")
 		config.admin_reload()
+
+
+/client/proc/toggle_medal_disable()
+	set category = "Debug"
+	set name = "Toggle Medal Disable"
+	set desc = "Toggles the safety lock on trying to contact the medal hub."
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	SSachievements.hub_enabled = !SSachievements.hub_enabled
+
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] [SSachievements.hub_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Medal Disable") // If...
+	log_admin("[key_name(src)] [SSachievements.hub_enabled ? "disabled" : "enabled"] the medal hub lockout.")
