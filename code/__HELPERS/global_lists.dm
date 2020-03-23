@@ -54,7 +54,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
-	GLOB.breasts_size_list = list ("a", "b", "c", "d", "e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
 	GLOB.gentlemans_organ_names = list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ",
 	"cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret",
 	"baloney pony", "schlanger", "Mutton dagger", "old blind bob","Hanging Johnny", "fishing rod", "Tally whacker", "polly rocket",

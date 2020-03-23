@@ -547,10 +547,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
 	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
 
-	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], GLOB.breasts_size_list, BREASTS_SIZE_DEF)
+	var/static/list/B_sizes
+	if(!B_sizes)
+		B_sizes = CONFIG_GET(keyed_list/breasts_cups_prefs)
+		B_sizes = B_sizes.Copy()
+	var/static/min_D
+	if(!min_D)
+		min_D = CONFIG_GET(number/penis_min_inches_prefs)
+	var/static/max_D
+	if(!max_D)
+		max_D = CONFIG_GET(number/penis_max_inches_prefs)
+
+	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], B_sizes, BREASTS_SIZE_DEF)
+	features["cock_length"]			= sanitize_integer(features["cock_length"], min_D, max_D, COCK_SIZE_DEF)
 	features["breasts_shape"]		= sanitize_inlist(features["breasts_shape"], GLOB.breasts_shapes_list, DEF_BREASTS_SHAPE)
 	features["cock_shape"]			= sanitize_inlist(features["cock_shape"], GLOB.cock_shapes_list, DEF_COCK_SHAPE)
-	features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, COCK_SIZE_DEF)
 	features["balls_shape"]			= sanitize_inlist(features["balls_shape"], GLOB.balls_shapes_list, DEF_BALLS_SHAPE)
 	features["vag_shape"]			= sanitize_inlist(features["vag_shape"], GLOB.vagina_shapes_list, DEF_VAGINA_SHAPE)
 	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, FALSE, "FFF")

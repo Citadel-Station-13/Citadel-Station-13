@@ -1927,9 +1927,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("cock_length")
-					var/new_length = input(user, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Character Preference") as num|null
+					var/min_D = CONFIG_GET(number/penis_min_inches_prefs)
+					var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
+					var/new_length = input(user, "Penis length in inches:\n([min_D]-[max_D])", "Character Preference") as num|null
 					if(new_length)
-						features["cock_length"] = max(min( round(text2num(new_length)), COCK_SIZE_MAX),COCK_SIZE_MIN)
+						features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
 
 				if("cock_shape")
 					var/new_shape
@@ -1955,8 +1957,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["balls_shape"] = new_shape
 
 				if("breasts_size")
-					var/new_size
-					new_size = input(user, "Breast Size", "Character Preference") as null|anything in GLOB.breasts_size_list
+					var/new_size = input(user, "Breast Size", "Character Preference") as null|anything in CONFIG_GET(keyed_list/breasts_cups_prefs)
 					if(new_size)
 						features["breasts_size"] = new_size
 

@@ -60,7 +60,6 @@ GLOBAL_LIST_EMPTY(genitals_list)
 GLOBAL_LIST_EMPTY(cock_shapes_list)
 GLOBAL_LIST_EMPTY(gentlemans_organ_names)
 GLOBAL_LIST_EMPTY(balls_shapes_list)
-GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
 GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
