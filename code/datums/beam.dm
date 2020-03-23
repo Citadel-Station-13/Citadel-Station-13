@@ -92,7 +92,7 @@
 	return ..()
 
 /datum/beam/proc/Draw()
-	if(!get_turf && (!isturf(target.loc) || !isturf(source.loc)))		//byond is quirky! if we aren't getting turf tell it to just Not(tm)
+	if(!get_turf && (!isturf(src.target.loc) || !isturf(src.source.loc)))		//byond is quirky! if we aren't getting turf tell it to just Not(tm)
 		return
 	var/atom/origin = get_turf? get_turf(src.origin) : src.origin
 	var/atom/target = get_turf? get_turf(src.target) : src.target
