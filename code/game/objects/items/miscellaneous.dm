@@ -69,8 +69,8 @@
 		ingredientboxes = list()
 		var/list/templist = typesof(/obj/item/storage/box/ingredients)
 		for(var/V in templist)
-			var/atom/A = V
-			ingredientboxes[initial(A.name)] = A
+			var/obj/item/storage/box/ingredients/A = V
+			ingredientboxes[initial(A.theme_name)] = A
 	return ingredientboxes
 
 /obj/item/choice_beacon/hero
