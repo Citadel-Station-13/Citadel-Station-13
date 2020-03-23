@@ -61,6 +61,9 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	var/call_help_cooldown = 0
 	var/call_help_cooldown_amt = 150 //Deciseconds between calling swarmers to help us when attacked
 	var/static/list/swarmer_caps
+	achievement_type = /datum/award/achievement/boss/swarmer_beacon_kill
+	crusher_achievement_type = /datum/award/achievement/boss/swarmer_beacon_crusher
+	score_achievement_type = /datum/award/score/swarmer_beacon_score
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Initialize()

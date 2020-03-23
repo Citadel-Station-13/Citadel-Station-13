@@ -908,3 +908,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		screen -= S
 		qdel(S)
 	char_render_holders = null
+
+/client/proc/give_award(achievement_type, mob/user)
+	return	player_details.achievements.unlock(achievement_type, user)

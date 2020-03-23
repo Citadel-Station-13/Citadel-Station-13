@@ -55,6 +55,9 @@ Difficulty: Hard
 	death_sound = 'sound/magic/enter_blood.ogg'
 
 	do_footstep = TRUE
+	achievement_type = /datum/award/achievement/boss/bubblegum_kill
+	crusher_achievement_type = /datum/award/achievement/boss/bubblegum_crusher
+	score_achievement_type = /datum/award/score/bubblegum_score
 
 /obj/item/gps/internal/bubblegum
 	icon_state = null

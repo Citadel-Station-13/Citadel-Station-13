@@ -50,6 +50,9 @@ Difficulty: Medium
 	elimination = 1
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
+	achievement_type = /datum/award/achievement/boss/legion_kill
+	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
+	score_achievement_type = /datum/award/score/legion_score
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()

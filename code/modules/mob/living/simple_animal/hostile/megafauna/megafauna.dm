@@ -35,6 +35,9 @@
 	var/anger_modifier = 0
 	var/obj/item/gps/internal
 	var/recovery_time = 0
+	var/achievement_type
+	var/crusher_achievement_type
+	var/score_achievement_type
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()

@@ -243,6 +243,10 @@
 
 			if(length(picked_materials))
 				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
+				for(var/x in picked_materials)
+					var/datum/material/M = x
+					if(!istype(M, /datum/material/glass) && !istype(M, /datum/material/iron))
+						user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
 
 	icon_state = "autolathe"
 	busy = FALSE

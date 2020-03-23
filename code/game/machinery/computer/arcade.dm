@@ -101,7 +101,8 @@
 
 	if(prob(1) && prob(1) && prob(1)) //Proper 1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
-		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
+		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
+		user.client.give_award(/datum/award/achievement/misc/pulse, user)
 
 	if(!contents.len)
 		var/list/toy_raffle

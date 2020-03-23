@@ -4,3 +4,4 @@
 	var/list/post_login_callbacks = list()
 	var/list/post_logout_callbacks = list()
 	var/byond_version = "Unknown"
+	var/datum/achievement_data/achievements

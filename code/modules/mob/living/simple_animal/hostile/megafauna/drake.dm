@@ -64,6 +64,9 @@ Difficulty: Medium
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
 
 	do_footstep = TRUE
+	achievement_type = /datum/award/achievement/boss/drake_kill
+	crusher_achievement_type = /datum/award/achievement/boss/drake_crusher
+	score_achievement_type = /datum/award/score/drake_score
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)

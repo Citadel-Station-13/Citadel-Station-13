@@ -146,11 +146,11 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(L && (L.density || prob(10)))
 		L.ex_act(EXPLODE_HEAVY)
 
-obj/effect/immovablerod/attack_hand(mob/living/user)
+/obj/effect/immovablerod/attack_hand(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.job in list("Research Director"))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 			for(var/mob/M in urange(8, src))
 				if(!M.stat)
 					shake_camera(M, 2, 3)
@@ -161,6 +161,7 @@ obj/effect/immovablerod/attack_hand(mob/living/user)
 				wizard.apply_damage(25, BRUTE)
 				qdel(src)
 			else
+				U.client.give_award(/datum/award/achievement/misc/feat_of_strength, U) //rod-form wizards would probably make this a lot easier to get so keep it to regular rods only
 				U.visible_message("<span class='boldwarning'>[U] suplexes [src] into the ground!</span>", "<span class='warning'>You suplex [src] into the ground!</span>")
 				new /obj/structure/festivus/anchored(drop_location())
 				new /obj/effect/anomaly/flux(drop_location())
