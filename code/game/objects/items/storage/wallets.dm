@@ -66,7 +66,7 @@
 	. = ..()
 	refreshID()
 
-/obj/item/storage/wallet/update_icon()
+/obj/item/storage/wallet/update_icon_state()
 	var/new_state = "wallet"
 	if(front_id)
 		new_state = "wallet_id"

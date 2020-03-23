@@ -118,7 +118,7 @@
 		s.set_up(3, 1, L)
 		s.start()
 
-		L.Knockdown(100)
+		L.DefaultCombatKnockdown(100)
 
 	if(master)
 		master.receive_signal()
@@ -192,7 +192,7 @@ Code:
 		s.set_up(3, 1, L)
 		s.start()
 
-		L.Knockdown(100)
+		L.DefaultCombatKnockdown(100)
 
 	if(master)
 		master.receive_signal()

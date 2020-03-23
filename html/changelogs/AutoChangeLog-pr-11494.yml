@@ -1,0 +1,6 @@
+author: "Arreksuru and Detective Google"
+delete-after: True
+changes: 
+  - rscadd: "new HUDpatches for medical, diagnostic, and mesons."
+  - rscadd: "crafting and de-crafting recipes for new HUDpatches."
+  - bugfix: "silly typo with \"singlasses\" in one of the crafting recipes for HUDglasses."

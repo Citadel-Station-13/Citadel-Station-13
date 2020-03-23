@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - balance: "Altered the plastitanium rapier from a perfect AP but weaker esword equivalent to a more unique sleep inducing melee weapon."
+  - rscadd: "Touched up all the relevant sprites."

@@ -10,6 +10,7 @@
 	amToggle = TRUE
 	warn_constant_cost = TRUE
 	var/moveintent_was_run
+	var/runintent
 	var/walk_threshold = 0.4 // arbitrary number, to be changed. edit in last commit: this is fine after testing on box station for a bit
 	var/lum
 
@@ -31,23 +32,25 @@
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	var/mob/living/user = owner
 
+	moveintent_was_run = (user.m_intent == MOVE_INTENT_RUN)
+
 	while(bloodsuckerdatum && ContinueActive(user))
 		// Pay Blood Toll (if awake)
 		owner.alpha = max(35, owner.alpha - min(75, 10 + 5 * level_current))
 		bloodsuckerdatum.AddBloodVolume(-0.2)
 		
-		moveintent_was_run = (user.m_intent == MOVE_INTENT_RUN)
+		runintent = (user.m_intent == MOVE_INTENT_RUN)
 		var/turf/T = get_turf(user)
 		lum = T.get_lumcount()
 
 		if(istype(owner.loc))
 			if(lum > walk_threshold)
-				if(moveintent_was_run)
+				if(runintent)
 					user.toggle_move_intent()
 					ADD_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
 
 			if(lum < walk_threshold)
-				if(!moveintent_was_run)
+				if(!runintent)
 					user.toggle_move_intent()
 					REMOVE_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
 		
@@ -65,5 +68,8 @@
 	..()
 	REMOVE_TRAIT(user, TRAIT_NORUNNING, "cloak of darkness")
 	user.alpha = 255
-	if(!moveintent_was_run)
+
+	runintent = (user.m_intent == MOVE_INTENT_RUN)
+
+	if(!runintent && moveintent_was_run)
 		user.toggle_move_intent()

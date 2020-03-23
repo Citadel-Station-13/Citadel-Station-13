@@ -260,7 +260,7 @@
 				return FALSE
 			if(ishuman(C) && !(lube & SLIP_WHEN_JOGGING))
 				var/mob/living/carbon/human/H = C
-				if(!H.sprinting && H.getStaminaLoss() <= 20)
+				if(!(H.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && H.getStaminaLoss() <= 20)
 					return FALSE
 	if(!(lube&SLIDE_ICE))
 		to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
@@ -272,7 +272,7 @@
 
 	var/olddir = C.dir
 	if(!(lube & SLIDE_ICE))
-		C.Knockdown(knockdown_amount)
+		C.DefaultCombatKnockdown(knockdown_amount)
 		C.stop_pulling()
 	else
 		C.Stun(20)

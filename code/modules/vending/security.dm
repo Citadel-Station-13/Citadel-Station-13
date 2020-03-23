@@ -20,7 +20,7 @@
 	premium = list(/obj/item/coin/antagtoken = 1,
 					/obj/item/clothing/head/helmet/blueshirt = 1,
 					/obj/item/clothing/suit/armor/vest/blueshirt = 1,
-					/obj/item/clothing/under/rank/security/blueshirt = 1,
+					/obj/item/clothing/under/rank/security/officer/blueshirt = 1,
 					/obj/item/ssword_kit = 1)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF

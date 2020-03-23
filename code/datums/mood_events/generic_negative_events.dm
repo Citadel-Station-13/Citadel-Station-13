@@ -243,6 +243,11 @@
 	description = "<span class='boldwarning'>I have been scorched by the unforgiving rays of the sun.</span>\n"
 	mood_change = -6
 	timeout = 15 MINUTES
+
+/datum/mood_event/bloodsucker_disgust
+	description = "<span class='boldwarning'>Something I recently ate was horrifyingly disgusting.</span>\n"
+	mood_change = -5
+	timeout = 5 MINUTES
 	
 /datum/mood_event/nanite_sadness
 	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"

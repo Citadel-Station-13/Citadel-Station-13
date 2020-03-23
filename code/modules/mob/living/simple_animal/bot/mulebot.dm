@@ -181,7 +181,7 @@
 	var/list/data = list()
 	data["on"] = on
 	data["locked"] = locked
-	data["siliconUser"] = hasSiliconAccessInArea(usr)
+	data["siliconUser"] = hasSiliconAccessInArea(user)
 	data["mode"] = mode ? mode_name[mode] : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
@@ -662,7 +662,7 @@
 				if(!paicard)
 					log_combat(src, L, "knocked down")
 					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Knockdown(160)
+					L.DefaultCombatKnockdown(160)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -747,8 +747,8 @@
 	else
 		return null
 
-/mob/living/simple_animal/bot/mulebot/resist()
-	..()
+/mob/living/simple_animal/bot/mulebot/do_resist()
+	. = ..()
 	if(load)
 		unload()
 

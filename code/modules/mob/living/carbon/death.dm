@@ -7,8 +7,8 @@
 
 	if(!gibbed)
 		emote("deathgasp")
-	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
+
+	disable_intentional_combat_mode(TRUE, FALSE)
 
 	. = ..()
 
@@ -67,6 +67,5 @@
 		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
 /mob/living/carbon/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
-	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
+	disable_intentional_combat_mode(TRUE, FALSE)
 	return ..()

@@ -58,30 +58,40 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	cut_overlays()
-	if(opened & icon_door_override)
-		add_overlay("[icon_door]_open")
+	. = ..()
+	if(!opened)
 		layer = OBJ_LAYER
-		return
-	else if(opened)
-		add_overlay("[icon_state]_open")
-		return
-	if(icon_door)
-		add_overlay("[icon_door]_door")
 	else
 		layer = BELOW_OBJ_LAYER
-		add_overlay("[icon_state]_door")
-	if(welded)
-		add_overlay("welded")
-	if(!secure)
-		return
-	if(broken)
-		add_overlay("off")
-		add_overlay("sparking")
-	else if(locked)
-		add_overlay("locked")
+
+/obj/structure/closet/update_overlays()
+	. = ..()
+	closet_update_overlays(.)
+
+/obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(!opened)
+		if(icon_door)
+			. += "[icon_door]_door"
+		else
+			. += "[icon_state]_door"
+		if(welded)
+			. += "welded"
+		if(!secure)
+			return
+		if(broken)
+			. += "off"
+			. += "sparking"
+		else if(locked)
+			. += "locked"
+		else
+			. += "unlocked"
 	else
-		add_overlay("unlocked")
+		if(icon_door_override)
+			. += "[icon_door]_open"
+		else
+			. += "[icon_state]_open"
+
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
@@ -431,7 +441,7 @@
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
-				L.Knockdown(40)
+				L.DefaultCombatKnockdown(40)
 			O.forceMove(T)
 			close()
 	else
@@ -474,8 +484,9 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
+		return FALSE
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
 		return attack_hand(usr)
@@ -510,7 +521,7 @@
 	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear banging from [src].</span>")
-	if(do_after(user,(breakout_time), target = src))
+	if(do_after(user,(breakout_time), target = src, required_mobility_flags = MOBILITY_RESIST))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
@@ -603,12 +614,12 @@
 	step_towards(user, T2)
 	T1 = get_turf(user)
 	if(T1 == T2)
-		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		user.set_resting(TRUE, TRUE)
 		if(!close(user))
 			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.resting = FALSE
+			user.set_resting(FALSE, TRUE)
 			return
-		user.resting = FALSE
+		user.set_resting(FALSE, TRUE)
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
 

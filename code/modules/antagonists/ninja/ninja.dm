@@ -70,16 +70,10 @@
 					O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
 					objectives += O
 			if(4)	//flavor
-				if(helping_station)
-					var/datum/objective/flavor/ninja_helping/O = new /datum/objective/flavor/ninja_helping
-					O.owner = owner
-					O.forge_objective()
-					objectives += O
-				else
-					var/datum/objective/flavor/ninja_syndie/O = new /datum/objective/flavor/ninja_helping
-					O.owner = owner
-					O.forge_objective()
-					objectives += O
+				var/datum/objective/flavor/O = helping_station ? new /datum/objective/flavor/ninja_helping : new /datum/objective/flavor/ninja_syndie
+				O.owner = owner
+				O.forge_objective()
+				objectives += O
 			else
 				break
 	var/datum/objective/O = new /datum/objective/survive()

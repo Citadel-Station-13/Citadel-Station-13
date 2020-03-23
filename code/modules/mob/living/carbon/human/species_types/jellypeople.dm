@@ -83,6 +83,7 @@
 	button_icon_state = "slimeheal"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
+	required_mobility_flags = NONE
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
 	if(..())
@@ -602,10 +603,11 @@
 	else if (select_alteration == "Penis Length")
 		for(var/obj/item/organ/genital/penis/X in H.internal_organs)
 			qdel(X)
-		var/new_length
-		new_length = input(owner, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Genital Alteration") as num|null
+		var/min_D = CONFIG_GET(number/penis_min_inches_prefs)
+		var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
+		var/new_length = input(owner, "Penis length in inches:\n([min_D]-[max_D])", "Genital Alteration") as num|null
 		if(new_length)
-			H.dna.features["cock_length"] = max(min( round(text2num(new_length)), COCK_SIZE_MAX),COCK_SIZE_MIN)
+			H.dna.features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
 		H.update_genitals()
 		H.apply_overlay()
 		H.give_genital(/obj/item/organ/genital/testicles)
@@ -614,8 +616,7 @@
 	else if (select_alteration == "Breast Size")
 		for(var/obj/item/organ/genital/breasts/X in H.internal_organs)
 			qdel(X)
-		var/new_size
-		new_size = input(owner, "Breast Size", "Genital Alteration") as null|anything in GLOB.breasts_size_list
+		var/new_size = input(owner, "Breast Size", "Genital Alteration") as null|anything in CONFIG_GET(keyed_list/breasts_cups_prefs)
 		if(new_size)
 			H.dna.features["breasts_size"] = new_size
 		H.update_genitals()

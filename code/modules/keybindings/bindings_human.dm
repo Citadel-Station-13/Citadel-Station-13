@@ -59,11 +59,11 @@
 	switch(_key)
 		if("Shift")
 			if(!user.prefs.sprint_spacebar)
-				user.prefs.sprint_toggle ? togglesprint() : sprint_hotkey(TRUE) //Yes, this looks hacky. Yes, this works.
+				user.prefs.sprint_toggle ? default_toggle_sprint() : sprint_hotkey(TRUE) //Yes, this looks hacky. Yes, this works.
 			return
 		if("Space")
 			if(user.prefs.sprint_spacebar)
-				user.prefs.sprint_toggle ? togglesprint() : sprint_hotkey(TRUE)
+				user.prefs.sprint_toggle ? default_toggle_sprint() : sprint_hotkey(TRUE)
 			return
 	return ..()
 
