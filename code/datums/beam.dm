@@ -15,6 +15,8 @@
 	var/beam_type = /obj/effect/ebeam //must be subtype
 	var/timing_id = null
 	var/recalculating = FALSE
+	/// If either origin or target is in a container, do get_turf instead of just not beaming.
+	var/get_turf = FALSE
 
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
 	origin = beam_origin
@@ -23,13 +25,13 @@
 	target_oldloc = get_turf(target)
 	sleep_time = beam_sleep_time
 	if(origin_oldloc == origin && target_oldloc == target)
-		static_beam = 1
+		static_beam = TRUE
 	max_distance = maxdistance
 	base_icon = new(beam_icon,beam_icon_state)
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
-	if(time < INFINITY)
+	if(time < INFINITY) 
 		addtimer(CALLBACK(src,.proc/End), time)
 
 /datum/beam/proc/Start()
@@ -42,10 +44,10 @@
 		return
 	recalculating = TRUE
 	timing_id = null
-	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
+	if(origin && target && (get_dist(origin,target) < max_distance) && (origin.z == target.z))
 		var/origin_turf = get_turf(origin)
 		var/target_turf = get_turf(target)
-		if(!static_beam && (origin_turf != origin_oldloc || target_turf != target_oldloc))
+		if(!static_beam && ((origin_turf != origin_oldloc) || (target_turf != target_oldloc)))
 			origin_oldloc = origin_turf //so we don't keep checking against their initial positions, leading to endless Reset()+Draw() calls
 			target_oldloc = target_turf
 			Reset()
@@ -90,6 +92,10 @@
 	return ..()
 
 /datum/beam/proc/Draw()
+	if(!get_turf && (!isturf(target.loc) || !isturf(source.loc)))		//byond is quirky! if we aren't getting turf tell it to just Not(tm)
+		return
+	var/atom/origin = get_turf? get_turf(src.origin) : src.origin
+	var/atom/target = get_turf? get_turf(src.target) : src.target
 	var/Angle = round(Get_Angle(origin,target))
 	var/matrix/rot_matrix = matrix()
 	rot_matrix.Turn(Angle)
