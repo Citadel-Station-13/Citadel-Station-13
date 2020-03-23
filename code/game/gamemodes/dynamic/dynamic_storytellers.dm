@@ -43,7 +43,7 @@ Property weights are:
 /datum/dynamic_storyteller/proc/calculate_threat()
 	var/threat = 0
 	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(A && A.owner && A.owner.current && A.owner.current.stat != DEAD)
+		if(A?.owner?.owner.current && A.owner.current.stat != DEAD)
 			threat += A.threat()
 	for(var/r in SSevents.running)
 		var/datum/round_event/R = r
