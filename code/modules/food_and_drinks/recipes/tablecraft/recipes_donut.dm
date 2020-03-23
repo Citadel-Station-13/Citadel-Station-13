@@ -121,6 +121,16 @@ datum/crafting_recipe/food/donut/meat
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/matcha
 
+/datum/crafting_recipe/food/donut/semen
+	time = 25
+	name = "Do\"nut\""
+	reqs = list(
+		/datum/reagent/consumable/semen = 10,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/donut/semen
+	subcategory = CAT_DONUT
+
 ////////////////////////////////////////////////////JELLY DONUTS///////////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donut/jelly/apple

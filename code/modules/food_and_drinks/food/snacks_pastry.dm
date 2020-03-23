@@ -144,6 +144,19 @@
 	is_decorated = TRUE
 	filling_color = "#879630"
 
+/obj/item/reagent_containers/food/snacks/donut/semen
+	name = "\"creamy\" donut"
+	desc = "That cream looks a little runny..."
+	icon_state = "donut_glaze"
+	item_state = "donut3"
+	bitesize = 5
+	bonus_reagents = list(/datum/reagent/consumable/semen = 5) //VERY creamy.
+	list_reagents = list("nutriment" = 5, "sugar" = 2, "semen" = 5)
+	filling_color = "#FFFFFF"
+	tastes = list("donut" = 2, "salt" = 3, "sugar" = 1)
+	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
+	dunkable = FALSE
+
 //////////////////////JELLY DONUTS/////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
