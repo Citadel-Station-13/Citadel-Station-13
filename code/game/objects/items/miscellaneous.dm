@@ -87,7 +87,6 @@
 			hero_item_list[initial(A.name)] = A
 	return hero_item_list
 
-
 /obj/item/storage/box/hero
 	name = "Courageous Tomb Raider - 1940's."
 
