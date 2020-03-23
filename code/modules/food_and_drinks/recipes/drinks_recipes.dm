@@ -883,7 +883,7 @@
 	name = "Malibu Sunset"
 	id = /datum/reagent/consumable/ethanol/malibu_sunset
 	results = list(/datum/reagent/consumable/ethanol/malibu_sunset = 5)
-	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_coconut = 1, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/grenadine = 1, /datum/reagent/consumable/orangejuice = 1, /datum/reagent/consumable/ice = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/painkiller = 2, /datum/reagent/consumable/grenadine = 1, /datum/reagent/consumable/orangejuice = 1, /datum/reagent/consumable/ice = 1)
 
 /datum/chemical_reaction/liz_fizz
 	name = "Liz Fizz"
