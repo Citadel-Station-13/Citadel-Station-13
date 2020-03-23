@@ -960,6 +960,9 @@
 							  /obj/item/reagent_containers/food/snacks/grown/bluecherries,
 							  /obj/item/reagent_containers/food/snacks/grown/cocoapod,
 							  /obj/item/reagent_containers/food/snacks/grown/vanillapod,
+							  /obj/item/reagent_containers/food/snacks/grown/grapes,
+							  /obj/item/reagent_containers/food/snacks/grown/strawberry,
+							  /obj/item/reagent_containers/food/snacks/grown/whitebeet,
 							  /obj/item/reagent_containers/food/snacks/meat/slab/bear,
 							  /obj/item/reagent_containers/food/snacks/meat/slab/spider,
 							  /obj/item/reagent_containers/food/snacks/spidereggs,
@@ -976,6 +979,14 @@
 							  /obj/item/reagent_containers/food/snacks/grown/pineapple,
 							  /obj/item/reagent_containers/food/snacks/grown/pumpkin,
 							  /obj/item/reagent_containers/food/snacks/meat/rawcrab,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/chicken,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
+							  /obj/item/reagent_containers/food/snacks/egg,
+
 							  /obj/item/reagent_containers/food/snacks/grown/eggplant)
 		new randomFood(src)
 
