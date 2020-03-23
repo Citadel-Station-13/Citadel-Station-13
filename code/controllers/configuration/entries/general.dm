@@ -468,3 +468,9 @@
 
 /datum/config_entry/flag/minimaps_enabled
 	config_entry_value = TRUE
+
+/datum/config_entry/number/medal_hub
+	config_entry_value = null
+
+/datum/config_entry/number/medal_hub_password
+	config_entry_value = null
