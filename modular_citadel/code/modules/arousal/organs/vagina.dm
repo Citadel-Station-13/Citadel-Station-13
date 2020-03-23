@@ -6,6 +6,7 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = "vagina"
 	size = 1 //There is only 1 size right now
+	shape = DEF_VAGINA_SHAPE
 	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE
 	masturbation_verb = "finger"
 	arousal_verb = "You feel wetness on your crotch"

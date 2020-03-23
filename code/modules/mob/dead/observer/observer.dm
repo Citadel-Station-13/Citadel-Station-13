@@ -653,6 +653,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 
 	transfer_ckey(target, FALSE)
+	target.AddElement(/datum/element/ghost_role_eligibility)
 	target.faction = list("neutral")
 	return 1
 

@@ -191,6 +191,15 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
+/obj/item/clothing/suit/armor/vest/infiltrator
+	name = "insidious combat vest"
+	desc = "An insidious combat vest designed using Syndicate nanofibers to absorb the supreme majority of kinetic blows. Although it doesn't look like it'll do too much for energy impacts."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	armor = list("melee" = 30, "bullet" = 40, "laser" = 20, "energy" = 30, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	strip_delay = 80
+
 //All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/centcom

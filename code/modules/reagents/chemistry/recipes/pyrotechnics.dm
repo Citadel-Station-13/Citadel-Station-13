@@ -114,9 +114,12 @@
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	// 100 multiplier = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
-	// 200 multiplier = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, round(multiplier / 12), round(multiplier / 7), 1)
+	// 50 multiplier = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
+	// 100 multiplier = 5 heavy range & 10 light range.
+	// 200 multiplier = 7 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
+	// 300 multiplier = 8 heavy range & 17 light range. Still rather significant, considering that you can get dozens of bluespace beakers 30 minutes in with a competent crew.
+	// 900 multiplier = 12 heavy range & 30 light range. Still less than 300 before this commit.
+	empulse(location, round(multiplier ** (3/8)), round(multiplier ** (1/2)), 1)
 	holder.clear_reagents()
 
 

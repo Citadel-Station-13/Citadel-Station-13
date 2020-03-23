@@ -23,6 +23,10 @@
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features(pref_species?.id)
+	if(gender == MALE || gender != FEMALE)
+		features["body_model"] = gender
+	else if(gender == PLURAL)
+		features["body_model"] = pick(MALE,FEMALE)
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon(equip_job = TRUE)

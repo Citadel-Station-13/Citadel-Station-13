@@ -128,7 +128,7 @@
 	//CITADEL CHANGES - sprint button
 	using = new /obj/screen/sprintbutton
 	using.icon = tg_ui_icon_to_cit_ui(ui_style)
-	using.icon_state = (owner.sprinting ? "act_sprint_on" : "act_sprint")
+	using.icon_state = ((owner.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) ? "act_sprint_on" : "act_sprint")
 	using.screen_loc = ui_movi
 	using.hud = src
 	static_inventory += using
