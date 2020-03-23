@@ -289,7 +289,7 @@
 	repeatable = TRUE
 	property_weights = list("extended" = 1)
 
-/datum/dynamic_ruleset/event/sigercarp_migration
+/datum/dynamic_ruleset/event/tigercarp_migration
 	name = "Tiger carp Migration"
 	config_tag = "tigercarp_migration"
 	typepath = /datum/round_event/tigercarp_migration
