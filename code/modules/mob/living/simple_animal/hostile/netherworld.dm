@@ -4,7 +4,7 @@
 	icon_state = "otherthing"
 	icon_living = "otherthing"
 	icon_dead = "otherthing-dead"
-	mob_biotypes = list(MOB_INORGANIC)
+	mob_biotypes = NONE
 	health = 80
 	maxHealth = 80
 	obj_damage = 100

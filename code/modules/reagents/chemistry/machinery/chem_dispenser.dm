@@ -144,14 +144,14 @@
 	..()
 	icon_state = "[(nopower_state && !powered()) ? nopower_state : initial(icon_state)]"
 
-/obj/machinery/chem_dispenser/update_icon()
-	cut_overlays()
+/obj/machinery/chem_dispenser/update_overlays()
+	. = ..()
 	if(has_panel_overlay && panel_open)
-		add_overlay(mutable_appearance(icon, "[initial(icon_state)]_panel-o"))
+		. += mutable_appearance(icon, "[initial(icon_state)]_panel-o")
 
 	if(beaker)
 		beaker_overlay = display_beaker()
-		add_overlay(beaker_overlay)
+		. += beaker_overlay
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
 	. = ..()
@@ -270,7 +270,7 @@
 			if(!is_operational() || recording_recipe)
 				return
 			var/amount = text2num(params["amount"])
-			if(beaker && amount in beaker.possible_transfer_amounts)
+			if(beaker && (amount in beaker.possible_transfer_amounts))
 				beaker.reagents.remove_all(amount)
 				work_animation()
 				. = TRUE
@@ -356,7 +356,6 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_icon()
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
 		return ..()
@@ -408,7 +407,7 @@
 	if(beaker)
 		var/obj/item/reagent_containers/B = beaker
 		B.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(B)
 	if(new_beaker)
 		beaker = new_beaker

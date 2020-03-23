@@ -8,18 +8,18 @@
 	var/inv_slots
 	var/proctype //if present, will be invoked on headwear generation.
 
-/datum/element/mob_holder/Attach(datum/target, _worn_state, _alt_worn, _right_hand, _left_hand, _inv_slots = NONE, _proctype)
+/datum/element/mob_holder/Attach(datum/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE, proctype)
 	. = ..()
 
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	worn_state = _worn_state
-	alt_worn = _alt_worn
-	right_hand = _right_hand
-	left_hand = _left_hand
-	inv_slots = _inv_slots
-	proctype = _proctype
+	src.worn_state = worn_state
+	src.alt_worn = alt_worn
+	src.right_hand = right_hand
+	src.left_hand = left_hand
+	src.inv_slots = inv_slots
+	src.proctype = proctype
 
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -40,7 +40,7 @@
 		to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
 	if(source.buckled)
-		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
+		to_chat(user, "<span class='warning'>[source] is buckled to something!</span>")
 		return FALSE
 	if(source == user)
 		to_chat(user, "<span class='warning'>You can't pick yourself up.</span>")
@@ -52,7 +52,7 @@
 
 	source.visible_message("<span class='warning'>[user] picks up [source]!</span>", \
 					"<span class='userdanger'>[user] picks you up!</span>")
-	to_chat(user, "<span class='notice'>You pick [src] up.</span>")
+	to_chat(user, "<span class='notice'>You pick [source] up.</span>")
 	source.drop_all_held_items()
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(source), source, worn_state, alt_worn, right_hand, left_hand, inv_slots)
 	if(proctype)
@@ -93,7 +93,7 @@
 		lefthand_file = left_hand
 	if(right_hand)
 		righthand_file = right_hand
-		slot_flags = slots
+	slot_flags = slots
 
 /obj/item/clothing/head/mob_holder/proc/assimilate(mob/living/target)
 	target.setDir(SOUTH)
@@ -101,6 +101,8 @@
 	target.forceMove(src)
 	var/image/I = new //work around to retain the same appearance to the mob idependently from inhands/worn states.
 	I.appearance = target.appearance
+	I.layer = FLOAT_LAYER //So it doesn't get screwed up by layer overrides.
+	I.plane = FLOAT_PLANE //Same as above but for planes.
 	I.override = TRUE
 	add_overlay(I)
 	name = target.name
@@ -112,23 +114,21 @@
 			w_class = WEIGHT_CLASS_NORMAL
 		if(MOB_SIZE_LARGE)
 			w_class = WEIGHT_CLASS_HUGE
-	RegisterSignal(src, COMSIG_CLICK_SHIFT, .proc/examine_held_mob)
 
 /obj/item/clothing/head/mob_holder/Destroy()
 	if(held_mob)
 		release()
 	return ..()
 
-/obj/item/clothing/head/mob_holder/proc/examine_held_mob(datum/source, mob/user)
-	held_mob.ShiftClick(user)
-	return COMPONENT_DENY_EXAMINATE
+/obj/item/clothing/head/mob_holder/examine(mob/user)
+	return held_mob?.examine(user) || ..()
 
 /obj/item/clothing/head/mob_holder/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
 	if(AM == held_mob)
 		held_mob.reset_perspective()
 		held_mob = null
-		qdel(src)
+		QDEL_IN(src, 1) //To avoid a qdel loop.
 
 /obj/item/clothing/head/mob_holder/Entered(atom/movable/AM, atom/newloc)
 	. = ..()
@@ -138,7 +138,7 @@
 			destination = get_turf(loc)
 		AM.forceMove(destination)
 
-/obj/item/clothing/head/mob_holder/dropped()
+/obj/item/clothing/head/mob_holder/dropped(mob/user)
 	. = ..()
 	if(held_mob && isturf(loc))//don't release on soft-drops
 		release()
@@ -150,7 +150,8 @@
 		L.forceMove(get_turf(L))
 		L.reset_perspective()
 		L.setDir(SOUTH)
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/clothing/head/mob_holder/relaymove(mob/user)
 	return
@@ -158,7 +159,7 @@
 /obj/item/clothing/head/mob_holder/container_resist()
 	if(isliving(loc))
 		var/mob/living/L = loc
-		L.visible_message("<span class='warning'>[src] escapes from [L]!</span>", "<span class='warning'>[src] escapes your grip!</span>")
+		L.visible_message("<span class='warning'>[held_mob] escapes from [L]!</span>", "<span class='warning'>[held_mob] escapes your grip!</span>")
 	release()
 
 /obj/item/clothing/head/mob_holder/assume_air(datum/gas_mixture/env)
@@ -170,7 +171,7 @@
 		location = location.loc
 		if(ismob(location))
 			return location.loc.assume_air(env)
-	return loc.assume_air(env)
+	return location.assume_air(env)
 
 /obj/item/clothing/head/mob_holder/remove_air(amount)
 	var/atom/location = loc
@@ -181,4 +182,4 @@
 		location = location.loc
 		if(ismob(location))
 			return location.loc.remove_air(amount)
-	return loc.remove_air(amount)
+	return location.remove_air(amount)

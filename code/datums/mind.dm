@@ -61,7 +61,6 @@
 	var/late_joiner = FALSE
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
-
 	var/list/learned_recipes //List of learned recipe TYPES.
 
 /datum/mind/New(var/key)
@@ -96,8 +95,7 @@
 		SStgui.on_transfer(current, new_character)
 		if(iscarbon(current))
 			var/mob/living/carbon/C = current
-			if(C.combatmode)
-				C.toggle_combat_mode(TRUE, TRUE)
+			C.disable_intentional_combat_mode(TRUE)
 	if(!language_holder)
 		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
 		language_holder = mob_holder.copy(src)
@@ -257,9 +255,11 @@
 	remove_rev()
 	SSticker.mode.update_cult_icons_removed(src)
 
-/datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)
+/datum/mind/proc/equip_traitor(datum/traitor_class/traitor_class, silent = FALSE, datum/antagonist/uplink_owner)
 	if(!current)
 		return
+	if(!traitor_class)
+		traitor_class = GLOB.traitor_classes[TRAITOR_HUMAN]
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
@@ -307,21 +307,21 @@
 
 	if (!uplink_loc)
 		if(!silent)
-			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
+			to_chat(traitor_mob, "Unfortunately, [traitor_class.employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
 		. = uplink_loc
-		var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
+		var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key,traitor_class)
 		if(!U)
 			CRASH("Uplink creation failed.")
 		U.setup_unlock_code()
 		if(!silent)
 			if(uplink_loc == R)
-				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(U.unlock_code)] to unlock its hidden features.")
+				to_chat(traitor_mob, "[traitor_class.employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(U.unlock_code)] to unlock its hidden features.")
 			else if(uplink_loc == PDA)
-				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[U.unlock_code]\" into the ringtone select to unlock its hidden features.")
+				to_chat(traitor_mob, "[traitor_class.employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[U.unlock_code]\" into the ringtone select to unlock its hidden features.")
 			else if(uplink_loc == P)
-				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [U.unlock_code] from its starting position to unlock its hidden features.")
+				to_chat(traitor_mob, "[traitor_class.employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [U.unlock_code] from its starting position to unlock its hidden features.")
 
 		if(uplink_owner)
 			uplink_owner.antag_memory += U.unlock_note + "<br>"
@@ -618,6 +618,10 @@
 	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
 
+/datum/mind/proc/make_Contractor_Support()
+	if(!(has_antag_datum(/datum/antagonist/traitor/contractor_support)))
+		add_antag_datum(/datum/antagonist/traitor/contractor_support)
+
 /datum/mind/proc/make_Changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(!C)
@@ -715,6 +719,11 @@
 	if(G)
 		G.reenter_corpse()
 
+/// Sets our can_hijack to the fastest speed our antag datums allow.
+/datum/mind/proc/get_hijack_speed()
+	. = 0
+	for(var/datum/antagonist/A in antag_datums)
+		. = max(., A.hijack_speed())
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)

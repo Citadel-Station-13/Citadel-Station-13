@@ -14,7 +14,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
-	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
+	var/hijack_speed = 0
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
@@ -83,9 +84,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
+	var/list/mob/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
@@ -228,6 +229,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
+
+/// Gets how fast we can hijack the shuttle, return 0 for can not hijack. Defaults to hijack_speed var, override for custom stuff like buffing hijack speed for hijack objectives or something.
+/datum/antagonist/proc/hijack_speed()
+	var/datum/objective/hijack/H = locate() in objectives
+	if(!isnull(H?.hijack_speed_override))
+		return H.hijack_speed_override
+	return hijack_speed
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

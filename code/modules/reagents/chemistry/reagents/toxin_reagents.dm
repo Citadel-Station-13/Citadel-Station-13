@@ -40,9 +40,9 @@
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
 		if(prob(98))
-			M.randmutb()
+			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		else
-			M.randmutg()
+			M.easy_randmut(POSITIVE)
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -260,7 +260,7 @@
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
-	if(MOB_BUG in M.mob_biotypes)
+	if(M.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
 		M.adjustToxLoss(damage)
 
@@ -504,7 +504,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+	if((method == TOUCH || method == VAPOR) && M.reagents)
 		M.reagents.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
@@ -539,7 +539,7 @@
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				C.Knockdown(60, 0)
+				C.DefaultCombatKnockdown(60, 0)
 				. = TRUE
 			if(2)
 				C.losebreath += 10
@@ -678,7 +678,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 11)
-		M.Knockdown(60, 0)
+		M.DefaultCombatKnockdown(60, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -843,7 +843,7 @@
 		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
-			M.Knockdown(20, 0)
+			M.DefaultCombatKnockdown(20, 0)
 		. = 1
 	..()
 

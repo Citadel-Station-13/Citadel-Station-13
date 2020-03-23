@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - tweak: "Batons now also trigger disarm behavior in disarm intent and not just on right click."

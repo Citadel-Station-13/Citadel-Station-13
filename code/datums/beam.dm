@@ -61,7 +61,8 @@
 /datum/beam/proc/recalculate_in(time)
 	if(timing_id)
 		deltimer(timing_id)
-	timing_id = addtimer(CALLBACK(src, .proc/recalculate), time, TIMER_STOPPABLE)
+	if(!finished)
+		timing_id = addtimer(CALLBACK(src, .proc/recalculate), time, TIMER_STOPPABLE)
 
 /datum/beam/proc/after_calculate()
 	if((sleep_time == null) || finished)	//Does not automatically recalculate.
@@ -82,6 +83,7 @@
 	elements.Cut()
 
 /datum/beam/Destroy()
+	finished = TRUE
 	Reset()
 	target = null
 	origin = null
@@ -99,7 +101,7 @@
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
-		if(QDELETED(src) || finished)
+		if(finished)
 			break
 		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
 		X.owner = src

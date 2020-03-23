@@ -19,7 +19,7 @@
 	icon_state = "welding"
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	materials = list(MAT_METAL=1750, MAT_GLASS=400)
+	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = 2
 	tint = 2
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 60)
@@ -197,16 +197,19 @@
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/head/wig/update_icon()
-	cut_overlays()
+/obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
 	if(!S)
+		icon = 'icons/obj/clothing/hats.dmi'
 		icon_state = "pwig"
-	else
-		var/mutable_appearance/M = mutable_appearance(S.icon,S.icon_state)
+
+/obj/item/clothing/head/wig/update_overlays()
+	. = ..()
+	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+	if(S)
+		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state, color = hair_color)
 		M.appearance_flags |= RESET_COLOR
-		M.color = hair_color
-		add_overlay(M)
+		. += M
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()

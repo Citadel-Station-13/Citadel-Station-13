@@ -147,6 +147,10 @@
 		. += newletter
 	return sanitize(.)
 
+//Ratvarian Slurring!
+
+#define CLOCK_CULT_SLUR(phrase) sanitize(text2ratvar(phrase))
+
 ///Adds stuttering to the message passed in
 /proc/stutter(phrase)
 	phrase = html_decode(phrase)
@@ -402,8 +406,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 	return TRUE
 
-/atom/proc/hasSiliconAccessInArea(mob/user)
-	return user && (issilicon(user) || (user.siliconaccesstoggle && (get_area(src) in user.siliconaccessareas)))
+/atom/proc/hasSiliconAccessInArea(mob/user, flags = PRIVILEDGES_SILICON)
+	return user.silicon_privileges & (flags) || (user.siliconaccesstoggle && (get_area(src) in user.siliconaccessareas))
 
 /mob/proc/toggleSiliconAccessArea(area/area)
 	if (area in siliconaccessareas)
@@ -420,25 +424,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return TRUE
 
 /mob/proc/getImplant(type)
-	if (!istype(src,/mob/living))
-		return
-	var/mob/living/L = src
-	for (var/I in L.implants)
-		if (istype(I,type))
-			return I
-	return null
+	return
 
-/proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="", var/allow_all=FALSE)
-	if(allow_all & TRUE)
-		if(!target.GetComponent(/datum/component/anti_magic))
-			return 1
-	if(IsAdminGhost(A))
-		if (desc != "")
-			log_admin("GHOST: [key_name(A)] [desc] ([target.name] at [loc_name(target)])")
-		else
-			log_admin("GHOST: [key_name(A)] fucked with the [target.name] at [loc_name(target)]")
-		return 1
-	return 0
+/mob/living/getImplant(type)
+	return locate(type) in implants
 
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
@@ -454,10 +443,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
+	var/list/mob/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(FALSE, TRUE)
@@ -566,4 +555,4 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
+	return stat == DEAD || silicon_privileges //Dead guys and silicons can always see reagents

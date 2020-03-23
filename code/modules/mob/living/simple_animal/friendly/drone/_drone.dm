@@ -35,13 +35,13 @@
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	speak_emote = list("chirps")
 	speech_span = SPAN_ROBOT
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
-	has_unlimited_silicon_privilege = 1
+	silicon_privileges = PRIVILEDGES_DRONE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
@@ -105,7 +105,7 @@
 	. = ..()
 	if(can_be_held)
 		//icon/item state is defined in mob_holder/drone_worn_icon()
-		AddElement(/datum/element/mob_holder, null, 'icons/mob/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', TRUE, /datum/element/mob_holder.proc/drone_worn_icon)
+		AddElement(/datum/element/mob_holder, null, 'icons/mob/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', ITEM_SLOT_HEAD, /datum/element/mob_holder.proc/drone_worn_icon)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -277,7 +277,7 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return 0 //So they don't die trying to fix wiring
 
 /mob/living/simple_animal/drone/can_see_reagents()

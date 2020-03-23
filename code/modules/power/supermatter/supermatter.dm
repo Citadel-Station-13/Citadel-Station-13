@@ -328,12 +328,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(power)
 		soundloop.volume = min(40, (round(power/100)/50)+1) // 5 +1 volume per 20 power. 2500 power is max
 
-	if(isclosedturf(T))
-		var/turf/did_it_melt = T.Melt()
-		if(!isclosedturf(did_it_melt)) //In case some joker finds way to place these on indestructible walls
-			visible_message("<span class='warning'>[src] melts through [T]!</span>")
-		return
-
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()
 
@@ -345,7 +339,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		// Pass all the gas related code an empty gas container
 		removed = new()
-
 	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
@@ -530,7 +523,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
 			has_been_powered = TRUE
 	else if(takes_damage)
-		damage += Proj.damage * config_bullet_energy
+		matter_power += Proj.damage * config_bullet_energy
 	return BULLET_ACT_HIT
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
@@ -813,7 +806,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			. = zapdir
 
 	if(target_mob)
-		target_mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, stun = 0)
+		target_mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, SHOCK_NOSTUN)
 		if(prob(15))
 			supermatter_zap(target_mob, 5, power / 2)
 			supermatter_zap(target_mob, 5, power / 2)

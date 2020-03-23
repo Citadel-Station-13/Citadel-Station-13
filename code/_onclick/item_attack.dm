@@ -1,19 +1,28 @@
-
+/**
+  *This is the proc that handles the order of an item_attack.
+  *The order of procs called is:
+  *tool_act on the target. If it returns TRUE, the chain will be stopped.
+  *pre_attack() on src. If this returns TRUE, the chain will be stopped.
+  *attackby on the target. If it returns TRUE, the chain will be stopped.
+  *and lastly
+  *afterattack. The return value does not matter.
+  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	if(!tool_attack_chain(user, target) && pre_attack(target, user, params))
-		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-		var/resolved = target.attackby(src, user, params)
-		if(!resolved && target && !QDELETED(src))
-			afterattack(target, user, 1, params) // 1: clicking something Adjacent
-
-
-//Checks if the item can work as a tool, calling the appropriate tool behavior on the target
-/obj/item/proc/tool_attack_chain(mob/user, atom/target)
-	if(!tool_behaviour)
-		return FALSE
-
-	return target.tool_act(user, src, tool_behaviour)
-
+	if(item_flags & NO_ATTACK_CHAIN_SOFT_STAMCRIT)
+		if(isliving(user))
+			var/mob/living/L = user
+			if(IS_STAMCRIT(L))
+				to_chat(L, "<span class='warning'>You are too exhausted to swing [src]!</span>")
+				return
+	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
+		return
+	if(pre_attack(target, user, params))
+		return
+	if(target.attackby(src,user, params))
+		return
+	if(QDELETED(src) || QDELETED(target))
+		return
+	afterattack(target, user, TRUE, params)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
@@ -23,8 +32,8 @@
 
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
-		return FALSE
-	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
+		return TRUE
+	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
@@ -49,7 +58,7 @@
 	if(item_flags & NOBLUDGEON)
 		return
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+	if(IS_STAMCRIT(user)) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 
@@ -79,7 +88,7 @@
 		return
 	if(item_flags & NOBLUDGEON)
 		return
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+	if(IS_STAMCRIT(user)) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 	user.adjustStaminaLossBuffered(getweight()*1.2)//CIT CHANGE - makes attacking things cause stamina loss
@@ -100,11 +109,9 @@
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(iscarbon(user))
-		var/mob/living/carbon/tempcarb = user
-		if(!tempcarb.combatmode)
-			totitemdamage *= 0.5
-	if(user.resting)
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		totitemdamage *= 0.5
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
@@ -112,15 +119,11 @@
 	send_item_attack_message(I, user)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW)) 
+		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW))
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
-				if(iscarbon(src))
-					var/mob/living/carbon/C = src
-					C.bleed(totitemdamage)
-				else
-					add_splatter_floor(location)
+				add_splatter_floor(location)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 		return TRUE //successful attack

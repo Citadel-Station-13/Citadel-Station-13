@@ -22,7 +22,7 @@
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
@@ -204,7 +204,7 @@
 	rapid = 2
 	icon_state = "syndicate_smg"
 	icon_living = "syndicate_smg"
-	casingtype = /obj/item/ammo_casing/c45/nostamina
+	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot //caravan ambush ruin
@@ -284,7 +284,7 @@
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE | PASSMOB
 	a_intent = INTENT_HARM
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	health = 25
 	maxHealth = 25
 	melee_damage_lower = 15

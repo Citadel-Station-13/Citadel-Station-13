@@ -4,13 +4,14 @@
 	icon_state = "laser"
 	item_state = "laser"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
+	icon_state = "laser-p"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0

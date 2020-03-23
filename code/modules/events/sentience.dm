@@ -24,7 +24,7 @@
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates
-	candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
+	candidates = get_candidates(ROLE_SENTIENCE, null, ROLE_SENTIENCE)
 
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless and on station
@@ -44,7 +44,7 @@
 	var/spawned_animals = 0
 	while(spawned_animals < animals && candidates.len && potential.len)
 		var/mob/living/simple_animal/SA = pick_n_take(potential)
-		var/mob/dead/observer/SG = pick_n_take(candidates)
+		var/mob/SG = pick_n_take(candidates)
 
 		spawned_animals++
 
@@ -59,7 +59,7 @@
 		SA.del_on_death = FALSE
 
 		spawned_mobs += SA
-
+		SA.AddElement(/datum/element/ghost_role_eligibility)
 		to_chat(SA, "<span class='userdanger'>Hello world!</span>")
 		to_chat(SA, "<span class='warning'>Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \

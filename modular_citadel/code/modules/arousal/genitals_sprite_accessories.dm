@@ -85,36 +85,36 @@
 //Vaginas
 /datum/sprite_accessory/vagina
 	icon = 'modular_citadel/icons/obj/genitals/vagina_onmob.dmi'
-	icon_state = null
 	name = "vagina"
 	color_src = "vag_color"
+	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/human
 	icon_state = "human"
 	name = "Human"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/tentacles
 	icon_state = "tentacle"
 	name = "Tentacle"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/dentata
 	icon_state = "dentata"
 	name = "Dentata"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/hairy
 	icon_state = "hairy"
 	name = "Hairy"
+	alt_aroused = FALSE
 
 /datum/sprite_accessory/vagina/spade
 	icon_state = "spade"
 	name = "Spade"
+	alt_aroused = FALSE
 
 /datum/sprite_accessory/vagina/furred
 	icon_state = "furred"
 	name = "Furred"
+	alt_aroused = FALSE
 
 /datum/sprite_accessory/vagina/gaping
 	icon_state = "gaping"
@@ -125,7 +125,6 @@
 	icon = 'modular_citadel/icons/obj/genitals/breasts_onmob.dmi'
 	name = "breasts"
 	color_src = "breasts_color"
-	alt_aroused = TRUE
 
 /datum/sprite_accessory/breasts/pair
 	icon_state = "pair"
@@ -138,14 +137,3 @@
 /datum/sprite_accessory/breasts/sextuple
 	icon_state = "sextuple"
 	name = "Sextuple"
-
-//OVIPOSITORS BE HERE
-/datum/sprite_accessory/ovipositor
-	icon = 'modular_citadel/icons/obj/genitals/penis_onmob.dmi'
-	icon_state = null
-	name = "Ovipositor"			//the preview name of the accessory
-	color_src = "cock_color"
-
-/datum/sprite_accessory/ovipositor/knotted
-	icon_state = "knotted"
-	name = "Knotted"

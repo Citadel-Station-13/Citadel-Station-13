@@ -74,15 +74,316 @@
 "an" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
+"ao" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/mob/living/simple_animal/bot/secbot/beepsky{
+	desc = "Powered by the tears and sweat of laborers.";
+	name = "Prison Ofitser"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"ap" = (
+/turf/open/floor/plating,
+/area/lavaland/surface/outdoors)
 "aA" = (
-/turf/open/lava/smooth/lava_land_surface,
-/area/template_noop)
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"aD" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"aQ" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"aU" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"aV" = (
+/obj/machinery/vending/sustenance,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"bd" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"bf" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Infirmary"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"bs" = (
+/turf/closed/wall,
+/area/lavaland/surface/outdoors)
+"bC" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"bG" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"bP" = (
+/obj/machinery/computer/security/labor,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"bY" = (
+/obj/machinery/computer/shuttle/labor/one_way{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"cb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"ch" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"cn" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"cp" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"cq" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "cu" = (
 /obj/item/pickaxe,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cv" = (
 /obj/structure/ore_box,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"cw" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"cV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"dg" = (
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+	dir = 8;
+	dwidth = 2;
+	height = 5;
+	id = "laborcamp_away";
+	name = "labor camp";
+	width = 9
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"dj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"dA" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"dD" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"dF" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"dG" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"dM" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"eb" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"eh" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"eo" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"eq" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"eP" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"eQ" = (
+/obj/structure/closet/crate/radiation,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare,
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"eR" = (
+/obj/structure/bed,
+/obj/item/bedsheet/medical,
+/obj/machinery/camera{
+	c_tag = "Labor Camp Medical";
+	dir = 8;
+	network = list("labor")
+	},
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"eS" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock{
+	name = "Labor Camp External Access"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"eW" = (
+/obj/machinery/status_display/evac{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"fc" = (
+/obj/machinery/mineral/unloading_machine{
+	dir = 1;
+	icon_state = "unloader-corner";
+	input_dir = 1;
+	output_dir = 2
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"ft" = (
+/obj/structure/stone_tile/block,
+/obj/item/twohanded/bonespear,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fC" = (
+/turf/closed/wall/r_wall,
+/area/mine/laborcamp/security)
+"fN" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/item/twohanded/bonespear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "fQ" = (
@@ -111,6 +412,10 @@
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"gg" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
 "gj" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
@@ -139,6 +444,9 @@
 /obj/structure/stone_tile/block,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"gq" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "gr" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -163,6 +471,17 @@
 	dir = 4
 	},
 /obj/structure/stone_tile,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"gt" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gy" = (
@@ -239,11 +558,27 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"hd" = (
+/obj/structure/mineral_door/sandstone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "hg" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center/cracked,
 /mob/living/simple_animal/hostile/megafauna/legion,
 /turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"hr" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/item/hatchet,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hs" = (
 /obj/structure/stone_tile/block{
@@ -251,6 +586,28 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"hy" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"hD" = (
+/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"hG" = (
+/obj/item/radio/intercom{
+	desc = "Talk through this. It looks like it has been modified to not broadcast.";
+	name = "Prison Intercom (General)";
+	pixel_y = 24;
+	prison_radio = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "hH" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -271,6 +628,29 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"hU" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"hY" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "gulag"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"ia" = (
+/obj/item/reagent_containers/glass/bucket/wood,
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "id" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -284,6 +664,15 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"iq" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/sign/warning/electricshock{
+	pixel_y = -32
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
 "ir" = (
 /obj/structure/stone_tile/slab/cracked{
 	dir = 5
@@ -320,6 +709,14 @@
 /obj/structure/stone_tile/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"iB" = (
+/obj/item/bikehorn{
+	color = "#000";
+	desc = "A horn off of a bicycle. This one has been charred to hell and back, yet somehow it still honks.";
+	name = "charred bike horn"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "iC" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -327,6 +724,53 @@
 /obj/structure/stone_tile/block/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"iG" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/seeds/ambrosia/deus{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/ambrosia/deus{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/tower{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/tower{
+	yield = 5
+	potency = 50
+	},
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"iJ" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/clothing/head/helmet/roman/legionnaire,
+/obj/item/twohanded/bonespear,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
 "iK" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
@@ -376,6 +820,16 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"jj" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
 "jk" = (
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding_tile,
@@ -423,12 +877,30 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"ju" = (
+/obj/machinery/door/airlock{
+	name = "Vending"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "jx" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"jD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "jF" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
@@ -491,6 +963,12 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"ke" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
 "kg" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -551,6 +1029,13 @@
 /obj/structure/stone_tile/center,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"kG" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "kH" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
@@ -587,10 +1072,30 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"kP" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "kR" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"lb" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
 "le" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -742,6 +1247,12 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"lL" = (
+/obj/structure/table,
+/obj/item/trash/plate,
+/obj/item/kitchen/fork,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "lP" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -786,6 +1297,13 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"lY" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
 "lZ" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -1179,10 +1697,1497 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"nt" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"nB" = (
+/obj/item/shovel,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"nC" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"nE" = (
+/turf/closed/mineral/random/volcanic,
+/area/lavaland/surface/outdoors/explored)
+"nJ" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered/ash_walkers)
+"nQ" = (
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"nU" = (
+/obj/structure/stone_tile,
+/obj/item/shard,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"nW" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
 "ol" = (
-/obj/effect/landmark/stationroom/lavaland/station,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"ot" = (
+/obj/structure/stone_tile/surrounding_tile,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"oB" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"oL" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/closet/secure_closet/labor_camp_security,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"oS" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/malf_upgrade,
+/obj/item/disk/tech_disk/illegal,
+/obj/structure/safe,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"oW" = (
+/obj/structure/gulag_beacon,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"pc" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"pf" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"pq" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"pt" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"pD" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"pF" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"pG" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"pH" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"pR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"pX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"qe" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/red,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"qh" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"qi" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"qr" = (
+/obj/machinery/door/airlock{
+	name = "Restroom"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"qA" = (
+/obj/item/flashlight/lantern,
+/obj/structure/stone_tile/center,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"qN" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"qS" = (
+/obj/structure/stone_tile/slab,
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"rb" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"rz" = (
+/obj/item/storage/box/rxglasses,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"rO" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/ore_box,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"rQ" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"sa" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"se" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"sk" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"sl" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"sx" = (
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/obj/item/stack/sheet/mineral/coal,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"sN" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"tp" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"ty" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"tz" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck/syndicate,
+/obj/item/construction/rcd/loaded/upgraded,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"tM" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "labor";
+	name = "labor camp blast door"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"ug" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"ui" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"uk" = (
+/obj/structure/lavaland/ash_walker,
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"up" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/freezer/gulag_fridge,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"uz" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"uB" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Labor Camp APC";
+	pixel_y = 23
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"vi" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"vt" = (
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"vu" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"vz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"vI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"vP" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock{
+	name = "Labor Camp External Access"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"vR" = (
+/obj/machinery/hydroponics/soil,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"wm" = (
+/obj/item/seeds/glowshroom{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/glowshroom{
+	yield = 5
+	potency = 50
+	},
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"ww" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"wF" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"wN" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"wW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"xr" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/closet/crate/internals,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"xs" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"xR" = (
+/obj/machinery/mineral/processing_unit_console,
+/turf/closed/wall,
+/area/mine/laborcamp)
+"xX" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/item/pickaxe,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"yd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"yf" = (
+/obj/machinery/hydroponics/soil,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/center,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"yw" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "gulag"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"yW" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"zf" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"zv" = (
+/obj/machinery/hydroponics/soil,
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"zx" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"zQ" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"Aa" = (
+/obj/machinery/door/airlock{
+	name = "Labor Camp Storage"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"An" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/table/wood,
+/obj/item/twohanded/bonespear,
+/obj/item/twohanded/bonespear,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"AH" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/twohanded/bonespear,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"AP" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Labor Camp Security Office";
+	dir = 1;
+	network = list("labor")
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"AR" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/button/door{
+	id = "labor";
+	name = "Labor Camp Lockdown";
+	pixel_y = 28;
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"AU" = (
+/obj/structure/stone_tile,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"AX" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/template_noop)
+/area/lavaland/surface/outdoors/explored)
+"AY" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Bg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 9
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Bj" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/structure/necropolis_gate/ashwalker,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Br" = (
+/obj/structure/stone_tile/slab,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Bs" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"Bv" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Shuttle Prisoner Airlock"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"BF" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"BG" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"BH" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/center/cracked,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"BP" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"BU" = (
+/turf/closed/indestructible/riveted/boss/see_through,
+/area/ruin/unpowered/ash_walkers)
+"Ch" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Cy" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"CG" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"CL" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/table/wood,
+/obj/item/clothing/head/helmet/skull,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Dn" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"Do" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"Dx" = (
+/obj/structure/bonfire/dense,
+/obj/structure/stone_tile/center,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Dz" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"DQ" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/item/book/granter/crafting_recipe/bone_bow,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Ef" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"Ez" = (
+/obj/machinery/grill{
+	name = "old rusty grill"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ED" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 5
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"EQ" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"Fn" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"Fq" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Fs" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Fw" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "gulag"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"Fz" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"FC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Labor Camp Monitoring";
+	req_access_txt = "2";
+	security_level = 6
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"FD" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"FQ" = (
+/turf/closed/wall,
+/area/mine/laborcamp)
+"Gc" = (
+/obj/structure/flora/junglebush/b,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Gw" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"Gx" = (
+/obj/item/pickaxe,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"GC" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"GI" = (
+/obj/machinery/camera{
+	c_tag = "Labor Camp External";
+	dir = 4;
+	network = list("labor")
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"GX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"Hq" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/scythe,
+/obj/item/twohanded/bonespear,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"HX" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Ik" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/recharger,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"IV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Jq" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"JI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"JO" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"JP" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"Ks" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"KA" = (
+/obj/structure/stone_tile/slab,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"KH" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"KJ" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"KO" = (
+/obj/machinery/computer/secure_data,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"KR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"KV" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/decal/cleanable/blood,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Ld" = (
+/obj/machinery/light/small,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"LJ" = (
+/turf/open/water,
+/area/lavaland/surface/outdoors)
+"Mh" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"Mx" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"MQ" = (
+/obj/structure/table/optable,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/item/surgical_drapes,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"MS" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"MX" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Nl" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"NS" = (
+/obj/machinery/computer/prisoner,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Ol" = (
+/obj/structure/closet/crate/internals,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Ou" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/table/wood,
+/obj/item/storage/toolbox/syndicate,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Oy" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"OK" = (
+/turf/closed/wall/r_wall,
+/area/mine/laborcamp)
+"Pj" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"PF" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Shuttle Security Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"PM" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+	dir = 1;
+	piping_layer = 3
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/mine/laborcamp/security)
+"Qd" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/storage/belt,
+/obj/item/twohanded/bonespear,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Qe" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Qk" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/stack/marker_beacon/ten,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"QC" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"QG" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"QH" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Labor Camp Security APC";
+	pixel_y = 23
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"QM" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"QZ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Shuttle Prisoner Airlock"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Ra" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"Rb" = (
+/obj/structure/closet/crate,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Rk" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"Rr" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"Rs" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"RF" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"RX" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Sc" = (
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/flashlight,
+/obj/item/pickaxe,
+/obj/item/clothing/glasses/meson,
+/obj/item/mining_scanner,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Sh" = (
+/obj/structure/stone_tile/block,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Si" = (
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"SG" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"SI" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"ST" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"SZ" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Mining Station Maintenance";
+	req_access_txt = "48"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"Tl" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Tn" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/kitchen/knife/combat/bone,
+/obj/item/book/granter/crafting_recipe/bone_bow,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Tp" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"TN" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered/ash_walkers)
+"TP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Uh" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/table/wood,
+/obj/item/weldingtool/experimental,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
 "Uq" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -1195,6 +3200,289 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"UC" = (
+/obj/structure/table,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"UV" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Vb" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/plants,
+/obj/item/seeds/cotton{
+	yield = 5
+	potency = 50
+	},
+/obj/item/seeds/cotton{
+	yield = 5
+	potency = 50
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Vj" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Vs" = (
+/obj/machinery/camera{
+	c_tag = "Labor Camp Central";
+	network = list("labor")
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 6
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Vy" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"VI" = (
+/obj/structure/well_foundation,
+/obj/item/reagent_containers/glass/bucket/wood,
+/obj/item/reagent_containers/glass/bucket/wood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"VV" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"Wb" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"Wh" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"Wj" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Wq" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WA" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/item/book/granter/crafting_recipe/bone_bow,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"WI" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Shuttle Security Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WL" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/closet/crate/medical,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/ancient,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/lizard,
+/obj/item/reagent_containers/blood/lizard,
+/obj/item/stack/sheet/cloth/ten,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"WN" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/item/twohanded/bonespear,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"WT" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Xe" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Xf" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Xo" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"Xw" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Xz" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"XG" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"XS" = (
+/obj/machinery/flasher{
+	id = "labor"
+	},
+/turf/closed/wall,
+/area/mine/laborcamp)
+"Yg" = (
+/obj/structure/flora/rock/pile/largejungle{
+	light_range = null
+	},
+/turf/open/water,
+/area/lavaland/surface/outdoors)
+"Ym" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Yu" = (
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/flashlight,
+/obj/item/clothing/glasses/meson,
+/obj/item/mining_scanner,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Yy" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/item/flashlight/lantern,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"YD" = (
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Zc" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/machinery/the_singularitygen,
+/turf/open/indestructible/boss,
+/area/ruin/unpowered/ash_walkers)
+"Zs" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/ruin/unpowered/ash_walkers)
+"ZK" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"ZM" = (
+/turf/closed/wall,
+/area/mine/laborcamp/security)
+"ZP" = (
+/obj/machinery/conveyor{
+	id = "gulag"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
 
 (1,1,1) = {"
 aa
@@ -1397,61 +3685,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-ol
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (2,1,1) = {"
 aa
@@ -1654,61 +3942,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (3,1,1) = {"
 aa
@@ -1911,61 +4199,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (4,1,1) = {"
 aa
@@ -2168,61 +4456,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ai
+ai
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (5,1,1) = {"
 aa
@@ -2425,61 +4713,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ai
+ai
+ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (6,1,1) = {"
 aa
@@ -2682,61 +4970,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ai
+gq
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (7,1,1) = {"
 aa
@@ -2838,10 +5126,10 @@ aj
 aj
 aj
 aj
-an
-an
-an
-an
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -2939,61 +5227,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+AX
+AX
+ab
+gq
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
 "}
 (8,1,1) = {"
 aa
@@ -3094,8 +5382,26 @@ ak
 ak
 ad
 aj
-ab
-ab
+aj
+aj
+aj
+aj
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
 ad
 an
 an
@@ -3109,24 +5415,6 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-ad
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
 ab
 ab
 ab
@@ -3196,61 +5484,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+ab
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+AX
+AX
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (9,1,1) = {"
 aa
@@ -3352,72 +5640,133 @@ ak
 ai
 aj
 aj
+aj
+aj
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 ab
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
+ab
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+AX
+AX
+aj
+aj
+AX
+AX
+aj
+aj
+AX
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+ab
 aj
 aj
 aj
@@ -3432,6 +5781,10 @@ aj
 aj
 aj
 aj
+ab
+ab
+aj
+ab
 aj
 aj
 aj
@@ -3443,71 +5796,6 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
 "}
 (10,1,1) = {"
 aa
@@ -3609,71 +5897,71 @@ ak
 ak
 ai
 aj
+aj
+aj
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
 ab
 ab
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-an
-ab
-ab
 ab
 ab
 aj
@@ -3710,61 +5998,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (11,1,1) = {"
 aa
@@ -3967,61 +6255,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+AX
+AX
+gq
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+AX
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (12,1,1) = {"
 aa
@@ -4224,61 +6512,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+AX
+AX
+AX
+gq
+AX
+AX
+AX
+AX
+AX
+gq
+AX
+AX
+gq
+AX
+AX
+AX
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (13,1,1) = {"
 aa
@@ -4481,61 +6769,61 @@ aj
 aj
 aj
 ab
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+AX
+AX
+AX
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+AX
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (14,1,1) = {"
 aa
@@ -4738,61 +7026,61 @@ aj
 aj
 ab
 ab
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+AX
+AX
+AX
+AX
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+AX
+AX
+ab
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (15,1,1) = {"
 aa
@@ -4995,61 +7283,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+AX
+AX
+AX
+AX
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+AX
+AX
+AX
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (16,1,1) = {"
 aa
@@ -5252,61 +7540,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+AX
+AX
+AX
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+AX
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (17,1,1) = {"
 aa
@@ -5509,61 +7797,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+AX
+AX
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+dg
+gq
+gq
+gq
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+ab
+aj
+aj
+aj
+aj
 "}
 (18,1,1) = {"
 aa
@@ -5766,61 +8054,61 @@ aj
 aj
 ab
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+FQ
+FQ
+FQ
+FQ
+FQ
+WI
+FQ
+FQ
+FQ
+Bv
+FQ
+ZM
+ZM
+ZM
+aj
+aj
+aj
+aj
+ab
+ai
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (19,1,1) = {"
 aa
@@ -6023,61 +8311,61 @@ an
 an
 ab
 ab
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+FQ
+lL
+Wq
+aV
+FQ
+AR
+FQ
+bY
+FQ
+Rs
+FQ
+ch
+tp
+ZM
+aj
+iB
+aj
+ab
+ab
+ai
+ai
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (20,1,1) = {"
 aa
@@ -6280,61 +8568,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+ab
+aj
+aj
+aj
+ab
+ab
+FQ
+Nl
+vt
+JO
+FQ
+PF
+FQ
+oW
+FQ
+QZ
+FQ
+hU
+iq
+ZM
+aj
+aj
+aj
+aj
+ab
+ai
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (21,1,1) = {"
 aa
@@ -6537,61 +8825,61 @@ an
 an
 an
 an
+an
+an
+an
+an
 aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+pR
+Ra
+FQ
+FQ
+FQ
+ju
+FQ
+FQ
+tM
+FQ
+eW
+vt
+vt
+OK
+fC
+SZ
+fC
+lY
+fC
+nE
+aj
+aj
+aj
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (22,1,1) = {"
 aa
@@ -6794,61 +9082,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+ol
+gg
+UC
+FQ
+nC
+vt
+vt
+vt
+vt
+vt
+vt
+vz
+vt
+vt
+OK
+Tp
+SI
+up
+zx
+fC
+nE
+nE
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (23,1,1) = {"
 aa
@@ -7051,61 +9339,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+FQ
+ug
+dG
+bf
+cq
+cq
+cq
+pf
+XS
+Vs
+TP
+cV
+dj
+dj
+FC
+ao
+wW
+ED
+aD
+fC
+nE
+gq
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (24,1,1) = {"
 aa
@@ -7308,61 +9596,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+FQ
+eR
+yW
+FQ
+hG
+vt
+Vy
+vI
+TP
+Bg
+JO
+Fq
+vt
+vt
+OK
+cn
+nQ
+IV
+AP
+fC
+AX
+aj
+aj
+aj
+aj
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (25,1,1) = {"
 aa
@@ -7565,61 +9853,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+FQ
+FQ
+FQ
+FQ
+FQ
+vt
+vt
+Ks
+vt
+yw
+FQ
+hY
+OK
+OK
+OK
+QH
+nQ
+jD
+Tl
+lY
+gq
+aj
+aj
+aj
+aj
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (26,1,1) = {"
 aa
@@ -7822,61 +10110,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+FQ
+Yu
+Yu
+Yu
+FQ
+vt
+Ld
+FQ
+FQ
+xR
+FQ
+hY
+OK
+uB
+qr
+Fs
+Ym
+Qe
+cb
+yd
+PM
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (27,1,1) = {"
 aa
@@ -8079,61 +10367,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+FQ
+Sc
+vt
+vt
+Aa
+vt
+bd
+fc
+ZP
+wN
+ZP
+Fw
+OK
+zQ
+ZM
+KO
+nQ
+JI
+YD
+VV
+gq
+gq
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (28,1,1) = {"
 aa
@@ -8336,61 +10624,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+FQ
+FQ
+sN
+Ol
+FQ
+vP
+FQ
+FQ
+FQ
+FQ
+FQ
+FQ
+OK
+OK
+fC
+bP
+Cy
+KH
+bC
+fC
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (29,1,1) = {"
 aa
@@ -8593,61 +10881,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+FQ
+FQ
+FQ
+FQ
+vt
+FQ
+bG
+ST
+ST
+gq
+gq
+gq
+AX
+lY
+NS
+qe
+Ik
+oL
+fC
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (30,1,1) = {"
 aa
@@ -8771,6 +11059,7 @@ aj
 aj
 aj
 aj
+aj
 an
 an
 an
@@ -8850,61 +11139,60 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+FQ
+Rs
+FQ
+bG
+gq
+gq
+gq
+gq
+gq
+AX
+KR
+GX
+ZK
+rb
+pX
+fC
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (31,1,1) = {"
 aa
@@ -9030,9 +11318,9 @@ aj
 aj
 aj
 aj
-an
 aj
 aj
+aj
 an
 an
 an
@@ -9107,61 +11395,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+FQ
+eS
+FQ
+bG
+gq
+gq
+gq
+gq
+gq
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (32,1,1) = {"
 aa
@@ -9364,61 +11652,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+gq
+gq
+GI
+gq
+gq
+gq
+gq
+gq
+aj
+aj
+aj
+aj
+aj
+ab
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (33,1,1) = {"
 aa
@@ -9621,61 +11909,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+gq
+aj
+aj
+aj
+aj
+ab
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (34,1,1) = {"
 aa
@@ -9878,61 +12166,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+gq
+gq
+gq
+gq
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (35,1,1) = {"
 aa
@@ -10135,61 +12423,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+gq
+gq
+gq
+gq
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (36,1,1) = {"
 aa
@@ -10392,61 +12680,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+gq
+gq
+gq
+gq
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (37,1,1) = {"
 aa
@@ -10649,61 +12937,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+gq
+gq
+cv
+an
+ab
+an
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (38,1,1) = {"
 aa
@@ -10906,61 +13194,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aj
+aj
+aj
+ai
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (39,1,1) = {"
 aa
@@ -11163,61 +13451,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aj
+aj
+aj
+aj
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (40,1,1) = {"
 aa
@@ -11420,61 +13708,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (41,1,1) = {"
 aa
@@ -11677,61 +13965,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ad
+ai
+ai
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (42,1,1) = {"
 aa
@@ -11934,61 +14222,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ai
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (43,1,1) = {"
 aa
@@ -12191,61 +14479,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (44,1,1) = {"
 aa
@@ -12448,61 +14736,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (45,1,1) = {"
 aa
@@ -12705,61 +14993,61 @@ an
 an
 an
 an
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+an
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (46,1,1) = {"
 aa
@@ -12962,61 +15250,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+an
+an
+an
+an
+an
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (47,1,1) = {"
 aa
@@ -13219,61 +15507,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ai
+ai
+aj
+ab
+aj
+aj
+ab
+ab
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (48,1,1) = {"
 aa
@@ -13476,61 +15764,61 @@ aj
 aj
 aj
 aj
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ai
+ai
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ai
+ad
+ad
+ab
+ab
+aj
+aj
+aj
+aj
 "}
 (49,1,1) = {"
 aa
@@ -13733,61 +16021,61 @@ aj
 aj
 ai
 ai
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ai
+ai
+ai
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ad
+ad
+ad
+ad
+ad
+ai
+ai
+aj
+aj
+aj
 "}
 (50,1,1) = {"
 aa
@@ -13990,61 +16278,61 @@ ab
 ab
 ai
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+am
+ai
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+ab
+ab
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ab
+aj
+aj
 "}
 (51,1,1) = {"
 aa
@@ -14247,61 +16535,61 @@ ai
 ai
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+ai
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ab
+aj
+aj
 "}
 (52,1,1) = {"
 aa
@@ -14504,61 +16792,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+ai
+ab
+aj
+aj
+ab
+ab
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ab
+aj
+aj
 "}
 (53,1,1) = {"
 aa
@@ -14761,61 +17049,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+ai
+ab
+aj
+ab
+ab
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ad
+ad
+ai
+ad
+ab
+ab
+aj
+aj
 "}
 (54,1,1) = {"
 aa
@@ -15018,61 +17306,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
 "}
 (55,1,1) = {"
 aa
@@ -15275,61 +17563,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (56,1,1) = {"
 aa
@@ -15532,61 +17820,61 @@ ak
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (57,1,1) = {"
 aa
@@ -15789,61 +18077,61 @@ ak
 ak
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (58,1,1) = {"
 aa
@@ -16046,61 +18334,61 @@ ak
 ak
 ak
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+ai
+ai
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (59,1,1) = {"
 aa
@@ -16303,61 +18591,61 @@ ak
 ak
 ak
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (60,1,1) = {"
 aa
@@ -16560,61 +18848,61 @@ ak
 ak
 ak
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (61,1,1) = {"
 aa
@@ -16817,61 +19105,61 @@ ak
 ak
 ak
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (62,1,1) = {"
 aa
@@ -17074,61 +19362,61 @@ ak
 ak
 ak
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (63,1,1) = {"
 aa
@@ -17331,61 +19619,61 @@ ak
 ak
 ak
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+ai
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (64,1,1) = {"
 aa
@@ -17588,61 +19876,61 @@ ak
 ak
 ak
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ap
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (65,1,1) = {"
 aa
@@ -17845,61 +20133,61 @@ ak
 ak
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bs
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (66,1,1) = {"
 aa
@@ -18102,61 +20390,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (67,1,1) = {"
 aa
@@ -18359,61 +20647,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (68,1,1) = {"
 aa
@@ -18616,61 +20904,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (69,1,1) = {"
 aa
@@ -18873,61 +21161,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+ai
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (70,1,1) = {"
 aa
@@ -19130,61 +21418,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+ab
+ai
+ai
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (71,1,1) = {"
 aa
@@ -19387,61 +21675,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+am
+am
+am
+am
+am
+am
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ai
+ai
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 "}
 (72,1,1) = {"
 aa
@@ -19644,61 +21932,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+am
+ai
+ai
+am
+am
+am
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
 "}
 (73,1,1) = {"
 aa
@@ -19901,61 +22189,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+am
+ai
+ab
+ab
+ai
+ai
+am
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
 "}
 (74,1,1) = {"
 aa
@@ -20158,61 +22446,61 @@ am
 am
 am
 am
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+ai
+ab
+ab
+ab
+ai
+ab
+ai
+am
+ai
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+aj
+aj
+aj
+aj
+ab
+ab
+ab
+aj
+aj
+aj
+aj
 "}
 (75,1,1) = {"
 aa
@@ -52358,9 +54646,9 @@ aa
 aa
 aa
 ad
-ab
-ab
-ab
+Mx
+Mx
+Mx
 aj
 aj
 aj
@@ -52615,11 +54903,11 @@ aa
 aa
 aa
 ad
-ab
-ab
-ab
-aj
-aj
+Mx
+Mx
+Mx
+Mx
+Mx
 aj
 aj
 aj
@@ -52871,13 +55159,13 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-aj
-aj
-aj
+Mx
+Mx
+Mx
+Mx
+Mx
+Mx
+Mx
 aj
 aj
 aj
@@ -53130,11 +55418,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-aj
+jR
+Mx
+Mx
+Mx
+Mx
 aj
 aj
 aj
@@ -53384,14 +55672,14 @@ ab
 ab
 ab
 ab
+kN
+ab
+LJ
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-aj
+Mx
+Mx
 aj
 aj
 aj
@@ -53641,14 +55929,14 @@ ab
 ab
 ab
 ab
+BF
+LJ
+LJ
+LJ
 ab
+iy
 ab
-ab
-ab
-ab
-ab
-ab
-aj
+Mx
 aj
 aj
 aj
@@ -53896,16 +56184,16 @@ aa
 it
 ab
 ab
+jx
 ab
-ab
-ab
-ab
-ab
+LJ
+LJ
+LJ
+LJ
 ai
-ai
 ab
-ab
-ab
+iy
+Mx
 aj
 aj
 aj
@@ -54152,17 +56440,17 @@ aa
 aa
 ab
 ab
+Ez
 ab
-ab
-ab
-ab
-ab
-ad
+LJ
+LJ
+Yg
+LJ
 ai
 ai
 ab
 ab
-ab
+Mx
 aj
 ab
 aj
@@ -54409,18 +56697,18 @@ aa
 aa
 ab
 ab
+sx
 ab
-ab
-ab
-ab
-ab
-ab
+LJ
+LJ
+LJ
+LJ
 ai
 ai
 ad
-ab
-aj
-aj
+Mx
+Mx
+Mx
 aj
 aj
 aj
@@ -54667,17 +56955,17 @@ aa
 ab
 ab
 ab
+jQ
 ab
-ab
-ab
-ab
-ab
+LJ
+LJ
+Gc
 ab
 ad
 ab
-ab
-aj
-aj
+Mx
+Mx
+Mx
 aj
 aj
 aj
@@ -54925,16 +57213,16 @@ ad
 ab
 ab
 ab
+jQ
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-aj
-aj
+Mx
+Mx
+Mx
 aj
 aj
 aj
@@ -55178,20 +57466,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-it
+Mx
+Mx
 ab
 ab
 ab
 ab
+jS
+ab
+jS
 ab
 ab
-ab
-ab
-ab
-aj
-aj
+Mx
+Mx
+Mx
 aj
 aj
 aj
@@ -55429,15 +57717,15 @@ aa
 aa
 aa
 aa
+wF
+Do
+Mh
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
+Rr
+Mx
+xs
+eq
 ab
 ab
 ab
@@ -55446,25 +57734,25 @@ ab
 ab
 ab
 ab
-ab
+Mx
+Mx
 aj
 aj
 aj
 aj
 aj
 aj
-aj
 ab
 ab
 ab
+ab
 ak
 ak
 ak
 ak
 ak
-ak
-ak
-ak
+ab
+ab
 ak
 ak
 ak
@@ -55687,42 +57975,42 @@ aa
 aa
 aa
 aa
+Si
+Si
+Si
+Si
+Si
+Si
+Si
+it
+ab
+ab
+jq
+ja
+Gx
+ab
+ab
+ab
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Mx
+aj
+aj
 ab
 aj
 aj
 aj
-aj
-aj
-aj
-aj
+aa
+ab
 ab
 ab
 ab
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+ab
+ab
+ab
+ab
+ab
 ak
 ak
 ak
@@ -55944,13 +58232,32 @@ aa
 aa
 aa
 aa
+Si
+oS
+CG
+wm
+Vb
+Bs
+Si
+it
+jq
+jR
+AH
+jS
+jS
+KV
+ab
+DQ
 aa
 aa
+ab
+aj
+aj
+ab
+aj
 aa
 aa
-aa
-aa
-ad
+kG
 ab
 ab
 ab
@@ -55960,28 +58267,9 @@ ab
 ab
 ab
 ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 ab
 ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
 ak
 ak
 ak
@@ -56200,13 +58488,33 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Gw
+Si
+aU
+Wh
+zf
+Qk
+iG
+Si
+jQ
+ll
+Xe
+iu
+Ch
+ja
+jx
+jQ
+ab
+jx
+lp
+lz
+lp
+lF
+lp
+lP
+lS
+iy
+iu
 ab
 ab
 ab
@@ -56217,29 +58525,9 @@ ab
 ab
 ab
 ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 ab
 ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
 ak
 ak
 ak
@@ -56457,13 +58745,33 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rk
+Si
+WA
+rz
+qh
+pq
+Jq
+ke
+gP
+ma
+ix
+Dx
+kM
+UV
+ja
+jS
+ab
+it
+lu
+lq
+lD
+lG
+lu
+lQ
+lu
+kR
+kM
 ab
 ab
 ab
@@ -56474,29 +58782,9 @@ ab
 ab
 ab
 ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 ab
 ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
 ak
 ak
 ak
@@ -56714,13 +59002,33 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uz
+Si
+MQ
+nU
+ui
+Xw
+Rb
+Si
+ix
+jQ
+gt
+jb
+pF
+jq
+jx
+ky
+jx
+kN
+lv
+lv
+lE
+lv
+lE
+lR
+lv
+ab
+jS
 ab
 ab
 ab
@@ -56731,27 +59039,7 @@ ab
 ab
 ab
 ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
-ab
-ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
 ak
 ak
 ak
@@ -56971,14 +59259,33 @@ aa
 aa
 aa
 aa
+uz
+Si
+WL
+eb
+dM
+eQ
+Zc
+Si
+jQ
+XG
+kN
+mn
+iy
+oB
+ll
+nB
+ab
 aa
 aa
+aj
+aj
+aj
+aj
+aj
 aa
 aa
-aa
-aa
-ad
-js
+FD
 ab
 ab
 ab
@@ -56988,26 +59295,7 @@ ab
 ab
 ab
 ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
-ab
-ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
 ak
 ak
 ak
@@ -57229,41 +59517,41 @@ aa
 aa
 aa
 aa
+Si
+Si
+Si
+Si
+Si
+Si
+Si
+jR
+jQ
+jR
+ae
+jx
+Pj
+ia
+yf
+jS
 aa
+aj
+aj
+ab
+ab
+aj
+aj
+aj
 aa
-aa
-aa
-aa
-ad
-ad
-ad
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 ab
 ab
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
+ab
+ab
+ab
+ab
 ak
 ak
 ak
@@ -57484,32 +59772,33 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-ai
-ai
-ai
-ai
+dD
+pt
+Wb
+Dn
+Zs
+Zs
+xX
+jb
+Fz
+QM
+jR
+jQ
+pc
+lg
+it
+qA
+vR
+mD
+Mx
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 ab
 ab
@@ -57517,9 +59806,8 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+ab
+ab
 ak
 ak
 ak
@@ -57740,27 +60028,27 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-ai
-ai
-ai
-ai
-ad
+wF
+qS
+Si
+Si
+Si
+Si
+Si
+Si
+Si
+Br
+pD
+jQ
+jx
+mn
+jQ
+hr
+zv
+BH
+jq
+Mx
 ab
-ab
-ab
-ab
-ab
-aj
-aj
 aj
 aj
 aj
@@ -57997,27 +60285,27 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-ai
-ai
-ai
-ai
-ad
+cp
+Si
+KA
+KA
+KA
+KA
+KA
+Si
+Si
+Si
+ft
+jx
+kN
+mn
+VI
+Vj
+MS
+AU
+Mx
+Mx
 ab
-ab
-ab
-ab
-ab
-aj
-aj
 aj
 aj
 aj
@@ -58254,28 +60542,28 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-ai
-ai
-ai
-ai
-ad
+lb
+tz
+KA
+AY
+BP
+cw
+WT
+ty
+Si
+Si
+qN
 ab
+hD
+gR
+Mx
+Mx
+Mx
+Mx
+Mx
+Mx
+Mx
 ab
-ab
-ab
-ab
-aj
-aj
-aj
 aj
 aj
 aj
@@ -58511,28 +60799,28 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-ai
-ai
-ai
-ai
-ad
+dA
+Ou
+KA
+QC
+GC
+hy
+ww
+vi
+Si
+BU
+kP
+iY
+jR
+lG
+js
+Mx
+xs
+xs
+xs
+Xz
+Mx
 ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
 aj
 aj
 aj
@@ -58768,28 +61056,28 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+cp
+An
+KA
+nt
+Ef
+uk
+rQ
+MX
+sa
+Bj
 gP
-ai
-ai
-ai
-ai
-ad
+kj
+lg
+sk
+Si
+Si
+nJ
+Si
+Si
+Mx
+Mx
 ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
 aj
 aj
 aj
@@ -59025,29 +61313,29 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+cp
+Uh
+KA
+jj
+vu
+qi
+TN
+RX
+Si
+BU
+Oy
+iY
+kN
+gR
+nJ
+WN
+Yy
+Hq
+nJ
+Mx
+Mx
 ab
-ai
-ai
-ai
-ai
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
 aj
 aj
 aj
@@ -59282,27 +61570,27 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ai
-ai
-ai
-ai
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sl
+CL
+KA
+nW
+Dz
+Xf
+QG
+se
+Si
+Si
+KJ
+jR
+fN
+gP
+RF
+eh
+EQ
+Tn
+nJ
+Mx
+Mx
 aj
 aj
 ab
@@ -59539,28 +61827,28 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+cp
+Si
+KA
+KA
+KA
+KA
+KA
+Si
+Si
+Si
+ix
+kN
+jq
 ab
+nJ
+JP
+Qd
+iJ
+Si
+Sh
+Mx
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
 aj
 aj
 aj
@@ -59796,28 +62084,28 @@ aj
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+pH
+qS
+Si
+Si
+Si
+Si
+Si
+Si
+Si
+kR
+rO
+xr
 ab
+eo
+nJ
+nJ
+nJ
+Si
+Si
+dF
+Mx
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
 aj
 aj
 aj
@@ -60054,27 +62342,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aQ
+Fn
+SG
+SG
+SG
+BG
+SG
+Xo
+ot
 ab
 ab
 ab
+pG
+Mx
+Mx
+eP
+Mx
+Mx
+Wj
+Mx
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
 aj
 aj
 aj
@@ -60318,19 +62606,19 @@ aa
 aa
 aa
 aa
+Mx
+Mx
 ab
 ab
 ab
+HX
+Mx
+Mx
+Mx
+Mx
 ab
+Mx
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
 aj
 aj
 aj
@@ -60575,15 +62863,15 @@ aa
 aa
 aa
 aa
-it
+Mx
+Mx
+Mx
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
+iC
+Mx
+Mx
+Mx
 ab
 ab
 aj
@@ -60833,13 +63121,13 @@ aa
 aa
 aa
 ad
+Mx
+Mx
+Mx
 ab
-ab
-ab
-ab
-ab
-ab
-ab
+jb
+Mx
+Mx
 ab
 ab
 ab
@@ -61091,12 +63379,12 @@ aa
 aa
 ad
 ad
-ab
-ab
-ab
-ab
-ab
-ab
+Mx
+Mx
+Mx
+hd
+Mx
+Mx
 ab
 ab
 ab
@@ -61350,7 +63638,7 @@ ad
 ad
 ad
 ad
-ab
+Mx
 ab
 ab
 ab
@@ -61607,7 +63895,7 @@ ad
 ad
 ad
 ad
-ab
+Mx
 ab
 ab
 ab
@@ -61860,12 +64148,12 @@ aa
 aa
 aa
 aa
-gP
-js
-ab
+Mx
+Mx
+Mx
 ad
 ad
-ab
+Mx
 ab
 ab
 ab
@@ -62122,7 +64410,7 @@ aa
 aa
 aa
 aa
-ab
+Mx
 ab
 ab
 ab
@@ -62385,10 +64673,10 @@ ab
 ab
 ab
 ab
-aj
-aj
-aj
-aj
+ab
+ab
+ab
+ab
 ab
 ab
 aj
@@ -62643,9 +64931,9 @@ ab
 ab
 ab
 ab
-aj
 ab
-aj
+ab
+ab
 ab
 ab
 ab
@@ -62902,8 +65190,8 @@ ab
 aj
 aj
 aj
-aj
-aj
+ab
+ab
 ab
 ab
 ab

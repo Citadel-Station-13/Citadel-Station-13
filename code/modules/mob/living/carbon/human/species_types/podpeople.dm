@@ -50,19 +50,20 @@
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
+		return TRUE
+	return ..()
 
 /datum/species/pod/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
 	switch(P.type)
 		if(/obj/item/projectile/energy/floramut)
 			if(prob(15))
 				H.rad_act(rand(30,80))
-				H.Knockdown(100)
+				H.DefaultCombatKnockdown(100)
 				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
-					H.randmutb()
+					H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 				else
-					H.randmutg()
+					H.easy_randmut(POSITIVE)
 				H.domutcheck()
 			else
 				H.adjustFireLoss(rand(5,15))
@@ -70,14 +71,42 @@
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 
+
 /datum/species/pod/pseudo_weak
 	name = "Anthromorphic Plant"
 	id = "podweak"
-	limbs_id = "pod"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "taur", "legs")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
+	limbs_id = "pod"
 	light_nutrition_gain_factor = 7.5
 	light_bruteheal = 0.2
 	light_burnheal = 0.2
 	light_toxheal = 0.7
+	
+/datum/species/pod/pseudo_weak/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		stop_wagging_tail(H)
+
+/datum/species/pod/pseudo_weak/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+	. = ..()
+
+/datum/species/pod/pseudo_weak/can_wag_tail(mob/living/carbon/human/H)
+	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
+
+/datum/species/pod/pseudo_weak/is_wagging_tail(mob/living/carbon/human/H)
+	return ("mam_waggingtail" in mutant_bodyparts)
+
+/datum/species/pod/pseudo_weak/start_wagging_tail(mob/living/carbon/human/H)
+	if("mam_tail" in mutant_bodyparts)
+		mutant_bodyparts -= "mam_tail"
+		mutant_bodyparts |= "mam_waggingtail"
+	H.update_body()
+
+/datum/species/pod/pseudo_weak/stop_wagging_tail(mob/living/carbon/human/H)
+	if("mam_waggingtail" in mutant_bodyparts)
+		mutant_bodyparts -= "mam_waggingtail"
+		mutant_bodyparts |= "mam_tail"
+	H.update_body()

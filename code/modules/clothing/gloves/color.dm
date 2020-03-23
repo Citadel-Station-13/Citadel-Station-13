@@ -194,7 +194,7 @@
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
-	desc = "Cheap sterile gloves made from latex."
+	desc = "Cheap sterile gloves made from latex. Transfers basic paramedical knowledge to the wearer via the use of nanochips."
 	icon_state = "latex"
 	item_state = "lgloves"
 	siemens_coefficient = 0.3
@@ -202,14 +202,34 @@
 	item_color="mime"
 	transfer_prints = TRUE
 	resistance_flags = NONE
+	var/carrytrait = TRAIT_QUICK_CARRY
+
+/obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_GLOVES)
+		ADD_TRAIT(user, carrytrait, CLOTHING_TRAIT)
+
+/obj/item/clothing/gloves/color/latex/dropped(mob/user)
+	..()
+	REMOVE_TRAIT(user, carrytrait, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are stronger than latex."
+	desc = "Pricy sterile gloves that are stronger than latex. Transfers advanced paramedical knowledge to the wearer via the use of nanochips."
 	icon_state = "nitrile"
 	item_state = "nitrilegloves"
 	item_color = "cmo"
 	transfer_prints = FALSE
+	carrytrait = TRAIT_QUICKER_CARRY
+
+/obj/item/clothing/gloves/color/latex/nitrile/infiltrator
+	name = "insidious combat gloves"
+	desc = "Specialized combat gloves for carrying people around. Transfers tactical kidnapping knowledge to the user via the use of nanochips."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.3
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/gloves/color/white
 	name = "white gloves"

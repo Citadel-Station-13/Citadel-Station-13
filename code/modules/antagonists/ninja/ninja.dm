@@ -8,11 +8,6 @@
 	var/give_objectives = TRUE
 	var/give_equipment = TRUE
 
-/datum/antagonist/ninja/New()
-	if(helping_station)
-		can_hijack = HIJACK_PREVENT
-	. = ..()
-
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_ninja_icons_added(M)
@@ -75,16 +70,10 @@
 					O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
 					objectives += O
 			if(4)	//flavor
-				if(helping_station)
-					var/datum/objective/flavor/ninja_helping/O = new /datum/objective/flavor/ninja_helping
-					O.owner = owner
-					O.forge_objective()
-					objectives += O
-				else
-					var/datum/objective/flavor/ninja_syndie/O = new /datum/objective/flavor/ninja_helping
-					O.owner = owner
-					O.forge_objective()
-					objectives += O
+				var/datum/objective/flavor/O = helping_station ? new /datum/objective/flavor/ninja_helping : new /datum/objective/flavor/ninja_syndie
+				O.owner = owner
+				O.forge_objective()
+				objectives += O
 			else
 				break
 	var/datum/objective/O = new /datum/objective/survive()
@@ -135,8 +124,6 @@
 			adj = "objectiveless"
 		else
 			return
-	if(helping_station)
-		can_hijack = HIJACK_PREVENT
 	new_owner.assigned_role = ROLE_NINJA
 	new_owner.special_role = ROLE_NINJA
 	new_owner.add_antag_datum(src)

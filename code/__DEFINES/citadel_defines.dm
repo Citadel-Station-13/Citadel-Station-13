@@ -34,39 +34,39 @@
 #define CAN_MASTURBATE_WITH		(1<<5)
 #define MASTURBATE_LINKED_ORGAN	(1<<6) //used to pass our mission to the linked organ
 #define CAN_CLIMAX_WITH			(1<<7)
+#define GENITAL_CAN_AROUSE		(1<<8)
+
+
+#define DEF_VAGINA_SHAPE	"Human"
 
 #define COCK_SIZE_MIN		1
+#define COCK_SIZE_DEF		6
 #define COCK_SIZE_MAX		20
 
-#define COCK_GIRTH_RATIO_MAX		1.25
-#define COCK_GIRTH_RATIO_DEF		0.75
-#define COCK_GIRTH_RATIO_MIN		0.5
+#define COCK_DIAMETER_RATIO_MAX		0.42
+#define COCK_DIAMETER_RATIO_DEF		0.25
+#define COCK_DIAMETER_RATIO_MIN		0.15
 
-#define KNOT_GIRTH_RATIO_MAX		3
-#define KNOT_GIRTH_RATIO_DEF		2.1
-#define KNOT_GIRTH_RATIO_MIN		1.25
-
+#define DEF_COCK_SHAPE		"Human"
 #define BALLS_VOLUME_BASE	25
 #define BALLS_VOLUME_MULT	1
+
+#define DEF_BALLS_SHAPE		"Single"
 
 #define BALLS_SIZE_MIN		1
 #define BALLS_SIZE_DEF		2
 #define BALLS_SIZE_MAX		3
 
-#define BALLS_SACK_SIZE_MIN 1
-#define BALLS_SACK_SIZE_DEF	8
-#define BALLS_SACK_SIZE_MAX 40
-
 #define CUM_RATE			2 // holy shit what a really shitty define name - relates to units per arbitrary measure of time?
 #define CUM_RATE_MULT		1
 #define CUM_EFFICIENCY		1 //amount of nutrition required per life()
 
-#define EGG_GIRTH_MIN		1//inches
-#define EGG_GIRTH_DEF		6
-#define EGG_GIRTH_MAX		16
-
 #define BREASTS_VOLUME_BASE	50	//base volume for the reagents in the breasts, multiplied by the size then multiplier. 50u for A cups, 850u for HH cups.
 #define BREASTS_VOLUME_MULT	1	//global multiplier for breast volume.
+
+#define BREASTS_SIZE_DEF	"c" //lowercase cause those sprite accessory don't use uppercased letters.
+
+#define DEF_BREASTS_SHAPE	"Pair"
 
 #define MILK_RATE			5
 #define MILK_RATE_MULT		1
@@ -82,22 +82,12 @@
 //Citadel istypes
 #define isgenital(A) (istype(A, /obj/item/organ/genital))
 
-#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
-
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 
 //xenobio console upgrade stuff
 #define XENOBIO_UPGRADE_MONKEYS				1
 #define XENOBIO_UPGRADE_SLIMEBASIC			2
 #define XENOBIO_UPGRADE_SLIMEADV			4
-
-//stamina stuff
-#define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
-#define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
-#define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
-#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
-
-#define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
 //Citadel toggles because bitflag memes
 #define MEDIHOUND_SLEEPER	(1<<0)
@@ -116,8 +106,6 @@
 #define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES|BREAST_ENLARGEMENT|PENIS_ENLARGEMENT)
 
 //component stuff
-#define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)
-
 #define COMSIG_VORE_TOGGLED "voremode_toggled" // totally not copypasta
 
 //belly sound pref things

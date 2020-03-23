@@ -680,7 +680,7 @@
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		C.transfer_ckey(SM, FALSE)
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
@@ -705,8 +705,9 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target and authenticate with identification systems."
 
 /obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
-	var/obj/item/implant/radio/syndicate/imp = new
-	imp.implant(SM, user)
+	if(SM.can_be_implanted())
+		var/obj/item/implant/radio/syndicate/imp = new
+		imp.implant(SM, user)
 
 	SM.access_card = new /obj/item/card/id/syndicate(SM)
 	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
@@ -961,10 +962,11 @@
 	icon_state = "potgrey"
 
 /obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)
-	if(!ismob(M))
-		return
 	if(!isanimal(M))
 		to_chat(user, "<span class='warning'>[M] is too complex for the potion!</span>")
+		return
+	if(!M.can_be_implanted())
+		to_chat(user, "<span class='warning'>[M] is incompatible with the potion!</span>")
 		return
 	if(M.stat)
 		to_chat(user, "<span class='warning'>[M] is dead!</span>")
@@ -983,7 +985,7 @@
 	icon_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
@@ -999,7 +1001,7 @@
 	icon_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28

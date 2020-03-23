@@ -22,7 +22,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
@@ -64,7 +64,7 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	if(isbelly(loc))
+	if(!isturf(loc))
 		return
 
 	if(prob(chew_probability))
@@ -76,7 +76,7 @@
 					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
 					playsound(src, 'sound/effects/sparks2.ogg', 100, 1)
 					C.deconstruct()
-					death(toast=1)
+					death(toast=TRUE)
 				else
 					C.deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")

@@ -24,7 +24,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=400)
+	custom_materials = list(/datum/material/iron=400)
 
 /obj/item/locator/attack_self(mob/user)
 	user.set_machine(src)
@@ -125,7 +125,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=10000)
+	custom_materials = list(/datum/material/iron=10000)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
@@ -138,14 +138,17 @@
 
 /obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
 	if(try_dispel_portal(target, user))
-		return FALSE
+		return TRUE
 	return ..()
 
-/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
-	if(is_parent_of_portal(target))
+/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user, delay = 30)
+	var/datum/beam/B = user.Beam(target, icon_state = "rped_upgrade", maxdistance = 50)
+	if(is_parent_of_portal(target) && (!delay || do_after(user, delay, target = target)))
 		qdel(target)
 		to_chat(user, "<span class='notice'>You dispel [target] with \the [src]!</span>")
+		qdel(B)
 		return TRUE
+	qdel(B)
 	return FALSE
 
 /obj/item/hand_tele/afterattack(atom/target, mob/user)

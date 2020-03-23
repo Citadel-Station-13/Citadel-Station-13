@@ -31,6 +31,7 @@
 	var/interior = ""
 	var/proper_bomb = TRUE //Please
 	var/obj/effect/countdown/nuclearbomb/countdown
+	var/nuclear_cooldown //used to stop global spam.
 
 /obj/machinery/nuclearbomb/Initialize()
 	. = ..()
@@ -178,23 +179,22 @@
 	else
 		return NUKE_OFF_UNLOCKED
 
-/obj/machinery/nuclearbomb/update_icon()
-	if(deconstruction_state == NUKESTATE_INTACT)
-		switch(get_nuke_state())
-			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
-				icon_state = "nuclearbomb_base"
-				update_icon_interior()
-				update_icon_lights()
-			if(NUKE_ON_TIMING)
-				cut_overlays()
-				icon_state = "nuclearbomb_timing"
-			if(NUKE_ON_EXPLODING)
-				cut_overlays()
-				icon_state = "nuclearbomb_exploding"
-	else
+/obj/machinery/nuclearbomb/update_icon_state()
+	if(deconstruction_state != NUKESTATE_INTACT)
 		icon_state = "nuclearbomb_base"
-		update_icon_interior()
-		update_icon_lights()
+		return
+	switch(get_nuke_state())
+		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
+			icon_state = "nuclearbomb_base"
+		if(NUKE_ON_TIMING)
+			icon_state = "nuclearbomb_timing"
+		if(NUKE_ON_EXPLODING)
+			icon_state = "nuclearbomb_exploding"
+
+/obj/machinery/nuclearbomb/update_overlays()
+	. = ..()
+	update_icon_interior()
+	update_icon_lights()
 
 /obj/machinery/nuclearbomb/proc/update_icon_interior()
 	cut_overlay(interior)
@@ -381,6 +381,7 @@
 				playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 50, FALSE)
 				set_active()
 				update_ui_mode()
+				. = TRUE
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 		if("anchor")
@@ -416,12 +417,16 @@
 		return
 	timing = !timing
 	if(timing)
+		if(nuclear_cooldown > world.time)
+			to_chat(usr, "<span class='danger'>[src]'s timer protocols are currently on cooldown, please stand by.</span>")
+			return
 		previous_level = get_security_level()
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 		set_security_level("delta")
+		nuclear_cooldown = world.time + 15 SECONDS
 
 		if(GLOB.war_declared)
 			var/area/A = get_area(src)

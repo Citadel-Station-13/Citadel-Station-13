@@ -87,7 +87,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/mineral/equipment_vendor/update_icon()
+/obj/machinery/mineral/equipment_vendor/update_icon_state()
 	if(powered())
 		icon_state = initial(icon_state)
 	else
@@ -122,13 +122,10 @@
 				to_chat(usr, "<span class='warning'>Error: Insufficient credits for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
 			else
-				if (I.mining_points -= prize.cost)
-					to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
-					new prize.equipment_path(src.loc)
-					SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
-				else
-					to_chat(usr, "<span class='warning'>Error: Transaction failure, please try again later!</span>")
-					flick(icon_deny, src)
+				I.mining_points -= prize.cost
+				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+				new prize.equipment_path(src.loc)
+				SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 		else
 			to_chat(usr, "<span class='warning'>Error: An ID with a registered account is required!</span>")
 			flick(icon_deny, src)

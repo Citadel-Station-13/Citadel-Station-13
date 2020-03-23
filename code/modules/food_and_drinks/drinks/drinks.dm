@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	reagent_flags = OPENCONTAINER
+	reagent_value = DEFAULT_REAGENTS_VALUE
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -201,7 +202,7 @@
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
-	materials = list(MAT_METAL=100)
+	custom_materials = list(/datum/material/iron=100)
 	possible_transfer_amounts = list()
 	volume = 5
 	flags_1 = CONDUCT_1
@@ -217,7 +218,7 @@
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
-	materials = list(MAT_GOLD=1000)
+	custom_materials = list(/datum/material/gold=1000)
 	volume = 150
 
 /obj/item/reagent_containers/food/drinks/trophy/silver_cup
@@ -228,7 +229,7 @@
 	force = 10
 	throwforce = 8
 	amount_per_transfer_from_this = 15
-	materials = list(MAT_SILVER=800)
+	custom_materials = list(/datum/material/silver=800)
 	volume = 100
 
 /obj/item/reagent_containers/food/drinks/trophy/bronze_cup
@@ -239,7 +240,7 @@
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
-	materials = list(MAT_METAL=400)
+	custom_materials = list(/datum/material/iron=400)
 	volume = 25
 
 ///////////////////////////////////////////////Drinks/////////////////////////////////////////
@@ -280,19 +281,24 @@
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
+	cut_overlays()    
 	if(reagents.total_volume)
-		icon_state = "tea"
+		var/mutable_appearance/MA = mutable_appearance(icon,"mugoverlay")
+		MA.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(MA)
 	else
 		icon_state = "tea_empty"
 
 /obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple tea"
+	icon_state = "tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
 
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
+	icon_state = "coco"
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 30, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
@@ -394,7 +400,7 @@
 	name = "shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
-	materials = list(MAT_METAL=1500)
+	custom_materials = list(/datum/material/iron=1500)
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
@@ -403,7 +409,7 @@
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	icon_state = "flask"
-	materials = list(MAT_METAL=250)
+	custom_materials = list(/datum/material/iron=250)
 	volume = 60
 	isGlass = FALSE
 
@@ -411,7 +417,7 @@
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
-	materials = list(MAT_GOLD=500)
+	custom_materials = list(/datum/material/gold=500)
 
 /obj/item/reagent_containers/food/drinks/flask/det
 	name = "detective's flask"

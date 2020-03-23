@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	icon_state = "swarmer_console"
 	health = 750
 	maxHealth = 750 //""""low-ish"""" HP because it's a passive boss, and the swarm itself is the real foe
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	medal_type = BOSS_MEDAL_SWARMERS
 	score_type = SWARMER_BEACON_SCORE
 	faction = list("mining", "boss", "swarmer")
@@ -275,7 +275,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		else
 			var/mob/living/L = target
 			L.attack_animal(src)
-			L.electrocute_act(10, src, safety = TRUE) //safety = TRUE means we don't check gloves... Ok?
+			L.electrocute_act(10, src, flags = SHOCK_NOGLOVES)
 		return TRUE
 	else
 		return ..()

@@ -1,0 +1,4 @@
+author: "Xantholne"
+delete-after: True
+changes: 
+  - bugfix: "Bumbles will now actually rest, sit up, and buzz"

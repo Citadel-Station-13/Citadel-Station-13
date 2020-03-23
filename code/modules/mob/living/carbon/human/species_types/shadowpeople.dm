@@ -100,6 +100,9 @@
 	var/obj/item/light_eater/blade
 	decay_factor = 0
 
+/obj/item/organ/heart/nightmare/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -129,9 +132,6 @@
 
 /obj/item/organ/heart/nightmare/Stop()
 	return 0
-
-/obj/item/organ/heart/nightmare/update_icon()
-	return //always beating visually
 
 /obj/item/organ/heart/nightmare/on_death()
 	if(!owner)
@@ -213,6 +213,16 @@
 		PDA.f_lum = 0
 		PDA.update_icon()
 		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
+	else if(istype(O, /obj/item/gun))
+		var/obj/item/gun/weapon = O
+		if(weapon.gun_light)
+			var/obj/item/flashlight/seclite/light = weapon.gun_light
+			light.forceMove(get_turf(weapon))
+			light.burn()
+			weapon.gun_light = null
+			weapon.update_gunlight()
+			QDEL_NULL(weapon.alight)
+			visible_message("<span class='danger'>[light] on [O] flickers out and disintegrates!</span>")
 	else
 		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 		O.burn()

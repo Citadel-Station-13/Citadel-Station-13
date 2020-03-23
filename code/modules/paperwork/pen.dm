@@ -21,7 +21,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=10)
+	custom_materials = list(/datum/material/iron=10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "black"	//what colour the ink is!
@@ -79,7 +79,7 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "crimson"
-	materials = list(MAT_GOLD = 750)
+	custom_materials = list(/datum/material/gold = 750)
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -139,6 +139,7 @@
 				O.name = input
 				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
 				O.renamedByPlayer = TRUE
+				log_game("[user] [key_name(user)] has renamed [O] to [input]")
 
 		if(penchoice == "Change description")
 			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
@@ -146,6 +147,7 @@
 				return
 			O.desc = input
 			to_chat(user, "You have successfully changed \the [O.name]'s description.")
+			log_game("[user] [key_name(user)] has changed [O]'s description to to [input]")
 
 /*
  * Sleepypens
@@ -177,9 +179,10 @@
 	sharpness = IS_SHARP
 	var/on = FALSE
 
-/obj/item/pen/edagger/Initialize()
+/obj/item/pen/edagger/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg')
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/pen/edagger/get_sharpness()
 	return on * sharpness
@@ -201,16 +204,15 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-		embedding = embedding.setRating(embed_chance = 100) //rule of cool
+		embedding = list("embed_chance" = 100, "embedded_fall_chance" = 0)//rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	update_icon()
 
-/obj/item/pen/edagger/update_icon()
+/obj/item/pen/edagger/update_icon_state()
 	if(on)
-		icon_state = "edagger"
-		item_state = "edagger"
+		icon_state = item_state = "edagger"
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	else

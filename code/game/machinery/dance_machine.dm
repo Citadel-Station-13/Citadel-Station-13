@@ -45,7 +45,7 @@
 			return
 	return ..()
 
-/obj/machinery/jukebox/update_icon()
+/obj/machinery/jukebox/update_icon_state()
 	if(active)
 		icon_state = "[initial(icon_state)]-active"
 	else
@@ -202,6 +202,8 @@
 	for(var/i in 1 to 10)
 		spawn_atom_to_turf(/obj/effect/temp_visual/hierophant/telegraph/edge, src, 1, FALSE)
 		sleep(5)
+		if(QDELETED(src))
+			return
 
 #define DISCO_INFENO_RANGE (rand(85, 115)*0.01)
 
@@ -431,5 +433,5 @@
 	. = ..()
 	if(active)
 		for(var/mob/living/M in rangers)
-			if(prob(5+(allowed(M)*4)) && M.canmove)
+			if(prob(5+(allowed(M)*4)) && CHECK_MOBILITY(M, MOBILITY_MOVE))
 				dance(M)

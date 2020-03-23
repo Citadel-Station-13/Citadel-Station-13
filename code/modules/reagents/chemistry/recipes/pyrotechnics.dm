@@ -76,7 +76,7 @@
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(multiplier/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Knockdown(40)
+				C.DefaultCombatKnockdown(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
 	..(holder, multiplier, T)
@@ -114,9 +114,12 @@
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	// 100 multiplier = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
-	// 200 multiplier = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, round(multiplier / 12), round(multiplier / 7), 1)
+	// 50 multiplier = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
+	// 100 multiplier = 5 heavy range & 10 light range.
+	// 200 multiplier = 7 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
+	// 300 multiplier = 8 heavy range & 17 light range. Still rather significant, considering that you can get dozens of bluespace beakers 30 minutes in with a competent crew.
+	// 900 multiplier = 12 heavy range & 30 light range. Still less than 300 before this commit.
+	empulse(location, round(multiplier ** (3/8)), round(multiplier ** (1/2)), 1)
 	holder.clear_reagents()
 
 
@@ -252,7 +255,7 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Knockdown(60)
+				C.DefaultCombatKnockdown(60)
 			else
 				C.Stun(100)
 	holder.remove_reagent(/datum/reagent/flash_powder, multiplier*3)
@@ -273,7 +276,7 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Knockdown(60)
+				C.DefaultCombatKnockdown(60)
 			else
 				C.Stun(100)
 

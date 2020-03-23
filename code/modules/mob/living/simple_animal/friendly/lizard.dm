@@ -18,7 +18,7 @@
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST, MOB_REPTILE)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/lizard/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/mob_holder, "lizard", null, null, null, SLOT_HEAD) //you can hold lizards now.
+	AddElement(/datum/element/mob_holder, worn_state = "lizard", inv_slots = ITEM_SLOT_HEAD) //you can hold lizards now.
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it

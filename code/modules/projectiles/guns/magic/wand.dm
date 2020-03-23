@@ -21,7 +21,7 @@
 	. = ..()
 	. += "Has [charges] charge\s remaining."
 
-/obj/item/gun/magic/wand/update_icon()
+/obj/item/gun/magic/wand/update_icon_state()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
 
 /obj/item/gun/magic/wand/attack(atom/target, mob/living/user)
@@ -181,3 +181,21 @@
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	charges--
+
+/////////////////////////////////////
+//WAND OF ARCANE MISSILE
+/////////////////////////////////////
+
+/obj/item/gun/magic/wand/arcane
+	name = "wand of arcane missile"
+	desc = "This wand fires off small bolts of concentrated magic energy, searing any victim."
+	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage
+	fire_sound = 'sound/weapons/mmlbuster.ogg'
+	icon_state = "arcanewand"
+	max_charges = 20 //20, 10, 10, 7
+
+/obj/item/gun/magic/wand/arcane/zap_self(mob/living/user)
+	..()
+	charges--
+	user.take_overall_damage(0,30)
+	to_chat(user, "<span class='warning'>You zap yourself. Why?</span>")

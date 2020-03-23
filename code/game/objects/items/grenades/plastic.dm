@@ -158,7 +158,7 @@
 	user.gib(1, 1)
 	qdel(src)
 
-/obj/item/grenade/plastic/update_icon()
+/obj/item/grenade/plastic/update_icon_state()
 	if(nadeassembly)
 		icon_state = "[item_state]1"
 	else

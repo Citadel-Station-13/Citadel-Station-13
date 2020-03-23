@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = FALSE
 	var/brightness_on = 4 //range of light when on
@@ -51,7 +51,7 @@
 
 /obj/item/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(istype(M) && on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))
+	if(istype(M) && on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)))
 
 		if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -224,7 +224,7 @@
 	light_color = "#FFDDBB"
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	materials = list()
+	custom_materials = null
 	on = TRUE
 
 
@@ -362,7 +362,7 @@
 	item_state = "slime"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	materials = list()
+	custom_materials = null
 	brightness_on = 6 //luminosity when on
 	light_color = "#FFEEAA"
 	flashlight_power = 0.6
@@ -390,7 +390,7 @@
 	return TRUE
 
 /obj/item/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)) // call original attack when examining organs
+	if(on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))) // call original attack when examining organs
 		..()
 	return
 
@@ -454,7 +454,7 @@
 	on = FALSE
 	update_icon()
 
-/obj/item/flashlight/glowstick/update_icon()
+/obj/item/flashlight/glowstick/update_icon_state()
 	item_state = "glowstick"
 	cut_overlays()
 	if(!fuel)
