@@ -121,39 +121,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"taur" = "None",
 		"genitals_use_skintone" = FALSE,
 		"has_cock" = FALSE,
-		"cock_shape" = "Human",
-		"cock_length" = 6,
-		"cock_girth_ratio" = COCK_GIRTH_RATIO_DEF,
+		"cock_shape" = DEF_COCK_SHAPE,
+		"cock_length" = COCK_SIZE_DEF,
+		"cock_diameter_ratio" = COCK_DIAMETER_RATIO_DEF,
 		"cock_color" = "fff",
-		"has_sheath" = FALSE,
-		"sheath_color" = "fff",
 		"has_balls" = FALSE,
 		"balls_internal" = FALSE,
 		"balls_color" = "fff",
-		"balls_amount" = 2,
-		"balls_sack_size" = BALLS_SACK_SIZE_DEF,
-		"balls_shape" = "Single",
+		"balls_shape" = DEF_BALLS_SHAPE,
 		"balls_size" = BALLS_SIZE_DEF,
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
 		"balls_efficiency" = CUM_EFFICIENCY,
-		"has_ovi" = FALSE,
-		"ovi_shape" = "knotted",
-		"ovi_length" = 6,
-		"ovi_color" = "fff",
-		"has_eggsack" = FALSE,
-		"eggsack_internal" = TRUE,
-		"eggsack_color" = "fff",
-		"eggsack_size" = BALLS_SACK_SIZE_DEF,
-		"eggsack_egg_color" = "fff",
-		"eggsack_egg_size" = EGG_GIRTH_DEF,
 		"has_breasts" = FALSE,
 		"breasts_color" = "fff",
-		"breasts_size" = "C",
-		"breasts_shape" = "Pair",
+		"breasts_size" = BREASTS_SIZE_DEF,
+		"breasts_shape" = DEF_BREASTS_SHAPE,
 		"breasts_producing" = FALSE,
 		"has_vag" = FALSE,
-		"vag_shape" = "Human",
+		"vag_shape" = DEF_VAGINA_SHAPE,
 		"vag_color" = "fff",
 		"vag_clits" = 1,
 		"vag_clit_diam" = 0.25,
@@ -164,7 +150,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
-		"meat_type" = "Mammalian"
+		"meat_type" = "Mammalian",
+		"body_model" = MALE
 		)
 
 	var/list/custom_names = list()
@@ -205,10 +192,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
+	//bad stuff
+	var/digestable = FALSE
+	var/devourable = FALSE
+	var/feeding = FALSE
+	var/lickable = FALSE
+	var/list/belly_prefs = list()
+	var/vore_taste = "nothing in particular"
+
 	//backgrounds
 	var/mutable_appearance/character_background
 	var/icon/bgstate = "steel"
 	var/list/bgstate_options = list("000", "midgrey", "FFF", "white", "steel", "techmaint", "dark", "plating", "reinforced")
+
+	var/show_mismatched_markings = FALSE //determines whether or not the markings lists should show markings that don't match the currently selected species. Intentionally left unsaved.
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -347,6 +344,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
+			if(gender != NEUTER && pref_species.sexes)
+				dat += "<b>Body Model:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=body_model'>[features["body_model"] == MALE ? "Masculine" : "Feminine"]</a><BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
 			dat += "<b>Random Body:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Randomize!</A><BR>"
@@ -410,6 +409,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "</td>"
 			//Mutant stuff
 			var/mutant_category = 0
+
+			dat += APPEARANCE_CATEGORY_COLUMN
+			dat += "<h3>Show mismatched markings</h3>"
+			dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=mismatched_markings;task=input'>[show_mismatched_markings ? "Yes" : "No"]</a>"
+			mutant_category++
+			if(mutant_category >= MAX_MUTANT_ROWS) //just in case someone sets the max rows to 1 or something dumb like that
+				dat += "</td>"
+				mutant_category = 0
 
 			if("tail_lizard" in pref_species.default_features)
 				if(!mutant_category)
@@ -1473,7 +1480,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", features["flavor_text"], MAX_FAVOR_LEN, TRUE)
+					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", features["flavor_text"], MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(msg))
 						features["flavor_text"] = html_decode(msg)
 
@@ -1618,6 +1625,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
+				if("mismatched_markings")
+					show_mismatched_markings = !show_mismatched_markings
+
 				if("ipc_screen")
 					var/new_ipc_screen
 					new_ipc_screen = input(user, "Choose your character's screen:", "Character Preference") as null|anything in GLOB.ipc_screens_list
@@ -1625,8 +1635,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["ipc_screen"] = new_ipc_screen
 
 				if("ipc_antenna")
+					var/list/snowflake_antenna_list = list()
+					//Potential todo: turn all of THIS into a define to reduce copypasta.
+					for(var/path in GLOB.ipc_antennas_list)
+						var/datum/sprite_accessory/antenna/instance = GLOB.ipc_antennas_list[path]
+						if(istype(instance, /datum/sprite_accessory))
+							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
+							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
+								snowflake_antenna_list[S.name] = path
 					var/new_ipc_antenna
-					new_ipc_antenna = input(user, "Choose your character's antenna:", "Character Preference") as null|anything in GLOB.ipc_antennas_list
+					new_ipc_antenna = input(user, "Choose your character's antenna:", "Character Preference") as null|anything in snowflake_antenna_list
 					if(new_ipc_antenna)
 						features["ipc_antenna"] = new_ipc_antenna
 
@@ -1646,6 +1666,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/tails/human/instance = GLOB.tails_list_human[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_tails_list[S.name] = path
 					var/new_tail
@@ -1663,6 +1685,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_tails_list[S.name] = path
 					var/new_tail
@@ -1686,6 +1710,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/mam_snouts/instance = GLOB.snouts_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_snouts_list[S.name] = path
 					var/new_snout
@@ -1701,6 +1727,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_mam_snouts_list[S.name] = path
 					var/new_mam_snouts
@@ -1798,6 +1826,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/taur/instance = GLOB.taur_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_taur_list[S.name] = path
 					var/new_taur
@@ -1816,6 +1846,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/ears/instance = GLOB.ears_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_ears_list[S.name] = path
 					var/new_ears
@@ -1829,6 +1861,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_ears_list[S.name] = path
 					var/new_ears
@@ -1842,6 +1876,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
+							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
+								continue
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_markings_list[S.name] = path
 					var/new_mam_body_markings
@@ -1877,6 +1913,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_dors = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in GLOB.xeno_dorsal_list
 					if(new_dors)
 						features["xenodorsal"] = new_dors
+
 				//Genital code
 				if("cock_color")
 					var/new_cockcolor = input(user, "Penis color:", "Character Preference") as color|null
@@ -1890,9 +1927,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("cock_length")
-					var/new_length = input(user, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Character Preference") as num|null
+					var/min_D = CONFIG_GET(number/penis_min_inches_prefs)
+					var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
+					var/new_length = input(user, "Penis length in inches:\n([min_D]-[max_D])", "Character Preference") as num|null
 					if(new_length)
-						features["cock_length"] = max(min( round(text2num(new_length)), COCK_SIZE_MAX),COCK_SIZE_MIN)
+						features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
 
 				if("cock_shape")
 					var/new_shape
@@ -1917,25 +1956,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_shape)
 						features["balls_shape"] = new_shape
 
-				if("egg_size")
-					var/new_size
-					var/list/egg_sizes = list(1,2,3)
-					new_size = input(user, "Egg Diameter(inches):", "Egg Size") as null|anything in egg_sizes
-					if(new_size)
-						features["eggsack_egg_size"] = new_size
-
-				if("egg_color")
-					var/new_egg_color = input(user, "Egg Color:", "Character Preference") as color|null
-					if(new_egg_color)
-						var/temp_hsv = RGBtoHSV(new_egg_color)
-						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
-							features["eggsack_egg_color"] = sanitize_hexcolor(new_egg_color)
-						else
-							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
-
 				if("breasts_size")
-					var/new_size
-					new_size = input(user, "Breast Size", "Character Preference") as null|anything in GLOB.breasts_size_list
+					var/new_size = input(user, "Breast Size", "Character Preference") as null|anything in CONFIG_GET(keyed_list/breasts_cups_prefs)
 					if(new_size)
 						features["breasts_size"] = new_size
 
@@ -2066,14 +2088,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["has_balls"] = FALSE
 				if("has_balls")
 					features["has_balls"] = !features["has_balls"]
-				if("has_ovi")
-					features["has_ovi"] = !features["has_ovi"]
-				if("has_eggsack")
-					features["has_eggsack"] = !features["has_eggsack"]
 				if("balls_internal")
 					features["balls_internal"] = !features["balls_internal"]
-				if("eggsack_internal")
-					features["eggsack_internal"] = !features["eggsack_internal"]
 				if("has_breasts")
 					features["has_breasts"] = !features["has_breasts"]
 					if(features["has_breasts"] == FALSE)
@@ -2114,15 +2130,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
-					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) in list(MALE,FEMALE,"nonbinary","object")
+					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) as null|anything in list(MALE,FEMALE,"nonbinary","object")
 					switch(chosengender)
 						if("nonbinary")
 							chosengender = PLURAL
+							features["body_model"] = pick(MALE, FEMALE)
 						if("object")
 							chosengender = NEUTER
+							features["body_model"] = MALE
+						else
+							features["body_model"] = chosengender
 					gender = chosengender
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
+
+				if("body_model")
+					features["body_model"] = features["body_model"] == MALE ? FEMALE : MALE
 
 				if("hotkeys")
 					hotkeys = !hotkeys
@@ -2262,16 +2285,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("load")
 					load_preferences()
 					load_character()
-					if(parent && parent.prefs_vr)
-						attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("changeslot")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
 						save_character()
-					if(parent && parent.prefs_vr)
-						attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("tab")
 					if (href_list["tab"])
@@ -2389,6 +2408,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.Digitigrade_Leg_Swap(FALSE)
 	else
 		character.Digitigrade_Leg_Swap(TRUE)
+
+	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_COPIED_TO, src, icon_updates, roundstart_checks)
 
 	//let's be sure the character updates
 	if(icon_updates)

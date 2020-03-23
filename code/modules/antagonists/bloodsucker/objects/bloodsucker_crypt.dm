@@ -205,7 +205,7 @@
 	buckled_mob.pixel_y = buckled_mob.get_standard_pixel_y_offset(180)
 	src.visible_message(text("<span class='danger'>[buckled_mob][buckled_mob.stat==DEAD?"'s corpse":""] slides off of the rack.</span>"))
 	density = FALSE
-	buckled_mob.AdjustKnockdown(30)
+	buckled_mob.DefaultCombatKnockdown(30)
 	update_icon()
 	useLock = FALSE // Failsafe
 
@@ -258,7 +258,7 @@
 /obj/structure/bloodsucker/vassalrack/proc/torture_victim(mob/living/user, mob/living/target)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// Check Bloodmob/living/M, force = FALSE, check_loc = TRUE
-	var/convert_cost = 200 + 200 * bloodsuckerdatum.vassals 
+	var/convert_cost = 200 + 200 * bloodsuckerdatum.vassals
 	if(user.blood_volume < convert_cost + 5)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
 		return
@@ -449,7 +449,7 @@
 /obj/structure/bloodsucker/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/structure/bloodsucker/candelabrum/update_icon()
+/obj/structure/bloodsucker/candelabrum/update_icon_state()
 	icon_state = "candelabrum[lit ? "_lit" : ""]"
 
 /obj/structure/bloodsucker/candelabrum/examine(mob/user)

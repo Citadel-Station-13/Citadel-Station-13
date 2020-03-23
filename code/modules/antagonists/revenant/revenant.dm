@@ -397,7 +397,7 @@
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		C.transfer_ckey(revenant.key, FALSE)
 		if(!revenant.key)
 			qdel(revenant)

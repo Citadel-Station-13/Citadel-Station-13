@@ -51,7 +51,7 @@
 		head_attack_message = " on the head"
 		//Knockdown the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
-			target.Knockdown(min(armor_duration, 200)) // Never knockdown more than a flash!
+			target.DefaultCombatKnockdown(min(armor_duration, 200)) // Never knockdown more than a flash!
 
 	//Display an attack message.
 	if(target != user)
@@ -427,6 +427,28 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
+	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
+	name = "pineapple juice"
+	desc = "Extremely tart, yellow juice."
+	icon_state = "pineapplejuice"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = FALSE
+	list_reagents = list(/datum/reagent/consumable/pineapplejuice = 100)
+	foodtype = FRUIT | PINEAPPLE
+
+/obj/item/reagent_containers/food/drinks/bottle/strawberryjuice
+	name = "strawberry juice"
+	desc = "Slushy, reddish juice."
+	icon_state = "strawberryjuice"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = FALSE
+	list_reagents = list(/datum/reagent/consumable/strawberryjuice = 100)
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/drinks/bottle/menthol

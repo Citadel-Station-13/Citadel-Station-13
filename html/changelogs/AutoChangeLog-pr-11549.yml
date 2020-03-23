@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscadd: "CTF spawns, random animals and possessed blades can now be pinged for ghost roles."
+  - bugfix: "A bunch of polls now work with ghost role eligible non-observers."

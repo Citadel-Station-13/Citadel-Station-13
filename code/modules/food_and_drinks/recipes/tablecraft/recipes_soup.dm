@@ -24,6 +24,16 @@
 	result = /obj/item/reagent_containers/food/snacks/soup/beet
 	subcategory = CAT_SOUP
 
+/datum/crafting_recipe/food/bisque
+	name = "Bisque"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/food/snacks/meat/crab = 1,
+		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/bisque
+	subcategory = CAT_SOUP
+
 /datum/crafting_recipe/food/bloodsoup
 	name = "Blood soup"
 	reqs = list(
@@ -65,6 +75,17 @@
 		/obj/item/organ/eyes = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/tomato/eyeball
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/onionsoup
+	name = "French onion soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/onion = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/onion
 	subcategory = CAT_SOUP
 
 /datum/crafting_recipe/food/hotchili

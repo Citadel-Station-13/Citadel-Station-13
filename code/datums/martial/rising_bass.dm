@@ -7,7 +7,6 @@
 /datum/martial_art/the_rising_bass
 	name = "The Rising Bass"
 	id = MARTIALART_RISINGBASS
-	dodge_chance = 100
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/rising_bass_help
 	var/datum/action/risingbassmove/sidekick = new/datum/action/risingbassmove/sidekick()
@@ -18,24 +17,24 @@
 	if(findtext(streak,SIDE_KICK_COMBO))
 		streak = ""
 		sideKick(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,SHOULDER_FLIP_COMBO))
 		streak = ""
 		shoulderFlip(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,REPULSE_PUNCH_COMBO))
 		streak = ""
 		repulsePunch(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,FOOT_SMASH_COMBO))
 		streak = ""
 		footSmash(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,DEFT_SWITCH_COMBO))
 		streak = ""
 		deftSwitch(A,D)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 //Repulse Punch - Slams the opponent far away from you.
@@ -79,7 +78,7 @@
 	return TRUE
 
 /datum/martial_art/the_rising_bass/proc/sideKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || D.lying == 0)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		var/dir = A.dir & (NORTH | SOUTH) ? pick(EAST, WEST) : pick(NORTH, SOUTH)
 		var/oppdir = dir == NORTH ? SOUTH : dir == SOUTH ? NORTH : dir == EAST ? WEST : EAST
 		var/turf/H = get_step(D, dir)
@@ -89,15 +88,15 @@
 						  "<span class='userdanger'>[A] kicks you in the side, forcing you to step away!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
-		D.Knockdown(60)
+		D.DefaultCombatKnockdown(60)
 		var/L = !checkfordensity(H,D) ? (!checkfordensity(K,D) ? D.loc : K) : H
 		D.forceMove(L)
 		log_combat(A, D, "side kicked (Rising Bass)")
 		return TRUE
-	return basic_hit(A,D)
+	return TRUE
 
 /datum/martial_art/the_rising_bass/proc/shoulderFlip(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		var/turf/H = get_step(A, get_dir(D,A))
 		var/L = checkfordensity(H,D) ? H : A.loc
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
@@ -108,14 +107,14 @@
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 		D.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 		D.Sleeping(60)
-		D.Knockdown(300)
+		D.DefaultCombatKnockdown(300)
 		D.forceMove(L)
 		log_combat(A, D, "shoulder flipped (Rising Bass)")
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_rising_bass/proc/repulsePunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if((!D.IsKnockdown() || !D.lying) && repulsecool > world.time)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND) && repulsecool < world.time)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] smashes [D] in the chest, throwing them away!</span>", \
 						  "<span class='userdanger'>[A] smashes you in the chest, repelling you away!</span>")
@@ -123,14 +122,14 @@
 		var/atom/F = get_edge_target_turf(D, get_dir(A, get_step_away(D, A)))
 		D.throw_at(F, 10, 1)
 		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
-		D.Knockdown(90)
+		D.DefaultCombatKnockdown(90)
 		log_combat(A, D, "repulse punched (Rising Bass)")
 		repulsecool = world.time + 3 SECONDS
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_rising_bass/proc/footSmash(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] smashes their foot down on [D]'s foot!</span>", \
 						  "<span class='userdanger'>[A] smashes your foot!</span>")
@@ -139,10 +138,10 @@
 		D.dropItemToGround(D.get_active_held_item())
 		log_combat(A, D, "foot smashed (Rising Bass)")
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_rising_bass/proc/deftSwitch(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.IsKnockdown() || !D.lying)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		if (D.get_active_held_item())
 			var/obj/item/G = D.get_active_held_item()
 			if (G && !(G.item_flags & (ABSTRACT|DROPDEL)) && D.temporarilyRemoveItemFromInventory(G))
@@ -158,25 +157,39 @@
 /datum/martial_art/the_rising_bass/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	return ..()
 
 /datum/martial_art/the_rising_bass/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	return ..()
 
 /datum/martial_art/the_rising_bass/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	return ..()
 
 /datum/martial_art/the_rising_bass/add_to_streak(element,mob/living/carbon/human/D)
 	if (streak == DEFT_SWITCH_COMBO || streak == SIDE_KICK_COMBO)
 		return
 	. = ..()
+
+/datum/martial_art/the_rising_bass/on_projectile_hit(mob/living/carbon/human/A, obj/item/projectile/P, def_zone)
+	. = ..()
+	if(A.incapacitated(FALSE, TRUE)) //NO STUN
+		return BULLET_ACT_HIT
+	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+		return BULLET_ACT_HIT
+	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
+		return BULLET_ACT_HIT
+	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
+		return BULLET_ACT_HIT
+	A.visible_message("<span class='danger'>[A] dodges the projectile cleanly, they're immune to ranged weapons!</span>", "<span class='userdanger'>You dodge out of the way of the projectile!</span>")
+	playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+	return BULLET_ACT_FORCE_PIERCE
 
 /mob/living/carbon/human/proc/rising_bass_help()
 	set name = "Recall Teachings"

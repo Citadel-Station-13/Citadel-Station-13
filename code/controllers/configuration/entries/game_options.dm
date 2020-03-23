@@ -335,6 +335,10 @@
 	config_entry_value = 16
 	min_val = 0
 
+/datum/config_entry/number/station_space_budget
+	config_entry_value = 10
+	min_val = 0
+
 /datum/config_entry/flag/allow_random_events	// Enables random events mid-round when set
 
 /datum/config_entry/number/events_min_time_mul	// Multipliers for random events minimal starting time and minimal players amounts
@@ -419,3 +423,16 @@
 	config_entry_value = 3
 
 /datum/config_entry/flag/suicide_allowed
+
+/datum/config_entry/keyed_list/breasts_cups_prefs
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+	config_entry_value = list("a", "b", "c", "d", "e") //keep these lowercase
+
+/datum/config_entry/number/penis_min_inches_prefs
+	config_entry_value = 1
+	min_val = 0
+
+/datum/config_entry/number/penis_max_inches_prefs
+	config_entry_value = 20
+	min_val = 0

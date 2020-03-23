@@ -37,7 +37,7 @@
 /obj/item/gun/ballistic/shotgun/attack_self(mob/living/user)
 	if(recentpump > world.time)
 		return
-	if(istype(user) && user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes pumping shotguns impossible in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes pumping shotguns impossible in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return//CIT CHANGE - ditto
 	pump(user, TRUE)
@@ -171,7 +171,7 @@
 	pump()
 	gun_type = type
 
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/dropped()
+/obj/item/gun/ballistic/shotgun/boltaction/enchanted/dropped(mob/user)
 	..()
 	guns_left = 0
 

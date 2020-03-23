@@ -40,7 +40,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/shocking/on_trigger(comm_message)
-	host_mob.electrocute_act(rand(5,10), "shock nanites", TRUE, TRUE)
+	host_mob.electrocute_act(rand(5,10), "shock nanites", 1, SHOCK_NOGLOVES)
 
 /datum/nanite_program/stun
 	name = "Neural Shock"
@@ -50,9 +50,11 @@
 	trigger_cooldown = 300
 	rogue_types = list(/datum/nanite_program/shocking, /datum/nanite_program/nerve_decay)
 
-/datum/nanite_program/stun/on_trigger(comm_message)
+/datum/nanite_program/triggered/stun/trigger(delayed)
+	if(!..())
+		return
+	host_mob.DefaultCombatKnockdown(80)
 	playsound(host_mob, "sparks", 75, TRUE, -1)
-	host_mob.Knockdown(80)
 
 /datum/nanite_program/pacifying
 	name = "Pacification"
@@ -105,7 +107,7 @@
 /datum/nanite_program/fake_death/enable_passive_effect()
 	. = ..()
 	host_mob.emote("deathgasp")
-	host_mob.fakedeath("nanites")
+	host_mob.fakedeath("nanites", TRUE)
 
 /datum/nanite_program/fake_death/disable_passive_effect()
 	. = ..()

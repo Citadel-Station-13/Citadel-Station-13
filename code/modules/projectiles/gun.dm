@@ -168,7 +168,7 @@
 		return
 	if(firing)
 		return
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)			//respect stamina softcrit
+	if(IS_STAMCRIT(user))			//respect stamina softcrit
 		to_chat(user, "<span class='warning'>You are too exhausted to fire [src]!</span>")
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
@@ -562,11 +562,11 @@
 		update_icon()
 
 /obj/item/gun/proc/getinaccuracy(mob/living/user)
-	if(!iscarbon(user))
+	if(!isliving(user))
 		return FALSE
 	else
-		var/mob/living/carbon/holdingdude = user
-		if(istype(holdingdude) && holdingdude.combatmode)
-			return (max((holdingdude.lastdirchange + weapon_weight * 25) - world.time,0) * inaccuracy_modifier)
+		var/mob/living/holdingdude = user
+		if(istype(holdingdude) && (holdingdude.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+			return 0
 		else
 			return ((weapon_weight * 25) * inaccuracy_modifier)

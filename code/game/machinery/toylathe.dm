@@ -46,7 +46,12 @@
 							)
 
 /obj/machinery/autoylathe/Initialize()
-	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/plastic), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	var/static/list/allowed_materials = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/plastic
+		)
+	AddComponent(/datum/component/material_container, allowed_materials, 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autoylathe(src)
@@ -121,7 +126,7 @@
 	return ..()
 
 /obj/machinery/autoylathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
-	if(item_inserted.custom_materials?.len && item_inserted.custom_materials[getmaterialref(/datum/material/glass)])
+	if(item_inserted.custom_materials?.len && item_inserted.custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 		flick("autolathe_r",src)//plays glass insertion animation by default otherwise
 	else
 		flick("autolathe_o",src)//plays metal insertion animation

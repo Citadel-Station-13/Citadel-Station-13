@@ -15,7 +15,7 @@
 	var/datum/integrated_io/selected_io = null
 	var/mode = WIRE
 
-/obj/item/integrated_electronics/wirer/update_icon()
+/obj/item/integrated_electronics/wirer/update_icon_state()
 	icon_state = "wirer-[mode]"
 
 /obj/item/integrated_electronics/wirer/proc/wire(var/datum/integrated_io/io, mob/user)
@@ -27,7 +27,7 @@
 			selected_io = io
 			to_chat(user, "<span class='notice'>You attach a data wire to \the [selected_io.holder]'s [selected_io.name] data channel.</span>")
 			mode = WIRING
-			update_icon()		
+			update_icon()
 		if(WIRING)
 			if(io == selected_io)
 				to_chat(user, "<span class='warning'>Wiring \the [selected_io.holder]'s [selected_io.name] into itself is rather pointless.</span>")

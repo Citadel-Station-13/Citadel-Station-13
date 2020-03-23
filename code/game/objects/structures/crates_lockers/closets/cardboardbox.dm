@@ -18,8 +18,8 @@
 	var/egged = 0
 	var/use_mob_movespeed = FALSE //Citadel adds snowflake box handling
 
-/obj/structure/closet/cardboard/relaymove(mob/user, direction)
-	if(opened || move_delay || user.stat || user.IsStun() || user.IsKnockdown() || user.IsUnconscious() || !isturf(loc) || !has_gravity(loc))
+/obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
+	if(opened || move_delay || !CHECK_MOBILITY(user, MOBILITY_MOVE) || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
 	var/oldloc = loc

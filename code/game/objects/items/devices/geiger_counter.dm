@@ -218,7 +218,7 @@
 /obj/item/geiger_counter/cyborg/proc/redirect_rad_act(datum/source, amount)
 	rad_act(amount)
 
-/obj/item/geiger_counter/cyborg/dropped()
+/obj/item/geiger_counter/cyborg/dropped(mob/user)
 	. = ..()
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)

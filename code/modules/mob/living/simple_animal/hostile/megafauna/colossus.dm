@@ -14,8 +14,8 @@ The colossus' true danger lies in its ranged capabilities. It fires immensely da
 At 33% health, the colossus gains an additional attack:
  4. The colossus fires two spirals of death bolts, spinning in opposite directions.
 
-When a colossus dies, it leaves behind a chunk of glowing crystal known as a black box. Anything placed inside will carry over into future rounds.
-For instance, you could place a bag of holding into the black box, and then kill another colossus next round and retrieve the bag of holding from inside.
+When a colossus dies, it leaves behind an anomalous crystal structure. This crystal can be activated in one of multiple ways and has an effect randomly chosen from a list.
+It also drops its vocal cords, which, when inserted into someone's mouth, allow them to activate some specific phrases that cause effects, such as sleeping to people nearby.
 
 Difficulty: Very Hard
 
@@ -123,7 +123,7 @@ Difficulty: Very Hard
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.mind)
-			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
+			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp) & istype(H.mind.martial_art, /datum/martial_art/the_rising_bass))
 				. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
@@ -244,8 +244,9 @@ Difficulty: Very Hard
 	var/list/stored_items = list()
 	var/list/blacklist = list()
 
-/obj/machinery/smartfridge/black_box/update_icon()
-	return
+/obj/machinery/smartfridge/black_box/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))

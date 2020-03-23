@@ -58,7 +58,7 @@
 	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
-	slowdown -= slowdown_wielded
+	set_slowdown(slowdown - slowdown_wielded)
 
 /obj/item/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -88,7 +88,7 @@
 	O.desc = "Your second grip on [src]."
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
-	slowdown += slowdown_wielded
+	set_slowdown(slowdown + slowdown_wielded)
 
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()
@@ -246,11 +246,11 @@
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/living/user, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity || IS_STAMCRIT(user))		//don't make stamcrit message they'll already have gotten one from the primary attack.
 		return
-	if(wielded) //destroys windows and grilles in one hit
+	if(wielded) //destroys windows and grilles in one hit (or more if it has a ton of health like plasmaglass)
 		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
 			W.take_damage(200, BRUTE, "melee", 0)
@@ -396,6 +396,7 @@
 		hitsound = 'sound/weapons/blade1.ogg'
 		START_PROCESSING(SSobj, src)
 		set_light(brightness_on)
+		AddElement(/datum/element/sword_point)
 
 /obj/item/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
@@ -405,6 +406,7 @@
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
+	RemoveElement(/datum/element/sword_point)
 
 /obj/item/twohanded/dualsaber/process()
 	if(wielded)
@@ -492,15 +494,6 @@
 /obj/item/twohanded/dualsaber/hypereutactic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/twohanded/dualsaber/hypereutactic/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
-	altafterattack(A, user, TRUE, params)
-	return TRUE
-
-/obj/item/twohanded/dualsaber/hypereutactic/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)	//does right click memes
-	if(istype(user))
-		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
-	return TRUE
 
 /obj/item/twohanded/dualsaber/hypereutactic/update_icon_state()
 	return
@@ -605,6 +598,8 @@
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
+	AddComponent(/datum/component/jousting)
+	AddElement(/datum/element/sword_point)
 
 /obj/item/twohanded/spear/attack_self(mob/user)
 	if(explosive)
@@ -629,10 +624,6 @@
 		user.gib()
 		return BRUTELOSS
 	return BRUTELOSS
-
-/obj/item/twohanded/spear/Initialize()
-	. = ..()
-	AddComponent(/datum/component/jousting)
 
 /obj/item/twohanded/spear/examine(mob/user)
 	. = ..()
@@ -818,6 +809,9 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/twohanded/pitchfork/Initialize(mapload)
+	AddElement(/datum/element/sword_point)
+
 /obj/item/twohanded/pitchfork/demonic
 	name = "demonic pitchfork"
 	desc = "A red pitchfork, it looks like the work of the devil."
@@ -901,6 +895,7 @@
 /obj/item/twohanded/vibro_weapon/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
+	AddElement(/datum/element/sword_point)
 
 /obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
@@ -1017,7 +1012,7 @@
 
 /obj/item/twohanded/electrostaff
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "electrostaff_3"
+	icon_state = "electrostaff"
 	item_state = "electrostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -1121,10 +1116,10 @@
 /obj/item/twohanded/electrostaff/update_icon_state()
 	. = ..()
 	if(!wielded)
-		icon_state = "electrostaff_3"
+		icon_state = "electrostaff"
 		item_state = "electrostaff"
 	else
-		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_3")
+		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_0")
 	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
 
 /obj/item/twohanded/electrostaff/examine(mob/living/user)
@@ -1176,7 +1171,7 @@
 		turn_off()
 
 /obj/item/twohanded/electrostaff/attack(mob/living/target, mob/living/user)
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -1222,7 +1217,7 @@
 		target.lastattackerckey = user.ckey
 		target.visible_message("<span class='danger'>[user] has shocked [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has shocked you with [src]!</span>")
-		log_combat(user, user, "stunned with an electrostaff")
+		log_combat(user, target, "stunned with an electrostaff")
 	playsound(src, 'sound/weapons/staff.ogg', 50, 1, -1)
 	target.apply_status_effect(stun_status_effect, stun_status_duration)
 	if(ishuman(user))
@@ -1247,9 +1242,9 @@
 	if(user)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
-		target.visible_message("<span class='danger'>[user] has seared [user] with [src]!</span>", \
+		target.visible_message("<span class='danger'>[user] has seared [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has seared you with [src]!</span>")
-		log_combat(user, user, "burned with an electrostaff")
+		log_combat(user, target, "burned with an electrostaff")
 	playsound(src, 'sound/weapons/sear.ogg', 50, 1, -1)
 	return TRUE
 

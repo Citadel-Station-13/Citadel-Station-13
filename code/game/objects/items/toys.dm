@@ -228,26 +228,39 @@
 	var/hacked = FALSE
 	total_mass = 0.4
 	var/total_mass_on = TOTAL_MASS_TOY_SWORD
+	var/activation_sound = 'sound/weapons/saberon.ogg'
+	var/deactivation_sound = 'sound/weapons/saberoff.ogg'
+	var/activation_message = "You extend the plastic blade with a quick flick of your wrist."
+	var/deactivation_message = "You push the plastic blade back down into the handle."
+	var/transform_volume = 20
 
 /obj/item/toy/sword/attack_self(mob/user)
-	active = !( active )
+	active = !active
 	if (active)
-		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
-		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
+		to_chat(user, "<span class='notice'>[activation_message]</span>")
+		playsound(user, activation_sound, transform_volume, 1)
+		w_class = WEIGHT_CLASS_BULKY
+		AddElement(/datum/element/sword_point)
+	else
+		to_chat(user, "<span class='notice'>[deactivation_message]</span>")
+		playsound(user, deactivation_sound, transform_volume, 1)
+		w_class = WEIGHT_CLASS_SMALL
+		RemoveElement(/datum/element/sword_point)
+
+	update_icon()
+	add_fingerprint(user)
+
+/obj/item/toy/sword/update_icon_state()
+	if(active)
 		if(hacked)
 			icon_state = "swordrainbow"
 			item_state = "swordrainbow"
 		else
 			icon_state = "swordblue"
 			item_state = "swordblue"
-		w_class = WEIGHT_CLASS_BULKY
 	else
-		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
 		icon_state = "sword0"
 		item_state = "sword0"
-		w_class = WEIGHT_CLASS_SMALL
-	add_fingerprint(user)
 
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
@@ -270,7 +283,7 @@
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
 
 			if(active)
-				icon_state = "swordrainbow"
+				update_icon()
 				user.update_inv_hands()
 		else
 			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
@@ -290,38 +303,24 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("poked", "jabbed", "hit")
 	light_color = "#37FFF7"
+	activation_sound = 'sound/weapons/nebon.ogg'
+	deactivation_sound = 'sound/weapons/neboff.ogg'
+	transform_volume = 50
+	activation_message = "You activate the holographic blade with a press of a button."
+	deactivation_message = "You deactivate the holographic blade with a press of a button."
 	var/light_brightness = 3
 	actions_types = list()
 
-/obj/item/toy/sword/cx/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
-	altafterattack(A, user, TRUE, params)
-	return TRUE
-
-/obj/item/toy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
-	if(istype(user))
-		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
-	return TRUE
+/obj/item/toy/sword/cx/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/toy/sword/cx/attack_self(mob/user)
-	active = !( active )
+	. = ..()
+	set_light(active ? light_brightness : 0)
 
-	if (active)
-		to_chat(user, "<span class='notice'>You activate the holographic blade with a press of a button.</span>")
-		playsound(user, 'sound/weapons/nebon.ogg', 50, 1)
-		w_class = WEIGHT_CLASS_BULKY
-		attack_verb = list("slashed", "stabbed", "ravaged")
-		set_light(light_brightness)
-		update_icon()
-
-	else
-		to_chat(user, "<span class='notice'>You deactivate the holographic blade with a press of a button.</span>")
-		playsound(user, 'sound/weapons/neboff.ogg', 50, 1)
-		w_class = WEIGHT_CLASS_SMALL
-		attack_verb = list("poked", "jabbed", "hit")
-		set_light(0)
-		update_icon()
-
-	add_fingerprint(user)
+/obj/item/toy/sword/cx/update_icon_state()
+	return
 
 /obj/item/toy/sword/cx/update_overlays()
 	. = ..()
@@ -1079,8 +1078,13 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+/obj/item/toy/cards/singlecard/attack_self(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if(!ishuman(user))
+		return
+	if(!CHECK_MOBILITY(user, MOBILITY_USE))
 		return
 	Flip()
 

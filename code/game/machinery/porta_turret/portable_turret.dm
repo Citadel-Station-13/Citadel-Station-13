@@ -247,6 +247,7 @@
 				if(prob(70))
 					if(stored_gun)
 						stored_gun.forceMove(loc)
+						stored_gun = null
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(prob(50))
 						new /obj/item/stack/sheet/metal(loc, rand(1,4))
@@ -408,7 +409,7 @@
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target non downed carbons
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.recoveringstam))//CIT CHANGE - replaces check for lying with check for recoveringstam
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || (C.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)))//CIT CHANGE - replaces check for lying with check for recoveringstam
 				continue
 
 			//If emagged, target all but dead carbons
@@ -705,7 +706,7 @@
 
 /obj/machinery/porta_turret/syndicate/energy/pirate
 	max_integrity = 260
-	integrity_failure = 20
+	integrity_failure = 0.08
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 
