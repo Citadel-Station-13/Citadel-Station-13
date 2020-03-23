@@ -11069,7 +11069,7 @@
 	dir = 4
 	},
 /obj/structure/closet/secure_closet/warden,
-/obj/item/clothing/under/rank/warden/grey,
+/obj/item/clothing/under/rank/security/warden/grey,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -34914,7 +34914,7 @@
 	light_color = "#e8eaff"
 	},
 /obj/machinery/vending/wardrobe/jani_wardrobe{
-	products = list(/obj/item/clothing/under/rank/janitor = 2, /obj/item/cartridge/janitor = 2, /obj/item/clothing/gloves/color/black = 2, /obj/item/clothing/head/soft/purple = 2, /obj/item/paint/paint_remover = 2, /obj/item/melee/flyswatter = 2, /obj/item/flashlight = 2, /obj/item/caution = 10, /obj/item/holosign_creator = 2, /obj/item/lightreplacer = 2, /obj/item/soap/nanotrasen = 2, /obj/item/storage/bag/trash = 2, /obj/item/clothing/shoes/galoshes = 2, /obj/item/watertank/janitor = 2, /obj/item/storage/belt/janitor = 2)
+	products = list(/obj/item/clothing/under/rank/civilian/janitor = 2, /obj/item/cartridge/janitor = 2, /obj/item/clothing/gloves/color/black = 2, /obj/item/clothing/head/soft/purple = 2, /obj/item/paint/paint_remover = 2, /obj/item/melee/flyswatter = 2, /obj/item/flashlight = 2, /obj/item/caution = 10, /obj/item/holosign_creator = 2, /obj/item/lightreplacer = 2, /obj/item/soap/nanotrasen = 2, /obj/item/storage/bag/trash = 2, /obj/item/clothing/shoes/galoshes = 2, /obj/item/watertank/janitor = 2, /obj/item/storage/belt/janitor = 2)
 	},
 /turf/open/floor/plating,
 /area/janitor)
@@ -44998,7 +44998,7 @@
 /area/library)
 "bCG" = (
 /obj/structure/destructible/cult/tome,
-/obj/item/clothing/under/suit_jacket/red,
+/obj/item/clothing/under/suit/red,
 /obj/item/book/codex_gigas,
 /turf/open/floor/plasteel/cult{
 	dir = 2
@@ -64322,12 +64322,12 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "clT" = (
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
 /obj/structure/closet/crate{
 	name = "Burial Garment Crate"
 	},
@@ -65350,7 +65350,7 @@
 /area/engine/engineering)
 "cnW" = (
 /obj/machinery/vending/engineering{
-	products = list(/obj/item/clothing/under/rank/engineer = 4, /obj/item/clothing/shoes/sneakers/orange = 4, /obj/item/clothing/head/hardhat = 4, /obj/item/storage/belt/utility = 4, /obj/item/clothing/glasses/meson/engine = 4, /obj/item/clothing/gloves/color/yellow = 2, /obj/item/screwdriver = 12, /obj/item/crowbar = 12, /obj/item/wirecutters = 12, /obj/item/multitool = 12, /obj/item/wrench = 12, /obj/item/t_scanner = 12, /obj/item/stock_parts/cell = 8, /obj/item/weldingtool = 8, /obj/item/clothing/head/welding = 8, /obj/item/light/tube = 10, /obj/item/clothing/suit/fire = 4, /obj/item/stock_parts/scanning_module = 5, /obj/item/stock_parts/micro_laser = 5, /obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5)
+	products = list(/obj/item/clothing/under/rank/engineering/engineer = 4, /obj/item/clothing/shoes/sneakers/orange = 4, /obj/item/clothing/head/hardhat = 4, /obj/item/storage/belt/utility = 4, /obj/item/clothing/glasses/meson/engine = 4, /obj/item/clothing/gloves/color/yellow = 2, /obj/item/screwdriver = 12, /obj/item/crowbar = 12, /obj/item/wirecutters = 12, /obj/item/multitool = 12, /obj/item/wrench = 12, /obj/item/t_scanner = 12, /obj/item/stock_parts/cell = 8, /obj/item/weldingtool = 8, /obj/item/clothing/head/welding = 8, /obj/item/light/tube = 10, /obj/item/clothing/suit/fire = 4, /obj/item/stock_parts/scanning_module = 5, /obj/item/stock_parts/micro_laser = 5, /obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5)
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	icon_state = "trimline_fill";
@@ -77113,7 +77113,7 @@
 	},
 /obj/item/clothing/head/HoS/beret,
 /obj/item/clothing/suit/armor/hos/trenchcoat,
-/obj/item/clothing/under/rank/head_of_security/grey,
+/obj/item/clothing/under/rank/security/head_of_security/grey,
 /obj/item/storage/box/deputy,
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32;
