@@ -17,10 +17,10 @@ export const Achievements = props => {
               .filter(x => x.category === category)
               .map(achievement => (
                 <tr key={achievement.name}>
-                  <td style={{'padding': '6px'}}>
+                  <td style={ {'padding': '6px'} }>
                     <Box className={achievement.icon_class} />
                   </td>
-                  <td style={{'vertical-align': 'top'}}>
+                  <td style={ {'vertical-align': 'top'} }>
                     <h1>{achievement.name}</h1>
                     {achievement.desc}
                     <Box
