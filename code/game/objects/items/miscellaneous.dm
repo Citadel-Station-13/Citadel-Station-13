@@ -130,3 +130,4 @@
 	icon_state = "supermatterspray"
 	w_class = WEIGHT_CLASS_SMALL
 	var/usesleft = 2
+
