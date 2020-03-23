@@ -210,7 +210,8 @@
 		"ipc_screen"		= snowflake_ipc_antenna_list ? pick(snowflake_ipc_antenna_list) : "None",
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
-		"meat_type"			= "Mammalian"
+		"meat_type"			= "Mammalian",
+		"body_model"		= MALE
 		))
 
 /proc/random_hair_style(gender)
