@@ -40,6 +40,7 @@
 		var/turn_angle = dir2angle(our_dir)
 		// dir2angle(), ss13 proc is clockwise so dir2angle(EAST) == 90
 		// turn(), byond proc is counterclockwise so turn(NORTH, 90) == WEST
+		their_dir = turn(their_dir, turn_angle)
 	if(their_dir == NONE)
 		return (DOWN in blockable_directions())
 	return (their_dir in blockable_directions())
