@@ -50,7 +50,7 @@ Property weights are:
 		threat += R.threat()
 	for(var/mob/living/simple_animal/hostile/H in GLOB.mob_living_list)
 		var/turf/T = get_turf(H)
-		if(H.stat != DEAD && is_station_level(T.z))
+		if(H.stat != DEAD && is_station_level(T.z) && !("Station" in H.faction))
 			threat += H.threat()
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (M.stat != DEAD && M.mind && M.mind.assigned_role)
