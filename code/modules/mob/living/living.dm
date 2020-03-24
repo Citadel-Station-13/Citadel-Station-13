@@ -702,8 +702,8 @@
 
 /mob/living/do_resist_grab(moving_resist, forced, silent = FALSE)
 	. = ..()
-	if(pulledby.grab_state)
-		if(CHECK_MOBILITY(src, MOBILITY_STAND) && prob(30/pulledby.grab_state))
+	if(pulledby.grab_state > GRAB_PASSIVE)
+		if(CHECK_MOBILITY(src, MOBILITY_RESIST) && prob(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			pulledby.stop_pulling()
 			return TRUE
