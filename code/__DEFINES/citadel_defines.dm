@@ -2,18 +2,6 @@
 //Be sure to update the min/max of these if you do change them.
 //Measurements are in imperial units. Inches, feet, yards, miles. Tsp, tbsp, cups, quarts, gallons, etc
 
-//HUD stuff
-#define  ui_arousal "EAST-1:28,CENTER-4:8"//Below the health doll
-#define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
-#define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
-#define ui_combat_toggle "EAST-4:22,SOUTH:5"
-
-//1:1 HUD layout stuff
-#define ui_boxcraft "EAST-4:22,SOUTH+1:6"
-#define ui_boxarea "EAST-4:6,SOUTH+1:6"
-#define ui_boxlang "EAST-5:22,SOUTH+1:6"
-#define ui_boxvore	"EAST-5:22,SOUTH+1:6"
-
 //Filters
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, color="#04080F")
 
