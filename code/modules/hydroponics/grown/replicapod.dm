@@ -78,7 +78,7 @@
 						make_podman = 1
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
+					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding && AmBloodsucker(M))
 						make_podman = 1
 						if(isliving(M))
 							var/mob/living/L = M

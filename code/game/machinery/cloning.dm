@@ -159,7 +159,7 @@
 		mess = TRUE
 		update_icon()
 		return FALSE
-	if(isbloodsucker(clonemind)) //If the mind is a bloodsucker
+	if(AmBloodsucker(clonemind)) //If the mind is a bloodsucker
 		return FALSE
 
 	attempting = TRUE //One at a time!!

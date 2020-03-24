@@ -88,7 +88,7 @@
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
-			if(!isbloodsucker(H))
+			if(!AmBloodsucker(H))
 				H.revive(full_heal = TRUE)
 			else
 				H.revive(full_heal = FALSE)

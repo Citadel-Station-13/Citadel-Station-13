@@ -99,7 +99,7 @@
 		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_DEATHCOMA)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
 		if(amInCoffinWhileTorpor)
 			mult *= 4 // Increase multiplier if we're sleeping in a coffin.
-			fireheal = min(C.getFireLoss_nonProsthetic(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
+			fireheal = min(C.getFireLoss(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
 			costMult = 0.25
 			C.ExtinguishMob()
 			CureDisabilities() 	// Extinguish Fire
@@ -113,7 +113,7 @@
 			//if (C.getFireLoss() > owner.current.getMaxHealth())
 			//	fireheal = regenRate / 2
 		// BRUTE: Always Heal
-		var/bruteheal = min(C.getBruteLoss_nonProsthetic(), regenRate)
+		var/bruteheal = min(C.getBruteLoss(), regenRate)
 		var/toxinheal = min(C.getToxLoss(), regenRate)
 		// Heal if Damaged
 		if(bruteheal + fireheal + toxinheal > 0) 	// Just a check? Don't heal/spend, and return.
@@ -130,24 +130,23 @@
 			return TRUE // Healed! Done for this tick.
 		if(amInCoffinWhileTorpor) 	// Limbs? (And I have no other healing)
 			var/list/missing = owner.current.get_missing_limbs() 	// Heal Missing
-			if (missing.len) 	// Cycle through ALL limbs and regen them!
+			if(missing.len) 	// Cycle through ALL limbs and regen them!
 				for (var/targetLimbZone in missing) 			// 1) Find ONE Limb and regenerate it.
 					owner.current.regenerate_limb(targetLimbZone, 0)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
-					var/obj/item/bodypart/L = owner.current.get_bodypart( targetLimbZone ) // 2) Limb returns Damaged
+					var/obj/item/bodypart/L = owner.current.get_bodypart(targetLimbZone) // 2) Limb returns Damaged
 					AddBloodVolume(50 * costMult)	// Costs blood to heal
 					L.brute_dam = 60
 					to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
 					playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
 				// DONE! After regenerating ANY number of limbs, we stop here.
 				return TRUE
-			/*else // REMOVED: For now, let's just leave prosthetics on. Maybe you WANT to be a robovamp.
+			else // REMOVED: For now, let's just leave prosthetics on. Maybe you WANT to be a robovamp. In actuality, robovamps are very bad.
 				// Remove Prosthetic/False Limb
 				for(var/obj/item/bodypart/BP in C.bodyparts)
-					message_admins("T1: [BP] ")
-					if (istype(BP) && BP.status == 2)
-						message_admins("T2: [BP] ")
+					if(istype(BP) && BP.status == 2)
+						to_chat(owner.current, "<span class='notice'>Your body expels the [BP]!</span>")
 						BP.drop_limb()
-						return TRUE */
+						return TRUE 
 						// NOTE: Limbs have a "status", like their hosts "stat". 2 is dead (aka Prosthetic). 1 seems to be idle/alive.*/
 	return FALSE
 
@@ -180,7 +179,10 @@
 	if(owner.current.blood_volume < BLOOD_VOLUME_BAD / 2)
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 	// Nutrition
-	owner.current.nutrition = min(owner.current.blood_volume, NUTRITION_LEVEL_FED) // <-- 350  //NUTRITION_LEVEL_FULL
+	if(owner.current.blood_volume < BLOOD_VOLUME_NORMAL)
+		owner.current.nutrition = min(owner.current.blood_volume, NUTRITION_LEVEL_WELL_FED) 
+	else if(owner.current.blood_volume < BLOOD_VOLUME_SAFE)
+		owner.current.nutrition = min(owner.current.blood_volume, NUTRITION_LEVEL_FED) // <-- 350  //NUTRITION_LEVEL_FULL
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //			DEATH
@@ -190,7 +192,7 @@
 /datum/antagonist/bloodsucker/proc/HandleDeath()
 	// 	FINAL DEATH
 	// Fire Damage? (above double health)
-	if(owner.current.getFireLoss_nonProsthetic() >= owner.current.maxHealth * 2.5)
+	if(owner.current.getFireLoss() >= owner.current.maxHealth * 3)
 		FinalDeath()
 		return
 	// Staked while "Temp Death" or Asleep
@@ -210,8 +212,8 @@
 				//	for (var/datum/action/bloodsucker/masquerade/P in powers)
 				//		P.Deactivate()
 		//	TEMP DEATH
-	var/total_brute = owner.current.getBruteLoss_nonProsthetic()
-	var/total_burn = owner.current.getFireLoss_nonProsthetic()
+	var/total_brute = owner.current.getBruteLoss()
+	var/total_burn = owner.current.getFireLoss()
 	var/total_toxloss = owner.current.getToxLoss() //This is neater than just putting it in total_damage
 	var/total_damage = total_brute + total_burn + total_toxloss
 	// Died? Convert to Torpor (fake death)
@@ -219,7 +221,7 @@
 		Torpor_Begin()
 		to_chat(owner, "<span class='danger'>Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor.</span>")
 		sleep(30) //To avoid spam
-		if (poweron_masquerade == TRUE)
+		if(poweron_masquerade == TRUE)
 			to_chat(owner, "<span class='warning'>Your wounds will not heal until you disable the <span class='boldnotice'>Masquerade</span> power.</span>")
 	// End Torpor:
 	else	// No damage, OR toxin healed AND brute healed and NOT in coffin (since you cannot heal burn)
@@ -229,17 +231,14 @@
 				Torpor_End()
 		// Fake Unconscious
 		if(poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
-			owner.current.Unconscious(20,1)
-	//HEALTH_THRESHOLD_CRIT 0
-	//HEALTH_THRESHOLD_FULLCRIT -30
-	//HEALTH_THRESHOLD_DEAD -100
+			owner.current.Unconscious(20, 1)
 
-/datum/antagonist/bloodsucker/proc/Torpor_Begin(amInCoffin=FALSE)
+/datum/antagonist/bloodsucker/proc/Torpor_Begin(amInCoffin = FALSE)
 	owner.current.stat = UNCONSCIOUS
-	owner.current.fakedeath("bloodsucker") // Come after UNCONSCIOUS or else it fails
+	ADD_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker") // Come after UNCONSCIOUS or else it fails
 	ADD_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")	// Without this, you'll just keep dying while you recover.
 	ADD_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
-	ADD_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	ADD_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")
 	// Visuals
 	owner.current.update_sight()
 	owner.current.reload_fullscreen()
@@ -248,10 +247,9 @@
 		if(power.active && !power.can_use_in_torpor)
 			power.DeactivatePower()
 
-
 /datum/antagonist/bloodsucker/proc/Torpor_End()
+	REMOVE_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker") 
 	owner.current.stat = SOFT_CRIT
-	owner.current.cure_fakedeath("bloodsucker") // Come after SOFT_CRIT or else it fails
 	REMOVE_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")
@@ -288,14 +286,15 @@
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains.</span>", \
 			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
 			 "<span class='italics'>You hear a dry, crackling sound.</span>")
+		sleep(50)
 		owner.current.dust()
 	// Fledglings get Gibbed
 	else
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat.</span>", \
 			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
 			 "<span class='italics'>You hear a wet, bursting sound.</span>")
-		owner.current.gib(TRUE, FALSE, FALSE)//Brain cloning is wierd and allows hellbounds. Lets destroy the brain for safety.
-	playsound(owner.current.loc, 'sound/effects/tendril_destroyed.ogg', 40, 1)
+		owner.current.gib(TRUE, FALSE, FALSE) //Brain cloning is wierd and allows hellbounds. Lets destroy the brain for safety.
+	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', 40, TRUE)
 
 
 
@@ -305,15 +304,15 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/mob/proc/CheckBloodsuckerEatFood(var/food_nutrition)
+/mob/proc/CheckBloodsuckerEatFood(food_nutrition)
 	if(!isliving(src))
 		return
 	var/mob/living/L = src
-	if(!L.AmBloodsucker())
+	if(!AmBloodsucker(L))
 		return
 	// We're a bloodsucker? Try to eat food...
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	bloodsuckerdatum.bloodsucker_disgust(food_nutrition)
+	var/datum/antagonist/bloodsucker/B = L.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	B.handle_eat_human_food(food_nutrition)
 
 
 /datum/antagonist/bloodsucker/proc/handle_eat_human_food(food_nutrition, puke_blood = TRUE, masquerade_override) // Called from snacks.dm and drinks.dm

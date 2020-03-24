@@ -267,7 +267,7 @@
 			to_chat(user, "<span class='notice'>You are full. Further blood will be wasted.</span>")
 			warning_full = TRUE
 		// Blood Remaining? (Carbons/Humans only)
-		if(iscarbon(target) && !target.AmBloodsucker(1))
+		if(iscarbon(target) && !AmBloodsucker(target, TRUE))
 			if(target.blood_volume <= BLOOD_VOLUME_BAD && warning_target_bloodvol > BLOOD_VOLUME_BAD)
 				to_chat(user, "<span class='warning'>Your victim's blood volume is fatally low!</span>")
 			else if(target.blood_volume <= BLOOD_VOLUME_OKAY && warning_target_bloodvol > BLOOD_VOLUME_OKAY)

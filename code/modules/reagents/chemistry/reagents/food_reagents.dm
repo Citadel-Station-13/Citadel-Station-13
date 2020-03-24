@@ -448,7 +448,7 @@
 	..()
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method, reac_volume)
-	if(isbloodsucker(M))
+	if(AmBloodsucker(M))
 		switch(method)
 			if(INGEST)
 				if(prob(min(30, current_cycle)))
