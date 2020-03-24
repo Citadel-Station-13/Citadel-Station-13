@@ -83,10 +83,9 @@
 /area/ruin/space/has_grav/powered/space_library)
 "aq" = (
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/folder{
-	step_x = 0;
-	step_y = 3
+/obj/item/pen{
+	pixel_x = 0;
+	pixel_y = 5
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/space_library)
@@ -182,8 +181,13 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/space_library)
 "aH" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
+/obj/item/paper{
+	step_x = 0;
+	step_y = 0;
+	pixel_x = -5;
+	pixel_y = -5
+	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/space_library)
 "aI" = (
@@ -269,19 +273,14 @@
 /area/ruin/space/has_grav/powered/space_library)
 "aV" = (
 /obj/structure/table/wood,
-/obj/item/paper{
-	step_x = 27;
-	step_y = 15
+/obj/item/flashlight/lamp/green{
+	pixel_x = 5;
+	pixel_y = -10
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/space_library)
 "aW" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/item/pen{
-	step_x = 21;
-	step_y = 11
-	},
 /obj/item/paper{
 	step_x = 0;
 	step_y = 0
@@ -289,22 +288,22 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/space_library)
 "aX" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/item/pen{
-	step_x = 2;
-	step_y = 4
+/obj/item/paper{
+	step_x = 0;
+	step_y = 0;
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/space_library)
 "aY" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
 /obj/item/pen{
-	step_x = 15;
-	step_y = 9
-	},
-/obj/item/paper{
-	step_x = 17;
-	step_y = 13
+	pixel_z = 3;
+	pixel_w = 6
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/space_library)
@@ -337,6 +336,26 @@
 "bd" = (
 /obj/structure/bookcase{
 	name = "bookcase (Fiction)"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"be" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/item/paper{
+	step_x = 0;
+	step_y = 0;
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"bf" = (
+/obj/structure/table/wood,
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 6;
+	pixel_z = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/space_library)
@@ -506,7 +525,7 @@ ah
 ao
 aD
 aF
-ay
+aV
 am
 ao
 af
@@ -588,7 +607,7 @@ aa
 aa
 ab
 aj
-aq
+az
 am
 am
 ay
@@ -637,12 +656,12 @@ ao
 aw
 am
 ap
-am
+aq
 aS
-aV
-aW
+am
 aX
-aY
+am
+bf
 ao
 ao
 ao
@@ -659,11 +678,11 @@ ao
 aw
 aA
 ao
-am
-am
-am
 aH
-aH
+am
+aW
+aY
+be
 am
 ao
 aN
