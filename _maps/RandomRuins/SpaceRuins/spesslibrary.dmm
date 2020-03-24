@@ -1,0 +1,783 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/space/basic,
+/area/space)
+"ab" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/space_library)
+"ac" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/powered/space_library)
+"ad" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/bookcase{
+	name = "bookcase (Fiction)"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ae" = (
+/obj/structure/bookcase/random/fiction,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"af" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ag" = (
+/obj/machinery/light/broken{
+	icon_state = "tube-broken";
+	dir = 1
+	},
+/obj/machinery/photocopier,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ah" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ai" = (
+/obj/machinery/light/broken{
+	icon_state = "tube-broken";
+	dir = 1
+	},
+/obj/machinery/bookbinder,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aj" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ak" = (
+/obj/machinery/light/broken{
+	icon_state = "tube-broken";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"al" = (
+/obj/structure/chair/comfy/black{
+	icon_state = "comfychair";
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"am" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"an" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ao" = (
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ap" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aq" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/folder{
+	step_x = 0;
+	step_y = 3
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ar" = (
+/obj/structure/chair/comfy/black{
+	icon_state = "comfychair";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"as" = (
+/obj/machinery/light/broken{
+	icon_state = "tube-broken";
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"at" = (
+/obj/structure/table/wood,
+/obj/item/folder,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"au" = (
+/obj/machinery/light/broken{
+	icon_state = "tube-broken";
+	dir = 4
+	},
+/obj/machinery/libraryscanner,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"av" = (
+/obj/structure/bookcase{
+	name = "bookcase (Adult)"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aw" = (
+/obj/structure/chair/comfy/black,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ax" = (
+/obj/machinery/light/broken{
+	icon_state = "tube-broken";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ay" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"az" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aA" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen/fountain,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aB" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aC" = (
+/obj/structure/bookcase/random/nonfiction,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aD" = (
+/obj/structure/bookcase/random/religion,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aE" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aG" = (
+/obj/structure/chair/sofa/right{
+	icon_state = "sofaend_right";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aI" = (
+/obj/structure/chair/sofa{
+	icon_state = "sofamiddle";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aJ" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aK" = (
+/obj/structure/chair/sofa/left{
+	icon_state = "sofaend_left";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/airlock/wood/glass{
+	desc = "It opens and closes. Suprisingly, this one also uses a series of tiny fans in the sides of the doorway itself to keep the air inside the library. Pretty neat.";
+	name = "Space Library"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aM" = (
+/obj/machinery/light/broken,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aO" = (
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aP" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	on = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table_frame/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aR" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	light_power = 1;
+	on = 0
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/mineral/wood,
+/obj/structure/table_frame/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aT" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aU" = (
+/obj/structure/table/wood,
+/obj/item/gps/internal{
+	gpstag = "Space Library"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aV" = (
+/obj/structure/table/wood,
+/obj/item/paper{
+	step_x = 27;
+	step_y = 15
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/item/pen{
+	step_x = 21;
+	step_y = 11
+	},
+/obj/item/paper{
+	step_x = 0;
+	step_y = 0
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aX" = (
+/obj/structure/table/wood,
+/obj/item/pen{
+	step_x = 2;
+	step_y = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aY" = (
+/obj/structure/table/wood,
+/obj/item/pen{
+	step_x = 15;
+	step_y = 9
+	},
+/obj/item/paper{
+	step_x = 17;
+	step_y = 13
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"aZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bookcase{
+	name = "bookcase (Adult)"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"ba" = (
+/obj/structure/bookcase{
+	name = "bookcase (Non-Fiction)"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"bb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bookcase{
+	name = "bookcase (Fiction)"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"bc" = (
+/obj/structure/bookcase{
+	name = "bookcase (Religion)"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+"bd" = (
+/obj/structure/bookcase{
+	name = "bookcase (Fiction)"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/space_library)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+ab
+ac
+ac
+ac
+ab
+ab
+ac
+ab
+ab
+ac
+ab
+ac
+ac
+ac
+ab
+ab
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+ab
+ad
+ao
+af
+af
+ax
+ba
+ax
+aB
+aB
+ax
+aE
+aE
+ax
+aE
+ab
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+ac
+ae
+ap
+at
+aO
+ao
+aB
+ao
+ba
+aC
+ap
+aE
+bc
+ap
+aD
+ab
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+ac
+af
+ao
+am
+aP
+ao
+aC
+ao
+aB
+aB
+ap
+aE
+bc
+ao
+aD
+ac
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+ab
+ag
+ao
+ao
+ap
+ap
+ao
+ap
+ao
+ao
+ap
+ap
+ao
+ao
+aM
+ab
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+ac
+ah
+ao
+av
+ah
+ao
+aD
+aF
+ay
+am
+ao
+af
+aT
+ao
+ae
+ac
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+ac
+ah
+ap
+aZ
+ah
+ao
+aE
+ao
+aU
+aJ
+ao
+bb
+aT
+ao
+bd
+ac
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+ab
+ah
+ao
+ah
+ah
+ap
+aE
+ap
+aE
+aE
+ao
+af
+aT
+ao
+af
+ac
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+ac
+ai
+ao
+ao
+ao
+ao
+ao
+ao
+aR
+am
+ao
+am
+ay
+ao
+aM
+ab
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+ab
+aj
+aq
+am
+am
+ay
+ap
+ao
+ap
+aF
+ao
+ao
+ao
+ap
+ao
+ab
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+ab
+ak
+ar
+ar
+ap
+aQ
+ap
+ao
+ap
+ap
+ao
+ap
+ao
+ap
+ao
+ab
+ab
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+ac
+al
+ap
+ao
+aw
+am
+ap
+am
+aS
+aV
+aW
+aX
+aY
+ao
+ao
+ao
+aL
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+ab
+am
+ao
+ao
+aw
+aA
+ao
+am
+am
+am
+aH
+aH
+am
+ao
+aN
+ab
+ac
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+ab
+an
+au
+ap
+aw
+az
+as
+aG
+aI
+aI
+aI
+aI
+aK
+as
+ao
+ac
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+ac
+ab
+ac
+ab
+ac
+ac
+ac
+ac
+ab
+ab
+ac
+ac
+ac
+ab
+ac
+ac
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

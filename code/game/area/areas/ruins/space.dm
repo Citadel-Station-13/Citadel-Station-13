@@ -474,3 +474,8 @@
 /area/ruin/space/has_grav/powered/advancedlab
 	name = "Abductor Replication Lab"
 	icon_state = "yellow"
+
+// Spess library
+/area/ruin/space/has_grav/powered/space_library
+	name = "Abandoned Library"
+	icon_state = "green"

@@ -323,6 +323,12 @@
 	name = "Abductor Replication Lab"
 	description = "Some scientists tried and almost succeeded to recreate abductor tools. Somewhat slower and a bit less modern than their originals, these tools are the best you can get if you aren't an alien."
 
+/datum/map_template/ruin/space/spesslibrary
+	id = "spesslibrary"
+	suffix = "spesslibrary.dmm"
+	name = "Abandoned Space Library"
+	description = "An library that once had many visitors, it now lays dormant and forgotten."
+
 //Space ruins for the station z
 /datum/map_template/ruin/spacenearstation
 	prefix = "_maps/RandomRuins/SpaceRuinsStation/"
