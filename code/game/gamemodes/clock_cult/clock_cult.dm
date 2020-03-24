@@ -269,7 +269,7 @@ Credit where due:
 //Servant of Ratvar outfit
 /datum/outfit/servant_of_ratvar
 	name = "Servant of Ratvar"
-	uniform = /obj/item/clothing/under/rank/engineer //no more chameleon suit for them, as requested
+	uniform = /obj/item/clothing/under/rank/engineering/engineer //no more chameleon suit for them, as requested
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset

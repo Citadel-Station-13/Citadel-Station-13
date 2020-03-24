@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - bugfix: "Red and blue boxes are now actually red or blue."

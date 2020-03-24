@@ -58,7 +58,7 @@
 	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
-	slowdown -= slowdown_wielded
+	set_slowdown(slowdown - slowdown_wielded)
 
 /obj/item/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -88,7 +88,7 @@
 	O.desc = "Your second grip on [src]."
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
-	slowdown += slowdown_wielded
+	set_slowdown(slowdown + slowdown_wielded)
 
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()
@@ -96,9 +96,6 @@
 	if(!wielded)
 		return
 	unwield(user)
-
-/obj/item/twohanded/update_icon()
-	return
 
 /obj/item/twohanded/attack_self(mob/user)
 	. = ..()
@@ -241,7 +238,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
-/obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/fireaxe/update_icon_state()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
 
@@ -249,11 +246,11 @@
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/living/user, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity || IS_STAMCRIT(user))		//don't make stamcrit message they'll already have gotten one from the primary attack.
 		return
-	if(wielded) //destroys windows and grilles in one hit
+	if(wielded) //destroys windows and grilles in one hit (or more if it has a ton of health like plasmaglass)
 		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
 			W.take_damage(200, BRUTE, "melee", 0)
@@ -342,7 +339,7 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/twohanded/dualsaber/update_icon()
+/obj/item/twohanded/dualsaber/update_icon_state()
 	if(wielded)
 		icon_state = "dualsaber[item_color][wielded]"
 	else
@@ -399,6 +396,7 @@
 		hitsound = 'sound/weapons/blade1.ogg'
 		START_PROCESSING(SSobj, src)
 		set_light(brightness_on)
+		AddElement(/datum/element/sword_point)
 
 /obj/item/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
@@ -408,6 +406,7 @@
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
+	RemoveElement(/datum/element/sword_point)
 
 /obj/item/twohanded/dualsaber/process()
 	if(wielded)
@@ -492,34 +491,15 @@
 	spinnable = FALSE
 	total_mass_on = 4
 
-/obj/item/twohanded/dualsaber/hypereutactic/chaplain
-	name = "\improper divine lightblade"
-	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
-	force = 5
-	force_unwielded = 5
-	force_wielded = 20
-	block_chance = 50
-	armour_penetration = 0
-	var/chaplain_spawnable = TRUE
-	obj_flags = UNIQUE_RENAME
-
-/obj/item/twohanded/dualsaber/hypereutactic/chaplain/Initialize()
+/obj/item/twohanded/dualsaber/hypereutactic/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
-	return FALSE
+/obj/item/twohanded/dualsaber/hypereutactic/update_icon_state()
+	return
 
-/obj/item/twohanded/dualsaber/hypereutactic/alt_pre_attack(atom/A, mob/living/user, params)	//checks if it can do right click memes
-	altafterattack(A, user, TRUE, params)
-	return TRUE
-
-/obj/item/twohanded/dualsaber/hypereutactic/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)	//does right click memes
-	if(istype(user))
-		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
-	return TRUE
-
-/obj/item/twohanded/dualsaber/hypereutactic/update_icon()
+/obj/item/twohanded/dualsaber/hypereutactic/update_overlays()
+	. = ..()
 	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "hypereutactic_blade")
 	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "hypereutactic_gem")
 
@@ -527,15 +507,10 @@
 		blade_overlay.color = light_color
 		gem_overlay.color = light_color
 
-	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
-
-	add_overlay(gem_overlay)
+	. += gem_overlay
 
 	if(wielded)
-		add_overlay(blade_overlay)
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
+		. += blade_overlay
 
 	clean_blood()
 
@@ -576,6 +551,24 @@
 	update_icon()
 	update_light()
 
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain
+	name = "divine lightblade"
+	desc = "A giant blade of bright and holy light, said to cut down the wicked with ease."
+	force = 5
+	force_unwielded = 5
+	force_wielded = 20
+	block_chance = 50
+	armour_penetration = 0
+	var/chaplain_spawnable = TRUE
+	obj_flags = UNIQUE_RENAME
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+
+/obj/item/twohanded/dualsaber/hypereutactic/chaplain/IsReflect()
+	return FALSE
+
 //spears
 /obj/item/twohanded/spear
 	icon_state = "spearglass0"
@@ -605,6 +598,8 @@
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
+	AddComponent(/datum/component/jousting)
+	AddElement(/datum/element/sword_point)
 
 /obj/item/twohanded/spear/attack_self(mob/user)
 	if(explosive)
@@ -630,16 +625,12 @@
 		return BRUTELOSS
 	return BRUTELOSS
 
-/obj/item/twohanded/spear/Initialize()
-	. = ..()
-	AddComponent(/datum/component/jousting)
-
 /obj/item/twohanded/spear/examine(mob/user)
 	. = ..()
 	if(explosive)
 		. += "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>"
 
-/obj/item/twohanded/spear/update_icon()
+/obj/item/twohanded/spear/update_icon_state()
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
 	else
@@ -717,9 +708,10 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
 
-/obj/item/twohanded/required/chainsaw/Initialize()
+/obj/item/twohanded/required/chainsaw/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
@@ -738,7 +730,7 @@
 	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : force
-	icon_state = "chainsaw_[on ? "on" : "off"]"
+	update_icon()
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 
@@ -747,11 +739,8 @@
 	else
 		hitsound = "swing_hit"
 
-	if(src == user.get_active_held_item()) //update inhands
-		user.update_inv_hands()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+/obj/item/twohanded/required/chainsaw/update_icon_state()
+	icon_state = "chainsaw_[on ? "on" : "off"]"
 
 /obj/item/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
@@ -820,6 +809,9 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/twohanded/pitchfork/Initialize(mapload)
+	AddElement(/datum/element/sword_point)
+
 /obj/item/twohanded/pitchfork/demonic
 	name = "demonic pitchfork"
 	desc = "A red pitchfork, it looks like the work of the devil."
@@ -844,7 +836,7 @@
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
 
-/obj/item/twohanded/pitchfork/update_icon()
+/obj/item/twohanded/pitchfork/update_icon_state()
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/twohanded/pitchfork/suicide_act(mob/user)
@@ -903,6 +895,7 @@
 /obj/item/twohanded/vibro_weapon/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
+	AddElement(/datum/element/sword_point)
 
 /obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
@@ -918,7 +911,7 @@
 				return 1
 	return 0
 
-/obj/item/twohanded/vibro_weapon/update_icon()
+/obj/item/twohanded/vibro_weapon/update_icon_state()
 	icon_state = "hfrequency[wielded]"
 
 /*
@@ -930,7 +923,7 @@
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 	force_wielded = 23
 
-/obj/item/twohanded/fireaxe/boneaxe/update_icon()
+/obj/item/twohanded/fireaxe/boneaxe/update_icon_state()
 	icon_state = "bone_axe[wielded]"
 
 /*
@@ -956,7 +949,7 @@
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
 
-/obj/item/twohanded/bonespear/update_icon()
+/obj/item/twohanded/bonespear/update_icon_state()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars
@@ -1120,13 +1113,13 @@
 		turn_off(user)
 	add_fingerprint(user)
 
-/obj/item/twohanded/electrostaff/update_icon()
+/obj/item/twohanded/electrostaff/update_icon_state()
 	. = ..()
 	if(!wielded)
-		icon_state = "electrostaff_3"
+		icon_state = "electrostaff"
 		item_state = "electrostaff"
 	else
-		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_3")
+		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_0")
 	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
 
 /obj/item/twohanded/electrostaff/examine(mob/living/user)
@@ -1178,7 +1171,7 @@
 		turn_off()
 
 /obj/item/twohanded/electrostaff/attack(mob/living/target, mob/living/user)
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -1224,7 +1217,7 @@
 		target.lastattackerckey = user.ckey
 		target.visible_message("<span class='danger'>[user] has shocked [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has shocked you with [src]!</span>")
-		log_combat(user, user, "stunned with an electrostaff")
+		log_combat(user, target, "stunned with an electrostaff")
 	playsound(src, 'sound/weapons/staff.ogg', 50, 1, -1)
 	target.apply_status_effect(stun_status_effect, stun_status_duration)
 	if(ishuman(user))
@@ -1249,9 +1242,9 @@
 	if(user)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
-		target.visible_message("<span class='danger'>[user] has seared [user] with [src]!</span>", \
+		target.visible_message("<span class='danger'>[user] has seared [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has seared you with [src]!</span>")
-		log_combat(user, user, "burned with an electrostaff")
+		log_combat(user, target, "burned with an electrostaff")
 	playsound(src, 'sound/weapons/sear.ogg', 50, 1, -1)
 	return TRUE
 
@@ -1314,6 +1307,8 @@
 			target = A
 		else
 			target = A.loc
+			if(!isturf(target)) //read: Mob inventories.
+				return
 	else
 		target = user.loc
 	if (locate(/obj/structure/table) in target.contents)

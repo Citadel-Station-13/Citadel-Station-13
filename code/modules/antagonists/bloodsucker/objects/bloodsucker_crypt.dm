@@ -207,7 +207,7 @@
 	buckled_mob.pixel_y = buckled_mob.get_standard_pixel_y_offset(180)
 	src.visible_message(text("<span class='danger'>[buckled_mob][buckled_mob.stat==DEAD?"'s corpse":""] slides off of the rack.</span>"))
 	density = FALSE
-	buckled_mob.AdjustKnockdown(30)
+	buckled_mob.DefaultCombatKnockdown(30)
 	update_icon()
 	useLock = FALSE // Failsafe
 
@@ -457,7 +457,7 @@
 /obj/structure/bloodsucker/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/structure/bloodsucker/candelabrum/update_icon()
+/obj/structure/bloodsucker/candelabrum/update_icon_state()
 	icon_state = "candelabrum[lit ? "_lit" : ""]"
 
 /obj/structure/bloodsucker/candelabrum/examine(mob/user)

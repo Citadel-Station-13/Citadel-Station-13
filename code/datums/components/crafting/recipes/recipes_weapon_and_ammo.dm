@@ -119,18 +119,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/switchblade_ms
-	name = "Switchblade"
-	result = /obj/item/switchblade/crafted
-	reqs = list(/obj/item/weaponcrafting/stock = 1,
-				/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/kitchen/knife = 1,
-				/obj/item/stack/cable_coil = 2)
-	tools = list(TOOL_WELDER)
-	time = 45
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 //////////////////
 ///BOMB CRAFTING//
 //////////////////
@@ -290,7 +278,7 @@
 
 /datum/crafting_recipe/arrow
 	name = "Arrow"
-	result = /obj/item/ammo_casing/caseless/arrow
+	result = /obj/item/ammo_casing/caseless/arrow/wood
 	time = 30
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
 				 /obj/item/stack/sheet/silk = 1,
@@ -305,23 +293,19 @@
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				 /obj/item/stack/sheet/sinew = 1,
-				 /obj/item/ammo_casing/caseless/arrow/ashen = 1)
+				 /obj/item/ammo_casing/caseless/arrow/ash = 1)
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/ashen_arrow
-	name = "Bonfire-Hardened Arrow"
-	result = /obj/item/ammo_casing/caseless/arrow/ashen
-	tools = list(/obj/structure/bonfire)
+	name = "Fire Hardened Arrow"
+	result = /obj/item/ammo_casing/caseless/arrow/ash
+	tools = list(TOOL_WELDER)
 	time = 30
 	always_availible = FALSE
-	reqs = list(/obj/item/ammo_casing/caseless/arrow = 1)
+	reqs = list(/obj/item/ammo_casing/caseless/arrow/wood = 1)
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
-
-/datum/crafting_recipe/ashen_arrow/welder
-	name = "Welder-Hardened Arrow"
-	tools = list(TOOL_WELDER)
 
 /datum/crafting_recipe/smartdart
 	name = "Medical smartdart"

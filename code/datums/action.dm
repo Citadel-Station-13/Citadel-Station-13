@@ -8,6 +8,7 @@
 	var/desc = null
 	var/obj/target = null
 	var/check_flags = 0
+	var/required_mobility_flags = MOBILITY_USE
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
@@ -31,6 +32,7 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
+	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
 
 /datum/action/Destroy()
 	if(owner)
@@ -95,20 +97,23 @@
 
 /datum/action/proc/IsAvailable()
 	if(!owner)
-		return 0
+		return FALSE
+	var/mob/living/L = owner
+	if(istype(L) && !CHECK_ALL_MOBILITY(L, required_mobility_flags))
+		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_STUN)
-		if(owner.IsKnockdown() || owner.IsStun())
-			return 0
+		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE))
+			return FALSE
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
-			return 0
+		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_STAND))
+			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
@@ -152,6 +157,9 @@
 		return 0
 	var/mob/M = target
 	M.ghostize(1)
+
+/datum/action/proc/OnUpdatedIcon()
+	UpdateButtonIcon()
 
 //Presets for item actions
 /datum/action/item_action
@@ -418,6 +426,7 @@
 
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_CONSCIOUS
+	required_mobility_flags = NONE
 
 /datum/action/item_action/hands_free/activate
 	name = "Activate"
@@ -426,7 +435,8 @@
 	name = "Shift Nerves"
 
 /datum/action/item_action/explosive_implant
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	name = "Activate Explosive Implant"
 
 /datum/action/item_action/toggle_research_scanner
@@ -666,7 +676,8 @@
 
 //Preset for general and toggled actions
 /datum/action/innate
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	var/active = 0
 
 /datum/action/innate/Trigger()
@@ -824,4 +835,4 @@
 	for(var/datum/action/A in M.actions)
 		if(istype(A, action_type))
 			return A
-	return 
+	return

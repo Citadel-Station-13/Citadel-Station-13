@@ -254,13 +254,13 @@
 	config_entry_value = 1
 
 /datum/config_entry/number/movedelay/sprint_buffer_max
-	config_entry_value = 42
+	config_entry_value = 24
 
 /datum/config_entry/number/movedelay/sprint_stamina_cost
-	config_entry_value = 0.7
+	config_entry_value = 1.4
 
 /datum/config_entry/number/movedelay/sprint_buffer_regen_per_ds
-	config_entry_value = 0.3
+	config_entry_value = 0.4
 
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
@@ -333,6 +333,10 @@
 
 /datum/config_entry/number/space_budget
 	config_entry_value = 16
+	min_val = 0
+
+/datum/config_entry/number/station_space_budget
+	config_entry_value = 10
 	min_val = 0
 
 /datum/config_entry/flag/allow_random_events	// Enables random events mid-round when set
@@ -419,3 +423,16 @@
 	config_entry_value = 3
 
 /datum/config_entry/flag/suicide_allowed
+
+/datum/config_entry/keyed_list/breasts_cups_prefs
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+	config_entry_value = list("a", "b", "c", "d", "e") //keep these lowercase
+
+/datum/config_entry/number/penis_min_inches_prefs
+	config_entry_value = 1
+	min_val = 0
+
+/datum/config_entry/number/penis_max_inches_prefs
+	config_entry_value = 20
+	min_val = 0

@@ -624,10 +624,7 @@
 					"set_internal_pressure" = 0
 				))
 
-/obj/machinery/airalarm/update_icon()
-	set_light(0)
-	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+/obj/machinery/airalarm/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "alarm0"
 		return
@@ -636,35 +633,39 @@
 		icon_state = "alarmx"
 		return
 
-	if(panel_open)
-		switch(buildstage)
-			if(2)
-				icon_state = "alarmx"
-			if(1)
-				icon_state = "alarm_b2"
-			if(0)
-				icon_state = "alarm_b1"
+	if(!panel_open)
+		icon_state = "alarm1"
 		return
 
-	icon_state = "alarm1"
+	switch(buildstage)
+		if(2)
+			icon_state = "alarmx"
+		if(1)
+			icon_state = "alarm_b2"
+		if(0)
+			icon_state = "alarm_b1"
+
+/obj/machinery/airalarm/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/overlay_state = AALARM_OVERLAY_OFF
 	var/area/A = get_base_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
-			add_overlay(AALARM_OVERLAY_GREEN)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
-			set_light(brightness_on)
 		if(1)
-			add_overlay(AALARM_OVERLAY_WARN)
 			overlay_state = AALARM_OVERLAY_WARN
 			light_color = LIGHT_COLOR_LAVA
-			set_light(brightness_on)
 		if(2)
-			add_overlay(AALARM_OVERLAY_DANGER)
 			overlay_state = AALARM_OVERLAY_DANGER
 			light_color = LIGHT_COLOR_RED
-			set_light(brightness_on)
+
+	if(overlay_state != AALARM_OVERLAY_OFF)
+		. += overlay_state
+		set_light(brightness_on)
+	else
+		set_light(0)
 
 	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 	update_light()

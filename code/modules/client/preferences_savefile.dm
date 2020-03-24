@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	25
+#define SAVEFILE_VERSION_MAX	26
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -114,6 +114,36 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["feature_lizard_legs"] >> digi
 		if(digi == "Digitigrade Legs")
 			WRITE_FILE(S["feature_lizard_legs"], "Digitigrade")
+
+	if(current_version < 26)
+		var/vr_path = "data/player_saves/[parent.ckey[1]]/[parent.ckey]/vore/character[default_slot].json"
+		if(fexists(vr_path))
+			var/list/json_from_file = json_decode(file2text(vr_path))
+			if(json_from_file)
+				digestable = json_from_file["digestable"]
+				devourable = json_from_file["devourable"]
+				feeding = json_from_file["feeding"]
+				lickable = json_from_file["lickable"]
+				belly_prefs = json_from_file["belly_prefs"]
+				vore_taste = json_from_file["vore_taste"]
+
+		for(var/V in all_quirks) // quirk migration
+			switch(V)
+				if("Acute hepatic pharmacokinesis")
+					DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
+					DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
+					ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
+					ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
+					all_quirks -= V
+				if("Crocin Immunity")
+					ENABLE_BITFIELD(cit_toggles,NO_APHRO)
+					all_quirks -= V
+				if("Buns of Steel")
+					ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
+					all_quirks -= V
+
+		if(features["meat_type"] == "Inesct")
+			features["meat_type"] = "Insect"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -345,6 +375,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"]	>> be_random_name
 	S["body_is_always_random"]	>> be_random_body
 	S["gender"]					>> gender
+	S["body_model"]				>> features["body_model"]
 	S["age"]					>> age
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
@@ -415,14 +446,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_cock_shape"]				>> features["cock_shape"]
 	S["feature_cock_color"]				>> features["cock_color"]
 	S["feature_cock_length"]			>> features["cock_length"]
-	S["feature_cock_girth"]				>> features["cock_girth"]
+	S["feature_cock_diameter"]			>> features["cock_diameter"]
 	S["feature_has_sheath"]				>> features["sheath_color"]
 	//balls features
 	S["feature_has_balls"]				>> features["has_balls"]
 	S["feature_balls_color"]			>> features["balls_color"]
 	S["feature_balls_size"]				>> features["balls_size"]
 	S["feature_balls_shape"]			>> features["balls_shape"]
-	S["feature_balls_sack_size"]		>> features["balls_sack_size"]
 	//breasts features
 	S["feature_has_breasts"]			>> features["has_breasts"]
 	S["feature_breasts_size"]			>> features["breasts_size"]
@@ -446,6 +476,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
+	S["digestable"]						>> digestable
+	S["devourable"]						>> devourable
+	S["feeding"]						>> feeding
+	S["vore_taste"]						>> vore_taste
+	S["lickable"]						>> lickable
+	S["belly_prefs"]					>> belly_prefs
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -455,6 +491,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	real_name	= reject_bad_name(real_name)
 	gender		= sanitize_gender(gender, TRUE, TRUE)
+	features["body_model"] = sanitize_gender(features["body_model"], FALSE, FALSE, gender == FEMALE ? FEMALE : MALE)
 	if(!real_name)
 		real_name	= random_unique_name(gender)
 	custom_species	= reject_bad_name(custom_species)
@@ -510,6 +547,30 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
 	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
 
+	var/static/list/B_sizes
+	if(!B_sizes)
+		B_sizes = CONFIG_GET(keyed_list/breasts_cups_prefs)
+		B_sizes = B_sizes.Copy()
+	var/static/min_D
+	if(!min_D)
+		min_D = CONFIG_GET(number/penis_min_inches_prefs)
+	var/static/max_D
+	if(!max_D)
+		max_D = CONFIG_GET(number/penis_max_inches_prefs)
+
+	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], B_sizes, BREASTS_SIZE_DEF)
+	features["cock_length"]			= sanitize_integer(features["cock_length"], min_D, max_D, COCK_SIZE_DEF)
+	features["breasts_shape"]		= sanitize_inlist(features["breasts_shape"], GLOB.breasts_shapes_list, DEF_BREASTS_SHAPE)
+	features["cock_shape"]			= sanitize_inlist(features["cock_shape"], GLOB.cock_shapes_list, DEF_COCK_SHAPE)
+	features["balls_shape"]			= sanitize_inlist(features["balls_shape"], GLOB.balls_shapes_list, DEF_BALLS_SHAPE)
+	features["vag_shape"]			= sanitize_inlist(features["vag_shape"], GLOB.vagina_shapes_list, DEF_VAGINA_SHAPE)
+	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, FALSE, "FFF")
+	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, FALSE, "FFF")
+	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, FALSE, "FFF")
+	features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, FALSE, "FFF")
+
+	features["flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
+
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
 	for(var/j in job_preferences)
@@ -518,23 +579,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	for(var/V in all_quirks) // quirk migration
-		switch(V)
-			if("Acute hepatic pharmacokinesis")
-				DISABLE_BITFIELD(cit_toggles, PENIS_ENLARGEMENT)
-				DISABLE_BITFIELD(cit_toggles, BREAST_ENLARGEMENT)
-				ENABLE_BITFIELD(cit_toggles,FORCED_FEM)
-				ENABLE_BITFIELD(cit_toggles,FORCED_MASC)
-				all_quirks -= V
-			if("Crocin Immunity")
-				ENABLE_BITFIELD(cit_toggles,NO_APHRO)
-				all_quirks -= V
-			if("Buns of Steel")
-				ENABLE_BITFIELD(cit_toggles,NO_ASS_SLAP)
-				all_quirks -= V
+	lickable						= sanitize_integer(lickable, FALSE, TRUE, initial(lickable))
+	devourable						= sanitize_integer(devourable, FALSE, TRUE, initial(devourable))
+	digestable						= sanitize_integer(digestable, FALSE, TRUE, initial(digestable))
+	feeding							= sanitize_integer(feeding, FALSE, TRUE, initial(feeding))
+	vore_taste						= copytext(vore_taste, 1, MAX_TASTE_LEN)
+	belly_prefs 					= SANITIZE_LIST(belly_prefs)
 
-	if(features["meat_type"] == "Inesct")
-		features["meat_type"] = "Insect"
 	cit_character_pref_load(S)
 
 	return 1
@@ -561,6 +612,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["name_is_always_random"]	, be_random_name)
 	WRITE_FILE(S["body_is_always_random"]	, be_random_body)
 	WRITE_FILE(S["gender"]					, gender)
+	WRITE_FILE(S["body_model"]				, features["body_model"])
 	WRITE_FILE(S["age"]						, age)
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)
@@ -612,6 +664,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	WRITE_FILE(S["all_quirks"]			, all_quirks)
+
+	WRITE_FILE(S["digestable"]			, digestable)
+	WRITE_FILE(S["devourable"]			, devourable)
+	WRITE_FILE(S["feeding"]				, feeding)
+	WRITE_FILE(S["vore_taste"]			, vore_taste)
+	WRITE_FILE(S["lickable"]			, lickable)
+	WRITE_FILE(S["belly_prefs"]			, belly_prefs)
 
 	cit_character_pref_save(S)
 

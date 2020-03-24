@@ -1,0 +1,8 @@
+author: "KathrinBailey"
+delete-after: True
+changes: 
+  - rscadd: "Nine new posters!"
+  - rscadd: "Shower curtains can be crafted."
+  - rscadd: "New sofas!"
+  - rscadd: "Green and purple comfy chairs to the crafting menu to fit green and purple carpets."
+  - bugfix: "Shower curtains now let you see through them once open, and don't once closed."

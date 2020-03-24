@@ -11,8 +11,7 @@
 	linked_organ_slot = ORGAN_SLOT_PENIS
 	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION
 	var/size_name = "average"
-	shape = "Single"
-	var/sack_size = BALLS_SACK_SIZE_DEF
+	shape = DEF_BALLS_SHAPE
 	fluid_id = /datum/reagent/consumable/semen
 	masturbation_verb = "massage"
 	layer_index = TESTICLES_LAYER_INDEX
@@ -64,7 +63,6 @@
 		color = "#[skintone2hex(H.skin_tone)]"
 	else
 		color = "#[D.features["balls_color"]]"
-	sack_size = D.features["balls_sack_size"]
 	shape = D.features["balls_shape"]
 	if(D.features["balls_shape"] == "Hidden")
 		ENABLE_BITFIELD(genital_flags, GENITAL_INTERNAL)

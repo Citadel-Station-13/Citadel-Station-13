@@ -11,7 +11,7 @@
 	if(item_flags & NO_ATTACK_CHAIN_SOFT_STAMCRIT)
 		if(isliving(user))
 			var/mob/living/L = user
-			if(L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+			if(IS_STAMCRIT(L))
 				to_chat(L, "<span class='warning'>You are too exhausted to swing [src]!</span>")
 				return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
@@ -58,7 +58,7 @@
 	if(item_flags & NOBLUDGEON)
 		return
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+	if(IS_STAMCRIT(user)) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 
@@ -88,7 +88,7 @@
 		return
 	if(item_flags & NOBLUDGEON)
 		return
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+	if(IS_STAMCRIT(user)) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 	user.adjustStaminaLossBuffered(getweight()*1.2)//CIT CHANGE - makes attacking things cause stamina loss
@@ -109,11 +109,9 @@
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(iscarbon(user))
-		var/mob/living/carbon/tempcarb = user
-		if(!tempcarb.combatmode)
-			totitemdamage *= 0.5
-	if(user.resting)
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		totitemdamage *= 0.5
+	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE
 	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
@@ -125,11 +123,7 @@
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
-				if(iscarbon(src))
-					var/mob/living/carbon/C = src
-					C.bleed(totitemdamage)
-				else
-					add_splatter_floor(location)
+				add_splatter_floor(location)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 		return TRUE //successful attack

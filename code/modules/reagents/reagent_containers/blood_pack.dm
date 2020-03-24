@@ -34,15 +34,11 @@
 		else
 			name = "blood pack"
 
-/obj/item/reagent_containers/blood/update_icon()
-	cut_overlays()
-
+/obj/item/reagent_containers/blood/update_overlays()
+	. = ..()
 	var/v = min(round(reagents.total_volume / volume * 10), 10)
 	if(v > 0)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "bloodpack1")
-		filling.icon_state = "bloodpack[v]"
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
+		. += mutable_appearance('icons/obj/reagentfillings.dmi', "bloodpack[v]", color = mix_color_from_reagents(reagents.reagent_list))
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
@@ -89,7 +85,7 @@
 	blood_type = "BUG"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
+	if(istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on the label of [src]!</span>")
 			return
@@ -107,25 +103,31 @@
 	else
 		return ..()
 
-/obj/item/reagent_containers/blood/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == INTENT_HELP && reagents.total_volume > 0)
-		if (user != M)
-			to_chat(user, "<span class='notice'>You force [M] to drink from the [src]</span>")
-			user.visible_message("<span class='userdanger'>[user] forces [M] to drink from the [src].</span>")
-			if(!do_mob(user, M, 50))
+/obj/item/reagent_containers/blood/attack(mob/living/carbon/C, mob/user, def_zone)
+	if(user.a_intent == INTENT_HELP && reagents.total_volume > 0 && iscarbon(C) && user.a_intent == INTENT_HELP)
+		if(C.is_mouth_covered())
+			to_chat(user, "<span class='notice'>You cant drink from the [src] while your mouth is covered.</span>")
+			return
+		if(user != C)
+			user.visible_message("<span class='danger'>[user] forces [C] to drink from the [src].</span>", \
+			"<span class='notice'>You force [C] to drink from the [src]</span>")
+			if(!do_mob(user, C, 50))
 				return
 		else
-			if(!do_mob(user, M, 10))
+			if(!do_mob(user, C, 10))
 				return
+
 			to_chat(user, "<span class='notice'>You take a sip from the [src].</span>")
 			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>")
 		if(reagents.total_volume <= 0) // Safety: In case you spam clicked the blood bag on yourself, and it is now empty (below will divide by zero)
 			return
-		var/gulp_size = 5
+		var/gulp_size = 3
 		var/fraction = min(gulp_size / reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction) 	//checkLiked(fraction, M) // Blood isn't food, sorry.
-		reagents.trans_to(M, gulp_size)
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		reagents.reaction(C, INGEST, fraction) 	//checkLiked(fraction, M) // Blood isn't food, sorry.
+		reagents.trans_to(C, gulp_size)
+		reagents.remove_reagent(src, 2) //Inneficency, so hey, IVs are usefull.
+		playsound(C.loc,'sound/items/drink.ogg', rand(10, 50), TRUE)
+		return
 	..()
 
 /obj/item/reagent_containers/blood/bluespace
@@ -133,3 +135,14 @@
 	desc = "Contains blood used for transfusion, this one has been made with bluespace technology to hold much more blood. Must be attached to an IV drip."
 	icon_state = "bsbloodpack"
 	volume = 600 //its a blood bath!
+
+/obj/item/reagent_containers/blood/bluespace/attack(mob/living/carbon/C, mob/user, def_zone)
+	if(user.a_intent == INTENT_HELP)
+		if(user != C)
+			to_chat(user, "<span class='notice'>You can't force people to drink from the [src]. Nothing comes out from it.</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You try to suck on the [src], but nothing comes out.</span>")
+			return
+	else
+		..()

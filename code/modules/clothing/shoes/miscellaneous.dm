@@ -19,6 +19,14 @@
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
+/obj/item/clothing/shoes/combat/sneakboots
+	name = "insidious sneakboots"
+	desc = "A pair of insidious boots with special noise muffling soles which very slightly drown out your footsteps. They would be absolutely perfect for stealth operations were it not for the iconic Syndicate flairs."
+	icon_state = "sneakboots"
+	item_state = "sneakboots"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	clothing_flags = TRAIT_SILENT_STEP
+
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."

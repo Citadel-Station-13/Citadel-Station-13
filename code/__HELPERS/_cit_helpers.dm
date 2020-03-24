@@ -60,7 +60,6 @@ GLOBAL_LIST_EMPTY(genitals_list)
 GLOBAL_LIST_EMPTY(cock_shapes_list)
 GLOBAL_LIST_EMPTY(gentlemans_organ_names)
 GLOBAL_LIST_EMPTY(balls_shapes_list)
-GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
 GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
@@ -107,38 +106,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
 
-//Flavor Text
-/mob/proc/set_flavor()
-	set name = "Set Flavor Text"
-	set desc = "Sets an extended description of your character's features."
-	set category = "IC"
-
-	var/new_flavor = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", flavor_text, MAX_FAVOR_LEN, TRUE)
-	if(!isnull(new_flavor))
-		flavor_text = new_flavor
-		to_chat(src, "Your flavor text has been updated.")
-
-//Flavor Text
-/mob/proc/set_flavor_2()
-	set name = "Set Temporary Flavor Text"
-	set desc = "Sets a description of your character's current appearance. Use this for emotions, poses etc."
-	set category = "IC"
-
-	var/new_flavor = stripped_multiline_input(usr, "Set the temporary flavor text in your 'examine' verb. This should be used only for things pertaining to the current round!", "Short-Term Flavor Text", flavor_text_2, MAX_FAVOR_LEN, TRUE)
-	if(!isnull(new_flavor))
-		flavor_text_2 = new_flavor
-		to_chat(src, "Your temporary flavor text has been updated.")
-
-/mob/proc/print_flavor_text(flavor,temp = FALSE)
-	if(!flavor)
-		return
-	// We are decoding and then encoding to not only get correct amount of characters, but also to prevent partial escaping characters being shown.
-	var/msg = html_decode(replacetext(flavor, "\n", " "))
-	if(length_char(msg) <= 40)
-		return "<span class='notice'>[html_encode(msg)]</span>"
-	else
-		return "<span class='notice'>[html_encode(copytext_char(msg, 1, 37))]... <a href='?src=[REF(src)];flavor[temp ? "2" : ""]_more=1'>More...</span></a>"
-
 //LOOC toggles
 /client/verb/listen_looc()
 	set name = "Show/Hide LOOC"
@@ -168,18 +135,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 
 /mob/living/carbon/proc/has_breasts()
 	if(getorganslot(ORGAN_SLOT_BREASTS))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/proc/has_ovipositor()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
-	if(G && istype(G, /obj/item/organ/genital/ovipositor))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/has_eggsack()
-	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(G && istype(G, /obj/item/organ/genital/eggsack))
 		return TRUE
 	return FALSE
 

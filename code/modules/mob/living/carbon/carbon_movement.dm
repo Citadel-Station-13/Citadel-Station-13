@@ -1,17 +1,3 @@
-/mob/living/carbon/movement_delay()
-	. = ..()
-	. += grab_state * 3 //can't go fast while grabbing something.
-
-	if(!get_leg_ignore()) //ignore the fact we lack legs
-		var/leg_amount = get_num_legs()
-		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
-		if(!leg_amount)
-			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
-		if(legcuffed)
-			. += legcuffed.slowdown
-	if(stat == SOFT_CRIT)
-		. += SOFTCRIT_ADD_SLOWDOWN
-
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING && !(lube & FLYING_DOESNT_HELP))
 		return FALSE
@@ -43,3 +29,10 @@
 			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10
+
+/mob/living/carbon/can_move_under_living(mob/living/other)
+	. = ..()
+	if(!.)		//we failed earlier don't need to fail again
+		return
+	if(!other.lying && lying)		//they're up, we're down.
+		return FALSE
