@@ -184,12 +184,15 @@
 	// Nutrition
 	owner.current.nutrition = clamp(owner.current.blood_volume, 545, 0) //The amount of blood is how full we are.
 	//A bit higher regeneration based on blood volume 
-	if(owner.current.blood_volume < BLOOD_VOLUME_NORMAL)
-		additional_regen = 0.3
-	else if(owner.current.blood_volume < BLOOD_VOLUME_OKAY)
-		additional_regen = 0.2
-	else if(owner.current.blood_volume < BLOOD_VOLUME_BAD)
-		additional_regen  = 0.1
+	switch(owner.current.blood_volume)
+		if(owner.current.blood_volume < 700)
+			additional_regen = 0.4
+		if(owner.current.blood_volume < BLOOD_VOLUME_NORMAL)
+			additional_regen = 0.3
+		if(owner.current.blood_volume < BLOOD_VOLUME_OKAY)
+			additional_regen = 0.2
+		if(owner.current.blood_volume < BLOOD_VOLUME_BAD)
+			additional_regen  = 0.1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //			DEATH

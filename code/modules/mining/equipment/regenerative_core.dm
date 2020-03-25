@@ -26,8 +26,8 @@
 	slot = "hivecore"
 	force = 0
 	actions_types = list(/datum/action/item_action/organ_action/use)
-	var/inert = 0
-	var/preserved = 0
+	var/inert
+	var/preserved
 
 /obj/item/organ/regenerative_core/Initialize()
 	. = ..()
@@ -38,7 +38,9 @@
 		go_inert()
 
 /obj/item/organ/regenerative_core/proc/preserved(implanted = 0)
-	inert = FALSE
+	if(inert)
+		name = initial(name)
+		inert = FALSE
 	preserved = TRUE
 	update_icon()
 	desc = "All that remains of a hivelord. It is preserved, allowing you to use it to heal completely without danger of decay."
@@ -88,10 +90,10 @@
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
-			if(!AmBloodsucker(H))
-				H.revive(full_heal = TRUE)
-			else
+			if(AmBloodsucker(H))
 				H.revive(full_heal = FALSE)
+			else
+				H.revive(full_heal = TRUE)
 			qdel(src)
 			user.log_message("[user] used [src] to heal [H]! Wake the fuck up, Samurai!", LOG_ATTACK, color="green") //Logging for 'old' style legion core use, when clicking on a sprite of yourself or another.
 
