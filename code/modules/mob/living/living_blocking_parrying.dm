@@ -7,9 +7,10 @@
 
 /datum/block_parry_data
 
+
 /obj/item
-	/// From a point of reference of someone facing NORTH. Put in DOWN to block attacks from our tile.
-	var/can_block_directions = list(NORTHWEST, NORTH, NORTHEAST)
+	/// See defines.
+	var/can_block_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
 	/// Defense flags, see __DEFINES/flags.dm
 	var/defense_flags = NONE
 
@@ -17,16 +18,18 @@
 
 	return ..()
 
-/// This item can be used to parry. Only a basic check.
+/// This item can be used to parry. Only a basic check used to determine if we should proceed with parry chain at all.
 #define ITEM_DEFENSE_CAN_PARRY		(1<<0)
-/// This item can be used in the directional blocking system. Only a basic check.
+/// This item can be used in the directional blocking system. Only a basic check used to determine if we should proceed with directional block handling at all.
 #define ITEM_DEFENSE_CAN_BLOCK		(1<<1)
+
+
 
 /**
   * Gets the list of directions we can block. Include DOWN to block attacks from our same tile.
   */
 /obj/item/proc/blockable_directions()
-	return list()
+	return can_block_directions
 
 /**
   * Checks if we can block from a specific direction from our direction.
@@ -41,9 +44,7 @@
 		// dir2angle(), ss13 proc is clockwise so dir2angle(EAST) == 90
 		// turn(), byond proc is counterclockwise so turn(NORTH, 90) == WEST
 		their_dir = turn(their_dir, turn_angle)
-	if(their_dir == NONE)
-		return (DOWN in blockable_directions())
-	return (their_dir in blockable_directions())
+	return (DIR2BLOCKDIR(their_dir) in blockable_directions())
 
 /**
   * can_block_direction but for "compound" directions to check all of them and return the number of directions that were blocked.
