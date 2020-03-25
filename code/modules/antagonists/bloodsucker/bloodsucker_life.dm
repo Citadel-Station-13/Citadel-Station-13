@@ -15,7 +15,7 @@
 	var/notice_healing
 	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA)) // Deduct Blood
-			AddBloodVolume(-0.1) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
+			AddBloodVolume(passive_blood_drain) // -.1 currently
 		if(HandleHealing(1)) 		// Heal
 			if(notice_healing == FALSE && owner.current.blood_volume > 0)
 				to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
@@ -39,12 +39,12 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
-	owner.current.blood_volume = CLAMP(owner.current.blood_volume + value, 0, maxBloodVolume)
+	owner.current.blood_volume = CLAMP(owner.current.blood_volume + value, 0, max_blood_volume)
 	update_hud()
 
 /datum/antagonist/bloodsucker/proc/HandleFeeding(mob/living/carbon/target, mult=1)
 	// mult: SILENT feed is 1/3 the amount
-	var/blood_taken = min(feedAmount, target.blood_volume) * mult	// Starts at 15 (now 8 since we doubled the Feed time)
+	var/blood_taken = min(feed_amount, target.blood_volume) * mult	// Starts at 15 (now 8 since we doubled the Feed time)
 	target.blood_volume -= blood_taken
 	// Simple Animals lose a LOT of blood, and take damage. This is to keep cats, cows, and so forth from giving you insane amounts of blood.
 	if(!ishuman(target))
@@ -82,32 +82,21 @@
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
 	// NOTE: Mult of 0 is just a TEST to see if we are injured and need to go into Torpor!
 	//It is called from your coffin on close (by you only)
-	var/notice_garlic
-	var/notice_necklace
+	var/actual_regen = regen_rate + additional_regen
 	if(poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
-	if(owner.current.reagents?.has_reagent(/datum/reagent/consumable/garlic))
-		if(notice_garlic)
-			to_chat(owner.current, "<span class='notice'>Garlic in your blood is interfering with your regeneration!</span>")
-			notice_garlic = TRUE
+	if(owner.current.reagents.has_reagent(/datum/reagent/consumable/garlic))
 		return FALSE
 	if(istype(owner.current.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
-		if(notice_necklace)
-			to_chat(owner.current, "<span class='notice'>The necklace on your neck is interrupting your healing!</span>")
-			notice_necklace = TRUE
 		return FALSE
-	owner.current.adjustStaminaLoss(-1.5 + (regenRate * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
-	owner.current.adjustCloneLoss(-0.1 * (regenRate * 2) * mult, 0)
-	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
-	if(notice_garlic)
-		notice_garlic = FALSE
-	if(notice_necklace)
-		notice_necklace = FALSE
+	owner.current.adjustStaminaLoss(-1.5 + (actual_regen * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustCloneLoss(-0.1 * (actual_regen * 2) * mult, 0)
+	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4) * mult)
 	// No Bleeding
 	if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
 		var/mob/living/carbon/human/H = owner.current
 		if(H.bleed_rate > 0) //Only heal bleeding if we are actually bleeding
-			H.bleed_rate =- 0.5 + regenRate * 0.2 * mult
+			H.bleed_rate =- 0.5 + actual_regen * 0.2 * mult
 	if(iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		var/mob/living/carbon/C = owner.current
 		var/costMult = 1 // Coffin makes it cheaper
@@ -115,7 +104,7 @@
 		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_DEATHCOMA)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
 		if(amInCoffinWhileTorpor)
 			mult *= 4 // Increase multiplier if we're sleeping in a coffin.
-			fireheal = min(C.getFireLoss(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
+			fireheal = min(C.getFireLoss(), actual_regen) // NOTE: Burn damage ONLY heals in torpor.
 			costMult = 0.25
 			C.ExtinguishMob()
 			CureDisabilities() 	// Extinguish Fire
@@ -125,12 +114,10 @@
 		else
 			if(owner.current.blood_volume <= 0) // No Blood? Lower Mult
 				mult = 0.25
-			// Crit from burn? Lower damage to maximum allowed.
-			//if (C.getFireLoss() > owner.current.getMaxHealth())
-			//	fireheal = regenRate / 2
+			
 		// BRUTE: Always Heal
-		var/bruteheal = min(C.getBruteLoss(), regenRate)
-		var/toxinheal = min(C.getToxLoss(), regenRate)
+		var/bruteheal = min(C.getBruteLoss(), actual_regen)
+		var/toxinheal = min(C.getToxLoss(), actual_regen)
 		// Heal if Damaged
 		if(bruteheal + fireheal + toxinheal > 0) 	// Just a check? Don't heal/spend, and return.
 			if(mult == 0)
@@ -195,10 +182,14 @@
 	if(owner.current.blood_volume < BLOOD_VOLUME_BAD / 2)
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 	// Nutrition
+	owner.current.nutrition = clamp(owner.current.blood_volume, 545, 0) //The amount of blood is how full we are.
+	//A bit higher regeneration based on blood volume 
 	if(owner.current.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.current.nutrition = min(owner.current.blood_volume, NUTRITION_LEVEL_WELL_FED) 
-	else if(owner.current.blood_volume < BLOOD_VOLUME_SAFE)
-		owner.current.nutrition = min(owner.current.blood_volume, NUTRITION_LEVEL_FED) // <-- 350  //NUTRITION_LEVEL_FULL
+		additional_regen = 0.3
+	else if(owner.current.blood_volume < BLOOD_VOLUME_OKAY)
+		additional_regen = 0.2
+	else if(owner.current.blood_volume < BLOOD_VOLUME_BAD)
+		additional_regen  = 0.1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //			DEATH
@@ -300,7 +291,7 @@
 	// Free my Vassals!
 	FreeAllVassals()
 	// Elders get Dusted
-	if(vamplevel >= 4) // (vamptitle)
+	if(bloodsucker_level >= 4) // (bloodsucker_title)
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains.</span>", \
 			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
 			 "<span class='italics'>You hear a dry, crackling sound.</span>")

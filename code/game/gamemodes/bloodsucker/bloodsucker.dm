@@ -133,7 +133,7 @@
 	// Not High Enough
 	if(creator)
 		var/datum/antagonist/bloodsucker/creator_bloodsucker = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if(!istype(creator_bloodsucker) || creator_bloodsucker.vamplevel < BLOODSUCKER_LEVEL_TO_EMBRACE)
+		if(!istype(creator_bloodsucker) || creator_bloodsucker.bloodsucker_level < BLOODSUCKER_LEVEL_TO_EMBRACE)
 			to_chat(creator, "<span class='danger'>Your blood is too thin to turn this corpse!</span>")
 			return FALSE
 	return TRUE

@@ -367,7 +367,7 @@
 	blood_display.hud = src
 	infodisplay += blood_display
 
-	vamprank_display = new /obj/screen/bloodsucker/rank_counter	// Vampire Rank
+	vamprank_display = new /obj/screen/bloodsucker/rank_counter	// Bloodsucker Rank
 	vamprank_display.hud = src
 	infodisplay += vamprank_display
 

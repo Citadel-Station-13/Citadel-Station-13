@@ -263,7 +263,7 @@
 				to_chat(user, "<span class='notice'>Your victim is dead. [target.p_their(TRUE)] blood barely nourishes you.</span>")
 				warning_target_dead = TRUE
 		// Full?
-		if(!warning_full && user.blood_volume >= bloodsuckerdatum.maxBloodVolume)
+		if(!warning_full && user.blood_volume >= bloodsuckerdatum.max_blood_volume)
 			to_chat(user, "<span class='notice'>You are full. Further blood will be wasted.</span>")
 			warning_full = TRUE
 		// Blood Remaining? (Carbons/Humans only)
@@ -300,7 +300,7 @@
 
 
 /datum/action/bloodsucker/feed/proc/CheckKilledTarget(mob/living/user, mob/living/target)
-	// Bad Vampire. You shouldn't do that.
+	// Bad Bloodsucker. You shouldn't do that.
 	if(target && target.stat >= DEAD && ishuman(target))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankkilled", /datum/mood_event/drankkilled) // BAD // in bloodsucker_life.dm
 

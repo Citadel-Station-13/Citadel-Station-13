@@ -448,8 +448,8 @@
 				. = 1
 	..()
 
-/datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method, reac_volume)
-	if(AmBloodsucker(M))
+/datum/reagent/consumable/garlic/reaction_mob(mob/living/M, method, reac_volume)
+	if(AmBloodsucker(M, TRUE)) //Theyll be immune to garlic as long as they masquarade, but they cant do it if they already have it.
 		switch(method)
 			if(INGEST)
 				if(prob(min(30, current_cycle)))
@@ -467,7 +467,7 @@
 					to_chat(M, "<span class='warning'>You feel like your veins are boiling!</span>")
 					M.emote("scream")
 					M.adjustFireLoss(5)
-
+	..()
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	value = 3

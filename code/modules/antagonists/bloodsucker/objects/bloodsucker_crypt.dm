@@ -123,7 +123,7 @@
 		. += {"<span class='cult'>Simply click and hold on a victim, and then drag their sprite on the vassal rack. Alt click on the vassal rack to unbuckle them.</span>"}
 		. += {"<span class='cult'>Make sure that the victim is handcuffed, or else they can simply run away or resist, as the process is not instant.</span>"}
 		. += {"<span class='cult'>To convert the victim, simply click on the vassal rack itself. Sharp weapons work faster than other tools.</span>"}
-		. += {"<span class='cult'> You have only the power for [B.vamplevel - B.count_vassals(user.mind)] vassals</span>"}
+		. += {"<span class='cult'> You have only the power for [B.bloodsucker_level - B.count_vassals(user.mind)] vassals</span>"}
 /*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 	. += {"<span class='cult'>This is the vassal rack, which allows your master to thrall crewmembers into his minions.\n
 	Aid your master in bringing their victims here and keeping them secure.\n
@@ -265,7 +265,7 @@
 	if(user.blood_volume < CONVERT_COST + 5)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
 		return
-	if(B.count_vassals(user.mind) > B.vamplevel)
+	if(B.count_vassals(user.mind) > B.bloodsucker_level)
 		to_chat(user, "<span class='notice'>Your power is yet too weak to bring more vassals under your control....</span>")
 		return
 	// Prep...
