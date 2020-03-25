@@ -48,7 +48,7 @@
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
 
-/datum/component/riding/proc/vehicle_dir_changed(from, to)
+/datum/component/riding/proc/vehicle_dir_changed(from_dir, to_dir)
 	spawn
 		handle_vehicle_offsets()
 		handle_vehicle_layer()
