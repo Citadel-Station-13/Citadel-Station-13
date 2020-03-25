@@ -59,7 +59,7 @@
 		if(!(NO_UNDERWEAR in H.dna.species.species_traits))
 			var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
 			var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
-			if(zone == BODY_ZONE_CHEST ? (H.hidden_undershirt || T?.covers_chest || B?.covers_chest) : (H.hidden_underwear || T?.covers_groin || B?.covers_groin))
+			if(zone == BODY_ZONE_CHEST ? (!H.hidden_undershirt && (T?.covers_chest || B?.covers_chest)) : (!H.hidden_underwear && (T?.covers_groin || B?.covers_groin)))
 				return FALSE
 	if(genital_flags & GENITAL_THROUGH_CLOTHES)
 		return TRUE
