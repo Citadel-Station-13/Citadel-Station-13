@@ -9,8 +9,8 @@
 	var/max_distance = 0
 	var/sleep_time = 3
 	var/finished = 0
-	var/target_oldloc = null
-	var/origin_oldloc = null
+	var/turf/target_oldloc
+	var/turf/origin_oldloc
 	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
 	var/timing_id = null
@@ -42,9 +42,13 @@
 		return
 	recalculating = TRUE
 	timing_id = null
-	if(origin && target && (get_dist(origin,target) < max_distance) && (origin.z == target.z))
-		var/origin_turf = get_turf(origin)
-		var/target_turf = get_turf(target)
+	var/turf/origin_turf
+	if(origin)
+		origin_turf = get_turf(origin)
+	var/turf/target_turf
+	if(target)
+		target_turf = get_turf(target)
+	if(origin_turf && target_turf && (get_dist(origin_turf, target_turf) < max_distance) && (origin_turf.z == target_turf.z))
 		if(!static_beam && ((origin_turf != origin_oldloc) || (target_turf != target_oldloc)))
 			origin_oldloc = origin_turf //so we don't keep checking against their initial positions, leading to endless Reset()+Draw() calls
 			target_oldloc = target_turf
@@ -90,15 +94,15 @@
 	return ..()
 
 /datum/beam/proc/Draw()
-	if(!isturf(origin.loc) || !isturf(target.loc))
+	if(!origin_oldloc || !target_oldloc)
 		return
-	var/Angle = round(Get_Angle(origin,target))
+	var/Angle = round(Get_Angle(origin_oldloc,target_oldloc))
 	var/matrix/rot_matrix = matrix()
 	rot_matrix.Turn(Angle)
 
 	//Translation vector for origin and target
-	var/DX = (32*target.x+target.pixel_x)-(32*origin.x+origin.pixel_x)
-	var/DY = (32*target.y+target.pixel_y)-(32*origin.y+origin.pixel_y)
+	var/DX = (32*target_oldloc.x+target_oldloc.pixel_x)-(32*origin_oldloc.x+origin_oldloc.pixel_x)
+	var/DY = (32*target_oldloc.y+target_oldloc.pixel_y)-(32*origin_oldloc.y+origin_oldloc.pixel_y)
 	var/N = 0
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
