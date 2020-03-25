@@ -265,7 +265,6 @@
 	var/list/gen_index[GENITAL_LAYER_INDEX_LENGTH]
 	var/list/genitals_to_add
 	var/list/fully_exposed
-	var/list/somewhat_exposed
 	for(var/obj/item/organ/genital/G in internal_organs)
 		if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 			LAZYADD(gen_index[G.layer_index], G)
@@ -316,13 +315,9 @@
 
 			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][dna.species.use_skintones ? "_s" : ""]_[aroused_state]_[layertext]"
 
-			if(layers_num[layer] == GENITALS_FRONT_LAYER)
-				if(G.genital_flags & GENITAL_THROUGH_CLOTHES)
-					genital_overlay.layer = -GENITALS_EXPOSED_LAYER
-					LAZYADD(fully_exposed, genital_overlay)
-				else if(!(G.genital_flags & GENITAL_UNDIES_HIDDEN))
-					genital_overlay.layer = -GENITALS_NO_UNDIE_LAYER
-					LAZYADD(somewhat_exposed, genital_overlay)
+			if(layers_num[layer] == GENITALS_FRONT_LAYER && G.genital_flags & GENITAL_THROUGH_CLOTHES)
+				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
+				LAZYADD(fully_exposed, genital_overlay)
 			else
 				genital_overlay.layer = -layers_num[layer]
 				standing += genital_overlay
@@ -333,10 +328,6 @@
 	if(LAZYLEN(fully_exposed))
 		overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
 		apply_overlay(GENITALS_EXPOSED_LAYER)
-
-	if(LAZYLEN(somewhat_exposed))
-		overlays_standing[GENITALS_NO_UNDIE_LAYER] = somewhat_exposed
-		apply_overlay(GENITALS_NO_UNDIE_LAYER)
 
 	for(var/L in relevant_layers)
 		apply_overlay(layers_num[L])
