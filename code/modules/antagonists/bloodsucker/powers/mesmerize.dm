@@ -120,20 +120,20 @@
 		cleanup_target(user, target, success)
 
 /datum/action/bloodsucker/targeted/mesmerize/proc/do_mesmerize_cycle(mob/living/user, mob/living/carbon/target)
-		var/power_time = 138 + level_current * 12
-		sleep(windup_time)
-		if(success)
-			PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
-			target.face_atom(user)
-			target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
-			ADD_TRAIT(target, TRAIT_MOBILITY_NOPICKUP, src)
-			ADD_TRAIT(target, TRAIT_MOBILITY_NOUSE, src)
-			ADD_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
-			to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
-			addtimer(CALLBACK(src, .proc/reset_victim), power_time)
-			reset_victim()		//make sure old one is cleared if it isn't already 
-			current_victim = target
-			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/reset_victim)
+	var/power_time = 138 + level_current * 12
+	sleep(windup_time)
+	if(success)
+		PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
+		target.face_atom(user)
+		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
+		ADD_TRAIT(target, TRAIT_MOBILITY_NOPICKUP, src)
+		ADD_TRAIT(target, TRAIT_MOBILITY_NOUSE, src)
+		ADD_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
+		to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
+		addtimer(CALLBACK(src, .proc/reset_victim), power_time)
+		reset_victim()		//make sure old one is cleared if it isn't already 
+		current_victim = target
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/reset_victim)
 
 /datum/action/bloodsucker/targeted/mesmerize/proc/reset_victim()
 	if(!current_victim)
