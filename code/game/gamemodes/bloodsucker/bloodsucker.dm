@@ -269,6 +269,3 @@
 
 /datum/game_mode/proc/remove_vassal(datum/mind/vassal)
 	vassal.remove_antag_datum(ANTAG_DATUM_VASSAL)
-	
-
-	
