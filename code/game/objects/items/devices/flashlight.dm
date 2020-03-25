@@ -256,7 +256,7 @@
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 7 // Pretty bright.
-	total_mass = 0.2
+	total_mass = 0.8
 	light_color = "#FA421A"
 	icon_state = "flare"
 	item_state = "flare"
@@ -337,7 +337,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	light_color = LIGHT_COLOR_ORANGE
-	total_mass = 0.5
+	total_mass = 1.25
 	on_damage = 12 //Its a log thats on fire
 	slot_flags = null
 
@@ -350,7 +350,7 @@
 	desc = "A mining lantern."
 	brightness_on = 6	// luminosity when on
 	light_color = "#FFAA44"
-	flashlight_power = 0.9
+	flashlight_power = 0.8
 
 /obj/item/flashlight/slime
 	gender = PLURAL
