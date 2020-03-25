@@ -27,15 +27,6 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 
-/datum/component/riding/Destroy()
-	var/mob/M = parent
-	if(!istype(M))		//we absolutely can not runtime.
-		stack_trace("Warning: parent was not a human on [type]/Destroy().")
-	else
-		for(var/mob/buckled in M.buckled_mobs)
-			vehicle_mob_unbuckle(null, buckled, TRUE)
-	return ..()
-
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	restore_position(M)
 	unequip_buckle_inhands(M)
