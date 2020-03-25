@@ -74,13 +74,9 @@
 	name = "testicle"		//the preview name of the accessory
 	color_src = "balls_color"
 
-/datum/sprite_accessory/testicles/hidden
-	icon_state = "none"
-	name = "Hidden"
-
 /datum/sprite_accessory/testicles/single
 	icon_state = "single"
-	name = "Single"
+	name = "Single" //Single as "single pair", for clarity.
 
 //Vaginas
 /datum/sprite_accessory/vagina

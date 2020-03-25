@@ -41,6 +41,9 @@
 		return
 	update_size()
 	update_appearance()
+	if(genital_flags & UPDATE_OWNER_APPEARANCE && owner && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.update_genitals()
 	if(linked_organ_slot || (linked_organ && !owner))
 		update_link()
 
@@ -49,9 +52,16 @@
 	var/list/exposed_genitals = list() //Keeping track of them so we don't have to iterate through every genitalia and see if exposed
 
 /obj/item/organ/genital/proc/is_exposed()
-	if(!owner || CHECK_BITFIELD(genital_flags, GENITAL_INTERNAL) || CHECK_BITFIELD(genital_flags, GENITAL_HIDDEN))
+	if(!owner || genital_flags & (GENITAL_INTERNAL|GENITAL_HIDDEN))
 		return FALSE
-	if(CHECK_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES))
+	if(genital_flags & GENITAL_UNDIES_HIDDEN && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(!(NO_UNDERWEAR in H.dna.species.species_traits))
+			var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
+			var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
+			if(zone == BODY_ZONE_CHEST ? (H.hidden_undershirt || T?.covers_chest || B?.covers_chest) : (H.hidden_underwear || T?.covers_groin || B?.covers_groin))
+				return FALSE
+	if(genital_flags & GENITAL_THROUGH_CLOTHES)
 		return TRUE
 
 	switch(zone) //update as more genitals are added
@@ -60,25 +70,19 @@
 		if(BODY_ZONE_PRECISE_GROIN)
 			return owner.is_groin_exposed()
 
-/obj/item/organ/genital/proc/toggle_visibility(visibility)
+/obj/item/organ/genital/proc/toggle_visibility(visibility, update = TRUE)
+	genital_flags &= ~(GENITAL_THROUGH_CLOTHES|GENITAL_HIDDEN|GENITAL_UNDIES_HIDDEN)
+	owner.exposed_genitals -= src
 	switch(visibility)
-		if("Always visible")
-			ENABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
-			DISABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
-			if(!(src in owner.exposed_genitals))
-				owner.exposed_genitals += src
-		if("Hidden by clothes")
-			DISABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
-			DISABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
-			if(src in owner.exposed_genitals)
-				owner.exposed_genitals -= src
-		if("Always hidden")
-			DISABLE_BITFIELD(genital_flags, GENITAL_THROUGH_CLOTHES)
-			ENABLE_BITFIELD(genital_flags, GENITAL_HIDDEN)
-			if(src in owner.exposed_genitals)
-				owner.exposed_genitals -= src
+		if(GEN_VISIBLE_ALWAYS)
+			genital_flags |= GENITAL_THROUGH_CLOTHES
+			owner.exposed_genitals += src
+		if(GEN_VISIBLE_NO_UNDIES)
+			genital_flags |= GENITAL_UNDIES_HIDDEN
+		if(GEN_VISIBLE_NEVER)
+			genital_flags |= GENITAL_HIDDEN
 
-	if(ishuman(owner)) //recast to use update genitals proc
+	if(update && ishuman(owner)) //recast to use update genitals proc
 		var/mob/living/carbon/human/H = owner
 		H.update_genitals()
 
@@ -86,6 +90,10 @@
 	set category = "IC"
 	set name = "Expose/Hide genitals"
 	set desc = "Allows you to toggle which genitals should show through clothes or not."
+
+	if(stat != CONSCIOUS)
+		to_chat(usr, "<span class='warning'>You can toggle genitals visibility right now...</span>")
+		return
 
 	var/list/genital_list = list()
 	for(var/obj/item/organ/genital/G in internal_organs)
@@ -95,10 +103,11 @@
 		return
 	//Full list of exposable genitals created
 	var/obj/item/organ/genital/picked_organ
-	picked_organ = input(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals", null) in genital_list
-	if(picked_organ)
-		var/picked_visibility = input(src, "Choose visibility setting", "Expose/Hide genitals", "Hidden by clothes") in list("Always visible", "Hidden by clothes", "Always hidden")
-		picked_organ.toggle_visibility(picked_visibility)
+	picked_organ = input(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals") as null|anything in genital_list
+	if(picked_organ && (picked_organ in internal_organs))
+		var/picked_visibility = input(src, "Choose visibility setting", "Expose/Hide genitals") as null|anything in GLOB.genitals_visibility_toggles
+		if(picked_visibility && picked_organ && (picked_organ in internal_organs))
+			picked_organ.toggle_visibility(picked_visibility)
 	return
 
 /mob/living/carbon/verb/toggle_arousal_state()
@@ -256,6 +265,7 @@
 	var/list/gen_index[GENITAL_LAYER_INDEX_LENGTH]
 	var/list/genitals_to_add
 	var/list/fully_exposed
+	var/list/somewhat_exposed
 	for(var/obj/item/organ/genital/G in internal_organs)
 		if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 			LAZYADD(gen_index[G.layer_index], G)
@@ -306,9 +316,13 @@
 
 			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size][dna.species.use_skintones ? "_s" : ""]_[aroused_state]_[layertext]"
 
-			if(layers_num[layer] == GENITALS_FRONT_LAYER && CHECK_BITFIELD(G.genital_flags, GENITAL_THROUGH_CLOTHES))
-				genital_overlay.layer = -GENITALS_EXPOSED_LAYER
-				LAZYADD(fully_exposed, genital_overlay) // to be added to a layer with higher priority than clothes, hence the name of the bitflag.
+			if(layers_num[layer] == GENITALS_FRONT_LAYER)
+				if(G.genital_flags & GENITAL_THROUGH_CLOTHES)
+					genital_overlay.layer = -GENITALS_EXPOSED_LAYER
+					LAZYADD(fully_exposed, genital_overlay)
+				else if(!(G.genital_flags & GENITAL_UNDIES_HIDDEN))
+					genital_overlay.layer = -GENITALS_NO_UNDIE_LAYER
+					LAZYADD(somewhat_exposed, genital_overlay)
 			else
 				genital_overlay.layer = -layers_num[layer]
 				standing += genital_overlay
@@ -319,6 +333,10 @@
 	if(LAZYLEN(fully_exposed))
 		overlays_standing[GENITALS_EXPOSED_LAYER] = fully_exposed
 		apply_overlay(GENITALS_EXPOSED_LAYER)
+
+	if(LAZYLEN(somewhat_exposed))
+		overlays_standing[GENITALS_NO_UNDIE_LAYER] = somewhat_exposed
+		apply_overlay(GENITALS_NO_UNDIE_LAYER)
 
 	for(var/L in relevant_layers)
 		apply_overlay(layers_num[L])

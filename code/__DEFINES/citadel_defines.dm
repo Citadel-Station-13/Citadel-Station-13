@@ -35,6 +35,8 @@
 #define MASTURBATE_LINKED_ORGAN	(1<<6) //used to pass our mission to the linked organ
 #define CAN_CLIMAX_WITH			(1<<7)
 #define GENITAL_CAN_AROUSE		(1<<8)
+#define GENITAL_UNDIES_HIDDEN	(1<<9)
+#define UPDATE_OWNER_APPEARANCE	(1<<10)
 
 
 #define DEF_VAGINA_SHAPE	"Human"
@@ -70,6 +72,12 @@
 #define MILK_RATE			5
 #define MILK_RATE_MULT		1
 #define MILK_EFFICIENCY		1
+
+//visibility toggles defines to avoid errors typos code errors.
+#define GEN_VISIBLE_ALWAYS "Always visible"
+#define GEN_VISIBLE_NO_CLOTHES "Hidden by clothes"
+#define GEN_VISIBLE_NO_UNDIES "Hidden by underwear"
+#define GEN_VISIBLE_NEVER "Always hidden"
 
 //Individual logging define
 #define INDIVIDUAL_LOOC_LOG "LOOC log"
