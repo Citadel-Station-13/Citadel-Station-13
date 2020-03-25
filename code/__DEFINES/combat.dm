@@ -82,6 +82,7 @@
 #define CANUNCONSCIOUS	(1<<2)
 #define CANPUSH			(1<<3)
 #define GODMODE			(1<<4)
+#define CANSTAGGER		(1<<5)
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
