@@ -39,7 +39,20 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 
 	/////////// PARRYING ////////////
-
+	/// Parry windup duration in deciseconds
+	var/parry_time_windup = 2
+	/// Parry spooldown duration in deciseconds
+	var/parry_time_spooldown = 3
+	/// Main parry window in deciseconds
+	var/parry_time_active = 5
+	/// Perfect parry window in deciseconds from the main window. 3 with main 5 = perfect on third decisecond of main window.
+	var/parry_time_perfect = 2.5
+	/// Time on both sides of perfect parry that still counts as well, perfect
+	var/parry_time_perfect_leeway = 0.5
+	/// Parry "efficiency" falloff in percent per decisecond once perfect window is over.
+	var/parry_imperfect_falloff_percent = 20
+	/// Efficiency in percent on perfect parry.
+	var/parry_efficiency_perfect = 120
 
 
 /obj/item
