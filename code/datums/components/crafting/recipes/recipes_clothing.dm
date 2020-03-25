@@ -290,7 +290,7 @@
 
 
 /datum/crafting_recipe/wintercoat_cosmic
-	name = "Cosmic Winter Coat"
+	name = "Garlic Necklace"
 	result = /obj/item/clothing/neck/garlic_necklace
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 15,
 				/obj/item/stack/cable_coil = 10)
