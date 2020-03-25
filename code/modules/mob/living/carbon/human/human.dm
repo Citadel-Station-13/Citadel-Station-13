@@ -898,7 +898,7 @@
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
 				target.set_resting(FALSE, TRUE)
-				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+				buckle_mob(target, TRUE, TRUE, 90, 1, 0, TRUE)
 				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
 	else
@@ -915,13 +915,13 @@
 				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 					return
-				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
+				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2, FALSE)
 		else
 			visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
 	else
 		to_chat(target, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
 
-/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0, fireman = FALSE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 	if(!is_type_in_typecache(target, can_ride_typecache))
@@ -952,6 +952,7 @@
 
 	stop_pulling()
 	riding_datum.handle_vehicle_layer()
+	riding_datum.fireman_carrying = fireman
 	. = ..(target, force, check_loc)
 
 /mob/living/carbon/human/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
