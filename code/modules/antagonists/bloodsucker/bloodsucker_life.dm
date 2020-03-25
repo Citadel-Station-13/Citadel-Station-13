@@ -12,7 +12,7 @@
 
 /datum/antagonist/bloodsucker/proc/LifeTick()// Should probably run from life.dm, same as handle_changeling, but will be an utter pain to move
 	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
-	var/notice_healing = FALSE
+	var/notice_healing
 	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_DEATHCOMA)) // Deduct Blood
 			AddBloodVolume(-0.1) // -.15 (before tick went from 10 to 30, but we also charge more for faking life now)
@@ -82,16 +82,32 @@
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
 	// NOTE: Mult of 0 is just a TEST to see if we are injured and need to go into Torpor!
 	//It is called from your coffin on close (by you only)
-	if(poweron_masquerade == TRUE || owner.current.AmStaked() || owner.current.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+	var/notice_garlic
+	var/notice_necklace
+	if(poweron_masquerade == TRUE || owner.current.AmStaked())
+		return FALSE
+	if(owner.current.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+		if(notice_garlic)
+			to_chat(owner.current, "<span class='notice'>Garlic in your blood is interfering with your regeneration!</span>")
+			notice_garlic = TRUE
+		return FALSE
+	if(istype(owner.current.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+		if(notice_necklace)
+			to_chat(owner.current, "<span class='notice'>The necklace on your neck is interrupting your healing!</span>")
+			notice_necklace = TRUE
 		return FALSE
 	owner.current.adjustStaminaLoss(-1.5 + (regenRate * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-0.1 * (regenRate * 2) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
+	if(notice_garlic)
+		notice_garlic = FALSE
+	if(notice_necklace)
+		notice_necklace = FALSE
 	// No Bleeding
 	if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
 		var/mob/living/carbon/human/H = owner.current
 		if(H.bleed_rate > 0) //Only heal bleeding if we are actually bleeding
-			H.bleed_rate =- 0.5 + regenRate * mult
+			H.bleed_rate =- 0.5 + regenRate * 0.2 * mult
 	if(iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		var/mob/living/carbon/C = owner.current
 		var/costMult = 1 // Coffin makes it cheaper
@@ -235,6 +251,7 @@
 
 /datum/antagonist/bloodsucker/proc/Torpor_Begin(amInCoffin = FALSE)
 	owner.current.stat = UNCONSCIOUS
+	owner.current.apply_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 	ADD_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker") // Come after UNCONSCIOUS or else it fails
 	ADD_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")	// Without this, you'll just keep dying while you recover.
 	ADD_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
@@ -248,8 +265,9 @@
 			power.DeactivatePower()
 
 /datum/antagonist/bloodsucker/proc/Torpor_End()
-	REMOVE_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker") 
 	owner.current.stat = SOFT_CRIT
+	owner.current.remove_status_effect(STATUS_EFFECT_UNCONSCIOUS)
+	owner.current.cure_fakedeath("bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")

@@ -119,7 +119,7 @@
 	send_item_attack_message(I, user)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && !HAS_TRAIT(src, TRAIT_NOMARROW))
+		if(I.damtype == BRUTE)
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)

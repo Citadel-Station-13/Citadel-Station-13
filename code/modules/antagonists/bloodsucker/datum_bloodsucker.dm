@@ -22,7 +22,7 @@
 	// STATS
 	var/vamplevel = 0
 	var/vamplevel_unspent = 1
-	var/regenRate = 0.4					// How many points of Brute do I heal per tick?
+	var/regenRate = 0.4					// How fast do I regenerate?
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
 	// OBJECTIVES
@@ -47,8 +47,8 @@
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
 	SSticker.mode.check_start_sunlight()// Start Sunlight? (if first Vamp)
 	SelectFirstName()// Name & Title
-	SelectTitle(am_fledgling=TRUE) 	// If I have a creator, then set as Fledgling.
-	SelectReputation(am_fledgling=TRUE)
+	SelectTitle(am_fledgling = TRUE) 	// If I have a creator, then set as Fledgling.
+	SelectReputation(am_fledgling = TRUE)
 	AssignStarterPowersAndStats()// Give Powers & Stats
 	forge_bloodsucker_objectives()// Objectives & Team
 	update_bloodsucker_icons_added(owner.current, "bloodsucker")	// Add Antag HUD

@@ -262,7 +262,7 @@
 	target.mind.add_antag_datum(V, V.master.get_team())
 	// Update Bloodsucker Title (we're a daddy now)
 	B.SelectTitle(am_fledgling = FALSE) // Only works if you have no title yet.
-	// lOg it
+	// Log it
 	message_admins("[target] has become a Vassal, and is enslaved to [creator].")
 	log_admin("[target] has become a Vassal, and is enslaved to [creator].")
 	return TRUE

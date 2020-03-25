@@ -287,3 +287,12 @@
 				/obj/item/bedsheet/cosmos = 1)
 	time = 60
 	category = CAT_CLOTHING
+
+
+/datum/crafting_recipe/wintercoat_cosmic
+	name = "Cosmic Winter Coat"
+	result = /obj/item/clothing/neck/garlic_necklace
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 15,
+				/obj/item/stack/cable_coil = 10)
+	time = 100 //Takes awhile to put all the garlics on the coil and knot it.
+	category = CAT_CLOTHING
