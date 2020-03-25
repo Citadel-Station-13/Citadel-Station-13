@@ -15,8 +15,6 @@
 	var/beam_type = /obj/effect/ebeam //must be subtype
 	var/timing_id = null
 	var/recalculating = FALSE
-	/// If either origin or target is in a container, do get_turf instead of just not beaming.
-	var/get_turf = FALSE
 
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
 	origin = beam_origin
@@ -92,10 +90,8 @@
 	return ..()
 
 /datum/beam/proc/Draw()
-	if(!get_turf && (!isturf(src.target.loc) || !isturf(src.origin.loc)))		//byond is quirky! if we aren't getting turf tell it to just Not(tm)
+	if(!isturf(origin.loc) || !isturf(target.loc))
 		return
-	var/atom/origin = get_turf? get_turf(src.origin) : src.origin
-	var/atom/target = get_turf? get_turf(src.target) : src.target
 	var/Angle = round(Get_Angle(origin,target))
 	var/matrix/rot_matrix = matrix()
 	rot_matrix.Turn(Angle)
