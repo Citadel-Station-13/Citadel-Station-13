@@ -57,9 +57,9 @@
 	if(genital_flags & GENITAL_UNDIES_HIDDEN && ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(!(NO_UNDERWEAR in H.dna.species.species_traits))
-			var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
-			var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
-			if(zone == BODY_ZONE_CHEST ? (!H.hidden_undershirt && (T?.covers_chest || B?.covers_chest)) : (!H.hidden_underwear && (T?.covers_groin || B?.covers_groin)))
+			var/datum/sprite_accessory/underwear/top/T = H.hidden_undershirt ? null : GLOB.undershirt_list[H.undershirt]
+			var/datum/sprite_accessory/underwear/bottom/B = H.hidden_underwear ? null : GLOB.underwear_list[H.underwear]
+			if(zone == BODY_ZONE_CHEST ? (T?.covers_chest || B?.covers_chest) : (!T?.covers_groin || B?.covers_groin))
 				return FALSE
 	if(genital_flags & GENITAL_THROUGH_CLOTHES)
 		return TRUE
@@ -72,17 +72,19 @@
 
 /obj/item/organ/genital/proc/toggle_visibility(visibility, update = TRUE)
 	genital_flags &= ~(GENITAL_THROUGH_CLOTHES|GENITAL_HIDDEN|GENITAL_UNDIES_HIDDEN)
-	owner.exposed_genitals -= src
+	if(owner)
+		owner.exposed_genitals -= src
 	switch(visibility)
 		if(GEN_VISIBLE_ALWAYS)
 			genital_flags |= GENITAL_THROUGH_CLOTHES
-			owner.exposed_genitals += src
+			if(owner)
+				owner.exposed_genitals += src
 		if(GEN_VISIBLE_NO_UNDIES)
 			genital_flags |= GENITAL_UNDIES_HIDDEN
 		if(GEN_VISIBLE_NEVER)
 			genital_flags |= GENITAL_HIDDEN
 
-	if(update && ishuman(owner)) //recast to use update genitals proc
+	if(update && owner && ishuman(owner)) //recast to use update genitals proc
 		var/mob/living/carbon/human/H = owner
 		H.update_genitals()
 
@@ -191,14 +193,19 @@
 	if(.)
 		update()
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
+		if(genital_flags & GENITAL_THROUGH_CLOTHES)
+			owner.exposed_genitals += src
 
 /obj/item/organ/genital/Remove(special = FALSE)
 	. = ..()
-	var/mob/living/carbon/human/H = .
+	var/mob/living/carbon/C = .
 	update()
-	if(!QDELETED(H))
-		UnregisterSignal(H, COMSIG_MOB_DEATH)
-		H.update_genitals()
+	if(!QDELETED(C))
+		if(genital_flags & UPDATE_OWNER_APPEARANCE && ishuman(C))
+			var/mob/living/carbon/human/H = .
+			H.update_genitals()
+		C.exposed_genitals -= src
+		UnregisterSignal(C, COMSIG_MOB_DEATH)
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean = FALSE)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
