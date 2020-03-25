@@ -300,30 +300,12 @@
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 			friendly_check = TRUE
-			if(S?.can_wag_tail(src))
-				if("tail_human" in S.default_features)
-					if(dna.features["tail_human"] == "None")
-						return
-					else
-						if(!dna.species.is_wagging_tail())
-							emote("wag")
-
-				if("tail_lizard" in S.default_features)
-					if(dna.features["tail_lizard"] == "None")
-						return
-					else
-						if(!dna.species.is_wagging_tail())
-							emote("wag")
-
-				if("mam_tail" in S.default_features)
-					if(dna.features["mam_tail"] == "None")
-						return
-					else
-						if(!dna.species.is_wagging_tail())
-							emote("wag")
-
-			else
-				return
+			if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
+				var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
+				for(var/T in many_tails)
+					if(S.mutant_bodyparts[T] && dna.features[T] != "None")
+						emote("wag")
+						break
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
 			M.visible_message( \

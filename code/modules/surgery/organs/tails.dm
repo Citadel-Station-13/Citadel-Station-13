@@ -21,16 +21,16 @@
 /obj/item/organ/tail/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
-		if(!("tail_human" in H.dna.species.mutant_bodyparts))
-			H.dna.species.mutant_bodyparts |= "tail_human"
-			H.dna.features["tail_human"] = tail_type
+		if(!H.dna.species.mutant_bodyparts["mam_tail"])
+			H.dna.species.mutant_bodyparts["mam_tail"] = tail_type
+			H.dna.features["mam_tail"] = tail_type
 			H.update_body()
 
 /obj/item/organ/tail/cat/Remove(special = FALSE)
 	if(!QDELETED(owner) && ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.dna.features["tail_human"] = "None"
-		H.dna.species.mutant_bodyparts -= "tail_human"
+		H.dna.features["mam_tail"] = "None"
+		H.dna.species.mutant_bodyparts -= "mam_tail"
 		color = H.hair_color
 		H.update_body()
 	return ..()
@@ -46,13 +46,13 @@
 	..()
 	if(istype(H))
 		// Checks here are necessary so it wouldn't overwrite the tail of a lizard it spawned in
-		if(!("tail_lizard" in H.dna.species.mutant_bodyparts))
+		if(!H.dna.species.mutant_bodyparts["tail_lizard"])
 			H.dna.features["tail_lizard"] = tail_type
-			H.dna.species.mutant_bodyparts |= "tail_lizard"
+			H.dna.species.mutant_bodyparts["tail_lizard"] = tail_type
 
-		if(!("spines" in H.dna.species.mutant_bodyparts))
+		if(!H.dna.species.mutant_bodyparts["spines"])
 			H.dna.features["spines"] = spines
-			H.dna.species.mutant_bodyparts |= "spines"
+			H.dna.species.mutant_bodyparts["spines"] = spines
 		H.update_body()
 
 /obj/item/organ/tail/lizard/Remove(special = FALSE)
