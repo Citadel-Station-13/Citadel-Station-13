@@ -6,7 +6,7 @@
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
 	icon_state = "act_sprint"
 	layer = ABOVE_HUD_LAYER - 0.1
-	var/static/mutable_appearance/flashy = mutable_appearance('icons/mob/screen_gen.dmi', "togglehalf_flash")
+	var/mutable_appearance/flashy
 
 /obj/screen/sprintbutton/Click()
 	if(ishuman(usr))
@@ -31,6 +31,10 @@
 		return
 
 	if((user.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && user.client.prefs.hud_toggle_flash)
+		if(!flashy)
+			flashy = mutable_appearance('icons/mob/screen_gen.dmi', "togglehalf_flash")
+		if(flashy.color != user.client.prefs.hud_toggle_color)
+			flashy.color = user.client.prefs.hud_toggle_color
 		. += flashy
 
 //Sprint buffer onscreen code.

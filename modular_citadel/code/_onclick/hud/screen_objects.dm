@@ -12,7 +12,7 @@
 	name = "toggle combat mode"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
 	icon_state = "combat_off"
-	var/static/mutable_appearance/flashy = mutable_appearance('icons/mob/screen_gen.dmi', "togglefull_flash")
+	var/mutable_appearance/flashy
 
 /obj/screen/combattoggle/Click()
 	if(iscarbon(usr))
@@ -37,6 +37,10 @@
 		return
 
 	if((user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && user.client.prefs.hud_toggle_flash)
+		if(!flashy)
+			flashy = mutable_appearance('icons/mob/screen_gen.dmi', "togglefull_flash")
+		if(flashy.color != user.client.prefs.hud_toggle_color)
+			flashy.color = user.client.prefs.hud_toggle_color
 		. += flashy //TODO - beg lummox jr for the ability to force mutable appearances or images to be created rendering from their first frame of animation rather than being based entirely around the client's frame count
 
 /obj/screen/voretoggle
