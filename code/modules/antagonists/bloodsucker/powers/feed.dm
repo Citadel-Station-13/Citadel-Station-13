@@ -67,12 +67,6 @@
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Your victim's blood is not suitable for you to take.</span>")
 			return FALSE
-	if(iscarbon(owner))
-		//We want to check if the target is wearing a garlic necklance.
-		if(istype(owner.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
-			if(display_error)
-				to_chat(owner, "<span class='warning'>Your victim is wearing a garlic clove on their neck! Disgusting!</span>")
-			return FALSE
 	return TRUE
 
 // If I'm not grabbing someone, find me someone nearby.
