@@ -116,7 +116,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 /datum/element/flavor_text/carbon
 	//list of antagonists etcetera that should have nothing to do with people's snowflakes.
 	var/static/list/i_dont_even_know_who_you_are = typecacheof(list(/datum/antagonist/abductor, /datum/antagonist/ert,
-													/datum/antagonist/nukeop, /datum/antagonist/official, /datum/antagonist/wizard))
+													/datum/antagonist/nukeop, /datum/antagonist/wizard))
 
 /datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE)
 	if(!iscarbon(target))
