@@ -16,7 +16,13 @@
 	message_Trigger = "Whom will you subvert to your will?"
 	must_be_capacitated = TRUE
 	bloodsucker_can_buy = TRUE
+	var/windup_time = 30
 	var/success
+	var/mob/living/current_victim
+
+/datum/action/bloodsucker/targeted/mesmerize/Destroy()
+	cleanup_victim()
+	return ..()
 
 /datum/action/bloodsucker/targeted/mesmerize/CheckCanUse(display_error)
 	. = ..()
@@ -96,7 +102,6 @@
 	if(!cancontinue)
 		success = FALSE
 		target.remove_status_effect(STATUS_EFFECT_MESMERIZE)
-		user.remove_status_effect(STATUS_EFFECT_MESMERIZE)
 		DeactivatePower()
 		DeactivateRangedAbility()
 		StartCooldown()
@@ -110,28 +115,49 @@
 
 	if(istype(target))
 		success = TRUE
-		var/power_time = 138 + level_current * 12
-		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
-		user.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
-		
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/ContinueTarget)
+		setup_target(user, target)
+		do_mesmerize_cycle(user, target)
+		cleanup_target(user, target, success)
 
-		// 3 second windup
-		sleep(30)
+/datum/action/bloodsucker/targeted/mesmerize/proc/do_mesmerize_cycle(mob/living/user, mob/living/carbon/target)
+		var/power_time = 138 + level_current * 12
+		sleep(windup_time)
 		if(success)
 			PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
 			target.face_atom(user)
 			target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
-			target.Stun(power_time)
+			ADD_TRAIT(target, TRAIT_MOBILITY_NOPICKUP, src)
+			ADD_TRAIT(target, TRAIT_MOBILITY_NOUSE, src)
+			ADD_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
 			to_chat(user, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
-			target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
-			target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
-			spawn(power_time)
-				if(istype(target) && success)
-					target.notransform = FALSE
-					// They Woke Up! (Notice if within view)
-					if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
-						to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
+			addtimer(CALLBACK(src, .proc/reset_victim), power_time)
+			reset_victim()		//make sure old one is cleared if it isn't already 
+			current_victim = target
+			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/reset_victim)
+
+/datum/action/bloodsucker/targeted/mesmerize/proc/reset_victim()
+	if(!current_victim)
+		return
+	var/mob/living/target = current_victim
+	current_victim = null
+	REMOVE_TRAIT(target, TRAIT_MOBILITY_NOMOVE, src)
+	REMOVE_TRAIT(target, TRAIT_MOBILITY_NOUSE, src)
+	REMOVE_TRAIT(target, TRAIT_MOBILITY_NOPICKUP, src)
+	target.remove_status_effect(STATUS_EFFECT_MESMERIZE)
+	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	if(istype(user) && target.stat == CONSCIOUS && (target in view(10, get_turf(user)))  )
+		to_chat(user, "<span class='warning'>[target] has snapped out of their trance.</span>")
+
+/datum/action/bloodsucker/targeted/mesmerize/proc/setup_target(mob/living/user, mob/living/target)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/ContinueTarget)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/ContinueTarget)
+	target.apply_status_effect(STATUS_EFFECT_MESMERIZE, windup_time)
+
+/datum/action/bloodsucker/targeted/mesmerize/proc/cleanup_target(mob/living/user, mob/living/target, success = FALSE)
+	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	if(!success)
+		target.remove_status_effect(STATUS_EFFECT_MESMERIZE) 
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)
 	return ..() && CheckCanUse() && CheckCanTarget(target)
