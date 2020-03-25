@@ -10,7 +10,7 @@
 	gender = NEUTER
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_HUMANOID
-
+	threat = 3
 	response_help = "touches"
 	response_disarm = "pushes"
 

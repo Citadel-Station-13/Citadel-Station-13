@@ -15,6 +15,7 @@
 	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
+	threat = 0.5
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)

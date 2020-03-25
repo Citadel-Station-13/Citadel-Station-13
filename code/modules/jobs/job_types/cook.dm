@@ -16,6 +16,7 @@
 	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_COOK
+	threat = 0.2
 
 /datum/outfit/job/cook
 	name = "Cook"

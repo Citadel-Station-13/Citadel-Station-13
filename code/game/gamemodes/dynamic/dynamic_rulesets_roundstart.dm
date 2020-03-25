@@ -802,7 +802,6 @@
 /datum/dynamic_ruleset/roundstart/bloodsucker
 	name = "Bloodsuckers"
 	config_tag = "bloodsucker"
-	persistent = TRUE
 	antag_flag = ROLE_BLOODSUCKER
 	antag_datum = ANTAG_DATUM_BLOODSUCKER
 	minimum_required_age = 0

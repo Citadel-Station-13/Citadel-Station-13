@@ -354,11 +354,15 @@ SUBSYSTEM_DEF(vote)
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
 				GLOB.master_mode = "dynamic"
 				var/list/runnable_storytellers = config.get_runnable_storytellers()
+				var/datum/dynamic_storyteller/picked
 				for(var/T in runnable_storytellers)
 					var/datum/dynamic_storyteller/S = T
+					if(stored_gamemode_votes[initial(S.name)] == 1 && CHECK_BITFIELD(initial(S.flags), FORCE_IF_WON))
+						picked = S
 					runnable_storytellers[S] *= round(stored_gamemode_votes[initial(S.name)]*100000,1)
-				var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
-				GLOB.dynamic_storyteller_type = S
+				if(!picked)
+					picked = pickweightAllowZero(runnable_storytellers)
+				GLOB.dynamic_storyteller_type = picked
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
