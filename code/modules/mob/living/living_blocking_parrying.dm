@@ -27,8 +27,6 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/////////// BLOCKING ////////////
 	/// See defines.
 	var/can_block_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
-	/// See defines.
-	var/block_flags = BLOCK_FLAGS_DEFAULT
 	/// Our slowdown added while blocking
 	var/block_slowdown = 2
 	/// Clickdelay added to user after block ends

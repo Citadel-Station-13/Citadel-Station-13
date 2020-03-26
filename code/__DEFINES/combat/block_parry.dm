@@ -1,7 +1,7 @@
 // We can't determine things like NORTHEAST vs NORTH *and* EAST without making our own flags :(
 #define BLOCK_DIR_NORTH			(1<<0)
 #define BLOCK_DIR_NORTHEAST		(1<<1)
-#define BLCOK_DIR_NORTHWEST		(1<<2)
+#define BLOCK_DIR_NORTHWEST		(1<<2)
 #define BLOCK_DIR_WEST			(1<<3)
 #define BLOCK_DIR_EAST			(1<<4)
 #define BLOCK_DIR_SOUTH			(1<<5)

@@ -71,10 +71,10 @@
 	else
 		for(var/obj/item/I in tocheck)
 			// i don't like this too
+			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			if(I == active_block_item)		//block is long termed enough we give a damn. parry, not so much.
 				I.check_active_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
 			else
-				var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 				I.check_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
 
 /// Gets an unsortedlist of objects to run block checks on. List must have associative values for priorities!
