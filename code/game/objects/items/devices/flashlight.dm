@@ -207,7 +207,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
 	brightness_on = 5 // A little better than the standard flashlight.
-	total_mass = 0.4
 	light_color = "#CDDDFF"
 	flashlight_power = 0.9
 	hitsound = 'sound/weapons/genhit1.ogg'
