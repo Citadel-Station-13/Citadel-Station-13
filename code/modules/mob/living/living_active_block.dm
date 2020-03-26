@@ -2,7 +2,7 @@
 /mob/living
 	/// Whether or not the user is actively blocking.
 	var/active_blocking = FALSE
-	/// The item the user is actively blocking with.
+	/// The item the user is actively blocking with if any.
 	var/obj/item/active_block_item
 
 /mob/living/on_item_dropped(obj/item/I)
@@ -35,6 +35,28 @@
 	add_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK, TRUE, 100, override = TRUE, multiplicative_slowdown = I.block_parry_data.block_slowdown, blacklisted_movetypes = FLOATING)
 	active_block_effect_start()
 	return TRUE
+
+/// Visual effect setup for starting a directional block
+/mob/living/proc/active_block_effect_start()
+
+/// Visual effect cleanup for starting a directional block
+/mob/living/proc/active_block_effect_end()
+
+/mob/living/get_standard_pixel_x_offset()
+	. = ..()
+	if(active_blocking)
+		if(dir & EAST)
+			. += 12
+		if(dir & WEST)
+			. -= 12
+
+/mob/living/get_standard_pixel_y_offset()
+	. = ..()
+	if(active_blocking)
+		if(dir & NORTH)
+			. += 12
+		if(dir & SOUTH)
+			. -= 12
 
 /// The amount of damage that is blocked.
 /obj/item/proc/active_block_damage_mitigation(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
