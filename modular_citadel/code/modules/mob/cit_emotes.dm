@@ -36,13 +36,13 @@
 				if(S.cell?.charge < 20)
 					to_chat(S, "<span class='warning'>Scream module deactivated. Please recharge.</span>")
 					return
-				S.cell.use(200)
+				S.cell.use(50)
 		if(ismonkey(user))
 			sound = 'modular_citadel/sound/voice/scream_monkey.ogg'
 		if(istype(user, /mob/living/simple_animal/hostile/gorilla))
 			sound = 'sound/creatures/gorilla.ogg'
 		if(ishuman(user))
-			user.adjustOxyLoss(5)
+			user.adjustOxyLoss(1)
 			sound = pick('modular_citadel/sound/voice/scream_m1.ogg', 'modular_citadel/sound/voice/scream_m2.ogg')
 			if(user.gender == FEMALE)
 				sound = pick('modular_citadel/sound/voice/scream_f1.ogg', 'modular_citadel/sound/voice/scream_f2.ogg')
