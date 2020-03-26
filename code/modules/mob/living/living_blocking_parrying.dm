@@ -101,8 +101,10 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/list/parry_imperfect_falloff_percent_override
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
-	/// Flags for things like what kind of counter we do if successful and such
-	var/parry_flags = PARRY_FLAGS_DEFAULT
+	/// Parry data.
+	var/list/parry_data = list(
+		PARRY_REFLEX_COUNTERATTACK = PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN
+		)
 
 /obj/item/proc/active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_PARRY))
@@ -146,7 +148,30 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	return world.time - parry_start_time
 
 /// same return values as normal blocking, called with absolute highest priority in the block "chain".
-/mob/living/proc/run_parry(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
+/mob/living/proc/run_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
+
+/// Run counterattack if any
+/mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
+	var/datum/block_parry_data = get_parry_data()
+	if(data.parry_data[PARRY_REFLEX_COUNTERATTACK])
+		switch(data.parry_data[PARRY_REFLEX_COUNTERATTACK])
+			if(PARRY_COUNTERATTACK_PROC)
+
+			if(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN)
+				switch(parrying)
+					if(ITEM_PARRY)
+
+					if(UNARMED_PARRY)
+
+					if(MARTIAL_PARRY)
+
+	if(data.parry_data[PARRY_DISARM_ATTACKER])
+
+	if(data.parry_data[PARRY_KNOCKDOWN_ATTACKER])
+
+	if(data.parry_data[PARRY_STAGGER_ATTACKER])
+
+	if(data.parry_data[PARRY_CLICKCD_ATTACKER])
 
 /// Gets the datum/block_parry_data we're going to use to parry.
 /mob/living/proc/get_parry_data()

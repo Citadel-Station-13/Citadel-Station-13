@@ -23,9 +23,10 @@
   * return_list - If something wants to grab things from what items/whatever put into list/block_return on obj/item/run_block and the comsig, pass in a list so you can grab anything put in it after block runs.
   */
 /mob/living/proc/do_run_block(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
-	. = run_parry(real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)			//Parry - Highest priority!
-	if((. & BLOCK_SUCCESS) && !(. & BLOCK_CONTINUE_CHAIN))
-		return
+	if(real_attack)
+		. = run_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)			//Parry - Highest priority!
+		if((. & BLOCK_SUCCESS) && !(. & BLOCK_CONTINUE_CHAIN))
+			return
 	// Component signal block runs have highest priority.. for now.
 	. = SEND_SIGNAL(src, COMSIG_LIVING_RUN_BLOCK, real_attack, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
 	if((. & BLOCK_SUCCESS) && !(. & BLOCK_CONTINUE_CHAIN))
