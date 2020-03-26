@@ -3537,6 +3537,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"agQ" = (
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
+/obj/structure/closet/secure_closet/courtroom,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/warning/securearea{
+	pixel_x = -32
+	},
+/obj/item/gavelhammer,
+/obj/machinery/atmospherics/pipe/simple/scrubbers,
+/turf/open/floor/plasteel,
+/area/security/courtroom)
 "agR" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4;
@@ -4875,18 +4888,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
-"ajh" = (
-/obj/machinery/light_switch{
-	pixel_y = 28
-	},
-/obj/structure/closet/secure_closet/courtroom,
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
-/obj/item/gavelhammer,
-/turf/open/floor/plasteel,
-/area/security/courtroom)
 "aji" = (
 /obj/structure/chair{
 	name = "Judge"
@@ -92643,7 +92644,7 @@ akd
 adB
 agl
 uHp
-ajh
+agQ
 agN
 akw
 alb
