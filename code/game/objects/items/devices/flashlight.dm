@@ -337,7 +337,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	light_color = LIGHT_COLOR_ORANGE
-	total_mass = 1.25
+	total_mass = TOTAL_MASS_NORMAL_ITEM
 	on_damage = 12 //Its a log thats on fire
 	slot_flags = null
 
