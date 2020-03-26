@@ -53,6 +53,16 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
+"aah" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/security/main)
 "aai" = (
 /turf/closed/wall/r_wall,
 /area/security/prison)
@@ -1541,6 +1551,18 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/port/fore)
+"adB" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
 "adC" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -2665,6 +2687,20 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
+"afo" = (
+/obj/structure/noticeboard{
+	dir = 1;
+	pixel_y = -27
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
 "afp" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -3143,6 +3179,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"agl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/security/main)
 "agm" = (
 /obj/machinery/light{
 	dir = 8
@@ -3321,6 +3371,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/security/main)
+"agD" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "agE" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box{
@@ -3332,6 +3391,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"agF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "agG" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -3436,6 +3502,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"agN" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/security/courtroom)
 "agO" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig Infirmary";
@@ -3888,16 +3958,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
-"ahC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/security/main)
 "ahD" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4202,21 +4262,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/brig)
-"aia" = (
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -27
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/security/main)
 "aib" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -4556,19 +4601,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
-"aiB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/chair/sofa/right{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/security/main)
 "aiC" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -4729,10 +4761,6 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
-"aiP" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/security/main)
 "aiQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -5126,12 +5154,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
-"ajM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/courtroom)
 "ajN" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -5286,16 +5308,6 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
-"aka" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "akb" = (
 /obj/machinery/light{
 	dir = 8
@@ -5607,11 +5619,6 @@
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel,
-/area/security/brig)
-"akE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "akF" = (
@@ -91862,11 +91869,11 @@ adl
 aet
 agy
 aha
-ahC
-aia
-aiP
-aka
-akE
+aah
+afo
+adR
+agD
+agF
 gyr
 alq
 amd
@@ -92633,11 +92640,11 @@ aff
 aeU
 ajA
 akd
-ahF
-aiB
-abp
+adB
+agl
+uHp
 ajh
-ajM
+agN
 akw
 alb
 alG
