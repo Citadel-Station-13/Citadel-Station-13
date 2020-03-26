@@ -45,7 +45,7 @@
 	if(isnull(absorption))
 		absorption = block_parry_data.block_damage_absorption
 	if(isnull(efficiency))
-		efficiency = block_parry_data.block_damage_damage_multiplier
+		efficiency = block_parry_data.block_damage_multiplier
 	if(isnull(limit))
 		limit = block_parry_data.block_damage_limit
 	// now we calculate damage to reduce.
