@@ -71,7 +71,7 @@
 
 	//for snowflake/donor specific sprites
 	var/list/ckeys_allowed
-	
+
 	//For soft-restricting markings to species IDs
 	var/list/recommended_species
 
@@ -79,3 +79,5 @@
 	icon = 'icons/mob/underwear.dmi'
 	var/has_color = FALSE
 	var/has_digitigrade = FALSE
+	var/covers_groin = FALSE
+	var/covers_chest = FALSE

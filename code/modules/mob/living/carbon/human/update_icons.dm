@@ -57,10 +57,12 @@ There are several things that need to be remembered:
 	dna.species.handle_mutant_bodyparts(src)
 
 
-/mob/living/carbon/human/update_body()
+/mob/living/carbon/human/update_body(update_genitals = FALSE)
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
 	..()
+	if(update_genitals)
+		update_genitals()
 
 /mob/living/carbon/human/update_fire()
 	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
@@ -72,7 +74,7 @@ There are several things that need to be remembered:
 
 	if(!..())
 		icon_render_key = null //invalidate bodyparts cache
-		update_body()
+		update_body(TRUE)
 		update_hair()
 		update_inv_w_uniform()
 		update_inv_wear_id()
