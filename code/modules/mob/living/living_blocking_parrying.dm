@@ -32,11 +32,36 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/block_slowdown = 2
 	/// Clickdelay added to user after block ends
 	var/block_end_click_cd_add = 4
-	/// Default damage-to-stamina coefficient, higher is better.
-	var/block_efficiency = 2
-	/// Override damage-to-stamina coefficient, higher is better, this should be list(ATTACK_TYPE_DEFINE = coefficient_number)
-	var/list/attack_type_block_efficiency
+	/// Disallow attacking during block
+	var/block_lock_attacking = TRUE
 
+	/// Amount of "free" damage blocking absorbs
+	var/block_damage_absorption = 10
+	/// Override absorption, list(ATTACK_TYPE_DEFINE = absorption), see [block_damage_absorption]
+	var/list/block_damage_absorption_override
+
+	/// Ratio of damage block above absorption amount, coefficient, lower is better, this is multiplied by damage to determine how much is blocked.
+	var/block_damage_multiplier = 0.5
+	/// Override damage overrun efficiency, list(ATTACK_TYPE_DEFINE = absorption), see [block_damage_efficiency]
+	var/list/block_damage_multiplier_override
+
+	/// Upper bound of damage block, anything above this will go right through.
+	var/block_damage_limit = 80
+	/// Override upper bound of damage block, list(ATTACK_TYPE_DEFINE = absorption), see [block_damage_limit]
+	var/list/block_damage_limit_override
+
+	/// Default damage-to-stamina coefficient, higher is better. This is based on amount of damage BLOCKED, not initial damage, to prevent damage from "double dipping".
+	var/block_stamina_efficiency = 2
+	/// Override damage-to-stamina coefficient, see [block_efficiency], this should be list(ATTACK_TYPE_DEFINE = coefficient_number)
+	var/list/block_stamina_efficiency_override
+
+	/// Ratio of stamina incurred by blocking that goes to the arm holding the object instead of the chest. Has no effect if this is not held in hand.
+	var/block_stamina_limb_ratio = 0.5
+	/// Override stamina limb ratio, list(ATTACK_TYPE_DEFINE = absorption), see [block_stamina_limb_ratio]
+	var/list/block_stamina_limb_ratio
+
+	/// Stamina dealt directly via adjustStaminaLoss() per SECOND of block.
+	var/block_stamina_cost_per_second = 1.5
 
 	/////////// PARRYING ////////////
 	/// Parry windup duration in deciseconds
@@ -48,12 +73,15 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Perfect parry window in deciseconds from the main window. 3 with main 5 = perfect on third decisecond of main window.
 	var/parry_time_perfect = 2.5
 	/// Time on both sides of perfect parry that still counts as well, perfect
-	var/parry_time_perfect_leeway = 0.5
+	var/parry_time_perfect_leeway = 1
+	/// [parry_time_perfect_leeway] override for attack types, list(ATTACK_TYPE_DEFINE = deciseconds)
+	var/list/parry_time_perfect_leeway_override
 	/// Parry "efficiency" falloff in percent per decisecond once perfect window is over.
 	var/parry_imperfect_falloff_percent = 20
+	/// [parry_imperfect_falloff_percent] override for attack types, list(ATTACK_TYPE_DEFINE = deciseconds)
+	var/list/parry_time_imperfect_falloff_percent_override
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
-
 
 /obj/item
 	/// Defense flags, see defines.
@@ -102,6 +130,6 @@ GLOBAL_LIST_EMPTY(block_parry_data)
   * * their_dirs - list of their directions as we cannot use bitfields here.
   */
 /obj/item/proc/can_block_directions_multiple(our_dir, list/their_dirs)
-	. = 0
+	. = FALSE
 	for(var/i in their_dirs)
-		. += can_block_direction(our_dir, i)
+		. |= can_block_direction(our_dir, i)
