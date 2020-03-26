@@ -34,6 +34,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/block_end_click_cd_add = 4
 	/// Disallow attacking during block
 	var/block_lock_attacking = TRUE
+	/// The priority we get in [mob/do_run_block()] while we're being used.
+	var/block_active_priority = BLOCK_PRIORITY_ACTIVE_BLOCK
 
 	/// Amount of "free" damage blocking absorbs
 	var/block_damage_absorption = 10
@@ -58,7 +60,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Ratio of stamina incurred by blocking that goes to the arm holding the object instead of the chest. Has no effect if this is not held in hand.
 	var/block_stamina_limb_ratio = 0.5
 	/// Override stamina limb ratio, list(ATTACK_TYPE_DEFINE = absorption), see [block_stamina_limb_ratio]
-	var/list/block_stamina_limb_ratio
+	var/list/block_stamina_limb_ratio_override
 
 	/// Stamina dealt directly via adjustStaminaLoss() per SECOND of block.
 	var/block_stamina_cost_per_second = 1.5
@@ -88,6 +90,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/defense_flags = NONE
 	/// Our block parry data. Should be set in init, or something.
 	var/datum/block_parry_data/block_parry_data
+
 
 
 /obj/item/Initialize(mapload)
