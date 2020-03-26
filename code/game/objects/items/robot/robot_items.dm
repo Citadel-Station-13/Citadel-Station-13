@@ -4,7 +4,6 @@
 /obj/item/borg
 	icon = 'icons/mob/robot_items.dmi'
 
-
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
@@ -489,7 +488,6 @@
 	projectile_type = /obj/item/projectile/bullet/reusable/gumball
 	click_cooldown_override = 2
 
-
 /obj/item/projectile/bullet/reusable/gumball
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
@@ -703,7 +701,6 @@
 	sight_mode = BORGTHERM
 	icon_state = "thermal"
 
-
 /obj/item/borg/sight/meson
 	name = "\proper meson vision"
 	sight_mode = BORGMESON
@@ -718,7 +715,6 @@
 	name = "hud"
 	var/obj/item/clothing/glasses/hud/hud = null
 
-
 /obj/item/borg/sight/hud/med
 	name = "medical hud"
 	icon_state = "healthhud"
@@ -727,7 +723,6 @@
 	..()
 	hud = new /obj/item/clothing/glasses/hud/health(src)
 	return
-
 
 /obj/item/borg/sight/hud/sec
 	name = "security hud"
@@ -738,7 +733,6 @@
 	hud = new /obj/item/clothing/glasses/hud/security(src)
 	return
 
-
 /**********************************************************************
 						Grippers oh god oh fuck
 ***********************************************************************/
@@ -748,12 +742,11 @@
 	desc = "A simple grasping tool for inserting circuitboards into machinary."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
-
 	item_flags = NOBLUDGEON
-
 	//Has a list of items that it can hold.
 	var/list/can_hold = list(
-		/obj/item/circuitboard
+		/obj/item/circuitboard,
+		/obj/item/analyzer
 		)
 
 	var/obj/item/wrapped = null // Item currently being held.
