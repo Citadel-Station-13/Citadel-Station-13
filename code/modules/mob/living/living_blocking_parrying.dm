@@ -1,7 +1,8 @@
 // yell at me later for file naming
 // This file contains stuff relating to the new directional blocking and parry system.
 /mob/living
-	var/obj/item/blocking_item
+	var/obj/item/active_block_item
+	var/obj/item/active_parry_item
 	var/parrying = FALSE
 	var/parry_frame = 0
 
@@ -34,7 +35,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/block_end_click_cd_add = 4
 	/// Disallow attacking during block
 	var/block_lock_attacking = TRUE
-	/// The priority we get in [mob/do_run_block()] while we're being used.
+	/// The priority we get in [mob/do_run_block()] while we're being used to parry.
 	var/block_active_priority = BLOCK_PRIORITY_ACTIVE_BLOCK
 
 	/// Amount of "free" damage blocking absorbs
@@ -66,6 +67,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/block_stamina_cost_per_second = 1.5
 
 	/////////// PARRYING ////////////
+	/// Prioriry for [mob/do_run_block()] while we're being used to parry.
+	var/parry_active_priority = BLOCK_PRIORITY_ACTIVE_PARRY
 	/// Parry windup duration in deciseconds
 	var/parry_time_windup = 2
 	/// Parry spooldown duration in deciseconds
@@ -85,24 +88,22 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
 
-/obj/item
-	/// Defense flags, see defines.
-	var/defense_flags = NONE
-	/// Our block parry data. Should be set in init, or something.
-	var/datum/block_parry_data/block_parry_data
 
 
+/obj/item/proc/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
+		return
+	/// Yadda yadda WIP access block/parry data...
 
-/obj/item/Initialize(mapload)
-	block_parry_data = get_block_parry_data(/datum/block_parry_data)
-	return ..()
+/obj/item/proc/active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_PARRY))
+		return
+	/// Yadda yadda WIP access block/parry data...
 
-/// This item can be used to parry. Only a basic check used to determine if we should proceed with parry chain at all.
-#define ITEM_DEFENSE_CAN_PARRY		(1<<0)
-/// This item can be used in the directional blocking system. Only a basic check used to determine if we should proceed with directional block handling at all.
-#define ITEM_DEFENSE_CAN_BLOCK		(1<<1)
-
-
+/obj/item/proc/check_active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
+		return
+	/// Yadda yadda WIP access block/parry data...
 
 /**
   * Gets the list of directions we can block. Include DOWN to block attacks from our same tile.

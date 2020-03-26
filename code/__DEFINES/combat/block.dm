@@ -44,6 +44,7 @@
 #define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_DEFLECT
 
 /// Block priorities. Higher means it's checked sooner.
+// THESE MUST NEVER BE 0! Block code uses ! instead of isnull for the speed boost.
 #define BLOCK_PRIORITY_ACTIVE_PARRY				300
 #define BLOCK_PRIORITY_ACTIVE_BLOCK				200
 #define BLOCK_PRIORITY_HELD_ITEM				100

@@ -51,31 +51,46 @@
 	if((. & BLOCK_SUCCESS) && !(. & BLOCK_CONTINUE_CHAIN))
 		return
 	var/list/obj/item/tocheck = get_blocking_items()
-	sortTim(tocheck, /proc/cmp_item_block_priority_asc)
+	sortTim(tocheck, /proc/cmp_numeric_asc, TRUE)
 	// i don't like this
 	var/block_chance_modifier = round(damage / -3)
 	if(real_attack)
 		for(var/obj/item/I in tocheck)
 			// i don't like this too
 			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			var/results = I.run_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
+			var/results
+			if(I == active_parry_item)
+				results = I.active_parry(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
+			else if(I == active_block_item)
+				results = I.active_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
+			else
+				results = I.run_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
 			. |= results
 			if((results & BLOCK_SUCCESS) && !(results & BLOCK_CONTINUE_CHAIN))
 				break
 	else
 		for(var/obj/item/I in tocheck)
 			// i don't like this too
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			I.check_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
+			if(I == active_block_item)		//block is long termed enough we give a damn. parry, not so much.
+				I.check_active_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
+			else
+				var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+				I.check_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
 
-/// Gets an unsortedlist of objects to run block checks on.
+/// Gets an unsortedlist of objects to run block checks on. List must have associative values for priorities!
 /mob/living/proc/get_blocking_items()
 	. = list()
+	if(active_block_item)
+		.[active_block_item] = active_block_item.block_parry_data.block_active_priority
+	if(active_parry_item)
+		.[active_parry_item] = active_parry_item.block_parry_data.parry_active_priority
 	for(var/obj/item/I in held_items)
 		// this is a bad check but i am not removing it until a better catchall is made
 		if(istype(I, /obj/item/clothing))
 			continue
-		. |= I
+		if(.[I])			//don't override block/parry.
+			continue
+		.[I] = I.block_priority
 
 /obj/item
 	/// The 0% to 100% chance for the default implementation of random block rolls.
