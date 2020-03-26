@@ -16,8 +16,9 @@
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
 	remove_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK)
-	if(timeToNextMove() < I.block_parry_data.block_end_click_cd_add)
-		changeNext_move(I.block_parry_data.block_end_click_cd_add)
+	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	if(timeToNextMove() < I.data.block_end_click_cd_add)
+		changeNext_move(I.data.block_end_click_cd_add)
 	active_block_effect_end()
 	return TRUE
 
@@ -26,13 +27,14 @@
 		return FALSE
 	if(!(I in held_items))
 		return FALSE
-	if(!istype(I.block_parry_data))		//Typecheck because if an admin/coder screws up varediting or something we do not want someone being broken forever, the CRASH logs feedback so we know what happened.
-		CRASH("start_active_blocking called with an item with no valid block_parry_data: [I.block_parry_data]!")
+	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	if(!istype(I.data))		//Typecheck because if an admin/coder screws up varediting or something we do not want someone being broken forever, the CRASH logs feedback so we know what happened.
+		CRASH("start_active_blocking called with an item with no valid data: [I.data]!")
 	active_blocking = TRUE
 	active_block_item = I
-	if(I.block_parry_data.block_lock_attacking)
+	if(I.data.block_lock_attacking)
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOMOVE, ACTIVE_BLOCK_TRAIT)
-	add_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK, TRUE, 100, override = TRUE, multiplicative_slowdown = I.block_parry_data.block_slowdown, blacklisted_movetypes = FLOATING)
+	add_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK, TRUE, 100, override = TRUE, multiplicative_slowdown = I.data.block_slowdown, blacklisted_movetypes = FLOATING)
 	active_block_effect_start()
 	return TRUE
 
@@ -60,16 +62,17 @@
 
 /// The amount of damage that is blocked.
 /obj/item/proc/active_block_damage_mitigation(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	var/absorption = block_parry_data.block_damage_absorption_override[attack_type]
-	var/efficiency = block_parry_data.block_damage_multiplier_override[attack_type]
-	var/limit = block_parry_data.block_damage_limit_override[attack_type]
+	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	var/absorption = data.block_damage_absorption_override[attack_type]
+	var/efficiency = data.block_damage_multiplier_override[attack_type]
+	var/limit = data.block_damage_limit_override[attack_type]
 	// must use isnulls to handle 0's.
 	if(isnull(absorption))
-		absorption = block_parry_data.block_damage_absorption
+		absorption = data.block_damage_absorption
 	if(isnull(efficiency))
-		efficiency = block_parry_data.block_damage_multiplier
+		efficiency = data.block_damage_multiplier
 	if(isnull(limit))
-		limit = block_parry_data.block_damage_limit
+		limit = data.block_damage_limit
 	// now we calculate damage to reduce.
 	var/final_damage = 0
 	// apply limit
@@ -84,13 +87,15 @@
 
 /// Amount of stamina from damage blocked. Note that the damage argument is damage_blocked.
 /obj/item/proc/active_block_stamina_cost(mob/living/owner, atom/object, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	var/efficiency = block_parry_data.block_stamina_efficiency_override[attack_type]
+	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	var/efficiency = data.block_stamina_efficiency_override[attack_type]
 	if(isnull(efficiency))
-		efficiency = block_parry_data.block_stamina_efficiency
+		efficiency = data.block_stamina_efficiency
 	return damage_blocked / efficiency
 
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		var/held_index = C.get_held_index_of_item(src)
@@ -98,9 +103,9 @@
 		if(!BP?.body_zone)
 			return C.adjustStaminaLossBuffered(stamina_amount)		//nah
 		var/zone = BP.body_zone
-		var/stamina_to_zone = block_parry_data.block_stamina_limb_ratio * stamina_amount
+		var/stamina_to_zone = data.block_stamina_limb_ratio * stamina_amount
 		var/stamina_to_chest = stamina_amount - stamina_to_zone
-		var/stamina_buffered = stamina_to_chest * block_parry_data.block_stamina_buffer_ratio
+		var/stamina_buffered = stamina_to_chest * data.block_stamina_buffer_ratio
 		stamina_to_chest -= stamina_buffered
 		C.apply_damage(stamina_to_zone, STAMINA, zone)
 		C.apply_damage(stamina_to_chest, STAMINA, BODY_ZONE_CHEST)
@@ -143,7 +148,8 @@
   * Gets the list of directions we can block. Include DOWN to block attacks from our same tile.
   */
 /obj/item/proc/blockable_directions()
-	return block_parry_data.can_block_directions
+	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	return data.can_block_directions
 
 /**
   * Checks if we can block from a specific direction from our direction.

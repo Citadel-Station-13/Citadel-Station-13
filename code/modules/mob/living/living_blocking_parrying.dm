@@ -11,18 +11,20 @@
 	var/parry_while_unarmed = FALSE
 	/// Should we prioritize martial art parrying when unarmed?
 	var/parry_prioritize_martial = TRUE
-	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet.
+	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
 	var/datum/block_parry_data/block_parry_data
 
 GLOBAL_LIST_EMPTY(block_parry_data)
 
-/proc/get_block_parry_data(type_or_id)
-	if(ispath(type_or_id))
-		. = GLOB.block_parry_data["[type_or_id]"]
+/proc/get_block_parry_data(datum/block_parry_data/type_id_datum)
+	if(istype(type_id_datum))
+		return type_id_datum
+	if(ispath(type_id_datum))
+		. = GLOB.block_parry_data["[type_id_datum]"]
 		if(!.)
-			. = GLOB.block_parry_data["[type_or_id]"] = new type_or_id
+			. = GLOB.block_parry_data["[type_id_datum]"] = new type_id_datum
 	else		//text id
-		return GLOB.block_parry_data["[type_or_id]"]
+		return GLOB.block_parry_data["[type_id_datum]"]
 
 /proc/set_block_parry_data(id, datum/block_parry_data/data)
 	if(ispath(id))
@@ -81,29 +83,67 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Prioriry for [mob/do_run_block()] while we're being used to parry.
 	//  None - Parry is always highest priority!
 
-	/// Parry windup duration in deciseconds
+	/// Parry windup duration in deciseconds. 0 to this is windup, afterwards is main stage.
 	var/parry_time_windup = 2
-	/// Parry spindown duration in deciseconds
+	/// Parry spindown duration in deciseconds. main stage end to this is the spindown stage, afterwards the parry fully ends.
 	var/parry_time_spindown = 3
-	/// Main parry window in deciseconds
+	/// Main parry window in deciseconds. This is between [parry_time_windup] and [parry_time_spindown]
 	var/parry_time_active = 5
-	/// Perfect parry window in deciseconds from the main window. 3 with main 5 = perfect on third decisecond of main window.
+	/// Perfect parry window in deciseconds from the start of the main window. 3 with main 5 = perfect on third decisecond of main window.
 	var/parry_time_perfect = 2.5
-	/// Time on both sides of perfect parry that still counts as well, perfect
+	/// Time on both sides of perfect parry that still counts as part of the perfect window.
 	var/parry_time_perfect_leeway = 1
 	/// [parry_time_perfect_leeway] override for attack types, list(ATTACK_TYPE_DEFINE = deciseconds)
 	var/list/parry_time_perfect_leeway_override
 	/// Parry "efficiency" falloff in percent per decisecond once perfect window is over.
-	var/parry_time_imperfect_falloff_percent = 20
+	var/parry_imperfect_falloff_percent = 20
 	/// [parry_imperfect_falloff_percent] override for attack types, list(ATTACK_TYPE_DEFINE = deciseconds)
-	var/list/parry_time_imperfect_falloff_percent_override
+	var/list/parry_imperfect_falloff_percent_override
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
+	/// Flags for things like what kind of counter we do if successful and such
+	var/parry_flags = PARRY_FLAGS_DEFAULT
 
 /obj/item/proc/active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_PARRY))
 		return
 	/// Yadda yadda WIP access block/parry data...
+
+/mob/living/proc/get_parry_stage()
+	if(!parrying)
+		return NOT_PARRYING
+	var/datum/block_parry_data/data = get_parry_data()
+	var/windup_end = data.parry_time_windup
+	var/active_end = windup + data.parry_time_active
+	var/spindown_end = active + data.parry_time_spindown
+	switch(get_parry_time())
+		if(0 to windup_end)
+			return PARRY_WINDUP
+		if(windup_end to active_end)
+			return PARRY_ACTIVE
+		if(active_end to spindown_end)
+			return PARRY_SPINDOWN
+	return NOT_PARRYING
+
+/mob/living/proc/get_parry_efficiency(attack_type)
+	var/datum/block_parry_data/data = get_parry_data()
+	if(get_parry_stage() != PARRY_ACTIVE)
+		return 0
+	var/difference = abs(get_parry_time() - (data.parry_time_perfect + data.parry_time_windup)
+	var/leeway = data.parry_time_perfect_leeway_override[attack_type]
+	if(isnull(leeway))
+		leeway = data.parry_time_perfect_leeway
+	difference -= leeway
+	. = data.parry_efficiency_perfect
+	if(difference <= 0)
+		return
+	var/falloff = data.parry_imperfect_falloff_percent_override[attack_type]
+	if(isnull(falloff))
+		falloff = data.parry_imperfect_falloff_percent
+	. -= falloff * difference
+
+/mob/living/proc/get_parry_time()
+	return world.time - parry_start_time
 
 /// same return values as normal blocking, called with absolute highest priority in the block "chain".
 /mob/living/proc/run_parry(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
@@ -111,13 +151,10 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 /// Gets the datum/block_parry_data we're going to use to parry.
 /mob/living/proc/get_parry_data()
 	if(parrying == ITEM_PARRY)
-		return active_parry_item.block_parry_data
+		return get_block_parry_data(active_parry_item.block_parry_data)
 	else if(parrying == UNARMED_PARRY)
-		return block_parry_data
+		return get_block_parry_data(block_parry_data)
 	else if(parrying == MARTIAL_PARRY)
-		return mind.martial_art.block_parry_data
+		return get_block_parry_data(mind.martial_art.block_parry_data)
 
-#define UNARMED_PARRY
-#define MARTIAL_PARRY
-#define ITEM_PARRY
 

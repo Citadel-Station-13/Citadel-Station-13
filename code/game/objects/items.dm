@@ -110,6 +110,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/* Our block parry data. Should be set in init, or something if you are using it.
 	 * This won't be accessed without ITEM_CAN_BLOCK or ITEM_CAN_PARRY so do not set it unless you have to to save memory.
 	 * If you decide it's a good idea to leave this unset while turning the flags on, you will runtime. Enjoy.
+	 * If this is set to a path, it'll run get_block_parry_data(path). YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
 	 */
 	var/datum/block_parry_data/block_parry_data
 

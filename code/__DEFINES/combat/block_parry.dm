@@ -29,6 +29,23 @@ GLOBAL_LIST_INIT(dir2blockdir, list(
 #define ITEM_PARRY			"item"
 
 /// Parry phase we're in
-#define PARRY_WINDUP		"windup"
-#define PARRY_ACTIVE		"main"
-#define PARRY_SPINDOWN		"spindown"
+#define NOT_PARRYING			0
+#define PARRY_WINDUP			1
+#define PARRY_ACTIVE			2
+#define PARRY_SPINDOWN			3
+
+/// Parry effects.
+/// List association must be one of the things underneath
+#define PARRY_REFLEX_COUNTERATTACK			"reflex_counter"
+	// Uses active_parry_reflex_counter() on the mob (if unarmed)/item/martial art used to parry.
+	#define PARRY_COUNTERATTACK_PROC					"proc"
+	// Automatically melee attacks back normally, LMB equivalent action of an harm intent attack.
+	#define PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN		"default"
+/// No list association
+#define PARRY_DISARM_ATTACKER				"disarm_attacker"
+/// List association should be duration or null for just plain knockdown.
+#define PARRY_KNOCKDOWN_ATTACKER			"knockdown_attacker"
+/// List association should be duration.
+#define PARRY_STAGGER_ATTACKER				"stagger_attacker"
+/// List association should be amount to increase clickcd of attacker to.
+#define PARRY_CLICKCD_ATTACKER				"clickcd_attacker"
