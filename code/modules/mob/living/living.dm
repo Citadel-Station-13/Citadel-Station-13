@@ -715,7 +715,7 @@
 		return TRUE
 
 /mob/living/proc/resist_buckle()
-	buckled.user_unbuckle_mob(src,src)
+	buckled?.user_unbuckle_mob(src,src)
 
 /mob/living/proc/resist_fire()
 	return

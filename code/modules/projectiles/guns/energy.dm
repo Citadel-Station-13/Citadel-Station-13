@@ -65,10 +65,10 @@
 	update_icon()
 
 /obj/item/gun/energy/Destroy()
-	if(flags_1 & INITIALIZED_1)
-		QDEL_NULL(cell)
-		QDEL_LIST(ammo_type)
-		STOP_PROCESSING(SSobj, src)
+	//no need to delete them, since contents are already deleted in atom/movable/Destroy().
+	cell = null
+	ammo_type = null
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/gun/energy/examine(mob/user)
