@@ -1,12 +1,18 @@
 // yell at me later for file naming
 // This file contains stuff relating to the new directional blocking and parry system.
 /mob/living
-	/// Whether ot not the user is in the middle of an active parry.
+	/// Whether ot not the user is in the middle of an active parry. Set to [UNARMED_PARRY], [ITEM_PARRY], [MARTIAL_PARRY] if parrying.
 	var/parrying = FALSE
-	/// The itme the user is currently parrying with.
+	/// The itme the user is currently parrying with, if any.
 	var/obj/item/active_parry_item
 	/// world.time of parry action start
 	var/parry_start_time = 0
+	/// Whether or not we can unarmed parry
+	var/parry_while_unarmed = FALSE
+	/// Should we prioritize martial art parrying when unarmed?
+	var/parry_prioritize_martial = TRUE
+	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet.
+	var/datum/block_parry_data/block_parry_data
 
 GLOBAL_LIST_EMPTY(block_parry_data)
 
@@ -73,11 +79,12 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 	/////////// PARRYING ////////////
 	/// Prioriry for [mob/do_run_block()] while we're being used to parry.
-	var/parry_active_priority = BLOCK_PRIORITY_ACTIVE_PARRY
+	//  None - Parry is always highest priority!
+
 	/// Parry windup duration in deciseconds
 	var/parry_time_windup = 2
-	/// Parry spooldown duration in deciseconds
-	var/parry_time_spooldown = 3
+	/// Parry spindown duration in deciseconds
+	var/parry_time_spindown = 3
 	/// Main parry window in deciseconds
 	var/parry_time_active = 5
 	/// Perfect parry window in deciseconds from the main window. 3 with main 5 = perfect on third decisecond of main window.
@@ -87,7 +94,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// [parry_time_perfect_leeway] override for attack types, list(ATTACK_TYPE_DEFINE = deciseconds)
 	var/list/parry_time_perfect_leeway_override
 	/// Parry "efficiency" falloff in percent per decisecond once perfect window is over.
-	var/parry_imperfect_falloff_percent = 20
+	var/parry_time_imperfect_falloff_percent = 20
 	/// [parry_imperfect_falloff_percent] override for attack types, list(ATTACK_TYPE_DEFINE = deciseconds)
 	var/list/parry_time_imperfect_falloff_percent_override
 	/// Efficiency in percent on perfect parry.
@@ -98,4 +105,19 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		return
 	/// Yadda yadda WIP access block/parry data...
 
+/// same return values as normal blocking, called with absolute highest priority in the block "chain".
+/mob/living/proc/run_parry(real_attack = TRUE, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
+
+/// Gets the datum/block_parry_data we're going to use to parry.
+/mob/living/proc/get_parry_data()
+	if(parrying == ITEM_PARRY)
+		return active_parry_item.block_parry_data
+	else if(parrying == UNARMED_PARRY)
+		return block_parry_data
+	else if(parrying == MARTIAL_PARRY)
+		return mind.martial_art.block_parry_data
+
+#define UNARMED_PARRY
+#define MARTIAL_PARRY
+#define ITEM_PARRY
 

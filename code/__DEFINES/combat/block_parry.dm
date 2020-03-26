@@ -22,3 +22,13 @@ GLOBAL_LIST_INIT(dir2blockdir, list(
 	))
 
 #define DIR2BLOCKDIR(d)			(GLOB.dir2blockdir["[d]"])
+
+/// ""types"" of parry "items"
+#define UNARMED_PARRY		"unarmed"
+#define MARTIAL_PARRY		"martial"
+#define ITEM_PARRY			"item"
+
+/// Parry phase we're in
+#define PARRY_WINDUP		"windup"
+#define PARRY_ACTIVE		"main"
+#define PARRY_SPINDOWN		"spindown"

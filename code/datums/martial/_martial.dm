@@ -10,6 +10,10 @@
 	var/help_verb
 	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
+	/// Can we be used to unarmed parry?
+	var/can_martial_parry = FALSE
+	/// Set this variable to something not null, this'll be the preferred unarmed parry in most cases if [can_martial_parry] is TRUE.
+	var/datum/block_parry_data/block_parry_data
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return FALSE

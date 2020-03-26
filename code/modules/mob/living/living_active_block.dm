@@ -126,6 +126,9 @@
 	. = BLOCK_CHANGE_DAMAGE
 	if(final_damage <= 0)
 		. |= BLOCK_SUCCESS			//full block
+		owner.visible_message("<span class='warning'>[owner] blocks \the [attack_text] with [src]!</span>")
+	else
+		owner.visible_message("<span class='warning'>[owner] dampens \the [attack_text] with [src]!</span>")
 
 /obj/item/proc/check_active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
