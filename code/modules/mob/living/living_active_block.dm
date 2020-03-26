@@ -11,6 +11,7 @@
 	return ..()
 
 /mob/living/proc/stop_active_blocking()
+	var/obj/item/I = active_block_item
 	active_blocking = FALSE
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
@@ -37,16 +38,16 @@
 
 /// The amount of damage that is blocked.
 /obj/item/proc/active_block_damage_mitigation(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	var/absorption = block_damage_absorption_override[attack_type]
-	var/efficiency = block_damage_damage_multiplier_override[attack_type]
-	var/limit = block_damage_limit_override[attack_type]
+	var/absorption = block_parry_data.block_damage_absorption_override[attack_type]
+	var/efficiency = block_parry_data.block_damage_multiplier_override[attack_type]
+	var/limit = block_parry_data.block_damage_limit_override[attack_type]
 	// must use isnulls to handle 0's.
 	if(isnull(absorption))
-		absorption = block_damage_absorption
+		absorption = block_parry_data.block_damage_absorption
 	if(isnull(efficiency))
-		efficiency = block_damage_damage_multiplier
+		efficiency = block_parry_data.block_damage_damage_multiplier
 	if(isnull(limit))
-		limit = block_damage_limit
+		limit = block_parry_data.block_damage_limit
 	// now we calculate damage to reduce.
 	var/final_damage = 0
 	// apply limit
@@ -61,32 +62,36 @@
 
 /// Amount of stamina from damage blocked. Note that the damage argument is damage_blocked.
 /obj/item/proc/active_block_stamina_cost(mob/living/owner, atom/object, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	var/efficiency = block_stamina_efficiency_override[attack_type]
+	var/efficiency = block_parry_data.block_stamina_efficiency_override[attack_type]
 	if(isnull(efficiency))
-		efficiency = block_stamina_efficiency
+		efficiency = block_parry_data.block_stamina_efficiency
 	return damage_blocked / efficiency
 
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	var/held_index = owner.get_held_index_of_item(src)
-	var/obj/item/bodypart/BP = owner.hand_bodyparts[held_index]
-	if(!BP?.body_zone)
-		return owner.adjustStaminaLossBuffered(stamina_amount)		//nah
-	var/zone = BP.body_zone
-	var/stamina_to_zone = block_stamina_limb_ratio * stamina_amount
-	var/stamina_to_chest = stamina_amount - stamina_to_zone
-	var/stamina_buffered = stamina_to_chest * block_stamina_buffer_ratio
-	stamina_to_chest -= stamina_buffered
-	owner.apply_damage(stamina_to_zone, STAMINA, zone)
-	owner.apply_damage(stamina_to_chest, STAMINA, BODY_ZONE_CHEST)
-	owner.adjustStaminaLossBuffered(stamina_buffered)
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		var/held_index = C.get_held_index_of_item(src)
+		var/obj/item/bodypart/BP = C.hand_bodyparts[held_index]
+		if(!BP?.body_zone)
+			return C.adjustStaminaLossBuffered(stamina_amount)		//nah
+		var/zone = BP.body_zone
+		var/stamina_to_zone = block_parry_data.block_stamina_limb_ratio * stamina_amount
+		var/stamina_to_chest = stamina_amount - stamina_to_zone
+		var/stamina_buffered = stamina_to_chest * block_parry_data.block_stamina_buffer_ratio
+		stamina_to_chest -= stamina_buffered
+		C.apply_damage(stamina_to_zone, STAMINA, zone)
+		C.apply_damage(stamina_to_chest, STAMINA, BODY_ZONE_CHEST)
+		C.adjustStaminaLossBuffered(stamina_buffered)
+	else
+		owner.adjustStaminaLossBuffered(stamina_amount)
 
 /obj/item/proc/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
 		return
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
 		return
-	var/incoming_direction = get_dir(get_turf(attacker) || get_turf(object))
+	var/incoming_direction = get_dir(get_turf(attacker) || get_turf(object), src)
 	if(!can_block_direction(owner.dir, incoming_direction))
 		return
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK] = TRUE
@@ -103,11 +108,11 @@
 /obj/item/proc/check_active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
 		return
-	var/incoming_direction = get_dir(get_turf(attacker) || get_turf(object))
+	var/incoming_direction = get_dir(get_turf(attacker) || get_turf(object), src)
 	if(!can_block_direction(owner.dir, incoming_direction))
 		return
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK] = TRUE
-	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATION] = active_block_damage_mitigation(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = active_block_damage_mitigation(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 
 /**
   * Gets the list of directions we can block. Include DOWN to block attacks from our same tile.
