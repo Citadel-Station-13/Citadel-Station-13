@@ -1,11 +1,12 @@
 // yell at me later for file naming
 // This file contains stuff relating to the new directional blocking and parry system.
 /mob/living
-	var/obj/item/active_block_item
-	var/obj/item/active_parry_item
+	/// Whether ot not the user is in the middle of an active parry.
 	var/parrying = FALSE
-	var/parry_frame = 0
-
+	/// The itme the user is currently parrying with.
+	var/obj/item/active_parry_item
+	/// world.time of parry action start
+	var/parry_start_time = 0
 
 GLOBAL_LIST_EMPTY(block_parry_data)
 
@@ -51,17 +52,23 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Override upper bound of damage block, list(ATTACK_TYPE_DEFINE = absorption), see [block_damage_limit]
 	var/list/block_damage_limit_override
 
+	/*
+	 * NOTE: Overrides for attack types for most the block_stamina variables were removed,
+	 * because at the time of writing nothing needed to use it. Add them if you need it,
+	 * it should be pretty easy, just copy [active_block_damage_mitigation]
+	 * for how to override with list.
+	 */
+
 	/// Default damage-to-stamina coefficient, higher is better. This is based on amount of damage BLOCKED, not initial damage, to prevent damage from "double dipping".
 	var/block_stamina_efficiency = 2
 	/// Override damage-to-stamina coefficient, see [block_efficiency], this should be list(ATTACK_TYPE_DEFINE = coefficient_number)
 	var/list/block_stamina_efficiency_override
-
 	/// Ratio of stamina incurred by blocking that goes to the arm holding the object instead of the chest. Has no effect if this is not held in hand.
 	var/block_stamina_limb_ratio = 0.5
-	/// Override stamina limb ratio, list(ATTACK_TYPE_DEFINE = absorption), see [block_stamina_limb_ratio]
-	var/list/block_stamina_limb_ratio_override
+	/// Ratio of stamina incurred by chest (so after [block_stamina_limb_ratio] runs) that is buffered.
+	var/block_stamina_buffer_ratio = 1
 
-	/// Stamina dealt directly via adjustStaminaLoss() per SECOND of block.
+	/// Stamina dealt directly via adjustStaminaLossBuffered() per SECOND of block.
 	var/block_stamina_cost_per_second = 1.5
 
 	/////////// PARRYING ////////////
@@ -86,52 +93,9 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
 
-
-
-/obj/item/proc/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
-		return
-	/// Yadda yadda WIP access block/parry data...
-
 /obj/item/proc/active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_PARRY))
 		return
 	/// Yadda yadda WIP access block/parry data...
 
-/obj/item/proc/check_active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
-		return
-	/// Yadda yadda WIP access block/parry data...
 
-/**
-  * Gets the list of directions we can block. Include DOWN to block attacks from our same tile.
-  */
-/obj/item/proc/blockable_directions()
-	return block_parry_data.can_block_directions
-
-/**
-  * Checks if we can block from a specific direction from our direction.
-  *
-  * @params
-  * * our_dir - our direction.
-  * * their_dir - their direction. Must be a single direction, or NONE for an attack from the same tile.
-  */
-/obj/item/proc/can_block_direction(our_dir, their_dir)
-	if(our_dir != NORTH)
-		var/turn_angle = dir2angle(our_dir)
-		// dir2angle(), ss13 proc is clockwise so dir2angle(EAST) == 90
-		// turn(), byond proc is counterclockwise so turn(NORTH, 90) == WEST
-		their_dir = turn(their_dir, turn_angle)
-	return (DIR2BLOCKDIR(their_dir) in blockable_directions())
-
-/**
-  * can_block_direction but for "compound" directions to check all of them and return the number of directions that were blocked.
-  *
-  * @params
-  * * our_dir - our direction.
-  * * their_dirs - list of their directions as we cannot use bitfields here.
-  */
-/obj/item/proc/can_block_directions_multiple(our_dir, list/their_dirs)
-	. = FALSE
-	for(var/i in their_dirs)
-		. |= can_block_direction(our_dir, i)

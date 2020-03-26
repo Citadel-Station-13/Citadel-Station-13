@@ -334,6 +334,7 @@
 			else
 				I.forceMove(newloc)
 		I.dropped(src)
+		on_item_dropped(I)
 	return TRUE
 
 //Outdated but still in use apparently. This should at least be a human proc.

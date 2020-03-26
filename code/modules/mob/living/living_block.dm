@@ -1,28 +1,5 @@
 // This file has a weird name, but it's for anything related to the checks for shields, blocking, dodging, and similar "stop this attack before it actually impacts the target" as opposed to "defend once it has hit".
 
-/*
-/// Bitflags for check_block() and handle_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
-/// Attack was not blocked
-#define BLOCK_NONE						NONE
-/// Attack was blocked, do not do damage. THIS FLAG MUST BE THERE FOR DAMAGE/EFFECT PREVENTION!
-#define BLOCK_SUCCESS					(1<<1)
-
-/// The below are for "metadata" on "how" the attack was blocked.
-
-/// Attack was and should be reflected (NOTE: the SHOULD here is important, as it says "the thing blocking isn't handling the reflecting for you so do it yourself"!)
-#define BLOCK_SHOULD_REFLECT			(1<<2)
-/// Attack was manually redirected (including reflected) by any means by the defender. For when YOU are handling the reflection, rather than the thing hitting you. (see sleeping carp)
-#define BLOCK_REDIRECTED				(1<<3)
-/// Attack was blocked by something like a shield.
-#define BLOCK_PHYSICAL_EXTERNAL			(1<<4)
-/// Attack was blocked by something worn on you.
-#define BLOCK_PHYSICAL_INTERNAL			(1<<5)
-/// Attack should pass through. Like SHOULD_REFLECT but for.. well, passing through harmlessly.
-#define BLOCK_SHOULD_PASSTHROUGH		(1<<6)
-/// Attack outright missed because the target dodged. Should usually be combined with SHOULD_PASSTHROUGH or something (see martial arts)
-#define BLOCK_TARGET_DODGED				(1<<7)
-*/
-
 ///Check whether or not we can block, without "triggering" a block. Basically run checks without effects like depleting shields. Wrapper for do_run_block(). The arguments on that means the same as for this.
 /mob/living/proc/check_block(atom/object, damage, attack_text = "the attack", attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
 	return do_run_block(FALSE, object, damage, attack_text, attack_type, armour_penetration, attacker, check_zone(def_zone), return_list)
