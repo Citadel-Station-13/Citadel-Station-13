@@ -28,6 +28,13 @@
 	/// Maximum times we can repeat
 	var/max_repeats = 10
 
+	/// Our volume
+	var/volume = 100
+	/// Max volume
+	var/max_volume = 100
+	/// Min volume - This is so someone doesn't decide it's funny to set it to 1 and play invisible songs.
+	var/min_volume = 50
+
 	/// What instruments our built in picker can use. The picker won't show unless this is longer than one.
 	var/list/allowed_instrument_ids = list("r3grand")
 
@@ -67,6 +74,26 @@
 	/// If this is enabled, some things won't be strictly cleared when they usually are (liked compiled_chords on play stop)
 	var/debug_mode = FALSE
 
+	/////////////////////// DO NOT TOUCH THESE ///////////////////
+	var/octave_min = INSTRUMENTS_MIN_OCTAVE
+	var/octave_max = INSTRUMENTS_MAX_OCTAVE
+	var/key_min = 0
+	var/key_max = 127
+	var/static/list/note_offset_lookup = list(9, 11, 0, 2, 4, 5, 7)
+	var/static/list/accent_lookup = list("b" = -1, "s" = 1, "#" = 1, "n" = 0)
+	//////////////////////////////////////////////////////////////
+
+	///////////// !!FUN!! - Only works in synthesized mode! /////////////////
+	var/note_shift = 0
+	var/note_shift_min = -100
+	var/note_shift_max = 100
+	var/frequency_shift = 0
+	var/frequency_shift_min = -30
+	var/frequency_shift_max = 30
+	var/can_noteshift = TRUE
+	var/can_freqshift = FALSE
+	/////////////////////////////////////////////////////////////////////////
+
 /datum/song/New(atom/parent, list/allowed_instrument_ids)
 	SSinstruments.on_song_new(src)
 	lines = list()
@@ -76,6 +103,7 @@
 	if(length(allowed_instrument_ids))
 		set_instrument(allowed_instrument_ids[1])
 	hearing_mobs = list()
+	volume = clamp(volume, min_volume, max_volume)
 
 /datum/song/Destroy()
 	SSinstruments.on_song_del(src)
@@ -129,6 +157,8 @@
 		return
 	playing = TRUE
 	updateDialog()
+	channels_reserved = list()
+	keys_playing = list()
 	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
 	//wrap the rest of the stuff to ensure stop_playing() is called.
 	. = do_play_lines()
@@ -141,8 +171,8 @@
 	playing = FALSE
 	if(!debug_mode)
 		compiled_chords = null
-
 	hearing_mobs.len = 0
+	terminate_all_sounds(TRUE)
 
 /// THIS IS A BLOCKING CALL.
 /datum/song/proc/do_play_lines()
@@ -164,17 +194,10 @@
 	var/sustain_mode = SUSTAIN_LINEAR
 	var/sustain_exponential = 1.07
 	var/sustain_linear = 10
-	var/volume = 100
-	var/octave_shift = 0
 
 
 
-	//Don't touch this.
-	var/octave_min = INSTRUMENTS_MIN_OCTAVE
-	var/octave_max = INSTRUMENTS_MAX_OCTAVE
-	var/static/list/note_offset_lookup = list(9, 11, 0, 2, 4, 5, 7)
-	var/static/list/accent_lookup = list("b" = -1, "s" = 1, "#" = 1, "n" = 0)
-	///////////////////////
+
 
 
 
@@ -219,10 +242,10 @@
 	return CLAMP(round(new_tempo, world.tick_lag), world.tick_lag, 5 SECONDS)
 
 /datum/song/proc/get_bpm()
-	return (10 / tempo) * 60
+	return 600 / tempo
 
 /datum/song/proc/set_bpm(bpm)
-	tempo = sanitize_tempo(10 / (bpm / 60))
+	tempo = sanitize_tempo(600 / bpm)
 
 /// Updates the window for our user. Override in subtypes.
 /datum/song/proc/updateDialog(mob/user)
