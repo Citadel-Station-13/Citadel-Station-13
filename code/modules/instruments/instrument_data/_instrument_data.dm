@@ -64,6 +64,7 @@
 	if(!length(real_samples))
 		CRASH("No real samples defined for [id] [type] on calculate_samples() call.")
 	var/list/real_keys = list()
+	samples = list()
 	for(var/key in real_samples)
 		real_keys += text2num(key)
 	sortTim(real_keys, /proc/cmp_numeric_asc, associative = FALSE)
