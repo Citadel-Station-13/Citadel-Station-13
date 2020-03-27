@@ -2,13 +2,16 @@
 /obj/item/instrument
 	name = "generic instrument"
 	force = 10
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	icon = 'icons/obj/musician.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/instruments_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/instruments_righthand.dmi'
 	var/datum/song/handheld/song
 	var/list/allowed_instrument_ids
+	var/tune_time_left = 0
 
-/obj/item/instrument/Initialize()
+/obj/item/instrument/Initialize(mapload)
 	. = ..()
 	if(!islist(allowed_instrument_ids))
 		allowed_instrument_ids = list(allowed_instrument_ids)
@@ -19,22 +22,48 @@
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
-	. = ..()
+	if(tune_time_left)
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/item/instrument/process(wait)
+	if(tune_time_left > 0)
+		if (song.playing)
+			for (var/mob/living/M in song.hearing_mobs)
+				M.dizziness = max(0,M.dizziness-2)
+				M.jitteriness = max(0,M.jitteriness-2)
+				M.confused = max(M.confused-1)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
+		tune_time_left -= wait
+	else
+		if(tune_time_left <= 0)
+			tune_time_left = 0
+			if (song.playing)
+				loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
+			STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/instrument/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/instrument/Initialize(mapload)
-	. = ..()
-	if(mapload)
-		song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
-
 /obj/item/instrument/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 1
+		return TRUE
 	interact(user)
+
+/obj/item/instrument/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/musicaltuner))
+		var/mob/living/carbon/human/H = user
+		if (HAS_TRAIT(H, TRAIT_MUSICIAN))
+			if (!tune_time)
+				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
+				tune_time_left = 600 SECONDS
+				START_PROCESSING(SSobj, src)
+			else
+				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
+		else
+			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
 
 /obj/item/instrument/interact(mob/user)
 	ui_interact(user)
@@ -59,6 +88,7 @@
 	desc = "A golden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon_state = "golden_violin"
 	item_state = "golden_violin"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/instrument/piano_synth
 	name = "synthesizer"
@@ -119,6 +149,10 @@
 	force = 0
 	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")
 
+/obj/item/instrument/trumpet/spectral/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spooky)
+
 /obj/item/instrument/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (loc, 'sound/instruments/trombone/En4.mid', 100,1,-1)
 	..()
@@ -143,7 +177,7 @@
 	AddComponent(/datum/component/spooky)
 
 /obj/item/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
-	playsound (loc, 'sound/instruments/saxophone/En4.mid', 100,1,-1)
+	playsound(loc, 'sound/instruments/saxophone/En4.mid', 100,1,-1)
 	..()
 
 /obj/item/instrument/trombone
@@ -160,6 +194,10 @@
 	item_state = "trombone"
 	force = 0
 	attack_verb = list("played","jazzed","tromboned","mourned","dooted","spooked")
+
+/obj/item/instrument/trombone/spectral/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spooky)
 
 /obj/item/instrument/trombone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (loc, 'sound/instruments/trombone/Cn4.mid', 100,1,-1)
@@ -184,6 +222,19 @@
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
 
+/obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
+	if(song.playing && ismob(loc))
+		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
+		song.playing = FALSE
+
+/obj/item/instrument/harmonica/equipped(mob/M, slot)
+	. = ..()
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/obj/item/instrument/harmonica/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"
 	desc = "An exquisitely decorated bike horn, capable of honking in a variety of notes."
@@ -198,6 +249,15 @@
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
+
+/obj/item/instrument/banjo
+	name = "banjo"
+	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
+	icon_state = "banjo"
+	item_state = "banjo"
+	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
+	hitsound = 'sound/weapons/banjoslap.ogg'
+	allowed_instrument_ids = "banjo"
 
 // subclass for handheld instruments, like violin
 /datum/song/handheld
@@ -240,3 +300,40 @@
 	desc = "The Omnitrumptet series 400 with more than 30 sound samples and fully customizable high fidelity output provides the ultimate means to toot your own horn"
 	icon_state = "trumpet"
 	allowed_subtypes = /datum/instrument/brass
+
+/obj/item/musicaltuner
+	name = "musical tuner"
+	desc = "A device for tuning musical instruments both manual and electronic alike."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "musicaltuner"
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+
+/obj/item/choice_beacon/music
+	name = "instrument delivery beacon"
+	desc = "Summon your tool of art."
+	icon_state = "gangtool-red"
+
+/obj/item/choice_beacon/music/generate_display_names()
+	var/static/list/instruments
+	if(!instruments)
+		instruments = list()
+		var/list/templist = list(/obj/item/instrument/violin,
+							/obj/item/instrument/piano_synth,
+							/obj/item/instrument/guitar,
+							/obj/item/instrument/eguitar,
+							/obj/item/instrument/glockenspiel,
+							/obj/item/instrument/accordion,
+							/obj/item/instrument/trumpet,
+							/obj/item/instrument/saxophone,
+							/obj/item/instrument/trombone,
+							/obj/item/instrument/recorder,
+							/obj/item/instrument/harmonica
+							)
+		for(var/V in templist)
+			var/atom/A = V
+			instruments[initial(A.name)] = A
+	return instruments

@@ -33,6 +33,10 @@
 	var/legacy_instrument_ext
 	/// What songs are using us
 	var/list/datum/song/songs_using = list()
+	/// Don't touch this
+	var/static/HIGHEST_KEY = 127
+	/// Don't touch this x2
+	var/static/LOWEST_KEY = 0
 
 /datum/instrument/proc/Initialize()
 	calculate_samples()
@@ -79,7 +83,7 @@
 	var/last_key = real_keys[length(real_keys)]
 	var/first_sample = real_samples[text2num(first_key)]
 	var/last_sample = real_samples[text2num(last_key)]
-	for(var/key in 0 to (first_key - 1))
+	for(var/key in lowest_key to (first_key - 1))
 		samples[num2text(key)] = new /datum/instrument_key(first_sample, key, key - first_key)
-	for(var/key in last_key to 127)
+	for(var/key in last_key to highest_key)
 		samples[num2text(key)] = new /datum/instrument_key(last_sample, key, key - last_key)
