@@ -1,4 +1,4 @@
-/datum/song/proc/do_play_lines_synth(mob/user)
+/datum/song/proc/do_play_lines_synthesized(mob/user)
 	compile_lines()
 	while(repeat)
 		for(var/_chord in compiled_chords)

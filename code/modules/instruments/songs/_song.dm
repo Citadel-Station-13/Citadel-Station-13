@@ -115,7 +115,8 @@
 	lines = list()
 	tempo = sanitize_tempo(tempo)
 	src.parent = parent
-	src.allowed_instrument_ids = islist(allowed_instrument_ids)? allowed_instrument_ids : list(allowed_instrument_ids)
+	if(allowed_instrument_ids)
+		src.allowed_instrument_ids = islist(allowed_instrument_ids)? allowed_instrument_ids : list(allowed_instrument_ids)
 	if(length(allowed_instrument_ids))
 		set_instrument(allowed_instrument_ids[1])
 	hearing_mobs = list()

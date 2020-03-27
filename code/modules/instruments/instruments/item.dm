@@ -13,15 +13,13 @@
 
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
-	if(!islist(allowed_instrument_ids))
-		allowed_instrument_ids = list(allowed_instrument_ids)
 	song = new(src, allowed_instrument_ids)
 	allowed_instrument_ids = null			//We don't need this clogging memory after it's used.
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
 	if(tune_time_left)
-	STOP_PROCESSING(SSprocessing, src)
+		STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /obj/item/instrument/proc/should_stop_playing(mob/user)
