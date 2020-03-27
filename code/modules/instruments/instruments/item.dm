@@ -16,8 +16,7 @@
 	if(!islist(allowed_instrument_ids))
 		allowed_instrument_ids = list(allowed_instrument_ids)
 	var/instrument_path = allowed_instruments.len? allowed_instruments[1] : null
-	song = new(src, instrument_path)
-	song.allowed_instruments = allowed_instrument_ids
+	song = new(src, allowed_instrument_ids)
 	allowed_instrument_ids = null			//We don't need this clogging memory after it's used.
 
 /obj/item/instrument/Destroy()
@@ -25,6 +24,9 @@
 	if(tune_time_left)
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
+
+/obj/item/instrument/proc/should_stop_playing(mob/user)
+	return !user.CanReach(src) || !user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)
 
 /obj/item/instrument/process(wait)
 	if(tune_time_left > 0)
@@ -73,7 +75,7 @@
 		return
 
 	user.set_machine(src)
-	song.interact(user)
+	song.ui_interact(user)
 
 /obj/item/instrument/violin
 	name = "space violin"
@@ -258,48 +260,6 @@
 	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
 	hitsound = 'sound/weapons/banjoslap.ogg'
 	allowed_instrument_ids = "banjo"
-
-// subclass for handheld instruments, like violin
-/datum/song/handheld
-
-/datum/song/handheld/updateDialog(mob/user)
-	parent.interact(user)
-
-/datum/song/handheld/shouldStopPlaying()
-	if(parent)
-		return !isliving(parent.loc)
-	else
-		return TRUE
-
-/obj/item/instrument/synthesized
-	name = "synthesized instrument"
-	var/allowed_subtypes = /datum/instrument
-
-/obj/item/instrument/synthesized/guitar
-	name = "guitar"
-	desc = "A wooden musical instrument with six strings. This one looks like it may actually work."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "guitar"
-	allowed_subtypes = /datum/instrument/guitar/clean_crisis
-
-/obj/item/instrument/synthesized/guitar/multi
-	name = "Polyguitar"
-	desc = "An instrument for a more ass-kicking era."
-	icon = 'icons/obj/musician.dmi'
-	icon_state = "eguitar"
-	allowed_subtypes = /datum/instrument/guitar
-
-//in-hand version
-/obj/item/instrument/synthesized/synthesizer
-	name = "Synthesizer Mini"
-	desc = "The power of an entire orchestra in a handy midi keyboard format."
-	icon_state = "h_synthesizer"
-
-/obj/item/instrument/synthesized/trumpet
-	name = "Omnitrumpet"
-	desc = "The Omnitrumptet series 400 with more than 30 sound samples and fully customizable high fidelity output provides the ultimate means to toot your own horn"
-	icon_state = "trumpet"
-	allowed_subtypes = /datum/instrument/brass
 
 /obj/item/musicaltuner
 	name = "musical tuner"

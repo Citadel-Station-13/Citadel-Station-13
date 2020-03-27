@@ -1,7 +1,5 @@
-//Playing legacy instruments
-
+/// Playing legacy instruments - None of the "advanced" like sound reservations and decay are invoked.
 /datum/song/proc/do_play_lines_legacy()
-	var/terminate = FALSE
 	while(repeat >= 0)
 		var/cur_oct[7]
 		var/cur_acc[7]
@@ -11,11 +9,10 @@
 
 		for(var/line in lines)
 			for(var/beat in splittext(lowertext(line), ","))
+				if(should_stop_playing())
+					return
 				var/list/notes = splittext(beat, "/")
 				for(var/note in splittext(notes[1], "-"))
-					if(should_stop_playing())
-						terminate = TRUE
-						break
 					if(length(note) == 0)
 						continue
 					var/cur_note = text2ascii(note) - 96
@@ -37,10 +34,8 @@
 					sleep(tempo)
 		repeat--
 		if(should_stop_playing())
-			terminate = TRUE
-		if(terminate)
-			break
-		updateUsrDialog()
+			return
+		updateDialog()
 
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
@@ -76,7 +71,8 @@
 		return
 	// and play
 	var/turf/source = get_turf(parentj)
-	do_hearcheck()
+	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last-hearcheck)
+		do_hearcheck()
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i

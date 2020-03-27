@@ -52,8 +52,7 @@
 	SSinstruments.instrument_data -= id
 	for(var/i in songs_using)
 		var/datum/song/S = i
-		S.stop_playing()
-		S.using_instrument = null
+		S.set_instrument(null)
 	real_samples = null
 	samples = null
 	songs_using = null

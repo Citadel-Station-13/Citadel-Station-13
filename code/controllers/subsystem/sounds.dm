@@ -79,4 +79,8 @@ SUBSYSTEM_DEF(sounds)
 /datum/controller/subsystem/sounds/proc/is_channel_available(channel)
 	return available_channels[num2text(channel)]
 
+/// How many channels we have left.
+/datum/controller/subsystem/sounds/proc/available_channels_left()
+	return length(available_channels)
+
 #undef DATUMLESS

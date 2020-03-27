@@ -3,19 +3,6 @@
 
 
 
-/datum/song/stationary/shouldStopPlaying(mob/user)
-	if(instrumentObj)
-		if(!instrumentObj.Adjacent(user) || user.stat)
-			return 1
-		return !instrumentObj.anchored		// add special cases to stop in subclasses
-	else
-		return 1
-
-
-
-
-
-
 
 
 
@@ -24,11 +11,6 @@
 	desc = "A surprisingly high-tech piano with a digital display for modifying sound output"
 	icon_state = "piano"
 	path = /datum/instrument/piano
-
-
-
-
-
 
 
 //Synthesizer and minimoog. They work the same
@@ -79,3 +61,90 @@
 	name = "space minimoog"
 	desc = "This is a minimoog, like a space piano, but more spacey!"
 	icon_state = "minimoog"
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
+/obj/structure/piano
+	name = "space minimoog"
+	icon = 'icons/obj/musician.dmi'
+	icon_state = "minimoog"
+	anchored = TRUE
+	density = TRUE
+	var/datum/song/song
+
+/obj/structure/piano/unanchored
+	anchored = FALSE
+
+/obj/structure/piano/New()
+	..()
+	song = new("piano", src)
+
+	if(prob(50) && icon_state == initial(icon_state))
+		name = "space minimoog"
+		desc = "This is a minimoog, like a space piano, but more spacey!"
+		icon_state = "minimoog"
+	else
+		name = "space piano"
+		desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
+		icon_state = "piano"
+
+/obj/structure/piano/Destroy()
+	qdel(song)
+	song = null
+	return ..()
+
+/obj/structure/piano/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
+
+/obj/structure/piano/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	interact(user)
+
+/obj/structure/piano/attack_paw(mob/user)
+	return attack_hand(user)
+
+/obj/structure/piano/interact(mob/user)
+	ui_interact(user)
+
+/obj/structure/piano/ui_interact(mob/user)
+	if(!user || !anchored)
+		return
+
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return 1
+	user.set_machine(src)
+	song.ui_interact(user)
+
+/obj/structure/piano/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I, 40)
+	return TRUE
+
+
+
+
+/obj/structure/musician
+	name = "Not A Piano"
+	desc = "Something broke, contact coderbus."
+	var/can_play_unanchored = FALSE
+
+/obj/structure/musician/proc/should_stop_playing(mob/user)
+	if(!(anchored || can_play_unanchored))
+		return TRUE
+	if(!user)
+		return FALSE
+	return !user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)		//can play with TK and while resting because fun.
+
+
+
+
+
+

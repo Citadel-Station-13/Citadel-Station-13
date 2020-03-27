@@ -4,6 +4,7 @@
 /datum/instrument/hardcoded
 	abstract_type = /datum/instrument/hardcoded
 	category = "Non-Synthesized"
+	instrument_flags = INSTRUMENT_LEGACY
 
 /datum/instrument/hardcoded/accordian
 	name = "Accordian"

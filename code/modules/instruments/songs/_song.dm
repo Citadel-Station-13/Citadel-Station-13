@@ -1,39 +1,173 @@
+#define MUSICIAN_HEARCHECK_MINDELAY 4
+#define MUSIC_MAXLINES 1000
+#define MUSIC_MAXLINECHARS 300
+
 /datum/song
+	/// Name of the song
 	var/name = "Untitled"
 
+	/// The atom we're attached to/playing from
+	var/atom/parent
+
+	/// Our song lines
+	var/list/lines
+
+	/// delay between notes in deciseconds
+	var/tempo = 5
+
+	/// Are we currently playing?
+	var/playing = FALSE
+
+	/// Are we currently editing?
+	var/editing = TRUE
+	/// Is the help screen open?
+	var/help = FALSE
+
+	/// Repeats left
+	var/repeat = 0
+	/// Maximum times we can repeat
+	var/max_repeats = 10
+
+	/// What instruments our built in picker can use. The picker won't show unless this is longer than one.
+	var/list/allowed_instrument_ids = list("r3grand")
+
+	//////////// Cached instrument variables /////////////
+	/// Instrument we are currently using
+	var/datum/instrument/using_instrument
+	/// Cached legacy ext for legacy instruments
+	var/cached_legacy_ext
+	/// Cached legacy dir for legacy instruments
+	var/cached_legacy_dir
+	/// Cached list of samples, referenced directly from the instrument for synthesized instruments
+	var/list/cached_samples
+	/// Are we operating in legacy mode (so if the instrument is a legacy instrument)
+	var/legacy = FALSE
+	//////////////////////////////////////////////////////
+
+	/////////////////// Playing variables ////////////////
+	/**
+	  * Only used in synthesized playback - The chords we compiled. Non assoc list of lists:
+	  * list(list(key1, key2, key3..., tempo_divisor), list(key1, key2..., tempo_divisor), ...)
+	  * tempo_divisor always exists
+	  * if key1 (and so if there's no keys) doesn't exist it's a rest
+	  * Compilation happens when we start playing and is cleared after we finish playing.
+	  */
+	var/list/compiled_chords
+	/// Key as text = channel as number
+	var/list/channels_reserved
+	/// Key as text = current volume
+	var/list/keys_playing
+
+	//////////////////////////////////////////////////////
+
+	/// Last world.time we checked for who can hear us
+	var/last_hearcheck = 0
+	/// The list of mobs that can hear us
+	var/list/hearing_mobs
+	/// If this is enabled, some things won't be strictly cleared when they usually are (liked compiled_chords on play stop)
 	var/debug_mode = FALSE
 
-	var/interface_help = FALSE		//help is open
-	var/interface_edit = TRUE		//editing mode
-	var/list/lines = list()
+/datum/song/New(atom/parent, list/allowed_instrument_ids)
+	SSinstruments.on_song_new(src)
+	lines = list()
+	tempo = sanitize_tempo(tempo)
+	src.parent = parent
+	src.allowed_instrument_ids = islist(allowed_instrument_ids)? allowed_instrument_ids : list(allowed_instrument_ids)
+	if(length(allowed_instrument_ids))
+		set_instrument(allowed_instrument_ids[1])
+	hearing_mobs = list()
+
+/datum/song/Destroy()
+	SSinstruments.on_song_del(src)
+	stop_playing()
+	lines = null
+	using_instrument = null
+	allowed_instrument_ids = null
+	parent = null
+	return ..()
+
+/datum/song/proc/do_hearcheck()
+	last_hearcheck = world.time
+	var/list/old = hearing_mobs.Copy()
+	hearing_mobs.len = 0
+	var/turf/source = get_turf(parent)
+	for(var/mob/M in get_hearers_in_view(15, source))
+		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
+			continue
+		hearing_mobs[M] = get_dist(M, source)
+	var/list/exited = old - hearing_mobs
+	for(var/i in exited)
+		terminate_sound_mob(i)
+
+/// I can either be a datum, id, or path (if the instrument has no id).
+/datum/song/proc/set_instrument(datum/instrument/I)
+	stop_playing()
+	if(using_instrument)
+		using_instrument.songs_using -= src
+	using_instrument = null
+	cached_samples = null
+	cached_legacy_ext = null
+	cached_legacy_dir = null
+	legacy = null
+	if(istext(I) || ispath(I))
+		I = SSinstruments.instrument_data[I]
+	if(istype(I))
+		using_instrument = I
+		I.songs_using += src
+		var/legacy = CHECK_BITFIELD(I, INSTRUMENT_LEGACY)
+		if(legacy)
+			cached_legacy_ext = I.legacy_instrument_ext
+			cached_legacy_dir = I.legacy_instrument_dir
+			legacy = TRUE
+		else
+			samples = I.samples
+			legacy = FALSE
+
+/// THIS IS A BLOCKING CALL.
+/datum/song/proc/start_playing(mob/user)
+	if(playing)
+		return
+	playing = TRUE
+	updateDialog()
+	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
+	//wrap the rest of the stuff to ensure stop_playing() is called.
+	. = do_play_lines()
+	stop_playing()
+	updateDialog()
+
+/datum/song/proc/stop_playing()
+	if(!playing)
+		return
+	playing = FALSE
+	if(!debug_mode)
+		compiled_chords = null
+
+	hearing_mobs.len = 0
+
+/// THIS IS A BLOCKING CALL.
+/datum/song/proc/do_play_lines()
+	if(!playing)
+		return
+	do_hearcheck()
+	if(legacy)
+		do_play_lines_legacy()
+	else
+		do_play_lines_synthesized()
+
+
+
+
+
+
+/datum/song
+
 	var/sustain_mode = SUSTAIN_LINEAR
 	var/sustain_exponential = 1.07
 	var/sustain_linear = 10
 	var/volume = 100
 	var/octave_shift = 0
-	var/tempo_ds = 5			//delay between notes in deciseconds
-	var/repeat_current = 0		//current repeats left
-	var/playing = FALSE			//whether we should be playing. Setting this to FALSE will halt the playing proc ASAP.
 
-	var/obj/parent			//The object in the world we're attached to. Can theoretically support datums in the future, but this should probably stay as an atom at the least.
 
-	var/max_repeats = 10		//max repeats
-	var/list/allowed_instrument_ids = list("r3grand")		//Ones the built in switcher is allowed to use.
-	var/datum/instrument/using_instrument
-
-	var/now_playing = FALSE		//Whether we actually are playing.
-	var/last_hearcheck = 0		//last world.time we checked for hearing mobs.
-	var/list/hearing_mobs		//list of mobs that can hear us
-	var/list/channels_reserved		//key = channel
-	var/list/keys_playing			//key = volume
-
-	//Cache for hyper speed!
-	var/cached_legacy_ext
-	var/cached_legacy_dir
-	var/list/cached_samples
-	var/legacy_mode = FALSE
-	var/list/compiled_chords 	//non assoc list of lists : index = list(key1, key2, key3... , tempo_divisor). tempo divisor always exists, key1 doesn't have to if it's a rest.
-	////////////////////////
 
 	//Don't touch this.
 	var/octave_min = INSTRUMENTS_MIN_OCTAVE
@@ -42,56 +176,7 @@
 	var/static/list/accent_lookup = list("b" = -1, "s" = 1, "#" = 1, "n" = 0)
 	///////////////////////
 
-/datum/song/New(atom/parent, datum/instrument/instrument_or_id)
-	src.parent = parent
-	SSinstruments.on_song_new(src)
-	set_instrument(instrument_or_id || ((islist(allowed_instrument_ids) && length(allowed_instrument_ids))? allowed_instrument_ids[1] : allowed_instrument_ids))
-	channels_reserved = list()
-	keys_playing = list()
 
-/datum/song/Destroy()
-	stop_playing()
-	var/time = world.time
-	UNTIL(!now_playing || ((world.time - time) > 20))
-	if((world.time - time) > 20)
-		crash_with("WARNING: datum/song [src] failed to stop playing more than 20 deciseconds after being instructed to stop by Destroy()!")
-	SSinstruments.on_song_del(src)
-	parent = null
-	lines = null
-	using_instrument = null
-	allowed_instrument_ids = null
-	hearing_mobs = null
-	cached_samples = null
-	compiled_chords = null
-	return ..()
-
-/datum/song/proc/set_bpm(bpm)
-	tempo_ds = round(600 / bpm, world.tick_lag)
-
-/datum/song/proc/get_bpm()
-	return (600 / tempo_ds)
-
-/datum/song/proc/set_instrument(datum/instrument/I)
-	if(istext(I))
-		I = SSinstruments.instrument_data[I]
-	if(istype(I))
-		if(istype(using_instrument))
-			LAZYOR(using_instruments.songs_using, src)
-		using_instrument = I
-		LAZYOR(I.songs_using, src)
-		return TRUE
-	if(isnull(I))
-		if(istype(using_instrument))
-			LAZYREMOVE(using_instruments.songs_using, src)
-		using_instrument = null
-		cached_samples = null
-		cached_legacy_ext = null
-		cached_legacy_dir = null
-		return TRUE
-	return FALSE
-
-/datum/song/proc/sanitize_tempo(new_tempo)
-	return max(round(abs(new_tempo), world.tick_lag), world.tick_lag)
 
 /datum/song/proc/stop_playing()
 	hearing_mobs.Cut()
@@ -108,20 +193,6 @@
 	play_lines()
 	return TRUE
 
-/datum/song/proc/do_hearcheck(force = FALSE)
-	if(((world.time - GLOB.musician_hearcheck_mindelay) > last_hearcheck) || force)
-		var/list/old = hearing_mobs.Copy()
-		LAZYCLEARLIST(hearing_mobs)
-		for(var/mob/M in hearers(15, source))
-			if(!M.client || !(M.is_preference_enabled(/datum/client_preference/instrument_toggle)))
-				continue
-			LAZYSET(hearing_mobs, M, TRUE)
-		var/list/diff = old - hearing_mobs
-		for(var/i in diff)
-			var/mob/M = i
-			terminate_sound_mob(M)
-		last_hearcheck = world.time
-
 /datum/song/proc/play_lines()
 	if(now_playing)
 		CRASH("WARNING: datum/song attempted to play_lines while it was already now_playing!")
@@ -135,13 +206,55 @@
 	updateDialog()
 	return TRUE
 
-/datum/song/proc/should_stop_playing()
-	return !playing || !using_instrument || QDELETED(parent)
 
+
+
+
+
+/datum/song/proc/should_stop_playing(mob/user)
+	return QDELETED(parent) || !using_instrument || !playing
+
+/datum/song/proc/sanitize_tempo(new_tempo)
+	new_tempo = abs(new_tempo)
+	return CLAMP(round(new_tempo, world.tick_lag), world.tick_lag, 5 SECONDS)
+
+/datum/song/proc/get_bpm()
+	return (10 / tempo) * 60
+
+/datum/song/proc/set_bpm(bpm)
+	tempo = sanitize_tempo(10 / (bpm / 60))
+
+/// Updates the window for our user. Override in subtypes.
 /datum/song/proc/updateDialog(mob/user)
-	parent?.updateDialog()		// assumes it's an object in world, override if otherwise
+	ui_interact(user)
 
 /datum/song/process(wait)
 	if(!now_playing)
 		return PROCESS_KILL
 	process_decay()
+
+// subtype for handheld instruments, like violin
+/datum/song/handheld
+
+/datum/song/handheld/updateDialog(mob/user)
+	parent.interact(user)
+
+/datum/song/handheld/should_stop_playing(mob/user)
+	. = ..()
+	if(.)
+		return TRUE
+	var/obj/item/instrument/I = parent
+	return I.should_stop_playing(user)
+
+// subtype for stationary structures, like pianos
+/datum/song/stationary
+
+/datum/song/stationary/updateDialog(mob/user)
+	parent.interact(user)
+
+/datum/song/stationary/should_stop_playing(mob/user)
+	. = ..()
+	if(.)
+		return TRUE
+	var/obj/structure/musician/M = parent
+	return M.should_stop_playing(user)
