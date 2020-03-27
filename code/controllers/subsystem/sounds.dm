@@ -1,63 +1,82 @@
+#define DATUMLESS "NO_DATUM"
+
 SUBSYSTEM_DEF(sounds)
 	name = "sounds"
 	flags = SS_NO_FIRE
 	var/static/sound_channels_max = CHANNEL_HIGHEST_AVAILABLE		//BYOND max channels
-	var/list/sound_channels						//Assoc list of sound channels. "[channel]" = datum_using_or_TRUE
-	var/list/sound_channels_by_datum			//assoc list : datum = list(channel1, channel2)
-	var/datum/stack/channel_stack				//Uses a stack for super-fast channel allocation.
+	/// Assoc list, "[channel]" = either the datum using it or TRUE for an unsafe-reserved (datumless reservation) channel
+	var/list/using_channels
+	/// Assoc list datum = list(channel1, channel2, ...) for what channels something reserved.
+	var/list/using_channels_by_datum
+	/// List of all available channels with associations set to TRUE for fast lookups/allocation.
+	var/list/available_channels
 
 /datum/controller/subsystem/sounds/Initialize()
-	sound_channels = list()
-	build_stack(CHANNEL_HIGHEST_AVAILABLE)
+	using_channels = list()
+	using_channels_by_datum = list()
+	setup_available_channels()
+	return ..()
 
-/datum/controller/subsystem/sounds/proc/build_stack(number)
-	channel_stack = new
-	channel_stack.max_elements = number
-	for(var/i in 1 to number)
-		channel_stack.Push("[i]")
+/datum/controller/subsystem/sounds/proc/setup_available_channels()
+	available_channels = list()
+	for(var/i in 1 to sound_channels_max)
+		available_channels["[i]"] = TRUE
 
+/// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)
 	channel = "[channel]"
-	if(!sound_channels.Find(channel))
-		return
-	var/using = sound_channels[channel]
-	sound_channels -= channel
-	if(sound_channels_by_datum[using])
-		sound_channels_by_datum[using] -= channel
-		if(!length(sound_channels_by_datum[using]))
-			sound_channels_by_datum -= using
-	channel_stack.Push(channel)
+	var/using = using_channels[channel]
+	using_channels -= channel
+	if(using)
+		using_channels_by_datum[using] -= channel
+		if(!length(using_channels_by_datum[using])
+			using_channels_by_datum -= using
+	available_channels[channel] = TRUE
 
-/datum/controller/subsystem/sounds/proc/free_datumless_channels()
-	free_sound_channel_datum("NO_DATUM")
-
-/datum/controller/subsystem/sounds/proc/free_sound_channel_datum(datum/D)
+/// Frees all the channels a datum is using.
+/datum/controller/subsystem/sounds/proc/free_datum_channels(datum/D)
 	var/list/L = sound_channels_by_datum[D]
-	if(istype(L))
-		for(var/i in L)
-			free_sound_channel(i)
+	if(!L)
+		return
+	for(var/channel in L)
+		using_channels -= channel
+		available_channels[channel] = TRUE
 	sound_channels_by_datum -= D
 
-//Don't use this unless ABSOLUTELY necessary!
-/datum/controller/subsystem/sounds/proc/reserve_sound_channel_unsafe()
-	var/channel = "[get_available_channel()]"
-	if(!channel)
-		return FALSE
-	sound_channels[channel] = "NO_DATUM"
-	LAZYINITLIST(sound_channels_by_datum["NO_DATUM"])
-	sound_channels_by_datum["NO_DATUM"] += channel
-	return channel
+/// Frees all datumless channels
+/datum/controller/subsystem/sounds/proc/free_datumless_channels()
+	free_datum_channels(DATUMLESS)
 
+/// NO AUTOMATIC CLEANUP - If you use this, you better manually free it later! Returns an integer for channel.
+/datum/controller/subsystem/sounds/proc/reserve_sound_channel_datumless()
+	var/channel = random_available_channel_text()
+	if(!channel)		//oh no..
+		return FALSE
+	sound_channels[channel] = DATUMLESS
+	LAZYINITLIST(sound_channels_by_datum[DATUMLESS])
+	sound_channels_by_datum[DATUMLESS] += channel
+	return text2num(channel)
+
+/// Reserves a channel for a datum. Automatic cleanup only when the datum is deleted. Returns an integer for channel.
 /datum/controller/subsystem/sounds/proc/reserve_sound_channel(datum/D)
-	if(!istype(D))
-		return FALSE
-	var/channel = "[channel_stack.Pop]"
-	if(!channel)
-		return FALSE
-	sound_channels["[channel]"] = D
+	if(!D)		//i don't like typechecks but someone will fuck it up
+		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
+	var/channel = random_available_channel_text()
+	sound_channels[channel] = D
 	LAZYINITLIST(sound_channels_by_datum[D])
 	sound_channels_by_datum[D] += channel
-	return channel
+	return text2num(channel)
 
-/datum/controller/subsystem/sounds/proc/get_available_channel()
-	return pick(sound_stack.stack)
+/// Random available channel, returns text.
+/datum/controller/subsystem/sounds/proc/random_available_channel_text()
+	return pick(available_channels)
+
+/// Random available channel, returns number
+/datum/controller/subsystem/sounds/proc/random_available_channel()
+	return text2num(pick(available_channels))
+
+/// If a channel is available
+/datum/controller/subsystem/sounds/proc/is_channel_available(channel)
+	return available_channels["[channel]"]
+
+#undef DATUMLESS
