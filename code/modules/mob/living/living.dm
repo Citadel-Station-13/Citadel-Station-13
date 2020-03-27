@@ -118,22 +118,22 @@
 		if(!CHECK_MOBILITY(src, MOBILITY_STAND) && CHECK_MOBILITY(L, MOBILITY_STAND))
 			var/origtargetloc = L.loc
 			if(!pulledby)
-				if(attemptingcrawl)
+				if(combat_flags & COMBAT_FLAG_ATTEMPTING_CRAWL)
 					return TRUE
-				if(getStaminaLoss() >= STAMINA_SOFTCRIT)
+				if(IS_STAMCRIT(src))
 					to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
 					return TRUE
-				attemptingcrawl = TRUE
+				ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
 				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>", "<span class='notice'>You are now attempting to crawl under [L].</span>")
 				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || CHECK_MOBILITY(src, MOBILITY_STAND))
-					attemptingcrawl = FALSE
+					DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
 					return TRUE
 			var/src_passmob = (pass_flags & PASSMOB)
 			pass_flags |= PASSMOB
 			Move(origtargetloc)
 			if(!src_passmob)
 				pass_flags &= ~PASSMOB
-			attemptingcrawl = FALSE
+			DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
 			return TRUE
 	//END OF CIT CHANGES
 
@@ -368,9 +368,8 @@
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
-
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
-	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || recoveringstam || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
 		return TRUE
 
 /mob/living/canUseStorage()
@@ -703,8 +702,8 @@
 
 /mob/living/do_resist_grab(moving_resist, forced, silent = FALSE)
 	. = ..()
-	if(pulledby.grab_state)
-		if(CHECK_MOBILITY(src, MOBILITY_STAND) && prob(30/pulledby.grab_state))
+	if(pulledby.grab_state > GRAB_PASSIVE)
+		if(CHECK_MOBILITY(src, MOBILITY_RESIST) && prob(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			pulledby.stop_pulling()
 			return TRUE
@@ -1193,3 +1192,9 @@
 
 /mob/living/canface()
 	return ..() && CHECK_MOBILITY(src, MOBILITY_MOVE)
+
+/mob/living/proc/set_gender(ngender = NEUTER, silent = FALSE, update_icon = TRUE, forced = FALSE)
+	if(forced || (!ckey || client?.prefs.cit_toggles & (ngender == FEMALE ? FORCED_FEM : FORCED_MASC)))
+		gender = ngender
+		return TRUE
+	return FALSE

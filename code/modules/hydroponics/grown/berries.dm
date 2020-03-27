@@ -261,6 +261,7 @@
 	seed = /obj/item/seeds/strawberry
 	name = "strawberry"
 	icon_state = "strawberry"
-	filling_color = "#7FFF00"
+	filling_color = "#E50D31"
+	juice_results = list(/datum/reagent/consumable/strawberryjuice = 0)
 	tastes = list("strawberries" = 1)
 	wine_power = 20

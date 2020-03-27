@@ -4556,7 +4556,7 @@
 /area/crew_quarters/fitness/recreation)
 "aiR" = (
 /obj/structure/table,
-/obj/item/clothing/under/sl_suit{
+/obj/item/clothing/under/suit/sl{
 	desc = "Whoever wears this makes the rules.";
 	name = "referee suit"
 	},
@@ -6918,8 +6918,8 @@
 /area/maintenance/port)
 "ana" = (
 /obj/structure/rack,
-/obj/item/clothing/under/rank/mailman,
-/obj/item/clothing/under/rank/vice{
+/obj/item/clothing/under/misc/mailman,
+/obj/item/clothing/under/misc/vice_officer{
 	pixel_x = 4;
 	pixel_y = -3
 	},
@@ -7555,7 +7555,7 @@
 	c_tag = "Brig - Infirmary";
 	dir = 1
 	},
-/obj/item/clothing/under/rank/medical/purple{
+/obj/item/clothing/under/rank/medical/doctor/purple{
 	pixel_y = -4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -8886,7 +8886,7 @@
 /obj/structure/chair,
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/remains/human,
-/obj/item/clothing/under/soviet,
+/obj/item/clothing/under/costume/soviet,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -9965,7 +9965,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asV" = (
@@ -10042,7 +10042,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/clothing/under/suit_jacket/burgundy,
+/obj/item/clothing/under/suit/burgundy,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "atc" = (
@@ -11693,7 +11693,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/clothing/under/suit_jacket/tan,
+/obj/item/clothing/under/suit/tan,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "awE" = (
@@ -13402,11 +13402,11 @@
 /area/crew_quarters/dorms)
 "aAe" = (
 /obj/structure/table,
-/obj/item/clothing/under/suit_jacket/female{
+/obj/item/clothing/under/suit/black/skirt{
 	pixel_x = 3;
 	pixel_y = 1
 	},
-/obj/item/clothing/under/suit_jacket/really_black{
+/obj/item/clothing/under/suit/black_really{
 	pixel_x = -2
 	},
 /obj/machinery/light/small{
@@ -13418,9 +13418,9 @@
 	},
 /obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/suit/toggle/lawyer/black,
-/obj/item/clothing/under/suit_jacket/red,
+/obj/item/clothing/under/suit/red,
 /obj/item/clothing/neck/tie/black,
-/obj/item/clothing/under/lawyer/blacksuit,
+/obj/item/clothing/under/suit/black,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -14755,7 +14755,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/clothing/under/suit_jacket/navy,
+/obj/item/clothing/under/suit/navy,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aCM" = (
@@ -16789,7 +16789,7 @@
 /area/crew_quarters/dorms)
 "aGP" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aGQ" = (
@@ -23603,7 +23603,7 @@
 /area/maintenance/starboard/fore)
 "aUX" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
@@ -26182,7 +26182,7 @@
 /area/ai_monitored/turret_protected/ai)
 "aZU" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/effect/turf_decal/tile/neutral{
@@ -26345,7 +26345,7 @@
 /area/maintenance/port/fore)
 "bah" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
 	icon_state = "map-right-MS";
@@ -27278,7 +27278,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /obj/structure/sign/map/left{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
 	icon_state = "map-left-MS";
@@ -29748,21 +29748,21 @@
 	name = "formal uniform crate";
 	req_access_txt = "3"
 	},
-/obj/item/clothing/under/rank/security/navyblue,
-/obj/item/clothing/under/rank/security/navyblue,
-/obj/item/clothing/under/rank/security/navyblue,
-/obj/item/clothing/under/rank/security/navyblue,
-/obj/item/clothing/under/rank/security/navyblue,
-/obj/item/clothing/under/rank/security/navyblue,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
 /obj/item/clothing/suit/armor/navyblue,
 /obj/item/clothing/suit/armor/navyblue,
 /obj/item/clothing/suit/armor/navyblue,
 /obj/item/clothing/suit/armor/navyblue,
 /obj/item/clothing/suit/armor/navyblue,
 /obj/item/clothing/suit/armor/navyblue,
-/obj/item/clothing/under/rank/warden/navyblue,
+/obj/item/clothing/under/rank/security/warden/formal,
 /obj/item/clothing/suit/armor/vest/warden/navyblue,
-/obj/item/clothing/under/rank/head_of_security/navyblue,
+/obj/item/clothing/under/rank/security/head_of_security/formal,
 /obj/item/clothing/suit/armor/hos/navyblue,
 /obj/item/clothing/head/beret/sec/navyofficer,
 /obj/item/clothing/head/beret/sec/navyofficer,
@@ -46039,7 +46039,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/clothing/shoes/laceup,
-/obj/item/clothing/under/suit_jacket/really_black,
+/obj/item/clothing/under/suit/black_really,
 /obj/item/clothing/glasses/sunglasses,
 /obj/machinery/camera{
 	c_tag = "Corporate Showroom"
@@ -47330,7 +47330,7 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
-/obj/item/clothing/under/suit_jacket/red,
+/obj/item/clothing/under/suit/red,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/book/codex_gigas,
 /turf/open/floor/engine/cult,
@@ -54133,7 +54133,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/gun/syringe,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -54146,6 +54145,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cds" = (
@@ -59207,13 +59207,13 @@
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
-/obj/item/gun/syringe,
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/storage/belt/medical{
 	pixel_y = 2
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "cnu" = (
@@ -61843,7 +61843,7 @@
 "csa" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/white,
-/obj/item/gun/syringe,
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "csb" = (
@@ -72433,12 +72433,12 @@
 	pixel_x = -26
 	},
 /obj/structure/table/wood,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cLW" = (
@@ -82724,6 +82724,14 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"soe" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "soh" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -117831,7 +117839,7 @@ bSV
 bUk
 bVv
 bWQ
-bWQ
+soe
 bWQ
 caL
 ccv

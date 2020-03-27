@@ -34,7 +34,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = WEIGHT_CLASS_NORMAL
+
+	/// The amount of stamina it takes to swing an item in a normal melee attack do not lie to me and say it's for realism because it ain't. If null it will autocalculate from w_class.
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
+	/// How long, in deciseconds, this staggers for, if null it will autocalculate from w_class and force. Unlike total mass this supports 0 and negatives.
+	var/stagger_force
+
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
@@ -399,7 +404,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		if(C.combatmode && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
+		if((C.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
 			if(!C.get_active_held_item())
 				C.UnarmedAttack(src, TRUE)
 				if(C.get_active_held_item() == src)
@@ -496,7 +501,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
@@ -856,3 +861,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/unembedded()
 	return
+
+/**
+  * Sets our slowdown and updates equipment slowdown of any mob we're equipped on.
+  */
+/obj/item/proc/set_slowdown(new_slowdown)
+	slowdown = new_slowdown
+	if(CHECK_BITFIELD(item_flags, IN_INVENTORY))
+		var/mob/living/L = loc
+		if(istype(L))
+			L.update_equipment_speed_mods()
+
+/obj/item/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, slowdown))
+		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.

@@ -14,8 +14,8 @@ The colossus' true danger lies in its ranged capabilities. It fires immensely da
 At 33% health, the colossus gains an additional attack:
  4. The colossus fires two spirals of death bolts, spinning in opposite directions.
 
-When a colossus dies, it leaves behind a chunk of glowing crystal known as a black box. Anything placed inside will carry over into future rounds.
-For instance, you could place a bag of holding into the black box, and then kill another colossus next round and retrieve the bag of holding from inside.
+When a colossus dies, it leaves behind an anomalous crystal structure. This crystal can be activated in one of multiple ways and has an effect randomly chosen from a list.
+It also drops its vocal cords, which, when inserted into someone's mouth, allow them to activate some specific phrases that cause effects, such as sleeping to people nearby.
 
 Difficulty: Very Hard
 
@@ -24,6 +24,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus
 	name = "colossus"
 	desc = "A monstrous creature protected by heavy shielding."
+	threat = 40
 	health = 2500
 	maxHealth = 2500
 	attacktext = "judges"
@@ -603,6 +604,7 @@ Difficulty: Very Hard
 	icon_state = "lightgeist"
 	icon_living = "lightgeist"
 	icon_dead = "butterfly_dead"
+	threat = -0.7
 	turns_per_move = 1
 	response_help = "waves away"
 	response_disarm = "brushes aside"

@@ -30,6 +30,7 @@
 	icon_dead = "magicarp_dead"
 	icon_gib = "magicarp_gib"
 	ranged = 1
+	threat = 4
 	retreat_distance = 2
 	minimum_distance = 0 //Between shots they can and will close in to nash
 	projectiletype = /obj/item/projectile/magic
@@ -51,6 +52,7 @@
 	color = "#00FFFF"
 	maxHealth = 75
 	health = 75
+	threat = 7
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot()
 	projectiletype = pick(allowed_projectile_types)

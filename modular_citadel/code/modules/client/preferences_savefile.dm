@@ -44,31 +44,6 @@
 	WRITE_FILE(S["feature_xeno_tail"], features["xenotail"])
 	WRITE_FILE(S["feature_xeno_dors"], features["xenodorsal"])
 	WRITE_FILE(S["feature_xeno_head"], features["xenohead"])
-	//cock features
-	WRITE_FILE(S["feature_has_cock"], features["has_cock"])
-	WRITE_FILE(S["feature_cock_shape"], features["cock_shape"])
-	WRITE_FILE(S["feature_cock_color"], features["cock_color"])
-	WRITE_FILE(S["feature_cock_length"], features["cock_length"])
-	WRITE_FILE(S["feature_cock_girth"], features["cock_girth"])
-	WRITE_FILE(S["feature_has_sheath"], features["sheath_color"])
-	//balls features
-	WRITE_FILE(S["feature_has_balls"], features["has_balls"])
-	WRITE_FILE(S["feature_balls_color"], features["balls_color"])
-	WRITE_FILE(S["feature_balls_size"], features["balls_size"])
-	WRITE_FILE(S["feature_balls_shape"], features["balls_shape"])
-	WRITE_FILE(S["feature_balls_sack_size"], features["balls_sack_size"])
-	//breasts features
-	WRITE_FILE(S["feature_has_breasts"], features["has_breasts"])
-	WRITE_FILE(S["feature_breasts_size"], features["breasts_size"])
-	WRITE_FILE(S["feature_breasts_shape"], features["breasts_shape"])
-	WRITE_FILE(S["feature_breasts_color"], features["breasts_color"])
-	WRITE_FILE(S["feature_breasts_producing"], features["breasts_producing"])
-	//vagina features
-	WRITE_FILE(S["feature_has_vag"], features["has_vag"])
-	WRITE_FILE(S["feature_vag_shape"], features["vag_shape"])
-	WRITE_FILE(S["feature_vag_color"], features["vag_color"])
-	//womb features
-	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
 	//flavor text
 	WRITE_FILE(S["feature_flavor_text"], features["flavor_text"])
 

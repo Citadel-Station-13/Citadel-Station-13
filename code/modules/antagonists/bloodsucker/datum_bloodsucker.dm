@@ -6,7 +6,7 @@
 	roundend_category = "bloodsuckers"
 	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
-
+	threat = 5
 	// NAME
 	var/vampname						// My Dracula name
 	var/vamptitle						// My Dracula title
@@ -91,10 +91,8 @@
 	// Refill with Blood
 	owner.current.blood_volume = max(owner.current.blood_volume,BLOOD_VOLUME_SAFE)
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/datum/antagonist/bloodsucker/threat()
+	return threat+3*vamplevel
 
 
 /datum/antagonist/bloodsucker/proc/SelectFirstName()
@@ -185,10 +183,10 @@
 	BuyPower(new /datum/action/bloodsucker/veil)
 	// Traits
 	for(var/T in defaultTraits)
-		ADD_TRAIT(owner.current, T, "bloodsucker")
+		ADD_TRAIT(owner.current, T, BLOODSUCKER_TRAIT)
 	if(HAS_TRAIT(owner.current, TRAIT_TOXINLOVER)) //No slime bonuses here, no thank you
 		had_toxlover = TRUE
-		REMOVE_TRAIT(owner.current, TRAIT_TOXINLOVER, "species")
+		REMOVE_TRAIT(owner.current, TRAIT_TOXINLOVER, SPECIES_TRAIT)
 	// Traits: Species
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
@@ -235,9 +233,9 @@
 		// owner.RemoveSpell(power)
 	// Traits
 	for(var/T in defaultTraits)
-		REMOVE_TRAIT(owner.current, T, "bloodsucker")
+		REMOVE_TRAIT(owner.current, T, BLOODSUCKER_TRAIT)
 	if(had_toxlover == TRUE)
-		ADD_TRAIT(owner.current, TRAIT_TOXINLOVER, "species")
+		ADD_TRAIT(owner.current, TRAIT_TOXINLOVER, SPECIES_TRAIT)
 
 	// Traits: Species
 	if(ishuman(owner.current))
@@ -387,7 +385,7 @@
 	add_objective(heartthief_objective)
 	/*
 	else
-	
+
 		// Solars Objective, doesnt work due to TG updates.
 		var/datum/objective/bloodsucker/solars/solars_objective = new
 		solars_objective.owner = owner

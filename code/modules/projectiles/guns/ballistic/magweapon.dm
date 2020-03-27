@@ -14,7 +14,7 @@
 	spread = 0
 	recoil = 0.1
 	casing_ejector = FALSE
-	inaccuracy_modifier = 0.5
+	inaccuracy_modifier = 0
 	dualwield_spread_mult = 1.4
 	weapon_weight = WEAPON_MEDIUM
 	var/obj/item/stock_parts/cell/cell

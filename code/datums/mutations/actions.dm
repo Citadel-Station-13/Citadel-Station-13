@@ -40,7 +40,7 @@
 	name = "Fire Breath"
 	desc = "You can breathe fire at a target."
 	school = "evocation"
-	charge_max = 1200
+	charge_max = 600
 	clothes_req = FALSE
 	range = 20
 	base_icon_state = "fireball"
@@ -111,7 +111,7 @@
 	energy_coeff = 1
 	synchronizer_coeff = 1
 
-/datum/mutation/human/void/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/void/on_life()
 	if(!isturf(owner.loc))
 		return
 	if(prob((0.5+((100-dna.stability)/20))) * GET_MUTATION_SYNCHRONIZER(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability

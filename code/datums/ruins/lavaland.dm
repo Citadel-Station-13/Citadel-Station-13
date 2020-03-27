@@ -248,14 +248,4 @@
 	cost = 5
 	placement_weight = 3
 	always_place = TRUE
-	allow_duplicates = TRUE
-
-// Mining Base
-/datum/map_template/ruin/lavaland/mining_base //THIS IS THE MINING BASE. DO NOT FUCK WITH THIS UNLESS YOU ARE 100% CERTAIN YOU KNOW WHAT YOU'RE DOING, OR THE MINING BASE WILL DISAPPEAR
-	name = "Mining Base"
-	id = "miningbase"
-	description = "The mining base that Nanotrasen uses for their mining operations."
-	suffix = "miningbase.dmm"
-	cost = 0
-	always_place = TRUE
-	unpickable = TRUE
+	allow_duplicates = TRUE 

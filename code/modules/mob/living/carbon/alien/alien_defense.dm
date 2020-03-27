@@ -21,7 +21,7 @@ In all, this is a lot like the monkey code. /N
 		return
 	switch(M.a_intent)
 		if (INTENT_HELP)
-			if(!recoveringstam)
+			if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
 				set_resting(FALSE, TRUE, FALSE)
 			AdjustAllImmobility(-60, FALSE)
 			AdjustUnconscious(-60, FALSE)

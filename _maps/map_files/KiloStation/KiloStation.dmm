@@ -7053,7 +7053,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/brown,
-/obj/item/clothing/under/overalls,
+/obj/item/clothing/under/misc/overalls,
 /obj/item/clothing/mask/gas{
 	pixel_x = 4;
 	pixel_y = 4
@@ -9271,7 +9271,7 @@
 /obj/structure/closet{
 	name = "science locker"
 	},
-/obj/item/clothing/under/rank/scientist{
+/obj/item/clothing/under/rank/rnd/scientist{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -14495,12 +14495,12 @@
 /obj/structure/closet{
 	name = "skirt closet"
 	},
-/obj/item/clothing/under/skirt/red{
+/obj/item/clothing/under/dress/skirt/red{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/skirt/blue,
-/obj/item/clothing/under/skirt/black{
+/obj/item/clothing/under/dress/skirt/blue,
+/obj/item/clothing/under/dress/skirt{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -22793,9 +22793,6 @@
 	pixel_y = 4
 	},
 /obj/item/storage/box/beakers,
-/obj/item/gun/syringe{
-	pixel_y = 5
-	},
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -22804,6 +22801,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aKZ" = (
@@ -23309,7 +23307,7 @@
 /area/science/mixing)
 "aLT" = (
 /obj/structure/closet,
-/obj/item/clothing/under/rank/bartender/purple{
+/obj/item/clothing/under/rank/civilian/bartender/purple{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -27298,11 +27296,11 @@
 	name = "medical locker"
 	},
 /obj/structure/grille/broken,
-/obj/item/clothing/under/skirt/blue{
+/obj/item/clothing/under/dress/skirt/blue{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/rank/medical,
+/obj/item/clothing/under/rank/medical/doctor,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/plating,
@@ -27635,7 +27633,7 @@
 	pixel_x = -26
 	},
 /obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/clothing/under/lobster,
+/obj/item/clothing/under/costume/lobster,
 /obj/item/clothing/head/lobsterhat,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -35210,7 +35208,7 @@
 /obj/structure/closet{
 	name = "kitchen closet"
 	},
-/obj/item/clothing/under/rank/chef{
+/obj/item/clothing/under/rank/civilian/chef{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -41674,7 +41672,7 @@
 /obj/structure/closet/secure_closet/personal,
 /obj/item/storage/backpack,
 /obj/item/storage/backpack/satchel,
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/effect/turf_decal/tile/neutral,
@@ -42355,7 +42353,7 @@
 /obj/structure/closet{
 	name = "supply locker"
 	},
-/obj/item/clothing/under/rank/cargotech,
+/obj/item/clothing/under/rank/cargo/tech,
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -42577,11 +42575,11 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/clothing/under/suit_jacket/really_black{
+/obj/item/clothing/under/suit/black_really{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/suit_jacket/really_black,
+/obj/item/clothing/under/suit/black_really,
 /obj/item/clothing/neck/tie/black{
 	pixel_x = 6
 	},
@@ -42749,7 +42747,7 @@
 /obj/structure/closet/secure_closet/personal,
 /obj/item/storage/backpack,
 /obj/item/storage/backpack/satchel,
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/effect/turf_decal/tile/neutral,
@@ -43879,18 +43877,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"bqG" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "bqH" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -49260,8 +49246,8 @@
 "byZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/wardrobe/black,
-/obj/item/clothing/under/trendy_fit,
-/obj/item/clothing/under/trendy_fit,
+/obj/item/clothing/under/custom/trendy_fit,
+/obj/item/clothing/under/custom/trendy_fit,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "bza" = (
@@ -49929,12 +49915,12 @@
 /obj/structure/closet{
 	name = "suit closet"
 	},
-/obj/item/clothing/under/lawyer/female{
+/obj/item/clothing/under/rank/civilian/lawyer/female{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/lawyer/bluesuit,
-/obj/item/clothing/under/lawyer/red{
+/obj/item/clothing/under/rank/civilian/lawyer/bluesuit,
+/obj/item/clothing/under/rank/civilian/lawyer/red{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -55137,7 +55123,7 @@
 /area/security/processing)
 "bIl" = (
 /obj/structure/table,
-/obj/item/clothing/under/rank/security{
+/obj/item/clothing/under/rank/security/officer{
 	pixel_x = -4
 	},
 /obj/item/toy/figure/dsquad{
@@ -63067,7 +63053,7 @@
 	name = "security locker"
 	},
 /obj/item/clothing/gloves/color/black,
-/obj/item/clothing/under/rank/security/skirt,
+/obj/item/clothing/under/rank/security/officer/skirt,
 /obj/item/clothing/shoes/jackboots,
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/cobweb,
@@ -80246,7 +80232,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/clothing/under/geisha{
+/obj/item/clothing/under/costume/geisha{
 	pixel_y = 5
 	},
 /obj/item/toy/katana,
@@ -81105,7 +81091,7 @@
 	name = "engineering locker"
 	},
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/under/rank/engineer,
+/obj/item/clothing/under/rank/engineering/engineer,
 /obj/item/clothing/shoes/workboots,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
@@ -82787,11 +82773,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/gloves/color/white,
-/obj/item/clothing/under/maid{
+/obj/item/clothing/under/costume/maid{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/janimaid,
+/obj/item/clothing/under/rank/civilian/janitor/maid,
 /obj/item/clothing/accessory/maidapron{
 	pixel_x = -4;
 	pixel_y = -4
@@ -87680,7 +87666,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
-/obj/item/clothing/under/maid,
+/obj/item/clothing/under/costume/maid,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -88205,7 +88191,7 @@
 /area/hallway/primary/fore)
 "uqy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/under/janimaid,
+/obj/item/clothing/under/rank/civilian/janitor/maid,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -88232,6 +88218,19 @@
 "whw" = (
 /turf/closed/wall/rust,
 /area/medical/surgery)
+"whZ" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/mob/living/simple_animal/pet/bumbles,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "wmX" = (
 /turf/closed/wall/rust,
 /area/quartermaster/qm)
@@ -122394,7 +122393,7 @@ aZd
 bqh
 bnJ
 bpl
-bqG
+whZ
 bsL
 buw
 bwH

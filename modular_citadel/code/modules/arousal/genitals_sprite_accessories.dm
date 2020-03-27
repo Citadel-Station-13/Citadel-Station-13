@@ -74,13 +74,9 @@
 	name = "testicle"		//the preview name of the accessory
 	color_src = "balls_color"
 
-/datum/sprite_accessory/testicles/hidden
-	icon_state = "none"
-	name = "Hidden"
-
 /datum/sprite_accessory/testicles/single
 	icon_state = "single"
-	name = "Single"
+	name = "Single" //Single as "single pair", for clarity.
 
 //Vaginas
 /datum/sprite_accessory/vagina
@@ -137,14 +133,3 @@
 /datum/sprite_accessory/breasts/sextuple
 	icon_state = "sextuple"
 	name = "Sextuple"
-
-//OVIPOSITORS BE HERE
-/datum/sprite_accessory/ovipositor
-	icon = 'modular_citadel/icons/obj/genitals/penis_onmob.dmi'
-	icon_state = null
-	name = "Ovipositor"			//the preview name of the accessory
-	color_src = "cock_color"
-
-/datum/sprite_accessory/ovipositor/knotted
-	icon_state = "knotted"
-	name = "Knotted"
