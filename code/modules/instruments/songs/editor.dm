@@ -1,34 +1,31 @@
-
-
-	/// What instruments our built in picker can use. The picker won't show unless this is longer than one.
-	var/list/allowed_instrument_ids = list("r3grand")
-
-	//////////// Cached instrument variables /////////////
-	/// Instrument we are currently using
-	var/datum/instrument/using_instrument
-
-	/// Note numbers to shift.
-	var/note_shift = 0
-	var/note_shift_min = -100
-	var/note_shift_max = 100
-	/// Frequency numbers to shift. Probably a horrible idea.
-	var/frequency_shift = 0
-	var/frequency_shift_min = -30
-	var/frequency_shift_max = 30
-	var/can_noteshift = TRUE
-	var/can_freqshift = FALSE
-	/// The kind of sustain we're using
-	var/sustain_mode = SUSTAIN_LINEAR
-	/// When a note is considered dead if it is below this in volume
-	var/sustain_dropoff_volume = 10
-	/// Total duration of linear sustain for 100 volume note to get to SUSTAIN_DROPOFF
-	var/sustain_linear_duration = 10
-	/// Exponential sustain dropoff rate per decisecond
-	var/sustain_exponential_dropoff = 1.045
-
 /datum/song/proc/instrument_status_ui()
 	. = list()
-	. += "
+	. += "<div class='statusDisplay'>"
+	. += "<b><a href='?src=[REF(src)];switchinstrument=1'>Current instrument</a>:</b> "
+	if(!using_instrument)
+		. += "<span class='danger'>No instrument loaded!</span><br>"
+	else
+		. += "[using_instrument.name]<br>"
+	. += "Playback Settings:<br>"
+	if(can_noteshift)
+		. += "<a href='?src=[REF(src)];setnoteshift=1'>Note Shift/Note Transpose</a>: [note_shift] keys / [round(note_shift / 12, 0.01)] octaves<br>"
+	if(can_freqshift)
+		. += "<a href='?src=[REF(src)];setfreqshift=1'>Frequency Shift</a>: [frequency_shift] %<br>"
+	var/smt
+	var/modetext = ""
+	switch(sustain_mode)
+		if(SUSTAIN_LINEAR)
+			smt = "Linear"
+			modetext = "<a href='?src=[REF(src)];setlinearfalloff=1'>Linear Sustain Duration</a>: [sustain_linear_duration / 10] seconds<br>"
+		if(SUSTAIN_EXPONENTIAL)
+			smt = "Exponential"
+			modetext = "<a href='?src=[REF(src)];setexpfalloff=1'>Exponential Falloff Factor</a>: [sustain_exponential_dropoff]% per decisecond<br>"
+	. += "<a href='?src=[REF(src)];setsustainmode=1'>Sustain Mode</a>: [smt]<br>"
+	. += modetext
+	. += using_instrument?.ready()? "Status: <span class='good'>Ready</span>" : "Status: <span class='bad'>!Instrument Definition Error!</span><br>"
+	. += "<a href='?src=[REF(src)];setvolume=1'>Volume</a>: [volume]<br>"
+	. += "<a href='?src=[REF(src)];setdropoffvolume=1'>Volume Dropoff Threshold</a>: [sustain_dropoff_volume]<br>"
+	. += "</div>"
 
 /datum/song/ui_interact(mob/user)
 	var/list/dat = list()
@@ -189,5 +186,49 @@
 		playing = FALSE
 		hearing_mobs = null
 
-	updateDialog(usr)
-	return
+	else if(href_list["setlinearfalloff"])
+		var/amount = input(usr, "Set linear sustain duration", "Linear Sustain Duration") as null|num
+		if(!isnull(amount))
+			set_linear_falloff_duration(round(amount, world.tick_lag))
+
+	else if(href_list["setexpfalloff"])
+		var/amount = input(usr, "Set exponential sustain factor", "Exponential sustain factor") as null|num
+		if(!isnull(amount))
+			set_exponential_drop_rate(round(amount, 0.00001))
+
+	else if(href_list["setvolume"])
+		var/amount = input(usr, "Set volume", "Volume") as null|num
+		if(!isnull(amount))
+			set_volume(round(amount, 1))
+
+	else if(href_list["setdropoffvolume"])
+		var/amount = input(usr, "Set dropoff threshold", "Dropoff Threshold Volume") as null|num
+		if(!isnull(amount))
+			set_dropoff_volume(round(amount, 0.01))
+
+	else if(href_list["switchinstrument"])
+		if(!length(allowed_instrument_ids))
+			return
+		var/choice = input(usr, "Select Instrument", "Instrument Selection") as null|anything in allowed_instrument_ids
+		if(choice)
+			set_instrument(choice)
+
+	else if(href_list["setnoteshift"])
+		var/amount = input(usr, "Set note shift", "Note Shift") as null|num
+		if(!isnull(amount))
+			note_shift = CLAMP(amount, note_shift_min, note_shift_max)
+
+	else if(href_list["setfreqshift"])
+		var/amount = input(usr, "Set frequency shift", "Freq Shift") as null|num
+		if(!isnull(amount))
+			frequency_shift = CLAMP(amount, frequency_shift_min, frequency_shift_max)
+
+	else if(href_list["setsustainmode"])
+		var/choice = input(usr, "Choose a sustain mode", "Sustain Mode") as null|anything in list("Linear", "Exponential")
+		switch(choice)
+			if("Linear")
+				sustain_mode = SUSTAIN_LINEAR
+			if("Exponential")
+				sustain_mode = SUSTAIN_EXPONENTIAL
+
+	updateDialog()

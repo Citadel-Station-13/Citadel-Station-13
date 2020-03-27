@@ -50,7 +50,7 @@
 	var/notelen
 	if(!(notelen = length(notestring)))
 		return
-	var/cur_note = text2ascii(note, 1) - 96
+	var/cur_note = text2ascii(lowertext(copytext(notestring, 1, 2)), 1) - 96
 	//a = 1, b = 2, c = 3, d = 4, e = 5, f = 6, g = 7
 	if(cur_note < 1 || cur_note > 7)
 		return
@@ -81,7 +81,8 @@
 	return ((octave * 12) + (accent_lookup[accent]) + (note_offset_lookup[cur_note]))
 
 /datum/song/proc/playkey_synth(key)
-	key = clamp(key + note_shift, key_min, key_max)
+	if(can_noteshift)
+		key = clamp(key + note_shift, key_min, key_max)
 	var/datum/instrument_key/K = using_instrument.samples[num2text(key)]			//See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
 	//Should probably add channel limiters here at some point but I don't care right now.
 	var/channel = key_channel_reserve(key)
@@ -92,7 +93,8 @@
 	keys_playing[num2text(key)] = volume
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		M.playsound_local(get_turf(parent), K.sample, volume, FALSE, K.frequency + frequency_shift, 0, FALSE, channel)
+		var/frequency = can_freqshift? K.frequency : (K.frequency + frequency_shift)
+		M.playsound_local(get_turf(parent), K.sample, volume, FALSE, frequency, 0, FALSE, channel)
 		// Could do environment and echo later but not for now
 
 /datum/song/proc/terminate_all_sounds(clear_channels = TRUE)
