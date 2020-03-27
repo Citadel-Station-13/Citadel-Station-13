@@ -225,7 +225,7 @@
 	ui_interact(user)
 
 /datum/song/process(wait)
-	if(!now_playing)
+	if(!playing)
 		return PROCESS_KILL
 	process_decay()
 

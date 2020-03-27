@@ -108,7 +108,12 @@
 			M.playsound_local(M, null, volume, vary, frequency, falloff, channel, pressure_affected, S)
 
 /mob/proc/stop_sound_channel(chan)
-	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))
+	var/sound/S = sound(null, repeat = 0, wait = 0, channel = chan)
+	S.status = SOUND_UPDATE
+	SEND_SOUND(src, S)
+
+/mob/proc/set_sound_channel_volume(channel, volume)
+	SEND_SOUND(src, sound(null, FLSE, FALSE, channel, volume))
 
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE

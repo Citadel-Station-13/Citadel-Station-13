@@ -131,7 +131,7 @@
 			if(SUSTAIN_EXPONENTIAL)
 				current_volume /= exponential_dropoff
 		keys_playing[key] = current_volume
-		var/dead = amount_left < sustain_dropoff_volume
+		var/dead = current_volume < sustain_dropoff_volume
 		if(dead)
 			keys_playing -= key
 		var/channel = channels_reserved[key]

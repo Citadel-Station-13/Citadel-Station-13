@@ -1,5 +1,39 @@
+
+
+	/// What instruments our built in picker can use. The picker won't show unless this is longer than one.
+	var/list/allowed_instrument_ids = list("r3grand")
+
+	//////////// Cached instrument variables /////////////
+	/// Instrument we are currently using
+	var/datum/instrument/using_instrument
+
+	/// Note numbers to shift.
+	var/note_shift = 0
+	var/note_shift_min = -100
+	var/note_shift_max = 100
+	/// Frequency numbers to shift. Probably a horrible idea.
+	var/frequency_shift = 0
+	var/frequency_shift_min = -30
+	var/frequency_shift_max = 30
+	var/can_noteshift = TRUE
+	var/can_freqshift = FALSE
+	/// The kind of sustain we're using
+	var/sustain_mode = SUSTAIN_LINEAR
+	/// When a note is considered dead if it is below this in volume
+	var/sustain_dropoff_volume = 10
+	/// Total duration of linear sustain for 100 volume note to get to SUSTAIN_DROPOFF
+	var/sustain_linear_duration = 10
+	/// Exponential sustain dropoff rate per decisecond
+	var/sustain_exponential_dropoff = 1.045
+
+/datum/song/proc/instrument_status_ui()
+	. = list()
+	. += "
+
 /datum/song/ui_interact(mob/user)
 	var/list/dat = list()
+
+	dat += instrument_status_ui()
 
 	if(lines.len > 0)
 		dat += "<H3>Playback</H3>"
@@ -13,7 +47,7 @@
 		else
 			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
 			dat += "Repeats left: <B>[repeat]</B><BR>"
-	if(!edit)
+	if(!editing)
 		dat += "<BR><B><A href='?src=[REF(src)];edit=2'>Show Editor</A></B><BR>"
 	else
 		dat += "<H3>Editing</H3>"
