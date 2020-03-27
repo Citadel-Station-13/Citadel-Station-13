@@ -20,11 +20,11 @@ SUBSYSTEM_DEF(sounds)
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
 	available_channels = list()
 	for(var/i in 1 to using_channels_max)
-		available_channels["[i]"] = TRUE
+		available_channels[num2text(i)] = TRUE
 
 /// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)
-	channel = "[channel]"
+	channel = num2text(channel)
 	var/using = using_channels[channel]
 	using_channels -= channel
 	if(using)
@@ -77,6 +77,6 @@ SUBSYSTEM_DEF(sounds)
 
 /// If a channel is available
 /datum/controller/subsystem/sounds/proc/is_channel_available(channel)
-	return available_channels["[channel]"]
+	return available_channels[num2text(channel)]
 
 #undef DATUMLESS
