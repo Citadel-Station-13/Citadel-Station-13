@@ -292,4 +292,4 @@
 	return SSticker.mode.name == "traitor"
 
 /datum/antagonist/traitor/threat()
-	return threat+traitor_kind.threat
+	return (..())+traitor_kind.threat
