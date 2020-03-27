@@ -16,12 +16,12 @@
 					if(should_stop_playing())
 						terminate = TRUE
 						break
-					if(lentext(note) == 0)
+					if(length(note) == 0)
 						continue
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
-					for(var/i=2 to lentext(note))
+					for(var/i=2 to length(note))
 						var/ni = copytext(note,i,i+1)
 						if(!text2num(ni))
 							if(ni == "#" || ni == "b" || ni == "n")

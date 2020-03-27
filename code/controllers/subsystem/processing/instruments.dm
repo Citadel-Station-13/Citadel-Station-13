@@ -1,11 +1,10 @@
-PROCESSING_SUBSYSTEM_DEF(SSinstruments)
+PROCESSING_SUBSYSTEM_DEF(instruments)
 	name = "Instruments"
 	wait = 0.5
 	flags = SS_KEEP_TIMING
 	priority = FIRE_PRIORITY_INSTRUMENTS
 	var/static/list/datum/instrument/instrument_data = list()		//id = datum
 	var/static/list/datum/song/songs = list()
-	var/list/datum/song/processing = list()
 	var/static/musician_maxlines = 600
 	var/static/musician_maxlinechars = 300
 	var/static/musician_hearcheck_mindelay = 5
@@ -22,6 +21,7 @@ PROCESSING_SUBSYSTEM_DEF(SSinstruments)
 
 /datum/controller/subsystem/processing/instruments/proc/initialize_instrument_data()
 	for(var/path in subtypesof(/datum/instrument))
+		var/datum/instrument/I = path
 		if(!istext(initial(I.id)))
 			continue
 		if(instrument_data[initial(I.id)])
