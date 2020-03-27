@@ -19,7 +19,7 @@
 	if(M)
 		M.adjustToxLoss(4, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
 
-/obj/item/organ/appendix/update_icon()
+/obj/item/organ/appendix/update_icon_state()
 	if(inflamed)
 		icon_state = "appendixinflamed"
 		name = "inflamed appendix"
@@ -27,10 +27,11 @@
 		icon_state = "appendix"
 		name = "appendix"
 
-/obj/item/organ/appendix/Remove(mob/living/carbon/M, special = 0)
-	for(var/datum/disease/appendicitis/A in M.diseases)
-		A.cure()
-		inflamed = TRUE
+/obj/item/organ/appendix/Remove(special = FALSE)
+	if(owner)
+		for(var/datum/disease/appendicitis/A in owner.diseases)
+			A.cure()
+			inflamed = TRUE
 	update_icon()
 	..()
 

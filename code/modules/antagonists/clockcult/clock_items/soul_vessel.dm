@@ -104,6 +104,6 @@
 	transfer_personality(H)
 	brainmob.fully_replace_character_name(null, "[braintype] [H.real_name]")
 	name = "[initial(name)] ([brainmob.name])"
-	B.Remove(H)
+	B.Remove()
 	qdel(B)
 	H.update_hair()

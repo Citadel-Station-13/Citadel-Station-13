@@ -22,7 +22,7 @@
 	precision_coeff = 0
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
-	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/P in component_parts)
 		precision_coeff = P.rating
 	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
@@ -34,7 +34,7 @@
 		if(scan_level >= 3)
 			. += "<span class='notice'>Scanner has been upgraded to support autoprocessing.<span>"
 
-/obj/machinery/dna_scannernew/update_icon()
+/obj/machinery/dna_scannernew/update_icon_state()
 
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
@@ -172,7 +172,7 @@
 
 /obj/machinery/dna_scannernew/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	interact(user)
 	return TRUE

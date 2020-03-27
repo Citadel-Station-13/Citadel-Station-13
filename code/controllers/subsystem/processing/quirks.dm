@@ -35,7 +35,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/my_quirks = cli.prefs.all_quirks.Copy()
 	var/list/cut
 	if(job?.blacklisted_quirks)
-		cut = filter_quirks(my_quirks, job)
+		cut = filter_quirks(my_quirks, job.blacklisted_quirks)
 	for(var/V in my_quirks)
 		var/datum/quirk/Q = quirks[V]
 		if(Q)
@@ -63,11 +63,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	for(var/i in quirk_names)
 		. += quirk_points_by_name(i)
 
-/datum/controller/subsystem/processing/quirks/proc/filter_quirks(list/our_quirks, datum/job/job)
+/datum/controller/subsystem/processing/quirks/proc/filter_quirks(list/our_quirks, list/blacklisted_quirks)
 	var/list/cut = list()
 	var/list/banned_names = list()
 	var/pointscut = 0
-	for(var/i in job.blacklisted_quirks)
+	for(var/i in blacklisted_quirks)
 		var/name = quirk_name_by_path(i)
 		if(name)
 			banned_names += name
@@ -85,7 +85,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 				our_quirks -= i
 				cut += i
 				pointscut += quirk_points_by_name(i)
-			if (pointscut >= 0) //with how it works, it needs to be above zero, not below, as points for positive is positive, and negative is negative, we only want it to break if it's above zero, ie. we cut more positive than negative
+			if (pointscut >= 0)
 				break
 	/*	//Code to automatically reduce positive quirks until balance is even.
 	var/points_used = total_points(our_quirks)
@@ -102,7 +102,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	*/
 
 	//Nah, let's null all non-neutrals out.
-	if (pointscut != 0)// only if the pointscutting didn't work.
+	if (pointscut < 0)// only if the pointscutting didn't work.
 		if(cut.len)
 			for(var/i in our_quirks)
 				if(quirk_points_by_name(i) != 0)

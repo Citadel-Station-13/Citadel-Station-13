@@ -178,7 +178,7 @@
 /datum/supply_pack/security/armory/russian
 	name = "Russian Surplus Crate"
 	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
-	cost = 5000
+	cost = 7500
 	contraband = TRUE
 	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
 					/obj/item/ammo_box/a762,
@@ -188,34 +188,17 @@
 					/obj/item/clothing/shoes/russian,
 					/obj/item/clothing/gloves/combat,
 					/obj/item/clothing/under/syndicate/rus_army,
-					/obj/item/clothing/under/soviet,
+					/obj/item/clothing/under/costume/soviet,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/shotgun/boltaction,
 					/obj/item/gun/ballistic/shotgun/boltaction)
 	crate_name = "surplus military crate"
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 10)
+	for(var/i in 1 to 5)
 		var/item = pick(contains)
 		new item(C)
-
-/datum/supply_pack/security/armory/spinfusor
-	name = "Stormhammer Spinfusor Crate"
-	cost = 14000
-	desc = "Got yourself a code red? Blob, nukies or even worst knocking on your door? Well with the Stormhammer Spinfusor you can stop crime in one shot, dont miss! Contains two Stormhammer Spinfusors (Note, guns may or may not be loaded). Requires Armory access to open."
-	contains = list(/obj/item/gun/ballistic/automatic/spinfusor,
-					/obj/item/gun/ballistic/automatic/spinfusor)
-	crate_name = "spinfusor crate"
-
-/datum/supply_pack/security/armory/spinfusorammo
-	name = "Spinfusor Disk Crate"
-	cost = 7000
-	desc = "Need more ammo for a Stormhammer? Well we got some for a price! Contains two boxes of Spinfusor disks. Requires Armory access to open."
-	contains = list(/obj/item/ammo_box/aspinfusor,
-					/obj/item/ammo_box/aspinfusor)
-	crate_name = "spinfusor disk crate"
 
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
@@ -234,7 +217,7 @@
 	crate_name = "swat crate"
 
 /datum/supply_pack/security/armory/swattasers //Lesser AEG tbh
-	name = "SWAT tatical tasers Crate"
+	name = "SWAT tactical tasers Crate"
 	desc = "Contains two tactical energy gun, these guns are able to tase, disable and lethal as well as hold a seclight. Requires Armory access to open."
 	cost = 7000
 	contains = list(/obj/item/gun/energy/e_gun/stun,

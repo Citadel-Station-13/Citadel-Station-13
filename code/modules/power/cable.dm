@@ -85,8 +85,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(isnull(_d1) || isnull(_d2))
 		// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 		var/dash = findtext(icon_state, "-")
-		d1 = text2num( copytext( icon_state, 1, dash ) )
-		d2 = text2num( copytext( icon_state, dash+1 ) )
+		d1 = text2num(copytext(icon_state, 1, dash))
+		d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
 	else
 		d1 = _d1
 		d2 = _d2
@@ -130,7 +130,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
-/obj/structure/cable/update_icon()
+/obj/structure/cable/update_icon_state()
 	icon_state = "[d1]-[d2]"
 	color = null
 	add_atom_colour(cable_color, FIXED_COLOUR_PRIORITY)
@@ -488,7 +488,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=10, MAT_GLASS=5)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=5)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
@@ -499,7 +499,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
-	materials = list()
+	custom_materials = null
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)

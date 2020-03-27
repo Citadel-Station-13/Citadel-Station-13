@@ -1,3 +1,4 @@
+#define PAI_EMP_SILENCE_DURATION 3 MINUTES
 
 /mob/living/silicon/pai/blob_act(obj/structure/blob/B)
 	return FALSE
@@ -7,8 +8,8 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	take_holo_damage(50/severity)
-	Knockdown(400/severity)
-	silent = max((3 MINUTES)/severity, silent)
+	DefaultCombatKnockdown(400/severity)
+	silent = max(silent, (PAI_EMP_SILENCE_DURATION) / SSmobs.wait / severity)
 	if(holoform)
 		fold_in(force = TRUE)
 	emitter_next_use = world.time + emitter_emp_cd
@@ -22,10 +23,10 @@
 			qdel(src)
 		if(2)
 			fold_in(force = 1)
-			Knockdown(400)
+			DefaultCombatKnockdown(400)
 		if(3)
 			fold_in(force = 1)
-			Knockdown(200)
+			DefaultCombatKnockdown(200)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
@@ -55,7 +56,8 @@
 	if(P.stun)
 		fold_in(force = TRUE)
 		visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")
-	return ..()
+	. = ..()
+	return BULLET_ACT_FORCE_PIERCE
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
 	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
@@ -96,7 +98,7 @@
 		take_holo_damage(amount * 0.25)
 
 /mob/living/silicon/pai/adjustOrganLoss(slot, amount, maximum = 500) //I kept this in, unlike tg
-	Knockdown(amount * 0.2)
+	DefaultCombatKnockdown(amount * 0.2)
 
 /mob/living/silicon/pai/getBruteLoss()
 	return emittermaxhealth - emitterhealth

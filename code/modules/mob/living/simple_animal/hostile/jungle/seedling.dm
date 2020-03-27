@@ -13,6 +13,7 @@
 	icon_state = "seedling"
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
+	threat = 0.5
 	maxHealth = 100
 	health = 100
 	melee_damage_lower = 30

@@ -110,7 +110,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user) || IsAdminGhost(user))
 		dat += text({"<BR>
 Arrest Unidentifiable Persons: []<BR>
 Arrest for Unauthorized Weapons: []<BR>
@@ -131,7 +131,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
 	if(..())
 		return 1
-	if(!issilicon(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+	if(!hasSiliconAccessInArea(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
 		return TRUE
 	switch(href_list["operation"])
 		if("idcheck")
@@ -213,7 +213,7 @@ Auto Patrol: []"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.canmove || arrest_type) // CIT CHANGE - makes sentient secbots check for canmove rather than !isstun.
+		if(CHECK_MOBILITY(C, MOBILITY_MOVE|MOBILITY_USE|MOBILITY_STAND) || arrest_type) // CIT CHANGE - makes sentient secbots check for canmove rather than !isstun.
 			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
@@ -254,11 +254,11 @@ Auto Patrol: []"},
 	var/threat = 5
 	if(ishuman(C))
 		C.stuttering = 5
-		C.Knockdown(100)
+		C.DefaultCombatKnockdown(100)
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 	else
-		C.Knockdown(100)
+		C.DefaultCombatKnockdown(100)
 		C.stuttering = 5
 		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 
@@ -312,7 +312,7 @@ Auto Patrol: []"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if( !Adjacent(target) || !isturf(target.loc) || target.getStaminaLoss() <= 120 || !target.recoveringstam) //CIT CHANGE - replaces amountknockdown with checks for stamina so secbots dont run into an infinite loop
+			if( !Adjacent(target) || !isturf(target.loc) || target.getStaminaLoss() <= 120 || !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)) //CIT CHANGE - replaces amountknockdown with checks for stamina so secbots dont run into an infinite loop
 				back_to_hunt()
 				return
 
@@ -339,7 +339,7 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss check
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss check
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.

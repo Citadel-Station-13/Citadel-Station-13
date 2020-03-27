@@ -96,15 +96,20 @@
 						"Gold Trim" = "detective_gold",
 						"The Peacemaker" = "detective_peacemaker"
 						)
+	var/list/safe_calibers
+
+/obj/item/gun/ballistic/revolver/detective/Initialize()
+	. = ..()
+	safe_calibers = magazine.caliber
 
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine.caliber != initial(magazine.caliber))
+	if(chambered && !(chambered.caliber in safe_calibers))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
 			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
 			user.take_bodypart_damage(0,20)
 			user.dropItemToGround(src)
-			return 0
+			return FALSE
 	..()
 
 /obj/item/gun/ballistic/revolver/detective/screwdriver_act(mob/living/user, obj/item/I)
@@ -171,6 +176,10 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 
+/obj/item/gun/ballistic/revolver/russian/do_spin()
+	. = ..()
+	spun = TRUE
+
 /obj/item/gun/ballistic/revolver/russian/Initialize()
 	. = ..()
 	do_spin()
@@ -187,7 +196,7 @@
 	return
 
 /obj/item/gun/ballistic/revolver/russian/attack_self(mob/user)
-	if(!spun && can_shoot())
+	if(!spun)
 		spin()
 		spun = TRUE
 		return
@@ -212,7 +221,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!spun)
-			to_chat(user, "<span class='warning'>You need to spin the revolver's chamber first!</span>")
+			to_chat(user, "<span class='warning'>You need to spin \the [src]'s chamber first!</span>")
 			return
 
 		spun = FALSE
@@ -232,6 +241,11 @@
 
 		user.visible_message("<span class='danger'>*click*</span>")
 		playsound(src, "gun_dry_fire", 30, 1)
+
+/obj/item/gun/ballistic/revolver/russian/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	add_fingerprint(user)
+	playsound(src, "gun_dry_fire", 30, TRUE)
+	user.visible_message("<span class='danger'>[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot.</span>", "<span class='danger'>\The [src]'s anti-combat mechanism prevents you from firing it at the same time!</span>")
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
@@ -259,7 +273,7 @@
 	icon_state = "dshotgun"
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_MEDIUM
+	weapon_weight = WEAPON_HEAVY
 	force = 10
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
@@ -358,4 +372,4 @@
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")
 		user.emote("scream")
 		user.drop_all_held_items()
-		user.Knockdown(80)
+		user.DefaultCombatKnockdown(80)

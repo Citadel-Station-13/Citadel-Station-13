@@ -3,7 +3,7 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
-	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
@@ -37,7 +37,7 @@
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
-	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
@@ -47,7 +47,7 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
-	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
@@ -60,7 +60,7 @@
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
-	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
@@ -72,7 +72,7 @@
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
-	materials = list(MAT_METAL=2500, MAT_GLASS=750)
+	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
@@ -85,7 +85,7 @@
 	desc = "A heated element that cauterizes wounds."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
-	materials = list(MAT_METAL=2500, MAT_GLASS=750)
+	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
@@ -100,7 +100,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	item_flags = SURGICAL_TOOL
 	flags_1 = CONDUCT_1
 	force = 15
@@ -141,7 +141,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
@@ -162,7 +162,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
+	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
 	item_flags = SURGICAL_TOOL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -219,7 +219,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
+	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	toolspeed = 0.5
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -246,7 +246,7 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 	tool_behaviour = TOOL_SAW
@@ -270,7 +270,7 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	toolspeed = 0.5
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
@@ -286,6 +286,26 @@
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
+
+/obj/item/surgical_drapes/advanced
+	name = "smart surgical drapes"
+	desc = "A smart set of drapes with wireless synchronization to the station's research networks, with an integrated display allowing users to execute advanced surgeries without the aid of an operating computer."
+	var/datum/techweb/linked_techweb
+
+/obj/item/surgical_drapes/advanced/Initialize(mapload)
+	. = ..()
+	linked_techweb = SSresearch.science_tech
+
+/obj/item/surgical_drapes/advanced/proc/get_advanced_surgeries()
+	. = list()
+	if(!linked_techweb)
+		return
+	for(var/subtype in subtypesof(/datum/design/surgery))
+		var/datum/design/surgery/prototype = subtype
+		var/id = initial(prototype.id)
+		if(id in linked_techweb.researched_designs)
+			prototype = SSresearch.techweb_design_by_id(id)
+			. |= prototype.surgery
 
 /obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
 	name = "organ storage bag"

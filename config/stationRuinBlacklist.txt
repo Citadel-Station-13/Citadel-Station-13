@@ -1,0 +1,12 @@
+#Listing maps here will blacklist them from generating in station space.
+#Maps must be the full path to them
+#A list of maps valid to blacklist can be found in _maps\RandomRuins\StationRuins\Space
+#SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
+#_maps/RandomRuins/StationRuins/Space/roid1.dmm
+#_maps/RandomRuins/StationRuins/Space/roid2.dmm
+#_maps/RandomRuins/StationRuins/Space/roid3.dmm
+#_maps/RandomRuins/StationRuins/Space/roid4.dmm
+#_maps/RandomRuins/StationRuins/Space/roid5.dmm
+#_maps/RandomRuins/StationRuins/Space/roid6.dmm
+#_maps/RandomRuins/StationRuins/Space/roid7.dmm

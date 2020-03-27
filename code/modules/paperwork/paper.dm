@@ -78,8 +78,7 @@
 		return get_dist(src, target) < 2
 	return ..()
 
-/obj/item/paper/update_icon()
-
+/obj/item/paper/update_icon_state()
 	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
 		return
@@ -152,7 +151,10 @@
 		if(istart == 0)
 			return	//No field found with matching id
 
-		laststart = istart+1
+		if(links)
+			laststart = istart + length(info_links[istart])
+		else
+			laststart = istart + length(info[istart])
 		locid++
 		if(locid == id)
 			var/iend = 1
@@ -376,8 +378,9 @@
 	icon_state = "scrap"
 	slot_flags = null
 
-/obj/item/paper/crumpled/update_icon()
-	return
+/obj/item/paper/crumpled/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"

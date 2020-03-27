@@ -29,7 +29,6 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs)				//all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
-GLOBAL_LIST_EMPTY(living_cameras)
 GLOBAL_LIST_EMPTY(aiEyes)
 
 GLOBAL_LIST_EMPTY(language_datum_instances)
@@ -91,13 +90,7 @@ GLOBAL_LIST_INIT(all_types_bloods,list(
 		"BUG"
 		))
 
-GLOBAL_LIST_INIT(blood_types, list(
-		"blood",
-		"jellyblood"
+GLOBAL_LIST_INIT(blood_reagent_types, list(
+		/datum/reagent/blood,
+		/datum/reagent/blood/jellyblood
 		))
-
-GLOBAL_LIST_INIT(blood_id_types, list(
-		"blood" = /datum/reagent/blood,
-		"jellyblood" = /datum/reagent/blood/jellyblood
-		))
-

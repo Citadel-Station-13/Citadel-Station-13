@@ -66,7 +66,7 @@
 		update_equip_info()
 		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
 		chassis.visible_message("<span class='warning'>[chassis] loads [target] into [src].</span>")
-		log_message("[target] loaded. Life support functions engaged.")
+		mecha_log_message("[target] loaded. Life support functions engaged.")
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target)
 	if(target.buckled)
@@ -85,7 +85,7 @@
 		return
 	patient.forceMove(get_turf(src))
 	occupant_message("[patient] ejected. Life support functions disabled.")
-	log_message("[patient] ejected. Life support functions disabled.")
+	mecha_log_message("[patient] ejected. Life support functions disabled.")
 	STOP_PROCESSING(SSobj, src)
 	patient = null
 	update_equip_info()
@@ -108,16 +108,17 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Topic(href,href_list)
 	..()
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
-	if(afilter.get("eject"))
+	if(href_list["eject"])
 		go_out()
-	if(afilter.get("view_stats"))
+	if(href_list["view_stats"])
 		chassis.occupant << browse(get_patient_stats(),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
-	if(afilter.get("inject"))
-		inject_reagent(afilter.getType("inject", /datum/reagent),afilter.getObj("source"))
-	return
+	if(href_list["inject"])
+		var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate() in chassis
+		var/datum/reagent/R = locate(href_list["inject"]) in SG.reagents.reagent_list
+		if (istype(R))
+			inject_reagent(R, SG)
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
 	if(!patient)
@@ -193,7 +194,7 @@
 	var/to_inject = min(R.volume, inject_amount)
 	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
 		occupant_message("Injecting [patient] with [to_inject] units of [R.name].")
-		log_message("Injecting [patient] with [to_inject] units of [R.name].")
+		mecha_log_message("Injecting [patient] with [to_inject] units of [R.name].")
 		log_combat(chassis.occupant, patient, "injected", "[name] ([R] - [to_inject] units)")
 		SG.reagents.trans_id_to(patient,R.type,to_inject)
 		update_equip_info()
@@ -216,7 +217,7 @@
 		return
 	if(!chassis.has_charge(energy_drain))
 		set_ready_state(1)
-		log_message("Deactivated.")
+		mecha_log_message("Deactivated.")
 		occupant_message("[src] deactivated - no power.")
 		STOP_PROCESSING(SSobj, src)
 		return
@@ -225,8 +226,7 @@
 		return
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
-	M.AdjustStun(-80)
-	M.AdjustKnockdown(-80)
+	M.AdjustAllImmobility(-80)
 	M.AdjustUnconscious(-80)
 	if(M.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
 		M.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
@@ -312,7 +312,7 @@
 	mechsyringe.icon = 'icons/obj/chemical.dmi'
 	mechsyringe.icon_state = "syringeproj"
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
-	log_message("Launched [mechsyringe] from [src], targeting [target].")
+	mecha_log_message("Launched [mechsyringe] from [src], targeting [target].")
 	var/mob/originaloccupant = chassis.occupant
 	spawn(0)
 		src = null //if src is deleted, still process the syringe
@@ -354,19 +354,18 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Topic(href,href_list)
 	..()
-	var/datum/topic_input/afilter = new (href,href_list)
-	if(afilter.get("toggle_mode"))
+	if (href_list["toggle_mode"])
 		mode = !mode
 		update_equip_info()
 		return
-	if(afilter.get("select_reagents"))
+	if (href_list["select_reagents"])
 		processed_reagents.len = 0
 		var/m = 0
 		var/message
 		for(var/i=1 to known_reagents.len)
 			if(m>=synth_speed)
 				break
-			var/reagent = afilter.get("reagent_[i]")
+			var/reagent = text2path(href_list["reagent_[i]"])
 			if(reagent && (reagent in known_reagents))
 				message = "[m ? ", " : null][known_reagents[reagent]]"
 				processed_reagents += reagent
@@ -375,20 +374,18 @@
 			message += " added to production"
 			START_PROCESSING(SSobj, src)
 			occupant_message(message)
-			occupant_message("Reagent processing started.")
-			log_message("Reagent processing started.")
+			occupant_message("<span class='notice'>Reagent processing started.</span>")
+			mecha_log_message("Reagent processing started.")
 		return
-	if(afilter.get("show_reagents"))
+	if (href_list["show_reagents"])
 		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
-	if(afilter.get("purge_reagent"))
-		var/reagent = afilter.get("purge_reagent")
+	if (href_list["purge_reagent"])
+		var/reagent = href_list["purge_reagent"]
 		if(reagent)
 			reagents.del_reagent(reagent)
 		return
-	if(afilter.get("purge_all"))
+	if (href_list["purge_all"])
 		reagents.clear_reagents()
-		return
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
@@ -511,7 +508,7 @@
 		return
 	if(!processed_reagents.len || reagents.total_volume >= reagents.maximum_volume || !chassis.has_charge(energy_drain))
 		occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
-		log_message("Reagent processing stopped.")
+		mecha_log_message("Reagent processing stopped.")
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/amount = synth_speed / processed_reagents.len
@@ -529,7 +526,8 @@
 	range = MELEE|RANGED
 	equip_cooldown = 0
 	var/obj/item/gun/medbeam/mech/medigun
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_PLASMA = 3000, MAT_GOLD = 8000, MAT_DIAMOND = 2000)
+	custom_materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
+	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize()
 	. = ..()

@@ -55,7 +55,7 @@
 	if(!operating)
 		. += "<span class='notice'>Alt-click [src] to turn it on.</span>"
 
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+	if(!in_range(user, src) && !hasSiliconAccessInArea(user) && !isobserver(user))
 		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
 		return
 	if(operating)
@@ -63,7 +63,7 @@
 		return
 
 	if(length(ingredients))
-		if(issilicon(user))
+		if(hasSiliconAccessInArea(user))
 			. += "<span class='notice'>\The [src] camera shows:</span>"
 		else
 			. += "<span class='notice'>\The [src] contains:</span>"
@@ -85,7 +85,7 @@
 		. += "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>"
 		. += "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>"
 
-/obj/machinery/microwave/update_icon()
+/obj/machinery/microwave/update_icon_state()
 	if(broken)
 		icon_state = "mwb"
 	else if(dirty_anim_playing)
@@ -187,14 +187,14 @@
 
 /obj/machinery/microwave/AltClick(mob/user)
 	. = ..()
-	if(user.canUseTopic(src, !issilicon(usr)))
+	if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		cook()
 		return TRUE
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
 
-	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || panel_open || !anchored || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(isAI(user) && (stat & NOPOWER))
 		return
@@ -206,10 +206,10 @@
 			to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
 
-	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
+	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !hasSiliconAccessInArea(user))
 
 	// post choice verification
-	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || panel_open || !anchored || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(isAI(user) && (stat & NOPOWER))
 		return
@@ -309,8 +309,8 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.materials[MAT_METAL])
-			metal += O.materials[MAT_METAL]
+		if(O.custom_materials?.len)
+			metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 	if(metal)
 		spark()

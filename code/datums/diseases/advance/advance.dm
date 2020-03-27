@@ -80,7 +80,8 @@
 
  */
 
-/datum/disease/advance/New()
+/datum/disease/advance/New(make_typecache = TRUE)
+	..()
 	Refresh()
 
 /datum/disease/advance/Destroy()
@@ -110,7 +111,7 @@
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
-	if(carrier)
+	if(carrier || QDELETED(src)) // Could be cured in parent call.
 		return
 
 	if(symptoms && symptoms.len)

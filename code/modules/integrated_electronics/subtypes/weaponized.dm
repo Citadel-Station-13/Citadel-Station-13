@@ -336,7 +336,7 @@
 	if(!L || !isliving(L))
 		return 0
 
-	L.Knockdown(stunforce)
+	L.DefaultCombatKnockdown(stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
 	message_admins("stunned someone with an assembly. Last touches: Assembly: [assembly.fingerprintslast] Circuit: [fingerprintslast]")

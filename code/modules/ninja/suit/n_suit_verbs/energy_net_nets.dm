@@ -53,12 +53,10 @@ It is possible to destroy the net by the occupant or someone else.
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
 		for(var/obj/item/W in H)
-			if(W == H.w_uniform)
+			if(W == H.w_uniform || W == H.shoes)
 				continue//So all they're left with are shoes and uniform.
-			if(W == H.shoes)
-				continue
 			H.dropItemToGround(W)
-
+		H.dna.species.give_important_for_life(H)	// After we remove items, at least give them what they need to live.
 	var/datum/antagonist/antag_datum
 	for(var/datum/antagonist/ninja/AD in GLOB.antagonists) //Because only ninjas get capture objectives; They're not doable without the suit.
 		if(AD.owner == master)

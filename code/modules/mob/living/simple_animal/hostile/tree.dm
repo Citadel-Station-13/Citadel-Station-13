@@ -7,6 +7,7 @@
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
 	gender = NEUTER
+	threat = 1
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "brushes"
@@ -56,7 +57,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(prob(15))
-			C.Knockdown(60)
+			C.DefaultCombatKnockdown(60)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 

@@ -20,9 +20,10 @@
 		M.AddAbility(P)
 
 
-/obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0)
-	for(var/obj/effect/proc_holder/alien/P in alien_powers)
-		M.RemoveAbility(P)
+/obj/item/organ/alien/Remove(special = FALSE)
+	if(owner)
+		for(var/obj/effect/proc_holder/alien/P in alien_powers)
+			owner.RemoveAbility(P)
 	..()
 
 /obj/item/organ/alien/prepare_eat()
@@ -100,11 +101,11 @@
 		var/mob/living/carbon/alien/A = M
 		A.updatePlasmaDisplay()
 
-/obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
-	..()
-	if(isalien(M))
-		var/mob/living/carbon/alien/A = M
+/obj/item/organ/alien/plasmavessel/Remove(special = FALSE)
+	if(owner && isalien(owner))
+		var/mob/living/carbon/alien/A = owner
 		A.updatePlasmaDisplay()
+	return ..()
 
 #define QUEEN_DEATH_DEBUFF_DURATION 2400
 
@@ -121,9 +122,10 @@
 	..()
 	M.faction |= ROLE_ALIEN
 
-/obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
-	M.faction -= ROLE_ALIEN
-	..()
+/obj/item/organ/alien/hivenode/Remove(special = FALSE)
+	if(owner)
+		owner.faction -= ROLE_ALIEN
+	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
 /obj/item/organ/alien/hivenode/proc/queen_death()
@@ -138,7 +140,7 @@
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
 		to_chat(owner, "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!</span>")
 		owner.emote("scream")
-		owner.Knockdown(100)
+		owner.DefaultCombatKnockdown(100)
 
 	owner.jitteriness += 30
 	owner.confused += 30

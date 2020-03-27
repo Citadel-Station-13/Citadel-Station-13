@@ -8,6 +8,7 @@
 	var/desc = null
 	var/obj/target = null
 	var/check_flags = 0
+	var/required_mobility_flags = MOBILITY_USE
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
@@ -31,6 +32,7 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
+	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
 
 /datum/action/Destroy()
 	if(owner)
@@ -95,20 +97,23 @@
 
 /datum/action/proc/IsAvailable()
 	if(!owner)
-		return 0
+		return FALSE
+	var/mob/living/L = owner
+	if(istype(L) && !CHECK_ALL_MOBILITY(L, required_mobility_flags))
+		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_STUN)
-		if(owner.IsKnockdown() || owner.IsStun())
-			return 0
+		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE))
+			return FALSE
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
-			return 0
+		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_STAND))
+			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
@@ -152,6 +157,9 @@
 		return 0
 	var/mob/M = target
 	M.ghostize(1)
+
+/datum/action/proc/OnUpdatedIcon()
+	UpdateButtonIcon()
 
 //Presets for item actions
 /datum/action/item_action
@@ -301,10 +309,7 @@
 /datum/action/item_action/synthswitch/Trigger()
 	if(istype(target, /obj/item/instrument/piano_synth))
 		var/obj/item/instrument/piano_synth/synth = target
-		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
-		if(!synth.insTypes[chosen])
-			return
-		return synth.changeInstrument(chosen)
+		return synth.selectInstrument()
 	return ..()
 
 /datum/action/item_action/vortex_recall
@@ -421,6 +426,7 @@
 
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_CONSCIOUS
+	required_mobility_flags = NONE
 
 /datum/action/item_action/hands_free/activate
 	name = "Activate"
@@ -429,7 +435,8 @@
 	name = "Shift Nerves"
 
 /datum/action/item_action/explosive_implant
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	name = "Activate Explosive Implant"
 
 /datum/action/item_action/toggle_research_scanner
@@ -544,6 +551,70 @@
 		cooldown = world.time
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
+/datum/action/item_action/removeAPCs
+	name = "Relinquish APC"
+	desc = "Let go of an APC, relinquish control back to the station."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijackx"
+
+/datum/action/item_action/removeAPCs/Trigger()
+	var/list/areas = list()
+	for (var/area/a in owner.siliconaccessareas)
+		areas[a.name] = a
+	var/removeAPC = input("Select an APC to remove:","Remove APC Control",1) as null|anything in areas
+	if (!removeAPC)
+		return
+	var/area/area = areas[removeAPC]
+	var/obj/machinery/power/apc/apc = area.get_apc()
+	if (!apc || !(area in owner.siliconaccessareas))
+		return
+	apc.hijacker = null
+	apc.update_icon()
+	apc.set_hijacked_lighting()
+	owner.toggleSiliconAccessArea(area)
+
+/datum/action/item_action/accessAPCs
+	name = "Access APC Interface"
+	desc = "Open the APC's interface."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijacky"
+
+/datum/action/item_action/accessAPCs/Trigger()
+	var/list/areas = list()
+	for (var/area/a in owner.siliconaccessareas)
+		areas[a.name] = a
+	var/accessAPC = input("Select an APC to access:","Access APC Interface",1) as null|anything in areas
+	if (!accessAPC)
+		return
+	var/area/area = areas[accessAPC]
+	var/obj/machinery/power/apc/apc = area.get_apc()
+	if (!apc || !(area in owner.siliconaccessareas))
+		return
+	apc.ui_interact(owner)
+
+/datum/action/item_action/stealthmodetoggle
+	name = "Toggle Stealth Mode"
+	desc = "Toggles the stealth mode on the hijack implant."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijackz"
+
+/datum/action/item_action/stealthmodetoggle/Trigger()
+	var/obj/item/implant/hijack/H = target
+	if (!istype(H))
+		return
+	if (H.stealthcooldown > world.time)
+		to_chat(owner,"<span class='warning'>The hijack implant's stealth mode toggle is still rebooting!</span>")
+		return
+	H.stealthmode = !H.stealthmode
+	for (var/area/area in H.imp_in.siliconaccessareas)
+		var/obj/machinery/power/apc/apc = area.get_apc()
+		if (apc)
+			apc.set_hijacked_lighting()
+			apc.update_icon()
+	H.stealthcooldown = world.time + 15 SECONDS
+	H.toggle_eyes()
+	to_chat(owner,"<span class='notice'>You toggle the hijack implant's stealthmode [H.stealthmode ? "on" : "off"].</span>")
+
 /datum/action/item_action/flash
 	name = "Flash"
 
@@ -605,7 +676,8 @@
 
 //Preset for general and toggled actions
 /datum/action/innate
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	var/active = 0
 
 /datum/action/innate/Trigger()
@@ -756,3 +828,11 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
+
+/proc/get_action_of_type(mob/M, var/action_type)
+	if(!M.actions || !ispath(action_type, /datum/action))
+		return
+	for(var/datum/action/A in M.actions)
+		if(istype(A, action_type))
+			return A
+	return

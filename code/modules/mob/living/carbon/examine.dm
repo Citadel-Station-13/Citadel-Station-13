@@ -16,10 +16,6 @@
 		. += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face."
 	if (wear_neck)
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
-	if(can_be_held)
-		. += "[t_He] looks small enough to be picked up with <b>Alt+Click</b>!\n"
-
-
 
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
@@ -94,8 +90,8 @@
 		if(digitalcamo)
 			. += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner."
 
-	if(combatmode)
-		. += "[t_He] [t_is] visibly tense[resting ? "." : ", and [t_is] standing in combative stance."]"
+	if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+		. += "[t_He] [t_is] visibly tense[CHECK_MOBILITY(src, MOBILITY_STAND) ? "." : ", and [t_is] standing in combative stance."]"
 
 	var/trait_exam = common_trait_examine()
 	if (!isnull(trait_exam))
@@ -116,4 +112,5 @@
 				. += "[t_He] look[p_s()] very happy."
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
 				. += "[t_He] look[p_s()] ecstatic."
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 	. += "*---------*</span>"

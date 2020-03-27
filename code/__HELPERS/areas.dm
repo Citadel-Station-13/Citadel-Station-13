@@ -1,5 +1,10 @@
 #define BP_MAX_ROOM_SIZE 300
 
+GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/engineering, \
+															    /area/engine/supermatter, \
+															    /area/engine/atmospherics_engine, \
+															    /area/ai_monitored/turret_protected/ai))
+
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()
 	GLOB.sortedAreas = list()
@@ -227,6 +232,8 @@
 /proc/get_sub_areas_contents(area/A, include_base = TRUE)
 	if(ispath(A))
 		A = GLOB.areas_by_type[A]
+	else
+		A = get_area(A) //in case it's called on other atoms.
 	if(!A)
 		return
 	if(A.base_area)

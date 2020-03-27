@@ -1,4 +1,4 @@
-/proc/get_uplink_items(datum/game_mode/gamemode, allow_sales = TRUE, allow_restricted = TRUE)
+/proc/get_uplink_items(datum/game_mode/gamemode, allow_sales = TRUE, allow_restricted = TRUE, other_filter = list())
 	var/list/filtered_uplink_items = GLOB.uplink_categories.Copy() // list of uplink categories without associated values.
 	var/list/sale_items = list()
 
@@ -18,7 +18,8 @@
 			continue
 		if (I.restricted && !allow_restricted)
 			continue
-
+		if (I.type in other_filter)
+			continue
 		LAZYSET(filtered_uplink_items[I.category], I.name, I)
 
 		if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
@@ -117,37 +118,37 @@
 	category = "Holiday"
 
 /datum/uplink_item/bundles_TC
-	category = "Bundles and Telecrystals"
+	category = "Telecrystals and Bundles"
 	surplus = 0
 	cant_discount = TRUE
 
 /datum/uplink_item/dangerous
-	category = "Conspicuous and Dangerous Weapons"
+	category = "Conspicuous Weapons"
 
 /datum/uplink_item/stealthy_weapons
-	category = "Stealthy and Inconspicuous Weapons"
+	category = "Stealthy Weapons"
 
 /datum/uplink_item/ammo
 	category = "Ammunition"
 	surplus = 40
 
 /datum/uplink_item/explosives
-	category = "Grenades and Explosives"
+	category = "Explosives"
 
 /datum/uplink_item/support
-	category = "Support and Mechanized Exosuits"
+	category = "Support and Exosuits"
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/suits
-	category = "Space Suits, Hardsuits and Clothing"
+	category = "Clothing"
 	surplus = 40
 
 /datum/uplink_item/stealthy_tools
-	category = "Stealth and Camouflage Items"
+	category = "Stealth Gadgets"
 
 /datum/uplink_item/device_tools
-	category = "Devices and Tools"
+	category = "Misc. Gadgets"
 
 /datum/uplink_item/implants
 	category = "Implants"
@@ -157,6 +158,7 @@
 	category = "Role-Restricted"
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	surplus = 0
+	cant_discount = TRUE
 
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

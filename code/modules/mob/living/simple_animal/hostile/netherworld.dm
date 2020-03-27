@@ -4,12 +4,13 @@
 	icon_state = "otherthing"
 	icon_living = "otherthing"
 	icon_dead = "otherthing-dead"
-	mob_biotypes = list(MOB_INORGANIC)
+	mob_biotypes = NONE
 	health = 80
 	maxHealth = 80
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 50
+	threat = 2
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("creature")

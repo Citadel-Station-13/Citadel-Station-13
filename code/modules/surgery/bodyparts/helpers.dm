@@ -17,7 +17,6 @@
 			return L
 	return FALSE
 
-
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE
 
@@ -29,7 +28,7 @@
 	return FALSE
 
 /mob/living/carbon/alien/larva/has_left_hand()
-	return 1
+	return TRUE
 
 
 /mob/proc/has_right_hand(check_disabled = TRUE)
@@ -43,9 +42,7 @@
 	return FALSE
 
 /mob/living/carbon/alien/larva/has_right_hand()
-	return 1
-
-
+	return TRUE
 
 /mob/proc/has_left_leg()
 	return TRUE
@@ -66,7 +63,6 @@
 		return TRUE
 	else
 		return FALSE
-
 
 //Limb numbers
 /mob/proc/get_num_arms(check_disabled = TRUE)
@@ -165,6 +161,7 @@
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
 			I.forceMove(T)
+			I.unembedded()
 
 	clear_alert("embeddedobject")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")

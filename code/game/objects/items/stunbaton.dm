@@ -15,12 +15,17 @@
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/stunforce = 140
+	var/stamforce = 25
 	var/status = FALSE
+	var/knockdown = TRUE
 	var/obj/item/stock_parts/cell/cell
-	var/hitcost = 1000
+	var/hitcost = 750
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
+
+/obj/item/melee/baton/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click attack while in combat mode to disarm instead of stun.</span>"
 
 /obj/item/melee/baton/get_cell()
 	. = cell
@@ -32,7 +37,7 @@
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/melee/baton/Initialize()
+/obj/item/melee/baton/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
@@ -48,7 +53,7 @@
 		baton_stun(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/cell/high/plus
 
 /obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE, explode = TRUE)
 	var/obj/item/stock_parts/cell/copper_top = get_cell()
@@ -79,7 +84,7 @@
 /obj/item/melee/baton/process()
 	deductcharge(round(hitcost * STUNBATON_DEPLETION_RATE), FALSE, FALSE)
 
-/obj/item/melee/baton/update_icon()
+/obj/item/melee/baton/update_icon_state()
 	if(status)
 		icon_state = "[initial(name)]_active"
 	else if(!cell)
@@ -134,44 +139,41 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+	var/interrupt = common_baton_melee(M, user, FALSE)
+	if(!interrupt)
+		..()
+
+/obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
+	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
+	user.changeNext_move(CLICK_CD_MELEE)
+
+//return TRUE to interrupt attack chain.
+/obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
+	if(iscyborg(M) || !isliving(M))		//can't baton cyborgs
+		return FALSE
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
-		return
-
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
-		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
-		return //CIT CHANGE - ditto
-
-	if(iscyborg(M))
-		..()
-		return
-
-
+	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
+		return TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		if(check_martial_counter(L, user))
-			return
+			return TRUE
+	if(status)
+		if(baton_stun(M, user, disarming))
+			user.do_attack_animation(M)
+			user.adjustStaminaLossBuffered(getweight())		//CIT CHANGE - makes stunbatonning others cost stamina
+	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
+		M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
+						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
+	return disarming || (user.a_intent != INTENT_HARM)
 
-	if(user.a_intent != INTENT_HARM)
-		if(status)
-			if(baton_stun(M, user))
-				user.do_attack_animation(M)
-				user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes stunbatonning others cost stamina
-				return
-		else
-			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
-	else
-		if(status)
-			baton_stun(M, user)
-		..()
-
-
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
 	if(L.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
-	var/stunpwr = stunforce
+	var/stunpwr = stamforce
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	if(!our_cell)
 		switch_status(FALSE)
@@ -187,17 +189,21 @@
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
 
+	if(!disarming)
+		if(knockdown)
+			L.DefaultCombatKnockdown(50, override_stamdmg = 0)		//knockdown
+		L.adjustStaminaLoss(stunpwr)
+	else
+		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
 
-	L.Knockdown(stunpwr)
-	L.adjustStaminaLoss(stunpwr*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
-	L.apply_effect(EFFECT_STUTTER, stunforce)
+	L.apply_effect(EFFECT_STUTTER, stamforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-		log_combat(user, L, "stunned")
+		L.visible_message("<span class='danger'>[user] has [disarming? "disarmed" : "stunned"] [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] has [disarming? "disarmed" : "stunned"] you with [src]!</span>")
+		log_combat(user, L, disarming? "disarmed" : "stunned")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
@@ -212,7 +218,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.Knockdown(stunforce*3)
+	user.DefaultCombatKnockdown(stamforce*6)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 
@@ -274,8 +280,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 100
-	hitcost = 2000
+	stamforce = 25
+	hitcost = 1000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	var/obj/item/assembly/igniter/sparkler

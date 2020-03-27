@@ -8,7 +8,8 @@
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = NONE
 	max_integrity = 250
-	integrity_failure = 25
+	integrity_failure = 0.1
+	custom_materials = list(/datum/material/iron = 2000)
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
@@ -53,8 +54,13 @@
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(buildstacktype && (!(flags_1 & NODECONSTRUCT_1)))
-		new buildstacktype(loc,buildstackamount)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 	..()
 
 /obj/structure/chair/attack_paw(mob/user)
@@ -95,7 +101,7 @@
 		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 			return TRUE
-		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
 			return TRUE
 		var/mob/living/poordude = buckled_mobs[1]
@@ -104,7 +110,7 @@
 		user.visible_message("<span class='notice'>[user] pulls [src] out from under [poordude].</span>", "<span class='notice'>You pull [src] out from under [poordude].</span>")
 		var/C = new item_chair(loc)
 		user.put_in_hands(C)
-		poordude.Knockdown(20)//rip in peace
+		poordude.DefaultCombatKnockdown(20)//rip in peace
 		user.adjustStaminaLoss(5)
 		unbuckle_all_mobs(TRUE)
 		qdel(src)
@@ -142,6 +148,15 @@
 	handle_rotation(newdir)
 
 // Chair types
+
+
+///Material chair
+/obj/structure/chair/greyscale
+	icon_state = "chair_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	item_chair = /obj/item/chair/greyscale
+	buildstacktype = null //Custom mats handle this
+
 /obj/structure/chair/wood
 	icon_state = "wooden_chair"
 	name = "wooden chair"
@@ -211,8 +226,14 @@
 /obj/structure/chair/comfy/black
 	color = rgb(167,164,153)
 
+/obj/structure/chair/comfy/green
+	color = rgb(81,173,106)
+
 /obj/structure/chair/comfy/lime
 	color = rgb(255,251,0)
+
+/obj/structure/chair/comfy/purple
+	color = rgb(255,50,230)
 
 /obj/structure/chair/comfy/plywood
 	name = "plywood chair"
@@ -271,7 +292,8 @@
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
-		var/C = new item_chair(loc)
+		var/obj/item/C = new item_chair(loc)
+		C.set_custom_materials(custom_materials)
 		TransferComponents(C)
 		usr.put_in_hands(C)
 		qdel(src)
@@ -296,7 +318,7 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-	materials = list(MAT_METAL = 2000)
+	custom_materials = list(/datum/material/iron = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -324,6 +346,7 @@
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
+	C.set_custom_materials(custom_materials)
 	TransferComponents(C)
 	C.setDir(dir)
 	qdel(src)
@@ -354,8 +377,14 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
-				C.Knockdown(20)
+				C.DefaultCombatKnockdown(20)
 		smash(user)
+
+/obj/item/chair/greyscale
+	icon_state = "chair_greyscale_toppled"
+	item_state = "chair_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool
 	name = "stool"
@@ -369,6 +398,43 @@
 	icon_state = "bar_toppled"
 	item_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
+
+//////////////////////////
+//Alien(Disco) Stools!////
+//////////////////////////
+
+/obj/structure/chair/stool/alien
+	name = "alien stool"
+	desc = "A hard stool made of advanced alien alloy."
+	icon_state = "stoolalien"
+	icon = 'icons/obj/abductor.dmi'
+	item_chair = /obj/item/chair/stool/alien
+	buildstacktype = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+
+/obj/structure/chair/stool/bar/alien
+	name = "alien bar stool"
+	desc = "A hard bar stool made of advanced alien alloy."
+	icon_state = "baralien"
+	icon = 'icons/obj/abductor.dmi'
+	item_chair = /obj/item/chair/stool/bar/alien
+	buildstacktype = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+
+/obj/item/chair/stool/alien
+	name = "stool"
+	icon_state = "stoolalien_toppled"
+	item_state = "stoolalien"
+	icon = 'icons/obj/abductor.dmi'
+	origin_type = /obj/structure/chair/stool/alien
+	break_chance = 0 //It's too sturdy.
+
+/obj/item/chair/stool/bar/alien
+	name = "bar stool"
+	icon_state = "baralien_toppled"
+	item_state = "baralien"
+	icon = 'icons/obj/abductor.dmi'
+	origin_type = /obj/structure/chair/stool/bar/alien
 
 //////////////////////////
 //Brass & Bronze stools!//
@@ -445,7 +511,7 @@
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
-	materials = null
+	custom_materials = null
 	break_chance = 50
 
 /obj/item/chair/wood/narsie_act()
@@ -516,40 +582,3 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
-
-/obj/structure/chair/sofa
-	name = "old ratty sofa"
-	icon_state = "sofamiddle"
-	icon = 'icons/obj/sofa.dmi'
-	buildstackamount = 1
-	var/mutable_appearance/armrest
-
-/obj/structure/chair/sofa/Initialize()
-	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
-	return ..()
-
-/obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
-	. = ..()
-	update_armrest()
-
-/obj/structure/chair/sofa/proc/update_armrest()
-	if(has_buckled_mobs())
-		add_overlay(armrest)
-	else
-		cut_overlay(armrest)
-
-/obj/structure/chair/sofa/post_unbuckle_mob()
-	. = ..()
-	update_armrest()
-
-/obj/structure/chair/sofa/left
-	icon_state = "sofaend_left"
-
-/obj/structure/chair/sofa/right
-	icon_state = "sofaend_right"
-
-/obj/structure/chair/sofa/corner
-	icon_state = "sofacorner"
-
-/obj/structure/chair/sofa/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
-	return

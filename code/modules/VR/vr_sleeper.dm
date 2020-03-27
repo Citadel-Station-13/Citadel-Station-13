@@ -63,7 +63,7 @@
 		addtimer(CALLBACK(src, .proc/emagNotify), 150)
 		return TRUE
 
-/obj/machinery/vr_sleeper/update_icon()
+/obj/machinery/vr_sleeper/update_icon_state()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
 
 /obj/machinery/vr_sleeper/open_machine()
@@ -231,7 +231,7 @@
 	if (!vr_area)
 		qdel(src)
 		return
-	var/list/contents = get_sub_areas_contents(src)
+	var/list/contents = get_sub_areas_contents(vr_area)
 	for (var/obj/item/ammo_casing/casing in contents)
 		qdel(casing)
 	for(var/obj/effect/decal/cleanable/C in contents)

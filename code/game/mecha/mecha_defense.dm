@@ -62,7 +62,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
-	log_message("Attack by hand/paw. Attacker - [user].", color="red")
+	mecha_log_message("Attack by hand/paw. Attacker - [user].", color="red")
 	log_append_to_last("Armor saved.")
 
 /obj/mecha/attack_paw(mob/user as mob)
@@ -70,12 +70,12 @@
 
 
 /obj/mecha/attack_alien(mob/living/user)
-	log_message("Attack by alien. Attacker - [user].", color="red")
+	mecha_log_message("Attack by alien. Attacker - [user].", color="red")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	attack_generic(user, 15, BRUTE, "melee", 0)
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
-	log_message("Attack by simple animal. Attacker - [user].", color="red")
+	mecha_log_message("Attack by simple animal. Attacker - [user].", color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly] [src].")
 		return 0
@@ -99,7 +99,7 @@
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(.)
-		log_message("Attack by hulk. Attacker - [user].", color="red")
+		mecha_log_message("Attack by hulk. Attacker - [user].", color="red")
 		log_combat(user, src, "punched", "hulk powers")
 
 /obj/mecha/blob_act(obj/structure/blob/B)
@@ -109,16 +109,16 @@
 	return
 
 /obj/mecha/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //wrapper
-	log_message("Hit by [AM].", color="red")
+	mecha_log_message("Hit by [AM].", color="red")
 	. = ..()
 
 
 /obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
-	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", color="red")
+	mecha_log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", color="red")
 	. = ..()
 
 /obj/mecha/ex_act(severity, target)
-	log_message("Affected by explosion of severity: [severity].", color="red")
+	mecha_log_message("Affected by explosion of severity: [severity].", color="red")
 	if(prob(deflect_chance))
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
@@ -148,7 +148,7 @@
 	if(get_charge())
 		use_power((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, "energy", 1)
-	log_message("EMP detected", color="red")
+	mecha_log_message("EMP detected", color="red")
 
 	if(istype(src, /obj/mecha/combat))
 		mouse_pointer = 'icons/mecha/mecha_mouse-disable.dmi'
@@ -160,7 +160,7 @@
 
 /obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>max_temperature)
-		log_message("Exposed to dangerous temperature.", color="red")
+		mecha_log_message("Exposed to dangerous temperature.", color="red")
 		take_damage(5, BURN, 0, 1)
 
 /obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -170,6 +170,10 @@
 			to_chat(user, "[src]-[W] interface initialized successfully.")
 		else
 			to_chat(user, "[src]-[W] interface initialization failed.")
+		return
+
+	if(istype(W, /obj/item/mecha_ammo))
+		ammo_resupply(W, user)
 		return
 
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
@@ -232,7 +236,7 @@
 			cell = null
 			state = 4
 			to_chat(user, "<span class='notice'>You unscrew and pry out the powercell.</span>")
-			log_message("Powercell removed")
+			mecha_log_message("Powercell removed")
 		else if(state==4 && cell)
 			state=3
 			to_chat(user, "<span class='notice'>You screw the cell in place.</span>")
@@ -246,7 +250,7 @@
 				var/obj/item/stock_parts/cell/C = W
 				to_chat(user, "<span class='notice'>You install the powercell.</span>")
 				cell = C
-				log_message("Powercell installed")
+				mecha_log_message("Powercell installed")
 			else
 				to_chat(user, "<span class='notice'>There's already a powercell installed.</span>")
 		return
@@ -280,7 +284,7 @@
 		return ..()
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
-	log_message("Attacked by [I]. Attacker - [user]")
+	mecha_log_message("Attacked by [I]. Attacker - [user]")
 	..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
@@ -316,11 +320,7 @@
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)
 
 /obj/mecha/narsie_act()
-	if(occupant)
-		var/mob/living/L = occupant
-		go_out(TRUE)
-		if(L)
-			L.narsie_act()
+	emp_act(EMP_HEAVY)
 
 /obj/mecha/ratvar_act()
 	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)

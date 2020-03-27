@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/hostileEnvironments = list() //Things blocking escape shuttle from leaving
 	var/list/tradeBlockade = list() //Things blocking cargo from leaving.
 	var/supplyBlocked = FALSE
+	var/emergency_shuttle_stat_text
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -37,7 +38,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
-	var/passive_supply_points_per_minute = 500
+	var/passive_supply_points_per_minute = 125
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -54,7 +55,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-	var/auto_call = 72000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2ish hours plus 15 for the shuttle. So total is 3.
+	var/endvote_passed = FALSE
+
 	var/realtimeofstart = 0
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
@@ -77,7 +79,6 @@ SUBSYSTEM_DEF(shuttle)
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 	realtimeofstart = world.realtime
-	auto_call = CONFIG_GET(number/auto_transfer_delay)
 	return ..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
@@ -112,11 +113,11 @@ SUBSYSTEM_DEF(shuttle)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
 
-	//Cargo stuff start
-	var/fire_time_diff = max(0, world.time - last_fire)		//Don't want this to be below 0, seriously.
-	var/point_gain = (fire_time_diff / 600) * passive_supply_points_per_minute
-	points += point_gain
-	//Cargo stuff end
+	if(!(times_fired % CEILING(600/wait, 1)))
+		points += passive_supply_points_per_minute
+
+	var/esETA = emergency?.getModeStr()
+	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
 
 	if(!SSmapping.clearing_reserved_turfs)
 		while(transit_requesters.len)
@@ -181,14 +182,13 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
 			shuttle was called. Using the backup shuttle instead.")
 		if(!backup_shuttle)
-			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
+			CRASH("requestEvac(): There is no emergency shuttle, \
 			or backup shuttle! The game will be unresolvable. This is \
 			possibly a mapping error, more likely a bug with the shuttle \
 			manipulation system, or badminry. It is possible to manually \
 			resolve this problem by loading an emergency shuttle template \
 			manually, and then calling register() on the mobile docking port. \
 			Good luck.")
-			return
 		emergency = backup_shuttle
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < srd)
@@ -416,7 +416,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
-		throw EXCEPTION("[M] is not a mobile docking port")
+		CRASH("[M] is not a mobile docking port")
 
 	if(M.assigned_transit)
 		return
@@ -639,10 +639,11 @@ SUBSYSTEM_DEF(shuttle)
 
 	QDEL_LIST(remove_images)
 
-/datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end after 2 hours have passed.
-	if((world.realtime - SSshuttle.realtimeofstart) > auto_call && EMERGENCY_IDLE_OR_RECALLED) //2 hours
+/datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end without being a proper shuttle call?
+	if(EMERGENCY_IDLE_OR_RECALLED)
 		SSshuttle.emergency.request(silent = TRUE)
 		priority_announce("The shift has come to an end and the shuttle called. [seclevel2num(get_security_level()) == SEC_LEVEL_RED ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [emergency.timeLeft(600)] minutes.", null, "shuttlecalled", "Priority")
-		log_game("Round time limit reached. Shuttle has been auto-called.")
-		message_admins("Round time limit reached. Shuttle called.")
-		emergencyNoRecall = TRUE
+		log_game("Round end vote passed. Shuttle has been auto-called.")
+		message_admins("Round end vote passed. Shuttle has been auto-called.")
+	emergencyNoRecall = TRUE
+	endvote_passed = TRUE

@@ -239,7 +239,6 @@ SUBSYSTEM_DEF(air)
 		if (MC_TICK_CHECK)
 			return
 
-
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
 	active_turfs -= T
 	SSair_turfs.currentrun -= T
@@ -257,9 +256,8 @@ SUBSYSTEM_DEF(air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
 		#endif
-		T.excited = 1
-		active_turfs |= T
-		SSair_turfs.currentrun |= T
+		T.excited = TRUE
+		active_turfs[T] = SSair_turfs.currentrun[T] = TRUE
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
 		add_to_react_queue(T)
@@ -275,10 +273,9 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/add_to_react_queue(turf/open/T)
 	if(istype(T) && T.air)
-		turf_react_queue |= T
+		turf_react_queue[T] = TRUE
 		if(currentpart == SSAIR_REACTQUEUE)
-			currentrun |= T
-	return
+			currentrun[T] = TRUE
 
 /datum/controller/subsystem/air/proc/remove_from_react_queue(turf/open/T)
 	turf_react_queue -= T
