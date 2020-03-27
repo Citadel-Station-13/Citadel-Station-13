@@ -4,7 +4,7 @@
 
 /mob/living/proc/update_sprint_icon()
 	var/obj/screen/sprintbutton/S = locate() in hud_used?.static_inventory
-	S?.update_icon_state()
+	S?.update_icon()
 
 /mob/living/proc/update_hud_sprint_bar()
 	hud_used?.sprint_buffer?.update_to_mob(src)

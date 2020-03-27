@@ -19,13 +19,26 @@
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
-	if(!isinhands)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		if(blood_DNA)
-			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
-		if(accessory_overlay)
-			. += accessory_overlay
+	if(isinhands)
+		return
+	if(damaged_clothes)
+		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
+	if(blood_DNA)
+		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
+	if(accessory_overlay)
+		. += accessory_overlay
+	if(hasprimary)	//checks if overlays are enabled
+		var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary")	//automagical sprite selection
+		primary_worn.color = primary_color	//colors the overlay
+		. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+	if(hassecondary)
+		var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary")
+		secondary_worn.color = secondary_color
+		. += secondary_worn
+	if(hastertiary)
+		var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[item_color]-tertiary")
+		tertiary_worn.color = tertiary_color
+		. += tertiary_worn
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))

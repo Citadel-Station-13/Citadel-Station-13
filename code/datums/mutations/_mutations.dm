@@ -51,45 +51,46 @@
 	if(copymut && istype(copymut, /datum/mutation/human))
 		copy_mutation(copymut)
 
-/datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
-	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))
+/datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/H)
+	if(!H || !istype(H) || H.stat == DEAD || (src in H.dna.mutations))
 		return TRUE
-	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
+	if(species_allowed.len && !species_allowed.Find(H.dna.species.id))
 		return TRUE
-	if(health_req && owner.health < health_req)
+	if(health_req && H.health < health_req)
 		return TRUE
-	if(limb_req && !owner.get_bodypart(limb_req))
+	if(limb_req && !H.get_bodypart(limb_req))
 		return TRUE
-	dna = owner.dna
+	owner = H
+	dna = H.dna
 	dna.mutations += src
 	if(text_gain_indication)
-		to_chat(owner, text_gain_indication)
+		to_chat(H, text_gain_indication)
 	if(visual_indicators.len)
-		var/list/mut_overlay = list(get_visual_indicator(owner))
-		if(owner.overlays_standing[layer_used])
-			mut_overlay = owner.overlays_standing[layer_used]
-			mut_overlay |= get_visual_indicator(owner)
-		owner.remove_overlay(layer_used)
-		owner.overlays_standing[layer_used] = mut_overlay
-		owner.apply_overlay(layer_used)
+		var/list/mut_overlay = list(get_visual_indicator())
+		if(H.overlays_standing[layer_used])
+			mut_overlay = H.overlays_standing[layer_used]
+			mut_overlay |= get_visual_indicator()
+		H.remove_overlay(layer_used)
+		H.overlays_standing[layer_used] = mut_overlay
+		H.apply_overlay(layer_used)
 
-	grant_spell(owner)
+	grant_spell()
 	if(!modified)
 		addtimer(CALLBACK(src, .proc/modify, 5)) //gonna want children calling ..() to run first
 
-/datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/get_visual_indicator()
 	return
 
-/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+/datum/mutation/human/proc/on_attack_hand(atom/target, proximity)
 	return
 
-/datum/mutation/human/proc/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
+/datum/mutation/human/proc/on_ranged_attack(atom/target, mouseparams)
 	return
 
-/datum/mutation/human/proc/on_move(mob/living/carbon/human/owner, new_loc)
+/datum/mutation/human/proc/on_move(atom/new_loc)
 	return
 
-/datum/mutation/human/proc/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/on_life()
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
@@ -172,7 +173,7 @@
 	else
 		qdel(src)
 
-/datum/mutation/human/proc/grant_spell(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/grant_spell()
 	if(!ispath(power) || !owner)
 		return FALSE
 

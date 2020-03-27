@@ -121,7 +121,7 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || (horizontal && L.mob_size > MOB_SIZE_TINY && L.density))
 			if(user)
 				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" )
 			return FALSE
@@ -133,7 +133,7 @@
 		if(closet != src && !closet.wall_mounted)
 			return FALSE
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something too large in [src], preventing it from closing.</span>")
 			return FALSE
@@ -216,7 +216,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return FALSE
 		var/mob/living/L = AM
-		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return FALSE
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)

@@ -345,11 +345,10 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
 
 //Endgame Results
-#define NUKE_NEAR_MISS 1
-#define NUKE_MISS_STATION 2
-#define NUKE_SYNDICATE_BASE 3
-#define STATION_DESTROYED_NUKE 4
-#define STATION_EVACUATED 5
+#define NUKE_MISS_STATION 1
+#define NUKE_SYNDICATE_BASE 2
+#define STATION_DESTROYED_NUKE 3
+#define STATION_EVACUATED 4
 #define BLOB_WIN 8
 #define BLOB_NUKE 9
 #define BLOB_DESTROYED 10

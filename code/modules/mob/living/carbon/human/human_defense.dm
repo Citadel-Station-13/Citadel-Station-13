@@ -121,7 +121,6 @@
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
 
-
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	if(user.a_intent == INTENT_HARM)
 		. = ..(user, TRUE)

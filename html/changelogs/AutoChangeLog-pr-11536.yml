@@ -1,0 +1,4 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - balance: "Water, Holywater and Unholywater will now now quickly purge itself if you have 151u in your system"
