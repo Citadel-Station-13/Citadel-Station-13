@@ -6,7 +6,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	var/obj/item/assembly/flash/handheld/bulb
@@ -115,7 +115,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
-			L.Knockdown(strength)
+			L.DefaultCombatKnockdown(strength)
 			flashed = TRUE
 
 	if(flashed)
@@ -196,8 +196,8 @@
 	var/id = null
 
 /obj/item/wallframe/flasher/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
+	. = ..()
+	. += "<span class='notice'>Its channel ID is '[id]'.</span>"
 
 /obj/item/wallframe/flasher/after_attach(var/obj/O)
 	..()

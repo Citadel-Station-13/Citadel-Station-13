@@ -12,7 +12,7 @@
 
 /datum/export/gear/powerdrill
 	cost = 25
-	k_elasticity = 1/40 //Market can only take so much
+	k_elasticity = 1/80 //Market can only take so much
 	unit_name = "power tool"
 	export_types = list(/obj/item/crowbar/power, /obj/item/screwdriver/power, \
 						/obj/item/weldingtool/experimental, /obj/item/wirecutters/power, /obj/item/wrench/power)
@@ -65,13 +65,13 @@
 
 // Basic tools
 /datum/export/basicmining
-	cost = 20
+	cost = 30
 	unit_name = "basic mining tool"
 	export_types = list(/obj/item/pickaxe, /obj/item/pickaxe/mini, /obj/item/shovel, /obj/item/resonator)
 	include_subtypes = FALSE
 
 /datum/export/upgradedmining
-	cost = 50
+	cost = 80
 	unit_name = "mining tool"
 	export_types = list(/obj/item/pickaxe/silver, /obj/item/pickaxe/drill, /obj/item/gun/energy/plasmacutter, /obj/item/resonator/upgraded)
 	include_subtypes = FALSE

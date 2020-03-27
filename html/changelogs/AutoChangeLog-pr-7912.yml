@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - server: "The server's tagline is now a config option. People can now stop confusing us with BR cit"

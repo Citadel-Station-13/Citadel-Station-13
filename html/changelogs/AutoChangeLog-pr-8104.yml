@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes chemical patches always checking the suit slot even if the targetted limb was the head."
-  - bugfix: "Skeleton, nightmare and golem races are once again available to get chemical patches applied onto."

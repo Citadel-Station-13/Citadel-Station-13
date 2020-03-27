@@ -1,10 +1,6 @@
 // simple is_type and similar inline helpers
 
-#define islist(L) (istype(L, /list))
-
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
-
-#define ismovableatom(A) (istype(A, /atom/movable))
 
 #define isatom(A) (isloc(A))
 
@@ -12,6 +8,16 @@
 
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
+
+GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
+	/turf/open/space,
+	/turf/open/chasm,
+	/turf/open/lava,
+	/turf/open/water,
+	/turf/open/openspace
+	)))
+
+#define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
 
 #define isopenturf(A) (istype(A, /turf/open))
 
@@ -60,6 +66,16 @@
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 #define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
+#define isdullahan(A) (is_species(A, /datum/species/dullahan))
+
+// Citadel specific species
+#define isipcperson(A) (is_species(A, /datum/species/ipc))
+#define ismammal(A) (is_species(A, /datum/species/mammal))
+#define isavian(A) (is_species(A, /datum/species/avian))
+#define isaquatic(A) (is_species(A, /datum/species/aquatic))
+#define isinsect(A) (is_species(A, /datum/species/insect))
+#define isxenoperson(A) (is_species(A, /datum/species/xeno))
+#define isstartjelly(A) (is_species(A, /datum/species/jelly/roundstartslime))
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
@@ -101,6 +117,8 @@
 #define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
+
+#define iscow(A) (istype(A, /mob/living/simple_animal/cow))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
@@ -176,6 +194,8 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define iscameramob(A) (istype(A, /mob/camera))
 
+#define isaicamera(A) (istype(A, /mob/camera/aiEye))
+
 #define iseminence(A) (istype(A, /mob/camera/eminence))
 
 //Footstep helpers
@@ -192,6 +212,8 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isidcard(I) (istype(I, /obj/item/card/id))
+
 #define isstructure(A) (istype(A, /obj/structure))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
@@ -202,6 +224,8 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
+#define isclothing(A) (istype(A, /obj/item/clothing))
+
 GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 	/obj/item/pen,
 	/obj/item/screwdriver,
@@ -211,6 +235,10 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 #define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
+
+#define isprojectile(A) (istype(A, /obj/item/projectile))
+
+#define isgun(A) (istype(A, /obj/item/gun))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))

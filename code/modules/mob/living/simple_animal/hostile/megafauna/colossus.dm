@@ -14,8 +14,8 @@ The colossus' true danger lies in its ranged capabilities. It fires immensely da
 At 33% health, the colossus gains an additional attack:
  4. The colossus fires two spirals of death bolts, spinning in opposite directions.
 
-When a colossus dies, it leaves behind a chunk of glowing crystal known as a black box. Anything placed inside will carry over into future rounds.
-For instance, you could place a bag of holding into the black box, and then kill another colossus next round and retrieve the bag of holding from inside.
+When a colossus dies, it leaves behind an anomalous crystal structure. This crystal can be activated in one of multiple ways and has an effect randomly chosen from a list.
+It also drops its vocal cords, which, when inserted into someone's mouth, allow them to activate some specific phrases that cause effects, such as sleeping to people nearby.
 
 Difficulty: Very Hard
 
@@ -24,6 +24,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus
 	name = "colossus"
 	desc = "A monstrous creature protected by heavy shielding."
+	threat = 40
 	health = 2500
 	maxHealth = 2500
 	attacktext = "judges"
@@ -117,13 +118,13 @@ Difficulty: Very Hard
 
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.mind)
-			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
+			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp) & istype(H.mind.martial_art, /datum/martial_art/the_rising_bass))
 				. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
@@ -244,8 +245,9 @@ Difficulty: Very Hard
 	var/list/stored_items = list()
 	var/list/blacklist = list()
 
-/obj/machinery/smartfridge/black_box/update_icon()
-	return
+/obj/machinery/smartfridge/black_box/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
@@ -373,10 +375,10 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		to_chat(user, observer_desc)
-		to_chat(user, "It is activated by [activation_method].")
+		. += observer_desc
+		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -388,14 +390,14 @@ Difficulty: Very Hard
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
 /obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot())
+	if(I.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else
 		ActivationReaction(user, ACTIVATE_WEAPON)
 	..()
 
 /obj/machinery/anomalous_crystal/bullet_act(obj/item/projectile/P, def_zone)
-	..()
+	. = ..()
 	if(istype(P, /obj/item/projectile/magic))
 		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
 		return
@@ -432,6 +434,7 @@ Difficulty: Very Hard
 			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)
+		C.after_spawn(H, H, TRUE)
 		qdel(C)
 		affected_targets.Add(H)
 
@@ -479,34 +482,33 @@ Difficulty: Very Hard
 			NewTerrainTables = /obj/structure/table/abductor
 
 /obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
-	if(..())
-		var/area/A = get_area(src)
-		if(!A.outdoors && !(A in affected_targets))
-			for(var/atom/Stuff in A)
-				if(isturf(Stuff))
-					var/turf/T = Stuff
-					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
-						if(O.air)
-							var/datum/gas_mixture/G = O.air
-							G.copy_from_turf(O)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
-							var/atom/Picked = pick(NewFlora)
-							new Picked(O)
-						continue
-					if(iswallturf(T) && NewTerrainWalls)
-						T.ChangeTurf(NewTerrainWalls)
-						continue
-				if(istype(Stuff, /obj/structure/chair) && NewTerrainChairs)
-					var/obj/structure/chair/Original = Stuff
-					var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
-					C.setDir(Original.dir)
-					qdel(Stuff)
-					continue
-				if(istype(Stuff, /obj/structure/table) && NewTerrainTables)
-					new NewTerrainTables(Stuff.loc)
-					continue
-			affected_targets += A
+	. = ..()
+	if(!.)
+		return
+	for(var/i in get_sub_areas(src))
+		var/area/A = i
+		if(A.outdoors || (A in affected_targets))
+			continue
+		affected_targets += A
+		for(var/stuff in A)
+			var/atom/target = stuff
+			if(isturf(target))
+				var/turf/T = target
+				if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
+					var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
+					if(NewFlora.len && prob(florachance) && !is_blocked_turf(O, TRUE))
+						var/atom/Picked = pick(NewFlora)
+						new Picked(O)
+				else if(iswallturf(T) && NewTerrainWalls)
+					T.ChangeTurf(NewTerrainWalls)
+			else if(NewTerrainChairs && istype(target, /obj/structure/chair))
+				var/obj/structure/chair/Original = target
+				var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
+				C.setDir(Original.dir)
+				qdel(target)
+			else if(NewTerrainTables && istype(target, /obj/structure/table))
+				new NewTerrainTables(target.loc)
+				qdel(target)
 
 /obj/machinery/anomalous_crystal/emitter //Generates a projectile when interacted with
 	observer_desc = "This crystal generates a projectile when activated."
@@ -575,13 +577,15 @@ Difficulty: Very Hard
 	if(..() && !ready_to_deploy)
 		GLOB.poi_list |= src
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK)
+		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK, ignore_dnr_observers = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()
 	if(.)
 		return
 	if(ready_to_deploy)
+		if(!user.can_reenter_round())
+			return FALSE
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
@@ -600,6 +604,7 @@ Difficulty: Very Hard
 	icon_state = "lightgeist"
 	icon_living = "lightgeist"
 	icon_dead = "butterfly_dead"
+	threat = -0.7
 	turns_per_move = 1
 	response_help = "waves away"
 	response_disarm = "brushes aside"
@@ -649,7 +654,7 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, send_the_signal = TRUE)
+/mob/living/simple_animal/hostile/lightgeist/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
 	. = ..()
 	if(.)
 		death()
@@ -728,7 +733,7 @@ Difficulty: Very Hard
 		holder_animal.mind.AddSpell(P)
 		holder_animal.verbs -= /mob/living/verb/pulled
 
-/obj/structure/closet/stasis/dump_contents(var/kill = 1)
+/obj/structure/closet/stasis/dump_contents(override = TRUE, kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
 		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
@@ -774,7 +779,7 @@ Difficulty: Very Hard
 	for(var/i in user)
 		if(istype(i, /obj/structure/closet/stasis))
 			var/obj/structure/closet/stasis/S = i
-			S.dump_contents(0)
+			S.dump_contents(kill=0)
 			qdel(S)
 			break
 	user.gib()

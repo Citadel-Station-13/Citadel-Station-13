@@ -5,8 +5,7 @@
 	name 				= "dildo"
 	desc 				= "Floppy!"
 	icon 				= 'modular_citadel/icons/obj/genitals/dildo.dmi'
-	damtype 			= AROUSAL
-	force 				= 5
+	force 				= 0
 	hitsound			= 'sound/weapons/tap.ogg'
 	throwforce			= 0
 	icon_state 			= "dildo_knotted_2"
@@ -37,15 +36,11 @@
 	name = "[sizeword][dildo_shape] [can_customize ? "custom " : ""][dildo_type]"
 
 /obj/item/dildo/AltClick(mob/living/user)
-	if(QDELETED(src))
-		return
-	if(!isliving(user))
-		return
-	if(isAI(user))
-		return
-	if(user.stat > 0)//unconscious or dead
+	. = ..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	customize(user)
+	return TRUE
 
 /obj/item/dildo/proc/customize(mob/living/user)
 	if(!can_customize)
@@ -93,9 +88,9 @@
 	pixel_x 	= rand(-7,7)
 
 /obj/item/dildo/examine(mob/user)
-	..()
+	. = ..()
 	if(can_customize)
-		user << "<span class='notice'>Alt-Click \the [src.name] to customize it.</span>"
+		. += "<span class='notice'>Alt-Click \the [src.name] to customize it.</span>"
 
 /obj/item/dildo/random//totally random
 	name 				= "random dildo"//this name will show up in vendors and shit so you know what you're vending(or don't, i guess :^))
@@ -150,7 +145,8 @@ obj/item/dildo/custom
 		playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
 		user.Stun(150)
 		user.adjust_blurriness(8)
-		user.adjust_eye_damage(10)
+		var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+		eyes?.applyOrganDamage(10)
 	return MANUAL_SUICIDE
 
 /obj/item/dildo/flared/huge/suicide_act(mob/living/user)
@@ -159,6 +155,5 @@ obj/item/dildo/custom
 		playsound(loc, 'sound/weapons/gagging.ogg', 50, 2, -1)
 		user.Stun(300)
 		user.adjust_blurriness(8)
-		user.adjust_eye_damage(15)
 	return MANUAL_SUICIDE
 

@@ -120,6 +120,8 @@
 	..()
 
 /obj/item/bodypart/head/update_icon_dropped()
+	if(custom_head)
+		return
 	var/list/standing = get_limb_icon(1)
 	if(!standing.len)
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.

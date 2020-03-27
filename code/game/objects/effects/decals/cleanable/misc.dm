@@ -13,7 +13,7 @@
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
-	reagents.add_reagent("ash", 30)
+	reagents.add_reagent(/datum/reagent/ash, 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
@@ -27,7 +27,7 @@
 
 /obj/effect/decal/cleanable/ash/large/Initialize()
 	. = ..()
-	reagents.add_reagent("ash", 30) //double the amount of ash.
+	reagents.add_reagent(/datum/reagent/ash, 30) //double the amount of ash.
 
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
@@ -71,6 +71,11 @@
 	name = "flour"
 	desc = "It's still good. Four second rule!"
 	icon_state = "flour"
+
+/obj/effect/decal/cleanable/greenglow/ecto
+	name = "ectoplasmic puddle"
+	desc = "You know who to call."
+	light_power = 2
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
@@ -126,12 +131,10 @@
 			playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 			if(reagents)
-				for(var/datum/reagent/R in reagents.reagent_list)
-					if (istype(R, /datum/reagent/consumable))
-						var/datum/reagent/consumable/nutri_check = R
-						if(nutri_check.nutriment_factor >0)
-							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
-							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
+				for(var/datum/reagent/consumable/R in reagents.reagent_list)
+					if(R.nutriment_factor > 0)
+						H.nutrition += R.nutriment_factor * R.volume
+						reagents.del_reagent(R.type)
 			reagents.trans_to(H, reagents.total_volume)
 			qdel(src)
 

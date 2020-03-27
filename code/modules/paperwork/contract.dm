@@ -7,12 +7,13 @@
 	var/datum/mind/target
 	item_flags = NOBLUDGEON
 
+/obj/item/paper/contract/ComponentInitialize()
+	return
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
+
 /obj/item/paper/contract/proc/update_text()
 	return
-
-/obj/item/paper/contract/update_icon()
-	return
-
 
 /obj/item/paper/contract/employment
 	icon_state = "paper_words"
@@ -100,7 +101,7 @@
 /obj/item/paper/contract/infernal/suicide_act(mob/user)
 	if(signed && (user == target.current) && istype(user, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
-		H.forcesay("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!", forced = "infernal contract suicide")
+		H.forcesay("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!")
 		H.visible_message("<span class='suicide'>[H] holds up a contract claiming [user.p_their()] soul, then immediately catches fire.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		H.adjust_fire_stacks(20)
 		H.IgniteMob()
@@ -173,7 +174,7 @@
 		attempt_signature(user)
 	else if(istype(P, /obj/item/stamp))
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>")
-	else if(P.is_hot())
+	else if(P.get_temperature())
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>[src] refuses to ignite!</span>")
 	else
 		return ..()

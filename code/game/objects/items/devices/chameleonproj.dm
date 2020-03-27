@@ -21,7 +21,7 @@
 	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
 
-/obj/item/chameleon/dropped()
+/obj/item/chameleon/dropped(mob/user)
 	..()
 	disrupt()
 
@@ -48,6 +48,10 @@
 	if(ismob(target))
 		return
 	if(istype(target, /obj/structure/falsewall))
+		return
+	if(target.alpha != 255)
+		return
+	if(target.invisibility != 0)
 		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
@@ -116,7 +120,7 @@
 	appearance = saved_appearance
 	if(istype(M.buckled, /obj/vehicle))
 		var/obj/vehicle/V = M.buckled
-		GET_COMPONENT_FROM(VRD, /datum/component/riding, V)
+		var/datum/component/riding/VRD = V.GetComponent(/datum/component/riding)
 		if(VRD)
 			VRD.force_dismount(M)
 		else
@@ -146,7 +150,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	..()
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)

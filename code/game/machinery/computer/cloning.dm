@@ -298,13 +298,15 @@
 		src.updateUsrDialog()
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		say("Initiating scan...")
-
+		var/prev_locked = scanner.locked
+		scanner.locked = TRUE
 		spawn(20)
 			src.scan_occupant(scanner.occupant)
 
 			loading = 0
 			src.updateUsrDialog()
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+			scanner.locked = prev_locked
 
 
 		//No locking an open scanner.
@@ -480,10 +482,10 @@
 
 	R.fields["ckey"] = mob_occupant.ckey
 	R.fields["name"] = mob_occupant.real_name
-	R.fields["id"] = copytext(md5(mob_occupant.real_name), 2, 6)
+	R.fields["id"] = copytext_char(md5(mob_occupant.real_name), 2, 6)
 	R.fields["UE"] = dna.unique_enzymes
 	R.fields["UI"] = dna.uni_identity
-	R.fields["SE"] = dna.struc_enzymes
+	R.fields["SE"] = dna.mutation_index
 	R.fields["blood_type"] = dna.blood_type
 	R.fields["features"] = dna.features
 	R.fields["factions"] = mob_occupant.faction

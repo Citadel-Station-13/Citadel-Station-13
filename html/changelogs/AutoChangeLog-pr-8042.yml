@@ -1,5 +1,0 @@
-author: "izzyinbox"
-delete-after: True
-changes: 
-  - rscadd: "Generic dog body marking sprite"
-  - imageadd: "colormatrix dog sprites"

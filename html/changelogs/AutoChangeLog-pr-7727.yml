@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Eyeblur now scales depending on how much actual eyeblur you actually have."

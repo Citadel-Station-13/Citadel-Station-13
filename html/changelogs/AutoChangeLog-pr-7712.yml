@@ -1,9 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - rscadd: "Adds a syndicate themed emergency shuttle that costs 20000 credits, and can ONLY be purchased when the communications console is emagged. This shuttle features a fully stocked medbay with self serve sleepers, plenty of room that can fit highpop, a fully featured bridge, ballistic auto turrets, and an armory, EVA prep room, and bar, all of which are only accessible by either an agent ID or through hacking.
-
--EVA prep features 2 syndicate hardsuits and 3 syndicate softsuits.
--Armory features 5 stetchkins with spare ammo, and 2 riot c-20r's.
-
-![image](https://user-images.githubusercontent.com/42078130/48306551-0b786380-e500-11e8-821a-e59ac4eee0ea.png)"

@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - tweak: "Autotransfer vote now requires actual transfer votes to transfer."

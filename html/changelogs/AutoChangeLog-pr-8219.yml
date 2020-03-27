@@ -1,6 +1,0 @@
-author: "Coolgat3"
-delete-after: True
-changes: 
-  - rscadd: "Added berets for all the heads."
-  - imageadd: "Added sprites for the berets."
-  - code_imp: "Coded the berets to spawn in appropiate lockers."

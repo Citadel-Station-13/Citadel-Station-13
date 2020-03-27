@@ -1,6 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - imageadd: "naga and quad Taurs literally don't freeze their ass off in space anymore."
-  - bugfix: "Digitigrade legs will toggle on/off properly on character menue"
-  - bugfix: "The misleading \"normal\" has been removed from species options"

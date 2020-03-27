@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "The TEG will now only produce a meaningful amount of power if the hot pipe contains gas that's actively combusting"

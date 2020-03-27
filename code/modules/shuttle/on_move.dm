@@ -131,7 +131,7 @@ All ShuttleMove procs go here
 	var/range = throw_force * 10
 	range = CEILING(rand(range-(range*0.1), range+(range*0.1)), 10)/10
 	var/speed = range/5
-	throw_at(target, range, speed)
+	safe_throw_at(target, range, speed)
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -290,7 +290,7 @@ All ShuttleMove procs go here
 	// ignores the movement of the shuttle from the staging area on CentCom to
 	// the station as it is loaded in.
 	if (oldT && !is_centcom_level(oldT.z))
-		GET_COMPONENT(STR, /datum/component/storage/concrete/emergency)
+		var/datum/component/storage/concrete/emergency/STR = GetComponent(/datum/component/storage/concrete/emergency)
 		STR?.unlock_me()
 
 /************************************Mob move procs************************************/
@@ -318,7 +318,7 @@ All ShuttleMove procs go here
 
 	var/knockdown = movement_force["KNOCKDOWN"]
 	if(knockdown)
-		Knockdown(knockdown)
+		DefaultCombatKnockdown(knockdown)
 
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)

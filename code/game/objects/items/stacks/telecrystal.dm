@@ -13,7 +13,7 @@
 		var/mob/living/L = user
 		for(var/obj/item/implant/uplink/I in L.implants)
 			if(I?.imp_in)
-				GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, I)
+				var/datum/component/uplink/hidden_uplink = I.GetComponent(/datum/component/uplink)
 				if(hidden_uplink)
 					hidden_uplink.telecrystals += amount
 					use(amount)

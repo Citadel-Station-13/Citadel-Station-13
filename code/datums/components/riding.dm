@@ -18,6 +18,7 @@
 	var/ride_check_rider_incapacitated = FALSE
 	var/ride_check_rider_restrained = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
+	var/list/offhands = list() // keyed list containing all the current riding offsets associated by mob
 
 /datum/component/riding/Initialize()
 	if(!ismovableatom(parent))
@@ -190,20 +191,28 @@
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
+	var/fireman_carrying = FALSE
 
 /datum/component/riding/human/Initialize()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
-	var/mob/living/carbon/human/H = parent
-	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
 	. = ..()
+	var/mob/living/carbon/human/H = parent
+	if(!length(H.buckled_mobs))
+		H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+	if(!fireman_carrying)
+		M.Daze(25)
+	REMOVE_TRAIT(M, TRAIT_MOBILITY_NOUSE, src)
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/H = parent
-	H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN)
+	if(length(H.buckled_mobs))
+		H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = fireman_carrying? FIREMAN_CARRY_SLOWDOWN : PIGGYBACK_CARRY_SLOWDOWN)
+	if(fireman_carrying)
+		ADD_TRAIT(M, TRAIT_MOBILITY_NOUSE, src)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	var/mob/living/carbon/human/H = parent
@@ -235,11 +244,11 @@
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
 
-
 /datum/component/riding/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
-	user.Knockdown(60)
+	user.DefaultCombatKnockdown(60)
+	user.Daze(50)
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
@@ -297,38 +306,36 @@
 	M.Move(targetm)
 	M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>")
 	M.throw_at(target, 14, 5, AM)
-	M.Knockdown(60)
+	M.DefaultCombatKnockdown(60)
 
-/datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
-	var/atom/movable/AM = parent
-	var/amount_equipped = 0
+/datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, mob/living/riding_target_override)
+	var/list/equipped
+	var/mob/living/L = riding_target_override ? riding_target_override : user
 	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
-		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
-		if(!riding_target_override)
-			inhand.rider = user
-		else
-			inhand.rider = riding_target_override
-		inhand.parent = AM
-		if(user.put_in_hands(inhand, TRUE))
-			amount_equipped++
-		else
+		var/obj/item/riding_offhand/inhand = new
+		inhand.rider = L
+		inhand.parent = parent
+		if(!user.put_in_hands(inhand, TRUE))
+			qdel(inhand) // it isn't going to be added to offhands anyway
 			break
+		LAZYADD(equipped, inhand)
+	var/amount_equipped = LAZYLEN(equipped)
+	if(amount_equipped)
+		LAZYADD(offhands[L], equipped)
 	if(amount_equipped >= amount_required)
 		return TRUE
-	else
-		unequip_buckle_inhands(user)
-		return FALSE
+	unequip_buckle_inhands(L)
+	return FALSE
 
 /datum/component/riding/proc/unequip_buckle_inhands(mob/living/carbon/user)
-	var/atom/movable/AM = parent
-	for(var/obj/item/riding_offhand/O in user.contents)
-		if(O.parent != AM)
-			CRASH("RIDING OFFHAND ON WRONG MOB")
-			continue
-		if(O.selfdeleting)
-			continue
-		else
-			qdel(O)
+	for(var/a in offhands[user])
+		LAZYREMOVE(offhands[user], a)
+		if(a) //edge cases null entries
+			var/obj/item/riding_offhand/O = a
+			if(O.parent != parent)
+				CRASH("RIDING OFFHAND ON WRONG MOB")
+			else if(!O.selfdeleting)
+				qdel(O)
 	return TRUE
 
 /obj/item/riding_offhand
@@ -342,7 +349,7 @@
 	var/mob/living/parent
 	var/selfdeleting = FALSE
 
-/obj/item/riding_offhand/dropped()
+/obj/item/riding_offhand/dropped(mob/user)
 	selfdeleting = TRUE
 	. = ..()
 

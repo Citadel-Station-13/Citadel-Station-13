@@ -6,7 +6,7 @@
 	slot = ORGAN_SLOT_HEART
 
 	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = 3 * STANDARD_ORGAN_DECAY		//designed to fail about 5 minutes after death
+	decay_factor = 2 * STANDARD_ORGAN_DECAY
 
 	low_threshold_passed = "<span class='info'>Prickles of pain appear then die out from within your chest...</span>"
 	high_threshold_passed = "<span class='warning'>Something inside your chest hurts, and the pain isn't subsiding. You notice yourself breathing far faster than before.</span>"
@@ -22,16 +22,16 @@
 	var/failed = FALSE		//to prevent constantly running failing code
 	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
 
-/obj/item/organ/heart/update_icon()
+/obj/item/organ/heart/update_icon_state()
 	if(beating)
 		icon_state = "[icon_base]-on"
 	else
 		icon_state = "[icon_base]-off"
 
-/obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
-	..()
+/obj/item/organ/heart/Remove(special = FALSE)
 	if(!special)
-		addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
+		addtimer(CALLBACK(src, .proc/stop_if_unowned), 12 SECONDS)
+	return ..()
 
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
@@ -55,9 +55,14 @@
 	update_icon()
 	return 1
 
+/obj/item/organ/heart/proc/HeartStrengthMessage()
+	if(beating)
+		return "a healthy"
+	return "<span class='danger'>an unstable</span>"
+
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
-	S.icon_state = "heart-off"
+	S.icon_state = "[icon_base]-off"
 	return S
 
 /obj/item/organ/heart/on_life()
@@ -89,6 +94,12 @@
 			owner.visible_message("<span class='userdanger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>")
 		owner.set_heartattack(TRUE)
 		failed = TRUE
+
+obj/item/organ/heart/slime
+	name = "slime heart"
+	desc = "It seems we've gotten to the slimy core of the matter."
+	icon_state = "heart-s-on"
+	icon_base = "heart-s"
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -129,14 +140,14 @@
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(owner)
 		to_chat(owner, "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
 
-/obj/item/organ/heart/cursed/Remove(mob/living/carbon/M, special = 0)
-	..()
-	M.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+/obj/item/organ/heart/cursed/Remove(special = FALSE)
+	owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+	return ..()
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "Pump your blood"
@@ -206,11 +217,13 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 		ramount += regen_amount
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
-	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 	ramount = 0
 
-
+/obj/item/organ/heart/ipc
+	name = "IPC heart"
+	desc = "An electronic pump that regulates hydraulic functions, the electronics have EMP shielding."
+	icon_state = "heart-c"
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
@@ -224,5 +237,5 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 		min_next_adrenaline = world.time + rand(250, 600) //anywhere from 4.5 to 10 minutes
 		to_chat(owner, "<span class='userdanger'>You feel yourself dying, but you refuse to give up!</span>")
 		owner.heal_overall_damage(15, 15)
-		if(owner.reagents.get_reagent_amount("ephedrine") < 20)
-			owner.reagents.add_reagent("ephedrine", 10)
+		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
+			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)

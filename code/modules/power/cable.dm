@@ -79,13 +79,17 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = "#ffffff"
 
 // the power cable object
-/obj/structure/cable/Initialize(mapload, param_color)
+/obj/structure/cable/Initialize(mapload, param_color, _d1, _d2)
 	. = ..()
 
-	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
-	var/dash = findtext(icon_state, "-")
-	d1 = text2num( copytext( icon_state, 1, dash ) )
-	d2 = text2num( copytext( icon_state, dash+1 ) )
+	if(isnull(_d1) || isnull(_d2))
+		// ensure d1 & d2 reflect the icon_state for entering and exiting cable
+		var/dash = findtext(icon_state, "-")
+		d1 = text2num(copytext(icon_state, 1, dash))
+		d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
+	else
+		d1 = _d1
+		d2 = _d2
 
 	var/turf/T = get_turf(src)			// hide if turf is not intact
 	if(level==1)
@@ -126,7 +130,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
-/obj/structure/cable/update_icon()
+/obj/structure/cable/update_icon_state()
 	icon_state = "[d1]-[d2]"
 	color = null
 	add_atom_colour(cable_color, FIXED_COLOUR_PRIORITY)
@@ -217,9 +221,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		return 0
 
-/obj/structure/cable/proc/avail()
+/obj/structure/cable/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
 	else
 		return 0
 
@@ -484,18 +488,18 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=10, MAT_GLASS=5)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=5)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("copper" = 2) //2 copper per cable in the coil
+	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
-	materials = list()
+	custom_materials = null
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)

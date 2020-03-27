@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "A mob's last words are now properly tracked and recorded on death. The first death of the round will now actually display the victim's last words on the round end screen."

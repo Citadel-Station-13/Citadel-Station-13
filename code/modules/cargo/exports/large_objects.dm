@@ -6,7 +6,7 @@
 	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
+	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden, /obj/structure/closet/crate/bin)
 
 /datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
@@ -29,25 +29,22 @@
 	export_types = list(/obj/structure/closet/crate/wooden)
 	exclude_types = list()
 
+/datum/export/large/barrel
+	cost = 300 //double the wooden cost of a coffin.
+	unit_name = "wooden barrel"
+	export_types = list(/obj/structure/fermenting_barrel)
+
 /datum/export/large/crate/coffin
 	cost = 150
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
 
 /datum/export/large/reagent_dispenser
-	cost = 100 // +0-400 depending on amount of reagents left
-	var/contents_cost = 400
-
-/datum/export/large/reagent_dispenser/get_cost(obj/O)
-	var/obj/structure/reagent_dispensers/D = O
-	var/ratio = D.reagents.total_volume / D.reagents.maximum_volume
-
-	return ..() + round(contents_cost * ratio)
+	cost = 100
 
 /datum/export/large/reagent_dispenser/water
 	unit_name = "watertank"
 	export_types = list(/obj/structure/reagent_dispensers/watertank)
-	contents_cost = 200
 
 /datum/export/large/reagent_dispenser/fuel
 	unit_name = "fueltank"
@@ -55,7 +52,6 @@
 
 /datum/export/large/reagent_dispenser/beer
 	unit_name = "beer keg"
-	contents_cost = 700
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
 
 /datum/export/large/pipedispenser
@@ -178,7 +174,7 @@
 	worth += gases[/datum/gas/bz]*4
 	worth += gases[/datum/gas/stimulum]*25
 	worth += gases[/datum/gas/hypernoblium]*1000
-	worth += gases[/datum/gas/miasma]*15
+	worth += gases[/datum/gas/miasma]*4
 	worth += gases[/datum/gas/tritium]*7
 	worth += gases[/datum/gas/pluoxium]*6
 	worth += gases[/datum/gas/nitryl]*30
@@ -282,17 +278,17 @@
 	include_subtypes = FALSE
 
 /datum/export/large/mech/odysseus
-	cost = 5500
+	cost = 7500
 	unit_name = "working odysseus"
 	export_types = list(/obj/mecha/medical/odysseus)
 
 /datum/export/large/mech/ripley
-	cost = 6500
+	cost = 12000
 	unit_name = "working ripley"
 	export_types = list(/obj/mecha/working/ripley)
 
 /datum/export/large/mech/firefighter
-	cost = 9000
+	cost = 14000
 	unit_name = "working firefighter"
 	export_types = list(/obj/mecha/working/ripley/firefighter)
 
@@ -302,12 +298,12 @@
 	export_types = list(/obj/mecha/combat/gygax)
 
 /datum/export/large/mech/durand
-	cost = 10000
+	cost = 16000
 	unit_name = "working durand"
 	export_types = list(/obj/mecha/combat/durand)
 
 /datum/export/large/mech/phazon
-	cost = 25000 //Little over half do to needing a core
+	cost = 35000 //Little over half do to needing a core
 	unit_name = "working phazon"
 	export_types = list(/obj/mecha/combat/phazon)
 
@@ -317,7 +313,7 @@
 	export_types = list(/obj/mecha/combat/marauder)
 
 /datum/export/large/mech/deathripley
-	cost = 8500 //Still a "Combat class" mech - Illegal tech as well! 165% "normal" boundy price.
+	cost = 18500 //Still a "Combat class" mech - Illegal tech as well! 165% "normal" boundy price.
 	unit_name = "working illegally modified"
 	export_types = list(/obj/mecha/working/ripley/deathripley)
 
@@ -332,12 +328,12 @@
 	export_types = list(/obj/mecha/working/ripley/mining)
 
 /datum/export/large/mech/honk
-	cost = 12000 //Still a "Combat class" mech - Comats bordem honk!
+	cost = 16000 //Still a "Combat class" mech - Comats bordem honk!
 	unit_name = "working honker"
 	export_types = list(/obj/mecha/combat/honker)
 
 /datum/export/large/mech/reticence
-	cost = 12000 //Still a "Combat class" mech - Has cloking and lethal weaponds.
+	cost = 16000 //Still a "Combat class" mech - Has cloking and lethal weaponds.
 	unit_name = "working reticence"
 	export_types = list(/obj/mecha/combat/reticence)
 
@@ -347,6 +343,6 @@
 	export_types = list(/obj/mecha/combat/marauder/seraph)
 
 /datum/export/large/mech/mauler
-	cost = 12000 //Still a Combat class mech - CC lethal weaponds.
+	cost = 25000 //Still a Combat class mech - CC lethal weaponds.
 	unit_name = "working legally modified marauder"
 	export_types = list(/obj/mecha/combat/marauder/mauler)

@@ -89,10 +89,10 @@
 	stored_items = list()
 
 
-/obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/brain/anti_drop/Remove(special = FALSE)
 	if(active)
 		ui_action_click()
-	..()
+	return ..()
 
 
 /obj/item/organ/cyberimp/brain/anti_stun
@@ -105,11 +105,8 @@
 	..()
 	if(crit_fail || !(organ_flags & ORGAN_FAILING))
 		return
-	owner.adjustStaminaLoss(-3.5) //Citadel edit, makes it more useful in Stamina based combat
-	if(owner.AmountStun() > STUN_SET_AMOUNT)
-		owner.SetStun(STUN_SET_AMOUNT)
-	if(owner.AmountKnockdown() > STUN_SET_AMOUNT)
-		owner.SetKnockdown(STUN_SET_AMOUNT)
+	owner.adjustStaminaLoss(-3.5, FALSE) //Citadel edit, makes it more useful in Stamina based combat
+	owner.HealAllImmobilityUpTo(STUN_SET_AMOUNT)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
@@ -142,22 +139,3 @@
 	if(prob(60/severity))
 		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2
-
-//BOX O' IMPLANTS
-
-/obj/item/storage/box/cyber_implants
-	name = "boxed cybernetic implants"
-	desc = "A sleek, sturdy box."
-	icon_state = "cyber_implants"
-	var/list/boxed = list(
-		/obj/item/autosurgeon/thermal_eyes,
-		/obj/item/autosurgeon/xray_eyes,
-		/obj/item/autosurgeon/anti_stun,
-		/obj/item/autosurgeon/reviver)
-	var/amount = 5
-
-/obj/item/storage/box/cyber_implants/PopulateContents()
-	var/implant
-	while(contents.len <= amount)
-		implant = pick(boxed)
-		new implant(src)

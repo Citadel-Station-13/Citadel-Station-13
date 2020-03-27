@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "Locomotion circuits are now restricted to jogging speed"
-  - balance: "MMI circuits and pAI circuits both now have 60 complexity, up from their original 29."

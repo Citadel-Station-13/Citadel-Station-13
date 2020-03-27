@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "Sprinting no longer takes stam when you're being pulled or when you're in zero gravity. Other sources of involuntary movement are not affected."

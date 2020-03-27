@@ -4,9 +4,9 @@
 #define WEIGHT_CLASS_TINY     1 //Usually items smaller then a human hand, ex: Playing Cards, Lighter, Scalpel, Coins/Money
 #define WEIGHT_CLASS_SMALL    2 //Pockets can hold small and tiny items, ex: Flashlight, Multitool, Grenades, GPS Device
 #define WEIGHT_CLASS_NORMAL   3 //Standard backpacks can carry tiny, small & normal items, ex: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
-#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in an inventory, ex: Defibrillator, Backpack, Space Suits
-#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, ex: Shotgun, Two Handed Melee Weapons
-#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe
+#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in a normal bag, ex: Defibrillator, Backpack, Space Suits
+#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, ex: Shotgun, Two Handed Melee Weapons - Can not fit in Boh
+#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe - Can not fit in Boh
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
@@ -28,7 +28,9 @@
 #define ITEM_SLOT_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
 #define ITEM_SLOT_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
 #define ITEM_SLOT_NECK			(1<<13)
-#define ITEM_SLOT_SUITSTORE		(1<<14)
+#define ITEM_SLOT_HANDS			(1<<14)
+#define ITEM_SLOT_BACKPACK		(1<<15)
+#define ITEM_SLOT_SUITSTORE		(1<<16)
 
 //SLOTS
 #define SLOT_BACK			1
@@ -86,6 +88,10 @@
 			. = ITEM_SLOT_ICLOTHING
 		if(SLOT_L_STORE, SLOT_R_STORE)
 			. = ITEM_SLOT_POCKET
+		if(SLOT_HANDS)
+			. = ITEM_SLOT_HANDS
+		if(SLOT_IN_BACKPACK)
+			. = ITEM_SLOT_BACKPACK
 		if(SLOT_S_STORE)
 			. = ITEM_SLOT_SUITSTORE
 
@@ -104,6 +110,7 @@
 #define HIDENECK		(1<<10)
 #define HIDETAUR		(1<<11) //gotta hide that snowflake
 #define HIDESNOUT		(1<<12) //or do we actually hide our snoots
+#define HIDEACCESSORY	(1<<13) //hides the jumpsuit accessory.
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD		(1<<0)
@@ -124,33 +131,24 @@
 #define NECK		(1<<11)
 #define FULL_BODY	(~0)
 
+//flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
+#define NORMAL_STYLE		0
+#define ALT_STYLE			1
+
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 
-//flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
-#define NORMAL_STYLE		0
-#define ALT_STYLE			1
+//flags for outfits that have mutantrace variants: These are hard sprited too.
+#define STYLE_DIGITIGRADE		(1<<0) //jumpsuits, suits and shoes
+#define STYLE_MUZZLE			(1<<1) //hats or masks
+#define STYLE_SNEK_TAURIC		(1<<2) //taur-friendly suits
+#define STYLE_PAW_TAURIC		(1<<3)
+#define STYLE_HOOF_TAURIC		(1<<4)
+#define STYLE_ALL_TAURIC		(STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC|STYLE_HOOF_TAURIC)
 
-#define NORMAL_SUIT_STYLE		0
-#define DIGITIGRADE_SUIT_STYLE 	1
-
-//Tauric Specific suits
-#define NOT_TAURIC			0
-#define SNEK_TAURIC			1
-#define PAW_TAURIC			2
-#define HOOF_TAURIC			3
-
-//Helmets/masks for muzzles or beaks
-#define NORMAL_FACED		0
-#define	MUZZLE_FACED		1
-#define	BEAKED_FACED		2
-
-//flags for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
-#define NO_MUTANTRACE_VARIATION		0
-#define MUTANTRACE_VARIATION		1
-
+//digitigrade legs settings.
 #define NOT_DIGITIGRADE				0
 #define FULL_DIGITIGRADE			1
 #define SQUISHED_DIGITIGRADE		2
@@ -237,3 +235,6 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 
 //Internals checker
 #define GET_INTERNAL_SLOTS(C) list(C.head, C.wear_mask)
+
+//Slots that won't trigger humans' update_genitals() on equip().
+GLOBAL_LIST_INIT(no_genitals_update_slots, list(SLOT_L_STORE, SLOT_R_STORE, SLOT_S_STORE, SLOT_IN_BACKPACK, SLOT_LEGCUFFED, SLOT_HANDCUFFED, SLOT_HANDS, SLOT_GENERC_DEXTROUS_STORAGE))

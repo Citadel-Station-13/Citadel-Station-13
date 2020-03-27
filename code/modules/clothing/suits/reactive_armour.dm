@@ -50,7 +50,8 @@
 		icon_state = "reactiveoff"
 		item_state = "reactiveoff"
 	add_fingerprint(user)
-	return
+	if(user.get_item_by_slot(SLOT_WEAR_SUIT) == src)
+		user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
 	. = ..()
@@ -71,8 +72,9 @@
 	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	. = FALSE
 	if(!active)
-		return 0
+		return
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
@@ -95,12 +97,11 @@
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked))
 			return
-		H.forceMove(picked)
+		do_teleport(H, picked, no_effects = TRUE, channel = TELEPORT_CHANNEL_WORMHOLE)
 		radiation_pulse(old, rad_amount_before)
 		radiation_pulse(src, rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
+		return TRUE
 
 //Fire
 
@@ -214,14 +215,24 @@
 		playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, 1)
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], converting the attack into a wave of force!</span>")
 		var/turf/T = get_turf(owner)
-		var/list/thrown_items = list()
-		for(var/atom/movable/A in range(T, 7))
-			if(A == owner || A.anchored || thrown_items[A])
+		var/list/cachedrange = range(T, 7) - owner
+		var/safety = 50
+		var/list/to_throw = list()
+		for(var/mob/living/L in cachedrange)
+			if(L.move_resist > MOVE_FORCE_EXTREMELY_STRONG)
 				continue
-			var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(A, T)))
-			A.throw_at(throwtarget,10,1)
-			thrown_items[A] = A
-
+			to_throw += L
+		for(var/obj/O in cachedrange)
+			if(O.anchored)
+				continue
+			to_throw += O
+		for(var/i in to_throw)
+			if(!safety)
+				break
+			var/atom/movable/AM = i
+			var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(AM, T)))
+			AM.throw_at(throwtarget,10,1)
+			safety--
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 
@@ -241,7 +252,7 @@
 			return
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams [H.p_them()] into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
-		owner.Knockdown(40)
+		owner.DefaultCombatKnockdown(40)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)

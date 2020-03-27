@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "The storage hud now properly takes into account the viewer's view size, meaning storage items with a large amount of storage slots will properly stretch across the bottom of the screen when running in widescreen."

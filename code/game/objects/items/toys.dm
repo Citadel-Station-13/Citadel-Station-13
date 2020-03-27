@@ -44,9 +44,13 @@
 	item_state = "balloon-empty"
 
 
-/obj/item/toy/balloon/New()
+/obj/item/toy/balloon/Initialize()
+	. = ..()
 	create_reagents(10)
-	..()
+
+/obj/item/toy/balloon/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -79,12 +83,12 @@
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
 				I.reagents.trans_to(src, 10)
 				update_icon()
-	else if(I.is_sharp())
+	else if(I.get_sharpness())
 		balloon_burst()
 	else
 		return ..()
 
-/obj/item/toy/balloon/throw_impact(atom/hit_atom)
+/obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		balloon_burst(hit_atom)
 
@@ -102,7 +106,7 @@
 		icon_state = "burst"
 		qdel(src)
 
-/obj/item/toy/balloon/update_icon()
+/obj/item/toy/balloon/update_icon_state()
 	if(src.reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		item_state = "balloon"
@@ -143,13 +147,13 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=10, MAT_GLASS=10)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left.")
+	. = ..()
+	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
@@ -182,7 +186,7 @@
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
-		user.show_message("<span class='warning'>*click*</span>", 2)
+		user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
 		playsound(src, "gun_dry_fire", 30, 1)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
@@ -197,15 +201,15 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL=10, MAT_GLASS=10)
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	var/amount_left = 7
 
-/obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357OLD-[]", src.amount_left)
+/obj/item/toy/ammo/gun/update_icon_state()
+	icon_state = "357OLD-[amount_left]"
 
 /obj/item/toy/ammo/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
+	. = ..()
+	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
  * Toy swords
@@ -224,26 +228,39 @@
 	var/hacked = FALSE
 	total_mass = 0.4
 	var/total_mass_on = TOTAL_MASS_TOY_SWORD
+	var/activation_sound = 'sound/weapons/saberon.ogg'
+	var/deactivation_sound = 'sound/weapons/saberoff.ogg'
+	var/activation_message = "You extend the plastic blade with a quick flick of your wrist."
+	var/deactivation_message = "You push the plastic blade back down into the handle."
+	var/transform_volume = 20
 
 /obj/item/toy/sword/attack_self(mob/user)
-	active = !( active )
+	active = !active
 	if (active)
-		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
-		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
+		to_chat(user, "<span class='notice'>[activation_message]</span>")
+		playsound(user, activation_sound, transform_volume, 1)
+		w_class = WEIGHT_CLASS_BULKY
+		AddElement(/datum/element/sword_point)
+	else
+		to_chat(user, "<span class='notice'>[deactivation_message]</span>")
+		playsound(user, deactivation_sound, transform_volume, 1)
+		w_class = WEIGHT_CLASS_SMALL
+		RemoveElement(/datum/element/sword_point)
+
+	update_icon()
+	add_fingerprint(user)
+
+/obj/item/toy/sword/update_icon_state()
+	if(active)
 		if(hacked)
 			icon_state = "swordrainbow"
 			item_state = "swordrainbow"
 		else
 			icon_state = "swordblue"
 			item_state = "swordblue"
-		w_class = WEIGHT_CLASS_BULKY
 	else
-		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
 		icon_state = "sword0"
 		item_state = "sword0"
-		w_class = WEIGHT_CLASS_SMALL
-	add_fingerprint(user)
 
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
@@ -266,7 +283,7 @@
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
 
 			if(active)
-				icon_state = "swordrainbow"
+				update_icon()
 				user.update_inv_hands()
 		else
 			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
@@ -275,6 +292,90 @@
 
 /obj/item/toy/sword/getweight()
 	return (active ? total_mass_on : total_mass) || w_class *1.25
+
+/obj/item/toy/sword/cx
+	name = "\improper DX Non-Euplastic LightSword"
+	desc = "A deluxe toy replica of an energy sword. Realistic visuals and sounds! Ages 8 and up."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "cxsword_hilt"
+	item_state = "cxsword"
+	active = FALSE
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("poked", "jabbed", "hit")
+	light_color = "#37FFF7"
+	activation_sound = 'sound/weapons/nebon.ogg'
+	deactivation_sound = 'sound/weapons/neboff.ogg'
+	transform_volume = 50
+	activation_message = "You activate the holographic blade with a press of a button."
+	deactivation_message = "You deactivate the holographic blade with a press of a button."
+	var/light_brightness = 3
+	actions_types = list()
+
+/obj/item/toy/sword/cx/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/toy/sword/cx/attack_self(mob/user)
+	. = ..()
+	set_light(active ? light_brightness : 0)
+
+/obj/item/toy/sword/cx/update_icon_state()
+	return
+
+/obj/item/toy/sword/cx/update_overlays()
+	. = ..()
+	var/mutable_appearance/blade_overlay = mutable_appearance(icon, "cxsword_blade")
+	var/mutable_appearance/gem_overlay = mutable_appearance(icon, "cxsword_gem")
+
+	if(light_color)
+		blade_overlay.color = light_color
+		gem_overlay.color = light_color
+
+	. += gem_overlay
+
+	if(active)
+		. += blade_overlay
+
+/obj/item/toy/sword/cx/AltClick(mob/living/user)
+	. = ..()
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return TRUE
+
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
+		if(energy_color_input)
+			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
+	return TRUE
+
+/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
+	. = ..()
+	if(active)
+		if(isinhands)
+			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "cxsword_blade")
+			blade_inhand.color = light_color
+			. += blade_inhand
+
+/obj/item/toy/sword/cx/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/toy/sword/cx))
+		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
+			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You combine the two plastic swords, making a single supermassive toy! You're fake-cool.</span>")
+			new /obj/item/twohanded/dualsaber/hypereutactic/toy(user.loc)
+			qdel(W)
+			qdel(src)
+	else
+		return ..()
+
+/obj/item/toy/sword/cx/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /*
  * Foam armblade
@@ -301,6 +402,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	var/active = FALSE
 	icon = 'icons/obj/items_and_weapons.dmi'
+	hitsound = 'sound/weapons/smash.ogg'
 	attack_verb = list("robusted")
 
 /obj/item/toy/windupToolbox/attack_self(mob/user)
@@ -308,13 +410,33 @@
 		icon_state = "his_grace_awakened"
 		to_chat(user, "<span class='warning'>You wind up [src], it begins to rumble.</span>")
 		active = TRUE
+		playsound(src, 'sound/effects/pope_entry.ogg', 100)
+		Rumble()
 		addtimer(CALLBACK(src, .proc/stopRumble), 600)
 	else
 		to_chat(user, "[src] is already active.")
 
+/obj/item/toy/windupToolbox/proc/Rumble()
+	var/static/list/transforms
+	if(!transforms)
+		var/matrix/M1 = matrix()
+		var/matrix/M2 = matrix()
+		var/matrix/M3 = matrix()
+		var/matrix/M4 = matrix()
+		M1.Translate(-1, 0)
+		M2.Translate(0, 1)
+		M3.Translate(1, 0)
+		M4.Translate(0, -1)
+		transforms = list(M1, M2, M3, M4)
+	animate(src, transform=transforms[1], time=0.2, loop=-1)
+	animate(transform=transforms[2], time=0.1)
+	animate(transform=transforms[3], time=0.2)
+	animate(transform=transforms[4], time=0.3)
+
 /obj/item/toy/windupToolbox/proc/stopRumble()
 	icon_state = initial(icon_state)
 	active = FALSE
+	animate(src, transform=matrix())
 
 /*
  * Subtype of Double-Bladed Energy Swords
@@ -330,12 +452,38 @@
 	force_wielded = 0
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
+	sharpness = IS_BLUNT
 
 /obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
 
 /obj/item/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
 	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy
+	name = "\improper DX Hyper-Euplastic LightSword"
+	desc = "A supermassive toy envisioned to cleave the very fabric of space and time itself in twain. Realistic visuals and sounds! Ages 8 and up."
+	force = 0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 5
+	force_unwielded = 0
+	force_wielded = 0
+	attack_verb = list("attacked", "struck", "hit")
+	total_mass_on = TOTAL_MASS_TOY_SWORD
+	slowdown_wielded = 0
+	sharpness = IS_BLUNT
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/IsReflect()//Stops it from reflecting energy projectiles
+	return FALSE
+
+/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
+	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
+	desc = "A custom-built toy with fancy rainbow lights built-in."
+	hacked = TRUE
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -384,7 +532,7 @@
 /obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
 	pop_burst()
 
-/obj/item/toy/snappop/throw_impact(atom/hit_atom)
+/obj/item/toy/snappop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		pop_burst()
 
@@ -694,15 +842,16 @@
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
 
-/obj/item/toy/cards/deck/update_icon()
-	if(cards.len > 26)
-		icon_state = "deck_[deckstyle]_full"
-	else if(cards.len > 10)
-		icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 0)
-		icon_state = "deck_[deckstyle]_low"
-	else if(cards.len == 0)
-		icon_state = "deck_[deckstyle]_empty"
+/obj/item/toy/cards/deck/update_icon_state()
+	switch(cards.len)
+		if(27 to INFINITY)
+			icon_state = "deck_[deckstyle]_full"
+		if(11 to 27)
+			icon_state = "deck_[deckstyle]_half"
+		if(1 to 11)
+			icon_state = "deck_[deckstyle]_low"
+		else
+			icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
@@ -865,13 +1014,13 @@
 
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
 			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
 		else
-			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
-
+			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
 /obj/item/toy/cards/singlecard/verb/Flip()
 	set name = "Flip Card"
@@ -929,8 +1078,13 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+/obj/item/toy/cards/singlecard/attack_self(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if(!ishuman(user))
+		return
+	if(!CHECK_MOBILITY(user, MOBILITY_USE))
 		return
 	Flip()
 
@@ -1006,7 +1160,7 @@
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
+/obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
 		for(var/mob/M in urange(10, src))
@@ -1055,7 +1209,7 @@
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
-/obj/item/toy/snowball/throw_impact(atom/hit_atom)
+/obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
 		qdel(src)
@@ -1097,8 +1251,8 @@
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss")]")
+	. = ..()
+	. += "<span class='info'>Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
 
 /*
  * Toy Dagger
@@ -1169,8 +1323,8 @@
 	var/toysound = 'sound/machines/click.ogg'
 
 /obj/item/toy/figure/New()
-    desc = "A \"Space Life\" brand [src]."
-    ..()
+	desc = "A \"Space Life\" brand [src]."
+	..()
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
@@ -1393,3 +1547,18 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
+
+/obj/item/toy/seashell
+	name = "seashell"
+	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "shell1"
+	var/static/list/possible_colors = list("" =  2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
+
+/obj/item/toy/seashell/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+	icon_state = "shell[rand(1,3)]"
+	color = pickweight(possible_colors)
+	setDir(pick(GLOB.cardinals))

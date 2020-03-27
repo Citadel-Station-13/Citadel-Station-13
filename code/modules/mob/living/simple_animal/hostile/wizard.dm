@@ -5,12 +5,13 @@
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 3
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
+	threat = 3
 	speed = 0
 	maxHealth = 100
 	health = 100

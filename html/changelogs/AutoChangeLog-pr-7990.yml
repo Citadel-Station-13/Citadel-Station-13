@@ -1,5 +1,0 @@
-author: "Coolgat3"
-delete-after: True
-changes: 
-  - tweak: "Changed player number checks to 20 from 24 for cult and clockcult, also made nukeops 28 required players instead of 30."
-  - tweak: "Changed enemy minimum age from 14 to 7"

@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "fixed Navy officer uniforms that failed to spawn"
-  - code_imp: "Loadout items will be forcefully added to backpacks or at your feet instead of left behind at title screen"

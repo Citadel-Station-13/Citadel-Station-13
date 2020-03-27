@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "The kindle status effect stun duration now properly proportional to the owner's remaining health."
-  - tweak: "Clockwork cult's kindle now affects silicons."

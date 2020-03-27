@@ -101,12 +101,28 @@
 	item_state = "synth"
 	instrumentId = "piano"
 	instrumentExt = "ogg"
-	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
+	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "banjo" = "ogg", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
 	actions_types = list(/datum/action/item_action/synthswitch)
 
 /obj/item/instrument/piano_synth/proc/changeInstrument(name = "piano")
 	song.instrumentDir = name
 	song.instrumentExt = insTypes[name]
+
+/obj/item/instrument/piano_synth/proc/selectInstrument() // Moved here so it can be used by the action and PAI software panel without copypasta
+	var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", song.instrumentDir) as null|anything in insTypes
+	if(!insTypes[chosen])
+		return
+	return changeInstrument(chosen)
+
+/obj/item/instrument/banjo
+	name = "banjo"
+	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
+	icon_state = "banjo"
+	item_state = "banjo"
+	instrumentExt = "ogg"
+	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
+	hitsound = 'sound/weapons/banjoslap.ogg'
+	instrumentId = "banjo"
 
 /obj/item/instrument/guitar
 	name = "guitar"
@@ -263,8 +279,6 @@
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
 
-///
-
 /obj/item/musicaltuner
 	name = "musical tuner"
 	desc = "A device for tuning musical instruments both manual and electronic alike."
@@ -275,3 +289,29 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+
+/obj/item/choice_beacon/music
+	name = "instrument delivery beacon"
+	desc = "Summon your tool of art."
+	icon_state = "gangtool-red"
+
+/obj/item/choice_beacon/music/generate_display_names()
+	var/static/list/instruments
+	if(!instruments)
+		instruments = list()
+		var/list/templist = list(/obj/item/instrument/violin,
+							/obj/item/instrument/piano_synth,
+							/obj/item/instrument/guitar,
+							/obj/item/instrument/eguitar,
+							/obj/item/instrument/glockenspiel,
+							/obj/item/instrument/accordion,
+							/obj/item/instrument/trumpet,
+							/obj/item/instrument/saxophone,
+							/obj/item/instrument/trombone,
+							/obj/item/instrument/recorder,
+							/obj/item/instrument/harmonica
+							)
+		for(var/V in templist)
+			var/atom/A = V
+			instruments[initial(A.name)] = A
+	return instruments

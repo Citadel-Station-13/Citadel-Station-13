@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - admin: "Added the \"add PB bypass\" and \"revoke PB bypass\" verbs, which allow admins to let a specific ckey to bypass the panic bunker for the rest of the round"

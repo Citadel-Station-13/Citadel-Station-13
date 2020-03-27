@@ -35,10 +35,10 @@
 	. = ..()
 	if(!isliving(user))
 		return
-	if(user.mind && user.mind in immune_minds)
+	if(user.mind && (user.mind in immune_minds))
 		return
 	if(get_dist(user, src) <= 1)
-		to_chat(user, "<span class='notice'>You reveal [src]!</span>")
+		. += "<span class='notice'>You reveal [src]!</span>"
 		flare()
 
 /obj/structure/trap/proc/flare()
@@ -65,6 +65,8 @@
 		var/mob/M = AM
 		if(M.mind in immune_minds)
 			return
+		if(M.anti_magic_check())
+			flare()
 	if(charges <= 0)
 		return
 	flare()
@@ -80,8 +82,8 @@
 	icon_state = "trap-shock"
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
-	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
-	L.Knockdown(100)
+	L.electrocute_act(30, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
+	L.DefaultCombatKnockdown(100)
 
 /obj/structure/trap/fire
 	name = "flame trap"
@@ -90,7 +92,7 @@
 
 /obj/structure/trap/fire/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>Spontaneous combustion!</B></span>")
-	L.Knockdown(20)
+	L.DefaultCombatKnockdown(20)
 
 /obj/structure/trap/fire/flare()
 	..()
@@ -104,7 +106,7 @@
 
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
-	L.Knockdown(20)
+	L.DefaultCombatKnockdown(20)
 	L.adjust_bodytemperature(-300)
 	L.apply_status_effect(/datum/status_effect/freon)
 
@@ -117,7 +119,7 @@
 
 /obj/structure/trap/damage/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>The ground quakes beneath your feet!</B></span>")
-	L.Knockdown(100)
+	L.DefaultCombatKnockdown(100)
 	L.adjustBruteLoss(35)
 
 /obj/structure/trap/damage/flare()
@@ -133,7 +135,19 @@
 	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
-
 /obj/structure/trap/ward/New()
 	..()
 	QDEL_IN(src, time_between_triggers)
+
+/obj/structure/trap/cult
+	name = "unholy trap"
+	desc = "A trap that rings with unholy energy. You think you hear... chittering?"
+	icon_state = "trap-cult"
+
+/obj/structure/trap/cult/trap_effect(mob/living/L)
+	to_chat(L, "<span class='danger'><B>With a crack, the hostile constructs come out of hiding, stunning you!</B></span>")
+	L.electrocute_act(10, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
+	L.DefaultCombatKnockdown(20)
+	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
+	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
+	QDEL_IN(src, 30)

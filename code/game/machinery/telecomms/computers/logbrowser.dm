@@ -86,7 +86,7 @@
 					else if(isobj(mobtype))
 						race = "Machinery"
 
-					else if(ispath(mobtype, ))
+					else if(ispath(mobtype, /mob/living/simple_animal))
 						race = "Domestic Animal"
 
 					else
@@ -196,7 +196,7 @@
 
 		var/newnet = stripped_input(usr, "Which network do you want to view?", "Comm Monitor", network)
 
-		if(newnet && ((usr in range(1, src)) || issilicon(usr)))
+		if(newnet && ((usr in range(1, src)) || hasSiliconAccessInArea(usr)))
 			if(length(newnet) > 15)
 				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 

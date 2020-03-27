@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(pai)
 	var/spam_delay = 100
 	var/list/pai_card_list = list()
 
-/datum/controller/subsystem/pai/Topic(href, href_list[])
+/datum/controller/subsystem/pai/Topic(href, href_list)
 	if(href_list["download"])
 		var/datum/paiCandidate/candidate = locate(href_list["candidate"]) in candidates
 		var/obj/item/paicard/card = locate(href_list["device"]) in pai_card_list
@@ -39,36 +39,40 @@ SUBSYSTEM_DEF(pai)
 
 		switch(option)
 			if("name")
-				t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
+				t = reject_bad_name(stripped_input(usr, "Enter a name for your pAI", "pAI Name", candidate.name, MAX_NAME_LEN), TRUE)
 				if(t)
-					candidate.name = copytext(sanitize(t),1,MAX_NAME_LEN)
+					candidate.name = t
 			if("desc")
-				t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
+				t = stripped_multiline_input(usr, "Enter a description for your pAI", "pAI Description", candidate.description, MAX_MESSAGE_LEN)
 				if(t)
-					candidate.description = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+					candidate.description = t
 			if("role")
-				t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
+				t = stripped_input(usr, "Enter a role for your pAI", "pAI Role", candidate.role, MAX_MESSAGE_LEN)
 				if(t)
-					candidate.role = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+					candidate.role = t
 			if("ooc")
-				t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
+				t = stripped_multiline_input(usr, "Enter any OOC comments", "pAI OOC Comments", candidate.comments, MAX_MESSAGE_LEN)
 				if(t)
-					candidate.comments = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+					candidate.comments = t
 			if("save")
 				candidate.savefile_save(usr)
 			if("load")
 				candidate.savefile_load(usr)
 				//In case people have saved unsanitized stuff.
 				if(candidate.name)
-					candidate.name = copytext(sanitize(candidate.name),1,MAX_NAME_LEN)
+					candidate.name = copytext_char(sanitize(candidate.name),1,MAX_NAME_LEN)
 				if(candidate.description)
-					candidate.description = copytext(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
+					candidate.description = copytext_char(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
 				if(candidate.role)
-					candidate.role = copytext(sanitize(candidate.role),1,MAX_MESSAGE_LEN)
+					candidate.role = copytext_char(sanitize(candidate.role),1,MAX_MESSAGE_LEN)
 				if(candidate.comments)
-					candidate.comments = copytext(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
+					candidate.comments = copytext_char(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
 
 			if("submit")
+				if(isobserver(usr))
+					var/mob/dead/observer/O = usr
+					if(!O.can_reenter_round())
+						return FALSE
 				if(candidate)
 					candidate.ready = 1
 					for(var/obj/item/paicard/p in pai_card_list)
@@ -148,6 +152,8 @@ SUBSYSTEM_DEF(pai)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
+			if(!G.can_reenter_round()) // this should use notify_ghosts() instead one day.
+				return FALSE
 			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()

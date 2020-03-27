@@ -1,5 +1,0 @@
-author: "BurgerBB"
-delete-after: True
-changes: 
-  - tweak: "Tweaks how slurring works so it's more of a gradual change into slurring instead of immediate."
-  - balance: "Slurring is now directly proportional to your drunkenness, with other sources of slur being added on top of it."

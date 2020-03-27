@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "The voting system now actually tracks who voted for what. This means it's now possible to change your vote, and it's possible to see what you voted for."

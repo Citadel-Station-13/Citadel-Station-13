@@ -379,15 +379,6 @@
 /obj/item/camera,
 /turf/open/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
-"Nz" = (
-/obj/structure/table/bronze,
-/obj/item/implantcase,
-/obj/item/implantcase,
-/obj/item/implantcase,
-/obj/item/implanter,
-/obj/item/storage/backpack/duffelbag/sec/surgery,
-/turf/open/floor/clockwork/reebe,
-/area/reebe/city_of_cogs)
 "NH" = (
 /obj/structure/table/bronze,
 /obj/item/taperecorder,
@@ -409,10 +400,6 @@
 "WT" = (
 /turf/closed/wall/clockwork,
 /area/reebe)
-"Yy" = (
-/obj/structure/table/optable,
-/turf/open/floor/clockwork/reebe,
-/area/reebe/city_of_cogs)
 
 (1,1,1) = {"
 zb
@@ -26979,9 +26966,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+ae
+ae
+ae
 ab
 ab
 ab
@@ -27235,11 +27222,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+ae
+ag
+ag
+ag
+ae
 ab
 ab
 ab
@@ -27492,11 +27479,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+ae
+ag
+ag
+ag
+ae
 aF
 aF
 aF
@@ -27747,8 +27734,8 @@ ab
 ab
 ab
 ab
-ae
-ae
+ab
+ab
 ah
 ah
 ai
@@ -28003,9 +27990,9 @@ ab
 ab
 ab
 ab
-ae
-ag
-ag
+ab
+ab
+ab
 ah
 ar
 aj
@@ -28260,9 +28247,9 @@ ab
 ab
 ab
 ab
-ae
-ag
-ag
+ab
+ab
+ab
 ah
 as
 aj
@@ -28517,9 +28504,9 @@ ab
 ab
 ab
 ab
-ae
-ag
-ag
+ab
+ab
+ab
 ah
 VP
 aj
@@ -28775,8 +28762,8 @@ ab
 ab
 ab
 ab
-ae
-ae
+ab
+ab
 ah
 ah
 ay
@@ -29033,7 +29020,7 @@ ab
 ab
 ab
 ab
-ae
+ab
 an
 au
 aj
@@ -33657,7 +33644,7 @@ ab
 ab
 ab
 ab
-ae
+ab
 ah
 al
 aj
@@ -33914,11 +33901,11 @@ ab
 ab
 ab
 ab
-ae
+ab
 ai
 bE
 aj
-Yy
+aj
 aj
 aj
 aA
@@ -34171,11 +34158,11 @@ ab
 ab
 ab
 ab
-ae
+ab
 ah
 al
 aj
-Nz
+aj
 aj
 aC
 ah
@@ -34688,11 +34675,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+ae
+ae
+ag
+ae
+ae
 aF
 aF
 aF

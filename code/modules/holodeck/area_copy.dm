@@ -4,7 +4,12 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup"
 	))
 
+GLOBAL_LIST_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
+	/obj/item/gun/energy = "ammo_type"
+	)))
+
 /proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc = FALSE, atom/newloc = null, nerf = FALSE, holoitem=FALSE)
+	RETURN_TYPE(original.type)
 	if(!original)
 		return
 	var/atom/O
@@ -15,7 +20,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 		O = new original.type(newloc)
 
 	if(perfectcopy && O && original)
-		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
+		for(var/V in original.vars - GLOB.duplicate_forbidden_vars - GLOB.duplicate_forbidden_vars_by_type[O.type])
 			if(islist(original.vars[V]))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
@@ -122,7 +127,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)
-			T1.CalculateAdjacentTurfs()
+			CALCULATE_ADJACENT_TURFS(T1)
 			SSair.add_to_active(T1,1)
 
 

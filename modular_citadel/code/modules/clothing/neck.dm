@@ -15,7 +15,7 @@
 
 /datum/action/item_action/zanderlocket/Trigger()
 	new/obj/effect/temp_visual/souldeath(owner.loc, owner)
-	playsound(owner, 'modular_citadel/sound/misc/souldeath.ogg', 100, FALSE)
+	playsound(owner, 'sound/misc/souldeath.ogg', 100, FALSE)
 
 
 /obj/item/clothing/neck/undertale/Initialize()

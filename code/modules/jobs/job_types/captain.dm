@@ -10,9 +10,9 @@
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#aac1ee"
 	req_admin_notify = 1
-	minimal_player_age = 14
+	minimal_player_age = 20
 	exp_requirements = 180
-	exp_type = EXP_TYPE_CREW
+	exp_type = EXP_TYPE_COMMAND
 	exp_type_department = EXP_TYPE_COMMAND
 
 	outfit = /datum/outfit/job/captain
@@ -20,12 +20,12 @@
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
 
-	mind_traits = list(TRAIT_CAPTAIN_METABOLISM)
-//	mind_traits = list(TRAIT_DISK_VERIFIER)
+	mind_traits = list(TRAIT_CAPTAIN_METABOLISM, TRAIT_DISK_VERIFIER)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
+	threat = 5
 
 /datum/job/captain/get_access()
 	return get_all_accesses()

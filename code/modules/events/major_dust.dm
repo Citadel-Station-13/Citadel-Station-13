@@ -2,6 +2,7 @@
 	name = "Major Space Dust"
 	typepath = /datum/round_event/meteor_wave/major_dust
 	weight = 8
+	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/meteor_wave/major_dust
 	wave_name = "space dust"
@@ -19,10 +20,4 @@
 	if(prob(50))
 		priority_announce(pick(reason), "Collision Alert")
 	else
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-		for(var/obj/machinery/computer/communications/C in GLOB.machines)
-			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
-				var/obj/item/paper/P = new(C.loc)
-				P.name = "Collision Alert"
-				P.info = "[pick(reason)]"
-				P.update_icon()
+		print_command_report("[pick(reason)]", "Collision Alert")

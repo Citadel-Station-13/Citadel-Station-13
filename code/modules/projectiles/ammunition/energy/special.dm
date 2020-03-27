@@ -67,3 +67,8 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	e_cost = 2000 //20,000 is in the cell making this 10 shots before reload
 	projectile_type = /obj/item/projectile/beam/emitter
+
+/obj/item/ammo_casing/energy/shrink
+	projectile_type = /obj/item/projectile/beam/shrink
+	select_name = "shrink ray"
+	e_cost = 200

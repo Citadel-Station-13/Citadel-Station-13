@@ -56,11 +56,9 @@
 /obj/structure/chair/sofa{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/gorilla{
-	AIStatus = null;
-	desc = "There is no need to be upset.";
-	dir = 4;
-	name = "Familiar Gorilla"
+/mob/living/simple_animal/hostile/gorilla/familiar{
+	icon_state = "crawling";
+	dir = 4
 	},
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)

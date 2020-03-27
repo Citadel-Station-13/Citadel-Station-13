@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - rscadd: "Added custom species names! Examining people will now display their species name unless they're an Unknown or have their face hidden. like flavor text. Set it in your character window!"
-  - code_imp: "changed how health scanners print messages, wrapping it in msg for one to_chat instead of printing every line to_chat."

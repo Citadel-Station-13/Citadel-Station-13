@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Nameless captains will no longer proc a \"Captain Captain on deck!\" message. Instead, it'll be a much more boring but much more sensical  \"Captain on deck!\" message."

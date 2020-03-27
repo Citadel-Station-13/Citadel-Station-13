@@ -67,21 +67,36 @@
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
+/datum/export/material/plastitanium
+	cost = 165 // plasma + titanium costs
+	export_types = list(/obj/item/stack/sheet/mineral/plastitanium)
+	message = "of plastitanium"
+
+/datum/export/material/plastitanium_glass
+	cost = 168 // plasma + titanium + glass costs
+	export_types = list(/obj/item/stack/sheet/plastitaniumglass)
+	message = "of plastitanium glass"
+
 // 1 glass + 0.5 metal, cost is rounded up.
 /datum/export/stack/rglass
 	cost = 6
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
-/datum/export/stack/bscrystal
-	cost = 150
-	message = "of bluespace crystals"
-	export_types = list(/obj/item/stack/sheet/bluespace_crystal)
+/datum/export/stack/plastitanium
+	cost = 165 // plasma + titanium costs
+	message = "of plastitanium"
+	export_types = list(/obj/item/stack/sheet/mineral/plastitanium)
 
 /datum/export/stack/wood
 	cost = 15
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
+
+/datum/export/stack/log
+	cost = 10
+	unit_name = "raw wood"
+	export_types = list(/obj/item/grown/log)
 
 /datum/export/stack/cardboard
 	cost = 2
@@ -100,10 +115,16 @@
 	export_types = list(/obj/item/stack/cable_coil)
 
 /datum/export/stack/cloth
-	cost = 10
+	cost = 20
 	unit_name = "sheets"
 	message = "of cloth"
 	export_types = list(/obj/item/stack/sheet/cloth)
+
+/datum/export/stack/silk
+	cost = 200 //The new plasma
+	unit_name = "sheets"
+	message = "of silk"
+	export_types = list(/obj/item/stack/sheet/silk)
 
 /datum/export/stack/duracloth
 	cost = 40
@@ -117,12 +138,6 @@
 	cost = 400
 	message = "of alien alloy"
 	export_types = list(/obj/item/stack/sheet/mineral/abductor)
-
-/datum/export/stack/adamantine
-	unit_name = "bar"
-	cost = 250
-	message = "of adamantine"
-	export_types = list(/obj/item/stack/sheet/mineral/adamantine)
 
 /datum/export/stack/bone
 	cost = 20

@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Fixed body_markings in bodyparts being assigned as a list when in reality, it's a string and literally everything expects it to be a string and uses it as a string. This should mean that markings no longer have completely fucked up caches for character preview and other things."

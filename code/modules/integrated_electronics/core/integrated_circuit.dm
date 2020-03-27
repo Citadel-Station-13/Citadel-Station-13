@@ -4,7 +4,7 @@
 	icon = 'icons/obj/assemblies/electronic_components.dmi'
 	icon_state = "template"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list()				// To be filled later
+	custom_materials = null				// To be filled later
 	var/obj/item/electronic_assembly/assembly // Reference to the assembly holding this circuit, if any.
 	var/extended_desc
 	var/list/inputs = list()
@@ -26,8 +26,8 @@
 	var/displayed_name = ""
 	var/demands_object_input = FALSE
 	var/can_input_object_when_closed = FALSE
-	
-	
+
+
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
 a creative player the means to solve many problems.  Circuits are held inside an electronic assembly, and are wired using special tools.
@@ -35,8 +35,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 /obj/item/integrated_circuit/examine(mob/user)
 	interact(user)
-	external_examine(user)
 	. = ..()
+	. += external_examine(user)
 
 // Can be called via electronic_assembly/attackby()
 /obj/item/integrated_circuit/proc/additem(var/obj/item/I, var/mob/living/user)
@@ -62,7 +62,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 // This should be used when someone is examining from an 'outside' perspective, e.g. reading a screen or LED.
 /obj/item/integrated_circuit/proc/external_examine(mob/user)
-	any_examine(user)
+	return any_examine(user)
 
 /obj/item/integrated_circuit/proc/any_examine(mob/user)
 	return
@@ -84,7 +84,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	setup_io(inputs, /datum/integrated_io, inputs_default, IC_INPUT)
 	setup_io(outputs, /datum/integrated_io, outputs_default, IC_OUTPUT)
 	setup_io(activators, /datum/integrated_io/activate, null, IC_ACTIVATOR)
-	materials[MAT_METAL] = w_class * SScircuit.cost_multiplier
+	LAZYSET(custom_materials, /datum/material/iron, w_class * SScircuit.cost_multiplier)
 	. = ..()
 
 /obj/item/integrated_circuit/proc/on_data_written() //Override this for special behaviour when new data gets pushed to the circuit.
@@ -402,3 +402,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE
 
 	return FALSE
+
+/obj/item/integrated_circuit/can_trigger_gun(mob/living/user)
+	if(!user.is_holding(src))
+		return FALSE
+	return ..()

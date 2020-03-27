@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Server operators and badmins can now make the server play like TG by toggling the stamina buffer on/off using the DISABLE_STAMBUFFER config option."

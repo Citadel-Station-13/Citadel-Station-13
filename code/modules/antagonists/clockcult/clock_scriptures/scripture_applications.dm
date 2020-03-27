@@ -87,9 +87,22 @@
 	object_path = /obj/item/clockwork/construct_chassis/clockwork_marauder
 	construct_type = /mob/living/simple_animal/hostile/clockwork/marauder
 	combat_construct = TRUE
-	var/static/recent_marauders = 0
-	var/static/time_since_last_marauder = 0
-	var/static/scaled_recital_time = 0
+	var/static/last_marauder = 0
+
+/datum/clockwork_scripture/create_object/construct/clockwork_marauder/post_recital()
+	last_marauder = world.time
+	return ..()
+
+/datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
+	if(!is_reebe(invoker.z))
+		if(!CONFIG_GET(flag/allow_clockwork_marauder_on_station))
+			to_chat(invoker, "<span class='brass'>This particular station is too far from the influence of the Hierophant Network. You can not summon a marauder here.</span>")
+			return FALSE
+		if(world.time < (last_marauder + CONFIG_GET(number/marauder_delay_non_reebe)))
+			to_chat(invoker, "<span class='brass'>The hierophant network is still strained from the last summoning of a marauder on a plane without the strong energy connection of Reebe to support it. \
+			You must wait another [DisplayTimeText((last_marauder + CONFIG_GET(number/marauder_delay_non_reebe)) - world.time, TRUE)]!</span>")
+			return FALSE
+	return ..()
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/update_construct_limit()
 	var/human_servants = 0
@@ -98,27 +111,7 @@
 		var/mob/living/L = M.current
 		if(ishuman(L) && L.stat != DEAD)
 			human_servants++
-	construct_limit = round(CLAMP((human_servants / 4), 1, 3)) - recent_marauders //1 per 4 human servants, maximum of 3, reduced by recent marauder creation
-	if(recent_marauders)
-		to_chat(invoker, "<span class='warning'>The Hierophant Network is depleted by a summoning in the last [DisplayTimeText(MARAUDER_SCRIPTURE_SCALING_THRESHOLD, TRUE)] - limiting the number of available marauders by [recent_marauders]!</span>")
-
-/datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
-	channel_time = initial(channel_time)
-	if(recent_marauders)
-		scaled_recital_time = min(recent_marauders * MARAUDER_SCRIPTURE_SCALING_TIME, MARAUDER_SCRIPTURE_SCALING_MAX)
-		to_chat(invoker, "<span class='warning'>The Hierophant Network is under strain from repeated summoning, making this scripture [DisplayTimeText(scaled_recital_time)] slower!</span>")
-		channel_time += scaled_recital_time
-	return TRUE
-
-/datum/clockwork_scripture/create_object/construct/clockwork_marauder/scripture_effects()
-	. = ..()
-	recent_marauders++
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/marauder_reset),MARAUDER_SCRIPTURE_SCALING_THRESHOLD)
-
-/proc/marauder_reset()
-	var/datum/clockwork_scripture/create_object/construct/clockwork_marauder/CM = new()
-	CM.recent_marauders--
-	qdel(CM)
+	construct_limit = round(CLAMP((human_servants / 4), 1, 3))	//1 per 4 human servants, maximum of 3
 
 //Summon Neovgre: Summon a very powerful combat mech that explodes when destroyed for massive damage.
 /datum/clockwork_scripture/create_object/summon_arbiter
@@ -146,6 +139,6 @@
 
 /datum/clockwork_scripture/create_object/summon_arbiter/check_special_requirements()
 	if(GLOB.neovgre_exists)
-		to_chat(invoker, "<span class='brass'>\"You've already got one...\"</span>")
+		to_chat(invoker, "<span class='nezbere'>\"Only one of my weapons may exist in this temporal stream!\"</span>")
 		return FALSE
 	return ..()

@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "Tauric suits now apply an (placeholder) blood overlay, as well as their shield overlay."

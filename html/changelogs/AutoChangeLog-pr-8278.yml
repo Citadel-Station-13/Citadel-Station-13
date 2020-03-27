@@ -1,5 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - rscadd: "Armor to blob shields"
-  - tweak: "block weaken state to 70% from 75%"

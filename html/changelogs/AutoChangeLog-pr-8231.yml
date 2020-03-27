@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - tweak: "hypospray kits hold 12 now, but only vials and sprays themselves"
-  - bugfix: "labcoats can carry MK II hyposprays on them now."

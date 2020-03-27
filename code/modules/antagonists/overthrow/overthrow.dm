@@ -10,6 +10,7 @@
 	roundend_category = "syndicate mutineers"
 	antagpanel_category = "Syndicate Mutineers"
 	job_rank = ROLE_TRAITOR // simply use the traitor preference & jobban settings
+	threat = 5
 	var/datum/team/overthrow/team
 	var/static/list/possible_useful_items
 
@@ -26,7 +27,6 @@
 // Sets objectives, equips all antags with the storage implant.
 /datum/antagonist/overthrow/on_gain()
 	objectives += team.objectives
-	owner.objectives += objectives
 	..()
 	owner.announce_objectives()
 	equip_overthrow()
@@ -34,7 +34,6 @@
 
 /datum/antagonist/overthrow/on_removal()
 	owner.special_role = null
-	owner.objectives -= objectives
 	..()
 
 // Creates the overthrow team, or sets it. The objectives are static for all the team members.

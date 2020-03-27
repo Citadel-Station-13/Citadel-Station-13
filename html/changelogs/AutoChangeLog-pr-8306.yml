@@ -1,6 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "fixed medical hardsuit overlay issue. I thought it was going to work well but fuck byond."
-  - bugfix: "None body markings shouldn't give rgb hell, but it also should reset properly anyway. ree."
-  - bugfix: "Sorted some sprites to better sooth my byond icon limit anxiety."

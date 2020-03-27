@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Jukeboxes now properly remove themselves from the active jukebox list when destroyed"

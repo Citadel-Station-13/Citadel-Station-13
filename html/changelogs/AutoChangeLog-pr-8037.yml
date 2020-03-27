@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "Cyborg mounted disablers/tasers/lasers now slowly self-recharge off the cyborg user's power cell instead of draining from it directly."
-  - tweak: "Borg rechargers now properly recharge the borg module's energy guns."
-  - bugfix: "Prevents a couple more special/mounted guns from being preserved on cryo"

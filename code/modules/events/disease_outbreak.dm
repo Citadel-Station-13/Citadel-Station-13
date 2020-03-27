@@ -14,7 +14,7 @@
 
 
 /datum/round_event/disease_outbreak/announce(fake)
-	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak7.ogg')
+	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", "outbreak7")
 
 /datum/round_event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)
@@ -37,6 +37,8 @@
 			continue
 		if(!H.client)
 			continue
+		if(HAS_TRAIT(H,TRAIT_EXEMPT_HEALTH_EVENTS))
+			continue
 		if(H.stat == DEAD)
 			continue
 		if(HAS_TRAIT(H, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
@@ -57,11 +59,11 @@
 				var/datum/disease/dnaspread/DS = D
 				DS.strain_data["name"] = H.real_name
 				DS.strain_data["UI"] = H.dna.uni_identity
-				DS.strain_data["SE"] = H.dna.struc_enzymes
+				DS.strain_data["SE"] = H.dna.mutation_index
 			else
 				D = new virus_type()
 		else
-			D = new /datum/disease/advance/random(max_severity, max_severity)
+			D = new /datum/disease/advance/random(TRUE, max_severity, max_severity)
 		D.carrier = TRUE
 		H.ForceContractDisease(D, FALSE, TRUE)
 

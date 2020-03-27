@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "The bug where you can sometimes get permanently stuck in stamcrit should HOPEFULLY be fixed. I'm unable to reproduce the bug myself, but let's hope."

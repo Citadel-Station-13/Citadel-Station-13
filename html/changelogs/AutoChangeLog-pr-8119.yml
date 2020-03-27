@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Sparks and igniters will now actually heat areas rather than cooling them, as was intended."
-  - tweak: "To alleviate some potential complaints, RPDs now have a cooldown before they can create sparks, and both RPDs and emitters produce less sparks."

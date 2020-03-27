@@ -151,6 +151,7 @@ h1.alert, h2.alert		{color: #000000;}
 .extremelybig			{font-size: 5;}
 .greentext				{color: #00FF00;	font-size: 3;}
 .redtext				{color: #FF0000;	font-size: 3;}
+.yellowtext				{color: #FFCC00;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 .spooky					{color: #FF9100;}
@@ -165,9 +166,9 @@ h1.alert, h2.alert		{color: #000000;}
 
 .hypnophrase			{color: #3bb5d3;	font-weight: bold; animation: hypnocolor 1500ms infinite;}
 @keyframes hypnocolor {
-    0% { color: #0d0d0d; }
-    25% { color: #410194; }
-    50% { color: #7f17d8; }
+	0% { color: #0d0d0d; }
+	25% { color: #410194; }
+	50% { color: #7f17d8; }
 	75% { color: #410194; }
 	100% { color: #3bb5d3; }
 }

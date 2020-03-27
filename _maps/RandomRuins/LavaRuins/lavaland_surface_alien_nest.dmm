@@ -167,7 +167,7 @@
 /area/ruin/unpowered/xenonest)
 "aM" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aQ" = (
@@ -260,7 +260,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/xenonest)
 "be" = (
@@ -381,7 +381,7 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/xenonest)
 "bs" = (
@@ -439,7 +439,7 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/xenonest)
 "by" = (

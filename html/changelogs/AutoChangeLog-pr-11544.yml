@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "Ninjas may be asked to steal the CMO's smart drapes"
+  - tweak: "Hyper Cell steal goal is upgraded to a bluespace cell, as well as the BoH goal now wants a type of BoH rather then the normal default one."

@@ -12,7 +12,7 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
-/datum/surgery/advanced/revival/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/advanced/revival/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	if(!..())
 		return FALSE
 	if(target.stat != DEAD)
@@ -65,6 +65,9 @@
 		target.visible_message("...[target] wakes up, alive and aware!")
 		target.emote("gasp")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
+		for(var/obj/item/organ/O in target.internal_organs)//zap those buggers back to life!
+			if(O.organ_flags & ORGAN_FAILING)
+				O.applyOrganDamage(-5)
 		return TRUE
 	else
 		user.visible_message("...[target.p_they()] convulses, then lies still.")

@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - admin: "Panic bunker toggling and bypassing is now logged in admin IRC"

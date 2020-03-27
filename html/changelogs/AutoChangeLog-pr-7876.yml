@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - admin: "When the nuclear disk stays stationary long enough to trigger an increase for the lone op event chance, admins will be notified every five increments."

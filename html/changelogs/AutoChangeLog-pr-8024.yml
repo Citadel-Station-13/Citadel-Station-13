@@ -1,6 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "The blood splatter effect that happens when you get attacked will now always make you lose blood depending on the damage you've taken. The effect now also scales with item damage, meaning tiny little papercuts will no longer be able to cause a massive blood splatter."
-  - rscadd: "The blood reagent will now cover items and spacemen in blood when applied to objects and mobs."
-  - tweak: "Helmets, masks, and neck items are all now valid targets to get splattered when you get covered in blood. Groovy."

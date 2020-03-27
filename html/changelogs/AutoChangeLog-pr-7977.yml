@@ -1,5 +1,0 @@
-author: "Zargserg"
-delete-after: True
-changes: 
-  - balance: "Lungs maximum toxin threshold is 0.5% of the atmosphere."
-  - bugfix: "Permanently contaminated atmosphere does not murder crew anymore."

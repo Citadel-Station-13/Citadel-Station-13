@@ -65,7 +65,7 @@
 		return FALSE
 	if(!isliving(AM) && !isobj(AM))
 		return FALSE
-	if(is_type_in_typecache(AM, forbidden_types) || AM.throwing || AM.floating)
+	if(is_type_in_typecache(AM, forbidden_types) || AM.throwing || (AM.movement_type & FLOATING))
 		return FALSE
 	//Flies right over the chasm
 	if(ismob(AM))
@@ -100,7 +100,7 @@
 		AM.forceMove(T)
 		if(isliving(AM))
 			var/mob/living/L = AM
-			L.Knockdown(100)
+			L.DefaultCombatKnockdown(100)
 			L.adjustBruteLoss(30)
 		falling_atoms -= AM
 
@@ -110,8 +110,7 @@
 		if (isliving(AM))
 			var/mob/living/L = AM
 			L.notransform = TRUE
-			L.Stun(200)
-			L.resting = TRUE
+			L.Paralyze(200)
 
 		var/oldtransform = AM.transform
 		var/oldcolor = AM.color

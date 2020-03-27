@@ -1,4 +1,0 @@
-author: "JTGSZ"
-delete-after: True
-changes: 
-  - bugfix: "qualifies_for_rank now checks latejoin menu"

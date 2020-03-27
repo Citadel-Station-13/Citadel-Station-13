@@ -5,14 +5,14 @@
 	icon_state = "coffee"
 	icon_vend = "coffee-vend"
 	products = list(/obj/item/reagent_containers/food/drinks/coffee = 25,
-		            /obj/item/reagent_containers/food/drinks/mug/tea = 25,
-		            /obj/item/reagent_containers/food/drinks/mug/coco = 25)
+					/obj/item/reagent_containers/food/drinks/mug/tea = 25,
+					/obj/item/reagent_containers/food/drinks/mug/coco = 25)
 	contraband = list(/obj/item/reagent_containers/food/drinks/ice = 12)
 	premium = list(/obj/item/reagent_containers/food/snacks/chocolatebar = 3,
-				   /obj/item/reagent_containers/food/condiment/milk = 2,
-				   /obj/item/reagent_containers/food/drinks/bottle/cream = 2,
-				   /obj/item/reagent_containers/food/condiment/sugar = 1)
-				   
+					/obj/item/reagent_containers/food/condiment/milk = 2,
+					/obj/item/reagent_containers/food/drinks/bottle/cream = 2,
+					/obj/item/reagent_containers/food/condiment/sugar = 1)
+
 	refill_canister = /obj/item/vending_refill/coffee
 
 /obj/item/vending_refill/coffee

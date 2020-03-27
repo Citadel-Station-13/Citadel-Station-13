@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "Digitigrade legs returned to normal, since digi leg markings overlay them anyway."
-  - bugfix: "commented out lizard mam_snout entries, because too many abominations"

@@ -1,6 +1,0 @@
-author: "Fermis"
-delete-after: True
-changes: 
-  - tweak: "tweaked Neurotoxin"
-  - balance: "added more depth to Neurotoxin"
-  - bugfix: "fixed the inability to create Neurotoxin"

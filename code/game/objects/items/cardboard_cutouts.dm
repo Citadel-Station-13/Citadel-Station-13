@@ -9,10 +9,10 @@
 	// Possible restyles for the cutout;
 	// add an entry in change_appearance() if you add to here
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
-		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
+		"Traitor", "Nuke Op", "Cultist", "Brass Cultist", "Clockwork Cultist",
 		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
-		"Laughter Demon", "Private Security Officer")
+		"Laughter Demon", "Private Security Officer", "Securitron", "Gondola", "Monkey")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
 
@@ -74,6 +74,7 @@
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))
 		push_over()
+	return BULLET_ACT_HIT
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
 	if(!crayon || !user)
@@ -123,10 +124,14 @@
 			name = "Unknown"
 			desc = "A cardboard cutout of a cultist."
 			icon_state = "cutout_cultist"
+		if("Brass Cultist")
+			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+			desc = "A cardboard cutout of a \"servant\" of Ratvar."
+			icon_state = "cutout_servant"
 		if("Clockwork Cultist")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboard cutout of a servant of Ratvar."
-			icon_state = "cutout_servant"
+			icon_state = "cutout_new_servant"
 		if("Revolutionary")
 			name = "Unknown"
 			desc = "A cardboard cutout of a revolutionary."
@@ -179,6 +184,18 @@
 			name = "Private Security Officer"
 			desc = "A cardboard cutout of a private security officer."
 			icon_state = "cutout_ntsec"
+		if("Securitron")
+			name = "[pick("Officer", "Oftiser", "Sergeant", "General")][pick(" Genesky", " Pingsky", " Beepsky", " Pipsqueak", "-at-Armsky")]"
+			desc = "A cardboard cutout of a securitron."
+			icon_state = "cutout_law"
+		if("Gondola")
+			name = "gondola"
+			desc = "A cardboard cutout of a gondola."
+			icon_state = "cutout_gondola"
+		if("Monkey")
+			name = "monkey ([rand(1, 999)])"
+			desc = "A cardboard cutout of a monkey."
+			icon_state = "cutout_monky"
 	return 1
 
 /obj/item/cardboard_cutout/setDir(newdir)

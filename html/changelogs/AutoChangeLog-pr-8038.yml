@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - admin: "The out-of-game round end notification is now a little more verbose. It'll now display the round type, end result of the round, and the survival rate."

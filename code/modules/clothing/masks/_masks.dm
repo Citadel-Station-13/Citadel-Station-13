@@ -8,9 +8,6 @@
 	var/modifies_speech = FALSE
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
-	var/muzzle_var = NORMAL_STYLE
-	mutantrace_variation = NO_MUTANTRACE_VARIATION //most masks have overrides, but not all probably.
-
 
 /obj/item/clothing/mask/attack_self(mob/user)
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
@@ -24,28 +21,6 @@
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
-	if(!ishuman(M))
-		return
-	var/mob/living/carbon/human/H = M
-	var/datum/species/pref_species = H.dna.species
-
-	if(mutantrace_variation)
-		if("mam_snouts" in pref_species.default_features)
-			if(H.dna.features["mam_snouts"] != "None")
-				muzzle_var = ALT_STYLE
-			else
-				muzzle_var = NORMAL_STYLE
-
-		else if("snout" in pref_species.default_features)
-			if(H.dna.features["snout"] != "None")
-				muzzle_var = ALT_STYLE
-			else
-				muzzle_var = NORMAL_STYLE
-
-		else
-			muzzle_var = NORMAL_STYLE
-
-		H.update_inv_wear_mask()
 
 /obj/item/clothing/mask/dropped(mob/M)
 	. = ..()
@@ -53,14 +28,14 @@
 
 /obj/item/clothing/mask/proc/handle_speech()
 
-/obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/mask/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			IF_HAS_BLOOD_DNA(src)
-				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+			if(blood_DNA)
+				. += mutable_appearance('icons/effects/blood.dmi', "maskblood", color = blood_DNA_to_color())
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaging = TRUE)
 	..()

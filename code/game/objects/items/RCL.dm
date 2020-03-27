@@ -2,8 +2,8 @@
 	name = "rapid cable layer"
 	desc = "A device used to rapidly deploy cables. It has screws on the side which can be removed to slide off the cables. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcl-empty"
-	item_state = "rcl-0"
+	icon_state = "rcl"
+	item_state = "rcl"
 	var/obj/structure/cable/last
 	var/obj/item/stack/cable_coil/loaded
 	opacity = FALSE
@@ -20,8 +20,16 @@
 	var/ghetto = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	var/datum/component/mobhook
 	var/datum/radial_menu/persistent/wiring_gui_menu
+	var/mob/listeningTo
+
+/obj/item/twohanded/rcl/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/twohanded/rcl/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -79,45 +87,39 @@
 		..()
 
 /obj/item/twohanded/rcl/examine(mob/user)
-	..()
+	. = ..()
 	if(loaded)
-		to_chat(user, "<span class='info'>It contains [loaded.amount]/[max_amount] cables.</span>")
+		. += "<span class='info'>It contains [loaded.amount]/[max_amount] cables.</span>"
 
 /obj/item/twohanded/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
-	QDEL_NULL(mobhook)
+	listeningTo = null
 	QDEL_NULL(wiring_gui_menu)
 	return ..()
 
-/obj/item/twohanded/rcl/update_icon()
-	if(!loaded)
-		icon_state = "rcl-empty"
-		item_state = "rcl-empty"
+/obj/item/twohanded/rcl/update_icon_state()
+	icon_state = initial(icon_state)
+	item_state = initial(item_state)
+	if(!loaded || !loaded.amount)
+		icon_state += "-empty"
+		item_state += "-0"
+
+/obj/item/twohanded/rcl/update_overlays()
+	. = ..()
+	if(!loaded || !loaded.amount)
 		return
-	cut_overlays()
-	var/cable_amount = 0
-	switch(loaded.amount)
-		if(61 to INFINITY)
-			cable_amount = 3
-		if(31 to 60)
-			cable_amount = 2
-		if(1 to 30)
-			cable_amount = 1
-		else
-			cable_amount = 0
-
-	var/mutable_appearance/cable_overlay = mutable_appearance(icon, "rcl-[cable_amount]")
+	var/mutable_appearance/cable_overlay = mutable_appearance(icon, "[initial(icon_state)]-[CEILING(loaded.amount/(max_amount/3), 1)]")
 	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
-	if(cable_amount >= 1)
-		icon_state = "rcl"
-		item_state = "rcl"
-		add_overlay(cable_overlay)
-	else
-		icon_state = "rcl-empty"
-		item_state = "rcl-0"
-		add_overlay(cable_overlay)
+	. += cable_overlay
 
+/obj/item/twohanded/rcl/worn_overlays(isinhands, icon_file, style_flags = NONE)
+	. = ..()
+	if(!isinhands || !(loaded?.amount))
+		return
+	var/mutable_appearance/cable_overlay = mutable_appearance(icon_file, "rcl-[CEILING(loaded.amount/(max_amount/3), 1)]")
+	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
+	. += cable_overlay
 
 /obj/item/twohanded/rcl/proc/is_empty(mob/user, loud = 1)
 	update_icon()
@@ -141,9 +143,8 @@
 
 /obj/item/twohanded/rcl/dropped(mob/wearer)
 	..()
-	if(mobhook)
-		active = FALSE
-		QDEL_NULL(mobhook)
+	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	last = null
 
 /obj/item/twohanded/rcl/attack_self(mob/user)
@@ -158,13 +159,12 @@
 				break
 
 obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
-	if(to_hook)
-		if(mobhook && mobhook.parent != to_hook)
-			QDEL_NULL(mobhook)
-		if (!mobhook)
-			mobhook = to_hook.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger)))
-	else
-		QDEL_NULL(mobhook)
+	if(listeningTo == to_hook)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, .proc/trigger)
+	listeningTo = to_hook
 
 /obj/item/twohanded/rcl/proc/trigger(mob/user)
 	if(active)
@@ -291,18 +291,6 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 
 	wiringGuiUpdate(user)
 
-
-/obj/item/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
-	. = ..()
-	loaded = new()
-	loaded.max_amount = max_amount
-	loaded.amount = max_amount
-	update_icon()
-
-/obj/item/twohanded/rcl/Initialize()
-	. = ..()
-	update_icon()
-
 /obj/item/twohanded/rcl/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/rcl_col))
 		current_color_index++;
@@ -321,37 +309,15 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 		else //open the menu
 			showWiringGui(user)
 
+/obj/item/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
+	loaded = new()
+	loaded.max_amount = max_amount
+	loaded.amount = max_amount
+	return ..()
+
 /obj/item/twohanded/rcl/ghetto
 	actions_types = list()
 	max_amount = 30
 	name = "makeshift rapid cable layer"
+	icon_state = "rclg"
 	ghetto = TRUE
-
-/obj/item/twohanded/rcl/ghetto/update_icon()
-	if(!loaded)
-		icon_state = "rclg-empty"
-		item_state = "rclg-0"
-		return
-	cut_overlays()
-	var/cable_amount = 0
-	switch(loaded.amount)
-		if(20 to INFINITY)
-			cable_amount = 3
-		if(10 to 19)
-			cable_amount = 2
-		if(1 to 9)
-			cable_amount = 1
-		else
-			cable_amount = 0
-
-	var/mutable_appearance/cable_overlay = mutable_appearance(icon, "rcl-[cable_amount]")
-	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
-	if(cable_amount >= 1)
-		icon_state = "rclg"
-		item_state = "rclg"
-		add_overlay(cable_overlay)
-	else
-		icon_state = "rclg-empty"
-		item_state = "rclg-0"
-		add_overlay(cable_overlay)
-

@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "The sprint hotkey will no longer cause you to get permanently stuck sprinting if the server lags. Just tap shift again if you get stuck"

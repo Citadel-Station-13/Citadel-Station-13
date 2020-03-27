@@ -33,7 +33,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	max_integrity = 300
-	integrity_failure = 100
+	integrity_failure = 0.33
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
 	var/active = 1		//No sales pitches if off!
@@ -66,7 +66,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/obj/item/coin/coin
 	var/obj/item/stack/spacecash/bill
 
-	var/global/vending_cache = list() //used for storing the icons of items being vended
+	var/static/vending_cache = list() //used for storing the icons of items being vended
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 

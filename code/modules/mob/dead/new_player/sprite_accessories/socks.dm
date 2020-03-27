@@ -2,6 +2,9 @@
 // Socks Definitions //
 ///////////////////////
 
+/datum/sprite_accessory/underwear/socks
+	has_digitigrade = TRUE
+
 /datum/sprite_accessory/underwear/socks/nude
 	name = "Nude"
 	icon_state = null
@@ -43,6 +46,18 @@
 	name = "Knee-High - UK"
 	icon_state = "uk_knee"
 
+/datum/sprite_accessory/underwear/socks/christmas_knee
+	name = "Knee-High - Christmas"
+	icon_state = "christmas_knee"
+
+/datum/sprite_accessory/underwear/socks/candycaner_knee
+	name = "Knee-High - Red Candy Cane"
+	icon_state = "candycaner_knee"
+
+/datum/sprite_accessory/underwear/socks/candycaneg_knee
+	name = "Knee-High - Green Candy Cane"
+	icon_state = "candycaneg_knee"
+
 /datum/sprite_accessory/underwear/socks/socks_norm
 	name = "Normal"
 	icon_state = "socks_norm"
@@ -51,6 +66,18 @@
 /datum/sprite_accessory/underwear/socks/bee_norm
 	name = "Normal - Bee"
 	icon_state = "bee_norm"
+
+/datum/sprite_accessory/underwear/socks/christmas_norm
+	name = "Normal - Christmas"
+	icon_state = "christmas_norm"
+
+/datum/sprite_accessory/underwear/socks/candycaner_norm
+	name = "Normal - Red Candy Cane"
+	icon_state = "candycaner_norm"
+
+/datum/sprite_accessory/underwear/socks/candycaneg_norm
+	name = "Normal - Green Candy Cane"
+	icon_state = "candycaneg_norm"
 
 /datum/sprite_accessory/underwear/socks/pantyhose
 	name = "Pantyhose"
@@ -131,3 +158,15 @@
 /datum/sprite_accessory/underwear/socks/uk_thigh
 	name = "Thigh-high - UK"
 	icon_state = "uk_thigh"
+
+/datum/sprite_accessory/underwear/socks/christmas_thigh
+	name = "Thigh-high - Christmas"
+	icon_state = "christmas_thigh"
+
+/datum/sprite_accessory/underwear/socks/candycaner_thigh
+	name = "Thigh-high - Red Candy Cane"
+	icon_state = "candycaner_thigh"
+
+/datum/sprite_accessory/underwear/socks/candycaneg_thigh
+	name = "Thigh-high - Green Candy Cane"
+	icon_state = "candycaneg_thigh"

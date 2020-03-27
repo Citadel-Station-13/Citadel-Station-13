@@ -130,10 +130,10 @@
 	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/rabbit
-    name = "Rabbit"
-    icon_state = "rabbit"
-    color_src = MATRIXED
-    icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/sergal
 	name = "Sergal"
@@ -159,6 +159,11 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
+/datum/sprite_accessory/ears/bunny
+	name = "Bunny"
+	icon_state = "bunny"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /******************************************
 *************** Furry Ears ****************
@@ -175,6 +180,10 @@
 /datum/sprite_accessory/mam_ears/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
+
+/datum/sprite_accessory/mam_ears/bat
+	name = "Bat"
+	icon_state = "bat"
 
 /datum/sprite_accessory/mam_ears/bear
 	name = "Bear"
@@ -283,8 +292,8 @@
 	icon_state = "pede"
 
 /datum/sprite_accessory/mam_ears/rabbit
-    name = "Rabbit"
-    icon_state = "rabbit"
+	name = "Rabbit"
+	icon_state = "rabbit"
 
 /datum/sprite_accessory/mam_ears/sergal
 	name = "Sergal"
@@ -297,3 +306,7 @@
 /datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
+
+/datum/sprite_accessory/mam_ears/bunny
+	name = "Bunny"
+	icon_state = "bunny"

@@ -1,71 +1,76 @@
-// Note: BYOND is object oriented. There is no reason for this to be copy/pasted blood code.
 
-/obj/effect/decal/cleanable/xenoblood
+/obj/effect/decal/cleanable/blood/xeno
 	name = "xeno blood"
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "xfloor1"
-	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	blood_state = BLOOD_STATE_XENO
+	color = BLOOD_COLOR_XENO
 
-/obj/effect/decal/cleanable/xenoblood/Initialize()
+/obj/effect/decal/cleanable/blood/splatter/xeno
+	color = BLOOD_COLOR_XENO
+
+/obj/effect/decal/cleanable/blood/gibs/xeno
+	color = BLOOD_COLOR_XENO
+	gibs_reagent_id = /datum/reagent/liquidgibs/xeno
+	gibs_bloodtype = "X*"
+
+/obj/effect/decal/cleanable/blood/gibs/xeno/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
+	update_icon()
 
-/obj/effect/decal/cleanable/xenoblood/xsplatter
-	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
+/obj/effect/decal/cleanable/blood/gibs/xeno/update_icon()
+	add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
+	cut_overlays()
+	var/mutable_appearance/flesh = mutable_appearance(icon, "[icon_state]x_flesh")
+	flesh.appearance_flags = RESET_COLOR
+	flesh.color = body_colors
+	add_overlay(flesh)
 
-/obj/effect/decal/cleanable/xenoblood/xgibs
-	name = "xeno gibs"
-	desc = "Gnarly..."
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "xgib1"
-	layer = LOW_OBJ_LAYER
-	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
-	mergeable_decal = FALSE
-
-/obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
-	set waitfor = 0
+/obj/effect/decal/cleanable/blood/gibs/xeno/streak(list/directions)
+	set waitfor = FALSE
+	var/list/diseases = list()
+	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, diseases)
 	var/direction = pick(directions)
-	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
-		sleep(2)
-		if(i > 0)
-			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
-		if(!step_to(src, get_step(src, direction), 0))
-			break
+	var/dist = 0
+	if(prob(50))		//yes this and the one below are different for a reason.
+		if(prob(25))
+			dist = 2
+		else
+			dist = 1
+	if(dist)
+		for(var/i in 1 to dist)
+			sleep(2)
+			var/obj/effect/decal/cleanable/blood/splatter/xeno/splat = new /obj/effect/decal/cleanable/blood/splatter/xeno(loc, diseases)
+			splat.transfer_blood_dna(blood_DNA, diseases)
+			if(!step_to(src, get_step(src, direction), 0))
+				break
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
-	return
+/obj/effect/decal/cleanable/blood/gibs/xeno/up
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/up
-	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
+/obj/effect/decal/cleanable/blood/gibs/xeno/down
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/down
-	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibdown1","xgibdown1","xgibdown1")
+/obj/effect/decal/cleanable/blood/gibs/xeno/body
+	random_icon_states = list("gibhead", "gibtorso")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/body
-	random_icon_states = list("xgibhead", "xgibtorso")
+/obj/effect/decal/cleanable/blood/gibs/xeno/torso
+	random_icon_states = list("gibtorso")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/torso
-	random_icon_states = list("xgibtorso")
+/obj/effect/decal/cleanable/blood/gibs/xeno/limb
+	random_icon_states = list("gibleg", "gibarm")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/limb
-	random_icon_states = list("xgibleg", "xgibarm")
+/obj/effect/decal/cleanable/blood/gibs/xeno/core
+	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/core
-	random_icon_states = list("xgibmid1", "xgibmid2", "xgibmid3")
-
-/obj/effect/decal/cleanable/xenoblood/xgibs/larva
+/obj/effect/decal/cleanable/blood/gibs/xeno/larva
 	random_icon_states = list("xgiblarva1", "xgiblarva2")
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body
+/obj/effect/decal/cleanable/blood/gibs/xeno/larva/body
 	random_icon_states = list("xgiblarvahead", "xgiblarvatorso")
 
 /obj/effect/decal/cleanable/blood/xtracks
-	icon_state = "xtracks"
+	icon_state = "tracks"
 	random_icon_states = null
 
 /obj/effect/decal/cleanable/blood/xtracks/Initialize()
+	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 	. = ..()
-	add_blood_DNA(list("Unknown DNA" = "X*"))

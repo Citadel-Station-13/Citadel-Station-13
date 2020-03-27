@@ -1,6 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "Mops no longer have a delay on their cleaning, making them an actually viable alternative to all of the janitor's other cleaning tools"
-  - balance: "To balance this, mops now take stamina to clean tiles. Standard mops take 5 stamina to use, while advanced mops take 2 stamina."
-  - tweak: "Oh and also mops make fancy new sounds and play animations when used now"

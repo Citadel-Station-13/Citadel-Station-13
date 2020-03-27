@@ -10,6 +10,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	strip_mod = 0.9
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
@@ -23,6 +24,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 30)
+	strip_mod = 0.9
 
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
@@ -38,6 +40,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	strip_mod = 1.5
 
 
 /obj/item/clothing/gloves/bracer
@@ -58,7 +61,7 @@
 
 /obj/item/clothing/gloves/rapid
 	name = "Gloves of the North Star"
-	desc = "Just looking at these fills you with an urge to beat the shit out of people."
+	desc = "Just looking at these fills you with an urge to beat the shit out of people. Violently."
 	icon_state = "rapid"
 	item_state = "rapid"
 	transfer_prints = TRUE
@@ -69,12 +72,10 @@
 		return
 
 	var/mob/living/M = loc
-
-	if(M.a_intent == INTENT_HARM)
-		M.changeNext_move(CLICK_CD_RAPID)
-		M.adjustStaminaLoss(-2) //Restore 2/3 of the stamina used assuming empty stam buffer. With proper stamina buffer management, this results in a net gain of +.5 stamina per click.
-		if(warcry)
-			M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
+	M.changeNext_move(CLICK_CD_RAPID)
+	M.adjustStaminaLoss(-3.5) // used to be -2 with some comment about stamina buffer management but *shrug -hatterhat
+	if(warcry)
+		M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
 
 	.= FALSE
 
@@ -86,7 +87,7 @@
 
 /obj/item/clothing/gloves/rapid/hug
 	name = "Hugs of the North Star"
-	desc = "Just looking at these fills you with an urge to hug the shit out of people"
+	desc = "Just looking at these fills you with an urge to hug the shit out of people. In a very friendly manner."
 	warcry = "owo" //Shouldn't ever come into play
 
 /obj/item/clothing/gloves/rapid/hug/Touch(mob/living/target,proximity = TRUE)
@@ -97,7 +98,7 @@
 
 	if(M.a_intent == INTENT_HELP)
 		if(target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH)) //Can't hug people who are dying/dead
-			if(target.on_fire || target.lying ) //No spamming extinguishing, helping them up, or other non-hugging/patting help interactions
+			if(target.on_fire || target.lying) //No spamming extinguishing, helping them up, or other non-hugging/patting help interactions
 				return
 			else
 				M.changeNext_move(CLICK_CD_RAPID)
@@ -105,3 +106,15 @@
 
 /obj/item/clothing/gloves/rapid/hug/attack_self(mob/user)
 	return FALSE
+
+/obj/item/clothing/gloves/thief
+	name = "black gloves"
+	desc = "Gloves made with completely frictionless, insulated cloth, easier to steal from people with."
+	icon_state = "thief"
+	item_state = "blackgloves"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	strip_delay = 80
+	transfer_prints = FALSE
+	strip_mod = 5
+	strip_silence = TRUE

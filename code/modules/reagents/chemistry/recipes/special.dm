@@ -123,7 +123,6 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /datum/chemical_reaction/randomized/proc/LoadOldRecipe(recipe_data)
 	created = text2num(recipe_data["timestamp"])
-
 	var/req_reag = unwrap_reagent_list(recipe_data["required_reagents"])
 	if(!req_reag)
 		return FALSE
@@ -149,13 +148,13 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /datum/chemical_reaction/randomized/secret_sauce
 	name = "secret sauce creation"
-	id = "secretsauce"
+	id = /datum/reagent/consumable/secretsauce
 	persistent = TRUE
 	persistence_period = 7 //Reset every week
 	randomize_container = TRUE
 	possible_containers = list(/obj/item/reagent_containers/glass/bucket) //easy way to ensure no common conflicts
 	randomize_req_temperature = TRUE
-	results = list("secret_sauce" =1)
+	results = list(/datum/reagent/consumable/secretsauce =1)
 
 /datum/chemical_reaction/randomized/secret_sauce/GetPossibleReagents(kind)
 	switch(kind)
@@ -169,11 +168,11 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /obj/item/paper/secretrecipe
 	name = "old recipe"
-	var/recipe_id = "secretsauce"
+	var/recipe_id = /datum/reagent/consumable/secretsauce
 
 /obj/item/paper/secretrecipe/examine(mob/user) //Extra secret
 	if(isobserver(user))
-		return
+		return list()
 	. = ..()
 
 /obj/item/paper/secretrecipe/Initialize()
@@ -187,6 +186,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
 	if(!recipe)
 		info = "This recipe is illegible."
+		return
 	var/list/dat = list("<ul>")
 	for(var/rid in recipe.required_reagents)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[rid]

@@ -25,6 +25,9 @@
 	H.facial_hair_color = H.hair_color
 	H.eye_color = random_eye_color()
 	H.dna.blood_type = random_blood_type()
+	H.saved_underwear = H.underwear
+	H.saved_undershirt = H.undershirt
+	H.saved_socks = H.socks
 
 	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
 	H.dna.features["mcolor"] = random_short_color()
@@ -37,7 +40,11 @@
 	H.dna.features["insect_wings"] = pick(GLOB.insect_wings_list)
 	H.dna.features["deco_wings"] = pick(GLOB.deco_wings_list)
 	H.dna.features["insect_fluff"] = pick(GLOB.insect_fluffs_list)
+	H.dna.features["flavor_text"] = "" //Oh no.
+	H.dna.features["body_model"] = H.gender
 
-	H.update_body()
+	SEND_SIGNAL(H, COMSIG_HUMAN_ON_RANDOMIZE)
+
+	H.update_body(TRUE)
 	H.update_hair()
 	H.update_body_parts()

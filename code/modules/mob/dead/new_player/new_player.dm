@@ -10,9 +10,6 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = FALSE
-
-	anchored = TRUE	//  don't get pushed around
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
@@ -151,7 +148,7 @@
 			message_admins(msg)
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
-			
+
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
@@ -473,10 +470,7 @@
 	var/free_space = 0
 	for(var/list/category in list(GLOB.command_positions) + list(GLOB.supply_positions) + list(GLOB.engineering_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
 		var/cat_color = "fff" //random default
-		if(SSjob.name_occupations && SSjob.name_occupations[category[1]])
-			cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
-		else
-			cat_color = SSjob.occupations[category[1]].selection_color
+		cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
 		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 		dat += "<legend align='center' style='color: [cat_color]'>[SSjob.name_occupations[category[1]].exp_type_department]</legend>"
 

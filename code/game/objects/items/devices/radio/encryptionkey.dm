@@ -21,7 +21,7 @@
 		for(var/i in channels)
 			examine_text_list += "[GLOB.channel_tokens[i]] - [lowertext(i)]"
 
-		to_chat(user, "<span class='notice'>It can access the following channels; [jointext(examine_text_list, ", ")].</span>")
+		. += "<span class='notice'>It can access the following channels; [jointext(examine_text_list, ", ")].</span>"
 
 /obj/item/encryptionkey/syndicate
 	name = "syndicate encryption key"
@@ -43,11 +43,6 @@
 	name = "engineering radio encryption key"
 	icon_state = "eng_cypherkey"
 	channels = list(RADIO_CHANNEL_ENGINEERING = 1)
-
-/obj/item/encryptionkey/headset_rob
-	name = "robotics radio encryption key"
-	icon_state = "rob_cypherkey"
-	channels = list(RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_ENGINEERING = 1)
 
 /obj/item/encryptionkey/headset_med
 	name = "medical radio encryption key"
@@ -97,7 +92,13 @@
 /obj/item/encryptionkey/heads/hop
 	name = "\proper the head of personnel's encryption key"
 	icon_state = "hop_cypherkey"
-	channels = list(RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_COMMAND = 1)
+	channels = list(RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_COMMAND = 1)
+
+/obj/item/encryptionkey/heads/qm
+	name = "\proper the quartermaster's encryption key"
+	desc = "An encryption key for a radio headset.  Channels are as follows: :u - supply, :c - command."
+	icon_state = "hop_cypherkey"
+	channels = list(RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_COMMAND = 1)
 
 /obj/item/encryptionkey/headset_cargo
 	name = "supply radio encryption key"

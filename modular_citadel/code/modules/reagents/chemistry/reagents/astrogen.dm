@@ -8,14 +8,13 @@ This ghost moves pretty quickly and is mostly invisible, but is still visible fo
 When it's out of your system, you return back to yourself. It doesn't last long and metabolism of the chem is exponential.
 Addiction is particularlly brutal, it slowly turns you invisible with flavour text, then kills you at a low enough alpha. (i've also added something to prevent geneticists speeding this up)
 There's afairly major catch regarding the death though. I'm not gonna say here, go read the code, it explains it and puts my comments on it in context. I know that anyone reading it without understanding it is going to freak out so, this is my attempt to get you to read it and understand it.
-I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit me and ask for some pills to quench your addiction.
+I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit chem and ask for some pills to quench your addiction.
 */
 
 
 
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
-	id = "astral"
 	description = "An opalescent murky liquid that is said to distort your soul from your being."
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "your mind"
@@ -30,27 +29,38 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	var/sleepytime = 0
 	inverse_chem_val = 0.25
 	can_synth = FALSE
+	var/datum/action/chem/astral/AS = new/datum/action/chem/astral()
 
 /datum/action/chem/astral
 	name = "Return to body"
-	var/mob/living/carbon/origin = null
-	var/mob/living/simple_animal/hostile/retaliate/ghost = null
+	var/mob/living/carbon/origin
+	var/datum/mind/originalmind
 
 /datum/action/chem/astral/Trigger()
-	ghost.mind.transfer_to(origin)
-	qdel(src)
+	if(origin.mind && origin.mind != originalmind)
+		to_chat(originalmind.current, "<span class='warning'><b><i>There's a foreign presence in your body blocking your return!</b></i></span>")
+		return ..()
+	if(origin.reagents.has_reagent(/datum/reagent/fermi/astral) )
+		var/datum/reagent/fermi/astral/As = locate(/datum/reagent/fermi/astral) in origin.reagents.reagent_list
+		if(As.current_cycle < 10)
+			to_chat(originalmind.current, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
+			return ..()
+	originalmind.transfer_to(origin)
+	if(origin.mind == originalmind)
+		qdel(src)
+
 
 /datum/reagent/fermi/astral/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/fakespace)
+		F.PlaceOnTop(/turf/open/floor/fakespace, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/fermi/astral/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/item/bedsheet))
 		new /obj/item/bedsheet/cosmos(get_turf(O))
 		qdel(O)
-
+	..()
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/carbon/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255
@@ -61,17 +71,25 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if (G == null)
 			G = new(get_turf(M.loc))
 		G.name = "[M]'s astral projection"
-		var/datum/action/chem/astral/AS = new(G)
+		//var/datum/action/chem/astral/AS = new(G)
+		AS.Grant(G)
 		AS.origin = M
-		AS.ghost = G
+		AS.originalmind = originalmind
+
 		if(M.mind)
 			M.mind.transfer_to(G)
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral projections")
+		//INSURANCE
+		M.apply_status_effect(/datum/status_effect/chem/astral_insurance)
+		var/datum/status_effect/chem/astral_insurance/AI = M.has_status_effect(/datum/status_effect/chem/astral_insurance)
+		AI.original = M
+		AI.originalmind = M.mind
+
 	if(overdosed)
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(id, current_cycle/10, FALSE)//exponent
+	metabolization_rate = current_cycle/10 //exponential
 	sleepytime+=5
 	if(G)//This is a mess because of how slow qdel is, so this is all to stop runtimes.
 		if(G.mind)
@@ -83,10 +101,12 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	if(!G)
 		if(M.mind)
-			var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
-			M.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+			var/mob/living/simple_animal/astral/G2 = new(get_turf(M.loc))
+			M.mind.transfer_to(G2)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
 			to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
 			log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
+			if(!G2.mind)
+				qdel(G2)
 		originalmind.transfer_to(M)
 	else if(G.mind)
 		G.mind.transfer_to(origin)
@@ -98,6 +118,9 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(G)//just in case
 		qdel(G)
 	log_game("FERMICHEM: [M] has astrally returned to their body!")
+	if(M.mind && M.mind == originalmind)
+		M.remove_status_effect(/datum/status_effect/chem/astral_insurance)
+	//AS.Remove(M)
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.
@@ -105,7 +128,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(addiction_stage < 2)
 		antiGenetics = 255
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
-	if(prob(70))
+	if(prob(75))
 		M.alpha--
 		antiGenetics--
 	switch(antiGenetics)

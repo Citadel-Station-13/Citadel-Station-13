@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "The revolution gamemode now waits until the 20 minute mark before checking for win conditions."

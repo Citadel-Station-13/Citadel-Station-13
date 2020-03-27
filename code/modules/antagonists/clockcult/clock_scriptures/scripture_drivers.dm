@@ -80,7 +80,7 @@
 	power_cost = 125
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted after 8 seconds if they do not move.</span>"
+	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted and healed of some of their wounds after 8 seconds if they do not move.</span>"
 	usage_tip = "This is the primary conversion method, though it will not penetrate mindshield implants."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
@@ -138,11 +138,11 @@
 	quickbind_desc = "Applies handcuffs to a struck target."
 
 
-//Vanguard: Provides twenty seconds of greatly increased stamina and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
+//Vanguard: Provides twenty seconds of greatly increased stamina regeneration and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed aswell as 50% of healed stamloss are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of greatly increased stamina and stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
+	desc = "Provides twenty seconds of greatly increased stamina regeneration and stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed aswell as incurring 50% of the stamina regenerated as stamina loss \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
@@ -152,7 +152,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 7
 	quickbind = TRUE
-	quickbind_desc = "Allows you to temporarily have quickly regenerating stamina and absorb stuns. All stuns absorbed will affect you when disabled."
+	quickbind_desc = "Allows you to temporarily have quickly regenerating stamina and absorb stuns. Part of the stuns absorbed and staminaloss healed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)

@@ -39,7 +39,7 @@
 
 /obj/structure/AIcore/latejoin_inactive/examine(mob/user)
 	. = ..()
-	to_chat(user, "Its transmitter seems to be [active? "on" : "off"].")
+	. += "Its transmitter seems to be [active? "on" : "off"]."
 
 /obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -52,7 +52,7 @@
 	var/area/A = get_area(src)
 	if(!A.blob_allowed)
 		return FALSE
-	if(!A.power_equip)
+	if(!A.powered(EQUIP))
 		return FALSE
 	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
 		return FALSE
@@ -255,7 +255,7 @@
 					return
 	return ..()
 
-/obj/structure/AIcore/update_icon()
+/obj/structure/AIcore/update_icon_state()
 	switch(state)
 		if(EMPTY_CORE)
 			icon_state = "0"

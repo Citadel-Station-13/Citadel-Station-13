@@ -1,5 +1,0 @@
-author: "deathride58 (Original PR by actioninja)"
-delete-after: True
-changes: 
-  - rscadd: "Disarm pushing (combat mode right click in disarm intent) will now actually push mobs away. Knockdowns from disarm pushing are no longer rng based on the target's staminaloss. Knockdowns from disarm pushing now only happen when you push someone into another mob, a table, or a wall. Pushes will now also temporarily stop targets from using firearms, and will disarm the firearm if performed a second time. Pushes still deal staminaloss to standing targets, and won't deal a single ounce of staminaloss to resting targets."
-  - rscdel: "You can no longer displace mobs that are in harm intent by simply walking into them. Mobs that aren't in help intent have to be disarm pushed to actually be moved."

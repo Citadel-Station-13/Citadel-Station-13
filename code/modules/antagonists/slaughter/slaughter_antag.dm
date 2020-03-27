@@ -3,6 +3,7 @@
 	show_name_in_check_antagonists = TRUE
 	var/objective_verb = "Kill"
 	var/datum/mind/summoner
+	threat = 10
 	job_rank = ROLE_ALIEN
 	show_in_antagpanel = FALSE
 
@@ -25,8 +26,6 @@
 	new_objective2.owner = owner
 	new_objective2.explanation_text = "[objective_verb] everyone[summoner ? " else while you're at it":""]."
 	objectives += new_objective2
-
-	owner.objectives |= objectives
 
 /datum/antagonist/slaughter/laughter
 	name = "Laughter demon"

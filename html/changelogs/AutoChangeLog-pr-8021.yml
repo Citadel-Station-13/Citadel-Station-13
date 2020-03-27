@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Mobs without clients no longer cause runtimes when their eyeblur updates"

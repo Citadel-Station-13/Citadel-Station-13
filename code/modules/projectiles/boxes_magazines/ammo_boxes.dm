@@ -3,21 +3,42 @@
 	desc = "Designed to quickly reload revolvers."
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
 	max_ammo = 7
 	multiple_sprites = 1
+
+/obj/item/ammo_box/a357/ap
+	name = "speed loader (.357 AP)"
+	ammo_type = /obj/item/ammo_casing/a357/ap
 
 /obj/item/ammo_box/c38
 	name = "speed loader (.38 rubber)"
 	desc = "Designed to quickly reload revolvers."
 	icon_state = "38"
+	caliber = "38"
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 	multiple_sprites = 1
-	materials = list(MAT_METAL = 20000)
+	custom_materials = list(/datum/material/iron = 20000)
 
 /obj/item/ammo_box/c38/lethal
 	name = "speed loader (.38)"
 	ammo_type = /obj/item/ammo_casing/c38/lethal
+
+/obj/item/ammo_box/c38/trac
+	name = "speed loader (.38 TRAC)"
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	ammo_type = /obj/item/ammo_casing/c38/trac
+
+/obj/item/ammo_box/c38/hotshot
+	name = "speed loader (.38 Hot Shot)"
+	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
+	ammo_type = /obj/item/ammo_casing/c38/hotshot
+
+/obj/item/ammo_box/c38/iceblox
+	name = "speed loader (.38 Iceblox)"
+	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
+	ammo_type = /obj/item/ammo_casing/c38/iceblox
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
@@ -64,9 +85,16 @@
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 40
-	materials = list(MAT_METAL = 500)
+	custom_materials = list(/datum/material/iron = 500)
+
+/obj/item/ammo_box/foambox/mag
+	name = "ammo box (Magnetic Foam Darts)"
+	icon = 'icons/obj/guns/toy.dmi'
+	icon_state = "foambox"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	max_ammo = 42
 
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
-	materials = list(MAT_METAL = 50000)
+	custom_materials = list(/datum/material/iron = 50000)

@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "The grace period for the revolution win condition check has been reduced from 20 minutes to 10 minutes. You don't need to wait nearly as long for the round to end if no heads join in."

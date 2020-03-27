@@ -1,7 +1,0 @@
-author: "BurgerBB"
-delete-after: True
-changes: 
-  - rscadd: "Adds a few important clockcult tips."
-  - rscadd: "Added Mech Sensors, a brass-created trap that activates when a mech not controlled by a cultist crosses it."
-  - rscadd: "Added power nullifiers, an emp trap that emps everything in a 3x3 area, with the center suffering a heavy EMP."
-  - tweak: "Brass Skewers now deal 50 damage to mechs."

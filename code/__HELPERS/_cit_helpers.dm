@@ -56,19 +56,15 @@ GLOBAL_LIST_EMPTY(ipc_screens_list)
 GLOBAL_LIST_EMPTY(ipc_antennas_list)
 
 	//Genitals and Arousal Lists
-GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
-GLOBAL_LIST_EMPTY(cock_shapes_icons) //Associated list for names->icon_states for cockshapes.
-GLOBAL_LIST_EMPTY(gentlemans_organ_names)
+GLOBAL_LIST_EMPTY(genitals_list)
+GLOBAL_LIST_EMPTY(cock_shapes_list)
 GLOBAL_LIST_EMPTY(balls_shapes_list)
-GLOBAL_LIST_EMPTY(balls_shapes_icons)
-GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
-GLOBAL_LIST_EMPTY(breasts_shapes_icons)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
-GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
-GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
-GLOBAL_LIST_INIT(cum_id_list,"semen")
-GLOBAL_LIST_INIT(milk_id_list,"milk")
+//longcat memes.
+GLOBAL_LIST_INIT(dick_nouns, list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett", "Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior"))
+
+GLOBAL_LIST_INIT(genitals_visibility_toggles, list(GEN_VISIBLE_ALWAYS, GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER))
 
 GLOBAL_LIST_INIT(dildo_shapes, list(
 		"Human"		= "human",
@@ -98,7 +94,7 @@ GLOBAL_LIST_INIT(meat_types, list(
 	"Mammalian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal,
 	"Aquatic" = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic,
 	"Avian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/avian,
-	"Inesct" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect))
+	"Insect" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect))
 
 //Crew objective and miscreants stuff
 GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
@@ -108,17 +104,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		set category = "Admin"
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
-
-//Flavor Text
-/mob/living/carbon/human/verb/set_flavor()
-	set name = "Set Flavor Text"
-	set desc = "Sets an extended description of your character's features."
-	set category = "IC"
-
-	var/new_flavor = input(src, "Enter your new flavor text:", "Flavor text", null) as message|null
-	if(!isnull(new_flavor))
-		flavor_text = sanitize(new_flavor)
-		to_chat(src, "Your flavor text has been updated.")
 
 //LOOC toggles
 /client/verb/listen_looc()
@@ -131,53 +116,41 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /mob/living/carbon/proc/has_penis()
-	if(getorganslot("penis"))//slot shared with ovipositor
-		if(istype(getorganslot("penis"), /obj/item/organ/genital/penis))
-			return TRUE
+	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
+	if(G && istype(G, /obj/item/organ/genital/penis))
+		return TRUE
 	return FALSE
 
 /mob/living/carbon/proc/has_balls()
-	if(getorganslot("balls"))
-		if(istype(getorganslot("balls"), /obj/item/organ/genital/testicles))
-			return TRUE
+	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_TESTICLES)
+	if(G && istype(G, /obj/item/organ/genital/testicles))
+		return TRUE
 	return FALSE
 
 /mob/living/carbon/proc/has_vagina()
-	if(getorganslot("vagina"))
+	if(getorganslot(ORGAN_SLOT_VAGINA))
 		return TRUE
 	return FALSE
 
 /mob/living/carbon/proc/has_breasts()
-	if(getorganslot("breasts"))
+	if(getorganslot(ORGAN_SLOT_BREASTS))
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/proc/has_ovipositor()
-	if(getorganslot("penis"))//shared slot
-		if(istype(getorganslot("penis"), /obj/item/organ/genital/ovipositor))
-			return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/has_eggsack()
-	if(getorganslot("balls"))
-		if(istype(getorganslot("balls"), /obj/item/organ/genital/eggsack))
-			return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/is_bodypart_exposed(bodypart)
-
-/mob/living/carbon/proc/is_groin_exposed(var/list/L)
+/mob/living/carbon/proc/is_groin_exposed(list/L)
 	if(!L)
 		L = get_equipped_items()
-	for(var/obj/item/I in L)
+	for(var/A in L)
+		var/obj/item/I = A
 		if(I.body_parts_covered & GROIN)
 			return FALSE
 	return TRUE
 
-/mob/living/carbon/proc/is_chest_exposed(var/list/L)
+/mob/living/carbon/proc/is_chest_exposed(list/L)
 	if(!L)
 		L = get_equipped_items()
-	for(var/obj/item/I in L)
+	for(var/A in L)
+		var/obj/item/I = A
 		if(I.body_parts_covered & CHEST)
 			return FALSE
 	return TRUE
@@ -195,9 +168,9 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	message_admins("[src] gave everyone genitals.")
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.gender == MALE)
-			H.give_penis()
-			H.give_balls()
+			H.give_genital(/obj/item/organ/genital/penis)
+			H.give_genital(/obj/item/organ/genital/testicles)
 		else
-			H.give_vagina()
-			H.give_womb()
-			H.give_breasts()
+			H.give_genital(/obj/item/organ/genital/vagina)
+			H.give_genital(/obj/item/organ/genital/womb)
+			H.give_genital(/obj/item/organ/genital/breasts)

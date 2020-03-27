@@ -2,14 +2,15 @@
 #define GORILLA_TOTAL_LAYERS 1
 
 /mob/living/simple_animal/hostile/gorilla
-	name = "Gorilla"
+	name = "gorilla"
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
 	icon = 'icons/mob/gorilla.dmi'
 	icon_state = "crawling"
 	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	threat = 0.5
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
@@ -71,7 +72,7 @@
 			var/atom/throw_target = get_edge_target_turf(L, dir)
 			L.throw_at(throw_target, rand(1,2), 7, src)
 		else
-			L.Knockdown(20)
+			L.DefaultCombatKnockdown(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)
@@ -108,3 +109,10 @@
 		playsound(src, 'sound/creatures/gorilla.ogg', 200)
 		oogas = 0
 
+/mob/living/simple_animal/hostile/gorilla/familiar
+	name = "familiar gorilla"
+	desc = "There is no need to be upset."
+	unique_name = FALSE
+	AIStatus = AI_OFF
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0

@@ -1,0 +1,8 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "blobs now receive a 50% cost refund on attacks that don't spread"
+  - balance: "reflector blobs are considerably tougher"
+  - bugfix: "fixed an integrity"
+  - bugfix: "attempting to turn a damaged strong blob into a reflector blob now refunds points"
+  - bugfix: "also fixes blob node camera jump (from another PR)"

@@ -8,7 +8,7 @@
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 30, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	var/obj/item/showpiece = null
 	var/alert = TRUE
 	var/open = FALSE
@@ -38,14 +38,14 @@
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
-	..()
+	. = ..()
 	if(alert)
-		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
+		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
 	if(showpiece)
-		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
+		. += "<span class='notice'>There's [showpiece] inside.</span>"
 	if(trophy_message)
-		to_chat(user, "The plaque reads:")
-		to_chat(user, trophy_message)
+		. += "The plaque reads:"
+		. += trophy_message
 
 
 /obj/structure/displaycase/proc/dump()
@@ -80,11 +80,11 @@
 /obj/structure/displaycase/proc/trigger_alarm()
 	//Activate Anti-theft
 	if(alert)
-		var/area/alarmed = get_area(src)
+		var/area/alarmed = get_base_area(src)
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
-/obj/structure/displaycase/update_icon()
+/obj/structure/displaycase/update_icon_state()
 	var/icon/I
 	if(open)
 		I = icon('icons/obj/stationobjs.dmi',"glassbox_open")
@@ -236,6 +236,12 @@
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(ACCESS_RD)
+
+/obj/structure/displaycase/clown
+	desc = "In the event of clown, honk glass."
+	alert = TRUE
+	start_showpiece_type = /obj/item/bikehorn
+	req_access = list(ACCESS_CENT_GENERAL)
 
 /obj/structure/displaycase/trophy
 	name = "trophy display case"

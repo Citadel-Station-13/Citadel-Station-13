@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - rscadd: "Added Digitigrade versions of everything appliciable in suit.dmi"
-  - imageadd: "Snowflake Icons weren't modified, and were given NO_MUTANTRACE_VARIATION"

@@ -22,10 +22,18 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	desc = "You aren't entirely sure what this does, but it's very beepy and boopy."
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	check_flags = AB_CHECK_CONSCIOUS //can't doomsday if dead.
 	var/mob/living/silicon/ai/owner_AI //The owner AI, so we don't have to typecast every time
 	var/uses //If we have multiple uses of the same power
 	var/auto_use_uses = TRUE //If we automatically use up uses on each activation
 	var/cooldown_period //If applicable, the time in deciseconds we have to wait before using any more modules
+
+
+/datum/action/innate/ai/New()
+	..()
+	if(uses > 1)
+		desc = "[desc] It has [uses] use\s remaining."
+		button.desc = desc
 
 /datum/action/innate/ai/Grant(mob/living/L)
 	. = ..()
@@ -38,7 +46,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /datum/action/innate/ai/IsAvailable()
 	. = ..()
 	if(owner_AI && owner_AI.malf_cooldown > world.time)
-		return
+		return FALSE
 
 /datum/action/innate/ai/Trigger()
 	. = ..()
@@ -49,12 +57,16 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/proc/adjust_uses(amt, silent)
 	uses += amt
-	if(!silent && uses)
-		to_chat(owner, "<span class='notice'>[name] now has <b>[uses]</b> use[uses > 1 ? "s" : ""] remaining.</span>")
-	if(!uses)
-		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
-			to_chat(owner, "<span class='warning'>[name] has run out of uses!</span>")
-		qdel(src)
+	if(uses)
+		if(!silent)
+			to_chat(owner, "<span class='notice'>[name] now has <b>[uses]</b> use[uses > 1 ? "s" : ""] remaining.</span>")
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		UpdateButtonIcon()
+		return
+	if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
+		to_chat(owner, "<span class='warning'>[name] has run out of uses!</span>")
+	qdel(src)
+
 
 //Framework for ranged abilities that can have different effects by left-clicking stuff.
 /datum/action/innate/ai/ranged
@@ -74,13 +86,16 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/ranged/adjust_uses(amt, silent)
 	uses += amt
-	if(!silent && uses)
-		to_chat(owner, "<span class='notice'>[name] now has <b>[uses]</b> use[uses > 1 ? "s" : ""] remaining.</span>")
-	if(!uses)
-		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
-			to_chat(owner, "<span class='warning'>[name] has run out of uses!</span>")
-		Remove(owner)
-		QDEL_IN(src, 100) //let any active timers on us finish up
+	if(uses)
+		if(!silent)
+			to_chat(owner, "<span class='notice'>[name] now has <b>[uses]</b> use[uses > 1 ? "s" : ""] remaining.</span>")
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		UpdateButtonIcon()
+		return
+	if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
+		to_chat(owner, "<span class='warning'>[name] has run out of uses!</span>")
+	Remove(owner)
+	QDEL_IN(src, 100) //let any active timers on us finish up
 
 /datum/action/innate/ai/ranged/Destroy()
 	QDEL_NULL(linked_ability)
@@ -97,7 +112,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/datum/action/innate/ai/ranged/attached_action
 
 /obj/effect/proc_holder/ranged_ai/Destroy()
-	QDEL_NULL(attached_action)
+	attached_action = null
 	return ..()
 
 /obj/effect/proc_holder/ranged_ai/proc/toggle(mob/user)
@@ -185,6 +200,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 							A.playsound_local(A, AM.unlock_sound, 50, 0)
 					else //Adding uses to an existing module
 						action.uses += initial(action.uses)
+						action.desc = "[initial(action.desc)] It has [action.uses] use\s remaining."
+						action.UpdateButtonIcon()
 						temp = "Additional use[action.uses > 1 ? "s" : ""] added to [action.name]!"
 			processing_time -= AM.cost
 
@@ -208,7 +225,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/unlock_text = "<span class='notice'>Hello World!</span>" //Text shown when an ability is unlocked
 	var/unlock_sound //Sound played when an ability is unlocked
 
-/datum/AI_Module/proc/upgrade(mob/living/silicon/AI/AI) //Apply upgrades!
+/datum/AI_Module/proc/upgrade(mob/living/silicon/ai/AI) //Apply upgrades!
 	return
 
 /datum/AI_Module/large //Big, powerful stuff that can only be used once.
@@ -238,6 +255,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
+	if (active)
+		return //prevent the AI from activating an already active doomsday
 	active = TRUE
 	set_us_up_the_bomb(owner)
 
@@ -245,66 +264,66 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	set waitfor = FALSE
 	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
 	sleep(5)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='small boldannounce'>Running executable 'selfdestruct'...</span>")
 	sleep(rand(10, 30))
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0)
 	to_chat(owner, "<span class='userdanger'>!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!</span>")
 	to_chat(owner, "<span class='boldannounce'>This is a class-3 security violation. This incident will be reported to Central Command.</span>")
 	for(var/i in 1 to 3)
 		sleep(20)
-		if(!owner || QDELETED(owner))
+		if(QDELETED(owner) || owner.stat == DEAD)
 			return
 		to_chat(owner, "<span class='boldannounce'>Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%</span>")
 	sleep(3)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' ******************</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0)
 	sleep(30)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Welcome, akjv9c88asdf12nb.</span>")
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
 	sleep(5)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='boldnotice'>Arm self-destruct device? (Y/N)</span>")
 	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0)
 	sleep(20)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(15)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='boldnotice'>Confirm arming of self-destruct device? (Y/N)</span>")
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
 	sleep(10)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(rand(15, 25))
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='boldnotice'>Please repeat password to confirm.</span>")
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
 	sleep(14)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='small boldannounce'>******************</span>")
 	sleep(40)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
 	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Transmitting arming signal...</span>")
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
 	sleep(30)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return
-	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", "aimalf")
 	set_security_level("delta")
 	var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
 	owner_AI.nuking = TRUE
@@ -397,7 +416,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	unlock_text = "<span class='notice'>You establish a power diversion to your turrets, upgrading their health and damage.</span>"
 	unlock_sound = 'sound/items/rped.ogg'
 
-/datum/AI_Module/large/upgrade_turrets/upgrade(mob/living/silicon/AI/AI)
+/datum/AI_Module/large/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
 	for(var/obj/machinery/porta_turret/ai/turret in GLOB.machines)
 		turret.obj_integrity += 30
 		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
@@ -505,6 +524,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!is_station_level(F.z))
 			continue
 		F.obj_flags |= EMAGGED
+		F.update_icon()
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
@@ -723,9 +743,10 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/blackout
 	name = "Blackout"
-	desc = "Overloads lights across the station."
+	desc = "Overloads random lights across the station."
 	button_icon_state = "blackout"
 	uses = 3
+	auto_use_uses = FALSE
 
 /datum/action/innate/ai/blackout/Activate()
 	for(var/obj/machinery/power/apc/apc in GLOB.apcs_list)
@@ -735,6 +756,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			apc.overload++
 	to_chat(owner, "<span class='notice'>Overcurrent applied to the powernet.</span>")
 	owner.playsound_local(owner, "sparks", 50, 0)
+	adjust_uses(-1)
 
 
 //Disable Emergency Lights
@@ -783,11 +805,6 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	auto_use_uses = FALSE
 	cooldown_period = 30
 
-/datum/action/innate/ai/reactivate_cameras/New()
-	..()
-	desc = "[desc] There are 30 reactivations remaining."
-	button.desc = desc
-
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
 	for(var/V in GLOB.cameranet.cameras)
@@ -802,8 +819,6 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	to_chat(owner, "<span class='notice'>Diagnostic complete! Cameras reactivated: <b>[fixed_cameras]</b>. Reactivations remaining: <b>[uses]</b>.</span>")
 	owner.playsound_local(owner, 'sound/items/wirecutter.ogg', 50, 0)
 	adjust_uses(0, TRUE) //Checks the uses remaining
-	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
-		desc = "[initial(desc)] There are [uses] reactivations remaining."
 
 
 //Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.

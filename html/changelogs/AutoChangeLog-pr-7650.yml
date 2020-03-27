@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Autostand no longer makes you invulnerable to dropping items when being knocked down with a force greater than 80"

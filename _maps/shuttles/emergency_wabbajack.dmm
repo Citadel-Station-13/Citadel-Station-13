@@ -205,15 +205,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"aE" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
 "aF" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -222,15 +213,12 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aG" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
-/obj/structure/table/glass,
-/obj/item/storage/box/syringes{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/beakers,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aH" = (
@@ -262,9 +250,8 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aL" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aM" = (
@@ -277,12 +264,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/structure/table/optable,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aU" = (
@@ -495,6 +477,15 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"cF" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ji" = (
 /obj/structure/chair/comfy/shuttle{
@@ -734,8 +725,8 @@ aw
 aw
 ab
 aG
-aE
 aK
+cF
 aL
 aT
 as

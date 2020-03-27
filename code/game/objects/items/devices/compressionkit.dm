@@ -12,9 +12,9 @@
 	var/mode = 0
 
 /obj/item/compressionkit/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It has [charges] charges left. Recharge with bluespace crystals.</span>")
-	to_chat(user, "<span class='notice'>Use in-hand to swap toggle compress/expand mode (expand mode not yet implemented).</span>")
+	. = ..()
+	. += "<span class='notice'>It has [charges] charges left. Recharge with bluespace crystals.</span>"
+	. += "<span class='notice'>Use in-hand to swap toggle compress/expand mode (expand mode not yet implemented).</span>"
 
 /obj/item/compressionkit/attack_self(mob/user)
 	if(mode == 0)
@@ -46,7 +46,7 @@
 	var/list/organs = M.getorganszone("head") + M.getorganszone("eyes") + M.getorganszone("mouth")
 	for(var/internal_organ in organs)
 		var/obj/item/organ/I = internal_organ
-		I.Remove(M)
+		I.Remove()
 		I.forceMove(T)
 	head.drop_limb()
 	qdel(head)
@@ -88,32 +88,6 @@
 				to_chat(user, "<span class='notice'>You successfully compress [target]! The compressor now has [charges] charges.</span>")
 		else
 			to_chat(user, "<span class='notice'>Anomalous error. Summon a coder.</span>")
-
-	if(istype(target, /mob/living))
-		var/mob/living/victim = target
-		if(istype(victim, /mob/living/carbon/human))
-			if(user.zone_selected == "groin") // pp smol. There's probably a smarter way to do this but im retarded. If you have a simpler method let me know.
-				var/list/organs = victim.getorganszone("groin")
-				for(var/internal_organ in organs)
-					if(istype(internal_organ, /obj/item/organ/genital/penis))
-						var/obj/item/organ/genital/penis/O = internal_organ
-						playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 1)
-						victim.visible_message("<span class='warning'>[user] is preparing to shrink [victim]\'s [O.name] with their bluespace compression kit!</span>")
-						if(do_mob(user, victim, 40) && charges > 0 && O.length > 0)
-							victim.visible_message("<span class='warning'>[user] has shrunk [victim]\'s [O.name]!</span>")
-							playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 50, 1)
-							sparks()
-							flash_lighting_fx(3, 3, LIGHT_COLOR_CYAN)
-							charges -= 1
-							O.length -= 5
-							if(O.length < 1)
-								victim.visible_message("<span class='warning'>[user]\'s [O.name] vanishes!</span>")
-								qdel(O) // no pp for you
-							else
-								O.update_size()
-								O.update_appearance()
-
-
 
 /obj/item/compressionkit/attackby(obj/item/I, mob/user, params)
 	..()

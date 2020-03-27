@@ -10,7 +10,7 @@
 	icon_living = "basic"
 	icon_dead = "basic"
 	gender = NEUTER
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	health = 50
 	maxHealth = 50
 	healable = 0
@@ -28,6 +28,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
+	blood_volume = 0
 
 	do_footstep = TRUE
 

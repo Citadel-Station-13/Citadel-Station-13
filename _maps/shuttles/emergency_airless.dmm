@@ -39,12 +39,19 @@
 	preferred_direction = 2;
 	width = 30
 	},
-/turf/closed/wall,
+/obj/machinery/door/airlock,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "h" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 1
 	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"K" = (
+/obj/machinery/door/airlock,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 
@@ -58,7 +65,7 @@ e
 e
 e
 e
-e
+K
 e
 g
 e
@@ -66,9 +73,9 @@ e
 e
 e
 e
+K
 e
-e
-e
+K
 e
 e
 e

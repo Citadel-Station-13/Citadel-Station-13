@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "Since apparently the game is literally unplayable if items are not in the exact center of a turf, the maximum pixel variance of thrown objects has been reduced by four pixels to make things a smidge more clearer for those that dont know what a turf is."
-  - bugfix: "Bartender glasses should HOPEFULLY no longer be tilted when landing on a table. Why the fuck is after_throw called via a timer."

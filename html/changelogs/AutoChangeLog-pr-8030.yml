@@ -1,5 +1,0 @@
-author: "Multicam Config"
-delete-after: True
-changes: 
-  - config: "removed whether or not the stuff for multicam was checking the useless var and instead now checks the CONFIG_GET flag."
-  - admin: "Admins now have a verb in the Server tab to turn AI multicam on and off."

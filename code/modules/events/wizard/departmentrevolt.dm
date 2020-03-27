@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/wizard/deprevolt
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	can_be_midround_wizard = FALSE // not removing it completely yet
 
 /datum/round_event/wizard/deprevolt/start()
 
@@ -18,7 +19,7 @@
 			jobs_to_revolt = list("Assistant")
 			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("white")
-			jobs_to_revolt = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist")
+			jobs_to_revolt = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Paramedic", "Virologist")
 			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Geneti", "Viro", "Psych")
 		if("yellow")
 			jobs_to_revolt = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")

@@ -39,7 +39,7 @@
 /obj/item/mmi/posibrain/soul_vessel/examine(mob/user)
 	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
-	..()
+	. = ..()
 	desc = initial(desc)
 
 /obj/item/mmi/posibrain/soul_vessel/transfer_personality(mob/candidate)
@@ -104,6 +104,6 @@
 	transfer_personality(H)
 	brainmob.fully_replace_character_name(null, "[braintype] [H.real_name]")
 	name = "[initial(name)] ([brainmob.name])"
-	B.Remove(H)
+	B.Remove()
 	qdel(B)
 	H.update_hair()

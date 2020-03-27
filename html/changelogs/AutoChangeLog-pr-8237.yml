@@ -1,7 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - imageadd: "added muzzled varients of space helmets and full masks"
-  - imageadd: "added knight_grey to taur suits, all paranormal ERT now have tauric versions enabled"
-  - bugfix: "Lava knights have digitigrade and tauric versions now"
-  - rscadd: "Added a glass version of the gas mask, because it was in the files and looked nice. does everything regular ones do except make you an unknown"

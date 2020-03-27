@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - code_imp: "The client update portion of /mob/Login() now double-checks to make sure client.player_details exists and is of the proper type. This should hopefully fix the \"cannot read null.player_details\" runtimes that can spontaneously cause clients to get kicked out and forced back to the lobby."

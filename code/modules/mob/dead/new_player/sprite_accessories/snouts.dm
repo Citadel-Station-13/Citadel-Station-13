@@ -151,11 +151,12 @@
 /datum/sprite_accessory/mam_snouts
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	recommended_species = list("mammal", "slimeperson", "insect", "podweak")
 
 /datum/sprite_accessory/mam_snouts/none
 	name = "None"
 	icon_state = "none"
-
+	recommended_species = null
 
 /datum/sprite_accessory/mam_snouts/bird
 	name = "Beak"
@@ -193,6 +194,10 @@
 /datum/sprite_accessory/mam_snouts/scanidalt
 	name = "Mammal, Short ALT"
 	icon_state = "scanidalt"
+
+/datum/sprite_accessory/mam_snouts/scanidalt2
+	name = "Mammal, Short ALT 2"
+	icon_state = "scanidalt2"
 
 /datum/sprite_accessory/mam_snouts/wolf
 	name = "Mammal, Thick"
@@ -239,6 +244,10 @@
 /datum/sprite_accessory/mam_snouts/shark
 	name = "Shark"
 	icon_state = "shark"
+
+/datum/sprite_accessory/mam_snouts/hshark
+	name = "hShark"
+	icon_state = "hshark"
 
 /datum/sprite_accessory/mam_snouts/toucan
 	name = "Toucan"
@@ -305,6 +314,10 @@
 /datum/sprite_accessory/mam_snouts/fscanidalt
 	name = "Mammal, Short ALT (Top)"
 	icon_state = "fscanidalt"
+
+/datum/sprite_accessory/mam_snouts/fscanidalt2
+	name = "Mammal, Short ALT 2 (Top)"
+	icon_state = "fscanidalt2"
 
 /datum/sprite_accessory/mam_snouts/fwolf
 	name = "Mammal, Thick (Top)"

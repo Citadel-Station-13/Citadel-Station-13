@@ -24,7 +24,15 @@
 	id = "sleeper"
 	build_path = /obj/item/circuitboard/machine/sleeper
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
-	category = list ("Medical Machinery")
+	category = list("Medical Machinery")
+
+/datum/design/board/syndiesleeper
+	name = "Machine Design (Syndicate Sleeper Board)"
+	desc = "The circuit board for a Syndicate sleeper, with controls inside."
+	id = "syndiesleeper"
+	build_path = /obj/item/circuitboard/machine/sleeper/syndie
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
+	category = list("Medical Machinery")
 
 /datum/design/board/cryotube
 	name = "Machine Design (Cryotube Board)"
@@ -89,3 +97,11 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
 	build_path = /obj/item/circuitboard/machine/clonescanner
 	category = list("Medical Machinery")
+
+/datum/design/board/bloodbankgen
+	name = "Machine Design (Blood Bank Generator Board)"
+	desc = "The circuit board for a blood bank generator."
+	id = "bloodbankgen"
+	build_path = /obj/item/circuitboard/machine/bloodbankgen
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	category = list ("Medical Machinery")

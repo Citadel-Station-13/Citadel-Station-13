@@ -174,3 +174,13 @@
 /datum/dog_fashion/back/deathsquad
 	name = "Trooper REAL_NAME"
 	desc = "That's not red paint. That's real corgi blood."
+
+/datum/dog_fashion/head/colour
+	name = "Stylish REAL_NAME"
+	desc = "From the tips of their paws to the top of their head, they look like a made bed."
+	emote_see = list("tries to tap dances.","looks sadly at others outfits...","barks at bad fashion!")
+
+/datum/dog_fashion/head/telegram
+	name = "Messenger REAL_NAME"
+	desc = "Dont shoot the messenger..."
+	emote_see = list("licks an envelope.","looks ready to set off to send a letter...","works on barking!")

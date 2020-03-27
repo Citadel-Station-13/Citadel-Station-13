@@ -4,13 +4,15 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,WINGCOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR)
 	mutantlungs = /obj/item/organ/lungs/slime
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_snouts", "taur", "deco_wings") //CIT CHANGE
-	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None") //CIT CHANGE
+	mutant_heart = /obj/item/organ/heart/slime
+	mutant_bodyparts = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None")
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
-	exotic_blood = "slimejelly"
+	gib_types = list(/obj/effect/gibspawner/slime, /obj/effect/gibspawner/slime/bodypartless)
+	exotic_blood = /datum/reagent/blood/jellyblood
+	exotic_bloodtype = "GEL"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
@@ -41,7 +43,7 @@
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
+	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for vampires
 		return
 	if(!H.blood_volume)
 		H.blood_volume += 5
@@ -80,6 +82,7 @@
 	button_icon_state = "slimeheal"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
+	required_mobility_flags = NONE
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
 	if(..())
@@ -113,6 +116,34 @@
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
 
+/datum/species/jelly/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		stop_wagging_tail(H)
+
+/datum/species/jelly/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+	. = ..()
+
+/datum/species/jelly/can_wag_tail(mob/living/carbon/human/H)
+	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
+
+/datum/species/jelly/is_wagging_tail(mob/living/carbon/human/H)
+	return mutant_bodyparts["mam_waggingtail"]
+
+/datum/species/jelly/start_wagging_tail(mob/living/carbon/human/H)
+	if(mutant_bodyparts["mam_tail"])
+		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
+		mutant_bodyparts -= "mam_tail"
+	H.update_body()
+
+/datum/species/jelly/stop_wagging_tail(mob/living/carbon/human/H)
+	if(mutant_bodyparts["mam_waggingtail"])
+		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
+		mutant_bodyparts -= "mam_waggingtail"
+	H.update_body()
+
+
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
 
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
@@ -121,7 +152,7 @@
 	name = "Xenobiological Slime Entity"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -174,6 +205,8 @@
 	bodies = old_species.bodies
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
+	if((HAS_TRAIT(H, TRAIT_NOMARROW)))
+		return
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
@@ -396,44 +429,15 @@
 	id = "slimeperson"
 	limbs_id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	inherent_traits = list(TRAIT_TOXINLOVER)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "taur")
-	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
+	mutant_bodyparts = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 160 //a notch brighter so it blends better.
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
-
-/datum/species/jelly/roundstartslime/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/jelly/roundstartslime/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-/datum/species/jelly/roundstartslime/can_wag_tail(mob/living/carbon/human/H)
-	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
-
-/datum/species/jelly/roundstartslime/is_wagging_tail(mob/living/carbon/human/H)
-	return ("mam_waggingtail" in mutant_bodyparts)
-
-/datum/species/jelly/roundstartslime/start_wagging_tail(mob/living/carbon/human/H)
-	if("mam_tail" in mutant_bodyparts)
-		mutant_bodyparts -= "mam_tail"
-		mutant_bodyparts |= "mam_waggingtail"
-	H.update_body()
-
-/datum/species/jelly/roundstartslime/stop_wagging_tail(mob/living/carbon/human/H)
-	if("mam_waggingtail" in mutant_bodyparts)
-		mutant_bodyparts -= "mam_waggingtail"
-		mutant_bodyparts |= "mam_tail"
-	H.update_body()
-
 
 /datum/action/innate/slime_change
 	name = "Alter Form"
@@ -470,37 +474,25 @@
 			H.hair_style = new_style
 			H.update_hair()
 	else if (select_alteration == "Genitals")
-		var/list/organs = list()
 		var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") in list("add sexual organ", "remove sexual organ", "cancel")
 		switch(operation)
 			if("add sexual organ")
-				var/new_organ = input("Select sexual organ:", "Organ Manipulation") in list("Penis", "Testicles", "Breasts", "Vagina", "Womb", "Cancel")
-				if(new_organ == "Penis")
-					H.give_penis()
-				else if(new_organ == "Testicles")
-					H.give_balls()
-				else if(new_organ == "Breasts")
-					H.give_breasts()
-				else if(new_organ == "Vagina")
-					H.give_vagina()
-				else if(new_organ == "Womb")
-					H.give_womb()
-				else
+				var/new_organ = input("Select sexual organ:", "Organ Manipulation") as null|anything in GLOB.genitals_list
+				if(!new_organ)
 					return
+				H.give_genital(GLOB.genitals_list[new_organ])
+
 			if("remove sexual organ")
+				var/list/organs = list()
 				for(var/obj/item/organ/genital/X in H.internal_organs)
 					var/obj/item/organ/I = X
 					organs["[I.name] ([I.type])"] = I
-				var/obj/item/organ = input("Select sexual organ:", "Organ Manipulation", null) in organs
-				organ = organs[organ]
-				if(!organ)
+				var/obj/item/O = input("Select sexual organ:", "Organ Manipulation", null) as null|anything in organs
+				var/obj/item/organ/genital/G = organs[O]
+				if(!G)
 					return
-				var/obj/item/organ/genital/O
-				if(isorgan(organ))
-					O = organ
-					O.Remove(H)
-				organ.forceMove(get_turf(H))
-				qdel(organ)
+				G.forceMove(get_turf(H))
+				qdel(G)
 				H.update_genitals()
 
 	else if (select_alteration == "Ears")
@@ -590,8 +582,8 @@
 		if(new_shape)
 			H.dna.features["cock_shape"] = new_shape
 		H.update_genitals()
-		H.give_balls()
-		H.give_penis()
+		H.give_genital(/obj/item/organ/genital/testicles)
+		H.give_genital(/obj/item/organ/genital/penis)
 		H.apply_overlay()
 
 
@@ -603,32 +595,32 @@
 		if(new_shape)
 			H.dna.features["vag_shape"] = new_shape
 		H.update_genitals()
-		H.give_womb()
-		H.give_vagina()
+		H.give_genital(/obj/item/organ/genital/womb)
+		H.give_genital(/obj/item/organ/genital/vagina)
 		H.apply_overlay()
 
 	else if (select_alteration == "Penis Length")
 		for(var/obj/item/organ/genital/penis/X in H.internal_organs)
 			qdel(X)
-		var/new_length
-		new_length = input(owner, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Genital Alteration") as num|null
+		var/min_D = CONFIG_GET(number/penis_min_inches_prefs)
+		var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
+		var/new_length = input(owner, "Penis length in inches:\n([min_D]-[max_D])", "Genital Alteration") as num|null
 		if(new_length)
-			H.dna.features["cock_length"] = max(min( round(text2num(new_length)), COCK_SIZE_MAX),COCK_SIZE_MIN)
+			H.dna.features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
 		H.update_genitals()
 		H.apply_overlay()
-		H.give_balls()
-		H.give_penis()
+		H.give_genital(/obj/item/organ/genital/testicles)
+		H.give_genital(/obj/item/organ/genital/penis)
 
 	else if (select_alteration == "Breast Size")
 		for(var/obj/item/organ/genital/breasts/X in H.internal_organs)
 			qdel(X)
-		var/new_size
-		new_size = input(owner, "Breast Size", "Genital Alteration") as null|anything in GLOB.breasts_size_list
+		var/new_size = input(owner, "Breast Size", "Genital Alteration") as null|anything in CONFIG_GET(keyed_list/breasts_cups_prefs)
 		if(new_size)
 			H.dna.features["breasts_size"] = new_size
 		H.update_genitals()
 		H.apply_overlay()
-		H.give_breasts()
+		H.give_genital(/obj/item/organ/genital/breasts)
 
 	else if (select_alteration == "Breast Shape")
 		for(var/obj/item/organ/genital/breasts/X in H.internal_organs)
@@ -639,7 +631,7 @@
 			H.dna.features["breasts_shape"] = new_shape
 		H.update_genitals()
 		H.apply_overlay()
-		H.give_breasts()
+		H.give_genital(/obj/item/organ/genital/breasts)
 
 	else
 		return
@@ -847,17 +839,18 @@
 	link_minds = new(src)
 	link_minds.Grant(C)
 	slimelink_owner = C
-	link_mob(C)
+	link_mob(C, TRUE)
 
-/datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
-	if(QDELETED(M) || M.stat == DEAD)
+/datum/species/jelly/stargazer/proc/link_mob(mob/living/M, selflink = FALSE)
+	if(QDELETED(M) || (M in linked_mobs))
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD)) //mindshield implant, no dice
-		return FALSE
-	if(M in linked_mobs)
+	if(!selflink && (M.stat == DEAD || HAS_TRAIT(M, TRAIT_MINDSHIELD) || M.anti_magic_check(FALSE, FALSE, TRUE, 0)))
 		return FALSE
 	linked_mobs.Add(M)
-	to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+	if(!selflink)
+		to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+		RegisterSignal(M, COMSIG_MOB_DEATH , .proc/unlink_mob)
+		RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unlink_mob)
 	var/datum/action/innate/linked_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(M)
@@ -867,6 +860,7 @@
 	var/link_id = linked_mobs.Find(M)
 	if(!(link_id))
 		return
+	UnregisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/linked_speech/action = linked_actions[link_id]
 	action.Remove(M)
 	to_chat(M, "<span class='notice'>You are no longer connected to [slimelink_owner.real_name]'s Slime Link.</span>")
@@ -899,18 +893,11 @@
 		Remove(H)
 		return
 
-	if(QDELETED(H) || H.stat == DEAD)
-		species.unlink_mob(H)
-		return
-
 	if(message)
 		var/msg = "<i><font color=#008CA2>\[[species.slimelink_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
 		log_directed_talk(H, species.slimelink_owner, msg, LOG_SAY, "slime link")
 		for(var/X in species.linked_mobs)
 			var/mob/living/M = X
-			if(QDELETED(M) || M.stat == DEAD)
-				species.unlink_mob(M)
-				continue
 			to_chat(M, msg)
 
 		for(var/X in GLOB.dead_mob_list)
@@ -939,9 +926,14 @@
 	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in options
 	if(!M)
 		return
-
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		to_chat(H, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+		return
 	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
 	if(msg)
+		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(H, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+			return
 		log_directed_talk(H, M, msg, LOG_SAY, "slime telepathy")
 		to_chat(M, "<span class='notice'>You hear an alien voice in your head... </span><font color=#008CA2>[msg]</font>")
 		to_chat(H, "<span class='notice'>You telepathically said: \"[msg]\" to [M]</span>")
