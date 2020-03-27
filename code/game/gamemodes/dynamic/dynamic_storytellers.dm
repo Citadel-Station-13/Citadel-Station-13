@@ -53,7 +53,7 @@ Property weights are:
 		if(H.stat != DEAD && is_station_level(T.z) && !("Station" in H.faction))
 			threat += H.threat()
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
-		if (M.stat != DEAD && M.mind && M.mind.assigned_role)
+		if (M?.mind?.assigned_role && M.stat != DEAD)
 			if(length(M.mind.antag_datums))
 				threat += SSjob.GetJob(M.mind.assigned_role).GetThreat()
 			else
