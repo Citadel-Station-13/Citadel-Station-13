@@ -29,7 +29,7 @@
 							cur_oct[cur_note] = text2num(ni)
 					playnote_legacy(cur_note, cur_acc[cur_note], cur_oct[cur_note])
 				if(notes.len >= 2 && text2num(notes[2]))
-					sleep(sanitize_tempo_ds(tempo_ds / text2num(notes[2])))
+					sleep(sanitize_tempo(tempo / text2num(notes[2])))
 				else
 					sleep(tempo)
 		repeat--
@@ -70,7 +70,7 @@
 	if(!fexists(soundfile))
 		return
 	// and play
-	var/turf/source = get_turf(parentj)
+	var/turf/source = get_turf(parent)
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last-hearcheck)
 		do_hearcheck()
 	var/sound/music_played = sound(soundfile)

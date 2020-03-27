@@ -82,7 +82,7 @@
 	var/last_key = real_keys[length(real_keys)]
 	var/first_sample = real_samples[text2num(first_key)]
 	var/last_sample = real_samples[text2num(last_key)]
-	for(var/key in lowest_key to (first_key - 1))
+	for(var/key in LOWEST_KEY to (first_key - 1))
 		samples[num2text(key)] = new /datum/instrument_key(first_sample, key, key - first_key)
-	for(var/key in last_key to highest_key)
+	for(var/key in last_key to HIGHEST_KEY)
 		samples[num2text(key)] = new /datum/instrument_key(last_sample, key, key - last_key)

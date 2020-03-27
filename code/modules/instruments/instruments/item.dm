@@ -15,7 +15,6 @@
 	. = ..()
 	if(!islist(allowed_instrument_ids))
 		allowed_instrument_ids = list(allowed_instrument_ids)
-	var/instrument_path = allowed_instruments.len? allowed_instruments[1] : null
 	song = new(src, allowed_instrument_ids)
 	allowed_instrument_ids = null			//We don't need this clogging memory after it's used.
 

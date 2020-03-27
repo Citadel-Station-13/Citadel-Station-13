@@ -76,8 +76,8 @@
 	var/last_process_decay
 
 	/////////////////////// DO NOT TOUCH THESE ///////////////////
-	var/octave_min = INSTRUMENTS_MIN_OCTAVE
-	var/octave_max = INSTRUMENTS_MAX_OCTAVE
+	var/octave_min = INSTRUMENT_MIN_OCTAVE
+	var/octave_max = INSTRUMENT_MAX_OCTAVE
 	var/key_min = 0
 	var/key_max = 127
 	var/static/list/note_offset_lookup = list(9, 11, 0, 2, 4, 5, 7)

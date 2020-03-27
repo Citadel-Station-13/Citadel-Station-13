@@ -1,6 +1,6 @@
 /datum/song/proc/do_play_lines_synth(mob/user)
 	compile_lines()
-	while(repeats)
+	while(repeat)
 		for(var/_chord in compiled_chords)
 			var/list/chord = _chord
 			var/tempodiv = chord[chord.len]
@@ -14,7 +14,7 @@
 			sleep(sanitize_tempo(tempo / tempodiv))
 		if(should_stop_playing(user))
 			return
-		repeats--
+		repeat--
 		updateDialog()
 
 /datum/song/proc/compile_lines()
@@ -92,10 +92,10 @@
 	keys_playing[num2text(key)] = volume
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		M.playsound_local(get_turf(parent), S.sample, volume, FALSE, S.frequency + frequency_shift, 0, FALSE, channel)
+		M.playsound_local(get_turf(parent), K.sample, volume, FALSE, K.frequency + frequency_shift, 0, FALSE, channel)
 		// Could do environment and echo later but not for now
 
-/datum/song/proc/terminate_sound_all(clear_channels = TRUE)
+/datum/song/proc/terminate_all_sounds(clear_channels = TRUE)
 	for(var/i in hearing_mobs)
 		terminate_sound_mob(i)
 	if(clear_channels)
