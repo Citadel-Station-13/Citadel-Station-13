@@ -22,12 +22,9 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 /datum/controller/subsystem/processing/instruments/proc/initialize_instrument_data()
 	for(var/path in subtypesof(/datum/instrument))
 		var/datum/instrument/I = path
-		if(!istext(initial(I.id)))
+		if(initial(I.abstract_type) == path)
 			continue
-		if(instrument_data[initial(I.id)])
-			stack_trace("Skipping duplicate instrument ID [initial(I.id)]")
-			continue
-		I = new
+		I = new path
 		I.Initialize()
+		instrument_data[I.id || "[I.type]"] = I
 		CHECK_TICK
-		instrument_data[I.id] = I

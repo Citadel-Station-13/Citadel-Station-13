@@ -1,19 +1,20 @@
 #define DATUMLESS "NO_DATUM"
 
 SUBSYSTEM_DEF(sounds)
-	name = "sounds"
+	name = "Sounds"
 	flags = SS_NO_FIRE
+	init_order = INIT_ORDER_SOUNDS
 	var/static/using_channels_max = CHANNEL_HIGHEST_AVAILABLE		//BYOND max channels
+
+	// Hey uh these two needs to be initialized fast because the whole "things get deleted before init" thing.
 	/// Assoc list, "[channel]" = either the datum using it or TRUE for an unsafe-reserved (datumless reservation) channel
-	var/list/using_channels
+	var/list/using_channels = list()
 	/// Assoc list datum = list(channel1, channel2, ...) for what channels something reserved.
-	var/list/using_channels_by_datum
+	var/list/using_channels_by_datum = list()
 	/// List of all available channels with associations set to TRUE for fast lookups/allocation.
 	var/list/available_channels
 
 /datum/controller/subsystem/sounds/Initialize()
-	using_channels = list()
-	using_channels_by_datum = list()
 	setup_available_channels()
 	return ..()
 

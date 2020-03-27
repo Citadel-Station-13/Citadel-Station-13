@@ -15,7 +15,7 @@
 /datum/instrument
 	/// Name of the instrument
 	var/name = "Generic instrument"
-	/// Uniquely identifies this instrument so runtime changes are possible as opposed to paths
+	/// Uniquely identifies this instrument so runtime changes are possible as opposed to paths. If this is unset, things will use path instead.
 	var/id
 	/// Category
 	var/category = "Unsorted"
@@ -39,7 +39,7 @@
 	var/static/LOWEST_KEY = 0
 
 /datum/instrument/proc/Initialize()
-	if(!CHECK_BITFIELD(instrument_flags, INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
+	if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return
 	calculate_samples()
 
@@ -71,8 +71,8 @@
 	for(var/i in 1 to (length(real_keys) - 1))
 		var/from_key = real_keys[i]
 		var/to_key = real_keys[i+1]
-		var/sample1 = real_samples[text2num(from_key)]
-		var/sample2 = real_samples[text2num(to_key)]
+		var/sample1 = real_samples[num2text(from_key)]
+		var/sample2 = real_samples[num2text(to_key)]
 		var/pivot = FLOOR((from_key + to_key) / 2, 1)			//original code was a round but I replaced it because that's effectively a floor, thanks Baystation! who knows what was intended.
 		for(var/key in from_key to pivot)
 			samples[num2text(key)] = new /datum/instrument_key(sample1, key, key - from_key)
@@ -82,8 +82,8 @@
 	// Fill in 0 to first key and last key to 127
 	var/first_key = real_keys[1]
 	var/last_key = real_keys[length(real_keys)]
-	var/first_sample = real_samples[text2num(first_key)]
-	var/last_sample = real_samples[text2num(last_key)]
+	var/first_sample = real_samples[num2text(first_key)]
+	var/last_sample = real_samples[num2text(last_key)]
 	for(var/key in LOWEST_KEY to (first_key - 1))
 		samples[num2text(key)] = new /datum/instrument_key(first_sample, key, key - first_key)
 	for(var/key in last_key to HIGHEST_KEY)
