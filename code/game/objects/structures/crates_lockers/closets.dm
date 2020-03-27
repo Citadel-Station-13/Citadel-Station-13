@@ -37,6 +37,7 @@
 	var/lock_in_use = FALSE //Someone is doing some stuff with the lock here, better not proceed further
 	var/eigen_teleport = FALSE //If the closet leads to Mr Tumnus.
 	var/obj/structure/closet/eigen_target //Where you go to.
+	var/breaking_out = FALSE // whether someone is breaking out
 
 
 /obj/structure/closet/Initialize(mapload)
@@ -503,7 +504,7 @@
 	return 1
 
 /obj/structure/closet/container_resist(mob/living/user)
-	if(opened)
+	if(opened || breaking_out)
 		return
 	if(ismovableatom(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -521,6 +522,7 @@
 	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear banging from [src].</span>")
+	breaking_out = TRUE
 	if(do_after(user,(breakout_time), target = src, required_mobility_flags = MOBILITY_RESIST))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
@@ -531,6 +533,7 @@
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, "<span class='warning'>You fail to break out of [src]!</span>")
+	breaking_out = FALSE
 
 /obj/structure/closet/AltClick(mob/user)
 	. = ..()
