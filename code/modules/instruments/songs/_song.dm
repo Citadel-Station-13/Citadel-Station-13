@@ -161,10 +161,10 @@
 		var/legacy = CHECK_BITFIELD(I, INSTRUMENT_LEGACY)
 		if(legacy)
 			cached_legacy_ext = I.legacy_instrument_ext
-			cached_legacy_dir = I.legacy_instrument_dir
+			cached_legacy_dir = I.legacy_instrument_path
 			legacy = TRUE
 		else
-			samples = I.samples
+			cached_samples = I.samples
 			legacy = FALSE
 
 /// THIS IS A BLOCKING CALL.
@@ -193,7 +193,7 @@
 	if(!debug_mode)
 		compiled_chords = null
 	hearing_mobs.len = 0
-	STOP_PLAYING(SSinstruments, src)
+	STOP_PROCESSING(SSinstruments, src)
 	terminate_all_sounds(TRUE)
 
 /// THIS IS A BLOCKING CALL.

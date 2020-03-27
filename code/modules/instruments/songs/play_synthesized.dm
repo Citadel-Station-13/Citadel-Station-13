@@ -70,12 +70,12 @@
 			if(change_lists)
 				accents[cur_note] = "b"
 			accent = "b"
-		elsee
+		else
 			var/n = text2num(text)
 			if(n && (n >= max(INSTRUMENT_MIN_OCTAVE, octave_min)) && (n <= min(INSTRUMENT_MAX_OCTAVE, octave_max)))
 				if(change_lists)
 					octaves[cur_note] = n
-				oactave = n
+				octave = n
 	accent = accent || accents[cur_note]
 	octave = octave || octaves[cur_note]
 	return ((octave * 12) + (accent_lookup[accent]) + (note_offset_lookup[cur_note]))

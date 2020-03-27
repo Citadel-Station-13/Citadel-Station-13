@@ -1,5 +1,5 @@
 /datum/song/ui_interact(mob/user)
-	var/dat = list()
+	var/list/dat = list()
 
 	if(lines.len > 0)
 		dat += "<H3>Playback</H3>"
@@ -124,9 +124,7 @@
 		tempo = sanitize_tempo(tempo + text2num(href_list["tempo"]))
 
 	else if(href_list["play"])
-		playing = TRUE
-		spawn()
-			playsong(usr)
+		INVOKE_ASYNC(src, .proc/start_playing, usr)
 
 	else if(href_list["newline"])
 		var/newline = html_encode(input("Enter your line: ", parent.name) as text|null)
