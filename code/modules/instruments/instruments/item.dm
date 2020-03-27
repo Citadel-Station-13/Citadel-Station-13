@@ -29,7 +29,7 @@
 	return !user.CanReach(src) || !user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)
 
 /obj/item/instrument/process(wait)
-	if(tune_time_left > 0)
+	if(is_tuned())
 		if (song.playing)
 			for (var/mob/living/M in song.hearing_mobs)
 				M.dizziness = max(0,M.dizziness-2)
@@ -58,7 +58,7 @@
 	if(istype(W, /obj/item/musicaltuner))
 		var/mob/living/carbon/human/H = user
 		if (HAS_TRAIT(H, TRAIT_MUSICIAN))
-			if (!tune_time)
+			if (!is_tuned())
 				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
 				tune_time_left = 600 SECONDS
 				START_PROCESSING(SSobj, src)
@@ -66,6 +66,9 @@
 				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
 		else
 			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
+
+/obj/item/instrument/proc/is_tuned()
+	return tune_time_left > 0
 
 /obj/item/instrument/interact(mob/user)
 	ui_interact(user)

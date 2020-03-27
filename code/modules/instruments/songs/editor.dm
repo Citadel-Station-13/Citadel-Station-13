@@ -49,15 +49,15 @@
 			dat += "<B><A href='?src=\ref[src];help=2'>Show Help</A></B><BR>"
 	var/datum/browser/popup = new(user, "instrument", parent? parent.name : "Song Display" , 700, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(instrumentObj.icon, instrumentObj.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(parent.icon, parent.icon_state))
 	popup.open()
 
 /datum/song/Topic(href, href_list)
-	if(!instrumentObj.Adjacent(usr) || usr.stat)
+	if(!parent.Adjacent(usr) || usr.stat)
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
-	instrumentObj.add_fingerprint(usr)
+	parent.add_fingerprint(usr)
 	if(href_list["newsong"])
 		lines = new()
 		tempo = sanitize_tempo(5) // default 120 BPM
@@ -66,13 +66,13 @@
 		var/t = ""
 		do
 			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
-			if(!in_range(instrumentObj, usr))
+			if(!in_range(parent, usr))
 				return
-			if(lentext(t) >= INSTRUMENT_MAX_LINE_LENGTH*INSTRUMENT_MAX_LINE_NUMBER)
+			if(length(t) >= INSTRUMENT_MAX_LINE_LENGTH*INSTRUMENT_MAX_LINE_NUMBER)
 				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 				if(cont == "no")
 					break
-		while(lentext(t) > INSTRUMENT_MAX_LINE_LENGTH*INSTRUMENT_MAX_LINE_NUMBER)
+		while(length(t) > INSTRUMENT_MAX_LINE_LENGTH*INSTRUMENT_MAX_LINE_NUMBER)
 		//split into lines
 		spawn()
 			lines = splittext(t, "\n")
@@ -86,7 +86,7 @@
 				lines.Cut(INSTRUMENT_MAX_LINE_NUMBER+1)
 			var/linenum = 1
 			for(var/l in lines)
-				if(lentext(l) > INSTRUMENT_MAX_LINE_LENGTH)
+				if(length(l) > INSTRUMENT_MAX_LINE_LENGTH)
 					to_chat(usr, "Line [linenum] too long!")
 					lines.Remove(l)
 				else
@@ -111,12 +111,12 @@
 		spawn()
 			playsong(usr)
 	else if(href_list["newline"])
-		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
-		if(!newline || !in_range(instrumentObj, usr))
+		var/newline = html_encode(input("Enter your line: ", parent.name) as text|null)
+		if(!newline || !in_range(parent, usr))
 			return
 		if(lines.len > INSTRUMENT_MAX_LINE_NUMBER)
 			return
-		if(lentext(newline) > INSTRUMENT_MAX_LINE_LENGTH)
+		if(length(newline) > INSTRUMENT_MAX_LINE_LENGTH)
 			newline = copytext(newline, 1, INSTRUMENT_MAX_LINE_LENGTH)
 		lines.Add(newline)
 	else if(href_list["deleteline"])
@@ -126,10 +126,10 @@
 		lines.Cut(num, num+1)
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
-		if(!content || !in_range(instrumentObj, usr))
+		var/content = html_encode(input("Enter your line: ", parent.name, lines[num]) as text|null)
+		if(!content || !in_range(parent, usr))
 			return
-		if(lentext(content) > INSTRUMENT_MAX_LINE_LENGTH)
+		if(length(content) > INSTRUMENT_MAX_LINE_LENGTH)
 			content = copytext(content, 1, INSTRUMENT_MAX_LINE_LENGTH)
 		if(num > lines.len || num < 1)
 			return
@@ -207,9 +207,9 @@
 		else
 			dat += "<B><A href='?src=[REF(src)];help=2'>Show Help</A></B><BR>"
 
-	var/datum/browser/popup = new(user, "instrument", instrumentObj.name, 700, 500)
+	var/datum/browser/popup = new(user, "instrument", parent.name, 700, 500)
 	popup.set_content(dat.Join(""))
-	popup.set_title_image(user.browse_rsc_icon(instrumentObj.icon, instrumentObj.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(parent.icon, parent.icon_state))
 	popup.open()
 
 /datum/song/proc/ParseSong(text)
@@ -237,12 +237,12 @@
 		updateDialog(usr)		// make sure updates when complete
 
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(instrumentObj, TRUE, FALSE, FALSE, FALSE))
+	if(!usr.canUseTopic(parent, TRUE, FALSE, FALSE, FALSE))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
 
-	instrumentObj.add_fingerprint(usr)
+	parent.add_fingerprint(usr)
 
 	if(href_list["newsong"])
 		lines = new()
@@ -253,7 +253,7 @@
 		var/t = ""
 		do
 			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
-			if(!in_range(instrumentObj, usr))
+			if(!in_range(parent, usr))
 				return
 
 			if(length_char(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
@@ -287,8 +287,8 @@
 			playsong(usr)
 
 	else if(href_list["newline"])
-		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
-		if(!newline || !in_range(instrumentObj, usr))
+		var/newline = html_encode(input("Enter your line: ", parent.name) as text|null)
+		if(!newline || !in_range(parent, usr))
 			return
 		if(lines.len > MUSIC_MAXLINES)
 			return
@@ -304,8 +304,8 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = stripped_input(usr, "Enter your line: ", instrumentObj.name, lines[num], MUSIC_MAXLINECHARS)
-		if(!content || !in_range(instrumentObj, usr))
+		var/content = stripped_input(usr, "Enter your line: ", parent.name, lines[num], MUSIC_MAXLINECHARS)
+		if(!content || !in_range(parent, usr))
 			return
 		if(num > lines.len || num < 1)
 			return
