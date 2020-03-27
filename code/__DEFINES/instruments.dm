@@ -1,8 +1,15 @@
 #define INSTRUMENT_MIN_OCTAVE 1
 #define INSTRUMENT_MAX_OCTAVE 9
-#define INSTRUMENT_MAX_SUSTAIN 50		//Synth samples are only 50 ds long!
-#define INSTRUMENT_MIN_EXP_DECAY 1.07
-#define INSTRUMENT_MAX_EXP_DECAY 10
+
+/// Maximum length a note should ever go for
+#define INSTRUMENT_MAX_TOTAL_SUSTAIN (5 SECONDS)
+
+/// These are per decisecond.
+#define INSTRUMENT_EXP_FALLOFF_MIN			1.025		//100/(1.025^50) calculated for [INSTRUMENT_MIN_SUSTAIN_DROPOFF] to be 30.
+#define INSTRUMENT_EXP_FALLOFF_MAX			10
+
+/// Minimum volume for when the sound is considered dead.
+#define INSTRUMENT_MIN_SUSTAIN_DROPOFF 30
 
 #define SUSTAIN_LINEAR 1
 #define SUSTAIN_EXPONENTIAL 2

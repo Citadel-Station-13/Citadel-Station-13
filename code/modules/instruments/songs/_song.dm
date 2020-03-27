@@ -64,7 +64,6 @@
 	var/list/channels_reserved
 	/// Key as text = current volume
 	var/list/keys_playing
-
 	//////////////////////////////////////////////////////
 
 	/// Last world.time we checked for who can hear us
@@ -98,12 +97,18 @@
 	var/can_freqshift = FALSE
 	/// The kind of sustain we're using
 	var/sustain_mode = SUSTAIN_LINEAR
+	/// When a note is considered dead if it is below this in volume
+	var/sustain_dropoff_volume = 10
+	/// Total duration of linear sustain for 100 volume note to get to SUSTAIN_DROPOFF
+	var/sustain_linear_duration = 10
 	/// Exponential sustain dropoff rate per decisecond
-	var/sustain_exponential = 1.07
-	/// Linear sustain dropoff rate per decisecond
-	var/sustain_linear = 10
+	var/sustain_exponential_dropoff = 1.045
+	////////// DO NOT DIRECTLY SET THESE!
+	/// Do not directly set, use update_sustain()
+	var/cached_linear_dropoff = 10
+	/// Do not directly set, use update_sustain()
+	var/cached_exponential_dropoff = 1.07
 	/////////////////////////////////////////////////////////////////////////
-
 
 /datum/song/New(atom/parent, list/allowed_instrument_ids)
 	SSinstruments.on_song_new(src)
@@ -222,6 +227,48 @@
 	if(!now_playing)
 		return PROCESS_KILL
 	process_decay()
+
+/datum/song/proc/update_sustain()
+	// Exponential is easy
+	cached_exponential_dropoff = sustain_exponential_dropoff
+	// Linear, not so much, since it's a target duration from 100 volume rather than an exponential rate.
+	var/target_duration = sustain_linear_duration
+	var/volume_diff = max(0, volume - sustain_dropoff_volume)
+	var/volume_decrease_per_decisecond = volume_diff / target_duration
+	cached_linear_dropoff = volume_decrease_per_decisecond
+
+/datum/song/proc/set_volume(volume)
+	src.volume = CLAMP(volume, max(0, min_volume), min(100, max_volume))
+	update_sustain()
+	updateDialog()
+
+/datum/song/proc/set_dropoff_volume(volume)
+	sustain_dropoff_volume = CLAMP(volume, INSTRUMENT_SUSTAIN_MIN_DROPOFF, 100)
+	update_sustain()
+	updateDialog()
+
+/datum/song/proc/set_exponential_drop_rate(drop)
+	sustain_exponential_dropoff = CLAMP(drop, INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX)
+	update_sustain()
+	updateDialog()
+
+/datum/song/proc/set_linear_falloff_duration(duration)
+	sustain_linear_duration = CLAMP(duration, 0, INSTRUMENT_MAX_TOTAL_SUSTAIN)
+	update_sustain()
+	updateDialog()
+
+/datum/song/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		switch(var_name)
+			if(NAMEOF(src, volume))
+				set_volume(var_value)
+			if(NAMEOF(src, sustain_dropoff_volume))
+				set_dropoff_volume(var_value)
+			if(NAMEOF(src, sustain_exponential_dropoff))
+				set_exponential_drop_rate(var_value)
+			if(NAMEOF(src, sustain_lienar_duration))
+				set_linear_falloff_duration(var_value)
 
 // subtype for handheld instruments, like violin
 /datum/song/handheld

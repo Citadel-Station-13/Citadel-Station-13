@@ -121,17 +121,17 @@
 	channels_reserved[key] = .
 
 /datum/song/proc/process_decay(wait_ds)
-	var/linear_delta = (volume / sustain_linear) * wait_ds
-	var/exponential_multiplier = sustain_exponential ** wait_ds
+	var/linear_dropoff = cached_linear_dropoff * wait_ds
+	var/exponential_dropoff = cached_exponential_dropoff ** wait_ds
 	for(var/key in keys_playing)
 		var/current_volume = keys_playing[key]
 		switch(sustain_mode)
 			if(SUSTAIN_LINEAR)
-				current_volume -= linear_delta
+				current_volume -= linear_dropoff
 			if(SUSTAIN_EXPONENTIAL)
-				current_volume /= exponential_multiplier
+				current_volume /= exponential_dropoff
 		keys_playing[key] = current_volume
-		var/dead = amount_left <= SUSTAIN_DROP
+		var/dead = amount_left < sustain_dropoff_volume
 		if(dead)
 			keys_playing -= key
 		var/channel = channels_reserved[key]
