@@ -1,14 +1,19 @@
 GLOBAL_DATUM_INIT(musical_config, /datum/musical_config, new)
 
 /datum/musical_config
+	var/highest_octave = 9
+	var/lowest_octave = 0
 
 	var/highest_transposition = 4
 	var/lowest_transposition = -4
 
+	var/longest_sustain_timer = 50
 	var/gentlest_drop = 1.07
 	var/steepest_drop = 10.0
 
 	var/channels_per_instrument = 128
+	var/max_lines = 1000
+	var/max_line_length = 50
 	var/max_events = 2400
 	var/song_editor_lines_per_page = 20
 
@@ -120,14 +125,14 @@ GLOBAL_DATUM_INIT(musical_config, /datum/musical_config, new)
 			"Value that controls the modal density in the late reverberation decay",
 			{"
 Bit flags that modify the behavior of above properties
-•1 - 'EnvSize' affects reverberation decay time
-•2 - 'EnvSize' affects reflection level
-•4 - 'EnvSize' affects initial reflection delay time
-•8 - 'EnvSize' affects reflections level
-•16 - 'EnvSize' affects late reverberation delay time
-•32 - AirAbsorptionHF affects DecayHFRatio
-•64 - 'EnvSize' affects echo time
-•128 - 'EnvSize' affects modulation time"})
+- 1 - 'EnvSize' affects reverberation decay time
+- 2 - 'EnvSize' affects reflection level
+- 4 - 'EnvSize' affects initial reflection delay time
+- 8 - 'EnvSize' affects reflections level
+- 16 - 'EnvSize' affects late reverberation delay time
+- 32 - AirAbsorptionHF affects DecayHFRatio
+- 64 - 'EnvSize' affects echo time
+- 128 - 'EnvSize' affects modulation time"})
 
 	var/list/echo_default = list(0, 0, 0, 0, 0, 0.0, 0, 0.25, 1.5, 1.0, 0, 1.0, 0, 0.0, 0.0, 0.0, 1.0, 7)
 	var/list/list/echo_params_bounds = list(
@@ -187,11 +192,27 @@ Bit flags that modify the behavior of above properties
 			"like DS3D flRolloffFactor but for room effect",
 			"multiplies AirAbsorptionHF member of environment reverb properties.",
 			{"
-			Bit flags that modify the behavior of properties•1 - Automatic setting of 'Direct' due to distance from listener
-			•2 - Automatic setting of 'Room' due to distance from listener
-			•4 - Automatic setting of 'RoomHF' due to distance from listener"})
+			Bit flags that modify the behavior of properties
+			- 1 - Automatic setting of 'Direct' due to distance from listener
+			- 2 - Automatic setting of 'Room' due to distance from listener
+			- 4 - Automatic setting of 'RoomHF' due to distance from listener"})
 
 	var/list/n2t_int = list() // Instead of num2text it is used for faster access in n2t
+	var/list/nn2no = list(0,2,4,5,7,9,11) // Maps note num onto note offset
+
+
+
+/datum/musical_config/proc/n2t(key) // Used instead of num2text for faster access in sample_map
+	if (!src.n2t_int.len)
+		for (var/i=1, i<=127, i++)
+			src.n2t_int += num2text(i)
+
+	if (key==0)
+		return "0" // Fuck you BYOND
+	if (!isnum(key) || key < 0 || key>127 || round(key) != key)
+		CRASH("n2t argument must be an integer from 0 to 127")
+	return src.n2t_int[key]
+
 
 /datum/musical_config/proc/environment_to_id(environment)
 	if (environment in src.all_environments)
@@ -211,3 +232,12 @@ Bit flags that modify the behavior of above properties
 
 /datum/musical_config/proc/is_custom_env(id)
 	return id_to_environment(id) == src.all_environments[28]
+
+
+/datum/sample_pair
+	var/sample
+	var/deviation = 0
+
+/datum/sample_pair/New(sample_file, deviation)
+	src.sample = sample_file
+	src.deviation = deviation
