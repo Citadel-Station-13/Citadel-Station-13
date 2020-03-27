@@ -39,6 +39,8 @@
 	var/static/LOWEST_KEY = 0
 
 /datum/instrument/proc/Initialize()
+	if(!CHECK_BITFIELD(instrument_flags, INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
+		return
 	calculate_samples()
 
 /datum/instrument/proc/ready()
