@@ -11530,7 +11530,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aAs" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/plating,
@@ -55567,7 +55567,7 @@
 	},
 /area/crew_quarters/theatre)
 "iTU" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/wood,
@@ -56767,7 +56767,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "myh" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
