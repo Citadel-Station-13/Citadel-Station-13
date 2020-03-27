@@ -93,7 +93,8 @@
 	keys_playing["[key]"] = volume
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		M.playsound_local(get_turf(parent), S.sample, volume, FALSE, S.frequency, 0, FALSE, channel)			WIP_TAG - ENVIRONMENT AND ECHO
+		M.playsound_local(get_turf(parent), S.sample, volume, FALSE, S.frequency, 0, FALSE, channel)
+		// Could do environment and echo later but not for now
 
 /datum/song/proc/terminate_sound_all(clear_channels = TRUE)
 	for(var/i in hearing_mobs)

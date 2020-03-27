@@ -80,4 +80,5 @@
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		M.playsound_local(source, null, volume, falloff = 5, S = music_played)			WIP_TAG - ENVIRONMENT AND ECHO
+		M.playsound_local(source, null, volume, falloff = 5, S = music_played)
+		// Could do environment and echo later but not for now
