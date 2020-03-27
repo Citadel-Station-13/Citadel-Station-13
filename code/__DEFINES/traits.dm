@@ -236,6 +236,7 @@
 #define APHRO_TRAIT "aphro"
 #define BLOODSUCKER_TRAIT "bloodsucker"
 #define CLOTHING_TRAIT "clothing" //used for quirky carrygloves
+#define SHOES_TRAIT "shoes" //inherited from your sweet kicks
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
