@@ -244,7 +244,7 @@
 	updateDialog()
 
 /datum/song/proc/set_dropoff_volume(volume)
-	sustain_dropoff_volume = CLAMP(volume, INSTRUMENT_SUSTAIN_MIN_DROPOFF, 100)
+	sustain_dropoff_volume = CLAMP(volume, INSTRUMENT_MIN_SUSTAIN_DROPOFF, 100)
 	update_sustain()
 	updateDialog()
 
@@ -268,7 +268,7 @@
 				set_dropoff_volume(var_value)
 			if(NAMEOF(src, sustain_exponential_dropoff))
 				set_exponential_drop_rate(var_value)
-			if(NAMEOF(src, sustain_lienar_duration))
+			if(NAMEOF(src, sustain_linear_duration))
 				set_linear_falloff_duration(var_value)
 
 // subtype for handheld instruments, like violin

@@ -1,7 +1,7 @@
 /obj/structure/musician
 	name = "Not A Piano"
 	desc = "Something broke, contact coderbus."
-	interaction_flags = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_DEXTERITY
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_DEXTERITY
 	var/can_play_unanchored = FALSE
 	var/list/allowed_instrument_ids
 	var/datum/song/song

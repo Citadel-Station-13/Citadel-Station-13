@@ -109,7 +109,7 @@
 		help = text2num(href_list["help"]) - 1
 
 	else if(href_list["edit"])
-		edit = text2num(href_list["edit"]) - 1
+		editing = text2num(href_list["edit"]) - 1
 
 	if(href_list["repeat"]) //Changing this from a toggle to a number of repeats to avoid infinite loops.
 		if(playing)

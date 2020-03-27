@@ -71,7 +71,7 @@
 		return
 	// and play
 	var/turf/source = get_turf(parent)
-	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last-hearcheck)
+	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		do_hearcheck()
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)

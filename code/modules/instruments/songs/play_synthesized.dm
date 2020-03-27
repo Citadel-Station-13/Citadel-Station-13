@@ -99,7 +99,7 @@
 	for(var/i in hearing_mobs)
 		terminate_sound_mob(i)
 	if(clear_channels)
-		SSsounds.release_datum_channels(src)
+		SSsounds.free_datum_channels(src)
 		channels_reserved.len = 0
 		keys_playing.len = 0
 
