@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(sounds)
 	using_channels -= channel
 	if(using)
 		using_channels_by_datum[using] -= channel
-		if(!length(using_channels_by_datum[using])
+		if(!length(using_channels_by_datum[using]))
 			using_channels_by_datum -= using
 	available_channels[channel] = TRUE
 
