@@ -1,5 +1,5 @@
 /// Playing legacy instruments - None of the "advanced" like sound reservations and decay are invoked.
-/datum/song/proc/do_play_lines_legacy()
+/datum/song/proc/do_play_lines_legacy(mob/user)
 	while(repeat >= 0)
 		var/cur_oct[7]
 		var/cur_acc[7]
@@ -9,7 +9,7 @@
 
 		for(var/line in lines)
 			for(var/beat in splittext(lowertext(line), ","))
-				if(should_stop_playing())
+				if(should_stop_playing(user))
 					return
 				var/list/notes = splittext(beat, "/")
 				for(var/note in splittext(notes[1], "-"))
@@ -33,7 +33,7 @@
 				else
 					sleep(tempo)
 		repeat--
-		if(should_stop_playing())
+		if(should_stop_playing(user))
 			return
 		updateDialog()
 

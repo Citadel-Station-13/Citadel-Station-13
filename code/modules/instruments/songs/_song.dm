@@ -73,6 +73,8 @@
 	var/list/hearing_mobs
 	/// If this is enabled, some things won't be strictly cleared when they usually are (liked compiled_chords on play stop)
 	var/debug_mode = FALSE
+	/// Last time we processed decay
+	var/last_process_decay
 
 	/////////////////////// DO NOT TOUCH THESE ///////////////////
 	var/octave_min = INSTRUMENTS_MIN_OCTAVE
@@ -84,15 +86,24 @@
 	//////////////////////////////////////////////////////////////
 
 	///////////// !!FUN!! - Only works in synthesized mode! /////////////////
+	/// Note numbers to shift.
 	var/note_shift = 0
 	var/note_shift_min = -100
 	var/note_shift_max = 100
+	/// Frequency numbers to shift. Probably a horrible idea.
 	var/frequency_shift = 0
 	var/frequency_shift_min = -30
 	var/frequency_shift_max = 30
 	var/can_noteshift = TRUE
 	var/can_freqshift = FALSE
+	/// The kind of sustain we're using
+	var/sustain_mode = SUSTAIN_LINEAR
+	/// Exponential sustain dropoff rate per decisecond
+	var/sustain_exponential = 1.07
+	/// Linear sustain dropoff rate per decisecond
+	var/sustain_linear = 10
 	/////////////////////////////////////////////////////////////////////////
+
 
 /datum/song/New(atom/parent, list/allowed_instrument_ids)
 	SSinstruments.on_song_new(src)
@@ -155,13 +166,18 @@
 /datum/song/proc/start_playing(mob/user)
 	if(playing)
 		return
+	if(!using_instrument?.ready())
+		to_chat(user, "<span class='warning'>An error has occured with [src]. Please reset the instrument.</span>")
+		return
 	playing = TRUE
 	updateDialog()
 	channels_reserved = list()
 	keys_playing = list()
 	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
 	//wrap the rest of the stuff to ensure stop_playing() is called.
-	. = do_play_lines()
+	last_process_decay = world.time
+	START_PROCESSING(SSinstruments, src)
+	. = do_play_lines(user)
 	stop_playing()
 	updateDialog()
 
@@ -172,67 +188,18 @@
 	if(!debug_mode)
 		compiled_chords = null
 	hearing_mobs.len = 0
+	STOP_PLAYING(SSinstruments, src)
 	terminate_all_sounds(TRUE)
 
 /// THIS IS A BLOCKING CALL.
-/datum/song/proc/do_play_lines()
+/datum/song/proc/do_play_lines(user)
 	if(!playing)
 		return
 	do_hearcheck()
 	if(legacy)
-		do_play_lines_legacy()
+		do_play_lines_legacy(user)
 	else
-		do_play_lines_synthesized()
-
-
-
-
-
-
-/datum/song
-
-	var/sustain_mode = SUSTAIN_LINEAR
-	var/sustain_exponential = 1.07
-	var/sustain_linear = 10
-
-
-
-
-
-
-
-/datum/song/proc/stop_playing()
-	hearing_mobs.Cut()
-	playing = FALSE
-	terminate_sound_all(TRUE)
-
-/datum/song/proc/start_playing()
-	set waitfor = FALSE
-	if(!instrument || !instrument.ready())
-		return FALSE
-	playing = TRUE
-	legacy = CHECK_BITFIELD(instrument.instrument_flags, INSTRUMENT_LEGACY)
-	do_hearcheck(TRUE)
-	play_lines()
-	return TRUE
-
-/datum/song/proc/play_lines()
-	if(now_playing)
-		CRASH("WARNING: datum/song attempted to play_lines while it was already now_playing!")
-		return FALSE
-	now_playing = TRUE
-	START_PROCESSING(SSinstruments, src)
-	legacy? do_play_lines_legacy() : do_play_lines_synth()
-	now_playing = FALSE
-	STOP_PROCESSING(SSinstruments, src)
-	terminate_sound_all(TRUE)
-	updateDialog()
-	return TRUE
-
-
-
-
-
+		do_play_lines_synthesized(user)
 
 /datum/song/proc/should_stop_playing(mob/user)
 	return QDELETED(parent) || !using_instrument || !playing

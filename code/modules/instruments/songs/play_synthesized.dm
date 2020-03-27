@@ -11,7 +11,7 @@
 					return
 			if(should_stop_playing(user))
 				return
-			sleep(sanitize_tempo_ds(tempo_ds / tempodiv))
+			sleep(sanitize_tempo(tempo / tempodiv))
 		if(should_stop_playing(user))
 			return
 		repeats--
