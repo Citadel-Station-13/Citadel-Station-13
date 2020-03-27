@@ -3,7 +3,7 @@
 SUBSYSTEM_DEF(sounds)
 	name = "sounds"
 	flags = SS_NO_FIRE
-	var/static/sound_channels_max = CHANNEL_HIGHEST_AVAILABLE		//BYOND max channels
+	var/static/using_channels_max = CHANNEL_HIGHEST_AVAILABLE		//BYOND max channels
 	/// Assoc list, "[channel]" = either the datum using it or TRUE for an unsafe-reserved (datumless reservation) channel
 	var/list/using_channels
 	/// Assoc list datum = list(channel1, channel2, ...) for what channels something reserved.
@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(sounds)
 
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
 	available_channels = list()
-	for(var/i in 1 to sound_channels_max)
+	for(var/i in 1 to using_channels_max)
 		available_channels["[i]"] = TRUE
 
 /// Removes a channel from using list.
@@ -35,13 +35,13 @@ SUBSYSTEM_DEF(sounds)
 
 /// Frees all the channels a datum is using.
 /datum/controller/subsystem/sounds/proc/free_datum_channels(datum/D)
-	var/list/L = sound_channels_by_datum[D]
+	var/list/L = using_channels_by_datum[D]
 	if(!L)
 		return
 	for(var/channel in L)
 		using_channels -= channel
 		available_channels[channel] = TRUE
-	sound_channels_by_datum -= D
+	using_channels_by_datum -= D
 
 /// Frees all datumless channels
 /datum/controller/subsystem/sounds/proc/free_datumless_channels()
@@ -52,9 +52,9 @@ SUBSYSTEM_DEF(sounds)
 	var/channel = random_available_channel_text()
 	if(!channel)		//oh no..
 		return FALSE
-	sound_channels[channel] = DATUMLESS
-	LAZYINITLIST(sound_channels_by_datum[DATUMLESS])
-	sound_channels_by_datum[DATUMLESS] += channel
+	using_channels[channel] = DATUMLESS
+	LAZYINITLIST(using_channels_by_datum[DATUMLESS])
+	using_channels_by_datum[DATUMLESS] += channel
 	return text2num(channel)
 
 /// Reserves a channel for a datum. Automatic cleanup only when the datum is deleted. Returns an integer for channel.
@@ -62,9 +62,9 @@ SUBSYSTEM_DEF(sounds)
 	if(!D)		//i don't like typechecks but someone will fuck it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	var/channel = random_available_channel_text()
-	sound_channels[channel] = D
-	LAZYINITLIST(sound_channels_by_datum[D])
-	sound_channels_by_datum[D] += channel
+	using_channels[channel] = D
+	LAZYINITLIST(using_channels_by_datum[D])
+	using_channels_by_datum[D] += channel
 	return text2num(channel)
 
 /// Random available channel, returns text.
