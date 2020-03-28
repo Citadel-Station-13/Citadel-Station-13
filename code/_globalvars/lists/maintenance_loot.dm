@@ -113,8 +113,8 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
     /obj/item/clothing/glasses/hud/health = 1,
 	/obj/item/clothing/shoes/wheelys = 1,
 	/obj/item/clothing/shoes/kindleKicks = 1,
-	/obj/item/storage/backpack/duffelbag/syndie = 1
-    /obj/item/banhammer = 1
+	/obj/item/storage/backpack/duffelbag/syndie = 1,
+    /obj/item/banhammer = 1,
 	/obj/item/storage/box/marshmallow = 2,
     /obj/item/storage/toolbox/rubber = 1,
 	"" = 3
