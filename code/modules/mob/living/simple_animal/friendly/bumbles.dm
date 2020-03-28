@@ -44,19 +44,22 @@
 			icon_state = "[icon_living]"
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/bumbles/bee_friendly()
-	return TRUE //treaty signed at the Beeneeva convention
+
 
 /mob/living/simple_animal/pet/bumbles/handle_automated_movement()
 	. = ..()
-	if(!isturf(loc) || !CHECK_MOBILITY(src, MOBILITY_MOVE)  || buckled)
-		return
 	if(!resting && prob(1))
 		emote("me", EMOTE_VISIBLE, pick("curls up on the surface below ", "is looking very sleepy.", "buzzes softly ", "looks around for a flower nap "))
 		set_resting(TRUE)
 	else if (resting && prob(1))
 		emote("me", EMOTE_VISIBLE, pick("wakes up with a smiling buzz.", "rolls upside down before waking up.", "stops resting."))
 		set_resting(FALSE)
+	if(!isturf(loc) || !CHECK_MOBILITY(src, MOBILITY_MOVE)  || buckled)
+		return
+
+/mob/living/simple_animal/pet/bumbles/bee_friendly()
+	return TRUE //treaty signed at the Beeneeva convention
+
 /mob/living/simple_animal/pet/bumbles/update_mobility()
 	. = ..()
 	if(stat != DEAD)
