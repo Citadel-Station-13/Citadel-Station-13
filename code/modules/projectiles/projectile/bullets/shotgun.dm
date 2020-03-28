@@ -18,6 +18,7 @@
 /obj/item/projectile/bullet/shotgun_stunslug
 	name = "electroslug"
 	damage = 5
+	stamina = 30
 	stutter = 5
 	jitter = 20
 	range = 7
