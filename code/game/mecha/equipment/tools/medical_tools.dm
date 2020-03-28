@@ -259,7 +259,8 @@
 	. = ..()
 	create_reagents(max_volume, NO_REACT)
 	syringes = new
-	known_reagents = list(/datum/reagent/medicine/epinephrine = "Epinephrine", /datum/reagent/medicine/charcoal = "Charcoal")
+	known_reagents = list(/datum/reagent/medicine/epinephrine = "Epinephrine", /datum/reagent/medicine/charcoal = "Charcoal", /datum/reagent/medicine/prussian_blue = "Prussian Blue", \
+	/datum/reagent/medicine/dexalin = "Dexalin", /datum/reagent/medicine/insulin = "Insulin", /datum/reagent/medicine/kelotane = "Kelotane", /datum/reagent/medicine/bicaridine = "Bicaridine")
 	processed_reagents = new
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
