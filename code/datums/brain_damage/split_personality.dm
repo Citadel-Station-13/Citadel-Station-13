@@ -47,7 +47,7 @@
 		switch_personalities(TRUE)
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
-	UnregisterSignal(M, COMSIG_MOB_DEATH)
+	UnregisterSignal(owner, COMSIG_MOB_DEATH)
 	..()
 
 /datum/brain_trauma/severe/split_personality/proc/revert_to_normal()
