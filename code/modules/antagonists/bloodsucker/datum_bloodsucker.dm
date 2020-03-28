@@ -92,7 +92,7 @@
 	owner.current.blood_volume = max(owner.current.blood_volume,BLOOD_VOLUME_SAFE)
 
 /datum/antagonist/bloodsucker/threat()
-	return threat+3*vamplevel
+	return ..()+3*vamplevel
 
 
 /datum/antagonist/bloodsucker/proc/SelectFirstName()
