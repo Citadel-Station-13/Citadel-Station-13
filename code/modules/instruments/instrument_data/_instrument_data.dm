@@ -48,7 +48,7 @@
 		return legacy_instrument_path && legacy_instrument_ext
 	else if(CHECK_BITFIELD(instrument_flags, INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return length(samples)
-	return (length(samples) == 127)
+	return (length(samples) >= 128)
 
 /datum/instrument/Destroy()
 	SSinstruments.instrument_data -= id
