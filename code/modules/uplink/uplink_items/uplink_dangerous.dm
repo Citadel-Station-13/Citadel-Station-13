@@ -28,19 +28,8 @@
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
 		Guaranteed to send your target out with a bang or your money back!"
 	item = /obj/item/gun/ballistic/rocketlauncher
-	cost = 8
+	cost = 18
 	surplus = 30
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/antitank
-	name = "Anti Tank Pistol"
-	desc = "Essentially amounting to a sniper rifle with no stock and barrel (or indeed, any rifling at all), \
-			this extremely dubious pistol is guaranteed to dislocate your wrists and hit the broad side of a barn! \
-	 		Uses sniper ammo. \
-	 		Bullets tend to veer off-course. We are not responsible for any unintentional damage or injury resulting from inaacuracy."
-	item = /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
-	cost = 14
-	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/pie_cannon
