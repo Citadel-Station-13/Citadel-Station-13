@@ -107,7 +107,7 @@
 	/// Do not directly set, use update_sustain()
 	var/cached_linear_dropoff = 10
 	/// Do not directly set, use update_sustain()
-	var/cached_exponential_dropoff = 1.07
+	var/cached_exponential_dropoff = 1.045
 	/////////////////////////////////////////////////////////////////////////
 
 /datum/song/New(atom/parent, list/allowed_instrument_ids)
@@ -275,7 +275,7 @@
 /datum/song/handheld
 
 /datum/song/handheld/updateDialog(mob/user)
-	parent.interact(user)
+	parent.ui_interact(user || usr)
 
 /datum/song/handheld/should_stop_playing(mob/user)
 	. = ..()
@@ -288,7 +288,7 @@
 /datum/song/stationary
 
 /datum/song/stationary/updateDialog(mob/user)
-	parent.interact(user)
+	parent.ui_interact(user || usr)
 
 /datum/song/stationary/should_stop_playing(mob/user)
 	. = ..()
