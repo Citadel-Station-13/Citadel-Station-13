@@ -438,7 +438,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
-	S["feature_exhibitionist"]			>> features["exhibitionist"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
 	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
