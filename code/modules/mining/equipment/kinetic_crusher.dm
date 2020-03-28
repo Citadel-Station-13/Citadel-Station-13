@@ -433,19 +433,23 @@
 	desc = "A glowing trinket that was originally the Hierophant's beacon. Suitable as a trophy for a kinetic crusher."
 	icon_state = "vortex_talisman"
 	denied_type = /obj/item/crusher_trophy/vortex_talisman
+	var/vortex_cd
 
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
-	return "mark detonation to create a barrier you can pass"
+	return "mark detonation to create a barrier you can pass that lasts for <b>7.5 seconds</b>, with a cooldown of <b>9 seconds</b> after creation."
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+	if(vortex_cd >= world.time)
+		return
 	var/turf/T = get_turf(user)
-	new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //a wall only you can pass!
+	var/obj/effect/temp_visual/hierophant/wall/crusher/W = new (T, user) //a wall only you can pass!
 	var/turf/otherT = get_step(T, turn(user.dir, 90))
 	if(otherT)
 		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
 	otherT = get_step(T, turn(user.dir, -90))
 	if(otherT)
 		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
+	vortex_cd = world.time + W.duration * 1.2
 
 /obj/effect/temp_visual/hierophant/wall/crusher
 	duration = 75
