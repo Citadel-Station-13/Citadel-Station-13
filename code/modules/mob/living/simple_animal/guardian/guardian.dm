@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme
 	if(!theme)
-		theme = pick("magic", "tech", "carp", "hive")
+		theme = pick("magic", "tech", "carp")
 	switch(theme)//should make it easier to create new stand designs in the future if anyone likes that
 		if("magic")
 			name = "Guardian Spirit"
