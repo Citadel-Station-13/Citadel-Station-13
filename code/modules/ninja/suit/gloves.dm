@@ -70,6 +70,9 @@
 	else
 		. = FALSE	//as to not cancel attack_hand()
 
+/obj/item/clothing/gloves/space_ninja/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 
 /obj/item/clothing/gloves/space_ninja/proc/toggledrain()
 	var/mob/living/carbon/human/U = loc

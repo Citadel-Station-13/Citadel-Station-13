@@ -58,7 +58,7 @@
 	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
-	slowdown -= slowdown_wielded
+	set_slowdown(slowdown - slowdown_wielded)
 
 /obj/item/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -88,7 +88,7 @@
 	O.desc = "Your second grip on [src]."
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
-	slowdown += slowdown_wielded
+	set_slowdown(slowdown + slowdown_wielded)
 
 /obj/item/twohanded/dropped(mob/user)
 	. = ..()
@@ -246,11 +246,11 @@
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/living/user, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity || IS_STAMCRIT(user))		//don't make stamcrit message they'll already have gotten one from the primary attack.
 		return
-	if(wielded) //destroys windows and grilles in one hit
+	if(wielded) //destroys windows and grilles in one hit (or more if it has a ton of health like plasmaglass)
 		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
 			W.take_damage(200, BRUTE, "melee", 0)
@@ -1012,7 +1012,7 @@
 
 /obj/item/twohanded/electrostaff
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "electrostaff_3"
+	icon_state = "electrostaff"
 	item_state = "electrostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -1116,10 +1116,10 @@
 /obj/item/twohanded/electrostaff/update_icon_state()
 	. = ..()
 	if(!wielded)
-		icon_state = "electrostaff_3"
+		icon_state = "electrostaff"
 		item_state = "electrostaff"
 	else
-		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_3")
+		icon_state = item_state = (on? "electrostaff_1" : "electrostaff_0")
 	set_light(7, on? 1 : 0, LIGHT_COLOR_CYAN)
 
 /obj/item/twohanded/electrostaff/examine(mob/living/user)
@@ -1171,7 +1171,7 @@
 		turn_off()
 
 /obj/item/twohanded/electrostaff/attack(mob/living/target, mob/living/user)
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -1217,7 +1217,7 @@
 		target.lastattackerckey = user.ckey
 		target.visible_message("<span class='danger'>[user] has shocked [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has shocked you with [src]!</span>")
-		log_combat(user, user, "stunned with an electrostaff")
+		log_combat(user, target, "stunned with an electrostaff")
 	playsound(src, 'sound/weapons/staff.ogg', 50, 1, -1)
 	target.apply_status_effect(stun_status_effect, stun_status_duration)
 	if(ishuman(user))
@@ -1242,9 +1242,9 @@
 	if(user)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
-		target.visible_message("<span class='danger'>[user] has seared [user] with [src]!</span>", \
+		target.visible_message("<span class='danger'>[user] has seared [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has seared you with [src]!</span>")
-		log_combat(user, user, "burned with an electrostaff")
+		log_combat(user, target, "burned with an electrostaff")
 	playsound(src, 'sound/weapons/sear.ogg', 50, 1, -1)
 	return TRUE
 

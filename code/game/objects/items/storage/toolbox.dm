@@ -177,7 +177,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	STR.max_items = 28
 
 /obj/item/storage/toolbox/brass/prefilled/PopulateContents()
-	new fabricator_type(src)
+	if(fabricator_type)
+		new fabricator_type(src)
 	new /obj/item/screwdriver/brass(src)
 	new /obj/item/wirecutters/brass(src)
 	new /obj/item/wrench/brass(src)
@@ -258,6 +259,42 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
+
+/obj/item/storage/toolbox/infiltrator
+	name = "insidious case"
+	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary while being quite the heavy bludgeoning implement when in a pinch."
+	icon_state = "infiltrator_case"
+	item_state = "infiltrator_case"
+	force = 12
+	throwforce = 16
+	w_class = WEIGHT_CLASS_NORMAL
+	has_latches = FALSE
+
+/obj/item/storage/toolbox/infiltrator/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.silent = TRUE
+	STR.max_items = 10
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
+		/obj/item/clothing/head/helmet/infiltrator,
+		/obj/item/clothing/suit/armor/vest/infiltrator,
+		/obj/item/clothing/under/syndicate/bloodred,
+		/obj/item/clothing/gloves/color/latex/nitrile/infiltrator,
+		/obj/item/clothing/mask/infiltrator,
+		/obj/item/clothing/shoes/combat/sneakboots,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/ammo_box
+		))
+
+/obj/item/storage/toolbox/infiltrator/PopulateContents()
+	new /obj/item/clothing/head/helmet/infiltrator(src)
+	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
+	new /obj/item/clothing/under/syndicate/bloodred(src)
+	new /obj/item/clothing/gloves/color/latex/nitrile/infiltrator(src)
+	new /obj/item/clothing/mask/infiltrator(src)
+	new /obj/item/clothing/shoes/combat/sneakboots(src)
 
 /obj/item/storage/toolbox/plastitanium/gold_real
 	name = "golden toolbox"

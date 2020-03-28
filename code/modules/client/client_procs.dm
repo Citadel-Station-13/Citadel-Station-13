@@ -223,20 +223,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			new /datum/admins(localhost_rank, ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
-	prefs_vr = GLOB.vore_preferences_datums[ckey] //CITADEL EDIT bypassing a failing hook
 
 	if(prefs)
 		prefs.parent = src
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-
-	if(prefs_vr)		//CITADEL EDIT bypassing a failing hook START
-		prefs_vr.client = src
-	else
-		prefs_vr = new/datum/vore_preferences(src)
-		GLOB.vore_preferences_datums[ckey] = prefs_vr
-						//CITADEL EDIT bypassing a failing hook END
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning

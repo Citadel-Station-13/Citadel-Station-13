@@ -104,8 +104,7 @@
 	var/obj/item/organ/genital/womb/W = M.getorganslot(ORGAN_SLOT_WOMB)
 
 	if(M.gender == MALE)
-		M.gender = FEMALE
-		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
+		M.set_gender(FEMALE)
 
 	if(P)
 		P.modify_size(-0.05)
@@ -251,8 +250,7 @@
 	var/obj/item/organ/genital/womb/W = M.getorganslot(ORGAN_SLOT_WOMB)
 
 	if(M.gender == FEMALE)
-		M.gender = MALE
-		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+		M.set_gender(MALE)
 
 	if(B)
 		B.modify_size(-0.05)

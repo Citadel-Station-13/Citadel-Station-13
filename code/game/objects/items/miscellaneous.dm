@@ -58,6 +58,21 @@
 
 	new /obj/effect/abstract/DPtarget(get_turf(src), pod)
 
+/obj/item/choice_beacon/ingredients
+	name = "ingredient box delivery beacon"
+	desc = "Summon a box of ingredients from a wide selection!"
+	icon_state = "gangtool-red"
+
+/obj/item/choice_beacon/ingredients/generate_display_names()
+	var/static/list/ingredientboxes
+	if(!ingredientboxes)
+		ingredientboxes = list()
+		var/list/templist = typesof(/obj/item/storage/box/ingredients)
+		for(var/V in templist)
+			var/obj/item/storage/box/ingredients/A = V
+			ingredientboxes[initial(A.theme_name)] = A
+	return ingredientboxes
+
 /obj/item/choice_beacon/hero
 	name = "heroic beacon"
 	desc = "To summon heroes from the past to protect the future."
@@ -72,14 +87,13 @@
 			hero_item_list[initial(A.name)] = A
 	return hero_item_list
 
-
 /obj/item/storage/box/hero
 	name = "Courageous Tomb Raider - 1940's."
 
 /obj/item/storage/box/hero/PopulateContents()
 	new /obj/item/clothing/head/fedora/curator(src)
 	new /obj/item/clothing/suit/curator(src)
-	new /obj/item/clothing/under/rank/curator/treasure_hunter(src)
+	new /obj/item/clothing/under/rank/civilian/curator/treasure_hunter(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/melee/curator_whip(src)
 
@@ -96,7 +110,7 @@
 	name = "Braveheart, the Scottish rebel - 1300's."
 
 /obj/item/storage/box/hero/scottish/PopulateContents()
-	new /obj/item/clothing/under/kilt(src)
+	new /obj/item/clothing/under/costume/kilt(src)
 	new /obj/item/claymore/weak/ceremonial(src)
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
@@ -116,3 +130,4 @@
 	icon_state = "supermatterspray"
 	w_class = WEIGHT_CLASS_SMALL
 	var/usesleft = 2
+

@@ -22,6 +22,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/list/blacklisted_quirks = list(/datum/quirk/nonviolent,/datum/quirk/mute) // Quirks that will be removed upon gaining this antag. Pacifist and mute are default.
+	var/threat = 0 // Amount of threat this antag poses, for dynamic mode
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -75,6 +76,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		remove_blacklisted_quirks()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
+		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAG_ON_GAIN, src)
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
@@ -84,9 +86,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
+	var/list/mob/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
@@ -236,6 +238,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!isnull(H?.hijack_speed_override))
 		return H.hijack_speed_override
 	return hijack_speed
+
+/// Gets our threat level. Defaults to threat var, override for custom stuff like different traitor goals having different threats.
+/datum/antagonist/proc/threat()
+	return threat
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

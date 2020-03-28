@@ -27,6 +27,7 @@
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "slimestatus")
 	owner.visible_message("<span class='notice'>[owner] stops glowing, the rainbow light fading away.</span>",
 		"<span class='warning'>You no longer feel protected...</span>")
+	return ..()
 
 /obj/screen/alert/status_effect/slimeskin
 	name = "Adamantine Slimeskin"
@@ -56,6 +57,7 @@
 		H.physiology.damage_resistance -= 10
 	owner.visible_message("<span class='warning'>[owner]'s gel coating liquefies and dissolves away.</span>",
 		"<span class='notice'>Your gel second-skin dissolves!</span>")
+	return ..()
 
 /datum/status_effect/slimerecall
 	id = "slime_recall"
@@ -87,6 +89,7 @@
 		"<span class='warning'>The unknown force snatches briefly you from reality, and deposits you next to [target]!</span>")
 	do_sparks(3, TRUE, owner)
 	owner.forceMove(target.loc)
+	return ..()
 
 /obj/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
@@ -117,6 +120,7 @@
 		qdel(cube)
 	owner.status_flags &= ~GODMODE
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	return ..()
 
 /datum/status_effect/slime_clone
 	id = "slime_cloned"
@@ -156,6 +160,7 @@
 	if(clone)
 		clone.unequip_everything()
 		qdel(clone)
+	return ..()
 
 /obj/screen/alert/status_effect/clone_decay
 	name = "Clone Decay"
@@ -195,6 +200,7 @@
 
 /datum/status_effect/bloodchill/on_remove()
 	owner.remove_movespeed_modifier("bloodchilled")
+	return ..()
 
 /obj/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
@@ -218,6 +224,7 @@
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier("bonechilled")
+	return ..()
 
 /obj/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
@@ -249,6 +256,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/firecookie/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
+	return ..()
 
 /datum/status_effect/watercookie
 	id = "watercookie"
@@ -266,6 +274,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/watercookie/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+	return ..()
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
@@ -283,6 +292,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.brute_mod /= 0.9
+	return ..()
 
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
@@ -302,6 +312,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.siemens_coeff = original_coeff
+	return ..()
 
 /datum/status_effect/toxincookie
 	id = "toxincookie"
@@ -315,6 +326,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/toxincookie/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
+	return ..()
 
 /datum/status_effect/timecookie
 	id = "timecookie"
@@ -332,6 +344,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H
 		H.physiology.do_after_speed /= 0.95
+	return ..()
 
 /datum/status_effect/lovecookie
 	id = "lovecookie"
@@ -377,6 +390,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/tarfoot/on_remove()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_TARFOOT)
+	return ..()
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -392,6 +406,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/spookcookie/on_remove()
 	owner.remove_alt_appearance("spookyscary")
+	return ..()
 
 /datum/status_effect/peacecookie
 	id = "peacecookie"
@@ -415,6 +430,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/plur/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
+	return ..()
 
 /datum/status_effect/adamantinecookie
 	id = "adamantinecookie"
@@ -432,6 +448,7 @@ datum/status_effect/rebreathing/tick()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.burn_mod /= 0.9
+	return ..()
 
 ///////////////////////////////////////////////////////
 //////////////////STABILIZED EXTRACTS//////////////////
@@ -513,6 +530,7 @@ datum/status_effect/rebreathing/tick()
 
 datum/status_effect/stabilized/blue/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+	return ..()
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
@@ -535,7 +553,6 @@ datum/status_effect/stabilized/blue/on_remove()
 			S.amount++
 			to_chat(owner, "<span class='notice'>[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!</span>")
 	return ..()
-
 
 /datum/status_effect/stabilized/yellow
 	id = "stabilizedyellow"
@@ -591,6 +608,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/darkpurple/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
 	qdel(fire)
+	return ..()
 
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
@@ -638,6 +656,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.hunger_mod /= 0.8
+	return ..()
 
 //Bluespace has an icon because it's kinda active.
 /obj/screen/alert/status_effect/bluespaceslime
@@ -697,6 +716,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/sepia/on_remove()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
+	return ..()
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
@@ -733,6 +753,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		clone.visible_message("<span class='warning'>[clone] dissolves into a puddle of goo!</span>")
 		clone.unequip_everything()
 		qdel(clone)
+	return ..()
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
@@ -749,6 +770,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/pyrite/on_remove()
 	owner.color = originalcolor
+	return ..()
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
@@ -760,6 +782,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/red/on_remove()
 	owner.unignore_slowdown("slimestatus")
+	return ..()
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"
@@ -791,6 +814,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		originalDNA.transfer_identity(H)
 		H.real_name = originalname
 		H.updateappearance(mutcolor_update=1)
+	return ..()
 
 /datum/status_effect/brokenpeace
 	id = "brokenpeace"
@@ -854,6 +878,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	for(var/i in owner.faction)
 		if(i == faction_name)
 			owner.faction -= faction_name
+	return ..()
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
@@ -947,6 +972,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/gold/on_remove()
 	if(familiar)
 		qdel(familiar)
+	return ..()
 
 /datum/status_effect/stabilized/adamantine/on_apply()
 	if(ishuman(owner))
@@ -958,6 +984,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance -= 5
+	return ..()
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"

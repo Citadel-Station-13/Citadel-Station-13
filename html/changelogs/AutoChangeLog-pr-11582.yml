@@ -1,0 +1,4 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - tweak: "Reverts Mining Base RNG Placement"

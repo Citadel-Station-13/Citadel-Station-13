@@ -8,9 +8,10 @@
 	masturbation_verb = "stroke"
 	arousal_verb = "You pop a boner"
 	unarousal_verb = "Your boner goes down"
-	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE|UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
 	linked_organ_slot = ORGAN_SLOT_TESTICLES
 	fluid_transfer_factor = 0.5
+	shape = DEF_COCK_SHAPE
 	size = 2 //arbitrary value derived from length and diameter for sprites.
 	layer_index = PENIS_LAYER_INDEX
 	var/length = 6 //inches
@@ -65,9 +66,9 @@
 
 	if(owner)
 		if (round(length) > round(prev_length))
-			to_chat(owner, "<span class='warning'>Your [pick(GLOB.gentlemans_organ_names)] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(round(length))] inch penis.</b></span>")
+			to_chat(owner, "<span class='warning'>Your [pick(GLOB.dick_nouns)] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(round(length))] inch penis.</b></span>")
 		else if ((round(length) < round(prev_length)) && (length > 0.5))
-			to_chat(owner, "<span class='warning'>Your [pick(GLOB.gentlemans_organ_names)] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(round(length))] inch penis.</b></span>")
+			to_chat(owner, "<span class='warning'>Your [pick(GLOB.dick_nouns)] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(round(length))] inch penis.</b></span>")
 	icon_state = sanitize_text("penis_[shape]_[size]")
 	diameter = (length * diameter_ratio)//Is it just me or is this ludicous, why not make it exponentially decay?
 
@@ -88,9 +89,6 @@
 				icon_state += "_s"
 		else
 			color = "#[owner.dna.features["cock_color"]]"
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.update_genitals()
 
 /obj/item/organ/genital/penis/get_features(mob/living/carbon/human/H)
 	var/datum/dna/D = H.dna
@@ -102,3 +100,4 @@
 	diameter_ratio = D.features["cock_diameter_ratio"]
 	shape = D.features["cock_shape"]
 	prev_length = length
+	toggle_visibility(D.features["cock_visibility"], FALSE)

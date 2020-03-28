@@ -4,6 +4,6 @@
 			toggle_throw_mode()
 			return
 		if("C")
-			toggle_combat_mode()
+			user_toggle_intentional_combat_mode()
 			return
 	return ..()

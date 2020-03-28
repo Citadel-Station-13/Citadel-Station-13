@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - bugfix: "Space hermits (those quirky fellas stuck in a rock with carp surrounding them) now have gravity! But they lost their perpetual generators."
+  - balance: "Space hermits now have to mine for their research tech (golem vendor board, ORM board). They have slightly less bad parts, though. And better(?) rocks."

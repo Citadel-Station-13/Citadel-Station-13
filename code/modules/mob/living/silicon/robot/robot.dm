@@ -968,7 +968,8 @@
 		if(IsUnconscious() || IsStun() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				blind_eyes(1)
+				if(!eye_blind)
+					blind_eyes(1)
 				update_mobility()
 				update_headlamp()
 		else
@@ -1115,6 +1116,7 @@
 	desc = "Stop controlling your shell and resume normal core operations."
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
+	required_mobility_flags = NONE
 
 /datum/action/innate/undeployment/Trigger()
 	if(!..())

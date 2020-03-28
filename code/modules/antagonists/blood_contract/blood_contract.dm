@@ -27,7 +27,7 @@
 	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H) //could use moving out from the mine
 
 	for(var/mob/living/carbon/human/P in GLOB.player_list)
-		if(P == H)
+		if(P == H || HAS_TRAIT(P, TRAIT_NO_MIDROUND_ANTAG))
 			continue
 		to_chat(P, "<span class='userdanger'>You have an overwhelming desire to kill [H]. [H.p_theyve(TRUE)] been marked red! Whoever [H.p_they()] [H.p_were()], friend or foe, go kill [H.p_them()]!</span>")
 		P.put_in_hands(new /obj/item/kitchen/knife/butcher(P), TRUE)

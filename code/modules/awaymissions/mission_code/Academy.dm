@@ -127,10 +127,10 @@
 
 	if(!current_wizard)
 		return
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard)
+	var/list/mob/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Wizard Academy Defender")
 		current_wizard.ghostize() // on the off chance braindead defender gets back in
 		C.transfer_ckey(current_wizard, FALSE)
@@ -269,9 +269,9 @@
 			A.setup_master(user)
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
+			var/list/mob/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
 			if(LAZYLEN(candidates))
-				var/mob/dead/observer/C = pick(candidates)
+				var/mob/C = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Dice Servant")
 				C.transfer_ckey(H, FALSE)
 
@@ -299,7 +299,7 @@
 
 /datum/outfit/butler
 	name = "Butler"
-	uniform = /obj/item/clothing/under/suit_jacket/really_black
+	uniform = /obj/item/clothing/under/suit/black_really
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/bowler
 	glasses = /obj/item/clothing/glasses/monocle

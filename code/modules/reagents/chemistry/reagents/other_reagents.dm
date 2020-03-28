@@ -231,6 +231,7 @@
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
+	overdose_threshold = 150 //Imagine drinking a gallon of water
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of water"
@@ -296,6 +297,10 @@
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
 	..()
+
+/datum/reagent/water/overdose_start(mob/living/M)
+	metabolization_rate = 45 * REAGENTS_METABOLISM
+	. = 1
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
@@ -378,6 +383,7 @@
 
 /datum/reagent/fuel/unholywater	//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
+	overdose_threshold = 150 //Same as normal water
 	description = "Something that shouldn't exist on this plane of existence."
 	taste_description = "suffering"
 	pH = 6.5
@@ -408,6 +414,10 @@
 		M.adjustBruteLoss(2, FALSE)
 	holder.remove_reagent(type, 1)
 	return TRUE
+
+/datum/reagent/fuel/unholywater/overdose_start(mob/living/M)
+	metabolization_rate = 60 * REAGENTS_METABOLISM
+	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"

@@ -84,8 +84,6 @@
 	/// The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/datum/weakref/LAssailant
 
-	var/list/obj/user_movement_hooks	//Passes movement in client/Move() to these!
-
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
 
@@ -125,6 +123,3 @@
 	var/siliconaccesstoggle = FALSE
 
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
-
-	var/flavor_text = ""
-	var/flavor_text_2 = "" //version of the above that only lasts for the current round.

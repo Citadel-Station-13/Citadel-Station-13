@@ -6,6 +6,10 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	/// Enable stamina combat
+	combat_flags = COMBAT_FLAGS_DEFAULT
+	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"

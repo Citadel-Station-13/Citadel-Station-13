@@ -8,6 +8,7 @@
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
+	threat = 1
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
@@ -118,6 +119,7 @@
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
+	threat = 3
 	maxHealth = 150
 	health = 150
 	response_harm = "harmlessly punches"
@@ -180,6 +182,7 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
+	threat = 3
 	maxHealth = 65
 	health = 65
 	melee_damage_lower = 20

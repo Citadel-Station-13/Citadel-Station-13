@@ -5,6 +5,7 @@
 	icon_living = "stickman"
 	icon_dead = "stickman_dead"
 	icon_gib = "syndicate_gib"
+	threat = 0.5
 	mob_biotypes = MOB_HUMANOID
 	gender = MALE
 	speak_chance = 0
