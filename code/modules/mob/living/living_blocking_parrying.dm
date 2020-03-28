@@ -79,6 +79,9 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Stamina dealt directly via adjustStaminaLossBuffered() per SECOND of block.
 	var/block_stamina_cost_per_second = 1.5
 
+	/// Sounds for blocking
+	var/list/block_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
+
 	/////////// PARRYING ////////////
 	/// Prioriry for [mob/do_run_block()] while we're being used to parry.
 	//  None - Parry is always highest priority!

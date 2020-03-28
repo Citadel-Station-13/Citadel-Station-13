@@ -40,9 +40,13 @@
 
 /// Visual effect setup for starting a directional block
 /mob/living/proc/active_block_effect_start()
+	visible_message("<span class='warning'>[src] raises their [active_block_item], dropping into a defensive stance!</span>")
+	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_OUT)
 
 /// Visual effect cleanup for starting a directional block
 /mob/living/proc/active_block_effect_end()
+	visible_message("<span class='warning'>[src] lowers their [active_block_item].</span>")
+	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN)
 
 /mob/living/get_standard_pixel_x_offset()
 	. = ..()
@@ -62,7 +66,7 @@
 
 /// The amount of damage that is blocked.
 /obj/item/proc/active_block_damage_mitigation(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	var/datum/block_parry_data/data = get_block_parry_data(block_parry_data)
 	var/absorption = data.block_damage_absorption_override[attack_type]
 	var/efficiency = data.block_damage_multiplier_override[attack_type]
 	var/limit = data.block_damage_limit_override[attack_type]
@@ -87,7 +91,7 @@
 
 /// Amount of stamina from damage blocked. Note that the damage argument is damage_blocked.
 /obj/item/proc/active_block_stamina_cost(mob/living/owner, atom/object, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	var/datum/block_parry_data/data = get_block_parry_data(block_parry_data)
 	var/efficiency = data.block_stamina_efficiency_override[attack_type]
 	if(isnull(efficiency))
 		efficiency = data.block_stamina_efficiency
@@ -95,7 +99,7 @@
 
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
-	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	var/datum/block_parry_data/data = get_block_parry_data(block_parry_data)
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		var/held_index = C.get_held_index_of_item(src)
@@ -121,6 +125,7 @@
 	var/incoming_direction = get_dir(get_turf(attacker) || get_turf(object), src)
 	if(!can_block_direction(owner.dir, incoming_direction))
 		return
+	var/datum/block_parry_data/data = get_block_parry_data(block_parry_data)
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK] = TRUE
 	var/damage_mitigated = active_block_damage_mitigation(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 	var/final_damage = max(0, damage - damage_mitigated)
@@ -134,6 +139,8 @@
 		owner.visible_message("<span class='warning'>[owner] blocks \the [attack_text] with [src]!</span>")
 	else
 		owner.visible_message("<span class='warning'>[owner] dampens \the [attack_text] with [src]!</span>")
+	if(length(data.block_sounds))
+		playsound(loc, pickweight(data.block_sounds), 75, TRUE)
 
 /obj/item/proc/check_active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
@@ -148,7 +155,7 @@
   * Gets the list of directions we can block. Include DOWN to block attacks from our same tile.
   */
 /obj/item/proc/blockable_directions()
-	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	var/datum/block_parry_data/data = get_block_parry_data(block_parry_data)
 	return data.can_block_directions
 
 /**
