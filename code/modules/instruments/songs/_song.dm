@@ -159,7 +159,7 @@
 	if(istype(I))
 		using_instrument = I
 		I.songs_using += src
-		var/legacy = CHECK_BITFIELD(I, INSTRUMENT_LEGACY)
+		var/legacy = CHECK_BITFIELD(I.instrument_flags, INSTRUMENT_LEGACY)
 		if(legacy)
 			cached_legacy_ext = I.legacy_instrument_ext
 			cached_legacy_dir = I.legacy_instrument_path
