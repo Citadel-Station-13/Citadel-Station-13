@@ -20,7 +20,9 @@
 				/obj/item/clothing/under/misc/gear_harness = 10,
 				/obj/item/dildo/custom = 5,
 				/obj/item/electropack/shockcollar = 3,
-				/obj/item/assembly/signaler = 3
+				/obj/item/assembly/signaler = 3,
+	            /obj/item/storage/pill_bottle/penis_enlargement = 2,
+	            /obj/item/storage/pill_bottle/breast_enlargement = 2,
 				)
 	contraband = list(
 				/obj/item/clothing/neck/petcollar/locked = 2,
@@ -32,12 +34,16 @@
 				/obj/item/clothing/under/costume/jabroni = 2,
 				/obj/item/dildo/flared/huge = 3,
 				/obj/item/reagent_containers/glass/bottle/crocin = 5,
-				/obj/item/reagent_containers/glass/bottle/camphor = 5
+				/obj/item/reagent_containers/glass/bottle/camphor = 5,
+			    /obj/item/autosurgeon/penis = 1,
+	            /obj/item/autosurgeon/testicles = 1,
 				)
 	premium = list(
 				/obj/item/clothing/accessory/skullcodpiece/fake = 3,
 				/obj/item/reagent_containers/glass/bottle/hexacrocin = 10,
-				/obj/item/clothing/under/pants/chaps = 5
+				/obj/item/clothing/under/pants/chaps = 5,
+		        /obj/structure/reagent_dispensers/keg/aphro = 2,
+		        /obj/structure/reagent_dispensers/keg/aphro/strong = 2,
 				)
 	refill_canister = /obj/item/vending_refill/kink
 
