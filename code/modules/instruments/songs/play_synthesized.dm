@@ -1,7 +1,11 @@
 /datum/song/proc/do_play_lines_synthesized(mob/user)
 	compile_lines()
 	while(repeat)
+		if(should_stop_playing(user))
+			return
 		for(var/_chord in compiled_chords)
+			if(should_stop_playing(user))
+				return
 			var/list/chord = _chord
 			var/tempodiv = chord[chord.len]
 			for(var/i in 1 to chord.len - 1)
@@ -9,13 +13,59 @@
 				if(!playkey_synth(key))
 					to_chat(user, "<span class='userdanger'>BUG: [src] failed to play a note. This likely means that the entire channel spectrum available to instruments has been saturated, or it can mean some unknown error.</span>")
 					return
-			if(should_stop_playing(user))
-				return
 			sleep(sanitize_tempo(tempo / tempodiv))
-		if(should_stop_playing(user))
-			return
 		repeat--
 		updateDialog()
+
+/// C-Db2-A-A4/2,A-B#4-C/3,/4,A,A-B-C as an example
+/datum/song/proc/compile_lines()
+	if(!length(src.lines))
+		return
+	var/list/lines = src.lines		//cache for hyepr speed!
+	compiled_chords = list()
+	var/list/octaves = list(3, 3, 3, 3, 3, 3, 3)
+	var/list/accents = list("n", "n", "n", "n", "n", "n", "n")
+	for(var/line in lines)
+		var/list/chords = splittext(lowertext(line), ",")
+		for(var/chord in chords)
+			var/tempodiv = 1
+			var/list/notes_tempodiv = splittext(chord, "/")
+			if(length(notes_tempodiv) == 2)
+				tempodiv = text2num(notes_tempodiv[2])
+
+
+/datum/song/proc/do_play_lines_legacy(mob/user)
+
+		for(var/line in lines)
+			for(var/beat in splittext(lowertext(line), ","))
+				if(should_stop_playing(user))
+					return
+				var/list/notes = splittext(beat, "/")
+				for(var/note in splittext(notes[1], "-"))
+					if(length(note) == 0)
+						continue
+					var/cur_note = text2ascii(note) - 96
+					if(cur_note < 1 || cur_note > 7)
+						continue
+					for(var/i=2 to length(note))
+						var/ni = copytext(note,i,i+1)
+						if(!text2num(ni))
+							if(ni == "#" || ni == "b" || ni == "n")
+								cur_acc[cur_note] = ni
+							else if(ni == "s")
+								cur_acc[cur_note] = "#" // so shift is never required
+						else
+							cur_oct[cur_note] = text2num(ni)
+					playnote_legacy(cur_note, cur_acc[cur_note], cur_oct[cur_note])
+				if(notes.len >= 2 && text2num(notes[2]))
+					sleep(sanitize_tempo(tempo / text2num(notes[2])))
+				else
+					sleep(tempo)
+		if(should_stop_playing(user))
+			return
+		updateDialog()
+	while(repeat-- > 0)
+
 
 /datum/song/proc/compile_lines()
 	compiled_chords = list()
@@ -50,7 +100,7 @@
 	var/notelen
 	if(!(notelen = length(notestring)))
 		return
-	var/cur_note = text2ascii(lowertext(copytext(notestring, 1, 2)), 1) - 96
+	var/cur_note = text2ascii(copytext(notestring, 1, 2), 1) - 96
 	//a = 1, b = 2, c = 3, d = 4, e = 5, f = 6, g = 7
 	if(cur_note < 1 || cur_note > 7)
 		return

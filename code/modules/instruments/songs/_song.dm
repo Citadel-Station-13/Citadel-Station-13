@@ -110,13 +110,13 @@
 	var/cached_exponential_dropoff = 1.045
 	/////////////////////////////////////////////////////////////////////////
 
-/datum/song/New(atom/parent, list/allowed_instrument_ids)
+/datum/song/New(atom/parent, list/instrument_ids)
 	SSinstruments.on_song_new(src)
 	lines = list()
 	tempo = sanitize_tempo(tempo)
 	src.parent = parent
-	if(allowed_instrument_ids)
-		src.allowed_instrument_ids = islist(allowed_instrument_ids)? allowed_instrument_ids : list(allowed_instrument_ids)
+	if(instrument_ids)
+		allowed_instrument_ids = islist(instrument_ids)? instrument_ids : list(instrument_ids)
 	if(length(allowed_instrument_ids))
 		set_instrument(allowed_instrument_ids[1])
 	hearing_mobs = list()
@@ -159,8 +159,8 @@
 	if(istype(I))
 		using_instrument = I
 		I.songs_using += src
-		var/legacy = CHECK_BITFIELD(I.instrument_flags, INSTRUMENT_LEGACY)
-		if(legacy)
+		var/instrument_legacy = CHECK_BITFIELD(I.instrument_flags, INSTRUMENT_LEGACY)
+		if(instrument_legacy)
 			cached_legacy_ext = I.legacy_instrument_ext
 			cached_legacy_dir = I.legacy_instrument_path
 			legacy = TRUE
@@ -185,7 +185,6 @@
 	START_PROCESSING(SSinstruments, src)
 	. = do_play_lines(user)
 	stop_playing()
-	updateDialog()
 
 /datum/song/proc/stop_playing()
 	if(!playing)
@@ -196,6 +195,7 @@
 	hearing_mobs.len = 0
 	STOP_PROCESSING(SSinstruments, src)
 	terminate_all_sounds(TRUE)
+	updateDialog()
 
 /// THIS IS A BLOCKING CALL.
 /datum/song/proc/do_play_lines(user)

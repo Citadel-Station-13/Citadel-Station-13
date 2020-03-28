@@ -23,6 +23,7 @@
 	. += "<a href='?src=[REF(src)];setsustainmode=1'>Sustain Mode</a>: [smt]<br>"
 	. += modetext
 	. += using_instrument?.ready()? "Status: <span class='good'>Ready</span><br>" : "Status: <span class='bad'>!Instrument Definition Error!</span><br>"
+	. += "Instrument Type: [legacy? "Legacy" : "Synthesized"]"
 	. += "<a href='?src=[REF(src)];setvolume=1'>Volume</a>: [volume]<br>"
 	. += "<a href='?src=[REF(src)];setdropoffvolume=1'>Volume Dropoff Threshold</a>: [sustain_dropoff_volume]<br>"
 	. += "</div>"
@@ -80,7 +81,7 @@
 		else
 			dat += "<B><A href='?src=[REF(src)];help=2'>Show Help</A></B><BR>"
 
-	var/datum/browser/popup = new(user, "instrument", parent.name, 700, 500)
+	var/datum/browser/popup = new(user, "instrument", parent?.name || "instrument", 700, 500)
 	popup.set_content(dat.Join(""))
 	popup.set_title_image(user.browse_rsc_icon(parent.icon, parent.icon_state))
 	popup.open()
@@ -183,8 +184,7 @@
 		lines[num] = content
 
 	else if(href_list["stop"])
-		playing = FALSE
-		hearing_mobs = null
+		stop_playing()
 
 	else if(href_list["setlinearfalloff"])
 		var/amount = input(usr, "Set linear sustain duration", "Linear Sustain Duration") as null|num
