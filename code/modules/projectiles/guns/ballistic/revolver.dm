@@ -97,6 +97,7 @@
 						"The Peacemaker" = "detective_peacemaker"
 						)
 	var/list/safe_calibers
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/ballistic/revolver/detective/Initialize()
 	. = ..()

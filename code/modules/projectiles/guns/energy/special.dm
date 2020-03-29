@@ -11,6 +11,7 @@
 	ammo_x_offset = 3
 	flight_x_offset = 17
 	flight_y_offset = 9
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/ionrifle/emp_act(severity)
 	return

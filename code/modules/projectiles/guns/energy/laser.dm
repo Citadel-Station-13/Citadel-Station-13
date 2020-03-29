@@ -8,6 +8,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -16,6 +17,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 	item_flags = NONE
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/practice/hyperburst
 	name = "toy hyper-burst launcher"
@@ -29,12 +31,14 @@
 	charge_delay = 2
 	recoil = 2
 	cell_type = /obj/item/stock_parts/cell/toymagburst
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/retro/old
 	name ="laser gun"
@@ -42,6 +46,7 @@
 	desc = "First generation lasergun, developed by Nanotrasen. Suffers from ammo issues but its unique ability to recharge its ammo without the need of a magazine helps compensate. You really hope someone has developed a better lasergun while you were in cryo."
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/old)
 	ammo_x_offset = 3
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
@@ -64,6 +69,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	cell_type = /obj/item/stock_parts/cell/lascarbine
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/carbine/nopin
 	pin = null
@@ -74,6 +80,7 @@
 	item_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/cyborg
 	can_charge = FALSE
@@ -83,6 +90,7 @@
 	selfcharge = EGUN_SELFCHARGE_BORG
 	cell_type = /obj/item/stock_parts/cell/secborg
 	charge_delay = 3
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/cyborg/emp_act()
 	return
@@ -95,6 +103,7 @@
 	name = "scatter laser gun"
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/scatter/shotty
 	name = "energy shotgun"
@@ -105,6 +114,7 @@
 	shaded_charge = 0
 	pin = /obj/item/firing_pin/implant/mindshield
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
+	pin = /obj/item/firing_pin
 
 ///Laser Cannon
 
@@ -120,6 +130,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
 	ammo_x_offset = 3
+	pin = /obj/item/firing_pin
 
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/item/projectile/beam/laser/accelerator
@@ -145,6 +156,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	pin = null
 	ammo_x_offset = 3
+	pin = /obj/item/firing_pin
 
 ////////Laser Tag////////////////////
 
@@ -158,6 +170,7 @@
 	pin = /obj/item/firing_pin/tag/blue
 	ammo_x_offset = 2
 	selfcharge = EGUN_SELFCHARGE
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
@@ -172,6 +185,7 @@
 	pin = /obj/item/firing_pin/tag/red
 	ammo_x_offset = 2
 	selfcharge = EGUN_SELFCHARGE
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
@@ -194,6 +208,7 @@
 	throw_range = 4
 	throwforce = 10
 	obj_flags = UNIQUE_RENAME
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/redtag/hitscan/chaplain/Initialize()
 	. = ..()

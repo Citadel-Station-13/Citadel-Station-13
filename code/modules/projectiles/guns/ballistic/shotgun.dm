@@ -93,6 +93,7 @@
 	unique_reskin = list("Tatical" = "riotshotgun",
 						"Wood Stock" = "wood_riotshotgun"
 						)
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/ballistic/shotgun/riot/attackby(obj/item/A, mob/user, params)
 	..()

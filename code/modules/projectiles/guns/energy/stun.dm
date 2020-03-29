@@ -25,6 +25,7 @@
 	// Not enough guns have altfire systems like this yet for this to be a universal framework.
 	var/last_altfire = 0
 	var/altfire_delay = 15
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/e_gun/advtaser/altafterattack(atom/target, mob/user, proximity_flag, params)
 	. = TRUE
@@ -46,6 +47,7 @@
 	selfcharge = EGUN_SELFCHARGE_BORG
 	cell_type = /obj/item/stock_parts/cell/secborg
 	charge_delay = 5
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg/mean
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell."
