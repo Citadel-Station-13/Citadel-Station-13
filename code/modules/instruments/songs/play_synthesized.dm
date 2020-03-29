@@ -1,6 +1,6 @@
 /datum/song/proc/do_play_lines_synthesized(mob/user)
 	compile_lines()
-	while(repeat)
+	do
 		if(should_stop_playing(user))
 			return
 		for(var/_chord in compiled_chords)
@@ -14,8 +14,11 @@
 					to_chat(user, "<span class='userdanger'>BUG: [src] failed to play a note. This likely means that the entire channel spectrum available to instruments has been saturated, or it can mean some unknown error.</span>")
 					return
 			sleep(sanitize_tempo(tempo / tempodiv))
-		repeat--
 		updateDialog()
+		var/repeat = repeat
+
+	while(repeat-- > 0)
+	repeat = 0
 
 /// C-Db2-A-A4/2,A-B#4-C/3,/4,A,A-B-C as an example
 /datum/song/proc/compile_lines()
@@ -33,7 +36,7 @@
 			var/list/notes_tempodiv = splittext(chord, "/")
 			if(length(notes_tempodiv) >= 2)
 				tempodiv = text2num(notes_tempodiv[2])
-			var/list/notes = splittext(notes[1], "-")
+			var/list/notes = splittext(notes_tempodiv[1], "-")
 			for(var/note in notes)
 				if(length(note) == 0)
 					continue
@@ -48,10 +51,10 @@
 						accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
 					else	//octave
 						octaves[key] = CLAMP(num, octave_min, octave_max)
-				compiled_chord += CLAMP((note_offset_lookup[key] + octaves[key] + accent_lookup[accents[key]]), key_min, key_max)
+				compiled_chord += CLAMP((note_offset_lookup[key] + octaves[key] * 12 + accent_lookup[accents[key]]), key_min, key_max)
 			compiled_chord += tempodiv		//this goes last
 			if(length(compiled_chord))
-				compiled_chords += compiled_chord
+				compiled_chords[++compiled_chords.len] = compiled_chord
 		CHECK_TICK
 	return compiled_chords
 
