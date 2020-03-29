@@ -480,8 +480,10 @@
 	return new fabrication_object(loc)
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(atom/movable/target)
-	if(target.resistance_flags & INDESTRUCTIBLE)
-		return FALSE
+	if(isobj(target))
+		var/obj/O = target
+		if(O.resistance_flags & INDESTRUCTIBLE)
+			return FALSE
 	for(var/mob/living/L in GetAllContents())
 		if(!ispAI(L) && !isbrain(L))
 			to_chat(src, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
