@@ -3,6 +3,8 @@
 #define INSTRUMENT_MIN_KEY 0
 #define INSTRUMENT_MAX_KEY 127
 
+#define CHANNELS_PER_INSTRUMENT 128
+
 /// Maximum length a note should ever go for
 #define INSTRUMENT_MAX_TOTAL_SUSTAIN (5 SECONDS)
 

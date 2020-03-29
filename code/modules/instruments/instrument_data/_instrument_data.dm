@@ -12,6 +12,14 @@
 		if(init_id)
 			. |= init_id
 
+/// Get all non admin_only instruments.
+/proc/get_allowed_instrument_ids()
+	. = list()
+	for(var/id in SSinstruments.instrument_data)
+		var/datum/instrument/I = SSinstruments.instrument_data[id]
+		if(!I.admin_only)
+			. += I
+
 /datum/instrument
 	/// Name of the instrument
 	var/name = "Generic instrument"
@@ -37,6 +45,8 @@
 	var/static/HIGHEST_KEY = 127
 	/// Don't touch this x2
 	var/static/LOWEST_KEY = 0
+	/// Oh no - For truly troll instruments.
+	var/admin_only = FALSE
 
 /datum/instrument/New()
 	if(isnull(id))

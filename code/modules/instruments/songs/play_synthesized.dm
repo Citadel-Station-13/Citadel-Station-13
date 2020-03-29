@@ -3,6 +3,7 @@
 	while(repeat >= 0)
 		if(should_stop_playing(user))
 			return
+		var/warned = FALSE
 		for(var/_chord in compiled_chords)
 			if(should_stop_playing(user))
 				return
@@ -11,7 +12,9 @@
 			for(var/i in 1 to chord.len - 1)
 				var/key = chord[i]
 				if(!playkey_synth(key))
-					return
+					if(!warned)
+						warned = TRUE
+						to_chat(user, "<span class='boldwarning'>[src] has ran out of channels. You might be playing your song too fast or be setting sustain to too high of a value. This warning will be suppressed for the rest of this cycle.</span>")
 			sleep(sanitize_tempo(tempo / tempodiv))
 		repeat--
 		updateDialog()
@@ -62,15 +65,14 @@
 		do_hearcheck()
 	var/datum/instrument_key/K = using_instrument.samples[num2text(key)]			//See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
 	//Should probably add channel limiters here at some point but I don't care right now.
-	var/channel = key_channel_reserve(key)
-	if(!channel)
-		. = FALSE
-		CRASH("Exiting playkey_synth - Unable to reserve channel")
+	var/channel = pop_channel(key)
+	if(isnull(channel))
+		return FALSE
 	. = TRUE
 	var/sound/copy = sound(K.sample)
 	copy.frequency = K.frequency
 	copy.volume = volume
-	keys_playing[num2text(key)] = volume
+	channels_playing[num2text(channel)] = volume
 	for(var/i in hearing_mobs)
 		var/mob/M = i
 		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, 0, channel, null, copy)
@@ -80,46 +82,45 @@
 	for(var/i in hearing_mobs)
 		terminate_sound_mob(i)
 	if(clear_channels)
+		channels_playing.len = 0
+		channels_idle.len = 0
+		SSinstruments.current_instrument_channels -= using_sound_channels
+		using_sound_channels = 0
 		SSsounds.free_datum_channels(src)
-		channels_reserved.len = 0
-		keys_playing.len = 0
 
 /datum/song/proc/terminate_sound_mob(mob/M)
-	for(var/key in channels_reserved)
-		M.stop_sound_channel(channels_reserved[key])
+	for(var/channel in channels_playing)
+		M.stop_sound_channel(text2num(channel))
 
-/datum/song/proc/key_channel_reserve(key)
-	key = num2text(key)
-	. = channels_reserved[key]
-	if(.)
+/datum/song/proc/pop_channel()
+	if(length(channels_idle))			//just pop one off of here if we have one available
+		return text2num(channels_idle[channels_idle.len--])
+	if(using_sound_channels >= max_sound_channels)
 		return
-	. = SSsounds.reserve_sound_channel(src)
-	if(!.)
-		return
-	channels_reserved[key] = .
+	. = SSinstruments.reserve_instrument_channel(src)
+	if(!isnull(.))
+		using_sound_channels++
 
 /datum/song/proc/process_decay(wait_ds)
 	var/linear_dropoff = cached_linear_dropoff * wait_ds
 	var/exponential_dropoff = cached_exponential_dropoff ** wait_ds
-	for(var/key in keys_playing)
-		var/current_volume = keys_playing[key]
+	for(var/channel in channels_playing)
+		var/current_volume = channels_playing[channel]
 		switch(sustain_mode)
 			if(SUSTAIN_LINEAR)
 				current_volume -= linear_dropoff
 			if(SUSTAIN_EXPONENTIAL)
 				current_volume /= exponential_dropoff
-		keys_playing[key] = current_volume
+		channels_playing[channel] = current_volume
 		var/dead = current_volume < sustain_dropoff_volume
+		var/channelnumber = text2num(channel)
 		if(dead)
-			keys_playing -= key
-		var/channel = channels_reserved[key]
-		if(!channel)
-			continue
-		if(dead)
+			channels_playing -= channel
+			channels_idle += channel
 			for(var/i in hearing_mobs)
 				var/mob/M = i
-				M.stop_sound_channel(channel)
+				M.stop_sound_channel(channelnumber)
 		else
 			for(var/i in hearing_mobs)
 				var/mob/M = i
-				M.set_sound_channel_volume(channel, current_volume)
+				M.set_sound_channel_volume(channelnumber, current_volume)

@@ -101,7 +101,7 @@
 
 /obj/item/instrument/piano_synth/Initialize()
 	. = ..()
-	song.allowed_instrument_ids = assoc_list_strip_value(SSinstruments.instrument_data)
+	song.allowed_instrument_ids = get_allowed_instrument_ids()
 
 /obj/item/instrument/guitar
 	name = "guitar"

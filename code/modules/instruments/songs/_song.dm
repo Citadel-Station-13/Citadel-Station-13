@@ -60,10 +60,10 @@
 	  * Compilation happens when we start playing and is cleared after we finish playing.
 	  */
 	var/list/compiled_chords
-	/// Key as text = channel as number
-	var/list/channels_reserved
-	/// Key as text = current volume
-	var/list/keys_playing
+	/// Channel as text = current volume
+	var/list/channels_playing = list()
+	/// List of channels that aren't being used, as text. This is to prevent unnecessary freeing and reallocations from SSsounds/SSinstruments.
+	var/list/channels_idle = list()
 	//////////////////////////////////////////////////////
 
 	/// Last world.time we checked for who can hear us
@@ -74,6 +74,10 @@
 	var/debug_mode = FALSE
 	/// Last time we processed decay
 	var/last_process_decay
+	/// Max sound channels to occupy
+	var/max_sound_channels = CHANNELS_PER_INSTRUMENT
+	/// Current channels, so we can save a length() call.
+	var/using_sound_channels = 0
 
 	/////////////////////// DO NOT TOUCH THESE ///////////////////
 	var/octave_min = INSTRUMENT_MIN_OCTAVE
@@ -118,8 +122,8 @@
 	volume = clamp(volume, min_volume, max_volume)
 
 /datum/song/Destroy()
-	SSinstruments.on_song_del(src)
 	stop_playing()
+	SSinstruments.on_song_del(src)
 	lines = null
 	using_instrument = null
 	allowed_instrument_ids = null
@@ -141,7 +145,6 @@
 
 /// I can either be a datum, id, or path (if the instrument has no id).
 /datum/song/proc/set_instrument(datum/instrument/I)
-	stop_playing()
 	if(using_instrument)
 		using_instrument.songs_using -= src
 	using_instrument = null
@@ -172,8 +175,6 @@
 		return
 	playing = TRUE
 	updateDialog()
-	channels_reserved = list()
-	keys_playing = list()
 	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
 	//wrap the rest of the stuff to ensure stop_playing() is called.
 	last_process_decay = world.time
