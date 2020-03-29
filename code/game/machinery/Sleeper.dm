@@ -250,7 +250,6 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
-		data["occupant"]["reagents"] = list()
 		
 		if(mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
@@ -284,7 +283,7 @@
 						else
 							blood_type = blood_id
 					data["blood_status"] = "Patient has [blood_type] type blood. [blood_warning]"
-				data["blood_levels"] = blood_percent - (rand(1,35))
+				data["blood_levels"] = blood_percent
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)

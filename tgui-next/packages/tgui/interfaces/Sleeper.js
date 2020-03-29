@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Section, LabeledList, Button, ProgressBar, Flex, AnimatedNumber } from '../components';
 import { Fragment } from 'inferno';
 
-export const StasisSleeper = props => {
+export const Sleeper = props => {
   const { act, data } = useBackend(props);
 
   const {
@@ -23,7 +23,8 @@ export const StasisSleeper = props => {
     }
     return 0;
   });
-  const synthchems = preSortChems.sort((a, b) => {
+  const preSortSynth = data.synthchems || [];
+  const synthchems = preSortSynth.sort((a, b) => {
     const descA = a.name.toLowerCase();
     const descB = b.name.toLowerCase();
     if (descA < descB) {
@@ -154,7 +155,6 @@ export const StasisSleeper = props => {
           <Button
             key={chem.name}
             content={chem.name}
-            disabled={!(chem.allowed)}
             width="140px"
             onClick={() => act('synth', {
               chem: chem.id,

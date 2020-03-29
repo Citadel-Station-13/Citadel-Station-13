@@ -330,7 +330,7 @@
 					if(P.icon_state == "pill4")
 						P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, vol_each, transfered_by = usr)
+					reagents.trans_to(P, vol_each)
 				return TRUE
 			if(item_type == "patch")
 				var/obj/item/reagent_containers/pill/patch/P
@@ -338,7 +338,7 @@
 					P = new/obj/item/reagent_containers/pill/patch(drop_location())
 					P.name = trim("[name] patch")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, vol_each, transfered_by = usr)
+					reagents.trans_to(P, vol_each)
 				return TRUE
 			if(item_type == "bottle")
 				var/obj/item/reagent_containers/glass/bottle/P
@@ -346,7 +346,7 @@
 					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, vol_each, transfered_by = usr)
+					reagents.trans_to(P, vol_each)
 				return TRUE
 			if(item_type == "condimentPack")
 				var/obj/item/reagent_containers/food/condiment/pack/P
@@ -355,7 +355,7 @@
 					P.originalname = name
 					P.name = trim("[name] pack")
 					P.desc = "A small condiment pack. The label says it contains [name]."
-					reagents.trans_to(P, vol_each, transfered_by = usr)
+					reagents.trans_to(P, vol_each)
 				return TRUE
 			if(item_type == "condimentBottle")
 				var/obj/item/reagent_containers/food/condiment/P
@@ -363,7 +363,7 @@
 					P = new/obj/item/reagent_containers/food/condiment(drop_location())
 					P.originalname = name
 					P.name = trim("[name] bottle")
-					reagents.trans_to(P, vol_each, transfered_by = usr)
+					reagents.trans_to(P, vol_each)
 				return TRUE
 			if(item_type == "hypoVial")
 				var/obj/item/reagent_containers/glass/bottle/vial/small/P
@@ -371,7 +371,7 @@
 					P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
 					P.name = trim("[name] hypovial")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, vol_each, transfered_by = usr)
+					reagents.trans_to(P, vol_each)
 				return TRUE
 			if(item_type == "smartDart")
 				var/obj/item/reagent_containers/syringe/dart/P
