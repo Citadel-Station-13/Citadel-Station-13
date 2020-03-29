@@ -8,6 +8,7 @@
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
+	threat = 10
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE

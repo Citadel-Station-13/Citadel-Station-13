@@ -702,8 +702,8 @@
 
 /mob/living/do_resist_grab(moving_resist, forced, silent = FALSE)
 	. = ..()
-	if(pulledby.grab_state)
-		if(CHECK_MOBILITY(src, MOBILITY_STAND) && prob(30/pulledby.grab_state))
+	if(pulledby.grab_state > GRAB_PASSIVE)
+		if(CHECK_MOBILITY(src, MOBILITY_RESIST) && prob(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			pulledby.stop_pulling()
 			return TRUE
@@ -715,7 +715,7 @@
 		return TRUE
 
 /mob/living/proc/resist_buckle()
-	buckled.user_unbuckle_mob(src,src)
+	buckled?.user_unbuckle_mob(src,src)
 
 /mob/living/proc/resist_fire()
 	return
@@ -1192,3 +1192,9 @@
 
 /mob/living/canface()
 	return ..() && CHECK_MOBILITY(src, MOBILITY_MOVE)
+
+/mob/living/proc/set_gender(ngender = NEUTER, silent = FALSE, update_icon = TRUE, forced = FALSE)
+	if(forced || (!ckey || client?.prefs.cit_toggles & (ngender == FEMALE ? FORCED_FEM : FORCED_MASC)))
+		gender = ngender
+		return TRUE
+	return FALSE

@@ -312,7 +312,7 @@
 	name = "personal closet";
 	req_access_txt = "201"
 	},
-/obj/item/clothing/under/pj/blue,
+/obj/item/clothing/under/misc/pj/blue,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -362,7 +362,7 @@
 	name = "personal closet";
 	req_access_txt = "201"
 	},
-/obj/item/clothing/under/suit_jacket/female,
+/obj/item/clothing/under/suit/black/skirt,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -2135,7 +2135,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ev" = (
-/obj/item/clothing/under/pj/red,
+/obj/item/clothing/under/misc/pj/red,
 /obj/structure/closet/secure_closet{
 	desc = "It's a secure locker for personnel. The first card swiped gains control.";
 	icon_state = "cabinet";
@@ -3130,7 +3130,7 @@
 	name = "Kitchen Crate"
 	},
 /obj/item/storage/box/mousetraps,
-/obj/item/clothing/under/waiter,
+/obj/item/clothing/under/suit/waiter,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006
@@ -5263,7 +5263,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "km" = (
-/obj/item/clothing/under/suit_jacket/navy,
+/obj/item/clothing/under/suit/navy,
 /obj/structure/closet/secure_closet{
 	desc = "It's a secure locker for personnel. The first card swiped gains control.";
 	icon_state = "cabinet";
@@ -9706,7 +9706,7 @@
 	name = "personal closet";
 	req_access_txt = "201"
 	},
-/obj/item/clothing/under/pj/red,
+/obj/item/clothing/under/misc/pj/red,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},

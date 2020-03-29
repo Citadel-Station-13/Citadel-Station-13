@@ -283,6 +283,8 @@
 
 /mob/living/carbon/resist_buckle()
 	. = FALSE
+	if(!buckled)
+		return
 	if(restrained())
 		// too soon.
 		if(last_special > world.time)
@@ -580,7 +582,7 @@
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
 	if(stam > DAMAGE_PRECISION)
-		var/total_health = (health - stam)
+		var/total_health = (maxHealth - stam)
 		if(total_health <= crit_threshold && !stat)
 			if(CHECK_MOBILITY(src, MOBILITY_STAND))
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
@@ -1025,3 +1027,19 @@
 
 /mob/living/carbon/can_hold_items()
 	return TRUE
+
+/mob/living/carbon/set_gender(ngender = NEUTER, silent = FALSE, update_icon = TRUE, forced = FALSE)
+	var/bender = gender != ngender
+	. = ..()
+	if(!.)
+		return
+	if(dna && bender)
+		if(ngender == MALE || ngender == FEMALE)
+			dna.features["body_model"] = ngender
+			if(!silent)
+				var/adj = ngender == MALE ? "masculine" : "feminine"
+				visible_message("<span class='boldnotice'>[src] suddenly looks more [adj]!</span>", "<span class='boldwarning'>You suddenly feel more [adj]!</span>")
+		else if(ngender == NEUTER)
+			dna.features["body_model"] = MALE
+	if(update_icon)
+		update_body()

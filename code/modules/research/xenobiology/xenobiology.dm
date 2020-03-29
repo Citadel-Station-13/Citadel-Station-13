@@ -342,12 +342,7 @@
 				to_chat(user, "<span class='warning'>You can't swap your gender!</span>")
 				return
 
-			if(user.gender == MALE)
-				user.gender = FEMALE
-				user.visible_message("<span class='boldnotice'>[user] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
-			else
-				user.gender = MALE
-				user.visible_message("<span class='boldnotice'>[user] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+			user.set_gender(user.gender == MALE ? FEMALE : MALE, forced = TRUE) //You are doing this to yourself.
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -680,7 +675,7 @@
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		C.transfer_ckey(SM, FALSE)
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
@@ -910,16 +905,9 @@
 		to_chat(user, "<span class='warning'>The potion can only be used on gendered things!</span>")
 		return
 
-	if(L.gender == MALE && (L.client?.prefs.cit_toggles & FORCED_FEM))
-		L.gender = FEMALE
-		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
-	else if(L.gender == FEMALE && (L.client?.prefs.cit_toggles & FORCED_MASC))
-		L.gender = MALE
-		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
-	else
+	if(!L.set_gender(L.gender == MALE ? FEMALE : MALE))
 		to_chat(user,"<span class='warning'>It won't work on [L]!</span>")
 		return
-	L.regenerate_icons()
 	qdel(src)
 
 /obj/item/slimepotion/slime/renaming

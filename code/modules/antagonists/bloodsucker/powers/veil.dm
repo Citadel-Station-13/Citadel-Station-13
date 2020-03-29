@@ -95,7 +95,7 @@
 	H.dna.features = random_features(H.dna.species?.id)
 
 	// Apply Appearance
-	H.update_body() // Outfit and underware, also body.
+	H.update_body(TRUE) // Outfit and underwear, also body and privates.
 	//H.update_mutant_bodyparts() // Lizard tails etc
 	H.update_hair()
 	H.update_body_parts()
@@ -140,7 +140,7 @@
 			ADD_TRAIT(H, TRAIT_DISFIGURED, "husk") // NOTE: We are ASSUMING husk. // H.status_flags |= DISFIGURED	// Restore "Unknown" disfigurement
 		H.dna.features = prev_features
 		// Apply Appearance
-		H.update_body() // Outfit and underware, also body.
+		H.update_body(TRUE) // Outfit and underwear, also body and privates.
 		H.update_hair()
 		H.update_body_parts()	// Body itself, maybe skin color?
 		cast_effect() // POOF

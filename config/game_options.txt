@@ -609,3 +609,14 @@ DROPPED_MODES 3
 
 ## Whether the suicide verb is allowed.
 # SUICIDE_ALLOWED
+
+## Breast cups selectable from the character creation menu. Keep em lowercase.
+BREASTS_CUPS_PREFS a
+BREASTS_CUPS_PREFS b
+BREASTS_CUPS_PREFS c
+BREASTS_CUPS_PREFS d
+BREASTS_CUPS_PREFS e
+
+## Minimum and maximum limits for penis length from the character creation menu.
+PENIS_MIN_INCHES_PREFS 1
+PENIS_MAX_INCHES_PREFS 20

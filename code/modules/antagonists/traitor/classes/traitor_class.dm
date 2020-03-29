@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(traitor_classes)
 	var/employer = "The Syndicate"
 	var/weight = 0
 	var/chaos = 0
-	var/cost = 0
+	var/threat = 0
 	var/TC = 20
 	var/list/uplink_filters
 

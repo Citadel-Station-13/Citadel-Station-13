@@ -266,6 +266,7 @@
 	M.equipOutfit(ctf_gear)
 	M.dna.species.punchdamagehigh = 25
 	M.dna.species.punchdamagelow = 25
+	M.AddElement(/datum/element/ghost_role_eligibility)
 	spawned_mobs += M
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)

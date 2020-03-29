@@ -23,7 +23,7 @@
 
 	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
-	var/stam_damage_coeff = 0.5
+	var/stam_damage_coeff = 0.75
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
@@ -220,7 +220,7 @@
 /obj/item/bodypart/proc/get_damage(include_stamina = FALSE)
 	var/total = brute_dam + burn_dam
 	if(include_stamina)
-		total += stamina_dam
+		total = max(total, stamina_dam)
 	return total
 
 //Checks disabled status thresholds
@@ -347,7 +347,7 @@
 		else
 			skin_tone = ""
 
-		body_gender = H.gender
+		body_gender = H.dna.features["body_model"]
 		should_draw_gender = S.sexes
 
 		if(MUTCOLORS in S.species_traits)
@@ -358,18 +358,18 @@
 			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			species_color = ""
-		
+
 		if(base_bp_icon != DEFAULT_BODYPART_ICON)
 			color_src = MUTCOLORS //TODO - Add color matrix support to base limbs
 
-		if("legs" in S.default_features)
+		if(S.mutant_bodyparts["legs"])
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
 				if(DIGITIGRADE in S.species_traits)
 					digitigrade_type = lowertext(H.dna.features["legs"])
 			else
 				digitigrade_type = null
 
-		if("mam_body_markings" in S.default_features)
+		if(S.mutant_bodyparts["mam_body_markings"])
 			var/datum/sprite_accessory/Smark
 			Smark = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 			if(Smark)

@@ -802,11 +802,10 @@
 /datum/dynamic_ruleset/roundstart/bloodsucker
 	name = "Bloodsuckers"
 	config_tag = "bloodsucker"
-	persistent = TRUE
 	antag_flag = ROLE_BLOODSUCKER
 	antag_datum = ANTAG_DATUM_BLOODSUCKER
 	minimum_required_age = 0
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	protected_roles = list("Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 1
 	weight = 2

@@ -52,7 +52,7 @@
 	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_move(src, NewLoc)
+		HM.on_move(NewLoc)
 	if(. && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && !pulledby)
 		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
 			doSprintLossTiles(1)

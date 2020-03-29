@@ -12660,7 +12660,7 @@
 /area/maintenance/port/fore)
 "avQ" = (
 /obj/structure/table,
-/obj/item/clothing/under/rank/security,
+/obj/item/clothing/under/rank/security/officer,
 /obj/item/restraints/handcuffs,
 /obj/structure/cable/white,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -13692,7 +13692,7 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_nanotrasen,
 /obj/item/clothing/suit/toggle/lawyer,
-/obj/item/clothing/under/maid,
+/obj/item/clothing/under/costume/maid,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -13716,7 +13716,7 @@
 /obj/item/clothing/head/fedora{
 	icon_state = "detective"
 	},
-/obj/item/clothing/under/geisha,
+/obj/item/clothing/under/costume/geisha,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -17365,7 +17365,7 @@
 /obj/item/clothing/head/fedora{
 	icon_state = "detective"
 	},
-/obj/item/clothing/under/lawyer/female,
+/obj/item/clothing/under/rank/civilian/lawyer/female,
 /obj/machinery/light/small,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -17387,7 +17387,7 @@
 	},
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/head/fedora,
-/obj/item/clothing/under/blacktango,
+/obj/item/clothing/under/dress/blacktango,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
@@ -27696,12 +27696,12 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe,
 /obj/item/reagent_containers/hypospray/CMO,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/neck/stethoscope,
+/obj/item/gun/syringe/dart,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXR" = (
