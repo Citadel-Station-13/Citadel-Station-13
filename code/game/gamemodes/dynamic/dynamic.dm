@@ -57,13 +57,13 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	/// Target threat level right now. Events and antags will try to keep the round at this level.
 	var/threat_level = 0
 	/// The current antag threat. Recalculated every time a ruletype starts or ends.
-	var/threat = 0 
+	var/threat = 0
 	/// Starting threat level, for things that increase it but can bring it back down.
 	var/initial_threat_level = 0
 	/// Things that cause a rolling threat adjustment to be displayed at roundend.
 	var/list/threat_tallies = list()
 	/// Running information about the threat. Can store text or datum entries.
-	var/list/threat_log = list() 
+	var/list/threat_log = list()
 	/// As above, but with info such as refunds.
 	var/list/threat_log_verbose = list()
 	/// List of roundstart rules used for selecting the rules.
@@ -150,11 +150,11 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	GLOB.dynamic_first_midround_delay_max = CONFIG_GET(number/dynamic_first_midround_delay_max)*600
 
 /datum/game_mode/dynamic/admin_panel()
-	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</A><BR>"
-	dat += "Threat Level: <b>[threat_level]</b><br/>"
+	dat += "Target threat: <b>[threat_level]</b><br/>"
 
-	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
+	dat += "Current threat: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
 	dat += "Storyteller: <b>[storyteller.name]</b><br/>"
 	dat += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
@@ -339,9 +339,10 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	storyteller = new GLOB.dynamic_storyteller_type // this is where all the initialization happens
 	storyteller.on_start()
 	SSblackbox.record_feedback("text","dynamic_storyteller",1,storyteller.name)
-	message_admins("Dynamic mode parameters for the round:")
-	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
-	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
+	message_admins("Dynamic mode parameters for the round:\n\
+	Storyteller is [storyteller.name].\n\
+	Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].\n\
+	Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
 	log_game("DYNAMIC: Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
@@ -403,7 +404,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
 /datum/game_mode/dynamic/post_setup(report)
 	update_playercounts()
-			
+
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()
@@ -641,7 +642,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		return TRUE
 	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
 	return FALSE
-		
+
 /datum/game_mode/dynamic/process()
 	if (pop_last_updated < world.time - (120 SECONDS))
 		pop_last_updated = world.time
@@ -654,7 +655,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			SSblackbox.record_feedback("associative","dynamic_rulesets_finished",1,rule.get_blackbox_info())
 
 	storyteller.do_process()
-	
+
 	if (midround_injection_cooldown < world.time)
 		if (GLOB.dynamic_forced_extended)
 			return

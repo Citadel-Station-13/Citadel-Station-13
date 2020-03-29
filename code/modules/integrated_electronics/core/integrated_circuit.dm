@@ -139,7 +139,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/table_middle_width = "40%"
 
 	var/HTML = ""
-	HTML += "<html><head><title>[src.displayed_name]</title></head><body>"
+	HTML += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[src.displayed_name]</title></head><body>"
 	HTML += "<div align='center'>"
 	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'>"
 

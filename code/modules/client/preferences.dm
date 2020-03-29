@@ -2154,6 +2154,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
 					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) as null|anything in list(MALE,FEMALE,"nonbinary","object")
+					if(!chosengender)
+						return
 					switch(chosengender)
 						if("nonbinary")
 							chosengender = PLURAL

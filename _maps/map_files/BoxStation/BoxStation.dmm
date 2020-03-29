@@ -5903,7 +5903,7 @@
 "alq" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Evidence Storage";
-	req_access_txt = "1"
+	req_access_txt = "4"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
