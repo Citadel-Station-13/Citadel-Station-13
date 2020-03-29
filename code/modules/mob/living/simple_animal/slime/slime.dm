@@ -70,7 +70,8 @@
 
 	var/colour = "grey"
 	var/coretype = /obj/item/slime_extract/grey
-	var/list/slime_mutation[4]
+	var/list/slime_mutation
+	var/static/list/color_mutation_cache = list()
 
 	var/static/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
@@ -84,6 +85,7 @@
 
 
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
+	initialize_mutations()
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
 
@@ -108,10 +110,16 @@
 		AC.Remove(src)
 	return ..()
 
+/mob/living/simple_animal/slime/proc/initialize_mutations()
+	var/list/cached = color_mutation_cache[colour]
+	if(!cached)
+		cached = color_mutation_cache[colour] = mutation_table(colour)
+	slime_mutation = cached
+
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
 	update_name()
-	slime_mutation = mutation_table(colour)
+	initialize_mutations()
 	var/sanitizedcolour = replacetext(colour, " ", "")
 	coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	regenerate_icons()
@@ -454,13 +462,13 @@
 
 	SStun = world.time + rand(20,60)
 	spawn(0)
-		canmove = 0
+		DISABLE_BITFIELD(mobility_flags, MOBILITY_MOVE)
 		if(user)
 			step_away(src,user,15)
 		sleep(3)
 		if(user)
 			step_away(src,user,15)
-		update_canmove()
+		update_mobility()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

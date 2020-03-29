@@ -213,7 +213,7 @@
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
+		M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)
 	..()
 
@@ -227,8 +227,7 @@
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/M)
 	if(isjellyperson(M))
 		shock_timer = 0 //immune to shocks
-		M.AdjustStun(-40, 0)
-		M.AdjustKnockdown(-40, 0)
+		M.AdjustAllImmobility(-40, 0)
 		M.AdjustUnconscious(-40, 0)
 		M.adjustStaminaLoss(-2, 0)
 		if(isluminescent(M))

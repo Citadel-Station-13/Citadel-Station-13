@@ -17,6 +17,7 @@
 	minimal_access = list(ACCESS_ROBOTICS, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
+	threat = 1
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"
@@ -25,7 +26,7 @@
 	belt = /obj/item/storage/belt/utility/full
 	l_pocket = /obj/item/pda/roboticist
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/roboticist
+	uniform = /obj/item/clothing/under/rank/rnd/roboticist
 	suit = /obj/item/clothing/suit/toggle/labcoat
 
 	backpack = /obj/item/storage/backpack/science

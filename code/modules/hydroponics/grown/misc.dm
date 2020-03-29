@@ -98,8 +98,6 @@
 	wine_power = 35
 	tastes = list("thistle" = 2, "artichoke" = 1)
 
-
-
 // Cabbage
 /obj/item/seeds/cabbage
 	name = "pack of cabbage seeds"
@@ -234,19 +232,6 @@
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
 
-// Lavaland cactus
-
-/obj/item/seeds/lavaland/cactus
-	name = "pack of fruiting cactus seeds"
-	desc = "These seeds grow into fruiting cacti."
-	icon_state = "seed-cactus"
-	species = "cactus"
-	plantname = "Fruiting Cactus"
-	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	growthstages = 2
-
-
 // Coconut
 /obj/item/seeds/coconut
 	name = "pack of coconut seeds"
@@ -279,6 +264,7 @@
 	throwforce = 5
 	hitsound = 'sound/weapons/klonk.ogg'
 	attack_verb = list("klonked", "donked", "bonked")
+	distill_reagent = "creme_de_coconut"
 	var/opened = FALSE
 	var/carved = FALSE
 	var/chopped = FALSE

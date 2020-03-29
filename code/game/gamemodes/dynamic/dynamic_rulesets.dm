@@ -174,8 +174,8 @@
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
-	return
-
+	return TRUE
+	
 /// Called on game mode pre_setup for roundstart rulesets.
 /// Do everything you need to do before job is assigned here.
 /// IMPORTANT: ASSIGN special_role HERE
@@ -201,8 +201,7 @@
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.
 /datum/dynamic_ruleset/proc/clean_up()
-	mode.refund_threat(cost + (scaled_times * scaling_cost))
-	mode.log_threat("[ruletype] [name] refunded [cost + (scaled_times * scaling_cost)]",verbose=TRUE)
+	return
 
 /// Gets weight of the ruleset
 /// Note that this decreases weight if repeatable is TRUE and repeatable_weight_decrease is higher than 0

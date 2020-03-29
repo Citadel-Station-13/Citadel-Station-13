@@ -522,11 +522,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		return BRUTELOSS
 
-/obj/item/lighter/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+/obj/item/lighter/update_icon_state()
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
-	add_overlay(lighter_overlay)
+
+/obj/item/lighter/update_overlays()
+	. = ..()
+	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+	. += lighter_overlay
 
 /obj/item/lighter/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
@@ -645,12 +647,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lighter_color = pick(color_list)
 	update_icon()
 
-/obj/item/lighter/greyscale/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+/obj/item/lighter/greyscale/update_icon_state()
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
+
+/obj/item/lighter/greyscale/update_overlays()
+	. = ..()
+	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
 	lighter_overlay.color = lighter_color
-	add_overlay(lighter_overlay)
+	. += lighter_overlay
 
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
@@ -852,7 +856,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
-			M.Knockdown(300, 1, 0)
+			M.DefaultCombatKnockdown(300, 1, 0)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 			sp.set_up(5, 1, src)
 			sp.start()

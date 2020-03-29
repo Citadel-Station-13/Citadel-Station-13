@@ -7,12 +7,13 @@
 	var/datum/mind/target
 	item_flags = NOBLUDGEON
 
+/obj/item/paper/contract/ComponentInitialize()
+	return
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
+
 /obj/item/paper/contract/proc/update_text()
 	return
-
-/obj/item/paper/contract/update_icon()
-	return
-
 
 /obj/item/paper/contract/employment
 	icon_state = "paper_words"

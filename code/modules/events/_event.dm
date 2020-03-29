@@ -121,7 +121,8 @@
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
-	var/fakeable = TRUE		//Can be faked by fake news event.
+	var/threat			= 0
+	var/fakeable 		= TRUE //Can be faked by fake news event.
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -161,7 +162,9 @@
 /datum/round_event/proc/end()
 	return
 
-
+// Returns threat; used for dynamic. Used for custom stuff, just returns the threat var by default.
+/datum/round_event/proc/threat()
+	return threat
 
 //Do not override this proc, instead use the appropiate procs.
 //This proc will handle the calls to the appropiate procs.

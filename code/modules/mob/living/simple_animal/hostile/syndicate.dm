@@ -28,6 +28,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
+	threat = 1
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -204,7 +205,7 @@
 	rapid = 2
 	icon_state = "syndicate_smg"
 	icon_living = "syndicate_smg"
-	casingtype = /obj/item/ammo_casing/c45/nostamina
+	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot //caravan ambush ruin

@@ -57,14 +57,16 @@
 	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 	return (TOXLOSS)
 
-/obj/item/storage/bag/trash/update_icon()
-	if(contents.len == 0)
-		icon_state = "[initial(icon_state)]"
-	else if(contents.len < 12)
-		icon_state = "[initial(icon_state)]1"
-	else if(contents.len < 21)
-		icon_state = "[initial(icon_state)]2"
-	else icon_state = "[initial(icon_state)]3"
+/obj/item/storage/bag/trash/update_icon_state()
+	switch(contents.len)
+		if(0)
+			icon_state = "[initial(icon_state)]"
+		if(0 to 11)
+			icon_state = "[initial(icon_state)]1"
+		if(11 to 20)
+			icon_state = "[initial(icon_state)]2"
+		else
+			icon_state = "[initial(icon_state)]3"
 
 /obj/item/storage/bag/trash/cyborg
 	insertable = FALSE
@@ -130,7 +132,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
 	listeningTo = user
 
-/obj/item/storage/bag/ore/dropped()
+/obj/item/storage/bag/ore/dropped(mob/user)
 	. = ..()
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
@@ -244,7 +246,8 @@
 	set name = "Activate Seed Extraction"
 	set category = "Object"
 	set desc = "Activate to convert your plants into plantable seeds."
-	if(usr.stat || !usr.canmove || usr.restrained())
+	var/mob/living/L = usr
+	if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE))
 		return
 	for(var/obj/item/O in contents)
 		seedify(O, 1)
@@ -327,6 +330,8 @@
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food, /obj/item/reagent_containers/glass, /datum/reagent/consumable, /obj/item/kitchen/knife, /obj/item/kitchen/rollingpin, /obj/item/kitchen/fork, /obj/item/storage/box)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Kitchen Tools, and ingredient boxes.
 	STR.insert_preposition = "on"
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
@@ -349,13 +354,16 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Knockdown(40)
+			M.DefaultCombatKnockdown(40)
 	update_icon()
 
-/obj/item/storage/bag/tray/update_icon()
-	cut_overlays()
+/obj/item/storage/bag/tray/update_overlays()
+	. = ..()
 	for(var/obj/item/I in contents)
-		add_overlay(new /mutable_appearance(I))
+		var/mutable_appearance/I_copy = new(I)
+		I_copy.plane = FLOAT_PLANE
+		I_copy.layer = FLOAT_LAYER
+		. += I_copy
 
 /obj/item/storage/bag/tray/Entered()
 	. = ..()

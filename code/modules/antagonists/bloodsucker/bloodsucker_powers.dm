@@ -96,7 +96,7 @@
 	// Incap?
 	if(must_be_capacitated)
 		var/mob/living/L = owner
-		if (L.incapacitated(TRUE, TRUE) || L.resting && !can_be_immobilized)
+		if (L.incapacitated(TRUE, TRUE) || !CHECK_MOBILITY(L, MOBILITY_STAND) && !can_be_immobilized)
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
 			return FALSE

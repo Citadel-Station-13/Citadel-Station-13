@@ -30,7 +30,7 @@
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
-#define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
+#define WRAP(val, min, max) CLAMP(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max-1)
 
 // Real modulus that handles decimals
 #define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
@@ -202,3 +202,8 @@
 // )
 
 #define MANHATTAN_DISTANCE(a, b) (abs(a.x - b.x) + abs(a.y - b.y))
+
+#define LOGISTIC_FUNCTION(L,k,x,x_0) (L/(1+(NUM_E**(-k*(x-x_0)))))
+
+/// Make sure something is a boolean TRUE/FALSE 1/0 value, since things like bitfield & bitflag doesn't always give 1s and 0s.
+#define FORCE_BOOLEAN(x) ((x)? TRUE : FALSE)

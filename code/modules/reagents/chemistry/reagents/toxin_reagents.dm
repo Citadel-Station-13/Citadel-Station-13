@@ -40,9 +40,9 @@
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
 		if(prob(98))
-			M.randmutb()
+			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		else
-			M.randmutg()
+			M.easy_randmut(POSITIVE)
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -495,6 +495,24 @@
 	toxpwr = 0.5
 	taste_description = "bad cooking"
 
+/datum/reagent/toxin/condensed_cooking_oil
+	name = "Condensed Cooking Oil"
+	description = "Taste the consequences of your mistakes."
+	reagent_state = LIQUID
+	color = "#d6d6d8"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	toxpwr = 0
+	taste_mult = -2
+	taste_description = "awful cooking"
+
+/datum/reagent/toxin/condensed_cooking_oil/on_mob_life(mob/living/carbon/M)
+	if(prob(15))
+		M.vomit()
+	else
+		if(prob(40))
+			M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.5) //For reference, bungotoxin does 3
+	..()
+
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
 	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
@@ -539,7 +557,7 @@
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				C.Knockdown(60, 0)
+				C.DefaultCombatKnockdown(60, 0)
 				. = TRUE
 			if(2)
 				C.losebreath += 10
@@ -678,7 +696,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 11)
-		M.Knockdown(60, 0)
+		M.DefaultCombatKnockdown(60, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -843,7 +861,7 @@
 		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
-			M.Knockdown(20, 0)
+			M.DefaultCombatKnockdown(20, 0)
 		. = 1
 	..()
 

@@ -1,0 +1,4 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - tweak: "Clicking an open closet with harm intent no longer attempts to place your currently held item inside, but rather attacks it."

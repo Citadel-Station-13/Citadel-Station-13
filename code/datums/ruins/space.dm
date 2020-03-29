@@ -18,7 +18,6 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
-
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -187,6 +186,7 @@
 	name = "Abandoned Teleporter"
 	description = "In space construction the teleporter is often the first system brought online. \
 	This lonely half built teleporter is a sign of a proposed structure that for one reason or another just never got built."
+	always_place = TRUE
 
 /datum/map_template/ruin/space/crashedclownship
 	id = "crashedclownship"
@@ -268,6 +268,7 @@
 	suffix = "whiteshipdock.dmm"
 	name = "Whiteship Dock"
 	description = "An abandoned but functional vessel parked in deep space, ripe for the taking."
+	always_place = TRUE
 
 /datum/map_template/ruin/space/cat_experiments
 	id = "meow"
@@ -287,6 +288,7 @@
 	suffix = "hilbertshoteltestingsite.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
+
 /datum/map_template/ruin/space/augmentation
 	id = "augmentationfacility"
 	suffix = "augmentationfacility.dmm"
@@ -322,3 +324,70 @@
 	suffix = "advancedlab.dmm"
 	name = "Abductor Replication Lab"
 	description = "Some scientists tried and almost succeeded to recreate abductor tools. Somewhat slower and a bit less modern than their originals, these tools are the best you can get if you aren't an alien."
+
+//Space ruins for the station z
+/datum/map_template/ruin/spacenearstation
+	prefix = "_maps/RandomRuins/SpaceRuinsStation/"
+	cost = 1
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/spacenearstation/roid1
+	id = "roid1"
+	suffix = "roid1.dmm"
+	name = "Mineable Asteroid 1"
+	description = "Mineral asteroid 1."
+	allow_duplicates = TRUE
+
+/datum/map_template/ruin/spacenearstation/roid2
+	id = "roid2"
+	suffix = "roid2.dmm"
+	name = "Crab Roid"
+	description = "Mineral asteroid. Ft. Crabs."
+
+/datum/map_template/ruin/spacenearstation/roid3
+	id = "roid3"
+	suffix = "roid3.dmm"
+	name = "Dorm Roid"
+	description = "Mineral asteroid. Ft. Dorm."
+
+/datum/map_template/ruin/spacenearstation/roid4
+	id = "roid4"
+	suffix = "roid4.dmm"
+	name = "Mineable Asteroid 2"
+	description = "Mineral asteroid 2."
+
+/datum/map_template/ruin/spacenearstation/roid5
+	id = "roid5"
+	suffix = "roid5.dmm"
+	name = "Mineable Asteroid 3"
+	description = "Mineral asteroid. Ft. Holofans."
+
+/datum/map_template/ruin/spacenearstation/roid6
+	id = "roid6"
+	suffix = "roid6.dmm"
+	name = "Mineable Asteroid 4"
+	description = "Mineral asteroid. Ft. Crashed escape pod."
+
+/datum/map_template/ruin/spacenearstation/roid7
+	id = "roid7"
+	suffix = "roid7.dmm"
+	name = "Mineable Asteroid 5"
+	description = "Mineral asteroid. Ft. Derelict space bar."
+
+/datum/map_template/ruin/spacenearstation/roid8
+	id = "roid8"
+	suffix = "roid8.dmm"
+	name = "Dead wizard Roid"
+	description = "Mineral asteroid. Ft. Dead wizard and toilet wand."
+
+/datum/map_template/ruin/spacenearstation/roid9
+	id = "roid9"
+	suffix = "roid9.dmm"
+	name = "Monitoring Roid"
+	description = "Mineral asteroid. Ft. Station monitoring, toolbox and erp."
+
+/datum/map_template/ruin/spacenearstation/roid10
+	id = "roid10"
+	suffix = "roid10.dmm"
+	name = "Maze Roid"
+	description = "Mineral asteroid. Ft. Brief maze."

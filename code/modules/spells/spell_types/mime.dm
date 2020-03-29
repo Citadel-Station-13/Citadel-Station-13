@@ -128,6 +128,49 @@
 		invocation_type ="none"
 	..()
 
+/obj/effect/proc_holder/spell/targeted/touch/mimerope
+	name = "Invisible Rope"
+	desc = "Form an invisible rope to tie people or trip people with."
+	school = "mime"
+	panel = "Mime"
+	invocation_type = "emote"
+	invocation_emote_self = "<span class='notice'>You start fabricate an invisible rope.</span>"
+	charge_max = 700
+	sound =  null
+	clothes_req = 0
+	range = -1
+	include_user = 1
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
+	hand_path = /obj/item/melee/touch_attack/mimerope
+
+/obj/effect/proc_holder/spell/targeted/touch/mimerope/Click()
+	if(usr && usr.mind)
+		if(!usr.mind.miming)
+			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			return
+		if (usr.get_active_held_item())
+			to_chat(usr, "<span class='notice'>Your hands must be free to create the invisible rope.</span>")
+			return
+		invocation = "<B>[usr.real_name]</B> is twirling an invisible rope in [usr.p_their()] hands."
+	else
+		invocation_type ="none"
+
+/obj/effect/proc_holder/spell/targeted/touch/mimerope/cast(list/targets,mob/user = usr)
+
+	usr.put_in_hands()
+
+/obj/item/melee/touch_attack/mimerope
+	item_state = ""
+	icon_state = ""
+	name = "mime rope"
+	desc = "An invisible rope."
+
+/obj/item/restraints/handcuffs/cable/mime
+	name = "mime restraints"
+	desc = "An invisible rope."
+	item_state = ""
+	icon_state = ""
 
 /obj/item/book/granter/spell/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime

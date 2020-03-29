@@ -61,7 +61,7 @@
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
-/obj/machinery/biogenerator/update_icon()
+/obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
 	else if(!src.beaker)
@@ -196,7 +196,7 @@
 						dat += "<A href='?src=[REF(src)];create=[D.id];amount=5'>x5</A>"
 					if(ispath(D.build_path, /obj/item/stack))
 						dat += "<A href='?src=[REF(src)];create=[D.id];amount=10'>x10</A>"
-					dat += "([D.materials[getmaterialref(/datum/material/biomass)]/efficiency])<br>"
+					dat += "([D.materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]/efficiency])<br>"
 				dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -233,14 +233,14 @@
 		menustat = "void"
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
-	if(materials.len != 1 || materials[1] != getmaterialref(/datum/material/biomass))
+	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
 		return FALSE
-	if (materials[getmaterialref(/datum/material/biomass)]*multiplier/efficiency > points)
+	if (materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency > points)
 		menustat = "nopoints"
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[getmaterialref(/datum/material/biomass)]*multiplier/efficiency
+			points -= materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
 		return TRUE

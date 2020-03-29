@@ -1,0 +1,4 @@
+author: "kappa-sama"
+delete-after: True
+changes: 
+  - balance: "60 seconds instead of 120 for firebreath"

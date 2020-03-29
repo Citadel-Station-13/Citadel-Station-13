@@ -3,36 +3,6 @@
 
 ////////////////////////////////////////////////BREAD////////////////////////////////////////////////
 
-/datum/crafting_recipe/food/meatbread
-	name = "Meat bread"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/plain = 3,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
-	)
-	result = /obj/item/reagent_containers/food/snacks/store/bread/meat
-	subcategory = CAT_BREAD
-
-/datum/crafting_recipe/food/xenomeatbread
-	name = "Xenomeat bread"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/xeno = 3,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
-	)
-	result = /obj/item/reagent_containers/food/snacks/store/bread/xenomeat
-	subcategory = CAT_BREAD
-
-/datum/crafting_recipe/food/spidermeatbread
-	name = "Spidermeat bread"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/spider = 3,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
-	)
-	result = /obj/item/reagent_containers/food/snacks/store/bread/spidermeat
-	subcategory = CAT_BREAD
-
 /datum/crafting_recipe/food/banananutbread
 	name = "Banana nut bread"
 	reqs = list(
@@ -44,16 +14,6 @@
 	result = /obj/item/reagent_containers/food/snacks/store/bread/banana
 	subcategory = CAT_BREAD
 
-/datum/crafting_recipe/food/tofubread
-	name = "Tofu bread"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/tofu = 3,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
-	)
-	result = /obj/item/reagent_containers/food/snacks/store/bread/tofu
-	subcategory = CAT_BREAD
-
 /datum/crafting_recipe/food/creamcheesebread
 	name = "Cream cheese bread"
 	reqs = list(
@@ -62,6 +22,16 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/bread/creamcheese
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/meatbread
+	name = "Meat bread"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet/plain = 3,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/bread/meat
 	subcategory = CAT_BREAD
 
 /datum/crafting_recipe/food/mimanabread
@@ -75,6 +45,38 @@
 	result = /obj/item/reagent_containers/food/snacks/store/bread/mimana
 	subcategory = CAT_BREAD
 
+/datum/crafting_recipe/food/spidermeatbread
+	name = "Spidermeat bread"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet/spider = 3,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/bread/spidermeat
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/tofubread
+	name = "Tofu bread"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/reagent_containers/food/snacks/tofu = 3,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/bread/tofu
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/xenomeatbread
+	name = "Xenomeat bread"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet/xeno = 3,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/bread/xenomeat
+	subcategory = CAT_BREAD
+
+////////////////////////////////////////////////TOAST////////////////////////////////////////////////
+
 /datum/crafting_recipe/food/butteredtoast
 	name = "Buttered Toast"
 	reqs = list(
@@ -82,6 +84,45 @@
 		/obj/item/reagent_containers/food/snacks/butter = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/butteredtoast
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/slimetoast
+	name = "Slime toast"
+	reqs = list(
+		/datum/reagent/toxin/slimejelly = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/slime
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/jelliedtoast
+	name = "Jellied toast"
+	reqs = list(
+		/datum/reagent/consumable/cherryjelly = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/peanutbuttertoast
+	name = "Peanut butter toast"
+	reqs = list(
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/peanut_buttertoast
+	subcategory = CAT_BREAD
+
+////////////////////////////////////////////////MISC////////////////////////////////////////////////
+
+/datum/crafting_recipe/food/baguette
+	name = "Baguette"
+	time = 40
+	reqs = list(/datum/reagent/consumable/sodiumchloride = 1,
+				/datum/reagent/consumable/blackpepper = 1,
+				/obj/item/reagent_containers/food/snacks/pastrybase = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/baguette
 	subcategory = CAT_BREAD
 
 /datum/crafting_recipe/food/butterbiscuit
@@ -100,4 +141,13 @@
 		/obj/item/reagent_containers/food/snacks/butter = 3,
 		)
 	result = /obj/item/reagent_containers/food/snacks/butterdog
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/twobread
+	name = "Two bread"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/wine = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/twobread
 	subcategory = CAT_BREAD

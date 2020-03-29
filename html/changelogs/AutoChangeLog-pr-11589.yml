@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - refactor: "Made votes obfuscation settings more robust."
+  - admin: "Also included them in custom votes."
+  - tweak: "The map rotation vote will only hide ongoing votes now, not the results."
