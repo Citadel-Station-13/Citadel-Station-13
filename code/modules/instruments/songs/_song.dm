@@ -251,7 +251,7 @@
 	updateDialog()
 
 /datum/song/proc/set_linear_falloff_duration(duration)
-	sustain_linear_duration = CLAMP(duration, 0, INSTRUMENT_MAX_TOTAL_SUSTAIN)
+	sustain_linear_duration = CLAMP(duration, 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN)
 	update_sustain()
 	updateDialog()
 

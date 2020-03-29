@@ -11,12 +11,10 @@
 			for(var/i in 1 to chord.len - 1)
 				var/key = chord[i]
 				if(!playkey_synth(key))
-					to_chat(user, "<span class='userdanger'>BUG: [src] failed to play a note. This likely means that the entire channel spectrum available to instruments has been saturated, or it can mean some unknown error.</span>")
 					return
-			to_chat(world, "Played [english_list(chord)] at tempodiv [tempodiv] tempo [sanitize_tempo(tempo/tempodiv)]")
 			sleep(sanitize_tempo(tempo / tempodiv))
-		updateDialog()
 		repeat--
+		updateDialog()
 	repeat = 0
 
 /// C-Db2-A-A4/2,A-B#4-C/3,/4,A,A-B-C as an example
@@ -72,11 +70,10 @@
 	var/sound/copy = sound(K.sample)
 	copy.frequency = K.frequency
 	copy.volume = volume
-	to_chat(world, "Playing sound key [key] frequency [K.frequency]")
 	keys_playing[num2text(key)] = volume
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, 0, channel, sound = copy)
+		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, 0, channel, null, copy)
 		// Could do environment and echo later but not for now
 
 /datum/song/proc/terminate_all_sounds(clear_channels = TRUE)
@@ -88,11 +85,8 @@
 		keys_playing.len = 0
 
 /datum/song/proc/terminate_sound_mob(mob/M)
-	for(var/i in channels_reserved)
-		M.stop_sound_channel(text2num(i))
-
-/datum/song/proc/key_channel_lookup(key)
-	return channels_reserved["[key]"]
+	for(var/key in channels_reserved)
+		M.stop_sound_channel(channels_reserved[key])
 
 /datum/song/proc/key_channel_reserve(key)
 	key = num2text(key)

@@ -34,8 +34,8 @@
 					sleep(tempo)
 		if(should_stop_playing(user))
 			return
-		updateDialog()
 		repeat--
+		updateDialog()
 	repeat = 0
 
 // note is a number from 1-7 for A-G
