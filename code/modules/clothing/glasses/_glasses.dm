@@ -8,7 +8,7 @@
 	strip_delay = 20
 	equip_delay_other = 25
 	resistance_flags = NONE
-	materials = list(MAT_GLASS = 250)
+	custom_materials = list(/datum/material/glass = 250)
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING	//admin only for now
@@ -82,6 +82,7 @@
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
 	darkness_view = 8
+	flash_protect = -2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -96,6 +97,11 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+
+/obj/item/clothing/glasses/meson/eyepatch
+	name = "eyepatch mesons"
+	desc = "A meson system that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "mesonpatch"
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
@@ -114,16 +120,23 @@
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
-	desc = "You can totally see in the dark now!"
+	desc = "You can totally see in the dark now! Just don't look too closely at bright lights. This lacks any flash correction."
 	icon_state = "night"
 	item_state = "glasses"
 	darkness_view = 8
+	flash_protect = -2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/night/prescription
 	name = "prescription night vision goggles"
 	desc = "NVGs but for those with nearsightedness."
+	vision_correction = 1
+	
+/obj/item/clothing/glasses/night/syndicate
+	name = "combat night vision goggles"
+	desc = "See everything, without fear."
+	flash_protect = 1
 	vision_correction = 1
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
@@ -286,7 +299,7 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	actions_types = list(/datum/action/item_action/toggle)
-	materials = list(MAT_METAL = 250)
+	custom_materials = list(/datum/material/iron = 250)
 	flash_protect = 2
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT

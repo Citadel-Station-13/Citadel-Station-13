@@ -38,10 +38,10 @@
 		tagged = 0
 		update_icon()
 
-/obj/structure/closet/body_bag/update_icon()
-	..()
+/obj/structure/closet/body_bag/update_overlays()
+	. = ..()
 	if (tagged)
-		add_overlay("bodybag_label")
+		. += "bodybag_label"
 
 /obj/structure/closet/body_bag/close()
 	if(..())

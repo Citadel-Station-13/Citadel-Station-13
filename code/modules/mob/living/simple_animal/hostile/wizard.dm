@@ -11,6 +11,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
+	threat = 3
 	speed = 0
 	maxHealth = 100
 	health = 100

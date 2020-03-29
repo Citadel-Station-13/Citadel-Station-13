@@ -75,6 +75,12 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
 	mask_type = /obj/item/clothing/mask/breath
 
+/obj/machinery/suit_storage_unit/paramedic
+	name = "paramedic suit storage unit"
+	suit_type = /obj/item/clothing/suit/space/eva/paramedic
+	helmet_type = /obj/item/clothing/head/helmet/space/eva/paramedic
+	mask_type = /obj/item/clothing/mask/breath
+
 /obj/machinery/suit_storage_unit/rd
 	suit_type = /obj/item/clothing/suit/space/hardsuit/rd
 	mask_type = /obj/item/clothing/mask/breath
@@ -134,29 +140,28 @@
 	QDEL_NULL(storage)
 	return ..()
 
-/obj/machinery/suit_storage_unit/update_icon()
-	cut_overlays()
-
+/obj/machinery/suit_storage_unit/update_overlays()
+	. = ..()
 	if(uv)
 		if(uv_super)
-			add_overlay("super")
+			. += "super"
 		else if(occupant)
-			add_overlay("uvhuman")
+			. += "uvhuman"
 		else
-			add_overlay("uv")
+			. += "uv"
 	else if(state_open)
 		if(stat & BROKEN)
-			add_overlay("broken")
+			. += "broken"
 		else
-			add_overlay("open")
+			. += "open"
 			if(suit)
-				add_overlay("suit")
+				. += "suit"
 			if(helmet)
-				add_overlay("helm")
+				. += "helm"
 			if(storage)
-				add_overlay("storage")
+				. += "storage"
 	else if(occupant)
-		add_overlay("human")
+		. += "human"
 
 /obj/machinery/suit_storage_unit/power_change()
 	..()

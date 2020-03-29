@@ -173,37 +173,6 @@
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
-/obj/item/borg/upgrade/premiumka
-	name = "mining cyborg premium KA"
-	desc = "A premium kinetic accelerator replacement for the mining module's standard kinetic accelerator."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = list(/obj/item/robot_module/miner)
-
-/obj/item/borg/upgrade/premiumka/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module)
-			for(var/obj/item/borg/upgrade/modkit/M in KA.modkits)
-				M.uninstall(src)
-			R.module.remove_module(KA, TRUE)
-
-		var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA = new /obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg(R.module)
-		R.module.basic_modules += PKA
-		R.module.add_module(PKA, FALSE, TRUE)
-
-/obj/item/borg/upgrade/premiumka/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/PKA in R.module)
-			for(var/obj/item/borg/upgrade/modkit/M in PKA.modkits)
-				M.uninstall(src)
-			R.module.remove_module(PKA, TRUE)
-
-		var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA = new (R.module)
-		R.module.basic_modules += KA
-		R.module.add_module(KA, FALSE, TRUE)
-
 
 /obj/item/borg/upgrade/advcutter
 	name = "mining cyborg advanced plasma cutter"
@@ -364,12 +333,9 @@
 		to_chat(toggle_action.owner, "<span class='notice'>You activate the self-repair module.</span>")
 		activate_sr()
 
-/obj/item/borg/upgrade/selfrepair/update_icon()
+/obj/item/borg/upgrade/selfrepair/update_icon_state()
 	if(toggle_action)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
 
@@ -465,7 +431,7 @@
 	desc = "An upgrade to the Medical module's hypospray, containing \
 		stronger versions of existing chemicals."
 	additional_reagents = list(/datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
-								/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid)
+								/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid, /datum/reagent/medicine/prussian_blue)
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"
@@ -580,7 +546,7 @@
 			return FALSE
 
 		R.notransform = TRUE
-		var/prev_lockcharge = R.lockcharge
+		var/prev_locked_down = R.locked_down
 		R.SetLockdown(1)
 		R.anchored = TRUE
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -590,7 +556,7 @@
 		for(var/i in 1 to 4)
 			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 			sleep(12)
-		if(!prev_lockcharge)
+		if(!prev_locked_down)
 			R.SetLockdown(0)
 		R.anchored = FALSE
 		R.notransform = FALSE

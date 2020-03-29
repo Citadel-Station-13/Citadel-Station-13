@@ -11,7 +11,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	item_flags = NONE
 	casing_ejector = FALSE
-	inaccuracy_modifier = 0.33 //to counteract the innaccuracy from WEAPON_HEAVY, bows are supposed to be accurate but only able to be fired with both hands
+	inaccuracy_modifier = 0 //to counteract the innaccuracy from WEAPON_HEAVY, bows are supposed to be accurate but only able to be fired with both hands
 	pin = null
 	no_pin_required = TRUE
 	trigger_guard = TRIGGER_GUARD_NONE //so ashwalkers can use it
@@ -22,11 +22,9 @@
 /obj/item/gun/ballistic/bow/chamber_round()
 	chambered = magazine.get_round(1)
 
-/obj/item/gun/ballistic/bow/afterattack()
-	. = ..()
-	if (chambered)
-		chambered = null
-		magazine.get_round(0)
+/obj/item/gun/ballistic/bow/process_chamber()
+	chambered = null
+	magazine.get_round(0)
 	update_icon()
 
 /obj/item/gun/ballistic/bow/attack_self(mob/living/user)
@@ -46,8 +44,8 @@
 		to_chat(user, "<span class='notice'>You notch the arrow.</span>")
 		update_icon()
 
-/obj/item/gun/ballistic/bow/update_icon()
-	icon_state = "bow_[get_ammo() ? (chambered ? "firing" : "loaded") : "unloaded"]"
+/obj/item/gun/ballistic/bow/update_icon_state()
+	icon_state = "[initial(icon_state)]_[get_ammo() ? (chambered ? "firing" : "loaded") : "unloaded"]"
 
 /obj/item/gun/ballistic/bow/can_shoot()
 	return chambered
@@ -64,5 +62,4 @@
 	desc = "Some sort of pipe made projectile weapon made of a silk string and lots of bending. Used to fire arrows."
 	icon_state = "pipebow"
 	item_state = "pipebow"
-	inaccuracy_modifier = 1.1 //Made of pipe and in a rush
 	force = 0

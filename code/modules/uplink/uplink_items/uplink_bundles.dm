@@ -30,6 +30,27 @@
 	cost = 14 // normally 16
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/bundles_TC/contract_kit
+	name = "Contract Kit"
+	desc = "The Syndicate have offered you the chance to become a contractor, take on kidnapping contracts for TC and cash payouts. Upon purchase,  \
+			you'll be granted your own contract uplink embedded within the supplied tablet computer. Additionally, you'll be granted \
+			standard contractor gear to help with your mission - comes supplied with the tablet, specialised space suit, chameleon jumpsuit and mask, \
+			specialised contractor baton, and three randomly selected low cost items. Can include otherwise unobtainable items."
+	item = /obj/item/storage/box/syndie_kit/contract_kit
+	cost = 20
+	player_minimum = 15
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/infiltrator_bundle
+	name = "Insidious Infiltration Gear Case"
+	desc = "Developed by Roseus Galactic in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
+			this suit proves to be cheaper than your standard issue hardsuit, with none of the movement restrictions (or the space proofing) of the outdated spacesuits employed by the company. \
+			Comes with an armored vest, helmet, blood-red sneaksuit, sneakboots, specialized combat gloves and a high-tech balaclava which obfuscates both your voice and your face. The case is also rather useful as a storage container and bludgeoning implement."
+	item = /obj/item/storage/toolbox/infiltrator
+	cost = 5
+	limited_stock = 1 //you only get one so you don't end up with too many gun cases
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/bundles_TC/cybernetics_bundle
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."

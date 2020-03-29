@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "Added a few cooldowns to chill nuclear bomb and communications console security level change spam, as well as the emergency shuttle's authorization announcements."

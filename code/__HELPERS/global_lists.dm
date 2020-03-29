@@ -54,12 +54,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
-	GLOB.breasts_size_list = list ("a", "b", "c", "d", "e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
-	GLOB.gentlemans_organ_names = list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ",
-	"cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret",
-	"baloney pony", "schlanger", "Mutton dagger", "old blind bob","Hanging Johnny", "fishing rod", "Tally whacker", "polly rocket",
-	"One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett",
-	"Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior")
 
 	for(var/gpath in subtypesof(/obj/item/organ/genital))
 		var/obj/item/organ/genital/G = gpath
@@ -75,11 +69,6 @@
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))
 		GLOB.surgeries_list += new path()
-
-	//Materials
-	for(var/path in subtypesof(/datum/material))
-		var/datum/material/D = new path()
-		GLOB.materials_list[D.id] = D
 
 	//Emotes
 	for(var/path in subtypesof(/datum/emote))
@@ -98,6 +87,8 @@
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/init_ref_coin_values) //so the current procedure doesn't sleep because of UNTIL()
+
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
@@ -115,3 +106,10 @@
 		for(var/path in subtypesof(prototype))
 			L+= path
 		return L
+
+/proc/init_ref_coin_values()
+	for(var/path in typesof(/obj/item/coin))
+		var/obj/item/coin/C = new path
+		UNTIL(C.flags_1 & INITIALIZED_1) //we want to make sure the value is calculated and not null.
+		GLOB.coin_values[path] = C.value
+		qdel(C)

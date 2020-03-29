@@ -8,7 +8,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	take_holo_damage(50/severity)
-	Knockdown(400/severity)
+	DefaultCombatKnockdown(400/severity)
 	silent = max(silent, (PAI_EMP_SILENCE_DURATION) / SSmobs.wait / severity)
 	if(holoform)
 		fold_in(force = TRUE)
@@ -23,10 +23,10 @@
 			qdel(src)
 		if(2)
 			fold_in(force = 1)
-			Knockdown(400)
+			DefaultCombatKnockdown(400)
 		if(3)
 			fold_in(force = 1)
-			Knockdown(200)
+			DefaultCombatKnockdown(200)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
@@ -98,7 +98,7 @@
 		take_holo_damage(amount * 0.25)
 
 /mob/living/silicon/pai/adjustOrganLoss(slot, amount, maximum = 500) //I kept this in, unlike tg
-	Knockdown(amount * 0.2)
+	DefaultCombatKnockdown(amount * 0.2)
 
 /mob/living/silicon/pai/getBruteLoss()
 	return emittermaxhealth - emitterhealth

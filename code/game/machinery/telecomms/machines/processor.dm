@@ -28,7 +28,6 @@
 	if(istype(machine_from, /obj/machinery/telecomms/bus))
 		relay_direct_information(signal, machine_from) // send the signal back to the machine
 	else // no bus detected - send the signal to servers instead
-		signal.data["slow"] += rand(5, 10) // slow the signal down
 		relay_information(signal, signal.server_type)
 
 //Preset Processors

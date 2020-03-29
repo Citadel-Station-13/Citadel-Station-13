@@ -5,6 +5,7 @@
 	max_occurrences = 0
 	earliest_start = 30 MINUTES
 	min_players = 15
+	gamemode_blacklist = list("dynamic")
 
 
 /datum/round_event/spawn_swarmer

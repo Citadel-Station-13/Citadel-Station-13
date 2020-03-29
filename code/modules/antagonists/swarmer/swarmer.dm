@@ -4,7 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -70,6 +70,7 @@
 	icon_living = "swarmer"
 	icon_dead = "swarmer_unactivated"
 	icon_gib = null
+	threat = 0.5
 	wander = 0
 	harm_intent_damage = 5
 	minbodytemp = 0
@@ -191,7 +192,7 @@
 	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(materials[MAT_METAL] || materials[MAT_GLASS])
+	if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 		return 1
 	return ..()
 
@@ -492,8 +493,8 @@
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
-	if(!tesla_shock)
+/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(!(flags & SHOCK_TESLA))
 		return FALSE
 	return ..()
 
@@ -584,9 +585,9 @@
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
-			L.electrocute_act(0, src, 1, 1, 1)
+			L.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
 			if(iscyborg(L))
-				L.Knockdown(100)
+				L.DefaultCombatKnockdown(100)
 			qdel(src)
 	..()
 

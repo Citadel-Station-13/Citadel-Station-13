@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ruins_templates = list()
 	var/list/space_ruins_templates = list()
 	var/list/lava_ruins_templates = list()
+	var/list/station_ruins_templates = list()
 	var/datum/space_level/isolated_ruins_z //Created on demand during ruin loading.
 
 	var/list/shuttle_templates = list()
@@ -94,6 +95,11 @@ SUBSYSTEM_DEF(mapping)
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
+
+	// Generate station space ruins
+	var/list/station_ruins = levels_by_trait(ZTRAIT_STATION)
+	if (station_ruins.len)
+		seedRuins(station_ruins, CONFIG_GET(number/station_space_budget), /area/space/station_ruins, station_ruins_templates)
 	SSmapping.seedStation()
 	loading_ruins = FALSE
 #endif
@@ -161,6 +167,7 @@ SUBSYSTEM_DEF(mapping)
 	ruins_templates = SSmapping.ruins_templates
 	space_ruins_templates = SSmapping.space_ruins_templates
 	lava_ruins_templates = SSmapping.lava_ruins_templates
+	station_ruins_templates = SSmapping.station_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 	unused_turfs = SSmapping.unused_turfs
@@ -352,6 +359,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// Still supporting bans by filename
 	var/list/banned = generateMapList("[global.config.directory]/lavaruinblacklist.txt")
 	banned += generateMapList("[global.config.directory]/spaceruinblacklist.txt")
+	banned += generateMapList("[global.config.directory]/stationruinblacklist.txt")
 
 	for(var/item in sortList(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
 		var/datum/map_template/ruin/ruin_type = item
@@ -372,6 +380,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			space_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/station))
 			station_room_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/spacenearstation))
+			station_ruins_templates[R.name] = R
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("[global.config.directory]/unbuyableshuttles.txt")

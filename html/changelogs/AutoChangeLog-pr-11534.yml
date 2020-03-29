@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - code_imp: "You no longer hit fermenting barrels when taking reagents from them"

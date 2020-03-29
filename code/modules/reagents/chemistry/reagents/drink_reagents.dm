@@ -136,6 +136,14 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/strawberryjuice
+	name = "Strawberry Juice"
+	description = "Refreshing seasonal summer drink."
+	color = "#E50D31"
+	taste_description = "strawberry"
+	glass_name = "glass of strawberry juice"
+	glass_desc = "Refreshing seasonal summer drink."
+
 /datum/reagent/consumable/nothing
 	name = "Nothing"
 	description = "Absolutely nothing."
@@ -812,6 +820,14 @@
 	taste_description = "peaches"
 	glass_name = "glass of peach juice"
 
+/datum/reagent/consumable/pineapplejuice
+	name = "Pineapple Juice"
+	description = "Tart, tropical, and hotly debated."
+	color = "#F7D435"
+	taste_description = "pineapple"
+	glass_name = "glass of pineapple juice"
+	glass_desc = "Tart, tropical, and hotly debated."
+
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
 	description = "A classic space-American vanilla flavored soft drink."
@@ -824,6 +840,19 @@
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/sol_dry
+	name = "Sol Dry"
+	description = "A soothing, mellow drink made from ginger."
+	color = "#f7d26a"
+	quality = DRINK_NICE
+	taste_description = "sweet ginger spice"
+	glass_name = "Sol Dry"
+	glass_desc = "A soothing, mellow drink made from ginger."
+
+/datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/M)
+	M.adjust_disgust(-5)
 	..()
 
 /datum/reagent/consumable/red_queen

@@ -53,7 +53,7 @@
 	use_power = NO_POWER_USE
 	req_access = null
 	max_integrity = 300
-	integrity_failure = 50
+	integrity_failure = 0.17
 	var/damage_deflection = 10
 	resistance_flags = FIRE_PROOF
 	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 100, "bomb" = 30, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
@@ -570,8 +570,7 @@
 	else if (istype(W, /obj/item/stack/cable_coil) && opened)
 		var/turf/host_turf = get_turf(src)
 		if(!host_turf)
-			throw EXCEPTION("attackby on APC when it's not on a turf")
-			return
+			CRASH("attackby on APC when it's not on a turf")
 		if (host_turf.intact)
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first!</span>")
 			return

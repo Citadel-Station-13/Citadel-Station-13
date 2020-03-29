@@ -1,0 +1,5 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - code_imp: "slowdown on items should now be set by set_slowdown()."
+  - bugfix: "hypereutactic blades properly slow down their wielders when being used and vv-editing an item's slowdown will once again properly update someone's slowdown to take the new value into account."

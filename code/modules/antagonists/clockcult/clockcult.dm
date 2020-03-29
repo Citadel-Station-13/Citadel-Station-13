@@ -5,6 +5,7 @@
 	antagpanel_category = "Clockcult"
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	antag_moodlet = /datum/mood_event/cult
+	threat = 3
 	var/datum/action/innate/hierophant/hierophant_network = new()
 	var/datum/team/clockcult/clock_team
 	var/make_team = TRUE //This should be only false for tutorial scarabs

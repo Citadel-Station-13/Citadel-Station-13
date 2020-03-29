@@ -84,7 +84,7 @@
 /obj/item/melee/baton/process()
 	deductcharge(round(hitcost * STUNBATON_DEPLETION_RATE), FALSE, FALSE)
 
-/obj/item/melee/baton/update_icon()
+/obj/item/melee/baton/update_icon_state()
 	if(status)
 		icon_state = "[initial(name)]_active"
 	else if(!cell)
@@ -153,7 +153,7 @@
 		return FALSE
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)			//CIT CHANGE - makes it impossible to baton in stamina softcrit
+	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
 		return TRUE
 	if(ishuman(M))
@@ -191,11 +191,11 @@
 
 	if(!disarming)
 		if(knockdown)
-			L.Knockdown(50, override_stamdmg = 0)		//knockdown
+			L.DefaultCombatKnockdown(50, override_stamdmg = 0)		//knockdown
 		L.adjustStaminaLoss(stunpwr)
 	else
 		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
-	
+
 	L.apply_effect(EFFECT_STUTTER, stamforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
@@ -218,7 +218,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.Knockdown(stamforce*6)
+	user.DefaultCombatKnockdown(stamforce*6)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 
@@ -282,7 +282,6 @@
 	throwforce = 5
 	stamforce = 25
 	hitcost = 1000
-	knockdown = FALSE
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	var/obj/item/assembly/igniter/sparkler

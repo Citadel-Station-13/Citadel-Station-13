@@ -50,11 +50,10 @@
 	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/box/update_icon()
+/obj/item/storage/box/update_overlays()
 	. = ..()
 	if(illustration)
-		cut_overlays()
-		add_overlay(illustration)
+		. += illustration
 
 /obj/item/storage/box/attack_self(mob/user)
 	..()
@@ -866,10 +865,11 @@
 	foldable = null
 	var/design = NODESIGN
 
-/obj/item/storage/box/papersack/update_icon()
+/obj/item/storage/box/papersack/update_icon_state()
 	if(contents.len == 0)
 		icon_state = "[item_state]"
-	else icon_state = "[item_state]_closed"
+	else
+		icon_state = "[item_state]_closed"
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
@@ -946,12 +946,47 @@
 							  /obj/item/reagent_containers/food/snacks/grown/apple,
 							  /obj/item/reagent_containers/food/snacks/chocolatebar,
 							  /obj/item/reagent_containers/food/snacks/grown/cherries,
+							  /obj/item/reagent_containers/food/snacks/grown/berries,
 							  /obj/item/reagent_containers/food/snacks/grown/banana,
 							  /obj/item/reagent_containers/food/snacks/grown/cabbage,
 							  /obj/item/reagent_containers/food/snacks/grown/soybeans,
 							  /obj/item/reagent_containers/food/snacks/grown/corn,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
-							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle)
+							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+							  /obj/item/reagent_containers/food/snacks/faggot,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+							  /obj/item/reagent_containers/food/snacks/grown/citrus/lime,
+							  /obj/item/reagent_containers/food/snacks/grown/bluecherries,
+							  /obj/item/reagent_containers/food/snacks/grown/cocoapod,
+							  /obj/item/reagent_containers/food/snacks/grown/vanillapod,
+							  /obj/item/reagent_containers/food/snacks/grown/grapes,
+							  /obj/item/reagent_containers/food/snacks/grown/strawberry,
+							  /obj/item/reagent_containers/food/snacks/grown/whitebeet,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/bear,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/spider,
+							  /obj/item/reagent_containers/food/snacks/spidereggs,
+							  /obj/item/reagent_containers/food/snacks/carpmeat,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+							  /obj/item/reagent_containers/food/snacks/grown/oat,
+							  /obj/item/reagent_containers/food/snacks/grown/wheat,
+							  /obj/item/reagent_containers/honeycomb,
+							  /obj/item/reagent_containers/food/snacks/grown/watermelon,
+							  /obj/item/reagent_containers/food/snacks/grown/onion,
+							  /obj/item/reagent_containers/food/snacks/grown/peach,
+							  /obj/item/reagent_containers/food/snacks/grown/peanut,
+							  /obj/item/reagent_containers/food/snacks/grown/pineapple,
+							  /obj/item/reagent_containers/food/snacks/grown/pumpkin,
+							  /obj/item/reagent_containers/food/snacks/meat/rawcrab,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/chicken,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+							  /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
+							  /obj/item/reagent_containers/food/snacks/egg,
+							  /obj/item/reagent_containers/food/snacks/grown/eggplant)
 		new randomFood(src)
 
 /obj/item/storage/box/ingredients/fiesta
@@ -1060,6 +1095,15 @@
 		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
 		new /obj/item/reagent_containers/food/snacks/grown/cabbage(src)
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/storage/box/ingredients/sushi
+	theme_name = "sushi"
+
+/obj/item/storage/box/ingredients/sushi/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/snacks/sea_weed(src)
+		new /obj/item/reagent_containers/food/snacks/carpmeat(src)
+	new /obj/item/reagent_containers/food/snacks/meat/rawcrab(src)
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"
@@ -1333,7 +1377,7 @@
 		/obj/item/storage/box/beakers/bluespace=1,\
 		/obj/item/storage/box/beakers/variety=1,\
 		/obj/item/storage/box/material=1,\
-		/obj/item/storage/belt/medical/surgery_belt_adv
+		/obj/item/storage/belt/medical/surgery_belt_adv=1
 		)
 	generate_items_inside(items_inside, src)
 

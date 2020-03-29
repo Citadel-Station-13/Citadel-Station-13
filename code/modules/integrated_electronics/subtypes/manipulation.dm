@@ -373,6 +373,7 @@
 		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
 		"Bananium"				= IC_PINTYPE_NUMBER,
 		"Titanium"				= IC_PINTYPE_NUMBER,
+		"Plastic"				= IC_PINTYPE_NUMBER
 		)
 	outputs = list(
 		"self ref" 				= IC_PINTYPE_REF,
@@ -386,7 +387,8 @@
 		"Solid Plasma"			= IC_PINTYPE_NUMBER,
 		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
 		"Bananium"				= IC_PINTYPE_NUMBER,
-		"Titanium"				= IC_PINTYPE_NUMBER
+		"Titanium"				= IC_PINTYPE_NUMBER,
+		"Plastic"				= IC_PINTYPE_NUMBER
 		)
 	activators = list(
 		"insert sheet" = IC_PINTYPE_PULSE_IN,
@@ -400,13 +402,22 @@
 	power_draw_per_use = 40
 	ext_cooldown = 1
 	cooldown_per_use = 10
-	var/list/mtypes = list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE)
+	var/static/list/mtypes = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/uranium,
+		/datum/material/plasma,
+		/datum/material/bluespace,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/plastic
+		)
 
-/obj/item/integrated_circuit/manipulation/matman/Initialize()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-	list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
-	FALSE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
-	materials.max_amount =100000
+/obj/item/integrated_circuit/manipulation/matman/ComponentInitialize()
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, mtypes, 100000, FALSE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
 	.=..()
 
@@ -414,9 +425,10 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	set_pin_data(IC_OUTPUT, 2, materials.total_amount)
 	for(var/I in 1 to mtypes.len)
-		var/datum/material/M = materials.materials[mtypes[I]]
+		var/datum/material/M = materials.materials[SSmaterials.GetMaterialRef(I)]
+		var/amount = materials[M]
 		if(M)
-			set_pin_data(IC_OUTPUT, I+2, M.amount)
+			set_pin_data(IC_OUTPUT, I+2, amount)
 	push_data()
 
 /obj/item/integrated_circuit/manipulation/matman/proc/is_insertion_ready(mob/user)
@@ -435,7 +447,7 @@
 			if(!S)
 				activate_pin(4)
 				return
-			if(materials.insert_stack(S, CLAMP(get_pin_data(IC_INPUT, 2),0,100), multiplier = 1) )
+			if(materials.insert_item(S, CLAMP(get_pin_data(IC_INPUT, 2),0,100), multiplier = 1) )
 				AfterMaterialInsert()
 				activate_pin(3)
 			else
@@ -451,7 +463,7 @@
 						continue
 					if(!mt) //Invalid input
 						if(U>0)
-							if(materials.retrieve_amount(U, mtypes[I], T))
+							if(materials.retrieve_sheets(U, SSmaterials.GetMaterialRef(mtypes[I]), T))
 								suc = TRUE
 					else
 						if(mt.transer_amt_to(materials, U, mtypes[I]))

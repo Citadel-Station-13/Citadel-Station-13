@@ -303,7 +303,7 @@ LINEN BINS
 		. += "There are [amount] sheets in the bin."
 
 
-/obj/structure/bedsheetbin/update_icon()
+/obj/structure/bedsheetbin/update_icon_state()
 	switch(amount)
 		if(0)
 			icon_state = "linenbin-empty"

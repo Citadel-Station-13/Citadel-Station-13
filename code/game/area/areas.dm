@@ -63,6 +63,9 @@
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
+	/// Color on minimaps, if it's null (which is default) it makes one at random.
+	var/minimap_color
+
 /**
   * These two vars allow for multiple unique areas to be linked to a master area
   * and share some functionalities such as APC powernet nodes, fire alarms etc, without sacrificing
@@ -96,7 +99,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // ===
 
 /area/New()
-	// This interacts with the map loader, so it needs to be set immediately
+	if(!minimap_color) // goes in New() because otherwise it doesn't fucking work
+		// generate one using the icon_state
+		if(icon_state && icon_state != "unknown")
+			var/icon/I = new(icon, icon_state, dir)
+			I.Scale(1,1)
+			minimap_color = I.GetPixel(1,1)
+		else // no icon state? use random.
+			minimap_color = rgb(rand(50,70),rand(50,70),rand(50,70))	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
 	if (unique)
 		GLOB.areas_by_type[type] = src
@@ -513,39 +523,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
-
-/atom/proc/has_gravity(turf/T)
-	if(!T || !isturf(T))
-		T = get_turf(src)
-
-	if(!T)
-		return 0
-
-	var/list/forced_gravity = list()
-	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
-	if(!forced_gravity.len)
-		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
-	if(forced_gravity.len)
-		var/max_grav
-		for(var/i in forced_gravity)
-			max_grav = max(max_grav, i)
-		if(max_grav)
-			return max_grav
-
-	if(isspaceturf(T)) // Turf never has gravity
-		return 0
-
-	var/area/A = get_area(T)
-	if(A.has_gravity) // Areas which always has gravity
-		return A.has_gravity
-	else
-		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[T.z]"])
-			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
-				max_grav = max(G.setting,max_grav)
-			return max_grav
-	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
 
 /area/proc/setup(a_name)
 	name = a_name

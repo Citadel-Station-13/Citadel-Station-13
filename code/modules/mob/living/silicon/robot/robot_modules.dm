@@ -97,8 +97,8 @@
 		var/obj/item/stack/S = I
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.materials[MAT_METAL])
-				S.cost = S.materials[MAT_METAL] * 0.25
+			if(S.custom_materials?.len && S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+				S.cost = S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -127,7 +127,7 @@
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wrapping_paper)
 
 		if(S && S.source)
-			S.materials = list()
+			S.custom_materials = null
 			S.is_cyborg = 1
 
 	if(I.loc != src)
@@ -257,7 +257,7 @@
 
 /obj/item/robot_module/proc/do_transform_delay()
 	var/mob/living/silicon/robot/R = loc
-	var/prev_lockcharge = R.lockcharge
+	var/prev_locked_down = R.locked_down
 	sleep(1)
 	flick("[cyborg_base_icon]_transform", R)
 	R.notransform = TRUE
@@ -267,7 +267,7 @@
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 		sleep(7)
-	if(!prev_lockcharge)
+	if(!prev_locked_down)
 		R.SetLockdown(0)
 	R.setDir(SOUTH)
 	R.anchored = FALSE
@@ -821,7 +821,6 @@
 		/obj/item/gps/cyborg,
 		/obj/item/weapon/gripper/mining,
 		/obj/item/cyborg_clamp,
-		/obj/item/card/id/miningborg,
 		/obj/item/stack/marker_beacon,
 		/obj/item/destTagger,
 		/obj/item/stack/packageWrap)
@@ -914,8 +913,8 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/twohanded/shockpaddles/syndicate,
-		/obj/item/healthanalyzer,
-		/obj/item/surgical_drapes,
+		/obj/item/healthanalyzer/advanced,
+		/obj/item/surgical_drapes/advanced,
 		/obj/item/retractor,
 		/obj/item/hemostat,
 		/obj/item/cautery,

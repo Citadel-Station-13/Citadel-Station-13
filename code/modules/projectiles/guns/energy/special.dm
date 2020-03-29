@@ -85,10 +85,11 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
+	inaccuracy_modifier = 0
 	obj_flags = 0
 	overheat_time = 20
 	holds_charge = TRUE
@@ -108,7 +109,7 @@
 	desc = "A reverse engineered weapon using syndicate technology. This thing seems incredibly unwieldly, and seems to be using similar internals to the Proto-Kinetic Accelerator. It might not play nice when brought near weapons similar to it."
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL=4000)
+	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	weapon_weight = WEAPON_HEAVY
@@ -125,6 +126,7 @@
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
 	sharpness = IS_SHARP
+	inaccuracy_modifier = 0
 	can_charge = 0
 
 	heat = 3800
@@ -180,6 +182,7 @@
 	item_state = null
 	icon_state = "wormhole_projector"
 	pin = null
+	inaccuracy_modifier = 0
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
@@ -315,6 +318,7 @@
 	icon_state = "emitter_carbine"
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
+	inaccuracy_modifier = 0
 	cell_type = /obj/item/stock_parts/cell/super
 	ammo_type = list(/obj/item/ammo_casing/energy/emitter)
 
