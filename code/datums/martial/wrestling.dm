@@ -485,9 +485,41 @@
 	name = "Holodeck Wrestling Belt"
 	style = new /datum/martial_art/wrestling/holodeck
 
+//Make sure that moves can only be used on people wearing the holodeck belt
 /datum/martial_art/wrestling/holodeck/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
 		..()
 	else
 		A.visible_message("You can't put people into a cinch unless they are wearing the holodeck wrestling belt!")
+
+/datum/martial_art/wrestling/holodeck/proc/drop(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
+		..()
+	else
+		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
+
+/datum/martial_art/wrestling/holodeck/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
+		..()
+	else
+		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
+
+/datum/martial_art/wrestling/holodeck/proc/strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
+		..()
+	else
+		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
+
+/datum/martial_art/wrestling/holodeck/proc/slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
+		..()
+	else
+		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
+
+/datum/martial_art/wrestling/holodeck/proc/throw_wrassle(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
+		..()
+	else
+		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
+
 
