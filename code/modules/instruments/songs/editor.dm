@@ -24,6 +24,7 @@
 	. += "Instrument Type: [legacy? "Legacy" : "Synthesized"]<br>"
 	. += "<a href='?src=[REF(src)];setvolume=1'>Volume</a>: [volume]<br>"
 	. += "<a href='?src=[REF(src)];setdropoffvolume=1'>Volume Dropoff Threshold</a>: [sustain_dropoff_volume]<br>"
+	. += "<a href='?src=[REF(src)];togglesustainhold=1'>Sustain indefinitely last held note</a>: [full_sustain_held_note? "Enabled" : "Disabled"].<br>"
 	. += "</div>"
 
 /datum/song/ui_interact(mob/user)
@@ -185,9 +186,9 @@
 		stop_playing()
 
 	else if(href_list["setlinearfalloff"])
-		var/amount = input(usr, "Set linear sustain duration", "Linear Sustain Duration") as null|num
+		var/amount = input(usr, "Set linear sustain duration in seconds", "Linear Sustain Duration") as null|num
 		if(!isnull(amount))
-			set_linear_falloff_duration(round(amount, world.tick_lag))
+			set_linear_falloff_duration(round(amount * 10, world.tick_lag))
 
 	else if(href_list["setexpfalloff"])
 		var/amount = input(usr, "Set exponential sustain factor", "Exponential sustain factor") as null|num

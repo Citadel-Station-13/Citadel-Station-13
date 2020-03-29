@@ -33,7 +33,7 @@
 	/// Max volume
 	var/max_volume = 100
 	/// Min volume - This is so someone doesn't decide it's funny to set it to 1 and play invisible songs.
-	var/min_volume = 50
+	var/min_volume = 25
 
 	/// What instruments our built in picker can use. The picker won't show unless this is longer than one.
 	var/list/allowed_instrument_ids = list("r3grand")
@@ -78,6 +78,10 @@
 	var/max_sound_channels = CHANNELS_PER_INSTRUMENT
 	/// Current channels, so we can save a length() call.
 	var/using_sound_channels = 0
+	/// Last channel to play. text.
+	var/last_channel_played
+	/// Should we not decay our last played note?
+	var/full_sustain_held_note = TRUE
 
 	/////////////////////// DO NOT TOUCH THESE ///////////////////
 	var/octave_min = INSTRUMENT_MIN_OCTAVE
@@ -97,11 +101,11 @@
 	/// The kind of sustain we're using
 	var/sustain_mode = SUSTAIN_LINEAR
 	/// When a note is considered dead if it is below this in volume
-	var/sustain_dropoff_volume = 10
+	var/sustain_dropoff_volume = 0
 	/// Total duration of linear sustain for 100 volume note to get to SUSTAIN_DROPOFF
-	var/sustain_linear_duration = 10
+	var/sustain_linear_duration = 5
 	/// Exponential sustain dropoff rate per decisecond
-	var/sustain_exponential_dropoff = 1.045
+	var/sustain_exponential_dropoff = 1.4
 	////////// DO NOT DIRECTLY SET THESE!
 	/// Do not directly set, use update_sustain()
 	var/cached_linear_dropoff = 10
@@ -120,6 +124,7 @@
 		set_instrument(allowed_instrument_ids[1])
 	hearing_mobs = list()
 	volume = clamp(volume, min_volume, max_volume)
+	update_sustain()
 
 /datum/song/Destroy()
 	stop_playing()
@@ -188,9 +193,9 @@
 	playing = FALSE
 	if(!debug_mode)
 		compiled_chords = null
-	hearing_mobs.len = 0
 	STOP_PROCESSING(SSinstruments, src)
 	terminate_all_sounds(TRUE)
+	hearing_mobs.len = 0
 	updateDialog()
 
 /// THIS IS A BLOCKING CALL.

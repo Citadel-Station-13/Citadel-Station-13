@@ -18,7 +18,7 @@
 	for(var/id in SSinstruments.instrument_data)
 		var/datum/instrument/I = SSinstruments.instrument_data[id]
 		if(!I.admin_only)
-			. += I
+			. += I.id
 
 /datum/instrument
 	/// Name of the instrument

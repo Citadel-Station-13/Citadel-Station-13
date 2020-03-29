@@ -14,7 +14,7 @@
 				if(!playkey_synth(key))
 					if(!warned)
 						warned = TRUE
-						to_chat(user, "<span class='boldwarning'>[src] has ran out of channels. You might be playing your song too fast or be setting sustain to too high of a value. This warning will be suppressed for the rest of this cycle.</span>")
+						to_chat(user, "<span class='boldwarning'>Your instrument has ran out of channels. You might be playing your song too fast or be setting sustain to too high of a value. This warning will be suppressed for the rest of this cycle.</span>")
 			sleep(sanitize_tempo(tempo / tempodiv))
 		repeat--
 		updateDialog()
@@ -65,17 +65,19 @@
 		do_hearcheck()
 	var/datum/instrument_key/K = using_instrument.samples[num2text(key)]			//See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
 	//Should probably add channel limiters here at some point but I don't care right now.
-	var/channel = pop_channel(key)
+	var/channel = pop_channel()
 	if(isnull(channel))
 		return FALSE
 	. = TRUE
 	var/sound/copy = sound(K.sample)
 	copy.frequency = K.frequency
 	copy.volume = volume
-	channels_playing[num2text(channel)] = volume
+	var/channel_text = num2text(channel)
+	channels_playing[channel_text] = volume
+	last_channel_played = channel_text
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, 0, channel, null, copy)
+		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, 0, channel, null, copy, distance_multiplier = INSTRUMENT_DISTANCE_FALLOFF_BUFF)
 		// Could do environment and echo later but not for now
 
 /datum/song/proc/terminate_all_sounds(clear_channels = TRUE)
@@ -94,7 +96,9 @@
 
 /datum/song/proc/pop_channel()
 	if(length(channels_idle))			//just pop one off of here if we have one available
-		return text2num(channels_idle[channels_idle.len--])
+		. = text2num(channels_idle[1])
+		channels_idle.Cut(1,2)
+		return
 	if(using_sound_channels >= max_sound_channels)
 		return
 	. = SSinstruments.reserve_instrument_channel(src)
@@ -105,6 +109,8 @@
 	var/linear_dropoff = cached_linear_dropoff * wait_ds
 	var/exponential_dropoff = cached_exponential_dropoff ** wait_ds
 	for(var/channel in channels_playing)
+		if(full_sustain_held_note && (channel == last_channel_played))
+			continue
 		var/current_volume = channels_playing[channel]
 		switch(sustain_mode)
 			if(SUSTAIN_LINEAR)
@@ -112,7 +118,7 @@
 			if(SUSTAIN_EXPONENTIAL)
 				current_volume /= exponential_dropoff
 		channels_playing[channel] = current_volume
-		var/dead = current_volume < sustain_dropoff_volume
+		var/dead = current_volume <= sustain_dropoff_volume
 		var/channelnumber = text2num(channel)
 		if(dead)
 			channels_playing -= channel

@@ -26,7 +26,7 @@
 		if(get_dist(M, turf_source) <= maxdistance)
 			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, soundenvwet, soundenvdry)
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S, envwet = -10000, envdry = 0, manual_x, manual_y)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S, envwet = -10000, envdry = 0, manual_x, manual_y, distance_multiplier = 1)
 	if(audiovisual_redirect)
 		var/turf/T = get_turf(src)
 		audiovisual_redirect.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, 0, -1000, turf_source.x - T.x, turf_source.y - T.y)
@@ -54,6 +54,8 @@
 		var/distance = 0
 		if(!manual_x && !manual_y)
 			distance = get_dist(T, turf_source)
+
+		distance *= distance_multiplier
 
 		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
 
@@ -86,13 +88,13 @@
 			dx = turf_source.x - T.x
 		else
 			dx = manual_x
-		S.x = dx
+		S.x = dx * distance_multiplier
 		var/dz = 0 // Hearing from infront/behind
 		if(!manual_x)
 			dz = turf_source.y - T.y
 		else
 			dz = manual_y
-		S.z = dz
+		S.z = dz * distance_multiplier
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
