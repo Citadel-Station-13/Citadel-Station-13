@@ -17,7 +17,12 @@
 	var/datum/action/strike/strike = new/datum/action/strike()
 	var/datum/action/drop/drop = new/datum/action/drop()
 
-/datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D, holodeck_mode)
+	//Stop people using holodeck wrestling on those not wearing the holodeck wrestling belt
+	if(holodeck_mode == 1)
+		if(!(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck)))
+			streak = ""
+			return 0
 	switch(streak)
 		if("drop")
 			streak = ""
@@ -135,7 +140,7 @@
 	strike.Remove(H)
 
 /datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(check_streak(A,D))
+	if(check_streak(A,D,0))
 		return 1
 	log_combat(A, D, "punched with wrestling")
 	..()
@@ -440,13 +445,13 @@
 	return
 
 /datum/martial_art/wrestling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(check_streak(A,D))
+	if(check_streak(A,D,0))
 		return 1
 	log_combat(A, D, "wrestling-disarmed")
 	..()
 
 /datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(check_streak(A,D))
+	if(check_streak(A,D,0))
 		return 1
 	if(A.pulling == D || A == D) // don't stun grab yoursel
 		return FALSE
@@ -487,39 +492,29 @@
 
 //Make sure that moves can only be used on people wearing the holodeck belt
 /datum/martial_art/wrestling/holodeck/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
-		..()
-	else
-		A.visible_message("You can't put people into a cinch unless they are wearing the holodeck wrestling belt!")
+	if(check_streak(A,D,1))
+		return 1
+	if(!(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck)))
+		return FALSE
+	if(A.pulling == D || A == D) // don't stun grab yoursel
+		return FALSE
+	A.start_pulling(D)
+	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
+								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
+	D.Stun(rand(60,100))
+	log_combat(A, D, "cinched")
+	return 1
 
-/datum/martial_art/wrestling/holodeck/proc/drop(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
-		..()
-	else
-		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
+/datum/martial_art/wrestling/holodeck/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(check_streak(A,D,1))
+		return 1
+	log_combat(A, D, "punched with wrestling")
+	..()
 
-/datum/martial_art/wrestling/holodeck/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
-		..()
-	else
-		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
-
-/datum/martial_art/wrestling/holodeck/proc/strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
-		..()
-	else
-		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
-
-/datum/martial_art/wrestling/holodeck/proc/slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
-		..()
-	else
-		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
-
-/datum/martial_art/wrestling/holodeck/proc/throw_wrassle(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck))
-		..()
-	else
-		A.visible_message("You feel it unwise to do such a thing on someone not wearing a holodeck wrestling belt.")
+/datum/martial_art/wrestling/holodeck/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(check_streak(A,D,1))
+		return 1
+	log_combat(A, D, "wrestling-disarmed")
+	..()
 
 
