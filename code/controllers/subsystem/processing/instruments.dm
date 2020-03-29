@@ -28,3 +28,6 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 		I.Initialize()
 		instrument_data[I.id || "[I.type]"] = I
 		CHECK_TICK
+
+/datum/controller/subsystem/processing/instruments/proc/get_instrument(id_or_path)
+	return instrument_data["[id_or_path]"]

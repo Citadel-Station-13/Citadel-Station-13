@@ -9,8 +9,6 @@
 	. += "Playback Settings:<br>"
 	if(can_noteshift)
 		. += "<a href='?src=[REF(src)];setnoteshift=1'>Note Shift/Note Transpose</a>: [note_shift] keys / [round(note_shift / 12, 0.01)] octaves<br>"
-	if(can_freqshift)
-		. += "<a href='?src=[REF(src)];setfreqshift=1'>Frequency Shift</a>: [frequency_shift] %<br>"
 	var/smt
 	var/modetext = ""
 	switch(sustain_mode)
@@ -23,7 +21,7 @@
 	. += "<a href='?src=[REF(src)];setsustainmode=1'>Sustain Mode</a>: [smt]<br>"
 	. += modetext
 	. += using_instrument?.ready()? "Status: <span class='good'>Ready</span><br>" : "Status: <span class='bad'>!Instrument Definition Error!</span><br>"
-	. += "Instrument Type: [legacy? "Legacy" : "Synthesized"]"
+	. += "Instrument Type: [legacy? "Legacy" : "Synthesized"]<br>"
 	. += "<a href='?src=[REF(src)];setvolume=1'>Volume</a>: [volume]<br>"
 	. += "<a href='?src=[REF(src)];setdropoffvolume=1'>Volume Dropoff Threshold</a>: [sustain_dropoff_volume]<br>"
 	. += "</div>"
@@ -209,7 +207,22 @@
 	else if(href_list["switchinstrument"])
 		if(!length(allowed_instrument_ids))
 			return
-		var/choice = input(usr, "Select Instrument", "Instrument Selection") as null|anything in allowed_instrument_ids
+		else if(length(allowed_instrument_ids) == 1)
+			set_instrument(allowed_instrument_ids[1])
+			return
+		var/list/categories = list()
+		for(var/i in allowed_instrument_ids)
+			var/datum/instrument/I = SSinstruments.get_instrument(i)
+			if(I)
+				LAZYSET(categories[I.category || "ERROR CATEGORY"], I.name, I.id)
+		var/cat = input(usr, "Select Category", "Instrument Category") as null|anything in categories
+		if(!cat)
+			return
+		var/list/instruments = categories[cat]
+		var/choice = input(usr, "Select Instrument", "Instrument Selection") as null|anything in instruments
+		if(!choice)
+			return
+		choice = instruments[choice]		//get id
 		if(choice)
 			set_instrument(choice)
 
@@ -217,11 +230,6 @@
 		var/amount = input(usr, "Set note shift", "Note Shift") as null|num
 		if(!isnull(amount))
 			note_shift = CLAMP(amount, note_shift_min, note_shift_max)
-
-	else if(href_list["setfreqshift"])
-		var/amount = input(usr, "Set frequency shift", "Freq Shift") as null|num
-		if(!isnull(amount))
-			frequency_shift = CLAMP(amount, frequency_shift_min, frequency_shift_max)
 
 	else if(href_list["setsustainmode"])
 		var/choice = input(usr, "Choose a sustain mode", "Sustain Mode") as null|anything in list("Linear", "Exponential")

@@ -1,6 +1,6 @@
 /// Playing legacy instruments - None of the "advanced" like sound reservations and decay are invoked.
 /datum/song/proc/do_play_lines_legacy(mob/user)
-	do
+	while(repeat >= 0)
 		var/cur_oct[7]
 		var/cur_acc[7]
 		for(var/i = 1 to 7)
@@ -35,7 +35,7 @@
 		if(should_stop_playing(user))
 			return
 		updateDialog()
-	while(repeat-- > 0)
+		repeat--
 	repeat = 0
 
 // note is a number from 1-7 for A-G

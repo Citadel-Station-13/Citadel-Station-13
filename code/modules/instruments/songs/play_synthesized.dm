@@ -1,6 +1,6 @@
 /datum/song/proc/do_play_lines_synthesized(mob/user)
 	compile_lines()
-	do
+	while(repeat >= 0)
 		if(should_stop_playing(user))
 			return
 		for(var/_chord in compiled_chords)
@@ -13,9 +13,10 @@
 				if(!playkey_synth(key))
 					to_chat(user, "<span class='userdanger'>BUG: [src] failed to play a note. This likely means that the entire channel spectrum available to instruments has been saturated, or it can mean some unknown error.</span>")
 					return
+			to_chat(world, "Played [english_list(chord)] at tempodiv [tempodiv] tempo [sanitize_tempo(tempo/tempodiv)]")
 			sleep(sanitize_tempo(tempo / tempodiv))
 		updateDialog()
-	while(repeat-- > 0)
+		repeat--
 	repeat = 0
 
 /// C-Db2-A-A4/2,A-B#4-C/3,/4,A,A-B-C as an example
@@ -59,6 +60,8 @@
 /datum/song/proc/playkey_synth(key)
 	if(can_noteshift)
 		key = clamp(key + note_shift, key_min, key_max)
+	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+		do_hearcheck()
 	var/datum/instrument_key/K = using_instrument.samples[num2text(key)]			//See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
 	//Should probably add channel limiters here at some point but I don't care right now.
 	var/channel = key_channel_reserve(key)
@@ -66,11 +69,14 @@
 		. = FALSE
 		CRASH("Exiting playkey_synth - Unable to reserve channel")
 	. = TRUE
+	var/sound/copy = sound(K.sample)
+	copy.frequency = K.frequency
+	copy.volume = volume
+	to_chat(world, "Playing sound key [key] frequency [K.frequency]")
 	keys_playing[num2text(key)] = volume
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		var/frequency = can_freqshift? K.frequency : (K.frequency + frequency_shift)
-		M.playsound_local(get_turf(parent), K.sample, volume, FALSE, frequency, 0, FALSE, channel)
+		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, 0, channel, sound = copy)
 		// Could do environment and echo later but not for now
 
 /datum/song/proc/terminate_all_sounds(clear_channels = TRUE)

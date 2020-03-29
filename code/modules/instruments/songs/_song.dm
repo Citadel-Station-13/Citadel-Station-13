@@ -89,12 +89,7 @@
 	var/note_shift = 0
 	var/note_shift_min = -100
 	var/note_shift_max = 100
-	/// Frequency numbers to shift. Probably a horrible idea.
-	var/frequency_shift = 0
-	var/frequency_shift_min = -30
-	var/frequency_shift_max = 30
 	var/can_noteshift = TRUE
-	var/can_freqshift = FALSE
 	/// The kind of sustain we're using
 	var/sustain_mode = SUSTAIN_LINEAR
 	/// When a note is considered dead if it is below this in volume
@@ -227,7 +222,9 @@
 /datum/song/process(wait)
 	if(!playing)
 		return PROCESS_KILL
-	process_decay()
+	var/delay = world.time - last_process_decay
+	process_decay(delay)
+	last_process_decay = world.time
 
 /datum/song/proc/update_sustain()
 	// Exponential is easy
