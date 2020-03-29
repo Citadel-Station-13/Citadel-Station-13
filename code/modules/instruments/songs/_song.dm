@@ -78,8 +78,8 @@
 	/////////////////////// DO NOT TOUCH THESE ///////////////////
 	var/octave_min = INSTRUMENT_MIN_OCTAVE
 	var/octave_max = INSTRUMENT_MAX_OCTAVE
-	var/key_min = 0
-	var/key_max = 127
+	var/key_min = INSTRUMENT_MIN_KEY
+	var/key_max = INSTRUMENT_MAX_KEY
 	var/static/list/note_offset_lookup = list(9, 11, 0, 2, 4, 5, 7)
 	var/static/list/accent_lookup = list("b" = -1, "s" = 1, "#" = 1, "n" = 0)
 	//////////////////////////////////////////////////////////////

@@ -1,5 +1,7 @@
 #define INSTRUMENT_MIN_OCTAVE 1
 #define INSTRUMENT_MAX_OCTAVE 9
+#define INSTRUMENT_MIN_KEY 0
+#define INSTRUMENT_MAX_KEY 127
 
 /// Maximum length a note should ever go for
 #define INSTRUMENT_MAX_TOTAL_SUSTAIN (5 SECONDS)
