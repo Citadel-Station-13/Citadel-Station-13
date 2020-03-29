@@ -9,6 +9,7 @@
 	ammo_x_offset = 3
 	flight_x_offset = 15
 	flight_y_offset = 10
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
@@ -20,6 +21,7 @@
 	ammo_x_offset = 2
 	charge_sections = 3
 	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/e_gun/mini/Initialize()
 	gun_light = new /obj/item/flashlight/seclite(src)
@@ -36,6 +38,7 @@
 	icon_state = "energytac"
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/e_gun/old
 	name = "prototype energy gun"
@@ -43,12 +46,14 @@
 	icon_state = "protolaser"
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/electrode/old)
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/e_gun/mini/practice_phaser
 	name = "practice phaser"
 	desc = "A modified version of the basic phaser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/practice)
 	icon_state = "decloner"
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
@@ -87,6 +92,7 @@
 	can_flashlight = 0
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/e_gun/nuclear
 	name = "advanced energy gun"
@@ -101,6 +107,7 @@
 	selfcharge = EGUN_SELFCHARGE
 	var/fail_tick = 0
 	var/fail_chance = 0
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/e_gun/nuclear/process()
 	if(fail_tick > 0)
