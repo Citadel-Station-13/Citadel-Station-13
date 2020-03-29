@@ -15,8 +15,6 @@
 					return
 			sleep(sanitize_tempo(tempo / tempodiv))
 		updateDialog()
-		var/repeat = repeat
-
 	while(repeat-- > 0)
 	repeat = 0
 
