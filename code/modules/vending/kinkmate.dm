@@ -27,7 +27,7 @@
 				/obj/item/key/collar = 2,
 				/obj/item/clothing/head/kitty = 3,
 				/obj/item/clothing/head/rabbitears = 3,
-				/obj/item/clothing/under/misc/keyholesweater = 2,
+				/obj/item/clothing/under/misc/keyholesweater/polykeyhole = 2,
 				/obj/item/clothing/under/misc/stripper/mankini = 2,
 				/obj/item/clothing/under/costume/jabroni = 2,
 				/obj/item/dildo/flared/huge = 3,

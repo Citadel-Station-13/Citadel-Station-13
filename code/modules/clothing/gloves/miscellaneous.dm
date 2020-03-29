@@ -12,6 +12,15 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	strip_mod = 0.9
 
+/obj/item/clothing/gloves/fingerless/polyelbow
+	name = "polychromic elbow gloves"
+	desc = "Polychromib Elbow length gloves, for the domimatrix in you."
+	icon_state = "polyelbow"
+	item_state = "polyelbow"
+	item_color = "polyelbow"
+	hasprimary = TRUE
+	primary_color = "#1B1B1B"
+
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin.  They're also quite warm."

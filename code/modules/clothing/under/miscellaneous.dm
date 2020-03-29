@@ -125,6 +125,20 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
+/obj/item/clothing/under/croptop/polycroptop
+	name = "polychromic crop top"
+	desc = "We've saved money by giving you half a shirt!"
+	icon_state = "polycroptop"
+	item_color = "polycroptop"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+	hasprimary = TRUE
+	hassecondary = TRUE
+	mutantrace_variation = NONE
+	primary_color = "#BB1A1A"
+	secondary_color = "#4D6280"
+
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
@@ -231,6 +245,17 @@
 	can_adjust = FALSE
 	mutantrace_variation = NONE
 
+/obj/item/clothing/under/misc/keyholesweater/polykeyhole
+	name = "polychromic keyhole sweater"
+	desc = "What is the point of this, anyway?"
+	icon_state = "polykeyholesweater"
+	item_state = "polykeyholesweater"
+	item_color = "polykeyholesweater"
+	hasprimary = TRUE
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+	primary_color = "#9976B0"
+
 /obj/item/clothing/under/misc/stripper
 	name = "pink stripper outfit"
 	icon_state = "stripper_p"
@@ -336,3 +361,64 @@
 	hastertiary = FALSE
 	primary_color = "#808080"
 	secondary_color = "#FF3535"
+
+// Lunar Clothes
+/obj/item/clothing/under/misc/qipao
+	name = "Black Qipao"
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years. This one is black."
+	icon_state = "qipao"
+	item_state = "qipao"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/misc/qipao/polyqpao
+	name = "Polychromic Qipao"
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years.."
+	icon_state = "qipaopoly"
+	item_state = "qipaopoly"
+	item_color = "qipaopoly"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	hasprimary = TRUE
+	hassecondary = TRUE
+	mutantrace_variation = NONE
+	primary_color = "#1B1B1B"
+	secondary_color = "#B69F1E"
+
+/obj/item/clothing/under/misc/cheongsam
+	name = "Black Cheongsam"
+	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years. This one is black."
+	icon_state = "cheong"
+	item_state = "cheong"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+
+/obj/item/clothing/under/misc/cheongsam/polycheong
+	name = "Polychromic Cheongsam"
+	desc = "A Cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years."
+	icon_state = "chepoly"
+	item_state = "chepoly"
+	item_color = "chepoly"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+	hasprimary = TRUE
+	hassecondary = TRUE
+	primary_color = "#F3F3F3"
+	secondary_color = "#B69F1E"
+
+/obj/item/clothing/under/misc/skimpycroptop
+	name = "Polychromic Skimpy Crop Top"
+	desc = "Legally we had to give you a small jacket to cover up at the most."
+	icon_state = "skimpycroptop"
+	item_state = "skimpycroptop"
+	item_color = "skimpycroptop"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = FALSE
+	mutantrace_variation = NONE
+	hasprimary = TRUE
+	hassecondary = TRUE
+	primary_color = "#1B1B1B"
+	secondary_color = "#1B1B1B"

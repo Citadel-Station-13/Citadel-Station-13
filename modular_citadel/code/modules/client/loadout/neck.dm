@@ -28,65 +28,15 @@
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/petcollar/choker
 
-/datum/gear/scarf
-	name = "White scarf"
+/datum/gear/polyscarf
+	name = "Polychromic Scarf"
 	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf
+	path = /obj/item/clothing/neck/polyscarf
 
-/datum/gear/blackscarf
-	name = "Black scarf"
+/datum/gear/polyscarflong
+	name = "PolyChromic Long Scarf"
 	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf/black
-
-/datum/gear/redscarf
-	name = "Red scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf/red
-
-/datum/gear/greenscarf
-	name = "Green scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf/green
-
-/datum/gear/darkbluescarf
-	name = "Dark blue scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf/darkblue
-
-/datum/gear/purplescarf
-	name = "Purple scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf/purple
-
-/datum/gear/yellowscarf
-	name = "Yellow scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf/yellow
-
-/datum/gear/orangescarf
-	name = "Orange scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf/orange
-
-/datum/gear/cyanscarf
-	name = "Cyan scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/scarf/cyan
-
-/datum/gear/stripedredscarf
-	name = "Striped red scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/stripedredscarf
-
-/datum/gear/stripedbluescarf
-	name = "Striped blue scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/stripedbluescarf
-
-/datum/gear/stripedgreenscarf
-	name = "Striped green scarf"
-	category = SLOT_NECK
-	path = /obj/item/clothing/neck/stripedgreenscarf
+	path = /obj/item/clothing/neck/polyscarflong
 
 /datum/gear/headphones
 	name = "Headphones"

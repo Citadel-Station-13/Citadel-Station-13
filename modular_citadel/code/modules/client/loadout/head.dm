@@ -8,10 +8,10 @@
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/beanie
 
-/datum/gear/beret
-	name = "Black beret"
+/datum/gear/polyberet
+	name = "Polychromic beret"
 	category = SLOT_HEAD
-	path = /obj/item/clothing/head/beret/black
+	path = /obj/item/clothing/head/polyberet
 
 /datum/gear/flatcap
 	name = "Flat cap"

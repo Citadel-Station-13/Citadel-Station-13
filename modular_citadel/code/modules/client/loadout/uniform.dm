@@ -132,10 +132,10 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/dress/skirt/swept
 
-/datum/gear/croptop
-	name = "Croptop"
+/datum/gear/polycroptop
+	name = "PolyChromic Croptop"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/croptop
+	path = /obj/item/clothing/under/croptop/polycroptop
 
 /datum/gear/yoga
 	name = "Yoga Pants"
@@ -219,40 +219,15 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/syndicate/cosmetic
 
-/datum/gear/creamsweater
-	name = "Cream Commando Sweater"
+/datum/gear/polychromicsweater
+	name =  "Polychromic Sweater"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/sweater
+	path = /obj/item/clothing/under/sweater/polychromic
 
-/datum/gear/blacksweater
-	name = "Black Commando Sweater"
+/datum/gear/polykeyhole
+	name =  "Polychromic Keyhole Sweater"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/sweater/black
-
-/datum/gear/purpsweater
-	name = "Purple Commando Sweater"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/sweater/purple
-
-/datum/gear/greensweater
-	name = "Green Commando Sweater"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/sweater/green
-
-/datum/gear/redsweater
-	name = "Red Commando Sweater"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/sweater/red
-
-/datum/gear/bluesweater
-	name =  "Navy Commando Sweater"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/sweater/blue
-
-/datum/gear/keyholesweater
-	name =  "Keyhole Sweater"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/misc/keyholesweater
+	path = /obj/item/clothing/under/misc/keyholesweater/polykeyhole
 
 /datum/gear/polykilt
 	name = "Polychromic Kilt"
@@ -410,13 +385,13 @@
 	name = "Green Feminine Christmas Suit"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/costume/christmas/croptop/green
+*/
 
 /datum/gear/pinkstripper
 	name = "Pink stripper outfit"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/misc/stripper
 	cost = 3
-*/
 
 /datum/gear/greenstripper
 	name = "Green stripper outfit"
@@ -424,38 +399,21 @@
 	path = /obj/item/clothing/under/misc/stripper/green
 	cost = 3
 
-/datum/gear/qipao
-	name = "Qipao, Black"
+/datum/gear/polyqipao
+	name = "Polychromic Qipao"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/costume/qipao
+	path = /obj/item/clothing/under/misc/qipao/polyqpao
 	cost = 3
 
-/datum/gear/qipao/white
-	name = "Qipao, White"
+
+/datum/gear/polycheong
+	name = "Polychromic Cheongsam"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/costume/qipao/white
+	path = /obj/item/clothing/under/misc/cheongsam/polycheong
 	cost = 3
 
-/datum/gear/qipao/red
-	name = "Qipao, Red"
+/datum/gear/polyskimpycroptop
+	name = "Polychromic Skimpy Croptop"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/costume/qipao/red
-	cost = 3
-
-/datum/gear/cheongsam
-	name = "Cheongsam, Black"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/costume/cheongsam
-	cost = 3
-
-/datum/gear/cheongsam/white
-	name = "Cheongsam, White"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/costume/cheongsam/white
-	cost = 3
-
-/datum/gear/cheongsam/red
-	name = "Cheongsam, Red"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/costume/cheongsam/red
+	path = /obj/item/clothing/under/misc/skimpycroptop
 	cost = 3

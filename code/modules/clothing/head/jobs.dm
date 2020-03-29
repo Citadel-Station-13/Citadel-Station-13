@@ -124,6 +124,15 @@
 	dog_fashion = /datum/dog_fashion/head/beret
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/head/polyberet
+	name = "polychromic beret"
+	desc = "A polychromic beret for more colorful mimes"
+	icon_state = "polyberet"
+	item_state = "polyberet"
+	item_color = "polyberet"
+	hasprimary = TRUE
+	primary_color = "#800000"
+
 /obj/item/clothing/head/beret/black
 	name = "black beret"
 	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."

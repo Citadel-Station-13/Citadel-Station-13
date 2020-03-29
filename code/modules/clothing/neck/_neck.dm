@@ -97,6 +97,14 @@
 	item_color = "scarf"
 	dog_fashion = /datum/dog_fashion/head
 
+/obj/item/clothing/neck/polyscarf
+	name = "polychromic scarf"
+	icon_state = "polyscarf"
+	item_state = "polyscarf"
+	item_color = "polyscarf"
+	hasprimary = TRUE
+	primary_color = "#F3F3F3"
+
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
 	icon_state = "scarf"
@@ -173,6 +181,17 @@
 	icon_state = "stripedbluescarf"
 	item_color = "stripedbluescarf"
 
+/obj/item/clothing/neck/polyscarflong
+	name = "polychromic scarf long"
+	icon_state = "polyscarflong"
+	item_state = "polyscarflong"
+	item_color = "polyscarflong"
+	hasprimary = TRUE
+	hassecondary = TRUE
+	primary_color = "#1B1B1B"
+	secondary_color = "#000000"
+
+
 ///////////
 //COLLARS//
 ///////////
@@ -192,7 +211,7 @@
 	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
-/obj/item/clothing/neck/petcollar/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/clothing/neck/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them

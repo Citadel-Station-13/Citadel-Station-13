@@ -3,6 +3,11 @@
 	category = SLOT_GLOVES
 	path = /obj/item/clothing/gloves/fingerless
 
+/datum/gear/polyelbow
+	name = "Polychromib Elbow Gloves"
+	category = SLOT_GLOVES
+	path = /obj/item/clothing/gloves/fingerless/polyelbow
+
 /datum/gear/goldring
 	name = "A gold ring"
 	category = SLOT_GLOVES
@@ -20,4 +25,4 @@
 	category = SLOT_GLOVES
 	path = /obj/item/clothing/gloves/ring/diamond
 	cost = 4
-	
+

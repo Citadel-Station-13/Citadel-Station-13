@@ -10,32 +10,20 @@
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
 	mutantrace_variation = NONE
 
-/obj/item/clothing/under/sweater/black
-	name = "black sweater"
-	icon_state = "bb_turtleblk"
+/obj/item/clothing/under/sweater/polychromic
+	name = "polychromic sweater"
+	icon_state = "turtlepoly"
 	item_state = "bl_suit"
-	item_color = "bb_turtleblk"
+	item_color = "turtlepoly"
+	hasprimary = TRUE
+	icon = 'icons/obj/clothing/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/uniform.dmi'
+	mutantrace_variation = NONE
+	can_adjust = FALSE
+	primary_color = "#1B1B1B"
 
-/obj/item/clothing/under/sweater/purple
-	name = "purple sweater"
-	icon_state = "bb_turtlepur"
-	item_state = "p_suit"
-	item_color = "bb_turtlepur"
 
-/obj/item/clothing/under/sweater/green
-	name = "green sweater"
-	icon_state = "bb_turtlegrn"
-	item_state = "g_suit"
-	item_color = "bb_turtlegrn"
 
-/obj/item/clothing/under/sweater/red
-	name = "red sweater"
-	icon_state = "bb_turtlered"
-	item_state = "r_suit"
-	item_color = "bb_turtlered"
 
-/obj/item/clothing/under/sweater/blue
-	name = "blue sweater"
-	icon_state = "bb_turtleblu"
-	item_state = "b_suit"
-	item_color = "bb_turtleblu"
+
+
