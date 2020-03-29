@@ -98,7 +98,7 @@
 
 /datum/antagonist/traitor/antag_panel_objectives()
 	. = ..()
-	if(contractor_hub?.assigned_targets)
+	if(contractor_hub?.assigned_targets && length(contractor_hub.assigned_targets))
 		. += "<i><b>Contract Targets</b></i>:<br>"
 		for(var/datum/mind/M in contractor_hub.assigned_targets)
 			. += "<b> - </b>[key_name(M, FALSE, TRUE)]<br>"
