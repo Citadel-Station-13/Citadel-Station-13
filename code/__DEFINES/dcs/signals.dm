@@ -149,7 +149,9 @@
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 	#define COMPONENT_BLOCK_DEATH_BROADCAST 1					//stops the death from being broadcasted in deadchat.
 #define COMSIG_MOB_GHOSTIZE "mob_ghostize"						//from base of mob/Ghostize(): (can_reenter_corpse, special, penalize)
-	#define COMPONENT_BLOCK_GHOSTING 1
+	#define COMPONENT_BLOCK_GHOSTING (1<<0)
+	#define COMPONENT_DO_NOT_PENALIZE_GHOSTING (1<<1)
+	#define COMPONENT_FREE_GHOSTING (1<<2)
 #define COMSIG_MOB_ALLOWED "mob_allowed"						//from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
 	#define COMPONENT_BLOCK_MAGIC 1

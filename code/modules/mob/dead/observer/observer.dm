@@ -297,12 +297,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 			penalty = CANT_REENTER_ROUND
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE, (stat == DEAD)? penalty : 0, (stat == DEAD)? TRUE : FALSE) & COMPONENT_BLOCK_GHOSTING)
+	var/sig_flags = SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE, (stat == DEAD)? penalty : 0, (stat == DEAD)? TRUE : FALSE)
+
+	if(sig_flags & COMPONENT_BLOCK_GHOSTING)
 		return
+
+	if(sig_flags & COMPONENT_DO_NOT_PENALIZE_GHOSTING)
+		penalty = 0
 
 	if(stat != DEAD)
 		succumb()
-	if(stat == DEAD)
+	if(stat == DEAD || sig_flags & COMPONENT_FREE_GHOSTING)
 		ghostize(1)
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst alive you won't be able to re-enter this round [penalty ? "or play ghost roles [penalty == CANT_REENTER_ROUND ? "until the round is over" : "for the next [DisplayTimeText(penalty)]"]" : ""]! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
@@ -653,7 +658,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 
 	transfer_ckey(target, FALSE)
-	target.AddElement(/datum/element/ghost_role_eligibility)
+	target.AddElement(/datum/element/ghost_role_eligibility, penalize_on_ghost = FALSE, free_ghosting = TRUE)
 	target.faction = list("neutral")
 	return 1
 
