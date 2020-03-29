@@ -240,4 +240,7 @@
 			if("Exponential")
 				sustain_mode = SUSTAIN_EXPONENTIAL
 
+	else if(href_list["togglesustainhold"])
+		full_sustain_held_note = !full_sustain_held_note
+
 	updateDialog()
