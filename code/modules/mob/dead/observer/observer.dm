@@ -380,6 +380,23 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	transfer_ckey(mind.current, FALSE)
 	return 1
 
+/mob/dead/observer/verb/stay_dead()
+	set category = "Ghost"
+	set name = "Do Not Resuscitate"
+	if(!client)
+		return
+	if(!can_reenter_corpse)
+		to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
+		return FALSE
+
+	var/response = alert(src, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone. ","Are you sure you want to stay dead?","Yes","No")
+	if(response != "Yes")
+		return
+
+	can_reenter_corpse = FALSE
+	to_chat(src, "You can no longer be brought back into your body.")
+	return TRUE
+
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
 	if(flashwindow)
 		window_flash(client)

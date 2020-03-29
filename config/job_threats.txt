@@ -3,3 +3,7 @@
 ## e.g. 
 ## JOB_THREAT Captain 5
 ## JOB_THREAT Assistant 0.2
+
+## Custom antag threat values, see above
+## e.g.
+## ANTAG_THREAT Traitor 5

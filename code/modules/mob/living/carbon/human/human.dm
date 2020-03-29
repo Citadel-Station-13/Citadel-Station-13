@@ -629,9 +629,8 @@
 	underwear = "Nude"
 	undershirt = "Nude"
 	socks = "Nude"
-	update_body()
+	update_body(TRUE)
 	update_hair()
-	update_genitals()
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	..()
@@ -708,7 +707,7 @@
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug
-		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
+		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_snout"))
 		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
 		creamed = FALSE
 

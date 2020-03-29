@@ -16,7 +16,7 @@
 	threat = -3
 
 /datum/antagonist/vamphunter/threat()
-	return bad_dude ? -threat : threat
+	return bad_dude ? -(..()) : ..()
 
 /datum/antagonist/vamphunter/on_gain()
 

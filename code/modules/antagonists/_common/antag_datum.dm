@@ -76,6 +76,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		remove_blacklisted_quirks()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
+		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAG_ON_GAIN, src)
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
@@ -240,6 +241,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /// Gets our threat level. Defaults to threat var, override for custom stuff like different traitor goals having different threats.
 /datum/antagonist/proc/threat()
+	. = CONFIG_GET(keyed_list/antag_threat)[lowertext(name)]
+	if(. == null)
+		return threat
 	return threat
 
 //This one is created by admin tools for custom objectives

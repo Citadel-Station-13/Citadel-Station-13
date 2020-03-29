@@ -283,6 +283,8 @@
 
 /mob/living/carbon/resist_buckle()
 	. = FALSE
+	if(!buckled)
+		return
 	if(restrained())
 		// too soon.
 		if(last_special > world.time)

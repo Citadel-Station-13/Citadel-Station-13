@@ -37,11 +37,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	if(job?.blacklisted_quirks)
 		cut = filter_quirks(my_quirks, job.blacklisted_quirks)
 	for(var/V in my_quirks)
-		var/datum/quirk/Q = quirks[V]
-		if(Q)
+		if(V in quirks)
+			var/datum/quirk/Q = quirks[V]
 			user.add_quirk(Q, spawn_effects)
 		else
-			stack_trace("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
+			log_admin("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
 			cli.prefs.all_quirks -= V
 			badquirk = TRUE
 	if(badquirk)

@@ -3,6 +3,7 @@
 	icon_state = "sofamiddle"
 	icon = 'icons/obj/sofa.dmi'
 	buildstackamount = 1
+	item_chair = null
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/sofa/Initialize()
