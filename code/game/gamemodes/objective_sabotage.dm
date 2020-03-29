@@ -98,6 +98,9 @@
 	special_equipment = list(/obj/item/aiModule/syndicate)
 	excludefromjob = list("Chief Engineer","Research Director","Head of Personnel","Captain","Chief Medical Officer","Head Of Security")
 
+/datum/sabotage_objective/ai_law/can_run()
+	return length(active_ais())
+
 /datum/sabotage_objective/ai_law/check_conditions()
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
