@@ -17960,6 +17960,11 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
+"Ui" = (
+/obj/structure/table,
+/obj/item/clothing/mask/luchador/tecnicos,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Uj" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Restroom";
@@ -18371,6 +18376,11 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
+"Wx" = (
+/obj/structure/table,
+/obj/item/clothing/mask/luchador,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Wz" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -18744,6 +18754,11 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"Yv" = (
+/obj/structure/table,
+/obj/item/clothing/mask/luchador/rudos,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Yw" = (
 /turf/closed/indestructible/fakedoor{
 	name = "External Access"
@@ -18828,6 +18843,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
+"Zl" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/boxing,
+/obj/item/clothing/gloves/boxing/blue,
+/obj/item/clothing/gloves/boxing/green,
+/obj/item/clothing/gloves/boxing/yellow,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Zr" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
@@ -73246,10 +73269,10 @@ bj
 YC
 YC
 YC
-YC
-YC
-YC
-YC
+Wx
+Yv
+Ui
+Zl
 YC
 YC
 YC
