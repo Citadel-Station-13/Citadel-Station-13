@@ -28,107 +28,32 @@
 	for(var/line in lines)
 		var/list/chords = splittext(lowertext(line), ",")
 		for(var/chord in chords)
+			var/list/compiled_chord = list()
 			var/tempodiv = 1
 			var/list/notes_tempodiv = splittext(chord, "/")
-			if(length(notes_tempodiv) == 2)
+			if(length(notes_tempodiv) >= 2)
 				tempodiv = text2num(notes_tempodiv[2])
-
-
-/datum/song/proc/do_play_lines_legacy(mob/user)
-
-		for(var/line in lines)
-			for(var/beat in splittext(lowertext(line), ","))
-				if(should_stop_playing(user))
-					return
-				var/list/notes = splittext(beat, "/")
-				for(var/note in splittext(notes[1], "-"))
-					if(length(note) == 0)
-						continue
-					var/cur_note = text2ascii(note) - 96
-					if(cur_note < 1 || cur_note > 7)
-						continue
-					for(var/i=2 to length(note))
-						var/ni = copytext(note,i,i+1)
-						if(!text2num(ni))
-							if(ni == "#" || ni == "b" || ni == "n")
-								cur_acc[cur_note] = ni
-							else if(ni == "s")
-								cur_acc[cur_note] = "#" // so shift is never required
-						else
-							cur_oct[cur_note] = text2num(ni)
-					playnote_legacy(cur_note, cur_acc[cur_note], cur_oct[cur_note])
-				if(notes.len >= 2 && text2num(notes[2]))
-					sleep(sanitize_tempo(tempo / text2num(notes[2])))
-				else
-					sleep(tempo)
-		if(should_stop_playing(user))
-			return
-		updateDialog()
-	while(repeat-- > 0)
-
-
-/datum/song/proc/compile_lines()
-	compiled_chords = list()
-	// A, B, C, D, E, F, G
-	var/list/octaves = list(3, 3, 3, 3, 3, 3, 3)
-	var/list/accents = list()
-	for(var/i in 1 to 7)
-		octaves += 3
-		accents += "n"
-	for(var/line in lines)
-		var/list/beats = splittext(lowertext(line), ",")
-		for(var/beat in beats)
-			var/list/contents = splittext(beat, "/")
-			var/tempo_divisor = 1
-			var/contents_length = length(contents)
-			var/list/newchord = list()
-			if(contents_length)
-				if(contents_length >= 2)
-					var/newdiv = text2num(contents[2])
-					if(isnum(newdiv))
-						tempo_divisor = newdiv
-				for(var/note in contents[1])
-					var/key = note_to_key(note, octaves, accents, TRUE)
-					if(key)
-						newchord += key
-			newchord += tempo_divisor
-			compiled_chords += newchord
+			var/list/notes = splittext(notes[1], "-")
+			for(var/note in notes)
+				if(length(note) == 0)
+					continue
+				// 1-7, A-G
+				var/key = text2ascii(note) - 96
+				if((key < 1) || (key > 7))
+					continue
+				for(var/i in 2 to length(note))
+					var/oct_acc = copytext(note, i, i + 1)
+					var/num = text2num(oct_acc)
+					if(!num)		//it's an accidental
+						accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
+					else	//octave
+						octaves[key] = CLAMP(num, octave_min, octave_max)
+				compiled_chord += (note_offset_lookup[key] + octaves[key] + accent_lookup[accents[key]])
+			compiled_chord += tempodiv		//this goes last
+			if(length(compiled_chord))
+				compiled_chords += compiled_chord
 		CHECK_TICK
-
-/datum/song/proc/note_to_key(notestring, list/octaves, list/accents, change_lists = FALSE)
-	//For the sake of performance, we're not going to check for octaves/accents existing.
-	var/notelen
-	if(!(notelen = length(notestring)))
-		return
-	var/cur_note = text2ascii(copytext(notestring, 1, 2), 1) - 96
-	//a = 1, b = 2, c = 3, d = 4, e = 5, f = 6, g = 7
-	if(cur_note < 1 || cur_note > 7)
-		return
-	var/accent
-	var/octave
-	for(var/i in 2 to notelen)
-		var/text = copytext(notestring, i)
-		if((text == "s") || (text == "#"))
-			if(change_lists)
-				accents[cur_note] = "#"
-			accent = "#"
-		else if(text == "n")
-			if(change_lists)
-				accents[cur_note] = "n"
-			accent = "n"
-		else if(text == "b")
-			if(change_lists)
-				accents[cur_note] = "b"
-			accent = "b"
-		else
-			var/n = text2num(text)
-			if(n && (n >= max(INSTRUMENT_MIN_OCTAVE, octave_min)) && (n <= min(INSTRUMENT_MAX_OCTAVE, octave_max)))
-				if(change_lists)
-					octaves[cur_note] = n
-				octave = n
-	accent = accent || accents[cur_note]
-	octave = octave || octaves[cur_note]
-	return ((octave * 12) + (accent_lookup[accent]) + (note_offset_lookup[cur_note]))
+	return compiled_chords
 
 /datum/song/proc/playkey_synth(key)
 	if(can_noteshift)
