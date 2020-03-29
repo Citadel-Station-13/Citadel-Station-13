@@ -18203,8 +18203,10 @@
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
 "Vk" = (
+/obj/structure/table,
+/obj/item/storage/belt/champion/wrestling/holodeck,
 /turf/open/floor/holofloor/wood,
-/area/holodeck)
+/area/holodeck/rec_center/wrestlingarena)
 "Vt" = (
 /obj/item/paper/fluff/stations/centcom/disk_memo,
 /obj/structure/noticeboard{
@@ -18369,10 +18371,6 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
-"Wx" = (
-/obj/item/storage/belt/champion/wrestling,
-/turf/open/floor/holofloor/wood,
-/area/holodeck/rec_center/wrestlingarena)
 "Wz" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -72474,6 +72472,7 @@ aa
 aa
 aa
 bj
+Vk
 YC
 YC
 YC
@@ -72482,8 +72481,7 @@ YC
 YC
 YC
 YC
-YC
-YC
+Vk
 fx
 aa
 aa
@@ -72731,16 +72729,16 @@ aa
 aa
 aa
 bj
-YC
-Wx
 Vk
 YC
 YC
 YC
 YC
 YC
-Wx
 YC
+YC
+YC
+Vk
 fx
 aa
 aa
@@ -72988,6 +72986,7 @@ aa
 aa
 aa
 bj
+Vk
 YC
 YC
 YC
@@ -72996,8 +72995,7 @@ YC
 YC
 YC
 YC
-YC
-YC
+Vk
 fx
 aa
 aa

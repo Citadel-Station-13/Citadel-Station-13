@@ -446,6 +446,9 @@
 	..()
 
 /datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(A.mind.martial_art == /datum/martial_art/wrestling/holodeck && D.mind.martial_art != /datum/martial_art/wrestling/holodeck)
+		A.visible_message("You cannot put someone into a cinch unless they are wearing a wrestling belt!")
+		return FALSE
 	if(check_streak(A,D))
 		return 1
 	if(A.pulling == D || A == D) // don't stun grab yoursel
@@ -460,6 +463,10 @@
 /obj/item/storage/belt/champion/wrestling
 	name = "Wrestling Belt"
 	var/datum/martial_art/wrestling/style = new
+
+/obj/item/storage/belt/champion/wrestling/holodeck
+	name = "Holodeck Wrestling Belt"
+	var/datum/martial_art/wrestling/holodeck/style = new
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	if(!ishuman(user))
