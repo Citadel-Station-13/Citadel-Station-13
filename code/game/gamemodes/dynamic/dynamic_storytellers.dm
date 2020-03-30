@@ -114,7 +114,7 @@ Property weights are:
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in mode.roundstart_rules)
-		if (rule.acceptable(mode.roundstart_pop_ready, mode.threat_level) && mode.threat >= rule.cost)	// If we got the population and threat required
+		if (rule.acceptable(mode.roundstart_pop_ready, mode.threat_level))	// If we got the population and threat required
 			rule.candidates = mode.candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
