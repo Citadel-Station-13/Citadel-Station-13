@@ -1,0 +1,6 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "added beacon for cooks to choose an ingredient box, which replaces the random box they used to receive"
+  - rscadd: "added a new sushi ingredients box"
+  - rscadd: "added more items to the wildcard box's possible contents"

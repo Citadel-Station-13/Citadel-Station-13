@@ -74,16 +74,15 @@
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
 	switch(off_station)
-		if(0)
+		if(FALSE)
 			if(istype(NM) && !NM.nuke_team.syndies_escaped())
 				return CINEMATIC_ANNIHILATION
 			else
 				return CINEMATIC_NUKE_WIN
-		if(1)
+		if(NUKE_MISS_STATION)
 			return CINEMATIC_NUKE_MISS
-		if(2)
+		else
 			return CINEMATIC_NUKE_FAR
-	return CINEMATIC_NUKE_FAR
 
 /obj/machinery/nuclearbomb/proc/disk_check(obj/item/disk/nuclear/D)
 	if(D.fake)
@@ -387,14 +386,14 @@
 		if("anchor")
 			if(auth && yes_code)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
-				set_anchor()
+				set_anchor(usr)
 			else
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 
 
-/obj/machinery/nuclearbomb/proc/set_anchor()
-	if(isinspace() && !anchored)
-		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
+/obj/machinery/nuclearbomb/proc/set_anchor(mob/user)
+	if((istype(get_area(src), /area/space) || isinspace()) && !anchored)
+		to_chat(user, "<span class='warning'>This is not a suitable platform for anchoring [src]!</span>")
 	else
 		anchored = !anchored
 
@@ -480,20 +479,14 @@
 
 	GLOB.enter_allowed = FALSE
 
-	var/off_station = 0
+	var/off_station = FALSE
 	var/turf/bomb_location = get_turf(src)
-	var/area/A = get_area(bomb_location)
-	if(bomb_location && is_station_level(bomb_location.z))
-		if(istype(A, /area/space))
-			off_station = NUKE_NEAR_MISS
-		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
-			off_station = NUKE_NEAR_MISS
+	if(!bomb_location || !is_station_level(bomb_location.z))
+		off_station = NUKE_MISS_STATION
 	else if(bomb_location.onSyndieBase())
 		off_station = NUKE_SYNDICATE_BASE
-	else
-		off_station = NUKE_MISS_STATION
 
-	if(off_station < 2)
+	if(!off_station)
 		SSshuttle.registerHostileEnvironment(src)
 		SSshuttle.lockdown = TRUE
 
@@ -507,7 +500,7 @@
 	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
 
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
-	if(off_station < 2)
+	if(!off_station)
 		return CINEMATIC_SELFDESTRUCT
 	else
 		return CINEMATIC_SELFDESTRUCT_MISS
@@ -588,7 +581,7 @@
 This is here to make the tiles around the station mininuke change when it's armed.
 */
 
-/obj/machinery/nuclearbomb/selfdestruct/set_anchor()
+/obj/machinery/nuclearbomb/selfdestruct/set_anchor(mob/user)
 	return
 
 /obj/machinery/nuclearbomb/selfdestruct/set_active()

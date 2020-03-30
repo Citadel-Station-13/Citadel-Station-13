@@ -22,6 +22,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/nonviolent, /datum/quirk/paraplegic)
+	threat = 2
 
 /datum/job/officer/get_access()
 	var/list/L = list()

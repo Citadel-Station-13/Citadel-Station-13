@@ -467,7 +467,9 @@
 		if(H.physiology)
 			H.physiology.stamina_mod *= 0.5
 		if(H.dna && H.dna.species)
-			H.dna.species.punchdamagehigh *= 5
+			H.dna.species.punchdamagehigh *= 4
+			H.dna.species.punchdamagelow  *= 4
+			H.dna.species.punchstunthreshold *= 2
 
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
@@ -478,7 +480,9 @@
 		if(H.physiology)
 			H.physiology.stamina_mod *= 2
 		if(H.dna && H.dna.species)
-			H.dna.species.punchdamagehigh *= 0.2
+			H.dna.species.punchdamagehigh *= 0.25
+			H.dna.species.punchdamagelow *= 0.25
+			H.dna.species.punchstunthreshold *= 0.5
 
 /datum/reagent/drug/skooma/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM)

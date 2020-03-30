@@ -19,6 +19,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 
+	threat = 1.5
+
 /datum/outfit/job/miner
 	name = "Shaft Miner (Lavaland)"
 	jobtype = /datum/job/mining

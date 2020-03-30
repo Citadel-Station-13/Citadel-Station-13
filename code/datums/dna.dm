@@ -412,13 +412,13 @@
 
 	switch(deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 4))
 		if(G_MALE)
-			set_gender(MALE, TRUE)
+			set_gender(MALE, TRUE, forced = TRUE)
 		if(G_FEMALE)
-			set_gender(FEMALE, TRUE)
+			set_gender(FEMALE, TRUE, forced = TRUE)
 		if(G_PLURAL)
-			set_gender(PLURAL, TRUE)
+			set_gender(PLURAL, TRUE, forced = TRUE)
 		else
-			set_gender(NEUTER, TRUE)
+			set_gender(NEUTER, TRUE, forced = TRUE)
 
 /mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	..()
