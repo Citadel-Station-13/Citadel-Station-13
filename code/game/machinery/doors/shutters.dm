@@ -61,6 +61,7 @@
 	icon = 'icons/obj/doors/shutters_window.dmi'
 	icon_state = "closed"
 	opacity = 0
+	glass = 1
 
 /obj/machinery/door/poddoor/shutters/window/preopen
 	icon_state = "open"

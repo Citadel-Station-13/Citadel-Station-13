@@ -84,3 +84,13 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/validsalad
 	subcategory = CAT_SALAD
+
+/datum/crafting_recipe/food/caesarsalad
+	name = "Caesar salad"
+	reqs = list(
+		/obj/item/kitchen/knife = 1,
+		/obj/item/reagent_containers/food/snacks/grown/ambrosia/gaia = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/salad/caesar
+	subcategory = CAT_SALAD
