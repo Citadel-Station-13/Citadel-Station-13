@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - tweak: "Stunslugs are now a mixed damage taser-like slug that will allow you to apply a variety of damage while still being countered by tasers usual counters."
+  - balance: "Mech scattershot guns are no longer oneshotting people into stamina crit."
