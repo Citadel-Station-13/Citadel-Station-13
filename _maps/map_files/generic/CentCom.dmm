@@ -12458,6 +12458,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/evac)
+"CQ" = (
+/obj/effect/landmark/holding_facility,
+/mob/living/simple_animal/bot/medbot{
+	name = "Syndicate Hospitality Drone"
+	},
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "CR" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -44367,7 +44374,7 @@ aa
 aa
 Ud
 ZB
-ZB
+CQ
 Ql
 Ud
 aa
