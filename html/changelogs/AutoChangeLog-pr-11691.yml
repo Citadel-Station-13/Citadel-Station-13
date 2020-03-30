@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - tweak: "cloners now stabilize mutations while someone's cloning, meaning active genes will not life tick."
