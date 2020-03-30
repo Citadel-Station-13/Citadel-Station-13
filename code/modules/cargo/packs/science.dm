@@ -201,11 +201,3 @@
 	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
-
-/datum/supply_pack/science/tech_slugs
-	name = "Tech Slug Ammo Shells"
-	desc = "A new type of shell that is able to be made into a few different dangerous types. Contains two boxes of tech slugs, 14 shells in all."
-	cost = 1700
-	contains = list(/obj/item/storage/box/techsslug,
-					/obj/item/storage/box/techsslug)
-	crate_name = "tech slug crate"
