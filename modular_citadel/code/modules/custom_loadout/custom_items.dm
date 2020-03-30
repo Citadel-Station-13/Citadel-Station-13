@@ -26,7 +26,7 @@
 	desc = "The design on this seems a little too familiar."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "infcloak"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "infcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -36,7 +36,7 @@
 	desc = "A soft black collar that seems to stretch to fit whoever wears it."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "infcollar"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "infcollar"
 	tagname = null
 
@@ -51,7 +51,7 @@
 	name = "Kiara's Sabre"
 	desc = "This blade looks as dangerous as its owner."
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "darksabre"
 	item_state = "darksabre"
 	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
@@ -68,7 +68,7 @@
 	name = "Ornate Sheathe"
 	desc = "An ornate and rather sinister looking sabre sheathe."
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "darksheath"
 	item_state = "darksheath"
 	fitting_swords = list(/obj/item/toy/darksabre)
@@ -78,7 +78,7 @@
 	name = "Dark Armor"
 	desc = "A dark, non-functional piece of armor sporting a red and black finish."
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "darkcarapace"
 	item_state = "darkcarapace"
 	blood_overlay_type = "armor"
@@ -105,7 +105,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "zombscarf"
 	desc = "A fashionable collar"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/suit/toggle/labcoat/mad/red
@@ -113,7 +113,7 @@
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "labred"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "labred"
 	mutantrace_variation = NONE
 
@@ -122,7 +122,7 @@
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "labredblack"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "labredblack"
 	mutantrace_variation = NONE
 
@@ -141,7 +141,7 @@
 	name = "carrot cloak"
 	desc = "A cloak in the shape and color of a carrot!"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "carrotcloak"
 	item_state = "carrotcloak"
 	w_class = WEIGHT_CLASS_SMALL
@@ -153,7 +153,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "satchel_carrot"
 	item_state = "satchel_carrot"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
 /obj/item/storage/backpack/satchel/carrot/Initialize()
 	. = ..()
@@ -176,7 +176,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "festive"
 	item_state = "festive"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
@@ -184,7 +184,7 @@
 	name = "Alboroto Rosa mask"
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "lucharzigfie"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "lucharzigfie"
 
 /obj/item/clothing/head/hardhat/reindeer/fluff
@@ -217,7 +217,7 @@
 	name = "The Hollow heart"
 	desc = "Sometimes things are too much to hide."
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "hheart"
 	item_state = "hheart"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
@@ -227,7 +227,7 @@
 	desc = "You would swear this was in your nightmares after eating too many veggies."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "hos-g"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	mutantrace_variation = NONE
@@ -244,7 +244,7 @@
 	desc = "Smells like reactor four."
 	icon = 'icons/obj/custom.dmi'
 	item_state = "stalker"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "stalker"
 
 /obj/item/reagent_containers/food/drinks/flask/steel
@@ -259,7 +259,7 @@
 	desc = "It's a collar..."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "petcollar-stripe"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "petcollar-stripe"
 	tagname = null
 
@@ -268,7 +268,7 @@
 	desc = "Just looking at this makes you want to sing."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "singer"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "singer"
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
@@ -278,7 +278,7 @@
 /obj/item/clothing/shoes/sneakers/pink
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "pink"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "pink"
 	mutantrace_variation = NONE
 
@@ -287,13 +287,13 @@
 	desc = "A neosilk clip-on tie. This one has a black S on the tipping and looks rather unique."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "bloodredtie"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
 /obj/item/clothing/suit/puffydress
 	name = "Puffy Dress"
 	desc = "A formal puffy black and red Victorian dress."
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "puffydress"
 	item_state = "puffydress"
 	body_parts_covered = CHEST|GROIN|LEGS
@@ -306,7 +306,7 @@
 	item_state = "vermillion"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
 /obj/item/clothing/under/sweater/black/naomi
@@ -323,7 +323,7 @@
 	desc = "This cloak doesn't seem too special."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "wintergreencloak"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "wintergreencloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -339,7 +339,7 @@
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "rdcoat"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "rdcoat"
 	mutantrace_variation = NONE
 
@@ -365,14 +365,14 @@
 	desc = "A truly patriotic form of heroic attire."
 	icon = 'icons/obj/custom.dmi'
 	resistance_flags = FLAMMABLE
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "flagcape"
 	item_state = "flagcape"
 
 /obj/item/clothing/shoes/lucky
 	name = "Lucky Jackboots"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	desc = "Comfy Lucky Jackboots with the word Luck on them."
 	item_state = "luckyjack"
 	icon_state = "luckyjack"
@@ -381,7 +381,7 @@
 /obj/item/clothing/under/custom/lunasune
 	name = "Divine Robes"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	desc = "Heavenly robes of the kitsune Luna Pumpkin,you can feel radiance coming from them."
 	item_state = "Divine_robes"
 	icon_state = "Divine_robes"
@@ -390,7 +390,7 @@
 /obj/item/clothing/under/custom/leoskimpy
 	name = "Leon's Skimpy Outfit"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	desc =  "A rather skimpy outfit."
 	item_state = "shark_cloth"
 	icon_state = "shark_cloth"
@@ -399,7 +399,7 @@
 /obj/item/clothing/under/custom/mimeoveralls
 	name = "Mime's Overalls"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	desc = "A less-than-traditional mime's attire, completed by a set of dorky-looking overalls."
 	item_state = "moveralls"
 	icon_state = "moveralls"
@@ -411,7 +411,7 @@
 	icon_state = "zuliecloak"
 	item_state = "zuliecloak"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/zuliecloak
 	body_parts_covered = CHEST|GROIN|ARMS
 	slot_flags = SLOT_WEAR_SUIT | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
@@ -423,7 +423,7 @@
 	icon_state = "zuliecap"
 	item_state = "zuliecap"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	flags_inv = HIDEEARS|HIDEHAIR
 	mutantrace_variation = NONE
 
@@ -431,7 +431,7 @@
 	name = "Multicolor Coat"
 	desc = "An oddly special looking coat with black, red, and gold"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "redgoldjacket"
 	item_state = "redgoldjacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -443,7 +443,7 @@
 	icon_state = "kimono"
 	item_state = "kimono"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NONE
 
@@ -453,7 +453,7 @@
 	icon_state = "commjacket"
 	item_state = "commjacket"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NONE
 
@@ -463,7 +463,7 @@
 	icon_state = "mw2_russian_para"
 	item_state = "mw2_russian_para"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
 /obj/item/clothing/gloves/longblackgloves
@@ -472,7 +472,7 @@
 	icon_state = "longblackgloves"
 	item_state = "longblackgloves"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
 /obj/item/clothing/under/custom/trendy_fit
 	name = "Trendy Fitting Clothing"
@@ -480,7 +480,7 @@
 	icon_state = "trendy_fit"
 	item_state = "trendy_fit"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
 /obj/item/clothing/head/blueberet
@@ -489,7 +489,7 @@
 	icon_state = "blueberet"
 	item_state = "blueberet"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/flight
@@ -498,7 +498,7 @@
 	icon_state = "flight-g"
 	item_state = "flight-g"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
 /obj/item/clothing/neck/necklace/onion
 	name = "Onion Necklace"
@@ -506,7 +506,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "onion"
 	item_state = "onion"
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 
 /obj/item/clothing/under/custom/mikubikini
 	name = "starlight singer bikini"
@@ -514,7 +514,7 @@
 	icon_state = "mikubikini"
 	item_state = "mikubikini"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/mikujacket
@@ -523,7 +523,7 @@
 	icon_state = "mikujacket"
 	item_state = "mikujacket"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
 /obj/item/clothing/head/mikuhair
@@ -532,7 +532,7 @@
 	icon_state = "mikuhair"
 	item_state = "mikuhair"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 	flags_inv = HIDEHAIR
 
@@ -542,7 +542,7 @@
 	icon_state = "mikugloves"
 	item_state = "mikugloves"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
 /obj/item/clothing/shoes/sneakers/mikuleggings
@@ -551,7 +551,7 @@
 	icon_state = "mikuleggings"
 	item_state = "mikuleggings"
 	icon = 'icons/obj/custom.dmi'
-	mob_overlay_icon = 'icons/mob/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
 /obj/item/toy/plush/mammal/dog/fritz

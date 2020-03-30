@@ -169,7 +169,7 @@
 	name = "pet collar"
 	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule. It seems to be made out of a polychromic material."
 	icon_state = "petcollar"
-	mob_overlay_icon = 'icons/mob/neck.dmi' //Because, as it appears, the item itself is normally not directly aware of its worn overlays, so this is about the easiest way, without adding a new var.
+	mob_overlay_icon = 'icons/mob/clothing/neck.dmi' //Because, as it appears, the item itself is normally not directly aware of its worn overlays, so this is about the easiest way, without adding a new var.
 	hasprimary = TRUE
 	primary_color = "#00BBBB"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar
@@ -286,7 +286,7 @@ obj/item/clothing/neck/neckerchief
 /obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/mask.dmi', icon_state)
+		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/clothing/mask.dmi', icon_state)
 		realOverlay.pixel_y = -3
 		. += realOverlay
 
