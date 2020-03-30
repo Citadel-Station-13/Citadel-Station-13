@@ -15,6 +15,8 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\lambdastation.dm"
+#include "_maps\map_files\LambdaStation\lambda.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\__513_compatibility.dm"
@@ -2420,7 +2422,6 @@
 #include "code\modules\mob\living\simple_animal\friendly\drone\verbs.dm"
 #include "code\modules\mob\living\simple_animal\friendly\drone\visuals_icons.dm"
 #include "code\modules\mob\living\simple_animal\guardian\guardian.dm"
-#include "code\modules\mob\living\simple_animal\guardian\guardiannaming.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\assassin.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\charger.dm"
 #include "code\modules\mob\living\simple_animal\guardian\types\dextrous.dm"

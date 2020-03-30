@@ -34,7 +34,7 @@
 	path = /obj/item/clothing/neck/polyscarf
 
 /datum/gear/polyscarflong
-	name = "PolyChromic Long Scarf"
+	name = "Long Polychromic Scarf"
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/polyscarflong
 

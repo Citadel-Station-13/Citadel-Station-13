@@ -182,7 +182,7 @@
 	item_color = "stripedbluescarf"
 
 /obj/item/clothing/neck/polyscarflong
-	name = "polychromic scarf long"
+	name = "long polychromic scarf"
 	icon_state = "polyscarflong"
 	item_state = "polyscarflong"
 	item_color = "polyscarflong"
@@ -210,23 +210,6 @@
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
-
-/obj/item/clothing/neck/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = ..()
-	if(hasprimary | hassecondary | hastertiary)
-		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
-			if(hasprimary)	//checks if overlays are enabled
-				var/mutable_appearance/primary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-primary")	//automagical sprite selection
-				primary_worn.color = primary_color	//colors the overlay
-				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite
-			if(hassecondary)
-				var/mutable_appearance/secondary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-secondary")
-				secondary_worn.color = secondary_color
-				. += secondary_worn
-			if(hastertiary)
-				var/mutable_appearance/tertiary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-tertiary")
-				tertiary_worn.color = tertiary_color
-				. += tertiary_worn
 
 /obj/item/clothing/neck/petcollar/leather
 	name = "leather pet collar"

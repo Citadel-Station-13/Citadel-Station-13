@@ -374,7 +374,7 @@
 
 /obj/item/clothing/under/misc/qipao/polyqpao
 	name = "Polychromic Qipao"
-	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years.."
+	desc = "A Qipao, traditionally worn in ancient Earth China by women during social events and lunar new years."
 	icon_state = "qipaopoly"
 	item_state = "qipaopoly"
 	item_color = "qipaopoly"
@@ -410,7 +410,7 @@
 	secondary_color = "#B69F1E"
 
 /obj/item/clothing/under/misc/skimpycroptop
-	name = "Polychromic Skimpy Crop Top"
+	name = "Skimpy Polychromic Croptop"
 	desc = "Legally we had to give you a small jacket to cover up at the most."
 	icon_state = "skimpycroptop"
 	item_state = "skimpycroptop"

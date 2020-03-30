@@ -133,7 +133,7 @@
 	path = /obj/item/clothing/under/dress/skirt/swept
 
 /datum/gear/polycroptop
-	name = "PolyChromic Croptop"
+	name = "Polychromic Croptop"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/croptop/polycroptop
 
@@ -413,7 +413,7 @@
 	cost = 3
 
 /datum/gear/polyskimpycroptop
-	name = "Polychromic Skimpy Croptop"
+	name = "Skimpy Polychromic Croptop"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/misc/skimpycroptop
 	cost = 3

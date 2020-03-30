@@ -33,18 +33,6 @@
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands", color = blood_DNA_to_color())
-	if(hasprimary)	//checks if overlays are enabled
-		var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary")	//automagical sprite selection
-		primary_worn.color = primary_color	//colors the overlay
-		. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
-	if(hassecondary)
-		var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary")
-		secondary_worn.color = secondary_color
-		. += secondary_worn
-	if(hastertiary)
-		var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[item_color]-tertiary")
-		tertiary_worn.color = tertiary_color
-		. += tertiary_worn
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
 	..()
