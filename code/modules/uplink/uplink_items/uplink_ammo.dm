@@ -66,14 +66,12 @@
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
 			Great for blasting airlocks off their frames and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/scatter
 	name = "12g Scatter Laser shot Slugs"
@@ -93,7 +91,6 @@
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g/stun
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
@@ -122,7 +119,6 @@
 	desc = "A duffel bag filled with enough .45 ammo to supply an entire team, at a discounted price."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
 	cost = 20 //instead of 27 TC
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/smg
 	name = ".45 SMG Magazine"
