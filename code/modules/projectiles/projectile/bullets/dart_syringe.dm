@@ -29,9 +29,6 @@
 	reagents.handle_reactions()
 	return BULLET_ACT_HIT
 
-/obj/item/projectile/bullet/dart/piercing
-	piercing = TRUE
-
 /obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/aluminium, 15)
