@@ -47,7 +47,7 @@
 	cult_team = new_team
 
 /datum/antagonist/cult/proc/add_objectives()
-	objectives |= cult_team.objectives
+	objectives |= cult_team?.objectives
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
@@ -74,7 +74,7 @@
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 
-	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
+	if(cult_team?.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
 
@@ -117,7 +117,7 @@
 		current = mob_override
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie)
-	if(!cult_team.cult_master)
+	if(!cult_team?.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
 	if(ishuman(current))
