@@ -1604,7 +1604,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("mutant_color2")
-					var/new_mutantcolor = input(user, "Choose your character's secondary alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's secondary alien/mutant color:", "Character Preference","#"+features["mcolor2"]) as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -1615,7 +1615,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("mutant_color3")
-					var/new_mutantcolor = input(user, "Choose your character's tertiary alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's tertiary alien/mutant color:", "Character Preference","#"+features["mcolor3"]) as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -1916,7 +1916,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				//Genital code
 				if("cock_color")
-					var/new_cockcolor = input(user, "Penis color:", "Character Preference") as color|null
+					var/new_cockcolor = input(user, "Penis color:", "Character Preference","#"+features["cock_color"]) as color|null
 					if(new_cockcolor)
 						var/temp_hsv = RGBtoHSV(new_cockcolor)
 						if(new_cockcolor == "#000000")
@@ -1940,7 +1940,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["cock_shape"] = new_shape
 
 				if("balls_color")
-					var/new_ballscolor = input(user, "Testicle Color:", "Character Preference") as color|null
+					var/new_ballscolor = input(user, "Testicle Color:", "Character Preference","#"+features["balls_color"]) as color|null
 					if(new_ballscolor)
 						var/temp_hsv = RGBtoHSV(new_ballscolor)
 						if(new_ballscolor == "#000000")
@@ -1968,7 +1968,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["breasts_shape"] = new_shape
 
 				if("breasts_color")
-					var/new_breasts_color = input(user, "Breast Color:", "Character Preference") as color|null
+					var/new_breasts_color = input(user, "Breast Color:", "Character Preference","#"+features["breasts_color"]) as color|null
 					if(new_breasts_color)
 						var/temp_hsv = RGBtoHSV(new_breasts_color)
 						if(new_breasts_color == "#000000")
@@ -1985,7 +1985,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["vag_shape"] = new_shape
 
 				if("vag_color")
-					var/new_vagcolor = input(user, "Vagina color:", "Character Preference") as color|null
+					var/new_vagcolor = input(user, "Vagina color:", "Character Preference","#"+features["vag_color"]) as color|null
 					if(new_vagcolor)
 						var/temp_hsv = RGBtoHSV(new_vagcolor)
 						if(new_vagcolor == "#000000")
