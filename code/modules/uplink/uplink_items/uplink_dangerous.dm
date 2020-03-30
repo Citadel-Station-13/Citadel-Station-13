@@ -23,6 +23,17 @@
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/dangerous/antitank
+	name = "Anti Tank Pistol"
+	desc = "Essentially amounting to a sniper rifle with no stock and barrel (or indeed, any rifling at all), \
+			this extremely dubious pistol is guaranteed to dislocate your wrists and hit the broad side of a barn! \
+	 		Uses sniper ammo. \
+	 		Bullets tend to veer off-course. We are not responsible for any unintentional damage or injury resulting from inaacuracy."
+	item = /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
+	cost = 20
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
