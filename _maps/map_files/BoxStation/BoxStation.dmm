@@ -5463,6 +5463,18 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"aka" = (
+/obj/structure/closet/secure_closet/bar{
+	req_access_txt = "25"
+	},
+/obj/item/clothing/under/suit/waiter,
+/obj/item/clothing/under/suit/waiter,
+/obj/item/clothing/under/suit/waiter,
+/obj/item/gun/ballistic/revolver/doublebarrel,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "akb" = (
 /obj/machinery/light{
 	dir = 8
@@ -5657,6 +5669,12 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/security/main)
+"akt" = (
+/obj/machinery/chem_master/condimaster{
+	name = "HoochMaster 2000"
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "aku" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -15392,16 +15410,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"aJE" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access_txt = "25"
-	},
-/obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/under/suit/waiter,
-/obj/item/clothing/under/suit/waiter,
-/obj/item/gun/ballistic/revolver/doublebarrel,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
 "aJF" = (
 /obj/machinery/newscaster{
 	pixel_x = 30
@@ -16754,15 +16762,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aND" = (
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/cable_coil,
-/obj/item/flashlight/lamp,
-/obj/item/flashlight/lamp/green,
-/obj/structure/table/wood,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
 "aNE" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -97323,7 +97322,7 @@ sEi
 alP
 aGJ
 aIe
-aJE
+aka
 aLU
 aKQ
 aNu
@@ -97840,7 +97839,7 @@ aHM
 aJm
 aKz
 mjr
-aND
+akt
 aJC
 aab
 aRg
