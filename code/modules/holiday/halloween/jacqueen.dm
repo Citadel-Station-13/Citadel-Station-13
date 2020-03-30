@@ -390,7 +390,7 @@
 	desc = "A jacqueline o' lantern! You can't seem to get rid of it."
 	icon_state = "hardhat0_pumpkin_j"
 	item_state = "hardhat0_pumpkin_j"
-	item_color = "pumpkin_j"
+	hat_type = "pumpkin_j"
 	brightness_on = 4
 
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize()

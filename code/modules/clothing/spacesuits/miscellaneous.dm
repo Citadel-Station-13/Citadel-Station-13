@@ -174,7 +174,7 @@ Contains:
 	desc = "Standard issue command helmet for the ERT."
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
-	item_color = "ert_commander"
+	hardsuit_type = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
 	brightness_on = 7
@@ -201,7 +201,7 @@ Contains:
 	desc = "Standard issue security helmet for the ERT."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
-	item_color = "ert_security"
+	hardsuit_type = "ert_security"
 
 /obj/item/clothing/suit/space/hardsuit/ert/sec
 	desc = "Standard issue security suit for the ERT."
@@ -214,7 +214,7 @@ Contains:
 	desc = "Standard issue engineer helmet for the ERT."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
-	item_color = "ert_engineer"
+	hardsuit_type = "ert_engineer"
 
 /obj/item/clothing/suit/space/hardsuit/ert/engi
 	desc = "Standard issue engineer suit for the ERT."
@@ -227,7 +227,7 @@ Contains:
 	desc = "Standard issue medical helmet for the ERT."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
-	item_color = "ert_medical"
+	hardsuit_type = "ert_medical"
 
 /obj/item/clothing/suit/space/hardsuit/ert/med
 	desc = "Standard issue medical suit for the ERT."
@@ -243,7 +243,7 @@ Contains:
 	desc = "Red alert command helmet for the ERT. This one is more armored than its standard version."
 	icon_state = "hardsuit0-ert_commander-alert"
 	item_state = "hardsuit0-ert_commander-alert"
-	item_color = "ert_commander-alert"
+	hardsuit_type = "ert_commander-alert"
 	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	brightness_on = 8
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -263,7 +263,7 @@ Contains:
 	desc = "Red alert security helmet for the ERT. This one is more armored than its standard version."
 	icon_state = "hardsuit0-ert_security-alert"
 	item_state = "hardsuit0-ert_security-alert"
-	item_color = "ert_security-alert"
+	hardsuit_type = "ert_security-alert"
 
 /obj/item/clothing/suit/space/hardsuit/ert/alert/sec
 	desc = "Red alert security suit for the ERT. This one is more armored than its standard version."
@@ -276,7 +276,7 @@ Contains:
 	desc = "Red alert engineer helmet for the ERT. This one is more armored than its standard version."
 	icon_state = "hardsuit0-ert_engineer-alert"
 	item_state = "hardsuit0-ert_engineer-alert"
-	item_color = "ert_engineer-alert"
+	hardsuit_type = "ert_engineer-alert"
 
 /obj/item/clothing/suit/space/hardsuit/ert/alert/engi
 	desc = "Red alert engineer suit for the ERT. This one is more armored than its standard version."
@@ -289,7 +289,7 @@ Contains:
 	desc = "Red alert medical helmet for the ERT. This one is more armored than its standard version."
 	icon_state = "hardsuit0-ert_medical-alert"
 	item_state = "hardsuit0-ert_medical-alert"
-	item_color = "ert_medical-alert"
+	hardsuit_type = "ert_medical-alert"
 
 /obj/item/clothing/suit/space/hardsuit/ert/alert/med
 	desc = "Red alert medical suit for the ERT. This one is more armored than its standard version."
@@ -320,7 +320,6 @@ Contains:
 	icon_state = "cespace_helmet"
 	item_state = "nothing"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
-	item_color = "engineering"
 	resistance_flags = FIRE_PROOF
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	actions_types = list()
@@ -391,7 +390,7 @@ Contains:
 	desc = "A helmet worn by those who deal with paranormal threats for a living."
 	icon_state = "hardsuit0-prt"
 	item_state = "hardsuit0-prt"
-	item_color = "knight_grey"
+	hardsuit_type = "knight_grey"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF

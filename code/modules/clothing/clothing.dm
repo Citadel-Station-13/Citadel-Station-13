@@ -444,11 +444,11 @@ BLIND     // can't see anything
 /obj/item/clothing/update_overlays()	// Polychrome stuff
 	. = ..()
 	if(hasprimary)	//Checks if the overlay is enabled
-		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_color]-primary", color = primary_color)	//Automagically picks overlays
+		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_state]-primary", color = primary_color)	//Automagically picks overlays
 		. += primary_overlay	//Applies the coloured overlay onto the item sprite. but NOT the mob sprite.
 	if(hassecondary)
-		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_color]-secondary", color = secondary_color)
+		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_state]-secondary", color = secondary_color)
 		. += secondary_overlay
 	if(hastertiary)
-		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_color]-tertiary", color = tertiary_color)
+		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_state]-tertiary", color = tertiary_color)
 		. += tertiary_overlay
