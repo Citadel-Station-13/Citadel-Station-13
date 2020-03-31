@@ -17,6 +17,7 @@
 	var/weight = 3 // Weights for randomly picking storyteller. Multiplied by score after voting.
 	var/event_frequency_lower = 6 MINUTES // How rare events will be, at least.
 	var/event_frequency_upper = 20 MINUTES // How rare events will be, at most.
+	var/min_players = -1 // How many players are required for this one to start.
 	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
@@ -200,6 +201,7 @@ Property weights are:
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
 	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
+	min_players = 30
 	var/refund_cooldown = 0
 	
 /datum/dynamic_storyteller/chaotic/do_process()
@@ -221,6 +223,7 @@ Property weights are:
 	curve_centre = 2
 	curve_width = 1.5
 	weight = 2
+	min_players = 30
 	flags = WAROPS_ALWAYS_ALLOWED
 	property_weights = list("valid" = 3, "trust" = 5)
 
