@@ -415,7 +415,7 @@
 	required_candidates = 1
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/clockcult)
 	weight = 4
-	cost = 10
+	cost = 20
 	requirements = list(101,101,101,80,60,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
