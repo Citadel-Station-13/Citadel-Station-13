@@ -201,7 +201,7 @@ Property weights are:
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
 	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
-	min_players = 30
+	min_players = 40
 	var/refund_cooldown = 0
 	
 /datum/dynamic_storyteller/chaotic/do_process()
