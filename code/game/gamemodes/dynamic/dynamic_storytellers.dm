@@ -196,7 +196,7 @@ Property weights are:
 	config_tag = "chaotic"
 	curve_centre = 10
 	desc = "High chaos modes. Revs, wizard, clock cult. Multiple antags at once. Chaos is kept up all round."
-	property_weights = list("extended" = -1, "chaos" = 2)
+	property_weights = list("extended" = -1, "chaos" = 1)
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
