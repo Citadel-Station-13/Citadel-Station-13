@@ -1954,7 +1954,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/datum/sprite_accessory/taur/T = GLOB.taur_list[features["taur"]]
 						for(var/A in GLOB.cock_shapes_list)
 							var/datum/sprite_accessory/penis/P = GLOB.cock_shapes_list[A]
-							if(T.taur_mode & P.accepted_taurs)
+							if(P.taur_icon && T.taur_mode & P.accepted_taurs)
 								LAZYSET(hockeys, "[A] (Taur)", A)
 					new_shape = input(user, "Penis shape:", "Character Preference") as null|anything in (GLOB.cock_shapes_list + hockeys)
 					if(new_shape)
