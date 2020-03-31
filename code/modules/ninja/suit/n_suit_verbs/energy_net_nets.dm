@@ -57,12 +57,12 @@ It is possible to destroy the net by the occupant or someone else.
 				continue//So all they're left with are shoes and uniform.
 			H.dropItemToGround(W)
 		H.dna.species.give_important_for_life(H)	// After we remove items, at least give them what they need to live.
+/*
 	var/datum/antagonist/antag_datum
 	for(var/datum/antagonist/ninja/AD in GLOB.antagonists) //Because only ninjas get capture objectives; They're not doable without the suit.
 		if(AD.owner == master)
 			antag_datum = AD
 			break
-
 	for(var/datum/objective/capture/capture in antag_datum)
 		if(istype(affecting, /mob/living/carbon/human)) //Humans.
 			if(affecting.stat == DEAD)//Dead folks are worth less.
@@ -87,7 +87,7 @@ It is possible to destroy the net by the occupant or someone else.
 				capture.captured_amount+=1
 				continue
 			capture.captured_amount+=2
-
+*/
 
 	affecting.revive(1, 1)	//Basically a revive and full heal, including limbs/organs
 							//In case people who have been captured dead want to hang out at the holding area
