@@ -105,7 +105,7 @@
 
 			if(item_to_retrieve.loc)
 				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
-			if(!L.put_in_hands(item_to_retrieve))
+			if(!isitem(item_to_retrieve) || !L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.forceMove(L.drop_location())
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)
