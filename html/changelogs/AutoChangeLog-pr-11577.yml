@@ -1,5 +1,0 @@
-author: "dapnee"
-delete-after: True
-changes: 
-  - rscadd: "couple gas masks around atmos"
-  - bugfix: "direction on turbine plasma pressure tank, cloning actually has a cloning console now"

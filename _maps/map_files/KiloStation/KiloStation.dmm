@@ -53,6 +53,17 @@
 "aaf" = (
 /turf/closed/wall/r_wall,
 /area/security/brig)
+"aag" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plasteel/dark,
+/area/engine/supermatter)
 "aah" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -72321,17 +72332,6 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ai_monitored/security/armory)
-"cin" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/obj/effect/turf_decal/caution/stand_clear,
-/turf/open/floor/plasteel/dark,
-/area/engine/supermatter)
 "cio" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -122951,9 +122951,9 @@ coc
 azE
 brn
 aLF
-cin
-cin
-cin
+aag
+aag
+aag
 aLF
 cut
 cuO
@@ -125007,9 +125007,9 @@ cos
 aAd
 bFh
 aLF
-cin
-cin
-cin
+aag
+aag
+aag
 aLF
 cuA
 cuW

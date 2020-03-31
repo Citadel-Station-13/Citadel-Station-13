@@ -663,7 +663,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(count)
 		target_amount = count
 	update_explanation_text()
-
+/*
 /datum/objective/capture
 	name = "capture"
 	var/captured_amount = 0
@@ -709,7 +709,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(count)
 		target_amount = count
 	update_explanation_text()
-
+*/
 //Changeling Objectives
 
 /datum/objective/absorb
