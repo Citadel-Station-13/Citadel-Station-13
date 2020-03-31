@@ -1,4 +1,0 @@
-author: "Kraseo"
-delete-after: True
-changes: 
-  - tweak: "Blacklists turret protected areas, the toxins test range, asteroid ruins, and solars from being valid dropoff locations for contracts."

@@ -56,6 +56,13 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
 	cost = 12
 
+/datum/uplink_item/ammo/shotgun/bioterror
+	name = "12g Bioterror Dart Drum"
+	desc = "An additional 8-round bioterror dart magazine for use with the Bulldog shotgun. \
+			Pierces armor and injects are horrid cocktail of death into your target. Be careful about friendly fire."
+	cost = 6 //legacy price
+	item = /obj/item/ammo_box/magazine/m12g/bioterror
+
 /datum/uplink_item/ammo/shotgun/buck
 	name = "12g Buckshot Drum"
 	desc = "An additional 8-round buckshot magazine for use with the Bulldog shotgun. Front towards enemy."
@@ -66,20 +73,12 @@
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
 			Great for blasting airlocks off their frames and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/ammo/shotgun/scatter
-	name = "12g Scatter Laser shot Slugs"
-	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
-	item = /obj/item/ammo_box/magazine/m12g/scatter
-	cost = 4 // most armor has less laser protection then bullet
 
 /datum/uplink_item/ammo/shotgun/slug
 	name = "12g Slug Drum"
@@ -93,7 +92,6 @@
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g/stun
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"

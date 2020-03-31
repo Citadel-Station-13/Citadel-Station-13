@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - rscadd: "Ports New Sleeping Carp"
-  - refactor: "Ports the martial arts refactors, which includes things like moving martial into the martial subfolder and renaming it _martial, and cleans up human_defense rising bass/sleeping carp exclusive code."

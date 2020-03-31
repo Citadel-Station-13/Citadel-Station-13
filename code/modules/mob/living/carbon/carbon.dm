@@ -283,6 +283,8 @@
 
 /mob/living/carbon/resist_buckle()
 	. = FALSE
+	if(!buckled)
+		return
 	if(restrained())
 		// too soon.
 		if(last_special > world.time)
@@ -580,7 +582,7 @@
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
 	if(stam > DAMAGE_PRECISION)
-		var/total_health = (health - stam)
+		var/total_health = (maxHealth - stam)
 		if(total_health <= crit_threshold && !stat)
 			if(CHECK_MOBILITY(src, MOBILITY_STAND))
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")

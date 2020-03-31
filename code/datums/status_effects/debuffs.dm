@@ -90,6 +90,7 @@
 /datum/status_effect/staggered
 	id = "staggered"
 	blocks_sprint = TRUE
+	alert_type = null
 
 /datum/status_effect/staggered/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))

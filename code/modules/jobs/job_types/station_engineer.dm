@@ -20,6 +20,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 
+	threat = 1
+
 /datum/outfit/job/engineer
 	name = "Station Engineer"
 	jobtype = /datum/job/engineer

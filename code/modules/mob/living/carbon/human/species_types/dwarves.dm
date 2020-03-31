@@ -8,7 +8,6 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR)
 	inherent_traits = list()
-	default_features = list("mcolor" = "FFF", "wings" = "None")
 	limbs_id = "human"
 	use_skintones = 1
 	say_mod = "bellows" //high energy, EXTRA BIOLOGICAL FUEL

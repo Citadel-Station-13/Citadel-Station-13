@@ -190,6 +190,7 @@
 	icon_dead = "scary_clown"
 	icon_gib = "scary_clown"
 	speak = list("...", ". . .")
+	threat = 3
 	maxHealth = 120
 	health = 120
 	emote_see = list("silently stares")

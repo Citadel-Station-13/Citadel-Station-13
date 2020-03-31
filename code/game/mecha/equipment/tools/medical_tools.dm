@@ -125,6 +125,7 @@
 		return
 	return {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<title>[patient] statistics</title>
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
@@ -259,7 +260,8 @@
 	. = ..()
 	create_reagents(max_volume, NO_REACT)
 	syringes = new
-	known_reagents = list(/datum/reagent/medicine/epinephrine = "Epinephrine", /datum/reagent/medicine/charcoal = "Charcoal")
+	known_reagents = list(/datum/reagent/medicine/epinephrine = "Epinephrine", /datum/reagent/medicine/charcoal = "Charcoal", /datum/reagent/medicine/prussian_blue = "Prussian Blue", \
+	/datum/reagent/medicine/dexalin = "Dexalin", /datum/reagent/medicine/insulin = "Insulin", /datum/reagent/medicine/kelotane = "Kelotane", /datum/reagent/medicine/bicaridine = "Bicaridine")
 	processed_reagents = new
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
@@ -390,6 +392,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
 						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 						<title>Reagent Synthesizer</title>
 						<script language='javascript' type='text/javascript'>
 						[js_byjax]

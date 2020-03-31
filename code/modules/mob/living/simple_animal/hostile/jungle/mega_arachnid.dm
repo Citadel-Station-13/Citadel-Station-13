@@ -8,6 +8,7 @@
 	icon_living = "arachnid"
 	icon_dead = "arachnid_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
+	threat = 2
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	maxHealth = 300
