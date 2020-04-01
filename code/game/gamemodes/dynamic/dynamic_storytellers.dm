@@ -53,6 +53,8 @@ Property weights are:
 		var/turf/T = get_turf(H)
 		if(H.stat != DEAD && is_station_level(T.z) && !("Station" in H.faction))
 			threat += H.threat()
+	for(var/obj/item/phylactery/P in GLOB.poi_list)
+		threat += 25 // can't be giving them too much of a break
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (M?.mind?.assigned_role && M.stat != DEAD)
 			var/datum/job/J = SSjob.GetJob(M.mind.assigned_role)
