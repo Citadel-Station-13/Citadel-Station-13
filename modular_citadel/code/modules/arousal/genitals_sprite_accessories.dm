@@ -1,5 +1,10 @@
 /datum/sprite_accessory
 	var/alt_aroused = FALSE //CIT CODE if this is TRUE, then the genitals will use an alternate icon_state when aroused.
+	var/taur_icon //leave null if the genital doesn't have a taur counterpart.
+	var/accepted_taurs = STYLE_HOOF_TAURIC|STYLE_PAW_TAURIC //Types that match with the accessory.
+	var/feat_taur //the text string of the dna feature to check for those who want to opt out.
+	var/taur_dimension_y = 0
+	var/taur_dimension_x = 0
 
 
 //DICKS,COCKS,PENISES,WHATEVER YOU WANT TO CALL THEM
@@ -8,6 +13,7 @@
 	name = "penis"			//the preview name of the accessory
 	color_src = "cock_color"
 	alt_aroused = TRUE
+	feat_taur = "cock_taur"
 
 /datum/sprite_accessory/penis/human
 	icon_state = "human"
@@ -16,10 +22,14 @@
 /datum/sprite_accessory/penis/knotted
 	icon_state = "knotted"
 	name = "Knotted"
+	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
+	taur_dimension_y = 64
 
 /datum/sprite_accessory/penis/flared
 	icon_state = "flared"
 	name = "Flared"
+	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
+	taur_dimension_y = 64
 
 /datum/sprite_accessory/penis/barbknot
 	icon_state = "barbknot"
@@ -28,6 +38,8 @@
 /datum/sprite_accessory/penis/tapered
 	icon_state = "tapered"
 	name = "Tapered"
+	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
+	taur_dimension_y = 64
 
 /datum/sprite_accessory/penis/tentacle
 	icon_state = "tentacle"
@@ -41,33 +53,7 @@
 	icon_state = "hemiknot"
 	name = "Knotted Hemi"
 
-
-////////////////////////
-// Taur cocks go here //
-////////////////////////
-/datum/sprite_accessory/penis/taur_flared
-	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
-	icon_state = "flared"
-	name = "Taur, Flared"
-	center = TRUE //Center the image 'cause 2-tile wide.
-	dimension_x = 64
-
-/datum/sprite_accessory/penis/taur_knotted
-	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
-	icon_state = "knotted"
-	name = "Taur, Knotted"
-	center = TRUE //Center the image 'cause 2-tile wide.
-	dimension_x = 64
-
-/datum/sprite_accessory/penis/taur_tapered
-	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
-	icon_state = "tapered"
-	name = "Taur, Tapered"
-	center = TRUE //Center the image 'cause 2-tile wide.
-	dimension_x = 64
-
 //Testicles
-//These ones aren't inert
 /datum/sprite_accessory/testicles
 	icon = 'modular_citadel/icons/obj/genitals/testicles_onmob.dmi'
 	icon_state = "testicle"
