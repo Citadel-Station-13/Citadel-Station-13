@@ -382,7 +382,10 @@
 	for(var/y69 in y-row_limit to y+row_limit)	//Create a shitton of explosions in irl turfs if we lose, it will probably kill us
 		for(var/x69 in x-column_limit to x+column_limit)
 			if(prob(mine_limit_v2))	//Probability of explosion happening, according to how many mines were on the board... up to a limit
-				addtimer(CALLBACK(GLOBAL_PROC, /proc/explosion, locate(y69,x69,z), 0, rand(1,2),rand(1,5),rand(3,10), FALSE), 10 * ++num_explosions)
+				var/turf/target = locate(y69,x69,z)
+				if(!target)
+					continue
+				addtimer(CALLBACK(GLOBAL_PROC, /proc/explosion, target, 0, rand(1,2),rand(1,5),rand(3,10), FALSE), 10 * ++num_explosions)
 				if(num_explosions == mine_limit_v2)
 					return
 
