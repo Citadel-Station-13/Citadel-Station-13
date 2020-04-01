@@ -112,6 +112,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			attacktext = "bites"
 			attack_sound = 'sound/weapons/bite.ogg'
 			recolorentiresprite = TRUE
+	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason
+		cooloverlay = mutable_appearance(icon, theme)
+		add_overlay(cooloverlay)
 
 /mob/living/simple_animal/hostile/guardian/Login() //if we have a mind, set its name to ours when it logs in
 	..()
