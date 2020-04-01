@@ -15,6 +15,6 @@
 /datum/instrument_key/proc/calculate()
 	if(!deviation)
 		CRASH("Invalid calculate call: No deviation or sample in instrument_key")
-	#define KEY_TWELTH 0.083
+	#define KEY_TWELTH (1/12)
 	frequency = 2 ** (KEY_TWELTH * deviation)
 	#undef KEY_TWELTH
