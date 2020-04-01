@@ -247,7 +247,10 @@ Property weights are:
 	config_tag = "random"
 	weight = 1
 	desc = "No weighting at all; every ruleset has the same chance of happening. Cooldowns vary wildly. As random as it gets."
-	forced_threat_level = 100
+
+/datum/dynamic_storyteller/random/on_start()
+	..()
+	GLOB.dynamic_forced_threat_level = rand(0,100)
 
 /datum/dynamic_storyteller/random/get_midround_cooldown()
 	return rand(GLOB.dynamic_midround_delay_min/2, GLOB.dynamic_midround_delay_max*2)
