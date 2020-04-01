@@ -1477,6 +1477,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		user.adjustStaminaLossBuffered(5) //CITADEL CHANGE - makes punching cause staminaloss
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+		var/puncherstam = user.getStaminaLoss()
+		var/puncherbrute = user.getBruteLoss()
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
 		if(!(target.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && damage < user.dna.species.punchstunthreshold)
@@ -1494,7 +1496,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
-				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+				miss_chance = min(puncherstam + (puncherbrute*0.5), 100) //probability of miss based on stamina + half of brute. capped at 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
