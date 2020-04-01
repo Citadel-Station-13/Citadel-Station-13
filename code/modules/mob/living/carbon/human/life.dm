@@ -323,6 +323,8 @@
 					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/human/proc/handle_active_genes()
+	if(HAS_TRAIT(src, TRAIT_MUTATION_STASIS))
+		return
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_life(src)
 

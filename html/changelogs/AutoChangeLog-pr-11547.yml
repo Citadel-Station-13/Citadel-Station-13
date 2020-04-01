@@ -1,4 +1,0 @@
-author: "YakumoChen"
-delete-after: True
-changes: 
-  - server: "Templates Headers will now correctly use the Citadel Official Wiki Link"

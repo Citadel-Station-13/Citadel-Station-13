@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Shuttle countdowns once again read like \"01:05\" instead of \"01: 5\"."

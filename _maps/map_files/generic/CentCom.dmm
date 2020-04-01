@@ -10005,6 +10005,12 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership)
+"wZ" = (
+/obj/structure/bed,
+/obj/item/bedsheet/syndie,
+/obj/effect/landmark/holding_facility,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "xa" = (
 /obj/machinery/door/window/northright{
 	dir = 4;
@@ -12452,6 +12458,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/evac)
+"CQ" = (
+/obj/effect/landmark/holding_facility,
+/mob/living/simple_animal/bot/medbot{
+	name = "Syndicate Hospitality Drone"
+	},
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "CR" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -17251,10 +17264,21 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
+"Ql" = (
+/obj/machinery/light,
+/obj/effect/landmark/holding_facility,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "Qm" = (
 /obj/singularity/wizard/mapped,
 /turf/open/indestructible/binary,
 /area/fabric_of_reality)
+"Qn" = (
+/obj/machinery/vr_sleeper/hugbox{
+	dir = 8
+	},
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "Qo" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
@@ -17794,7 +17818,7 @@
 /area/syndicate_mothership)
 "Tn" = (
 /obj/structure/table/wood/fancy,
-/obj/item/candle/infinite{
+/obj/item/candle/infinite/hugbox{
 	pixel_y = 6
 	},
 /turf/open/indestructible/hotelwood,
@@ -17820,7 +17844,6 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/tinted{
-	icon_state = "twindow";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -17897,7 +17920,6 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/tinted{
-	icon_state = "twindow";
 	dir = 1
 	},
 /obj/machinery/washing_machine,
@@ -17939,9 +17961,12 @@
 /obj/vehicle/ridden/janicart,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
-"Ud" = (
-/obj/effect/landmark/holding_facility,
+"Uc" = (
+/obj/machinery/vending/sustenance,
 /turf/open/indestructible/hotelwood,
+/area/centcom/holding)
+"Ud" = (
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "Ug" = (
 /obj/machinery/door/poddoor/shuttledock{
@@ -17962,6 +17987,11 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
+"Ui" = (
+/obj/structure/table,
+/obj/item/clothing/mask/luchador/tecnicos,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Uj" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Restroom";
@@ -18204,6 +18234,11 @@
 /obj/structure/window/reinforced/tinted,
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership)
+"Vk" = (
+/obj/structure/table,
+/obj/item/storage/belt/champion/wrestling/holodeck,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Vt" = (
 /obj/item/paper/fluff/stations/centcom/disk_memo,
 /obj/structure/noticeboard{
@@ -18368,6 +18403,11 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
+"Wx" = (
+/obj/structure/table,
+/obj/item/clothing/mask/luchador,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Wz" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -18741,6 +18781,11 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"Yv" = (
+/obj/structure/table,
+/obj/item/clothing/mask/luchador/rudos,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Yw" = (
 /turf/closed/indestructible/fakedoor{
 	name = "External Access"
@@ -18750,6 +18795,9 @@
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
 /area/centcom/evac)
+"YC" = (
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "YJ" = (
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/item/reagent_containers/food/drinks/shaker,
@@ -18822,6 +18870,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
+"Zl" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/boxing,
+/obj/item/clothing/gloves/boxing/blue,
+/obj/item/clothing/gloves/boxing/green,
+/obj/item/clothing/gloves/boxing/yellow,
+/turf/open/floor/holofloor/wood,
+/area/holodeck/rec_center/wrestlingarena)
 "Zr" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
@@ -18844,6 +18900,10 @@
 /obj/effect/landmark/start/nukeop_leader,
 /turf/open/floor/wood,
 /area/syndicate_mothership)
+"ZB" = (
+/obj/effect/landmark/holding_facility,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "ZE" = (
 /obj/structure/sink{
 	dir = 4;
@@ -43829,11 +43889,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Ud
+Ud
+Ud
+Ud
+Ud
 aa
 aa
 aa
@@ -44086,11 +44146,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Ud
+Uc
+ZB
+ZB
+Ud
 aa
 aa
 aa
@@ -44343,11 +44403,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Ud
+ZB
+CQ
+Ql
+Ud
 aa
 aa
 aa
@@ -44600,11 +44660,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Ud
+wZ
+ZB
+Qn
+Ud
 aa
 aa
 aa
@@ -44857,11 +44917,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Ud
+Ud
+Ud
+Ud
+Ud
 aa
 aa
 aa
@@ -46174,8 +46234,8 @@ Sd
 HH
 Nd
 WM
-Ud
-Ud
+Sd
+Sd
 NT
 Nj
 Po
@@ -46431,8 +46491,8 @@ Sd
 XM
 NT
 Sd
-Ud
-Ud
+Sd
+Sd
 NT
 YU
 zT
@@ -46688,8 +46748,8 @@ Sd
 Tn
 NT
 Sd
-Ud
-Ud
+Sd
+Sd
 NT
 YU
 zT
@@ -46945,8 +47005,8 @@ Sd
 GY
 NT
 Sd
-Ud
-Ud
+Sd
+Sd
 NT
 YU
 zT
@@ -47202,8 +47262,8 @@ Qk
 Vu
 Nd
 Gs
-Ud
-Ud
+Sd
+Sd
 NT
 Mt
 PA
@@ -71951,18 +72011,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ab
 aa
 aa
 aa
@@ -72208,18 +72268,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+bj
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+fx
 aa
 aa
 aa
@@ -72465,18 +72525,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+bj
+Vk
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+Vk
+fx
 aa
 aa
 aa
@@ -72722,18 +72782,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+bj
+Vk
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+Vk
+fx
 aa
 aa
 aa
@@ -72979,18 +73039,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+bj
+Vk
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+YC
+Vk
+fx
 aa
 aa
 aa
@@ -73236,18 +73296,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+bj
+YC
+YC
+Wx
+YC
+Yv
+Ui
+YC
+Zl
+YC
+YC
+fx
 aa
 aa
 aa
@@ -73494,16 +73554,16 @@ ae
 ae
 ae
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 ab
 aa
 aa
