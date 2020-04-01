@@ -1329,7 +1329,7 @@
 			chargecount = 0
 			longtermpower = max(-10,longtermpower - 2)
 			if(cell.charge >= cur_used)
-				cell.use(cur_used)
+				cell.use(GLOB.CELLRATE * cur_used)
 			else
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
 				equipment = autoset(equipment, 0)
