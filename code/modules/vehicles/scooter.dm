@@ -45,7 +45,6 @@
 	icon_state = "skateboard"
 	density = FALSE
 	arms_required = 0
-	fall_off_if_missing_arms = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
@@ -108,7 +107,7 @@
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 				H.updatehealth()
 			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
-			H.Paralyze(80)
+			H.Knockdown(80)
 		else
 			var/backdir = turn(dir, 180)
 			vehicle_move(backdir)
@@ -127,7 +126,7 @@
 			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 			L.throw_at(throw_target, 2, 2)
 			visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
-			L.Paralyze(40)
+			L.Knockdown(40)
 			grinding = FALSE
 			icon_state = board_icon
 			return

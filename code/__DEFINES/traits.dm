@@ -135,10 +135,14 @@
 #define TRAIT_NOMARROW			"nomarrow"		// You don't make blood, with chemicals or nanites.
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
+#define TRAIT_PASSTABLE			"passtable"
 
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
+#define INNATE_TRAIT "innate"
+
 
 // item traits
 #define TRAIT_NODROP            "nodrop"

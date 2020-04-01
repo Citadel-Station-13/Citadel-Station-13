@@ -500,7 +500,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new board_item_type(get_turf(user))
+	if(!user.canUseTopic(src, TRUE, FALSE, TRUE))
+		return
+	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))
+	S.buckle_mob(user)
 	qdel(src)
 
 /obj/item/melee/skateboard/pro
@@ -509,7 +512,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	item_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
-	custom_premium_price = 300
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"
@@ -517,7 +519,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hoverboard_red"
 	item_state = "hoverboard_red"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard
-	custom_premium_price = 2015
 
 /obj/item/melee/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
