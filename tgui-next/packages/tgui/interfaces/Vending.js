@@ -33,8 +33,6 @@ export const Vending = props => {
             Welcome, <b>{data.user.name}</b>,
               {' '}
               <b>{data.user.job || "Unemployed"}</b>!
-              <br />
-            Your balance is <b>{data.user.cash} credits</b>.
             </Box>
           ) || (
             <Box color="light-gray">
@@ -47,16 +45,6 @@ export const Vending = props => {
       <Section title="Products" >
         <Table>
           {inventory.map((product => {
-            const free = (
-              !data.onstation
-              || product.price === 0
-              || (
-                !product.premium
-                && data.department
-                && data.user
-                && data.department === data.user.department
-              )
-            );
             return (
               <Table.Row key={product.name}>
                 <Table.Cell>
@@ -91,7 +79,7 @@ export const Vending = props => {
                 <Table.Cell>
                   {custom && (
                     <Button
-                      content={data.access ? 'FREE' : product.price + ' cr'}
+                      content={"VEND"}
                       onClick={() => act(ref, 'dispense', {
                         'item': product.name,
                       })} />
@@ -99,15 +87,8 @@ export const Vending = props => {
                     <Button
                       disabled={(
                         data.stock[product.namename] === 0
-                        || (
-                          !free
-                          && (
-                            !data.user
-                            || product.price > data.user.cash
-                          )
-                        )
                       )}
-                      content={free ? 'FREE' : product.price + ' cr'}
+                      content={"VEND"}
                       onClick={() => act(ref, 'vend', {
                         'ref': product.ref,
                       })} />

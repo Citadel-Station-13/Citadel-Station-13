@@ -30,10 +30,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/amount = 0
 	///How many we can store at maximum
 	var/max_amount = 0
-	///Does the item have a custom price override
-	var/custom_price
-	///Does the item have a custom premium price override
-	var/custom_premium_price
 
 /**
   * # vending machines
@@ -96,12 +92,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/list/slogan_list = list()
 	///Small ad messages in the vending screen - random chance of popping up whenever you open it
 	var/list/small_ads = list()
+	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 	///Message sent post vend (Thank you for shopping!)
 	var/vend_reply
 	///Last world tick we sent a vent reply
 	var/last_reply
 	///Last world tick we sent a slogan message out
 	var/last_slogan
+	var/last_shopper
 	///How many ticks until we can send another
 	var/slogan_delay = 6000
 	///Icon when vending an item to the user
@@ -125,9 +123,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///Bills we accept?
 	var/obj/item/stack/spacecash/bill
 	///Default price of items if not overridden
-	var/default_price = 25
-	///Default price of premium items if not overridden
-	var/extra_price = 50
   	/**
 	  * Is this item on station or not
 	  *
@@ -234,7 +229,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		return
 
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(!(machine_stat & BROKEN) && powered())
+	if(!(stat & BROKEN) && powered())
 		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
 
 /obj/machinery/vending/obj_break(damage_flag)
@@ -289,8 +284,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.custom_price = initial(temp.custom_price)
-		R.custom_premium_price = initial(temp.custom_premium_price)
 		recordlist += R
 /**
   * Refill a vending machine from a refill canister
@@ -447,7 +440,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(canLoadItem(the_item) && loadingAttempt(the_item,user))
 					SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, the_item, src, TRUE)
 					loaded++
-	else
+				else
 					denied_items++
 			if(denied_items)
 				to_chat(user, "<span class='warning'>[src] refuses some items!</span>")
@@ -530,13 +523,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
 			return
-
-	if(tilted && !user.buckled && !isAI(user))
-		to_chat(user, "<span class='notice'>You begin righting [src].</span>")
-		if(do_after(user, 50, target=src))
-			untilt(user)
-		return
-
 	return ..()
 
 /obj/machinery/vending/ui_base_html(html)
@@ -558,7 +544,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_price || default_price,
 			max_amount = R.max_amount,
 			ref = REF(R)
 		)
@@ -568,7 +553,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_premium_price || extra_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
@@ -579,7 +563,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_price || default_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
@@ -588,66 +571,55 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
-	var/mob/living/carbon/human/H
-	var/obj/item/card/id/C
 	.["stock"] = list()
-	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
+	for(var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
 		.["stock"][R.name] = R.amount
 	.["extended_inventory"] = extended_inventory
 
 /obj/machinery/vending/ui_act(action, params)
 	. = ..()
 	if(.)
-			return
+		return
 	switch(action)
 		if("vend")
 			. = TRUE
 			if(!vend_ready)
-		return
-		if(panel_open)
+				return
+			if(panel_open)
 				to_chat(usr, "<span class='warning'>The vending machine cannot dispense products while its service panel is open!</span>")
-			return
+				return
 			vend_ready = FALSE //One thing at a time!!
 			var/datum/data/vending_product/R = locate(params["ref"])
 			var/list/record_to_check = product_records + coin_records
 			if(extended_inventory)
 				record_to_check = product_records + coin_records + hidden_records
-		if(!R || !istype(R) || !R.product_path)
+			if(!R || !istype(R) || !R.product_path)
 				vend_ready = TRUE
-			return
-			var/price_to_use = default_price
-			if(R.custom_price)
-				price_to_use = R.custom_price
-		if(R in hidden_records)
-			if(!extended_inventory)
-					vend_ready = TRUE
 				return
-			else if (!(R in record_to_check))
+			if(R in hidden_records)
+				if(!extended_inventory)
+					vend_ready = TRUE
+					return
+			else if(!(R in record_to_check))
 				vend_ready = TRUE
-			message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
-			return
-		if (R.amount <= 0)
+				message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
+				return
+			if (R.amount <= 0)
 				say("Sold out of [R.name].")
 				flick(icon_deny,src)
 				vend_ready = TRUE
-			return
-			if(onstation && ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/C = H.get_idcard(TRUE)
-
-
-
+				return
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
 				say("Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS
 				last_shopper = usr
-		use_power(5)
-		if(icon_vend) //Show the vending animation if needed
-			flick(icon_vend,src)
+			use_power(5)
+			if(icon_vend) //Show the vending animation if needed
+				flick(icon_vend,src)
 			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 			new R.product_path(get_turf(src))
 			R.amount--
-		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
+			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 
 /obj/machinery/vending/process()
@@ -685,7 +657,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/power_change()
 	. = ..()
-		if(powered())
+	if(powered())
 		START_PROCESSING(SSmachines, src)
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
