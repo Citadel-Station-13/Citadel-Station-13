@@ -206,7 +206,7 @@ Property weights are:
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
-	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
+	flags = WAROPS_ALWAYS_ALLOWED
 	min_players = 40
 	var/refund_cooldown = 0
 	
