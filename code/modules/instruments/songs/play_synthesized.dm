@@ -34,24 +34,26 @@
 			var/list/compiled_chord = list()
 			var/tempodiv = 1
 			var/list/notes_tempodiv = splittext(chord, "/")
-			if(length(notes_tempodiv) >= 2)
+			var/len = length(notes_tempodiv)
+			if(len >= 2)
 				tempodiv = text2num(notes_tempodiv[2])
-			var/list/notes = splittext(notes_tempodiv[1], "-")
-			for(var/note in notes)
-				if(length(note) == 0)
-					continue
-				// 1-7, A-G
-				var/key = text2ascii(note) - 96
-				if((key < 1) || (key > 7))
-					continue
-				for(var/i in 2 to length(note))
-					var/oct_acc = copytext(note, i, i + 1)
-					var/num = text2num(oct_acc)
-					if(!num)		//it's an accidental
-						accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
-					else	//octave
-						octaves[key] = CLAMP(num, octave_min, octave_max)
-				compiled_chord += CLAMP((note_offset_lookup[key] + octaves[key] * 12 + accent_lookup[accents[key]]), key_min, key_max)
+			if(len)			//some dunkass is going to do ,,,, to make 3 rests instead of ,/1 because there's no standardization so let's be prepared for that.
+				var/list/notes = splittext(notes_tempodiv[1], "-")
+				for(var/note in notes)
+					if(length(note) == 0)
+						continue
+					// 1-7, A-G
+					var/key = text2ascii(note) - 96
+					if((key < 1) || (key > 7))
+						continue
+					for(var/i in 2 to length(note))
+						var/oct_acc = copytext(note, i, i + 1)
+						var/num = text2num(oct_acc)
+						if(!num)		//it's an accidental
+							accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
+						else	//octave
+							octaves[key] = CLAMP(num, octave_min, octave_max)
+					compiled_chord += CLAMP((note_offset_lookup[key] + octaves[key] * 12 + accent_lookup[accents[key]]), key_min, key_max)
 			compiled_chord += tempodiv		//this goes last
 			if(length(compiled_chord))
 				compiled_chords[++compiled_chords.len] = compiled_chord

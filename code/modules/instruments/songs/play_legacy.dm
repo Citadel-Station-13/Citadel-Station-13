@@ -12,22 +12,23 @@
 				if(should_stop_playing(user))
 					return
 				var/list/notes = splittext(beat, "/")
-				for(var/note in splittext(notes[1], "-"))
-					if(length(note) == 0)
-						continue
-					var/cur_note = text2ascii(note) - 96
-					if(cur_note < 1 || cur_note > 7)
-						continue
-					for(var/i=2 to length(note))
-						var/ni = copytext(note,i,i+1)
-						if(!text2num(ni))
-							if(ni == "#" || ni == "b" || ni == "n")
-								cur_acc[cur_note] = ni
-							else if(ni == "s")
-								cur_acc[cur_note] = "#" // so shift is never required
-						else
-							cur_oct[cur_note] = text2num(ni)
-					playnote_legacy(cur_note, cur_acc[cur_note], cur_oct[cur_note])
+				if(length(notes))		//because some jack-butts are going to do ,,,, to symbolize 3 rests instead of something reasonable like ,/1.
+					for(var/note in splittext(notes[1], "-"))
+						if(length(note) == 0)
+							continue
+						var/cur_note = text2ascii(note) - 96
+						if(cur_note < 1 || cur_note > 7)
+							continue
+						for(var/i=2 to length(note))
+							var/ni = copytext(note,i,i+1)
+							if(!text2num(ni))
+								if(ni == "#" || ni == "b" || ni == "n")
+									cur_acc[cur_note] = ni
+								else if(ni == "s")
+									cur_acc[cur_note] = "#" // so shift is never required
+							else
+								cur_oct[cur_note] = text2num(ni)
+						playnote_legacy(cur_note, cur_acc[cur_note], cur_oct[cur_note])
 				if(notes.len >= 2 && text2num(notes[2]))
 					sleep(sanitize_tempo(tempo / text2num(notes[2])))
 				else
