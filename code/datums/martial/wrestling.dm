@@ -18,6 +18,8 @@
 	var/datum/action/drop/drop = new/datum/action/drop()
 
 /datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	if(!can_use(A, D))
+		return 0
 	switch(streak)
 		if("drop")
 			streak = ""
@@ -448,6 +450,8 @@
 /datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
+	if(!can_use(A,D))
+		return ..()
 	if(A.pulling == D || A == D) // don't stun grab yoursel
 		return FALSE
 	A.start_pulling(D)
@@ -476,3 +480,19 @@
 	if(H.get_item_by_slot(SLOT_BELT) == src)
 		style.remove(H)
 	return
+
+//Subtype of wrestling, reserved for the wrestling belts found in the holodeck
+/datum/martial_art/wrestling/holodeck
+	name = "Holodeck Wrestling"
+
+/obj/item/storage/belt/champion/wrestling/holodeck
+	name = "Holodeck Wrestling Belt"
+	style = new /datum/martial_art/wrestling/holodeck
+
+//Make sure that moves can only be used on people wearing the holodeck belt
+/datum/martial_art/wrestling/holodeck/can_use(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	if(!(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck)))
+		return 0
+	else
+		return ..()
+
