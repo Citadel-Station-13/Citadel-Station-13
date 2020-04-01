@@ -167,7 +167,7 @@
 /datum/supply_pack/security/armory/riotshotguns
 	name = "Riot Shotgun Crate"
 	desc = "For when the greytide gets really uppity. Contains three riot shotguns, seven rubber shot and beanbag shells. Requires Armory access to open."
-	cost = 6500
+	cost = 8000
 	contains = list(/obj/item/gun/ballistic/shotgun/riot,
 					/obj/item/gun/ballistic/shotgun/riot,
 					/obj/item/gun/ballistic/shotgun/riot,
