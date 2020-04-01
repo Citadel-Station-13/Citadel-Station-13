@@ -378,12 +378,13 @@
 		explosion(loc, 2, 5, 10, 15)	//Thought you could survive by putting as few mines as possible, huh??
 	else
 		explosion(loc, 1, 3, rand(1,5), rand(1,10))
-	for(var/y69=y-row_limit;y69<y+row_limit;y69++)	//Create a shitton of explosions in irl turfs if we lose, it will probably kill us
-		for(var/x69=x-column_limit;x69<x+column_limit;x69++)
+	var/num_explosions = 0
+	for(var/y69 in y-row_limit to y+row_limit)	//Create a shitton of explosions in irl turfs if we lose, it will probably kill us
+		for(var/x69 in x-column_limit to x+column_limit)
 			if(prob(mine_limit_v2))	//Probability of explosion happening, according to how many mines were on the board... up to a limit
-				var/explosionloc
-				explosionloc = locate(y69,x69,z)
-				explosion(explosionloc, 0, rand(1,2),rand(1,5),rand(3,10), adminlog = FALSE)
+				addtimer(CALLBACK(GLOBAL_PROC, /proc/explosion, locate(y69,x69,z), 0, rand(1,2),rand(1,5),rand(3,10), FALSE), 10 * ++num_explosions)
+				if(num_explosions == mine_limit_v2)
+					return
 
 #undef MINESWEEPERIMG
 #undef MINESWEEPER_GAME_MAIN_MENU
