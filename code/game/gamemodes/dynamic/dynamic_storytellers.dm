@@ -137,17 +137,19 @@ Property weights are:
 			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 				continue
 			rule.trim_candidates()
-			var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
-			/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
-				pick this particular ruleset. 
-				Let's use a toy example: there's 60 threat level and 10 threat spent.
-				We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
-				Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
-				When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
-				is 2.26 times as likely to be picked, all other things considered.
-				Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
-			*/
-			var/threat_weight = 1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0))
+			var/threat_weight = 1
+			if(!(rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
+				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+				/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
+					pick this particular ruleset. 
+					Let's use a toy example: there's 60 threat level and 10 threat spent.
+					We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
+					Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
+					When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
+					is 2.26 times as likely to be picked, all other things considered.
+					Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
+				*/
+				threat_weight = 1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
@@ -170,8 +172,10 @@ Property weights are:
 
 			rule.candidates = list(newPlayer)
 			rule.trim_candidates()
-			var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
-			var/threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
+			var/threat_weight = 1
+			if(!(rule.flags & MINOR_RULESET))
+				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+				threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
