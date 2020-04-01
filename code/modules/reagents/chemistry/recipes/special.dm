@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /obj/item/paper/secretrecipe
 	name = "old recipe"
-	var/recipe_id = "secretsauce"
+	var/recipe_id = /datum/reagent/consumable/secretsauce
 
 /obj/item/paper/secretrecipe/examine(mob/user) //Extra secret
 	if(isobserver(user))
@@ -186,6 +186,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
 	if(!recipe)
 		info = "This recipe is illegible."
+		return
 	var/list/dat = list("<ul>")
 	for(var/rid in recipe.required_reagents)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[rid]

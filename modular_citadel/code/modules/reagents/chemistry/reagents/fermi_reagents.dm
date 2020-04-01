@@ -93,7 +93,7 @@
 	if(method == INJECT)
 		var/turf/T = get_turf(M)
 		M.adjustOxyLoss(15)
-		M.Knockdown(50)
+		M.DefaultCombatKnockdown(50)
 		M.Stun(50)
 		M.emote("cough")
 		var/obj/item/toy/plush/P = pick(subtypesof(/obj/item/toy/plush))
@@ -129,7 +129,7 @@
 		if(16)
 			T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/fluffy
-			T.Remove(M)
+			T.Remove()
 			nT.Insert(M)
 			T.moveToNullspace()//To valhalla
 			to_chat(M, "<span class='big warning'>Your tongue feels... weally fwuffy!!</span>")
@@ -152,7 +152,7 @@
 /datum/reagent/fermi/furranium/on_mob_delete(mob/living/carbon/M)
 	if(cached_purity < 0.95)//Only permanent if you're a good chemist.
 		nT = M.getorganslot(ORGAN_SLOT_TONGUE)
-		nT.Remove(M)
+		nT.Remove()
 		qdel(nT)
 		T.Insert(M)
 		to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
@@ -191,7 +191,7 @@
 	var/datum/component/nanites/N = C.GetComponent(/datum/component/nanites)
 	if(prob(5))
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
-		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
+		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(10))
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
@@ -218,7 +218,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 /datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	if(prob(15))
 		to_chat(C, "<span class='warning'>The residual voltage in your system causes you to seize up!</b></span>")
-		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
+		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(50))
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)

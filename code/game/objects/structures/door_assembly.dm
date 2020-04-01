@@ -205,6 +205,9 @@
 					if(!mineral)
 						if(istype(G, /obj/item/stack/sheet/mineral) && G.sheettype)
 							var/M = G.sheettype
+							var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
+							if(!mineralassembly)
+								return
 							if(G.get_amount() >= 2)
 								playsound(src, 'sound/items/crowbar.ogg', 100, 1)
 								user.visible_message("[user] adds [G.name] to the airlock assembly.", \
@@ -214,7 +217,6 @@
 										return
 									to_chat(user, "<span class='notice'>You install [M] plating into the airlock assembly.</span>")
 									G.use(2)
-									var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
 									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
 									transfer_assembly_vars(src, MA, TRUE)
 							else
@@ -241,6 +243,7 @@
 				//door.req_access = req_access
 				door.electronics = electronics
 				door.heat_proof = heat_proof_finished
+				door.security_level = 0
 				if(electronics.one_access)
 					door.req_one_access = electronics.accesses
 				else
@@ -258,13 +261,13 @@
 	update_name()
 	update_icon()
 
-/obj/structure/door_assembly/update_icon()
-	cut_overlays()
+/obj/structure/door_assembly/update_overlays()
+	. = ..()
 	if(!glass)
-		add_overlay(get_airlock_overlay("fill_construction", icon))
+		. += get_airlock_overlay("fill_construction", icon)
 	else if(glass)
-		add_overlay(get_airlock_overlay("glass_construction", overlays_file))
-	add_overlay(get_airlock_overlay("panel_c[state+1]", overlays_file))
+		. += get_airlock_overlay("glass_construction", overlays_file)
+	. += get_airlock_overlay("panel_c[state+1]", overlays_file)
 
 /obj/structure/door_assembly/proc/update_name()
 	name = ""

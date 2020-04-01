@@ -149,12 +149,23 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("meat" = 1)
+	slices_num = 6
+	slice_path = /obj/item/reagent_containers/food/snacks/salami
 	foodtype = MEAT | BREAKFAST
 	var/roasted = FALSE
 
 /obj/item/reagent_containers/food/snacks/sausage/Initialize()
 	. = ..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
+
+/obj/item/reagent_containers/food/snacks/salami
+	name = "salami"
+	filling_color = "#CD4122"
+	desc = "A slice of cured salami."
+	icon_state = "salami"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	tastes = list("meat" = 1, "smoke" = 1)
+	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/kebab
 	trash = /obj/item/stack/rods
@@ -225,9 +236,10 @@
 	if(iscarbon(M))
 		M.visible_message("[src] bursts out of [M]!</span>")
 		M.emote("scream")
-		M.Knockdown(40)
+		M.DefaultCombatKnockdown(40)
 		M.adjustBruteLoss(60)
 		Expand()
+		return TRUE
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
@@ -325,7 +337,7 @@
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog plate"
 	desc = "A plate with two small corn dogs, with two dimples of ketchup and mustard to dip them in."
-	icon_state = "dorndog"
+	icon_state = "corndog"
 	trash = /obj/item/trash/plate/alt
 	tastes = list("hotdog" = 2, "mustard and ketchup" = 1, "fryed bread" = 1)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/mustard = 5, /datum/reagent/consumable/ketchup = 5)

@@ -6,7 +6,6 @@
 #define BELLIES_NAME_MIN 2
 #define BELLIES_NAME_MAX 12
 #define BELLIES_DESC_MAX 1024
-#define FLAVOR_MAX 40
 
 /mob/living/proc/insidePanel()
 	set name = "Vore Panel"
@@ -242,22 +241,13 @@
 	dat += "<a href='?src=\ref[src];applyprefs=1'>Reload Slot Prefs</a>"
 
 	dat += "<HR>"
-	switch(user.digestable)
-		if(TRUE)
-			dat += "<br><a style='background:#173d15;' href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: ON)</a>"
-		if(FALSE)
-			dat += "<br><a style='background:#990000;' href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: OFF)</a>"
-	switch(user.devourable)
-		if(TRUE)
-			dat += "<br><a style='background:#173d15;' href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: ON)</a>"
-		if(FALSE)
-			dat += "<br><a style='background:#990000;' href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: OFF)</a>"
-	switch(user.feeding)
-		if(TRUE)
-			dat += "<br><a style='background:#173d15;' href='?src=\ref[src];toggledfeed=1'>Toggle Feeding (Currently: ON)</a>"
-		if(FALSE)
-			dat += "<br><a style='background:#990000;' href='?src=\ref[src];toggledfeed=1'>Toggle Feeding (Currently: OFF)</a>"
-
+	var/pref_on = "#173d15"
+	var/pref_off = "#990000"
+	dat += "<br><a style='background:[user.digestable ? pref_on : pref_off];' href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: [user.digestable ? "ON" : "OFF"])</a>"
+	dat += "<br><a style='background:[user.devourable ? pref_on : pref_off];' href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: [user.devourable ? "ON" : "OFF"])</a>"
+	dat += "<br><a style='background:[user.feeding ? pref_on : pref_off];' href='?src=\ref[src];toggledfeed=1'>Toggle Feeding (Currently: [user.feeding ? "ON" : "OFF"])</a>"
+	if(user.client.prefs)
+		dat += "<br><a style='background:[user.client.prefs.lickable ? pref_on : pref_off];' href='?src=\ref[src];toggledlickable=1'>Toggle Licking (Currently: [user.client.prefs.lickable ? "ON" : "OFF"])</a>"
 	//Returns the dat html to the vore_look
 	return dat
 
@@ -583,7 +573,7 @@
 		if(new_bulge == 0) //Disable.
 			selected.bulge_size = 0
 			to_chat(user,"<span class='notice'>Your stomach will not be seen on examine.</span>")
-		else if (!IsInRange(new_bulge,25,200))
+		else if (!ISINRANGE(new_bulge,25,200))
 			selected.bulge_size = 0.25 //Set it to the default.
 			to_chat(user,"<span class='notice'>Invalid size.</span>")
 		else if(new_bulge)
@@ -668,18 +658,19 @@
 		user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(!user.save_vore_prefs())
+		if(!(user.client?.prefs))
+			return FALSE
+		if(!user.client.prefs.save_character())
 			to_chat(user, "<span class='warning'>Belly Preferences not saved!</span>")
-
+			log_admin("Could not save vore prefs on USER: [user].")
 		else
 			to_chat(user, "<span class='notice'>Belly Preferences were saved!</span>")
-			log_admin("Could not save vore prefs on USER: [user].")
 
 	if(href_list["applyprefs"])
-		var/alert = alert("Are you sure you want to reload character slot preferences? This will remove your current vore organs and eject their contents.","Confirmation","Reload","Cancel")
+		var/alert = alert("Are you sure you want to reload the current slot preferences? This will remove your current vore organs and eject their contents.","Confirmation","Reload","Cancel")
 		if(!alert == "Reload")
 			return FALSE
-		if(!user.apply_vore_prefs())
+		if(!user.copy_from_prefs_vr())
 			alert("ERROR: Vore preferences failed to apply!","Error")
 		else
 			to_chat(user,"<span class='notice'>Vore preferences applied from active slot!</span>")
@@ -690,13 +681,15 @@
 			return FALSE
 
 		new_flavor = readd_quotes(new_flavor)
-		if(length(new_flavor) > FLAVOR_MAX)
-			alert("Entered flavor/taste text too long. [FLAVOR_MAX] character limit.","Error!")
+		if(length(new_flavor) > MAX_TASTE_LEN)
+			alert("Entered flavor/taste text too long. [MAX_TASTE_LEN] character limit.","Error!")
 			return FALSE
 		user.vore_taste = new_flavor
 
 	if(href_list["toggledg"])
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
+		if(!user || !user.client)
+			return
 		switch(choice)
 			if("Cancel")
 				return FALSE
@@ -705,11 +698,12 @@
 			if("Prevent Digestion")
 				user.digestable = FALSE
 
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.digestable = user.digestable
+		user.client.prefs.digestable = user.digestable
 
 	if(href_list["toggledvor"])
 		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
+		if(!user || !user.client)
+			return
 		switch(choice)
 			if("Cancel")
 				return FALSE
@@ -718,11 +712,12 @@
 			if("Prevent Devourment")
 				user.devourable = FALSE
 
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.devourable = user.devourable
+		user.client.prefs.devourable = user.devourable
 
 	if(href_list["toggledfeed"])
 		var/choice = alert(user, "This button is to toggle your ability to be fed to others. Feeding predators is currently: [user.feeding ? "Allowed" : "Prevented"]", "", "Allow Feeding", "Cancel", "Prevent Feeding")
+		if(!user || !user.client)
+			return
 		switch(choice)
 			if("Cancel")
 				return FALSE
@@ -731,8 +726,19 @@
 			if("Prevent Feeding")
 				user.feeding = FALSE
 
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.feeding = user.feeding
+		user.client.prefs.feeding = user.feeding
+
+	if(href_list["toggledlickable"])
+		var/choice = alert(user, "This button is to toggle your ability to be licked. Being licked is currently: [user.client.prefs.lickable ? "Allowed" : "Prevented"]", "", "Allow Licking", "Cancel", "Prevent Licking")
+		if(!user || !user.client)
+			return
+		switch(choice)
+			if("Cancel")
+				return FALSE
+			if("Allow Licking")
+				user.client.prefs.lickable = TRUE
+			if("Prevent Licking")
+				user.client.prefs.lickable = FALSE
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return TRUE

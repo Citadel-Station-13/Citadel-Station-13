@@ -43,21 +43,23 @@
 		else
 			eye_color = H.eye_color
 		if(!special)
-			H.dna?.species?.handle_body() //regenerate eyeballs overlays.
+			H.dna?.species?.handle_body(H) //regenerate eyeballs overlays.
 	M.update_tint()
 	owner.update_sight()
 
-/obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/eyes/Remove(special = FALSE)
 	clear_eye_trauma()
 	. = ..()
-	if(ishuman(M) && eye_color)
-		var/mob/living/carbon/human/H = M
-		H.eye_color = old_eye_color
+	var/mob/living/carbon/C = .
+	if(!QDELETED(C))
+		if(ishuman(C) && eye_color)
+			var/mob/living/carbon/human/H = C
+			H.eye_color = old_eye_color
+			if(!special)
+				H.dna.species.handle_body(H)
 		if(!special)
-			H.dna.species.handle_body()
-	if(!special)
-		M.update_tint()
-		M.update_sight()
+			C.update_tint()
+			C.update_sight()
 
 /obj/item/organ/eyes/on_life()
 	..()
@@ -185,13 +187,13 @@
 	eye.update_brightness(M)
 	M.become_blind("flashlight_eyes")
 
-
-/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, special = FALSE)
-	eye.on = FALSE
-	eye.update_brightness(M)
-	eye.forceMove(src)
-	M.cure_blind("flashlight_eyes")
-	..()
+/obj/item/organ/eyes/robotic/flashlight/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		eye.on = FALSE
+		eye.update_brightness(owner)
+		eye.forceMove(src)
+		owner.cure_blind("flashlight_eyes")
+	return ..()
 
 // Welding shield implant
 /obj/item/organ/eyes/robotic/shield
@@ -202,7 +204,7 @@
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
 	return
 
-#define RGB2EYECOLORSTRING(definitionvar) ("[copytext(definitionvar,2,3)][copytext(definitionvar,4,5)][copytext(definitionvar,6,7)]")
+#define RGB2EYECOLORSTRING(definitionvar) ("[copytext_char(definitionvar, 2, 3)][copytext_char(definitionvar, 4, 5)][copytext_char(definitionvar, 6, 7)]")
 
 /obj/item/organ/eyes/robotic/glow
 	name = "High Luminosity Eyes"
@@ -227,7 +229,7 @@
 	terminate_effects()
 	. = ..()
 
-/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/eyes/robotic/glow/Remove(special = FALSE)
 	terminate_effects()
 	. = ..()
 
@@ -236,7 +238,6 @@
 		deactivate(TRUE)
 	active = FALSE
 	clear_visuals(TRUE)
-	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/item/organ/eyes/robotic/glow/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/organ_action/toggle))
@@ -255,6 +256,8 @@
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
+	if(!isnum(range))
+		return
 
 	set_distance(CLAMP(range, 0, max_light_beam_distance))
 	assume_rgb(C)
@@ -316,6 +319,8 @@
 	on_mob.forceMove(scanning)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
+		if(!scanning)
+			break
 		if(scanning.opacity || scanning.has_opaque_atom)
 			stop = TRUE
 		var/obj/effect/abstract/eye_lighting/L = LAZYACCESS(eye_lighting, i)
@@ -374,3 +379,7 @@
 	name = "insect eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = -1
+
+/obj/item/organ/eyes/ipc
+	name = "ipc eyes"
+	icon_state = "cybernetic_eyeballs"

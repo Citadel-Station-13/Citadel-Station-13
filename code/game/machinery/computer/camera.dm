@@ -36,7 +36,7 @@
 	return ..()
 
 /obj/machinery/computer/security/can_interact(mob/user)
-	if((!issilicon(user) && !Adjacent(user)) || is_blind(user) || !in_view_range(user, src))
+	if((!hasSiliconAccessInArea(user) && !Adjacent(user)) || is_blind(user) || !in_view_range(user, src))
 		return FALSE
 	return ..()
 
@@ -175,11 +175,10 @@
 	clockwork = TRUE //it'd look very weird
 	light_power = 0
 
-/obj/machinery/computer/security/telescreen/update_icon()
+/obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
-	return
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"

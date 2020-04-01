@@ -8,7 +8,7 @@
 #define REAGENT_PURITY_ACCURACY 0.001
 #define DEFAULT_SPECIFIC_HEAT 200
 
-// container_type defines
+//reagents_holder_flags defines
 #define INJECTABLE		(1<<0)	// Makes it possible to add reagents through droppers and syringes.
 #define DRAWABLE		(1<<1)	// Makes it possible to remove reagents through syringes.
 
@@ -22,6 +22,11 @@
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER 	(REFILLABLE | DRAINABLE | TRANSPARENT)
 
+//reagents_value defines, for cargo stuff.
+#define DEFAULT_REAGENTS_VALUE 1
+#define NO_REAGENTS_VALUE 0
+#define HARVEST_REAGENTS_VALUE 0.3
+
 
 #define TOUCH			1	// splashing
 #define INGEST			2	// ingestion
@@ -29,11 +34,18 @@
 #define PATCH			4	// patches
 #define INJECT			5	// injection
 
+//container_flags
+#define PH_WEAK 		(1 << 0)
+#define TEMP_WEAK 		(1 << 1)
+#define APTFT_VERB		(1 << 2) //APTFT stands for "amount per transfer from this"
+#define APTFT_ALTCLICK	(1 << 3)
 
 //defines passed through to the on_reagent_change proc
 #define DEL_REAGENT		1	// reagent deleted (fully cleared)
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
+
+#define THRESHOLD_UNHUSK 50 // health threshold for synthflesh/rezadone to unhusk someone
 
 //reagent bitflags, used for altering how they works
 #define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body

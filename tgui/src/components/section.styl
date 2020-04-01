@@ -32,12 +32,6 @@ section
     @extend $cell
     width: 100%
 
-  .compressedcell
-    @extend $cell
-    &:not(:first-child)
-      text-align: center
-      padding-top: 0px
-
   .cell
     @extend $cell
     &:not(:first-child)
@@ -47,3 +41,4 @@ section
       width: 75px
   &:not(:last-child)
       padding-right: 4px
+  

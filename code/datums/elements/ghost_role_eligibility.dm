@@ -1,12 +1,17 @@
 /datum/element/ghost_role_eligibility
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
+	id_arg_index = 3
 	var/list/timeouts = list()
 	var/list/mob/eligible_mobs = list()
+	var/penalizing = FALSE
+	var/free_ghost = FALSE
 
-/datum/element/ghost_role_eligibility/Attach(datum/target,penalize = FALSE)
+/datum/element/ghost_role_eligibility/Attach(datum/target,penalize = FALSE,free_ghosting = FALSE, penalize_on_ghost = FALSE)
 	. = ..()
 	if(!ismob(target))
 		return ELEMENT_INCOMPATIBLE
+	penalizing = penalize_on_ghost
+	free_ghost = free_ghosting
 	var/mob/M = target
 	if(!(M in eligible_mobs))
 		eligible_mobs += M
@@ -17,12 +22,17 @@
 			penalty += roundstart_quit_limit - world.time
 		if(penalty)
 			penalty += world.realtime
-			if(penalty - SSshuttle.realtimeofstart > SSshuttle.auto_call + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
-				penalty = CANT_REENTER_ROUND
+			if(SSautotransfer.can_fire && SSautotransfer.maxvotes)
+				var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
+				if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+					penalty = CANT_REENTER_ROUND
 			if(!(M.ckey in timeouts))
 				timeouts += M.ckey
 				timeouts[M.ckey] = 0
+			else if(timeouts[M.ckey] == CANT_REENTER_ROUND)
+				return
 			timeouts[M.ckey] = max(timeouts[M.ckey],penalty)
+	RegisterSignal(M,COMSIG_MOB_GHOSTIZE,.proc/get_ghost_flags)
 
 /datum/element/ghost_role_eligibility/Detach(mob/M)
 	. = ..()
@@ -38,7 +48,7 @@
 	return candidates
 
 /mob/proc/can_reenter_round(silent = FALSE)
-	var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+	var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(list(/datum/element/ghost_role_eligibility))
 	return eli.can_reenter_round(src,silent)
 
 /datum/element/ghost_role_eligibility/proc/can_reenter_round(var/mob/M,silent = FALSE)
@@ -52,3 +62,11 @@
 	if(!silent && M.client)
 		to_chat(M, "<span class='warning'>You are unable to reenter the round[timeout != CANT_REENTER_ROUND ? " yet. Your ghost role blacklist will expire in [DisplayTimeText(timeout - world.realtime)]" : ""].</span>")
 	return FALSE
+
+/datum/element/ghost_role_eligibility/proc/get_ghost_flags()
+	. = 0
+	if(!penalizing)
+		. |= COMPONENT_DO_NOT_PENALIZE_GHOSTING
+	if(free_ghost)
+		. |= COMPONENT_FREE_GHOSTING
+	return .

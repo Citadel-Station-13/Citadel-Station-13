@@ -2,7 +2,7 @@
 
 /datum/component/wearertargeting/phantomthief
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	signals = list(COMSIG_COMBAT_TOGGLED)
+	signals = list(COMSIG_LIVING_COMBAT_ENABLED)
 	proctype = .proc/handlefilterstuff
 	var/filter_x
 	var/filter_y

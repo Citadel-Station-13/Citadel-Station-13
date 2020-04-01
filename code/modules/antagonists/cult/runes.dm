@@ -22,7 +22,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = LOW_OBJ_LAYER
+	layer = SIGIL_LAYER
 	color = RUNE_COLOR_RED
 
 	var/invocation = "Aiy ele-mayo." //This is said by cultists when the rune is invoked.
@@ -219,7 +219,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
 			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
 			<span class='large_brass'>\"Give up and you will feel pain unlike anything you've ever felt!\"</span>")
-			L.Knockdown(80)
+			L.DefaultCombatKnockdown(80)
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
@@ -569,9 +569,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		mob_to_revive.grab_ghost()
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", ROLE_CULTIST, null, ROLE_CULTIST, 50, mob_to_revive)
+		var/list/mob/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", ROLE_CULTIST, null, ROLE_CULTIST, 50, mob_to_revive)
 		if(LAZYLEN(candidates))
-			var/mob/dead/observer/C = pick(candidates)
+			var/mob/C = pick(candidates)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(0)
@@ -885,7 +885,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(new_human)
 			new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 									  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
-			for(var/obj/I in new_human)
+			for(var/obj/item/I in new_human)
 				new_human.dropItemToGround(I, TRUE)
 			new_human.dust()
 	else if(choice == "Ascend as a Dark Spirit")
@@ -908,7 +908,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(affecting.key)
 				affecting.visible_message("<span class='warning'>[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming.</span>", \
 									 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
-				affecting.Knockdown(40)
+				affecting.DefaultCombatKnockdown(40)
 				break
 			if(affecting.health <= 10)
 				to_chat(G, "<span class='cultitalic'>Your body can no longer sustain the connection!</span>")
@@ -970,7 +970,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	playsound(T, 'sound/magic/enter_blood.ogg', 100, 1)
 	visible_message("<span class='warning'>A colossal shockwave of energy bursts from the rune, disintegrating it in the process!</span>")
 	for(var/mob/living/L in range(src, 3))
-		L.Knockdown(30)
+		L.DefaultCombatKnockdown(30)
 	empulse(T, 0.42*(intensity), 1)
 	var/list/images = list()
 	var/zmatch = T.z

@@ -199,8 +199,7 @@
 
 
 
-/obj/machinery/washing_machine/update_icon()
-	cut_overlays()
+/obj/machinery/washing_machine/update_icon_state()
 	if(busy)
 		icon_state = "wm_running_[bloody_mess]"
 	else if(bloody_mess)
@@ -208,8 +207,11 @@
 	else
 		var/full = contents.len ? 1 : 0
 		icon_state = "wm_[state_open]_[full]"
+
+/obj/machinery/washing_machine/update_overlays()
+	. = ..()
 	if(panel_open)
-		add_overlay("wm_panel")
+		. += "wm_panel"
 
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
 	if(panel_open && !busy && default_unfasten_wrench(user, W))

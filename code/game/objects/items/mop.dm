@@ -21,7 +21,7 @@
 
 /obj/item/mop/New()
 	..()
-	create_reagents(mopcap)
+	create_reagents(mopcap, NONE, NO_REAGENTS_VALUE)
 
 
 /obj/item/mop/proc/clean(turf/A)
@@ -42,7 +42,7 @@
 
 	var/mob/living/L = user
 
-	if(istype(L) && L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+	if(istype(L) && IS_STAMCRIT(L))
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
 		return
 

@@ -203,32 +203,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 
-	//Radiation
-/obj/item/clothing/head/helmet/space/hardsuit/engine/rad
-	name = "radiation hardsuit helmet"
-	desc = "A special helmet that protects against radiation and space. Not much else unfortunately."
-	icon_state = "cespace_helmet"
-	item_state = "nothing"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
-	item_color = "engineering"
-	resistance_flags = FIRE_PROOF
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	actions_types = list()
-
-/obj/item/clothing/suit/space/hardsuit/engine/rad
-	name = "radiation hardsuit"
-	desc = "A special suit that protects against radiation and space. Not much else unfortunately."
-	icon_state = "hardsuit-rad"
-	item_state = "nothing"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/rad
-	resistance_flags = FIRE_PROOF
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	mutantrace_variation = NONE
-
-/obj/item/clothing/head/helmet/space/hardsuit/engine/rad/attack_self()
-	return //Sprites required for flashlight
-
 	//Chief Engineer's hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	name = "advanced hardsuit helmet"
@@ -295,13 +269,13 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 90)
-	on = TRUE
+	on = FALSE
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDAMAGE
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon_state()
 	icon_state = "hardsuit[on]-[item_color]"
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize()
@@ -362,7 +336,7 @@
 		linkedsuit.update_icon()
 		user.update_inv_wear_suit()
 		user.update_inv_w_uniform()
-
+		user.update_equipment_speed_mods()
 
 /obj/item/clothing/suit/space/hardsuit/syndi
 	name = "blood-red hardsuit"
@@ -388,10 +362,13 @@
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 50, "energy" = 25, "bomb" = 55, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	visor_flags_inv = 0
-	visor_flags = 0
-	on = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
+
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug/Initialize()
+	. = ..()
+	soundloop.volume = 0
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit"
@@ -406,6 +383,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 
+/obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
+	slowdown = 0
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
@@ -471,6 +451,18 @@
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS | SCAN_REAGENTS
+
+/obj/item/clothing/head/helmet/space/hardsuit/medical/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == SLOT_HEAD)
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		DHUD.add_hud_to(user)
+
+/obj/item/clothing/head/helmet/space/hardsuit/medical/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		DHUD.remove_hud_from(user)
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
@@ -710,7 +702,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
 	listeningTo = user
 
-/obj/item/clothing/suit/space/hardsuit/ancient/dropped()
+/obj/item/clothing/suit/space/hardsuit/ancient/dropped(mob/user)
 	. = ..()
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
@@ -718,6 +710,29 @@
 /obj/item/clothing/suit/space/hardsuit/ancient/Destroy()
 	listeningTo = null
 	return ..()
+
+/obj/item/clothing/head/helmet/space/hardsuit/soviet
+	name = "soviet hardhelmet"
+	desc = "Crafted with the pride of the proletariat. The vengeful gaze of the visor roots out all fascists and capitalists."
+	item_state = "rig0-soviet"
+	item_color = "soviet"
+	icon_state = "rig0-soviet"
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 75)
+	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/space/hardsuit/soviet
+	name = "soviet hardsuit"
+	desc = "Crafted with the pride of the proletariat. The last thing the enemy sees is the bottom of this armor's boot."
+	item_state = "rig-soviet"
+	icon_state = "rig-soviet"
+	slowdown = 0.8
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 75)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/soviet
+	mutantrace_variation = NONE
+
+/obj/item/clothing/suit/space/hardsuit/soviet/Initialize()
+	. = ..()
+	allowed = GLOB.security_hardsuit_allowed
 
 /////////////SHIELDED//////////////////////////////////
 
@@ -928,15 +943,9 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/helm_overlay = mutable_appearance(icon, "knight_cydonia_overlay")
-
-	if(energy_color)
-		helm_overlay.color = energy_color
-
-	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
-
-	add_overlay(helm_overlay)
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/update_overlays()
+	. = ..()
+	. += mutable_appearance(icon, "knight_cydonia_overlay", color = energy_color)
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = ..()
@@ -965,15 +974,9 @@
 	set_light(1)
 	update_icon()
 
-/obj/item/clothing/suit/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/suit_overlay = mutable_appearance(icon, "knight_cydonia_overlay")
-
-	if(energy_color)
-		suit_overlay.color = energy_color
-
-	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
-
-	add_overlay(suit_overlay)
+/obj/item/clothing/suit/space/hardsuit/lavaknight/update_overlays()
+	. = ..()
+	. += mutable_appearance(icon, "knight_cydonia_overlay", color = energy_color)
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = ..()

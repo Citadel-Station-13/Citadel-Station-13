@@ -171,7 +171,8 @@
 		key_name = copytext(str_val, 1, key_pos)
 		if(lowercase)
 			key_name = lowertext(key_name)
-		key_value = copytext(str_val, key_pos + 1)
+		if(key_pos)
+			key_value = copytext(str_val, key_pos + length(str_val[key_pos]))
 		var/new_key
 		var/new_value
 		var/continue_check_value

@@ -31,7 +31,7 @@
 	var/color = mix_color_from_reagents(reagents.reagent_list)
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		var/turf/T = get_turf(hit_atom)
 		new/obj/effect/decal/cleanable/egg_smudge(T)
@@ -96,6 +96,16 @@
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
 	foodtype = MEAT | FRIED | BREAKFAST
 
+/obj/item/reagent_containers/food/snacks/baconegg
+	name = "bacon and eggs"
+	desc = "A fried egg with a side of bacon. Delicious!"
+	icon_state = "baconegg"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bitesize = 2
+	filling_color = "#FFFFF0"
+	tastes = list("egg" = 2, "bacon" = 2, "salt" = 1, "pepper" = 1)
+	foodtype = MEAT | FRIED | BREAKFAST
+
 /obj/item/reagent_containers/food/snacks/boiledegg
 	name = "boiled egg"
 	desc = "A hard boiled egg."
@@ -141,8 +151,17 @@
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4)
-	trash = /obj/item/trash/plate
 	w_class = WEIGHT_CLASS_NORMAL
+	trash = /obj/item/trash/plate
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 	foodtype = MEAT | BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/scotchegg
+	name = "scotch egg"
+	desc = "A boiled egg wrapped in a delicious, seasoned meatball."
+	icon_state = "scotchegg"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	bitesize = 3
+	filling_color = "#FFFFF0"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6)

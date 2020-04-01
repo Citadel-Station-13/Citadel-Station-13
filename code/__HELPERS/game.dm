@@ -8,8 +8,8 @@
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
 
-/proc/get_area_name(atom/X, format_text = FALSE)
-	var/area/A = isarea(X) ? X : get_area(X)
+/proc/get_area_name(atom/X, format_text = FALSE, get_base_area = FALSE)
+	var/area/A = get_base_area ? get_base_area(X) : get_area(X)
 	if(!A)
 		return null
 	return format_text ? format_text(A.name) : A.name
@@ -145,20 +145,6 @@
 			turfs += T
 	return turfs
 
-
-//This is the new version of recursive_mob_check, used for say().
-//The other proc was left intact because morgue trays use it.
-//Sped this up again for real this time
-/proc/recursive_hear_check(O)
-	var/list/processing_list = list(O)
-	. = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		if(A.flags_1 & HEAR_1)
-			. += A
-		processing_list.Cut(1, 2)
-		processing_list += A.contents
-
 /** recursive_organ_check
   * inputs: O (object to start with)
   * outputs:
@@ -238,35 +224,30 @@
 
 	return found_mobs
 
-
 /proc/get_hearers_in_view(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	. = list()
-
 	if(!T)
 		return
-
-	var/list/processing_list = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
-	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
+	var/list/processing = list()
+	if(R == 0)
+		processing += T.contents
+	else
 		var/lum = T.luminosity
-		T.luminosity = 6 // This is the maximum luminosity
-		var/list/cachedview = view(R, T)
-		for(var/mob/M in cachedview)
-			processing_list += M
-		for(var/obj/O in cachedview)
-			processing_list += O
+		T.luminosity = 6
+		var/list/cached_view = view(R, T)
+		for(var/mob/M in cached_view)
+			processing += M
+		for(var/obj/O in cached_view)
+			processing += O
 		T.luminosity = lum
-
-	while(processing_list.len) // recursive_hear_check inlined here
-		var/atom/A = processing_list[1]
+	var/i = 0
+	while(i < length(processing))
+		var/atom/A = processing[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
-		processing_list.Cut(1, 2)
-		processing_list += A.contents
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
+		processing += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
@@ -444,7 +425,7 @@
 			candidates -= M
 
 /proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
-	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
+	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(list(/datum/element/ghost_role_eligibility))
 	var/list/candidates = eligibility.get_all_ghost_role_eligible()
 	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
@@ -455,7 +436,7 @@
 	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
-		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
+		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (M.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
 			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))
@@ -568,3 +549,36 @@
 	var/pressure = environment.return_pressure()
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		. = TRUE
+
+/proc/ispipewire(item)
+	var/static/list/pipe_wire = list(
+		/obj/machinery/atmospherics,
+		/obj/structure/disposalpipe,
+		/obj/structure/cable
+	)
+	return (is_type_in_list(item, pipe_wire))
+
+// Find a obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+/proc/find_obstruction_free_location(var/range, var/atom/center, var/area/specific_area)
+	var/list/turfs = RANGE_TURFS(range, center)
+	var/list/possible_loc = list()
+	for(var/turf/found_turf in turfs)
+		var/area/turf_area = get_area(found_turf)
+		if(specific_area)	// We check if both the turf is a floor, and that it's actually in the area. // We also want a location that's clear of any obstructions.
+			if(!istype(turf_area, specific_area))
+				continue
+		if(!isspaceturf(found_turf))
+			if(!is_blocked_turf(found_turf))
+				possible_loc.Add(found_turf)
+	if(possible_loc.len < 1)	// Need at least one free location.
+		return FALSE
+	return pick(possible_loc)
+
+/proc/power_fail(duration_min, duration_max)
+	for(var/P in GLOB.apcs_list)
+		var/obj/machinery/power/apc/C = P
+		if(C.cell && SSmapping.level_trait(C.z, ZTRAIT_STATION))
+			var/area/A = C.area
+			if(GLOB.typecache_powerfailure_safe_areas[A.type])
+				continue
+			C.energy_fail(rand(duration_min,duration_max))

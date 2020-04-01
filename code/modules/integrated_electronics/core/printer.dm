@@ -33,7 +33,8 @@
 
 /obj/item/integrated_circuit_printer/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit, /obj/item/electronic_assembly))
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit, /obj/item/electronic_assembly))
+	materials.precise_insertion = TRUE
 
 /obj/item/integrated_circuit_printer/proc/print_program(mob/user)
 	if(!cloning)
@@ -107,7 +108,7 @@
 	interact(user)
 
 /obj/item/integrated_circuit_printer/interact(mob/user)
-	if(!(in_range(src, user) || issilicon(user)))
+	if(!(in_range(src, user) || hasSiliconAccessInArea(user)))
 		return
 
 	if(isnull(current_category))
@@ -189,16 +190,16 @@
 		var/cost = 400
 		if(ispath(build_type, /obj/item/electronic_assembly))
 			var/obj/item/electronic_assembly/E = SScircuit.cached_assemblies[build_type]
-			cost = E.materials[MAT_METAL]
+			cost = E.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 		else if(ispath(build_type, /obj/item/integrated_circuit))
 			var/obj/item/integrated_circuit/IC = SScircuit.cached_components[build_type]
-			cost = IC.materials[MAT_METAL]
+			cost = IC.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 		else if(!(build_type in SScircuit.circuit_fabricator_recipe_list["Tools"]))
 			return
 
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
-		if(!debug && !materials.use_amount_type(cost, MAT_METAL))
+		if(!debug && !materials.use_amount_mat(cost, /datum/material/iron))
 			to_chat(usr, "<span class='warning'>You need [cost] metal to build that!</span>")
 			return TRUE
 
@@ -270,14 +271,14 @@
 					return
 				else if(fast_clone)
 					var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-					if(debug || materials.use_amount_type(program["metal_cost"], MAT_METAL))
+					if(debug || materials.use_amount_mat(program["metal_cost"], /datum/material/iron))
 						cloning = TRUE
 						print_program(usr)
 					else
 						to_chat(usr, "<span class='warning'>You need [program["metal_cost"]] metal to build that!</span>")
 				else
 					var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-					if(!materials.use_amount_type(program["metal_cost"], MAT_METAL))
+					if(!materials.use_amount_mat(program["metal_cost"], /datum/material/iron))
 						to_chat(usr, "<span class='warning'>You need [program["metal_cost"]] metal to build that!</span>")
 						return
 					var/cloning_time = round(program["metal_cost"] / 15)
@@ -295,7 +296,7 @@
 				to_chat(usr, "<span class='notice'>Cloning has been canceled. Metal cost has been refunded.</span>")
 				cloning = FALSE
 				var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-				materials.use_amount_type(-program["metal_cost"], MAT_METAL) //use negative amount to regain the cost
+				materials.use_amount_mat(-program["metal_cost"], /datum/material/iron) //use negative amount to regain the cost
 
 
 	interact(usr)
