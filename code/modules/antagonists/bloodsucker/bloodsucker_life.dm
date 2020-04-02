@@ -140,7 +140,7 @@
 		return FALSE 
 	for(var/targetLimbZone in missing) 			// 1) Find ONE Limb and regenerate it.
 		C.regenerate_limb(targetLimbZone, FALSE)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
-		C.AddBloodVolume(50)
+		AddBloodVolume(50)
 		var/obj/item/bodypart/L = C.get_bodypart(targetLimbZone) // 2) Limb returns Damaged
 		L.brute_dam = 60
 		to_chat(C, "<span class='notice'>Your flesh knits as it regrows your [L]!</span>")
