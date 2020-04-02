@@ -1,4 +1,52 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"ab" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"ac" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"ad" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"ae" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"af" = (
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "aT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/button/door{
@@ -32,16 +80,6 @@
 "dN" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"dW" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -299,23 +337,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"wt" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
-"xg" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "xx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -542,16 +563,6 @@
 /obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"HW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "In" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -581,19 +592,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
-"JC" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
 /area/engine/engineering)
 "Kg" = (
 /obj/structure/cable/yellow{
@@ -824,19 +822,6 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/engine/engineering)
-"YY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plasteel,
 /area/engine/engineering)
 "Zb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1169,7 +1154,7 @@ xJ
 gf
 fh
 dN
-YY
+aa
 MD
 Ch
 Pt
@@ -1197,7 +1182,7 @@ LO
 Eu
 Pg
 cP
-JC
+ab
 tv
 rj
 Pt
@@ -1225,7 +1210,7 @@ NS
 xx
 fh
 zW
-dW
+ac
 ea
 rj
 Pt
@@ -1253,7 +1238,7 @@ yo
 me
 aT
 Aw
-JC
+ab
 tv
 rj
 Og
@@ -1280,7 +1265,7 @@ MJ
 jH
 FK
 Ch
-wt
+af
 tE
 rj
 rj
@@ -1333,7 +1318,7 @@ dz
 MJ
 "}
 (17,1,1) = {"
-wt
+af
 Zz
 Wf
 Ox
@@ -1389,7 +1374,7 @@ MJ
 MJ
 "}
 (19,1,1) = {"
-wt
+af
 eJ
 Zx
 nW
@@ -1448,7 +1433,7 @@ MJ
 jH
 Nz
 Ch
-wt
+af
 tE
 rj
 rj
@@ -1477,7 +1462,7 @@ AF
 WX
 HQ
 Aw
-JC
+ab
 tv
 rj
 Og
@@ -1505,7 +1490,7 @@ fh
 kh
 fh
 fh
-dW
+ac
 ea
 rj
 Pt
@@ -1533,7 +1518,7 @@ fh
 kh
 uG
 cP
-xg
+ad
 tv
 rj
 Pt
@@ -1561,7 +1546,7 @@ eA
 FY
 mB
 Rp
-HW
+ae
 Mi
 Ch
 Pt

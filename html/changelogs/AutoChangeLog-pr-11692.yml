@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - bugfix: "made color picking for character appearance show the colors when you pick them"
