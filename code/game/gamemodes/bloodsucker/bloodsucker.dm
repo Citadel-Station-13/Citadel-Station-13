@@ -11,8 +11,10 @@
 	// The antags you're allowed to be if turning Vassal.
 
 /proc/AmBloodsucker(mob/living/M, falseIfInDisguise = FALSE)
+	if(!M.mind)
+		return FALSE
 	// No Datum
-	if(!M.mind || !M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	if(!M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		return FALSE
 	return TRUE
 

@@ -93,27 +93,25 @@
 	owner.current.adjustCloneLoss(-0.1 * (actual_regen * 2) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4) * mult)
 	// No Bleeding
-	if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
+	/*if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
 		var/mob/living/carbon/human/H = owner.current
 		if(H.bleed_rate > 0) //Only heal bleeding if we are actually bleeding
-			H.bleed_rate =- 0.5 + actual_regen * 0.2 * mult
+			H.bleed_rate =- 0.5 + actual_regen * 0.2 */
 	if(iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		var/mob/living/carbon/C = owner.current
 		var/costMult = 1 // Coffin makes it cheaper
 		var/fireheal = 0 	// BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
-		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_DEATHCOMA)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
+		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_FAKEDEATH)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
 		if(amInCoffinWhileTorpor)
 			mult *= 4 // Increase multiplier if we're sleeping in a coffin.
-			fireheal = min(C.getFireLoss(), actual_regen) // NOTE: Burn damage ONLY heals in torpor.
-			costMult = 0.25
+			fireheal = min(C.getFireLoss(), regen_rate) // NOTE: Burn damage ONLY heals in torpor.
 			C.ExtinguishMob()
 			CureDisabilities() 	// Extinguish Fire
 			C.remove_all_embedded_objects() // Remove Embedded!
 			owner.current.regenerate_organs() // Heal Organs (will respawn original eyes etc. but we replace right away, next)
 			CheckVampOrgans() // Heart, Eyes
-		else
-			if(owner.current.blood_volume <= 0) // No Blood? Lower Mult
-				mult = 0.25
+			if(check_limbs(costMult))
+				return TRUE
 			
 		// BRUTE: Always Heal
 		var/bruteheal = min(C.getBruteLoss(), actual_regen)
@@ -131,27 +129,29 @@
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
 			AddBloodVolume((bruteheal * -0.5 + fireheal * -1 + toxinheal * -0.2) / mult * costMult)	// Costs blood to heal
 			return TRUE // Healed! Done for this tick.
-		if(amInCoffinWhileTorpor) 	// Limbs? (And I have no other healing)
-			var/list/missing = owner.current.get_missing_limbs() 	// Heal Missing
-			if(missing.len) 	// Cycle through ALL limbs and regen them!
-				for (var/targetLimbZone in missing) 			// 1) Find ONE Limb and regenerate it.
-					owner.current.regenerate_limb(targetLimbZone, 0)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
-					var/obj/item/bodypart/L = owner.current.get_bodypart(targetLimbZone) // 2) Limb returns Damaged
-					AddBloodVolume(50 * costMult)	// Costs blood to heal
-					L.brute_dam = 60
-					to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
-					playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
-				// DONE! After regenerating ANY number of limbs, we stop here.
-				return TRUE
-			else // REMOVED: For now, let's just leave prosthetics on. Maybe you WANT to be a robovamp. In actuality, robovamps are very bad.
-				// Remove Prosthetic/False Limb
-				for(var/obj/item/bodypart/BP in C.bodyparts)
-					if(istype(BP) && BP.status == 2)
-						to_chat(owner.current, "<span class='notice'>Your body expels the [BP]!</span>")
-						BP.drop_limb()
-						return TRUE 
-						// NOTE: Limbs have a "status", like their hosts "stat". 2 is dead (aka Prosthetic). 1 seems to be idle/alive.*/
-	return FALSE
+		
+
+
+/datum/antagonist/bloodsucker/proc/check_limbs(costMult)
+	var/limb_regen_cost = 50 * costMult
+	var/mob/living/carbon/C = owner.current
+	var/list/missing = C.get_missing_limbs()
+	if(missing.len && C.blood_volume < limb_regen_cost + 5)
+		return FALSE 
+	for(var/targetLimbZone in missing) 			// 1) Find ONE Limb and regenerate it.
+		C.regenerate_limb(targetLimbZone, FALSE)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
+		C.AddBloodVolume(50)
+		var/obj/item/bodypart/L = C.get_bodypart(targetLimbZone) // 2) Limb returns Damaged
+		L.brute_dam = 60
+		to_chat(C, "<span class='notice'>Your flesh knits as it regrows your [L]!</span>")
+		playsound(C, 'sound/magic/demon_consume.ogg', 50, TRUE)
+		return TRUE
+	/*for(var/obj/item/bodypart/BP in C.bodyparts)
+		if(!istype(BP) && !BP.status == 2)
+			return FALSE
+		to_chat(C, "<span class='notice'>Your body expels the [BP]!</span>")
+		BP.drop_limb()
+		return TRUE */
 
 /datum/antagonist/bloodsucker/proc/CureDisabilities()
 	var/mob/living/carbon/C = owner.current
