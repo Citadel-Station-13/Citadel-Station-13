@@ -44116,20 +44116,20 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "N2O to Pure"
-	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/engine/atmos)
 "bIZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "N2O to Pure"
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
@@ -47280,10 +47280,6 @@
 /area/engine/atmos)
 "bPw" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Plasma to Pure"
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -47300,6 +47296,9 @@
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -49746,10 +49745,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUH" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "CO2 to Pure"
-	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -49767,6 +49762,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
@@ -53170,13 +53168,10 @@
 	name = "Inner Pipe Access";
 	req_access_txt = "24"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "O2 to Pure"
-	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "cbl" = (
@@ -81712,6 +81707,14 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/crew_quarters/cryopod)
+"eJq" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "CO2 to Pure"
+	},
+/turf/open/floor/plasteel/dark,
+/area/engine/atmos)
 "eQf" = (
 /obj/machinery/computer/shuttle/mining/common{
 	dir = 1
@@ -82112,6 +82115,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"kJW" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "O2 to Pure"
+	},
+/turf/open/floor/plasteel/dark,
+/area/engine/atmos)
 "kOt" = (
 /obj/item/multitool,
 /obj/item/screwdriver,
@@ -82335,6 +82345,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"njd" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Plasma to Pure"
+	},
+/turf/open/floor/plasteel/dark,
+/area/engine/atmos)
 "nnK" = (
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/paper_bin,
@@ -126382,7 +126400,7 @@ dDm
 bIS
 bZK
 cbk
-ccP
+kJW
 ceh
 cfx
 bAR
@@ -127657,11 +127675,11 @@ bIZ
 bKG
 bMl
 dhj
-bIZ
+njd
 bKG
 bMl
 bKG
-bIZ
+eJq
 bKG
 bMl
 bYB
