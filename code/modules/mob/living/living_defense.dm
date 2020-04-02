@@ -104,13 +104,14 @@
 	return FALSE
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	// Throwingdatum can be null if someone had an accident() while slipping with an item in hand.
 	var/obj/item/I
 	var/throwpower = 30
 	if(isitem(AM))
 		I = AM
 		throwpower = I.throwforce
 	var/impacting_zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	if(run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, throwingdatum.thrower, impacting_zone) & BLOCK_SUCCESS)
+	if(run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum?.thrower, impacting_zone) & BLOCK_SUCCESS)
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
