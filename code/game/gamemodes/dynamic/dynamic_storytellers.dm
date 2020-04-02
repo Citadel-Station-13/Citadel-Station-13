@@ -327,9 +327,10 @@ Property weights are:
 	property_weights = list("story_potential" = 2)
 
 
-/datum/dynamic_storyteller/story/do_process()
+/datum/dynamic_storyteller/story/calculate_threat()
 	var/current_time = (world.time / SSautotransfer.targettime)*180
-	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.5),0.1)
+	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.25),0.1)
+	..()
 
 /datum/dynamic_storyteller/classic
 	name = "Classic"
