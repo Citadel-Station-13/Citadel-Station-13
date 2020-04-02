@@ -25,7 +25,15 @@
 	icon_state = "sneakboots"
 	item_state = "sneakboots"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	clothing_flags = TRAIT_SILENT_STEP
+
+/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_SHOES)
+		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
+
+/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"

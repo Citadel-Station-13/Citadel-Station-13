@@ -22,9 +22,9 @@
 	// STATS
 	var/bloodsucker_level 
 	var/bloodsucker_level_unspent = 1
-	var/regen_rate = 0.3					// How fast do I regenerate?
+	var/regen_rate = 0.3				// How fast do I regenerate?
 	var/additional_regen                // How much additional blood regen we gain from bonuses such as high blood.
-	var/feed_amount = 15					// Amount of blood drawn from a target per tick.
+	var/feed_amount = 15				// Amount of blood drawn from a target per tick.
 	var/max_blood_volume = 600			// Maximum blood a Vamp can hold via feeding.
 	// OBJECTIVES
 	var/list/datum/objective/objectives_given = list()	// For removal if needed.
@@ -90,7 +90,7 @@
 	owner.current.blood_volume = max(owner.current.blood_volume,BLOOD_VOLUME_SAFE)
 
 /datum/antagonist/bloodsucker/threat()
-	return threat+3*vamplevel
+	return ..() + 3 * bloodsucker_level
 
 
 /datum/antagonist/bloodsucker/proc/SelectFirstName()

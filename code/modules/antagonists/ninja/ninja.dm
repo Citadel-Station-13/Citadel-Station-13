@@ -4,12 +4,13 @@
 	job_rank = ROLE_NINJA
 	show_name_in_check_antagonists = TRUE
 	antag_moodlet = /datum/mood_event/focused
+	threat = 8
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
 	var/give_equipment = TRUE
 
 /datum/antagonist/ninja/threat()
-	return helping_station ? -8 : 8
+	return helping_station ? -(..()) : ..()
 
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current

@@ -96,6 +96,13 @@
 			equip(silent)
 		owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
+/datum/antagonist/traitor/antag_panel_objectives()
+	. = ..()
+	if(contractor_hub?.assigned_targets && length(contractor_hub.assigned_targets))
+		. += "<i><b>Contract Targets</b></i>:<br>"
+		for(var/datum/mind/M in contractor_hub.assigned_targets)
+			. += "<b> - </b>[key_name(M, FALSE, TRUE)]<br>"
+
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	update_traitor_icons_added()
@@ -292,4 +299,4 @@
 	return SSticker.mode.name == "traitor"
 
 /datum/antagonist/traitor/threat()
-	return threat+traitor_kind.threat
+	return (..())+traitor_kind.threat

@@ -275,8 +275,9 @@
 			break
 
 		// Blood Gulp Sound
-		owner.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
-
+		owner.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
+		if(!amSilent)
+			target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 	// DONE!
 	//DeactivatePower(user,target)
 	if(amSilent)
@@ -299,7 +300,7 @@
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankkilled", /datum/mood_event/drankkilled) // BAD // in bloodsucker_life.dm
 
 /datum/action/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
-	return ..()  && target && (!target_grappled || user.pulling == target) && sucking_checks(target, TRUE, TRUE) // Active, and still Antag,
+	return ..()  && target && (!target_grappled || user.pulling == target) && sucking_checks(target, TRUE, TRUE) // Active, and still antag,
 	// NOTE: We only care about pulling if target started off that way. Mostly only important for Aggressive feed.
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target)

@@ -236,7 +236,7 @@
 	else	// No damage, OR toxin healed AND brute healed and NOT in coffin (since you cannot heal burn)
 		if(total_damage <= 0 || total_toxloss <= 0 && total_brute <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			// Not Daytime, Not in Torpor
-			if(!SSticker.mode.is_daylight() && HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
+			if(!SSticker.mode.is_daylight() && HAS_TRAIT_FROM(owner.current, TRAIT_FAKEDEATH, "bloodsucker"))
 				Torpor_End()
 		// Fake Unconscious
 		if(poweron_masquerade == TRUE && total_damage >= owner.current.getMaxHealth() - HEALTH_THRESHOLD_FULLCRIT)
@@ -261,6 +261,7 @@
 	owner.current.stat = SOFT_CRIT
 	owner.current.remove_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 	owner.current.cure_fakedeath("bloodsucker")
+	REMOVE_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")

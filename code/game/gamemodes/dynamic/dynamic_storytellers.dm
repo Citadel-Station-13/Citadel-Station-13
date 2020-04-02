@@ -17,6 +17,7 @@
 	var/weight = 3 // Weights for randomly picking storyteller. Multiplied by score after voting.
 	var/event_frequency_lower = 6 MINUTES // How rare events will be, at least.
 	var/event_frequency_upper = 20 MINUTES // How rare events will be, at most.
+	var/min_players = -1 // How many players are required for this one to start.
 	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
@@ -53,11 +54,13 @@ Property weights are:
 		if(H.stat != DEAD && is_station_level(T.z) && !("Station" in H.faction))
 			threat += H.threat()
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
-		if (M.stat != DEAD && M.mind && M.mind.assigned_role)
-			if(length(M.mind.antag_datums))
-				threat += SSjob.GetJob(M.mind.assigned_role).GetThreat()
-			else
-				threat -= SSjob.GetJob(M.mind.assigned_role).GetThreat()
+		if (M?.mind?.assigned_role && M.stat != DEAD)
+			var/datum/job/J = SSjob.GetJob(M.mind.assigned_role)
+			if(J)
+				if(length(M.mind.antag_datums))
+					threat += J.GetThreat()
+				else
+					threat -= J.GetThreat()
 	threat += (mode.current_players[CURRENT_DEAD_PLAYERS].len)*dead_player_weight
 	return round(threat,0.1)
 
@@ -112,7 +115,7 @@ Property weights are:
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in mode.roundstart_rules)
-		if (rule.acceptable(mode.roundstart_pop_ready, mode.threat_level) && mode.threat >= rule.cost)	// If we got the population and threat required
+		if (rule.acceptable(mode.roundstart_pop_ready, mode.threat_level))	// If we got the population and threat required
 			rule.candidates = mode.candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
@@ -193,11 +196,12 @@ Property weights are:
 	config_tag = "chaotic"
 	curve_centre = 10
 	desc = "High chaos modes. Revs, wizard, clock cult. Multiple antags at once. Chaos is kept up all round."
-	property_weights = list("extended" = -1, "chaos" = 2)
+	property_weights = list("extended" = -1, "chaos" = 1)
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
 	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
+	min_players = 40
 	var/refund_cooldown = 0
 	
 /datum/dynamic_storyteller/chaotic/do_process()
@@ -219,6 +223,7 @@ Property weights are:
 	curve_centre = 2
 	curve_width = 1.5
 	weight = 2
+	min_players = 30
 	flags = WAROPS_ALWAYS_ALLOWED
 	property_weights = list("valid" = 3, "trust" = 5)
 

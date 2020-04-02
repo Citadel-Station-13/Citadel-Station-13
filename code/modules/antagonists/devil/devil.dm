@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/ascendable = FALSE
 
 /datum/antagonist/devil/threat()
-	return threat + form * 10
+	return ..() + form * 10
 
 /datum/antagonist/devil/can_be_owned(datum/mind/new_owner)
 	. = ..()

@@ -320,8 +320,8 @@
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
-		parts += "[FOURSPACES]Threat left: [mode.threat]"
+		parts += "[FOURSPACES]Final threat level: [mode.threat_level]"
+		parts += "[FOURSPACES]Final threat: [mode.threat]"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
 			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
@@ -331,7 +331,7 @@
 		for(var/entry in mode.threat_tallies)
 			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
 		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat_level,"Final threat level")
-		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat,"Threat left")
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat,"Final Threat")
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()

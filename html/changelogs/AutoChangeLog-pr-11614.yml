@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixing an issue with the split personality removing the original owner from the round if the body died while the stranger was in control."

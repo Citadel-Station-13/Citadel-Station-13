@@ -106,7 +106,7 @@
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
-		var/threat = round(mode.threat_level/10)
+		var/threat = CLAMP(round(mode.threat_level/10),1,10)
 		if (job_check < required_enemies[threat])
 			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
@@ -216,7 +216,7 @@
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
 	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
-	if ((antag_count < max_traitors) && prob(mode.threat_level))//adding traitors if the antag population is getting low
+	if ((antag_count < max_traitors) && prob(min(100,mode.threat_level)))//adding traitors if the antag population is getting low
 		return ..()
 	else
 		return FALSE
@@ -415,7 +415,7 @@
 	required_candidates = 1
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/clockcult)
 	weight = 4
-	cost = 10
+	cost = 20
 	requirements = list(101,101,101,80,60,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
