@@ -70,6 +70,7 @@
 	icon_living = "swarmer"
 	icon_dead = "swarmer_unactivated"
 	icon_gib = null
+	threat = 0.5
 	wander = 0
 	harm_intent_damage = 5
 	minbodytemp = 0

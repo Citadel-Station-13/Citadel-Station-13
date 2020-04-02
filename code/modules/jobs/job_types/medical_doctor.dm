@@ -15,6 +15,7 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
+	threat = 0.5
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"

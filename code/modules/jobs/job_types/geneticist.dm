@@ -17,6 +17,7 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_GENETICIST
+	threat = 1.5
 
 /datum/outfit/job/geneticist
 	name = "Geneticist"

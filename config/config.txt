@@ -7,6 +7,7 @@ $include antag_rep.txt
 $include donator_groupings.txt
 $include dynamic_config.txt
 $include plushies/defines.txt
+$include job_threats.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:

@@ -33,6 +33,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."
+	threat = 30
 	health = 2500
 	maxHealth = 2500
 	spacewalk = TRUE

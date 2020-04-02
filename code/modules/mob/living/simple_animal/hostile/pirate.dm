@@ -11,6 +11,7 @@
 	response_help = "pushes"
 	response_disarm = "shoves"
 	response_harm = "hits"
+	threat = 3
 	speed = 0
 	maxHealth = 115
 	health = 115

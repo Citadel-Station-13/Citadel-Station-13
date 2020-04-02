@@ -8,6 +8,9 @@
 	var/give_objectives = TRUE
 	var/give_equipment = TRUE
 
+/datum/antagonist/ninja/threat()
+	return helping_station ? -8 : 8
+
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_ninja_icons_added(M)

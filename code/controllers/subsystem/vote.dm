@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/generated_actions = list()
 	var/next_pop = 0
 
-	var/obfuscated = FALSE//CIT CHANGE - adds obfuscated/admin-only votes
+	var/display_votes = SHOW_RESULTS|SHOW_VOTES|SHOW_WINNER|SHOW_ABSTENTION //CIT CHANGE - adds obfuscated/admin-only votes
 
 	var/list/stored_gamemode_votes = list() //Basically the last voted gamemode is stored here for end-of-round use.
 
@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(vote)
 	voted.Cut()
 	voting.Cut()
 	scores.Cut()
-	obfuscated = FALSE //CIT CHANGE - obfuscated votes
+	display_votes = initial(display_votes) //CIT CHANGE - obfuscated votes
 	remove_action_buttons()
 
 /datum/controller/subsystem/vote/proc/get_result()
@@ -250,7 +250,7 @@ SUBSYSTEM_DEF(vote)
 	if(winners.len > 0)
 		if(was_roundtype_vote)
 			stored_gamemode_votes = list()
-		if(!obfuscated)
+		if(display_votes & SHOW_RESULTS)
 			if(vote_system == SCHULZE_VOTING)
 				text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
 			if(vote_system == MAJORITY_JUDGEMENT_VOTING)
@@ -261,15 +261,15 @@ SUBSYSTEM_DEF(vote)
 				votes = 0
 			if(was_roundtype_vote)
 				stored_gamemode_votes[choices[i]] = votes
-			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
+			text += "\n<b>[choices[i]]:</b> [display_votes & SHOW_RESULTS ? votes : "???"]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
-			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes
+			if(winners.len > 1 && display_votes & SHOW_WINNER) //CIT CHANGE - adds obfuscated votes
 				text = "\n<b>Vote Tied Between:</b>"
 				for(var/option in winners)
 					text += "\n\t[option]"
 			. = pick(winners)
-			text += "\n<b>Vote Result: [obfuscated ? "???" : .]</b>" //CIT CHANGE - adds obfuscated votes
-		else
+			text += "\n<b>Vote Result: [display_votes & SHOW_WINNER ? . : "???"]</b>" //CIT CHANGE - adds obfuscated votes
+		if(display_votes & SHOW_ABSTENTION)
 			text += "\n<b>Did not vote:</b> [GLOB.clients.len-voted.len]"
 	else if(vote_system == SCORE_VOTING)
 		for(var/score_name in scores)
@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(vote)
 				score = 0
 			if(was_roundtype_vote)
 				stored_gamemode_votes[score_name] = score
-			text = "\n<b>[score_name]:</b> [obfuscated ? "???" : score]"
+			text = "\n<b>[score_name]:</b> [display_votes & SHOW_RESULTS ? score : "???"]"
 			. = 1
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
@@ -295,7 +295,7 @@ SUBSYSTEM_DEF(vote)
 				if(islist(myvote))
 					for(var/j=1,j<=myvote.len,j++)
 						SSblackbox.record_feedback("nested tally","voting",1,list(vote_title_text,"[j]\th",choices[myvote[j]]))
-	if(obfuscated) //CIT CHANGE - adds obfuscated votes. this messages admins with the vote's true results
+	if(!(display_votes & SHOW_RESULTS)) //CIT CHANGE - adds obfuscated votes. this messages admins with the vote's true results
 		var/admintext = "Obfuscated results"
 		if(vote_system != SCORE_VOTING)
 			if(vote_system == SCHULZE_VOTING)
@@ -327,7 +327,7 @@ SUBSYSTEM_DEF(vote)
 				if(CONFIG_GET(flag/modetier_voting))
 					reset()
 					started_time = 0
-					initiate_vote("mode tiers","server",hideresults=FALSE,votesystem=SCORE_VOTING,forced=TRUE, vote_time = 30 MINUTES)
+					initiate_vote("mode tiers","server", votesystem=SCORE_VOTING, forced=TRUE, vote_time = 30 MINUTES)
 					to_chat(world,"<b>The vote will end right as the round starts.</b>")
 					return .
 			if("restart")
@@ -354,11 +354,15 @@ SUBSYSTEM_DEF(vote)
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
 				GLOB.master_mode = "dynamic"
 				var/list/runnable_storytellers = config.get_runnable_storytellers()
+				var/datum/dynamic_storyteller/picked
 				for(var/T in runnable_storytellers)
 					var/datum/dynamic_storyteller/S = T
+					if(stored_gamemode_votes[initial(S.name)] == 1 && CHECK_BITFIELD(initial(S.flags), FORCE_IF_WON))
+						picked = S
 					runnable_storytellers[S] *= round(stored_gamemode_votes[initial(S.name)]*100000,1)
-				var/datum/dynamic_storyteller/S = pickweightAllowZero(runnable_storytellers)
-				GLOB.dynamic_storyteller_type = S
+				if(!picked)
+					picked = pickweightAllowZero(runnable_storytellers)
+				GLOB.dynamic_storyteller_type = picked
 			if("map")
 				var/datum/map_config/VM = config.maplist[.]
 				message_admins("The map has been voted for and will change to: [VM.map_name]")
@@ -432,7 +436,7 @@ SUBSYSTEM_DEF(vote)
 					saved -= usr.ckey
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults, votesystem = PLURALITY_VOTING, forced = FALSE,vote_time = -1)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, display = display_votes, votesystem = PLURALITY_VOTING, forced = FALSE,vote_time = -1)//CIT CHANGE - adds display argument to votes to allow for obfuscated votes
 	vote_system = votesystem
 	if(!mode)
 		if(started_time)
@@ -452,7 +456,7 @@ SUBSYSTEM_DEF(vote)
 
 		SEND_SOUND(world, sound('sound/misc/notice2.ogg'))
 		reset()
-		obfuscated = hideresults //CIT CHANGE - adds obfuscated votes
+		display_votes = display //CIT CHANGE - adds obfuscated votes
 		switch(vote_type)
 			if("restart")
 				choices.Add("Restart Round","Continue Playing")
@@ -503,6 +507,21 @@ SUBSYSTEM_DEF(vote)
 					if(!option || mode || !usr.client)
 						break
 					choices.Add(option)
+				var/keep_going = TRUE
+				var/toggles = SHOW_RESULTS|SHOW_VOTES|SHOW_WINNER
+				while(keep_going)
+					var/list/choices = list()
+					for(var/A in GLOB.display_vote_settings)
+						var/toggletext
+						var/bitflag = GLOB.display_vote_settings[A]
+						toggletext = "[toggles & bitflag ? "Show" : "Hide"] [A]"
+						choices[toggletext] = bitflag
+					var/chosen = input(usr, "Toggle vote display settings. Cancel to finalize.", toggles) as null|anything in choices
+					if(!chosen)
+						keep_going = FALSE
+					else
+						toggles ^= choices[chosen]
+				display_votes = toggles
 			else
 				return 0
 		mode = vote_type
@@ -573,7 +592,7 @@ SUBSYSTEM_DEF(vote)
 							ivotedforthis = ((C.ckey in voted) && (i in voted[C.ckey]))
 					if(!votes)
 						votes = 0
-					. += "<li>[ivotedforthis ? "<b>" : ""]<a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)[ivotedforthis ? "</b>" : ""]</li>" // CIT CHANGE - adds obfuscated votes
+					. += "<li>[ivotedforthis ? "<b>" : ""]<a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([display_votes & SHOW_VOTES ? votes : (admin ? "??? ([votes])" : "???")] votes)[ivotedforthis ? "</b>" : ""]</li>" // CIT CHANGE - adds obfuscated votes
 					if(choice_descs.len >= i)
 						. += "<li>[choice_descs[i]]</li>"
 				. += "</ul><hr>"
