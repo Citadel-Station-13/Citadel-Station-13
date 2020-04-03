@@ -128,7 +128,8 @@ There are several things that need to be remembered:
 		var/variant_flag = NONE
 
 		if((DIGITIGRADE in dna.species.species_traits) && U.mutantrace_variation & STYLE_DIGITIGRADE)
-			alt_worn = 'icons/mob/uniform_digi.dmi'
+			if(!(U.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
+				alt_worn = U.anthro_mob_worn_overlay || 'icons/mob/uniform_digi.dmi'
 			variant_flag |= STYLE_DIGITIGRADE
 
 		var/mutable_appearance/uniform_overlay
@@ -285,7 +286,8 @@ There are several things that need to be remembered:
 		var/alt_icon = S.alternate_worn_icon || 'icons/mob/feet.dmi'
 		var/variation_flag = NONE
 		if((DIGITIGRADE in dna.species.species_traits) && S.mutantrace_variation & STYLE_DIGITIGRADE)
-			alt_icon = 'icons/mob/feet_digi.dmi'
+			if(!(S.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
+				alt_icon = S.anthro_mob_worn_overlay || 'icons/mob/feet_digi.dmi'
 			variation_flag |= STYLE_DIGITIGRADE
 
 		var/t_state = shoes.item_state
@@ -337,7 +339,8 @@ There are several things that need to be remembered:
 		else if(dna.species.mutant_bodyparts["snout"] && dna.features["snout"] != "None")
 			muzzled = TRUE
 		if(muzzled && H.mutantrace_variation & STYLE_MUZZLE)
-			alt_icon = 'icons/mob/head_muzzled.dmi'
+			if(!(H.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
+				alt_icon = H.anthro_mob_worn_overlay || 'icons/mob/head_muzzled.dmi'
 			variation_flag |= STYLE_MUZZLE
 
 		overlays_standing[HEAD_LAYER] = H.build_worn_icon(H.icon_state, HEAD_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, variation_flag, FALSE)
@@ -391,6 +394,7 @@ There are several things that need to be remembered:
 		update_observer_view(wear_suit,1)
 
 		var/worn_icon = wear_suit.alternate_worn_icon || 'icons/mob/suit.dmi'
+		var/worn_state = wear_suit.icon_state
 		var/center = FALSE
 		var/dimension_x = 32
 		var/dimension_y = 32
@@ -400,6 +404,7 @@ There are several things that need to be remembered:
 			T = GLOB.taur_list[dna.features["taur"]]
 
 		if(S.mutantrace_variation)
+
 			if(T?.taur_mode)
 				var/init_worn_icon = worn_icon
 				variation_flag |= S.mutantrace_variation & T.taur_mode || S.mutantrace_variation & T.alt_taur_mode
@@ -411,14 +416,20 @@ There are several things that need to be remembered:
 					if(STYLE_PAW_TAURIC)
 						worn_icon = 'icons/mob/taur_canine.dmi'
 				if(worn_icon != init_worn_icon) //worn icon sprite was changed, taur offsets will have to be applied.
+					if(S.taur_mob_worn_overlay) //not going to make several new variables for all taur types. Nope.
+						var/static/list/icon_to_state = list('icons/mob/taur_hooved.dmi' = "_hooved", 'icons/mob/taur_naga.dmi' = "_snake", 'icons/mob/taur_canine.dmi' = "_paws")
+						worn_state += icon_to_state[worn_icon]
+						worn_icon = S.taur_mob_worn_overlay
 					center = T.center
 					dimension_x = T.dimension_x
 					dimension_y = T.dimension_y
+
 			else if((DIGITIGRADE in dna.species.species_traits) && S.mutantrace_variation & STYLE_DIGITIGRADE) //not a taur, but digitigrade legs.
-				worn_icon = 'icons/mob/suit_digi.dmi'
+				if(!(S.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
+					worn_icon = S.anthro_mob_worn_overlay || 'icons/mob/suit_digi.dmi'
 				variation_flag |= STYLE_DIGITIGRADE
 
-		overlays_standing[SUIT_LAYER] = S.build_worn_icon(wear_suit.icon_state, SUIT_LAYER, worn_icon, FALSE, NO_FEMALE_UNIFORM, variation_flag, FALSE)
+		overlays_standing[SUIT_LAYER] = S.build_worn_icon(worn_state, SUIT_LAYER, worn_icon, FALSE, NO_FEMALE_UNIFORM, variation_flag, FALSE)
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
@@ -470,7 +481,8 @@ There are several things that need to be remembered:
 		else if(dna.species.mutant_bodyparts["snout"] && dna.features["snout"] != "None")
 			muzzled = TRUE
 		if(muzzled && M.mutantrace_variation & STYLE_MUZZLE)
-			alt_icon = 'icons/mob/mask_muzzled.dmi'
+			if(!(M.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
+				alt_icon = M.anthro_mob_worn_overlay || 'icons/mob/mask_muzzled.dmi'
 			variation_flag |= STYLE_MUZZLE
 
 		overlays_standing[FACEMASK_LAYER] = M.build_worn_icon(wear_mask.icon_state, FACEMASK_LAYER, alt_icon, FALSE, NO_FEMALE_UNIFORM, variation_flag, FALSE)

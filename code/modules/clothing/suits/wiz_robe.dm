@@ -72,6 +72,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -102,12 +103,14 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	item_state = "magusred"
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 
 /obj/item/clothing/suit/wizrobe/santa
@@ -115,6 +118,7 @@
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"

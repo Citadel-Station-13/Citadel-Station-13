@@ -58,4 +58,4 @@
 	primary_color = "#FFFFFF"
 	secondary_color = "#8CC6FF"
 	body_parts_covered = GROIN
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON

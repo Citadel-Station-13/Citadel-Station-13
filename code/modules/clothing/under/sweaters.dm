@@ -6,9 +6,7 @@
 	item_color = "bb_turtle"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = TRUE
-	icon = 'modular_citadel/icons/obj/clothing/turtlenecks.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/sweater/black
 	name = "black sweater"

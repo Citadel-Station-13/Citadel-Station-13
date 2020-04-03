@@ -24,6 +24,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
+
+	var/icon/anthro_mob_worn_overlay //Version of the above dedicated to muzzles/digitigrade
+	var/icon/taur_mob_worn_overlay // Idem but for taurs.
+
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
 	max_integrity = 200

@@ -41,6 +41,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/misc/mailman
 	name = "mailman's jumpsuit"
@@ -203,6 +204,7 @@
 	item_state = "duraskirt"
 	can_adjust = FALSE
 	body_parts_covered = CHEST|GROIN|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/misc/squatter
 	name = "slav squatter tracksuit"
@@ -229,7 +231,7 @@
 	item_state = "keyholesweater"
 	item_color = "keyholesweater"
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/misc/stripper
 	name = "pink stripper outfit"
@@ -238,6 +240,7 @@
 	item_color = "stripper_p"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/misc/stripper/green
 	name = "green stripper outfit"
@@ -313,7 +316,7 @@
 	secondary_color = "#FF3535"
 	body_parts_covered = CHEST|ARMS	//Because there's no bottom included
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/misc/poly_tanktop
 	name = "polychromic tank top"
@@ -326,7 +329,7 @@
 	tertiary_color = "#8CC6FF"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/misc/poly_tanktop/female
 	name = "polychromic feminine tank top"
