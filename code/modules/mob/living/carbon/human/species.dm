@@ -1533,13 +1533,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			log_combat(user, target, "punched")
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
-							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
-			var/knockdown_duration = 40 + (punchedstam + (punchedbrute*0.5))*0.8 - armor_block
-			target.DefaultCombatKnockdown(knockdown_duration)
-			target.forcesay(GLOB.hit_appends)
-			log_combat(user, target, "got a stun punch with their previous punch")
+			if((punchedstam > 50) && prob(punchedstam*0.5)) \\If our punch victim has been hit above the threshold, and they have more than 50 stamina damage, roll for stun, probability of 1% per 2 stamina damage
+				target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
+								"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, "<span class='danger'>You knock [target] down!</span>")
+				var/knockdown_duration = 40 + (punchedstam + (punchedbrute*0.5))*0.8 - armor_block
+				target.DefaultCombatKnockdown(knockdown_duration)
+				target.forcesay(GLOB.hit_appends)
+				log_combat(user, target, "got a stun punch with their previous punch")
 		else if(!(target.mobility_flags & MOBILITY_STAND))
 			target.forcesay(GLOB.hit_appends)
 
