@@ -333,91 +333,91 @@
 				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested","commandreport")
 				CM.lastTimeUsed = world.time
 
-
-		// AI interface
-		if("ai-main")
-			aicurrmsg = null
-			aistate = STATE_DEFAULT
-		if("ai-callshuttle")
-			aistate = STATE_CALLSHUTTLE
-		if("ai-callshuttle2")
-			SSshuttle.requestEvac(usr, href_list["call"])
-			aistate = STATE_DEFAULT
-		if("ai-messagelist")
-			aicurrmsg = null
-			aistate = STATE_MESSAGELIST
-		if("ai-viewmessage")
-			aistate = STATE_VIEWMESSAGE
-			if (!aicurrmsg)
-				if(href_list["message-num"])
-					var/msgnum = text2num(href_list["message-num"])
-					aicurrmsg = messages[msgnum]
-				else
-					aistate = STATE_MESSAGELIST
-		if("ai-delmessage")
-			aistate = aicurrmsg ? STATE_DELMESSAGE : STATE_MESSAGELIST
-		if("ai-delmessage2")
-			if(aicurrmsg)
-				if(currmsg == aicurrmsg)
-					currmsg = null
-				messages -= aicurrmsg
+		if(hasSiliconAccessInArea(usr))
+			// AI interface
+			if("ai-main")
 				aicurrmsg = null
-			aistate = STATE_MESSAGELIST
-		if("ai-respond")
-			var/answer = text2num(href_list["answer"])
-			if(!aicurrmsg || !answer || aicurrmsg.possible_answers.len < answer)
+				aistate = STATE_DEFAULT
+			if("ai-callshuttle")
+				aistate = STATE_CALLSHUTTLE
+			if("ai-callshuttle2")
+				SSshuttle.requestEvac(usr, href_list["call"])
+				aistate = STATE_DEFAULT
+			if("ai-messagelist")
+				aicurrmsg = null
 				aistate = STATE_MESSAGELIST
-			else
-				if(!aicurrmsg.answered)
-					aicurrmsg.answered = answer
-					log_game("[key_name(usr)] answered [aicurrmsg.title] comm message. Answer : [aicurrmsg.answered]")
-					if(aicurrmsg.answer_callback)
-						aicurrmsg.answer_callback.InvokeAsync()
+			if("ai-viewmessage")
 				aistate = STATE_VIEWMESSAGE
-		if("ai-status")
-			aistate = STATE_STATUSDISPLAY
-		if("ai-announce")
-			make_announcement(usr, 1)
-		if("ai-securitylevel")
-			if(security_level_cd > world.time)
-				to_chat(usr, "<span class='warning'>Security level protocols are currently on cooldown. Please stand by.</span>")
-				return
-			tmp_alertlevel = text2num( href_list["newalertlevel"] )
-			if(!tmp_alertlevel)
-				tmp_alertlevel = SEC_LEVEL_GREEN
-			var/old_level = GLOB.security_level
-			if(!tmp_alertlevel)
-				tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel < SEC_LEVEL_GREEN)
-				tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel > SEC_LEVEL_AMBER)
-				tmp_alertlevel = SEC_LEVEL_AMBER //Cannot engage delta with this
-			set_security_level(tmp_alertlevel)
-			security_level_cd = world.time + 15 SECONDS
-			if(GLOB.security_level != old_level)
-				//Only notify people if an actual change happened
-				var/security_level = get_security_level()
-				log_game("[key_name(usr)] has changed the security level to [security_level] from [src] at [AREACOORD(usr)].")
-				message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [security_level] from [src] at [AREACOORD(usr)].")
-				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has changed the security level to [security_level] from [src] at [get_area_name(usr, TRUE)].</span>", usr)
-			tmp_alertlevel = 0
-			aistate = STATE_DEFAULT
-		if("ai-changeseclevel")
-			aistate = STATE_ALERT_LEVEL
-		if("ai-emergencyaccess")
-			aistate = STATE_TOGGLE_EMERGENCY
-		if("ai-enableemergency")
-			make_maint_all_access()
-			log_game("[key_name(usr)] enabled emergency maintenance access.")
-			message_admins("[ADMIN_LOOKUPFLW(usr)] enabled emergency maintenance access.")
-			deadchat_broadcast("<span class='deadsay bold'>[usr.real_name] enabled emergency maintenance access.</span>", usr)
-			aistate = STATE_DEFAULT
-		if("ai-disableemergency")
-			revoke_maint_all_access()
-			log_game("[key_name(usr)] disabled emergency maintenance access.")
-			message_admins("[ADMIN_LOOKUPFLW(usr)] disabled emergency maintenance access.")
-			deadchat_broadcast("<span class='deadsay bold'>[usr.real_name] disabled emergency maintenance access.</span>", usr)
-			aistate = STATE_DEFAULT
+				if (!aicurrmsg)
+					if(href_list["message-num"])
+						var/msgnum = text2num(href_list["message-num"])
+						aicurrmsg = messages[msgnum]
+					else
+						aistate = STATE_MESSAGELIST
+			if("ai-delmessage")
+				aistate = aicurrmsg ? STATE_DELMESSAGE : STATE_MESSAGELIST
+			if("ai-delmessage2")
+				if(aicurrmsg)
+					if(currmsg == aicurrmsg)
+						currmsg = null
+					messages -= aicurrmsg
+					aicurrmsg = null
+				aistate = STATE_MESSAGELIST
+			if("ai-respond")
+				var/answer = text2num(href_list["answer"])
+				if(!aicurrmsg || !answer || aicurrmsg.possible_answers.len < answer)
+					aistate = STATE_MESSAGELIST
+				else
+					if(!aicurrmsg.answered)
+						aicurrmsg.answered = answer
+						log_game("[key_name(usr)] answered [aicurrmsg.title] comm message. Answer : [aicurrmsg.answered]")
+						if(aicurrmsg.answer_callback)
+							aicurrmsg.answer_callback.InvokeAsync()
+					aistate = STATE_VIEWMESSAGE
+			if("ai-status")
+				aistate = STATE_STATUSDISPLAY
+			if("ai-announce")
+				make_announcement(usr, 1)
+			if("ai-securitylevel")
+				if(security_level_cd > world.time)
+					to_chat(usr, "<span class='warning'>Security level protocols are currently on cooldown. Please stand by.</span>")
+					return
+				tmp_alertlevel = text2num( href_list["newalertlevel"] )
+				if(!tmp_alertlevel)
+					tmp_alertlevel = SEC_LEVEL_GREEN
+				var/old_level = GLOB.security_level
+				if(!tmp_alertlevel)
+					tmp_alertlevel = SEC_LEVEL_GREEN
+				if(tmp_alertlevel < SEC_LEVEL_GREEN)
+					tmp_alertlevel = SEC_LEVEL_GREEN
+				if(tmp_alertlevel > SEC_LEVEL_AMBER)
+					tmp_alertlevel = SEC_LEVEL_AMBER //Cannot engage delta with this
+				set_security_level(tmp_alertlevel)
+				security_level_cd = world.time + 15 SECONDS
+				if(GLOB.security_level != old_level)
+					//Only notify people if an actual change happened
+					var/security_level = get_security_level()
+					log_game("[key_name(usr)] has changed the security level to [security_level] from [src] at [AREACOORD(usr)].")
+					message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [security_level] from [src] at [AREACOORD(usr)].")
+					deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has changed the security level to [security_level] from [src] at [get_area_name(usr, TRUE)].</span>", usr)
+				tmp_alertlevel = 0
+				aistate = STATE_DEFAULT
+			if("ai-changeseclevel")
+				aistate = STATE_ALERT_LEVEL
+			if("ai-emergencyaccess")
+				aistate = STATE_TOGGLE_EMERGENCY
+			if("ai-enableemergency")
+				make_maint_all_access()
+				log_game("[key_name(usr)] enabled emergency maintenance access.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] enabled emergency maintenance access.")
+				deadchat_broadcast("<span class='deadsay bold'>[usr.real_name] enabled emergency maintenance access.</span>", usr)
+				aistate = STATE_DEFAULT
+			if("ai-disableemergency")
+				revoke_maint_all_access()
+				log_game("[key_name(usr)] disabled emergency maintenance access.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] disabled emergency maintenance access.")
+				deadchat_broadcast("<span class='deadsay bold'>[usr.real_name] disabled emergency maintenance access.</span>", usr)
+				aistate = STATE_DEFAULT
 
 	updateUsrDialog()
 
