@@ -101,7 +101,7 @@
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
-	D.apply_damage(5, BRUTE)
+	D.apply_damage(damage_base*0.5, BRUTE)
 	D.DefaultCombatKnockdown(40, override_hardstun = 0.01, override_stamdmg = 25)
 	log_combat(A, D, "leg sweeped")
 	return 1
@@ -112,7 +112,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	if(D.losebreath <= 10)
 		D.losebreath = CLAMP(D.losebreath + 5, 0, 10)
-	D.adjustOxyLoss(10)
+	D.adjustOxyLoss(damage_base + 5)
 	log_combat(A, D, "quickchoked")
 	return 1
 
@@ -120,7 +120,7 @@
 	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
 				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.apply_damage(5, BRUTE)
+	D.apply_damage(damage_base*0.5, BRUTE)
 	if(D.silent <= 10)
 		D.silent = CLAMP(D.silent + 10, 0, 10)
 	log_combat(A, D, "neck chopped")
@@ -137,7 +137,7 @@
 		return 1
 	log_combat(A, D, "punched")
 	var/picked_hit_type = pick("punches", "kicks")
-	var/bonus_damage = 10
+	var/bonus_damage = (damage_base + 5)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		bonus_damage += 5
 		picked_hit_type = "stomps on"

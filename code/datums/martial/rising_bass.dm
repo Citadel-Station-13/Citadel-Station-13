@@ -87,7 +87,7 @@
 		D.visible_message("<span class='warning'>[A] kicks [D] in the side, sliding them over!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the side, forcing you to step away!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
+		D.apply_damage(damage_base*0.5, BRUTE, BODY_ZONE_CHEST)
 		D.DefaultCombatKnockdown(60)
 		var/L = !checkfordensity(H,D) ? (!checkfordensity(K,D) ? D.loc : K) : H
 		D.forceMove(L)
@@ -104,8 +104,8 @@
 						  "<span class='userdanger'>[A] flips you over their shoulder, slamming you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.emote("scream")
-		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
-		D.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+		D.apply_damage(damage_base, BRUTE, BODY_ZONE_CHEST)
+		D.apply_damage(damage_base + 25, BRUTE, BODY_ZONE_HEAD)
 		D.Sleeping(60)
 		D.DefaultCombatKnockdown(300)
 		D.forceMove(L)
@@ -121,7 +121,7 @@
 		playsound(get_turf(A), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		var/atom/F = get_edge_target_turf(D, get_dir(A, get_step_away(D, A)))
 		D.throw_at(F, 10, 1)
-		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
+		D.apply_damage(damage_base, BRUTE, BODY_ZONE_CHEST)
 		D.DefaultCombatKnockdown(90)
 		log_combat(A, D, "repulse punched (Rising Bass)")
 		repulsecool = world.time + 3 SECONDS
@@ -134,7 +134,7 @@
 		D.visible_message("<span class='warning'>[A] smashes their foot down on [D]'s foot!</span>", \
 						  "<span class='userdanger'>[A] smashes your foot!</span>")
 		playsound(get_turf(A), 'sound/weapons/punch1.ogg', 50, 1, -1)
-		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		D.apply_damage(damage_base*0.5, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		D.dropItemToGround(D.get_active_held_item())
 		log_combat(A, D, "foot smashed (Rising Bass)")
 		return TRUE

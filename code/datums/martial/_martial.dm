@@ -10,6 +10,7 @@
 	var/help_verb
 	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
+	var/damage_base //this is set on teach and is a random value between your species punchdamagelow and punchdamagehigh
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return FALSE
@@ -50,6 +51,8 @@
 	if(help_verb)
 		H.verbs += help_verb
 	H.mind.martial_art = src
+	ADD_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
+	damage_base = rand(H.dna.species.punchdamagelow, H.dna.species.punchdamagehigh)
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)
@@ -68,7 +71,8 @@
 	else
 		var/datum/martial_art/X = H.mind.default_martial_art
 		X.teach(H)
-
+	REMOVE_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
+	
 /datum/martial_art/proc/on_remove(mob/living/carbon/human/H)
 	if(help_verb)
 		H.verbs -= help_verb

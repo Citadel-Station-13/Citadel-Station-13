@@ -207,11 +207,11 @@
 /obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
 	..()
 	if(slot == SLOT_GLOVES)
-		ADD_TRAIT(user, carrytrait, CLOTHING_TRAIT)
+		ADD_TRAIT(user, carrytrait, GLOVE_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/dropped(mob/user)
 	..()
-	REMOVE_TRAIT(user, carrytrait, CLOTHING_TRAIT)
+	REMOVE_TRAIT(user, carrytrait, GLOVE_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"

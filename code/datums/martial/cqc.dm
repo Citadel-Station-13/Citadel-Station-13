@@ -46,7 +46,7 @@
 		D.visible_message("<span class='warning'>[A] slams [D] into the ground!</span>", \
 						  	"<span class='userdanger'>[A] slams you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
-		D.apply_damage(10, BRUTE)
+		D.apply_damage(damage_base + 5, BRUTE)
 		D.DefaultCombatKnockdown(120)
 		log_combat(A, D, "slammed (CQC)")
 	return TRUE
@@ -60,7 +60,7 @@
 		playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 		var/atom/throw_target = get_edge_target_turf(D, A.dir)
 		D.throw_at(throw_target, 1, 14, A)
-		D.apply_damage(10, BRUTE)
+		D.apply_damage(damage_base + 5, BRUTE)
 		log_combat(A, D, "kicked (CQC)")
 	if(!CHECK_MOBILITY(D, MOBILITY_STAND) && CHECK_MOBILITY(D, MOBILITY_USE))
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
@@ -68,7 +68,7 @@
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
 		D.SetSleeping(300)
-		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
+		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_base + 10, 150)
 	return TRUE
 
 /datum/martial_art/cqc/proc/Pressure(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -76,7 +76,7 @@
 		return FALSE
 	log_combat(A, D, "pressured (CQC)")
 	D.visible_message("<span class='warning'>[A] punches [D]'s neck!</span>")
-	D.adjustStaminaLoss(60)
+	D.apply_damage(damage_base + 55, STAMINA)
 	playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 	return TRUE
 
@@ -89,7 +89,7 @@
 		log_combat(A, D, "restrained (CQC)")
 		D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
 							"<span class='userdanger'>[A] locks you into a restraining position!</span>")
-		D.adjustStaminaLoss(20)
+		D.apply_damage(damage_base + 15, STAMINA)
 		D.Stun(100)
 		restraining = TRUE
 		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
@@ -106,8 +106,8 @@
 		var/obj/item/I = D.get_active_held_item()
 		if(I && D.temporarilyRemoveItemFromInventory(I))
 			A.put_in_hands(I)
-		D.adjustStaminaLoss(50)
-		D.apply_damage(25, BRUTE)
+		D.apply_damage(damage_base + 45, STAMINA)
+		D.apply_damage(damage_base + 20, BRUTE)
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -135,7 +135,7 @@
 	log_combat(A, D, "attacked (CQC)")
 	A.do_attack_animation(D)
 	var/picked_hit_type = pick("CQC'd", "Big Bossed")
-	var/bonus_damage = 13
+	var/bonus_damage = (damage_base + 7)
 	if(!CHECK_MOBILITY(D, MOBILITY_STAND))
 		bonus_damage += 5
 		picked_hit_type = "stomps on"
@@ -151,7 +151,7 @@
 		D.visible_message("<span class='warning'>[A] leg sweeps [D]!", \
 							"<span class='userdanger'>[A] leg sweeps you!</span>")
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
-		D.apply_damage(10, BRUTE)
+		D.apply_damage(bonus_damage, BRUTE)
 		D.DefaultCombatKnockdown(60)
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
@@ -172,7 +172,7 @@
 			if(I && D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
 			D.Jitter(2)
-			D.apply_damage(5, BRUTE)
+			D.apply_damage(damage_base*0.5, BRUTE)
 	else
 		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
