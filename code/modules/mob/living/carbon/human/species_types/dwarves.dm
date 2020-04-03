@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 				to_chat(owner, "<span class = 'warning'>Someone should really clean up in here!</span>")
 				last_filth_spam = world.time
 		if(26 to 50)
-			if(prob(7)) //And then the probability they vomit along with it.
+			if(prob(6)) //And then the probability they vomit along with it.
 				to_chat(owner, "<span class = 'danger'>The stench makes you queasy.</span>")
 				owner.vomit(10) //I think vomit should stay over a disgust adjustment.
 		if(51 to 75)
