@@ -235,7 +235,7 @@
 
 /obj/structure/reagent_dispensers/keg/milk
 	name = "keg of milk"
-	desc = "A keg of generic, UTH processed, filtered spacemarket milk. Neat."
+	desc = "A keg of generic, UTH processed, skimmed spacemarket milk. Neat."
 	icon_state = "whitekeg"
 	reagent_id = /datum/reagent/consumable/milk
 
