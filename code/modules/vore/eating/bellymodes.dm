@@ -172,7 +172,7 @@
 					to_update = TRUE
 
 	//because dragons need snowflake guts
-		if(digest_mode == DM_DRAGON)
+		if(DM_DRAGON)
 			if(HAS_TRAIT(owner, TRAIT_PACIFISM)) //imagine var editing this when you're a pacifist. smh
 				digest_mode = DM_NOISY
 				return
@@ -235,23 +235,23 @@
 					digest_item(T)
 
 	/////////////////////////// Make any noise ///////////////////////////
-		if(play_sound)
-			if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
-				LAZYCLEARLIST(hearing_mobs)
-				for(var/mob/M in hearers(VORE_SOUND_RANGE, owner))
-					if(!M.client || !(M.client.prefs.cit_toggles & DIGESTION_NOISES))
-						continue
-					LAZYADD(hearing_mobs, M)
-					last_hearcheck = world.time
-				for(var/mob/M in hearing_mobs) //so we don't fill the whole room with the sound effect
-					if(M && M.client && (isturf(M.loc) || (M.loc != src.contents))) //to avoid people on the inside getting the outside sounds and their direct sounds + built in sound pref check
-						M.playsound_local(owner.loc, play_sound, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
-						//these are all external sound triggers now, so it's ok.
-		if(to_update)
-			for(var/mob/living/M in contents)
-				if(M.client)
-					M.updateVRPanel()
-			if(owner.client)
-				owner.updateVRPanel()
+	if(play_sound)
+		if((world.time + NORMIE_HEARCHECK) > last_hearcheck)
+			LAZYCLEARLIST(hearing_mobs)
+			for(var/mob/M in hearers(VORE_SOUND_RANGE, owner))
+				if(!M.client || !(M.client.prefs.cit_toggles & DIGESTION_NOISES))
+					continue
+				LAZYADD(hearing_mobs, M)
+				last_hearcheck = world.time
+			for(var/mob/M in hearing_mobs) //so we don't fill the whole room with the sound effect
+				if(M && M.client && (isturf(M.loc) || (M.loc != src.contents))) //to avoid people on the inside getting the outside sounds and their direct sounds + built in sound pref check
+					M.playsound_local(owner.loc, play_sound, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
+					//these are all external sound triggers now, so it's ok.
+	if(to_update)
+		for(var/mob/living/M in contents)
+			if(M.client)
+				M.updateVRPanel()
+		if(owner.client)
+			owner.updateVRPanel()
 
 	return SSBELLIES_PROCESSED
