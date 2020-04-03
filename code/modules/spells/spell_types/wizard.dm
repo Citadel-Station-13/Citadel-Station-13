@@ -4,7 +4,6 @@
 
 	school = "evocation"
 	charge_max = 200
-	clothes_req = 1
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
@@ -38,7 +37,6 @@
 
 	school = "transmutation"
 	charge_max = 400
-	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
 	range = -1
@@ -58,7 +56,7 @@
 
 	school = "conjuration"
 	charge_max = 120
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -77,7 +75,7 @@
 
 	school = "conjuration"
 	charge_max = 360
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -92,7 +90,6 @@
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range."
 	charge_max = 400
-	clothes_req = 1
 	invocation = "NEC CANTIO"
 	invocation_type = "shout"
 	range = -1
@@ -109,7 +106,6 @@
 
 	school = "abjuration"
 	charge_max = 20
-	clothes_req = 1
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -131,8 +127,7 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = 0
-	cult_req = 1
+	clothes_req = SPELL_CULT_GARB
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
@@ -140,7 +135,6 @@
 
 	school = "abjuration"
 	charge_max = 600
-	clothes_req = 1
 	invocation = "SCYAR NILA"
 	invocation_type = "shout"
 	range = -1
@@ -156,7 +150,6 @@
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
-	clothes_req = 1
 	invocation = "TOKI YO TOMARE"
 	invocation_type = "shout"
 	range = 0
@@ -174,7 +167,6 @@
 
 	school = "conjuration"
 	charge_max = 1200
-	clothes_req = 1
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = "shout"
 	range = 1
@@ -189,7 +181,7 @@
 
 	school = "conjuration"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -206,7 +198,7 @@
 
 	school = "conjuration"
 	charge_max = 1200
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "IA IA"
 	invocation_type = "shout"
 	summon_amt = 10
@@ -221,7 +213,7 @@
 
 	school = "transmutation"
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	message = "<span class='notice'>Your eyes cry out in pain!</span>"
@@ -233,7 +225,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
-	cult_req = 1
+	clothes_req = SPELL_CULT_GARB
 	charge_max = 5000
 	summon_amt = 2
 
@@ -253,7 +245,6 @@
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
 	charge_max = 400
-	clothes_req = 1
 	invocation = "GITTAH WEIGH"
 	invocation_type = "shout"
 	range = 5
@@ -314,7 +305,7 @@
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
-	clothes_req = 0
+	clothes_req = NONE
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
@@ -335,7 +326,7 @@
 	name = "Sacred Flame"
 	desc = "Makes everyone around you more flammable, and lights yourself on fire."
 	charge_max = 60
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "FI'RAN DADISKO"
 	invocation_type = "shout"
 	max_targets = 0
@@ -358,7 +349,7 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
 	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
-	clothes_req = 1
+	clothes_req = SPELL_WIZARD_GARB
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
 
