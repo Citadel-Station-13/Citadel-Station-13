@@ -187,7 +187,7 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon_state = ""
+	icon_state = "pwig"
 	item_state = "pwig"
 	flags_inv = HIDEHAIR
 	var/hair_style = "Very Long Hair"
@@ -195,6 +195,7 @@
 
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
+	icon_state = "" //Shitty hack that i dont know if it is even neccesary to deal with the vendor stack exception
 	update_icon()
 
 /obj/item/clothing/head/wig/update_icon_state()

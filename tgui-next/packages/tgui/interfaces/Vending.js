@@ -2,6 +2,7 @@ import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Section, Box, Button, Table } from '../components';
 import { classes } from 'common/react';
+import { useBackend } from '../backend';
 
 export const Vending = props => {
   const { state } = props;
@@ -26,22 +27,7 @@ export const Vending = props => {
   }
   return (
     <Fragment>
-      {data.onstation && (
-        <Section title="User">
-          {data.user && (
-            <Box>
-            Welcome, <b>{data.user.name}</b>,
-              {' '}
-              <b>{data.user.job || "Unemployed"}</b>!
-            </Box>
-          ) || (
-            <Box color="light-gray">
-            No registered ID card!<br />
-            Please contact your local HoP!
-            </Box>
-          )}
-        </Section>
-      )}
+      )
       <Section title="Products" >
         <Table>
           {inventory.map((product => {
@@ -79,7 +65,7 @@ export const Vending = props => {
                 <Table.Cell>
                   {custom && (
                     <Button
-                      content={"VEND"}
+                      content={"Vend"}
                       onClick={() => act(ref, 'dispense', {
                         'item': product.name,
                       })} />
@@ -88,7 +74,7 @@ export const Vending = props => {
                       disabled={(
                         data.stock[product.namename] === 0
                       )}
-                      content={"VEND"}
+                      content={"Vend"}
                       onClick={() => act(ref, 'vend', {
                         'ref': product.ref,
                       })} />
