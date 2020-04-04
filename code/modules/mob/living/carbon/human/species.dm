@@ -1555,7 +1555,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					
 					target.adjustCloneLoss(10)
 					target.adjustBruteLoss(10)
-					
+
 		else if(!(target.mobility_flags & MOBILITY_STAND))
 			target.forcesay(GLOB.hit_appends)
 

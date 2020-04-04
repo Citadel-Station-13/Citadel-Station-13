@@ -196,7 +196,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/proc/update_stored(length = 1, colorC = "red")
 	stored.amount = length
-	stored.item_color = colorC
+	stored.color = colorC
 	stored.update_icon()
 
 ////////////////////////////////////////////
@@ -469,7 +469,6 @@ By design, d1 is the smallest direction and d2 is the highest
 // Definitions
 ////////////////////////////////
 
-GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15)))
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -482,7 +481,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	max_amount = MAXCOIL
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
-	item_color = "red"
+	color = "red"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -504,7 +503,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
 	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
-	item_color = cable_color
+	color = cable_color
 	update_icon()
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
@@ -514,18 +513,11 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null)
 	. = ..()
-
-	var/list/cable_colors = GLOB.cable_colors
-	item_color = param_color || item_color || pick(cable_colors)
-	if(cable_colors[item_color])
-		item_color = cable_colors[item_color]
-
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
-	recipes = GLOB.cable_coil_recipes
 
 ///////////////////////////////////
 // General procedures
@@ -541,7 +533,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
 		if(user == H)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
-			if(!do_mob(user, H, 50))
+			if(!do_after(user, H, 50))
 				return
 		if(item_heal_robotic(H, user, 0, 15))
 			use(1)
@@ -553,8 +545,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 /obj/item/stack/cable_coil/update_icon()
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
-	color = null
-	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/stack/cable_coil/attack_hand(mob/user)
 	. = ..()
@@ -562,8 +552,27 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		return
 	var/obj/item/stack/cable_coil/new_cable = ..()
 	if(istype(new_cable))
-		new_cable.item_color = item_color
+		new_cable.color = color
 		new_cable.update_icon()
+
+/obj/item/stack/cable_coil/attack_self(mob/user)
+	if(!check_cable_amount(user))
+		return
+	to_chat(user, "<span class='notice'>You start making some cable restraints.</span>")
+	if(do_after(user, 30, TRUE, user) && check_cable_amount(user))
+		amount -= 15
+		var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
+		user.put_in_hands(result)
+		result.color = color 
+		to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
+		return
+	to_chat(user, "<span class='notice'>You fail to make cable restraints, you need to stand still while doing so.</span>")
+
+/obj/item/stack/cable_coil/proc/check_cable_amount(user)
+	if(amount < 15) //We dont care about cyborgs here, so we dont use get_amount()
+		to_chat(user, "<span class='notice'>You dont have enough cable coil to make restraints out of them</span>")
+		return FALSE
+	return TRUE
 
 //add cables to the stack
 /obj/item/stack/cable_coil/proc/give(extra)
@@ -581,7 +590,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/proc/get_new_cable(location)
 	var/path = /obj/structure/cable
-	return new path(location, item_color)
+	return new path(location, color)
 
 // called when cable_coil is clicked on a turf
 /obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user, dirnew)
@@ -738,7 +747,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		C.d2 = nd2
 
 		//updates the stored cable coil
-		C.update_stored(2, item_color)
+		C.update_stored(2, color)
 
 		C.add_fingerprint(user)
 		C.update_icon()
@@ -769,40 +778,36 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 /////////////////////////////
 
 /obj/item/stack/cable_coil/red
-	item_color = "red"
-	color = "#ff0000"
+	color = "red"
 
 /obj/item/stack/cable_coil/yellow
-	item_color = "yellow"
-	color = "#ffff00"
+	color = "yellow"
 
 /obj/item/stack/cable_coil/blue
-	item_color = "blue"
-	color = "#1919c8"
+	color = "blue"
 
 /obj/item/stack/cable_coil/green
-	item_color = "green"
-	color = "#00aa00"
+	color = "green"
 
 /obj/item/stack/cable_coil/pink
-	item_color = "pink"
 	color = "#ff3ccd"
 
 /obj/item/stack/cable_coil/orange
-	item_color = "orange"
 	color = "#ff8000"
 
 /obj/item/stack/cable_coil/cyan
-	item_color = "cyan"
-	color = "#00ffff"
+	color = "cyan"
 
 /obj/item/stack/cable_coil/white
-	item_color = "white"
+	color = "white"
 
 /obj/item/stack/cable_coil/random
-	item_color = null
 	color = "#ffffff"
 
+/obj/item/stack/cable_coil/random/Initialize(mapload, new_amount = null, param_color = null)
+	. = ..()
+	var/list/cable_colors = GLOB.cable_colors
+	color = pick(cable_colors)
 
 /obj/item/stack/cable_coil/random/five
 	amount = 5
@@ -820,36 +825,33 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	update_icon()
 
 /obj/item/stack/cable_coil/cut/red
-	item_color = "red"
-	color = "#ff0000"
+	color = "red"
 
 /obj/item/stack/cable_coil/cut/yellow
-	item_color = "yellow"
-	color = "#ffff00"
+	color = "yellow"
 
 /obj/item/stack/cable_coil/cut/blue
-	item_color = "blue"
-	color = "#1919c8"
+	color = "blue"
 
 /obj/item/stack/cable_coil/cut/green
-	item_color = "green"
-	color = "#00aa00"
+	color = "green"
 
 /obj/item/stack/cable_coil/cut/pink
-	item_color = "pink"
 	color = "#ff3ccd"
-
 /obj/item/stack/cable_coil/cut/orange
-	item_color = "orange"
 	color = "#ff8000"
 
 /obj/item/stack/cable_coil/cut/cyan
-	item_color = "cyan"
-	color = "#00ffff"
+	color = "cyan"
 
 /obj/item/stack/cable_coil/cut/white
-	item_color = "white"
+	color = "white"
 
 /obj/item/stack/cable_coil/cut/random
-	item_color = null
 	color = "#ffffff"
+
+/obj/item/stack/cable_coil/cut/random/Initialize(mapload, new_amount = null, param_color = null)
+	. = ..()
+	var/list/cable_colors = GLOB.cable_colors
+	color = pick(cable_colors)
+	

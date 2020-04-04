@@ -53,6 +53,8 @@ Property weights are:
 		var/turf/T = get_turf(H)
 		if(H.stat != DEAD && is_station_level(T.z) && !("Station" in H.faction))
 			threat += H.threat()
+	for(var/obj/item/phylactery/P in GLOB.poi_list)
+		threat += 25 // can't be giving them too much of a break
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (M?.mind?.assigned_role && M.stat != DEAD)
 			var/datum/job/J = SSjob.GetJob(M.mind.assigned_role)
@@ -135,17 +137,19 @@ Property weights are:
 			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 				continue
 			rule.trim_candidates()
-			var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
-			/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
-				pick this particular ruleset. 
-				Let's use a toy example: there's 60 threat level and 10 threat spent.
-				We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
-				Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
-				When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
-				is 2.26 times as likely to be picked, all other things considered.
-				Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
-			*/
-			var/threat_weight = 1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0))
+			var/threat_weight = 1
+			if(!(rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
+				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+				/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
+					pick this particular ruleset. 
+					Let's use a toy example: there's 60 threat level and 10 threat spent.
+					We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
+					Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
+					When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
+					is 2.26 times as likely to be picked, all other things considered.
+					Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
+				*/
+				threat_weight = 1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
@@ -168,8 +172,10 @@ Property weights are:
 
 			rule.candidates = list(newPlayer)
 			rule.trim_candidates()
-			var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
-			var/threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
+			var/threat_weight = 1
+			if(!(rule.flags & MINOR_RULESET))
+				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+				threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
@@ -200,7 +206,7 @@ Property weights are:
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
-	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
+	flags = WAROPS_ALWAYS_ALLOWED
 	min_players = 40
 	var/refund_cooldown = 0
 	
@@ -245,7 +251,10 @@ Property weights are:
 	config_tag = "random"
 	weight = 1
 	desc = "No weighting at all; every ruleset has the same chance of happening. Cooldowns vary wildly. As random as it gets."
-	forced_threat_level = 100
+
+/datum/dynamic_storyteller/random/on_start()
+	..()
+	GLOB.dynamic_forced_threat_level = rand(0,100)
 
 /datum/dynamic_storyteller/random/get_midround_cooldown()
 	return rand(GLOB.dynamic_midround_delay_min/2, GLOB.dynamic_midround_delay_max*2)
@@ -318,9 +327,10 @@ Property weights are:
 	property_weights = list("story_potential" = 2)
 
 
-/datum/dynamic_storyteller/story/do_process()
+/datum/dynamic_storyteller/story/calculate_threat()
 	var/current_time = (world.time / SSautotransfer.targettime)*180
-	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.5),0.1)
+	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.25),0.1)
+	..()
 
 /datum/dynamic_storyteller/classic
 	name = "Classic"

@@ -4,7 +4,7 @@
 	invocation_type = "none"
 	include_user = 1
 	range = -1
-	clothes_req = 0
+	clothes_req = NONE
 	school = "conjuration"
 	charge_max = 100
 	cooldown_min = 10
@@ -32,7 +32,7 @@
 	invocation_type = "none"
 	include_user = 1
 	range = -1
-	clothes_req = 0
+	clothes_req = NONE
 	charge_max = 50
 	cooldown_min = 10
 	action_icon = 'icons/mob/actions/actions_silicon.dmi'
@@ -51,7 +51,7 @@
 	invocation_type = "none"
 	include_user = 1
 	range = -1
-	clothes_req = 0
+	clothes_req = NONE
 	charge_max = 50
 	cooldown_min = 10
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
@@ -73,4 +73,4 @@
 		friendShell = new /obj/effect/mob_spawn/human/demonic_friend(L.loc, L.mind, src)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/robeless
-	clothes_req = FALSE
+	clothes_req = NONE
