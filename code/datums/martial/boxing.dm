@@ -17,14 +17,13 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/extra_damage = rand(10, 13)
-	if(damage_base == A.dna.species.punchdamagelow)
+	var/extra_damage = base_damage
+	if(extra_damage == A.dna.species.punchdamagelow)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
 			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(A, D, "attempted to hit", atk_verb)
 		return TRUE
-	damage_base += extra_damage
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
@@ -34,7 +33,7 @@
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 
-	D.apply_damage(damage_base, STAMINA, affecting, armor_block)
+	D.apply_damage(rand(10,13) + extra_damage, STAMINA, affecting, armor_block)
 	log_combat(A, D, "punched (boxing) ")
 	if(D.getStaminaLoss() > 100 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
 		var/knockout_prob = (D.getStaminaLoss() + rand(-15,15))*0.75

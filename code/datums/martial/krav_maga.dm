@@ -96,13 +96,15 @@
 	return 0
 
 /datum/martial_art/krav_maga/proc/leg_sweep(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	var/obj/item/bodypart/affecting = D.get_bodypart(BODY_ZONE_CHEST)
+	var/armor_block = D.run_armor_check(affecting, "melee")
 	if(!CHECK_MOBILITY(D, MOBILITY_STAND))
 		return 0
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
-	D.apply_damage(damage_base*0.5, BRUTE)
-	D.DefaultCombatKnockdown(40, override_hardstun = 0.01, override_stamdmg = 25)
+	D.apply_damage(damage_base + 25, STAMINA, affecting, armor_block)
+	D.DefaultCombatKnockdown(80, override_hardstun = 1, override_stamdmg = 0)
 	log_combat(A, D, "leg sweeped")
 	return 1
 
@@ -133,15 +135,17 @@
 	..()
 
 /datum/martial_art/krav_maga/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/armor_block = D.run_armor_check(affecting, "melee")
 	if(check_streak(A,D))
 		return 1
 	log_combat(A, D, "punched")
 	var/picked_hit_type = pick("punches", "kicks")
-	var/bonus_damage = (damage_base + 5)
+	var/bonus_damage = 0
 	if(CHECK_MOBILITY(D, MOBILITY_STAND))
-		bonus_damage += 5
+		bonus_damage += 10
 		picked_hit_type = "stomps on"
-	D.apply_damage(bonus_damage, BRUTE)
+	D.apply_damage(damage_base + bonus_damage, BRUTE, affecting, armor_block)
 	if(picked_hit_type == "kicks" || picked_hit_type == "stomps on")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, 1, -1)
@@ -153,21 +157,30 @@
 	log_combat(A, D, "[picked_hit_type] with [name]")
 	return 1
 
-/datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	var/obj/item/I = null
-	if(prob(60))
-		I = D.get_active_held_item()
-		if(I)
-			if(D.temporarilyRemoveItemFromInventory(I))
-				A.put_in_hands(I)
-		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
-							"<span class='userdanger'>[A] has disarmed [D]!</span>")
-		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	else
-		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
-							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
-		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
+/datum/martial_art/krav_maga/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(check_streak(A,D))
+		return 1
+	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/armor_block = D.run_armor_check(affecting, "melee")
+	if((D.mobility_flags & MOBILITY_STAND))
+		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
+					"<span class='userdanger'>You're slapped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+		to_chat(A, "<span class='danger'>You jab [D]!</span>")
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+		D.apply_damage(damage_base + 5, STAMINA, affecting, armor_block)
+		log_combat(A, D, "punched nonlethally")
+	if(!(D.mobility_flags & MOBILITY_STAND))
+		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
+					"<span class='userdanger'>You're manhandled by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+		to_chat(A, "<span class='danger'>You stomp [D]!</span>")
+		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+		D.apply_damage(damage_base + 10, STAMINA, affecting, armor_block)
+		log_combat(A, D, "stomped nonlethally")
+	if(prob(D.getStaminaLoss()))
+		D.visible_message("<span class='warning'>[D] sputters and recoils in pain!</span>", "<span class='userdanger'>You recoil in pain as you are jabbed in a nerve!</span>")
+		D.drop_all_held_items()
 	return 1
 
 //Krav Maga Gloves

@@ -656,6 +656,7 @@
 		C.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), SLOT_WEAR_SUIT)
 		C.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), SLOT_SHOES)
 		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), SLOT_BACK)
+		C.equip_to_slot_or_del(new /obj/item/clothing/gloves/fingerless/pugilist/hungryghost(user), SLOT_GLOVES)
 		if(C == user)
 			qdel(src) //Clears the hands
 		C.put_in_hands(new /obj/item/melee/cultblade(user))

@@ -50,6 +50,7 @@
 /obj/item/clothing/gloves/fingerless/pugilist/holy
 	name = "armwraps of unyielding resolve"
 	desc = "A series of armwraps, soaked in holy water. Makes you pretty keen to smite evil magic users."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	enhancement = 1 //It is not magic that makes you punch harder, but force of will. Trust me.
 	secondary_trait = TRAIT_ANTIMAGIC
 
@@ -61,7 +62,7 @@
 
 /obj/item/clothing/gloves/fingerless/pugilist/hungryghost
 	name = "armwraps of the hungry ghost"
-	desc = "A series of blackened, bloodstained armwraps scrawled with strange geometric symbols. Makes you pretty keen to commit horrible acts against the living through bloody carnage."
+	desc = "A series of blackened, bloodstained armwraps stitched with strange geometric symbols. Makes you pretty keen to commit horrible acts against the living through bloody carnage."
 	icon_state = "narsiearmwraps"
 	item_state = "narsiearmwraps"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
