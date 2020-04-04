@@ -116,7 +116,7 @@
 		w_items += secret.w_class
 		contents += secret
 
-/obj/structure/toilet/secret/prison //We care about you Skyrats!
+/obj/structure/toilet/secret/prison
 	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
 
 /obj/structure/toilet/secret/low_loot
