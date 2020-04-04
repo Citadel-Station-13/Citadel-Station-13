@@ -34,7 +34,6 @@
 			ADD_TRAIT(H, secondary_trait, GLOVE_TRAIT)
 			H.dna.species.punchdamagehigh += enhancement
 			H.dna.species.punchdamagelow += enhancement
-			H.dna.species.punchstunthreshold -= enhancement
 
 /obj/item/clothing/gloves/fingerless/pugilist/dropped(mob/user)
 	..()
@@ -45,7 +44,6 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.species.punchdamagehigh -= enhancement
 		H.dna.species.punchdamagelow -= enhancement
-		H.dna.species.punchstunthreshold += enhancement
 
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain
 	name = "armwraps of unyielding resolve"
