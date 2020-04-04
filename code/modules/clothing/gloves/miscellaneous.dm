@@ -32,8 +32,8 @@
 			ADD_TRAIT(H, TRAIT_PUGILIST, GLOVE_TRAIT)
 			ADD_TRAIT(H, inherited_trait, GLOVE_TRAIT)
 			ADD_TRAIT(H, secondary_trait, GLOVE_TRAIT)
-			H.dna.species.punchdamagehigh += enhancement
-			H.dna.species.punchdamagelow += enhancement
+			H.dna.species.punchdamagehigh += initial(H.dna.species.punchdamagehigh)
+			H.dna.species.punchdamagelow += initial(H.dna.species.punchdamagelow)
 
 /obj/item/clothing/gloves/fingerless/pugilist/dropped(mob/user)
 	..()
