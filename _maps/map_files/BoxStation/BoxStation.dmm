@@ -55549,18 +55549,6 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
-"iDS" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
-	},
-/turf/open/space/basic,
-/area/space)
 "iEJ" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
@@ -57124,15 +57112,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"nGI" = (
-/obj/machinery/door/airlock/external{
-	name = "Common Mining Shuttle Bay"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "nLu" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -60202,17 +60181,6 @@
 /obj/item/coin/gold,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"xfS" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/computer/shuttle/mining/common{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/entry)
 "xgk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -60535,15 +60503,6 @@
 /obj/item/instrument/trombone,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
-"xQG" = (
-/obj/machinery/door/airlock/external{
-	name = "Common Mining Shuttle Bay"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "xSW" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -69068,7 +69027,7 @@ aaa
 aaa
 aoV
 aaa
-iDS
+aaa
 aaa
 aaa
 aoV
@@ -69323,11 +69282,11 @@ aaa
 aaa
 aaa
 aaa
-asE
-asE
-nGI
-asE
-asE
+aaa
+aaa
+aaa
+aaa
+aaa
 aoV
 aaa
 aaa
@@ -69581,9 +69540,9 @@ aaa
 aaa
 aaa
 aaf
-awW
-auP
-awW
+aaa
+aaa
+aaa
 aaf
 kls
 aaa
@@ -69839,8 +69798,8 @@ aaa
 aaa
 arB
 arB
-xQG
-asE
+arB
+arB
 aAC
 aaf
 aaa
@@ -70095,7 +70054,7 @@ aaa
 aaa
 aaa
 arB
-xfS
+awZ
 ayk
 awW
 aAD
@@ -73439,7 +73398,7 @@ ayl
 aIK
 ayl
 beM
-asE
+arB
 aaa
 aaa
 aaa
