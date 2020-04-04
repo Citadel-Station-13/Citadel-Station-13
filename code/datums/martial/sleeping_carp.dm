@@ -35,14 +35,14 @@
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	if(prob(10))
-		crit_damage += 20
+		crit_damage += (damage_base*2 + 15)
 		playsound(get_turf(D), 'sound/weapons/bite.ogg', 50, TRUE, -1)
-		D.visible_message("<span class='warning'>[D] sputters blood as the blow strikes them with inhuman force!</span>", "<span class='userdanger'>You are struck with incredible precision by [A]!</span>")
+		D.visible_message("<span class='warning'>[D] staggers as the blow strikes them with inhuman force!</span>", "<span class='userdanger'>You are struck with incredible precision by [A]!</span>")
 		log_combat(A, D, "critcal strong punched (Sleeping Carp)")//log it here because a critical can swing for 40 force and it's important for the sake of how hard they hit
 	else
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 		log_combat(A, D, "strong punched (Sleeping Carp)")//so as to not double up on logging
-	D.apply_damage(damage_base*2 + crit_damage, BRUTE, affecting)
+	D.apply_damage((damage_base + 15) + crit_damage, BRUTE, affecting)
 	return
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
@@ -93,7 +93,7 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
-	D.apply_damage(damage_base + 10, BRUTE, affecting)
+	D.apply_damage(damage_base + 5, BRUTE, affecting)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "punched (Sleeping Carp)")
 	return TRUE
