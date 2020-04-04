@@ -12,10 +12,12 @@
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
+
 /obj/structure/toilet/Initialize()
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
+
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	. = ..()
@@ -69,8 +71,10 @@
 		open = !open
 		update_icon()
 
+
 /obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
+
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/crowbar))
@@ -116,14 +120,8 @@
 		w_items += secret.w_class
 		contents += secret
 
-/obj/structure/toilet/secret/prison //We care about you Skyrats!
-	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
 
-/obj/structure/toilet/secret/low_loot
-	secret_type = /obj/effect/spawner/lootdrop/low_loot_toilet
 
-/obj/structure/toilet/secret/high_loot
-	secret_type = /obj/effect/spawner/lootdrop/high_loot_toilet
 
 /obj/structure/urinal
 	name = "urinal"
@@ -195,6 +193,7 @@
 			"<span class='italics'>You hear metal and squishing noises.</span>")
 		exposed = !exposed
 	return TRUE
+
 
 /obj/item/reagent_containers/food/urinalcake
 	name = "urinal cake"
@@ -279,6 +278,7 @@
 		add_hiddenprint(user)
 	return TRUE
 
+
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(on)
@@ -315,6 +315,7 @@
 		else if(isobj(AM))
 			wash_obj(AM)
 
+
 /obj/machinery/shower/proc/wash_obj(obj/O)
 	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	. = O.clean_blood()
@@ -323,6 +324,7 @@
 		var/obj/item/I = O
 		I.acid_level = 0
 		I.extinguish()
+
 
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
@@ -333,6 +335,7 @@
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
+
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
@@ -664,8 +667,10 @@
 /obj/structure/sink/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)
 
+
 //Shower Curtains//
 //Defines used are pre-existing in layers.dm//
+
 
 /obj/structure/curtain
 	name = "curtain"
@@ -721,6 +726,7 @@
 		deconstruct()
 
 	return TRUE
+
 
 /obj/structure/curtain/attack_hand(mob/user)
 	. = ..()
