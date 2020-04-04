@@ -391,7 +391,7 @@
 	if(start_x < 1)
 		starting_column -= start_x - 1
 		start_x = 1
-	for(var/row in start to length(table)) //translate the mines locations into actual turf coordinates.
+	for(var/row in starting_row to length(table)) //translate the mines locations into actual turf coordinates.
 		if(!locate(cur_y, start_x, z))
 			break
 		var/cur_x = start_x
