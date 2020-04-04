@@ -51,6 +51,11 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	enhancement = 1 //It is not magic that makes you punch harder, but force of will. Trust me.
 	secondary_trait = TRAIT_ANTIMAGIC
+	var/chaplain_spawnable = TRUE
+	
+/obj/item/clothing/gloves/fingerless/pugilist/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
 
 /obj/item/clothing/gloves/fingerless/pugilist/magic
 	name = "armwraps of mighty fists"
