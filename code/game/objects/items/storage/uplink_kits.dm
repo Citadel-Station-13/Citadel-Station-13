@@ -158,7 +158,7 @@
 		if("detective") // 30~ tc worth & good clothing to fake that you are infact the detective 
 			new /obj/item/clothing/under/rank/security/detective(src) // 1TC Tactical Turtlenecks
 			new /obj/item/clothing/head/fedora/det_hat(src) // 2~ Good armor
-			new /obj/item/clothing/gloves/color/black(src) //0 tc 
+			new /obj/item/clothing/gloves/thief(src) //4 tc 
 			new /obj/item/clothing/accessory/waistcoat(src) //0 tc
 			new /obj/item/clothing/shoes/laceup(src) // 0tc
 			new /obj/item/storage/box/evidence(src) //Good for hiding your own evidence or planting some - 1tc
@@ -176,6 +176,7 @@
 			new /obj/item/card/id/syndicate(src) //2tc sadly no detective access
 			new /obj/item/lighter(src) //0 tc
 			new /obj/item/clothing/glasses/hud/security/sunglasses(src) //2tc huds + flash proofing
+			new /obj/item/pda/detective(src) //1tc its F.R.A.M all over again!
 
 /obj/item/storage/box/syndie_kit
 	name = "box"
