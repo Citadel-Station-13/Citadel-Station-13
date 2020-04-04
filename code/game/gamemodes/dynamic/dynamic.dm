@@ -511,7 +511,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	drafted_rules -= starting_rule
 
 	starting_rule.trim_candidates()
-	starting_rule.scale_up(extra_rulesets_amount, threat)
+	starting_rule.scale_up(extra_rulesets_amount, threat_level)
 	if (starting_rule.pre_execute())
 		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> [starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat", verbose = TRUE)
 		if(starting_rule.flags & HIGHLANDER_RULESET)

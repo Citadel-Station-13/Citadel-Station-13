@@ -1,0 +1,7 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscadd: "A new, much more barebones holding facility for contractors."
+  - rscdel: "Energy nets are gone."
+  - tweak: "Various ghost roles are now easier to ghost as."
+  - tweak: "The candles in the dojo no longer make the place hotter and hotter over time."

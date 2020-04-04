@@ -762,7 +762,7 @@ Difficulty: Very Hard
 	name = "Exit Possession"
 	desc = "Exits the body you are possessing."
 	charge_max = 60
-	clothes_req = 0
+	clothes_req = NONE
 	invocation_type = "none"
 	max_targets = 1
 	range = -1

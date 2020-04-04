@@ -19,7 +19,10 @@ import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
 import { ChemDebugSynthesizer } from './interfaces/ChemDebugSynthesizer';
+import { ChemDispenser } from './interfaces/ChemDispenser';
 import { ChemFilter } from './interfaces/ChemFilter';
+import { ChemHeater } from './interfaces/ChemHeater';
+import { ChemMaster } from './interfaces/ChemMaster';
 import { ChemPress } from './interfaces/ChemPress';
 import { ChemReactionChamber } from './interfaces/ChemReactionChamber';
 import { ChemSplitter } from './interfaces/ChemSplitter';
@@ -76,6 +79,7 @@ import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { Sleeper } from './interfaces/Sleeper';
 import { SlimeBodySwapper } from './interfaces/SlimeBodySwapper';
 import { Signaler } from './interfaces/Signaler';
 import { SmartVend } from './interfaces/SmartVend';
@@ -185,8 +189,20 @@ const ROUTES = {
     component: () => ChemAcclimator,
     scrollable: false,
   },
+  chem_dispenser: {
+    component: () => ChemDispenser,
+    scrollable: true,
+  },
   chemical_filter: {
     component: () => ChemFilter,
+    scrollable: true,
+  },
+  chem_heater: {
+    component: () => ChemHeater,
+    scrollable: true,
+  },
+  chem_master: {
+    component: () => ChemMaster,
     scrollable: true,
   },
   chem_press: {
@@ -440,6 +456,10 @@ const ROUTES = {
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
     scrollable: true,
+  },
+  sleeper: {
+    component: () => Sleeper,
+    scrollable: false,
   },
   slime_swap_body: {
     component: () => SlimeBodySwapper,
