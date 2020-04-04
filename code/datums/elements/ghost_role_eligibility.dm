@@ -15,6 +15,7 @@
 	var/mob/M = target
 	if(!(M in eligible_mobs))
 		eligible_mobs += M
+		RegisterSignal(M, COMSIG_MOB_GHOSTIZE, .proc/get_ghost_flags)
 	if(penalize) //penalizing them from making a ghost role / midround antag comeback right away.
 		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
 		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
@@ -32,12 +33,12 @@
 			else if(timeouts[M.ckey] == CANT_REENTER_ROUND)
 				return
 			timeouts[M.ckey] = max(timeouts[M.ckey],penalty)
-	RegisterSignal(M,COMSIG_MOB_GHOSTIZE,.proc/get_ghost_flags)
 
 /datum/element/ghost_role_eligibility/Detach(mob/M)
 	. = ..()
 	if(M in eligible_mobs)
 		eligible_mobs -= M
+		UnregisterSignal(M, COMSIG_MOB_GHOSTIZE)
 
 /datum/element/ghost_role_eligibility/proc/get_all_ghost_role_eligible(silent = FALSE)
 	var/list/candidates = list()
