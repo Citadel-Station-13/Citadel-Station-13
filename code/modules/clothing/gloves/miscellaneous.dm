@@ -47,7 +47,7 @@
 		H.dna.species.punchdamagelow -= enhancement
 		H.dna.species.punchstunthreshold += enhancement
 
-/obj/item/clothing/gloves/fingerless/pugilist/holy
+/obj/item/clothing/gloves/fingerless/pugilist/chaplain
 	name = "armwraps of unyielding resolve"
 	desc = "A series of armwraps, soaked in holy water. Makes you pretty keen to smite evil magic users."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
