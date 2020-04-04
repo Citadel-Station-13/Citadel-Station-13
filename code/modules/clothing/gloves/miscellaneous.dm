@@ -88,9 +88,13 @@
 	desc = "The armbands of a deadly martial artist. Makes you pretty keen to put an end to evil in an extremely violent manner."
 	icon_state = "rapid"
 	item_state = "rapid"
-	enhancement = 7 //omae wa mou shindeiru
+	enhancement = 10 //omae wa mou shindeiru
 	var/warcry = "AT"
-	secondary_trait = TRAIT_NODROP
+	secondary_trait = TRAIT_NOHARDCRIT
+	
+/obj/item/clothing/gloves/fingerless/pugilist/rapid/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, GLOVE_TRAIT)
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/Touch(mob/living/target,proximity = TRUE)
 	if(!istype(target))
