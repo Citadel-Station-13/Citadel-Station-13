@@ -1,7 +1,7 @@
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/PopulateContents()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "baseball" = 1, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "baseball" = 1, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1, "detective" = 1)))
 		if("bloodyspai") // 30 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -154,6 +154,28 @@
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
+
+		if("detective") // 30~ tc worth & good clothing to fake that you are infact the detective 
+			new /obj/item/clothing/under/rank/security/detective(src) // 1TC Tactical Turtlenecks
+			new /obj/item/clothing/head/fedora/det_hat(src) // 2~ Good armor
+			new /obj/item/clothing/gloves/color/black(src) //0 tc 
+			new /obj/item/clothing/accessory/waistcoat(src) //0 tc
+			new /obj/item/clothing/shoes/laceup(src) // 0tc
+			new /obj/item/storage/box/evidence(src) //Good for hiding your own evidence or planting some - 1tc
+			new /obj/item/radio/headset/headset_sec(src) //1 tc
+			new /obj/item/detective_scanner(src) //Joke item 0 tc
+			new /obj/item/flashlight/seclite(src) //1TC
+			new /obj/item/holosign_creator/security(src) //Could be ironicly good at stopping sec in maints as they run at you 1tc
+			new /obj/item/reagent_containers/spray/pepper(src) //sprays are grate 1tc
+			new /obj/item/clothing/suit/armor/vest/det_suit(src)// Okish armor 3tc
+			new /obj/item/storage/belt/holster/full(src) //GUN + ammo like 7tc
+			new /obj/item/pinpointer/crew(src) //Ironicly good 2tc
+			new /obj/item/melee/classic_baton(src) //3tc for this amazing weapon
+			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src) //1TC
+			new /obj/item/implanter/mindshield(src) //Priceless
+			new /obj/item/card/id/syndicate(src) //2tc sadly no detective access
+			new /obj/item/lighter(src) //0 tc
+			new /obj/item/clothing/glasses/hud/security/sunglasses(src) //2tc huds + flash proofing
 
 /obj/item/storage/box/syndie_kit
 	name = "box"
