@@ -32,7 +32,7 @@
 	//--end of love :'(--
 
 	var/snowflake_id					//if we set from a config snowflake plushie.
-	var/can_random_spawn = TRUE			//if this is FALSE, don't spawn this for random plushies.
+	var/can_random_spawn = FALSE		//if this is TRUE, spawn this for random plushies.
 
 /obj/item/toy/plush/random_snowflake/Initialize(mapload, set_snowflake_id)
 	. = ..()
@@ -445,6 +445,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	item_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
+	can_random_spawn = TRUE	
 
 /obj/item/toy/plush/bubbleplush
 	name = "bubblegum plushie"
@@ -452,6 +453,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	icon_state = "bubbleplush"
 	attack_verb = list("rends")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
+	can_random_spawn = TRUE	
 
 /obj/item/toy/plush/plushvar
 	name = "ratvar plushie"
@@ -459,6 +461,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	icon_state = "plushvar"
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE	//he's a boy, right?
+	can_random_spawn = TRUE	
 
 /obj/item/toy/plush/plushvar/Moved()
 	. = ..()
@@ -546,6 +549,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	var/clashing
 	var/is_invoker = TRUE
 	gender = FEMALE	//it's canon if the toy is
+	can_random_spawn = TRUE	
 
 /obj/item/toy/plush/narplush/Moved()
 	. = ..()
@@ -556,6 +560,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 /obj/item/toy/plush/narplush/hugbox
 	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy? <b>It looks sad.</b>"
 	is_invoker = FALSE
+	can_random_spawn = TRUE	
 
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"
@@ -564,12 +569,14 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	item_state = "plushie_lizard"
 	attack_verb = list("clawed", "hissed", "tail slapped")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/lizardplushie/kobold
 	name = "kobold plushie"
 	desc = "An adorable stuffed toy that resembles a kobold."
 	icon_state = "kobold"
 	item_state = "kobold"
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -578,6 +585,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	item_state = "plushie_nuke"
 	attack_verb = list("shot", "nuked", "detonated")
 	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
@@ -587,6 +595,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	attack_verb = list("blorbled", "slimed", "absorbed", "glomped")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -607,6 +616,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	attack_verb = list("stung")
 	gender = FEMALE
 	squeak_override = list('modular_citadel/sound/voice/scream_moth.ogg' = 1)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/mothplushie
 	name = "insect plushie"
@@ -623,6 +633,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	item_state = "plushie_lamp"
 	attack_verb = list("lit", "flickered", "flashed")
 	squeak_override = list('sound/weapons/magout.ogg' = 1)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/box
 	name = "cardboard plushie"
@@ -630,6 +641,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	icon_state = "box"
 	item_state = "box"
 	attack_verb = list("open", "closed", "packed", "hidden", "rigged", "bombed", "sent", "gave")
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/slaggy
 	name = "slag plushie"
@@ -637,6 +649,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	icon_state = "slaggy"
 	item_state = "slaggy"
 	attack_verb = list("melted", "refined", "stared")
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/mr_buckety
 	name = "bucket plushie"
@@ -644,6 +657,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	icon_state = "mr_buckety"
 	item_state = "mr_buckety"
 	attack_verb = list("filled", "dumped", "stared")
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/dr_scanny
 	name = "scanner plushie"
@@ -651,6 +665,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	icon_state = "dr_scanny"
 	item_state = "dr_scanny"
 	attack_verb = list("scanned", "beeped", "stared")
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/borgplushie
 	name = "robot plushie"
@@ -659,6 +674,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	item_state = "securityk9"
 	attack_verb = list("beeped", "booped", "pinged")
 	squeak_override = list('sound/machines/beep.ogg' = 1)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/borgplushie/medihound
 	icon_state = "medihound"
@@ -675,6 +691,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	item_state = "exo"
 	attack_verb = list("hacked", "detonated", "overloaded")
 	squeak_override = list('sound/machines/beep.ogg' = 9, 'sound/machines/buzz-two.ogg' = 1)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/mammal/fox
 	icon_state = "fox"
@@ -687,6 +704,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	item_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
 	squeak_override = list('modular_citadel/sound/voice/hiss.ogg' = 1)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/mammal
 	name = "mammal plushie"
@@ -700,6 +718,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	item_state = "fermis"
 	attack_verb = list("cuddled", "petpatted", "wigglepurred")
 	squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/xeno
 	name = "xenohybrid plushie"
@@ -727,6 +746,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	'modular_citadel/sound/voice/bark1.ogg' = 1,
 	'modular_citadel/sound/voice/bark2.ogg' = 1
 	)
+	can_random_spawn = TRUE
 
 /obj/item/toy/plush/catgirl
 	name = "feline plushie"
