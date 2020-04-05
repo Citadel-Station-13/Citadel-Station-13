@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/pluoxium
 	id = "pluox"
-	specific_heat = 80
+	specific_heat = 160
 	name = "Pluoxium"
 	fusion_power = 10
 	rarity = 200
