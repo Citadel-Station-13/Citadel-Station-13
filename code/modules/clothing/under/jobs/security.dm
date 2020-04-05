@@ -8,6 +8,11 @@
 /*
  * Security
  */
+/obj/item/clothing/under/rank/security
+	strip_delay = 50
+	alt_covers_chest = TRUE
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security jumpsuit"
@@ -16,10 +21,6 @@
 	item_state = "r_suit"
 	item_color = "rsecurity"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = SENSOR_COORDS
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
