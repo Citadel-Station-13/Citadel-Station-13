@@ -659,7 +659,7 @@
 		return FALSE
 	var/obj/effect/proc_holder/spell/S = target
 	if(owner)
-		return S.can_cast(owner)
+		return S.can_cast(owner, FALSE, TRUE)
 	return FALSE
 
 /datum/action/spell_action/alien
@@ -676,7 +676,8 @@
 
 //Preset for general and toggled actions
 /datum/action/innate
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	var/active = 0
 
 /datum/action/innate/Trigger()

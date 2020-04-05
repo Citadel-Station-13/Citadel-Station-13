@@ -1,5 +1,7 @@
 // Powersink - used to drain station power
 
+GLOBAL_LIST_EMPTY(power_sinks)
+
 /obj/item/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
@@ -25,6 +27,14 @@
 	var/const/OPERATING = 2
 
 	var/obj/structure/cable/attached		// the attached cable
+
+/obj/item/powersink/Initialize()
+	. = ..()
+	GLOB.power_sinks += src
+
+/obj/item/powersink/Destroy()
+	GLOB.power_sinks -= src
+	. = ..()
 
 /obj/item/powersink/update_icon_state()
 	icon_state = "powersink[mode == OPERATING]"

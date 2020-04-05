@@ -266,7 +266,7 @@
 	item_state = "petcollar-stripe"
 	tagname = null
 
-/obj/item/clothing/under/singery/custom
+/obj/item/clothing/under/costume/singer/yellow/custom
 	name = "bluish performer's outfit"
 	desc = "Just looking at this makes you want to sing."
 	icon = 'icons/obj/custom.dmi'
@@ -313,7 +313,7 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NONE
 
-/obj/item/clothing/under/bb_sweater/black/naomi
+/obj/item/clothing/under/sweater/black/naomi
 	name = "worn black sweater"
 	mutantrace_variation = NONE
 	desc = "A well-loved sweater, showing signs of several cleanings and re-stitchings. And a few stains. Is that cat fur?"
@@ -382,7 +382,7 @@
 	icon_state = "luckyjack"
 	mutantrace_variation = NONE
 
-/obj/item/clothing/under/lunasune
+/obj/item/clothing/under/custom/lunasune
 	name = "Divine Robes"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
@@ -391,7 +391,7 @@
 	icon_state = "Divine_robes"
 	mutantrace_variation = NONE
 
-/obj/item/clothing/under/leoskimpy
+/obj/item/clothing/under/custom/leoskimpy
 	name = "Leon's Skimpy Outfit"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
@@ -400,7 +400,7 @@
 	icon_state = "shark_cloth"
 	mutantrace_variation = NONE
 
-/obj/item/clothing/under/mimeoveralls
+/obj/item/clothing/under/custom/mimeoveralls
 	name = "Mime's Overalls"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
@@ -461,7 +461,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NONE
 
-/obj/item/clothing/under/mw2_russian_para
+/obj/item/clothing/under/custom/mw2_russian_para
 	name = "Russian Paratrooper Jumper"
 	desc = "A Russian made old paratrooper jumpsuit, has many pockets for easy storage of gear from a by gone era. As bulky as it looks, its shockingly light!"
 	icon_state = "mw2_russian_para"
@@ -478,7 +478,7 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 
-/obj/item/clothing/under/trendy_fit
+/obj/item/clothing/under/custom/trendy_fit
 	name = "Trendy Fitting Clothing"
 	desc = "An outfit straight from the boredom of space, its the type of thing only someone trying to entertain themselves on the way to their next destination would wear."
 	icon_state = "trendy_fit"
@@ -512,7 +512,7 @@
 	item_state = "onion"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 
-/obj/item/clothing/under/mikubikini
+/obj/item/clothing/under/custom/mikubikini
 	name = "starlight singer bikini"
 	desc = " "
 	icon_state = "mikubikini"

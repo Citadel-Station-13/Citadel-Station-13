@@ -29,12 +29,60 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
+// /mob/living/combat_flags
+#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+
+/// Default combat flags for those affected by ((stamina combat))
+#define COMBAT_FLAGS_DEFAULT					NONE
+/// Default combat flags for everyone else (so literally everyone but humans)
+#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED)
+/// Default combat flags for those only affected by sprint (so just silicons)
+#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED)
+
+/// The user wants combat mode on
+#define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
+/// The user wants sprint mode on
+#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<1)
+/// Combat mode is currently active
+#define COMBAT_FLAG_COMBAT_ACTIVE			(1<<2)
+/// Sprint is currently active
+#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<3)
+/// Currently attempting to crawl under someone
+#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<4)
+/// Currently stamcritted
+#define COMBAT_FLAG_HARD_STAMCRIT			(1<<5)
+/// Currently attempting to resist up from the ground
+#define COMBAT_FLAG_RESISTING_REST			(1<<6)
+/// Intentionally resting
+#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
+/// Currently stamcritted but not as violently
+#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
+
+// Helpers for getting someone's stamcrit state. Cast to living.
+#define NOT_STAMCRIT 0
+#define SOFT_STAMCRIT 1
+#define HARD_STAMCRIT 2
+
+// Stamcrit check helpers
+#define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
+#define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
+
+//stamina stuff
+#define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
+
+#define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
+
 //Bitflags defining which status effects could be or are inflicted on a mob
+// This is a bit out of date/inaccurate in light of all the new status effects and is probably pending rework.
 #define CANSTUN			(1<<0)
 #define CANKNOCKDOWN	(1<<1)
 #define CANUNCONSCIOUS	(1<<2)
 #define CANPUSH			(1<<3)
 #define GODMODE			(1<<4)
+#define CANSTAGGER		(1<<5)
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
@@ -203,3 +251,5 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
+
+

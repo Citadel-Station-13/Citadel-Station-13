@@ -237,7 +237,7 @@
 	display_name = "Games and Toys"
 	description = "For the slackers on the station."
 	prereq_ids = list("comptech")
-	design_ids = list("arcade_battle", "arcade_orion", "slotmachine", "autoylathe")
+	design_ids = list("arcade_battle", "arcade_orion", "arcade_minesweeper", "slotmachine", "autoylathe")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /////////////////////////Bluespace tech/////////////////////////
@@ -278,7 +278,7 @@
 	display_name = "Bluespace Pockets"
 	description = "Studies into the mysterious alternate dimension known as bluespace and how to place items in the threads of reality."
 	prereq_ids = list("adv_power", "adv_bluespace", "adv_biotech", "adv_plasma")
-	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag")
+	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag", "duffelbag_holding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5500)
 
 /datum/techweb_node/bluespace_portal
@@ -336,7 +336,7 @@
 	display_name = "Advanced Robotics Research"
 	description = "It can even do the dishes!"
 	prereq_ids = list("robotics")
-	design_ids = list("borg_upgrade_diamonddrill", "borg_upgrade_advancedmop", "borg_upgrade_advcutter", "borg_upgrade_premiumka")
+	design_ids = list("borg_upgrade_diamonddrill", "borg_upgrade_advancedmop", "borg_upgrade_advcutter")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/neural_programming

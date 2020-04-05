@@ -54,7 +54,12 @@
 	icon_state = "holdingsat"
 	item_state = "holdingsat"
 	species_exception = list(/datum/species/angel)
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+
+/obj/item/storage/backpack/holding/duffel
+	name = "duffel bag of holding"
+	desc = "A duffel bag that opens into a localized pocket of Blue Space."
+	icon_state = "holdingduffel"
+	item_state = "holdingduffel"
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()
@@ -453,7 +458,7 @@
 	item_state = "duffel-syndieammo"
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
-	new /obj/item/clothing/under/lawyer/blacksuit(src)
+	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
@@ -625,7 +630,7 @@
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
 	new /obj/item/pda/clown(src)
-	new /obj/item/clothing/under/rank/clown(src)
+	new /obj/item/clothing/under/rank/civilian/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)
 	new /obj/item/bikehorn(src)

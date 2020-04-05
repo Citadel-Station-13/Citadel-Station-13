@@ -143,32 +143,60 @@
 
 /obj/item/melee/rapier
 	name = "plastitanium rapier"
-	desc = "A impossibly thin blade made of plastitanium with a tip made of diamond. It looks to be able to cut through any armor."
+	desc = "A thin blade made of plastitanium with a diamond tip. It appears to be coated in a persistent layer of an unknown substance."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "rapier"
 	item_state = "rapier"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 25
-	throwforce = 35
-	block_chance = 0
-	armour_penetration = 100
+	force = 15
+	throwforce = 25
+	block_chance = 50
+	armour_penetration = 200 //Apparently this gives it the ability to pierce block
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_-
-	attack_verb = list("slashed", "cut", "pierces", "pokes")
-	total_mass = 3.4
+	attack_verb = list("stabs", "punctures", "pierces", "pokes")
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	total_mass = 0.4
 
 /obj/item/melee/rapier/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 65, 0)
+
+/obj/item/melee/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0
+	return ..()
+
+/obj/item/melee/rapier/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/rapier/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/rapier/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/rapier/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
 
 /obj/item/melee/rapier/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "rapier")
 
 /obj/item/melee/rapier/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-rapier")
+
+/obj/item/melee/rapier/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/H = target
+		var/loss = H.getStaminaLoss()
+		H.Dizzy(10)
+		H.adjustStaminaLoss(30)
+		if((loss > 40) && prob(loss)) // if above 40, roll for sleep using 1% every 1 stamina damage
+			H.Sleeping(180)
 
 /obj/item/melee/classic_baton
 	name = "police baton"
@@ -240,7 +268,7 @@
 	if(!on)
 		return ..()
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes batons unusuable in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes batons unusuable in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 

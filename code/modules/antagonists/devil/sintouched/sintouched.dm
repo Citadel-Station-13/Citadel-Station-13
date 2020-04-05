@@ -14,6 +14,13 @@
 
 	var/static/list/sins = list(SIN_ACEDIA,SIN_GLUTTONY,SIN_GREED,SIN_SLOTH,SIN_WRATH,SIN_ENVY,SIN_PRIDE)
 
+/datum/antagonist/sintouched/threat()
+	switch(sin)
+		if(SIN_GLUTTONY,SIN_ENVY)
+			return 1
+		else
+			return 0
+
 /datum/antagonist/sintouched/New()
 	. = ..()
 	sin = pick(sins)

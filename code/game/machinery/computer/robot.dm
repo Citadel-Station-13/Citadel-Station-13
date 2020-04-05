@@ -11,16 +11,19 @@
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
-		return 0
+		return FALSE
 	if(isAI(user))
 		if (R.connected_ai != user)
-			return 0
+			return FALSE
 	if(iscyborg(user))
 		if (R != user)
-			return 0
+			return FALSE
 	if(R.scrambledcodes)
-		return 0
-	return 1
+		return FALSE
+	if (hasSiliconAccessInArea(user) && !issilicon(user))
+		if (!Adjacent(user))
+			return FALSE
+	return TRUE
 
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	. = ..()
@@ -115,10 +118,10 @@
 		if(src.allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in GLOB.silicon_mobs
 			if(can_control(usr, R))
-				var/choice = input("Are you certain you wish to [R.locked_down? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
+				var/choice = input("Are you certain you wish to [!R.locked_down ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] [R.locked_down? "locked down" : "released"] [key_name(R, R.client)][ADMIN_LOOKUPFLW(R)]!</span>")
-					log_game("[key_name(usr)] [R.locked_down? "locked down" : "released"] [key_name(R)]!")
+					message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] [!R.locked_down ? "locked down" : "released"] [key_name(R, R.client)][ADMIN_LOOKUPFLW(R)]!</span>")
+					log_game("[key_name(usr)] [!R.locked_down ? "locked down" : "released"] [key_name(R)]!")
 					R.SetLockdown(!R.locked_down)
 					to_chat(R, "[!R.locked_down ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>")
 					if(R.connected_ai)

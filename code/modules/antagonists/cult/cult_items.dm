@@ -353,6 +353,11 @@
 	brightness_on = 0
 	actions_types = list()
 
+
+/obj/item/clothing/head/helmet/space/hardsuit/cult/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_CULT_HELMET, ITEM_SLOT_HEAD)
+
 /obj/item/clothing/suit/space/hardsuit/cult
 	name = "\improper Nar'Sien hardened armor"
 	icon_state = "cult_armor"
@@ -362,6 +367,10 @@
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
 	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
+
+/obj/item/clothing/suit/space/hardsuit/cult/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_CULT_ARMOR, ITEM_SLOT_OCLOTHING)
 
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"

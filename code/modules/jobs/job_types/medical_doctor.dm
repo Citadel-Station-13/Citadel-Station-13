@@ -15,6 +15,7 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
+	threat = 0.5
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -22,7 +23,7 @@
 
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical
+	uniform = /obj/item/clothing/under/rank/medical/doctor
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/regular

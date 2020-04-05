@@ -8,18 +8,18 @@
 	var/inv_slots
 	var/proctype //if present, will be invoked on headwear generation.
 
-/datum/element/mob_holder/Attach(datum/target, _worn_state, _alt_worn, _right_hand, _left_hand, _inv_slots = NONE, _proctype)
+/datum/element/mob_holder/Attach(datum/target, worn_state, alt_worn, right_hand, left_hand, inv_slots = NONE, proctype)
 	. = ..()
 
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	worn_state = _worn_state
-	alt_worn = _alt_worn
-	right_hand = _right_hand
-	left_hand = _left_hand
-	inv_slots = _inv_slots
-	proctype = _proctype
+	src.worn_state = worn_state
+	src.alt_worn = alt_worn
+	src.right_hand = right_hand
+	src.left_hand = left_hand
+	src.inv_slots = inv_slots
+	src.proctype = proctype
 
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/mob_try_pickup)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -76,6 +76,7 @@
 	lefthand_file = 'icons/mob/animals_held_lh.dmi'
 	icon_state = ""
 	w_class = WEIGHT_CLASS_BULKY
+	dynamic_hair_suffix = ""
 	var/mob/living/held_mob
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, slots = NONE)
@@ -161,6 +162,11 @@
 		var/mob/living/L = loc
 		L.visible_message("<span class='warning'>[held_mob] escapes from [L]!</span>", "<span class='warning'>[held_mob] escapes your grip!</span>")
 	release()
+
+/obj/item/clothing/head/mob_holder/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	if(!ishuman(M)) //monkeys holding monkeys holding monkeys...
+		return FALSE
+	return ..()
 
 /obj/item/clothing/head/mob_holder/assume_air(datum/gas_mixture/env)
 	var/atom/location = loc

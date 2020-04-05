@@ -159,7 +159,7 @@
 /datum/uplink_item/role_restricted/kitchen_gun
 	name = "Kitchen Gun (TM)"
 	desc = "A revolutionary .45 caliber cleaning solution! Say goodbye to daily stains and dirty surfaces with Kitchen Gun (TM)! \
-	Just five shots from Kitchen Gun (TM), and it'll sparkle like new! Includes two extra ammunition clips!"
+	Just three shots from Kitchen Gun (TM), and it'll sparkle like new! Includes two extra ammunition clips!"
 	cost = 10
 	surplus = 40
 	restricted_roles = list("Cook", "Janitor")

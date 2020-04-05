@@ -41,16 +41,9 @@
 	var/count = 0
 
 /datum/sabotage_objective/processing/power_sink/check_condition_processing()
-	count += 1
-	if(count==10 || sink_found) // doesn't need to fire that often unless a sink exists
-		var/sink_found_this_time = FALSE
-		for(var/datum/powernet/PN in GLOB.powernets)
-			for(var/obj/item/powersink/sink in PN.nodes)
-				sink_found_this_time = TRUE
-				won = max(won,sink.power_drained/1e8)
-		sink_found = sink_found_this_time
-		count = 0
-	return FALSE
+	for(var/s in GLOB.power_sinks)
+		var/obj/item/powersink/sink = s
+		won = max(won,sink.power_drained/1e8)
 
 /obj/item/paper/guides/antag/supermatter_sabotage
 	info = "Ways to sabotage a supermatter:<br>\
@@ -84,14 +77,14 @@
 
 /datum/sabotage_objective/processing/supermatter/can_run()
 	return (locate(/obj/machinery/power/supermatter_crystal) in GLOB.machines)
-
+/*
 /datum/sabotage_objective/station_integrity
 	name = "Make sure the station is at less than 80% integrity by the end. Smash walls, windows etc. to reach this goal."
 	sabotage_type = "integrity"
 
 /datum/sabotage_objective/station_integrity/check_conditions()
 	return 5-(max(SSticker.station_integrity*4,320)/80)
-
+*/
 /datum/sabotage_objective/cloner
 	name = "Destroy all Nanotrasen cloning machines."
 	sabotage_type = "cloner"
@@ -104,6 +97,9 @@
 	sabotage_type = "ailaw"
 	special_equipment = list(/obj/item/aiModule/syndicate)
 	excludefromjob = list("Chief Engineer","Research Director","Head of Personnel","Captain","Chief Medical Officer","Head Of Security")
+
+/datum/sabotage_objective/ai_law/can_run()
+	return length(active_ais())
 
 /datum/sabotage_objective/ai_law/check_conditions()
 	for (var/i in GLOB.ai_list)

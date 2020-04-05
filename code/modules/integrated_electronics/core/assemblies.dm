@@ -149,7 +149,7 @@
 	var/total_complexity = return_total_complexity()
 	var/HTML = ""
 
-	HTML += "<html><head><title>[name]</title></head><body>"
+	HTML += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>"
 
 	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
 	HTML += "[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"

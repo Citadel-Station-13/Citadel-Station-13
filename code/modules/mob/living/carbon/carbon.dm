@@ -153,7 +153,7 @@
 		return
 
 	//CIT CHANGES - makes it impossible to throw while in stamina softcrit
-	if(getStaminaLoss() >= STAMINA_SOFTCRIT)
+	if(IS_STAMCRIT(src))
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
 	var/random_turn = a_intent == INTENT_HARM
@@ -283,6 +283,8 @@
 
 /mob/living/carbon/resist_buckle()
 	. = FALSE
+	if(!buckled)
+		return
 	if(restrained())
 		// too soon.
 		if(last_special > world.time)
@@ -448,7 +450,7 @@
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	//CIT CHANGES START HERE
-	else if(combatmode)
+	else if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
 		modifier += 50
 
 	if(modifier < 100)
@@ -580,7 +582,7 @@
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
 	if(stam > DAMAGE_PRECISION)
-		var/total_health = (health - stam)
+		var/total_health = (maxHealth - stam)
 		if(total_health <= crit_threshold && !stat)
 			if(CHECK_MOBILITY(src, MOBILITY_STAND))
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
@@ -820,15 +822,13 @@
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
+			disable_intentional_combat_mode(FALSE, FALSE)
 			if(!eye_blind)
 				blind_eyes(1)
-			if(combatmode)
-				toggle_combat_mode(TRUE, TRUE)
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
-				if(combatmode)
-					toggle_combat_mode(TRUE, TRUE)
+				disable_intentional_combat_mode(FALSE, FALSE)
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
@@ -984,14 +984,121 @@
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
-	. += "---"
-	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=[REF(src)]"
-	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=[REF(src)]"
-	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=[REF(src)]"
-	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=[REF(src)]"
-	.["Give martial arts"] = "?_src_=vars;[HrefToken()];givemartialart=[REF(src)]"
-	.["Give brain trauma"] = "?_src_=vars;[HrefToken()];givetrauma=[REF(src)]"
-	.["Cure brain traumas"] = "?_src_=vars;[HrefToken()];curetraumas=[REF(src)]"
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_MAKE_AI, "Make AI")
+	VV_DROPDOWN_OPTION(VV_HK_MODIFY_BODYPART, "Modify bodypart")
+	VV_DROPDOWN_OPTION(VV_HK_MODIFY_ORGANS, "Modify organs")
+	VV_DROPDOWN_OPTION(VV_HK_HALLUCINATION, "Hallucinate")
+	VV_DROPDOWN_OPTION(VV_HK_MARTIAL_ART, "Give Martial Arts")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_TRAUMA, "Give Brain Trauma")
+	VV_DROPDOWN_OPTION(VV_HK_CURE_TRAUMA, "Cure Brain Traumas")
+
+/mob/living/carbon/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_MODIFY_BODYPART])
+		if(!check_rights(R_SPAWN))
+			return
+		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
+		if(!edit_action)
+			return
+		var/list/limb_list = list()
+		if(edit_action == "remove" || edit_action == "augment")
+			for(var/obj/item/bodypart/B in bodyparts)
+				limb_list += B.body_zone
+			if(edit_action == "remove")
+				limb_list -= BODY_ZONE_CHEST
+		else
+			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+			for(var/obj/item/bodypart/B in bodyparts)
+				limb_list -= B.body_zone
+		var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
+		if(result)
+			var/obj/item/bodypart/BP = get_bodypart(result)
+			switch(edit_action)
+				if("remove")
+					if(BP)
+						BP.drop_limb()
+					else
+						to_chat(usr, "[src] doesn't have such bodypart.")
+				if("add")
+					if(BP)
+						to_chat(usr, "[src] already has such bodypart.")
+					else
+						if(!regenerate_limb(result))
+							to_chat(usr, "[src] cannot have such bodypart.")
+				if("augment")
+					if(ishuman(src))
+						if(BP)
+							BP.change_bodypart_status(BODYPART_ROBOTIC, TRUE, TRUE)
+						else
+							to_chat(usr, "[src] doesn't have such bodypart.")
+					else
+						to_chat(usr, "Only humans can be augmented.")
+		admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src]")
+	if(href_list[VV_HK_MAKE_AI])
+		if(!check_rights(R_SPAWN))
+			return
+		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			return
+		usr.client.holder.Topic("vv_override", list("makeai"=href_list[VV_HK_TARGET]))
+	if(href_list[VV_HK_MODIFY_ORGANS])
+		if(!check_rights(NONE))
+			return
+		usr.client.manipulate_organs(src)
+	if(href_list[VV_HK_MARTIAL_ART])
+		if(!check_rights(NONE))
+			return
+		var/list/artpaths = subtypesof(/datum/martial_art)
+		var/list/artnames = list()
+		for(var/i in artpaths)
+			var/datum/martial_art/M = i
+			artnames[initial(M.name)] = M
+		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in artnames
+		if(!usr)
+			return
+		if(QDELETED(src))
+			to_chat(usr, "Mob doesn't exist anymore")
+			return
+		if(result)
+			var/chosenart = artnames[result]
+			var/datum/martial_art/MA = new chosenart
+			MA.teach(src)
+			log_admin("[key_name(usr)] has taught [MA] to [key_name(src)].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] has taught [MA] to [key_name_admin(src)].</span>")
+	if(href_list[VV_HK_GIVE_TRAUMA])
+		if(!check_rights(NONE))
+			return
+		var/list/traumas = subtypesof(/datum/brain_trauma)
+		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in traumas
+		if(!usr)
+			return
+		if(QDELETED(src))
+			to_chat(usr, "Mob doesn't exist anymore")
+			return
+		if(!result)
+			return
+		var/datum/brain_trauma/BT = gain_trauma(result)
+		if(BT)
+			log_admin("[key_name(usr)] has traumatized [key_name(src)] with [BT.name]")
+			message_admins("<span class='notice'>[key_name_admin(usr)] has traumatized [key_name_admin(src)] with [BT.name].</span>")
+	if(href_list[VV_HK_CURE_TRAUMA])
+		if(!check_rights(NONE))
+			return
+		cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
+		log_admin("[key_name(usr)] has cured all traumas from [key_name(src)].")
+		message_admins("<span class='notice'>[key_name_admin(usr)] has cured all traumas from [key_name_admin(src)].</span>")
+	if(href_list[VV_HK_HALLUCINATION])
+		if(!check_rights(NONE))
+			return
+		var/list/hallucinations = subtypesof(/datum/hallucination)
+		var/result = input(usr, "Choose the hallucination to apply","Send Hallucination") as null|anything in hallucinations
+		if(!usr)
+			return
+		if(QDELETED(src))
+			to_chat(usr, "Mob doesn't exist anymore")
+			return
+		if(result)
+			new result(src, TRUE)
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
@@ -1011,8 +1118,7 @@
 			return TRUE
 
 /mob/living/carbon/transfer_ckey(mob/new_mob, send_signal = TRUE)
-	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
+	disable_intentional_combat_mode(TRUE, FALSE)
 	return ..()
 
 /mob/living/carbon/can_see_reagents()
@@ -1028,3 +1134,19 @@
 
 /mob/living/carbon/can_hold_items()
 	return TRUE
+
+/mob/living/carbon/set_gender(ngender = NEUTER, silent = FALSE, update_icon = TRUE, forced = FALSE)
+	var/bender = gender != ngender
+	. = ..()
+	if(!.)
+		return
+	if(dna && bender)
+		if(ngender == MALE || ngender == FEMALE)
+			dna.features["body_model"] = ngender
+			if(!silent)
+				var/adj = ngender == MALE ? "masculine" : "feminine"
+				visible_message("<span class='boldnotice'>[src] suddenly looks more [adj]!</span>", "<span class='boldwarning'>You suddenly feel more [adj]!</span>")
+		else if(ngender == NEUTER)
+			dna.features["body_model"] = MALE
+	if(update_icon)
+		update_body()

@@ -368,22 +368,25 @@
 	var/list/datum/dynamic_storyteller/runnable_storytellers = new
 	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
+	var/list/min_player_counts = Get(/datum/config_entry/keyed_list/storyteller_min_players)
 	for(var/T in storyteller_cache)
 		var/datum/dynamic_storyteller/S = T
 		var/config_tag = initial(S.config_tag)
-		var/final_weight = initial(S.weight)
-		if(probabilities[config_tag]<=0)
+		var/probability = (config_tag in probabilities) ? probabilities[config_tag] : initial(S.weight)
+		var/min_players = (config_tag in min_player_counts) ? min_player_counts[config_tag] : initial(S.min_players)
+		if(probability <= 0)
 			continue
-		final_weight = probabilities[config_tag]
-		if(SSpersistence.saved_storytellers.len == 3 && repeated_mode_adjust.len == 3)
+		if(length(GLOB.player_list) < min_players)
+			continue
+		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
 			var/name = initial(S.name)
 			var/recent_round = min(SSpersistence.saved_storytellers.Find(name),3)
 			var/adjustment = 0
 			while(recent_round)
 				adjustment += repeated_mode_adjust[recent_round]
 				recent_round = SSpersistence.saved_modes.Find(name,recent_round+1,0)
-			final_weight *= ((100-adjustment)/100)
-		runnable_storytellers[S] = final_weight
+			probability *= ((100-adjustment)/100)
+		runnable_storytellers[S] = probability
 	return runnable_storytellers
 
 

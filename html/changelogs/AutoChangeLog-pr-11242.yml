@@ -1,5 +1,0 @@
-author: "Kraseo"
-delete-after: True
-changes: 
-  - rscadd: "Lavaland flora have more traits now, to encourage harvesting and sending these off to the botanists."
-  - bugfix: "Napalm will now properly remove weeds from a tray if the plant in it has the fireproof gene."

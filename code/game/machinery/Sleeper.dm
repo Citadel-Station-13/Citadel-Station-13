@@ -207,11 +207,14 @@
 
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
+	var/chemical_list = list()
+	var/blood_percent = 0
+
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
-	data["efficiency"] = efficiency
-	data["current_vol"] = reagents.total_volume
-	data["tot_capacity"] = reagents.maximum_volume
+	data["blood_levels"] = blood_percent
+	data["blood_status"] = "Patient either has no blood, or does not require it to function."
+	data["chemical_list"] = chemical_list
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
@@ -247,10 +250,13 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
-		data["occupant"]["reagents"] = list()
-		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
+		
+		if(mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
-				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+				chemical_list += list(list("name" = R.name, "volume" = R.volume))
+		else
+			chemical_list = "Patient has no reagents."
+
 		data["occupant"]["failing_organs"] = list()
 		var/mob/living/carbon/C = mob_occupant
 		if(C)
@@ -259,21 +265,25 @@
 					continue
 				data["occupant"]["failing_organs"] += list(list("name" = Or.name))
 
-		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
-			var/blood_id = C.get_blood_id()
-			if(blood_id)
-				data["occupant"]["blood"] = list() // We can start populating this list.
-				var/blood_type = C.dna.blood_type
-				if(!(blood_id in GLOB.blood_reagent_types)) // special blood substance
-					var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
-					if(R)
-						blood_type = R.name
-					else
-						blood_type = blood_id
-				data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
-				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
-				data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
-				data["occupant"]["blood"]["bloodType"] = blood_type
+		if(istype(C)) //Non-carbons shouldn't be able to enter sleepers, but this is to prevent runtimes if something ever breaks
+			if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
+				blood_percent = round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+				var/blood_id = C.get_blood_id()
+				var/blood_warning = ""
+				if(blood_percent < 80)
+					blood_warning = "Patient has low blood levels."
+				if(blood_percent < 60)
+					blood_warning = "Patient has DANGEROUSLY low blood levels."
+				if(blood_id)
+					var/blood_type = C.dna.blood_type
+					if(!(blood_id in GLOB.blood_reagent_types)) // special blood substance
+						var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
+						if(R)
+							blood_type = R.name
+						else
+							blood_type = blood_id
+					data["blood_status"] = "Patient has [blood_type] type blood. [blood_warning]"
+				data["blood_levels"] = blood_percent
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
@@ -309,14 +319,14 @@
 			if(allowed(usr))
 				if(!is_operational())
 					return
-				reagents.remove_reagent(chem, 10)
+				reagents.remove_reagent(chem, 1000)
 				return
 			if(chem in available_chems)
 				if(!is_operational())
 					return
 				/*var/datum/reagent/R = reagents.has_reagent(chem) //For when purity effects are in
 				if(R.purity < 0.8)*/
-				reagents.remove_reagent(chem, 10)
+				reagents.remove_reagent(chem, 1000)
 			else
 				visible_message("<span class='warning'>Access Denied.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)

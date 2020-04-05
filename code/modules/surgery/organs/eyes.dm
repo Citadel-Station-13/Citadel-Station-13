@@ -319,6 +319,8 @@
 	on_mob.forceMove(scanning)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
+		if(!scanning)
+			break
 		if(scanning.opacity || scanning.has_opaque_atom)
 			stop = TRUE
 		var/obj/effect/abstract/eye_lighting/L = LAZYACCESS(eye_lighting, i)

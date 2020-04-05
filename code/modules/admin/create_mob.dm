@@ -41,9 +41,10 @@
 	H.dna.features["deco_wings"] = pick(GLOB.deco_wings_list)
 	H.dna.features["insect_fluff"] = pick(GLOB.insect_fluffs_list)
 	H.dna.features["flavor_text"] = "" //Oh no.
+	H.dna.features["body_model"] = H.gender
 
 	SEND_SIGNAL(H, COMSIG_HUMAN_ON_RANDOMIZE)
 
-	H.update_body()
+	H.update_body(TRUE)
 	H.update_hair()
 	H.update_body_parts()

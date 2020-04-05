@@ -58,6 +58,7 @@
 	RegisterSignal(current_mind, COMSIG_PRE_MIND_TRANSFER, .proc/pre_player_transfer)
 	if(mastermind?.current)
 		mastermind.current.audiovisual_redirect = M
+	ADD_TRAIT(M, TRAIT_NO_MIDROUND_ANTAG, VIRTUAL_REALITY_TRAIT)
 
 /datum/component/virtual_reality/UnregisterFromParent()
 	. = ..()
@@ -69,6 +70,7 @@
 	current_mind = null
 	if(mastermind?.current)
 		mastermind.current.audiovisual_redirect = null
+	REMOVE_TRAIT(parent, TRAIT_NO_MIDROUND_ANTAG, VIRTUAL_REALITY_TRAIT)
 
 /**
   * Called when attempting to connect a mob to a virtual reality mob.
@@ -235,7 +237,7 @@
 		qdel(src)
 
 /**
-  * Used for recursive virtual realities shenanigeans and should be called only through the above proc.
+  * Used for recursive virtual realities shenanigeans and should be called by the above proc.
   */
 /datum/component/virtual_reality/proc/vr_in_a_vr(mob/player, deathcheck = FALSE, lethal_cleanup = FALSE)
 	var/mob/M = parent

@@ -7,7 +7,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
-/datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/nervousness/on_life()
 	if(prob(10))
 		owner.stuttering = max(10, owner.stuttering)
 
