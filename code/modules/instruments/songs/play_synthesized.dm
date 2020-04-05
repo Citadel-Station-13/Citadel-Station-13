@@ -72,6 +72,7 @@
 		return FALSE
 	. = TRUE
 	var/sound/copy = sound(K.sample)
+	var/volume = src.volume * using_instrument.volume_multiplier
 	copy.frequency = K.frequency
 	copy.volume = volume
 	var/channel_text = num2text(channel)

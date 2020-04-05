@@ -32,8 +32,8 @@
 	var/volume = 75
 	/// Max volume
 	var/max_volume = 75
-	/// Min volume - This is so someone doesn't decide it's funny to set it to 1 and play invisible songs.
-	var/min_volume = 25
+	/// Min volume - This is so someone doesn't decide it's funny to set it to 0 and play invisible songs.
+	var/min_volume = 1
 
 	/// What instruments our built in picker can use. The picker won't show unless this is longer than one.
 	var/list/allowed_instrument_ids = list("r3grand")
