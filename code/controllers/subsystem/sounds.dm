@@ -53,6 +53,7 @@ SUBSYSTEM_DEF(sounds)
 	var/channel = random_available_channel_text()
 	if(!channel)		//oh no..
 		return FALSE
+	available_channels -= channel
 	using_channels[channel] = DATUMLESS
 	LAZYINITLIST(using_channels_by_datum[DATUMLESS])
 	using_channels_by_datum[DATUMLESS] += channel
@@ -63,6 +64,9 @@ SUBSYSTEM_DEF(sounds)
 	if(!D)		//i don't like typechecks but someone will fuck it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	var/channel = random_available_channel_text()
+	if(!channel)
+		return FALSE
+	available_channels -= channel
 	using_channels[channel] = D
 	LAZYINITLIST(using_channels_by_datum[D])
 	using_channels_by_datum[D] += channel
