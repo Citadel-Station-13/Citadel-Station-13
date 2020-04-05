@@ -1,263 +1,11 @@
-GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending"))
+GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "mob"))		//Requires DEBUG
 GLOBAL_PROTECT(VVlocked)
-GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays", "resize"))
+GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays"))		//Requires DEBUG or FUN
 GLOBAL_PROTECT(VVicon_edit_lock)
-GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey"))
+GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey"))	//Requires DEBUG or SPAWN
 GLOBAL_PROTECT(VVckey_edit)
-GLOBAL_LIST_INIT(VVpixelmovement, list("step_x", "step_y", "bound_height", "bound_width", "bound_x", "bound_y"))
+GLOBAL_LIST_INIT(VVpixelmovement, list("bound_x", "bound_y", "step_x", "step_y", "step_size", "bound_height", "bound_width", "bounds"))		//No editing ever.
 GLOBAL_PROTECT(VVpixelmovement)
-
-
-/client/proc/vv_get_class(var/var_name, var/var_value)
-	if(isnull(var_value))
-		. = VV_NULL
-
-	else if (isnum(var_value))
-		if (var_name in GLOB.bitfields)
-			. = VV_BITFIELD
-		else
-			. = VV_NUM
-
-	else if (istext(var_value))
-		if (findtext(var_value, "\n"))
-			. = VV_MESSAGE
-		else
-			. = VV_TEXT
-
-	else if (isicon(var_value))
-		. = VV_ICON
-
-	else if (ismob(var_value))
-		. = VV_MOB_REFERENCE
-
-	else if (isloc(var_value))
-		. = VV_ATOM_REFERENCE
-
-	else if (istype(var_value, /client))
-		. = VV_CLIENT
-
-	else if (istype(var_value, /datum))
-		. = VV_DATUM_REFERENCE
-
-	else if (ispath(var_value))
-		if (ispath(var_value, /atom))
-			. = VV_ATOM_TYPE
-		else if (ispath(var_value, /datum))
-			. = VV_DATUM_TYPE
-		else
-			. = VV_TYPE
-
-	else if (islist(var_value))
-		. = VV_LIST
-
-	else if (isfile(var_value))
-		. = VV_FILE
-	else
-		. = VV_NULL
-
-/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes, var_name)
-	. = list("class" = class, "value" = null)
-	if (!class)
-		if (!classes)
-			classes = list (
-				VV_NUM,
-				VV_TEXT,
-				VV_MESSAGE,
-				VV_ICON,
-				VV_ATOM_REFERENCE,
-				VV_DATUM_REFERENCE,
-				VV_MOB_REFERENCE,
-				VV_CLIENT,
-				VV_ATOM_TYPE,
-				VV_DATUM_TYPE,
-				VV_TYPE,
-				VV_FILE,
-				VV_NEW_ATOM,
-				VV_NEW_DATUM,
-				VV_NEW_TYPE,
-				VV_NEW_LIST,
-				VV_NULL,
-				VV_RESTORE_DEFAULT
-				)
-
-		if(holder && holder.marked_datum && !(VV_MARKED_DATUM in restricted_classes))
-			classes += "[VV_MARKED_DATUM] ([holder.marked_datum.type])"
-		if (restricted_classes)
-			classes -= restricted_classes
-
-		if (extra_classes)
-			classes += extra_classes
-
-		.["class"] = input(src, "What kind of data?", "Variable Type", default_class) as null|anything in classes
-		if (holder && holder.marked_datum && .["class"] == "[VV_MARKED_DATUM] ([holder.marked_datum.type])")
-			.["class"] = VV_MARKED_DATUM
-
-
-	switch(.["class"])
-		if (VV_TEXT)
-			.["value"] = input("Enter new text:", "Text", current_value) as null|text
-			if (.["value"] == null)
-				.["class"] = null
-				return
-		if (VV_MESSAGE)
-			.["value"] = input("Enter new text:", "Text", current_value) as null|message
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-
-		if (VV_NUM)
-			.["value"] = input("Enter new number:", "Num", current_value) as null|num
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-		if (VV_BITFIELD)
-			.["value"] = input_bitfield(usr, "Editing bitfield: [var_name]", var_name, current_value)
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-		if (VV_ATOM_TYPE)
-			.["value"] = pick_closest_path(FALSE)
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-		if (VV_DATUM_TYPE)
-			.["value"] = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-		if (VV_TYPE)
-			var/type = current_value
-			var/error = ""
-			do
-				type = input("Enter type:[error]", "Type", type) as null|text
-				if (!type)
-					break
-				type = text2path(type)
-				error = "\nType not found, Please try again"
-			while(!type)
-			if (!type)
-				.["class"] = null
-				return
-			.["value"] = type
-
-
-		if (VV_ATOM_REFERENCE)
-			var/type = pick_closest_path(FALSE)
-			var/subtypes = vv_subtype_prompt(type)
-			if (subtypes == null)
-				.["class"] = null
-				return
-			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
-			if (!value)
-				.["class"] = null
-				return
-			.["value"] = things[value]
-
-		if (VV_DATUM_REFERENCE)
-			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
-			var/subtypes = vv_subtype_prompt(type)
-			if (subtypes == null)
-				.["class"] = null
-				return
-			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
-			if (!value)
-				.["class"] = null
-				return
-			.["value"] = things[value]
-
-		if (VV_MOB_REFERENCE)
-			var/type = pick_closest_path(FALSE, make_types_fancy(typesof(/mob)))
-			var/subtypes = vv_subtype_prompt(type)
-			if (subtypes == null)
-				.["class"] = null
-				return
-			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
-			if (!value)
-				.["class"] = null
-				return
-			.["value"] = things[value]
-
-
-
-		if (VV_CLIENT)
-			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in GLOB.clients
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-
-		if (VV_FILE)
-			.["value"] = input("Pick file:", "File") as null|file
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-
-		if (VV_ICON)
-			.["value"] = input("Pick icon:", "Icon") as null|icon
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-
-		if (VV_MARKED_DATUM)
-			.["value"] = holder.marked_datum
-			if (.["value"] == null)
-				.["class"] = null
-				return
-
-
-		if (VV_NEW_ATOM)
-			var/type = pick_closest_path(FALSE)
-			if (!type)
-				.["class"] = null
-				return
-			.["type"] = type
-			var/atom/newguy = new type()
-			newguy.datum_flags |= DF_VAR_EDITED
-			.["value"] = newguy
-
-		if (VV_NEW_DATUM)
-			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
-			if (!type)
-				.["class"] = null
-				return
-			.["type"] = type
-			var/datum/newguy = new type()
-			newguy.datum_flags |= DF_VAR_EDITED
-			.["value"] = newguy
-
-		if (VV_NEW_TYPE)
-			var/type = current_value
-			var/error = ""
-			do
-				type = input("Enter type:[error]", "Type", type) as null|text
-				if (!type)
-					break
-				type = text2path(type)
-				error = "\nType not found, Please try again"
-			while(!type)
-			if (!type)
-				.["class"] = null
-				return
-			.["type"] = type
-			var/datum/newguy = new type()
-			if(istype(newguy))
-				newguy.datum_flags |= DF_VAR_EDITED
-			.["value"] = newguy
-
-
-		if (VV_NEW_LIST)
-			.["value"] = list()
-			.["type"] = /list
 
 /client/proc/vv_parse_text(O, new_var)
 	if(O && findtext(new_var,"\["))
@@ -372,13 +120,13 @@ GLOBAL_PROTECT(VVpixelmovement)
 		if(confirm != "Continue")
 			return
 
-
+	var/is_normal_list = IS_NORMAL_LIST(L)
 
 	var/list/names = list()
 	for (var/i in 1 to L.len)
 		var/key = L[i]
 		var/value
-		if (IS_NORMAL_LIST(L) && !isnum(key))
+		if (is_normal_list && !isnum(key))
 			value = L[key]
 		if (value == null)
 			value = "null"
@@ -439,10 +187,17 @@ GLOBAL_PROTECT(VVpixelmovement)
 		assoc_key = L[index]
 	var/default
 	var/variable
-	if (assoc)
-		variable = L[assoc_key]
-	else
-		variable = L[index]
+	var/old_assoc_value		//EXPERIMENTAL - Keep old associated value while modifying key, if any
+	if(is_normal_list)
+		if (assoc)
+			variable = L[assoc_key]
+		else
+			variable = L[index]
+			//EXPERIMENTAL - Keep old associated value while modifying key, if any
+			var/found = L[variable]
+			if(!isnull(found))
+				old_assoc_value = found
+			//
 
 	default = vv_get_class(objectvar, variable)
 
@@ -504,11 +259,13 @@ GLOBAL_PROTECT(VVpixelmovement)
 			for(var/V in varsvars)
 				new_var = replacetext(new_var,"\[[V]]","[O.vars[V]]")
 
-
-	if(assoc)
-		L[assoc_key] = new_var
-	else
-		L[index] = new_var
+	if(is_normal_list)
+		if(assoc)
+			L[assoc_key] = new_var
+		else
+			L[index] = new_var
+			if(!isnull(old_assoc_value) && IS_VALID_ASSOC_KEY(new_var))
+				L[new_var] = old_assoc_value
 	if (O)
 		if (O.vv_edit_var(objectvar, L) == FALSE)
 			to_chat(src, "Your edit was rejected by the object.")
@@ -527,14 +284,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(param_var_name in GLOB.VVicon_edit_lock)
 		if(!check_rights(R_FUN|R_DEBUG))
 			return FALSE
-	if(param_var_name in GLOB.VVpixelmovement)
-		if(!check_rights(R_DEBUG))
-			return FALSE
-		var/prompt = alert(usr, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
-		if (prompt != "Continue")
-			return FALSE
 	return TRUE
-
 
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))
@@ -567,11 +317,6 @@ GLOBAL_PROTECT(VVpixelmovement)
 	var_value = O.vars[variable]
 	if(!vv_varname_lockcheck(variable))
 		return
-	if(istype(O, /datum/armor))
-		var/prompt = alert(src, "Editing this var changes this value on potentially thousands of items that share the same combination of armor values. If you want to edit the armor of just one item, use the \"Modify armor values\" dropdown item", "DANGER", "ABORT ", "Continue", " ABORT")
-		if (prompt != "Continue")
-			return
-
 
 	var/default = vv_get_class(variable, var_value)
 
@@ -635,7 +380,6 @@ GLOBAL_PROTECT(VVpixelmovement)
 		to_chat(src, "Your edit was rejected by the object.")
 		return
 	vv_update_display(O, "varedited", VV_MSG_EDITED)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_VAR_EDIT, args)
 	log_world("### VarEdit by [key_name(src)]: [O.type] [variable]=[var_value] => [var_new]")
 	log_admin("[key_name(src)] modified [original_name]'s [variable] from [html_encode("[var_value]")] to [html_encode("[var_new]")]")
 	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_value] to [var_new]"
