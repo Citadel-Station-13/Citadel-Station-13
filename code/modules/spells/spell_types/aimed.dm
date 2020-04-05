@@ -16,7 +16,7 @@
 	if(!istype(user))
 		return
 	var/msg
-	if(!can_cast(user))
+	if(!can_cast(user, FALSE, TRUE))
 		msg = "<span class='warning'>You can no longer cast [name]!</span>"
 		remove_ranged_ability(msg)
 		return
@@ -95,7 +95,6 @@
 	desc = "Fire a high powered lightning bolt at your foes!"
 	school = "evocation"
 	charge_max = 150
-	clothes_req = 1
 	invocation = "ZAP MUTHA'FUCKA"
 	invocation_type = "shout"
 	cooldown_min = 30
@@ -113,7 +112,7 @@
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 	school = "evocation"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
@@ -131,7 +130,7 @@
 	desc = "Blazing hot rapid-fire homing cards. Banish your foes with its mystical power!"
 	school = "evocation"
 	charge_max = 50
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "Sigi'lu M'Fan 'Tasia"
 	invocation_type = "shout"
 	range = 40

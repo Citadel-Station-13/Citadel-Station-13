@@ -470,7 +470,6 @@
 				/datum/objective/steal,
 				/datum/objective/download,
 				/datum/objective/nuclear,
-				/datum/objective/capture,
 				/datum/objective/absorb,
 				/datum/objective/custom
 			)

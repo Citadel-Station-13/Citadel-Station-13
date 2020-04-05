@@ -149,7 +149,9 @@
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 	#define COMPONENT_BLOCK_DEATH_BROADCAST 1					//stops the death from being broadcasted in deadchat.
 #define COMSIG_MOB_GHOSTIZE "mob_ghostize"						//from base of mob/Ghostize(): (can_reenter_corpse, special, penalize)
-	#define COMPONENT_BLOCK_GHOSTING 1
+	#define COMPONENT_BLOCK_GHOSTING (1<<0)
+	#define COMPONENT_DO_NOT_PENALIZE_GHOSTING (1<<1)
+	#define COMPONENT_FREE_GHOSTING (1<<2)
 #define COMSIG_MOB_ALLOWED "mob_allowed"						//from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
 	#define COMPONENT_BLOCK_MAGIC 1
@@ -176,6 +178,8 @@
 //	#define SPEECH_IGNORE_SPAM 6
 //	#define SPEECH_FORCED 7
 #define COMSIG_MOB_ANTAG_ON_GAIN "mob_antag_on_gain"			//from base of /datum/antagonist/on_gain(): (antag_datum)
+
+#define COMSIG_MOB_SPELL_CAST_CHECK "mob_spell_cast_check"			//called from base of /obj/effect/proc_holder/spell/cast_check(): (spell)
 
 // /mob/living signals
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regenerate_limbs"	//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
