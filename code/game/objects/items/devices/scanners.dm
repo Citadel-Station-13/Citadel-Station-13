@@ -310,11 +310,11 @@ SLIME SCANNER
 			//GENERAL HANDLER
 			if(!damage_message)
 				if(O.organ_flags & ORGAN_FAILING)
-					damage_message += " <span class='alert'><b>End Stage [O.name] failure detected.</b></span>"
+					damage_message += " <span class='alert'><b>Chronic [O.name] failure detected.</b></span>"
 				else if(O.damage > O.high_threshold)
-					damage_message += " <span class='alert'>Chronic [O.name] failure detected.</span>"
+					damage_message += " <span class='alert'>Acute [O.name] failure detected.</span>"
 				else if(O.damage > O.low_threshold && advanced)
-					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
+					damage_message += " <font color='red'>Minor [O.name] failure detected.</span>"
 
 			if(temp_message || damage_message)
 				msg += "\t<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
