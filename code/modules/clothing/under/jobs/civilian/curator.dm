@@ -13,7 +13,6 @@
 	item_state = "red_suit"
 	item_color = "red_suit_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
@@ -37,5 +36,4 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	can_adjust = FALSE
 	resistance_flags = NONE
