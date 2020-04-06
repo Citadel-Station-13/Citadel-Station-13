@@ -58,12 +58,9 @@
 
 //////10mm soporific bullets//////
 
-obj/item/projectile/bullet/c10mm/soporific
+/obj/item/projectile/bullet/c10mm/soporific
 	name ="10mm soporific bullet"
-	armour_penetration = 0
 	nodamage = TRUE
-	dismemberment = 0
-	knockdown = 0
 
 /obj/item/projectile/bullet/c10mm/soporific/on_hit(atom/target, blocked = FALSE)
 	. = ..()

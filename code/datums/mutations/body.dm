@@ -75,6 +75,7 @@
 	quality = POSITIVE
 	difficulty = 16
 	instability = 5
+	conflicts = list(GIGANTISM)
 	locked = TRUE    // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
@@ -333,6 +334,7 @@
 	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
+	conflicts = list(DWARFISM)
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
