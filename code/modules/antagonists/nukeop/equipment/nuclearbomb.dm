@@ -414,11 +414,11 @@
 	if(safety)
 		to_chat(usr, "<span class='danger'>The safety is still on.</span>")
 		return
+	if(!timing && nuclear_cooldown > world.time)
+		to_chat(usr, "<span class='danger'>[src]'s timer protocols are currently on cooldown, please stand by.</span>")
+		return
 	timing = !timing
 	if(timing)
-		if(nuclear_cooldown > world.time)
-			to_chat(usr, "<span class='danger'>[src]'s timer protocols are currently on cooldown, please stand by.</span>")
-			return
 		previous_level = get_security_level()
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
