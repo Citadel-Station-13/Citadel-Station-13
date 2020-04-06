@@ -2291,6 +2291,10 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
+"aeD" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "aeE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -3112,6 +3116,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"afQ" = (
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "afR" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -3180,6 +3187,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
+"afZ" = (
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "aga" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3658,6 +3669,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
+"agQ" = (
+/obj/item/electronics/airlock,
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "agR" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -4264,6 +4279,11 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/fore)
+"ahT" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/hallway/primary/port)
 "ahU" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table,
@@ -4780,6 +4800,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
+"aiT" = (
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor5"
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/hallway/primary/port)
 "aiU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/neutral{
@@ -4800,6 +4828,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
+"aiW" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/hallway/primary/port)
 "aiX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -4901,6 +4934,14 @@
 /obj/item/restraints/handcuffs/cable/pink,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"ajk" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/hallway/primary/port)
 "ajl" = (
 /obj/item/soap/deluxe,
 /obj/item/storage/secure/safe{
@@ -4992,6 +5033,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
+"ajs" = (
+/obj/item/stack/sheet/metal/ten,
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "ajt" = (
 /obj/structure/closet{
 	name = "Evidence Closet 5"
@@ -5012,6 +5057,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
+"aju" = (
+/obj/item/stack/sheet/mineral/wood/twenty,
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "ajv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -6872,6 +6921,11 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"amv" = (
+/obj/item/stack/sheet/metal/ten,
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "amw" = (
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/eastright{
@@ -6908,6 +6962,10 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
+"amB" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "amC" = (
 /obj/structure/chair{
 	dir = 4
@@ -33789,16 +33847,6 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
-"bnM" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bnP" = (
-/obj/machinery/door/airlock/external{
-	name = "Common Mining Dock"
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "bnR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -34932,25 +34980,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port)
-"bqf" = (
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bqg" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 3;
-	height = 5;
-	id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bqi" = (
-/obj/structure/sign/warning/docking,
-/turf/closed/wall,
 /area/hallway/primary/port)
 "bqj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -81715,19 +81744,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
-"eQf" = (
-/obj/machinery/computer/shuttle/mining/common{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "eZe" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -97336,9 +97352,9 @@ bjX
 blU
 baE
 baE
-bnM
-bnM
-bnM
+baE
+baE
+baE
 baE
 baE
 jPu
@@ -97591,13 +97607,13 @@ bgw
 bix
 bjY
 blV
-bqi
-bqf
-bqf
-bqf
-bqf
-bqf
-bqi
+baE
+afQ
+afQ
+afQ
+afZ
+afQ
+baE
 djW
 bNd
 alK
@@ -97848,13 +97864,13 @@ bgx
 biy
 bjZ
 blW
-bnM
-bqf
-bqf
-bqf
-bqf
-bqf
-bnM
+baE
+afZ
+afQ
+ajs
+afQ
+afQ
+baE
 bBf
 kQP
 bzx
@@ -98105,13 +98121,13 @@ bgy
 biz
 bka
 blX
-bnM
-bqf
-bqf
-bqf
-bqf
-bqf
-bnM
+baE
+afQ
+afQ
+afQ
+afQ
+afQ
+baE
 bBf
 bCL
 bEq
@@ -98362,13 +98378,13 @@ bgz
 biA
 bnR
 blY
-bnP
-bqg
-bqf
-bqf
-bqf
-bqf
-bnM
+aeD
+agQ
+afQ
+afQ
+afQ
+afQ
+baE
 rNX
 jBe
 bzx
@@ -98619,13 +98635,13 @@ bgA
 biz
 bkb
 blZ
-eQf
-bqf
-bqf
-bqf
-bqf
-bqf
-bnM
+baE
+ahT
+afQ
+afQ
+aju
+afQ
+baE
 bBh
 xmb
 iSt
@@ -98876,13 +98892,13 @@ bpt
 bcW
 bkc
 bma
-bnM
-bqf
-bqf
-bqf
-bqf
-bqf
-bnM
+baE
+ahT
+aiW
+afQ
+amv
+afQ
+baE
 bBf
 bCM
 bzx
@@ -99133,13 +99149,13 @@ bbK
 bcW
 dhP
 bqd
-bqi
-bqf
-bqf
-bqf
-bqf
-bqf
-bqi
+baE
+aiT
+ajk
+afQ
+amB
+afQ
+baE
 djW
 bsx
 xfI
@@ -99392,9 +99408,9 @@ bkd
 bmb
 baE
 baE
-bnM
 baE
-bnM
+baE
+baE
 baE
 baE
 bBf
