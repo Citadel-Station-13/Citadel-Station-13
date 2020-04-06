@@ -124,7 +124,11 @@ GLOBAL_LIST_EMPTY(uplinks)
 		saved_player_population = GLOB.joined_player_list.len
 		//if population has changed, update uplink items
 		if(saved_player_population != previous_player_population)
-			uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted, filters)
+			//make sure discounts are not rerolled
+			var/old_discounts = uplink_items["Discounted Gear"]
+			uplink_items = get_uplink_items(gamemode, FALSE, allow_restricted, filters)
+			if(old_discounts)
+				uplink_items["Discounted Gear"] = old_discounts
 		ui_interact(user)
 
 	// an unlocked uplink blocks also opening the PDA or headset menu
@@ -200,7 +204,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 			if(item in buyable_items)
 				var/datum/uplink_item/I = buyable_items[item]
 				//check to make sure people cannot buy items when the player pop is below the requirement
-				if(saved_player_population >= I.player_minimum)
+				if(GLOB.joined_player_list.len >= I.player_minimum)
 					MakePurchase(usr, I)
 				. = TRUE
 		if("lock")
