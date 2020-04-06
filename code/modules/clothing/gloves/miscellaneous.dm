@@ -109,7 +109,7 @@
 	if(warcry)
 		M.say("[warcry]", ignore_spam = TRUE, forced = TRUE)
 
-	.return FALSE
+	return FALSE
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/attack_self(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
@@ -123,15 +123,15 @@
 	enhancement = 0
 	secondary_trait = TRAIT_PACIFISM //You are only here to hug and be friends!
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/Touch(mob/living/target,proximity = TRUE)
-	if(!istype(target))
+/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/Touch(mob/target, proximity = TRUE)
+	if(!isliving(target))
 		return
 
 	var/mob/living/M = loc
 
 	if(M.a_intent != INTENT_HELP)
 		return FALSE
-	if(stat != CONSCIOUS) //Can't hug people who are dying/dead
+	if(target.stat != CONSCIOUS) //Can't hug people who are dying/dead
 		return FALSE
 	else
 		M.changeNext_move(CLICK_CD_RAPID)
