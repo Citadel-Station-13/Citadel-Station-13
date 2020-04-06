@@ -406,7 +406,7 @@
 
 /obj/item/storage/box/syndie_kit/pistol
 
-/obj/item/storage/box/syndie_kit/revolver/PopulateContents()
+/obj/item/storage/box/syndie_kit/pistol/PopulateContents()
 	new /obj/item/gun/ballistic/automatic/pistol(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 
