@@ -7,6 +7,7 @@
 #define WAROPS_ALWAYS_ALLOWED	(1<<1)
 #define USE_PREF_WEIGHTS		(1<<2)
 #define FORCE_IF_WON			(1<<3)
+#define USE_PREV_ROUND_WEIGHTS	(1<<4)
 
 #define ONLY_RULESET       (1<<0)
 #define HIGHLANDER_RULESET (1<<1)
