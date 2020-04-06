@@ -20,12 +20,15 @@
 	body_parts_covered = ARMS
 	cold_protection = ARMS
 	strip_delay = 300 //you can't just yank them off
+	///Extra damage through the punch.
 	var/enhancement = 0 //it's a +0 to your punches because it isn't magical
+	///Main trait added by the gloves to the user on wear.
 	var/inherited_trait = TRAIT_NOGUNS //what are you, dishonoroable?
+	///Secondary trait added by the gloves to the user on wear.
 	var/secondary_trait = TRAIT_FEARLESS //what are you, a coward?
 
 /obj/item/clothing/gloves/fingerless/pugilist/equipped(mob/user, slot)
-	..()
+	. = ..()
 	if(slot == SLOT_GLOVES)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -36,7 +39,7 @@
 			H.dna.species.punchdamagelow += enhancement
 
 /obj/item/clothing/gloves/fingerless/pugilist/dropped(mob/user)
-	..()
+
 	REMOVE_TRAIT(user, TRAIT_PUGILIST, GLOVE_TRAIT)
 	REMOVE_TRAIT(user, inherited_trait, GLOVE_TRAIT)
 	REMOVE_TRAIT(user, secondary_trait, GLOVE_TRAIT)
@@ -44,6 +47,7 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.species.punchdamagehigh = initial(H.dna.species.punchdamagehigh)
 		H.dna.species.punchdamagelow = initial(H.dna.species.punchdamagelow)
+	return ..()
 
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain
 	name = "armwraps of unyielding resolve"
@@ -52,7 +56,7 @@
 	enhancement = 1 //It is not magic that makes you punch harder, but force of will. Trust me.
 	secondary_trait = TRAIT_ANTIMAGIC
 	var/chaplain_spawnable = TRUE
-	
+
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
@@ -72,7 +76,7 @@
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 35, "rad" = 0, "fire" = 50, "acid" = 50)
 	enhancement = 3
 	secondary_trait = TRAIT_KI_VAMPIRE
-	
+
 /obj/item/clothing/gloves/fingerless/pugilist/brassmountain
 	name = "armbands of the brass mountain"
 	desc = "A series of scolding hot brass armbands. Makes you pretty keen to bring the light to the unenlightened through unmitigated violence."
@@ -91,21 +95,21 @@
 	enhancement = 10 //omae wa mou shindeiru
 	var/warcry = "AT"
 	secondary_trait = TRAIT_NOHARDCRIT
-	
+
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLOVE_TRAIT)
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/Touch(mob/living/target,proximity = TRUE)
-	if(!istype(target))
+/obj/item/clothing/gloves/fingerless/pugilist/rapid/Touch(atom/target, proximity = TRUE)
+	if(!isliving(target))
 		return
 
 	var/mob/living/M = loc
 	M.changeNext_move(CLICK_CD_RAPID)
 	if(warcry)
-		M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
+		M.say("[warcry]", ignore_spam = TRUE, forced = TRUE)
 
-	.= FALSE
+	.return FALSE
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/attack_self(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
@@ -125,13 +129,14 @@
 
 	var/mob/living/M = loc
 
-	if(M.a_intent == INTENT_HELP)
-		if(target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH)) //Can't hug people who are dying/dead
-			if(target.on_fire || target.lying) //No spamming extinguishing, helping them up, or other non-hugging/patting help interactions
-				return
-			else
-				M.changeNext_move(CLICK_CD_RAPID)
-	. = FALSE
+	if(M.a_intent != INTENT_HELP)
+		return FALSE
+	if(stat != CONSCIOUS) //Can't hug people who are dying/dead
+		return FALSE
+	else
+		M.changeNext_move(CLICK_CD_RAPID)
+
+	return FALSE
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/attack_self(mob/user)
 	return FALSE
