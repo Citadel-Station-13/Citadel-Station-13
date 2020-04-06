@@ -847,6 +847,7 @@
 #include "code\game\objects\effects\decals\decal.dm"
 #include "code\game\objects\effects\decals\misc.dm"
 #include "code\game\objects\effects\decals\remains.dm"
+#include "code\game\objects\effects\decals\vgdecals.dm"
 #include "code\game\objects\effects\decals\cleanable\aliens.dm"
 #include "code\game\objects\effects\decals\cleanable\gibs.dm"
 #include "code\game\objects\effects\decals\cleanable\humans.dm"
