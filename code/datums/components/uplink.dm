@@ -28,6 +28,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/compact_mode = FALSE
 	var/debug = FALSE
 	var/saved_player_population = 0
+	var/list/filters = list()
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate, datum/traitor_class/traitor_class)
 	if(!isitem(parent))
@@ -48,7 +49,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
 	GLOB.uplinks += src
-	var/list/filters = list()
 	if(istype(traitor_class))
 		filters = traitor_class.uplink_filters
 		starting_tc = traitor_class.TC
@@ -121,10 +121,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(user)
 		ui_interact(user)
 		//update the saved population
-		previous_player_population = saved_player_population
+		var/previous_player_population = saved_player_population
 		saved_player_population = GLOB.joined_player_list.len
 		//if population has changed, update uplink items
-		if(saved_player_population != current_player_population)
+		if(saved_player_population != previous_player_population)
 			uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted, filters)
 
 	// an unlocked uplink blocks also opening the PDA or headset menu
