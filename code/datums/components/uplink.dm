@@ -119,13 +119,13 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	active = TRUE
 	if(user)
-		ui_interact(user)
 		//update the saved population
 		var/previous_player_population = saved_player_population
 		saved_player_population = GLOB.joined_player_list.len
 		//if population has changed, update uplink items
 		if(saved_player_population != previous_player_population)
 			uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted, filters)
+		ui_interact(user)
 
 	// an unlocked uplink blocks also opening the PDA or headset menu
 	return COMPONENT_NO_INTERACT
