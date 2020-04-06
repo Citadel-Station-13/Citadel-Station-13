@@ -706,7 +706,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "\improper E-Cigarette"
 	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
 	icon = 'icons/obj/clothing/masks.dmi'
-	icon_state = "blaVape" //We cant have a null icon state due to the vendor spritesheet
+	icon_state = "black_vape"
 	item_state = null
 	w_class = WEIGHT_CLASS_TINY
 	var/chem_volume = 100
