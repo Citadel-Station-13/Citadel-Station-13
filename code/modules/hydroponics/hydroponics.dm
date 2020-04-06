@@ -31,7 +31,6 @@
 	var/self_sufficiency_progress = 0
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
 
-
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
@@ -88,7 +87,6 @@
 		connected += a
 
 	return connected
-
 
 /obj/machinery/hydroponics/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
@@ -323,7 +321,6 @@
 	if(harvest)
 		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3"))
 
-
 /obj/machinery/hydroponics/examine(user)
 	. = ..()
 	if(myseed)
@@ -351,7 +348,6 @@
 	if(pestlevel >= 5)
 		. += "<span class='warning'>It's filled with tiny worms!</span>"
 
-
 /obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
 	dead = 0
 	var/oldPlantName
@@ -361,7 +357,17 @@
 		myseed = null
 	else
 		oldPlantName = "empty tray"
-	switch(rand(1,18))		// randomly pick predominative weed
+	switch(rand(1,28))		// randomly pick predominative weed
+		if(27 to 28)
+			myseed = new /obj/item/seeds/cotton(src)
+		if(25 to 26)
+			myseed = new /obj/item/seeds/wheat(src)
+		if(23 to 24)
+			myseed = new /obj/item/seeds/wheat/oat(src)
+		if(21 to 22)
+			myseed = new /obj/item/reagent_containers/food/snacks/grown/poppy(src)
+		if(19 to 20)
+			myseed = new /obj/item/seeds/grass(src)
 		if(16 to 18)
 			myseed = new /obj/item/seeds/reishi(src)
 		if(14 to 15)
@@ -399,7 +405,6 @@
 
 /obj/machinery/hydroponics/proc/hardmutate()
 	mutate(4, 10, 2, 4, 50, 4, 10, 3)
-
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!myseed || dead)
@@ -451,7 +456,6 @@
 	else
 		to_chat(usr, "<span class='warning'>The few weeds in [src] seem to react, but only for a moment...</span>")
 
-
 /obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
 	plant_health = 0
 	harvest = 0
@@ -459,8 +463,6 @@
 	if(!dead)
 		update_icon()
 		dead = 1
-
-
 
 /obj/machinery/hydroponics/proc/mutatepest(mob/user)
 	if(pestlevel > 5)
@@ -653,11 +655,25 @@
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))
 			myseed.adjust_potency(round(salt*0.5))
 
+	// Iron, found naturly in the ground and helps plants grow big and stronge!
+	if(S.has_reagent(/datum/reagent/iron, 1))
+		if(myseed)
+			myseed.adjust_potency(round(S.get_reagent_amount(/datum/reagent/iron) * 0.01))
+
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent(/datum/reagent/ash, 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ash) * 0.25))
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/ash) * 0.5))
 		adjustWeeds(-1)
+
+	// Carbon like ash is used in IRL gardening to get bigger plants, but you need a lot here in space...
+	if(S.has_reagent(/datum/reagent/carbon, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/carbon) * 0.05))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/carbon) * 0.10))
+		adjustPests(-rand(1,2)) //carbon filled plants make pests die
+		adjustWeeds(rand(1,2)) //We make other plants grow as well...
+		if(myseed)
+			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/carbon) * 0.01))
 
 	// Diethylamine is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
 	if(S.has_reagent(/datum/reagent/diethylamine, 1))
