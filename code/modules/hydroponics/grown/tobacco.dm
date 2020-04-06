@@ -34,6 +34,7 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/medicine/salbutamol = 0.05, /datum/reagent/drug/nicotine = 0.08, /datum/reagent/consumable/nutriment = 0.03)
 	rarity = 20
+	genes = list(/datum/plant_gene/trait/smoke) //get it? because you smoke tobacco? i'm hilarious.
 
 /obj/item/reagent_containers/food/snacks/grown/tobacco/space
 	seed = /obj/item/seeds/tobacco/space
@@ -42,4 +43,3 @@
 	icon_state = "stobacco_leaves"
 	distill_reagent = null
 	wine_power = 50
-	genes = list(/datum/plant_gene/trait/smoke) //get it? because you smoke tobacco? i'm hilarious.
