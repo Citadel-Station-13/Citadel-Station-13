@@ -10,7 +10,7 @@
 	var/help_verb
 	var/pacifism_check = TRUE //are the martial arts combos/attacks unable to be used by pacifist.
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
-	var/damage_base //this is set on teach and is a random value between your species punchdamagelow and punchdamagehigh
+	var/damage_base //this is set by damage_roll proc and is a random value between your species punchdamagelow and punchdamagehigh.
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return FALSE
@@ -36,6 +36,18 @@
 	current_target = new_target
 	streak = ""
 
+/datum/martial_art/proc/damage_roll(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	//Here we roll for our damage to be added into the damage_base var. This is changed depending on whether we are in combat mode, lying down, or if our target is in combat mode.
+	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
+	if(!(D.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		damage *= 1.5
+	if(!CHECK_MOBILITY(A, MOBILITY_STAND))
+		damage *= 0.5
+	if(!(A.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		damage *= 0.25
+	damage_base = damage
+	return
+
 /datum/martial_art/proc/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	if(!istype(H) || !H.mind)
 		return FALSE
@@ -52,7 +64,6 @@
 		H.verbs += help_verb
 	H.mind.martial_art = src
 	ADD_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
-	damage_base = rand(H.dna.species.punchdamagelow, H.dna.species.punchdamagehigh)
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)

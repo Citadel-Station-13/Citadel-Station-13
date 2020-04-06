@@ -7,6 +7,7 @@
 	to_chat(A, "<span class='spider'>You begin to wind up an attack...</span>")
 	if(!do_after(A, 25, target = D))
 		to_chat(A, "<span class='spider'><b>Your attack was interrupted!</b></span>")
+		damage_roll(A,D)
 		return TRUE //martial art code was a mistake
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	atk_verb = pick("punches", "smashes", "ruptures", "cracks")

@@ -132,6 +132,7 @@
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "grabbed (Krav Maga)")
+	damage_roll(A,D)
 	..()
 
 /datum/martial_art/krav_maga/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -140,6 +141,7 @@
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "punched")
+	damage_roll(A,D)
 	var/picked_hit_type = pick("punches", "kicks")
 	var/bonus_damage = 0
 	if(CHECK_MOBILITY(D, MOBILITY_STAND))
@@ -162,6 +164,7 @@
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
+	damage_roll(A,D)
 	if(D.mobility_flags & MOBILITY_STAND)
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
 					"<span class='userdanger'>You're slapped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)

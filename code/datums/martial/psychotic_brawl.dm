@@ -4,12 +4,15 @@
 	pacifism_check = FALSE //Quite uncontrollable and unpredictable, people will still end up harming others with it.
 
 /datum/martial_art/psychotic_brawling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	damage_roll(A,D)
 	return psycho_attack(A,D)
 
 /datum/martial_art/psychotic_brawling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	damage_roll(A,D)
 	return psycho_attack(A,D)
 
 /datum/martial_art/psychotic_brawling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	damage_roll(A,D)
 	return psycho_attack(A,D)
 
 /datum/martial_art/psychotic_brawling/proc/psycho_attack(mob/living/carbon/human/A, mob/living/carbon/human/D)

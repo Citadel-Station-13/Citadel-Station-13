@@ -156,18 +156,21 @@
 
 /datum/martial_art/the_rising_bass/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	return ..()
 
 /datum/martial_art/the_rising_bass/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	return ..()
 
 /datum/martial_art/the_rising_bass/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	return ..()

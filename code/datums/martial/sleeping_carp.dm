@@ -78,6 +78,7 @@
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "grabbed (Sleeping Carp)")
@@ -85,6 +86,7 @@
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
@@ -101,6 +103,7 @@
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "disarmed (Sleeping Carp)")

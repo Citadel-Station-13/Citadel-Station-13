@@ -113,6 +113,7 @@
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A.a_intent == INTENT_GRAB && A!=D && can_use(A)) // A!=D prevents grabbing yourself
 		add_to_streak("G",D)
+		damage_roll(A,D)
 		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
 			return TRUE
 		old_grab_state = A.grab_state
@@ -130,6 +131,7 @@
 	if(!can_use(A))
 		return FALSE
 	add_to_streak("H",D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "attacked (CQC)")
@@ -160,6 +162,7 @@
 	if(!can_use(A))
 		return FALSE
 	add_to_streak("D",D)
+	damage_roll(A,D)
 	var/obj/item/I = null
 	if(check_streak(A,D))
 		return TRUE
