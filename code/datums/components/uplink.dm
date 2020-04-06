@@ -27,6 +27,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/datum/ui_state/checkstate
 	var/compact_mode = FALSE
 	var/debug = FALSE
+	var/saved_player_population = 0
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate, datum/traitor_class/traitor_class)
 	if(!isitem(parent))
@@ -68,6 +69,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
+	saved_player_population = GLOB.joined_player_list.len
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/U)
 	lockable |= U.lockable
@@ -118,6 +120,13 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = TRUE
 	if(user)
 		ui_interact(user)
+		//update the saved population
+		previous_player_population = saved_player_population
+		saved_player_population = GLOB.joined_player_list.len
+		//if population has changed, update uplink items
+		if(saved_player_population != current_player_population)
+			uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted, filters)
+
 	// an unlocked uplink blocks also opening the PDA or headset menu
 	return COMPONENT_NO_INTERACT
 
@@ -190,7 +199,9 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 			if(item in buyable_items)
 				var/datum/uplink_item/I = buyable_items[item]
-				MakePurchase(usr, I)
+				//check to make sure people cannot buy items when the player pop is below the requirement
+				if(saved_player_population >= I.player_minimum)
+					MakePurchase(usr, I)
 				. = TRUE
 		if("lock")
 			active = FALSE
