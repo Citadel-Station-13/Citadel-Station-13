@@ -35,11 +35,10 @@
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 		tune_time_left -= wait
 	else
-		if(tune_time_left <= 0)
-			tune_time_left = 0
-			if (song.playing)
-				loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
-			STOP_PROCESSING(SSprocessing, src)
+		tune_time_left = 0
+		if (song.playing)
+			loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
+		STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/instrument/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
