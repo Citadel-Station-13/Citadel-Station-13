@@ -415,9 +415,6 @@
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
 
-/datum/plant_gene/trait/stinging/on_slip(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	on_throw_impact(G, target)
-
 /datum/plant_gene/trait/stinging/on_throw_impact(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)
 		var/mob/living/L = target
