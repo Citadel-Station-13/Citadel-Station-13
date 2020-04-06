@@ -42,3 +42,4 @@
 	icon_state = "stobacco_leaves"
 	distill_reagent = null
 	wine_power = 50
+	genes = list(/datum/plant_gene/trait/smoke) //get it? because you smoke tobacco? i'm hilarious.
