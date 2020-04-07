@@ -559,14 +559,19 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(!check_cable_amount(user))
 		return
 	to_chat(user, "<span class='notice'>You start making some cable restraints.</span>")
-	if(do_after(user, 30, TRUE, user) && check_cable_amount(user))
-		amount -= 15
-		var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
-		user.put_in_hands(result)
-		result.color = color 
-		to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
+	if(!do_after(user, 30, TRUE, user, TRUE))
+		to_chat(user, "<span class='notice'>You fail to make cable restraints, you need to stand still while doing so.</span>")
 		return
-	to_chat(user, "<span class='notice'>You fail to make cable restraints, you need to stand still while doing so.</span>")
+	if(!check_cable_amount())
+		return
+	amount -= 15
+	if(amount == 0)
+		qdel(src)
+	var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
+	user.put_in_hands(result)
+	result.color = color 
+	to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
+	
 
 /obj/item/stack/cable_coil/proc/check_cable_amount(user)
 	if(amount < 15) //We dont care about cyborgs here, so we dont use get_amount()
