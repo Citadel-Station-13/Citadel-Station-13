@@ -113,7 +113,6 @@
 	if (secret_type)
 		secret = new secret_type(src)
 		secret.desc += "" //In case you want to add something to the item that spawns
-		w_items += secret.w_class
 		contents += secret
 
 /obj/structure/toilet/secret/low_loot
