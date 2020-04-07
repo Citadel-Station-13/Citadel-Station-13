@@ -725,6 +725,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		var/cur_sample_weight = world.time - last_threat_sample_time
 		threat_average = ((threat_average * threat_average_weight) + threat) / (threat_average_weight + cur_sample_weight)
 		threat_average_weight += cur_sample_weight
+		last_threat_sample_time  = world.time
 	else
 		threat_average = threat
 		threat_average_weight++
