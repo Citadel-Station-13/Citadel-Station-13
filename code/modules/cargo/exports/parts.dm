@@ -138,6 +138,12 @@
 	export_types = list(/obj/item/tea_plate)
 	include_subtypes = FALSE
 
+/datum/export/glasswork_teacup
+	cost = 1800
+	unit_name = "tea gear"
+	export_types = list(/obj/item/tea_cup)
+	include_subtypes = FALSE
+
 /datum/export/glasswork_laserpointer
 	cost = 2600
 	unit_name = "hand made laserpointer"
