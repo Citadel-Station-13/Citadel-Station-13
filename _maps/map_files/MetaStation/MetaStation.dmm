@@ -16890,7 +16890,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aGz" = (
-//obj/structure/toilet/secret/low_loot{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
