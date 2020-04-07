@@ -21,9 +21,16 @@
 
 	var/locked = FALSE								//when locked nothing can see inside or use it.
 
-	var/max_w_class = WEIGHT_CLASS_SMALL			//max size of objects that will fit.
-	var/max_combined_w_class = 14					//max combined sizes of objects that will fit.
-	var/max_items = 7								//max number of objects that will fit.
+	/// Storage flags, including what kinds of limiters we use for how many items we can hold
+	var/storage_flags = STORAGE_LIMIT_VOLUME
+	/// Max w_class we can hold. Applies to [STORAGE_LIMIT_COMBINED_W_CLASS] and [STORAGE_LIMIT_VOLUME]
+	var/max_w_class = WEIGHT_CLASS_SMALL
+	/// Max combined w_class. Applies to [STORAGE_LIMIT_COMBINED_W_CLASS]
+	var/max_combined_w_class = WEIGHT_CLASS_SMALL * 7
+	/// Max items we can hold. Applies to [STORAGE_LIMIT_MAX_ITEMS]
+	var/max_items = 7
+	/// Max volume we can hold. Applies to [STORAGE_LIMIT_VOLUME]. Auto scaled on New() if unset.
+	var/max_volume
 
 	var/emp_shielded = FALSE
 
@@ -65,6 +72,8 @@
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
+	if(isnull(max_volume))
+		max_volume = AUTO_SCALE_STORAGE_VOLUME(max_w_class, max_items)
 	if(master)
 		change_master(master)
 	boxes = new(null, src)
