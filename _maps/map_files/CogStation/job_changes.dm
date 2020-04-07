@@ -1,11 +1,11 @@
 #define JOB_MODIFICATION_MAP_NAME "CogStation"
 
 //Medical
-/datum/job/scientist/New()
+/datum/job/chemist/New()
 	..()
 	MAP_JOB_CHECK
-	access += ACCESS_CHEMISTRY
-	minimal_access += ACCESS_CHEMISTRY
+	access += ACCESS_RESEARCH
+	minimal_access += ACCESS_RESEARCH
 
 //Science
 
