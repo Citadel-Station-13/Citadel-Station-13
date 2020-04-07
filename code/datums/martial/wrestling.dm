@@ -227,6 +227,7 @@
 	if(!A.pulling || A.pulling != D)
 		to_chat(A, "You need to have [D] in a cinch!")
 		return
+	var/damage = damage_roll(A,D)
 	D.forceMove(A.loc)
 	A.setDir(get_dir(A, D))
 	D.setDir(get_dir(D, A))
@@ -309,11 +310,11 @@
 
 			switch(rand(1,3))
 				if (2)
-					D.apply_damage(damage_base + 25, BRUTE)
+					D.apply_damage(damage + 25, BRUTE)
 				if (3)
 					D.ex_act(EXPLODE_LIGHT)
 				else
-					D.apply_damage(damage_base + 15, BRUTE)
+					D.apply_damage(damage + 15, BRUTE)
 		else
 			D.ex_act(EXPLODE_LIGHT)
 
@@ -337,6 +338,7 @@
 	if(!D)
 		return
 	var/turf/T = get_turf(A)
+	var/damage = damage_roll(A,D)
 	if (T && isturf(T) && D && isturf(D.loc))
 		for (var/i = 0, i < 4, i++)
 			A.setDir(turn(A.dir, 90))
@@ -345,7 +347,7 @@
 		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
 
 		A.visible_message("<span class = 'danger'><b>[A] headbutts [D]!</b></span>")
-		D.apply_damage(damage_base + 15, BRUTE)
+		D.apply_damage(damage + 15, BRUTE)
 		playsound(A.loc, "swing_hit", 50, 1)
 		D.Unconscious(20)
 	log_combat(A, D, "headbutted")
@@ -353,13 +355,14 @@
 /datum/martial_art/wrestling/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
 		return
+	var/damage = damage_roll(A,D)
 	A.emote("scream")
 	A.emote("flip")
 	A.setDir(turn(A.dir, 90))
 
 	A.visible_message("<span class = 'danger'><B>[A] roundhouse-kicks [D]!</B></span>")
 	playsound(A.loc, "swing_hit", 50, 1)
-	D.apply_damage(damage_base + 15, STAMINA)
+	D.apply_damage(damage + 15, STAMINA)
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
@@ -373,7 +376,8 @@
 	var/obj/surface = null
 	var/turf/ST = null
 	var/falling = 0
-
+	var/damage = damage_roll(A,D)
+	
 	for (var/obj/O in oview(1, A))
 		if (O.density == 1)
 			if (O == A)
@@ -401,7 +405,7 @@
 			A.pixel_y = 0
 			if (falling == 1)
 				A.visible_message("<span class = 'danger'><B>...and dives head-first into the ground, ouch!</b></span>")
-				A.apply_damage(damage_base + 15, BRUTE)
+				A.apply_damage(damage + 15, BRUTE)
 				A.DefaultCombatKnockdown(60)
 			to_chat(A, "[D] is too far away!")
 			return FALSE
@@ -427,9 +431,9 @@
 			if (prob(33) || D.stat)
 				D.ex_act(EXPLODE_LIGHT)
 			else
-				D.apply_damage(damage_base + 25, BRUTE)
+				D.apply_damage(damage + 25, BRUTE)
 		else
-			D.apply_damage(damage_base + 25, BRUTE)
+			D.apply_damage(damage + 25, BRUTE)
 
 		D.DefaultCombatKnockdown(40)
 

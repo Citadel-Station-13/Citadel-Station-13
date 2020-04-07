@@ -94,7 +94,7 @@
 	item_state = "rapid"
 	enhancement = 10 //omae wa mou shindeiru
 	var/warcry = "AT"
-	secondary_trait = TRAIT_NOHARDCRIT
+	secondary_trait = TRAIT_NOSOFTCRIT //basically extra health
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/Initialize()
 	. = ..()
@@ -111,7 +111,7 @@
 
 	return FALSE
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/attack_self(mob/user)
+/obj/item/clothing/gloves/fingerless/pugilist/rapid/AltClick(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
 	if(input)
 		warcry = input
@@ -138,7 +138,7 @@
 
 	return FALSE
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/attack_self(mob/user)
+/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/AltClick(mob/user)
 	return FALSE
 
 /obj/item/clothing/gloves/botanic_leather

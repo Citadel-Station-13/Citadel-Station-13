@@ -17,7 +17,7 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 	damage_roll(A,D)
-	var/extra_damage = damage_base
+	var/extra_damage = damage_roll(A,D)
 	if(extra_damage == A.dna.species.punchdamagelow)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \

@@ -44,11 +44,13 @@
 	return
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	var/damage = (damage_roll(A,D)*3)
 	D.visible_message("<span class='danger'>[A] has hit [D] with Plasma Punch!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with Plasma Punch!</span>")
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
 	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 	D.throw_at(throw_target, 200, 4,A)
+	D.apply_damage(damage, BRUTE)
 	A.say("HYAH!", forced="plasma fist")
 	log_combat(A, D, "threw back (Plasma Fist)")
 	return
@@ -65,21 +67,18 @@
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
-	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	return FALSE
 
 /datum/martial_art/plasma_fist/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
-	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	return FALSE
 
 /datum/martial_art/plasma_fist/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
-	damage_roll(A,D)
 	if(check_streak(A,D))
 		return TRUE
 	return FALSE
