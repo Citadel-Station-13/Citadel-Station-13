@@ -564,9 +564,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 	if(!check_cable_amount())
 		return
-	amount -= 15
-	if(amount == 0)
-		qdel(src)
+	use(15)
 	var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
 	user.put_in_hands(result)
 	result.color = color 
