@@ -571,7 +571,7 @@
 		)
 
 /obj/effect/spawner/lootdrop/healing_kits
-	name = "random medical kit(s) spawner"
+	name = "random safe medical kit(s) spawner"
 	lootcount = 1
 	loot = list(
 		/obj/item/storage/firstaid/regular = 1,
@@ -580,8 +580,7 @@
 		/obj/item/storage/firstaid/toxin = 1,
 		/obj/item/storage/firstaid/radbgone = 1,
 		/obj/item/storage/firstaid/o2 = 1,
-		/obj/item/storage/firstaid/brute = 1,
-		/obj/item/storage/firstaid/tactical = 1
+		/obj/item/storage/firstaid/brute = 1
 		)
 
 /obj/effect/spawner/lootdrop/breathing_tanks
