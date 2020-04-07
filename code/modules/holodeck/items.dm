@@ -34,10 +34,10 @@
 	. = ..()
 	item_color = "red"
 
-/obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(active)
+/obj/item/holo/esword/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!active)
 		return ..()
-	return 0
+	return ..()
 
 /obj/item/holo/esword/attack(target as mob, mob/user as mob)
 	..()

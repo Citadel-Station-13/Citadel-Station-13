@@ -234,15 +234,16 @@
 /obj/item/flamethrower/full/tank
 	create_with_tank = TRUE
 
-/obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/item/projectile/P = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
-		owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")
-		var/target_turf = get_turf(owner)
-		igniter.ignite_turf(src,target_turf, release_amount = 100)
-		qdel(ptank)
-		return 1 //It hit the flamethrower, not them
-
+/obj/item/flamethrower/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type & ATTACK_TYPE_PROJECTILE)
+		var/obj/item/projectile/P = object
+		if(istype(P) && (P.damage_type != STAMINA) && damage && !P.nodamage && prob(15))
+			owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")
+			var/target_turf = get_turf(owner)
+			igniter.ignite_turf(src,target_turf, release_amount = 100)
+			qdel(ptank)
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return ..()
 
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(700,2)
