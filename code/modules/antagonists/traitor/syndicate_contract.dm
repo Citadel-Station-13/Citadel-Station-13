@@ -89,7 +89,7 @@
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)	// They're off to holding - handle the return timer and give some text about what's going on.
 	addtimer(CALLBACK(src, .proc/returnVictim, M), 4 MINUTES)	// Ship 'em back - dead or alive... 4 minutes wait.
 	if(M.stat != DEAD)	//Even if they weren't the target, we're still treating them the same.
-		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 20)	// Heal them up - gets them out of crit/soft crit.
+		M.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 20)	// Heal them up - gets them out of crit/soft crit. -- now 100% toxinlover friendly!!
 		M.flash_act()
 		M.confused += 10
 		M.blur_eyes(5)
