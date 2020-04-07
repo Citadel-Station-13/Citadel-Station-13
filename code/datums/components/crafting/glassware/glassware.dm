@@ -163,12 +163,11 @@
 	desc = "A small polished glass lens. Just needs to be refined with some sandstone."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "glass_optics"
-	next_step = /obj/item/glasswork/lens
+	next_step = /obj/item/glasswork/glass_base/lens
 
 /obj/item/glasswork/glass_base/glass_lens_part6/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/sheet/mineral/sandstone))
-		if(do_after(user,20, target = src))
 		new next_step(user.loc, 1)
 		qdel(src)
 

@@ -112,7 +112,7 @@
 /datum/export/glasswork_lens
 	cost = 1800
 	unit_name = "small glass lens"
-	export_types = list(/obj/item/glasswork/lens)
+	export_types = list(/obj/item/glasswork/glass_base/lens)
 
 /datum/export/glasswork_spouty
 	cost = 1200
