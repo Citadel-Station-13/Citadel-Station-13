@@ -132,7 +132,7 @@
 /datum/bounty/item/science/anomaly_core
 	name = "Anomaly Core"
 	description = "A new theory has begone that each sector of space has different anomalies, this all started when a local station tried to make a fire based reactive suit and failed making a stealth version, please send us a core so we may study it more."
-	reward = 2000
+	reward = 2500
 	required_count = 1
 	wanted_types = list(/obj/item/assembly/signaler/anomaly)
 
