@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/miasma
 	id = "miasma"
-	specific_heat = 0.00001
+	specific_heat = 20
 	fusion_power = 50
 	name = "Miasma"
 	gas_overlay = "miasma"
