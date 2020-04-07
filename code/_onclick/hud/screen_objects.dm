@@ -210,20 +210,6 @@
 		user.swap_hand(held_index)
 	return TRUE
 
-/obj/screen/close
-	name = "close"
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
-	icon_state = "backpack_close"
-
-/obj/screen/close/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/close/Click()
-	var/datum/component/storage/S = master
-	S.hide_from(usr)
-	return TRUE
 
 /obj/screen/drop
 	name = "drop"
@@ -405,30 +391,6 @@
 		icon_state = "act_rest"
 	else
 		icon_state = "act_rest0"
-
-/obj/screen/storage
-	name = "storage"
-	icon_state = "block"
-	screen_loc = "7,7 to 10,8"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/obj/screen/storage/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/storage/Click(location, control, params)
-	if(world.time <= usr.next_move)
-		return TRUE
-	if(usr.incapacitated())
-		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
-	if(master)
-		var/obj/item/I = usr.get_active_held_item()
-		if(I)
-			master.attackby(null, I, usr, params)
-	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"

@@ -46,8 +46,19 @@
 
 	var/display_numerical_stacking = FALSE			//stack things of the same type and show as a single object with a number.
 
-	var/obj/screen/storage/boxes					//storage display object
-	var/obj/screen/close/closer						//close button object
+	/// "legacy"/default view mode's storage "boxes"
+	var/obj/screen/storage/boxes/ui_boxes
+	/// New volumetric storage display mode's left side
+	var/obj/screen/storage/left/ui_left
+	/// New volumetric storage display mode's right side
+	var/obj/screen/storage/right/ui_right
+	/// New volumetric storage display mode's center 'blocks'
+	var/obj/screen/storage/continuous/ui_continuous
+	/// The close button, used in all modes.
+	var/obj/screen/storage/close/ui_closer
+	/// Associative list of list(item = screen object) for volumetric storage item screen blocks
+	var/list/ui_item_blocks
+
 	var/current_maxscreensize
 
 	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
@@ -120,8 +131,15 @@
 
 /datum/component/storage/Destroy()
 	close_all()
-	QDEL_NULL(boxes)
-	QDEL_NULL(closer)
+	QDEL_NULL(ui_boxes)
+	QDEL_NULL(ui_closer)
+	QDEL_NULL(ui_continuous)
+	QDEL_NULL(ui_left)
+	QDEL_NULL(ui_right)
+	// DO NOT USE QDEL_LIST_ASSOC.
+	for(var/i in ui_item_blocks)
+		qdel(ui_item_blocks[i])		//qdel the screen object not the item
+	ui_item_blocks.Cut()
 	LAZYCLEARLIST(is_using)
 	return ..()
 
@@ -309,103 +327,6 @@
 	if(check_locked())
 		close_all()
 
-/datum/component/storage/proc/_process_numerical_display()
-	. = list()
-	for(var/obj/item/I in accessible_items())
-		if(QDELETED(I))
-			continue
-		if(!.[I.type])
-			.[I.type] = new /datum/numbered_display(I, 1)
-		else
-			var/datum/numbered_display/ND = .[I.type]
-			ND.number++
-	. = sortTim(., /proc/cmp_numbered_displays_name_asc, associative = TRUE)
-
-//This proc determines the size of the inventory to be displayed. Please touch it only if you know what you're doing.
-/datum/component/storage/proc/orient2hud(mob/user, maxcolumns)
-	var/list/accessible_contents = accessible_items()
-	var/adjusted_contents = length(accessible_contents)
-
-	//Numbered contents display
-	var/list/datum/numbered_display/numbered_contents
-	if(display_numerical_stacking)
-		numbered_contents = _process_numerical_display()
-		adjusted_contents = numbered_contents.len
-
-	var/columns = CLAMP(max_items, 1, maxcolumns ? maxcolumns : screen_max_columns)
-	var/rows = CLAMP(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
-	standard_orient_objs(rows, columns, numbered_contents)
-
-//This proc draws out the inventory and places the items on it. It uses the standard position.
-/datum/component/storage/proc/standard_orient_objs(rows, cols, list/obj/item/numerical_display_contents)
-	boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+cols-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
-	var/cx = screen_start_x
-	var/cy = screen_start_y
-	if(islist(numerical_display_contents))
-		for(var/type in numerical_display_contents)
-			var/datum/numbered_display/ND = numerical_display_contents[type]
-			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
-			ND.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
-			ND.sample_object.layer = ABOVE_HUD_LAYER
-			ND.sample_object.plane = ABOVE_HUD_PLANE
-			cx++
-			if(cx - screen_start_x >= cols)
-				cx = screen_start_x
-				cy++
-				if(cy - screen_start_y >= rows)
-					break
-	else
-		for(var/obj/O in accessible_items())
-			if(QDELETED(O))
-				continue
-			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
-			O.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			O.maptext = ""
-			O.layer = ABOVE_HUD_LAYER
-			O.plane = ABOVE_HUD_PLANE
-			cx++
-			if(cx - screen_start_x >= cols)
-				cx = screen_start_x
-				cy++
-				if(cy - screen_start_y >= rows)
-					break
-	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
-
-/datum/component/storage/proc/show_to(mob/M, set_screen_size = TRUE)
-	if(!M.client)
-		return FALSE
-	var/list/cview = getviewsize(M.client.view)
-	var/maxallowedscreensize = cview[1]-8
-	if(set_screen_size)
-		current_maxscreensize = maxallowedscreensize
-	else if(current_maxscreensize)
-		maxallowedscreensize = current_maxscreensize
-	if(M.active_storage != src && (M.stat == CONSCIOUS))
-		for(var/obj/item/I in accessible_items())
-			if(I.on_found(M))
-				return FALSE
-	if(M.active_storage)
-		M.active_storage.hide_from(M)
-	orient2hud(M, (isliving(M) ? maxallowedscreensize : 7))
-	M.client.screen |= boxes
-	M.client.screen |= closer
-	M.client.screen |= accessible_items()
-	M.active_storage = src
-	LAZYOR(is_using, M)
-	return TRUE
-
-/datum/component/storage/proc/hide_from(mob/M)
-	if(!M.client)
-		return TRUE
-	var/atom/real_location = real_location()
-	M.client.screen -= boxes
-	M.client.screen -= closer
-	M.client.screen -= real_location.contents
-	if(M.active_storage == src)
-		M.active_storage = null
-	LAZYREMOVE(is_using, M)
-	return TRUE
 
 /datum/component/storage/proc/close(mob/M)
 	hide_from(M)
@@ -427,24 +348,6 @@
 	var/datum/component/storage/concrete/master = master()
 	master.emp_act(source, severity)
 
-//This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
-//The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
-/datum/component/storage/proc/orient_objs(tx, ty, mx, my)
-	var/atom/real_location = real_location()
-	var/cx = tx
-	var/cy = ty
-	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
-	for(var/obj/O in real_location)
-		if(QDELETED(O))
-			continue
-		O.screen_loc = "[cx],[cy]"
-		O.layer = ABOVE_HUD_LAYER
-		O.plane = ABOVE_HUD_PLANE
-		cx++
-		if(cx > mx)
-			cx = tx
-			cy--
-	closer.screen_loc = "[mx+1],[my]"
 
 //Resets something that is being removed from storage.
 /datum/component/storage/proc/_removal_reset(atom/movable/thing)
