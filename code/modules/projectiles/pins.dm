@@ -23,6 +23,8 @@
 	if(proximity_flag)
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
+			if(G.no_pin_required)
+				return
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.forceMove(get_turf(G))
 				G.pin.gun_remove(user)
@@ -69,12 +71,9 @@
 		if(gun)
 			qdel(gun)
 
-
-
 /obj/item/firing_pin/magic
 	name = "magic crystal shard"
 	desc = "A small enchanted shard which allows magical weapons to fire."
-
 
 // Test pin, works only near firing range.
 /obj/item/firing_pin/test_range
@@ -229,3 +228,16 @@
 	if(gun)
 		gun.pin = null
 	return ..()
+
+//Station Locked
+
+/obj/item/firing_pin/away
+	name = "station locked pin"
+	desc = "A firing pin that only will fire when off the station."
+
+/obj/item/firing_pin/away/pin_auth(mob/living/user)
+	var/area/station_area = get_area(src)
+	if(!station_area || is_station_level(station_area.z))
+		to_chat(user, "<span class='warning'>The pin beeps, refusing to fire.</span>")
+		return FALSE
+	return TRUE

@@ -18,6 +18,8 @@
 	var/datum/action/drop/drop = new/datum/action/drop()
 
 /datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	if(!can_use(A, D))
+		return 0
 	switch(streak)
 		if("drop")
 			streak = ""
@@ -207,7 +209,7 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/Knockdown, 20))
+			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/DefaultCombatKnockdown, 20))
 	log_combat(A, D, "has thrown with wrestling")
 	return 0
 
@@ -303,7 +305,7 @@
 		playsound(A.loc, "swing_hit", 50, 1)
 		if (!D.stat)
 			D.emote("scream")
-			D.Knockdown(40)
+			D.DefaultCombatKnockdown(40)
 
 			switch(rand(1,3))
 				if (2)
@@ -361,7 +363,7 @@
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
-		D.Knockdown(20)
+		D.DefaultCombatKnockdown(20)
 		D.throw_at(T, 3, 2)
 	log_combat(A, D, "roundhouse-kicked")
 
@@ -400,7 +402,7 @@
 			if (falling == 1)
 				A.visible_message("<span class = 'danger'><B>...and dives head-first into the ground, ouch!</b></span>")
 				A.adjustBruteLoss(rand(10,20))
-				A.Knockdown(60)
+				A.DefaultCombatKnockdown(60)
 			to_chat(A, "[D] is too far away!")
 			return 0
 
@@ -429,7 +431,7 @@
 		else
 			D.adjustBruteLoss(rand(20,30))
 
-		D.Knockdown(40)
+		D.DefaultCombatKnockdown(40)
 
 		A.pixel_y = 0
 
@@ -448,6 +450,8 @@
 /datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
+	if(!can_use(A,D))
+		return ..()
 	if(A.pulling == D || A == D) // don't stun grab yoursel
 		return FALSE
 	A.start_pulling(D)
@@ -476,3 +480,19 @@
 	if(H.get_item_by_slot(SLOT_BELT) == src)
 		style.remove(H)
 	return
+
+//Subtype of wrestling, reserved for the wrestling belts found in the holodeck
+/datum/martial_art/wrestling/holodeck
+	name = "Holodeck Wrestling"
+
+/obj/item/storage/belt/champion/wrestling/holodeck
+	name = "Holodeck Wrestling Belt"
+	style = new /datum/martial_art/wrestling/holodeck
+
+//Make sure that moves can only be used on people wearing the holodeck belt
+/datum/martial_art/wrestling/holodeck/can_use(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	if(!(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck)))
+		return 0
+	else
+		return ..()
+

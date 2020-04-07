@@ -12,7 +12,6 @@
 	item_state = "explorer_envirosuit"
 	item_color = "explorer_envirosuit"
 
-
 /obj/item/clothing/under/plasmaman/chef
 	name = "chef's plasma envirosuit"
 	desc = "A white plasmaman envirosuit designed for cullinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
@@ -69,6 +68,8 @@
 	item_state = "captain_envirosuit"
 	item_color = "captain_envirosuit"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/plasmaman/mime
 	name = "mime envirosuit"

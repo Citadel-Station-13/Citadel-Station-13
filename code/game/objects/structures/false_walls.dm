@@ -7,7 +7,7 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	layer = CLOSED_TURF_LAYER
+	layer = LOW_OBJ_LAYER
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
@@ -64,7 +64,7 @@
 		update_icon()
 		air_update_turf(TRUE)
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon_state()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(opening)
 		if(density)
 			icon_state = "fwall_opening"

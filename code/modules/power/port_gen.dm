@@ -39,7 +39,7 @@
 /obj/machinery/power/port_gen/proc/handleInactive()
 	return
 
-/obj/machinery/power/port_gen/update_icon()
+/obj/machinery/power/port_gen/update_icon_state()
 	icon_state = "[base_icon]_[active]"
 
 /obj/machinery/power/port_gen/process()
@@ -103,6 +103,8 @@
 	. += "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
 	if(crit_fail)
 		. += "<span class='danger'>The generator seems to have broken down.</span>"
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)

@@ -143,7 +143,7 @@
 //Cult Blood Spells
 /datum/action/innate/cult/blood_spell/stun
 	name = "Stun"
-	desc = "A potent spell that will stun and mute victims upon contact."
+	desc = "A potent spell that will stun and mute victims upon contact.  When the cult ascends, so does the spell, it burns and throws back the victim!"
 	button_icon_state = "hand"
 	magic_path = "/obj/item/melee/blood_magic/stun"
 	health_cost = 10
@@ -343,7 +343,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NO_ATTACK_CHAIN_SOFT_STAMCRIT
 
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -437,9 +437,16 @@
 			else
 				target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
-		else
-			if(!iscultist(L))
-				L.Knockdown(160)
+		else // cult doesn't stun any longer when halos are out, instead it does burn damage + knockback!
+			var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if(user_antag.cult_team.cult_ascendent)
+				if(!iscultist(L))
+					L.adjustFireLoss(20)
+					if(L.move_resist < MOVE_FORCE_STRONG)
+						var/atom/throw_target = get_edge_target_turf(L, user.dir)
+						L.throw_at(throw_target, 7, 1, user)
+			else if(!iscultist(L))
+				L.DefaultCombatKnockdown(160)
 				L.adjustStaminaLoss(140) //Ensures hard stamcrit
 				L.flash_act(1,1)
 				if(issilicon(target))
@@ -753,7 +760,7 @@
 	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
-			if(B.blood_state == "blood")
+			if(B.blood_state == BLOOD_STATE_BLOOD)
 				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 					temp += 30
 				else

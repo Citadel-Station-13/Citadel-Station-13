@@ -9,7 +9,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=2500)
 
 	var/code = 2
 	var/frequency = FREQ_ELECTROPACK
@@ -61,7 +61,7 @@
 	var/mob/living/carbon/C = usr
 	if(usr.stat || usr.restrained() || C.back == src)
 		return
-	
+
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=radio")
 		onclose(usr, "radio")
@@ -118,7 +118,7 @@
 		s.set_up(3, 1, L)
 		s.start()
 
-		L.Knockdown(100)
+		L.DefaultCombatKnockdown(100)
 
 	if(master)
 		master.receive_signal()
@@ -127,7 +127,7 @@
 /obj/item/electropack/ui_interact(mob/user)
 	if(!ishuman(user))
 		return
-	
+
 	user.set_machine(src)
 	var/dat = {"
 <TT>
@@ -157,7 +157,7 @@ Code:
 	w_class = WEIGHT_CLASS_SMALL
 	strip_delay = 60
 	equip_delay_other = 60
-	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
 
 	var/tagname = null
 
@@ -166,7 +166,7 @@ Code:
 	id = "shockcollar"
 	build_type = AUTOLATHE
 	build_path = /obj/item/electropack/shockcollar
-	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass =2000)
 	category = list("hacked", "Misc")
 
 /obj/item/electropack/shockcollar/attack_hand(mob/user)
@@ -192,7 +192,7 @@ Code:
 		s.set_up(3, 1, L)
 		s.start()
 
-		L.Knockdown(100)
+		L.DefaultCombatKnockdown(100)
 
 	if(master)
 		master.receive_signal()
@@ -200,14 +200,14 @@ Code:
 
 /obj/item/electropack/shockcollar/attackby(obj/item/W, mob/user, params) //moves it here because on_click is being bad
 	if(istype(W, /obj/item/pen))
-		var/t = input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot") as null|text
+		var/t = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot", MAX_NAME_LEN)
 		if(t)
-			tagname = copytext(sanitize(t), 1, MAX_NAME_LEN)
-			name = "[initial(name)] - [tagname]"
+			tagname = t
+			name = "[initial(name)] - [t]"
 	else
 		return ..()
 
-/obj/item/electropack/shockcollar/ui_interact(mob/user) //on_click calls this 
+/obj/item/electropack/shockcollar/ui_interact(mob/user) //on_click calls this
 	var/dat = {"
 <TT>
 <B>Frequency/Code</B> for shock collar:<BR>

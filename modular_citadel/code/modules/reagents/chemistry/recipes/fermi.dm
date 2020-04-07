@@ -10,7 +10,7 @@
 	if(clear_conversion == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
 			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
-			if(R.purity == 1)
+			if(!R || R.purity == 1)
 				continue
 
 			var/cached_volume = R.volume
@@ -25,7 +25,6 @@
 				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
 				R.cached_purity = R.purity
 				R.purity = 1
-	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.
 /datum/chemical_reaction/proc/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
@@ -200,8 +199,10 @@
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
 
-/datum/chemical_reaction/fermi/breast_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+/datum/chemical_reaction/fermi/breast_enlarger/FermiFinish(datum/reagents/holder, atom/my_atom)
 	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
+	if(!BE)
+		return
 	var/cached_volume = BE.volume
 	if(BE.purity < 0.35)
 		holder.remove_reagent(type, cached_volume)
@@ -249,8 +250,10 @@
 	P.length = ((PE.volume * PE.purity) / 10)//half as effective.
 	my_atom.reagents.clear_reagents()
 
-/datum/chemical_reaction/fermi/penis_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+/datum/chemical_reaction/fermi/penis_enlarger/FermiFinish(datum/reagents/holder, atom/my_atom)
 	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
+	if(!PE)
+		return
 	var/cached_volume = PE.volume
 	if(PE.purity < 0.35)
 		holder.remove_reagent(type, cached_volume)
@@ -306,13 +309,11 @@
 /datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
-	if(!B)
+	if(!B || !E)
 		return
 	if(!B.data)
-		var/list/seen = viewers(5, get_turf(my_atom))
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
-			E.purity = 0
+		my_atom.visible_message("<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
+		E.purity = 0
 	if (B.data["gender"] == "female")
 		E.data["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
@@ -332,11 +333,11 @@
 /datum/chemical_reaction/fermi/enthrall/slime/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/blood/jellyblood/B = locate(/datum/reagent/blood/jellyblood) in my_atom.reagents.reagent_list//The one line change.
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	if(!B || !E)
+		return
 	if(!B.data)
-		var/list/seen = viewers(5, get_turf(my_atom))
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //Just in case
-			E.purity = 0
+		my_atom.visible_message("<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
+		E.purity = 0
 	if (B.data["gender"] == "female")
 		E.data["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
@@ -348,14 +349,9 @@
 	E.data["creatorID"] = B.data["ckey"]
 	E.creatorID = B.data["ckey"]
 
-/datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
-	var/turf/T = get_turf(my_atom)
-	var/datum/reagents/R = new/datum/reagents(1000)
-	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent(/datum/reagent/fermi/enthrallExplo, volume)
-	s.set_up(R, volume/2, T)
-	s.start()
-	my_atom.reagents.clear_reagents()
+/datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH)
+	R0.clear_reagents()
+	..()
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"
@@ -466,9 +462,9 @@
 
 
 /datum/chemical_reaction/fermi/acidic_buffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
-	if(!locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list)
-		return
 	var/datum/reagent/fermi/acidic_buffer/Fa = locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list
+	if(!Fa)
+		return
 	Fa.data = 0.1//setting it to 0 means byond thinks it's not there.
 
 /datum/chemical_reaction/fermi/basic_buffer//done test
@@ -493,10 +489,10 @@
 	FermiChem 		= TRUE
 
 
-/datum/chemical_reaction/fermi/basic_buffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
-	if(!locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list)
-		return
+/datum/chemical_reaction/fermi/basic_buffer/FermiFinish(datum/reagents/holder, atom/my_atom) //might need this
 	var/datum/reagent/fermi/basic_buffer/Fb = locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list
+	if(!Fb)
+		return
 	Fb.data = 14
 
 //secretcatchemcode, shh!! Of couse I hide it amongst cats. Though, I moved it with your requests.

@@ -23,12 +23,12 @@
 				owner.remove_status_effect(src)
 	..()
 
-/datum/status_effect/chem/SGDF/on_remove(mob/living/carbon/M)
+/datum/status_effect/chem/SGDF/on_remove()
 	log_game("FERMICHEM: SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]")
 	originalmind.transfer_to(fermi_Clone)
 	to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. Curiously, you find that you memories are blank after you ingested the synthetic serum, leaving you to wonder where the other you is.</span>")
-	to_chat(M, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. Curiously, you find that you memories are blank after you ingested the synthetic serum, leaving you to wonder where the other you is.</span>")
 	fermi_Clone = null
+	return ..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -95,6 +95,7 @@
 	to_chat(owner, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
 	owner.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
 	sizeMoveMod(1)
+	return ..()
 
 /datum/status_effect/chem/breast_enlarger/proc/sizeMoveMod(var/value)
 	if(cachedmoveCalc == value)
@@ -164,6 +165,7 @@
 	log_game("FERMICHEM: [owner]'s dick has reduced to an acceptable size. ID: [owner.key]")
 	owner.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
 	owner.ResetBloodVol()
+	return ..()
 
 ///////////////////////////////////////////////
 //			Astral INSURANCE
@@ -190,17 +192,15 @@
 		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
 	originalmind.transfer_to(original)
 
-/datum/status_effect/chem/astral_insurance/on_remove(mob/living/carbon/M) //God damnit get them home!
-	if(owner.mind == originalmind) //If they're home, HOORAY
-		return
-	if(owner.mind)
-		var/mob/living/simple_animal/astral/G = new(get_turf(M.loc))
-		owner.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
-		to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
-		log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
-	originalmind.transfer_to(original)
-
-
+/datum/status_effect/chem/astral_insurance/on_remove() //God damnit get them home!
+	if(owner.mind != originalmind) //If they're home, HOORAY
+		if(owner.mind)
+			var/mob/living/simple_animal/astral/G = new(get_turf(owner))
+			owner.mind.transfer_to(G)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+			to_chat(G, "<span class='warning'>[owner]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
+			log_game("FERMICHEM: [owner]'s possesser has been booted out into a astral ghost!")
+		originalmind.transfer_to(original)
+	return ..()
 
 /*//////////////////////////////////////////
 		Mind control functions!
@@ -211,10 +211,10 @@
 
 /mob/living/verb/toggle_hypno()
 	set category = "IC"
-	set name = "Toggle Lewd MKUltra"
-	set desc = "Allows you to toggle if you'd like lewd flavour messages for MKUltra."
+	set name = "Toggle Lewd Hypno"
+	set desc = "Allows you to toggle if you'd like lewd flavour messages for hypno features, such as MKUltra."
 	client.prefs.cit_toggles ^= HYPNO
-	to_chat(usr, "You [((client.prefs.cit_toggles & HYPNO) ?"will":"no longer")] receive lewd flavour messages for MKUltra.")
+	to_chat(usr, "You [((client.prefs.cit_toggles & HYPNO) ?"will":"no longer")] receive lewd flavour messages for hypno.")
 
 /datum/status_effect/chem/enthrall
 	id = "enthrall"
@@ -268,10 +268,6 @@
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist) //Do resistance calc if resist is pressed#
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	mental_capacity = 500 - M.getOrganLoss(ORGAN_SLOT_BRAIN)//It's their brain!
-	var/mob/living/carbon/human/H = owner
-	if(H)//Prefs
-		if(!H.canbearoused)
-			H.client?.prefs.cit_toggles &= ~HYPNO
 	lewd = (owner.client?.prefs.cit_toggles & HYPNO) && (master.client?.prefs.cit_toggles & HYPNO)
 	var/message = "[(lewd ? "I am a good pet for [enthrallGender]." : "[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
@@ -547,7 +543,7 @@
 			if (statusStrength < 0)
 				status = null
 				owner.remove_movespeed_modifier(MOVESPEED_ID_MKULTRA)
-				owner.Knockdown(50)
+				owner.DefaultCombatKnockdown(50)
 				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else
 				statusStrength -= 1
@@ -607,7 +603,7 @@
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "MKUltra")
 	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independent!'</i></span>")
 	UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL)
-
+	return ..()
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(datum/source, list/hearing_args)
 	if(lewd == FALSE)
@@ -625,8 +621,6 @@
 			//Speak (Forces player to talk)
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
 				var/saytext = "Your mouth moves on it's own before you can even catch it."
-				if(HAS_TRAIT(C, TRAIT_NYMPHO))
-					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'><i>[saytext]</i></span>"), 5)
 				addtimer(CALLBACK(C, /atom/movable/proc/say, "[customTriggers[trigger][2]]"), 5)
 				log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.")
@@ -639,23 +633,22 @@
 
 			//Shocking truth!
 			else if (lowertext(customTriggers[trigger]) == "shock")
-				if (C.canbearoused && lewd)
-					C.adjustArousalLoss(5)
+				if (lewd && ishuman(C))
+					var/mob/living/carbon/human/H = C
+					H.adjust_arousal(5)
 				C.jitteriness += 100
 				C.stuttering += 25
-				C.Knockdown(60)
+				C.DefaultCombatKnockdown(60)
 				C.Stun(60)
 				to_chat(owner, "<span class='warning'><i>Your muscles seize up, then start spasming wildy!</i></span>")
 
 			//wah intensifies wah-rks
 			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				if (HAS_TRAIT(C, TRAIT_NYMPHO) && lewd)
-					if (C.getArousalLoss() > 80)
-						C.mob_climax(forced_climax=TRUE)
-						C.SetStun(10)//We got your stun effects in somewhere, Kev.
-					else
-						C.adjustArousalLoss(10)
-						to_chat(C, "<span class='love'><i>You feel a surge of arousal!</i></span>")
+				if (lewd)
+					if(ishuman(C))
+						var/mob/living/carbon/human/H = C
+						H.mob_climax(forced_climax=TRUE)
+					C.SetStun(10)//We got your stun effects in somewhere, Kev.
 				else
 					C.throw_at(get_step_towards(hearing_args[HEARING_SPEAKER],C), 3, 1) //cut this if it's too hard to get working
 
@@ -734,16 +727,13 @@
 	if(prob(5))
 		M.emote("me",1,"squints, shaking their head for a moment.")//shows that you're trying to resist sometimes
 		deltaResist *= 1.5
-	//nymphomania
-	if (M.canbearoused && HAS_TRAIT(M, TRAIT_NYMPHO))//I'm okay with this being removed.
-		deltaResist*= 0.5-(((2/200)*M.arousalloss)/1)//more aroused you are, the weaker resistance you can give, the less you are, the more you gain. (+/- 0.5)
 
 	//chemical resistance, brain and annaphros are the key to undoing, but the subject has to to be willing to resist.
 	if (owner.reagents.has_reagent(/datum/reagent/medicine/mannitol))
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent(/datum/reagent/medicine/neurine))
 		deltaResist *= 1.5
-	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && M.canbearoused && lewd)
+	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && lewd)
 		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiac))
 			deltaResist *= 1.5
 		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiacplus))

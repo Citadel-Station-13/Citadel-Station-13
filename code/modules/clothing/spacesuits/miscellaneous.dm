@@ -11,6 +11,7 @@ Contains:
  - ERT hardsuit: Command, Sec, Engi, Med
  - ERT High Alarm - Command, Sec, Engi, Med
  - EVA spacesuit
+ - Radiation Spacesuit
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
 */
@@ -312,6 +313,28 @@ Contains:
 	flash_protect = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
 
+//Radiation
+/obj/item/clothing/head/helmet/space/rad
+	name = "radiation voidsuit helmet"
+	desc = "A special helmet that protects against radiation and space. Not much else unfortunately."
+	icon_state = "cespace_helmet"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	item_color = "engineering"
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	actions_types = list()
+
+/obj/item/clothing/suit/space/rad
+	name = "radiation voidsuit"
+	desc = "A special suit that protects against radiation and space. Not much else unfortunately."
+	icon_state = "hardsuit-rad"
+	item_state = "nothing"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	mutantrace_variation = NONE
+
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
@@ -442,3 +465,16 @@ Contains:
 		torn = TRUE
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+
+/obj/item/clothing/suit/space/eva/paramedic
+	name = "paramedic EVA suit"
+	icon_state = "paramedic-eva"
+	item_state = "paramedic-eva"
+	desc = "A deep blue space suit decorated with red and white crosses to indicate that the wearer is trained emergency medical personnel."
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/roller)
+
+/obj/item/clothing/head/helmet/space/eva/paramedic
+	name = "paramedic EVA helmet"
+	desc = "A deep blue space helmet with a large red cross on the faceplate to designate the wearer as trained emergency medical personnel."
+	icon_state = "paramedic-eva-helmet"
+	item_state = "paramedic-eva-helmet"

@@ -50,7 +50,7 @@
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	damage = 5
+	damage = 12.5
 
 /obj/item/projectile/beam/xray
 	name = "\improper X-ray beam"
@@ -107,8 +107,8 @@
 /obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
 	life -= 10
 	if(life > 0)
-		. = -1
-	..()
+		. = BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
@@ -118,7 +118,14 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/projectile/beam/emitter/singularity_pull()
-	return //don't want the emitters to miss
+	return
+
+/obj/item/projectile/beam/emitter/hitscan
+	hitscan = TRUE
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter
+	impact_type = /obj/effect/projectile/impact/laser/emitter
+	impact_effect_type = null
 
 /obj/item/projectile/beam/lasertag
 	name = "laser tag beam"
@@ -138,6 +145,15 @@
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
 				M.adjustStaminaLoss(34)
+
+/obj/item/projectile/beam/lasertag/mag		//the projectile, compatible with regular laser tag armor
+	icon_state = "magjectile-toy"
+	name = "lasertag magbolt"
+	movement_type = FLYING | UNSTOPPABLE		//for penetration memes
+	range = 5		//so it isn't super annoying
+	light_range = 2
+	light_color = LIGHT_COLOR_YELLOW
+	eyeblur = 0
 
 /obj/item/projectile/beam/lasertag/redtag
 	icon_state = "laser"

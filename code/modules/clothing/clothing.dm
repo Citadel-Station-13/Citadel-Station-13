@@ -2,7 +2,7 @@
 	name = "clothing"
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	integrity_failure = 80
+	integrity_failure = 0.4
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
 	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
@@ -441,17 +441,14 @@ BLIND     // can't see anything
 
 	return TRUE
 
-/obj/item/clothing/update_icon()	// Polychrome stuff
-	..()
+/obj/item/clothing/update_overlays()	// Polychrome stuff
+	. = ..()
 	if(hasprimary)	//Checks if the overlay is enabled
-		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_color]-primary")	//Automagically picks overlays
-		primary_overlay.color = primary_color	//Colors the greyscaled overlay
-		add_overlay(primary_overlay)	//Applies the coloured overlay onto the item sprite. but NOT the mob sprite.
+		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_color]-primary", color = primary_color)	//Automagically picks overlays
+		. += primary_overlay	//Applies the coloured overlay onto the item sprite. but NOT the mob sprite.
 	if(hassecondary)
-		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_color]-secondary")
-		secondary_overlay.color = secondary_color
-		add_overlay(secondary_overlay)
+		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_color]-secondary", color = secondary_color)
+		. += secondary_overlay
 	if(hastertiary)
-		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_color]-tertiary")
-		tertiary_overlay.color = tertiary_color
-		add_overlay(tertiary_overlay)
+		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_color]-tertiary", color = tertiary_color)
+		. += tertiary_overlay

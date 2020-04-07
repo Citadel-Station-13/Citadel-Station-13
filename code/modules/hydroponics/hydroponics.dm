@@ -46,6 +46,11 @@
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
 
+/obj/machinery/hydroponics/constructable/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.</span>"
+
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
 		qdel(myseed)
@@ -90,6 +95,7 @@
 		return ..()
 	if(istype(Proj , /obj/item/projectile/energy/floramut))
 		mutate()
+		return BULLET_ACT_HIT
 	else if(istype(Proj , /obj/item/projectile/energy/florayield))
 		return myseed.bullet_act(Proj)
 	else
@@ -614,7 +620,7 @@
 		if(!(myseed.resistance_flags & FIRE_PROOF))
 			adjustHealth(-round(S.get_reagent_amount(/datum/reagent/napalm) * 6))
 			adjustToxic(round(S.get_reagent_amount(/datum/reagent/napalm) * 7))
-			adjustWeeds(-rand(5,9))
+		adjustWeeds(-rand(5,9))
 
 	//Weed Spray
 	if(S.has_reagent(/datum/reagent/toxin/plantbgone/weedkiller, 1))

@@ -37,7 +37,7 @@
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
 	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
-/obj/item/seeds/Initialize(loc, nogenes = 0)
+/obj/item/seeds/Initialize(mapload, nogenes = 0)
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
@@ -145,6 +145,7 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 			adjust_yield(1 * rating)
 		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjust_yield(1 * rating)
+		return BULLET_ACT_HIT
 	else
 		return ..()
 
@@ -185,8 +186,8 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 		product_name = parent.myseed.plantname
 	if(getYield() >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
+	parent.investigate_log("[user] harvested [getYield()] of [src], with seed traits [english_list(genes)] and reagents_add [english_list(reagents_add)] and potency [potency].", INVESTIGATE_BOTANY)
 	parent.update_tray(user)
-
 	return result
 
 

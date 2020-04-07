@@ -34,12 +34,12 @@
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
 	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
-	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
-		if(prob(50))
+	if(clumsy)
+		if(clumsy_check == GRENADE_CLUMSY_FUMBLE && prob(50))
 			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 			preprime(user, 5, FALSE)
 			return FALSE
-	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
+	else if(clumsy_check == GRENADE_NONCLUMSY_FUMBLE && !(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY)))
 		to_chat(user, "<span class='warning'>You pull the pin on [src]. Attached to it is a pink ribbon that says, \"<span class='clown'>HONK</span>\"</span>")
 		preprime(user, 5, FALSE)
 		return FALSE
@@ -93,9 +93,8 @@
 		var/obj/item/I = loc
 		I.grenade_prime_react(src)
 
-
-/obj/item/grenade/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+/obj/item/grenade/tool_act(mob/living/user, obj/item/I, tool_behaviour)
+	if(tool_behaviour == TOOL_SCREWDRIVER)
 		switch(det_time)
 			if ("1")
 				det_time = 10

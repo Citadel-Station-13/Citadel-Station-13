@@ -8,7 +8,8 @@
 	name = "clockwork marauder"
 	desc = "The stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield."
 	icon_state = "clockwork_marauder"
-	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_HUMANOID
+	threat = 3
 	health = 120
 	maxHealth = 120
 	force_threshold = 8
@@ -97,7 +98,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/P)
 	if(deflect_projectile(P))
-		return
+		return BULLET_ACT_BLOCK
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)

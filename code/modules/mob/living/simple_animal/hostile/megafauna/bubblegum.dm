@@ -17,7 +17,7 @@ From these blood pools Bubblegum may summon slaughterlings - weak, low-damage mi
 When Bubblegum dies, it leaves behind a H.E.C.K. suit+helmet as well as a chest that can contain three things:
  1. A spellblade that can slice off limbs at range
  2. A bottle that, when activated, drives everyone nearby into a frenzy
- 3. A contract that marks for death the chosen target
+ 3. A super double-barrel shotgun that shoots both shells at the same time.
 
 Difficulty: Hard
 
@@ -26,6 +26,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum
 	name = "bubblegum"
 	desc = "In what passes for a hierarchy among slaughter demons, this one is king."
+	threat = 35
 	health = 2500
 	maxHealth = 2500
 	attacktext = "rends"
@@ -158,12 +159,12 @@ Difficulty: Hard
 		DestroySurroundings()
 	..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!charging)
 		return ..()
 
-	else if(isliving(A))
-		var/mob/living/L = A
+	else if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
 		L.apply_damage(40, BRUTE)
 		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)

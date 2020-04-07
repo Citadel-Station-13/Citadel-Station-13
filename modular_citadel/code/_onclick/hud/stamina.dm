@@ -11,13 +11,13 @@
 /obj/screen/staminas/Click(location,control,params)
 	if(isliving(usr))
 		var/mob/living/L = usr
-		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss()]</b> stamina loss.<br>Your stamina buffer can take <b>[L.stambuffer]</b> stamina loss, and will use <b>50%</b> of that stamina loss when recharging.<br>Your stamina buffer is <b>[(L.stambuffer*(100/L.stambuffer))-(L.bufferedstam*(100/L.stambuffer))]%</b> full.</span>")
+		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss()]</b> stamina loss.<br>Your stamina buffer can take <b>[L.stambuffer]</b> stamina loss, and recharges at no cost.<br>Your stamina buffer is <b>[(L.stambuffer*(100/L.stambuffer))-(L.bufferedstam*(100/L.stambuffer))]%</b> full.</span>")
 
 /obj/screen/staminas/update_icon_state()
 	var/mob/living/carbon/user = hud?.mymob
 	if(!user)
 		return
-	if(user.stat == DEAD || user.recoveringstam || (user.hal_screwyhud in 1 to 2))
+	if(user.stat == DEAD || (user.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (user.hal_screwyhud in 1 to 2))
 		icon_state = "staminacrit"
 	else if(user.hal_screwyhud == 5)
 		icon_state = "stamina0"
@@ -37,7 +37,7 @@
 	var/mob/living/carbon/user = hud?.mymob
 	if(!user)
 		return
-	if(user.stat == DEAD || user.recoveringstam || (user.hal_screwyhud in 1 to 2))
+	if(user.stat == DEAD || (user.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (user.hal_screwyhud in 1 to 2))
 		icon_state = "stambuffer7"
 	else if(user.hal_screwyhud == 5)
 		icon_state = "stambuffer0"

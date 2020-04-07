@@ -32,11 +32,11 @@
 	//var/not_bloodsucker = FALSE		// This goes to Vassals or Hunters, but NOT bloodsuckers.
 
 /datum/action/bloodsucker/New()
-	if (bloodcost > 0)
+	if(bloodcost > 0)
 		desc += "<br><br><b>COST:</b> [bloodcost] Blood"	// Modify description to add cost.
-	if (warn_constant_cost)
+	if(warn_constant_cost)
 		desc += "<br><br><i>Your over-time blood consumption increases while [name] is active.</i>"
-	if (amSingleUse)
+	if(amSingleUse)
 		desc += "<br><br><i>Useable once per night.</i>"
 	..()
 
@@ -47,35 +47,35 @@
 
 /datum/action/bloodsucker/Trigger()
 	// Active? DEACTIVATE AND END!
-	if (active && CheckCanDeactivate(TRUE))
+	if(active && CheckCanDeactivate(TRUE))
 		DeactivatePower()
 		return
-	if (!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
+	if(!CheckCanPayCost(TRUE) || !CheckCanUse(TRUE))
 		return
 	PayCost()
-	if (amToggle)
+	if(amToggle)
 		active = !active
 		UpdateButtonIcon()
-	if (!amToggle || !active)
+	if(!amToggle || !active)
 		StartCooldown() // Must come AFTER UpdateButton(), otherwise icon will revert.
 	ActivatePower()  // NOTE: ActivatePower() freezes this power in place until it ends.
-	if (active) // Did we not manually disable? Handle it here.
+	if(active) // Did we not manually disable? Handle it here.
 		DeactivatePower()
-	if (amSingleUse)
+	if(amSingleUse)
 		RemoveAfterUse()
 
 /datum/action/bloodsucker/proc/CheckCanPayCost(display_error)
 	if(!owner || !owner.mind)
 		return FALSE
 	// Cooldown?
-	if (cooldownUntil > world.time)
-		if (display_error)
+	if(cooldownUntil > world.time)
+		if(display_error)
 			to_chat(owner, "[src] is unavailable. Wait [(cooldownUntil - world.time) / 10] seconds.")
 		return FALSE
 	// Have enough blood?
 	var/mob/living/L = owner
-	if (L.blood_volume < bloodcost)
-		if (display_error)
+	if(L.blood_volume < bloodcost)
+		if(display_error)
 			to_chat(owner, "<span class='warning'>You need at least [bloodcost] blood to activate [name]</span>")
 		return FALSE
 	return TRUE
@@ -96,7 +96,7 @@
 	// Incap?
 	if(must_be_capacitated)
 		var/mob/living/L = owner
-		if (L.incapacitated(TRUE, TRUE) || L.resting && !can_be_immobilized)
+		if (L.incapacitated(TRUE, TRUE) || !CHECK_MOBILITY(L, MOBILITY_STAND) && !can_be_immobilized)
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Not while you're incapacitated!</span>")
 			return FALSE

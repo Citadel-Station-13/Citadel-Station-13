@@ -37,7 +37,7 @@
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
 	log_combat(A, D, "punched (boxing) ")
-	if(D.getStaminaLoss() > 100)
+	if(D.getStaminaLoss() > 100 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
 		var/knockout_prob = (D.getStaminaLoss() + rand(-15,15))*0.75
 		if((D.stat != DEAD) && prob(knockout_prob))
 			D.visible_message("<span class='danger'>[A] has knocked [D] out with a haymaker!</span>", \
@@ -50,6 +50,12 @@
 			D.forcesay(GLOB.hit_appends)
 	return 1
 
+/datum/martial_art/boxing/teach(mob/living/carbon/human/H, make_temporary = TRUE)
+	. = ..()
+	if(.)
+		if(H.pulling && ismob(H.pulling))
+			H.stop_pulling()
+
 /obj/item/clothing/gloves/boxing
 	var/datum/martial_art/boxing/style = new
 
@@ -58,7 +64,7 @@
 		return
 	if(slot == SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
-		style.teach(H,1)
+		style.teach(H,TRUE)
 	return
 
 /obj/item/clothing/gloves/boxing/dropped(mob/user)

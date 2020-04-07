@@ -8,7 +8,8 @@
 	icon_aggro = "Goldgrub_alert"
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	threat = 0.2
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	vision_range = 2
 	aggro_vision_range = 9
 	move_to_delay = 5
@@ -75,7 +76,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [name]'s girth!</span>")
-	return
+	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	vision_range = 9

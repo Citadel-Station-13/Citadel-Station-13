@@ -84,7 +84,7 @@
 	//It is called from your coffin on close (by you only)
 	if(poweron_masquerade == TRUE || owner.current.AmStaked())
 		return FALSE
-	owner.current.adjustStaminaLoss(-2 + (regenRate * -8) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
+	owner.current.adjustStaminaLoss(-1.5 + (regenRate * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-0.1 * (regenRate * 2) * mult, 0)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 	// No Bleeding
@@ -125,7 +125,7 @@
 			C.adjustFireLoss(-fireheal * mult, forced = TRUE)
 			C.adjustToxLoss(-toxinheal * mult * 2, forced = TRUE) //Toxin healing because vamps arent immune
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
-			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
+			AddBloodVolume((bruteheal * -0.5 + fireheal * -1 + toxinheal * -0.2) / mult * costMult)	// Costs blood to heal
 			return TRUE // Healed! Done for this tick.
 		if(amInCoffinWhileTorpor) 	// Limbs? (And I have no other healing)
 			var/list/missing = owner.current.get_missing_limbs() 	// Heal Missing
@@ -189,7 +189,7 @@
 /datum/antagonist/bloodsucker/proc/HandleDeath()
 	// 	FINAL DEATH
 	// Fire Damage? (above double health)
-	if(owner.current.getFireLoss_nonProsthetic() >= owner.current.getMaxHealth() * 1.5)
+	if(owner.current.getFireLoss_nonProsthetic() >= owner.current.maxHealth * 2.5)
 		FinalDeath()
 		return
 	// Staked while "Temp Death" or Asleep
@@ -315,7 +315,7 @@
 	bloodsuckerdatum.handle_eat_human_food(food_nutrition)
 
 
-/datum/antagonist/bloodsucker/proc/handle_eat_human_food(var/food_nutrition) // Called from snacks.dm and drinks.dm
+/datum/antagonist/bloodsucker/proc/handle_eat_human_food(food_nutrition, puke_blood = TRUE, masquerade_override) // Called from snacks.dm and drinks.dm
 	set waitfor = FALSE
 	if(!owner.current || !iscarbon(owner.current))
 		return
@@ -324,14 +324,14 @@
 	C.nutrition -= food_nutrition
 	foodInGut += food_nutrition
 	// Already ate some bad clams? Then we can back out, because we're already sick from it.
-	if (foodInGut != food_nutrition)
+	if(foodInGut != food_nutrition)
 		return
 	// Haven't eaten, but I'm in a Human Disguise.
-	else if (poweron_masquerade)
+	else if(poweron_masquerade && !masquerade_override)
 		to_chat(C, "<span class='notice'>Your stomach turns, but your \"human disguise\" keeps the food down...for now.</span>")
 	// Keep looping until we purge. If we have activated our Human Disguise, we ignore the food. But it'll come up eventually...
 	var/sickphase = 0
-	while (foodInGut)
+	while(foodInGut)
 		sleep(50)
 		C.adjust_disgust(10 * sickphase)
 		// Wait an interval...
@@ -340,24 +340,29 @@
 		if(C.stat == DEAD)
 			return
 		// Put up disguise? Then hold off the vomit.
-		if(poweron_masquerade)
+		if(poweron_masquerade && !masquerade_override)
 			if(sickphase > 0)
 				to_chat(C, "<span class='notice'>Your stomach settles temporarily. You regain your composure...for now.</span>")
 			sickphase = 0
 			continue
 		switch(sickphase)
-			if (1)
+			if(1)
 				to_chat(C, "<span class='warning'>You feel unwell. You can taste ash on your tongue.</span>")
 				C.Stun(10)
-			if (2)
+			if(2)
 				to_chat(C, "<span class='warning'>Your stomach turns. Whatever you ate tastes of grave dirt and brimstone.</span>")
 				C.Dizzy(15)
 				C.Stun(13)
-			if (3)
+			if(3)
 				to_chat(C, "<span class='warning'>You purge the food of the living from your viscera! You've never felt worse.</span>")
-				C.vomit(foodInGut * 4, foodInGut * 2, 0)  // (var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
-				C.blood_volume = max(0, C.blood_volume - foodInGut * 2)
+				 //Puke blood only if puke_blood is true, and loose some blood, else just puke normally.
+				if(puke_blood)
+					C.blood_volume = max(0, C.blood_volume - foodInGut * 2)
+					C.vomit(foodInGut * 4, foodInGut * 2, 0) 
+				else 
+					C.vomit(foodInGut * 4, FALSE, 0)
 				C.Stun(30)
 				//C.Dizzy(50)
 				foodInGut = 0
+				SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "vampdisgust", /datum/mood_event/bloodsucker_disgust)
 		sickphase ++

@@ -5,7 +5,7 @@
 /mob/living/carbon/alien/get_ear_protection()
 	return 2 //no ears
 
-/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush)
+/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	return ..(AM, skipcatch = TRUE, hitpush = FALSE)
 
 /mob/living/carbon/alien/can_embed(obj/item/I)
@@ -21,12 +21,12 @@ In all, this is a lot like the monkey code. /N
 		return
 	switch(M.a_intent)
 		if (INTENT_HELP)
-			if(!recoveringstam)
-				resting = 0
-			AdjustStun(-60)
-			AdjustKnockdown(-60)
-			AdjustUnconscious(-60)
-			AdjustSleeping(-100)
+			if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+				set_resting(FALSE, TRUE, FALSE)
+			AdjustAllImmobility(-60, FALSE)
+			AdjustUnconscious(-60, FALSE)
+			AdjustSleeping(-100, FALSE)
+			update_mobility()
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
 		if(INTENT_DISARM, INTENT_HARM)
 			if(health > 0)

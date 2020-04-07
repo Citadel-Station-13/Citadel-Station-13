@@ -111,8 +111,8 @@
 		preserved(TRUE)
 		owner.visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
 
-/obj/item/organ/regenerative_core/Remove(mob/living/carbon/M, special = 0)
-	if(!inert && !special)
+/obj/item/organ/regenerative_core/Remove(special = FALSE)
+	if(!inert && !special && !QDELETED(owner))
 		owner.visible_message("<span class='notice'>[src] rapidly decays as it's removed.</span>")
 		go_inert()
 	return ..()
@@ -129,14 +129,13 @@
 	. = ..()
 	update_icon()
 
-/obj/item/organ/regenerative_core/update_icon()
+/obj/item/organ/regenerative_core/update_icon_state()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
-	cut_overlays()
+
+/obj/item/organ/regenerative_core/update_overlays()
+	. = ..()
 	if(!inert && !preserved)
-		add_overlay("legion_soul_crackle")
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		. += "legion_soul_crackle"
 
 /obj/item/organ/regenerative_core/legion/go_inert()
 	..()

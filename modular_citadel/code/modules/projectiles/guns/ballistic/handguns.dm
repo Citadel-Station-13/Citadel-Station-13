@@ -58,14 +58,12 @@
 
 //////10mm soporific bullets//////
 
-obj/item/projectile/bullet/c10mm/soporific
+/obj/item/projectile/bullet/c10mm/soporific
 	name ="10mm soporific bullet"
-	armour_penetration = 0
 	nodamage = TRUE
-	dismemberment = 0
-	knockdown = 0
 
 /obj/item/projectile/bullet/c10mm/soporific/on_hit(atom/target, blocked = FALSE)
+	. = ..()
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.blur_eyes(6)
@@ -73,7 +71,6 @@ obj/item/projectile/bullet/c10mm/soporific
 			L.Sleeping(300)
 		else
 			L.adjustStaminaLoss(25)
-	return 1
 
 /obj/item/ammo_casing/c10mm/soporific
 	name = ".10mm soporific bullet casing"

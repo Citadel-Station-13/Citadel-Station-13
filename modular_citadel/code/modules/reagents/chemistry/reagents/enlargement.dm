@@ -40,7 +40,7 @@
 			M.visible_message("<span class='warning'>A pair of breasts suddenly fly out of the [M]!</b></span>")
 			var/T2 = get_random_station_turf()
 			M.adjustBruteLoss(25)
-			M.Knockdown(50)
+			M.DefaultCombatKnockdown(50)
 			M.Stun(50)
 			B.throw_at(T2, 8, 1)
 		M.reagents.del_reagent(type)
@@ -104,8 +104,7 @@
 	var/obj/item/organ/genital/womb/W = M.getorganslot(ORGAN_SLOT_WOMB)
 
 	if(M.gender == MALE)
-		M.gender = FEMALE
-		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
+		M.set_gender(FEMALE)
 
 	if(P)
 		P.modify_size(-0.05)
@@ -196,7 +195,7 @@
 			M.visible_message("<span class='warning'>A penis suddenly flies out of the [M]!</b></span>")
 			var/T2 = get_random_station_turf()
 			M.adjustBruteLoss(25)
-			M.Knockdown(50)
+			M.DefaultCombatKnockdown(50)
 			M.Stun(50)
 			P.throw_at(T2, 8, 1)
 		M.reagents.del_reagent(type)
@@ -251,8 +250,7 @@
 	var/obj/item/organ/genital/womb/W = M.getorganslot(ORGAN_SLOT_WOMB)
 
 	if(M.gender == FEMALE)
-		M.gender = MALE
-		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+		M.set_gender(MALE)
 
 	if(B)
 		B.modify_size(-0.05)

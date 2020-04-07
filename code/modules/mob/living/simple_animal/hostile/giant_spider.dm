@@ -17,12 +17,13 @@
 
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/poison/giant_spider
+	threat = 1
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 	speak_chance = 5

@@ -245,48 +245,47 @@
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
-	if(C.movement_type & FLYING)
-		return 0
-	if(has_gravity(src))
-		var/obj/buckled_obj
-		if(C.buckled)
-			buckled_obj = C.buckled
-			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
-				return 0
-		else
-			if(!(lube&SLIP_WHEN_CRAWLING) && (C.lying || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
-				return 0
-			if(lube & NO_SLIP_WHEN_WALKING)
-				if(C.m_intent == MOVE_INTENT_WALK)
-					return 0
-				if(ishuman(C) && !(lube & SLIP_WHEN_JOGGING))
-					var/mob/living/carbon/human/H = C
-					if(!H.sprinting && H.getStaminaLoss() <= 20)
-						return 0
-		if(!(lube&SLIDE_ICE))
-			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+	if(!(lube & FLYING_DOESNT_HELP) && (C.movement_type & FLYING || !has_gravity(src)))
+		return FALSE
+	var/obj/buckled_obj
+	if(C.buckled)
+		buckled_obj = C.buckled
+		if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+			return FALSE
+	else
+		if(!(lube&SLIP_WHEN_CRAWLING) && (C.lying || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
+			return FALSE
+		if(lube & NO_SLIP_WHEN_WALKING)
+			if(C.m_intent == MOVE_INTENT_WALK)
+				return FALSE
+			if(ishuman(C) && !(lube & SLIP_WHEN_JOGGING))
+				var/mob/living/carbon/human/H = C
+				if(!(H.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && H.getStaminaLoss() <= 20)
+					return FALSE
+	if(!(lube&SLIDE_ICE))
+		to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
+		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
-		for(var/obj/item/I in C.held_items)
-			C.accident(I)
+	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
+	for(var/obj/item/I in C.held_items)
+		C.accident(I)
 
-		var/olddir = C.dir
-		if(!(lube & SLIDE_ICE))
-			C.Knockdown(knockdown_amount)
-			C.stop_pulling()
-		else
-			C.Stun(20)
+	var/olddir = C.dir
+	if(!(lube & SLIDE_ICE))
+		C.DefaultCombatKnockdown(knockdown_amount)
+		C.stop_pulling()
+	else
+		C.Stun(20)
 
-		if(buckled_obj)
-			buckled_obj.unbuckle_mob(C)
-			lube |= SLIDE_ICE
+	if(buckled_obj)
+		buckled_obj.unbuckle_mob(C)
+		lube |= SLIDE_ICE
 
-		if(lube&SLIDE)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
-		else if(lube&SLIDE_ICE)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
-		return 1
+	if(lube&SLIDE)
+		new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+	else if(lube&SLIDE_ICE)
+		new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
+	return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
 	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)

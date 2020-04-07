@@ -15,9 +15,9 @@
 	var/decon_speed = 30
 	var/wtype = "glass"
 	var/fulltile = FALSE
-	var/glass_type = /obj/item/stack/sheet/glass
+	var/obj/item/stack/sheet/glass_type = /obj/item/stack/sheet/glass
+	var/cleanable_type = /obj/effect/decal/cleanable/glass
 	var/glass_amount = 1
-	var/mutable_appearance/crack_overlay
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
@@ -277,12 +277,15 @@
 
 /obj/structure/window/proc/spawnDebris(location)
 	. = list()
-	. += new /obj/item/shard(location)
-	. += new /obj/effect/decal/cleanable/glass(location)
+	var/shard = initial(glass_type.shard_type)
+	if(shard)
+		. += new shard(location)
+		if (fulltile)
+			. += new shard(location)
+	if(cleanable_type)
+		. += new cleanable_type(location)
 	if (reinf)
 		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
-	if (fulltile)
-		. += new /obj/item/shard(location)
 
 /obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
 	if (get_dist(src,user) > 1)
@@ -333,22 +336,19 @@
 		queue_smooth_neighbors(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_icon()
-	if(!QDELETED(src))
-		if(!fulltile)
-			return
+/obj/structure/window/update_overlays()
+	. = ..()
+	if(QDELETED(src) || !fulltile)
+		return
+	var/ratio = obj_integrity / max_integrity
+	ratio = CEILING(ratio*4, 1) * 25
 
-		var/ratio = obj_integrity / max_integrity
-		ratio = CEILING(ratio*4, 1) * 25
+	if(smooth)
+		queue_smooth(src)
 
-		if(smooth)
-			queue_smooth(src)
-
-		cut_overlay(crack_overlay)
-		if(ratio > 75)
-			return
-		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-		add_overlay(crack_overlay)
+	if(ratio > 75)
+		return
+	. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
@@ -416,16 +416,8 @@
 	max_integrity = 150
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
+	cleanable_type = /obj/effect/decal/cleanable/glass/plasma
 	rad_insulation = RAD_NO_INSULATION
-
-/obj/structure/window/plasma/spawnDebris(location)
-	. = list()
-	. += new /obj/item/shard/plasma(location)
-	. += new /obj/effect/decal/cleanable/glass/plasma(location)
-	if (reinf)
-		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
-	if (fulltile)
-		. += new /obj/item/shard/plasma(location)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -599,6 +591,14 @@
 /obj/structure/window/plastitanium/unanchored
 	anchored = FALSE
 
+//pirate ship windows
+/obj/structure/window/plastitanium/pirate
+	desc = "Yarr this window be explosion proof!"
+	explosion_block = 30
+
+/obj/structure/window/plastitanium/pirate/unanchored
+	anchored = FALSE
+
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass."
@@ -661,11 +661,6 @@
 	max_integrity = 120
 	level = 3
 	glass_amount = 2
-
-/obj/structure/window/reinforced/clockwork/spawnDebris(location)
-	. = list()
-	for(var/i in 1 to 4)
-		. += new /obj/item/clockwork/alloy_shards/medium/gear_bit(location)
 
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	made_glow = TRUE

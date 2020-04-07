@@ -9,35 +9,35 @@
 
 /datum/uplink_item/suits/turtlenck
 	name = "Tactical Turtleneck"
-	desc = "A slightly armored suit that has no sensor on them, if someone sees you in this hope they think its a fake."
+	desc = "A slightly armored conspicious jumpsuit that has no suit sensors attached to them, if someone sees you in this hope they think its a fake."
 	item = /obj/item/clothing/under/syndicate
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
 
 /datum/uplink_item/suits/turtlenck_skirt
 	name = "Tactical Skirtleneck"
-	desc = "A slightly armored suit that has no sensor on them, if someone sees you in this hope they think its a fake."
+	desc = "A slightly armored conspicious jumpsuit that has no suit sensors attached to them, if someone sees you in this hope they think its a fake."
 	item = /obj/item/clothing/under/syndicate/skirt
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
 
 /datum/uplink_item/suits/padding
 	name = "Soft Padding"
-	desc = "Padding to add to a jumpsuit to help against melee and bullets."
+	desc = "An inconspicious soft padding meant to be worn underneath jumpsuits, will cushion the user from melee harm."
 	item = /obj/item/clothing/accessory/padding
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/kevlar
-	name = "Kevlar sheets"
-	desc = "Kevlar sheets to add to jumpsuit to help against bullets and melee."
+	name = "Kevlar Padding"
+	desc = "An inconspicious kevlar padding meant to be worn underneath jumpsuits, will cushion the wearer from ballistic harm."
 	item = /obj/item/clothing/accessory/kevlar
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/plastic
-	name = "Plastic sheet"
-	desc = "Plastic body sheet to add to a jumpsuit to help against laser and energy harm."
+	name = "Ablative Padding"
+	desc = "An inconspicious ablative padding meant to be worn underneath jumpsuits, will cushion the wearer from energy lasers harm."
 	item = /obj/item/clothing/accessory/plastics
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
@@ -59,7 +59,7 @@
 			Nanotrasen crew who spot these suits are known to panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
@@ -78,3 +78,9 @@
 	cost = 30
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	exclude_modes = list()
+
+/datum/uplink_item/suits/thiefgloves
+	name = "Thieving Gloves"
+	desc = "A pair of gloves that are insulated and frictionless, allowing you to steal easily from anyone you see."
+	item = /obj/item/clothing/gloves/thief
+	cost = 4

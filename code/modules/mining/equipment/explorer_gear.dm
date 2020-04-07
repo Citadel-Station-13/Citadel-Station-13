@@ -70,7 +70,7 @@
 	item_state = "hostile_env"
 	clothing_flags = THICKMATERIAL //not spaceproof
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | GOLIATH_RESISTANCE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_SNEK_TAURIC|STYLE_PAW_TAURIC
 	slowdown = 0
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
@@ -110,12 +110,12 @@
 	AddComponent(/datum/component/spraycan_paintable)
 	update_icon()
 
-/obj/item/clothing/head/helmet/space/hostile_environment/update_icon()
-	..()
-	cut_overlays()
+
+/obj/item/clothing/head/helmet/space/hostile_environment/update_overlays()
+	. = ..()
 	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "hostile_env_glass")
 	glass_overlay.appearance_flags = RESET_COLOR
-	add_overlay(glass_overlay)
+	. += glass_overlay
 
 /obj/item/clothing/head/helmet/space/hostile_environment/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
@@ -167,7 +167,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	hoodtype = /obj/item/clothing/head/hooded/explorer/exo
-	armor = list("melee" = 65, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 60, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 55, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 40, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
 	resistance_flags = FIRE_PROOF | GOLIATH_RESISTANCE
 
 /obj/item/clothing/head/hooded/explorer/exo
@@ -175,7 +175,7 @@
 	desc = "A robust helmet for fighting dangerous animals. Its design and material make it harder for a Goliath to keep their grip on the wearer."
 	icon_state = "exo"
 	item_state = "exo"
-	armor = list("melee" = 65, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 60, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 55, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 40, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
 	resistance_flags = FIRE_PROOF | GOLIATH_RESISTANCE
 
 /obj/item/clothing/mask/gas/exo

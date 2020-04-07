@@ -44,9 +44,9 @@
 		if(H.stat == DEAD || H == user)
 			continue
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
-			if(has_job_loyalties && H.mind.assigned_role in job_loyalties)
+			if(has_job_loyalties && (H.mind.assigned_role in job_loyalties))
 				inspired += H
-			else if(has_role_loyalties && H.mind.special_role in role_loyalties)
+			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
 				inspired += H
 		else if(check_inspiration(H))
 			inspired += H
@@ -64,8 +64,7 @@
 /obj/item/banner/proc/inspiration(mob/living/carbon/human/H)
 	H.adjustBruteLoss(-15)
 	H.adjustFireLoss(-15)
-	H.AdjustStun(-40)
-	H.AdjustKnockdown(-40)
+	H.AdjustAllImmobility(-40)
 	H.AdjustUnconscious(-40)
 	playsound(H, 'sound/magic/staff_healing.ogg', 25, FALSE)
 
@@ -315,3 +314,9 @@
 	desc = "This one is rusted."
 	force = 30
 	armour_penetration = 15
+
+/obj/item/claymore/weak/ceremonial
+	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
+	force = 15
+	block_chance = 30
+	armour_penetration = 5

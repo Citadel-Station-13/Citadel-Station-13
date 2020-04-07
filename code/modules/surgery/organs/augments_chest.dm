@@ -84,6 +84,8 @@
 	to_chat(owner, "<span class='notice'>You feel a faint buzzing as your reviver implant starts patching your wounds...</span>")
 
 /obj/item/organ/cyberimp/chest/reviver/proc/heal()
+	if(!owner)
+		return
 	if(owner.getOxyLoss())
 		owner.adjustOxyLoss(-5)
 		revive_cost += 0.5 SECONDS
@@ -145,10 +147,10 @@
 		ion_trail = new
 	ion_trail.set_up(M)
 
-/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Remove(special = FALSE)
 	if(on)
-		toggle(silent = TRUE)
-	..()
+		toggle(TRUE)
+	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/ui_action_click()
 	toggle()
@@ -168,21 +170,19 @@
 				to_chat(owner, "<span class='notice'>You turn your thrusters set on.</span>")
 	else
 		ion_trail.stop()
-		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-		owner.remove_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER)
-		if(!silent)
-			to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
+		if(!QDELETED(owner))
+			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+			owner.remove_movespeed_modifier(MOVESPEED_ID_CYBER_THRUSTER)
+			if(!silent)
+				to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
 		on = FALSE
 	update_icon()
 
-/obj/item/organ/cyberimp/chest/thrusters/update_icon()
+/obj/item/organ/cyberimp/chest/thrusters/update_icon_state()
 	if(on)
 		icon_state = "imp_jetpack-on"
 	else
 		icon_state = "imp_jetpack"
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/move_react()
 	allow_thrust(0.01)

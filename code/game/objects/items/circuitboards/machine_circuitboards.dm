@@ -35,6 +35,10 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/autolathe/secure
+	name = "Secure Autolathe (Machine Board)"
+	build_path = /obj/machinery/autolathe/secure
+
 /obj/item/circuitboard/machine/bloodbankgen
 	name = "Blood Bank Generator (Machine Board)"
 	build_path = /obj/machinery/bloodbankgen
@@ -70,7 +74,7 @@
 	build_path = /obj/machinery/dna_scannernew
 	req_components = list(
 		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 2)
@@ -238,6 +242,14 @@
 		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 		/obj/machinery/vending/games = "\improper Good Clean Fun",
 		/obj/machinery/vending/autodrobe = "AutoDrobe",
+		/obj/machinery/vending/assist = "\improper Vendomat",
+		/obj/machinery/vending/engivend = "\improper Engi-Vend",
+		/obj/machinery/vending/engivend = "\improper YouTool",
+		/obj/machinery/vending/sustenance = "\improper Sustenance Vendor",
+		/obj/machinery/vending/dinnerware = "\improper Plasteel Chef's Dinnerware Vendor",
+		/obj/machinery/vending/cart = "\improper PTech",
+		/obj/machinery/vending/hydronutrients = "\improper NutriMax",
+		/obj/machinery/vending/hydroseeds = "\improper MegaSeed Servitor",
 		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
 		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
 		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
@@ -308,6 +320,7 @@
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	desc = "You can use a screwdriver to switch between heater and freezer."
+	var/pipe_layer = PIPING_LAYER_DEFAULT
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/micro_laser = 2,
@@ -342,8 +355,18 @@
 		build_path = initial(new_type.build_path)
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
-	else
-		return ..()
+		return
+
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
+		to_chat(user, "<span class='notice'>You change the circuitboard to layer [pipe_layer].</span>")
+		return
+
+	. = ..()
+
+/obj/item/circuitboard/machine/thermomachine/examine()
+	. = ..()
+	. += "<span class='notice'>It is set to layer [pipe_layer].</span>"
 
 /obj/item/circuitboard/machine/thermomachine/heater
 	name = "Heater (Machine Board)"

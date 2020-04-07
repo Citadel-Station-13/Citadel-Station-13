@@ -125,7 +125,7 @@
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
-	..()
+	. = ..()
 	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
 		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
 			var/boom_message = "[ADMIN_LOOKUPFLW(P.firer)] triggered a fueltank explosion via projectile."
@@ -235,7 +235,7 @@
 
 /obj/structure/reagent_dispensers/keg/milk
 	name = "keg of milk"
-	desc = "It's not quite what you were hoping for."
+	desc = "A keg of pasteurised, homogenised, filtered and semi-skimmed space milk."
 	icon_state = "whitekeg"
 	reagent_id = /datum/reagent/consumable/milk
 

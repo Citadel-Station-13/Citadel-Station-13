@@ -25,14 +25,14 @@
 	QDEL_NULL(toppaper)	//let movable/Destroy handle the rest
 	return ..()
 
-/obj/item/clipboard/update_icon()
-	cut_overlays()
+/obj/item/clipboard/update_overlays()
+	. = ..()
 	if(toppaper)
-		add_overlay(toppaper.icon_state)
-		copy_overlays(toppaper)
+		. += toppaper.icon_state
+		. += toppaper.overlays
 	if(haspen)
-		add_overlay("clipboard_pen")
-	add_overlay("clipboard_over")
+		. += "clipboard_pen"
+	. += "clipboard_over"
 
 
 /obj/item/clipboard/attackby(obj/item/W, mob/user, params)

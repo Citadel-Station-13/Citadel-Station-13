@@ -28,7 +28,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc sends the asset to the client, but only if it needs it.
 //This proc blocks(sleeps) unless verify is set to false
-/proc/send_asset(var/client/client, var/asset_name, var/verify = TRUE)
+/proc/send_asset(client/client, asset_name, verify = TRUE)
 	if(!istype(client))
 		if(ismob(client))
 			var/mob/M = client
@@ -72,7 +72,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	return 1
 
 //This proc blocks(sleeps) unless verify is set to false
-/proc/send_asset_list(var/client/client, var/list/asset_list, var/verify = TRUE)
+/proc/send_asset_list(client/client, list/asset_list, verify = TRUE)
 	if(!istype(client))
 		if(ismob(client))
 			var/mob/M = client
@@ -122,7 +122,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc will download the files without clogging up the browse() queue, used for passively sending files on connection start.
 //The proc calls procs that sleep for long times.
-/proc/getFilesSlow(var/client/client, var/list/files, var/register_asset = TRUE)
+/proc/getFilesSlow(client/client, list/files, register_asset = TRUE)
 	var/concurrent_tracker = 1
 	for(var/file in files)
 		if (!client)
@@ -140,13 +140,13 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
-/proc/register_asset(var/asset_name, var/asset)
+/proc/register_asset(asset_name, asset)
 	SSassets.cache[asset_name] = asset
 
 //Generated names do not include file extention.
 //Used mainly for code that deals with assets in a generic way
 //The same asset will always lead to the same asset name
-/proc/generate_asset_name(var/file)
+/proc/generate_asset_name(file)
 	return "asset.[md5(fcopy_rsc(file))]"
 
 
@@ -156,7 +156,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 GLOBAL_LIST_EMPTY(asset_datums)
 
 //get an assetdatum or make a new one
-/proc/get_asset_datum(var/type)
+/proc/get_asset_datum(type)
 	return GLOB.asset_datums[type] || new type()
 
 /datum/asset
@@ -323,6 +323,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/size_id = sprite[SPR_SIZE]
 	return {"<span class="[name][size_id] [sprite_name]"></span>"}
 
+/datum/asset/spritesheet/proc/icon_class_name(sprite_name)
+	var/sprite = sprites[sprite_name]
+	if (!sprite)
+		return null
+	var/size_id = sprite[SPR_SIZE]
+	return {"[name][size_id] [sprite_name]"}
+
 #undef SPR_SIZE
 #undef SPR_IDX
 #undef SPRSZ_COUNT
@@ -379,14 +386,24 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/simple/tgui
 	assets = list(
-		"tgui.css"	= 'tgui/assets/tgui.css',
-		"tgui.js"	= 'tgui/assets/tgui.js',
-		"font-awesome.min.css" = 'tgui/assets/font-awesome.min.css',
-		"fontawesome-webfont.eot" = 'tgui/assets/fonts/fontawesome-webfont.eot',
-		"fontawesome-webfont.woff2" = 'tgui/assets/fonts/fontawesome-webfont.woff2',
-		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
-		"fontawesome-webfont.ttf" = 'tgui/assets/fonts/fontawesome-webfont.ttf',
-		"fontawesome-webfont.svg" = 'tgui/assets/fonts/fontawesome-webfont.svg'
+		// tgui
+		"tgui.css" = 'tgui/assets/tgui.css',
+		"tgui.js" = 'tgui/assets/tgui.js',
+		// tgui-next
+		"tgui-main.html" = 'tgui-next/packages/tgui/public/tgui-main.html',
+		"tgui-fallback.html" = 'tgui-next/packages/tgui/public/tgui-fallback.html',
+		"tgui.bundle.js" = 'tgui-next/packages/tgui/public/tgui.bundle.js',
+		"tgui.bundle.css" = 'tgui-next/packages/tgui/public/tgui.bundle.css',
+		"shim-html5shiv.js" = 'tgui-next/packages/tgui/public/shim-html5shiv.js',
+		"shim-ie8.js" = 'tgui-next/packages/tgui/public/shim-ie8.js',
+		"shim-dom4.js" = 'tgui-next/packages/tgui/public/shim-dom4.js',
+		"shim-css-om.js" = 'tgui-next/packages/tgui/public/shim-css-om.js',
+	)
+
+/datum/asset/group/tgui
+	children = list(
+		/datum/asset/simple/tgui,
+		/datum/asset/simple/fontawesome
 	)
 
 /datum/asset/simple/headers
@@ -448,7 +465,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"scanner"		= 'icons/pda_icons/pda_scanner.png',
 		"signaler"		= 'icons/pda_icons/pda_signaler.png',
 		"status"		= 'icons/pda_icons/pda_status.png',
-		"dronephone"	= 'icons/pda_icons/pda_dronephone.png'
+		"dronephone"	= 'icons/pda_icons/pda_dronephone.png',
+		"emoji"			= 'icons/pda_icons/pda_emoji.png'
 	)
 
 /datum/asset/spritesheet/simple/paper
@@ -511,7 +529,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
-
+	
 /datum/asset/simple/IRV
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
@@ -550,7 +568,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	children = list(
 		/datum/asset/simple/jquery,
 		/datum/asset/simple/goonchat,
-		/datum/asset/spritesheet/goonchat
+		/datum/asset/spritesheet/goonchat,
+		/datum/asset/simple/fontawesome
 	)
 
 /datum/asset/simple/jquery
@@ -563,16 +582,21 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	verify = FALSE
 	assets = list(
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
-		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"fontawesome-webfont.eot"  = 'tgui/assets/fonts/fontawesome-webfont.eot',
-		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',
-		"fontawesome-webfont.ttf"  = 'tgui/assets/fonts/fontawesome-webfont.ttf',
-		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
-		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 		"browserOutput_dark.css"   = 'code/modules/goonchat/browserassets/css/browserOutput_dark.css',
 		"browserOutput_light.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_light.css'
+	)
+
+/datum/asset/simple/fontawesome
+	verify = FALSE
+	assets = list(
+		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
+		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
+		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
+		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
+		"font-awesome.css"    = 'html/font-awesome/css/all.min.css',
+		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css'
 	)
 
 /datum/asset/spritesheet/goonchat
@@ -679,3 +703,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 		Insert(initial(D.id), I)
 	return ..()
+
+/datum/asset/simple/genetics
+	assets = list(
+		"dna_discovered.gif"	= 'html/dna_discovered.gif',
+		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
+		"dna_extra.gif" 		= 'html/dna_extra.gif'
+)

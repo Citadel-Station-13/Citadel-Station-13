@@ -105,7 +105,7 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
-	materials = list(MAT_METAL=1000)
+	custom_materials = list(/datum/material/iron=1000)
 	resistance_flags = FIRE_PROOF
 	var/medaltype = "medal" //Sprite used for medalbox
 	var/commended = FALSE
@@ -190,7 +190,7 @@
 	icon_state = "silver"
 	item_color = "silver"
 	medaltype = "medal-silver"
-	materials = list(MAT_SILVER=1000)
+	custom_materials = list(/datum/material/silver=1000)
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -206,7 +206,7 @@
 	icon_state = "gold"
 	item_color = "gold"
 	medaltype = "medal-gold"
-	materials = list(MAT_GOLD=1000)
+	custom_materials = list(/datum/material/gold=1000)
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
@@ -217,7 +217,7 @@
 	name = "old medal of captaincy"
 	desc = "A rustic badge pure gold, has been through hell and back by the looks, the syndcate have been after these by the looks of it for generations..."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 10) //Pure gold
-	materials = list(MAT_GOLD=2000)
+	custom_materials = list(/datum/material/gold=2000)
 
 /obj/item/clothing/accessory/medal/gold/heroism
 	name = "medal of exceptional heroism"
@@ -230,7 +230,7 @@
 	item_color = "plasma"
 	medaltype = "medal-plasma"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
-	materials = list(MAT_PLASMA=1000)
+	custom_materials = list(/datum/material/plasma=1000)
 
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -370,22 +370,25 @@
 /////////////////////
 
 /obj/item/clothing/accessory/padding
-	name = "soft padding"
-	desc = "Some long sheets of padding to help soften the blows of a physical attacks."
+	name = "protective padding"
+	desc = "A soft padding meant to cushion the wearer from melee harm."
 	icon_state = "padding"
 	item_color = "nothing"
-	armor = list("melee" = 15, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 45)
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 45)
+	flags_inv = HIDEACCESSORY //hidden from indiscrete mob examines.
 
 /obj/item/clothing/accessory/kevlar
-	name = "kevlar sheets"
-	desc = "Long thin sheets of kevlar to help resist bullets and some physical attacks."
+	name = "kevlar padding"
+	desc = "A layered kevlar padding meant to cushion the wearer from ballistic harm."
 	icon_state = "padding"
 	item_color = "nothing"
 	armor = list("melee" = 10, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
+	flags_inv = HIDEACCESSORY
 
 /obj/item/clothing/accessory/plastics
-	name = "underling plastic sheet"
-	desc = "A full body sheet of white plastic to help defuse lasers and energy based weapons."
+	name = "ablative padding"
+	desc = "A thin ultra-refractory composite padding meant to cushion the wearer from energy lasers harm."
 	icon_state = "plastics"
 	item_color = "nothing"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 30, "rad" = 0, "fire" = 0, "acid" = -40)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = -40)
+	flags_inv = HIDEACCESSORY

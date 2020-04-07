@@ -23,7 +23,7 @@
 	if(!boomingandboxing)
 		var/list/tracklist = list()
 		for(var/datum/track/S in SSjukeboxes.songs)
-			if(istype(S) && S.song_associated_id in availabletrackids)
+			if(istype(S) && (S.song_associated_id in availabletrackids))
 				tracklist[S.song_name] = S
 		var/selected = input(user, "Play song", "Track:") as null|anything in tracklist
 		if(QDELETED(src) || !selected || !istype(tracklist[selected], /datum/track))
@@ -37,7 +37,7 @@
 	SSjukeboxes.removejukebox(SSjukeboxes.findjukeboxindex(src))
 	. = ..()
 
-/obj/item/boombox/update_icon()
+/obj/item/boombox/update_icon_state()
 	icon_state = "[baseiconstate]_[boomingandboxing ? "on" : "off"]"
 	return
 
@@ -48,8 +48,11 @@
 	baseiconstate = "raiqbawks"
 	availabletrackids = list("hotline.ogg","chiptune.ogg","genesis.ogg")
 
-/obj/item/boombox/raiq/update_icon()
+/obj/item/boombox/raiq/Initialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/start_party)
+
+/obj/item/boombox/raiq/proc/start_party()
 	if(boomingandboxing)
 		START_PROCESSING(SSobj, src)
 	else
@@ -58,4 +61,3 @@
 
 /obj/item/boombox/raiq/process()
 	set_light(5,0.95,pick("#d87aff","#7a7aff","#89ecff","#b88eff","#ff59ad"))
-	return

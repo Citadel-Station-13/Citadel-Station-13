@@ -48,6 +48,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "space_near"
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 
+/area/space/station_ruins //Paint this area where you want station ruins to be allowed to spawn
+
 /area/start
 	name = "start area"
 	icon_state = "start"
@@ -259,6 +261,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Hallway
 
+/area/hallway
+	nightshift_public_area = NIGHTSHIFT_AREA_PUBLIC
+
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
@@ -318,6 +323,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/service
 	name = "Service Hallway"
 	icon_state = "hall_service"
+
+/area/hallway/secondary/civilian
+	name = "Civilian Wing"
+	icon_state = "hallFS"
+
 
 //Command
 
@@ -404,14 +414,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = TRUE
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/dorms/male
 	name = "Male Dorm"
 	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/crew_quarters/dorms/female
 	name = "Female Dorm"
 	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/crew_quarters/rehab_dome
 	name = "Rehabilitation Dome"
@@ -448,26 +461,32 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/locker
 	name = "Locker Room"
 	icon_state = "locker"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/lounge
 	name = "Lounge"
 	icon_state = "yellow"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/fitness/recreation
 	name = "Recreation Area"
 	icon_state = "fitness"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/cafeteria
 	name = "Cafeteria"
 	icon_state = "cafeteria"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/cafeteria/lunchroom
 	name = "Lunchroom"
 	icon_state = "cafeteria"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
@@ -480,6 +499,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
@@ -518,6 +538,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Library"
 	icon_state = "library"
 	flags_1 = NONE
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/library/lounge
 	name = "Library Lounge"
@@ -527,6 +548,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Abandoned Library"
 	icon_state = "library"
 	flags_1 = NONE
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/chapel
 	icon_state = "chapel"
@@ -534,12 +556,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	flags_1 = NONE
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "The consecration here prevents you from warping in."
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
 /area/chapel/main
 	name = "Chapel"
 
 /area/chapel/main/monastery
 	name = "Monastery"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
 
 /area/chapel/office
 	name = "Chapel Office"
@@ -832,6 +856,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
 
+/area/medical/paramedic
+	name = "Paramedic Station"
+	icon_state = "paramedic"
+
 
 //Security
 
@@ -1022,7 +1050,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hydroponics/garden/monastery
 	name = "Monastery Garden"
 	icon_state = "hydro"
-
 
 //Science
 
@@ -1228,6 +1255,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "storage_wing"
 
 
+// Vacant Rooms
+
+/area/vacant_room
+	name = "Vacant Room"
+	ambientsounds = MAINTENANCE
+	icon_state = "vacant_room"
+
+/area/vacant_room/office
+	name = "Vacant Office"
+	icon_state = "vacant_room"
+
+/area/vacant_room/commissary
+	name = "Vacant Commissary"
+	icon_state = "vacant_room"
+
+
 //AI
 
 /area/ai_monitored/security/armory
@@ -1350,3 +1393,203 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/lounge
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
+
+/area/crew_quarters/fitness/pool
+	name = "Pool Area"
+	icon_state = "pool"
+
+/area/crew_quarters/dorms/blue
+	name = "Blue Dorms"
+	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
+
+/area/crew_quarters/dorms/purple
+	name = "Purple Dorms"
+	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
+
+/area/crew_quarters/lounge/jazz
+	name = "Jazz Lounge"
+	icon_state = "yellow"
+	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
+
+/area/crew_quarters/fitness/recreation
+	name = "Recreation Area"
+	icon_state = "fitness"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
+/area/crew_quarters/fitness/cogpool
+	name = "Pool"
+	icon_state = "fitness"
+	clockwork_warp_fail = "Pool's closed."
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
+/area/crew_quarters/barbershop
+	name = "Barbershop"
+	icon_state = "blue"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
+/area/crew_quarters/observatory
+	name = "Observatory"
+	icon_state = "Sleep"
+
+//Engineering
+
+/area/engine/teg_hot
+	name = "Hot Loop"
+	icon_state = "red"
+
+/area/engine/teg_cold
+	name = "Cold Loop"
+	icon_state = "blue"
+
+/area/engine/workshop
+	name = "Engineering Workshop"
+	icon_state = "engine"
+
+/area/security/courtroom/jury
+	name = "Jury Room"
+	icon_state = "courtroom"
+
+/area/quartermaster/miningdock/airless
+	name = "Mining Dock"
+	icon_state = "mining"
+	has_gravity = STANDARD_GRAVITY
+	valid_territory = FALSE
+	outdoors = TRUE
+	ambientsounds = SPACE
+	blob_allowed = FALSE //While part of the station, what good will it do you?
+
+/area/quartermaster/miningdock/airless/no_grav
+	name = "Mining Dock"
+	icon_state = "mining"
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE
+	valid_territory = FALSE
+	outdoors = TRUE
+	ambientsounds = SPACE
+	blob_allowed = FALSE //While part of the station, what good will it do you?
+
+/area/janitor/aux
+	name = "Auxiliary Custodial Closet"
+	icon_state = "janitor"
+	flags_1 = NONE
+
+/area/hydroponics/lobby
+	name = "Hydroponics Lobby"
+	icon_state = "hydro"
+
+//Storage
+
+/area/storage/emergency/generic
+	name = "Emergency Storage"
+	icon_state = "emergencystorage"
+
+//Construction
+
+/area/construction
+	name = "Construction Area"
+	icon_state = "yellow"
+	ambientsounds = ENGINEERING
+
+/area/construction/secondary
+	name = "Secondary Construction Area"
+	icon_state = "yellow"
+
+/area/construction/minisat_exterior
+	name = "Minisat Exterior"
+	icon_state = "yellow"
+
+/area/construction/mining/aux_base
+	name = "Auxiliary Base Construction"
+	icon_state = "yellow"
+
+/area/construction/mining/aux_base/closet
+	name = "Auxiliary Closet Construction"
+	icon_state = "yellow"
+
+/area/construction/supplyshuttle
+	name = "Supply Shuttle"
+	icon_state = "yellow"
+
+/area/construction/quarters
+	name = "Engineers' Quarters"
+	icon_state = "yellow"
+
+/area/construction/qmaint
+	name = "Maintenance"
+	icon_state = "yellow"
+
+/area/construction/hallway
+	name = "Hallway"
+	icon_state = "yellow"
+
+/area/construction/solars
+	name = "Solar Panels"
+	icon_state = "yellow"
+
+/area/construction/solarscontrol
+	name = "Solar Panel Control"
+	icon_state = "yellow"
+
+/area/construction/storage
+	name = "Construction Site Storage"
+	icon_state = "yellow"
+
+/area/construction/storage/wing
+	name = "Storage Wing"
+	icon_state = "storage_wing"
+
+//Routers
+
+/area/router
+	name = "Router"
+	icon_state = "yellow"
+	ambientsounds = ENGINEERING
+
+/area/router/service
+	name = "Service Router"
+	icon_state = "green"
+
+/area/router/public
+	name = "Public Router"
+	icon_state = "yellow"
+
+/area/router/sec
+	name = "Security Router"
+	icon_state = "blue"
+
+/area/router/medsci
+	name = "MedSci Router"
+	icon_state = "yellow"
+
+/area/router/eva
+	name = "EVA Router"
+	icon_state = "yellow"
+
+/area/router/air
+	name = "Airbridge Router"
+	icon_state = "red"
+
+/area/router/eng
+	name = "Engineering Router"
+	icon_state = "yellow"
+
+/area/router/aux
+	name = "Routing System"
+	icon_state = "yellow"
+	requires_power = FALSE
+	has_gravity = STANDARD_GRAVITY
+	always_unpowered = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE
+	valid_territory = FALSE
+	outdoors = TRUE
+	ambientsounds = SPACE
+	blob_allowed = FALSE //While part of the station, what good will it do you?

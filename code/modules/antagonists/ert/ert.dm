@@ -10,9 +10,9 @@
 	var/datum/outfit/outfit = /datum/outfit/ert/security
 	var/role = "Security Officer"
 	var/list/name_source
+	threat = -5
 	show_in_antagpanel = FALSE
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
 	update_name()

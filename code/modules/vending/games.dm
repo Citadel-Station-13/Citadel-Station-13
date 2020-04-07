@@ -8,6 +8,8 @@
 					/obj/item/toy/cards/deck/cas = 3,
 					/obj/item/toy/cards/deck/cas/black = 3)
 	contraband = list(/obj/item/dice/fudge = 9)
+	premium = list(/obj/item/melee/skateboard/pro = 3,
+					/obj/item/melee/skateboard/hoverboard = 1)
 	refill_canister = /obj/item/vending_refill/games
 
 /obj/item/vending_refill/games

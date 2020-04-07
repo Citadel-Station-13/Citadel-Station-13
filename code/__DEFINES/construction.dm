@@ -59,19 +59,6 @@
 //let's just pretend fulltile windows being children of border windows is fine
 #define FULLTILE_WINDOW_DIR NORTHEAST
 
-//Material defines, for determining how much of a given material an item contains
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PLASMA		"$plasma"
-#define MAT_BLUESPACE	"$bluespace"
-#define MAT_BANANIUM	"$bananium"
-#define MAT_TITANIUM	"$titanium"
-#define MAT_BIOMASS		"$biomass"
-#define MAT_PLASTIC	"$plastic"
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
@@ -92,17 +79,19 @@
 #define CAT_BREAD	"Breads"
 #define CAT_BURGER	"Burgers"
 #define CAT_CAKE	"Cakes"
+#define CAT_DONUT	"Donuts"
 #define CAT_EGG	"Egg-Based Food"
 #define CAT_MEAT	"Meats"
+#define CAT_MEXICAN	"Mexican"
 #define CAT_MISCFOOD	"Misc. Food"
 #define CAT_PASTRY	"Pastries"
-#define CAT_PIE	"Pies"
+#define CAT_PIE	"Pies & Sweets"
 #define CAT_PIZZA	"Pizzas"
 #define CAT_SALAD	"Salads"
+#define CAT_SEAFOOD    "Seafood"
 #define CAT_SANDWICH	"Sandwiches"
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
-#define CAT_FISH	"Fish"
 #define CAT_ICE	"Frozen"
 
 #define RCD_FLOORWALL 1

@@ -96,7 +96,7 @@
 		charges_left = charges
 
 	if(!reagents)
-		create_reagents(charges_left * volume_multiplier)
+		create_reagents(charges_left * volume_multiplier, NONE, NO_REAGENTS_VALUE)
 	reagents.clear_reagents()
 
 	var/total_weight = 0
@@ -407,7 +407,7 @@
 		to_chat(user, "<span class='notice'>You spray a [temp] on \the [target.name]</span>")
 
 	if(length(text_buffer) > 1)
-		text_buffer = copytext(text_buffer,2)
+		text_buffer = copytext(text_buffer, length(text_buffer[1]) + 1)
 		SStgui.update_uis(src)
 
 	if(post_noise)
@@ -427,7 +427,7 @@
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
 	// Check area validity.
 	// Reject space, player-created areas, and non-station z-levels.
-	var/area/A = get_area(target)
+	var/area/A = get_base_area(target)
 	if(!A || (!is_station_level(A.z)) || !A.valid_territory)
 		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
 		return FALSE
@@ -461,7 +461,7 @@
 		qdel(old_marking)
 
 	var/datum/antagonist/gang/G = user.mind.has_antag_datum(/datum/antagonist/gang)
-	var/area/territory = get_area(target)
+	var/area/territory = get_base_area(target)
 
 	new /obj/effect/decal/cleanable/crayon/gang(target,G.gang,"graffiti",0,user) // Heres the gang tag.
 	to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
@@ -577,8 +577,8 @@
 	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
-/obj/item/storage/crayons/update_icon()
-	cut_overlays()
+/obj/item/storage/crayons/update_overlays()
+	. = ..()
 	for(var/obj/item/toy/crayon/crayon in contents)
 		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.item_color))
 
@@ -619,7 +619,6 @@
 	is_capped = TRUE
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
-	gang = TRUE //Gang check is true for all things upon the honored hierarchy of spraycans, except those that are FALSE.
 
 	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
 
@@ -695,7 +694,7 @@
 			C.blind_eyes(1)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
-			C.Knockdown(60)
+			C.DefaultCombatKnockdown(60)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
@@ -711,7 +710,8 @@
 
 	if(isobj(target))
 		if(actually_paints)
-			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
+			var/list/hsl = rgb2hsl(hex2num(copytext(paint_color,2,4)),hex2num(copytext(paint_color,4,6)),hex2num(copytext(paint_color,6,8)))
+			if(hsl[3] < 0.25 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
 				return FALSE
 
@@ -735,13 +735,15 @@
 
 	. = ..()
 
-/obj/item/toy/crayon/spraycan/update_icon()
+/obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped
+
+/obj/item/toy/crayon/spraycan/update_overlays()
+	. = ..()
 	if(use_overlays)
-		cut_overlays()
 		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
-		add_overlay(spray_overlay)
+		. += spray_overlay
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"
@@ -774,7 +776,6 @@
 	icon_capped = "deathcan2_cap"
 	icon_uncapped = "deathcan2"
 	use_overlays = FALSE
-	gang = FALSE
 
 	volume_multiplier = 25
 	charges = 100
@@ -789,7 +790,6 @@
 	icon_capped = "clowncan2_cap"
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
-	gang = FALSE
 
 	reagent_contents = list(/datum/reagent/lube = 1, /datum/reagent/consumable/banana = 1)
 	volume_multiplier = 5
@@ -804,7 +804,6 @@
 	icon_capped = "mimecan_cap"
 	icon_uncapped = "mimecan"
 	use_overlays = FALSE
-	gang = FALSE
 
 	can_change_colour = FALSE
 	paint_color = "#FFFFFF" //RGB

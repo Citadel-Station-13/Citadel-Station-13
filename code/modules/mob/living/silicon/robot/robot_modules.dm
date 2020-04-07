@@ -97,8 +97,8 @@
 		var/obj/item/stack/S = I
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.materials[MAT_METAL])
-				S.cost = S.materials[MAT_METAL] * 0.25
+			if(S.custom_materials?.len && S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+				S.cost = S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -121,13 +121,13 @@
 		else if(istype(S, /obj/item/stack/marker_beacon))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/beacon)
-		
+
 		else if(istype(S, /obj/item/stack/packageWrap))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wrapping_paper)
 
 		if(S && S.source)
-			S.materials = list()
+			S.custom_materials = null
 			S.is_cyborg = 1
 
 	if(I.loc != src)
@@ -191,7 +191,7 @@
 		else if(istype(I, /obj/item/gun/energy))
 			var/obj/item/gun/energy/EG = I
 			if(EG.cell?.charge < EG.cell.maxcharge)
-				var/obj/item/ammo_casing/energy/S = EG.ammo_type[EG.select]
+				var/obj/item/ammo_casing/energy/S = EG.ammo_type[EG.current_firemode_index]
 				EG.cell.give(S.e_cost * coeff)
 				if(!EG.chambered)
 					EG.recharge_newshot(TRUE)
@@ -257,7 +257,7 @@
 
 /obj/item/robot_module/proc/do_transform_delay()
 	var/mob/living/silicon/robot/R = loc
-	var/prev_lockcharge = R.lockcharge
+	var/prev_locked_down = R.locked_down
 	sleep(1)
 	flick("[cyborg_base_icon]_transform", R)
 	R.notransform = TRUE
@@ -267,7 +267,7 @@
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 		sleep(7)
-	if(!prev_lockcharge)
+	if(!prev_locked_down)
 		R.SetLockdown(0)
 	R.setDir(SOUTH)
 	R.anchored = FALSE
@@ -339,9 +339,10 @@
 
 /obj/item/robot_module/medical/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Heavy", "Sleek", "Marina", "Droid", "Eyebot", "Medihound", "Medihound Dark", "Vale")
-	if(R.client && R.client.ckey in list("nezuli"))
-		borg_icon += "Alina"
+	var/medmodels = list("Default", "Heavy", "Sleek", "Marina", "Droid", "Eyebot", "Medihound", "Medihound Dark", "Vale")
+	if(R.client && (R.client.ckey in list("nezuli")))
+		medmodels += "Alina"
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in medmodels
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -436,7 +437,7 @@
 /obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
 	var/list/engymodels = list("Default", "Default - Treads", "Heavy", "Sleek", "Marina", "Can", "Spider", "Loader","Handy", "Pup Dozer", "Vale")
-	if(R.client && R.client.ckey in list("nezuli"))
+	if(R.client && (R.client.ckey in list("nezuli")))
 		engymodels += "Alina"
 	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in engymodels
 	if(!borg_icon)
@@ -514,7 +515,7 @@
 /obj/item/robot_module/security/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
 	var/list/secmodels = list("Default", "Default - Treads", "Heavy", "Sleek", "Can", "Marina", "Spider", "K9", "K9 Dark", "Vale")
-	if(R.client && R.client.ckey in list("nezuli"))
+	if(R.client && (R.client.ckey in list("nezuli")))
 		secmodels += "Alina"
 	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in secmodels
 	if(!borg_icon)
@@ -595,8 +596,8 @@
 
 /obj/item/robot_module/peacekeeper/do_transform_animation()
 	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV/CREWSIMOV, you are an enforcer of the PEACE and preventer of HUMAN/CREW HARM. \
-	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
+	to_chat(loc, "<span class='userdanger'>Under ASIMOV/CREWSIMOV, you are an enforcer of the PEACE. \
+	You are not a security module and you are expected to follow orders to the best of your abilities without causing harm. Space law means nothing to you.</span>")
 
 /obj/item/robot_module/peacekeeper/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
@@ -820,7 +821,6 @@
 		/obj/item/gps/cyborg,
 		/obj/item/weapon/gripper/mining,
 		/obj/item/cyborg_clamp,
-		/obj/item/card/id/miningborg,
 		/obj/item/stack/marker_beacon,
 		/obj/item/destTagger,
 		/obj/item/stack/packageWrap)
@@ -913,8 +913,8 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/twohanded/shockpaddles/syndicate,
-		/obj/item/healthanalyzer,
-		/obj/item/surgical_drapes,
+		/obj/item/healthanalyzer/advanced,
+		/obj/item/surgical_drapes/advanced,
 		/obj/item/retractor,
 		/obj/item/hemostat,
 		/obj/item/cautery,

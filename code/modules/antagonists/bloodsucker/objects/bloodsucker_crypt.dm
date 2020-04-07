@@ -107,7 +107,7 @@
 	var/convert_progress = 3		// Resets on each new character to be added to the chair. Some effects should lower it...
 	var/disloyalty_confirm = FALSE	// Command & Antags need to CONFIRM they are willing to lose their role (and will only do it if the Vassal'ing succeeds)
 	var/disloyalty_offered = FALSE	// Has the popup been issued? Don't spam them.
-	var/convert_cost = 100
+
 
 /obj/structure/bloodsucker/vassalrack/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal(src.loc, 4)
@@ -116,10 +116,10 @@
 
 /obj/structure/bloodsucker/vassalrack/examine(mob/user)
 	. = ..()
-	if((user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) || isobserver(user))
+	if(isvamp(user) || isobserver(user))
 		. += {"<span class='cult'>This is the vassal rack, which allows you to thrall crewmembers into loyal minions in your service.</span>"}
 		. += {"<span class='cult'>You need to first secure the vassal rack by clicking on it while it is in your lair.</span>"}
-		. += {"<span class='cult'>Simply click and hold on a victim, and then drag their sprite on the vassal rack.</span>"}
+		. += {"<span class='cult'>Simply click and hold on a victim, and then drag their sprite on the vassal rack. Alt click on the vassal rack to unbuckle them.</span>"}
 		. += {"<span class='cult'>Make sure that the victim is handcuffed, or else they can simply run away or resist, as the process is not instant.</span>"}
 		. += {"<span class='cult'>To convert the victim, simply click on the vassal rack itself. Sharp weapons work faster than other tools.</span>"}
 /*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
@@ -177,7 +177,7 @@
 	M.pixel_y = -2 //M.get_standard_pixel_y_offset(120)//180)
 	update_icon()
 	// Torture Stuff
-	convert_progress = 2 			// Goes down unless you start over.
+	convert_progress = 4 			// Goes down unless you start over.
 	disloyalty_confirm = FALSE		// New guy gets the chance to say NO if he's special.
 	disloyalty_offered = FALSE		// Prevents spamming torture window.
 
@@ -190,7 +190,7 @@
 		else
 			M.visible_message("<span class='danger'>[user] tries to pull [M] rack!</span>",\
 							"<span class='danger'>[user] attempts to release you from the rack!</span>") //  For sound if not seen -->  "<span class='italics'>You hear a squishy wet noise.</span>")
-		if(!do_mob(user, M, 100))
+		if(!do_mob(user, M, 200))
 			return
 	// Did the time. Now try to do it.
 	..()
@@ -205,7 +205,7 @@
 	buckled_mob.pixel_y = buckled_mob.get_standard_pixel_y_offset(180)
 	src.visible_message(text("<span class='danger'>[buckled_mob][buckled_mob.stat==DEAD?"'s corpse":""] slides off of the rack.</span>"))
 	density = FALSE
-	buckled_mob.AdjustKnockdown(30)
+	buckled_mob.DefaultCombatKnockdown(30)
 	update_icon()
 	useLock = FALSE // Failsafe
 
@@ -248,7 +248,7 @@
 	// Bloodsucker Owner! Let the boy go.
 	if(C.mind)
 		var/datum/antagonist/vassal/vassaldatum = C.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-		if (istype(vassaldatum) && vassaldatum.master == bloodsuckerdatum || C.stat >= DEAD)
+		if(istype(vassaldatum) && vassaldatum.master == bloodsuckerdatum || C.stat >= DEAD)
 			unbuckle_mob(C)
 			useLock = FALSE // Failsafe
 			return
@@ -256,7 +256,9 @@
 	torture_victim(user, C)
 
 /obj/structure/bloodsucker/vassalrack/proc/torture_victim(mob/living/user, mob/living/target)
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// Check Bloodmob/living/M, force = FALSE, check_loc = TRUE
+	var/convert_cost = 200 + 200 * bloodsuckerdatum.vassals
 	if(user.blood_volume < convert_cost + 5)
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
 		return
@@ -275,7 +277,7 @@
 			// All done!
 			if(convert_progress <= 0)
 				// FAIL: Can't be Vassal
-				if(!SSticker.mode.can_make_vassal(target, user, display_warning=FALSE) || HAS_TRAIT(target, TRAIT_MINDSHIELD)) // If I'm an unconvertable Antag ONLY
+				if(!SSticker.mode.can_make_vassal(target, user, display_warning = FALSE) || HAS_TRAIT(target, TRAIT_MINDSHIELD)) // If I'm an unconvertable Antag ONLY
 					to_chat(user, "<span class='danger'>[target] doesn't respond to your persuasion. It doesn't appear they can be converted to follow you, they either have a mindshield or their external loyalties are too difficult for you to break.<i>\[ALT+click to release\]</span>")
 					convert_progress ++ // Pop it back up some. Avoids wasting Blood on a lost cause.
 				// SUCCESS: All done!
@@ -301,10 +303,9 @@
 		return
 	// Check: Blood
 	if(user.blood_volume < convert_cost)
-		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target].</span>")
+		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target], you need [convert_cost - user.blood_volume] units more!</span>")
 		useLock = FALSE
 		return
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	bloodsuckerdatum.AddBloodVolume(-convert_cost)
 	target.add_mob_blood(user)
 	user.visible_message("<span class='notice'>[user] marks a bloody smear on [target]'s forehead and puts a wrist up to [target.p_their()] mouth!</span>", \
@@ -448,7 +449,7 @@
 /obj/structure/bloodsucker/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/structure/bloodsucker/candelabrum/update_icon()
+/obj/structure/bloodsucker/candelabrum/update_icon_state()
 	icon_state = "candelabrum[lit ? "_lit" : ""]"
 
 /obj/structure/bloodsucker/candelabrum/examine(mob/user)

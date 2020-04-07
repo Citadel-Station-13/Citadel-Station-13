@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
+	mats_per_stack = 500
 	var/turf_type = null
 	var/mineralType = null
 	novariants = TRUE
@@ -233,38 +234,110 @@
 	turf_type = /turf/open/floor/carpet/royalblue
 	tableVariant = /obj/structure/table/wood/fancy/royalblue
 
+/obj/item/stack/tile/carpet/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/black/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/black/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/blackred/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/blackred/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/blackred/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/monochrome/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/monochrome/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/monochrome/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/blue/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/blue/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/blue/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/cyan/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/cyan/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/cyan/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/green/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/green/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/green/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/orange/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/orange/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/orange/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/purple/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/purple/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/purple/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/red/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/red/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/red/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/royalblack/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/royalblack/twenty
+	amount = 20
+
 /obj/item/stack/tile/carpet/royalblack/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/royalblue/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/royalblue/twenty
+	amount = 20
 
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50
@@ -362,7 +435,7 @@
 	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
 	force = 6
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
@@ -372,6 +445,6 @@
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
-	materials = list() // All other Borg versions of items have no Metal or Glass - RR
+	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
