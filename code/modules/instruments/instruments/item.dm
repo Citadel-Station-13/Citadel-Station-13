@@ -57,7 +57,7 @@
 			if (!is_tuned())
 				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
 				tune_time_left = 600 SECONDS
-				START_PROCESSING(SSobj, src)
+				START_PROCESSING(SSprocessing, src)
 			else
 				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
 		else
