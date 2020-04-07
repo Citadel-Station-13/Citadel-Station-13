@@ -120,8 +120,8 @@
 		w_items += secret.w_class
 		contents += secret
 
-
-
+/obj/structure/toilet/secret/prison
+	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
 
 /obj/structure/urinal
 	name = "urinal"

@@ -197,7 +197,7 @@
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
 	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
 
-
+//not using global lists as vv is a debug function and debug functions should rely on as less things as possible.
 /proc/get_all_of_type(var/T, subtypes = TRUE)
 	var/list/typecache = list()
 	typecache[T] = 1
@@ -205,19 +205,25 @@
 		typecache = typecacheof(typecache)
 	. = list()
 	if (ispath(T, /mob))
-		for(var/mob/thing in GLOB.mob_list)
+		for(var/mob/thing in world)
 			if (typecache[thing.type])
 				. += thing
 			CHECK_TICK
 
 	else if (ispath(T, /obj/machinery/door))
-		for(var/obj/machinery/door/thing in GLOB.airlocks)
+		for(var/obj/machinery/door/thing in world)
 			if (typecache[thing.type])
 				. += thing
 			CHECK_TICK
 
 	else if (ispath(T, /obj/machinery))
-		for(var/obj/machinery/thing in GLOB.machines)
+		for(var/obj/machinery/thing in world)
+			if (typecache[thing.type])
+				. += thing
+			CHECK_TICK
+
+	else if (ispath(T, /obj/item))
+		for(var/obj/item/thing in world)
 			if (typecache[thing.type])
 				. += thing
 			CHECK_TICK
@@ -247,7 +253,7 @@
 			CHECK_TICK
 
 	else if (ispath(T, /client))
-		for(var/client/thing in GLOB.clients)
+		for(var/client/thing in world)
 			if (typecache[thing.type])
 				. += thing
 			CHECK_TICK
