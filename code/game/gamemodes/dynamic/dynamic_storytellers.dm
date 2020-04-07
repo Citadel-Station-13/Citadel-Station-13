@@ -233,7 +233,7 @@ Property weights are:
 	curve_width = 1.5
 	weight = 2
 	min_players = 30
-	flags = WAROPS_ALWAYS_ALLOWED
+	flags = WAROPS_ALWAYS_ALLOWED | USE_PREV_ROUND_WEIGHTS
 	property_weights = list("valid" = 3, "trust" = 5)
 
 /datum/dynamic_storyteller/team/get_injection_chance(dry_run = FALSE)
