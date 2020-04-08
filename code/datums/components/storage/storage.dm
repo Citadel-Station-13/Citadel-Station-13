@@ -360,6 +360,8 @@
 
 /datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
 	_removal_reset(thing)
+	qdel(ui_item_blocks[thing])
+	ui_item_blocks -= thing
 	refresh_mob_views()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted

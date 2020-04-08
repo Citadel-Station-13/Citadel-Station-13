@@ -39,3 +39,13 @@
 	var/datum/component/storage/S = master
 	S.hide_from(usr)
 	return TRUE
+
+/obj/screen/storage/volumetric_box
+	var/obj/item/our_item
+
+/obj/screen/storage/volumetric_box/Initialize(mapload, new_master, our_item)
+	src.our_item = our_item
+	return ..()
+
+/obj/screen/storage/volumetric_box/Click(location, control, params)
+	return our_item.Click(location, control, params)

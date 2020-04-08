@@ -72,73 +72,98 @@
 					break
 
 /**
-  * Orients all objects in .. volumetric mode.
+  * Orients all objects in .. volumetric mode. Does not support numerical display!
   */
 /datum/component/storage/proc/orient2hud_volumetric(mob/user, maxcolumns)
 	. = list()
-	var/list/accessible_contents = accessible_items()
-	var/adjusted_contents = length(accessible_contents)
 
-	//Numbered contents display
-	var/list/datum/numbered_display/numbered_contents
-	if(display_numerical_stacking)
-		numbered_contents = _process_numerical_display()
-		adjusted_contents = numbered_contents.len
+	// Generate ui_item_blocks for missing ones and render+orient.
+	var/list/atom/contents = accessible_items()
 
-	var/columns = CLAMP(max_items, 1, maxcolumns ? maxcolumns : screen_max_columns)
-	var/rows = CLAMP(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
+	var/horizontal_pixels = maxcolumns * world.icon_size
+	// do the check for fallback for when someone has too much gamer gear
+	if((MINIMUM_PIXELS_PER_ITEMS * length(contents)) > horizontal_pixels)
+		to_chat(user, "<span class='warning'>[parent] was showed to you in legacy mode due to your items overrunning the three row limit! Consider not carrying too much or bugging a maintainer to raise this limit!</span>")
+		return orient2hud_legacy(user, maxcolumns)
+	// after this point we are sure we can somehow fit all items with 8 pixels or more into our one row.
 
-	// First, continuous section.
-	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+columns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
+
+	// sigh. two loops.
+	var/total = max_volume
+
+	var/used = 0
+
+	var/list/volume_by_item = list()
+	var/list/percentage_by_item = list()
+	var/list/percentages = list()
+	// define outside for less lag
+	var/obj/item/I
+	var/volume
+	for(var/obj/item/I in contents)
+		volume = I.get_volume()
+		used += volume_by_item[I] = volume
+		percentages += percentage_by_item[I] = volume
+	// ugh
+	var/min_percent = min(percentages)
+
+	var/percentage_metric = max(min_percent,
+
+	var/pixels_needed = (100 / min_percent) * MINIMUM_PIXELS_PER_ITEM
+
+	var/overrunning = pixels_needed > maximum_horizontal_pixels
+
+	var/row = 1
+	var/pixel = 0
+
+	for(var/i in volume_by_item)
+		I = i
+		if(!ui_item_blocks[I])
+			ui_item_blocks[I] = new /obj/screen/storage(null, src, I)
+		var/obj/screen/storage/volumetric_box/B = ui_item_blocks[I]
+
+		. += B
+		var/pixels_to_use
+		if(!overrunning)
+			pixels_to_use = CEILING(min_percent / percentage_by_item[i], MINIMUM_PIXELS_PER_ITEM)
+		else
+			pixels_to_use = MINIMUM_PIXELS_PER_ITEM		//not enough room to display everything ughh
+
+		// now that we have pixels_to_use, place our thing and add it to the returned list.
+
+		// uh oh, increment row or clamp.
+		if((horizontal_pixels - pixel) < pixels_to_use)
+			if(!pixels_to_use)
+				row++
+			else
+				pixels_to_use = (horizontal_pixels - pixel)
+		// now, scale the thing
+		var/multiply = pixels_to_use / MINIMUM_PIXELS_PER_ITEM
+		B.transform = matrix(multiply, 0, 0, 0, 1, 0)
+		// unfortunately since scaling means expand-from-center.. ugh..
+		var/px_add = 0
+		if(multiply > 1)
+			px_add = (pixels_to_use - MINIMUM_PIXELS_PER_ITEM) * 0.5
+		// not handling multiply < 1, that should never happen.
+		// now, screenloc the thing.
+		var/xshift = FLOOR(pixel / icon_size, 1)
+		var/px = pixel % world.icon_Size
+		B.screen_loc = "[screen_start_x + xshift]:[px],[screen_start_y+rows-1]:[screen_pixel_y]"
+		pixels += px
+		if(pixels >= horizontal_pixels)
+			row++
+		. += B
+
+	// Then, continuous section.
+	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_continuous
 	// Then, left and right.
 	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x]:[screen_pixel_x - 2],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_left
-	ui_right.screen_loc = "[screen_start_x+columns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x+columns-1]:[screen_pixel_x + 2],[screen_start_y+rows-1]:[screen_pixel_y]"
+	ui_right.screen_loc = "[screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_right
 	// Then, closer.
-	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
+	closer.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 	. += ui_closer
-	// Generate ui_item_blocks for missing ones.
-
-
-
-
-
-
-	var/cx = screen_start_x
-	var/cy = screen_start_y
-	if(islist(numerical_display_contents))
-		for(var/type in numerical_display_contents)
-			var/datum/numbered_display/ND = numerical_display_contents[type]
-			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
-			ND.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
-			ND.sample_object.layer = ABOVE_HUD_LAYER
-			ND.sample_object.plane = ABOVE_HUD_PLANE
-			. += ND.sample_object
-			cx++
-			if(cx - screen_start_x >= columns)
-				cx = screen_start_x
-				cy++
-				if(cy - screen_start_y >= rows)
-					break
-	else
-		for(var/obj/O in accessible_items())
-			if(QDELETED(O))
-				continue
-			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
-			O.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			O.maptext = ""
-			O.layer = ABOVE_HUD_LAYER
-			O.plane = ABOVE_HUD_PLANE
-			. += O
-			cx++
-			if(cx - screen_start_x >= columns)
-				cx = screen_start_x
-				cy++
-				if(cy - screen_start_y >= rows)
-					break
 
 /**
   * Shows our UI to a mob.
@@ -204,7 +229,7 @@
   */
 /datum/component/storage/proc/volumetric_ui()
 	var/atom/real_location = real_location()
-	return (storage_flags & STORAGE_LIMIT_VOLUME) && (length(real_location.contents) <= MAXIMUM_VOLUMETRIC_OBJECTS)
+	return (storage_flags & STORAGE_LIMIT_VOLUME) && (length(real_location.contents) <= MAXIMUM_VOLUMETRIC_OBJECTS) && !display_numeric_stacking
 
 /**
   * Gets the ui item objects to ui_hide.

@@ -29,6 +29,8 @@
 
 // UI defines
 /// Minimum pixels an item must have in volumetric scaled storage UI
-#define MINIMUM_PIXELS_PER_ITEM 5
+#define MINIMUM_PIXELS_PER_ITEM 4
+/// The size of the volumetric scaled storage UI's volumetric boxes that's rendered behind items.
+#define VOLUMETRIC_STORAGE_BOX_SIZE 8
 /// Maximum number of objects that will be allowed to be displayed using the volumetric display system. Arbitrary number to prevent server lockups.
 #define MAXIMUM_VOLUMETRIC_ITEMS 256
