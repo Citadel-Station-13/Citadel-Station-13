@@ -84,7 +84,7 @@
 	// do the check for fallback for when someone has too much gamer gear
 	if((MINIMUM_PIXELS_PER_ITEMS * length(contents)) > horizontal_pixels)
 		to_chat(user, "<span class='warning'>[parent] was showed to you in legacy mode due to your items overrunning the three row limit! Consider not carrying too much or bugging a maintainer to raise this limit!</span>")
-		return orient2hud_legacy(user, maxcolumns)VO
+		return orient2hud_legacy(user, maxcolumns)
 	// after this point we are sure we can somehow fit all items with 8 pixels or more into our one row.
 
 	// sigh loopmania time
@@ -183,7 +183,7 @@
   */
 /datum/component/storage/vv_edit_var(var_name, var_value)
 	var/list/old
-	if(var_name == NAMEOF(storage_flags))
+	if(var_name == NAMEOF(src, storage_flags))
 		old = is_using.Copy()
 		for(var/i in is_using)
 			ui_hide(i)
