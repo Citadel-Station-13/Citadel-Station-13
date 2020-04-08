@@ -557,7 +557,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil/attack_self(mob/user)
     if(!use(15))
-      to_chat(user, "<span class='notice'>You dont have enough cable coil to make restraints out of them</span>")
+        to_chat(user, "<span class='notice'>You dont have enough cable coil to make restraints out of them</span>")
+        return
     to_chat(user, "<span class='notice'>You start making some cable restraints.</span>")
     if(!do_after(user, 30, TRUE, user, TRUE))
         to_chat(user, "<span class='notice'>You fail to make cable restraints, you need to stand still while doing so.</span>")
@@ -567,7 +568,6 @@ By design, d1 is the smallest direction and d2 is the highest
     user.put_in_hands(result)
     result.color = color 
     to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
-
 
 //add cables to the stack
 /obj/item/stack/cable_coil/proc/give(extra)
