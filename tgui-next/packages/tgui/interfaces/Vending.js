@@ -2,7 +2,6 @@ import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Section, Box, Button, Table } from '../components';
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
 
 export const Vending = props => {
   const { state } = props;
@@ -10,24 +9,37 @@ export const Vending = props => {
   const { ref } = config;
   let inventory;
   let custom = false;
-  if (data.vending_machine_input) {
-    inventory = data.vending_machine_input;
-    custom = true;
+  const onstation = true;
+  if (data.extended_inventory && data.coin) {
+    inventory = [
+      ...data.product_records,
+      ...data.hidden_records,
+      ...data.coin_records,
+    ];
   } else if (data.extended_inventory) {
     inventory = [
       ...data.product_records,
-      ...data.coin_records,
       ...data.hidden_records,
+    ];
+  } else if (data.coin) {
+    inventory = [
+      ...data.product_records,
+      ...data.coin_records,
     ];
   } else {
     inventory = [
       ...data.product_records,
-      ...data.coin_records,
     ];
   }
   return (
     <Fragment>
-      )
+      {data.coin && (
+        <Section title="Coins">
+          <Button
+            content={"Take out the coin"}
+            onClick={() => act(ref, 'takeoutcoin')} />
+        </Section>
+      )}
       <Section title="Products" >
         <Table>
           {inventory.map((product => {
@@ -65,16 +77,13 @@ export const Vending = props => {
                 <Table.Cell>
                   {custom && (
                     <Button
-                      content={"Vend"}
+                      content={'Vend'}
                       onClick={() => act(ref, 'dispense', {
                         'item': product.name,
                       })} />
                   ) || (
                     <Button
-                      disabled={(
-                        data.stock[product.namename] === 0
-                      )}
-                      content={"Vend"}
+                      content={'Vend'}
                       onClick={() => act(ref, 'vend', {
                         'ref': product.ref,
                       })} />
