@@ -139,7 +139,6 @@
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
 	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
-	H.physiology.stamina_mod *= 0.5 //stun batons prove to be one of the few ways to fight them. They have stun resistance already, so I think doubling down too hard on this resistance is a bit much.
 	H.physiology.stun_mod *= 0.3 //for those rare stuns
 	H.physiology.pressure_mod *= 0.3 //go hang out with carp
 	H.physiology.cold_mod *= 0.3 //cold mods are different to burn mods, they do stack however
@@ -154,7 +153,6 @@
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod = initial(H.physiology.brute_mod)
 	H.physiology.burn_mod = initial(H.physiology.burn_mod)
-	H.physiology.stamina_mod = initial(H.physiology.stamina_mod)
 	H.physiology.stun_mod = initial(H.physiology.stun_mod)
 	H.physiology.pressure_mod = initial(H.physiology.pressure_mod) //no more carpies
 	H.physiology.cold_mod = initial(H.physiology.cold_mod)
