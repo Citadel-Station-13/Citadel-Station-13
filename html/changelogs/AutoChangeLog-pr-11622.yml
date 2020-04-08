@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "mobs with antag statuses such as wizard, ert and nuke ops get their flavor text removed now."
-  - bugfix: "Fixed megafauna mobs, goliaths and \"anchored\" AIs being stuffable into closets."
