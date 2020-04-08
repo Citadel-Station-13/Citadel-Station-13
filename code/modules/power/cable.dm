@@ -564,7 +564,8 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 	if(!check_cable_amount())
 		return
-	use(15)
+	if(!use(15))
+	    to_chat(user, "<span class='warning'>You need at least 15 lengths of cable!</span>
 	var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
 	user.put_in_hands(result)
 	result.color = color 
