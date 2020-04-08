@@ -114,7 +114,7 @@
 	. = ..()
 	if(A.incapacitated(FALSE, TRUE)) //NO STUN
 		return BULLET_ACT_HIT
-	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+	if(CHECK_ALL_MOBILITY(A, MOBILITY_USE|MOBILITY_STAND)) //NO UNABLE TO USE, NO DEFLECTION ON THE FLOOR
 		return BULLET_ACT_HIT
 	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
 		return BULLET_ACT_HIT
@@ -125,6 +125,8 @@
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
 		P.setAngle(rand(0, 360))//SHING
+		A.adjustStaminaLossBuffered (6) //Citadel change to stop infinite bullet sponging as you run away, but it is buffered! 
+										//Also if adjustStaminaLoss ever gets fixed so it isn't being affected by stamina mods like scarps, please adjust by half.
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
 
