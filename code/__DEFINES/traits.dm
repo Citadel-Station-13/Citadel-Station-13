@@ -147,6 +147,7 @@
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
 #define TRAIT_NO_MIDROUND_ANTAG	"no-midround-antag" //can't be turned into an antag by random events
+#define TRAIT_PASSTABLE			"passtable"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -173,6 +174,9 @@
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
+#define INNATE_TRAIT "innate"
+
 
 // item traits
 #define TRAIT_NODROP            "nodrop"
@@ -212,6 +216,7 @@
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 #define TRAIT_NO_INTERNALS		"no-internals"
 #define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
+#define TRAIT_MUTATION_STASIS			"mutation_stasis" //Prevents processed genetics mutations from processing.
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -236,6 +241,7 @@
 #define APHRO_TRAIT "aphro"
 #define BLOODSUCKER_TRAIT "bloodsucker"
 #define CLOTHING_TRAIT "clothing" //used for quirky carrygloves
+#define SHOES_TRAIT "shoes" //inherited from your sweet kicks
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"

@@ -9,6 +9,7 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	threat = 4
 	move_to_delay = 14
 	ranged = 1
 	vision_range = 4
@@ -233,6 +234,7 @@
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
+	threat = 5
 	health = 450
 	maxHealth = 450
 	melee_damage_lower = 20
@@ -283,9 +285,10 @@
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
 			if(mob_species == /datum/species/plasmaman)
-				uniform = /obj/item/clothing/under/plasmaman
-				head = /obj/item/clothing/head/helmet/space/plasmaman
+				uniform = /obj/item/clothing/under/plasmaman/mining
+				head = /obj/item/clothing/head/helmet/space/plasmaman/mining
 				belt = /obj/item/tank/internals/plasmaman/belt
+				mask = /obj/item/clothing/mask/gas/explorer
 			else
 				uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
 				if (prob(4))

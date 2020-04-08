@@ -3,7 +3,7 @@
 	employer = "Donk Corporation"
 	weight = 0
 	chaos = 1
-	cost = 2
+	threat  = 2
 
 /datum/traitor_class/human/assassin/forge_single_objective(datum/antagonist/traitor/T)
 	.=1

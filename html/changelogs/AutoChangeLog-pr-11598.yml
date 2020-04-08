@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed crafting hud icon overlapping the second pocket on 1:1 screen mode."

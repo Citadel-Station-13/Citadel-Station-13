@@ -297,7 +297,8 @@
 				left_part += "<hr><a href='?src=[REF(src)];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
-			  <title>[name]</title>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+				<title>[name] data</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
 				.red {color: #f00;}

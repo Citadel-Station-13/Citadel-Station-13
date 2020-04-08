@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Vampire mesmerize doesn't permanently disable combat mode."

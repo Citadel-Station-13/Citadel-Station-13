@@ -15,7 +15,7 @@ export const BeakerContents = props => {
       )}
       {beakerContents.map(chemical => (
         <Box key={chemical.name} color="label">
-          {chemical.volume} units of {chemical.name}
+          {chemical.volume} units of {chemical.name}, Purity: {chemical.purity}
         </Box>
       ))}
     </Box>

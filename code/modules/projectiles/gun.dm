@@ -41,7 +41,7 @@
 	var/firing = FALSE
 	/// Used in gun-in-mouth execution/suicide and similar, while TRUE nothing should work on this like firing or modification and so on and so forth.
 	var/busy_action = FALSE
-	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
+	var/weapon_weight = WEAPON_LIGHT	//used for inaccuracy and wielding requirements/penalties
 	var/spread = 0						//Spread induced by the gun itself.
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.

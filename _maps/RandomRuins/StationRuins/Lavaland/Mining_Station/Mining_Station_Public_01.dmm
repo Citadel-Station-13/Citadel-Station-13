@@ -154,13 +154,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "cX" = (
-/obj/structure/statue{
-	desc = "A lifelike statue of a horrifying monster.";
-	dir = 8;
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
-	icon_state = "goliath";
-	name = "goliath"
-	},
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "dk" = (
@@ -267,9 +261,13 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eS" = (
-/obj/structure/table,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
+/obj/structure/statue{
+	desc = "A lifelike statue of a horrifying monster.";
+	dir = 8;
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
+	icon_state = "goliath";
+	name = "goliath"
+	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fm" = (
@@ -427,7 +425,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/structure/displaycase,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "hP" = (
@@ -773,7 +770,8 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "nH" = (
-/obj/structure/displaycase,
+/obj/machinery/light,
+/obj/structure/closet/wardrobe/miner,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "nI" = (
@@ -1086,6 +1084,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "re" = (
@@ -1180,9 +1179,6 @@
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = 28
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
@@ -1279,12 +1275,8 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "uG" = (
-/obj/structure/table,
-/obj/item/clothing/glasses/meson,
-/obj/item/storage/bag/ore,
-/obj/item/pickaxe,
-/obj/item/mining_scanner,
-/obj/item/flashlight,
+/obj/structure/ore_box,
+/obj/effect/turf_decal/box,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "uI" = (
@@ -1758,15 +1750,6 @@
 "Cd" = (
 /turf/closed/wall,
 /area/mine/production)
-"Cg" = (
-/obj/structure/table,
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/tank/internals/emergency_oxygen,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "Cj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -1870,7 +1853,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/chair,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Dv" = (
@@ -1880,12 +1862,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
-"DN" = (
-/obj/machinery/computer/shuttle/mining/common{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "Ed" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2028,27 +2004,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp)
-"Hk" = (
-/obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
-	dir = 8;
-	dwidth = 3;
-	height = 7;
-	id = "lavaland_common_away";
-	name = "Mining base public dock";
-	width = 7
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Hm" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Lavaland Shuttle Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "Ho" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -2120,12 +2075,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"If" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Ii" = (
 /obj/structure/table,
@@ -2757,9 +2706,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Pq" = (
@@ -2882,7 +2828,6 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/structure/chair,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Rv" = (
@@ -3397,15 +3342,6 @@
 	network = list("mine")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Zw" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "Lavaland Shuttle Airlock"
-	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ZF" = (
@@ -4330,10 +4266,10 @@ VT
 VT
 VT
 VT
-Lm
-Lm
-Lm
-Lm
+VT
+VT
+VT
+VT
 VT
 VT
 VT
@@ -4386,14 +4322,14 @@ VT
 VT
 VT
 VT
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
+VT
+VT
+VT
+VT
+VT
+VT
+VT
+VT
 VT
 VT
 VT
@@ -4442,15 +4378,15 @@ wz
 VT
 VT
 VT
+VT
+VT
+VT
+VT
+VT
 Lm
 Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
+VT
+VT
 Lm
 VT
 VT
@@ -4499,17 +4435,17 @@ wz
 wz
 VT
 VT
+VT
+VT
 Lm
+VT
+VT
+VT
 Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
+VT
+VT
+VT
+VT
 Lm
 VT
 VT
@@ -4555,18 +4491,18 @@ Lm
 wz
 wz
 Lm
+VT
+VT
+VT
 Lm
 Lm
 Lm
 Lm
 Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
+VT
+VT
+VT
+VT
 VT
 VT
 VT
@@ -4612,6 +4548,8 @@ VT
 VT
 wz
 Lm
+VT
+VT
 Lm
 Lm
 Lm
@@ -4620,10 +4558,8 @@ Lm
 Lm
 Lm
 Lm
-Lm
-Lm
-Lm
-Lm
+VT
+VT
 VT
 VT
 VT
@@ -4669,6 +4605,7 @@ VT
 VT
 Lm
 Lm
+VT
 Lm
 Lm
 Lm
@@ -4678,8 +4615,7 @@ Lm
 Lm
 Lm
 Lm
-Lm
-Lm
+VT
 VT
 VT
 VT
@@ -4725,12 +4661,12 @@ my
 VT
 VT
 VT
+VT
+VT
 Lm
 Lm
-Lm
-Lm
-Lm
-Lm
+VT
+VT
 Lm
 Lm
 Lm
@@ -4786,10 +4722,10 @@ wz
 Lm
 Lm
 Lm
+VT
 Lm
 Lm
 Lm
-Hk
 Lm
 Lm
 Lm
@@ -4843,11 +4779,11 @@ wz
 Lm
 Lm
 Lm
+VT
 Lm
 Lm
-KV
-Zw
-KV
+Lm
+Lm
 Lm
 Lm
 Lm
@@ -4902,9 +4838,9 @@ Lm
 Lm
 Lm
 Lm
-KV
-Ag
-KV
+Lm
+Lm
+Lm
 Lm
 Lm
 VT
@@ -4959,9 +4895,9 @@ VN
 VN
 XX
 VN
-KV
-Hm
-KV
+VN
+VN
+VN
 VT
 VT
 VT
@@ -5013,12 +4949,12 @@ pu
 bn
 VN
 zy
-If
-DN
-If
-FE
+Ag
+Ag
+Ag
+Ag
 qZ
-KV
+VN
 VT
 VT
 VT
@@ -5074,8 +5010,8 @@ Ag
 Ag
 Ag
 Ag
-Ag
-KV
+cX
+VN
 VT
 VT
 VT
@@ -5132,7 +5068,7 @@ uG
 uG
 Ag
 cX
-KV
+VN
 VT
 VT
 VT
@@ -5188,8 +5124,8 @@ KO
 uG
 uG
 Ag
-Ag
-KV
+cX
+VN
 VT
 VT
 VT
@@ -5245,7 +5181,7 @@ RP
 Ag
 Ag
 Ag
-oy
+nH
 VN
 VT
 VT
@@ -5300,8 +5236,8 @@ VN
 Pp
 sx
 eS
-Cg
-nH
+Ag
+Ag
 hH
 VN
 wz

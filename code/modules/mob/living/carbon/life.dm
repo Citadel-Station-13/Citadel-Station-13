@@ -377,9 +377,15 @@
 
 	var/turf/open/miasma_turf = deceasedturf
 
-	var/list/cached_gases = miasma_turf.air.gases
+	var/datum/gas_mixture/stank = new
 
-	cached_gases[/datum/gas/miasma] += 0.1
+	stank.gases[/datum/gas/miasma] = 0.1
+
+	stank.temperature = BODYTEMP_NORMAL
+
+	miasma_turf.assume_air(stank)
+
+	miasma_turf.air_update_turf()
 
 /mob/living/carbon/proc/handle_blood()
 	return

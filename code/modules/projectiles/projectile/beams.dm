@@ -50,7 +50,7 @@
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	damage = 5
+	damage = 12.5
 
 /obj/item/projectile/beam/xray
 	name = "\improper X-ray beam"

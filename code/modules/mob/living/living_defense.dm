@@ -104,13 +104,14 @@
 	return FALSE
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	// Throwingdatum can be null if someone had an accident() while slipping with an item in hand.
 	var/obj/item/I
 	var/throwpower = 30
 	if(isitem(AM))
 		I = AM
 		throwpower = I.throwforce
 	var/impacting_zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-	if(run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, throwingdatum.thrower, impacting_zone) & BLOCK_SUCCESS)
+	if(run_block(AM, throwpower, "\the [AM.name]", ATTACK_TYPE_THROWN, 0, throwingdatum?.thrower, impacting_zone) & BLOCK_SUCCESS)
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
@@ -188,17 +189,6 @@
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user == anchored || !isturf(user.loc))
 		return FALSE
-
-	//pacifist vore check.
-	if(user.pulling && HAS_TRAIT(user, TRAIT_PACIFISM) && user.voremode) //they can only do heals, noisy guts, absorbing (technically not harm)
-		if(ismob(user.pulling))
-			var/mob/P = user.pulling
-			if(src != user)
-				to_chat(user, "<span class='notice'>You can't risk digestion!</span>")
-				return FALSE
-			else
-				user.vore_attack(user, P, user)
-				return
 
 	//normal vore check.
 	if(user.pulling && user.grab_state == GRAB_AGGRESSIVE && user.voremode)

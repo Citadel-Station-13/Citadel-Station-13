@@ -159,6 +159,8 @@
 										if(CHECK_BITFIELD(obj_flags, EMAGGED) && !exploding_hell)
 											exploding_hell  = TRUE
 											explode_EVERYTHING()
+											if(QDELETED(src))
+												return
 										if(mine_sound)
 											switch(rand(1,3))	//Play every time a mine is hit
 												if(1)
@@ -367,10 +369,10 @@
 	var/row_limit = rows-1
 	var/column_limit = columns-1
 	var/mine_limit_v2 = mine_limit
-	if(rows > 11)
-		row_limit = 10
-	if(columns > 11)
-		column_limit = 10
+	if(rows > 21)
+		row_limit = 20
+	if(columns > 21)
+		column_limit = 20
 	if(mine_limit > (rows*columns) * 0.25)
 		mine_limit_v2 = 24
 	message_admins("[key_name_admin(user)] failed an emagged Minesweeper arcade and has unleashed an explosion armageddon of size [row_limit],[column_limit] around [ADMIN_LOOKUPFLW(user.loc)]!")
@@ -378,12 +380,35 @@
 		explosion(loc, 2, 5, 10, 15)	//Thought you could survive by putting as few mines as possible, huh??
 	else
 		explosion(loc, 1, 3, rand(1,5), rand(1,10))
-	for(var/y69=y-row_limit;y69<y+row_limit;y69++)	//Create a shitton of explosions in irl turfs if we lose, it will probably kill us
-		for(var/x69=x-column_limit;x69<x+column_limit;x69++)
-			if(prob(mine_limit_v2))	//Probability of explosion happening, according to how many mines were on the board... up to a limit
-				var/explosionloc
-				explosionloc = locate(y69,x69,z)
-				explosion(explosionloc, 0, rand(1,2),rand(1,5),rand(3,10), adminlog = FALSE)
+	var/list/targets = list()
+	var/cur_y = y - round(row_limit * 0.5, 1)
+	var/starting_row = 1
+	if(cur_y < 1)
+		starting_row -= cur_y - 1
+		cur_y = 1
+	var/start_x = x - round(column_limit * 0.5, 1)
+	var/starting_column = 1
+	if(start_x < 1)
+		starting_column -= start_x - 1
+		start_x = 1
+	for(var/row in starting_row to length(table)) //translate the mines locations into actual turf coordinates.
+		if(!locate(cur_y, start_x, z))
+			break
+		var/cur_x = start_x
+		for(var/column in starting_column to length(table[row]))
+			var/coord_value = table[row][column]
+			if(coord_value == 10 || coord_value == 0) //there is a mine in here.
+				var/turf/T = locate(cur_y, cur_x, z)
+				if(!T)
+					break
+				targets += T
+			cur_x++
+		cur_y++
+	var/num_explosions = 0
+	for(var/T in shuffle(targets)) //Create a shitton of explosions in irl turfs if we lose, it will probably kill us
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/explosion, T, 0, rand(1,2),rand(1,5),rand(3,10), FALSE), 15 * ++num_explosions)
+		if(num_explosions == mine_limit_v2)
+			return
 
 #undef MINESWEEPERIMG
 #undef MINESWEEPER_GAME_MAIN_MENU

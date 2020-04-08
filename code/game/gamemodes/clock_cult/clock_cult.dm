@@ -351,5 +351,5 @@ Credit where due:
 
 /obj/item/paper/servant_primer/oui_getcontent(mob/target)
 	if(!is_servant_of_ratvar(target) && !isobserver(target))
-		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
+		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
 	return ..()

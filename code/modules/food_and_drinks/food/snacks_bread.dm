@@ -189,12 +189,11 @@
 GLOBAL_VAR_INIT(frying_hardmode, TRUE)
 GLOBAL_VAR_INIT(frying_bad_chem_add_volume, TRUE)
 GLOBAL_LIST_INIT(frying_bad_chems, list(
-/datum/reagent/toxin/bad_food = 10,
-/datum/reagent/clf3 = 2,
+/datum/reagent/toxin/bad_food = 3,
 /datum/reagent/drug/aranesp = 2,
-/datum/reagent/blackpowder = 10,
-/datum/reagent/phlogiston = 3,
-/datum/reagent/toxin/cyanide = 3,
+/datum/reagent/toxin = 2,
+/datum/reagent/lithium = 2,
+/datum/reagent/mercury = 2,
 ))
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
@@ -227,8 +226,10 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			var/bad_chem = GLOB.frying_bad_chems[R]
 			var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
 			if(GLOB.frying_bad_chem_add_volume)
-				reagents.maximum_volume += bad_chem_amount
+				reagents.maximum_volume += bad_chem_amount + 2 //Added room for condensed cooking oil
 			reagents.add_reagent(bad_chem, bad_chem_amount)
+			//All fried inedible items also get condensed cooking oil added, which induces minor vomiting and heart damage
+			reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 2)
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(trash)
