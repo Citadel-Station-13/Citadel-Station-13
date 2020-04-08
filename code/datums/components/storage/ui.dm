@@ -84,49 +84,35 @@
 	// do the check for fallback for when someone has too much gamer gear
 	if((MINIMUM_PIXELS_PER_ITEMS * length(contents)) > horizontal_pixels)
 		to_chat(user, "<span class='warning'>[parent] was showed to you in legacy mode due to your items overrunning the three row limit! Consider not carrying too much or bugging a maintainer to raise this limit!</span>")
-		return orient2hud_legacy(user, maxcolumns)
+		return orient2hud_legacy(user, maxcolumns)VO
 	// after this point we are sure we can somehow fit all items with 8 pixels or more into our one row.
 
-
-	// sigh. two loops.
-	var/total = max_volume
-
+	// sigh loopmania time
 	var/used = 0
-
+	// define outside for performance
+	var/volume
 	var/list/volume_by_item = list()
 	var/list/percentage_by_item = list()
-	var/list/percentages = list()
-	// define outside for less lag
-	var/obj/item/I
-	var/volume
 	for(var/obj/item/I in contents)
-		volume = I.get_volume()
-		used += volume_by_item[I] = volume
-		percentages += percentage_by_item[I] = volume
-	// ugh
-	var/min_percent = min(percentages)
+		volume = I.get_volume
+		used += volume
+		volume_by_item[I] = volume
+		percentage_by_item[I] = volume / max_volume
+	var/overrun = FALSE
+	if(used >= (horizontal_pixels + 4))		//2-4 pixel grace zone
+		// congratulations we are now in overrun mode. everything will be crammed to minimum storage pixels.
+		to_chat(user, "<span class='warning'>[parent] rendered in overrun mode due to more items inside than the maximum volume supports.</span>")
+		overrun = TRUE
 
-	var/percentage_metric = max(min_percent,
-
-	var/pixels_needed = (100 / min_percent) * MINIMUM_PIXELS_PER_ITEM
-
-	var/overrunning = pixels_needed > maximum_horizontal_pixels
-
-	var/row = 1
-	var/pixel = 0
-
-	for(var/i in volume_by_item)
+	// define outside for marginal performance boost
+	var/obj/item/I
+	for(var/i in percentage_by_item)
 		I = i
+		var/percent = percentage_by_item[I]
 		if(!ui_item_blocks[I])
 			ui_item_blocks[I] = new /obj/screen/storage(null, src, I)
 		var/obj/screen/storage/volumetric_box/B = ui_item_blocks[I]
-
-		. += B
-		var/pixels_to_use
-		if(!overrunning)
-			pixels_to_use = CEILING(min_percent / percentage_by_item[i], MINIMUM_PIXELS_PER_ITEM)
-		else
-			pixels_to_use = MINIMUM_PIXELS_PER_ITEM		//not enough room to display everything ughh
+		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(MINIMUM_PIXELS_PER_ITEM, FLOOR(horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM))
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 
@@ -137,21 +123,21 @@
 			else
 				pixels_to_use = (horizontal_pixels - pixel)
 		// now, scale the thing
-		var/multiply = pixels_to_use / MINIMUM_PIXELS_PER_ITEM
+		var/multiply = pixels_to_use / VOLUMETRIC_STORAGE_BOX_SIZE
 		B.transform = matrix(multiply, 0, 0, 0, 1, 0)
 		// unfortunately since scaling means expand-from-center.. ugh..
-		var/px_add = 0
-		if(multiply > 1)
-			px_add = (pixels_to_use - MINIMUM_PIXELS_PER_ITEM) * 0.5
-		// not handling multiply < 1, that should never happen.
+		var/px_add = (pixels_to_use - VOLUMETRIC_STORAGE_BOX_SIZE) * 0.5
 		// now, screenloc the thing.
 		var/xshift = FLOOR(pixel / icon_size, 1)
 		var/px = pixel % world.icon_Size
-		B.screen_loc = "[screen_start_x + xshift]:[px],[screen_start_y+rows-1]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x + xshift]:[px + px_add],[screen_start_y+rows-1]:[screen_pixel_y]"
 		pixels += px
 		if(pixels >= horizontal_pixels)
 			row++
+
+		// finally add our things.
 		. += B
+		. += I
 
 	// Then, continuous section.
 	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
