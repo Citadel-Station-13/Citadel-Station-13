@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Near-station nuclear explosions now display the on-station nuke explosion cinematic, consistently with its clearance of the station level and its nuclear victory / total annihilation ending status."
-  - balance: "Nuclear bombs can't be anchored in space areas (not just turfs) anymore, as a quick effortless way to discourage players from anchoring the device on the edge of the map."

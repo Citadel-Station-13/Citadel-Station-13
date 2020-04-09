@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - rscdel: "Null crates are no longer available in cargo!"
