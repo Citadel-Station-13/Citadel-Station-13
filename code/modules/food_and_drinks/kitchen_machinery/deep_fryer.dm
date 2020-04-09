@@ -106,8 +106,8 @@ God bless America.
 			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
 			//setup food quality for item depending on if it's edible or not
 			if(istype(I, /obj/item/reagent_containers/food))
-				/obj/item/reagent_containers/food/original_food = I
-				frying.adjust_food_quality(I.food_quality) //food quality remains unchanged until degree of frying is calculated
+				var/obj/item/reagent_containers/food/original_food = I
+				frying.adjust_food_quality(original_food.food_quality) //food quality remains unchanged until degree of frying is calculated
 			else
 				frying.food_quality = 10 //inedible fried item has low quality
 			icon_state = "fryer_on"
