@@ -449,7 +449,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return FALSE
 
 	if(!skipcharge)
-		if(!charge_check(user))
+		if(!charge_check(user, silent))
 			return FALSE
 
 	if(user.stat && !stat_allowed && !(magic_flags & SPELL_SKIP_STAT))
