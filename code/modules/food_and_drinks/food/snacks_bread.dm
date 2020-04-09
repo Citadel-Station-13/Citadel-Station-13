@@ -185,6 +185,7 @@
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = ""
 	bitesize = 2
+	var/fried_garbage = FALSE //did you really fry a fire extinguisher?
 
 GLOBAL_VAR_INIT(frying_hardmode, TRUE)
 GLOBAL_VAR_INIT(frying_bad_chem_add_volume, TRUE)
@@ -215,21 +216,13 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	item_flags = fried.item_flags
 	obj_flags = fried.obj_flags
 
-	if(istype(fried, /obj/item/reagent_containers/food/snacks))
+	if(istype(fried, /obj/item/reagent_containers/food))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)
 		qdel(fried)
 	else
 		fried.forceMove(src)
 		trash = fried
-		if(!istype(fried, /obj/item/reagent_containers/food) && GLOB.frying_hardmode && GLOB.frying_bad_chems.len)
-			var/R = rand(1, GLOB.frying_bad_chems.len)
-			var/bad_chem = GLOB.frying_bad_chems[R]
-			var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
-			if(GLOB.frying_bad_chem_add_volume)
-				reagents.maximum_volume += bad_chem_amount + 2 //Added room for condensed cooking oil
-			reagents.add_reagent(bad_chem, bad_chem_amount)
-			//All fried inedible items also get condensed cooking oil added, which induces minor vomiting and heart damage
-			reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 2)
+		fried_garbage = TRUE
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(trash)
@@ -237,6 +230,13 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	. = ..()
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/On_Consume(mob/living/eater)
+	if(fried_garbage && GLOB.frying_hardmode && GLOB.frying_bad_chems.len)
+		var/R = rand(1, GLOB.frying_bad_chems.len)
+		var/bad_chem = GLOB.frying_bad_chems[R]
+		var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
+		eater.reagents.add_reagent(bad_chem, bad_chem_amount)
+		//All fried inedible items also get condensed cooking oil added, which induces minor vomiting and heart damage
+		eater.reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 2)
 	if(trash)
 		QDEL_NULL(trash)
 	..()
