@@ -28,8 +28,10 @@
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
+		var/obj/item/reagent_containers/food/food_input = what
 		for(var/i = 0, i < rating_amount, i++)
-			new recipe.output(drop_location())
+			var/obj/item/reagent_containers/food/food_output = new recipe.output(drop_location())
+			food_output.adjust_food_quality(food_input.food_quality) //output quality equals input quality for the food processor
 	if (ismob(what))
 		var/mob/themob = what
 		themob.gib(TRUE,TRUE,TRUE)
