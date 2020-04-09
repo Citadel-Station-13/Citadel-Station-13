@@ -125,7 +125,7 @@
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
 	//CIT CHANGES END HERE
-	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
+	if((user != src) && run_block(I, totitemdamage, "the [I.name]", ATTACK_TYPE_MELEE, I.armour_penetration, user) & BLOCK_SUCCESS)
 		return FALSE
 	send_item_attack_message(I, user)
 	I.do_stagger_action(src, user)

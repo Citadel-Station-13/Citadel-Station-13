@@ -21,6 +21,38 @@
 	var/obj/item/suppressor/S = new(src)
 	install_suppressor(S)
 
+//(reskinnable stetchkin)
+/obj/item/gun/ballistic/automatic/pistol/modular
+	name = "modular pistol"
+	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "cde"
+	can_unsuppress = TRUE
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Default" = "cde",
+						"N-99" = "n99",
+						"Stealth" = "stealthpistol",
+						"HKVP-78" = "vp78",
+						"Luger" = "p08b",
+						"Mk.58" = "secguncomp",
+						"PX4 Storm" = "px4"
+						)
+
+/obj/item/gun/ballistic/automatic/pistol/modular/update_icon()
+	..()
+	if(current_skin)
+		icon_state = "[unique_reskin[current_skin]][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	else
+		icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	if(magazine && suppressed)
+		cut_overlays()
+		add_overlay("[unique_reskin[current_skin]]-magazine-sup")	//Yes, this means the default iconstate can't have a magazine overlay
+	else if (magazine)
+		cut_overlays()
+		add_overlay("[unique_reskin[current_skin]]-magazine")
+	else
+		cut_overlays()
+
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."
@@ -92,3 +124,34 @@
 		to_chat(user, "<span class='notice'>..and falls into view. Whew, that was a close one.</span>")
 		user.dropItemToGround(src)
 
+////////////Anti Tank Pistol////////////
+
+/obj/item/gun/ballistic/automatic/pistol/antitank
+	name = "Anti Tank Pistol"
+	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate your wrist."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "atp"
+	item_state = "pistol"
+	recoil = 4
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	fire_delay = 50
+	burst_size = 1
+	can_suppress = 0
+	w_class = WEIGHT_CLASS_NORMAL
+	actions_types = list()
+	fire_sound = 'sound/weapons/blastcannon.ogg'
+	spread = 20		//damn thing has no rifling.
+
+/obj/item/gun/ballistic/automatic/pistol/antitank/update_icon()
+	..()
+	if(magazine)
+		cut_overlays()
+		add_overlay("atp-mag")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+
+/obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
+	name = "Syndicate Anti Tank Pistol"
+	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate a variety of joints without proper bracing."
+	pin = /obj/item/firing_pin/implant/pindicate

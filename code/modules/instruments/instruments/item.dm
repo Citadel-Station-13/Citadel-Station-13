@@ -1,83 +1,80 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/instrument
 	name = "generic instrument"
-	resistance_flags = FLAMMABLE
 	force = 10
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	icon = 'icons/obj/musician.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/instruments_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/instruments_righthand.dmi'
 	var/datum/song/handheld/song
-	var/instrumentId = "generic"
-	var/instrumentExt = "mid"
-	var/tune_time = 0
-
-/obj/item/instrument/Initialize()
-	. = ..()
-	song = new(instrumentId, src, instrumentExt)
-
-/obj/item/instrument/Destroy()
-	if (tune_time)
-		STOP_PROCESSING(SSobj, src)
-	qdel(song)
-	song = null
-	return ..()
-
-/obj/item/instrument/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return (BRUTELOSS)
+	var/list/allowed_instrument_ids
+	var/tune_time_left = 0
 
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
-	if(mapload)
-		song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
+	song = new(src, allowed_instrument_ids)
+	allowed_instrument_ids = null			//We don't need this clogging memory after it's used.
 
-/obj/item/instrument/attack_self(mob/user)
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 1
-	interact(user)
+/obj/item/instrument/Destroy()
+	QDEL_NULL(song)
+	if(tune_time_left)
+		STOP_PROCESSING(SSprocessing, src)
+	return ..()
 
-/obj/item/instrument/interact(mob/user)
-	ui_interact(user)
+/obj/item/instrument/proc/should_stop_playing(mob/user)
+	return !user.CanReach(src) || !user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)
 
-/obj/item/instrument/ui_interact(mob/user)
-	if(!user)
-		return
-
-	if(!isliving(user) || user.stat || user.restrained() || user.lying)
-		return
-
-	user.set_machine(src)
-	song.interact(user)
-
-/obj/item/instrument/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/musicaltuner))
-		var/mob/living/carbon/human/H = user
-		if (HAS_TRAIT(H, TRAIT_MUSICIAN))
-			if (!tune_time)
-				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
-				tune_time = 300
-				START_PROCESSING(SSobj, src)
-			else
-				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
-		else
-			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
-
-/obj/item/instrument/process()
-	if (tune_time)
+/obj/item/instrument/process(wait)
+	if(is_tuned())
 		if (song.playing)
 			for (var/mob/living/M in song.hearing_mobs)
 				M.dizziness = max(0,M.dizziness-2)
 				M.jitteriness = max(0,M.jitteriness-2)
 				M.confused = max(M.confused-1)
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
-		tune_time--
+		tune_time_left -= wait
 	else
-		if (!tune_time)
-			if (song.playing)
-				loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
-			STOP_PROCESSING(SSobj, src)
+		tune_time_left = 0
+		if (song.playing)
+			loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
+		STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/instrument/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
+
+/obj/item/instrument/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return TRUE
+	interact(user)
+
+/obj/item/instrument/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/musicaltuner))
+		var/mob/living/carbon/human/H = user
+		if (HAS_TRAIT(H, TRAIT_MUSICIAN))
+			if (!is_tuned())
+				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
+				tune_time_left = 600 SECONDS
+				START_PROCESSING(SSprocessing, src)
+			else
+				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
+		else
+			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
+
+/obj/item/instrument/proc/is_tuned()
+	return tune_time_left > 0
+
+/obj/item/instrument/interact(mob/user)
+	ui_interact(user)
+
+/obj/item/instrument/ui_interact(mob/living/user)
+	if(!isliving(user) || user.stat || user.restrained())
+		return
+
+	user.set_machine(src)
+	song.ui_interact(user)
 
 /obj/item/instrument/violin
 	name = "space violin"
@@ -85,7 +82,7 @@
 	icon_state = "violin"
 	item_state = "violin"
 	hitsound = "swing_hit"
-	instrumentId = "violin"
+	allowed_instrument_ids = "violin"
 
 /obj/item/instrument/violin/golden
 	name = "golden violin"
@@ -99,40 +96,20 @@
 	desc = "An advanced electronic synthesizer that can be used as various instruments."
 	icon_state = "synth"
 	item_state = "synth"
-	instrumentId = "piano"
-	instrumentExt = "ogg"
-	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "banjo" = "ogg", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
-	actions_types = list(/datum/action/item_action/synthswitch)
+	allowed_instrument_ids = "piano"
 
-/obj/item/instrument/piano_synth/proc/changeInstrument(name = "piano")
-	song.instrumentDir = name
-	song.instrumentExt = insTypes[name]
-
-/obj/item/instrument/piano_synth/proc/selectInstrument() // Moved here so it can be used by the action and PAI software panel without copypasta
-	var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", song.instrumentDir) as null|anything in insTypes
-	if(!insTypes[chosen])
-		return
-	return changeInstrument(chosen)
-
-/obj/item/instrument/banjo
-	name = "banjo"
-	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
-	icon_state = "banjo"
-	item_state = "banjo"
-	instrumentExt = "ogg"
-	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
-	hitsound = 'sound/weapons/banjoslap.ogg'
-	instrumentId = "banjo"
+/obj/item/instrument/piano_synth/Initialize()
+	. = ..()
+	song.allowed_instrument_ids = get_allowed_instrument_ids()
 
 /obj/item/instrument/guitar
 	name = "guitar"
 	desc = "It's made of wood and has bronze strings."
 	icon_state = "guitar"
 	item_state = "guitar"
-	instrumentExt = "ogg"
 	attack_verb = list("played metal on", "serenaded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
-	instrumentId = "guitar"
+	allowed_instrument_ids = "guitar"
 
 /obj/item/instrument/eguitar
 	name = "electric guitar"
@@ -142,29 +119,28 @@
 	force = 12
 	attack_verb = list("played metal on", "shredded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
-	instrumentId = "eguitar"
-	instrumentExt = "ogg"
+	allowed_instrument_ids = "eguitar"
 
 /obj/item/instrument/glockenspiel
 	name = "glockenspiel"
 	desc = "Smooth metal bars perfect for any marching band."
 	icon_state = "glockenspiel"
 	item_state = "glockenspiel"
-	instrumentId = "glockenspiel"
+	allowed_instrument_ids = "glockenspiel"
 
 /obj/item/instrument/accordion
 	name = "accordion"
 	desc = "Pun-Pun not included."
 	icon_state = "accordion"
 	item_state = "accordion"
-	instrumentId = "accordion"
+	allowed_instrument_ids = "accordion"
 
 /obj/item/instrument/trumpet
 	name = "trumpet"
 	desc = "To announce the arrival of the king!"
 	icon_state = "trumpet"
 	item_state = "trombone"
-	instrumentId = "trombone"
+	allowed_instrument_ids = "trombone"
 
 /obj/item/instrument/trumpet/spectral
 	name = "spectral trumpet"
@@ -172,7 +148,6 @@
 	icon_state = "trumpet"
 	item_state = "trombone"
 	force = 0
-	instrumentId = "trombone"
 	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")
 
 /obj/item/instrument/trumpet/spectral/Initialize()
@@ -188,14 +163,13 @@
 	desc = "This soothing sound will be sure to leave your audience in tears."
 	icon_state = "saxophone"
 	item_state = "saxophone"
-	instrumentId = "saxophone"
+	allowed_instrument_ids = "saxophone"
 
 /obj/item/instrument/saxophone/spectral
 	name = "spectral saxophone"
 	desc = "This spooky sound will be sure to leave mortals in bones."
 	icon_state = "saxophone"
 	item_state = "saxophone"
-	instrumentId = "saxophone"
 	force = 0
 	attack_verb = list("played","jazzed","saxxed","mourned","dooted","spooked")
 
@@ -204,7 +178,7 @@
 	AddComponent(/datum/component/spooky)
 
 /obj/item/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
-	playsound (loc, 'sound/instruments/saxophone/En4.mid', 100,1,-1)
+	playsound(loc, 'sound/instruments/saxophone/En4.mid', 100,1,-1)
 	..()
 
 /obj/item/instrument/trombone
@@ -212,12 +186,11 @@
 	desc = "How can any pool table ever hope to compete?"
 	icon_state = "trombone"
 	item_state = "trombone"
-	instrumentId = "trombone"
+	allowed_instrument_ids = "trombone"
 
 /obj/item/instrument/trombone/spectral
 	name = "spectral trombone"
 	desc = "A skeleton's favorite instrument. Apply directly on the mortals."
-	instrumentId = "trombone"
 	icon_state = "trombone"
 	item_state = "trombone"
 	force = 0
@@ -237,14 +210,14 @@
 	force = 5
 	icon_state = "recorder"
 	item_state = "recorder"
-	instrumentId = "recorder"
+	allowed_instrument_ids = "recorder"
 
 /obj/item/instrument/harmonica
 	name = "harmonica"
 	desc = "For when you get a bad case of the space blues."
 	icon_state = "harmonica"
 	item_state = "harmonica"
-	instrumentId = "harmonica"
+	allowed_instrument_ids = "harmonica"
 	slot_flags = ITEM_SLOT_MASK
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -271,13 +244,21 @@
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	attack_verb = list("beautifully honks")
-	instrumentId = "bikehorn"
-	instrumentExt = "ogg"
+	allowed_instrument_ids = "bikehorn"
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
+
+/obj/item/instrument/banjo
+	name = "banjo"
+	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
+	icon_state = "banjo"
+	item_state = "banjo"
+	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
+	hitsound = 'sound/weapons/banjoslap.ogg'
+	allowed_instrument_ids = "banjo"
 
 /obj/item/musicaltuner
 	name = "musical tuner"

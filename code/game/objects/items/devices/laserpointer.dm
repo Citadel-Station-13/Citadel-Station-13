@@ -18,7 +18,6 @@
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
-
 /obj/item/laser_pointer/red
 	pointer_icon_state = "red_laser"
 /obj/item/laser_pointer/green
@@ -27,6 +26,9 @@
 	pointer_icon_state = "blue_laser"
 /obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
+
+/obj/item/laser_pointer/blue/handmade
+	diode = null
 
 /obj/item/laser_pointer/New()
 	..()

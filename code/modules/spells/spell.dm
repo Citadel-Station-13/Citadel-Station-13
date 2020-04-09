@@ -436,12 +436,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(magic_flags & SPELL_SKIP_ALL_REQS)
 		return TRUE
 
-	if(player_lock && (!user.mind || !(src in user.mind.spell_list)))
+	if(player_lock ? (!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list)) : !(src in user.mob_spell_list))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
-		return FALSE
-
-	if(!(src in user.mob_spell_list))
 		return FALSE
 
 	if(!centcom_cancast && !(magic_flags & SPELL_SKIP_CENTCOM)) //Certain spells are not allowed on the centcom zlevel
@@ -486,7 +483,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				to_chat(L, "<span class='notice'>You can't get the words out!</span>")
 			return FALSE
 
-	if(!(magic_flags & SPELL_SKIP_MOBTYPE) && ((mobs_whitelist && !mobs_whitelist[user]) || (mobs_blacklist && mobs_blacklist[user])))
+	if(!(magic_flags & SPELL_SKIP_MOBTYPE) && ((mobs_whitelist && !mobs_whitelist[user.type]) || (mobs_blacklist && mobs_blacklist[user.type])))
 		if(!silent)
 			to_chat(user, "<span class='notice'>This spell can't be casted in this current form!</span>")
 		return FALSE

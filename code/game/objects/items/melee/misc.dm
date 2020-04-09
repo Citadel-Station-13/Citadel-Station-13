@@ -2,12 +2,11 @@
 	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
-	if(target.check_block())
+	if(target.check_martial_melee_block())
 		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
 		user.Stun(40)
 		return TRUE
-
 
 /obj/item/melee/chainofcommand
 	name = "chain of command"
@@ -75,9 +74,9 @@
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
 	AddElement(/datum/element/sword_point)
 
-/obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+/obj/item/melee/sabre/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type & ATTACK_TYPE_PROJECTILE)		// Don't bring a sword to a gunfight.
+		return BLOCK_NONE
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/component/storage/S)
@@ -165,8 +164,8 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 65, 0)
 
-/obj/item/melee/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
+/obj/item/melee/rapier/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type == ATTACK_TYPE_PROJECTILE)
 		final_block_chance = 0
 	return ..()
 
@@ -305,7 +304,7 @@
 			return
 	else
 		if(cooldown_check < world.time)
-			if(target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+			if(target.run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
 			if(ishuman(target))
