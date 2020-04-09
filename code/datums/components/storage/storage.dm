@@ -88,9 +88,6 @@
 		max_volume = AUTO_SCALE_STORAGE_VOLUME(max_w_class, max_items)
 	if(master)
 		change_master(master)
-	boxes = new(null, src)
-	closer = new(null, src)
-	orient2hud()
 
 	RegisterSignal(parent, COMSIG_CONTAINS_STORAGE, .proc/on_check)
 	RegisterSignal(parent, COMSIG_IS_STORAGE_LOCKED, .proc/check_locked)

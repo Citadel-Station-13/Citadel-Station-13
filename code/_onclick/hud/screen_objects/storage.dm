@@ -37,7 +37,7 @@
 
 /obj/screen/storage/close/Click()
 	var/datum/component/storage/S = master
-	S.hide_from(usr)
+	S.ui_hide(usr)
 	return TRUE
 
 /obj/screen/storage/left

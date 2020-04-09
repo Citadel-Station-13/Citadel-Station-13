@@ -39,9 +39,9 @@
 	// Then orient the actual items.
 	var/cx = screen_start_x
 	var/cy = screen_start_y
-	if(islist(numerical_display_contents))
-		for(var/type in numerical_display_contents)
-			var/datum/numbered_display/ND = numerical_display_contents[type]
+	if(islist(numbered_contents))
+		for(var/type in numbered_contents)
+			var/datum/numbered_display/ND = numbered_contents[type]
 			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			ND.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
@@ -82,7 +82,7 @@
 
 	var/horizontal_pixels = maxcolumns * world.icon_size
 	// do the check for fallback for when someone has too much gamer gear
-	if((MINIMUM_PIXELS_PER_ITEMS * length(contents)) > horizontal_pixels)
+	if((MINIMUM_PIXELS_PER_ITEM * length(contents)) > horizontal_pixels)
 		to_chat(user, "<span class='warning'>[parent] was showed to you in legacy mode due to your items overrunning the three row limit! Consider not carrying too much or bugging a maintainer to raise this limit!</span>")
 		return orient2hud_legacy(user, maxcolumns)
 	// after this point we are sure we can somehow fit all items with 8 pixels or more into our one row.
@@ -94,7 +94,7 @@
 	var/list/volume_by_item = list()
 	var/list/percentage_by_item = list()
 	for(var/obj/item/I in contents)
-		volume = I.get_volume
+		volume = I.get_w_volume()
 		used += volume
 		volume_by_item[I] = volume
 		percentage_by_item[I] = volume / max_volume
@@ -117,20 +117,14 @@
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 
-		// uh oh, increment row or clamp.
-		if((horizontal_pixels - pixel) < pixels_to_use)
-			if(!pixels_to_use)
-				row++
-			else
-				pixels_to_use = (horizontal_pixels - pixel)
 		// now, scale the thing
 		var/multiply = pixels_to_use / VOLUMETRIC_STORAGE_BOX_SIZE
 		B.transform = matrix(multiply, 0, 0, 0, 1, 0)
 		// unfortunately since scaling means expand-from-center.. ugh..
 		var/px_add = (pixels_to_use - VOLUMETRIC_STORAGE_BOX_SIZE) * 0.5
 		// now, screenloc the thing.
-		var/xshift = FLOOR(pixel / icon_size, 1)
-		var/px = pixel % world.icon_Size
+		var/xshift = FLOOR(pixel / world.icon_size, 1)
+		var/px = pixel % world.icon_size
 		B.screen_loc = I.screen_loc = "[screen_start_x + xshift]:[px + px_add],[screen_start_y+rows-1]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
 		pixel += pixels_to_use
@@ -215,7 +209,7 @@
   */
 /datum/component/storage/proc/volumetric_ui()
 	var/atom/real_location = real_location()
-	return (storage_flags & STORAGE_LIMIT_VOLUME) && (length(real_location.contents) <= MAXIMUM_VOLUMETRIC_OBJECTS) && !display_numeric_stacking
+	return (storage_flags & STORAGE_LIMIT_VOLUME) && (length(real_location.contents) <= MAXIMUM_VOLUMETRIC_ITEMS) && !display_numerical_stacking
 
 /**
   * Gets the ui item objects to ui_hide.
