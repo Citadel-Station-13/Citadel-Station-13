@@ -106,6 +106,7 @@
 
 	// define outside for marginal performance boost
 	var/obj/item/I
+	var/pixel = 0
 	for(var/i in percentage_by_item)
 		I = i
 		var/percent = percentage_by_item[I]
@@ -131,6 +132,8 @@
 		var/xshift = FLOOR(pixel / icon_size, 1)
 		var/px = pixel % world.icon_Size
 		B.screen_loc = I.screen_loc = "[screen_start_x + xshift]:[px + px_add],[screen_start_y+rows-1]:[screen_pixel_y]"
+		// add the used pixels to pixel after we place the object
+		pixel += pixels_to_use
 
 		// finally add our things.
 		. += B

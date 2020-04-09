@@ -327,7 +327,7 @@
 	if(check_locked())
 		close_all()
 
-/datui_um/component/storage/proc/close(mob/M)
+/datum/component/storage/proc/close(mob/M)
 	ui_hide(M)
 
 /datum/component/storage/proc/close_all()
