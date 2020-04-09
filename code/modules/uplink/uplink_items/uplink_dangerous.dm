@@ -9,9 +9,9 @@
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+	desc = "A sleek box containing a small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines. The handgun is compatible \
 			with suppressors."
-	item = /obj/item/gun/ballistic/automatic/pistol
+	item = /obj/item/storage/box/syndie_kit/pistol
 	cost = 7
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
