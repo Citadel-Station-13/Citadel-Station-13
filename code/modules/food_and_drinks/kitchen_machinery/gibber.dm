@@ -185,7 +185,6 @@
 	for (var/i=1 to meat_produced)
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.food_quality = meat_quality
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
@@ -211,6 +210,7 @@
 		skin.forceMove(loc)
 		skin.throw_at(pick(nearby_turfs),meat_produced,3)
 	for (var/i=1 to meat_produced)
+		allmeat[i].adjust_food_quality(meat_quality)
 		var/obj/item/meatslab = allmeat[i]
 		meatslab.forceMove(loc)
 		meatslab.throw_at(pick(nearby_turfs),i,3)

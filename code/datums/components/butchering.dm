@@ -75,6 +75,7 @@
 	var/turf/T = meat.drop_location()
 	var/final_effectiveness = effectiveness - meat.butcher_difficulty
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
+	var/list/butchered_items = list()
 	for(var/V in meat.butcher_results)
 		var/obj/bones = V
 		var/amount = meat.butcher_results[bones]
@@ -86,20 +87,21 @@
 				if(butcher)
 					to_chat(butcher, "<span class='info'>You harvest some extra [initial(bones.name)] from [meat]!</span>")
 				for(var/i in 1 to 2)
-					var/butcher_item = new bones (T)
-					if(istype(butcher_item, /obj/item/reagent_containers/food))
-						var/obj/item/reagent_containers/food/butcher_food = butcher_item
-						butcher_food.adjust_food_quality(meat_quality)
+					butchered_items += new bones (T)
 
 			else
-				new bones (T)
+				butchered_items += new bones (T)
 		meat.butcher_results.Remove(bones) //in case you want to, say, have it drop its results on gib
 	for(var/V in meat.guaranteed_butcher_results)
 		var/obj/sinew = V
 		var/amount = meat.guaranteed_butcher_results[sinew]
 		for(var/i in 1 to amount)
-			new sinew (T)
+			butchered_items += new sinew (T)
 		meat.guaranteed_butcher_results.Remove(sinew)
+	for(var/butchered_item in butchered_items)
+		if(istype(butchered_item, /obj/item/reagent_containers/food))
+			var/obj/item/reagent_containers/food/butchered_meat = butchered_item
+			butchered_meat.food_quality = meat_quality
 	if(butcher)
 		meat.visible_message("<span class='notice'>[butcher] butchers [meat].</span>")
 	ButcherEffects(meat)
