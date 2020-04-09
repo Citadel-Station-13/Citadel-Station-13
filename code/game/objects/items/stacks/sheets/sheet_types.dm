@@ -375,6 +375,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("black gloves", /obj/item/clothing/gloves/color/black, 3), \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
+	new/datum/stack_recipe("padded floor tile", /obj/item/stack/tile/padded, 1), \
 	null, \
 	))
 
