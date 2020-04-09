@@ -56558,7 +56558,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/structure/toilet{
+/obj/structure/toilet/secret/prison{
 	pixel_y = 16
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -56908,7 +56908,7 @@
 /area/hallway/primary/central)
 "bKT" = (
 /obj/effect/turf_decal/box,
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/structure/mirror{
@@ -56941,7 +56941,7 @@
 /area/crew_quarters/toilet/restrooms)
 "bKU" = (
 /obj/effect/turf_decal/box,
-/obj/structure/toilet{
+//obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/structure/mirror{
@@ -59908,7 +59908,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 16
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -62988,7 +62988,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 16
 	},
 /obj/effect/turf_decal/tile/neutral{
