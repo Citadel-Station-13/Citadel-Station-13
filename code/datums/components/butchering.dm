@@ -69,6 +69,9 @@
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
+	var/meat_quality = 30 + (bonus_modifier/10) //increases through quality of butchering tool, and through if it was butchered in the kitchen or not
+	if(istype(get_area(butcher), /area/crew_quarters/kitchen))
+		meat_quality = meat_quality + 20
 	var/turf/T = meat.drop_location()
 	var/final_effectiveness = effectiveness - meat.butcher_difficulty
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
@@ -83,7 +86,11 @@
 				if(butcher)
 					to_chat(butcher, "<span class='info'>You harvest some extra [initial(bones.name)] from [meat]!</span>")
 				for(var/i in 1 to 2)
-					new bones (T)
+					var/butcher_item = new bones (T)
+					if(istype(butcher_item, /obj/item/reagent_containers/food))
+						var/obj/item/reagent_containers/food/butcher_food = butcher_item
+						butcher_food.adjust_food_quality(meat_quality)
+
 			else
 				new bones (T)
 		meat.butcher_results.Remove(bones) //in case you want to, say, have it drop its results on gib
