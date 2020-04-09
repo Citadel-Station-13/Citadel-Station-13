@@ -518,6 +518,6 @@
 		/obj/item/gun/ballistic/automatic/toy/pistol = 5,
 		/obj/item/firing_pin = 5,
 		/obj/item/grenade/empgrenade = 15,
-		/obj/item/clothing/gloves/combat = 10,
+		/obj/item/clothing/gloves/tackler/combat/insulated = 10,
 		/obj/item/clothing/shoes/sneakers/noslip = 10
 		)

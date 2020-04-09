@@ -110,7 +110,7 @@
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
-		if(hurt)
+		if(hurt && !GetComponent(/datum/component/tackler))
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
 			victim.DefaultCombatKnockdown(20)
