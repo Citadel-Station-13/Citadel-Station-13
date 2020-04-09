@@ -1,0 +1,103 @@
+"aa" = (/obj/structure/lattice,/turf/open/space/basic,/area/ruin/space/has_grav/carphunters)
+"ab" = (/turf/open/space/basic,/area/space)
+"ac" = (/obj/machinery/porta_turret/syndicate/pod{dir = 9; faction = list("pirate")},/turf/closed/wall/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"ad" = (/turf/closed/wall/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"ae" = (/obj/effect/spawner/structure/window/plastitanium,/turf/closed/wall/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"af" = (/obj/machinery/porta_turret/syndicate/pod,/turf/closed/wall/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"ag" = (/obj/effect/spawner/structure/window/plastitanium,/obj/structure/barricade/wooden/crude,/turf/closed/wall/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"ah" = (/obj/machinery/porta_turret/syndicate/pod{dir = 5; faction = list("pirate")},/turf/closed/wall/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"ai" = (/obj/structure/lattice/catwalk,/turf/open/space/basic,/area/ruin/space/has_grav/carphunters)
+"aj" = (/obj/machinery/space_heater,/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"ak" = (/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"al" = (/obj/structure/bed,/obj/item/toy/plush/carpplushie/dehy_carp,/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"am" = (/obj/structure/bed,/mob/living/simple_animal/hostile/shark{damage_coeff = list("brute" = 0.5, "fire" = 1, "tox" = 1, "clone" = 1, "stamina" = 0, "oxy" = 1); health = 375; loot = list(/obj/item/gun/ballistic/automatic/speargun,/obj/item/ammo_casing/caseless/magspear); maxHealth = 375; name = "Grate White Carp"},/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"an" = (/obj/structure/bed,/mob/living/simple_animal/hostile/carp,/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"ao" = (/obj/machinery/airalarm/all_access{dir = 1; pixel_y = -24},/obj/machinery/space_heater,/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"ap" = (/obj/machinery/airalarm/all_access{dir = 1; pixel_y = -24},/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"aq" = (/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"ar" = (/obj/structure/bed,/obj/item/bedsheet/brown,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"as" = (/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"at" = (/obj/structure/closet/firecloset/full,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"au" = (/obj/structure/table/reinforced,/obj/item/export_scanner,/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"av" = (/obj/machinery/recharger,/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aw" = (/obj/machinery/computer/bounty,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"ax" = (/obj/machinery/porta_turret/syndicate/pod{dir = 10; faction = list("pirate")},/turf/closed/wall/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"ay" = (/obj/machinery/door/airlock/hatch,/obj/structure/fans/tiny,/turf/open/floor/plasteel/stairs,/area/ruin/space/has_grav/carphunters)
+"az" = (/obj/machinery/door/airlock/hatch,/obj/structure/fans/tiny,/obj/structure/barricade/wooden/crude,/turf/open/floor/plasteel/stairs,/area/ruin/space/has_grav/carphunters)
+"aA" = (/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aB" = (/obj/machinery/computer{desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages."; dir = 8; name = "Broken Computer"},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aC" = (/obj/structure/chair/office,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aD" = (/obj/structure/closet/crate/freezer,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aE" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aF" = (/obj/machinery/airalarm/all_access{dir = 8; pixel_x = 24},/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aG" = (/obj/machinery/sleeper/syndie,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aH" = (/obj/item/reagent_containers/food/drinks/beer/light,/obj/structure/chair/office/dark{dir = 4},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aI" = (/obj/structure/closet/crate/freezer,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aJ" = (/obj/item/export_scanner,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aK" = (/obj/structure/closet/crate/freezer,/obj/item/reagent_containers/food/snacks/carpmeat,/obj/item/reagent_containers/food/snacks/carpmeat,/obj/item/reagent_containers/food/snacks/carpmeat,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aL" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aM" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aN" = (/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aO" = (/obj/structure/safe/floor,/obj/item/ship_in_a_bottle,/obj/item/gun/ballistic/automatic/speargun,/obj/item/ammo_casing/caseless/magspear,/obj/item/ammo_casing/caseless/magspear,/obj/item/ammo_casing/caseless/magspear,/obj/item/ammo_casing/caseless/magspear,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aP" = (/mob/living/simple_animal/hostile/pirate/ranged{desc = "Has a bounty for YOUR head!"; name = "Carp Hunter"},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aQ" = (/obj/structure/closet/crate/freezer,/obj/item/reagent_containers/food/drinks/beer/light,/obj/item/reagent_containers/food/drinks/beer/light,/obj/item/reagent_containers/food/drinks/beer/light,/obj/item/reagent_containers/food/drinks/beer/light,/obj/item/reagent_containers/food/drinks/beer/light,/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aR" = (/obj/item/reagent_containers/food/drinks/beer/light,/obj/structure/chair/office{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aS" = (/obj/structure/closet/crate/freezer,/obj/item/reagent_containers/food/snacks/carpmeat,/obj/item/reagent_containers/food/snacks/carpmeat,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aT" = (/obj/structure/closet/crate/freezer,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/obj/effect/spawner/lootdrop/mre,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aU" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/stairs,/area/ruin/space/has_grav/carphunters)
+"aV" = (/obj/structure/closet/crate/freezer,/obj/item/reagent_containers/food/snacks/carpmeat,/obj/item/reagent_containers/food/snacks/carpmeat,/obj/item/reagent_containers/food/snacks/carpmeat,/obj/item/reagent_containers/food/snacks/carpmeat,/obj/item/reagent_containers/food/snacks/carpmeat,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+"aW" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aX" = (/obj/machinery/recharger,/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aY" = (/obj/machinery/computer/scan_consolenew{dir = 1},/turf/open/floor/plasteel/dark,/area/ruin/space/has_grav/carphunters)
+"aZ" = (/obj/machinery/shower,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"ba" = (/obj/machinery/airalarm/all_access{dir = 8; pixel_x = 24},/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bb" = (/obj/effect/decal/cleanable/blood/gibs,/mob/living/simple_animal/hostile/carp{health = 0},/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bc" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bd" = (/obj/effect/decal/cleanable/blood/old,/obj/item/reagent_containers/food/snacks/carpmeat,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"be" = (/obj/structure/table/optable,/obj/effect/decal/cleanable/blood/innards,/obj/item/scalpel/advanced,/obj/item/reagent_containers/food/snacks/carpmeat,/mob/living/simple_animal/hostile/carp{health = 0},/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bf" = (/obj/machinery/gibber/autogibber,/obj/item/reagent_containers/food/snacks/carpmeat,/obj/item/reagent_containers/food/snacks/carpmeat,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bg" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/cleanable/blood/innards,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bh" = (/obj/item/reagent_containers/food/snacks/carpmeat,/mob/living/simple_animal/hostile/carp{health = 0},/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bi" = (/obj/machinery/airalarm/all_access{dir = 8; pixel_x = 24},/obj/structure/closet/emcloset,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bj" = (/obj/machinery/suit_storage_unit/pirate,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bk" = (/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bl" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bm" = (/mob/living/simple_animal/hostile/pirate/melee{desc = "Has a bounty for YOUR head!"; name = "Carp Hunter"},/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bn" = (/obj/effect/decal/cleanable/blood/innards,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bo" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/freezer,/area/ruin/space/has_grav/carphunters)
+"bp" = (/obj/machinery/power/smes{charge = 5e+006},/obj/effect/turf_decal/stripes/line{dir = 5},/obj/structure/cable{icon_state = "0-4"},/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"bq" = (/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"br" = (/obj/machinery/power/apc{pixel_y = 24},/obj/structure/cable{icon_state = "0-8"},/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"bs" = (/obj/machinery/door/airlock/hatch,/obj/structure/fans/tiny,/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plasteel/stairs,/area/ruin/space/has_grav/carphunters)
+"bt" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable{icon_state = "0-2"},/obj/structure/closet/crate,/obj/item/stack/sheet/metal/twenty,/obj/item/stack/sheet/glass{amount = 10},/obj/item/storage/toolbox/mechanical,/obj/item/flashlight{pixel_x = 3; pixel_y = 3},/obj/item/stack/sheet/mineral/plasma{amount = 20},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"bu" = (/obj/machinery/airalarm/all_access{dir = 8; pixel_x = 24},/obj/machinery/suit_storage_unit/pirate,/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"bv" = (/obj/effect/spawner/structure/window/plastitanium,/turf/open/space/basic,/area/ruin/space/has_grav/carphunters)
+"bw" = (/obj/structure/cable,/obj/machinery/power/port_gen/pacman{anchored = 1},/obj/item/wrench,/obj/effect/turf_decal/stripes/line{dir = 6},/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"bx" = (/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"by" = (/obj/item/reagent_containers/food/drinks/beer/light,/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"bz" = (/mob/living/simple_animal/hostile/pirate/ranged{desc = "Has a bounty for YOUR head!"; name = "Carp Hunter"},/turf/open/floor/padded,/area/ruin/space/has_grav/carphunters)
+"bA" = (/obj/structure/lattice,/turf/open/space/basic,/area/space)
+"bB" = (/obj/machinery/porta_turret/syndicate/pod{dir = 6; faction = list("pirate")},/turf/closed/wall/mineral/plastitanium,/area/ruin/space/has_grav/carphunters)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababab
+aaacadaeadafadagadafadaeadahaaabababababababababababababab
+aiadajajajadakakakadakakakadaaaaaaaaaaaaaaaaaaaaaaaaaaabab
+aiadajalajadakamakadakanakadadadaeaeaeadadafadaeaeaeaaaaab
+aiadajakaoadapakakadapakakadaqarasaraqasataeauavawaeaeaaaa
+aiaxadayadadadazadadadayadadasaqasasasasadadadaAaAaBaeaaab
+aiadaCasasaDasasasasasasaEadasaraqarasaFadaGadaAaHaBaeaaab
+aiadasaIasasasaJaKasaqasasaLasasasasasasaMaNaMaAaOaBaeaaab
+aiadasasaPasaKasasasasasasaLasaqasaPasaQadaGadaAaHaBaeaaab
+aiadaRasasasasasasaSasasaEadaIasasasasaTadadadaAaAaBaeaaaa
+aiacadaUadaeaeaUaeaeaUaeadadaIaVaVasasasataeaWaXaYaeaeaaab
+aiadaZbaadbbbcbdbebfbgbhbiadadaeaeadadaUadadadaeaeaeaaabab
+aaadbjbkadblbbbmbcbnbhbcboadaaaaaaadbpbqbradaaaaaaaaaaabab
+aaaxadayadbsadadayadadayadaxaaabaaadbtakbuadaaabababababab
+aaaaaaaiaaaiaaaaaiaaaaaiaaaaaaabaabvbwakbxbvaaabababababab
+ababbAaibAaibAbAaibAbAaibAabababaabvbybzbxbvaaabababababab
+ababbAabbAabbAbAabbAbAabbAbAbAbAaaaxbvbvbvbBaaabababababab
+ababbAabbAabbAbAabbAbAabbAabababaaaaaaaaaaaaaaabababababab
+abababababababababababababababababbAabababbAababababababab
+abababababababababababababababababbAabababbAababababababab
+"}

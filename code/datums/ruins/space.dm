@@ -391,3 +391,9 @@
 	suffix = "roid10.dmm"
 	name = "Maze Roid"
 	description = "Mineral asteroid. Ft. Brief maze."
+
+/datum/map_template/ruin/space/carp_hunter
+	id = "carp_hunter"
+	suffix = "carp_hunter.dmm"
+	name = "Carp Hunters"
+	description = "A small base in space that is used by outlaws to hunt carps for deydration and exports of the exotic meat."

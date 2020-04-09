@@ -52,8 +52,6 @@
 	name = "Bridge"
 	icon_state = "bridge"
 
-
-
 /area/ruin/space/has_grav/powered/dinner_for_two
 	name = "Dinner for Two"
 
@@ -128,9 +126,6 @@
 	name = "Hotel Staff Room"
 	icon_state = "crew_quarters"
 
-
-
-
 //Ruin of Derelict Oupost
 
 /area/ruin/space/has_grav/derelictoutpost
@@ -153,7 +148,6 @@
 	name = "Derelict Outpost Docked Ship"
 	icon_state = "red"
 
-
 //Ruin of Space Bar
 
 /area/ruin/space/has_grav/powered/spacebar
@@ -166,13 +160,11 @@
 	name = "Turreted Outpost"
 	icon_state = "red"
 
-
 //Ruin of old teleporter
 
 /area/ruin/space/oldteleporter
 	name = "Old teleporter"
 	icon_state = "teleporter"
-
 
 //Ruin of mech transport
 
@@ -180,12 +172,10 @@
 	name = "Mech Transport"
 	icon_state = "green"
 
-
 //Ruin of gas the lizard
 
 /area/ruin/space/has_grav/gasthelizard
 	name = "Gas the lizard"
-
 
 //Ruin of Deep Storage
 
@@ -225,13 +215,11 @@
 	name = "Deep Storage Recycler"
 	icon_state = "storage"
 
-
 //Ruin of Abandoned Zoo
 
 /area/ruin/space/has_grav/abandonedzoo
 	name = "Abandoned Zoo"
 	icon_state = "green"
-
 
 //Ruin of ancient Space Station
 
@@ -409,7 +397,6 @@
 	power_light = FALSE
 	power_environ = FALSE
 
-
 //DJSTATION
 
 /area/ruin/space/djstation
@@ -422,7 +409,6 @@
 	name = "DJ Station Solars"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
-
 
 //ABANDONED TELEPORTER
 
@@ -451,14 +437,12 @@
 	name = "Bridge"
 	icon_state = "bridge"
 
-
 //ABANDONED BOX WHITESHIP
 
 /area/ruin/space/has_grav/whiteship/box
 
 	name = "Abandoned Ship"
 	icon_state = "red"
-
 
 //SYNDICATE LISTENING POST STATION
 
@@ -473,4 +457,10 @@
 // Abductor Replication Lab
 /area/ruin/space/has_grav/powered/advancedlab
 	name = "Abductor Replication Lab"
+	icon_state = "yellow"
+
+//Ruin of Carp Hunters
+
+/area/ruin/space/has_grav/carphunters
+	name = "Carp Hunter Base"
 	icon_state = "yellow"
