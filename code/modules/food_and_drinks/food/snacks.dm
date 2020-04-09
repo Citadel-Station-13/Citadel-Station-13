@@ -153,6 +153,12 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
+	if(food_quality >= 70)
+		. += "It is of a high quality."
+	else
+		if(food_quality <= 30)
+			. += "It is of a low quality."
+
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
@@ -161,13 +167,6 @@ All foods are distributed among various categories. Use common sense.
 		. += "[src] was bitten [bitecount] times!"
 	else
 		. += "[src] was bitten multiple times!"
-
-	//examine text for quality
-	if(food_quality >= 70)
-		. += "It is of a high quality."
-	else
-		if(food_quality <= 30)
-			. += "It is of a low quality."
 
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
