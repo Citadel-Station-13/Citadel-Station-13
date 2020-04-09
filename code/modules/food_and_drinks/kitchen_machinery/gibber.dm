@@ -184,6 +184,7 @@
 
 	for (var/i=1 to meat_produced)
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
+		newmeat.adjust_food_quality(meat_quality)
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
@@ -210,7 +211,6 @@
 		skin.forceMove(loc)
 		skin.throw_at(pick(nearby_turfs),meat_produced,3)
 	for (var/i=1 to meat_produced)
-		allmeat[i].adjust_food_quality(meat_quality)
 		var/obj/item/meatslab = allmeat[i]
 		meatslab.forceMove(loc)
 		meatslab.throw_at(pick(nearby_turfs),i,3)
