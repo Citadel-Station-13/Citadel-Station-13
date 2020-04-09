@@ -783,8 +783,8 @@
 		var/obj/item/reagent_containers/food/splashed_food = O
 		splashed_food.adjust_food_quality(100)
 		// if it's a customisable food, we need to edit its total quality too, to prevent its quality resetting from adding more ingredients!
-		if(istype(O, obj/item/reagent_containers/food/customizable))
-			var/obj/item/reagent_containers/food/customizable/splashed_custom_food = O
+		if(istype(O, /obj/item/reagent_containers/food/snacks/customizable))
+			var/obj/item/reagent_containers/food/snacks/customizable/splashed_custom_food = O
 			splashed_custom_food.total_quality += 10000
 r
 /datum/reagent/consumable/char
