@@ -19,6 +19,7 @@
 	var/broken = 0 // 0, 1 or 2 // How broken is it???
 	var/max_n_of_items = 10
 	var/efficiency = 0
+	var/quality_increase = 5 // how much do we increase the quality of microwaved items
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
@@ -48,6 +49,7 @@
 		efficiency += M.rating
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		max_n_of_items = 10 * M.rating
+		quality_increase = M.rating * 5
 		break
 
 /obj/machinery/microwave/examine(mob/user)
@@ -308,7 +310,7 @@
 
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
-		O.microwave_act(src)
+		O.microwave_act(src, quality_increase)
 		if(O.custom_materials?.len)
 			metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
