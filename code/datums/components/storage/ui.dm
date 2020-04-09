@@ -131,21 +131,18 @@
 		var/xshift = FLOOR(pixel / icon_size, 1)
 		var/px = pixel % world.icon_Size
 		B.screen_loc = I.screen_loc = "[screen_start_x + xshift]:[px + px_add],[screen_start_y+rows-1]:[screen_pixel_y]"
-		pixels += px
-		if(pixels >= horizontal_pixels)
-			row++
 
 		// finally add our things.
 		. += B
 		. += I
 
 	// Then, continuous section.
-	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
+	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 	. += ui_continuous
 	// Then, left and right.
-	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x]:[screen_pixel_x - 2],[screen_start_y+rows-1]:[screen_pixel_y]"
+	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y]"
 	. += ui_left
-	ui_right.screen_loc = "[screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y+rows-1]:[screen_pixel_y]"
+	ui_right.screen_loc = "[screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y]"
 	. += ui_right
 	// Then, closer.
 	closer.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"

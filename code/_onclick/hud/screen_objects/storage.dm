@@ -40,7 +40,17 @@
 	S.hide_from(usr)
 	return TRUE
 
+/obj/screen/storage/left
+	icon_state = "storage_start"
+
+/obj/screen/storage/right
+	icon_state = "storage_end"
+
+/obj/screen/storage/continuous
+	icon_state = "storage_continue"
+
 /obj/screen/storage/volumetric_box
+	icon_state = "stored_8px"
 	var/obj/item/our_item
 
 /obj/screen/storage/volumetric_box/Initialize(mapload, new_master, our_item)

@@ -55,7 +55,7 @@
 	/// New volumetric storage display mode's center 'blocks'
 	var/obj/screen/storage/continuous/ui_continuous
 	/// The close button, used in all modes.
-	var/obj/screen/storage/close/ui_closer
+	var/obj/screen/storage/close/ui_close
 	/// Associative list of list(item = screen object) for volumetric storage item screen blocks
 	var/list/ui_item_blocks
 
@@ -132,7 +132,7 @@
 /datum/component/storage/Destroy()
 	close_all()
 	QDEL_NULL(ui_boxes)
-	QDEL_NULL(ui_closer)
+	QDEL_NULL(ui_close)
 	QDEL_NULL(ui_continuous)
 	QDEL_NULL(ui_left)
 	QDEL_NULL(ui_right)
@@ -327,8 +327,7 @@
 	if(check_locked())
 		close_all()
 
-
-/datum/component/storage/proc/close(mob/M)
+/datui_um/component/storage/proc/close(mob/M)
 	hide_from(M)
 
 /datum/component/storage/proc/close_all()
@@ -376,7 +375,7 @@
 /datum/component/storage/proc/refresh_mob_views()
 	var/list/seeing = can_see_contents()
 	for(var/i in seeing)
-		show_to(i)
+		ui_show_to(i)
 	return TRUE
 
 /datum/component/storage/proc/can_see_contents()
@@ -473,7 +472,7 @@
 	A.add_fingerprint(M)
 	if(!force && (check_locked(null, M) || !M.CanReach(parent, view_only = TRUE)))
 		return FALSE
-	show_to(M, !ghost)
+	ui_show_to(M, !ghost)
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
 	if(isitem(O))
@@ -656,7 +655,7 @@
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
 		if(!check_locked(source, user, TRUE))
-			show_to(user)
+			ui_show_to(user)
 			A.do_jiggle()
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
