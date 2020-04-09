@@ -23,8 +23,7 @@ define('F_UNVALIDATED_USER', 1<<0);
 define('F_SECRET_PR', 1<<1);
 
 //CONFIGS ARE IN SECRET.PHP, THESE ARE JUST DEFAULTS!
-
-/*$hookSecret = '08ajh0qj93209qj90jfq932j32r';
+$hookSecret = '08ajh0qj93209qj90jfq932j32r';
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 $repoOwnerAndName = "tgstation/tgstation";
 $servers = array();
@@ -39,7 +38,7 @@ $validation = "org";
 $validation_count = 1;
 $tracked_branch = 'master';
 $require_changelogs = false;
-$discordWebHooks = array();*/
+$discordWebHooks = array();
 
 require_once 'secret.php';
 
