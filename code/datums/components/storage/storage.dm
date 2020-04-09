@@ -313,7 +313,7 @@
 	if(!_target)
 		_target = get_turf(parent)
 	if(usr)
-		hide_from(usr)
+		ui_hide(usr)
 	var/list/contents = contents()
 	var/atom/real_location = real_location()
 	for(var/obj/item/I in contents)
@@ -328,7 +328,7 @@
 		close_all()
 
 /datui_um/component/storage/proc/close(mob/M)
-	hide_from(M)
+	ui_hide(M)
 
 /datum/component/storage/proc/close_all()
 	. = FALSE
@@ -375,7 +375,7 @@
 /datum/component/storage/proc/refresh_mob_views()
 	var/list/seeing = can_see_contents()
 	for(var/i in seeing)
-		ui_show_to(i)
+		ui_show(i)
 	return TRUE
 
 /datum/component/storage/proc/can_see_contents()
@@ -472,7 +472,7 @@
 	A.add_fingerprint(M)
 	if(!force && (check_locked(null, M) || !M.CanReach(parent, view_only = TRUE)))
 		return FALSE
-	ui_show_to(M, !ghost)
+	ui_show(M, !ghost)
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
 	if(isitem(O))
@@ -655,7 +655,7 @@
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
 		if(!check_locked(source, user, TRUE))
-			ui_show_to(user)
+			ui_show(user)
 			A.do_jiggle()
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
@@ -674,7 +674,7 @@
 	return do_quick_empty(loctarget)
 
 /datum/component/storage/proc/signal_hide_attempt(datum/source, mob/target)
-	return hide_from(target)
+	return ui_hide(target)
 
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
 	if(!isliving(user) || !user.CanReach(parent))
