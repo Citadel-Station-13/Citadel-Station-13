@@ -782,7 +782,11 @@
 	if(reac_volume >= 1 && istype(O, /obj/item/reagent_containers/food))
 		var/obj/item/reagent_containers/food/splashed_food = O
 		splashed_food.adjust_food_quality(100)
-
+		// if it's a customisable food, we need to edit its total quality too, to prevent its quality resetting from adding more ingredients!
+		if(istype(O, obj/item/reagent_containers/food/customizable))
+			var/obj/item/reagent_containers/food/customizable/splashed_custom_food = O
+			splashed_custom_food.total_quality += 10000
+r
 /datum/reagent/consumable/char
 	name = "Char"
 	description = "Essence of the grill. Has strange properties when overdosed."
