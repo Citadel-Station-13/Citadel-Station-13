@@ -448,9 +448,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
 			return FALSE
 
-	if(!skipcharge)
-		if(!charge_check(user, silent))
-			return FALSE
+	if(!skipcharge && !charge_check(user, silent))
+		return FALSE
 
 	if(user.stat && !stat_allowed && !(magic_flags & SPELL_SKIP_STAT))
 		if(!silent)
