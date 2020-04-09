@@ -23,7 +23,7 @@
 
 /obj/structure/sign/plaques/kiddie
 	name = "\improper AI developers plaque"
-	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be retarded. Beneath the image, someone has scratched the word \"PACKETS\"."
+	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be stupid. Beneath the image, someone has scratched the word \"PACKETS\"."
 	icon_state = "kiddieplaque"
 
 /obj/structure/sign/plaques/kiddie/badger
@@ -46,4 +46,3 @@
 	name = "Mr. Deempisi portrait"
 	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
 	icon_state = "monkey_painting"
-	
