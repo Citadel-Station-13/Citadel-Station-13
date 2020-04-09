@@ -12,7 +12,6 @@
 	icon_state = "director_skirt"
 	item_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/rnd/research_director/alt

@@ -84,7 +84,7 @@
 	var/lastused_equip = 0
 	var/lastused_environ = 0
 	var/lastused_total = 0
-	var/main_status = 0
+	var/main_status = 0 // Whether or not there's external power. 0 is "none", 1 is "insufficient", 2 is "charging".
 	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
@@ -1276,63 +1276,89 @@
 	var/last_eq = equipment
 	var/last_en = environ
 	var/last_ch = charging
-
 	var/excess = surplus()
-
-	if(!src.avail())
+	if(!avail())
 		main_status = 0
 	else if(excess < 0)
 		main_status = 1
 	else
 		main_status = 2
 
+	var/cur_excess = excess
+	var/cur_used = lastused_total
+
+	// first: if we have enough power, power the essentials DIRECTLY
+
+	var/environ_satisfied = FALSE
+	var/equipment_satisfied = FALSE
+	var/lighting_satisfied = FALSE
+
+	if(cur_excess >= lastused_environ)
+		autoset(environ, 1)
+		add_load(lastused_environ)
+		cur_excess -= lastused_environ
+		cur_used -= lastused_environ
+		environ_satisfied = TRUE
+
+	if(cur_excess >= lastused_equip)
+		autoset(equipment, 1)
+		add_load(lastused_equip)
+		cur_excess -= lastused_equip
+		cur_used -= lastused_equip
+		equipment_satisfied = TRUE
+
+	if(cur_excess >= lastused_light)
+		autoset(lighting, 1)
+		add_load(lastused_light)
+		cur_excess -= lastused_light
+		cur_used -= lastused_light
+		lighting_satisfied = TRUE
+
+
+	// next: take from or charge to the cell, depending on how much is left
 	if(cell && !shorted)
-		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
-		cell.use(cellused)
+		if(cur_excess > 0)
+			var/charging_cell = min(cur_excess, cell.maxcharge * GLOB.CHARGELEVEL)
+			cell.give(charging_cell)
+			add_load(charging_cell)
+			lastused_total += charging_cell
+			longtermpower = min(10,longtermpower + 1)
+			if(chargemode && !charging)
+				chargecount++
+				if(chargecount == 10)
 
-		if(excess > lastused_total)		// if power excess recharge the cell
-										// by the same amount just used
-			cell.give(cellused)
-			add_load(cellused/GLOB.CELLRATE)		// add the load used to recharge the cell
-
-
-		else		// no excess, and not enough per-apc
-			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess)	//recharge with what we can
-				add_load(excess)		// so draw what we can from the grid
-				charging = APC_NOT_CHARGING
-
-			else	// not enough power available to run the last tick!
-				charging = APC_NOT_CHARGING
-				chargecount = 0
+					chargecount = 0
+					charging = APC_CHARGING
+		else	// not enough power available to run the last tick!
+			charging = APC_NOT_CHARGING
+			chargecount = 0
+			longtermpower = max(-10,longtermpower - 2)
+			if(cell.charge >= cur_used)
+				cell.use(GLOB.CELLRATE * cur_used)
+			else
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
 				equipment = autoset(equipment, 0)
 				lighting = autoset(lighting, 0)
 				environ = autoset(environ, 0)
 
+		// set channels based on remaining charge
 
-		// set channels depending on how much charge we have left
-
-		// Allow the APC to operate as normal if the cell can charge
-		if(charging && longtermpower < 10)
-			longtermpower += 1
-		else if(longtermpower > -10)
-			longtermpower -= 2
+		var/cell_percent = cell.percent()
 
 		if(cell.charge <= 0)					// zero charge, turn all off
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
 			area.poweralert(0, src)
-		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
+		
+		else if(cell_percent < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
 			area.poweralert(0, src)
-		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
-			equipment = autoset(equipment, 2)
-			lighting = autoset(lighting, 1)
+		else if(cell_percent < 30 && longtermpower < 0)	// <30%, turn off lighting
+			equipment = autoset(equipment, 1)
+			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
 			area.poweralert(0, src)
 		else									// otherwise all can be on
@@ -1340,50 +1366,21 @@
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
 			area.poweralert(1, src)
-			if(cell.percent() > 75)
+			if(cell_percent > 75)
 				area.poweralert(1, src)
 
-		// now trickle-charge the cell
-		if(chargemode && charging == APC_CHARGING && operating)
-			if(excess > 0)		// check to make sure we have enough to charge
-				// Max charge is capped to % per second constant
-				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
-				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-
-			else
-				charging = APC_NOT_CHARGING		// stop charging
-				chargecount = 0
 
 		// show cell as fully charged if so
 		if(cell.charge >= cell.maxcharge)
 			cell.charge = cell.maxcharge
 			charging = APC_FULLY_CHARGED
 
-		if(chargemode)
-			if(!charging)
-				if(excess > cell.maxcharge*GLOB.CHARGELEVEL)
-					chargecount++
-				else
-					chargecount = 0
-
-				if(chargecount == 10)
-
-					chargecount = 0
-					charging = APC_CHARGING
-
-		else // chargemode off
-			charging = 0
-			chargecount = 0
-
-	else // no cell, switch everything off
-
+	else // no cell, can still run but not very well
 		charging = APC_NOT_CHARGING
 		chargecount = 0
-		equipment = autoset(equipment, 0)
-		lighting = autoset(lighting, 0)
-		environ = autoset(environ, 0)
-		area.poweralert(0, src)
+		environ = autoset(environ, environ_satisfied)
+		equipment = autoset(equipment, equipment_satisfied)
+		lighting = autoset(lighting, lighting_satisfied)
 
 	// update icon & area power if anything changed
 
@@ -1398,17 +1395,13 @@
 // on 0=off, 1=on, 2=autooff
 
 /obj/machinery/power/apc/proc/autoset(val, on)
-	if(on==0)
-		if(val==2)			// if on, return off
-			return 0
-		else if(val==3)		// if auto-on, return auto-off
-			return 1
-	else if(on==1)
-		if(val==1)			// if auto-off, return auto-on
-			return 3
-	else if(on==2)
-		if(val==3)			// if auto-on, return auto-off
-			return 1
+	if(val == 3 && (on == 2 || !on)) 	// if auto-on, return auto-off
+		return 1
+	else if(val == 2 && !on)			// if on, return off
+		return 0
+	else if(on == 1 && val == 1)		// if auto-off, return auto-on
+		return 3
+	// no, i don't understand these comments either
 	return val
 
 /obj/machinery/power/apc/proc/reset(wire)

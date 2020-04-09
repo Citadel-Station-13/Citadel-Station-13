@@ -8,6 +8,11 @@
 /*
  * Security
  */
+/obj/item/clothing/under/rank/security
+	strip_delay = 50
+	alt_covers_chest = TRUE
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security jumpsuit"
@@ -15,10 +20,6 @@
 	icon_state = "rsecurity"
 	item_state = "r_suit"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = SENSOR_COORDS
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
@@ -66,10 +67,6 @@
 	icon_state = "rwarden"
 	item_state = "r_suit"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/warden/grey
 	name = "grey security suit"
@@ -103,10 +100,6 @@
 	icon_state = "detective"
 	item_state = "det"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/detective/skirt
 	name = "detective's suitskirt"
@@ -122,7 +115,6 @@
 	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
 	icon_state = "greydet"
 	item_state = "greydet"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/detective/grey/skirt
 	name = "noir suitskirt"
@@ -144,9 +136,6 @@
 	item_state = "r_suit"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/head_of_security/skirt
 	name = "head of security's jumpskirt"
@@ -183,7 +172,6 @@
 	name = "head of security's formal uniform"
 	icon_state = "hosblueclothes"
 	item_state = "hosblueclothes"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/head_of_security/parade
 	name = "head of security's parade uniform"
@@ -198,4 +186,3 @@
 	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE

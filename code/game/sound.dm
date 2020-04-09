@@ -8,7 +8,7 @@
 		return
 
 	//allocate a channel if necessary now so its the same for everyone
-	channel = channel || open_sound_channel()
+	channel = channel || SSsounds.random_available_channel()
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	var/sound/S = sound(get_sfx(soundin))
@@ -26,10 +26,10 @@
 		if(get_dist(M, turf_source) <= maxdistance)
 			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, soundenvwet, soundenvdry)
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S, envwet = -10000, envdry = 0, manual_x, manual_y)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S, envwet = -10000, envdry = 0, manual_x, manual_y, distance_multiplier = 1)
 	if(audiovisual_redirect)
 		var/turf/T = get_turf(src)
-		audiovisual_redirect.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, 0, -1000, turf_source.x - T.x, turf_source.y - T.y)
+		audiovisual_redirect.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, 0, -1000, turf_source.x - T.x, turf_source.y - T.y, distance_multiplier)
 	if(!client || !can_hear())
 		return
 
@@ -37,7 +37,7 @@
 		S = sound(get_sfx(soundin))
 
 	S.wait = 0 //No queue
-	S.channel = channel || open_sound_channel()
+	S.channel = channel || SSsounds.random_available_channel()
 	S.volume = vol
 	S.environment = 7
 
@@ -54,6 +54,8 @@
 		var/distance = 0
 		if(!manual_x && !manual_y)
 			distance = get_dist(T, turf_source)
+
+		distance *= distance_multiplier
 
 		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
 
@@ -86,13 +88,13 @@
 			dx = turf_source.x - T.x
 		else
 			dx = manual_x
-		S.x = dx
+		S.x = dx * distance_multiplier
 		var/dz = 0 // Hearing from infront/behind
 		if(!manual_x)
 			dz = turf_source.y - T.y
 		else
 			dz = manual_y
-		S.z = dz
+		S.z = dz * distance_multiplier
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
@@ -107,14 +109,13 @@
 			var/mob/M = m
 			M.playsound_local(M, null, volume, vary, frequency, falloff, channel, pressure_affected, S)
 
-/proc/open_sound_channel()
-	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
-	. = ++next_channel
-	if(next_channel > CHANNEL_HIGHEST_AVAILABLE)
-		next_channel = 1
-
 /mob/proc/stop_sound_channel(chan)
 	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))
+
+/mob/proc/set_sound_channel_volume(channel, volume)
+	var/sound/S = sound(null, FALSE, FALSE, channel, volume)
+	S.status = SOUND_UPDATE
+	SEND_SOUND(src, S)
 
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE

@@ -76,6 +76,7 @@
 	lefthand_file = 'icons/mob/animals_held_lh.dmi'
 	icon_state = ""
 	w_class = WEIGHT_CLASS_BULKY
+	dynamic_hair_suffix = ""
 	var/mob/living/held_mob
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/target, worn_state, alt_worn, right_hand, left_hand, slots = NONE)
@@ -161,6 +162,11 @@
 		var/mob/living/L = loc
 		L.visible_message("<span class='warning'>[held_mob] escapes from [L]!</span>", "<span class='warning'>[held_mob] escapes your grip!</span>")
 	release()
+
+/obj/item/clothing/head/mob_holder/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	if(!ishuman(M)) //monkeys holding monkeys holding monkeys...
+		return FALSE
+	return ..()
 
 /obj/item/clothing/head/mob_holder/assume_air(datum/gas_mixture/env)
 	var/atom/location = loc

@@ -14420,7 +14420,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Hk" = (
