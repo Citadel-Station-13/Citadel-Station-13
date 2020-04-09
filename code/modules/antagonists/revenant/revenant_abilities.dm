@@ -117,7 +117,7 @@
 	tinfoil_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	clothes_req = NONE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -135,7 +135,7 @@
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr, skipcharge = FALSE, silent = FALSE)
 	if(charge_counter < charge_max)
 		return FALSE
 	if(!istype(user)) //Badmins, no. Badmins, don't do it.

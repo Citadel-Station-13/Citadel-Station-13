@@ -492,9 +492,6 @@
 		return
 	var/turf/T = get_turf(src)
 	reagents.chem_temp = 1000
-	//Disable seperated contents when the grenade primes
-	if (seed.get_gene(/datum/plant_gene/trait/noreact))
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 	reagents.handle_reactions()
 	log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
 	qdel(src)

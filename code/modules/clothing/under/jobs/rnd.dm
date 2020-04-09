@@ -14,7 +14,6 @@
 	item_state = "lb_suit"
 	item_color = "director_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 

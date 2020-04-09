@@ -92,6 +92,8 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
 	var/dwarf_filth_ticker = 0 //Currently set =< 4, that means this will fire the proc around every 4-8 seconds.
 	var/dwarf_eth_ticker = 0 //Currently set =< 1, that means this will fire the proc around every 2 seconds
+	var/last_filth_spam
+	var/last_alcohol_spam
 
 /obj/item/organ/dwarfgland/prepare_eat()
 	var/obj/S = ..()
@@ -136,40 +138,39 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 			filth_counter += 10 //Dwarves could technically chainstun each other in a vomit tantrum spiral.
 	switch(filth_counter)
 		if(11 to 25)
-			if(prob(25))
-				to_chat(owner, "<span class = 'danger'>Someone should really clean up in here!</span>")
+			if(last_filth_spam + 40 SECONDS < world.time)
+				to_chat(owner, "<span class = 'warning'>Someone should really clean up in here!</span>")
+				last_filth_spam = world.time
 		if(26 to 50)
-			if(prob(30)) //Probability the message appears
+			if(prob(6)) //And then the probability they vomit along with it.
 				to_chat(owner, "<span class = 'danger'>The stench makes you queasy.</span>")
-				if(prob(20)) //And then the probability they vomit along with it.
-					owner.vomit(20) //I think vomit should stay over a disgust adjustment.
+				owner.vomit(10) //I think vomit should stay over a disgust adjustment.
 		if(51 to 75)
-			if(prob(35))
+			if(prob(9))
 				to_chat(owner, "<span class = 'danger'>By Armok! You won't be able to keep alcohol down at all!</span>")
-				if(prob(25))
-					owner.vomit(20) //Its more funny
+				owner.vomit(20) //Its more funny
 		if(76 to 100)
-			if(prob(40))
+			if(prob(11))
 				to_chat(owner, "<span class = 'userdanger'>You can't live in such FILTH!</span>")
-				if(prob(25))
-					owner.adjustToxLoss(10) //Now they start dying.
-					owner.vomit(20)
+				owner.adjustToxLoss(10) //Now they start dying.
+				owner.vomit(20)
 		if(101 to INFINITY) //Now they will really start dying
-			if(prob(40))
+			if(last_filth_spam + 12 SECONDS < world.time)
 				to_chat(owner, "<span class = 'userdanger'> THERES TOO MUCH FILTH, OH GODS THE FILTH!</span>")
+				last_filth_spam = world.time
+			if(prob(40))
 				owner.adjustToxLoss(15)
-				owner.vomit(40)
+				owner.vomit(30)
 	CHECK_TICK //Check_tick right here, its motherfuckin magic. (To me at least)
 
 //Handles the dwarf alcohol cycle tied to on_life, it ticks in dwarf_cycle_ticker.
 /obj/item/organ/dwarfgland/proc/dwarf_eth_cycle()
 	//BOOZE POWER
+	var/init_stored_alcohol = stored_alcohol
 	for(var/datum/reagent/R in owner.reagents.reagent_list)
 		if(istype(R, /datum/reagent/consumable/ethanol))
 			var/datum/reagent/consumable/ethanol/E = R
-			stored_alcohol += (E.boozepwr / 50)
-			if(stored_alcohol > max_alcohol) //Dwarves technically start at 250 alcohol stored.
-				stored_alcohol = max_alcohol
+			stored_alcohol = CLAMP(stored_alcohol + E.boozepwr / 50, 0, max_alcohol)
 	var/heal_amt = heal_rate
 	stored_alcohol -= alcohol_rate //Subtracts alcohol_Rate from stored alcohol so EX: 250 - 0.25 per each loop that occurs.
 	if(stored_alcohol > 400) //If they are over 400 they start regenerating
@@ -177,16 +178,27 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 		owner.adjustFireLoss(-heal_amt) //Unless they drink casually all the time.
 		owner.adjustOxyLoss(-heal_amt)
 		owner.adjustCloneLoss(-heal_amt) //Also they will probably get brain damage if thats a thing here.
-	if(prob(25))
-		switch(stored_alcohol)
-			if(0 to 24)
+	if(init_stored_alcohol + 0.5 < stored_alcohol) //recovering stored alcohol at a steady rate of +0.75, no spam.
+		return
+	switch(stored_alcohol)
+		if(0 to 24)
+			if(last_alcohol_spam + 8 SECONDS < world.time)
 				to_chat(owner, "<span class='userdanger'>DAMNATION INCARNATE, WHY AM I CURSED WITH THIS DRY-SPELL? I MUST DRINK.</span>")
-				owner.adjustToxLoss(35)
-			if(25 to 50)
+				last_alcohol_spam = world.time
+			owner.adjustToxLoss(10)
+		if(25 to 50)
+			if(last_alcohol_spam + 20 SECONDS < world.time)
 				to_chat(owner, "<span class='danger'>Oh DAMN, I need some brew!</span>")
-			if(51 to 75)
+				last_alcohol_spam = world.time
+		if(51 to 75)
+			if(last_alcohol_spam + 35 SECONDS < world.time)
 				to_chat(owner, "<span class='warning'>Your body aches, you need to get ahold of some booze...</span>")
-			if(76 to 100)
+				last_alcohol_spam = world.time
+		if(76 to 100)
+			if(last_alcohol_spam + 40 SECONDS < world.time)
 				to_chat(owner, "<span class='notice'>A pint of anything would really hit the spot right now.</span>")
-			if(101 to 150)
+				last_alcohol_spam = world.time
+		if(101 to 150)
+			if(last_alcohol_spam + 50 SECONDS < world.time)
 				to_chat(owner, "<span class='notice'>You feel like you could use a good brew.</span>")
+				last_alcohol_spam = world.time

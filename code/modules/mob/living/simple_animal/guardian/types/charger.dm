@@ -54,7 +54,7 @@
 			var/blocked = FALSE
 			if(hasmatchingsummoner(hit_atom)) //if the summoner matches don't hurt them
 				blocked = TRUE
-			if(L.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
+			if(L.run_block(src, 90, "[name]", ATTACK_TYPE_TACKLE, 0, src) & BLOCK_SUCCESS)
 				blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()

@@ -11,6 +11,7 @@ export const ChemHeater = props => {
     isActive,
     isBeakerLoaded,
     currentTemp,
+    currentpH,
     beakerCurrentVolume,
     beakerMaxVolume,
     beakerContents = [],
@@ -40,7 +41,7 @@ export const ChemHeater = props => {
                 target: value,
               })} />
           </LabeledList.Item>
-          <LabeledList.Item label="Reading">
+          <LabeledList.Item label="Temperature">
             <Box
               width="60px"
               textAlign="right">
@@ -49,6 +50,17 @@ export const ChemHeater = props => {
                   value={currentTemp}
                   format={value => toFixed(value) + ' K'} />
               ) || '—'}
+            </Box>
+          </LabeledList.Item>
+          <LabeledList.Item label="pH">
+            <Box
+              width="60px"
+              textAlign="right">
+              {isBeakerLoaded && (
+                <AnimatedNumber
+                  value={currentpH}
+                  format={value => toFixed(value) + ' pH'} />
+              ) || '-'}
             </Box>
           </LabeledList.Item>
         </LabeledList>

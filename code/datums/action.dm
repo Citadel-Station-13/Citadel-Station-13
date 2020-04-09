@@ -302,16 +302,6 @@
 			name = "Toggle Friendly Fire \[ON\]"
 	..()
 
-/datum/action/item_action/synthswitch
-	name = "Change Synthesizer Instrument"
-	desc = "Change the type of instrument your synthesizer is playing as."
-
-/datum/action/item_action/synthswitch/Trigger()
-	if(istype(target, /obj/item/instrument/piano_synth))
-		var/obj/item/instrument/piano_synth/synth = target
-		return synth.selectInstrument()
-	return ..()
-
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
 	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
@@ -659,7 +649,7 @@
 		return FALSE
 	var/obj/effect/proc_holder/spell/S = target
 	if(owner)
-		return S.can_cast(owner)
+		return S.can_cast(owner, FALSE, TRUE)
 	return FALSE
 
 /datum/action/spell_action/alien

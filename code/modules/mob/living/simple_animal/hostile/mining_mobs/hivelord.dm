@@ -285,9 +285,10 @@
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
 			if(mob_species == /datum/species/plasmaman)
-				uniform = /obj/item/clothing/under/plasmaman
-				head = /obj/item/clothing/head/helmet/space/plasmaman
+				uniform = /obj/item/clothing/under/plasmaman/mining
+				head = /obj/item/clothing/head/helmet/space/plasmaman/mining
 				belt = /obj/item/tank/internals/plasmaman/belt
+				mask = /obj/item/clothing/mask/gas/explorer
 			else
 				uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
 				if (prob(4))

@@ -4,13 +4,12 @@
 
 	school = "transmutation"
 	charge_max = 300
-	clothes_req = 1
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
 	cooldown_min = 100 //50 deciseconds reduction per rank
 	include_user = 1
-	nonabstract_req = 1
+	mobs_blacklist = list(/mob/living/brain, /mob/living/silicon/pai)
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
 	var/jaunt_in_type = /obj/effect/temp_visual/wizard

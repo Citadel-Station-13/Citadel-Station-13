@@ -104,7 +104,7 @@
 		dat += " Cooldown:[S.charge_max/10]"
 	dat += " Cost:[cost]<br>"
 	dat += "<i>[S.desc][desc]</i><br>"
-	dat += "[S.clothes_req?"Needs wizard garb":"Can be cast without wizard garb"]<br>"
+	dat += "[S.clothes_req & SPELL_WIZARD_GARB ? "Needs wizard garb" : "Can be cast without wizard garb"]<br>"
 	return dat
 
 /datum/spellbook_entry/fireball
