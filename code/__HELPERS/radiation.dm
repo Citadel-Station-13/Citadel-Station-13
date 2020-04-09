@@ -27,12 +27,15 @@
 		return
 	var/area/A = get_area(source)
 	var/atom/nested_loc = source.loc
+	var/spawn_waves = TRUE
 	while(nested_loc != A)
 		if(nested_loc.rad_flags & RAD_PROTECT_CONTENTS)
-			return
+			spawn_waves = FALSE
+			break
 		nested_loc = nested_loc.loc
-	for(var/dir in GLOB.cardinals)
-		new /datum/radiation_wave(source, dir, intensity, range_modifier, can_contaminate)
+	if(spawn_waves)
+		for(var/dir in GLOB.cardinals)
+			new /datum/radiation_wave(source, dir, intensity, range_modifier, can_contaminate)
 
 	var/list/things = get_rad_contents(source) //copypasta because I don't want to put special code in waves to handle their origin
 	for(var/k in 1 to things.len)
