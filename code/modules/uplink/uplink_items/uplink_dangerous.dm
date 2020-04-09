@@ -174,10 +174,13 @@
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/rapid
-	name = "Gloves of the North Star"
-	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
-	item = /obj/item/clothing/gloves/rapid
-	cost = 8
+	name = "Bands of the North Star"
+	desc = "These armbands let the user punch people very fast and with the lethality of a legendary martial artist. \
+			Does not improve weapon attack speed or the meaty fists of a hulk, but you will be unmatched in martial power. \
+			Combines with all martial arts, but the user will be unable to bring themselves to use guns, nor remove the armbands."
+	item = /obj/item/clothing/gloves/fingerless/pugilist/rapid
+	cost = 30
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"

@@ -287,7 +287,7 @@
 /datum/export/weapon/gloves
 	cost = 90
 	unit_name = "star struck gloves"
-	export_types = list(/obj/item/clothing/gloves/rapid)
+	export_types = list(/obj/item/clothing/gloves/fingerless/pugilist/rapid)
 
 /datum/export/weapon/l6
 	cost = 500
