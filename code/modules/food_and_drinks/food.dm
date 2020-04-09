@@ -40,9 +40,9 @@
 					to_chat(H,"<span class='notice'>That didn't taste very good...</span>")
 					H.adjust_disgust(11 + 15 * fraction)
 					SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "gross_food", /datum/mood_event/gross_food)
-				else if((foodtype & H.dna.species.liked_food) || food_quality >= 70)
+				else if((foodtype & H.dna.species.liked_food & food_quality >= 50) || food_quality >= 70) //you like food of high quality, and food of regular quality you have a preference for
 					to_chat(H,"<span class='notice'>I love this taste!</span>")
-					H.adjust_disgust(-5 + -2.5 * fraction)
+					H.adjust_disgust(-5 + (-2.5 * food_quality/50) + -2.5 * fraction)
 					SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
 			else
 				if(foodtype & H.dna.species.toxic_food)
