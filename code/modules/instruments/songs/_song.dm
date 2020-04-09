@@ -60,7 +60,7 @@
 	  * Compilation happens when we start playing and is cleared after we finish playing.
 	  */
 	var/list/compiled_chords
-	/// Channel as text = current volume
+	/// Channel as text = current volume percentage but it's 0 to 100 instead of 0 to 1.
 	var/list/channels_playing = list()
 	/// List of channels that aren't being used, as text. This is to prevent unnecessary freeing and reallocations from SSsounds/SSinstruments.
 	var/list/channels_idle = list()
@@ -237,7 +237,7 @@
 	cached_exponential_dropoff = sustain_exponential_dropoff
 	// Linear, not so much, since it's a target duration from 100 volume rather than an exponential rate.
 	var/target_duration = sustain_linear_duration
-	var/volume_diff = max(0, volume - sustain_dropoff_volume)
+	var/volume_diff = max(0, 100 - sustain_dropoff_volume)
 	var/volume_decrease_per_decisecond = volume_diff / target_duration
 	cached_linear_dropoff = volume_decrease_per_decisecond
 
