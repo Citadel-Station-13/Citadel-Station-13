@@ -601,7 +601,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							QDEL_NULL(coin)
 						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
 						coin = null
-					QDEL_NULL(coin)
+				QDEL_NULL(coin)
 			else if(!(R in product_records))
 				vend_ready = TRUE
 				message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
