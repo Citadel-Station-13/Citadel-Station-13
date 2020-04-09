@@ -107,15 +107,18 @@
 	// set waitfor = FALSE   <---- DONT DO THIS!We WANT this power to hold up ClickWithPower(), so that we can unlock the power when it's done.
 	var/mob/living/carbon/target = A
 	var/mob/living/L = owner
-
-	if(istype(target))
-		success = TRUE
-		var/power_time = 138 + level_current * 12
-		target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
-		L.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/ContinueTarget)
-		// 3 second windup
-		addtimer(CALLBACK(src, .proc/apply_effects, L, target, power_time), 3 SECONDS)
+	L.face_atom(A)
+	if(!istype(target))
+		return
+	success = TRUE
+	var/power_time = 138 + level_current * 12
+	target.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
+	L.apply_status_effect(STATUS_EFFECT_MESMERIZE, 30)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/ContinueTarget)
+	// 5 second windup
+	addtimer(CALLBACK(src, .proc/apply_effects, L, target, power_time), 6 SECONDS)
+	ADD_TRAIT(target, TRAIT_COMBAT_MODE_LOCKED, src)
+	ADD_TRAIT(L, TRAIT_COMBAT_MODE_LOCKED, src)
 
 /datum/action/bloodsucker/targeted/mesmerize/proc/apply_effects(aggressor, victim, power_time)
 	var/mob/living/carbon/target = victim
@@ -123,8 +126,9 @@
 	if(!success)
 		return
 	PowerActivatedSuccessfully() // blood & cooldown only altered if power activated successfully - less "fuck you"-y
+	target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time)
+	REMOVE_TRAIT(L, TRAIT_COMBAT_MODE_LOCKED, src)
 	target.face_atom(L)
-	target.apply_status_effect(STATUS_EFFECT_MESMERIZE, power_time) // pretty much purely cosmetic
 	target.Stun(power_time)
 	to_chat(L, "<span class='notice'>[target] is fixed in place by your hypnotic gaze.</span>")
 	target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
@@ -132,6 +136,7 @@
 	spawn(power_time)
 	if(istype(target) && success)
 		target.notransform = FALSE
+		REMOVE_TRAIT(target, TRAIT_COMBAT_MODE_LOCKED, src)
 		if(istype(L) && target.stat == CONSCIOUS && (target in view(10, get_turf(L)))) // They Woke Up! (Notice if within view)
 			to_chat(L, "<span class='warning'>[target] has snapped out of their trance.</span>")
 

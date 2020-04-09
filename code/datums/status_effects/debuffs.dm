@@ -113,19 +113,24 @@
 		duration = set_duration
 	. = ..()
 
-/datum/status_effect/no_combat_mode/mesmerize
+/datum/status_effect/mesmerize
 	id = "Mesmerize"
 	alert_type = /obj/screen/alert/status_effect/mesmerized
 
-/datum/status_effect/no_combat_mode/mesmerize/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
 	owner.add_movespeed_modifier("[STATUS_EFFECT_MESMERIZE]_[id]", TRUE, priority = 64, override = TRUE, multiplicative_slowdown = 5, blacklisted_movetypes = FALSE? NONE : CRAWLING)
 
-/datum/status_effect/no_combat_mode/mesmerize/on_remove()
+/datum/status_effect/mesmerize/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
 	owner.remove_movespeed_modifier("[STATUS_EFFECT_MESMERIZE]_[id]")
+
+/datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
 
 /obj/screen/alert/status_effect/mesmerized
 	name = "Mesmerized"
