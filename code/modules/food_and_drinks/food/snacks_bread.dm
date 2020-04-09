@@ -247,18 +247,22 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
 			name = "lightly-fried [name]"
 			desc = "[desc] It's been lightly fried in a deep fryer."
+			adjust_food_quality(food_quality - 5)
 		if(16 to 49)
 			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 			name = "fried [name]"
 			desc = "[desc] It's been fried, increasing its tastiness value by [rand(1, 75)]%."
+			adjust_food_quality(food_quality - 10)
 		if(50 to 59)
 			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
 			name = "deep-fried [name]"
 			desc = "[desc] Deep-fried to perfection."
+			adjust_food_quality(food_quality) //we shouldn't punish perfection in the fried arts
 		if(60 to INFINITY)
 			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
 			name = "the physical manifestation of the very concept of fried foods"
 			desc = "A heavily-fried...something.  Who can tell anymore?"
+			adjust_food_quality(0) //good job, you're truly the best cook.
 	filling_color = color
 	foodtype |= FRIED
 
