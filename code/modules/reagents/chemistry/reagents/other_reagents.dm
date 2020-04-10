@@ -1070,11 +1070,11 @@
 	to_chat(M, "<span class='userdanger'>You start feeling your guts twisting painfully!</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 
-/datum/reagent/iron/overdose_process(mob/living/carbon/C)
+/datum/reagent/iron/overdose_process(mob/living/M)
 	if(prob(20))
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		if (istype(L))
-			C.applyLiverDamage(2) //mild until the fabled med rework comes out. the organ damage galore
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			L.applyOrganDamage(2)
 	..()
 
 /datum/reagent/gold
