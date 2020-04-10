@@ -115,7 +115,7 @@
 		I = i
 		var/percent = percentage_by_item[I]
 		if(!ui_item_blocks[I])
-			ui_item_blocks[I] = new /obj/screen/storage(null, src, I)
+			ui_item_blocks[I] = new /obj/screen/storage/volumetric_box(null, src, I)
 		var/obj/screen/storage/volumetric_box/B = ui_item_blocks[I]
 		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(MINIMUM_PIXELS_PER_ITEM, FLOOR(horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM))
 
@@ -132,6 +132,17 @@
 		B.screen_loc = I.screen_loc = "[screen_start_x + xshift]:[px + px_add],[screen_start_y]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
 		pixel += pixels_to_use
+
+		// set various things
+		B.layer = VOLUMETRIC_STORAGE_BOX_LAYER
+		B.plane = VOLUMETRIC_STORAGE_BOX_PLANE
+		B.name = I.name
+
+
+		I.mouse_opacity = MOUSE_OPACITY_ICON
+		I.maptext = ""
+		I.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
+		I.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 
 		// finally add our things.
 		. += B
@@ -230,6 +241,7 @@
 		. = list()
 		for(var/i in ui_item_blocks)
 			. += ui_item_blocks[i]		//get the block not the item
+			. += i
 
 /**
   * Gets our ui_boxes, making it if it doesn't exist.
