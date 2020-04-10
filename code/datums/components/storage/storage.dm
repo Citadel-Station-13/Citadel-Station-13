@@ -134,8 +134,10 @@
 	QDEL_NULL(ui_left)
 	QDEL_NULL(ui_right)
 	// DO NOT USE QDEL_LIST_ASSOC.
-	for(var/i in ui_item_blocks)
-		qdel(ui_item_blocks[i])		//qdel the screen object not the item
+	if(ui_item_blocks)
+		for(var/i in ui_item_blocks)
+			qdel(ui_item_blocks[i])		//qdel the screen object not the item
+		ui_item_blocks.Cut()
 	LAZYCLEARLIST(is_using)
 	return ..()
 
