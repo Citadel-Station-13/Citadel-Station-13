@@ -168,7 +168,6 @@
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message("<span class='warning'>[user] lands a passable tackle on [target], sending them both tumbling!</span>", "<span class='userdanger'>You land a passable tackle on [target], sending you both tumbling!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a passable tackle on you, sending you both tumbling!</span>")
-
 			target.adjustStaminaLoss(stamina_cost)
 			target.Paralyze(5)
 			user.Knockdown(20)
@@ -205,8 +204,8 @@
 			target.Paralyze(5)
 			target.Knockdown(30)
 			if(ishuman(target) && ishuman(user))
-				S.dna.species.grab(S, T)
-				S.setGrabState(GRAB_AGGRESSIVE)
+				target.grabbedby(user)
+				target.grippedby(user, instant = TRUE) //instant aggro grab
 
 	SEND_SIGNAL(user, COMSIG_CARBON_TACKLED, "tackle completed")
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
