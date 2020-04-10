@@ -10,7 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/loom/attackby(obj/item/I, mob/user)
+/obj/structure/loom/attackby(/obj/item/I, mob/user)
 	if(weave(I, user))
 		return
 	return ..()
@@ -21,7 +21,7 @@
 	return TRUE
 
 ///Handles the weaving.
-/obj/structure/loom/proc/weave(obj/item/stack/sheet/S, mob/user)
+/obj/structure/loom/proc/weave(/obj/item/stack/sheet/S, mob/user)
 	if(!istype(S) || !S.is_fabric)
 		return FALSE
 	if(!anchored)
