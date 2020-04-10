@@ -14,9 +14,6 @@
 */
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-
-	///If we're currently tackling or are on cooldown. Actually, shit, if I use this to handle cooldowns, then getting thrown by something while on cooldown will count as a tackle..... whatever, i'll fix that next commit
-	var/tackling = TRUE
 	///How much stamina it takes to launch a tackle
 	var/stamina_cost
 	///Launching a tackle calls Knockdown on you for this long, so this is your cooldown. Once you stand back up, you can tackle again.
@@ -43,14 +40,15 @@
 	src.skill_mod = skill_mod
 	src.min_distance = min_distance
 
-	var/mob/P = parent
+	var/mob/living/carbon/P = parent
 	to_chat(P, "<span class='notice'>You are now able to launch tackles! You can do so by activating throw intent, and clicking on your target with an empty hand.</span>")
-
+	P.tackling = TRUE
 	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
 
 /datum/component/tackler/Destroy()
-	var/mob/P = parent
+	var/mob/living/carbon/P = parent
 	to_chat(P, "<span class='notice'>You can no longer tackle.</span>")
+	P.tackling = FALSE
 	..()
 
 /datum/component/tackler/RegisterWithParent()
@@ -82,12 +80,12 @@
 		to_chat(user, "<span class='warning'>You must be standing to tackle!</span>")
 		return
 
-	if(tackling)
+	if(user.tackling)
 		to_chat(user, "<span class='warning'>You're not ready to tackle!</span>")
 		return
 
-	if(user.has_movespeed_modifier(MOVESPEED_ID_SHOVE)) // can't tackle if you just got shoved
-		to_chat(user, "<span class='warning'>You're too off balance to tackle!</span>")
+	if(user.has_status_effect(STATUS_EFFECT_TASED)) // can't tackle if you just got shoved
+		to_chat(user, "<span class='warning'>You cant tackle while you are tased!</span>")
 		return
 
 	user.face_atom(A)
@@ -96,7 +94,7 @@
 	if(modifiers["alt"] || modifiers["shift"] || modifiers["ctrl"] || modifiers["middle"])
 		return
 
-	tackling = TRUE
+	user.tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
@@ -136,7 +134,7 @@
  * Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
 */
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
-	if(!tackling || !tackle)
+	if(!user.tackling || !tackle)
 		return
 
 	if(!iscarbon(hit))
@@ -149,13 +147,12 @@
 	var/mob/living/carbon/human/S = user
 
 	var/roll = rollTackle(target)
-	tackling = FALSE
+	user.tackling = FALSE
 
 	switch(roll)
 		if(-INFINITY to -5)
 			user.visible_message("<span class='danger'>[user] botches [user.p_their()] tackle and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!</span>", "<span class='userdanger'>You botch your tackle and slam your head into [target], knocking yourself silly!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] botches [user.p_their()] tackle and slams [user.p_their()] head into you, knocking [user.p_them()]self silly!</span>")
-
 			user.Paralyze(30)
 			var/obj/item/bodypart/head/hed = user.get_bodypart(BODY_ZONE_HEAD)
 			if(hed)
@@ -165,11 +162,8 @@
 		if(-4 to -2) // glancing blow at best
 			user.visible_message("<span class='warning'>[user] lands a weak tackle on [target], briefly knocking [target.p_them()] off-balance!</span>", "<span class='userdanger'>You land a weak tackle on [target], briefly knocking [target.p_them()] off-balance!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a weak tackle on you, briefly knocking you off-balance!</span>")
-
 			user.Knockdown(30)
-			if(ishuman(target) && !T.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
-				T.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH) // maybe define a slightly more severe/longer slowdown for this
-				addtimer(CALLBACK(T, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+			target.apply_status_effect(STATUS_EFFECT_TASED_WEAK, 6 SECONDS)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message("<span class='warning'>[user] lands a passable tackle on [target], sending them both tumbling!</span>", "<span class='userdanger'>You land a passable tackle on [target], sending you both tumbling!</span>", target)
@@ -183,7 +177,6 @@
 		if(1 to 2) // solid hit, tackler has a slight advantage
 			user.visible_message("<span class='warning'>[user] lands a solid tackle on [target], knocking them both down hard!</span>", "<span class='userdanger'>You land a solid tackle on [target], knocking you both down hard!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a solid tackle on you, knocking you both down hard!</span>")
-
 			target.adjustStaminaLoss(30)
 			target.Paralyze(5)
 			user.Knockdown(10)
@@ -192,8 +185,8 @@
 		if(3 to 4) // really good hit, the target is definitely worse off here. Without positive modifiers, this is as good a tackle as you can land
 			user.visible_message("<span class='warning'>[user] lands an expert tackle on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!</span>", "<span class='userdanger'>You land an expert tackle on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands an expert tackle on you, knocking you down hard and maintaining a passive grab!</span>")
-
 			user.SetKnockdown(0)
+			user.set_resting(FALSE, TRUE, FALSE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
@@ -205,8 +198,8 @@
 		if(5 to INFINITY) // absolutely BODIED
 			user.visible_message("<span class='warning'>[user] lands a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", "<span class='userdanger'>You land a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a monster tackle on you, knocking you senseless and aggressively pinning you!</span>")
-
 			user.SetKnockdown(0)
+			user.set_resting(FALSE, TRUE, FALSE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
@@ -215,7 +208,7 @@
 				S.dna.species.grab(S, T)
 				S.setGrabState(GRAB_AGGRESSIVE)
 
-
+	SEND_SIGNAL(user, COMSIG_CARBON_TACKLED, "tackle completed")
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 /**
@@ -405,7 +398,8 @@
 
 
 /datum/component/tackler/proc/resetTackle()
-	tackling = FALSE
+	var/mob/living/carbon/P = parent
+	P.tackling = FALSE
 	QDEL_NULL(tackle)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
@@ -441,7 +435,7 @@
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
-	if(!tackling)
+	if(!owner.tackling)
 		return
 
 	var/turf/T = get_turf(owner)

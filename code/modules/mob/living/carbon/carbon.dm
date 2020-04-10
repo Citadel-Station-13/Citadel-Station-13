@@ -98,6 +98,8 @@
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
+	if(src.GetComponent(/datum/component/tackler))
+		return
 	if(throwingdatum?.thrower && iscyborg(throwingdatum.thrower))
 		var/mob/living/silicon/robot/R = throwingdatum.thrower
 		if(!R.emagged)
@@ -110,7 +112,7 @@
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
-		if(hurt && !GetComponent(/datum/component/tackler))
+		if(hurt)
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
 			victim.DefaultCombatKnockdown(20)
