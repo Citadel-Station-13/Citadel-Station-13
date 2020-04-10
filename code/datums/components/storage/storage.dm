@@ -136,7 +136,6 @@
 	// DO NOT USE QDEL_LIST_ASSOC.
 	for(var/i in ui_item_blocks)
 		qdel(ui_item_blocks[i])		//qdel the screen object not the item
-	ui_item_blocks.Cut()
 	LAZYCLEARLIST(is_using)
 	return ..()
 
@@ -344,7 +343,6 @@
 	var/datum/component/storage/concrete/master = master()
 	master.emp_act(source, severity)
 
-
 //Resets something that is being removed from storage.
 /datum/component/storage/proc/_removal_reset(atom/movable/thing)
 	if(!istype(thing))
@@ -356,8 +354,9 @@
 
 /datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
 	_removal_reset(thing)
-	qdel(ui_item_blocks[thing])
-	ui_item_blocks -= thing
+	if(LAZYACCESS(ui_item_blocks, thing))
+		qdel(ui_item_blocks[thing])
+		ui_item_blocks -= thing
 	refresh_mob_views()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted
