@@ -81,14 +81,9 @@
 
 	// Generate ui_item_blocks for missing ones and render+orient.
 	var/list/atom/contents = accessible_items()
-
-	var/horizontal_pixels = maxcolumns * world.icon_size
-	// do the check for fallback for when someone has too much gamer gear
-	if((MINIMUM_PIXELS_PER_ITEM * length(contents)) > horizontal_pixels)
-		to_chat(user, "<span class='warning'>[parent] was showed to you in legacy mode due to your items overrunning the three row limit! Consider not carrying too much or bugging a maintainer to raise this limit!</span>")
-		return orient2hud_legacy(user, maxcolumns)
-	// after this point we are sure we can somehow fit all items with 8 pixels or more into our one row.
-
+	// our volume
+	var/our_volume = get_max_volume()
+	var/horizontal_pixels = (maxcolumns * world.icon_size) - (VOLUMETRIC_STORAGE_EDGE_PADDING * 2)
 	// sigh loopmania time
 	var/used = 0
 	// define outside for performance
@@ -100,33 +95,41 @@
 		used += volume
 		volume_by_item[I] = volume
 		percentage_by_item[I] = volume / get_max_volume()
-		to_chat(world, "DEBUG: [I] volume [volume] percent [percentage_by_item[I]]")
 	var/overrun = FALSE
-	if(used >= (horizontal_pixels + 4))		//2-4 pixel grace zone
+	if(used > our_volume)
 		// congratulations we are now in overrun mode. everything will be crammed to minimum storage pixels.
 		to_chat(user, "<span class='warning'>[parent] rendered in overrun mode due to more items inside than the maximum volume supports.</span>")
 		overrun = TRUE
 
+	// item padding
+	horizontal_pixels -= ((length(percentage_by_item) - 1) * VOLUMETRIC_STORAGE_ITEM_PADDING)
+
+	// do the check for fallback for when someone has too much gamer gear
+	if((MINIMUM_PIXELS_PER_ITEM * length(percentage_by_item)) > horizontal_pixels)
+		to_chat(user, "<span class='warning'>[parent] was showed to you in legacy mode due to your items overrunning the three row limit! Consider not carrying too much or bugging a maintainer to raise this limit!</span>")
+		return orient2hud_legacy(user, maxcolumns)
+	// after this point we are sure we can somehow fit all items with 8 pixels or more into our one row.
+
 	// define outside for marginal performance boost
 	var/obj/item/I
 	// start at this pixel from screen_start_x.
-	var/current_pixel = 0
+	var/current_pixel = VOLUMETRIC_STORAGE_EDGE_PADDING
 
 	LAZYINITLIST(ui_item_blocks)
+
 	for(var/i in percentage_by_item)
 		I = i
 		var/percent = percentage_by_item[I]
 		if(!ui_item_blocks[I])
-			ui_item_blocks[I] = new /obj/screen/storage/volumetric_box(null, src, I)
-		var/obj/screen/storage/volumetric_box/B = ui_item_blocks[I]
-		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(MINIMUM_PIXELS_PER_ITEM, FLOOR(horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM))
-		to_chat(world, "DEBUG: [I] using [pixels_to_use] pixels out of [horizontal_pixels]")
+			ui_item_blocks[I] = new /obj/screen/storage/volumetric_box/center(null, src, I)
+		var/obj/screen/storage/volumetric_box/center/B = ui_item_blocks[I]
+		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(MINIMUM_PIXELS_PER_ITEM, round(horizontal_pixels * percent, 1))
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 
-		B.screen_loc = I.screen_loc = "[screen_start_x]:[current_pixel + (pixels_to_use * 0.5)],[screen_start_y]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x]:[current_pixel + (pixels_to_use * 0.5) + VOLUMETRIC_STORAGE_ITEM_PADDING],[screen_start_y]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
-		current_pixel += pixels_to_use
+		current_pixel += pixels_to_use + VOLUMETRIC_STORAGE_ITEM_PADDING
 
 		// set various things
 		B.set_pixel_size(pixels_to_use)
@@ -174,9 +177,10 @@
 		maxallowedscreensize = current_maxscreensize
 	// we got screen size, register signal
 	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout, override = TRUE)
-	if(M.active_storage)
-		M.active_storage.ui_hide(M)
-	M.active_storage = src
+	if(M.active_storage != src)
+		if(M.active_storage)
+			M.active_storage.ui_hide(M)
+		M.active_storage = src
 	LAZYOR(is_using, M)
 	if(volumetric_ui())
 		//new volumetric ui bay-style

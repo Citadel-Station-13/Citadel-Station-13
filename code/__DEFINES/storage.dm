@@ -41,3 +41,7 @@
 #define MINIMUM_PIXELS_PER_ITEM 6
 /// Maximum number of objects that will be allowed to be displayed using the volumetric display system. Arbitrary number to prevent server lockups.
 #define MAXIMUM_VOLUMETRIC_ITEMS 256
+/// How much padding to give between items
+#define VOLUMETRIC_STORAGE_ITEM_PADDING 1
+/// How much padding to give to edges
+#define VOLUMETRIC_STORAGE_EDGE_PADDING 1

@@ -71,6 +71,7 @@
 	icon_state = "stored_continue"
 	var/obj/screen/storage/stored_left/left
 	var/obj/screen/storage/stored_right/right
+	var/pixel_size
 
 /obj/screen/storage/volumetric_box/center/Initialize(mapload, new_master, our_item)
 	left = new(null, src, our_item)
@@ -78,7 +79,7 @@
 	return ..()
 
 /obj/screen/storage/volumetric_box/center/Destroy()
-	QDEL_NULL(lefT)
+	QDEL_NULL(left)
 	QDEL_NULL(right)
 	return ..()
 
@@ -89,6 +90,9 @@
   * Sets the size of this box screen object and regenerates its left/right borders. This includes the actual border's size!
   */
 /obj/screen/storage/volumetric_box/center/proc/set_pixel_size(pixels)
+	if(pixel_size == pixels)
+		return
+	pixel_size = pixels
 	cut_overlays()
 	//our icon size is 32 pixels.
 	transform = matrix((pixels - (VOLUMETRIC_STORAGE_BOX_BORDER_SIZE * 2)) / VOLUMETRIC_STORAGE_BOX_ICON_SIZE, 0, 0, 0, 1, 0)
