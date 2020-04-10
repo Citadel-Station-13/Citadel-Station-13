@@ -110,7 +110,7 @@
 	// define outside for marginal performance boost
 	var/obj/item/I
 	// start at this pixel from screen_start_x.
-	var/pixel = -((world.icon_size - VOLUMETRIC_BOX_SIZE) * 0.5)
+	var/pixel = -((world.icon_size - VOLUMETRIC_STORAGE_BOX_SIZE) * 0.5)
 
 	LAZYINITLIST(ui_item_blocks)
 	for(var/i in percentage_by_item)
