@@ -1,12 +1,17 @@
 // storage_flags variable on /datum/component/storage
 
-// Storage limits. These can be combined I guess but you really, really shouldn't (don't do it really)
+// Storage limits. These can be combined (and usually are combined).
 /// Check max_items and contents.len when trying to insert
 #define STORAGE_LIMIT_MAX_ITEMS				(1<<0)
-/// Check w_class and max_combined_w_class, aka legacy behavior if you combine it with [STORAGE_LIMIT_MAX_ITEMS].
+/// Check max_combined_w_class.
 #define STORAGE_LIMIT_COMBINED_W_CLASS		(1<<1)
-/// Use max_w_class for maximum w_class but use the new volume system. Will automatically force rendering to use the new volume/baystation scaling UI so this is kind of incompatible with stuff like stack storage etc etc.
+/// Use the new volume system. Will automatically force rendering to use the new volume/baystation scaling UI so this is kind of incompatible with stuff like stack storage etc etc.
 #define STORAGE_LIMIT_VOLUME				(1<<2)
+/// Use max_w_class
+#define STORAGE_LIMIT_MAX_W_CLASS			(1<<3)
+
+#define STORAGE_FLAGS_LEGACY_DEFAULT		(STORAGE_LIMIT_MAX_ITEMS | STORAGE_LIMIT_COMBINED_W_CLASS | STORAGE_LIMIT_MAX_W_CLASS)
+#define STORAGE_FLAGS_VOLUME_DEFAULT		(STORAGE_LIMIT_MAX_ITEMS | STORAGE_LIMIT_VOLUME | STORAGE_LIMIT_MAX_W_CLASS)
 
 //ITEM INVENTORY WEIGHT, FOR w_class
 /// Usually items smaller then a human hand, ex: Playing Cards, Lighter, Scalpel, Coins/Money
@@ -28,7 +33,11 @@
 #define AUTO_SCALE_STORAGE_VOLUME(w_class, max_combined_w_class)		(AUTO_SCALE_VOLUME(w_class) * (max_combined_w_class / w_class))
 
 // UI defines
+/// Size of volumetric box icon
+#define VOLUMETRIC_STORAGE_BOX_ICON_SIZE 32
+/// Size of EACH left/right border icon for volumetric boxes
+#define VOLUMETRIC_STORAGE_BOX_BORDER_SIZE 1
 /// Minimum pixels an item must have in volumetric scaled storage UI
-#define MINIMUM_PIXELS_PER_ITEM 2
+#define MINIMUM_PIXELS_PER_ITEM 6
 /// Maximum number of objects that will be allowed to be displayed using the volumetric display system. Arbitrary number to prevent server lockups.
 #define MAXIMUM_VOLUMETRIC_ITEMS 256

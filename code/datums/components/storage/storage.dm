@@ -22,7 +22,7 @@
 	var/locked = FALSE								//when locked nothing can see inside or use it.
 
 	/// Storage flags, including what kinds of limiters we use for how many items we can hold
-	var/storage_flags = STORAGE_LIMIT_VOLUME
+	var/storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
 	/// Max w_class we can hold. Applies to [STORAGE_LIMIT_COMBINED_W_CLASS] and [STORAGE_LIMIT_VOLUME]
 	var/max_w_class = WEIGHT_CLASS_SMALL
 	/// Max combined w_class. Applies to [STORAGE_LIMIT_COMBINED_W_CLASS]
@@ -496,10 +496,6 @@
 		if(M && !stop_messages)
 			host.add_fingerprint(M)
 		return FALSE
-	if(real_location.contents.len >= max_items)
-		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[host] is full, make some space!</span>")
-		return FALSE //Storage item is full
 	if(length(can_hold))
 		if(!is_type_in_typecache(I, can_hold))
 			if(!stop_messages)
@@ -509,17 +505,34 @@
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
-	if(I.w_class > max_w_class)
-		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
-		return FALSE
-	var/sum_w_class = I.w_class
-	for(var/obj/item/_I in real_location)
-		sum_w_class += _I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
-	if(sum_w_class > max_combined_w_class)
-		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[I] won't fit in [host], make some space!</span>")
-		return FALSE
+	// STORAGE LIMITS
+	if(storage_flags & STORAGE_LIMIT_MAX_ITEMS)
+		if(real_location.contents.len >= max_items)
+			if(!stop_messages)
+				to_chat(M, "<span class='warning'>[host] has too many things in it, make some space!</span>")
+			return FALSE //Storage item is full
+	if(storage_flags & STORAGE_LIMIT_MAX_W_CLASS)
+		if(I.w_class > max_w_class)
+			if(!stop_messages)
+				to_chat(M, "<span class='warning'>[I] is too long for [host]!</span>")
+			return FALSE
+	if(storage_flags & STORAGE_LIMIT_COMBINED_W_CLASS)
+		var/sum_w_class = I.w_class
+		for(var/obj/item/_I in real_location)
+			sum_w_class += _I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
+		if(sum_w_class > max_combined_w_class)
+			if(!stop_messages)
+				to_chat(M, "<span class='warning'>[I] won't fit in [host], make some space!</span>")
+			return FALSE
+	if(storage_flags & STORAGE_LIMIT_VOLUME)
+		var/sum_volume = I.get_w_volume()
+		for(var/obj/item/_I in real_location)
+			sum_volume += _I.get_w_volume()
+		if(sum_volume > get_max_volume())
+			if(!stop_messages)
+				to_chat(M, "<span class='warning'>[I] is too spacious to fit in [host], make some space!</span>")
+			return FALSE
+	/////////////////
 	if(isitem(host))
 		var/obj/item/IP = host
 		var/datum/component/storage/STR_I = I.GetComponent(/datum/component/storage)

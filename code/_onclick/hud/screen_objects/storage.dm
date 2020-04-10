@@ -55,40 +55,52 @@
 /obj/screen/storage/volumetric_box
 	icon_state = "stored_continue"
 	var/obj/item/our_item
-	var/obj/screen/storage/stored_left/left
-	var/obj/screen/storage/stored_right/right
-
-/obj/screen/storage/volumetric_box/Destroy()
-	QDEL_NULL(left)
-	QDEL_NULL(right)
-	our_item = null
-	return ..()
 
 /obj/screen/storage/volumetric_box/Initialize(mapload, new_master, our_item)
 	src.our_item = our_item
-	left = new(null, src, our_item)
-	right = new(null, src, our_item)
+	return ..()
+
+/obj/screen/storage/volumetric_box/Destroy()
+	our_item = null
 	return ..()
 
 /obj/screen/storage/volumetric_box/Click(location, control, params)
 	return our_item.Click(location, control, params)
 
-/obj/screen/storage/volumetric_box/proc/on_screen_objects()
+/obj/screen/storage/volumetric_box/center
+	icon_state = "stored_continue"
+	var/obj/screen/storage/stored_left/left
+	var/obj/screen/storage/stored_right/right
+
+/obj/screen/storage/volumetric_box/center/Initialize(mapload, new_master, our_item)
+	left = new(null, src, our_item)
+	right = new(null, src, our_item)
+	return ..()
+
+/obj/screen/storage/volumetric_box/center/Destroy()
+	QDEL_NULL(lefT)
+	QDEL_NULL(right)
+	return ..()
+
+/obj/screen/storage/volumetric_box/center/proc/on_screen_objects()
 	return list(src, left, right)
 
-#define BOX_ICON_PIXELS 32
-/obj/screen/storage/volumetric_box/proc/set_pixel_size(pixels)
+/**
+  * Sets the size of this box screen object and regenerates its left/right borders. This includes the actual border's size!
+  */
+/obj/screen/storage/volumetric_box/center/proc/set_pixel_size(pixels)
 	cut_overlays()
 	//our icon size is 32 pixels.
-	transform = matrix(pixels / BOX_ICON_PIXELS, 0, 0, 0, 1, 0)
-	left.pixel_x = -((BOX_ICON_PIXELS - pixels) * 0.5) - 4
-	right.pixel_x = ((BOX_ICON_PIXELS - pixels) * 0.5) + 4
+	transform = matrix((pixels - (VOLUMETRIC_STORAGE_BOX_BORDER_SIZE * 2)) / VOLUMETRIC_STORAGE_BOX_ICON_SIZE, 0, 0, 0, 1, 0)
+	left.pixel_x = -((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) - VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
+	right.pixel_x = ((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) + VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
 	add_overlay(left)
 	add_overlay(right)
-#undef BOX_ICON_PIXELS
 
 /obj/screen/storage/stored_left
 	icon_state = "stored_start"
+	appearance_flags = APPEARANCE_UI | KEEP_APART | RESET_TRANSFORM // Yes I know RESET_TRANSFORM is in APPEARANCE_UI but we're hard-asserting this incase someone changes it.
 
 /obj/screen/storage/stored_right
 	icon_state = "stored_end"
+	appearance_flags = APPEARANCE_UI | KEEP_APART | RESET_TRANSFORM
