@@ -10,25 +10,25 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/loom/attackby(/obj/item/I, mob/user)
+/obj/structure/loom/attackby(obj/item/I, mob/user)
 	if(weave(I, user))
 		return
 	return ..()
 
-/obj/structure/loom/wrench_act(mob/living/user, /obj/item/I)
+/obj/structure/loom/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I, 5)
 	return TRUE
 
 ///Handles the weaving.
-/obj/structure/loom/proc/weave(/obj/item/stack/sheet/S, mob/user)
+/obj/structure/loom/proc/weave(obj/item/stack/sheet/S, mob/user)
 	if(!istype(S) || !S.is_fabric)
 		user.show_message("<span class='notice'>This can not be loomed!</span>", MSG_VISUAL)
 		return FALSE
 	if(!anchored)
 		user.show_message("<span class='notice'>The loom needs to be wrenched down.</span>", MSG_VISUAL)
 		return FALSE
-	if(S.amount < FABRIC_PER_SHEET)
+	if(S.amount =< FABRIC_PER_SHEET)
 		user.show_message("<span class='notice'>You need at least [FABRIC_PER_SHEET] units of fabric before using this.</span>", 1)
 		return FALSE
 	user.show_message("<span class='notice'>You start weaving \the [S.name] through the loom..</span>", MSG_VISUAL)
