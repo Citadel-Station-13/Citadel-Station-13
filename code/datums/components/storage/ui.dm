@@ -220,6 +220,7 @@
 	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_right, ui_continuous, get_ui_item_objects_hide())
 	if(M.active_storage == src)
 		M.active_storage = null
+	UnregisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT)
 	LAZYREMOVE(is_using, M)
 	return TRUE
 
