@@ -84,6 +84,7 @@
 	// our volume
 	var/our_volume = get_max_volume()
 	var/horizontal_pixels = (maxcolumns * world.icon_size) - (VOLUMETRIC_STORAGE_EDGE_PADDING * 2)
+	var/max_horizontal_pixels = horizontal_pixels * screen_max_rows
 	// sigh loopmania time
 	var/used = 0
 	// define outside for performance
@@ -95,25 +96,34 @@
 		used += volume
 		volume_by_item[I] = volume
 		percentage_by_item[I] = volume / get_max_volume()
+	var/padding_pixels = ((length(percentage_by_item) - 1) * VOLUMETRIC_STORAGE_ITEM_PADDING) + VOLUMETRIC_STORAGE_EDGE_PADDING * 2
+	var/min_pixels = (MINIMUM_PIXELS_PER_ITEM * length(percentage_by_item)) + padding_pixels
+	// do the check for fallback for when someone has too much gamer gear
+	if((min_pixels) > (max_horizontal_pixels + 4))	// 4 pixel grace zone
+		to_chat(user, "<span class='warning'>[parent] was showed to you in legacy mode due to your items overrunning the three row limit! Consider not carrying too much or bugging a maintainer to raise this limit!</span>")
+		return orient2hud_legacy(user, maxcolumns)
+	// after this point we are sure we can somehow fit all items into our max number of rows.
+
+	// determine rows
+	var/rows = CLAMP(CEILING(min_pixels / horizontal_pixels, 1), 1, screen_max_rows)
+
 	var/overrun = FALSE
 	if(used > our_volume)
 		// congratulations we are now in overrun mode. everything will be crammed to minimum storage pixels.
 		to_chat(user, "<span class='warning'>[parent] rendered in overrun mode due to more items inside than the maximum volume supports.</span>")
 		overrun = TRUE
 
-	// item padding
-	horizontal_pixels -= ((length(percentage_by_item) - 1) * VOLUMETRIC_STORAGE_ITEM_PADDING)
+	// how much we are using
+	var/using_horizontal_pixels = horizontal_pixels * rows
 
-	// do the check for fallback for when someone has too much gamer gear
-	if((MINIMUM_PIXELS_PER_ITEM * length(percentage_by_item)) > horizontal_pixels)
-		to_chat(user, "<span class='warning'>[parent] was showed to you in legacy mode due to your items overrunning the three row limit! Consider not carrying too much or bugging a maintainer to raise this limit!</span>")
-		return orient2hud_legacy(user, maxcolumns)
-	// after this point we are sure we can somehow fit all items with 8 pixels or more into our one row.
+	// item padding
+	using_horizontal_pixels -= padding_pixels
 
 	// define outside for marginal performance boost
 	var/obj/item/I
 	// start at this pixel from screen_start_x.
 	var/current_pixel = VOLUMETRIC_STORAGE_EDGE_PADDING
+	var/row = 1
 
 	LAZYINITLIST(ui_item_blocks)
 
@@ -123,11 +133,15 @@
 		if(!ui_item_blocks[I])
 			ui_item_blocks[I] = new /obj/screen/storage/volumetric_box/center(null, src, I)
 		var/obj/screen/storage/volumetric_box/center/B = ui_item_blocks[I]
-		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(MINIMUM_PIXELS_PER_ITEM, horizontal_pixels * percent)
+		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(using_horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM)
+		var/addrow = FALSE
+		if(CEILING(pixels_to_use, 1) >= FLOOR(horizontal_pixels - current_pixel - VOLUMETRIC_STORAGE_EDGE_PADDING, 1))
+			pixels_to_use = horizontal_pixels - current_pixel - VOLUMETRIC_STORAGE_EDGE_PADDING
+			addrow = TRUE
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 
-		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + VOLUMETRIC_STORAGE_ITEM_PADDING, 1)],[screen_start_y]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + VOLUMETRIC_STORAGE_ITEM_PADDING, 1)],[screen_start_y+row-1]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
 		current_pixel += pixels_to_use + VOLUMETRIC_STORAGE_ITEM_PADDING
 
@@ -146,20 +160,22 @@
 		. += B.on_screen_objects()
 		. += I
 
+		// go up a row if needed
+		if(addrow)
+			row++
+			current_pixel = VOLUMETRIC_STORAGE_EDGE_PADDING
+
 	// Then, continuous section.
 	ui_continuous = get_ui_continuous()
-	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
+	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_continuous
-	// Then, left and right.
+	// Then, left.
 	ui_left = get_ui_left()
-	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y]"
+	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x]:[screen_pixel_x - 2],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_left
-	ui_right = get_ui_right()
-	ui_right.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
-	. += ui_right
-	// Then, closer.
+	// Then, closer, which is also our right element.
 	ui_close = get_ui_close()
-	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y]"
+	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y + row - 1]:[screen_pixel_y]"
 	. += ui_close
 
 /**
@@ -217,7 +233,7 @@
 	if(!M.client)
 		return TRUE
 	UnregisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT)
-	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_right, ui_continuous) + get_ui_item_objects_hide()
+	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_continuous) + get_ui_item_objects_hide()
 	if(M.active_storage == src)
 		M.active_storage = null
 	LAZYREMOVE(is_using, M)
@@ -259,14 +275,6 @@
 	if(!ui_left)
 		ui_left = new(null, src)
 	return ui_left
-
-/**
-  * Gets our ui_right, making it if it doesn't exist.
-  */
-/datum/component/storage/proc/get_ui_right()
-	if(!ui_right)
-		ui_right = new(null, src)
-	return ui_right
 
 /**
   * Gets our ui_close, making it if it doesn't exist.

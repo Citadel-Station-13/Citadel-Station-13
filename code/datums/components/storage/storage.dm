@@ -50,11 +50,9 @@
 	var/obj/screen/storage/boxes/ui_boxes
 	/// New volumetric storage display mode's left side
 	var/obj/screen/storage/left/ui_left
-	/// New volumetric storage display mode's right side
-	var/obj/screen/storage/right/ui_right
 	/// New volumetric storage display mode's center 'blocks'
 	var/obj/screen/storage/continuous/ui_continuous
-	/// The close button, used in all modes.
+	/// The close button, used in all modes. Frames right side in volumetric mode.
 	var/obj/screen/storage/close/ui_close
 	/// Associative list of list(item = screen object) for volumetric storage item screen blocks
 	var/list/ui_item_blocks
@@ -130,7 +128,6 @@
 	QDEL_NULL(ui_close)
 	QDEL_NULL(ui_continuous)
 	QDEL_NULL(ui_left)
-	QDEL_NULL(ui_right)
 	// DO NOT USE QDEL_LIST_ASSOC.
 	if(ui_item_blocks)
 		for(var/i in ui_item_blocks)
