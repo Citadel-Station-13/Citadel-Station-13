@@ -22,7 +22,7 @@
 	var/locked = FALSE								//when locked nothing can see inside or use it.
 
 	/// Storage flags, including what kinds of limiters we use for how many items we can hold
-	var/storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
+	var/storage_flags = STORAGE_FLAGS_LEGACY_DEFAULT
 	/// Max w_class we can hold. Applies to [STORAGE_LIMIT_COMBINED_W_CLASS] and [STORAGE_LIMIT_VOLUME]
 	var/max_w_class = WEIGHT_CLASS_SMALL
 	/// Max combined w_class. Applies to [STORAGE_LIMIT_COMBINED_W_CLASS]
