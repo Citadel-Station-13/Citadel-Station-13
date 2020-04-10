@@ -863,7 +863,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /// Get an item's volume that it uses when being stored.
 /obj/item/proc/get_w_volume()
-	return isnull(volume)? AUTO_SCALE_VOLUME(w_class) : w_volume
+	// if w_volume is 0 you fucked up anyways lol
+	return w_volume || AUTO_SCALE_VOLUME(w_class)
 
 /obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
 	return
