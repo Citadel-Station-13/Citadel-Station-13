@@ -124,7 +124,7 @@
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 
-		B.screen_loc = I.screen_loc = "[screen_start_x]:[current_pixel],[screen_start_y]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x]:[current_pixel + (pixels_to_use * 0.5)],[screen_start_y]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
 		current_pixel += pixels_to_use
 
@@ -149,14 +149,14 @@
 	. += ui_continuous
 	// Then, left and right.
 	ui_left = get_ui_left()
-	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y]"
+	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y]"
 	. += ui_left
 	ui_right = get_ui_right()
-	ui_right.screen_loc = "[screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y]"
+	ui_right.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 	. += ui_right
 	// Then, closer.
 	ui_close = get_ui_close()
-	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
+	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y]"
 	. += ui_close
 
 /**

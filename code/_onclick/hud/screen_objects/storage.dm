@@ -76,15 +76,16 @@
 /obj/screen/storage/volumetric_box/proc/on_screen_objects()
 	return list(src, left, right)
 
+#define BOX_ICON_PIXELS 32
 /obj/screen/storage/volumetric_box/proc/set_pixel_size(pixels)
 	cut_overlays()
 	//our icon size is 32 pixels.
-	transform = matrix(32 / pixels, 0, 0, 0, 1, 0)
-	left.pixel_x = -(pixels * 0.5) - 4
-	right.pixel_x = (pixels * 0.5) + 4
+	transform = matrix(pixels / BOX_ICON_PIXELS, 0, 0, 0, 1, 0)
+	left.pixel_x = -((BOX_ICON_PIXELS - pixels) * 0.5) - 4
+	right.pixel_x = ((BOX_ICON_PIXELS - pixels) * 0.5) + 4
 	add_overlay(left)
 	add_overlay(right)
-	pixel_x = (pixels - 32) * 0.5
+#undef BOX_ICON_PIXELS
 
 /obj/screen/storage/stored_left
 	icon_state = "stored_start"
