@@ -31,6 +31,10 @@
 	START_PROCESSING(SSobj, src)
 	update_icon()
 
+/obj/item/clothing/glasses/meson/engine/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/clothing/glasses/meson/engine/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -90,7 +94,7 @@
 
 	for(var/i in rad_places)
 		var/turf/place = i
-		if(get_dist(user, place) >= range*2)	//Rads are easier to see than wires under the floor
+		if(get_dist(user, place) >= range*8)	//Rads are easier to see than wires under the floor
 			continue
 		var/strength = round(rad_places[i] / 1000, 0.1)
 		var/image/pic = new(loc = place)
@@ -120,18 +124,8 @@
 				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
 			flick_overlay(pic, list(user.client), 8)
 
-/obj/item/clothing/glasses/meson/engine/update_icon()
+/obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = "trayson-[mode]"
-	update_mob()
-
-/obj/item/clothing/glasses/meson/engine/proc/update_mob()
-	item_state = icon_state
-	if(isliving(loc))
-		var/mob/living/user = loc
-		if(user.get_item_by_slot(SLOT_GLASSES) == src)
-			user.update_inv_glasses()
-		else
-			user.update_inv_hands()
 
 /obj/item/clothing/glasses/meson/engine/tray //atmos techs have lived far too long without tray goggles while those damned engineers get their dual-purpose gogles all to themselves
 	name = "optical t-ray scanner"
@@ -139,7 +133,6 @@
 	item_state = "trayson-t-ray"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
-
 	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_NONE)
 
 /obj/item/clothing/glasses/meson/engine/tray/prescription
@@ -152,7 +145,6 @@
 	icon_state = "trayson-shuttle"
 	item_state = "trayson-shuttle"
 	desc = "Used to see the boundaries of shuttle regions."
-
 	modes = list(MODE_NONE = MODE_SHUTTLE, MODE_SHUTTLE = MODE_NONE)
 
 #undef MODE_NONE

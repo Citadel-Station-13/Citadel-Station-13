@@ -97,6 +97,9 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_numbered_displays_name_dsc(datum/numbered_display/A, datum/numbered_display/B)
 	return sorttext(B.sample_object.name, A.sample_object.name)
 
+/proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
+	return sorttext(initial(b.name),initial(a.name))
+
 /proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
 	var/a_sign = num2sign(initial(A.value) * -1)
 	var/b_sign = num2sign(initial(B.value) * -1)
@@ -114,3 +117,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 		return a_sign - b_sign
 	else
 		return sorttext(b_name, a_name)
+
+/proc/cmp_item_block_priority_asc(obj/item/A, obj/item/B)
+	return A.block_priority - B.block_priority

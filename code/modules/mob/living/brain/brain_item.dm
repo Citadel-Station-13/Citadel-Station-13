@@ -10,7 +10,7 @@
 	organ_flags = ORGAN_VITAL
 	attack_verb = list("attacked", "slapped", "whacked")
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
-	decay_factor = STANDARD_ORGAN_DECAY	/ 4		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
+	decay_factor = STANDARD_ORGAN_DECAY	/ 2		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 	healing_factor = STANDARD_ORGAN_HEALING / 2
 
 	maxHealth	= BRAIN_DAMAGE_DEATH
@@ -55,16 +55,18 @@
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
-/obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
-	..()
+/obj/item/organ/brain/Remove(special = FALSE, no_id_transfer = FALSE)
+	. = ..()
+	var/mob/living/carbon/C = .
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
+	if((!QDELETED(src) || C) && !no_id_transfer)
 		transfer_identity(C)
-	C.update_hair()
+	if(C)
+		C.update_hair()
 
 /obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.
@@ -86,7 +88,7 @@
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
 		if(HAS_TRAIT(L, TRAIT_NOCLONE))
-			brainmob.status_traits[TRAIT_NOCLONE] = L.status_traits[TRAIT_NOCLONE]
+			LAZYSET(brainmob.status_traits, TRAIT_NOCLONE, L.status_traits[TRAIT_NOCLONE])
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
@@ -102,16 +104,16 @@
 	if(istype(O, /obj/item/organ_storage)) //BUG_PROBABLE_CAUSE
 		return //Borg organ bags shouldn't be killing brains
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent("neurine")) //Neurine fixes dead brains
+	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/neurine)) //Neurine fixes dead brains
 		. = TRUE //don't do attack animation.
 		var/cached_Bdamage = brainmob?.health
-		var/datum/reagent/medicine/neurine/N = reagents.has_reagent("neurine")
-		var/datum/reagent/medicine/mannitol/M1 = reagents.has_reagent("mannitol")
+		var/datum/reagent/medicine/neurine/N = reagents.has_reagent(/datum/reagent/medicine/neurine)
+		var/datum/reagent/medicine/mannitol/M1 = reagents.has_reagent(/datum/reagent/medicine/mannitol)
 
-		if(O.reagents.has_reagent("mannitol"))//Just a quick way to bolster the effects if someone mixes up a batch.
+		if(O.reagents.has_reagent(/datum/reagent/medicine/mannitol))//Just a quick way to bolster the effects if someone mixes up a batch.
 			N.volume *= (M1.volume*0.5)
 
-		if(!O.reagents.has_reagent("neurine", 10))
+		if(!O.reagents.has_reagent(/datum/reagent/medicine/neurine, 10))
 			to_chat(user, "<span class='warning'>There's not enough neurine in [O] to restore [src]!</span>")
 			return
 
@@ -134,14 +136,14 @@
 					gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 		return
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
+	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
-		var/datum/reagent/medicine/mannitol/M = reagents.has_reagent("mannitol")
+		var/datum/reagent/medicine/mannitol/M = reagents.has_reagent(/datum/reagent/medicine/mannitol)
 		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, "<span class='warning'>[src] is far too damaged, you'll have to use neurine on it!</span>")
 			return
 
-		if(!O.reagents.has_reagent("mannitol", 10))
+		if(!O.reagents.has_reagent(/datum/reagent/medicine/mannitol, 10))
 			to_chat(user, "<span class='warning'>There's not enough mannitol in [O] to restore [src]!</span>")
 			return
 
@@ -389,6 +391,7 @@
 	if(resilience)
 		actual_trauma.resilience = resilience
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
+	return actual_trauma
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)

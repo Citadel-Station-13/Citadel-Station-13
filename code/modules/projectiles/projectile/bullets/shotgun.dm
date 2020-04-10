@@ -18,13 +18,28 @@
 /obj/item/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
 	damage = 5
-	stamina = 20
-	knockdown = 100
+	stamina = 30
 	stutter = 5
 	jitter = 20
 	range = 7
 	icon_state = "spark"
 	color = "#FFFF00"
+	var/tase_duration = 50
+
+/obj/item/projectile/bullet/shotgun_stunslug/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
+		do_sparks(1, TRUE, src)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "tased", /datum/mood_event/tased)
+		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
+		C.IgniteMob()
+		if(C.dna && C.dna.check_mutation(HULK))
+			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
+		else if(tase_duration && (C.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(C, TRAIT_STUNIMMUNE) && !HAS_TRAIT(C, TRAIT_TASED_RESISTANCE))
+			C.electrocute_act(15, src, 1, SHOCK_NOSTUN)
+			C.apply_status_effect(STATUS_EFFECT_TASED_WEAK, tase_duration)
 
 /obj/item/projectile/bullet/shotgun_meteorslug
 	name = "meteorslug"
@@ -53,7 +68,7 @@
 /obj/item/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 1)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/pellet
 	var/tile_dropoff = 0.75
@@ -61,7 +76,7 @@
 
 /obj/item/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 10
+	damage = 12.5
 
 /obj/item/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"
@@ -93,7 +108,6 @@
 
 /obj/item/projectile/bullet/scattershot
 	damage = 20
-	stamina = 65
 
 /obj/item/projectile/bullet/seed
 	damage = 4

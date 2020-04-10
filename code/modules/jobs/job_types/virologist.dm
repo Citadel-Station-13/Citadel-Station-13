@@ -18,13 +18,15 @@
 
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
 
+	threat = 1.5
+
 /datum/outfit/job/virologist
 	name = "Virologist"
 	jobtype = /datum/job/virologist
 
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/virologist
+	uniform = /obj/item/clothing/under/rank/medical/virologist
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist

@@ -22,7 +22,7 @@ Bonus
 	stealth = -3
 	resistance = -4
 	stage_speed = 0
-	transmittable = -4
+	transmittable = -3
 	level = 6
 	severity = 5
 	base_message_chance = 50
@@ -30,8 +30,11 @@ Bonus
 	symptom_delay_max = 60
 	var/bleed = FALSE
 	var/pain = FALSE
-	threshold_desc = "<b>Resistance 7:</b> Host will bleed profusely during necrosis.<br>\
-					  <b>Transmission 8:</b> Causes extreme pain to the host, weakening it."
+	threshold_desc = list(
+		"Resistance 9" = "Doubles the intensity of the immolation effect, but reduces the frequency of all of this symptom's effects.",
+		"Stage Speed 8" = "Increases explosion radius and explosion damage to the host when the host is wet.",
+		"Transmission 8" = "Additionally synthesizes chlorine trifluoride and napalm inside the host. More chemicals are synthesized if the resistance 9 threshold has been met."
+	)
 
 /datum/symptom/flesh_eating/Start(datum/disease/advance/A)
 	if(!..())
@@ -96,8 +99,11 @@ Bonus
 	symptom_delay_max = 6
 	var/chems = FALSE
 	var/zombie = FALSE
-	threshold_desc = "<b>Stage Speed 7:</b> Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.<br>\
-					  <b>Stealth 5:</b> The symptom remains hidden until active."
+	threshold_desc = list(
+		"Stage Speed 7" = "Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.",
+		"Stealth 5" = "The symptom remains hidden until active.",
+	)
+
 
 /datum/symptom/flesh_death/Start(datum/disease/advance/A)
 	if(!..())
@@ -124,7 +130,7 @@ Bonus
 	var/get_damage = rand(6,10)
 	M.adjustBruteLoss(get_damage)
 	if(chems)
-		M.reagents.add_reagent_list(list("heparin" = 2, "lipolicide" = 2))
+		M.reagents.add_reagent_list(list(/datum/reagent/toxin/heparin = 2, /datum/reagent/toxin/lipolicide = 2))
 	if(zombie)
-		M.reagents.add_reagent("romerol", 1)
+		M.reagents.add_reagent(/datum/reagent/romerol, 1)
 	return 1

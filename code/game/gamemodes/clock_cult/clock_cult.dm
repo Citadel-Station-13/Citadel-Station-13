@@ -269,7 +269,7 @@ Credit where due:
 //Servant of Ratvar outfit
 /datum/outfit/servant_of_ratvar
 	name = "Servant of Ratvar"
-	uniform = /obj/item/clothing/under/rank/engineer //no more chameleon suit for them, as requested
+	uniform = /obj/item/clothing/under/rank/engineering/engineer //no more chameleon suit for them, as requested
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset
@@ -351,5 +351,5 @@ Credit where due:
 
 /obj/item/paper/servant_primer/oui_getcontent(mob/target)
 	if(!is_servant_of_ratvar(target) && !isobserver(target))
-		return "<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
+		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
 	return ..()

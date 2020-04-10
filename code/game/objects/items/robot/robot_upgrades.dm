@@ -173,32 +173,33 @@
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
-/obj/item/borg/upgrade/soh
-	name = "mining cyborg satchel of holding"
-	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+
+/obj/item/borg/upgrade/advcutter
+	name = "mining cyborg advanced plasma cutter"
+	desc = "An upgrade for the mining cyborgs plasma cutter, bringing it to advanced operation."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
 
-/obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/advcutter/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		for(var/obj/item/storage/bag/ore/cyborg/S in R.module)
-			R.module.remove_module(S, TRUE)
+		for(var/obj/item/gun/energy/plasmacutter/cyborg/C in R.module)
+			C.name = "advanced cyborg plasma cutter"
+			C.desc = "An improved version of the cyborg plasma cutter. Baring functionality identical to the standard hand held version."
+			C.icon_state = "adv_plasmacutter"
+			for(var/obj/item/ammo_casing/energy/plasma/weak/L in C.ammo_type)
+				L.projectile_type = /obj/item/projectile/plasma/adv
 
-		var/obj/item/storage/bag/ore/holding/H = new /obj/item/storage/bag/ore/holding(R.module)
-		R.module.basic_modules += H
-		R.module.add_module(H, FALSE, TRUE)
-
-/obj/item/borg/upgrade/soh/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/advcutter/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/storage/bag/ore/holding/H in R.module)
-			R.module.remove_module(H, TRUE)
-
-		var/obj/item/storage/bag/ore/cyborg/S = new (R.module)
-		R.module.basic_modules += S
-		R.module.add_module(S, FALSE, TRUE)
+		for(var/obj/item/gun/energy/plasmacutter/cyborg/C in R.module)
+			C.name = initial(name)
+			C.desc = initial(desc)
+			C.icon_state = initial(icon_state)
+			for(var/obj/item/ammo_casing/energy/plasma/weak/L in C.ammo_type)
+				L.projectile_type = initial(L.projectile_type)
 
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
@@ -303,7 +304,6 @@
 	var/msg_cooldown = 0
 	var/on = FALSE
 	var/powercost = 10
-	var/mob/living/silicon/robot/cyborg
 	var/datum/action/toggle_action
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R, user = usr)
@@ -314,7 +314,6 @@
 			to_chat(user, "<span class='warning'>This unit is already equipped with a self-repair module.</span>")
 			return FALSE
 
-		cyborg = R
 		icon_state = "selfrepair_off"
 		toggle_action = new /datum/action/item_action/toggle(src)
 		toggle_action.Grant(R)
@@ -322,40 +321,28 @@
 /obj/item/borg/upgrade/selfrepair/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		toggle_action.Remove(cyborg)
+		toggle_action.Remove(R)
 		QDEL_NULL(toggle_action)
-		cyborg = null
-		deactivate_sr()
-
-/obj/item/borg/upgrade/selfrepair/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/check_dropped), 1)
-
-/obj/item/borg/upgrade/selfrepair/proc/check_dropped()
-	if(loc != cyborg)
-		toggle_action.Remove(cyborg)
-		QDEL_NULL(toggle_action)
-		cyborg = null
 		deactivate_sr()
 
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
-	on = !on
 	if(on)
-		to_chat(cyborg, "<span class='notice'>You activate the self-repair module.</span>")
-		START_PROCESSING(SSobj, src)
+		to_chat(toggle_action.owner, "<span class='notice'>You deactivate the self-repair module.</span>")
+		deactivate_sr()
 	else
-		to_chat(cyborg, "<span class='notice'>You deactivate the self-repair module.</span>")
-		STOP_PROCESSING(SSobj, src)
-	update_icon()
+		to_chat(toggle_action.owner, "<span class='notice'>You activate the self-repair module.</span>")
+		activate_sr()
 
-/obj/item/borg/upgrade/selfrepair/update_icon()
-	if(cyborg)
+/obj/item/borg/upgrade/selfrepair/update_icon_state()
+	if(toggle_action)
 		icon_state = "selfrepair_[on ? "on" : "off"]"
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
 	else
 		icon_state = "cyborg_upgrade5"
+
+/obj/item/borg/upgrade/selfrepair/proc/activate_sr()
+	START_PROCESSING(SSobj, src)
+	on = TRUE
+	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate_sr()
 	STOP_PROCESSING(SSobj, src)
@@ -367,7 +354,9 @@
 		repair_tick = 1
 		return
 
-	if(cyborg && (cyborg.stat != DEAD) && on)
+	var/mob/living/silicon/robot/cyborg = toggle_action.owner
+
+	if(istype(cyborg) && (cyborg.stat != DEAD) && on)
 		if(!cyborg.cell)
 			to_chat(cyborg, "<span class='warning'>Self-repair module deactivated. Please, insert the power cell.</span>")
 			deactivate_sr()
@@ -434,15 +423,15 @@
 	name = "medical cyborg expanded hypospray"
 	desc = "An upgrade to the Medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
-	additional_reagents = list("mannitol", "oculine", "inacusiate",
-		"mutadone", "haloperidol")
+	additional_reagents = list(/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
+		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol)
 
 /obj/item/borg/upgrade/hypospray/high_strength
 	name = "medical cyborg high-strength hypospray"
 	desc = "An upgrade to the Medical module's hypospray, containing \
 		stronger versions of existing chemicals."
-	additional_reagents = list("oxandrolone", "sal_acid", "rezadone",
-		"pen_acid")
+	additional_reagents = list(/datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
+								/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid, /datum/reagent/medicine/prussian_blue)
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"
@@ -557,7 +546,7 @@
 			return FALSE
 
 		R.notransform = TRUE
-		var/prev_lockcharge = R.lockcharge
+		var/prev_locked_down = R.locked_down
 		R.SetLockdown(1)
 		R.anchored = TRUE
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -567,7 +556,7 @@
 		for(var/i in 1 to 4)
 			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 			sleep(12)
-		if(!prev_lockcharge)
+		if(!prev_locked_down)
 			R.SetLockdown(0)
 		R.anchored = FALSE
 		R.notransform = FALSE

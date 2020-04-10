@@ -713,7 +713,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cz" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cA" = (
@@ -967,10 +967,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
-"dw" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/indestructible/rock/snow,
-/area/space)
 
 (1,1,1) = {"
 aa
@@ -1227,7 +1223,7 @@ aa
 aa
 aa
 aa
-dw
+aa
 "}
 (2,1,1) = {"
 aa

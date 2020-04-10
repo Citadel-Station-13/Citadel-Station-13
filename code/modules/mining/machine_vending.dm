@@ -54,6 +54,7 @@
 		new /datum/data/mining_equipment("Super Resonator",				/obj/item/resonator/upgraded,										2500),
 		new /datum/data/mining_equipment("Jump Boots",					/obj/item/clothing/shoes/bhop,										2500),
 		new /datum/data/mining_equipment("Luxury Shelter Capsule",		/obj/item/survivalcapsule/luxury,									3000),
+		new /datum/data/mining_equipment("Luxury Bar Capsule",			/obj/item/survivalcapsule/luxuryelite,								10000),
 		new /datum/data/mining_equipment("Nanotrasen Minebot",			/mob/living/simple_animal/hostile/mining_drone,						800),
 		new /datum/data/mining_equipment("Minebot Melee Upgrade",		/obj/item/mine_bot_upgrade,											400),
 		new /datum/data/mining_equipment("Minebot Armor Upgrade",		/obj/item/mine_bot_upgrade/health,									400),
@@ -86,7 +87,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/mineral/equipment_vendor/update_icon()
+/obj/machinery/mineral/equipment_vendor/update_icon_state()
 	if(powered())
 		icon_state = initial(icon_state)
 	else
@@ -121,13 +122,10 @@
 				to_chat(usr, "<span class='warning'>Error: Insufficient credits for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
 			else
-				if (I.mining_points -= prize.cost)
-					to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
-					new prize.equipment_path(src.loc)
-					SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
-				else
-					to_chat(usr, "<span class='warning'>Error: Transaction failure, please try again later!</span>")
-					flick(icon_deny, src)
+				I.mining_points -= prize.cost
+				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+				new prize.equipment_path(src.loc)
+				SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 		else
 			to_chat(usr, "<span class='warning'>Error: An ID with a registered account is required!</span>")
 			flick(icon_deny, src)
@@ -301,11 +299,11 @@
 
 /obj/item/storage/backpack/duffelbag/mining_cloned
 	name = "mining replacement kit"
-	desc = "A large bag that has advance tools and a spare jumpsuit, boots, and gloves for a newly cloned miner to get back in the field. Even as a new Id!"
+	desc = "A large bag that has advance tools and a spare jumpsuit, boots, and gloves for a newly cloned miner to get back in the field. Even has a new ID!"
 
 /obj/item/storage/backpack/duffelbag/mining_cloned/PopulateContents()
 	new /obj/item/pickaxe/mini(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/implanter/tracking/gps(src)

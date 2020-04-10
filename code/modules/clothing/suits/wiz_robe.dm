@@ -9,6 +9,12 @@
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	var/magic_flags = SPELL_WIZARD_HAT
+
+/obj/item/clothing/head/wizard/ComponentInitialize()
+	. = ..()
+	if(magic_flags)
+		AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -36,7 +42,7 @@
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
-	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	magic_flags = NONE
 
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
@@ -50,6 +56,7 @@
 	icon_state = "magus"
 	item_state = "magus"
 	dog_fashion = null
+	magic_flags = SPELL_WIZARD_HAT|SPELL_CULT_HELMET
 
 /obj/item/clothing/head/wizard/santa
 	name = "Santa's hat"
@@ -72,6 +79,12 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/magic_flags = SPELL_WIZARD_ROBE
+
+/obj/item/clothing/suit/wizrobe/ComponentInitialize()
+	. = ..()
+	if(magic_flags)
+		AddElement(/datum/element/spellcasting, magic_flags, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -102,13 +115,14 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
+	magic_flags = SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	item_state = "magusred"
-
+	magic_flags = SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"
@@ -117,33 +131,27 @@
 	item_state = "santa"
 
 /obj/item/clothing/suit/wizrobe/fake
-	name = "wizard robe"
 	desc = "A rather dull blue robe meant to mimick real wizard robes."
 	icon_state = "wizard-fake"
-	item_state = "wizrobe"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/head/wizard/marisa/fake
-	name = "witch hat"
-	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
-	icon_state = "marisa"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
-	name = "witch robe"
-	desc = "Magic is all about the spell power, ZE!"
-	icon_state = "marisa"
-	item_state = "marisarobe"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
+	magic_flags = NONE
 
 /obj/item/clothing/suit/wizrobe/paper
 	name = "papier-mache robe" // no non-latin characters!
@@ -198,6 +206,10 @@
 	slowdown = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/suit/space/hardsuit/shielded/wizard/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
+
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
 	desc = "A suitably impressive helmet.."
@@ -208,6 +220,10 @@
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
 	actions_types = null //No inbuilt light
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
 	return

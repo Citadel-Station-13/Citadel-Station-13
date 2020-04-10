@@ -31,7 +31,7 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if(!canmove || leaping)
+	if(!CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || leaping)
 		return
 
 	if(pounce_cooldown > world.time)
@@ -54,37 +54,32 @@
 	weather_immunities -= "lava"
 	update_icons()
 
-/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/A)
+/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 
 	if(!leaping)
 		return ..()
 
 	pounce_cooldown = world.time + pounce_cooldown_time
-	if(A)
-		if(isliving(A))
-			var/mob/living/L = A
-			var/blocked = FALSE
-			if(ishuman(A))
-				var/mob/living/carbon/human/H = A
-				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
-					blocked = TRUE
-			if(!blocked)
+	if(hit_atom)
+		if(isliving(hit_atom))
+			var/mob/living/L = hit_atom
+			if(L.run_block(src, 0, "the [name]", ATTACK_TYPE_TACKLE, 0, src) & BLOCK_SUCCESS)
+				DefaultCombatKnockdown(40, 1, 1)
+			else
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(100)
+				L.DefaultCombatKnockdown(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
-			else
-				Knockdown(40, 1, 1)
 
 			toggle_leap(0)
-		else if(A.density && !A.CanPass(src))
-			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			Knockdown(40, 1, 1)
+		else if(hit_atom.density && !hit_atom.CanPass(src))
+			visible_message("<span class ='danger'>[src] smashes into [hit_atom]!</span>", "<span class ='alertalien'>[src] smashes into [hit_atom]!</span>")
+			Paralyze(40, TRUE, TRUE)
 
 		if(leaping)
 			leaping = 0
 			update_icons()
-			update_canmove()
+			update_mobility()
 
 
 /mob/living/carbon/alien/humanoid/float(on)

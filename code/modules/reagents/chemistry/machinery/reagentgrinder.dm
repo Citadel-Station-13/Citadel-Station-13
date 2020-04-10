@@ -66,7 +66,7 @@
 		AM.forceMove(drop_location())
 	holdingitems = list()
 
-/obj/machinery/reagentgrinder/update_icon()
+/obj/machinery/reagentgrinder/update_icon_state()
 	if(beaker)
 		icon_state = "juicer1"
 	else
@@ -75,7 +75,7 @@
 /obj/machinery/reagentgrinder/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(beaker)
 	if(new_beaker)
 		beaker = new_beaker
@@ -142,7 +142,7 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
-	if(operating || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 
 	var/list/options = list()
@@ -170,10 +170,10 @@
 		for(var/key in options)
 			choice = key
 	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+		choice = show_radial_menu(user, src, options, require_near = !hasSiliconAccessInArea(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 
 	switch(choice)
@@ -190,7 +190,7 @@
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+	if(!in_range(user, src) && !hasSiliconAccessInArea(user) && !isobserver(user))
 		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
 		return
 
@@ -299,18 +299,18 @@
 /obj/machinery/reagentgrinder/proc/mix_complete()
 	if(beaker?.reagents.total_volume)
 		//Recipe to make Butter
-		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF, 1)
-		beaker.reagents.remove_reagent("milk", MILK_TO_BUTTER_COEFF * butter_amt)
+		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
+		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
 			new /obj/item/reagent_containers/food/snacks/butter(drop_location())
 		//Recipe to make Mayonnaise
-		if (beaker.reagents.has_reagent("eggyolk"))
-			var/amount = beaker.reagents.get_reagent_amount("eggyolk")
-			beaker.reagents.remove_reagent("eggyolk", amount)
-			beaker.reagents.add_reagent("mayonnaise", amount)
+		if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
+			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
+			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)
 		//Moonsugar for skooma
-		if(beaker.reagents.has_reagent("sugar") && beaker.reagents.has_reagent("moonshine"))
-			var/amount = min(beaker.reagents.get_reagent_amount("sugar"), beaker.reagents.get_reagent_amount("moonshine"))
-			beaker.reagents.remove_reagent("sugar", amount)
-			beaker.reagents.remove_reagent("moonshine", amount)
-			beaker.reagents.add_reagent("moonsugar", amount*2)
+		if(beaker.reagents.has_reagent(/datum/reagent/consumable/sugar) && beaker.reagents.has_reagent(/datum/reagent/consumable/ethanol/moonshine))
+			var/amount = min(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/sugar), beaker.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/moonshine))
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/sugar, amount)
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/ethanol/moonshine, amount)
+			beaker.reagents.add_reagent(/datum/reagent/moonsugar, amount*2)

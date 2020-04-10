@@ -5,7 +5,7 @@
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
-	integrity_failure = 250
+	integrity_failure = 0.5
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	buildable_sign = 0
 	var/list/barsigns=list()
@@ -305,30 +305,28 @@
 
 /datum/barsign/meow_mix
 	name = "Meow Mix"
-	icon = "meow_mix"
+	icon = "Meow Mix"
 	desc = "No, we don't serve catnip, officer!"
+
+/datum/barsign/the_hive
+	name = "The Hive"
+	icon = "thehive"
+	desc = "Comb in for some sweet drinks! Not known for serving any sappy drink."
 
 /datum/barsign/hiddensigns
 	hidden = TRUE
 
-
 //Hidden signs list below this point
-
-
 
 /datum/barsign/hiddensigns/empbarsign
 	name = "Haywire Barsign"
 	icon = "empbarsign"
 	desc = "Something has gone very wrong."
 
-
-
 /datum/barsign/hiddensigns/syndibarsign
 	name = "Syndi Cat Takeover"
 	icon = "syndibarsign"
 	desc = "Syndicate or die."
-
-
 
 /datum/barsign/hiddensigns/signoff
 	name = "Bar Sign"

@@ -1,3 +1,4 @@
+#define PAI_EMP_SILENCE_DURATION 3 MINUTES
 
 /mob/living/silicon/pai/blob_act(obj/structure/blob/B)
 	return FALSE
@@ -7,10 +8,11 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	take_holo_damage(50/severity)
-	Knockdown(400/severity)
-	silent = max(30/severity, silent)
+	DefaultCombatKnockdown(400/severity)
+	silent = max(silent, (PAI_EMP_SILENCE_DURATION) / SSmobs.wait / severity)
 	if(holoform)
 		fold_in(force = TRUE)
+	emitter_next_use = world.time + emitter_emp_cd
 	//Need more effects that aren't instadeath or permanent law corruption.
 
 /mob/living/silicon/pai/ex_act(severity, target)
@@ -21,18 +23,19 @@
 			qdel(src)
 		if(2)
 			fold_in(force = 1)
-			Knockdown(400)
+			DefaultCombatKnockdown(400)
 		if(3)
 			fold_in(force = 1)
-			Knockdown(200)
+			DefaultCombatKnockdown(200)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
 	switch(user.a_intent)
-		if("help")
+		if(INTENT_HELP)
 			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
-		if("disarm")
+		if(INTENT_DISARM)
 			visible_message("<span class='notice'>[user] boops [src] on the head!</span>")
-		if("harm")
+		if(INTENT_HARM)
 			user.do_attack_animation(src)
 			if (user.name == master)
 				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
@@ -41,14 +44,20 @@
 					if(user.put_in_hands(card))
 						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
 			else
+				if(HAS_TRAIT(user, TRAIT_PACIFISM))
+					to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
+					return
 				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
 				take_holo_damage(2)
+		else
+			grabbedby(user)
 
-/mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
-	if(Proj.stun)
+/mob/living/silicon/pai/bullet_act(obj/item/projectile/P, def_zone)
+	if(P.stun)
 		fold_in(force = TRUE)
-		src.visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")
-	. = ..(Proj)
+		visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")
+	. = ..()
+	return BULLET_ACT_FORCE_PIERCE
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
 	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
@@ -63,7 +72,8 @@
 	emitterhealth = CLAMP((emitterhealth - amount), -50, emittermaxhealth)
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
-	to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
+	if(amount > 0)
+		to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
 	return amount
 
 /mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -88,7 +98,7 @@
 		take_holo_damage(amount * 0.25)
 
 /mob/living/silicon/pai/adjustOrganLoss(slot, amount, maximum = 500) //I kept this in, unlike tg
-	Knockdown(amount * 0.2)
+	DefaultCombatKnockdown(amount * 0.2)
 
 /mob/living/silicon/pai/getBruteLoss()
 	return emittermaxhealth - emitterhealth

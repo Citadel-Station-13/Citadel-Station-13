@@ -15,15 +15,15 @@
 	. = ..()
 
 /obj/item/ammo_casing/energy/gravity/repulse
-	projectile_type = /obj/item/projectile/gravityrepulse
+	projectile_type = /obj/item/projectile/gravity/repulse
 	select_name = "repulse"
 
 /obj/item/ammo_casing/energy/gravity/attract
-	projectile_type = /obj/item/projectile/gravityattract
+	projectile_type = /obj/item/projectile/gravity/attract
 	select_name = "attract"
 
 /obj/item/ammo_casing/energy/gravity/chaos
-	projectile_type = /obj/item/projectile/gravitychaos
+	projectile_type = /obj/item/projectile/gravity/chaos
 	select_name = "chaos"
 
 

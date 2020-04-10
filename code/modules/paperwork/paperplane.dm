@@ -34,7 +34,9 @@
 
 /obj/item/paperplane/handle_atom_del(atom/A)
 	if(A == internalPaper)
+		var/obj/item/paper/P = internalPaper
 		internalPaper = null
+		P.moveToNullspace() //So we're not deleting it twice when deleting our contents.
 		if(!QDELETED(src))
 			qdel(src)
 	return ..()
@@ -53,12 +55,12 @@
 	sleep(10)
 	return (BRUTELOSS)
 
-/obj/item/paperplane/update_icon()
-	cut_overlays()
+/obj/item/paperplane/update_overlays()
+	. = ..()
 	var/list/stamped = internalPaper.stamped
 	if(stamped)
 		for(var/S in stamped)
-			add_overlay("paperplane_[S]")
+			. += "paperplane_[S]"
 
 /obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
@@ -99,10 +101,10 @@
 /obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
-/obj/item/paperplane/throw_impact(atom/hit_atom)
+/obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/C = hit_atom
-		if(C.can_catch_item(TRUE))
+		if(!C.get_active_held_item() && !C.restrained())
 			var/datum/action/innate/origami/origami_action = locate() in C.actions
 			if(origami_action?.active) //if they're a master of origami and have the ability turned on, force throwmode on so they'll automatically catch the plane.
 				C.throw_mode_on()
@@ -118,7 +120,7 @@
 		H.adjust_blurriness(6)
 		if(eyes)
 			eyes.applyOrganDamage(rand(6,8))
-		H.Knockdown(40)
+		H.DefaultCombatKnockdown(40)
 		H.emote("scream")
 
 /obj/item/paper/examine(mob/user)

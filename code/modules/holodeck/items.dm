@@ -34,10 +34,10 @@
 	. = ..()
 	item_color = "red"
 
-/obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(active)
+/obj/item/holo/esword/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!active)
 		return ..()
-	return 0
+	return ..()
 
 /obj/item/holo/esword/attack(target as mob, mob/user as mob)
 	..()
@@ -80,14 +80,14 @@
 	item_state = "dodgeball"
 	desc = "Used for playing the most violent and degrading of childhood games."
 
-/obj/item/toy/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
+/obj/item/toy/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
-			M.Knockdown(60)
+			M.DefaultCombatKnockdown(60)
 			visible_message("<span class='danger'>[M] is knocked right off [M.p_their()] feet!</span>")
 
 //
@@ -117,13 +117,13 @@
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		L.forceMove(loc)
-		L.Knockdown(100)
+		L.DefaultCombatKnockdown(100)
 		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
 		user.stop_pulling()
 	else
 		..()
 
-/obj/structure/holohoop/hitby(atom/movable/AM)
+/obj/structure/holohoop/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if (isitem(AM) && !istype(AM,/obj/item/projectile))
 		if(prob(50))
 			AM.forceMove(get_turf(src))
@@ -196,7 +196,7 @@
 	if(numbuttons == numready)
 		begin_event()
 
-/obj/machinery/readybutton/update_icon()
+/obj/machinery/readybutton/update_icon_state()
 	if(ready)
 		icon_state = "auth_on"
 	else

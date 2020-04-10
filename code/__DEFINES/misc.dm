@@ -25,30 +25,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 
 #define NOT_IMPLEMENTED "NOT_IMPLEMENTED"
 
-#define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
-
-#define JANUARY		1
-#define FEBRUARY	2
-#define MARCH		3
-#define APRIL		4
-#define MAY			5
-#define JUNE		6
-#define JULY		7
-#define AUGUST		8
-#define SEPTEMBER	9
-#define OCTOBER		10
-#define NOVEMBER	11
-#define DECEMBER	12
-
-//Select holiday names -- If you test for a holiday in the code, make the holiday's name a define and test for that instead
-#define NEW_YEAR				"New Year"
-#define VALENTINES				"Valentine's Day"
-#define APRIL_FOOLS				"April Fool's Day"
-#define EASTER					"Easter"
-#define HALLOWEEN				"Halloween"
-#define CHRISTMAS				"Christmas"
-#define FESTIVE_SEASON			"Festive Season"
-
 //Human Overlays Indexes/////////
 //LOTS OF CIT CHANGES HERE. BE CAREFUL WHEN UPSTREAM ADDS MORE LAYERS
 #define MUTATIONS_LAYER			32		//mutations. Tk headglows, cold resistance glow, etc
@@ -369,11 +345,10 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
 
 //Endgame Results
-#define NUKE_NEAR_MISS 1
-#define NUKE_MISS_STATION 2
-#define NUKE_SYNDICATE_BASE 3
-#define STATION_DESTROYED_NUKE 4
-#define STATION_EVACUATED 5
+#define NUKE_MISS_STATION 1
+#define NUKE_SYNDICATE_BASE 2
+#define STATION_DESTROYED_NUKE 3
+#define STATION_EVACUATED 4
 #define BLOB_WIN 8
 #define BLOB_NUKE 9
 #define BLOB_DESTROYED 10
@@ -427,8 +402,11 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 
 //Dummy mob reserve slots
 #define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+#define DUMMY_HUMAN_SLOT_HOLOFORM			"dummy_holoform_generation"
 #define DUMMY_HUMAN_SLOT_ADMIN "admintools"
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
+#define DUMMY_HUMAN_SLOT_HALLUCINATION "dummy_hallucination"
+#define DUMMY_HUMAN_SLOT_EXAMINER "dummy_examiner"
 
 #define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
@@ -487,7 +465,7 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
 // list of all null rod weapons
-#define HOLY_WEAPONS /obj/item/nullrod, /obj/item/twohanded/dualsaber/hypereutactic/chaplain, /obj/item/gun/energy/laser/redtag/hitscan/chaplain, /obj/item/multitool/chaplain, /obj/item/melee/baseball_bat/chaplain
+#define HOLY_WEAPONS /obj/item/nullrod, /obj/item/twohanded/dualsaber/hypereutactic/chaplain, /obj/item/gun/energy/laser/redtag/hitscan/chaplain, /obj/item/multitool/chaplain, /obj/item/clothing/gloves/fingerless/pugilist/chaplain, /obj/item/melee/baseball_bat/chaplain
 
 // Used by PDA and cartridge code to reduce repetitiveness of spritesheets
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
@@ -528,3 +506,20 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
 
 #define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+
+#define CUSTOM_HOLOFORM_DELAY		10 SECONDS			//prevents spamming to make lag. it's pretty expensive to do this.
+
+#define HOLOFORM_FILTER_AI		"FILTER_AI"
+#define HOLOFORM_FILTER_PAI		"FILTER_PAI"
+#define HOLOFORM_FILTER_STATIC	"FILTER_STATIC"
+
+#define CANT_REENTER_ROUND -1
+
+//Nightshift levels.
+#define NIGHTSHIFT_AREA_FORCED				0		//ALWAYS nightshift if nightshift is enabled
+#define NIGHTSHIFT_AREA_PUBLIC				1		//hallways
+#define NIGHTSHIFT_AREA_RECREATION			2		//dorms common areas, etc
+#define NIGHTSHIFT_AREA_DEPARTMENT_HALLS	3		//interior hallways, etc
+#define NIGHTSHIFT_AREA_NONE				4		//default/highest.
+
+#define UNTIL(X) while(!(X)) stoplag()

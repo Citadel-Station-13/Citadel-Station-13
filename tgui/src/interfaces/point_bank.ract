@@ -1,0 +1,60 @@
+<ui-display>
+	<ui-section>
+		Current stored points: {{data.totalPoints}}
+            <div class="display tabular">
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    -All
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    -1000
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    -100
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    -10
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    -1
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        Transfer Points
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    +1
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    +10
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    +100
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    +1000
+		    	    </ui-button>
+                </section>
+                <section class="cell">
+			        <ui-button action='Claim'>
+		    		    +All
+		    	    </ui-button>
+                </section>
+            </div>
+	</ui-section>
+</ui-display>

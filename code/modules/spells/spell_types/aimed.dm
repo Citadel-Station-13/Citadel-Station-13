@@ -16,7 +16,7 @@
 	if(!istype(user))
 		return
 	var/msg
-	if(!can_cast(user))
+	if(!can_cast(user, FALSE, TRUE))
 		msg = "<span class='warning'>You can no longer cast [name]!</span>"
 		remove_ranged_ability(msg)
 		return
@@ -94,9 +94,8 @@
 	name = "Lightning Bolt"
 	desc = "Fire a high powered lightning bolt at your foes!"
 	school = "evocation"
-	charge_max = 200
-	clothes_req = 1
-	invocation = "UN'LTD P'WAH"
+	charge_max = 150
+	invocation = "ZAP MUTHA'FUCKA"
 	invocation_type = "shout"
 	cooldown_min = 30
 	active_icon_state = "lightning"
@@ -112,12 +111,12 @@
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 	school = "evocation"
-	charge_max = 60
-	clothes_req = 0
+	charge_max = 100
+	clothes_req = NONE
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
-	cooldown_min = 20 //10 deciseconds reduction per rank
+	cooldown_min = 20 //20 deciseconds reduction per rank
 	projectile_type = /obj/item/projectile/magic/aoe/fireball
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
@@ -131,7 +130,7 @@
 	desc = "Blazing hot rapid-fire homing cards. Banish your foes with its mystical power!"
 	school = "evocation"
 	charge_max = 50
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "Sigi'lu M'Fan 'Tasia"
 	invocation_type = "shout"
 	range = 40

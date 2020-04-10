@@ -49,6 +49,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(src)] might be running a modified client! (failed can_see on AI click of [A] (Turf Loc: [ADMIN_VERBOSEJMP(pixel_turf)]))")
 		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A] (Turf Loc: [AREACOORD(pixel_turf)]))"
 		log_admin(message)
+		to_chat(src, "<span class='warning'>You're experiencing a bug. Reconnect immediately to fix it. Admins have been notified.</span>")
 		if(REALTIMEOFDAY >= chnotify + 9000)
 			chnotify = REALTIMEOFDAY
 			send2irc_adminless_only("NOCHEAT", message)
@@ -140,10 +141,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(locked)
-		bolt_raise(usr)
-	else
-		bolt_drop(usr)
+	toggle_bolt(usr)
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
 	if(obj_flags & EMAGGED)
@@ -165,10 +163,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(!emergency)
-		emergency_on(usr)
-	else
-		emergency_off(usr)
+	toggle_emergency(usr)
 
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.

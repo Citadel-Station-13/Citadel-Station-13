@@ -9,7 +9,7 @@
 	// A list will be created in initialization that figures out the baseturf's baseturf etc.
 	// In the case of a list it is sorted from bottom layer to top.
 	// This shouldn't be modified directly, use the helper procs.
-	var/list/baseturfs = /turf/open/space
+	var/list/baseturfs = /turf/baseturf_bottom
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -46,6 +46,9 @@
 
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
+
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 	assemble_baseturfs()
 
@@ -224,14 +227,20 @@
 		for(var/i in contents)
 			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
+			if(QDELETED(mover))
+				break
 			var/atom/movable/thing = i
-			if(thing.Cross(mover))
-				continue
-			if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-				firstbump = thing
+			if(!thing.Cross(mover))
+				if(CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+					mover.Bump(thing)
+					continue
+				else
+					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
+						firstbump = thing
 	if(firstbump)
-		mover.Bump(firstbump)
-		return FALSE
+		if(!QDELETED(mover))
+			mover.Bump(firstbump)
+		return CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
@@ -239,13 +248,16 @@
 	if(!.)
 		return FALSE
 	for(var/i in contents)
+		if(QDELETED(mover))
+			break
 		if(i == mover)
 			continue
 		var/atom/movable/thing = i
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover.Bump(thing)
-			return FALSE
+			if(!CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+				return FALSE
 
 /turf/Entered(atom/movable/AM)
 	..()
@@ -354,13 +366,13 @@
 	if(.)
 		return
 	if(length(src_object.contents()))
-		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
-		if(!do_after(usr,20,target=src_object.parent))
+		to_chat(user, "<span class='notice'>You start dumping out the contents...</span>")
+		if(!do_after(user,20,target=src_object.parent))
 			return FALSE
 
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
 		stoplag(1)
 	qdel(progress)
 
@@ -391,7 +403,7 @@
 				continue
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.singularity_act()
-	ScrapeAway()
+	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
 
 /turf/proc/can_have_cabling()
@@ -543,6 +555,8 @@
 	//if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))
 		V = locate() in src
+	if(!V) //the decal was spawned on a wall or groundless turf and promptly qdeleted.
+		return
 	// Make toxins and blazaam vomit look different
 	if(toxvomit == VOMIT_PURPLE)
 		V.icon_state = "vomitpurp_[pick(1,4)]"
@@ -554,14 +568,17 @@
 			clear_reagents_to_vomit_pool(C,V)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
+	for(var/datum/reagent/consumable/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+		if(R.nutriment_factor > 0)
+			M.reagents.del_reagent(R.type)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10)
-	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(istype(R, /datum/reagent/consumable))
-			var/datum/reagent/consumable/nutri_check = R
-			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.id,R.volume)
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
 /turf/proc/Melt()
-	return ScrapeAway()
+	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+
+/turf/bullet_act(obj/item/projectile/P)
+	. = ..()
+	if(. != BULLET_ACT_FORCE_PIERCE)
+		. =  BULLET_ACT_TURF

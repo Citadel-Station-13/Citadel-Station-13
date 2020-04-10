@@ -2,7 +2,7 @@
 	name = "Telepathy"
 	desc = "Telepathically transmits a message to the target."
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = NONE
 	range = 7
 	include_user = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'

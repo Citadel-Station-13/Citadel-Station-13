@@ -3,6 +3,7 @@
 	name = "under"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
+	block_priority = BLOCK_PRIORITY_UNIFORM
 	slot_flags = ITEM_SLOT_ICLOTHING
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
@@ -11,21 +12,34 @@
 	var/sensor_mode = NO_SENSORS
 	var/can_adjust = TRUE
 	var/adjusted = NORMAL_STYLE
-	var/suit_style = NORMAL_SUIT_STYLE
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
+	var/dummy_thick = FALSE // is able to hold accessories on its item
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
-	mutantrace_variation = MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
+	mutantrace_variation = STYLE_DIGITIGRADE
 
-/obj/item/clothing/under/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/under/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
-	if(!isinhands)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		if(blood_DNA)
-			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
-		if(accessory_overlay)
-			. += accessory_overlay
+	if(isinhands)
+		return
+	if(damaged_clothes)
+		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
+	if(blood_DNA)
+		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
+	if(accessory_overlay)
+		. += accessory_overlay
+	if(hasprimary)	//checks if overlays are enabled
+		var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary")	//automagical sprite selection
+		primary_worn.color = primary_color	//colors the overlay
+		. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+	if(hassecondary)
+		var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary")
+		secondary_worn.color = secondary_color
+		. += secondary_worn
+	if(hastertiary)
+		var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[item_color]-tertiary")
+		tertiary_worn.color = tertiary_color
+		. += tertiary_worn
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
@@ -49,8 +63,6 @@
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
-	adjusted = NORMAL_STYLE
-	suit_style = NORMAL_SUIT_STYLE
 	..()
 
 /obj/item/clothing/under/equipped(mob/user, slot)
@@ -60,14 +72,6 @@
 		fitted = initial(fitted)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
-
-	if(mutantrace_variation && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(DIGITIGRADE in H.dna.species.species_traits)
-			suit_style = DIGITIGRADE_SUIT_STYLE
-		else
-			suit_style = NORMAL_SUIT_STYLE
-		H.update_inv_w_uniform()
 
 	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -93,6 +97,10 @@
 			if(user)
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return
+		if(dummy_thick)
+			if(user)
+				to_chat(user, "<span class='warning'>[src] is too bulky and cannot have accessories attached to it!</span>")
+			return
 		else
 			if(user && !user.temporarilyRemoveItemFromInventory(I))
 				return
@@ -101,6 +109,9 @@
 
 			if(user && notifyAttach)
 				to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
+
+			if((flags_inv & HIDEACCESSORY) || (A.flags_inv & HIDEACCESSORY))
+				return TRUE
 
 			var/accessory_color = attached_accessory.item_color
 			if(!accessory_color)

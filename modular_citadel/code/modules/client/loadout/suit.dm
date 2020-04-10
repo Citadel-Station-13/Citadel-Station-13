@@ -69,6 +69,22 @@
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/aformal
 
+/datum/gear/coat/runed
+	name = "Runed winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/narsie/fake
+
+/datum/gear/coat/brass
+	name = "Brass winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/ratvar/fake
+
+/datum/gear/coat/polycoat
+	name = "Polychromic winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/polychromic
+	cost = 4 //too many people with neon green coats is hard on the eyes
+
 /* Commented out until it is "balanced"
 /datum/gear/coat/sec
 	name = "Security winter coat"

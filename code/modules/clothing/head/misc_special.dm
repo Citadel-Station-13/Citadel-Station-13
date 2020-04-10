@@ -19,7 +19,7 @@
 	icon_state = "welding"
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	materials = list(MAT_METAL=1750, MAT_GLASS=400)
+	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = 2
 	tint = 2
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 60)
@@ -28,7 +28,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = FIRE_PROOF
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -86,6 +86,7 @@
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
+	alternate_screams = list('sound/voice/human/cyka1.ogg', 'sound/voice/human/cheekibreeki.ogg')
 	flags_inv = HIDEEARS|HIDEHAIR
 	var/earflaps = 1
 	cold_protection = HEAD
@@ -164,6 +165,7 @@
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
 	flags_cover = HEADCOVERSEYES
+	alternate_screams = list('modular_citadel/sound/voice/scream_silicon.ogg')
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
@@ -185,28 +187,27 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon_state = ""
-	item_state = "pwig"
+	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon_state = "hair_vlong"
 	flags_inv = HIDEHAIR
+	color = "#000"
 	var/hair_style = "Very Long Hair"
-	var/hair_color = "#000"
 
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
+	icon_state = "" //Shitty hack that i dont know if it is even neccesary to deal with the vendor stack exception
 	update_icon()
 
-/obj/item/clothing/head/wig/update_icon()
-	cut_overlays()
+/obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
 	if(!S)
+		icon = 'icons/obj/clothing/hats.dmi'
 		icon_state = "pwig"
 	else
-		var/mutable_appearance/M = mutable_appearance(S.icon,S.icon_state)
-		M.appearance_flags |= RESET_COLOR
-		M.color = hair_color
-		add_overlay(M)
+		icon = S.icon
+		icon_state = S.icon_state
 
-/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
+/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
 	if(!isinhands)
 		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
@@ -214,12 +215,12 @@
 			return
 		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
 		M.appearance_flags |= RESET_COLOR
-		M.color = hair_color
+		M.color = color
 		. += M
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
-	hair_color = "#[random_short_color()]"
+	color = "#[random_short_color()]"
 	. = ..()
 
 /obj/item/clothing/head/bronze

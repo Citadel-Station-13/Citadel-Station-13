@@ -57,7 +57,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/heal_brute = 20
 	self_delay = 20
-	grind_results = list("styptic_powder" = 10)
+	grind_results = list(/datum/reagent/medicine/styptic_powder = 10)
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -126,7 +126,7 @@
 	heal_brute = 0
 
 /obj/item/stack/medical/gauze/cyborg
-	materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 250
 
@@ -140,7 +140,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/heal_burn = 20
 	self_delay = 20
-	grind_results = list("silver_sulfadiazine" = 10)
+	grind_results = list(/datum/reagent/medicine/silver_sulfadiazine = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)

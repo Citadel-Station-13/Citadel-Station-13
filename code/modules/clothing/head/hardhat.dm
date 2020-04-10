@@ -16,6 +16,11 @@
 
 	dog_fashion = /datum/dog_fashion/head
 
+
+/obj/item/clothing/head/hardhat/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/clothing/head/hardhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
 
@@ -27,15 +32,9 @@
 		turn_off(user)
 	update_icon()
 
-/obj/item/clothing/head/hardhat/update_icon()
+/obj/item/clothing/head/hardhat/update_icon_state()
 	icon_state = "hardhat[on]_[item_color]"
 	item_state = "hardhat[on]_[item_color]"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_head()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon(force = TRUE)
 
 /obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
 	set_light(brightness_on, power_on)
@@ -91,7 +90,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/hardhat/weldhat
 	name = "welding hard hat"
@@ -125,18 +124,17 @@
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 	update_icon()
 
-/obj/item/clothing/head/hardhat/weldhat/worn_overlays(isinhands)
+/obj/item/clothing/head/hardhat/weldhat/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
 		. += mutable_appearance('icons/mob/head.dmi', "weldhelmet")
 		if(!up)
 			. += mutable_appearance('icons/mob/head.dmi', "weldvisor")
 
-/obj/item/clothing/head/hardhat/weldhat/update_icon()
-	cut_overlays()
+/obj/item/clothing/head/hardhat/weldhat/update_overlays()
+	. = ..()
 	if(!up)
-		add_overlay("weldvisor")
-	..()
+		. += "weldvisor"
 
 /obj/item/clothing/head/hardhat/weldhat/orange
 	icon_state = "hardhat0_orange"

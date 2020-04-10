@@ -4,7 +4,7 @@
 	icon = 'icons/obj/assemblies/electronic_components.dmi'
 	icon_state = "template"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list()				// To be filled later
+	custom_materials = null				// To be filled later
 	var/obj/item/electronic_assembly/assembly // Reference to the assembly holding this circuit, if any.
 	var/extended_desc
 	var/list/inputs = list()
@@ -84,7 +84,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	setup_io(inputs, /datum/integrated_io, inputs_default, IC_INPUT)
 	setup_io(outputs, /datum/integrated_io, outputs_default, IC_OUTPUT)
 	setup_io(activators, /datum/integrated_io/activate, null, IC_ACTIVATOR)
-	materials[MAT_METAL] = w_class * SScircuit.cost_multiplier
+	LAZYSET(custom_materials, /datum/material/iron, w_class * SScircuit.cost_multiplier)
 	. = ..()
 
 /obj/item/integrated_circuit/proc/on_data_written() //Override this for special behaviour when new data gets pushed to the circuit.
@@ -139,7 +139,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/table_middle_width = "40%"
 
 	var/HTML = ""
-	HTML += "<html><head><title>[src.displayed_name]</title></head><body>"
+	HTML += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[src.displayed_name]</title></head><body>"
 	HTML += "<div align='center'>"
 	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'>"
 

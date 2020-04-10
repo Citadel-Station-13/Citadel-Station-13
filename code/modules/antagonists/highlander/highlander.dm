@@ -3,7 +3,7 @@
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
-	can_hijack = HIJACK_HIJACKER
+	hijack_speed = 2					//if you kill everyone and actually haev a hand to hijack with, you win??
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
@@ -45,7 +45,7 @@
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)

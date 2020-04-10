@@ -63,7 +63,7 @@
 		addtimer(CALLBACK(src, .proc/emagNotify), 150)
 		return TRUE
 
-/obj/machinery/vr_sleeper/update_icon()
+/obj/machinery/vr_sleeper/update_icon_state()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
 
 /obj/machinery/vr_sleeper/open_machine()
@@ -222,18 +222,23 @@
 
 /obj/effect/vr_clean_master/Initialize()
 	. = ..()
-	vr_area = get_area(src)
-	addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)
+	vr_area = get_base_area(src)
+	if(!vr_area)
+		return INITIALIZE_HINT_QDEL
+	addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES, TIMER_LOOP)
 
 /obj/effect/vr_clean_master/proc/clean_up()
-	if (vr_area)
-		for (var/obj/item/ammo_casing/casing in vr_area)
-			qdel(casing)
-		for(var/obj/effect/decal/cleanable/C in vr_area)
-			qdel(C)
-		for (var/A in corpse_party)
-			var/mob/M = A
-			if(M && M.stat == DEAD && get_area(M) == vr_area)
-				qdel(M)
-			corpse_party -= M
-		addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)
+	if (!vr_area)
+		qdel(src)
+		return
+	var/list/contents = get_sub_areas_contents(vr_area)
+	for (var/obj/item/ammo_casing/casing in contents)
+		qdel(casing)
+	for(var/obj/effect/decal/cleanable/C in contents)
+		qdel(C)
+	for (var/A in corpse_party)
+		var/mob/M = A
+		if(!QDELETED(M) && (M in contents) && M.stat == DEAD)
+			qdel(M)
+		corpse_party -= M
+	addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)

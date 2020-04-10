@@ -32,16 +32,16 @@
 	..()
 	switch(stage)
 		if(1)
-			if (prob(stage_prob) && stage1)
+			if (prob(stage_prob) && length(stage1))
 				to_chat(affected_mob, pick(stage1))
 		if(2)
-			if (prob(stage_prob) && stage2)
+			if (prob(stage_prob) && length(stage2))
 				to_chat(affected_mob, pick(stage2))
 		if(3)
-			if (prob(stage_prob*2) && stage3)
+			if (prob(stage_prob*2) && length(stage3))
 				to_chat(affected_mob, pick(stage3))
 		if(4)
-			if (prob(stage_prob*2) && stage4)
+			if (prob(stage_prob*2) && length(stage4))
 				to_chat(affected_mob, pick(stage4))
 		if(5)
 			do_disease_transformation(affected_mob)
@@ -76,9 +76,9 @@
 /datum/disease/transformation/proc/replace_banned_player(var/mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [affected_mob.name]?", bantype, null, bantype, 50, affected_mob)
+	var/list/mob/candidates = pollCandidatesForMob("Do you want to play as [affected_mob.name]?", bantype, null, bantype, 50, affected_mob)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		to_chat(affected_mob, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbaned player.")
 		affected_mob.ghostize(0)
@@ -93,7 +93,7 @@
 /datum/disease/transformation/jungle_fever
 	name = "Jungle Fever"
 	cure_text = "Death."
-	cures = list("adminordrazine")
+	cures = list(/datum/reagent/medicine/adminordrazine)
 	spread_text = "Monkey Bites"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
@@ -156,19 +156,19 @@
 
 	name = "Robotic Transformation"
 	cure_text = "An injection of copper."
-	cures = list("copper")
+	cures = list(/datum/reagent/copper)
 	cure_chance = 5
 	agent = "R2D2 Nanomachines"
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= list()
+	stage1	= null
 	stage2	= list("Your joints feel stiff.", "<span class='danger'>Beep...boop..</span>")
 	stage3	= list("<span class='danger'>Your joints feel very stiff.</span>", "Your skin feels loose.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4	= list("<span class='danger'>Your skin feels very loose.</span>", "<span class='danger'>You can feel... something...inside you.</span>")
 	stage5	= list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
 	new_form = /mob/living/silicon/robot
-	infectable_biotypes = list(MOB_ORGANIC, MOB_UNDEAD, MOB_ROBOTIC)
+	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
 	bantype = "Cyborg"
 
 /datum/disease/transformation/robot/stage_act()
@@ -189,13 +189,13 @@
 
 	name = "Xenomorph Transformation"
 	cure_text = "Spaceacillin & Glycerol"
-	cures = list("spaceacillin", "glycerol")
+	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/glycerol)
 	cure_chance = 5
 	agent = "Rip-LEY Alien Microbes"
 	desc = "This disease changes the victim into a xenomorph."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= list()
+	stage1	= null
 	stage2	= list("Your throat feels scratchy.", "<span class='danger'>Kill...</span>")
 	stage3	= list("<span class='danger'>Your throat feels very scratchy.</span>", "Your skin feels tight.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4	= list("<span class='danger'>Your skin feels very tight.</span>", "<span class='danger'>Your blood boils!</span>", "<span class='danger'>You can feel... something...inside you.</span>")
@@ -218,7 +218,7 @@
 /datum/disease/transformation/slime
 	name = "Advanced Mutation Transformation"
 	cure_text = "frost oil"
-	cures = list("frostoil")
+	cures = list(/datum/reagent/consumable/frostoil)
 	cure_chance = 80
 	agent = "Advanced Mutation Toxin"
 	desc = "This highly concentrated extract converts anything into more of itself."
@@ -247,7 +247,7 @@
 /datum/disease/transformation/corgi
 	name = "The Barkening"
 	cure_text = "Death"
-	cures = list("adminordrazine")
+	cures = list(/datum/reagent/medicine/adminordrazine)
 	agent = "Fell Doge Majicks"
 	desc = "This disease transforms the victim into a corgi."
 	severity = DISEASE_SEVERITY_BIOHAZARD
@@ -272,7 +272,7 @@
 /datum/disease/transformation/morph
 	name = "Gluttony's Blessing"
 	cure_text = "nothing"
-	cures = list("adminordrazine")
+	cures = list(/datum/reagent/medicine/adminordrazine)
 	agent = "Gluttony's Blessing"
 	desc = "A 'gift' from somewhere terrible."
 	stage_prob = 20
@@ -284,12 +284,12 @@
 	stage4	= list("<span class='danger'>You're ravenous.</span>")
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
 	new_form = /mob/living/simple_animal/hostile/morph
-	infectable_biotypes = list(MOB_ORGANIC, MOB_INORGANIC, MOB_UNDEAD) //magic!
+	infectable_biotypes = MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD //magic!
 
 /datum/disease/transformation/gondola
 	name = "Gondola Transformation"
 	cure_text = "Condensed Capsaicin, ingested or injected." //getting pepper sprayed doesn't help
-	cures = list("condensedcapsaicin") //beats the hippie crap right out of your system
+	cures = list(/datum/reagent/consumable/condensedcapsaicin) //beats the hippie crap right out of your system
 	cure_chance = 80
 	stage_prob = 5
 	agent = "Tranquility"
@@ -310,17 +310,17 @@
 			if (prob(5))
 				affected_mob.emote("smile")
 			if (prob(20))
-				affected_mob.reagents.add_reagent_list(list("pax" = 5))
+				affected_mob.reagents.add_reagent(/datum/reagent/pax, 5)
 		if(3)
 			if (prob(5))
 				affected_mob.emote("smile")
 			if (prob(20))
-				affected_mob.reagents.add_reagent_list(list("pax" = 5))
+				affected_mob.reagents.add_reagent(/datum/reagent/pax, 5)
 		if(4)
 			if (prob(5))
 				affected_mob.emote("smile")
 			if (prob(20))
-				affected_mob.reagents.add_reagent_list(list("pax" = 5))
+				affected_mob.reagents.add_reagent(/datum/reagent/pax, 5)
 			if (prob(2))
 				to_chat(affected_mob, "<span class='danger'>You let go of what you were holding.</span>")
 				var/obj/item/I = affected_mob.get_active_held_item()

@@ -55,7 +55,7 @@
 		/obj/item/stack/tile/fakespace/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/stack/tile/fakepit/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/restraints/handcuffs/fake = ARCADE_WEIGHT_TRICK,
-		/obj/item/clothing/gloves/rapid/hug = ARCADE_WEIGHT_TRICK,
+		/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug = ARCADE_WEIGHT_TRICK,
 
 		/obj/item/grenade/chem_grenade/glitter/pink = ARCADE_WEIGHT_TRICK,
 		/obj/item/grenade/chem_grenade/glitter/blue = ARCADE_WEIGHT_TRICK,
@@ -67,7 +67,9 @@
 		/obj/item/clothing/shoes/kindleKicks = ARCADE_WEIGHT_RARE,
 		/obj/item/storage/belt/military/snack = ARCADE_WEIGHT_RARE,
 
-		/obj/item/clothing/mask/fakemoustache/italian = ARCADE_WEIGHT_RARE
+		/obj/item/clothing/mask/fakemoustache/italian = ARCADE_WEIGHT_RARE,
+		/obj/item/clothing/suit/hooded/wintercoat/ratvar/fake = ARCADE_WEIGHT_TRICK,
+		/obj/item/clothing/suit/hooded/wintercoat/narsie/fake = ARCADE_WEIGHT_TRICK
 	)
 
 	light_color = LIGHT_COLOR_GREEN

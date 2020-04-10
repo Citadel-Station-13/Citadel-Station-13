@@ -132,7 +132,7 @@
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
 	density = FALSE
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	incorporeal_move = 1
 	layer = 4
 	var/timer = 0
@@ -190,6 +190,7 @@
 	icon_dead = "scary_clown"
 	icon_gib = "scary_clown"
 	speak = list("...", ". . .")
+	threat = 3
 	maxHealth = 120
 	health = 120
 	emote_see = list("silently stares")

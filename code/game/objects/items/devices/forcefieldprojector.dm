@@ -1,20 +1,20 @@
 /obj/item/forcefield_projector
 	name = "forcefield projector"
-	desc = "An experimental device that can create several forcefields at a distance."
+	desc = "An experimental device that can create several forcefields at a short distance."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "signmaker_engi"
+	icon_state = "signmaker_forcefield"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_METAL=250, MAT_GLASS=500)
-	var/max_shield_integrity = 250
+	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
+	var/max_shield_integrity = 100
 	var/shield_integrity = 250
 	var/max_fields = 3
 	var/list/current_fields
-	var/field_distance_limit = 7
+	var/field_distance_limit = 2
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -87,7 +87,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	armor = list("melee" = 0, "bullet" = 25, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 0, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	var/obj/item/forcefield_projector/generator
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)

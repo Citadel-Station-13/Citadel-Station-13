@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
+	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 300)
 	crit_fail = FALSE     //Is the flash burnt out?
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
@@ -39,7 +39,7 @@
 	if(flash)
 		add_overlay(flashing_overlay)
 		attached_overlays += flashing_overlay
-		addtimer(CALLBACK(src, .proc/update_icon), 5)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 	if(holder)
 		holder.update_icon()
 
@@ -150,7 +150,7 @@
 		var/mob/living/silicon/robot/R = M
 		log_combat(user, R, "flashed", src)
 		update_icon(1)
-		R.Knockdown(rand(80,120))
+		R.DefaultCombatKnockdown(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 		R.confused += min(5, diff)
 		R.flash_act(affect_silicon = 1)
@@ -197,14 +197,13 @@
 			else
 				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
-
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	. = ..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
-	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdown) && iscarbon(M) && !M.resting && !M.get_eye_protection())
-		M.Knockdown(80)
+	if(. && !CONFIG_GET(flag/disable_borg_flash_knockdown) && iscarbon(M) && CHECK_MOBILITY(M, MOBILITY_STAND) && !M.get_eye_protection())
+		M.DefaultCombatKnockdown(80)
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
 	..()
@@ -267,7 +266,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
+	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
@@ -308,12 +307,12 @@
 	else if(flash)
 		icon_state = "flashshield_flash"
 		item_state = "flashshield_flash"
-		addtimer(CALLBACK(src, .proc/update_icon), 5)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 
 	if(holder)
 		holder.update_icon()
 
-/obj/item/assembly/flash/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/assembly/flash/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	activate()
 	return ..()
 

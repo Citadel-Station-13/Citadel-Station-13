@@ -38,6 +38,7 @@
 	color_src = MATRIXED
 	gender_specific = 0
 	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
+	recommended_species = list("mammal", "xeno", "slimeperson", "podweak")
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
@@ -274,6 +275,18 @@
 /datum/sprite_accessory/insect_fluff/snow
 	name = "Snow"
 	icon_state = "snow"
+
+/datum/sprite_accessory/insect_fluff/oakworm
+	name = "Oak Worm"
+	icon_state = "oakworm"
+
+/datum/sprite_accessory/insect_fluff/jungle
+	name = "Jungle"
+	icon_state = "jungle"
+
+/datum/sprite_accessory/insect_fluff/witchwing
+	name = "Witch Wing"
+	icon_state = "witchwing"
 
 /datum/sprite_accessory/insect_fluff/colored
 	name = "Colored (Hair)"

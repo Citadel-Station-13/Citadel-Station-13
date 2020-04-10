@@ -19,6 +19,22 @@
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
+/obj/item/clothing/shoes/combat/sneakboots
+	name = "insidious sneakboots"
+	desc = "A pair of insidious boots with special noise muffling soles which very slightly drown out your footsteps. They would be absolutely perfect for stealth operations were it not for the iconic Syndicate flairs."
+	icon_state = "sneakboots"
+	item_state = "sneakboots"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
+/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_SHOES)
+		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
+
+/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
+
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
@@ -89,12 +105,12 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(user.mind && user.mind.assigned_role == "Clown")
+	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
-	if(user.mind && user.mind.assigned_role == "Clown")
+	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
 /obj/item/clothing/shoes/clown_shoes/jester
@@ -327,6 +343,13 @@
 		lightCycle = 0
 		active = FALSE
 
+/obj/item/clothing/shoes/russian
+	name = "russian boots"
+	desc = "Comfy shoes."
+	icon_state = "rus_shoes"
+	item_state = "rus_shoes"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
 // kevin is into feet
 /obj/item/clothing/shoes/wraps
 	name = "gilded leg wraps"
@@ -348,3 +371,13 @@
 	name = "blue leg wraps"
 	desc = "Ankle coverings. Hang ten, brother."
 	icon_state = "bluecuffs"
+
+/obj/item/clothing/shoes/cowboyboots
+	name = "cowboy boots"
+	desc = "A standard pair of brown cowboy boots."
+	icon_state = "cowboyboots"
+
+/obj/item/clothing/shoes/cowboyboots/black
+	name = "black cowboy boots"
+	desc = "A pair of black cowboy boots, pretty easy to scuff up."
+	icon_state = "cowboyboots_black"

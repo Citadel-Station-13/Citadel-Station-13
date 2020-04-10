@@ -55,7 +55,7 @@
 			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			foodtype |= S.foodtype
-			update_overlays(S)
+			update_snack_overlays(S)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
 	else
@@ -103,7 +103,7 @@
 		rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
 		filling_color = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
-/obj/item/reagent_containers/food/snacks/customizable/update_overlays(obj/item/reagent_containers/food/snacks/S)
+/obj/item/reagent_containers/food/snacks/customizable/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
 		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
@@ -139,7 +139,7 @@
 /obj/item/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/reagent_containers/food/snacks/slice, reagents_per_slice)
 	..()
 	slice.filling_color = filling_color
-	slice.update_overlays(src)
+	slice.update_snack_overlays(src)
 
 
 /obj/item/reagent_containers/food/snacks/customizable/Destroy()
@@ -189,7 +189,7 @@
 	desc = "Delicious food on a stick."
 	ingredients_placement = INGREDIENTS_LINE
 	trash = /obj/item/stack/rods
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	ingMax = 6
 	icon_state = "rod"
 
@@ -293,7 +293,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 	reagent_flags = OPENCONTAINER
-	materials = list(MAT_GLASS = 500)
+	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
@@ -304,7 +304,7 @@
 		else if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
-			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
+			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
 				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 			else
@@ -318,14 +318,17 @@
 	..()
 	update_icon()
 
-/obj/item/reagent_containers/glass/bowl/update_icon()
-	cut_overlays()
+
+/obj/item/reagent_containers/glass/bowl/update_icon_state()
+	if(!reagents || !reagents.total_volume)
+		icon_state = "bowl"
+
+/obj/item/reagent_containers/glass/bowl/update_overlays()
+	. = ..()
 	if(reagents && reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/food/soupsalad.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
-	else
-		icon_state = "bowl"
+		. += filling
 
 #undef INGREDIENTS_FILL
 #undef INGREDIENTS_SCATTER
