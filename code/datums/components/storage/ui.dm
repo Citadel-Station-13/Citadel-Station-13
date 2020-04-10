@@ -31,9 +31,11 @@
 	var/rows = CLAMP(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
 
 	// First, boxes.
+	ui_boxes = get_ui_boxes()
 	ui_boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+columns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_boxes
 	// Then, closer.
+	ui_close = get_ui_close()
 	ui_close.screen_loc = "[screen_start_x + columns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 	. += ui_close
 	// Then orient the actual items.
@@ -107,6 +109,8 @@
 	// define outside for marginal performance boost
 	var/obj/item/I
 	var/pixel = 0
+
+	LAZYINITLIST(ui_item_blocks)
 	for(var/i in percentage_by_item)
 		I = i
 		var/percent = percentage_by_item[I]
@@ -134,14 +138,18 @@
 		. += I
 
 	// Then, continuous section.
+	ui_continuous = get_ui_continuous()
 	ui_continuous.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 	. += ui_continuous
 	// Then, left and right.
+	ui_left = get_ui_left()
 	ui_left.screen_loc = "[screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x]:[screen_pixel_x - 2],[screen_start_y]:[screen_pixel_y]"
 	. += ui_left
+	ui_right = get_ui_right()
 	ui_right.screen_loc = "[screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y]"
 	. += ui_right
 	// Then, closer.
+	ui_close = get_ui_close()
 	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 	. += ui_close
 
