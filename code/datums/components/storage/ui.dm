@@ -100,6 +100,7 @@
 		used += volume
 		volume_by_item[I] = volume
 		percentage_by_item[I] = volume / max_volume
+		to_chat(world, "DEBUG: [I] volume [volume] percent [percentage_by_item[I]]")
 	var/overrun = FALSE
 	if(used >= (horizontal_pixels + 4))		//2-4 pixel grace zone
 		// congratulations we are now in overrun mode. everything will be crammed to minimum storage pixels.
@@ -108,7 +109,8 @@
 
 	// define outside for marginal performance boost
 	var/obj/item/I
-	var/pixel = 0
+	// start at this pixel from screen_start_x.
+	var/pixel = -((world.icon_size - VOLUMETRIC_BOX_SIZE) * 0.5)
 
 	LAZYINITLIST(ui_item_blocks)
 	for(var/i in percentage_by_item)
@@ -118,12 +120,14 @@
 			ui_item_blocks[I] = new /obj/screen/storage/volumetric_box(null, src, I)
 		var/obj/screen/storage/volumetric_box/B = ui_item_blocks[I]
 		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(MINIMUM_PIXELS_PER_ITEM, FLOOR(horizontal_pixels * percent, MINIMUM_PIXELS_PER_ITEM))
+		to_chat(world, "DEBUG: [I] using [pixels_to_use] pixels out of [horizontal_pixels]")
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 
 		// now, scale the thing
 		var/multiply = pixels_to_use / VOLUMETRIC_STORAGE_BOX_SIZE
 		B.transform = matrix(multiply, 0, 0, 0, 1, 0)
+
 		// unfortunately since scaling means expand-from-center.. ugh..
 		var/px_add = (pixels_to_use - VOLUMETRIC_STORAGE_BOX_SIZE) * 0.5
 		// now, screenloc the thing.
@@ -137,7 +141,6 @@
 		B.layer = VOLUMETRIC_STORAGE_BOX_LAYER
 		B.plane = VOLUMETRIC_STORAGE_BOX_PLANE
 		B.name = I.name
-
 
 		I.mouse_opacity = MOUSE_OPACITY_ICON
 		I.maptext = ""
@@ -178,7 +181,7 @@
 	else if(current_maxscreensize)
 		maxallowedscreensize = current_maxscreensize
 	// we got screen size, register signal
-	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout)
+	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout, override = TRUE)
 	if(M.active_storage)
 		M.active_storage.ui_hide(M)
 	M.active_storage = src
@@ -217,10 +220,10 @@
 /datum/component/storage/proc/ui_hide(mob/M)
 	if(!M.client)
 		return TRUE
-	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_right, ui_continuous, get_ui_item_objects_hide())
+	UnregisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT)
+	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_right, ui_continuous) + get_ui_item_objects_hide()
 	if(M.active_storage == src)
 		M.active_storage = null
-	UnregisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT)
 	LAZYREMOVE(is_using, M)
 	return TRUE
 
@@ -241,7 +244,8 @@
 	else
 		. = list()
 		for(var/i in ui_item_blocks)
-			. += ui_item_blocks[i]		//get the block not the item
+			// get both the box and the item
+			. += ui_item_blocks[i]
 			. += i
 
 /**
