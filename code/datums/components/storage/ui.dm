@@ -34,8 +34,8 @@
 	ui_boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+columns-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_boxes
 	// Then, closer.
-	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
-	. += ui_closer
+	ui_close.screen_loc = "[screen_start_x + columns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
+	. += ui_close
 	// Then orient the actual items.
 	var/cx = screen_start_x
 	var/cy = screen_start_y
@@ -125,7 +125,7 @@
 		// now, screenloc the thing.
 		var/xshift = FLOOR(pixel / world.icon_size, 1)
 		var/px = pixel % world.icon_size
-		B.screen_loc = I.screen_loc = "[screen_start_x + xshift]:[px + px_add],[screen_start_y+rows-1]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x + xshift]:[px + px_add],[screen_start_y]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
 		pixel += pixels_to_use
 
@@ -142,8 +142,8 @@
 	ui_right.screen_loc = "[screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y] to [screen_start_x+maxcolumns-1]:[screen_pixel_x + 2],[screen_start_y]:[screen_pixel_y]"
 	. += ui_right
 	// Then, closer.
-	closer.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
-	. += ui_closer
+	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
+	. += ui_close
 
 /**
   * Shows our UI to a mob.
@@ -163,7 +163,7 @@
 	if(M.active_storage)
 		M.active_storage.ui_hide(M)
 	M.active_storage = src
-	LAZOR(is_using, M)
+	LAZYOR(is_using, M)
 	if(volumetric_ui())
 		//new volumetric ui bay-style
 		M.client.screen |= orient2hud_volumetric(M, maxallowedscreensize)
@@ -198,7 +198,7 @@
 /datum/component/storage/proc/ui_hide(mob/M)
 	if(!M.client)
 		return TRUE
-	M.client.screen -= list(ui_boxes, ui_closer, ui_left, ui_right, ui_continuous, get_ui_item_objects_hide())
+	M.client.screen -= list(ui_boxes, ui_close, ui_left, ui_right, ui_continuous, get_ui_item_objects_hide())
 	if(M.active_storage == src)
 		M.active_storage = null
 	LAZYREMOVE(is_using, M)
