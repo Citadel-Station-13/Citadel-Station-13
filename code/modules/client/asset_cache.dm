@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
-	
+
 /datum/asset/simple/IRV
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',

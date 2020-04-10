@@ -76,7 +76,7 @@
 	copy.frequency = K.frequency
 	copy.volume = volume
 	var/channel_text = num2text(channel)
-	channels_playing[channel_text] = volume
+	channels_playing[channel_text] = 100
 	last_channel_played = channel_text
 	for(var/i in hearing_mobs)
 		var/mob/M = i
@@ -132,4 +132,4 @@
 		else
 			for(var/i in hearing_mobs)
 				var/mob/M = i
-				M.set_sound_channel_volume(channelnumber, current_volume)
+				M.set_sound_channel_volume(channelnumber, (current_volume * 0.01) * volume * using_instrument.volume_multiplier)
