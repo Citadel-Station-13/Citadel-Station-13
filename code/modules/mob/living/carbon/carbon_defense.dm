@@ -275,7 +275,7 @@
 
 	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		var/friendly_check = FALSE
-		if(check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
+		if(run_block(M, 0, M.name, ATTACK_TYPE_UNARMED))
 			return
 		if(lying)
 			if(buckled)
