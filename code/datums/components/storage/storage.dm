@@ -84,8 +84,6 @@
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(isnull(max_volume))
-		max_volume = AUTO_SCALE_STORAGE_VOLUME(max_w_class, max_items)
 	if(master)
 		change_master(master)
 
@@ -714,3 +712,9 @@
 			to_chat(user, "[parent] now picks up all items in a tile at once.")
 		if(COLLECT_ONE)
 			to_chat(user, "[parent] now picks up one item at a time.")
+
+/**
+  * Gets our max volume
+  */
+/datum/component/storage/proc/get_max_volume()
+	return max_volume || AUTO_SCALE_STORAGE_VOLUME(max_w_class, max_combined_w_class)

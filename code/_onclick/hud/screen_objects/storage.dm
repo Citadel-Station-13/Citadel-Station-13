@@ -42,20 +42,52 @@
 
 /obj/screen/storage/left
 	icon_state = "storage_start"
+	insertion_click = TRUE
 
 /obj/screen/storage/right
 	icon_state = "storage_end"
+	insertion_click = TRUE
 
 /obj/screen/storage/continuous
 	icon_state = "storage_continue"
+	insertion_click = TRUE
 
 /obj/screen/storage/volumetric_box
-	icon_state = "stored_8px"
+	icon_state = "stored_continue"
 	var/obj/item/our_item
+	var/obj/screen/storage/stored_left/left
+	var/obj/screen/storage/stored_right/right
+
+/obj/screen/storage/volumetric_box/Destroy()
+	QDEL_NULL(left)
+	QDEL_NULL(right)
+	our_item = null
+	return ..()
 
 /obj/screen/storage/volumetric_box/Initialize(mapload, new_master, our_item)
 	src.our_item = our_item
+	left = new(null, src, our_item)
+	right = new(null, src, our_item)
 	return ..()
 
 /obj/screen/storage/volumetric_box/Click(location, control, params)
 	return our_item.Click(location, control, params)
+
+/obj/screen/storage/volumetric_box/proc/on_screen_objects()
+	return list(src, left, right)
+
+/obj/screen/storage/volumetric_box/proc/set_pixel_size(pixels)
+	cut_overlays()
+	//our icon size is 32 pixels.
+	transform = matrix(32 / pixels, 0, 0, 0, 1, 0)
+	left.pixel_x = -(pixels * 0.5) - 4
+	right.pixel_x = (pixels * 0.5) + 4
+	add_overlay(left)
+	add_overlay(right)
+	pixel_x = (pixels - 32) * 0.5
+
+/obj/screen/storage/stored_left
+	icon_state = "stored_start"
+
+/obj/screen/storage/stored_right
+	icon_state = "stored_end"

@@ -99,7 +99,7 @@
 		volume = I.get_w_volume()
 		used += volume
 		volume_by_item[I] = volume
-		percentage_by_item[I] = volume / max_volume
+		percentage_by_item[I] = volume / get_max_volume()
 		to_chat(world, "DEBUG: [I] volume [volume] percent [percentage_by_item[I]]")
 	var/overrun = FALSE
 	if(used >= (horizontal_pixels + 4))		//2-4 pixel grace zone
@@ -110,7 +110,7 @@
 	// define outside for marginal performance boost
 	var/obj/item/I
 	// start at this pixel from screen_start_x.
-	var/pixel = -((world.icon_size - VOLUMETRIC_STORAGE_BOX_SIZE) * 0.5)
+	var/current_pixel = 0
 
 	LAZYINITLIST(ui_item_blocks)
 	for(var/i in percentage_by_item)
@@ -124,20 +124,12 @@
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 
-		// now, scale the thing
-		var/multiply = pixels_to_use / VOLUMETRIC_STORAGE_BOX_SIZE
-		B.transform = matrix(multiply, 0, 0, 0, 1, 0)
-
-		// unfortunately since scaling means expand-from-center.. ugh..
-		var/px_add = (pixels_to_use - VOLUMETRIC_STORAGE_BOX_SIZE) * 0.5
-		// now, screenloc the thing.
-		var/xshift = FLOOR(pixel / world.icon_size, 1)
-		var/px = pixel % world.icon_size
-		B.screen_loc = I.screen_loc = "[screen_start_x + xshift]:[px + px_add],[screen_start_y]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x]:[current_pixel],[screen_start_y]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
-		pixel += pixels_to_use
+		current_pixel += pixels_to_use
 
 		// set various things
+		B.set_pixel_size(pixels_to_use)
 		B.layer = VOLUMETRIC_STORAGE_BOX_LAYER
 		B.plane = VOLUMETRIC_STORAGE_BOX_PLANE
 		B.name = I.name
@@ -148,7 +140,7 @@
 		I.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 
 		// finally add our things.
-		. += B
+		. += B.on_screen_objects()
 		. += I
 
 	// Then, continuous section.

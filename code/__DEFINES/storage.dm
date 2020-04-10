@@ -23,14 +23,12 @@
 #define WEIGHT_CLASS_GIGANTIC 6
 
 /// Macro for automatically getting the volume of an item from its w_class.
-#define AUTO_SCALE_VOLUME(w_class)							(w_class ** 2)
-/// Macro for automatically getting the volume of a storage item from its max_w_class and max_items.
-#define AUTO_SCALE_STORAGE_VOLUME(w_class, max_items)		(AUTO_SCALE_VOLUME(w_class) * max_items)
+#define AUTO_SCALE_VOLUME(w_class)							(2 ** w_class)
+/// Macro for automatically getting the volume of a storage item from its max_w_class and max_combined_w_class.
+#define AUTO_SCALE_STORAGE_VOLUME(w_class, max_combined_w_class)		(AUTO_SCALE_VOLUME(w_class) * (max_combined_w_class / w_class))
 
 // UI defines
 /// Minimum pixels an item must have in volumetric scaled storage UI
-#define MINIMUM_PIXELS_PER_ITEM 4
-/// The size of the volumetric scaled storage UI's volumetric boxes that's rendered behind items.
-#define VOLUMETRIC_STORAGE_BOX_SIZE 8
+#define MINIMUM_PIXELS_PER_ITEM 2
 /// Maximum number of objects that will be allowed to be displayed using the volumetric display system. Arbitrary number to prevent server lockups.
 #define MAXIMUM_VOLUMETRIC_ITEMS 256
