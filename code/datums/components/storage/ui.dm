@@ -123,11 +123,11 @@
 		if(!ui_item_blocks[I])
 			ui_item_blocks[I] = new /obj/screen/storage/volumetric_box/center(null, src, I)
 		var/obj/screen/storage/volumetric_box/center/B = ui_item_blocks[I]
-		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(MINIMUM_PIXELS_PER_ITEM, round(horizontal_pixels * percent, 1))
+		var/pixels_to_use = overrun? MINIMUM_PIXELS_PER_ITEM : max(MINIMUM_PIXELS_PER_ITEM, horizontal_pixels * percent)
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
 
-		B.screen_loc = I.screen_loc = "[screen_start_x]:[current_pixel + (pixels_to_use * 0.5) + VOLUMETRIC_STORAGE_ITEM_PADDING],[screen_start_y]:[screen_pixel_y]"
+		B.screen_loc = I.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + VOLUMETRIC_STORAGE_ITEM_PADDING, 1)],[screen_start_y]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
 		current_pixel += pixels_to_use + VOLUMETRIC_STORAGE_ITEM_PADDING
 
