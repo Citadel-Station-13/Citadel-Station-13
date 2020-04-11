@@ -2,6 +2,7 @@
 	name = "shield"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	block_chance = 50
+	item_flags = ITEM_CAN_BLOCK
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/transparent = FALSE	// makes beam projectiles pass through the shield
 
@@ -182,12 +183,15 @@
 	throw_speed = 3
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
-	var/active = 0
+	var/active = FALSE
 
 /obj/item/shield/riot/tele/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!active)
 		return BLOCK_NONE
 	return ..()
+
+/obj/item/shield/riot/tele/can_active_block()
+	return ..() && active
 
 /obj/item/shield/riot/tele/attack_self(mob/living/user)
 	active = !active

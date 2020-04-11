@@ -50,5 +50,5 @@ GLOBAL_LIST_INIT(dir2blockdir, list(
 #define PARRY_KNOCKDOWN_ATTACKER			"knockdown_attacker"
 /// List association should be duration.
 #define PARRY_STAGGER_ATTACKER				"stagger_attacker"
-/// List association should be amount to increase clickcd of attacker to.
-#define PARRY_CLICKCD_ATTACKER				"clickcd_attacker"
+/// List association should be amount of time to daze attacker.
+#define PARRY_DAZE_ATTACKER					"daze_attacker"

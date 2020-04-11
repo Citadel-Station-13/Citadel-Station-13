@@ -95,7 +95,7 @@
 	if(!I)
 		to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
 		return
-	if(!(I.can_active_block())
+	if(!I.can_active_block())
 		to_chat(src, "<span class='warning'>[I] is not capable of actively being used to block!</span>")
 		return
 	var/datum/block_parry_data/data = I.get_block_parry_data()
@@ -123,7 +123,7 @@
   * Gets our datum/block_parry_data
   */
 /obj/item/proc/get_block_parry_data()
-	return get_block_parray_data(block_parry_data)
+	return get_block_parry_data(block_parry_data)
 
 /**
   * Returns if we can actively block.

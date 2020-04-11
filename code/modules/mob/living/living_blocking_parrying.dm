@@ -133,13 +133,19 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		return
 	/// Yadda yadda WIP access block/parry data...
 
+/obj/item/proc/active_parry_reflex_counter(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
+
+/mob/living/proc/active_parry_reflex_counter(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
+
+/datum/martial_art/proc/active_parry_reflex_counter(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list)
+
 /mob/living/proc/get_parry_stage()
 	if(!parrying)
 		return NOT_PARRYING
 	var/datum/block_parry_data/data = get_parry_data()
 	var/windup_end = data.parry_time_windup
-	var/active_end = windup + data.parry_time_active
-	var/spindown_end = active + data.parry_time_spindown
+	var/active_end = windup_end + data.parry_time_active
+	var/spindown_end = active_end + data.parry_time_spindown
 	switch(get_parry_time())
 		if(0 to windup_end)
 			return PARRY_WINDUP
@@ -174,26 +180,41 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 /// Run counterattack if any
 /mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
+	if(!isliving(attacker))
+		return
+	var/mob/living/L = attacker
 	var/datum/block_parry_data/data = get_parry_data()
+	var/list/effect_text = list()
 	if(data.parry_data[PARRY_REFLEX_COUNTERATTACK])
 		switch(data.parry_data[PARRY_REFLEX_COUNTERATTACK])
 			if(PARRY_COUNTERATTACK_PROC)
-
+				switch(parrying)
+					if(ITEM_PARRY)
+						active_parry_item.active_parry_reflex_counter(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+					if(UNARMED_PARRY)
+						active_parry_reflex_counter(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
+					if(MARTIAL_PARRY)
+						mind.martial_art.active_parry_reflex_counter(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list)
 			if(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN)
 				switch(parrying)
 					if(ITEM_PARRY)
-
+						active_parry_item.melee_attack_chain(src, attacker, null)
 					if(UNARMED_PARRY)
-
+						UnarmedAttack(attacker)
 					if(MARTIAL_PARRY)
-
+						UnarmedAttack(attacker)
 	if(data.parry_data[PARRY_DISARM_ATTACKER])
-
+		L.drop_all_held_items()
+		effect_text += "disarming"
 	if(data.parry_data[PARRY_KNOCKDOWN_ATTACKER])
-
+		L.DefaultCombatKnockdown(data[parry_data[PARRY_KNOCKDOWN_ATTACKER])
+		effect_text += "knocking them to the ground"
 	if(data.parry_data[PARRY_STAGGER_ATTACKER])
-
-	if(data.parry_data[PARRY_CLICKCD_ATTACKER])
+		L.Stagger(data.parry_data[PARRY_STAGGER_ATTACKER])
+		effect_text += "staggering"
+	if(data.parry_data[PARRY_DAZE_ATTACKER])
+		L.Daze(data.parry_data[PARRY_DAZE_ATTACKER])
+		effect_text += "dazing"
 
 /// Gets the datum/block_parry_data we're going to use to parry.
 /mob/living/proc/get_parry_data()
