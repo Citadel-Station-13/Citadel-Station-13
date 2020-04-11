@@ -133,9 +133,6 @@
 		else
 			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
 			if(prob (25))
-				var/turf/location = get_turf(loc)
-				if(location)
-					location.hotspot_expose(1000,1000)
 				sparks.start() //the most radical way to start plasma fires
 			addtimer(CALLBACK(src, .proc/grind), 2)
 			return
