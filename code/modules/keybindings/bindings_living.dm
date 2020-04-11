@@ -22,6 +22,23 @@
 		if ("V")
 			lay_down()
 			return
+		if("Insert")
+			if(client.keys_held["Ctrl"])
+				keybind_toggle_active_blocking()
+				return
+			else
+				keybind_parry()
+				return
+		if("G")
+			keybind_parry()
+			return
+		if("F")
+			keybind_start_active_blocking()
+	return ..()
 
-
+/mob/living/key_up(_key, client/user)
+	switch(_key)
+		if("F")
+			keybind_stop_active_blocking()
+			return
 	return ..()
