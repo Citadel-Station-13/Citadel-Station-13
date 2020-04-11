@@ -382,18 +382,26 @@
 		explosion(loc, 1, 3, rand(1,5), rand(1,10))
 	var/list/targets = list()
 	var/cur_y = y - round(row_limit * 0.5, 1)
+	var/starting_row = 1
+	if(cur_y < 1)
+		starting_row -= cur_y - 1
+		cur_y = 1
 	var/start_x = x - round(column_limit * 0.5, 1)
-	for(var/row in table) //translate the mines locations into actual turf coordinates.
+	var/starting_column = 1
+	if(start_x < 1)
+		starting_column -= start_x - 1
+		start_x = 1
+	for(var/row in starting_row to length(table)) //translate the mines locations into actual turf coordinates.
 		if(!locate(cur_y, start_x, z))
-			continue
+			break
 		var/cur_x = start_x
-		for(var/column in row)
+		for(var/column in starting_column to length(table[row]))
 			var/coord_value = table[row][column]
 			if(coord_value == 10 || coord_value == 0) //there is a mine in here.
-				var/turf/target = locate(cur_y, cur_x, z)
-				if(!target)
-					continue
-				targets += target
+				var/turf/T = locate(cur_y, cur_x, z)
+				if(!T)
+					break
+				targets += T
 			cur_x++
 		cur_y++
 	var/num_explosions = 0

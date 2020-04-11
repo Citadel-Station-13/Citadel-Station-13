@@ -260,3 +260,10 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
+
+/turf/open/floor/padded
+	name = "padded floor"
+	desc = "Keeps crazy people from hurting themselves. It's soft, plush, and very nice to get shoved agaisnt."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "floor_padded"
+	floor_tile = /obj/item/stack/tile/padded

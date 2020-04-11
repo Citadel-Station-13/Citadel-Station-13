@@ -15,6 +15,12 @@
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/ammo/pistol/box
+	name = "Ammo Box - 10mm"
+	desc = "An additional box of 10mm ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c10mm
+	illegal_tech = FALSE
+
 /datum/uplink_item/ammo/pistolap
 	name = "10mm Armour Piercing Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
@@ -22,6 +28,12 @@
 	item = /obj/item/ammo_box/magazine/m10mm/ap
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/ammo/pistolap/box
+	name = "Ammo Box - 10mm Armour Piercing"
+	desc = "An additional box of 10mm Armour Piercing ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c10mm/ap
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/pistolhp
 	name = "10mm Hollow Point Magazine"
@@ -31,6 +43,12 @@
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/ammo/pistolhp/box
+	name = "Ammo Box - 10mm Hollow Point"
+	desc = "An additional box of 10mm Hollow Point ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c10mm/hp
+	illegal_tech = FALSE
+
 /datum/uplink_item/ammo/pistolfire
 	name = "10mm Incendiary Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
@@ -39,12 +57,24 @@
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/ammo/pistolfire/box
+	name = "Ammo Box - 10mm Incendiary"
+	desc = "An additional box of 10mm Incendiary ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/magazine/m10mm/fire
+	illegal_tech = FALSE
+
 /datum/uplink_item/ammo/pistolzzz
 	name = "10mm Soporific Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. Loaded with soporific rounds that put the target to sleep. \
 			NOTE: Soporific is not instant acting due to the constraints of the round's scale. Will usually require three shots to take effect."
 	item = /obj/item/ammo_box/magazine/m10mm/soporific
 	cost = 2
+
+/datum/uplink_item/ammo/pistolzzz/box
+	name = "Ammo Box - 10mm Soporific"
+	desc = "An additional box of 10mm Soporific ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c10mm/soporific
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
@@ -211,6 +241,12 @@
 	item = /obj/item/ammo_box/magazine/pistolm9mm
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/pistolaps
+	name = "Ammo Box - 9mm"
+	desc = "An additional box of 9mm ammo. The box has 30 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c9mm
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/flechetteap
 	name = "Armor Piercing Flechette Magazine"

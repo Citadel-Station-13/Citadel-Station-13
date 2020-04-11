@@ -317,7 +317,7 @@
 	throwforce = 10
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
-	hit_reaction_chance = 50
+	block_chance = 50
 	custom_materials = list(/datum/material/iron = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
@@ -362,18 +362,17 @@
 			new stack_type(get_turf(loc))
 	qdel(src)
 
-/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
-		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
-		return 1
-	return 0
+/obj/item/chair/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!(attack_type & ATTACK_TYPE_UNARMED))
+		return NONE
+	return ..()
 
 /obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
 	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user] smashes \the [src] to pieces against \the [target]</span>")
+		user.visible_message("<span class='danger'>[user] smashes [src] to pieces against [target]</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)

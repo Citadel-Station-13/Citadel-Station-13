@@ -8,6 +8,11 @@
 /*
  * Security
  */
+/obj/item/clothing/under/rank/security
+	strip_delay = 50
+	alt_covers_chest = TRUE
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security jumpsuit"
@@ -16,10 +21,6 @@
 	item_state = "r_suit"
 	item_color = "rsecurity"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = SENSOR_COORDS
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
@@ -73,10 +74,6 @@
 	item_state = "r_suit"
 	item_color = "rwarden"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/warden/grey
 	name = "grey security suit"
@@ -114,10 +111,6 @@
 	item_state = "det"
 	item_color = "detective"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/detective/skirt
 	name = "detective's suitskirt"
@@ -135,7 +128,6 @@
 	icon_state = "greydet"
 	item_state = "greydet"
 	item_color = "greydet"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/detective/grey/skirt
 	name = "noir suitskirt"
@@ -159,9 +151,6 @@
 	item_color = "rhos"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/head_of_security/skirt
 	name = "head of security's jumpskirt"
@@ -203,7 +192,6 @@
 	icon_state = "hosblueclothes"
 	item_state = "hosblueclothes"
 	item_color = "hosblueclothes"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/head_of_security/parade
 	name = "head of security's parade uniform"
@@ -220,4 +208,3 @@
 	item_state = "r_suit"
 	item_color = "hos_parade_fem"
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE

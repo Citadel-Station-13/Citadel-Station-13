@@ -5,7 +5,7 @@
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/transparent = FALSE	// makes beam projectiles pass through the shield
 
-/obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/proc/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	return TRUE
 
 /obj/item/shield/riot
@@ -26,16 +26,18 @@
 	transparent = TRUE
 	max_integrity = 75
 
-/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(transparent && (hitby.pass_flags & PASSGLASS))
-		return FALSE
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
+/obj/item/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(ismovableatom(object))
+		var/atom/movable/AM = object
+		if(transparent && (AM.pass_flags & PASSGLASS))
+			return BLOCK_NONE
+	if(attack_type & ATTACK_TYPE_THROWN)
 		final_block_chance += 30
-	if(attack_type == LEAP_ATTACK)
+	if(attack_type & ATTACK_TYPE_TACKLE)
 		final_block_chance = 100
 	. = ..()
-	if(.)
-		on_shield_block(owner, hitby, attack_text, damage, attack_type)
+	if(. & BLOCK_SUCCESS)
+		on_shield_block(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
@@ -69,10 +71,10 @@
 	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
 	new /obj/item/shard((get_turf(src)))
 
-/obj/item/shield/riot/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/riot/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(obj_integrity <= damage)
 		var/turf/T = get_turf(owner)
-		T.visible_message("<span class='warning'>[hitby] destroys [src]!</span>")
+		T.visible_message("<span class='warning'>[attack_text] destroys [src]!</span>")
 		shatter(owner)
 		qdel(src)
 		return FALSE
@@ -139,11 +141,11 @@
 	. = ..()
 	icon_state = "[base_icon_state]0"
 
-/obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
-
-/obj/item/shield/energy/IsReflect()
-	return (active)
+/obj/item/shield/energy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if((attack_type & ATTACK_TYPE_PROJECTILE) && is_energy_reflectable_projectile(object))
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
+		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
+	return ..()
 
 /obj/item/shield/energy/attack_self(mob/living/carbon/human/user)
 	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -182,10 +184,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/active = 0
 
-/obj/item/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(active)
-		return ..()
-	return 0
+/obj/item/shield/riot/tele/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!active)
+		return BLOCK_NONE
+	return ..()
 
 /obj/item/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
@@ -249,7 +251,7 @@
 	transparent = FALSE
 	item_flags = SLOWS_WHILE_IN_HAND
 
-/obj/item/shield/riot/implant/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
+/obj/item/shield/riot/implant/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type & ATTACK_TYPE_PROJECTILE)
 		final_block_chance = 60 //Massive shield
 	return ..()

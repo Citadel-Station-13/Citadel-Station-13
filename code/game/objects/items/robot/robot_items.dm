@@ -11,7 +11,7 @@
 	var/charge_cost = 30
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
-	if(M.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
+	if(M.run_block(src, 0, "[M]'s [name]", ATTACK_TYPE_MELEE, 0, user, ran_zone(user.zone_selected)) & BLOCK_SUCCESS)
 		playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(iscyborg(user))
