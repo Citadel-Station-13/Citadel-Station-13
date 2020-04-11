@@ -34,6 +34,9 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 /// Carries data like list data that would be a waste of memory if we initialized the list on every /item as we can cache datums easier.
 /datum/block_parry_data
 	/////////// BLOCKING ////////////
+
+	/// NOTE: FOR ATTACK_TYPE_DEFINE, you MUST wrap it in "[DEFINE_HERE]"! The defines are bitflags, and therefore, NUMBERS!
+
 	/// See defines.
 	var/can_block_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
 	/// Our slowdown added while blocking
@@ -47,17 +50,17 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 	/// Amount of "free" damage blocking absorbs
 	var/block_damage_absorption = 10
-	/// Override absorption, list(ATTACK_TYPE_DEFINE = absorption), see [block_damage_absorption]
+	/// Override absorption, list("[ATTACK_TYPE_DEFINE]" = absorption), see [block_damage_absorption]
 	var/list/block_damage_absorption_override
 
 	/// Ratio of damage block above absorption amount, coefficient, lower is better, this is multiplied by damage to determine how much is blocked.
 	var/block_damage_multiplier = 0.5
-	/// Override damage overrun efficiency, list(ATTACK_TYPE_DEFINE = absorption), see [block_damage_efficiency]
+	/// Override damage overrun efficiency, list("[ATTACK_TYPE_DEFINE]" = absorption), see [block_damage_efficiency]
 	var/list/block_damage_multiplier_override
 
 	/// Upper bound of damage block, anything above this will go right through.
 	var/block_damage_limit = 80
-	/// Override upper bound of damage block, list(ATTACK_TYPE_DEFINE = absorption), see [block_damage_limit]
+	/// Override upper bound of damage block, list("[ATTACK_TYPE_DEFINE]" = absorption), see [block_damage_limit]
 	var/list/block_damage_limit_override
 
 	/*
@@ -69,7 +72,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 	/// Default damage-to-stamina coefficient, higher is better. This is based on amount of damage BLOCKED, not initial damage, to prevent damage from "double dipping".
 	var/block_stamina_efficiency = 2
-	/// Override damage-to-stamina coefficient, see [block_efficiency], this should be list(ATTACK_TYPE_DEFINE = coefficient_number)
+	/// Override damage-to-stamina coefficient, see [block_efficiency], this should be list("[ATTACK_TYPE_DEFINE]" = coefficient_number)
 	var/list/block_stamina_efficiency_override
 	/// Ratio of stamina incurred by blocking that goes to the arm holding the object instead of the chest. Has no effect if this is not held in hand.
 	var/block_stamina_limb_ratio = 0.5
@@ -78,6 +81,15 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 	/// Stamina dealt directly via adjustStaminaLossBuffered() per SECOND of block.
 	var/block_stamina_cost_per_second = 1.5
+
+	/// Bitfield for attack types that we can block while down. This will work in any direction.
+	var/block_resting_attack_types_anydir = ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED | ATTACK_TYPE_TACKLE
+	/// Bitfield for attack types that we can block while down but only in our normal directions.
+	var/block_resting_attack_types_directional = ATTACK_TYPE_PROJECTILE | ATTACK_TYPE_THROWN
+	/// Multiplier to stamina damage taken for attacks blocked while downed.
+	var/block_resting_stamina_penalty_multiplier = 1.5
+	/// Override list for multiplier to stamina damage taken for attacks blocked while down. list("[ATTACK_TYPE_DEFINE]" = multiplier_number)
+	var/list/block_resting_stamina_penalty_multiplier_override
 
 	/// Sounds for blocking
 	var/list/block_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
@@ -96,11 +108,11 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_time_perfect = 2.5
 	/// Time on both sides of perfect parry that still counts as part of the perfect window.
 	var/parry_time_perfect_leeway = 1
-	/// [parry_time_perfect_leeway] override for attack types, list(ATTACK_TYPE_DEFINE = deciseconds)
+	/// [parry_time_perfect_leeway] override for attack types, list("[ATTACK_TYPE_DEFINE]" = deciseconds)
 	var/list/parry_time_perfect_leeway_override
 	/// Parry "efficiency" falloff in percent per decisecond once perfect window is over.
 	var/parry_imperfect_falloff_percent = 20
-	/// [parry_imperfect_falloff_percent] override for attack types, list(ATTACK_TYPE_DEFINE = deciseconds)
+	/// [parry_imperfect_falloff_percent] override for attack types, list("[ATTACK_TYPE_DEFINE]" = deciseconds)
 	var/list/parry_imperfect_falloff_percent_override
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
@@ -109,11 +121,17 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		PARRY_REFLEX_COUNTERATTACK = PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN
 		)
 
+/mob/living/proc/handle_block_parry(seconds = 1)
+	if(active_blocking)
+		var/datum/block_parry_data/data = get_block_parry_data(active_block_item.block_parry_data)
+		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
+
 /obj/item/proc/active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_PARRY))
 		return
 	/// Yadda yadda WIP access block/parry data...
 
+/*
 /mob/living/proc/get_parry_stage()
 	if(!parrying)
 		return NOT_PARRYING
@@ -134,15 +152,15 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/datum/block_parry_data/data = get_parry_data()
 	if(get_parry_stage() != PARRY_ACTIVE)
 		return 0
-	var/difference = abs(get_parry_time() - (data.parry_time_perfect + data.parry_time_windup)
-	var/leeway = data.parry_time_perfect_leeway_override[attack_type]
+	var/difference = abs(get_parry_time() - (data.parry_time_perfect + data.parry_time_windup))
+	var/leeway = data.parry_time_perfect_leeway_override["[attack_type]"]
 	if(isnull(leeway))
 		leeway = data.parry_time_perfect_leeway
 	difference -= leeway
 	. = data.parry_efficiency_perfect
 	if(difference <= 0)
 		return
-	var/falloff = data.parry_imperfect_falloff_percent_override[attack_type]
+	var/falloff = data.parry_imperfect_falloff_percent_override["[attack_type]"]
 	if(isnull(falloff))
 		falloff = data.parry_imperfect_falloff_percent
 	. -= falloff * difference
@@ -155,7 +173,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 /// Run counterattack if any
 /mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
-	var/datum/block_parry_data = get_parry_data()
+	var/datum/block_parry_data/data = get_parry_data()
 	if(data.parry_data[PARRY_REFLEX_COUNTERATTACK])
 		switch(data.parry_data[PARRY_REFLEX_COUNTERATTACK])
 			if(PARRY_COUNTERATTACK_PROC)
@@ -184,5 +202,5 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		return get_block_parry_data(block_parry_data)
 	else if(parrying == MARTIAL_PARRY)
 		return get_block_parry_data(mind.martial_art.block_parry_data)
-
+*/
 

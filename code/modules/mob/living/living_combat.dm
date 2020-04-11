@@ -27,6 +27,7 @@
 		to_chat(src, was_forced? "<span class='warning'>Your muscles are forcibly relaxed!</span>" : "<span class='warning'>You relax your muscles.</span>")
 	if(update_icon)
 		update_combat_mode_icon()
+	stop_active_blocking(TRUE)
 
 /mob/living/proc/enable_combat_mode(silent = TRUE, was_forced = FALSE, visible = FALSE, update_icon = TRUE)
 	if(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)

@@ -10,15 +10,17 @@
 		stop_active_blocking()
 	return ..()
 
-/mob/living/proc/stop_active_blocking()
+/mob/living/proc/stop_active_blocking(was_forced = FALSE)
+	if(!active_blocking)
+		return FALSE
 	var/obj/item/I = active_block_item
 	active_blocking = FALSE
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
 	remove_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK)
 	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
-	if(timeToNextMove() < I.data.block_end_click_cd_add)
-		changeNext_move(I.data.block_end_click_cd_add)
+	if(timeToNextMove() < data.block_end_click_cd_add)
+		changeNext_move(data.block_end_click_cd_add)
 	active_block_effect_end()
 	return TRUE
 
@@ -28,13 +30,13 @@
 	if(!(I in held_items))
 		return FALSE
 	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
-	if(!istype(I.data))		//Typecheck because if an admin/coder screws up varediting or something we do not want someone being broken forever, the CRASH logs feedback so we know what happened.
-		CRASH("start_active_blocking called with an item with no valid data: [I.data]!")
+	if(!istype(data))		//Typecheck because if an admin/coder screws up varediting or something we do not want someone being broken forever, the CRASH logs feedback so we know what happened.
+		CRASH("start_active_blocking called with an item with no valid data: [I] --> [I.block_parry_data]!")
 	active_blocking = TRUE
 	active_block_item = I
-	if(I.data.block_lock_attacking)
+	if(data.block_lock_attacking)
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOMOVE, ACTIVE_BLOCK_TRAIT)
-	add_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK, TRUE, 100, override = TRUE, multiplicative_slowdown = I.data.block_slowdown, blacklisted_movetypes = FLOATING)
+	add_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK, TRUE, 100, override = TRUE, multiplicative_slowdown = data.block_slowdown, blacklisted_movetypes = FLOATING)
 	active_block_effect_start()
 	return TRUE
 
@@ -67,9 +69,9 @@
 /// The amount of damage that is blocked.
 /obj/item/proc/active_block_damage_mitigation(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	var/datum/block_parry_data/data = get_block_parry_data(block_parry_data)
-	var/absorption = data.block_damage_absorption_override[attack_type]
-	var/efficiency = data.block_damage_multiplier_override[attack_type]
-	var/limit = data.block_damage_limit_override[attack_type]
+	var/absorption = data.block_damage_absorption_override["[attack_type]"]
+	var/efficiency = data.block_damage_multiplier_override["[attack_type]"]
+	var/limit = data.block_damage_limit_override["[attack_type]"]
 	// must use isnulls to handle 0's.
 	if(isnull(absorption))
 		absorption = data.block_damage_absorption
@@ -92,10 +94,15 @@
 /// Amount of stamina from damage blocked. Note that the damage argument is damage_blocked.
 /obj/item/proc/active_block_stamina_cost(mob/living/owner, atom/object, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	var/datum/block_parry_data/data = get_block_parry_data(block_parry_data)
-	var/efficiency = data.block_stamina_efficiency_override[attack_type]
+	var/efficiency = data.block_stamina_efficiency_override["[attack_type]"]
 	if(isnull(efficiency))
 		efficiency = data.block_stamina_efficiency
-	return damage_blocked / efficiency
+	var/multiplier = 1
+	if(!CHECK_MOBILITY(owner, MOBILITY_STAND))
+		multiplier = data.block_resting_stamina_penalty_multiplier_override["["[attack_type]"]"]
+		if(isnull(multiplier))
+			multiplier = data.block_resting_stamina_penalty_multiplier
+	return (damage_blocked / efficiency)
 
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
@@ -119,13 +126,13 @@
 
 /obj/item/proc/active_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
-		return
-	if(!CHECK_BITFIELD(item_flags, ITEM_CAN_BLOCK))
-		return
-	var/incoming_direction = get_dir(get_turf(attacker) || get_turf(object), src)
-	if(!can_block_direction(owner.dir, incoming_direction))
-		return
+		return BLOCK_NONE
 	var/datum/block_parry_data/data = get_block_parry_data(block_parry_data)
+	var/incoming_direction = get_dir(get_turf(attacker) || get_turf(object), src)
+	if(!CHECK_MOBILITY(owner, MOBILITY_STAND) && !(data.block_resting_attack_types_anydir & attack_type) && (!(data.block_resting_attack_types_directional & attack_type) || !can_block_direction(owner.dir, incoming_direction)))
+		return BLOCK_NONE
+	else if(!can_block_direction(owner.dir, incoming_direction))
+		return BLOCK_NONE
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK] = TRUE
 	var/damage_mitigated = active_block_damage_mitigation(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 	var/final_damage = max(0, damage - damage_mitigated)
