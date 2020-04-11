@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		L.drop_all_held_items()
 		effect_text += "disarming"
 	if(data.parry_data[PARRY_KNOCKDOWN_ATTACKER])
-		L.DefaultCombatKnockdown(data[parry_data[PARRY_KNOCKDOWN_ATTACKER])
+		L.DefaultCombatKnockdown(data.parry_data[PARRY_KNOCKDOWN_ATTACKER])
 		effect_text += "knocking them to the ground"
 	if(data.parry_data[PARRY_STAGGER_ATTACKER])
 		L.Stagger(data.parry_data[PARRY_STAGGER_ATTACKER])
