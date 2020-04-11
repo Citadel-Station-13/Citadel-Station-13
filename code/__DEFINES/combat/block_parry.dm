@@ -23,6 +23,9 @@ GLOBAL_LIST_INIT(dir2blockdir, list(
 
 #define DIR2BLOCKDIR(d)			(GLOB.dir2blockdir["[d]"])
 
+/// If this is the value of active_block_starting it signals we want to interrupt the start
+#define ACTIVE_BLOCK_STARTING_INTERRUPT "INTERRUPT"
+
 /// ""types"" of parry "items"
 #define UNARMED_PARRY		"unarmed"
 #define MARTIAL_PARRY		"martial"
