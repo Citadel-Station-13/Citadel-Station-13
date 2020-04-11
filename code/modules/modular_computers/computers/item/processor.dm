@@ -20,7 +20,6 @@
 	. = ..()
 	if(!loc || !istype(loc, /obj/machinery/modular_computer))
 		CRASH("Inapropriate type passed to obj/item/modular_computer/processor/New()! Aborting.")
-		return
 	// Obtain reference to machinery computer
 	all_components = list()
 	idle_threads = list()
