@@ -48,10 +48,11 @@
 			px = -12
 	var/oldpx = user.pixel_x
 	var/oldpy = user.pixel_y
-	animate(user, pixel_x = px, pixel_y = py, time = 1, easing = SINE_EASING | EASE_OUT)
-	animate(user, pixel_x = oldpx, pixel_y = oldpy, time = 1.5)
+	animate(user, pixel_x = px, pixel_y = py, time = 3, easing = SINE_EASING | EASE_OUT, flags = ANIMATION_END_NOW)
+	animate(user, pixel_x = oldpx, pixel_y = oldpy, time = 3)
 	user.visible_message("<span class='warning'>[user] charges forwards with [src]!</span>")
-	animate(new /obj/effect/temp_visual/dir_setting/shieldbash(user.loc, dir), alpha = 0, pixel_x = px + 4, pixel_y = py + 4, time = 3)
+	var/obj/effect/temp_visual/dir_setting/shield_bash = new(user.loc, dir)
+	animate(effect, alpha = 0, pixel_x = px + 4, pixel_y = py + 4, time = 3)
 
 /obj/item/shield/proc/bash_target(mob/living/user, mob/living/target)
 	if(!(target.status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
@@ -97,6 +98,8 @@
 			to_chat(user, "<span class='warning'>You can't ground slam with [src]!</span>")
 			return FALSE
 		bash_target(user, target)
+		user.do_attack_animation(target, used_item = src)
+		playsound(src, "swing_hit", 75, 1)
 		last_shieldbash = world.time
 		user.adjustStaminaLossBuffered(shieldbash_stamcost)
 		return 1
@@ -109,15 +112,18 @@
 	var/list/victims = list()
 	for(var/i in checking)
 		var/turf/T = i
-		for(var/mob/living/L in T)
+		for(var/mob/living/L in T.contents)
 			victims += L
 	if(length(victims))
 		for(var/i in victims)
 			bash_target(user, target)
+		playsound(src, "swing_hit", 75, 1)
+	else
+		playsound(src, 'sound/weapons/punchmiss.ogg', 75, 1)
 	return length(victims)
 
 /obj/effect/temp_visual/dir_setting/shield_bash
-	icon = 'icon/effects/96x96_attack_sweep.dmi'
+	icon = 'icons/effects/96x96_attack_sweep.dmi'
 	icon_state = "shieldbash"
 	duration = 3
 
