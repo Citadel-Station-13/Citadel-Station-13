@@ -239,6 +239,8 @@ Auto Patrol: []"},
 		attempt_handcuff(C)
 
 /mob/living/simple_animal/bot/secbot/proc/attempt_handcuff(mob/living/carbon/C)
+	if (!on)
+		return
 	if(!C.handcuffed)
 		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 		C.update_handcuffed()
