@@ -64,6 +64,8 @@
 			progbar = new(living_user, delay, target)
 	// MAIN LOOP
 	. = TRUE
+	if(!delay)
+		return
 	var/obj/item/held
 	var/locchanged
 	var/ctu
@@ -140,7 +142,7 @@
 		dy = targetturf.y - userturf.y
 		if((dx != initial_dx) || (dy != initial_dy))
 			return FALSE
-		if(loc_changed && !drifting && !(do_after_flags & DO_AFTER_ALLOW_NONSPACEDRIFT_RELATIVITY))
+		if(locchanged && !drifting && !(do_after_flags & DO_AFTER_ALLOW_NONSPACEDRIFT_RELATIVITY))
 			return FALSE
 	if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
 		return FALSE
