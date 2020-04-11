@@ -167,10 +167,12 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 /mob/living/proc/get_parry_time()
 	return world.time - parry_start_time
+*/
 
 /// same return values as normal blocking, called with absolute highest priority in the block "chain".
 /mob/living/proc/run_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 
+/*
 /// Run counterattack if any
 /mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 	var/datum/block_parry_data/data = get_parry_data()
