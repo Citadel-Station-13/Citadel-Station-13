@@ -133,7 +133,6 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		return
 	/// Yadda yadda WIP access block/parry data...
 
-/*
 /mob/living/proc/get_parry_stage()
 	if(!parrying)
 		return NOT_PARRYING
@@ -169,12 +168,10 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 
 /mob/living/proc/get_parry_time()
 	return world.time - parry_start_time
-*/
 
 /// same return values as normal blocking, called with absolute highest priority in the block "chain".
 /mob/living/proc/run_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 
-/*
 /// Run counterattack if any
 /mob/living/proc/run_parry_countereffects(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 	var/datum/block_parry_data/data = get_parry_data()
@@ -201,10 +198,9 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 /// Gets the datum/block_parry_data we're going to use to parry.
 /mob/living/proc/get_parry_data()
 	if(parrying == ITEM_PARRY)
-		return get_block_parry_data(active_parry_item.block_parry_data)
+		return active_parry_item.get_block_parry_data()
 	else if(parrying == UNARMED_PARRY)
 		return get_block_parry_data(block_parry_data)
 	else if(parrying == MARTIAL_PARRY)
 		return get_block_parry_data(mind.martial_art.block_parry_data)
-*/
 
