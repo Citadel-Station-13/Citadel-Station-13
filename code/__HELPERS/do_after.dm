@@ -32,8 +32,8 @@
 	var/stage = DO_AFTER_STARTING
 	var/startlocuser = user.loc
 	var/startloctarget = target.loc
-	var/turf/userturf = get_turf(user)
-	var/turf/targetturf = get_turf(target)
+	var/turf/user_turf = get_turf(user)
+	var/turf/target_turf = get_turf(target)
 	if(!userturf || !targetturf)
 		return FALSE
 	if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
@@ -94,7 +94,7 @@
 			if((dx != initial_dx) || (dy != initial_dy))
 				. = FALSE
 				break
-			if(loc_changed && !drifting && !(do_after_flags & DO_AFTER_ALLOW_NONSPACEDRIFT_RELATIVITY))
+			if(locchanged && !drifting && !(do_after_flags & DO_AFTER_ALLOW_NONSPACEDRIFT_RELATIVITY))
 				. = FALSE
 				break
 		if(!user.inertia_dir)
@@ -123,12 +123,12 @@
 	INVOKE_CALLBACK
 	if(cb_return == DO_AFTER_STOP)
 		return FALSE
-	else if(cb_return != DO_AFTER_PROCEED)
-		if(CHECK_FLAG_FAILURE)
-			return FALSE
+	else if(cb_return == DO_AFTER_PROCEED)
+		return TRUE
+	if(CHECK_FLAG_FAILURE)
+		return FALSE
 	if(((do_after_flags & DO_AFTER_DISALLOW_MOVING_ABSOLUTE_USER) && (user.loc != startlocuser)) || ((do_after_flags & DO_AFTER_DISALLOW_MOVING_ABSOLUTE_TARGET) && (target.loc != startloctarget)))
-		. = FALSE
-		break
+		return FALSE
 	else if(do_after_flags & DO_AFTER_DISALLOW_MOVING_RELATIVE)
 		ctu = get_turf(user)
 		ctt = get_turf(target)
@@ -138,20 +138,16 @@
 		dx = targetturf.x - userturf.x
 		dy = targetturf.y - userturf.y
 		if((dx != initial_dx) || (dy != initial_dy))
-			. = FALSE
-			break
+			return FALSE
 		if(loc_changed && !drifting && !(do_after_flags & DO_AFTER_ALLOW_NONSPACEDRIFT_RELATIVITY))
-			. = FALSE
-			break
+			return FALSE
 	if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
 		return FALSE
 	held = living_user?.get_active_held_item()
 	if((do_after_flags & DO_AFTER_DISALLOW_ACTIVE_ITEM_CHANGE) && (held != (tool || initially_held_item)))
-		. = FALSE
-		break
+		return FALSE
 	if((do_after_flags & DO_AFTER_REQUIRE_FREE_HAND_OR_TOOL) && (!living_user?.is_holding(tool) && !length(living_user?.get_empty_held_indexes())))
-		. = FALSE
-		break
+		return FALSE
 
 /// Requires absolute stillness in the user
 #define DO_AFTER_DISALLOW_MOVING_ABSOLUTE_USER		(1<<0)
