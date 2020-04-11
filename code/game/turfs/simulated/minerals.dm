@@ -173,6 +173,13 @@
 		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40, /turf/closed/mineral/titanium = 11,
 		/turf/closed/mineral/gibtonite = 4, /turf/closed/mineral/bscrystal = 1)
 
+/turf/closed/mineral/random/no_caves/earth_like
+	icon_state = "rock_oxy"
+	turf_type = /turf/open/floor/plating/asteroid
+	baseturfs = /turf/open/floor/plating/asteroid
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
@@ -245,13 +252,6 @@
 		/turf/closed/mineral/uranium/volcanic = 3, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 8, /turf/closed/mineral/titanium/volcanic = 8,
 		/turf/closed/mineral/silver/volcanic = 20, /turf/closed/mineral/plasma/volcanic = 30, /turf/closed/mineral/bscrystal/volcanic = 1, /turf/closed/mineral/gibtonite/volcanic = 2,
 		/turf/closed/mineral/iron/volcanic = 95)
-
-/turf/closed/mineral/random/earth_like
-	icon_state = "rock_oxy"
-	turf_type = /turf/open/floor/plating/asteroid
-	baseturfs = /turf/open/floor/plating/asteroid
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	defer_change = TRUE
 
 
 /turf/closed/mineral/iron
