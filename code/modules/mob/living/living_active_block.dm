@@ -2,6 +2,10 @@
 /mob/living
 	/// Whether or not the user is actively blocking.
 	var/active_blocking = FALSE
+	/// Whether or not we can actively block. Disabled by default since a lot of mobs do not support stamina damage. Imagine a dextrous guardian with a shield..
+	var/active_block_enabled = FALSE
+	/// Whether or not we are in the process of raising our shield/whatever.
+	var/active_block_starting = FALSE
 	/// The item the user is actively blocking with if any.
 	var/obj/item/active_block_item
 
@@ -52,7 +56,7 @@
 
 /mob/living/get_standard_pixel_x_offset()
 	. = ..()
-	if(active_blocking)
+	if(active_blocking || active_block_starting)
 		if(dir & EAST)
 			. += 12
 		if(dir & WEST)
@@ -60,11 +64,54 @@
 
 /mob/living/get_standard_pixel_y_offset()
 	. = ..()
-	if(active_blocking)
+	if(active_blocking || active_block_starting)
 		if(dir & NORTH)
 			. += 12
 		if(dir & SOUTH)
 			. -= 12
+
+/**
+  * Proc called by keybindings to toggle active blocking.
+  */
+/mob/living/proc/keybind_toggle_active_blocking()
+	if(active_blocking)
+		return keybind_stop_active_blocking()
+	else
+		return keybind_start_active_blocking()
+
+/**
+  * Proc called by keybindings to start active blocking.
+  */
+/mob/living/proc/keybind_start_active_blocking()
+	if(active_blocking || active_block_starting)
+		return FALSE
+	if(!CHECK_BITFIELD(combat_flags, COMBAT_FLAG_COMBAT_ACTIVE))
+		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
+		return FALSE
+	var/obj/item/I = get_active_held_item()
+	if(!I)
+		to_chat(src, "<span class='warning'>You can't block with your bare hands!</span>")
+		return
+	if(!(I.item_flags & ITEM_CAN_BLOCK))
+		to_chat(src, "<span class='warning'>[I] is not capable of actively being used to block!</span>")
+		return
+	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
+	var/delay = data.block_start_delay
+	active_block_starting = TRUE
+	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = delay, FALSE, SINE_EASING | EASE_IN)
+	if(!do_after_advanced(src, delay, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT|DO_AFTER_DISALLOW_ACTIVE_ITEM_CHANGE, null, MOBILITY_USE, COMBAT_FLAG_COMBAT_ACTIVE, null, I))
+		to_chat(src, "<span class='warning'>You fail to raise [src].</span>")
+		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
+		return
+	active_block_starting = FALSe
+	start_active_blocking(I)
+
+/**
+  * Proc called by keybindings to stop active blocking.
+  */
+/mob/living/proc/keybind_stop_active_blocking()
+	stop_active_blocking(FALSE)
+	return TRUE
 
 /// The amount of damage that is blocked.
 /obj/item/proc/active_block_damage_mitigation(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)

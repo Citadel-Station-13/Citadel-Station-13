@@ -10,12 +10,18 @@
 			else
 				stop_pulling()
 			return
-		if("Insert", "G")
-			a_intent_change(INTENT_HOTKEY_RIGHT)
+		if("Insert")
+			if(client.keys_held["Ctrl"])
+				keybind_toggle_active_blocking()
+				return
+			else
+				keybind_parry()
+				return
+		if("G")
+			keybind_parry()
 			return
 		if("F")
-			a_intent_change(INTENT_HOTKEY_LEFT)
-			return
+			keybind_start_active_blocking()
 		if("X", "Northeast") // Northeast is Page-up
 			swap_hand()
 			return
@@ -90,5 +96,8 @@
 	switch(_key)
 		if("Alt")
 			toggle_move_intent()
+			return
+		if("F")
+			keybind_stop_active_blocking()
 			return
 	return ..()

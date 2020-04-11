@@ -47,6 +47,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/block_lock_attacking = TRUE
 	/// The priority we get in [mob/do_run_block()] while we're being used to parry.
 	var/block_active_priority = BLOCK_PRIORITY_ACTIVE_BLOCK
+	/// Windup before we have our blocking active.
+	var/block_start_delay = 5
 
 	/// Amount of "free" damage blocking absorbs
 	var/block_damage_absorption = 10
