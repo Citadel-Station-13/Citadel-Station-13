@@ -19,6 +19,8 @@
 	var/shieldbash_stamdmg = 15
 	/// Shield bashing stagger duration
 	var/shieldbash_stagger_duration = 3.5 SECONDS
+	/// Shield bashing push distance
+	var/shieldbash_push_distance = 1
 
 /obj/item/shield/examine(mob/user)
 	. = ..()
@@ -31,11 +33,11 @@
 	return TRUE
 
 /obj/item/shield/alt_pre_attack(atom/A, mob/living/user, params)
-	user_shieldbash(user, A)
+	user_shieldbash(user, A, user.a_intent != INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	user_shieldbash(user, target)
+	user_shieldbash(user, target, user.a_intent != INTENT_HARM)
 	return TRUE
 
 /obj/item/shield/proc/do_shieldbash_effect(mob/living/user, dir)
@@ -54,11 +56,11 @@
 	var/oldpy = user.pixel_y
 	animate(user, pixel_x = px, pixel_y = py, time = 3, easing = SINE_EASING | EASE_OUT, flags = ANIMATION_END_NOW)
 	animate(user, pixel_x = oldpx, pixel_y = oldpy, time = 3)
-	user.visible_message("<span class='warning'>[user] charges forwards with [src]!</span>")
+	user.visible_message("<span class='warning'>[user] [harmful? "charges forwards with" : "sweeps"] [src]!</span>")
 	var/obj/effect/temp_visual/dir_setting/shield_bash/effect = new(user.loc, dir)
 	animate(effect, alpha = 0, pixel_x = px + 4, pixel_y = py + 4, time = 3)
 
-/obj/item/shield/proc/bash_target(mob/living/user, mob/living/target, bashdir)
+/obj/item/shield/proc/bash_target(mob/living/user, mob/living/target, bashdir, harmful)
 	if(!(target.status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
 		// unified stun absorption system when lol
 		target.visible_message("<span class='warning'>[user] slams [target] with [src], but [target] doesn't falter!</span>", "<span class='userdanger'>[user] slams you with [src], but it barely fazes you!</span>")
@@ -66,12 +68,16 @@
 	var/target_downed = !CHECK_MOBILITY(target, MOBILITY_STAND)
 	var/wallhit = FALSE
 	var/turf/target_current_turf = get_turf(target)
-	target.visible_message("<span class='warning'>[target_downed? "[user] slams [src] into [target]" : "[user] bashes [target] with [src]"]!</span>",
-	"<span class='warning'>[target_downed? "[user] slams [src] into you" : "[user] bashes you with [src]"]!</span>")
-	for(var/i in 1 to shieldbash_knockback)
+	if(harmful)
+		target.visible_message("<span class='warning'>[target_downed? "[user] slams [src] into [target]" : "[user] bashes [target] with [src]"]!</span>",
+		"<span class='warning'>[target_downed? "[user] slams [src] into you" : "[user] bashes you with [src]"]!</span>")
+	else
+		target.visible_message("<span class='warning'>[user] shoves [target] with [src]!</span>",
+		"<span class='warning'>[user] shoves you with [src]!</span>")
+	for(var/i in 1 to harmful? shieldbash_knockback : shieldbash_push_distance)
 		var/turf/new_turf = get_step(target, bashdir)
 		var/mob/living/carbon/human/H = locate() in new_turf
-		if(H)
+		if(H && harmful)
 			H.visible_message("<span class='warning'>[target] is sent crashing into [H]!</span>",
 			"<span class='userdanger'>[target] is sent crashing into you!</span>")
 			H.KnockToFloor()
@@ -94,12 +100,13 @@
 	else if(disarming)
 		target.drop_all_held_items()
 
-	target.apply_damage(shieldbash_stamdmg, STAMINA, BODY_ZONE_CHEST)
-	target.apply_damage(shieldbash_brutedamage, BRUTE, BODY_ZONE_CHEST)
+	if(harmful)
+		target.apply_damage(shieldbash_stamdmg, STAMINA, BODY_ZONE_CHEST)
+		target.apply_damage(shieldbash_brutedamage, BRUTE, BODY_ZONE_CHEST)
 	target.Stagger(shieldbash_stagger_duration)
 	return TRUE
 
-/obj/item/shield/proc/user_shieldbash(mob/living/user, atom/target)
+/obj/item/shield/proc/user_shieldbash(mob/living/user, atom/target, harmful)
 	if(!(shield_flags & SHIELD_CAN_BASH))
 		to_chat(user, "<span class='warning'>[src] can't be used to shield bash!</span>")
 		return FALSE
@@ -110,9 +117,9 @@
 		if(!(shield_flags & SHIELD_BASH_GROUND_SLAM))
 			to_chat(user, "<span class='warning'>You can't ground slam with [src]!</span>")
 			return FALSE
-		bash_target(user, target)
+		bash_target(user, target, NONE, harmful)
 		user.do_attack_animation(target, used_item = src)
-		playsound(src, "swing_hit", 75, 1)
+		playsound(src, harmful? "swing_hit" : 'sound/weapons/thudswoosh.ogg', 75, 1)
 		last_shieldbash = world.time
 		user.adjustStaminaLossBuffered(shieldbash_stamcost)
 		return 1
@@ -121,7 +128,7 @@
 	user.adjustStaminaLossBuffered(shieldbash_stamcost)
 	// Since we are in combat mode, we can probably safely use the user's dir instead of getting their mouse pointing cardinal dir.
 	var/bashdir = user.dir
-	do_shieldbash_effect(user, bashdir)
+	do_shieldbash_effect(user, bashdir, harmful)
 	var/list/checking = list(get_step(user, user.dir), get_step(user, turn(user.dir, 45)), get_step(user, turn(user.dir, -45)))
 	var/list/victims = list()
 	for(var/i in checking)
@@ -130,8 +137,8 @@
 			victims += L
 	if(length(victims))
 		for(var/i in victims)
-			bash_target(user, i, bashdir)
-		playsound(src, "swing_hit", 75, 1)
+			bash_target(user, i, bashdir, harmful)
+		playsound(src, harmful? "swing_hit" : 'sound/weapons/thudswoosh.ogg', 75, 1)
 	else
 		playsound(src, 'sound/weapons/punchmiss.ogg', 75, 1)
 	return length(victims)
