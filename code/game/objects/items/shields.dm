@@ -134,6 +134,7 @@
 		playsound(src, "swing_hit", 75, 1)
 	else
 		playsound(src, 'sound/weapons/punchmiss.ogg', 75, 1)
+	step(user, bashdir)		//lunge
 	return length(victims)
 
 /obj/effect/temp_visual/dir_setting/shield_bash
