@@ -18,6 +18,7 @@
 	if(!active_blocking)
 		return FALSE
 	var/obj/item/I = active_block_item
+	active_block_effect_end()
 	active_blocking = FALSE
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
@@ -25,7 +26,6 @@
 	var/datum/block_parry_data/data = get_block_parry_data(I.block_parry_data)
 	if(timeToNextMove() < data.block_end_click_cd_add)
 		changeNext_move(data.block_end_click_cd_add)
-	active_block_effect_end()
 	return TRUE
 
 /mob/living/proc/start_active_blocking(obj/item/I)
@@ -39,7 +39,7 @@
 	active_blocking = TRUE
 	active_block_item = I
 	if(data.block_lock_attacking)
-		ADD_TRAIT(src, TRAIT_MOBILITY_NOMOVE, ACTIVE_BLOCK_TRAIT)
+		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)		//probably should be something else at some point
 	add_movespeed_modifier(MOVESPEED_ID_ACTIVE_BLOCK, TRUE, 100, override = TRUE, multiplicative_slowdown = data.block_slowdown, blacklisted_movetypes = FLOATING)
 	active_block_effect_start()
 	return TRUE
