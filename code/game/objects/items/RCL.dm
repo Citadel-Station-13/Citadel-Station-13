@@ -223,7 +223,6 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 			continue
 		if(C.d1 == 0)
 			return C
-			break
 	return
 
 

@@ -60,13 +60,12 @@
 			continue
 		vv_edit_var(v, initial(vars[v]))
 		vars[v] = initial(vars[v])
- 	QDEL_NULL(chambered.BB)
+	QDEL_NULL(chambered.BB)
 	chambered.newshot()
 
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
 	if(!istype(AC))
 		CRASH("[AC] is not /obj/item/ammo_casing!")
-		return FALSE
 	for(var/V in ammo_copy_vars)
 		if(AC.vars.Find(V))
 			chameleon_ammo_vars[V] = AC.vars[V]
@@ -78,7 +77,6 @@
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/item/projectile/P)
 	if(!istype(P))
 		CRASH("[P] is not /obj/item/projectile!")
-		return FALSE
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser", "nodamage" = TRUE)
 	for(var/V in projectile_copy_vars)
 		if(P.vars.Find(V))
@@ -99,7 +97,6 @@
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/G , passthrough = TRUE)
 	if(!istype(G))
 		CRASH("[G] is not /obj/item/gun!")
-		return FALSE
 	for(var/V in gun_copy_vars)
 		if(vars.Find(V) && G.vars.Find(V))
 			chameleon_gun_vars[V] = G.vars[V]

@@ -25,7 +25,6 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
 	else
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
-		return
 
 	if(strength > RAD_MINIMUM_CONTAMINATION)
 		SSradiation.warn(src)

@@ -893,7 +893,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					accessory_overlay.icon_state = "m_ears_none_[layertext]"
 				if(bodypart == "tail")
 					accessory_overlay.icon_state = "m_tail_husk_[layertext]"
-				if(MATRIXED)
+				if(S.color_src == MATRIXED)
 					var/list/husklist = list()
 					husklist += ReadRGB("#a3a3a3")
 					husklist += ReadRGB("#a3a3a3")
