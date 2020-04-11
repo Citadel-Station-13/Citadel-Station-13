@@ -31,6 +31,7 @@
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
+	var/maxgeneticpoints = 10
 	var/purchasedpowers = list()
 	var/mimicing = ""
 	var/canrespec = 0
@@ -98,16 +99,23 @@
 			to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.dna.remove_mutation(CLOWNMUT)
 
-/datum/antagonist/changeling/proc/reset_properties()
+/datum/antagonist/changeling/proc/reset_properties(hardReset = FALSE)
 	changeling_speak = 0
 	chosen_sting = null
-	geneticpoints = initial(geneticpoints)
+
+	geneticpoints = maxgeneticpoints
 	sting_range = initial(sting_range)
-	chem_storage = initial(chem_storage)
-	chem_recharge_rate = initial(chem_recharge_rate)
-	chem_charges = min(chem_charges, chem_storage)
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
+
+	if (hardReset)
+		chem_storage = initial(chem_storage)
+		chem_recharge_rate = initial(chem_recharge_rate)
+		geneticpoints = initial(geneticpoints)
+		maxgeneticpoints = initial(maxgeneticpoints)
+
+	chem_charges = min(chem_charges, chem_storage)
+
 
 /datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
