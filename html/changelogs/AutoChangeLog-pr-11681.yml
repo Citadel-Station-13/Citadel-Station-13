@@ -1,5 +1,0 @@
-author: "PersianXerxes"
-delete-after: True
-changes: 
-  - rscadd: "TGUI Next UIs for: chem heaters, chem masters, chem dispensers, and sleepers"
-  - code_imp: "Reworked Chem Master code"
