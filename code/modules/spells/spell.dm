@@ -187,15 +187,18 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
+	var/mob/living/L
+	if(isliving(user))
+		L = user
 	switch(invocation_type)
 		if("shout")
-			if(user.can_speak_vocal(invocation))
+			if(!L || L.can_speak_vocal(invocation))
 				if(prob(50))//Auto-mute? Fuck that noise
 					user.say(invocation, forced = "spell")
 				else
 					user.say(replacetext(invocation," ","`"), forced = "spell")
 		if("whisper")
-			if(user.can_speak_vocal(invocation))
+			if(!L || L.can_speak_vocal(invocation))
 				if(prob(50))
 					user.whisper(invocation)
 				else
