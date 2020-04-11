@@ -179,7 +179,7 @@
 //	#define SPEECH_FORCED 7
 #define COMSIG_MOB_ANTAG_ON_GAIN "mob_antag_on_gain"			//from base of /datum/antagonist/on_gain(): (antag_datum)
 
-#define COMSIG_MOB_SPELL_CAST_CHECK "mob_spell_cast_check"			//called from base of /obj/effect/proc_holder/spell/cast_check(): (spell)
+#define COMSIG_MOB_SPELL_CAN_CAST "mob_spell_can_cast"			//called from base of /obj/effect/proc_holder/spell/can_cast(): (spell)
 
 // /mob/living signals
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regenerate_limbs"	//from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
