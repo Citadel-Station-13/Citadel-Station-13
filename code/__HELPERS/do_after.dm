@@ -32,8 +32,8 @@
 	var/stage = DO_AFTER_STARTING
 	var/startlocuser = user.loc
 	var/startloctarget = target.loc
-	var/turf/user_turf = get_turf(user)
-	var/turf/target_turf = get_turf(target)
+	var/turf/userturf = get_turf(user)
+	var/turf/targetturf = get_turf(target)
 	if(!userturf || !targetturf)
 		return FALSE
 	if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
@@ -42,8 +42,9 @@
 	var/endtime = world.time + delay
 	var/obj/item/initially_held_item = mob_redirect?.get_active_held_item()
 	if(!(do_after_flags & DO_AFTER_NO_COEFFICIENT) && living_user)
-		delay *= living_user.do_after_coefficient()
-	var/drifting = user.Process_Spacemove(NONE) && user.inertia_dir
+		delay *= living_user.do_after_coefficent()
+	var/atom/movable/AM_user = ismovable(user) && user
+	var/drifting = AM_user?.Process_Spacemove(NONE) && AM_user.inertia_dir
 	var/initial_dx = targetturf.x - userturf.x
 	var/initial_dy = targetturf.y - userturf.y
 	var/dx = initial_dx
@@ -86,7 +87,7 @@
 		else if(do_after_flags & DO_AFTER_DISALLOW_MOVING_RELATIVE)
 			ctu = get_turf(user)
 			ctt = get_turf(target)
-			locchanged = (user_turf != ctu) || (target_turf != ctt)
+			locchanged = (userturf != ctu) || (targetturf != ctt)
 			userturf = ctu
 			targetturf = ctt
 			dx = targetturf.x - userturf.x
@@ -97,7 +98,7 @@
 			if(locchanged && !drifting && !(do_after_flags & DO_AFTER_ALLOW_NONSPACEDRIFT_RELATIVITY))
 				. = FALSE
 				break
-		if(!user.inertia_dir)
+		if(!AM_user.inertia_dir)
 			drifting = FALSE
 		if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
 			return FALSE
@@ -132,7 +133,7 @@
 	else if(do_after_flags & DO_AFTER_DISALLOW_MOVING_RELATIVE)
 		ctu = get_turf(user)
 		ctt = get_turf(target)
-		locchanged = (user_turf != ctu) || (target_turf != ctt)
+		locchanged = (userturf != ctu) || (targetturf != ctt)
 		userturf = ctu
 		targetturf = ctt
 		dx = targetturf.x - userturf.x

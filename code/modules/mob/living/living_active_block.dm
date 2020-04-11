@@ -103,7 +103,7 @@
 		to_chat(src, "<span class='warning'>You fail to raise [src].</span>")
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
 		return
-	active_block_starting = FALSe
+	active_block_starting = FALSE
 	start_active_blocking(I)
 
 /**
