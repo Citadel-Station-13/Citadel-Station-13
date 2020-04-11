@@ -199,7 +199,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		if(threatadd > 0)
 			create_threat(threatadd)
 		else
-			spend_threat(-threatadd)
+			remove_threat(threatadd)
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
