@@ -634,8 +634,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 			coin = null
 			return
 			
-		if("togglevoice" && panel_open)
-			shut_up = !shut_up
+		if("togglevoice")
+			if(panel_open)
+				shut_up = !shut_up
 				
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
