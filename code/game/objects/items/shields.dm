@@ -40,7 +40,7 @@
 	user_shieldbash(user, target, user.a_intent != INTENT_HARM)
 	return TRUE
 
-/obj/item/shield/proc/do_shieldbash_effect(mob/living/user, dir)
+/obj/item/shield/proc/do_shieldbash_effect(mob/living/user, dir, harmful)
 	var/px = 0
 	var/py = 0
 	switch(dir)
@@ -141,7 +141,6 @@
 		playsound(src, harmful? "swing_hit" : 'sound/weapons/thudswoosh.ogg', 75, 1)
 	else
 		playsound(src, 'sound/weapons/punchmiss.ogg', 75, 1)
-	step(user, bashdir)		//lunge
 	return length(victims)
 
 /obj/effect/temp_visual/dir_setting/shield_bash
