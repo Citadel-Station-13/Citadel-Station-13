@@ -3,10 +3,123 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-	var/transparent = FALSE	// makes beam projectiles pass through the shield
+	/// Shield flags
+	var/shield_flags = SHIELD_FLAGS_DEFAULT
+	/// Last shieldbash world.time
+	var/last_shieldbash = 0
+	/// Shieldbashing cooldown
+	var/shieldbash_cooldown = 5 SECONDS
+	/// Shieldbashing stamina cost
+	var/shieldbash_stamcost = 7.5
+	/// Shieldbashing knockback
+	var/shieldbash_knockback = 2
+	/// Shield bashing brute damage
+	var/shieldbash_brutedamage = 5
+	/// Shield bashing stamina damage
+	var/shieldbash_stamdmg = 15
+	/// Shield bashing daze duration
+	var/shieldbash_daze_duration = 3.5 SECONDS
+
+/obj/item/shield/examine(mob/user)
+	. = ..()
+	if(shield_flags & SHIELD_CAN_BASH)
+		. += "<span class='notice'>Right click on combat mode attack with [src] to shield bash!</span>"
+		if(shield_flags & SHIELD_BASH_GROUND_SLAM)
+			. += "<span class='notice'>Directly rightclicking on a downed target with [src] will slam them instead of bashing.</span>"
 
 /obj/item/shield/proc/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance)
 	return TRUE
+
+/obj/item/shield/alt_pre_attack(atom/A, mob/living/user, params)
+	user_shieldbash(user, A)
+	return TRUE
+
+/obj/item/shield/proc/do_shieldbash_effect(mob/living/user, dir)
+	var/px = 0
+	var/py = 0
+	switch(dir)
+		if(NORTH)
+			py = 12
+		if(SOUTH)
+			py = -12
+		if(EAST)
+			px = 12
+		if(WEST)
+			px = -12
+	var/oldpx = user.pixel_x
+	var/oldpy = user.pixel_y
+	animate(user, pixel_x = px, pixel_y = py, time = 1, easing = SINE_EASING | EASE_OUT)
+	animate(user, pixel_x = oldpx, pixel_y = oldpy, time = 1.5)
+	user.visible_message("<span class='warning'>[user] charges forwards with [src]!</span>")
+	animate(new /obj/effect/temp_visual/dir_setting/shieldbash(user.loc, dir), alpha = 0, pixel_x = px + 4, pixel_y = py + 4, time = 3)
+
+/obj/item/shield/proc/bash_target(mob/living/user, mob/living/target)
+	if(!(target.status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))	// should probably add stun absorption check at some point I guess..
+		// unified stun absorption system when lol
+		target.visible_message("<span class='warning'>[user] slams [target] with [src], but [target] doesn't falter!</span>", "<span class='userdanger'>[user] slams you with [src], but it barely fazes you!</span>")
+		return FALSE
+	var/target_downed = !CHECK_MOBILITY(target, MOBILITY_STAND)
+	var/away_dir = get_dir(user, target)
+	var/wallhit = !(away_dir & (away_dir - 1)) && isclosedturf(get_step_away(target, user))		//no diagonals
+	var/disarming = (target_downed && (shield_flags & SHIELD_BASH_GROUND_SLAM_DISARM)) || (shield_flags & SHIELD_BASH_ALWAYS_DISARM) || (wallhit && (shield_flags & SHIELD_BASH_WALL_DISARM))
+	var/knockdown = !target_downed && ((shield_flags & SHIELD_BASH_ALWAYS_KNOCKDOWN) || (wallhit && (shield_flags & SHIELD_BASH_WALL_KNOCKDOWN)))
+	target.visible_message("<span class='warning'>[target_downed? "[user] slams [src] into [target]" : "[user] bashes [target] with [src]"][shieldbash_daze_duration? ", dazing them":""][knockdown? " and knocking them down":""]!</span>",
+	"<span class='userdanger'>[target_downed? "[user] slams [src] into you" : "[user] bashes you with [src]"][shieldbash_daze_duration? ", dazing you":""][knockdown? " and knocking you down":""]!</span>")
+	if(knockdown)
+		target.KnockToFloor(disarming)
+	else if(disarming)
+		target.drop_all_held_items()
+	target.apply_damage(shieldbash_stamdmg, STAMINA, BODY_ZONE_CHEST)
+	target.apply_damage(shieldbash_brutedamage, BRUTE, BODY_ZONE_CHEST)
+	target.Daze(shieldbash_daze_duration)
+	if(!target_downed && shieldbash_knockback)
+		var/turf/targetturf = get_turf(target)
+		var/turf/userturf = get_turf(user)
+		var/dx = CLAMP(targetturf.x - userturf.x, -1, 1)
+		var/dy = CLAMP(targetturf.y - userturf.y, -1, 1)
+		dx *= shieldbash_knockback
+		dy *= shieldbash_knockback
+		var/turf/knockback_target = locate(CLAMP(userturf.x + dx, 1, world.maxx), CLAMP(userturf.y + dy, 1, world.maxy), z)
+		if(knockback_target)
+			for(var/i in 1 to shieldbash_knockback)
+				step(target, get_dir(target, knockback_target))
+	return TRUE
+
+/obj/item/shield/proc/user_shieldbash(mob/living/user, atom/target)
+	if(!(shield_flags & SHIELD_CAN_BASH))
+		to_chat(user, "<span class='warning'>[src] can't be used to shield bash!</span>")
+		return FALSE
+	if(world.time < last_shieldbash + shieldbash_cooldown)
+		to_chat(user, "<span class='warning'>You can't bash with [src] again so soon!</span>")
+		return FALSE
+	if(isliving(target))		//GROUND SLAAAM
+		if(!(shield_flags & SHIELD_BASH_GROUND_SLAM))
+			to_chat(user, "<span class='warning'>You can't ground slam with [src]!</span>")
+			return FALSE
+		bash_target(user, target)
+		last_shieldbash = world.time
+		user.adjustStaminaLossBuffered(shieldbash_stamcost)
+		return 1
+	// Directional sweep!
+	last_shieldbash = world.time
+	user.adjustStaminaLossBuffered(shieldbash_stamcost)
+	// Since we are in combat mode, we can probably safely use the user's dir instead of getting their mouse pointing cardinal dir.
+	do_shieldbash_effect(user, user.dir)
+	var/list/checking = list(get_step(user, user.dir), get_step(user, turn(user.dir, 45)), get_step(user, turn(user.dir, -45)))
+	var/list/victims = list()
+	for(var/i in checking)
+		var/turf/T = i
+		for(var/mob/living/L in T)
+			victims += L
+	if(length(victims))
+		for(var/i in victims)
+			bash_target(user, target)
+	return length(victims)
+
+/obj/effect/temp_visual/dir_setting/shield_bash
+	icon = 'icon/effects/96x96_attack_sweep.dmi'
+	icon_state = "shieldbash"
+	duration = 3
 
 /obj/item/shield/riot
 	name = "riot shield"
@@ -23,13 +136,13 @@
 	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
-	transparent = TRUE
+	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_TRANSPARENT
 	max_integrity = 75
 
 /obj/item/shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(ismovableatom(object))
 		var/atom/movable/AM = object
-		if(transparent && (AM.pass_flags & PASSGLASS))
+		if(CHECK_BITFIELD(shield_flags, SHIELD_TRANSPARENT) && (AM.pass_flags & PASSGLASS))
 			return BLOCK_NONE
 	if(attack_type & ATTACK_TYPE_THROWN)
 		final_block_chance += 30
@@ -88,7 +201,7 @@
 	item_state = "roman_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	transparent = FALSE
+	shield_flags = SHIELD_FLAGS_DEFAULT
 	max_integrity = 65
 
 /obj/item/shield/riot/roman/fake
@@ -111,7 +224,7 @@
 	custom_materials = null
 	resistance_flags = FLAMMABLE
 	block_chance = 30
-	transparent = FALSE
+	shield_flags = SHIELD_FLAGS_DEFAULT
 	max_integrity = 55
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
@@ -238,7 +351,7 @@
 	throwforce = 15 //Massive pice of metal
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = SLOWS_WHILE_IN_HAND
-	transparent = FALSE
+	shield_flags = SHIELD_FLAGS_DEFAULT
 
 /obj/item/shield/riot/implant
 	name = "riot tower shield"
@@ -248,7 +361,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	block_chance = 30 //May be big but hard to move around to block.
 	slowdown = 1
-	transparent = FALSE
+	shield_flags = SHIELD_FLAGS_DEFAULT
 	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/shield/riot/implant/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
