@@ -690,7 +690,7 @@
 	uniform = /obj/item/clothing/under/color/random
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	id = /obj/item/card/id
-	r_hand = /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
+	//r_hand = /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 
 
 /datum/outfit/ghostcafe/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
