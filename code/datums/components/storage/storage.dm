@@ -15,6 +15,7 @@
 	var/datum/component/storage/concrete/master		//If not null, all actions act on master and this is just an access point.
 
 	var/list/can_hold								//if this is set, only things in this typecache will fit.
+	var/list/can_hold_extra							//if this is set, it will also be able to hold these.
 	var/list/cant_hold								//if this is set, anything in this typecache will not be able to fit.
 
 	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
@@ -591,19 +592,20 @@
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] is full, make some space!</span>")
 		return FALSE //Storage item is full
-	if(length(can_hold))
-		if(!is_type_in_typecache(I, can_hold))
+	if(!length(can_hold_extra) || !is_type_in_typecache(I, can_hold_extra))
+		if(length(can_hold))
+			if(!is_type_in_typecache(I, can_hold))
+				if(!stop_messages)
+					to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
+				return FALSE
+		if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
-		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
-		return FALSE
-	if(I.w_class > max_w_class)
-		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
-		return FALSE
+		if(I.w_class > max_w_class)
+			if(!stop_messages)
+				to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
+			return FALSE
 	var/sum_w_class = I.w_class
 	for(var/obj/item/_I in real_location)
 		sum_w_class += _I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
