@@ -118,7 +118,7 @@
 /obj/structure/toilet/secret/LateInitialize()
 	. = ..()
 	w_items = 0 //recalculate total weight thanks to the secret.
-	for(var/item/I in contents)
+	for(var/obj/item/I in contents)
 		w_items += I.w_class
 
 /obj/structure/toilet/secret/low_loot
