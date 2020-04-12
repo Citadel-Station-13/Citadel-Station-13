@@ -33,6 +33,13 @@
 				/obj/item/organ/ears/cat = 1)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/papermask
+	name = "Paper Mask"
+	result = /obj/item/clothing/mask/paper
+	time = 10
+	reqs = list(/obj/item/paper = 20)
+	category = CAT_CLOTHING
+
 ////////
 //Huds//
 ////////

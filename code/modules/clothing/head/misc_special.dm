@@ -187,14 +187,15 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon_state = ""
-	item_state = "pwig"
+	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon_state = "hair_vlong"
 	flags_inv = HIDEHAIR
+	color = "#000"
 	var/hair_style = "Very Long Hair"
-	var/hair_color = "#000"
 
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
+	icon_state = "" //Shitty hack that i dont know if it is even neccesary to deal with the vendor stack exception
 	update_icon()
 
 /obj/item/clothing/head/wig/update_icon_state()
@@ -202,14 +203,9 @@
 	if(!S)
 		icon = 'icons/obj/clothing/hats.dmi'
 		icon_state = "pwig"
-
-/obj/item/clothing/head/wig/update_overlays()
-	. = ..()
-	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
-	if(S)
-		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state, color = hair_color)
-		M.appearance_flags |= RESET_COLOR
-		. += M
+	else
+		icon = S.icon
+		icon_state = S.icon_state
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
 	. = list()
@@ -219,12 +215,12 @@
 			return
 		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
 		M.appearance_flags |= RESET_COLOR
-		M.color = hair_color
+		M.color = color
 		. += M
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
-	hair_color = "#[random_short_color()]"
+	color = "#[random_short_color()]"
 	. = ..()
 
 /obj/item/clothing/head/bronze

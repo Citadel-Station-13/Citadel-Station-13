@@ -7,6 +7,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -34,7 +35,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = WEIGHT_CLASS_NORMAL
+
+	/// The amount of stamina it takes to swing an item in a normal melee attack do not lie to me and say it's for realism because it ain't. If null it will autocalculate from w_class.
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
+	/// How long, in deciseconds, this staggers for, if null it will autocalculate from w_class and force. Unlike total mass this supports 0 and negatives.
+	var/stagger_force
+
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
@@ -87,8 +93,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
 
-	var/block_chance = 0
-	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
@@ -359,13 +363,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
-	if(prob(final_block_chance))
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return 1
-	return 0
-
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
 	return ITALICS | REDUCE_RANGE
 
@@ -457,9 +454,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click(mob/user, actiontype)
 	attack_self(user)
-
-/obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-	return 0
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))

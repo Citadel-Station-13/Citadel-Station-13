@@ -189,96 +189,139 @@
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
-		data["beakerContents"] = beakerContents
+	data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
-		data["bufferContents"] = bufferContents
+	data["bufferContents"] = bufferContents
 
 	//Calculated at init time as it never changes
 	data["pillStyles"] = pillStyles
-
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
 	if(..())
 		return
+
 	switch(action)
 		if("eject")
 			replace_beaker(usr)
 			. = TRUE
 
-		if("ejectp")
+		if("ejectPillBottle")
 			replace_pillbottle(usr)
 			. = TRUE
 
-		if("transferToBuffer")
-			if(beaker)
-				var/reagent = GLOB.name2reagent[params["id"]]
-				var/amount = text2num(params["amount"])
-				if (amount > 0)
-					end_fermi_reaction()
-					beaker.reagents.trans_id_to(src, reagent, amount)
-					. = TRUE
-				else if (amount == -1) // -1 means custom amount
-					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
-					if (useramount > 0)
-						end_fermi_reaction()
-						beaker.reagents.trans_id_to(src, reagent, useramount)
-						. = TRUE
-
-		if("transferFromBuffer")
+		if("transfer")
+			if(!beaker)
+				return FALSE
 			var/reagent = GLOB.name2reagent[params["id"]]
 			var/amount = text2num(params["amount"])
-			if (amount > 0)
-				if(mode)
-					reagents.trans_id_to(beaker, reagent, amount)
-					. = TRUE
-				else
-					reagents.remove_reagent(reagent, amount)
-					. = TRUE
-			else if (amount == -1) // -1 means custom amount
-				useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
-				if (useramount > 0)
-					end_fermi_reaction()
-					reagents.trans_id_to(beaker, reagent, useramount)
-					. = TRUE
+			var/to_container = params["to"]
+			// Custom amount
+			if (amount == -1)
+				amount = text2num(input(
+					"Enter the amount you want to transfer:",
+					name, ""))
+			if (amount == null || amount <= 0)
+				return FALSE
+			if (to_container == "buffer")
+				end_fermi_reaction()
+				beaker.reagents.trans_id_to(src, reagent, amount)
+				return TRUE
+			if (to_container == "beaker" && mode)
+				end_fermi_reaction()
+				reagents.trans_id_to(beaker, reagent, amount)
+				return TRUE
+			if (to_container == "beaker" && !mode)
+				end_fermi_reaction()
+				reagents.remove_reagent(reagent, amount)
+				return TRUE
+			return FALSE
 
 		if("toggleMode")
 			mode = !mode
 			. = TRUE
 
-		if("createPill")
-			var/many = params["many"]
+		if("pillStyle")
+			var/id = text2num(params["id"])
+			chosenPillStyle = id
+			return TRUE
+
+		if("create")
 			if(reagents.total_volume == 0)
-				return
-			if(!condi)
-				var/amount = 1
-				var/vol_each = min(reagents.total_volume, 50)
-				if(text2num(many))
-					amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
-					if(!amount)
-						return
-					vol_each = min(reagents.total_volume / amount, 50)
-				var/name = html_decode(stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
-					return
+				return FALSE
+			var/item_type = params["type"]
+			// Get amount of items
+			var/amount = text2num(params["amount"])
+			if(amount == null)
+				amount = text2num(input(usr,
+					"Max 10. Buffer content will be split evenly.",
+					"How many to make?", 1))
+			amount = clamp(round(amount), 0, 10)
+			if (amount <= 0)
+				return FALSE
+			// Get units per item
+			var/vol_each = text2num(params["volume"])
+			var/vol_each_text = params["volume"]
+			var/vol_each_max = reagents.total_volume / amount
+			if (item_type == "pill")
+				vol_each_max = min(50, vol_each_max)
+			else if (item_type == "patch")
+				vol_each_max = min(40, vol_each_max)
+			else if (item_type == "bottle")
+				vol_each_max = min(30, vol_each_max)
+			else if (item_type == "condimentPack")
+				vol_each_max = min(10, vol_each_max)
+			else if (item_type == "condimentBottle")
+				vol_each_max = min(50, vol_each_max)
+			else if (item_type == "hypoVial")
+				vol_each_max = min(60, vol_each_max)
+			else if (item_type == "smartDart")
+				vol_each_max = min(20, vol_each_max)
+			else
+				return FALSE
+			if(vol_each_text == "auto")
+				vol_each = vol_each_max
+			if(vol_each == null)
+				vol_each = text2num(input(usr,
+					"Maximum [vol_each_max] units per item.",
+					"How many units to fill?",
+					vol_each_max))
+			vol_each = clamp(vol_each, 0, vol_each_max)
+			if(vol_each <= 0)
+				return FALSE
+			// Get item name
+			var/name = params["name"]
+			var/name_has_units = item_type == "pill" || item_type == "patch"
+			if(!name)
+				var/name_default = reagents.get_master_reagent_name()
+				if (name_has_units)
+					name_default += " ([vol_each]u)"
+				name = stripped_input(usr,
+					"Name:",
+					"Give it a name!",
+					name_default,
+					MAX_NAME_LEN)
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+				return FALSE
+			// Start filling
+			if(item_type == "pill")
 				var/obj/item/reagent_containers/pill/P
 				var/target_loc = drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
-					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
+					var/datum/component/storage/STRB = bottle.GetComponent(
+						/datum/component/storage)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
-						target_loc = bottle
-
-				for(var/i in 1 to amount)
-					if(i <= drop_threshold)
-						P = new(target_loc)
+				for(var/i = 0; i < amount; i++)
+					if(i < drop_threshold)
+						P = new/obj/item/reagent_containers/pill(target_loc)
 					else
-						P = new(drop_location())
+						P = new/obj/item/reagent_containers/pill(drop_location())
 					P.name = trim("[name] pill")
 					if(chosenPillStyle == RANDOM_PILL_STYLE)
 						P.icon_state ="pill[rand(1,21)]"
@@ -287,171 +330,62 @@
 					if(P.icon_state == "pill4")
 						P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 					adjust_item_drop_location(P)
-					reagents.trans_to(P,vol_each)
-			else
-				var/name = html_decode(stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN))
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
-					return
-				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
-
-				P.originalname = name
-				P.name = trim("[name] pack")
-				P.desc = "A small condiment pack. The label says it contains [name]."
-				reagents.trans_to(P,10)
-			. = TRUE
-
-		if("pillStyle")
-			var/id = text2num(params["id"])
-			chosenPillStyle = id
-
-		if("createPatch")
-			var/many = params["many"]
-			if(reagents.total_volume == 0)
-				return
-			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 40)
-			if(text2num(many))
-				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
-				if(!amount)
-					return
-				vol_each = min(reagents.total_volume / amount, 40)
-			var/name = html_decode(stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
-				return
-			var/obj/item/reagent_containers/pill/P
-
-			for(var/i = 0; i < amount; i++)
-				P = new/obj/item/reagent_containers/pill/patch(drop_location())
-				P.name = trim("[name] patch")
-				adjust_item_drop_location(P)
-				reagents.trans_to(P,vol_each)
-			. = TRUE
-
-		if("createBottle")
-			var/many = params["many"]
-			if(reagents.total_volume == 0)
-				return
-
-			if(condi)
-				var/name = html_decode(stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
-					return
-				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
-				P.originalname = name
-				P.name = trim("[name] bottle")
-				reagents.trans_to(P, P.volume)
-			else
-				var/amount_full = 0
-				var/vol_part = min(reagents.total_volume, 30)
-				if(text2num(many))
-					amount_full = round(reagents.total_volume / 30)
-					vol_part = ((reagents.total_volume*1000) % 30000) / 1000 //% operator doesn't support decimals.
-				var/name = html_decode(stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
-					return
-
+					reagents.trans_to(P, vol_each)
+				return TRUE
+			if(item_type == "patch")
+				var/obj/item/reagent_containers/pill/patch/P
+				for(var/i = 0; i < amount; i++)
+					P = new/obj/item/reagent_containers/pill/patch(drop_location())
+					P.name = trim("[name] patch")
+					adjust_item_drop_location(P)
+					reagents.trans_to(P, vol_each)
+				return TRUE
+			if(item_type == "bottle")
 				var/obj/item/reagent_containers/glass/bottle/P
-				for(var/i = 0; i < amount_full; i++)
+				for(var/i = 0; i < amount; i++)
 					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, 30)
-
-				if(vol_part)
-					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
+					reagents.trans_to(P, vol_each)
+				return TRUE
+			if(item_type == "condimentPack")
+				var/obj/item/reagent_containers/food/condiment/pack/P
+				for(var/i = 0; i < amount; i++)
+					P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
+					P.originalname = name
+					P.name = trim("[name] pack")
+					P.desc = "A small condiment pack. The label says it contains [name]."
+					reagents.trans_to(P, vol_each)
+				return TRUE
+			if(item_type == "condimentBottle")
+				var/obj/item/reagent_containers/food/condiment/P
+				for(var/i = 0; i < amount; i++)
+					P = new/obj/item/reagent_containers/food/condiment(drop_location())
+					P.originalname = name
 					P.name = trim("[name] bottle")
+					reagents.trans_to(P, vol_each)
+				return TRUE
+			if(item_type == "hypoVial")
+				var/obj/item/reagent_containers/glass/bottle/vial/small/P
+				for(var/i = 0; i < amount; i++)
+					P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
+					P.name = trim("[name] hypovial")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, vol_part)
-			. = TRUE
-		//CITADEL ADD Hypospray Vials
-		if("createVial")
-			var/many = params["many"]
-			if(reagents.total_volume == 0)
-				return
+					reagents.trans_to(P, vol_each)
+				return TRUE
+			if(item_type == "smartDart")
+				var/obj/item/reagent_containers/syringe/dart/P
+				for(var/i = 0; i < amount; i++)
+					P = new /obj/item/reagent_containers/syringe/dart(drop_location())
+					P.name = trim("[name] SmartDart")
+					adjust_item_drop_location(P)
+					reagents.trans_to(P, vol_each)
+					P.mode=!mode
+					P.update_icon()
+				return TRUE
+			return FALSE
 
-			var/amount_full = 0
-			var/vol_part = min(reagents.total_volume, 60)
-			if(text2num(many))
-				amount_full = round(reagents.total_volume / 60)
-				vol_part = reagents.total_volume % 60
-			var/name = html_decode(stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN))
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
-				return
-
-			var/obj/item/reagent_containers/glass/bottle/vial/small/P
-			for(var/i = 0; i < amount_full; i++)
-				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
-				P.name = trim("[name] hypovial")
-				adjust_item_drop_location(P)
-				reagents.trans_to(P, 60)
-
-			if(vol_part)
-				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
-				P.name = trim("[name] hypovial")
-				adjust_item_drop_location(P)
-				reagents.trans_to(P, vol_part)
-			. = TRUE
-
-		if("createDart")
-			for(var/datum/reagent/R in reagents.reagent_list)
-				if(!(istype(R, /datum/reagent/medicine)))
-					visible_message("<b>The [src]</b> beeps, \"<span class='warning'>SmartDarts are insoluble with non-medicinal compounds.\"</span>")
-					return
-
-			var/many = params["many"]
-			if(reagents.total_volume == 0)
-				return
-			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 20)
-			if(text2num(many))
-				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many darts?", amount) as num|null), 0, 10)
-				if(!amount)
-					return
-				vol_each = min(reagents.total_volume / amount, 20)
-
-			var/name = html_decode(stripped_input(usr,"Name:","Name your SmartDart!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN))
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !hasSiliconAccessInArea(usr)))
-				return
-
-			var/obj/item/reagent_containers/syringe/dart/D
-			for(var/i = 0; i < amount; i++)
-				D = new /obj/item/reagent_containers/syringe/dart(drop_location())
-				D.name = trim("[name] SmartDart")
-				adjust_item_drop_location(D)
-				reagents.trans_to(D, vol_each)
-				D.mode=!mode
-				D.update_icon()
-			. = TRUE
-
-		//END CITADEL ADDITIONS
-		if("analyzeBeak")
-			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
-			if(R)
-				var/state = "Unknown"
-				if(initial(R.reagent_state) == 1)
-					state = "Solid"
-				else if(initial(R.reagent_state) == 2)
-					state = "Liquid"
-				else if(initial(R.reagent_state) == 3)
-					state = "Gas"
-				var/const/P = 3 //The number of seconds between life ticks
-				var/T = initial(R.metabolization_rate) * (60 / P)
-				var/datum/chemical_reaction/Rcr = get_chemical_reaction(R)
-				if(Rcr && Rcr.FermiChem)
-					fermianalyze = TRUE
-					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
-					var/datum/reagent/targetReagent = beaker.reagents.has_reagent(R)
-
-					if(!targetReagent)
-						CRASH("Tried to find a reagent that doesn't exist in the chem_master!")
-					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = targetReagent.purity, "inverseRatioF" = initial(R.inverse_chem_val), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
-				else
-					fermianalyze = FALSE
-					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
-				screen = "analyze"
-				return
-
-		if("analyzeBuff")
+		if("analyze")
 			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
 			if(R)
 				var/state = "Unknown"
@@ -476,7 +410,7 @@
 					fermianalyze = FALSE
 					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
 				screen = "analyze"
-				return
+				return TRUE
 
 		if("goScreen")
 			screen = params["screen"]

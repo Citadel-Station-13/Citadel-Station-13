@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	user.set_machine(src)
 
-	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
+	var/dat = "<!DOCTYPE html><html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 	dat += assets.css_tag()
 	dat += emoji_s.css_tag()
 
@@ -807,9 +807,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// If it didn't reach, note that fact
 	if (!signal.data["done"])
 		to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
-		return
 		if (!silent)
 			playsound(src, 'sound/machines/terminal_error.ogg', 15, 1)
+		return
 
 	var/target_text = signal.format_target()
 	if(allow_emojis)
@@ -998,9 +998,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/card/id/idcard = C
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
-			return
 			if (!silent)
 				playsound(src, 'sound/machines/terminal_error.ogg', 15, 1)
+			return
 
 		if(!owner)
 			owner = idcard.registered_name
@@ -1192,7 +1192,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(incapacitated())
 		return
 	if(!isnull(aiPDA))
-		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
+		var/HTML = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
 		to_chat(user, "You do not have a PDA. You should make an issue report about this.")

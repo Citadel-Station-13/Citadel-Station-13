@@ -35,6 +35,17 @@
 	current_target = new_target
 	streak = ""
 
+/datum/martial_art/proc/damage_roll(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	//Here we roll for our damage to be added into the damage var in the various attack procs. This is changed depending on whether we are in combat mode, lying down, or if our target is in combat mode.
+	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
+	if(!(D.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		damage *= 1.5
+	if(!CHECK_MOBILITY(A, MOBILITY_STAND))
+		damage *= 0.5
+	if(!(A.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		damage *= 0.25
+	return damage
+
 /datum/martial_art/proc/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	if(!istype(H) || !H.mind)
 		return FALSE
@@ -50,6 +61,7 @@
 	if(help_verb)
 		H.verbs += help_verb
 	H.mind.martial_art = src
+	ADD_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)
@@ -68,7 +80,8 @@
 	else
 		var/datum/martial_art/X = H.mind.default_martial_art
 		X.teach(H)
-
+	REMOVE_TRAIT(H, TRAIT_PUGILIST, MARTIAL_ARTIST_TRAIT)
+	
 /datum/martial_art/proc/on_remove(mob/living/carbon/human/H)
 	if(help_verb)
 		H.verbs -= help_verb

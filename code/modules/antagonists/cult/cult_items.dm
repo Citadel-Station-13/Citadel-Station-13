@@ -162,24 +162,20 @@
 	jaunt.Remove(user)
 	user.update_icons()
 
-/obj/item/twohanded/required/cult_bastard/IsReflect()
-	if(spinning)
+/obj/item/twohanded/required/cult_bastard/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(spinning && is_energy_reflectable_projectile(object) && (attack_type & ATTACK_TYPE_PROJECTILE))
 		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-		return TRUE
-	else
-		..()
-
-/obj/item/twohanded/required/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
 	if(prob(final_block_chance))
-		if(attack_type == PROJECTILE_ATTACK)
+		if(attack_type & ATTACK_TYPE_PROJECTILE)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-			return TRUE
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
 		else
 			playsound(src, 'sound/weapons/parry.ogg', 75, 1)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-			return TRUE
-	return FALSE
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return BLOCK_NONE
 
 /obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
@@ -353,6 +349,11 @@
 	brightness_on = 0
 	actions_types = list()
 
+
+/obj/item/clothing/head/helmet/space/hardsuit/cult/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_CULT_HELMET, ITEM_SLOT_HEAD)
+
 /obj/item/clothing/suit/space/hardsuit/cult
 	name = "\improper Nar'Sien hardened armor"
 	icon_state = "cult_armor"
@@ -362,6 +363,10 @@
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
 	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
+
+/obj/item/clothing/suit/space/hardsuit/cult/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_CULT_ARMOR, ITEM_SLOT_OCLOTHING)
 
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"
@@ -414,7 +419,13 @@
 			user.adjustBruteLoss(25)
 			user.dropItemToGround(src, TRUE)
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(current_charges)
+		block_return[BLOCK_RETURN_NORMAL_BLOCK_CHANCE] = 100
+		block_return[BLOCK_RETURN_BLOCK_CAPACITY] = (block_return[BLOCK_RETURN_BLOCK_CAPACITY] || 0) + current_charges
+	return ..()
+
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
@@ -422,8 +433,8 @@
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
-		return 1
-	return 0
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return BLOCK_NONE
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, style_flags = NONE)
 	. = list()
@@ -725,19 +736,19 @@
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
 
-/obj/item/twohanded/cult_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/cult_spear/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
-		if(attack_type == PROJECTILE_ATTACK)
+		if(attack_type & ATTACK_TYPE_PROJECTILE)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-			return TRUE
+			return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_REDIRECTED | BLOCK_PHYSICAL_EXTERNAL
 		else
 			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-			return TRUE
-	return FALSE
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return BLOCK_NONE
 
 /datum/action/innate/cult/spear
 	name = "Bloody Bond"
@@ -936,10 +947,18 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	var/illusions = 2
 
-/obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/mirror/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	block_return[BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE] = max(block_return[BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE] || null, final_block_chance)
+	return ..()
+
+/obj/item/shield/mirror/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(iscultist(owner))
-		if(istype(hitby, /obj/item/projectile))
-			var/obj/item/projectile/P = hitby
+		if(istype(object, /obj/item/projectile) && (attack_type == ATTACK_TYPE_PROJECTILE))
+			if(is_energy_reflectable_projectile(object))
+				if(prob(final_block_chance))
+					return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED
+				return BLOCK_NONE	//To avoid reflection chance double-dipping with block chance
+			var/obj/item/projectile/P = object
 			if(P.damage >= 30)
 				var/turf/T = get_turf(owner)
 				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
@@ -947,11 +966,9 @@
 				playsound(T, 'sound/effects/glassbr3.ogg', 100)
 				owner.DefaultCombatKnockdown(25)
 				qdel(src)
-				return FALSE
-			if(P.is_reflectable)
-				return FALSE //To avoid reflection chance double-dipping with block chance
+				return BLOCK_NONE
 		. = ..()
-		if(.)
+		if(. & BLOCK_SUCCESS)
 			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
 			if(illusions > 0)
 				illusions--
@@ -966,7 +983,7 @@
 					E.Copy_Parent(owner, 70, 10)
 					E.GiveTarget(owner)
 					E.Goto(owner, owner.movement_delay(), E.minimum_distance)
-			return TRUE
+			return
 	else
 		if(prob(50))
 			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
@@ -975,18 +992,13 @@
 			H.GiveTarget(owner)
 			H.move_to_delay = owner.movement_delay()
 			to_chat(owner, "<span class='danger'><b>[src] betrays you!</b></span>")
-		return FALSE
+		return BLOCK_NONE
 
 /obj/item/shield/mirror/proc/readd()
 	illusions++
 	if(illusions == initial(illusions) && isliving(loc))
 		var/mob/living/holder = loc
 		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
-
-/obj/item/shield/mirror/IsReflect()
-	if(prob(block_chance))
-		return TRUE
-	return FALSE
 
 /obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)

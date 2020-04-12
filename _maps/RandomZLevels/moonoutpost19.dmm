@@ -761,7 +761,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bF" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/high_loot{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer{
@@ -4121,7 +4121,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "hP" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/high_loot{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4473,7 +4473,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "iw" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/high_loot{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -4764,7 +4764,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "iZ" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/high_loot{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer{

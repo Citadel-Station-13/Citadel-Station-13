@@ -1,0 +1,4 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - rscadd: "Added a lfwb-inspired orbiting pixel + flashing outline animation to the sprint and combat mode buttons. This can be toggled via the preferences menu, and is completely independent from all HUD themes."

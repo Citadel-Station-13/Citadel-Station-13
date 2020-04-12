@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - code_imp: "Mobility flags are here. Fixed some edge cases with xeno hardstuns and similar stuff like warden's shotgun hardstuns and yeah."
