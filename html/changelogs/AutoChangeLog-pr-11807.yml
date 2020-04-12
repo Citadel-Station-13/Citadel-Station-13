@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - code_imp: "datum/pipeline return_air stack trace now gives a reference so it's actually marginally useful if caught in round."
