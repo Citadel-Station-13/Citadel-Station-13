@@ -6,6 +6,21 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/tome/traitor
+	var/spent = FALSE
+
+/obj/item/tome/traitor/check_uplink_validity()
+	return !spent
+
+/obj/item/tome/traitor/attack_self(mob/living/user)
+	if(!iscultist(user) && !spent)
+		to_chat(user, "<span class='userdanger'>You press your hand onto [src], sinister tendrils of corrupted magic swirling around you. Was this the best of ideas?</span>")
+		if(user.mind.add_antag_datum(/datum/antagonist/cult/neutered/traitor))
+			spent = TRUE
+		else
+			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
+	return ..()
+
 /obj/item/melee/cultblade/dagger
 	name = "ritual dagger"
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
@@ -509,7 +524,7 @@
 	var/static/curselimit = 0
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
-	if(!iscultist(user))
+	if(!iscultist(user, TRUE))
 		user.dropItemToGround(src, TRUE)
 		user.DefaultCombatKnockdown(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
