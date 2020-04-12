@@ -23,13 +23,13 @@
 	icon_state = "knotted"
 	name = "Knotted"
 	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
-	taur_dimension_y = 64
+	taur_dimension_x = 64
 
 /datum/sprite_accessory/penis/flared
 	icon_state = "flared"
 	name = "Flared"
 	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
-	taur_dimension_y = 64
+	taur_dimension_x = 64
 
 /datum/sprite_accessory/penis/barbknot
 	icon_state = "barbknot"
@@ -39,7 +39,7 @@
 	icon_state = "tapered"
 	name = "Tapered"
 	taur_icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi'
-	taur_dimension_y = 64
+	taur_dimension_x = 64
 
 /datum/sprite_accessory/penis/tentacle
 	icon_state = "tentacle"
