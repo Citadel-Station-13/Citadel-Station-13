@@ -109,12 +109,37 @@
 
 /obj/item/clothing/gloves/thief
 	name = "black gloves"
-	desc = "Gloves made with completely frictionless, insulated cloth, easier to steal from people with."
-	icon_state = "thief"
+	desc = "These gloves are fire-resistant."
+	icon_state = "black"
 	item_state = "blackgloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	strip_delay = 80
+	strip_mod = 1.7
 	transfer_prints = FALSE
-	strip_mod = 5
-	strip_silence = TRUE
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+
+/obj/item/clothing/gloves/thief/strip_mod(mob/M)
+	. = ..()
+	if(isantagonist(M))
+		return 5
+
+/obj/item/clothing/gloves/thief/strip_silence(mob/M)
+	. = ..()
+	if(isantagonist(M))
+		return TRUE
+
+/obj/item/clothing/gloves/thief/Initialize()
+	. = ..()
+	var/image/I = image(icon = 'icons/obj/clothing/gloves.dmi', icon_state = "thief", loc = src)
+	I.override = TRUE
+	I.name = "thieving gloves"
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/antag, "traitoricon", I)
+
+/obj/item/clothing/gloves/thief/examine(mob/user)
+	. = ..()
+	if(isantagonist(user))
+		. += "They are made with completely frictionless, insulated cloth, making it easier to steal from people with."

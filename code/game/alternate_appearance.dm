@@ -180,3 +180,17 @@ datum/atom_hud/alternate_appearance/basic/onePerson
 	..(key, I, FALSE)
 	seer = M
 	add_hud_to(seer)
+
+/datum/atom_hud/alternate_appearance/basic/antag
+
+/datum/atom_hud/alternate_appearance/basic/antag/New(key, image/I)
+	..()
+	theImage.layer = target.layer + 0.1
+	for(var/mob in GLOB.mob_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/antag/mobShouldSee(mob/M)
+	if(isantagonist(M))
+		return TRUE
+	return FALSE

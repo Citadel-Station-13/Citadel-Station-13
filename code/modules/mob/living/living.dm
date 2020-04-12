@@ -770,8 +770,8 @@
 		var/mob/living/carbon/C = src
 		var/obj/item/clothing/gloves/g = C.gloves
 		if (istype(g))
-			strip_mod = g.strip_mod
-			strip_silence = g.strip_silence
+			strip_mod = g.strip_mod()
+			strip_silence = g.strip_silence()
 	if (!strip_silence)
 		who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")

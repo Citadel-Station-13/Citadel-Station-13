@@ -43,3 +43,9 @@
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
 	return FALSE // return TRUE to cancel attack_hand()
+
+/obj/item/clothing/gloves/proc/strip_mod(mob/M)
+	return strip_mod
+
+/obj/item/clothing/gloves/proc/strip_silence(mob/M)
+	return strip_silence
