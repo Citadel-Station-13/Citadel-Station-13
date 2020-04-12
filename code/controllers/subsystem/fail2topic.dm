@@ -21,9 +21,6 @@ SUBSYSTEM_DEF(fail2topic)
 
 	DropFirewallRule() // Clear the old bans if any still remain
 
-	if (world.system_type == UNIX && enabled)
-		enabled = FALSE
-		subsystem_log("DISABLED - UNIX systems are not supported.")
 	if(!enabled)
 		flags |= SS_NO_FIRE
 		can_fire = FALSE
@@ -90,7 +87,10 @@ SUBSYSTEM_DEF(fail2topic)
 	fail_counts -= ip
 	rate_limiting -= ip
 
-	. = shell("netsh advfirewall firewall add rule name=\"[rule_name]\" dir=in interface=any action=block remoteip=[ip]")
+	if (world.system_type == UNIX)
+		. = shell("iptables -A [rule_name] -s [ip] -j DROP")
+	else
+		. = shell("netsh advfirewall firewall add rule name=\"[rule_name]\" dir=in interface=any action=block remoteip=[ip]")
 
 	if (.)
 		subsystem_log("Failed to ban [ip]. Exit code: [.].")
@@ -105,7 +105,10 @@ SUBSYSTEM_DEF(fail2topic)
 
 	active_bans = list()
 
-	. = shell("netsh advfirewall firewall delete rule name=\"[rule_name]\"")
+	if (world.system_type == UNIX)
+		. = shell("iptables -F [rule_name]") //Let's just assume that folks running linux are smart enough to have a dedicated chain configured for this.
+	else
+		. = shell("netsh advfirewall firewall delete rule name=\"[rule_name]\"")
 
 	if (.)
 		subsystem_log("Failed to drop firewall rule. Exit code: [.].")
