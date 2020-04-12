@@ -625,8 +625,8 @@ PENIS_MAX_INCHES_PREFS 20
 BODY_SIZE_MIN 1
 BODY_SIZE_MAX 1
 
-## Pun-Pun movement slowdown for characters with a body size smaller than this value,
-## Which kinda makes sense considering their strides should be shorters.
+## Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+## to compensate for their smaller hitbox.
 ## To disable, just make sure the value is lower than 'body_size_min'
 THRESHOLD_BODY_SIZE_SLOWDOWN 0.85
 

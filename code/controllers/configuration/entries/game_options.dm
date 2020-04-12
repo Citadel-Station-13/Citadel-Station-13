@@ -460,8 +460,8 @@
 	config_entry_value = RESIZE_DEFAULT_SIZE
 	min_val = RESIZE_DEFAULT_SIZE
 
-//Pun-Pun movement slowdown for characters with a body size smaller than this value,
-//Which kinda makes sense considering their strides should be shorters.
+//Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+//to compensate for their smaller hitbox.
 //To disable, just make sure the value is lower than 'body_size_min'
 /datum/config_entry/number/threshold_body_size_slowdown
 	config_entry_value = RESIZE_DEFAULT_SIZE * 0.85
