@@ -190,7 +190,7 @@ BLIND     // can't see anything
 
 /proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
-	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+	var/icon/female_s				= icon("icon"='icons/mob/clothing/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
 	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
@@ -445,11 +445,11 @@ BLIND     // can't see anything
 /obj/item/clothing/update_overlays()	// Polychrome stuff
 	. = ..()
 	if(hasprimary)	//Checks if the overlay is enabled
-		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_color]-primary", color = primary_color)	//Automagically picks overlays
+		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_state]-primary", color = primary_color)	//Automagically picks overlays
 		. += primary_overlay	//Applies the coloured overlay onto the item sprite. but NOT the mob sprite.
 	if(hassecondary)
-		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_color]-secondary", color = secondary_color)
+		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_state]-secondary", color = secondary_color)
 		. += secondary_overlay
 	if(hastertiary)
-		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_color]-tertiary", color = tertiary_color)
+		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_state]-tertiary", color = tertiary_color)
 		. += tertiary_overlay

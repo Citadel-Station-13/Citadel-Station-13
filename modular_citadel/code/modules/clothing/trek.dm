@@ -15,7 +15,7 @@
 	desc = "The overcoat worn by all officers of the 2380s."
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	icon_state = "trek_ds9_coat"
-	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	mob_overlay_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "trek_ds9_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	mutantrace_variation = NONE
@@ -44,7 +44,7 @@
 	name = "Federation Uniform Jacket"
 	desc = "A uniform jacket from the United Federation. Set phasers to awesome."
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	mob_overlay_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedcoat"
 	item_state = "fedcoat"
 	mutantrace_variation = NONE
@@ -110,7 +110,7 @@
 	name = "Modern Federation Uniform Jacket"
 	desc = "A modern uniform jacket from the United Federation."
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	mob_overlay_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedmodern"
 	item_state = "fedmodern"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -142,7 +142,7 @@
 	desc = "An officer's cap that demands discipline from the one who wears it."
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	icon_state = "fedcapofficer"
-	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	mob_overlay_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "fedcapofficer"
 
 	//Variants
