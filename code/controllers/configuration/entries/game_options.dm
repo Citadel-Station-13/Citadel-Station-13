@@ -460,8 +460,9 @@
 	config_entry_value = RESIZE_DEFAULT_SIZE
 	min_val = RESIZE_DEFAULT_SIZE
 
-//pun pun slowdown for characters smaller than this thanks shorter strides.
-//Set to a value below 'body_size_min' to disable it.
+//Pun-Pun movement slowdown for characters with a body size smaller than this value,
+//Which kinda makes sense considering their strides should be shorters.
+//To disable, just make sure the value is lower than 'body_size_min'
 /datum/config_entry/number/threshold_body_size_slowdown
 	config_entry_value = RESIZE_DEFAULT_SIZE * 0.85
 	min_val = 0
@@ -471,4 +472,4 @@
 //doesn't apply to floating or crawling mobs
 /datum/config_entry/number/body_size_slowdown_multiplier
 	config_entry_value = 0.25
-	min_val = 1.1 //otherwise it'd be a waste of time.
+	min_val = 0.1 //To encourage folks to disable the slowdown through the above config instead.
