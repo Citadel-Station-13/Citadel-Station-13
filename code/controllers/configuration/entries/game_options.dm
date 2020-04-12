@@ -449,3 +449,26 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 	config_entry_value = list(GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER) //refer to cit_helpers for all toggles.
+
+//Body size configs, the feature will be disabled if both min and max have the same value.
+/datum/config_entry/number/body_size_min
+	config_entry_value = RESIZE_DEFAULT_SIZE
+	min_val = 0.1 //to avoid issues with zeros and negative values.
+	max_val = RESIZE_DEFAULT_SIZE
+
+/datum/config_entry/number/body_size_max
+	config_entry_value = RESIZE_DEFAULT_SIZE
+	min_val = RESIZE_DEFAULT_SIZE
+
+//pun pun slowdown for characters smaller than this thanks shorter strides.
+//Set to a value below 'body_size_min' to disable it.
+/datum/config_entry/number/threshold_body_size_slowdown
+	config_entry_value = RESIZE_DEFAULT_SIZE * 0.85
+	min_val = 0
+	max_val = RESIZE_DEFAULT_SIZE
+
+//multiplicative slowdown multiplier. See 'dna.update_body_size' for the operation.
+//doesn't apply to floating or crawling mobs
+/datum/config_entry/number/body_size_slowdown_multiplier
+	config_entry_value = 0.25
+	min_val = 1.1 //otherwise it'd be a waste of time.
