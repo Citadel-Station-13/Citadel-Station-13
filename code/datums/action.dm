@@ -97,7 +97,7 @@
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/IsAvailable()
+/datum/action/proc/IsAvailable(silent = FALSE)
 	if(!owner)
 		return FALSE
 	var/mob/living/L = owner
@@ -149,7 +149,7 @@
 		button.add_overlay(M)
 		button.appearance_cache = target.appearance
 
-	if(!IsAvailable())
+	if(!IsAvailable(TRUE))
 		button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 	else
 		button.color = rgb(255,255,255,255)
@@ -307,7 +307,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "vortex_recall"
 
-/datum/action/item_action/vortex_recall/IsAvailable()
+/datum/action/item_action/vortex_recall/IsAvailable(silent = FALSE)
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
@@ -319,7 +319,7 @@
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
-/datum/action/item_action/clock/IsAvailable()
+/datum/action/item_action/clock/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	return ..()
@@ -328,7 +328,7 @@
 	name = "Create Judicial Marker"
 	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
-/datum/action/item_action/clock/toggle_visor/IsAvailable()
+/datum/action/item_action/clock/toggle_visor/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -407,7 +407,7 @@
 /datum/action/item_action/jetpack_stabilization
 	name = "Toggle Jetpack Stabilization"
 
-/datum/action/item_action/jetpack_stabilization/IsAvailable()
+/datum/action/item_action/jetpack_stabilization/IsAvailable(silent = FALSE)
 	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
 		return 0
@@ -464,7 +464,7 @@
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
 
-/datum/action/item_action/organ_action/IsAvailable()
+/datum/action/item_action/organ_action/IsAvailable(silent = FALSE)
 	var/obj/item/organ/I = target
 	if(!I.owner)
 		return 0
@@ -633,32 +633,32 @@
 		return FALSE
 	if(target)
 		var/obj/effect/proc_holder/S = target
-		S.Click()
+		S.Trigger(usr)
 		return TRUE
 
-/datum/action/spell_action/IsAvailable()
+/datum/action/spell_action/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	return TRUE
 
 /datum/action/spell_action/spell
 
-/datum/action/spell_action/spell/IsAvailable()
+/datum/action/spell_action/spell/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	var/obj/effect/proc_holder/spell/S = target
 	if(owner)
-		return S.can_cast(owner, FALSE, TRUE)
+		return S.can_cast(owner, FALSE, silent)
 	return FALSE
 
 /datum/action/spell_action/alien
 
-/datum/action/spell_action/alien/IsAvailable()
+/datum/action/spell_action/alien/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	var/obj/effect/proc_holder/alien/ab = target
 	if(owner)
-		return ab.cost_check(ab.check_turf,owner,1)
+		return ab.cost_check(ab.check_turf,owner,silent)
 	return FALSE
 
 
@@ -700,7 +700,7 @@
 	button.maptext_width = 24
 	button.maptext_height = 12
 
-/datum/action/cooldown/IsAvailable()
+/datum/action/cooldown/IsAvailable(silent = FALSE)
 	return next_use_time <= world.time
 
 /datum/action/cooldown/proc/StartCooldown()

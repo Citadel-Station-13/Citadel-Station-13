@@ -321,12 +321,16 @@ There are several things that need to be remembered:
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[SLOT_BACK])
+	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_HEAD]
 		inv.update_icon()
 
-	update_mutant_bodyparts()
 	if(head)
+		head.screen_loc = ui_head
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)
+				client.screen += head
+		update_observer_view(head,1)
 		remove_overlay(HEAD_LAYER)
 		var/obj/item/clothing/head/H = head
 		var/alt_icon = H.mob_overlay_icon || 'icons/mob/clothing/head.dmi'
@@ -348,6 +352,7 @@ There are several things that need to be remembered:
 			head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
 		overlays_standing[HEAD_LAYER] = head_overlay
 	apply_overlay(HEAD_LAYER)
+	update_mutant_bodyparts()
 
 /mob/living/carbon/human/update_inv_belt()
 	remove_overlay(BELT_LAYER)
@@ -457,11 +462,16 @@ There are several things that need to be remembered:
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[SLOT_WEAR_MASK])
+	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_MASK]
 		inv.update_icon()
 
 	if(wear_mask)
+		wear_mask.screen_loc = ui_mask
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)
+				client.screen += wear_mask
+		update_observer_view(wear_mask,1)
 		var/obj/item/clothing/mask/M = wear_mask
 		remove_overlay(FACEMASK_LAYER)
 		var/alt_icon = M.mob_overlay_icon || 'icons/mob/clothing/mask.dmi'
@@ -515,22 +525,6 @@ There are several things that need to be remembered:
 
 //human HUD updates for items in our inventory
 
-//update whether our head item appears on our hud.
-/mob/living/carbon/human/update_hud_head(obj/item/I)
-	I.screen_loc = ui_head
-	if(client && hud_used && hud_used.hud_shown)
-		if(hud_used.inventory_shown)
-			client.screen += I
-	update_observer_view(I,1)
-
-//update whether our mask item appears on our hud.
-/mob/living/carbon/human/update_hud_wear_mask(obj/item/I)
-	I.screen_loc = ui_mask
-	if(client && hud_used && hud_used.hud_shown)
-		if(hud_used.inventory_shown)
-			client.screen += I
-	update_observer_view(I,1)
-
 //update whether our neck item appears on our hud.
 /mob/living/carbon/human/update_hud_neck(obj/item/I)
 	I.screen_loc = ui_neck
@@ -579,13 +573,7 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 /obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state, style_flags = NONE, use_mob_overlay_icon = TRUE)
 
 	var/t_state
-	if(override_state)
-		t_state = override_state
-	else
-		if(isinhands && item_state)
-			t_state = item_state
-		else
-			t_state = icon_state
+	t_state = override_state || item_state || icon_state
 
 	//Find a valid icon file from variables+arguments
 	var/file2use

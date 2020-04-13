@@ -30,16 +30,14 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	on = !on
-	icon_state = "[basestate][on]-[hardsuit_type]"
 	user.update_inv_head()	//so our mob-overlays update
-
 	if(on)
 		set_light(brightness_on)
 	else
 		set_light(0)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+
+/obj/item/clothing/head/helmet/space/hardsuit/update_icon_state()
+	icon_state = "[basestate][on]-[hardsuit_type]"
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
 	..()
