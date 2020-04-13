@@ -510,13 +510,16 @@ DEFAULT_VIEW 21x15
 
 ### FAIL2TOPIC:
 ### Automated IP bans for world/Topic() spammers
+### NOTE FOR WINDOWS HOSTS: This requires you to be running dreamdaemon as an administrator for it to work at all. TGS3 handles this automatically, and honestly there's no reason not to be using TGS3 if you're hosting on Windows.
+### NOTE FOR LINUX HOSTS: This requires manual setup of iptables. Beware that improper configuration of this can and will irreversibly fuck up a server, so please don't tinker with it if you don't know what you're doing.
 ## Enabled
-FAIL2TOPIC_ENABLED
+#FAIL2TOPIC_ENABLED
 ## Minimum wait time in deciseconds between valid requests 
 FAIL2TOPIC_RATE_LIMIT 10
 ## Number of requests after breaching rate limit that triggers a ban
 FAIL2TOPIC_MAX_FAILS 5
 ## Firewall rule name used on physical server
+## FOR LINUX HOSTS: This is used as the chain name. The iptables chain doesn't get created or hooked up to INPUT automatically, so you'll have to get that set up yourself. Recommended name: BYOND
 FAIL2TOPIC_RULE_NAME _dd_fail2topic
 
 ## Enable automatic profiling - Byond 513.1506 and newer only.
