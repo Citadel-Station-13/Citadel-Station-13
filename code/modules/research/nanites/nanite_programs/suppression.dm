@@ -40,7 +40,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/shocking/on_trigger(comm_message)
-	host_mob.electrocute_act(rand(5,10), "shock nanites", TRUE, TRUE)
+	host_mob.electrocute_act(rand(5,10), "shock nanites", 1, SHOCK_NOGLOVES)
 
 /datum/nanite_program/stun
 	name = "Neural Shock"
@@ -107,7 +107,7 @@
 /datum/nanite_program/fake_death/enable_passive_effect()
 	. = ..()
 	host_mob.emote("deathgasp")
-	host_mob.fakedeath("nanites")
+	host_mob.fakedeath("nanites", TRUE)
 
 /datum/nanite_program/fake_death/disable_passive_effect()
 	. = ..()

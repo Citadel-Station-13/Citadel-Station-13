@@ -24,6 +24,7 @@
 	icon_state = "toyburst"
 	obj_flags = NONE
 	fire_delay = 40
+	w_class = WEIGHT_CLASS_HUGE
 	weapon_weight = WEAPON_HEAVY
 	selfcharge = EGUN_SELFCHARGE
 	charge_delay = 2
@@ -56,12 +57,14 @@
 /obj/item/gun/energy/laser/carbine
 	name = "laser carbine"
 	desc = "A ruggedized laser carbine featuring much higher capacity and improved handling when compared to a normal laser gun."
-	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "lasernew"
-	item_state = "laser"
+	item_state = "lasernew"
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	inaccuracy_modifier = 0.5
 	force = 10
 	throwforce = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	cell_type = /obj/item/stock_parts/cell/lascarbine
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 

@@ -19,9 +19,15 @@
 /mob/proc/set_dizziness(amount)
 	dizziness = max(amount, 0)
 
-///Blind a mobs eyes by amount
+/**
+  * Sets a mob's blindness to an amount if it was not above it already, similar to how status effects work 
+  */
 /mob/proc/blind_eyes(amount)
-	adjust_blindness(amount)
+	var/old_blind = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
+	eye_blind = max(eye_blind, amount)
+	var/new_blind = eye_blind || HAS_TRAIT(src, TRAIT_BLIND)
+	if(old_blind != new_blind)
+		update_blindness()
 
 /**
   * Adjust a mobs blindness by an amount

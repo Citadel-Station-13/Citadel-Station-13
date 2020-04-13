@@ -139,7 +139,7 @@
 	name = "Headset Upgrader"
 	desc = "A device that can be used to make one headset immune to flashbangs."
 	item = /obj/item/headsetupgrader
-	cost = 3
+	cost = 1
 
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"
@@ -185,8 +185,9 @@
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after injection."
-	item = /obj/item/reagent_containers/syringe/stimulants
+			5 minutes after fully injecting yourself. Can inject yourself, or others, 5 times and through hardsuits. \
+			Each injection will gives around a minute of stimulants."
+	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
 

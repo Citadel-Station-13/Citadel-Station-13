@@ -43,7 +43,7 @@
 
 //						EXPLANATION
 /datum/objective/bloodsucker/lair/update_explanation_text()
-	explanation_text = "Create a lair by claiming a coffin, and protect it until the end of the shift"//  Make sure to keep it safe!"
+	explanation_text = "Create a lair by claiming a coffin, and protect it until the end of the shift."//  Make sure to keep it safe!"
 
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/lair/check_completion()
@@ -228,7 +228,7 @@
 		if (SC && SC.lastgen > 0 && SC.connected_panels.len > 0 && SC.connected_tracker)
 			return FALSE
 	return TRUE
-*/ 
+*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -250,15 +250,15 @@
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/heartthief/check_completion()
 	// -Must have a body.
-	if (!owner.current)
+	if(!owner.current)
 		return FALSE
 	// Taken from /steal in objective.dm
 	var/list/all_items = owner.current.GetAllContents() // Includes items inside other items.
 	var/itemcount = FALSE
 	for(var/obj/I in all_items) //Check for items
-		if(I == /obj/item/organ/heart)
-			itemcount ++
-			if (itemcount >= target_amount) // Got the right amount?
+		if(istype(I, /obj/item/organ/heart/))
+			itemcount++
+			if(itemcount >= target_amount) // Got the right amount?
 				return TRUE
 
 	return FALSE

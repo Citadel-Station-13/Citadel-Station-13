@@ -3,8 +3,10 @@
 	name = "under"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
+	block_priority = BLOCK_PRIORITY_UNIFORM
 	slot_flags = ITEM_SLOT_ICLOTHING
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	mutantrace_variation = STYLE_DIGITIGRADE
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = TRUE
@@ -12,19 +14,32 @@
 	var/can_adjust = TRUE
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
+	var/dummy_thick = FALSE // is able to hold accessories on its item
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
-	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = list()
-	if(!isinhands)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		if(blood_DNA)
-			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
-		if(accessory_overlay)
-			. += accessory_overlay
+	if(isinhands)
+		return
+	if(damaged_clothes)
+		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
+	if(blood_DNA)
+		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
+	if(accessory_overlay)
+		. += accessory_overlay
+	if(hasprimary)	//checks if overlays are enabled
+		var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[icon_state]-primary")	//automagical sprite selection
+		primary_worn.color = primary_color	//colors the overlay
+		. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+	if(hassecondary)
+		var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[icon_state]-secondary")
+		secondary_worn.color = secondary_color
+		. += secondary_worn
+	if(hastertiary)
+		var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[icon_state]-tertiary")
+		tertiary_worn.color = tertiary_color
+		. += tertiary_worn
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
@@ -82,6 +97,10 @@
 			if(user)
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return
+		if(dummy_thick)
+			if(user)
+				to_chat(user, "<span class='warning'>[src] is too bulky and cannot have accessories attached to it!</span>")
+			return
 		else
 			if(user && !user.temporarilyRemoveItemFromInventory(I))
 				return
@@ -94,10 +113,8 @@
 			if((flags_inv & HIDEACCESSORY) || (A.flags_inv & HIDEACCESSORY))
 				return TRUE
 
-			var/accessory_color = attached_accessory.item_color
-			if(!accessory_color)
-				accessory_color = attached_accessory.icon_state
-			accessory_overlay = mutable_appearance('icons/mob/accessories.dmi', "[accessory_color]")
+			var/accessory_color = attached_accessory.icon_state
+			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
 			accessory_overlay.alpha = attached_accessory.alpha
 			accessory_overlay.color = attached_accessory.color
 
@@ -149,3 +166,6 @@
 				. += "Its vital tracker and tracking beacon appear to be enabled."
 	if(attached_accessory)
 		. += "\A [attached_accessory] is attached to it."
+
+/obj/item/clothing/under/rank
+	dying_key = DYE_REGISTRY_UNDER

@@ -53,6 +53,9 @@
 
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
+/// Blocks sprint
+#define STATUS_EFFECT_STAGGERED /datum/status_effect/staggered
+
 #define STATUS_EFFECT_TASED_WEAK /datum/status_effect/electrode				//not as crippling, just slows down
 
 #define STATUS_EFFECT_TASED /datum/status_effect/electrode/no_combat_mode //the affected has been tased, preventing fine muscle control
@@ -96,7 +99,7 @@
 #define STATUS_EFFECT_PENIS_ENLARGEMENT /datum/status_effect/chem/penis_enlarger //More applied slowdown, just like the above.
 
 #define STATUS_EFFECT_NO_COMBAT_MODE /datum/status_effect/no_combat_mode //Wont allow combat mode and will disable it
-#define STATUS_EFFECT_MESMERIZE /datum/status_effect/no_combat_mode/mesmerize //Just reskinned no_combat_mode
+#define STATUS_EFFECT_MESMERIZE /datum/status_effect/mesmerize //Just reskinned no_combat_mode
 
 #define STATUS_EFFECT_ELECTROSTAFF /datum/status_effect/electrostaff		//slows down victim
 
@@ -118,3 +121,4 @@
 
 #define STATUS_EFFECT_RAINBOWPROTECTION /datum/status_effect/rainbow_protection //Invulnerable and pacifistic
 #define STATUS_EFFECT_SLIMESKIN /datum/status_effect/slimeskin //Increased armor
+#define STATUS_EFFECT_DNA_MELT /datum/status_effect/dna_melt //usually does something horrible to you when you hit 100 genetic instability

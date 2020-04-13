@@ -189,7 +189,7 @@
 	new /obj/item/reagent_containers/medspray/silver_sulf(src)
 	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
-	new /obj/item/clothing/glasses/hud/health/night(src)
+	new /obj/item/clothing/glasses/hud/health/night/syndicate(src)
 
 /obj/item/storage/firstaid/tactical/nukeop
 	name = "improved combat medical kit"
@@ -204,7 +204,7 @@
 	new /obj/item/reagent_containers/medspray/silver_sulf(src)
 	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
-	new /obj/item/clothing/glasses/hud/health/night(src)
+	new /obj/item/clothing/glasses/hud/health/night/syndicate(src)
 
 /*
  * Pill Bottles
@@ -524,14 +524,6 @@
 	name = "deluxe hypospray kit"
 	desc = "A kit containing a Deluxe hypospray and Vials."
 	icon_state = "tactical-mini"
-
-/obj/item/storage/hypospraykit/cmo/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.can_hold = typecacheof(list(
-	/obj/item/hypospray/mkii,
-	/obj/item/reagent_containers/glass/bottle/vial))
 
 /obj/item/storage/hypospraykit/cmo/PopulateContents()
 	if(empty)

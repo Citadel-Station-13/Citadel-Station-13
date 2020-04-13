@@ -42,15 +42,11 @@
 							observers = null
 							break
 
-		var/t_state = I.item_state
-		if(!t_state)
-			t_state = I.icon_state
-
 		var/icon_file = I.lefthand_file
 		if(get_held_index_of_item(I) % 2 == 0)
 			icon_file = I.righthand_file
 
-		hands += I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
@@ -100,7 +96,7 @@
 
 	if(wear_mask)
 		if(!(head && (head.flags_inv & HIDEMASK)))
-			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
+			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi', override_state = wear_mask.icon_state)
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
@@ -114,7 +110,7 @@
 
 	if(wear_neck)
 		if(!(head && (head.flags_inv & HIDENECK)))
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
+			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi', override_state = wear_mask.icon_state)
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
@@ -127,7 +123,7 @@
 		inv.update_icon()
 
 	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
+		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi', override_state = back.icon_state)
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
@@ -143,7 +139,7 @@
 		inv.update_icon()
 
 	if(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
+		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi', override_state = head.icon_state)
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
@@ -152,7 +148,7 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		var/mutable_appearance/cuffs = mutable_appearance('icons/mob/restraints.dmi', handcuffed.item_state, -HANDCUFF_LAYER)
+		var/mutable_appearance/cuffs = mutable_appearance('icons/mob/clothing/restraints.dmi', handcuffed.item_state, -HANDCUFF_LAYER)
 		cuffs.color = handcuffed.color
 
 		overlays_standing[HANDCUFF_LAYER] = cuffs
@@ -162,7 +158,7 @@
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
+		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/clothing/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
 		legcuffs.color = legcuffed.color
 
 		overlays_standing[LEGCUFF_LAYER] = legcuffs

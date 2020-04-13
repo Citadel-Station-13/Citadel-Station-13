@@ -92,6 +92,22 @@
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/clockwork_slab
+	name = "Clockwork Slab"
+	desc = "A reverse engineered clockwork slab. Is this really a good idea?."
+	item = /obj/item/clockwork/slab/traitor
+	cost = 20
+	refundable = TRUE
+	restricted_roles = list("Chaplain")
+
+/datum/uplink_item/role_restricted/arcane_tome
+	name = "Arcane Tome"
+	desc = "A replica of a Nar'sian tome. This is probably a bad idea.."
+	item = /obj/item/tome/traitor
+	cost = 20
+	refundable = TRUE
+	restricted_roles = list("Chaplain")
+
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"
 	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. \
@@ -159,7 +175,7 @@
 /datum/uplink_item/role_restricted/kitchen_gun
 	name = "Kitchen Gun (TM)"
 	desc = "A revolutionary .45 caliber cleaning solution! Say goodbye to daily stains and dirty surfaces with Kitchen Gun (TM)! \
-	Just five shots from Kitchen Gun (TM), and it'll sparkle like new! Includes two extra ammunition clips!"
+	Just three shots from Kitchen Gun (TM), and it'll sparkle like new! Includes two extra ammunition clips!"
 	cost = 10
 	surplus = 40
 	restricted_roles = list("Cook", "Janitor")

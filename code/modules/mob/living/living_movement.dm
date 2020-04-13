@@ -1,6 +1,10 @@
 /mob/living/Moved()
 	. = ..()
 	update_turf_movespeed(loc)
+	if(is_shifted)
+		is_shifted = FALSE
+		pixel_x = get_standard_pixel_x_offset(lying)
+		pixel_y = get_standard_pixel_y_offset(lying)
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))
@@ -27,7 +31,15 @@
 
 /mob/living/update_config_movespeed()
 	update_move_intent_slowdown()
+	sprint_buffer_max = CONFIG_GET(number/movedelay/sprint_buffer_max)
+	sprint_buffer_regen_ds = CONFIG_GET(number/movedelay/sprint_buffer_regen_per_ds)
+	sprint_stamina_cost = CONFIG_GET(number/movedelay/sprint_stamina_cost)
 	return ..()
+
+/mob/living/movement_delay(ignorewalk = 0)
+	. = ..()
+	if(!CHECK_MOBILITY(src, MOBILITY_STAND))
+		. += 6
 
 /// whether or not we can slide under another living mob. defaults to if we're not dense. CanPass should check "overriding circumstances" like buckled mobs/having PASSMOB flag, etc.
 /mob/living/proc/can_move_under_living(mob/living/other)

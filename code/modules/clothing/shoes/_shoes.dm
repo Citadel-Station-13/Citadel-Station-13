@@ -61,7 +61,7 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
-			var/file2use = style_flags & STYLE_DIGITIGRADE ? 'icons/mob/feet_digi.dmi' : 'icons/effects/blood.dmi'
+			var/file2use = style_flags & STYLE_DIGITIGRADE ? 'icons/mob/clothing/feet_digi.dmi' : 'icons/effects/blood.dmi'
 			. += mutable_appearance(file2use, "shoeblood", color = blood_DNA_to_color())
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)

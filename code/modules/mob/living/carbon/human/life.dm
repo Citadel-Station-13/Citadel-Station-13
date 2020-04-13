@@ -316,12 +316,15 @@
 				BP.receive_damage(I.w_class*I.embedding.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.forceMove(drop_location())
+				I.unembedded()
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/human/proc/handle_active_genes()
+	if(HAS_TRAIT(src, TRAIT_MUTATION_STASIS))
+		return
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_life(src)
 

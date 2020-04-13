@@ -7,9 +7,21 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+
+	///icon state name for inhand overlays
 	var/item_state = null
+	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
+	///Icon file for mob worn overlays.
+	///no var for state because it should *always* be the same as icon_state
+	var/icon/mob_overlay_icon
+	//Forced mob worn layer instead of the standard preferred ssize.
+	var/alternate_worn_layer
+
 	var/list/alternate_screams = list() //REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
@@ -21,10 +33,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/inhand_x_dimension = 32
 	var/inhand_y_dimension = 32
 
-	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
-	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
-	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
-
 	max_integrity = 200
 
 	obj_flags = NONE
@@ -34,7 +42,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = WEIGHT_CLASS_NORMAL
+
+	/// The amount of stamina it takes to swing an item in a normal melee attack do not lie to me and say it's for realism because it ain't. If null it will autocalculate from w_class.
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
+	/// How long, in deciseconds, this staggers for, if null it will autocalculate from w_class and force. Unlike total mass this supports 0 and negatives.
+	var/stagger_force
+
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
@@ -54,8 +67,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
 	//Citadel Edit for digitigrade stuff
 	var/mutantrace_variation = NONE //Are there special sprites for specific situations? Don't use this unless you need to.
-
-	var/item_color = null //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
@@ -87,8 +98,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
 
-	var/block_chance = 0
-	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
@@ -104,6 +113,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/tip_timer
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
+
+	///Used as the dye color source in the washing machine only (at the moment). Can be a hex color or a key corresponding to a registry entry, see washing_machine.dm
+	var/dye_color
+	///Whether the item is unaffected by standard dying.
+	var/undyeable = FALSE
+	///What dye registry should be looked at when dying this item; see washing_machine.dm
+	var/dying_key
 
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
@@ -359,13 +375,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
-	if(prob(final_block_chance))
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return 1
-	return 0
-
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
 	return ITALICS | REDUCE_RANGE
 
@@ -399,7 +408,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		if(C.combatmode && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
+		if((C.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
 			if(!C.get_active_held_item())
 				C.UnarmedAttack(src, TRUE)
 				if(C.get_active_held_item() == src)
@@ -465,9 +474,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/ui_action_click(mob/user, actiontype)
 	attack_self(user)
 
-/obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-	return 0
-
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [M]!</span>")
@@ -503,7 +509,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+	if(IS_STAMCRIT(user))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
@@ -857,3 +863,24 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
+
+/obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
+	return
+
+/obj/item/proc/unembedded()
+	return
+
+/**
+  * Sets our slowdown and updates equipment slowdown of any mob we're equipped on.
+  */
+/obj/item/proc/set_slowdown(new_slowdown)
+	slowdown = new_slowdown
+	if(CHECK_BITFIELD(item_flags, IN_INVENTORY))
+		var/mob/living/L = loc
+		if(istype(L))
+			L.update_equipment_speed_mods()
+
+/obj/item/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, slowdown))
+		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.

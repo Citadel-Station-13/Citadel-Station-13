@@ -117,7 +117,7 @@
 	. = ..()
 	if(!isinhands || !(loaded?.amount))
 		return
-	var/mutable_appearance/cable_overlay = mutable_appearance(icon, "rcl-[CEILING(loaded.amount/(max_amount/3), 1)]")
+	var/mutable_appearance/cable_overlay = mutable_appearance(icon_file, "rcl-[CEILING(loaded.amount/(max_amount/3), 1)]")
 	cable_overlay.color = GLOB.cable_colors[colors[current_color_index]]
 	. += cable_overlay
 
@@ -201,7 +201,7 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 					return //If we've run out, display message and exit
 			else
 				last = null
-		loaded.item_color	 = colors[current_color_index]
+		loaded.color	 = colors[current_color_index]
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
 	update_icon()
@@ -223,7 +223,6 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 			continue
 		if(C.d1 == 0)
 			return C
-			break
 	return
 
 
@@ -277,7 +276,7 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 	if(T.intact || !T.can_have_cabling())
 		return
 
-	loaded.item_color	 = colors[current_color_index]
+	loaded.color	 = colors[current_color_index]
 
 	var/obj/structure/cable/linkingCable = findLinkingCable(user)
 	if(linkingCable)
@@ -299,7 +298,7 @@ obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
 		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
-			loaded.item_color= colors[current_color_index]
+			loaded.color = colors[current_color_index]
 			update_icon()
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)

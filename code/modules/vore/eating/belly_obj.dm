@@ -161,6 +161,8 @@
 	SSbellies.belly_list -= src
 	if(owner?.vore_organs)
 		owner.vore_organs -= src
+		if(owner.vore_selected == src)
+			owner.vore_selected = null
 		owner = null
 	. = ..()
 
@@ -413,7 +415,7 @@
 		if("em")
 			raw_messages = examine_messages
 
-	var/messages = list2text(raw_messages,delim)
+	var/messages = raw_messages.Join(delim)
 	return messages
 
 // The next function sets the messages on the belly, from human-readable var
@@ -422,7 +424,7 @@
 /obj/belly/proc/set_messages(var/raw_text, var/type, var/delim = "\n\n")
 	ASSERT(type == "smo" || type == "smi" || type == "dmo" || type == "dmp" || type == "em")
 
-	var/list/raw_list = text2list(html_encode(raw_text),delim)
+	var/list/raw_list = splittext(html_encode(raw_text),delim)
 	if(raw_list.len > 10)
 		raw_list.Cut(11)
 		testing("[owner] tried to set [lowertext(name)] with 11+ messages")
@@ -556,7 +558,6 @@
 				to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
 				to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
 				return
-			return
 
 	var/struggle_outer_message = pick(struggle_messages_outside)
 	var/struggle_user_message = pick(struggle_messages_inside)

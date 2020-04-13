@@ -4,7 +4,6 @@
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"
-	item_color = "mime"
 
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
@@ -18,6 +17,22 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
+/obj/item/clothing/shoes/combat/sneakboots
+	name = "insidious sneakboots"
+	desc = "A pair of insidious boots with special noise muffling soles which very slightly drown out your footsteps. They would be absolutely perfect for stealth operations were it not for the iconic Syndicate flairs."
+	icon_state = "sneakboots"
+	item_state = "sneakboots"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
+/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_SHOES)
+		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
+
+/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -108,7 +123,6 @@
 	icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	item_color = "hosred"
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = NONE
@@ -165,7 +179,6 @@
 	name = "\improper Nar'Sien invoker boots"
 	desc = "A pair of boots worn by the followers of Nar'Sie."
 	icon_state = "cult"
-	item_color = "cult"
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
@@ -211,7 +224,6 @@
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
-	item_color = "hosred"
 	resistance_flags = FIRE_PROOF
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)

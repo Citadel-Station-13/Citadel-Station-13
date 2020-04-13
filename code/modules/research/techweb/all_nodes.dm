@@ -71,7 +71,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("medicalkit", "chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "blood_bag", "bloodbankgen", "telescopiciv", "medspray")
+	design_ids = list("medicalkit", "chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "blood_bag", "bloodbankgen", "telescopiciv", "medspray","genescanner")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/adv_biotech
@@ -79,7 +79,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "defibrillator_compact", "smartdartgun", "medicinalsmartdart", "pHmeter")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "defibrillator_compact", "smartdartgun", "medicinalsmartdart", "pHmeter", "containmentbodybag")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/bio_process
@@ -221,23 +221,21 @@
 	description = "Unlock the potential of the mysterious of why CC decided to not build these around the station themselves."
 	prereq_ids = list("adv_engi", "high_efficiency")
 	design_ids = list("meteor_defence", "meteor_console")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-*/
 
-//datum/techweb_node/adv_meteor_defense
-	//id = "adv_meteor_defense"
-	//display_name = "Meteor Defense Research"
-	//description = "New and improved coding and lock on tech for meteor defence!"
-	//prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
-	//design_ids = list("meteor_disk")
-	//research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+/datum/techweb_node/adv_meteor_defense
+	id = "adv_meteor_defense"
+	display_name = "Meteor Defense Research"
+	description = "New and improved coding and lock on tech for meteor defence!"
+	prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
+	design_ids = list("meteor_disk")
+*/
 
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
 	display_name = "Games and Toys"
 	description = "For the slackers on the station."
 	prereq_ids = list("comptech")
-	design_ids = list("arcade_battle", "arcade_orion", "slotmachine", "autoylathe")
+	design_ids = list("arcade_battle", "arcade_orion", "arcade_minesweeper", "slotmachine", "autoylathe")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /////////////////////////Bluespace tech/////////////////////////
@@ -278,7 +276,7 @@
 	display_name = "Bluespace Pockets"
 	description = "Studies into the mysterious alternate dimension known as bluespace and how to place items in the threads of reality."
 	prereq_ids = list("adv_power", "adv_bluespace", "adv_biotech", "adv_plasma")
-	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag")
+	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag", "duffelbag_holding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5500)
 
 /datum/techweb_node/bluespace_portal
@@ -336,7 +334,7 @@
 	display_name = "Advanced Robotics Research"
 	description = "It can even do the dishes!"
 	prereq_ids = list("robotics")
-	design_ids = list("borg_upgrade_diamonddrill", "borg_upgrade_advancedmop", "borg_upgrade_advcutter", "borg_upgrade_premiumka")
+	design_ids = list("borg_upgrade_diamonddrill", "borg_upgrade_advancedmop", "borg_upgrade_advcutter")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/neural_programming

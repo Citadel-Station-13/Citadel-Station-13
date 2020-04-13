@@ -425,8 +425,7 @@
 			candidates -= M
 
 /proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
-	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
-	var/list/candidates = eligibility.get_all_ghost_role_eligible()
+	var/list/candidates = get_all_ghost_role_eligible()
 	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
 /proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
@@ -564,13 +563,13 @@
 	var/list/possible_loc = list()
 	for(var/turf/found_turf in turfs)
 		var/area/turf_area = get_area(found_turf)
-		if (specific_area)	// We check if both the turf is a floor, and that it's actually in the area. // We also want a location that's clear of any obstructions.
+		if(specific_area)	// We check if both the turf is a floor, and that it's actually in the area. // We also want a location that's clear of any obstructions.
 			if(!istype(turf_area, specific_area))
 				continue
 		if(!isspaceturf(found_turf))
 			if(!is_blocked_turf(found_turf))
 				possible_loc.Add(found_turf)
-	if (possible_loc.len < 1)	// Need at least one free location.
+	if(possible_loc.len < 1)	// Need at least one free location.
 		return FALSE
 	return pick(possible_loc)
 

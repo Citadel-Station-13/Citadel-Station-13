@@ -117,7 +117,7 @@
 			continue
 		contam_atoms += thing
 	var/did_contam = 0
-	if(length(can_contam))
+	if(can_contam)
 		var/rad_strength = ((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT)/contam_atoms.len
 		for(var/k in 1 to contam_atoms.len)
 			var/atom/thing = contam_atoms[k]

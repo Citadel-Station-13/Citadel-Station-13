@@ -58,30 +58,40 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	cut_overlays()
-	if(opened & icon_door_override)
-		add_overlay("[icon_door]_open")
+	. = ..()
+	if(!opened)
 		layer = OBJ_LAYER
-		return
-	else if(opened)
-		add_overlay("[icon_state]_open")
-		return
-	if(icon_door)
-		add_overlay("[icon_door]_door")
 	else
 		layer = BELOW_OBJ_LAYER
-		add_overlay("[icon_state]_door")
-	if(welded)
-		add_overlay("welded")
-	if(!secure)
-		return
-	if(broken)
-		add_overlay("off")
-		add_overlay("sparking")
-	else if(locked)
-		add_overlay("locked")
+
+/obj/structure/closet/update_overlays()
+	. = ..()
+	closet_update_overlays(.)
+
+/obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(!opened)
+		if(icon_door)
+			. += "[icon_door]_door"
+		else
+			. += "[icon_state]_door"
+		if(welded)
+			. += "welded"
+		if(!secure)
+			return
+		if(broken)
+			. += "off"
+			. += "sparking"
+		else if(locked)
+			. += "locked"
+		else
+			. += "unlocked"
 	else
-		add_overlay("unlocked")
+		if(icon_door_override)
+			. += "[icon_door]_open"
+		else
+			. += "[icon_state]_open"
+
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
@@ -111,7 +121,7 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || (horizontal && L.mob_size > MOB_SIZE_TINY && L.density))
 			if(user)
 				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" )
 			return FALSE
@@ -123,7 +133,7 @@
 		if(closet != src && !closet.wall_mounted)
 			return FALSE
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something too large in [src], preventing it from closing.</span>")
 			return FALSE
@@ -206,7 +216,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return FALSE
 		var/mob/living/L = AM
-		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return FALSE
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
@@ -441,7 +451,7 @@
 /obj/structure/closet/relaymove(mob/user)
 	if(user.stat || !isturf(loc) || !isliving(user))
 		return
-	if(locked)
+	if(locked || welded)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
 			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")

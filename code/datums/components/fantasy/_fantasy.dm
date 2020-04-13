@@ -30,26 +30,23 @@
 	return ..()
 
 /datum/component/fantasy/RegisterWithParent()
-	. = ..()
 	var/obj/item/master = parent
 	originalName = master.name
 	modify()
 
 /datum/component/fantasy/UnregisterFromParent()
-	. = ..()
 	unmodify()
 
-/datum/component/fantasy/InheritComponent(datum/component/fantasy/newComp, original, list/arguments)
+/datum/component/fantasy/InheritComponent(datum/component/fantasy/newComp, original, quality, list/affixes, canFail, announce)
 	unmodify()
 	if(newComp)
-		quality += newComp.quality
-		canFail = newComp.canFail
-		announce = newComp.announce
+		src.quality += newComp.quality
+		src.canFail = newComp.canFail
+		src.announce = newComp.announce
 	else
-		arguments.len = 5 // This is done to replicate what happens when an arglist smaller than the necessary arguments is given
-		quality += arguments[1]
-		canFail = arguments[4] || canFail
-		announce = arguments[5] || announce
+		src.quality += quality
+		src.canFail = canFail || src.canFail
+		src.announce = announce || src.announce
 	modify()
 
 /datum/component/fantasy/proc/randomQuality()

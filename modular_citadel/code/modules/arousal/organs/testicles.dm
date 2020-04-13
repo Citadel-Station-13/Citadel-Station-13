@@ -9,10 +9,9 @@
 	arousal_verb = "Your balls ache a little"
 	unarousal_verb = "Your balls finally stop aching, again"
 	linked_organ_slot = ORGAN_SLOT_PENIS
-	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION
+	genital_flags = CAN_MASTURBATE_WITH|MASTURBATE_LINKED_ORGAN|GENITAL_FUID_PRODUCTION|UPDATE_OWNER_APPEARANCE|GENITAL_UNDIES_HIDDEN
 	var/size_name = "average"
-	shape = "Single"
-	var/sack_size = BALLS_SACK_SIZE_DEF
+	shape = DEF_BALLS_SHAPE
 	fluid_id = /datum/reagent/consumable/semen
 	masturbation_verb = "massage"
 	layer_index = TESTICLES_LAYER_INDEX
@@ -54,9 +53,6 @@
 				icon_state += "_s"
 		else
 			color = "#[owner.dna.features["balls_color"]]"
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.update_genitals()
 
 /obj/item/organ/genital/testicles/get_features(mob/living/carbon/human/H)
 	var/datum/dna/D = H.dna
@@ -64,10 +60,8 @@
 		color = "#[skintone2hex(H.skin_tone)]"
 	else
 		color = "#[D.features["balls_color"]]"
-	sack_size = D.features["balls_sack_size"]
 	shape = D.features["balls_shape"]
-	if(D.features["balls_shape"] == "Hidden")
-		ENABLE_BITFIELD(genital_flags, GENITAL_INTERNAL)
 	fluid_rate = D.features["balls_cum_rate"]
 	fluid_mult = D.features["balls_cum_mult"]
 	fluid_efficiency = D.features["balls_efficiency"]
+	toggle_visibility(D.features["balls_visibility"], FALSE)

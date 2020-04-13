@@ -136,6 +136,14 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/strawberryjuice
+	name = "Strawberry Juice"
+	description = "Refreshing seasonal summer drink."
+	color = "#E50D31"
+	taste_description = "strawberry"
+	glass_name = "glass of strawberry juice"
+	glass_desc = "Refreshing seasonal summer drink."
+
 /datum/reagent/consumable/nothing
 	name = "Nothing"
 	description = "Absolutely nothing."
@@ -812,6 +820,14 @@
 	taste_description = "peaches"
 	glass_name = "glass of peach juice"
 
+/datum/reagent/consumable/pineapplejuice
+	name = "Pineapple Juice"
+	description = "Tart, tropical, and hotly debated."
+	color = "#F7D435"
+	taste_description = "pineapple"
+	glass_name = "glass of pineapple juice"
+	glass_desc = "Tart, tropical, and hotly debated."
+
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
 	description = "A classic space-American vanilla flavored soft drink."
@@ -826,6 +842,19 @@
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
+/datum/reagent/consumable/sol_dry
+	name = "Sol Dry"
+	description = "A soothing, mellow drink made from ginger."
+	color = "#f7d26a"
+	quality = DRINK_NICE
+	taste_description = "sweet ginger spice"
+	glass_name = "Sol Dry"
+	glass_desc = "A soothing, mellow drink made from ginger."
+
+/datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/M)
+	M.adjust_disgust(-5)
+	..()
+
 /datum/reagent/consumable/red_queen
 	name = "Red Queen"
 	description = "DRINK ME."
@@ -835,12 +864,13 @@
 	glass_icon_state = "red_queen"
 	glass_name = "Red Queen"
 	glass_desc = "DRINK ME."
-	var/current_size = 1
+	var/current_size = RESIZE_DEFAULT_SIZE
 
 /datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/H)
 	if(prob(75))
 		return ..()
 	var/newsize = pick(0.5, 0.75, 1, 1.50, 2)
+	newsize *= RESIZE_DEFAULT_SIZE
 	H.resize = newsize/current_size
 	current_size = newsize
 	H.update_transform()
@@ -849,7 +879,8 @@
 	..()
 
 /datum/reagent/consumable/red_queen/on_mob_end_metabolize(mob/living/M)
-	M.resize = 1/current_size
+	M.resize = RESIZE_DEFAULT_SIZE/current_size
+	current_size = RESIZE_DEFAULT_SIZE
 	M.update_transform()
 	..()
 

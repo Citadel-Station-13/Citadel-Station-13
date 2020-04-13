@@ -41,7 +41,7 @@
 	var/firing = FALSE
 	/// Used in gun-in-mouth execution/suicide and similar, while TRUE nothing should work on this like firing or modification and so on and so forth.
 	var/busy_action = FALSE
-	var/weapon_weight = WEAPON_LIGHT	//currently only used for inaccuracy
+	var/weapon_weight = WEAPON_LIGHT	//used for inaccuracy and wielding requirements/penalties
 	var/spread = 0						//Spread induced by the gun itself.
 	var/burst_spread = 0				//Spread induced by the gun itself during burst fire per iteration. Only checked if spread is 0.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
@@ -168,7 +168,7 @@
 		return
 	if(firing)
 		return
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)			//respect stamina softcrit
+	if(IS_STAMCRIT(user))			//respect stamina softcrit
 		to_chat(user, "<span class='warning'>You are too exhausted to fire [src]!</span>")
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
@@ -562,11 +562,11 @@
 		update_icon()
 
 /obj/item/gun/proc/getinaccuracy(mob/living/user)
-	if(!iscarbon(user))
+	if(!isliving(user))
 		return FALSE
 	else
-		var/mob/living/carbon/holdingdude = user
-		if(istype(holdingdude) && holdingdude.combatmode)
-			return (max((holdingdude.lastdirchange + weapon_weight * 25) - world.time,0) * inaccuracy_modifier)
+		var/mob/living/holdingdude = user
+		if(istype(holdingdude) && (holdingdude.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+			return 0
 		else
 			return ((weapon_weight * 25) * inaccuracy_modifier)

@@ -821,7 +821,6 @@
 		/obj/item/gps/cyborg,
 		/obj/item/weapon/gripper/mining,
 		/obj/item/cyborg_clamp,
-		/obj/item/card/id/miningborg,
 		/obj/item/stack/marker_beacon,
 		/obj/item/destTagger,
 		/obj/item/stack/packageWrap)
@@ -914,8 +913,8 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/twohanded/shockpaddles/syndicate,
-		/obj/item/healthanalyzer,
-		/obj/item/surgical_drapes,
+		/obj/item/healthanalyzer/advanced,
+		/obj/item/surgical_drapes/advanced,
 		/obj/item/retractor,
 		/obj/item/hemostat,
 		/obj/item/cautery,

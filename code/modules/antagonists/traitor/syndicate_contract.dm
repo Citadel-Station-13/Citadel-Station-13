@@ -2,6 +2,7 @@
 	var/id = 0
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
+	var/target_rank
 	var/ransom = 0
 	var/payout_type = null
 	var/list/victim_belongings = list()
@@ -13,6 +14,11 @@
 
 /datum/syndicate_contract/proc/generate(blacklist)
 	contract.find_target(null, blacklist)
+	var/datum/data/record/record = find_record("name", contract.target.name, GLOB.data_core.general)
+	if(record)
+		target_rank = record.fields["rank"]
+	else
+		target_rank = "Unknown"
 	if (payout_type == CONTRACT_PAYOUT_LARGE)
 		contract.payout_bonus = rand(9,13)
 	else if(payout_type == CONTRACT_PAYOUT_MEDIUM)
@@ -81,9 +87,9 @@
 								As is policy we've taken a portion of the station's funds to offset the overall cost.", null, "attention", null, "Nanotrasen Asset Protection")
 
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)	// They're off to holding - handle the return timer and give some text about what's going on.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 4)	// Ship 'em back - dead or alive... 4 minutes wait.
+	addtimer(CALLBACK(src, .proc/returnVictim, M), 4 MINUTES)	// Ship 'em back - dead or alive... 4 minutes wait.
 	if(M.stat != DEAD)	//Even if they weren't the target, we're still treating them the same.
-		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 20)	// Heal them up - gets them out of crit/soft crit.
+		M.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 20)	// Heal them up - gets them out of crit/soft crit. -- now 100% toxinlover friendly!!
 		M.flash_act()
 		M.confused += 10
 		M.blur_eyes(5)

@@ -85,7 +85,7 @@
 		. += "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>"
 		. += "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>"
 
-/obj/machinery/microwave/update_icon()
+/obj/machinery/microwave/update_icon_state()
 	if(broken)
 		icon_state = "mwb"
 	else if(dirty_anim_playing)
@@ -287,7 +287,7 @@
 
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
 	if(stat & (NOPOWER|BROKEN))
-		if(MICROWAVE_PRE)
+		if(type == MICROWAVE_PRE)
 			pre_fail()
 		return
 	if(!time)

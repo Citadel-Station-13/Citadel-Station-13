@@ -38,7 +38,17 @@
 			specialised contractor baton, and three randomly selected low cost items. Can include otherwise unobtainable items."
 	item = /obj/item/storage/box/syndie_kit/contract_kit
 	cost = 20
-	player_minimum = 20
+	player_minimum = 15
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/suits/infiltrator_bundle
+	name = "Insidious Infiltration Gear Case"
+	desc = "Developed by Roseus Galactic in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
+			this suit proves to be cheaper than your standard issue hardsuit, with none of the movement restrictions (or the space proofing) of the outdated spacesuits employed by the company. \
+			Comes with an armored vest, helmet, blood-red sneaksuit, sneakboots, specialized combat gloves and a high-tech balaclava which obfuscates both your voice and your face. The case is also rather useful as a storage container and bludgeoning implement."
+	item = /obj/item/storage/toolbox/infiltrator
+	cost = 5
+	limited_stock = 1 //you only get one so you don't end up with too many gun cases
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/bundles_TC/cybernetics_bundle

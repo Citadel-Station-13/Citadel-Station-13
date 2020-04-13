@@ -33,12 +33,13 @@
 				return 1
 	return !density
 
-/obj/structure/closet/crate/update_icon()
+/obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	cut_overlays()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
-		add_overlay("manifest")
+		. += "manifest"
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	. = ..()
@@ -178,6 +179,7 @@
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
 	icon_state = "radiation"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"

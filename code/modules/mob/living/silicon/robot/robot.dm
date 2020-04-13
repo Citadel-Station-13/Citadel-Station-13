@@ -10,6 +10,8 @@
 	has_limbs = 1
 	hud_type = /datum/hud/robot
 
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+
 	var/custom_name = ""
 	var/braintype = "Cyborg"
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
@@ -968,7 +970,8 @@
 		if(IsUnconscious() || IsStun() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				blind_eyes(1)
+				if(!eye_blind)
+					blind_eyes(1)
 				update_mobility()
 				update_headlamp()
 		else
@@ -1115,6 +1118,7 @@
 	desc = "Stop controlling your shell and resume normal core operations."
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
+	required_mobility_flags = NONE
 
 /datum/action/innate/undeployment/Trigger()
 	if(!..())

@@ -173,7 +173,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	filling_color = "#F0E68C"
 	tastes = list("egg" = 1)
-	foodtype = MEAT | GRAIN
+	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/beans
 	name = "tin of beans"
@@ -542,6 +542,7 @@
 	desc = "A sliced piece of juicy pineapple."
 	icon_state = "pineapple_slice"
 	filling_color = "#F6CB0B"
+	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
 	tastes = list("pineapple" = 1)
 	foodtype = FRUIT | PINEAPPLE
 
@@ -578,6 +579,16 @@
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
 	tastes = list("peaches" = 1, "tin" = 7)
+
+/obj/item/reagent_containers/food/snacks/crab_rangoon
+	name = "Crab Rangoon"
+	desc = "Has many names, like crab puffs, cheese wontons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
+	icon_state = "crabrangoon"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	filling_color = "#f2efdc"
+	w_class = WEIGHT_CLASS_SMALL
+	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
+	foodtype = MEAT | DAIRY | GRAIN
 
 /obj/item/reagent_containers/food/snacks/chocolatestrawberry
 	name = "Chocolate dipped strawberries"

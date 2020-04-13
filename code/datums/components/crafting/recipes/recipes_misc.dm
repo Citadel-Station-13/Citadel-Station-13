@@ -278,7 +278,7 @@
 	result = /obj/item/banner/command/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/captainparade = 1)
+				/obj/item/clothing/under/rank/captain/parade = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/engineering_banner
@@ -286,7 +286,7 @@
 	result = /obj/item/banner/engineering/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/engineer = 1)
+				/obj/item/clothing/under/rank/engineering/engineer = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/cargo_banner
@@ -294,7 +294,7 @@
 	result = /obj/item/banner/cargo/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/cargotech = 1)
+				/obj/item/clothing/under/rank/cargo/tech = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/science_banner
@@ -302,7 +302,7 @@
 	result = /obj/item/banner/science/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/scientist = 1)
+				/obj/item/clothing/under/rank/rnd/scientist = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/medical_banner
@@ -310,7 +310,7 @@
 	result = /obj/item/banner/medical/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/medical = 1)
+				/obj/item/clothing/under/rank/medical/doctor = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/security_banner
@@ -318,7 +318,7 @@
 	result = /obj/item/banner/security/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/security = 1)
+				/obj/item/clothing/under/rank/security/officer = 1)
 	category = CAT_MISC
 
 	/datum/crafting_recipe/bloodsucker/vassalrack

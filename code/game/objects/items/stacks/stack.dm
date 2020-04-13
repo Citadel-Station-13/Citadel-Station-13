@@ -219,8 +219,9 @@
 			O = new R.result_type(usr.drop_location())
 		if(O)
 			O.setDir(usr.dir)
+			log_craft("[O] crafted by [usr] at [loc_name(O.loc)]")
+
 		use(R.req_amount * multiplier)
-		log_craft("[O] crafted by [usr] at [loc_name(O.loc)]")
 
 		if(R.applies_mats && custom_materials && custom_materials.len)
 			var/list/used_materials = list()
@@ -239,8 +240,7 @@
 
 		else if(istype(O, /obj/item/restraints/handcuffs/cable))
 			var/obj/item/cuffs = O
-			cuffs.item_color = item_color
-			cuffs.update_icon()
+			cuffs.color = color
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged

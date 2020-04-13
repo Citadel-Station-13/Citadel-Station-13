@@ -1,12 +1,17 @@
 ## Dynamic storytellers weights: how likely each storyteller is to show up. This is adjusted by voting and recency.
 STORYTELLER_WEIGHT CHAOTIC 2
 STORYTELLER_WEIGHT TEAMWORK 4
-STORYTELLER_WEIGHT CONVERSION 2
-STORYTELLER_WEIGHT RANDOM 6
+STORYTELLER_WEIGHT CONVERSION 0
+STORYTELLER_WEIGHT RANDOM 2
+STORYTELLER_WEIGHT CLASSIC 6
 STORYTELLER_WEIGHT INTRIGUE 6
 STORYTELLER_WEIGHT STORY 6
 STORYTELLER_WEIGHT CALM 6
 STORYTELLER_WEIGHT EXTENDED 0
+
+## Dynamic storyteller minimum player coutns: how many players before this storyteller can be rolled.
+STORYTELLER_MIN_PLAYERS CHAOTIC 30
+STORYTELLER_MIN_PLAYERS TEAMWORK 30
 
 ## Injection delays: how long (in minutes) will pass before a midround or latejoin antag is injected.
 DYNAMIC_MIDROUND_DELAY_MIN 5

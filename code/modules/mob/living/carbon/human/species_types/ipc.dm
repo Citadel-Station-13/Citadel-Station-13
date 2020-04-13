@@ -3,13 +3,12 @@
 	id = "ipc"
 	say_mod = "beeps"
 	default_color = "00FF00"
-	should_draw_citadel = TRUE
+	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	blacklisted = 0
 	sexes = 0
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
-	mutant_bodyparts = list("ipc_screen", "ipc_antenna")
-	default_features = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
+	mutant_bodyparts = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
 	mutanttongue = /obj/item/organ/tongue/robot/ipc

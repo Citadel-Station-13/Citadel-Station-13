@@ -76,6 +76,7 @@
 	var/list/choices = list("Preset - Basic", "Preset - Dynamic")
 	if(CONFIG_GET(flag/pai_custom_holoforms))
 		choices += "Custom"
+	var/old_chassis = chassis
 	var/choicetype = input(src, "What type of chassis do you want to use?") as null|anything in choices
 	if(!choicetype)
 		return FALSE
@@ -95,10 +96,10 @@
 			dynamic_chassis = choice
 	resist_a_rest(FALSE, TRUE)
 	update_icon()
-	current_mob_holder?.Detach(src)
-	current_mob_holder = null
+	if(possible_chassis[old_chassis])
+		RemoveElement(/datum/element/mob_holder, old_chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 	if(possible_chassis[chassis])
-		current_mob_holder = AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
+		AddElement(/datum/element/mob_holder, chassis, 'icons/mob/pai_item_head.dmi', 'icons/mob/pai_item_rh.dmi', 'icons/mob/pai_item_lh.dmi', ITEM_SLOT_HEAD)
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
 
 /mob/living/silicon/pai/lay_down()

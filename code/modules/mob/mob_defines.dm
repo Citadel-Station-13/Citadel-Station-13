@@ -8,6 +8,8 @@
 	pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -38,6 +40,7 @@
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
+	var/is_shifted = FALSE
 
 	//MOVEMENT SPEED
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
@@ -80,10 +83,8 @@
 	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/move_on_shuttle = 1 // Can move on the shuttle.
 
-//The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
-	var/mob/living/carbon/LAssailant = null
-
-	var/list/obj/user_movement_hooks	//Passes movement in client/Move() to these!
+	/// The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
+	var/datum/weakref/LAssailant
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
@@ -124,6 +125,3 @@
 	var/siliconaccesstoggle = FALSE
 
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
-
-	var/flavor_text = ""
-	var/flavor_text_2 = "" //version of the above that only lasts for the current round.
