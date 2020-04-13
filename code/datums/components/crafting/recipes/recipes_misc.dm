@@ -1,4 +1,16 @@
 /////////////////
+//Cargo Exports//
+/////////////////
+
+/datum/crafting_recipe/paperwork
+	name = "Filed Paper Work"
+	result =  /obj/item/folder/paperwork_correct
+	time = 10 //Takes time for people to file and complete paper work!
+	tools = list(/obj/item/pen)
+	reqs = list(/obj/item/folder/paperwork = 1)
+	category = CAT_MISC
+
+/////////////////
 //Large Objects//
 /////////////////
 
@@ -259,14 +271,6 @@
 	reqs = list(/obj/item/camera = 1,
 				/datum/reagent/water/holywater = 10)
 	parts = list(/obj/item/camera = 1)
-	category = CAT_MISC
-
-/datum/crafting_recipe/paperwork
-	name = "Filed Paper Work"
-	result =  /obj/item/folder/paperwork_correct
-	time = 10 //Takes time for people to file and complete paper work!
-	tools = list(/obj/item/pen)
-	reqs = list(/obj/item/folder/paperwork = 1)
 	category = CAT_MISC
 
 //////////////
