@@ -387,15 +387,15 @@
 	var/newlocobject = null
 
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
-	..()
+	. = ..()
 	if(slot == SLOT_SHOES)
 		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
 	else
-		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
+		UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
 
 /obj/item/clothing/shoes/wallwalkers/dropped(mob/user)
-	..()
-	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
 
 /obj/item/clothing/shoes/wallwalkers/attackby(obj/item/W, mob/user, params)
 	. = ..()
@@ -414,7 +414,7 @@
 	. = ..()
 	. += "<span class='warning'>It has [wallcharges] charges left.</span>"
 
-/obj/item/clothing/shoes/wallwalkers/proc/intercept_user_move(mob/living/m, client,dir,newloc,oldloc)
+/obj/item/clothing/shoes/wallwalkers/proc/intercept_user_move(mob/living/m, client/client, dir, newloc, oldloc)
 	if (walkcool >= world.time || m.m_intent != MOVE_INTENT_WALK || wallcharges <= 0)
 		return
 	walkcool = world.time + m.movement_delay()
