@@ -3291,7 +3291,6 @@
 #include "modular_citadel\code\modules\client\verbs\who.dm"
 #include "modular_citadel\code\modules\clothing\neck.dm"
 #include "modular_citadel\code\modules\clothing\trek.dm"
-#include "modular_citadel\code\modules\clothing\suits\polychromic_cloaks.dm"
 #include "modular_citadel\code\modules\clothing\suits\suits.dm"
 #include "modular_citadel\code\modules\custom_loadout\custom_items.dm"
 #include "modular_citadel\code\modules\custom_loadout\load_to_mob.dm"

@@ -96,7 +96,7 @@
 
 /obj/item/clothing/under/costume/kilt/polychromic/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/polychromic, list("#FFFFFF", "#F08080"), list("polykilt-primary", "polykilt-secondary"), null, POLYCHROMIC_ALTCLICK|POLYCHROMIC_NO_HELD|POLYCHROMIC_ACTION)
+	AddElement(/datum/element/polychromic, list("#FFFFFF", "#F08080"), 2)
 
 /obj/item/clothing/under/costume/gladiator
 	name = "gladiator uniform"

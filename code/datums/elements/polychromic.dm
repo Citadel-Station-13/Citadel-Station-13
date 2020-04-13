@@ -14,13 +14,16 @@
 	var/list/already_updates_onmob = list()
 	var/poly_flags
 	var/worn_file //used in place of items' held or mob overlay icons if present.
+	var/static/list/suits_with_helmet_typecache = typecacheof(list(/obj/item/clothing/suit/hooded, /obj/item/clothing/suit/space/hardsuit))
+	var/list/helmet_by_suit //because poly winter coats exist.
+	var/list/suit_by_helmet //Idem.
 
-/datum/element/polychromic/Attach(datum/target, list/colors, states, _icon, _flags = POLYCHROMIC_ALTCLICK|POLYCHROMIC_NO_HELD, _worn, list/names = list("Primary", "Secondary", "Tertiary", "Quaternary", "Quinary", "Senary"))
+/datum/element/polychromic/Attach(datum/target, list/colors, states, _flags = POLYCHROMIC_ACTION|POLYCHROMIC_NO_HELD, _icon, _worn, list/names = list("Primary", "Secondary", "Tertiary", "Quaternary", "Quinary", "Senary"))
 	. = ..()
 	var/make_appearances = islist(states)
 	var/states_len = make_appearances ? length(states) : states
 	var/names_len = length(names)
-	if(!states_len || !names_len || !isatom(target))
+	if(!states_len || !names_len || colors_by_atom[target] || !isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	var/atom/A = target
 
@@ -59,8 +62,10 @@
 			if(!SSdcs.GetElement(/datum/element/update_icon_updates_onmob))
 				A.AddElement(/datum/element/update_icon_updates_onmob)
 			else
-				already_updates_onmob[A]++
+				LAZYSET(already_updates_onmob, A, TRUE)
 			RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
+			if(suits_with_helmet_typecache[A.type])
+				RegisterSignal(A, COMSIG_SUIT_MADE_HELMET, .proc/register_helmet)
 	else if(_flags & POLYCHROMIC_ACTION && ismob(A)) //in the event mob update icon procs are ever standarized.
 		var/datum/action/polychromic/P = new(A)
 		RegisterSignal(P, COMSIG_ACTION_TRIGGER, .proc/activate_action)
@@ -71,33 +76,48 @@
 
 /datum/element/polychromic/Detach(atom/A)
 	. = ..()
-	A.cut_overlay(colors_by_atom[A])
 	colors_by_atom -= A
-	if(!(poly_flags & POLYCHROMIC_NO_HELD) && !(poly_flags & POLYCHROMIC_NO_WORN) && isitem(A))
-		if(!already_updates_onmob[A])
-			A.RemoveElement(/datum/element/update_icon_updates_onmob)
-		else
-			already_updates_onmob[A]--
-			if(!already_updates_onmob[A])
-				already_updates_onmob -= A
 	var/datum/action/polychromic/P = actions_by_atom[A]
 	if(P)
 		actions_by_atom -= A
 		qdel(P)
-	UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_WORN_OVERLAYS))
+	UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_WORN_OVERLAYS, COMSIG_SUIT_MADE_HELMET))
+	if(isitem(A))
+		if(!(poly_flags & POLYCHROMIC_NO_HELD) && !(poly_flags & POLYCHROMIC_NO_WORN))
+			if(!already_updates_onmob[A])
+				A.RemoveElement(/datum/element/update_icon_updates_onmob)
+			else
+				LAZYREMOVE(already_updates_onmob, A)
+			var/obj/item/clothing/head/H = helmet_by_suit[A]
+			if(H)
+				UnregisterSignal(H, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_WORN_OVERLAYS, COMSIG_PARENT_QDELETING))
+				LAZYREMOVE(helmet_by_suit, A)
+				LAZYREMOVE(suit_by_helmet, H)
+				colors_by_atom -= H
+				if(!QDELETED(H))
+					H.update_icon() //removing the overlays
+			if(!QDELETED(A) && ismob(A.loc))
+				var/mob/M = A.loc
+				if(!(poly_flags & POLYCHROMIC_NO_HELD) && M.is_holding(A))
+					M.update_inv_hands()
+				else if(!(poly_flags & POLYCHROMIC_NO_WORN))
+					M.regenerate_icons()
+	if(!QDELETED(A))
+		A.update_icon() //removing the overlays
 
 /datum/element/polychromic/proc/apply_overlays(atom/source, list/overlays)
 	var/list/L = colors_by_atom[source]
+	var/f_icon = icon_file || source.icon
 	if(isnum(overlays_states))
 		for(var/i in 1 to overlays_states)
-			overlays += mutable_appearance(source.icon, "[source.icon_state]-[i]", color = L[i])
+			overlays += mutable_appearance(f_icon, "[source.icon_state]-[i]", color = L[i])
 	else
 		overlays += colors_by_atom[source]
 
-/datum/element/polychromic/proc/apply_worn_overlays(obj/item/source, isinhands, icon_file, used_state, style_flags, list/overlays)
+/datum/element/polychromic/proc/apply_worn_overlays(obj/item/source, isinhands, icon, used_state, style_flags, list/overlays)
 	if(poly_flags & (isinhands ? POLYCHROMIC_NO_HELD : POLYCHROMIC_NO_WORN))
 		return
-	var/f_icon = worn_file || icon_file
+	var/f_icon = worn_file || icon
 	var/list/L = colors_by_atom[source]
 
 	if(isnum(overlays_states))
@@ -147,6 +167,20 @@
 
 /datum/element/polychromic/proc/on_examine(atom/source, mob/user, list/examine_list)
 	examine_list += "<span class='notice'>Alt-click to recolor it.</span>"
+
+/datum/element/polychromic/proc/register_helmet(atom/source, obj/item/clothing/head/H)
+	LAZYSET(suit_by_helmet, H, source)
+	LAZYSET(helmet_by_suit, source, H)
+	colors_by_atom[H] = colors_by_atom[source]
+	RegisterSignal(H, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlays)
+	RegisterSignal(H, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
+	RegisterSignal(H, COMSIG_PARENT_QDELETING, .proc/unregister_helmet)
+
+/datum/element/polychromic/proc/unregister_helmet(atom/source)
+	var/obj/item/clothing/suit/S = suit_by_helmet[source]
+	LAZYREMOVE(suit_by_helmet, source)
+	LAZYREMOVE(helmet_by_suit, S)
+	colors_by_atom -= source
 
 /datum/action/polychromic
 	name = "Modify Polychromic Colors"
