@@ -1,0 +1,5 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - server: "Fail2Topic now supports Linux. Do beware that this requires some sysop experience to properly set up!"
+  - config: "Fail2Topic is now disabled by default, and the out-of-the-box config files have been updated to be a little more detailed."
