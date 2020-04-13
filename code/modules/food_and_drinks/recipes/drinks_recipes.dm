@@ -915,3 +915,41 @@
 	results = list(/datum/reagent/consumable/ethanol/commander_and_chief = 50)
 	required_reagents = list(/datum/reagent/consumable/ethanol/alliescocktail = 50, /datum/reagent/consumable/ethanol/champagne = 20, /datum/reagent/consumable/doctor_delight = 10, /datum/reagent/consumable/ethanol/quintuple_sec = 10, /datum/reagent/consumable/ethanol/screwdrivercocktail = 10)
 	mix_message = "When your powers combine, I am Captain Pl-..."
+
+////////////////////////////////////////// Race Base Drinks //////////////////////////////////////
+
+/datum/chemical_reaction/coldscales
+	name = "Cold Scales"
+	id = /datum/reagent/consumable/coldscales
+	results = list(/datum/reagent/consumable/coldscales = 3)
+	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/ethanol/lizardwine = 1,  /datum/reagent/consumable/menthol = 1)
+
+/datum/chemical_reaction/oil_drum
+	name = "Oil Drum"
+	id = /datum/reagent/consumable/oil_drum
+	results = list(/datum/reagent/consumable/oil_drum = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1,  /datum/reagent/oil = 1, /datum/reagent/consumable/ethanol/champagne = 12)
+
+/datum/chemical_reaction/nord_king
+	name = "Nord King"
+	id = /datum/reagent/consumable/nord_king
+	results = list(/datum/reagent/consumable/nord_king = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 5,  /datum/reagent/consumable/honey = 1, /datum/reagent/consumable/ethanol/red_mead = 10)
+
+/datum/chemical_reaction/velvet_kiss
+	name = "Velvet Kiss"
+	id = /datum/reagent/consumable/velvet_kiss
+	results = list(/datum/reagent/consumable/velvet_kiss = 3)
+	required_reagents = list(/datum/reagent/blood = 5,  /datum/reagent/consumable/tea = 1, /datum/reagent/consumable/ethanol/wine = 10)
+
+
+
+
+
+
+
+
+
+
+
+
