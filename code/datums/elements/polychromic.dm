@@ -11,6 +11,7 @@
 	var/icon_file
 	var/list/overlays_names //wrap numbers into text strings please.
 	var/list/actions_by_atom = list()
+	var/list/already_updates_onmob = list()
 	var/poly_flags
 	var/worn_file //used in place of items' held or mob overlay icons if present.
 
@@ -54,8 +55,11 @@
 		if(_flags & POLYCHROMIC_ACTION)
 			RegisterSignal(A, COMSIG_ITEM_EQUIPPED, .proc/grant_user_action)
 			RegisterSignal(A, COMSIG_ITEM_DROPPED, .proc/remove_user_action)
-		if(!(_flags & (POLYCHROMIC_NO_HELD|POLYCHROMIC_NO_WORN)))
-			A.AddElement(/datum/element/update_icon_updates_onmob)
+		if(!(_flags & POLYCHROMIC_NO_HELD) && !(_flags & POLYCHROMIC_NO_WORN))
+			if(!SSdcs.GetElement(/datum/element/update_icon_updates_onmob))
+				A.AddElement(/datum/element/update_icon_updates_onmob)
+			else
+				already_updates_onmob[A]++
 			RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
 	else if(_flags & POLYCHROMIC_ACTION && ismob(A)) //in the event mob update icon procs are ever standarized.
 		var/datum/action/polychromic/P = new(A)
@@ -69,6 +73,13 @@
 	. = ..()
 	A.cut_overlay(colors_by_atom[A])
 	colors_by_atom -= A
+	if(!(poly_flags & POLYCHROMIC_NO_HELD) && !(poly_flags & POLYCHROMIC_NO_WORN) && isitem(A))
+		if(!already_updates_onmob[A])
+			A.RemoveElement(/datum/element/update_icon_updates_onmob)
+		else
+			already_updates_onmob[A]--
+			if(!already_updates_onmob[A])
+				already_updates_onmob -= A
 	var/datum/action/polychromic/P = actions_by_atom[A]
 	if(P)
 		actions_by_atom -= A
@@ -99,10 +110,10 @@
 
 /datum/element/polychromic/proc/set_color(atom/source, mob/user)
 	var/choice = input(user,"Polychromic options", "Recolor [source]") as null|anything in overlays_names
-	if(!choice || QDELETED(source) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(!choice || QDELETED(source) || !user.canUseTopic(source, BE_CLOSE, NO_DEXTERY))
 		return
 	var/ncolor = input(user, "Polychromic options", "Choose [choice] Color") as color|null
-	if(!ncolor || QDELETED(source) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(!ncolor || QDELETED(source) || !user.canUseTopic(source, BE_CLOSE, NO_DEXTERY))
 		return
 	var/list/L = colors_by_atom[source]
 	if(!L) // Ummmmmh.
@@ -142,4 +153,4 @@
 	background_icon_state = "bg_polychromic"
 	use_target_appearance = TRUE
 	button_icon_state = null
-	target_appearance_matrix = list(0.7,0,0,0,0.7,0)
+	target_appearance_matrix = list(0.75,0,0,0,0.75,0)

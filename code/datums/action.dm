@@ -120,34 +120,34 @@
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(!button)
 		return
-	if(button_icon && button_icon_state)
-		if(!status_only)
-			button.name = name
-			button.desc = desc
-			if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
-				var/list/settings = owner.hud_used.get_action_buttons_icons()
-				if(button.icon != settings["bg_icon"])
-					button.icon = settings["bg_icon"]
-				if(button.icon_state != settings["bg_state"])
-					button.icon_state = settings["bg_state"]
-			else
-				if(button.icon != button_icon)
-					button.icon = button_icon
-				if(button.icon_state != background_icon_state)
-					button.icon_state = background_icon_state
+	if(!status_only)
+		button.name = name
+		button.desc = desc
+		if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			var/list/settings = owner.hud_used.get_action_buttons_icons()
+			if(button.icon != settings["bg_icon"])
+				button.icon = settings["bg_icon"]
+			if(button.icon_state != settings["bg_state"])
+				button.icon_state = settings["bg_state"]
+		else
+			if(button.icon != button_icon)
+				button.icon = button_icon
+			if(button.icon_state != background_icon_state)
+				button.icon_state = background_icon_state
 
+		if(!use_target_appearance)
 			ApplyIcon(button, force)
 
-	else if(use_target_appearance && target && button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
-		var/mutable_appearance/M = new(target)
-		M.layer = FLOAT_LAYER
-		M.plane = FLOAT_PLANE
-		if(target_appearance_matrix)
-			var/list/L = target_appearance_matrix
-			M.transform = matrix(L[1], L[2], L[3], L[4], L[5], L[6])
-		button.cut_overlays()
-		button.add_overlay(M)
-		button.appearance_cache = target.appearance
+		else if(target && button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
+			var/mutable_appearance/M = new(target)
+			M.layer = FLOAT_LAYER
+			M.plane = FLOAT_PLANE
+			if(target_appearance_matrix)
+				var/list/L = target_appearance_matrix
+				M.transform = matrix(L[1], L[2], L[3], L[4], L[5], L[6])
+			button.cut_overlays()
+			button.add_overlay(M)
+			button.appearance_cache = target.appearance
 
 	if(!IsAvailable(TRUE))
 		button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
