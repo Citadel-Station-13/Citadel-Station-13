@@ -14,8 +14,8 @@
 	var/list/actions_by_atom = list()
 	var/poly_flags
 	var/static/list/suits_with_helmet_typecache = typecacheof(list(/obj/item/clothing/suit/hooded, /obj/item/clothing/suit/space/hardsuit))
-	var/list/helmet_by_suit //because poly winter coats exist.
-	var/list/suit_by_helmet //Idem.
+	var/list/helmet_by_suit = list() //because poly winter coats exist.
+	var/list/suit_by_helmet = list() //Idem.
 
 /datum/element/polychromic/Attach(datum/target, list/colors, states, _flags = POLYCHROMIC_ACTION|POLYCHROMIC_NO_HELD, _icon, _worn, list/names = list("Primary", "Secondary", "Tertiary", "Quaternary", "Quinary", "Senary"))
 	. = ..()
@@ -82,8 +82,8 @@
 		var/obj/item/clothing/head/H = helmet_by_suit[A]
 		if(H)
 			UnregisterSignal(H, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_WORN_OVERLAYS, COMSIG_PARENT_QDELETING))
-			LAZYREMOVE(helmet_by_suit, A)
-			LAZYREMOVE(suit_by_helmet, H)
+			helmet_by_suit -= A
+			suit_by_helmet -= H
 			colors_by_atom -= H
 			if(!QDELETED(H))
 				H.update_icon() //removing the overlays
@@ -166,8 +166,8 @@
 	examine_list += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /datum/element/polychromic/proc/register_helmet(atom/source, obj/item/clothing/head/H)
-	LAZYSET(suit_by_helmet, H, source)
-	LAZYSET(helmet_by_suit, source, H)
+	suit_by_helmet[H] = source
+	helmet_by_suit[source] = H
 	colors_by_atom[H] = colors_by_atom[source]
 	RegisterSignal(H, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlays)
 	RegisterSignal(H, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
@@ -175,8 +175,8 @@
 
 /datum/element/polychromic/proc/unregister_helmet(atom/source)
 	var/obj/item/clothing/suit/S = suit_by_helmet[source]
-	LAZYREMOVE(suit_by_helmet, source)
-	LAZYREMOVE(helmet_by_suit, S)
+	suit_by_helmet -= source
+	helmet_by_suit -= S
 	colors_by_atom -= source
 
 /datum/action/polychromic
