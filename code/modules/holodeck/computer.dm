@@ -2,7 +2,10 @@
 	Holodeck Update
 
 	The on-station holodeck area is of type [holodeck_type].
-	All subtypes of [program_type] are loaded into the program cache or emag programs list.
+	All types found in GLOB.holodeck_areas_per_comp_type[src.type], generated on make_datum_references_lists(),
+	are loaded into the program cache or emag programs list.
+	Paths with their abstract_type variable equal to themselves will be skipped.
+
 	If init_program is null, a random program will be loaded on startup.
 	If you don't wish this, set it to the offline program or another of your choosing.
 
@@ -12,7 +15,6 @@
 	3) Create a new control console that uses those areas
 
 	Non-mapped areas should be skipped but you should probably comment them out anyway.
-	The base of program_type will always be ignored; only subtypes will be loaded.
 */
 
 #define HOLODECK_CD 25
@@ -35,7 +37,6 @@
 	// Splitting this up allows two holodecks of the same size
 	// to use the same source patterns.  Y'know, if you want to.
 	var/holodeck_type = /area/holodeck/rec_center	// locate(this) to get the target holodeck
-	var/program_type = /area/holodeck/rec_center	// subtypes of this (but not this itself) are loadable programs
 
 	var/active = FALSE
 	var/damaged = FALSE
@@ -181,7 +182,7 @@
 	return ..()
 
 /obj/machinery/computer/holodeck/proc/generate_program_list()
-	for(var/typekey in subtypesof(program_type))
+	for(var/typekey in GLOB.holodeck_areas_prototypes[type])
 		var/area/holodeck/A = GLOB.areas_by_type[typekey]
 		if(!A || !A.contents.len)
 			continue
