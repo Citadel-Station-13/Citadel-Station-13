@@ -295,6 +295,7 @@
 			prof.name_list[slot] = I.name
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
+			prof.item_color_list[slot] = I.item_color
 			prof.item_state_list[slot] = I.item_state
 			prof.exists_list[slot] = 1
 		else
@@ -510,6 +511,7 @@
 	var/list/appearance_list = list()
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
+	var/list/item_color_list = list()
 	var/list/item_state_list = list()
 
 	var/underwear
@@ -532,6 +534,7 @@
 	newprofile.appearance_list = appearance_list.Copy()
 	newprofile.flags_cover_list = flags_cover_list.Copy()
 	newprofile.exists_list = exists_list.Copy()
+	newprofile.item_color_list = item_color_list.Copy()
 	newprofile.item_state_list = item_state_list.Copy()
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt

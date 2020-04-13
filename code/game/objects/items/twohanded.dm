@@ -281,7 +281,7 @@
 	hitsound = "swing_hit"
 	var/hitsound_on = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
-	var/saber_color = "green"
+	item_color = "green"
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
@@ -326,8 +326,8 @@
 /obj/item/twohanded/dualsaber/Initialize()
 	. = ..()
 	if(LAZYLEN(possible_colors))
-		saber_color = pick(possible_colors)
-		switch(saber_color)
+		item_color = pick(possible_colors)
+		switch(item_color)
 			if("red")
 				light_color = LIGHT_COLOR_RED
 			if("green")
@@ -343,7 +343,7 @@
 
 /obj/item/twohanded/dualsaber/update_icon_state()
 	if(wielded)
-		icon_state = "dualsaber[saber_color][wielded]"
+		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()
@@ -457,7 +457,7 @@
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
-			saber_color = "rainbow"
+			item_color = "rainbow"
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")

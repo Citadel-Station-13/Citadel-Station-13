@@ -240,7 +240,8 @@
 
 		else if(istype(O, /obj/item/restraints/handcuffs/cable))
 			var/obj/item/cuffs = O
-			cuffs.color = color
+			cuffs.item_color = item_color
+			cuffs.update_icon()
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged

@@ -15,7 +15,7 @@
 
 /obj/item/implantcase/update_icon_state()
 	if(imp)
-		icon_state = "implantcase-[imp.implant_color]"
+		icon_state = "implantcase-[imp.item_color]"
 	else
 		icon_state = "implantcase-0"
 

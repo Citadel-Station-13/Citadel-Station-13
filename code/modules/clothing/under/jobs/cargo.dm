@@ -4,12 +4,14 @@
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	item_state = "lb_suit"
+	item_color = "qm"
 
 /obj/item/clothing/under/rank/cargo/qm/skirt
 	name = "quartermaster's jumpskirt"
 	desc = "It's a jumpskirt worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm_skirt"
 	item_state = "lb_suit"
+	item_color = "qm_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -19,6 +21,7 @@
 	desc = "Shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargotech"
 	item_state = "lb_suit"
+	item_color = "cargo"
 	body_parts_covered = CHEST|GROIN|ARMS
 	alt_covers_chest = TRUE
 
@@ -27,6 +30,7 @@
 	desc = "Skiiiiirts! They're comfy and easy to wear"
 	icon_state = "cargo_skirt"
 	item_state = "lb_suit"
+	item_color = "cargo_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -36,10 +40,12 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	item_state = "miner"
+	item_color = "miner"
 
 /obj/item/clothing/under/rank/cargo/miner/lavaland
 	desc = "A green uniform for operating in hazardous environments."
 	name = "shaft miner's jumpsuit"
 	icon_state = "explorer"
 	item_state = "explorer"
+	item_color = "explorer"
 	can_adjust = FALSE

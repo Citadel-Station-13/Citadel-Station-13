@@ -76,7 +76,7 @@
 	var/list/recommended_species
 
 /datum/sprite_accessory/underwear
-	icon = 'icons/mob/clothing/underwear.dmi'
+	icon = 'icons/mob/underwear.dmi'
 	var/has_color = FALSE
 	var/has_digitigrade = FALSE
 	var/covers_groin = FALSE

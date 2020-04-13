@@ -71,7 +71,7 @@
 	name = "bugged mob"
 	desc = "Yell at coderbrush."
 	icon = null
-	mob_overlay_icon = 'icons/mob/animals_held.dmi'
+	alternate_worn_icon = 'icons/mob/animals_held.dmi'
 	righthand_file = 'icons/mob/animals_held_rh.dmi'
 	lefthand_file = 'icons/mob/animals_held_lh.dmi'
 	icon_state = ""
@@ -86,7 +86,7 @@
 		assimilate(target)
 
 	if(alt_worn)
-		mob_overlay_icon = alt_worn
+		alternate_worn_icon = alt_worn
 	if(worn_state)
 		item_state = worn_state
 		icon_state = worn_state

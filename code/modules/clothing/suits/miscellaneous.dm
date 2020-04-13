@@ -973,6 +973,7 @@
 	name = "polychromic winter coat"
 	icon_state = "coatpoly"
 	item_state = "coatpoly"
+	item_color = "coatpoly"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic
 	hasprimary = TRUE
 	hassecondary = TRUE
@@ -983,6 +984,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/polychromic
 	icon_state = "winterhood_poly"
+	item_color = "winterhood_poly"
 	item_state = "winterhood_poly"
 
 /obj/item/clothing/head/hooded/winterhood/polychromic/worn_overlays(isinhands, icon_file, style_flags = NONE)	//this is where the main magic happens.
@@ -990,11 +992,11 @@
 	if(suit.hasprimary | suit.hassecondary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
 			if(suit.hasprimary)	//checks if overlays are enabled
-				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[icon_state]-primary")	//automagical sprite selection
+				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary")	//automagical sprite selection
 				primary_worn.color = suit.primary_color	//colors the overlay
 				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
 			if(suit.hassecondary)
-				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[icon_state]-secondary")
+				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary")
 				secondary_worn.color = suit.secondary_color
 				. += secondary_worn
 
@@ -1003,15 +1005,15 @@
 	if(hasprimary | hassecondary | hastertiary)
 		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
 			if(hasprimary)	//checks if overlays are enabled
-				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[icon_state]-primary[suittoggled ? "_t" : ""]")	//automagical sprite selection
+				var/mutable_appearance/primary_worn = mutable_appearance(icon_file, "[item_color]-primary[suittoggled ? "_t" : ""]")	//automagical sprite selection
 				primary_worn.color = primary_color	//colors the overlay
 				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
 			if(hassecondary)
-				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[icon_state]-secondary[suittoggled ? "_t" : ""]")
+				var/mutable_appearance/secondary_worn = mutable_appearance(icon_file, "[item_color]-secondary[suittoggled ? "_t" : ""]")
 				secondary_worn.color = secondary_color
 				. += secondary_worn
 			if(hastertiary)
-				var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[icon_state]-tertiary[suittoggled ? "_t" : ""]")
+				var/mutable_appearance/tertiary_worn = mutable_appearance(icon_file, "[item_color]-tertiary[suittoggled ? "_t" : ""]")
 				tertiary_worn.color = tertiary_color
 				. += tertiary_worn
 

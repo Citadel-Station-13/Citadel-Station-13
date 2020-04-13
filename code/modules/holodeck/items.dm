@@ -24,16 +24,15 @@
 	hitsound = "swing_hit"
 	armour_penetration = 50
 	var/active = 0
-	var/saber_color
 
 /obj/item/holo/esword/green/Initialize()
 	. = ..()
-	saber_color = "green"
+	item_color = "green"
 
 
 /obj/item/holo/esword/red/Initialize()
 	. = ..()
-	saber_color = "red"
+	item_color = "red"
 
 /obj/item/holo/esword/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!active)
@@ -45,13 +44,13 @@
 
 /obj/item/holo/esword/Initialize()
 	. = ..()
-	saber_color = pick("red","blue","green","purple")
+	item_color = pick("red","blue","green","purple")
 
 /obj/item/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[saber_color]"
+		icon_state = "sword[item_color]"
 		w_class = WEIGHT_CLASS_BULKY
 		hitsound = 'sound/weapons/blade1.ogg'
 		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
