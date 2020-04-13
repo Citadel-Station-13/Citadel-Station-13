@@ -3,8 +3,7 @@
 	desc = "Stabby stabby."
 	var/sting_icon = null
 
-/obj/effect/proc_holder/changeling/sting/Click()
-	var/mob/user = usr
+/obj/effect/proc_holder/changeling/sting/Trigger(mob/user)
 	if(!user || !user.mind)
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -74,8 +73,7 @@
 	action_icon_state = "ling_sting_transform"
 	action_background_icon_state = "bg_ling"
 
-/obj/effect/proc_holder/changeling/sting/transformation/Click()
-	var/mob/user = usr
+/obj/effect/proc_holder/changeling/sting/transformation/Trigger(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.chosen_sting)
 		unset_sting(user)

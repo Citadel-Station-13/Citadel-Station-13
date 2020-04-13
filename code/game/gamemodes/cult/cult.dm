@@ -3,8 +3,11 @@
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 
-/proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/cult)
+/proc/iscultist(mob/living/M, require_full_power = FALSE, holy_water_check = FALSE)
+	if(!istype(M))
+		return FALSE
+	var/datum/antagonist/cult/D = M?.mind?.has_antag_datum(/datum/antagonist/cult)
+	return D && (!require_full_power || !D.neutered) && (!holy_water_check || !D.ignore_holy_water)
 
 /datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
 	for(var/datum/objective/sacrifice/sac_objective in objectives)
@@ -93,7 +96,7 @@
 		add_cultist(cult_mind, 0, equip=TRUE)
 		if(!main_cult)
 			var/datum/antagonist/cult/C = cult_mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(C && C.cult_team)
+			if(C?.cult_team)
 				main_cult = C.cult_team
 	..()
 

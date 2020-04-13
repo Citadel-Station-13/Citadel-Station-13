@@ -219,14 +219,13 @@
 	if(isitem(target))
 		var/obj/item/I = target
 		I.item_state = initial(picked_item.item_state)
-		I.item_color = initial(picked_item.item_color)
 	var/obj/item/clothing/CL = target
 	var/obj/item/clothing/PCL = new picked_item
 	if(istype(CL) && istype(PCL))
 		CL.flags_cover = PCL.flags_cover
 		CL.flags_inv = PCL.flags_inv
 		CL.mutantrace_variation = PCL.mutantrace_variation
-		CL.alternate_worn_icon = PCL.alternate_worn_icon
+		CL.mob_overlay_icon = PCL.mob_overlay_icon
 		qdel(PCL)
 	target.icon = initial(picked_item.icon)
 
@@ -238,7 +237,6 @@
 	P.desc = initial(picked_item.desc)
 	P.icon_state = initial(picked_item.icon_state)
 	P.item_state = initial(picked_item.item_state)
-	P.item_color = initial(picked_item.item_color)
 	P.overlays_offsets = initial(picked_item.overlays_offsets)
 	P.set_new_overlays()
 	P.update_icon()
@@ -269,7 +267,6 @@
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
-	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
@@ -284,7 +281,6 @@
 	desc = "A tough jumpsuit woven from alloy threads. It can take on the appearance of other jumpsuits."
 	icon_state = "engine"
 	item_state = "engi_suit"
-	item_color = "engine"
 
 /obj/item/clothing/under/chameleon/Initialize()
 	. = ..()
@@ -394,7 +390,6 @@
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
-	item_color = "grey"
 
 	resistance_flags = NONE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
@@ -494,7 +489,6 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	icon_state = "black"
-	item_color = "black"
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
@@ -520,7 +514,6 @@
 /obj/item/clothing/shoes/chameleon/noslip
 	name = "black shoes"
 	icon_state = "black"
-	item_color = "black"
 	desc = "A pair of black shoes."
 	clothing_flags = NOSLIP
 
@@ -639,7 +632,6 @@
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "blacktie"
-	item_color = "blacktie"
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
