@@ -134,11 +134,11 @@
 	target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move //    target.changeNext_move(power_time) // check click.dm
 	target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
 	spawn(power_time)
-	if(istype(target) && success)
-		target.notransform = FALSE
-		REMOVE_TRAIT(target, TRAIT_COMBAT_MODE_LOCKED, src)
-		if(istype(L) && target.stat == CONSCIOUS && (target in view(10, get_turf(L)))) // They Woke Up! (Notice if within view)
-			to_chat(L, "<span class='warning'>[target] has snapped out of their trance.</span>")
+		if(istype(target) && success)
+			target.notransform = FALSE
+			REMOVE_TRAIT(target, TRAIT_COMBAT_MODE_LOCKED, src)
+			if(istype(L) && target.stat == CONSCIOUS && (target in view(10, get_turf(L)))) // They Woke Up! (Notice if within view)
+				to_chat(L, "<span class='warning'>[target] has snapped out of their trance.</span>")
 
 
 /datum/action/bloodsucker/targeted/mesmerize/ContinueActive(mob/living/user, mob/living/target)
