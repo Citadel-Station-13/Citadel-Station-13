@@ -16,7 +16,7 @@
 
 /datum/element/polychromic/Attach(datum/target, list/colors, states, _icon, _flags = POLYCHROMIC_ALTCLICK|POLYCHROMIC_NO_HELD, _worn, list/names = list("Primary", "Secondary", "Tertiary", "Quaternary", "Quinary", "Senary"))
 	. = ..()
-	var/make_appearances = islist(overlays_states)
+	var/make_appearances = islist(states)
 	var/states_len = make_appearances ? length(states) : states
 	var/names_len = length(names)
 	if(!states_len || !names_len || !isatom(target))
@@ -52,10 +52,11 @@
 
 	if(isitem(A))
 		if(_flags & POLYCHROMIC_ACTION)
-			RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/grant_user_action)
-			RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/remove_user_action)
-		AddElement(A, /datum/element/update_icon_updates_onmob) //Since we can change the overall aspect of the item.
-		RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
+			RegisterSignal(A, COMSIG_ITEM_EQUIPPED, .proc/grant_user_action)
+			RegisterSignal(A, COMSIG_ITEM_DROPPED, .proc/remove_user_action)
+		if(!(_flags & (POLYCHROMIC_NO_HELD|POLYCHROMIC_NO_WORN)))
+			A.AddElement(/datum/element/update_icon_updates_onmob)
+			RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
 	else if(_flags & POLYCHROMIC_ACTION && ismob(A)) //in the event mob update icon procs are ever standarized.
 		var/datum/action/polychromic/P = new(A)
 		RegisterSignal(P, COMSIG_ACTION_TRIGGER, .proc/activate_action)
