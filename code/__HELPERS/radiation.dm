@@ -25,6 +25,12 @@
 /proc/radiation_pulse(atom/source, intensity, range_modifier, log=FALSE, can_contaminate=TRUE)
 	if(!SSradiation.can_fire)
 		return
+	var/area/A = get_area(source)
+	var/atom/nested_loc = source.loc
+	while(nested_loc != A)
+		if(nested_loc.rad_flags & RAD_PROTECT_CONTENTS)
+			return
+		nested_loc = nested_loc.loc
 	for(var/dir in GLOB.cardinals)
 		new /datum/radiation_wave(source, dir, intensity, range_modifier, can_contaminate)
 

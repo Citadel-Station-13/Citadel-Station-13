@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/boss
 	name = "A Perfectly Generic Boss Placeholder"
 	desc = ""
+	threat = 10
 	robust_searching = 1
 	stat_attack = UNCONSCIOUS
 	status_flags = 0

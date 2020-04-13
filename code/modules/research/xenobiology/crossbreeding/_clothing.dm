@@ -137,8 +137,7 @@ Slimecrossing Armor
 	var/hit_reflect_chance = 10 // Citadel Change: because 40% chance of bouncing lasers back into peoples faces isn't good.
 	armor = list("melee" = 70, "bullet" = 70, "laser" = 40, "energy" = 40, "bomb" = 80, "bio" = 80, "rad" = 80, "fire" = 70, "acid" = 90) //Citadel Change to avoid immortal Xenobiologists.
 
-/obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
-	if(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) && prob(hit_reflect_chance))
-		return TRUE
-	else
-		return FALSE
+/obj/item/clothing/suit/armor/heavy/adamantine/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(is_energy_reflectable_projectile(object) && prob(hit_reflect_chance))
+		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_INTERNAL
+	return ..()

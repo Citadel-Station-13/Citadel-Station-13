@@ -9,7 +9,7 @@
 	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
 		var/obj/item/clothing/glasses/GFP = src.glasses
 		number += GFP.flash_protect
-
+ 
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
@@ -79,33 +79,30 @@
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
 	//CIT CHANGES START HERE - combatmode and resting checks
 	var/totitemdamage = I.force
-	if(iscarbon(user))
-		var/mob/living/carbon/tempcarb = user
-		if(!tempcarb.combatmode)
-			totitemdamage *= 0.5
+	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+		totitemdamage *= 0.5
 	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 		totitemdamage *= 0.5
-	if(!combatmode)
+	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		totitemdamage *= 1.5
 	//CIT CHANGES END HERE
-	if(user != src && check_shields(I, totitemdamage, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
+	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
+	if((user != src) && (run_block(I, totitemdamage, "the [I]", ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone) & BLOCK_SUCCESS))
 		return FALSE
-	var/obj/item/bodypart/affecting
-	if(user == src)
-		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
-	else
-		affecting = get_bodypart(ran_zone(user.zone_selected))
+	var/obj/item/bodypart/affecting = get_bodypart(impacting_zone)
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
+	I.do_stagger_action(src, user)
 	if(I.force)
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
 				I.add_mob_blood(src)
-				bleed(totitemdamage)
+				var/turf/location = get_turf(src)
+				add_splatter_floor(location)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 
@@ -263,11 +260,11 @@
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && (flags & SHOCK_NOSTUN))
+	if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN))
 		Stun(40)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && (flags & SHOCK_NOSTUN))
+		if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN))
 			DefaultCombatKnockdown(60)
 	return shock_damage
 
@@ -278,6 +275,8 @@
 
 	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		var/friendly_check = FALSE
+		if(run_block(M, 0, M.name, ATTACK_TYPE_UNARMED))
+			return
 		if(lying)
 			if(buckled)
 				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
@@ -300,30 +299,12 @@
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 			friendly_check = TRUE
-			if(S?.can_wag_tail(src))
-				if("tail_human" in S.default_features)
-					if(dna.features["tail_human"] == "None")
-						return
-					else
-						if(!dna.species.is_wagging_tail())
-							emote("wag")
-
-				if("tail_lizard" in S.default_features)
-					if(dna.features["tail_lizard"] == "None")
-						return
-					else
-						if(!dna.species.is_wagging_tail())
-							emote("wag")
-
-				if("mam_tail" in S.default_features)
-					if(dna.features["mam_tail"] == "None")
-						return
-					else
-						if(!dna.species.is_wagging_tail())
-							emote("wag")
-
-			else
-				return
+			if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
+				var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
+				for(var/T in many_tails)
+					if(S.mutant_bodyparts[T] && dna.features[T] != "None")
+						emote("wag")
+						break
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
 			M.visible_message( \
@@ -347,7 +328,7 @@
 		AdjustAllImmobility(-60, FALSE)
 		AdjustUnconscious(-60, FALSE)
 		AdjustSleeping(-100, FALSE)
-		if(recoveringstam)
+		if(combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 			adjustStaminaLoss(-15)
 		else
 			set_resting(FALSE, FALSE)

@@ -52,6 +52,29 @@
 	ammo_type = /obj/item/ammo_casing/c10mm
 	max_ammo = 20
 
+/obj/item/ammo_box/c10mm/fire
+	name = "ammo box (10mm Incendiary)"
+	icon_state = "10mmbox"
+	ammo_type = /obj/item/ammo_casing/c10mm/fire
+	max_ammo = 20
+
+/obj/item/ammo_box/c10mm/hp
+	name = "ammo box (10mm Hollow Point)"
+	icon_state = "10mmbox"
+	ammo_type = /obj/item/ammo_casing/c10mm/hp
+	max_ammo = 20
+
+/obj/item/ammo_box/c10mm/ap
+	name = "ammo box (10mm Armour Piercing)"
+	icon_state = "10mmbox"
+	ammo_type = /obj/item/ammo_casing/c10mm/ap
+	max_ammo = 20
+
+/obj/item/ammo_box/c10mm/soporific
+	name = "ammo box (10mm Soporific)"
+	ammo_type = /obj/item/ammo_casing/c10mm/soporific
+	max_ammo = 20
+
 /obj/item/ammo_box/c45
 	name = "ammo box (.45)"
 	icon_state = "45box"

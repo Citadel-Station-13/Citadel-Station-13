@@ -356,7 +356,6 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_icon()
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
 		return ..()
@@ -487,6 +486,7 @@
 		/datum/reagent/consumable/pwr_game,
 		/datum/reagent/consumable/shamblers,
 		/datum/reagent/consumable/sugar,
+		/datum/reagent/consumable/pineapplejuice,
 		/datum/reagent/consumable/orangejuice,
 		/datum/reagent/consumable/grenadine,
 		/datum/reagent/consumable/limejuice,
@@ -495,15 +495,22 @@
 		/datum/reagent/consumable/menthol
 	)
 	upgrade_reagents = list(
-		/datum/reagent/drug/mushroomhallucinogen,
-		/datum/reagent/consumable/nothing,
-		/datum/reagent/medicine/cryoxadone
+		/datum/reagent/consumable/banana,
+		/datum/reagent/consumable/berryjuice,
+		/datum/reagent/consumable/strawberryjuice
 	)
 	upgrade_reagents2 = list(
-		/datum/reagent/consumable/banana,
-		/datum/reagent/consumable/berryjuice
+		/datum/reagent/consumable/applejuice,
+		/datum/reagent/consumable/carrotjuice,
+		/datum/reagent/consumable/pumpkinjuice,
+		/datum/reagent/consumable/watermelonjuice
 	)
-	upgrade_reagents3 = null
+	upgrade_reagents3 = list(
+		/datum/reagent/drug/mushroomhallucinogen,
+		/datum/reagent/consumable/nothing,
+		/datum/reagent/medicine/cryoxadone,
+		/datum/reagent/consumable/peachjuice
+	)
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol/thirteenloko,
 		/datum/reagent/consumable/ethanol/changelingsting,
@@ -552,6 +559,7 @@
 		/datum/reagent/consumable/ethanol/hcider,
 		/datum/reagent/consumable/ethanol/creme_de_menthe,
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
+		/datum/reagent/consumable/ethanol/creme_de_coconut,
 		/datum/reagent/consumable/ethanol/triple_sec,
 		/datum/reagent/consumable/ethanol/sake,
 		/datum/reagent/consumable/ethanol/applejack

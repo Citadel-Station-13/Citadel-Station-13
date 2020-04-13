@@ -12,6 +12,7 @@
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
 	unique_name = TRUE
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 	hud_type = /datum/hud/monkey
@@ -43,7 +44,7 @@
 
 /mob/living/carbon/monkey/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/mob_holder, "monkey", null, null, null, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/mob_holder, worn_state = "monkey", inv_slots = ITEM_SLOT_HEAD)
 
 
 /mob/living/carbon/monkey/Destroy()

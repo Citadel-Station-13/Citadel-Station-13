@@ -310,11 +310,11 @@ SLIME SCANNER
 			//GENERAL HANDLER
 			if(!damage_message)
 				if(O.organ_flags & ORGAN_FAILING)
-					damage_message += " <span class='alert'><b>End Stage [O.name] failure detected.</b></span>"
+					damage_message += " <span class='alert'><b>Chronic [O.name] failure detected.</b></span>"
 				else if(O.damage > O.high_threshold)
-					damage_message += " <span class='alert'>Chronic [O.name] failure detected.</span>"
+					damage_message += " <span class='alert'>Acute [O.name] failure detected.</span>"
 				else if(O.damage > O.low_threshold && advanced)
-					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
+					damage_message += " <font color='red'>Minor [O.name] failure detected.</span>"
 
 			if(temp_message || damage_message)
 				msg += "\t<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
@@ -803,7 +803,7 @@ SLIME SCANNER
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE)) //no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT_NOT_FROM(M, TRAIT_RADIMMUNE,BLOODSUCKER_TRAIT)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] analyzes [M]'s genetic sequence.</span>", \
 							"<span class='notice'>You analyze [M]'s genetic sequence.</span>")
 		gene_scan(M, user)

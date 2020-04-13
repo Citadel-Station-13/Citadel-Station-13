@@ -19,6 +19,22 @@
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
+/obj/item/clothing/shoes/combat/sneakboots
+	name = "insidious sneakboots"
+	desc = "A pair of insidious boots with special noise muffling soles which very slightly drown out your footsteps. They would be absolutely perfect for stealth operations were it not for the iconic Syndicate flairs."
+	icon_state = "sneakboots"
+	item_state = "sneakboots"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
+/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_SHOES)
+		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
+
+/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
+
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
@@ -373,18 +389,17 @@
 	var/walkcool = 0
 	var/wallcharges = 4
 	var/newlocobject = null
-	//sparks, maybe oxydamage instead
 
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	..()
 	if (slot == SLOT_SHOES)
-		LAZYADD(user.user_movement_hooks,src)
+		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
 	else
-		LAZYREMOVE(user.user_movement_hooks,src)
+		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
 
 /obj/item/clothing/shoes/wallwalkers/dropped(mob/user)
 	..()
-	LAZYREMOVE(user.user_movement_hooks,src)
+	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
 
 /obj/item/clothing/shoes/wallwalkers/attackby(obj/item/W, mob/user, params)
 	. = ..()
@@ -403,7 +418,7 @@
 	. = ..()
 	. += "<span class='warning'>It has [wallcharges] charges left.</span>"
 
-/obj/item/clothing/shoes/wallwalkers/intercept_user_move(dir,mob/living/m,newloc,oldloc)
+/obj/item/clothing/shoes/wallwalkers/proc/intercept_user_move(mob/living/m, client,dir,newloc,oldloc)
 	if (walkcool >= world.time || m.m_intent != MOVE_INTENT_WALK || wallcharges <= 0)
 		return
 	walkcool = world.time + m.movement_delay()
@@ -428,8 +443,8 @@
 	if (!issolid)
 		return
 	m.adjustOxyLoss(rand(5,13))
-	if (prob(10))
-		m.adjustBruteLoss(rand(3,5))
+	if (prob(15))
+		m.adjustBruteLoss(rand(4,7))
 		to_chat(m,"<span class='warning'>You feel as if travelling through the solid object left something behind and it hurts!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, oldloc)

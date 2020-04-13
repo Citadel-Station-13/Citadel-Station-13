@@ -10,6 +10,7 @@
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 50
+	threat = 2
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("creature")

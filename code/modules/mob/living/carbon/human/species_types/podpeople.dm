@@ -76,14 +76,13 @@
 	name = "Anthromorphic Plant"
 	id = "podweak"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "taur", "legs")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
+	mutant_bodyparts = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
 	limbs_id = "pod"
 	light_nutrition_gain_factor = 7.5
 	light_bruteheal = 0.2
 	light_burnheal = 0.2
 	light_toxheal = 0.7
-	
+
 /datum/species/pod/pseudo_weak/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		stop_wagging_tail(H)
@@ -94,19 +93,19 @@
 	. = ..()
 
 /datum/species/pod/pseudo_weak/can_wag_tail(mob/living/carbon/human/H)
-	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
+	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
 
 /datum/species/pod/pseudo_weak/is_wagging_tail(mob/living/carbon/human/H)
-	return ("mam_waggingtail" in mutant_bodyparts)
+	return mutant_bodyparts["mam_waggingtail"]
 
 /datum/species/pod/pseudo_weak/start_wagging_tail(mob/living/carbon/human/H)
-	if("mam_tail" in mutant_bodyparts)
+	if(mutant_bodyparts["mam_tail"])
+		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
 		mutant_bodyparts -= "mam_tail"
-		mutant_bodyparts |= "mam_waggingtail"
 	H.update_body()
 
 /datum/species/pod/pseudo_weak/stop_wagging_tail(mob/living/carbon/human/H)
-	if("mam_waggingtail" in mutant_bodyparts)
+	if(mutant_bodyparts["mam_waggingtail"])
+		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
 		mutant_bodyparts -= "mam_waggingtail"
-		mutant_bodyparts |= "mam_tail"
 	H.update_body()

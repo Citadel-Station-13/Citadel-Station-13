@@ -90,7 +90,7 @@
 	lifespan = 30
 	endurance = 25
 	mutatelist = list()
-	genes = list(/datum/plant_gene/trait/glow/white, /datum/plant_gene/trait/noreact, /datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/glow/white, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/uranium = 0.25, /datum/reagent/iodine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 
@@ -261,6 +261,7 @@
 	seed = /obj/item/seeds/strawberry
 	name = "strawberry"
 	icon_state = "strawberry"
-	filling_color = "#7FFF00"
+	filling_color = "#E50D31"
+	juice_results = list(/datum/reagent/consumable/strawberryjuice = 0)
 	tastes = list("strawberries" = 1)
 	wine_power = 20

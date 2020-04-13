@@ -9,14 +9,14 @@
 
 /datum/uplink_item/suits/turtlenck
 	name = "Tactical Turtleneck"
-	desc = "A slightly armored suit that has no sensor on them, if someone sees you in this hope they think its a fake."
+	desc = "A slightly armored conspicious jumpsuit that has no suit sensors attached to them, if someone sees you in this hope they think its a fake."
 	item = /obj/item/clothing/under/syndicate
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these
 
 /datum/uplink_item/suits/turtlenck_skirt
 	name = "Tactical Skirtleneck"
-	desc = "A slightly armored suit that has no sensor on them, if someone sees you in this hope they think its a fake."
+	desc = "A slightly armored conspicious jumpsuit that has no suit sensors attached to them, if someone sees you in this hope they think its a fake."
 	item = /obj/item/clothing/under/syndicate/skirt
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //They already get these

@@ -1732,9 +1732,8 @@
 		var/mob/M = locate(href_list["makeeligible"])
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.")
-		var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
-		if(M.ckey in eli.timeouts)
-			eli.timeouts -= M.ckey
+		if(M.ckey in GLOB.client_ghost_timeouts)
+			GLOB.client_ghost_timeouts -= M.ckey
 
 	else if(href_list["sendtoprison"])
 		if(!check_rights(R_ADMIN))
@@ -1880,7 +1879,7 @@
 
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
-			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), SLOT_W_UNIFORM)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), SLOT_W_UNIFORM)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), SLOT_SHOES)
 		L.Unconscious(100)
 		sleep(5)

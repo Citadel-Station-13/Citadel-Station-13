@@ -235,10 +235,11 @@ Auto Patrol: []"},
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 	C.visible_message("<span class='danger'>[src] is trying to put zipties on [C]!</span>",\
 						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
-	addtimer(CALLBACK(src, .proc/attempt_handcuff, C), 60)
+	if(do_after(src, 60, FALSE, C))
+		attempt_handcuff(C)
 
 /mob/living/simple_animal/bot/secbot/proc/attempt_handcuff(mob/living/carbon/C)
-	if( !on || !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
+	if (!on)
 		return
 	if(!C.handcuffed)
 		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
@@ -312,7 +313,7 @@ Auto Patrol: []"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if( !Adjacent(target) || !isturf(target.loc) || target.getStaminaLoss() <= 120 || !target.recoveringstam) //CIT CHANGE - replaces amountknockdown with checks for stamina so secbots dont run into an infinite loop
+			if( !Adjacent(target) || !isturf(target.loc) || target.getStaminaLoss() <= 120 || !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)) //CIT CHANGE - replaces amountknockdown with checks for stamina so secbots dont run into an infinite loop
 				back_to_hunt()
 				return
 
@@ -339,7 +340,7 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss check
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss check
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.

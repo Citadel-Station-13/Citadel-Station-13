@@ -241,5 +241,5 @@
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
-	flags = TRAITOR_RULESET
+	flags = TRAITOR_RULESET | MINOR_RULESET
 	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 2)

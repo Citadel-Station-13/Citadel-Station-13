@@ -6,7 +6,8 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = "vagina"
 	size = 1 //There is only 1 size right now
-	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE
+	shape = DEF_VAGINA_SHAPE
+	genital_flags = CAN_MASTURBATE_WITH|CAN_CLIMAX_WITH|GENITAL_CAN_AROUSE|GENITAL_UNDIES_HIDDEN
 	masturbation_verb = "finger"
 	arousal_verb = "You feel wetness on your crotch"
 	unarousal_verb = "You no longer feel wet"
@@ -69,3 +70,4 @@
 	else
 		color = "[D.features["vag_color"]]"
 	shape = "[D.features["vag_shape"]]"
+	toggle_visibility(D.features["vag_visibility"], FALSE)

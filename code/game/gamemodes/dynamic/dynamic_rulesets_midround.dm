@@ -34,8 +34,7 @@
 	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
 	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
-	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
-	ghost_eligible = trim_list(eligibility.get_all_ghost_role_eligible())
+	ghost_eligible = trim_list(get_all_ghost_role_eligible())
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
@@ -43,7 +42,7 @@
 		if (!istype(M, required_type))
 			trimmed_list.Remove(M)
 			continue
-		if (M.GetComponent(/datum/component/virtual_reality))
+		if (HAS_TRAIT(M, TRAIT_NO_MIDROUND_ANTAG))
 			trimmed_list.Remove(M)
 			continue
 		if (!M.client) // Are they connected?
@@ -106,7 +105,7 @@
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
-		var/threat = round(mode.threat_level/10)
+		var/threat = CLAMP(round(mode.threat_level/10),1,10)
 		if (job_check < required_enemies[threat])
 			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
@@ -216,7 +215,7 @@
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
 	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
-	if ((antag_count < max_traitors) && prob(mode.threat_level))//adding traitors if the antag population is getting low
+	if ((antag_count < max_traitors) && prob(min(100,mode.threat_level)))//adding traitors if the antag population is getting low
 		return ..()
 	else
 		return FALSE
@@ -273,10 +272,14 @@
 	var/ion_announce = 33
 	var/removeDontImproveChance = 10
 
+/datum/dynamic_ruleset/midround/malf/ready()
+	if(!candidates || !candidates.len)
+		return FALSE
+	return ..()
+
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	living_players = candidates[CURRENT_LIVING_PLAYERS]
-	for(var/mob/living/player in candidates)
+	for(var/mob/living/player in living_players)
 		if(!isAI(player))
 			candidates -= player
 			continue
@@ -287,8 +290,6 @@
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/malf/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
 	var/mob/living/silicon/ai/M = pick_n_take(candidates)
 	assigned += M.mind
 	var/datum/antagonist/traitor/AI = new
@@ -313,7 +314,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	config_tag = "midround_wizard"
-	persistent = TRUE
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
@@ -337,11 +337,11 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
 	..()
 	new_character.forceMove(pick(GLOB.wizardstart))
+	wizard = new_character.mind
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/rule_process() // i can literally copy this from are_special_antags_dead it's great
 	if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 		return FALSE
-
 	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
 		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
 			return FALSE
@@ -414,7 +414,7 @@
 	required_candidates = 1
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/clockcult)
 	weight = 4
-	cost = 10
+	cost = 20
 	requirements = list(101,101,101,80,60,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
@@ -447,9 +447,7 @@
 	property_weights = list("story_potential" = -1, "trust" = 1, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/list/vents = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
-	// 50% chance of being incremented by one
-	required_candidates += prob(50)
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/ready()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		if(QDELETED(temp_vent))
 			continue
@@ -463,6 +461,12 @@
 				vents += temp_vent
 	if(!vents.len)
 		return FALSE
+	return ..()
+
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
+	// 50% chance of being incremented by one
+	required_candidates += prob(50)
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/generate_ruleset_body(mob/applicant)
@@ -497,7 +501,7 @@
 	property_weights = list("story_potential" = 1, "trust" = 1, "extended" = 1, "valid" = 2, "integrity" = 1)
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/ready()
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
 		var/light_amount = T.get_lumcount()
@@ -505,7 +509,7 @@
 			spawn_locs += T
 	if(!spawn_locs.len)
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/generate_ruleset_body(mob/applicant)
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
@@ -659,9 +663,6 @@
 	Mind.transfer_to(Ninja)
 	var/datum/antagonist/ninja/ninjadatum = new
 	ninjadatum.helping_station = pick(TRUE,FALSE)
-	if(ninjadatum.helping_station)
-		mode.refund_threat(cost+5)
-		mode.log_threat("Ninja was helping station; [cost+5] cost refunded.")
 	Mind.add_antag_datum(ninjadatum)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
@@ -670,6 +671,9 @@
 	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by dynamic.")
 	log_game("[key_name(Ninja)] was spawned as a ninja by dynamic.")
 	return Ninja
+	
+/datum/dynamic_ruleset/midround/from_ghosts/ninja/finish_setup(mob/new_character, index)
+	return
 
 #undef ABDUCTOR_MAX_TEAMS
 #undef REVENANT_SPAWN_THRESHOLD

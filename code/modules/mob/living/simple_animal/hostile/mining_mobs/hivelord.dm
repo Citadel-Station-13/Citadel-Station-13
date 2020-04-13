@@ -9,6 +9,7 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	threat = 4
 	move_to_delay = 14
 	ranged = 1
 	vision_range = 4
@@ -233,6 +234,7 @@
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
+	threat = 5
 	health = 450
 	maxHealth = 450
 	melee_damage_lower = 20
@@ -283,11 +285,12 @@
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
 			if(mob_species == /datum/species/plasmaman)
-				uniform = /obj/item/clothing/under/plasmaman
-				head = /obj/item/clothing/head/helmet/space/plasmaman
+				uniform = /obj/item/clothing/under/plasmaman/mining
+				head = /obj/item/clothing/head/helmet/space/plasmaman/mining
 				belt = /obj/item/tank/internals/plasmaman/belt
+				mask = /obj/item/clothing/mask/gas/explorer
 			else
-				uniform = /obj/item/clothing/under/rank/miner/lavaland
+				uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
 				if (prob(4))
 					belt = pickweight(list(/obj/item/storage/belt/mining = 2, /obj/item/storage/belt/mining/alt = 2))
 				else if(prob(10))
@@ -306,7 +309,7 @@
 				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
 		if("Ashwalker")
 			mob_species = /datum/species/lizard/ashwalker
-			uniform = /obj/item/clothing/under/gladiator/ash_walker
+			uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
 			if(prob(95))
 				head = /obj/item/clothing/head/helmet/gladiator
 			else
@@ -346,7 +349,7 @@
 				l_pocket = pick(list(/obj/item/crowbar/power, /obj/item/wrench/power, /obj/item/weldingtool/experimental))
 		if("YeOlde")
 			mob_gender = FEMALE
-			uniform = /obj/item/clothing/under/maid
+			uniform = /obj/item/clothing/under/costume/maid
 			gloves = /obj/item/clothing/gloves/color/white
 			shoes = /obj/item/clothing/shoes/laceup
 			head = /obj/item/clothing/head/helmet/knight
@@ -369,7 +372,7 @@
 			back = /obj/item/tank/internals/oxygen
 			mask = /obj/item/clothing/mask/breath
 		if("Cultist")
-			uniform = /obj/item/clothing/under/roman
+			uniform = /obj/item/clothing/under/costume/roman
 			suit = /obj/item/clothing/suit/cultrobes
 			head = /obj/item/clothing/head/culthood
 			suit_store = /obj/item/tome
@@ -378,7 +381,7 @@
 			glasses =  /obj/item/clothing/glasses/hud/health/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
 		if("Lavaknight")
-			uniform = /obj/item/clothing/under/assistantformal
+			uniform = /obj/item/clothing/under/misc/assistantformal
 			mask = /obj/item/clothing/mask/breath
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			r_pocket = /obj/item/melee/transforming/energy/sword/cx/broken

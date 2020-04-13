@@ -92,10 +92,8 @@
 		M.cut_overlays()
 		M.regenerate_icons()
 
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	DeactivateStealth()
-
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
+/obj/item/clothing/suit/armor/abductor/vest/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	. = ..()
 	DeactivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/ui_action_click()
@@ -493,7 +491,7 @@
 
 	user.do_attack_animation(L)
 
-	if(L.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+	if(L.run_block(src, 0, "[user]'s [src]", ATTACK_TYPE_MELEE, 0, user, check_zone(user.zone_selected)) & BLOCK_SUCCESS)
 		playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return FALSE
 

@@ -11,7 +11,7 @@
 	var/charge_cost = 30
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
-	if(M.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
+	if(M.run_block(src, 0, "[M]'s [name]", ATTACK_TYPE_MELEE, 0, user, ran_zone(user.zone_selected)) & BLOCK_SUCCESS)
 		playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(iscyborg(user))
@@ -80,7 +80,7 @@
 					else
 						user.visible_message("<span class='notice'>[user] hugs [M] to make [M.p_them()] feel better!</span>", \
 								"<span class='notice'>You hug [M] to make [M.p_them()] feel better!</span>")
-					if(M.resting && !M.recoveringstam)
+					if(M.resting && !(M.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
 						M.set_resting(FALSE, TRUE)
 				else
 					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
@@ -99,7 +99,7 @@
 					else
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
-					if(!CHECK_MOBILITY(M, MOBILITY_STAND) && !M.recoveringstam)
+					if(!CHECK_MOBILITY(M, MOBILITY_STAND) && !(M.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
 						M.set_resting(FALSE, TRUE)
 				else
 					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \

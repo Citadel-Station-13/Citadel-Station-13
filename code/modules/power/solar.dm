@@ -185,7 +185,7 @@
 	if(sunfrac <= 0)
 		return
 
-	var/sgen = SOLAR_GEN_RATE * sunfrac
+	var/sgen = SOLAR_GEN_RATE * sunfrac * efficiency
 	add_avail(sgen)
 	if(control)
 		control.gen += sgen
@@ -253,6 +253,7 @@
 		var/obj/item/stack/sheet/G = S.change_stack(null, 2)
 		if(G)
 			glass_type = G
+			G.moveToNullspace()
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)

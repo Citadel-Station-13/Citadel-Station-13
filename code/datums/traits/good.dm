@@ -108,10 +108,10 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/choice_beacon/music/B = new(get_turf(H))
 	H.put_in_hands(B)
-	H.equip_to_slot(B, SLOT_IN_BACKPACK)
+	H.equip_to_slot_if_possible(B, SLOT_IN_BACKPACK)
 	var/obj/item/musicaltuner/musicaltuner = new(get_turf(H))
 	H.put_in_hands(musicaltuner)
-	H.equip_to_slot(musicaltuner, SLOT_IN_BACKPACK)
+	H.equip_to_slot_if_possible(musicaltuner, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/photographer
