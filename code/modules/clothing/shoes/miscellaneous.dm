@@ -388,7 +388,7 @@
 
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	..()
-	if (slot == SLOT_SHOES)
+	if(slot == SLOT_SHOES)
 		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
 	else
 		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
