@@ -57,7 +57,7 @@
 	var/turf/target = locate(target_x, target_y, z)
 	ghost.forceMove(target)
 
-/obj/machinery/launchpad/proc/isAvailable()
+/obj/machinery/launchpad/proc/isAvailable(silent = FALSE)
 	if(stat & NOPOWER)
 		return FALSE
 	if(panel_open)
@@ -198,7 +198,7 @@
 	QDEL_NULL(briefcase)
 	return ..()
 
-/obj/machinery/launchpad/briefcase/isAvailable()
+/obj/machinery/launchpad/briefcase/isAvailable(silent = FALSE)
 	if(closed)
 		return FALSE
 	return ..()

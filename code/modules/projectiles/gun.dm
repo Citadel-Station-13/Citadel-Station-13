@@ -513,7 +513,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 
-/datum/action/item_action/toggle_scope_zoom/IsAvailable()
+/datum/action/item_action/toggle_scope_zoom/IsAvailable(silent = FALSE)
 	. = ..()
 	if(!.)
 		var/obj/item/gun/G = target
