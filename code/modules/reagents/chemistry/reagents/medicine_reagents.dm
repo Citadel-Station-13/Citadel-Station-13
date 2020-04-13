@@ -263,9 +263,9 @@
 /datum/reagent/medicine/silver_sulfadiazine/overdose_start(mob/living/M)
 	metabolization_rate = 15 * REAGENTS_METABOLISM
 	M.adjustBruteLoss(2*REM, 0)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.applyLiverDamage(1)
+	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(L)
+		L.applyOrganDamage(1)
 	..()
 	. = 1
 
@@ -326,9 +326,9 @@
 datum/reagent/medicine/styptic_powder/overdose_start(mob/living/M)
 	metabolization_rate = 15 * REAGENTS_METABOLISM
 	M.adjustBruteLoss(2*REM, 0)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.applyLiverDamage(1)
+	var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(L)
+		L.applyOrganDamage(1)
 	..()
 	. = 1
 
