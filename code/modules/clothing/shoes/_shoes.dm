@@ -50,7 +50,7 @@
 		last_blood_DNA = blood_dna[blood_dna.len]
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		var/bloody = FALSE
 		if(blood_DNA)

@@ -205,7 +205,7 @@
 		icon_state = S.icon_state
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
 		if(!S)

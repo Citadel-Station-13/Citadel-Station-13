@@ -7,7 +7,7 @@
 	equip_delay_other = 40
 
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)

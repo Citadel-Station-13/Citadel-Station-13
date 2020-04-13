@@ -122,7 +122,7 @@
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
-	. = list()
+	. = ..()
 	if(isinhands && item_state && inhand_overlay)
 		var/mutable_appearance/M = mutable_appearance(icon_file, "slab_[inhand_overlay]")
 		. += M

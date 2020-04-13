@@ -9,11 +9,10 @@
 	var/overlays_states //A list or a number of states. In the latter case, the atom icon_state/item_state will be used followed by a number.
 	var/list/colors_by_atom = list() //list of color strings or mutable appearances, depending on the above variable.
 	var/icon_file
+	var/worn_file //used in place of items' held or mob overlay icons if present.
 	var/list/overlays_names //wrap numbers into text strings please.
 	var/list/actions_by_atom = list()
-	var/list/already_updates_onmob = list()
 	var/poly_flags
-	var/worn_file //used in place of items' held or mob overlay icons if present.
 	var/static/list/suits_with_helmet_typecache = typecacheof(list(/obj/item/clothing/suit/hooded, /obj/item/clothing/suit/space/hardsuit))
 	var/list/helmet_by_suit //because poly winter coats exist.
 	var/list/suit_by_helmet //Idem.
@@ -58,11 +57,8 @@
 		if(_flags & POLYCHROMIC_ACTION)
 			RegisterSignal(A, COMSIG_ITEM_EQUIPPED, .proc/grant_user_action)
 			RegisterSignal(A, COMSIG_ITEM_DROPPED, .proc/remove_user_action)
-		if(!(_flags & POLYCHROMIC_NO_HELD) && !(_flags & POLYCHROMIC_NO_WORN))
-			if(!SSdcs.GetElement(/datum/element/update_icon_updates_onmob))
-				A.AddElement(/datum/element/update_icon_updates_onmob)
-			else
-				LAZYSET(already_updates_onmob, A, TRUE)
+		if(!(_flags & POLYCHROMIC_NO_WORN) || !(_flags & POLYCHROMIC_NO_HELD))
+			A.AddElement(/datum/element/update_icon_updates_onmob)
 			RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
 			if(suits_with_helmet_typecache[A.type])
 				RegisterSignal(A, COMSIG_SUIT_MADE_HELMET, .proc/register_helmet)
@@ -83,19 +79,16 @@
 		qdel(P)
 	UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_WORN_OVERLAYS, COMSIG_SUIT_MADE_HELMET))
 	if(isitem(A))
-		if(!(poly_flags & POLYCHROMIC_NO_HELD) && !(poly_flags & POLYCHROMIC_NO_WORN))
-			if(!already_updates_onmob[A])
-				A.RemoveElement(/datum/element/update_icon_updates_onmob)
-			else
-				LAZYREMOVE(already_updates_onmob, A)
-			var/obj/item/clothing/head/H = helmet_by_suit[A]
-			if(H)
-				UnregisterSignal(H, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_WORN_OVERLAYS, COMSIG_PARENT_QDELETING))
-				LAZYREMOVE(helmet_by_suit, A)
-				LAZYREMOVE(suit_by_helmet, H)
-				colors_by_atom -= H
-				if(!QDELETED(H))
-					H.update_icon() //removing the overlays
+		var/obj/item/clothing/head/H = helmet_by_suit[A]
+		if(H)
+			UnregisterSignal(H, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_WORN_OVERLAYS, COMSIG_PARENT_QDELETING))
+			LAZYREMOVE(helmet_by_suit, A)
+			LAZYREMOVE(suit_by_helmet, H)
+			colors_by_atom -= H
+			if(!QDELETED(H))
+				H.update_icon() //removing the overlays
+		if(!(poly_flags & POLYCHROMIC_NO_WORN) || !(poly_flags & POLYCHROMIC_NO_HELD))
+			A.RemoveElement(/datum/element/update_icon_updates_onmob)
 			if(!QDELETED(A) && ismob(A.loc))
 				var/mob/M = A.loc
 				if(!(poly_flags & POLYCHROMIC_NO_HELD) && M.is_holding(A))
@@ -124,26 +117,29 @@
 		for(var/i in 1 to overlays_states)
 			overlays += mutable_appearance(f_icon, "[used_state]-[i]", color = L[i])
 	else
-		for(var/I in 1 to length(overlays_states))
-			var/mutable_appearance/M = L[I]
-			overlays += mutable_appearance(f_icon, overlays_states[I], color = M.color)
+		for(var/i in 1 to length(overlays_states))
+			var/mutable_appearance/M = L[i]
+			overlays += mutable_appearance(f_icon, overlays_states[i], color = M.color)
 
 /datum/element/polychromic/proc/set_color(atom/source, mob/user)
 	var/choice = input(user,"Polychromic options", "Recolor [source]") as null|anything in overlays_names
 	if(!choice || QDELETED(source) || !user.canUseTopic(source, BE_CLOSE, NO_DEXTERY))
 		return
-	var/ncolor = input(user, "Polychromic options", "Choose [choice] Color") as color|null
-	if(!ncolor || QDELETED(source) || !user.canUseTopic(source, BE_CLOSE, NO_DEXTERY))
-		return
+	var/index = overlays_names.Find(choice)
 	var/list/L = colors_by_atom[source]
 	if(!L) // Ummmmmh.
 		return
-	var/K = L[overlays_names.Find(choice)]
-	if(istext(K))
-		K = sanitize_hexcolor(ncolor, 6, TRUE, K)
+	var/mutable_appearance/M = L[index]
+	var/old_color = istype(M) ? M.color : M
+	var/ncolor = input(user, "Polychromic options", "Choose [choice] Color", old_color) as color|null
+	if(!ncolor || QDELETED(source) || !colors_by_atom[source] || !user.canUseTopic(source, BE_CLOSE, NO_DEXTERY))
+		return
+	ncolor = sanitize_hexcolor(ncolor, 6, TRUE, old_color)
+	if(istype(M))
+		M.color = ncolor
 	else
-		var/mutable_appearance/M = K
-		M.color = sanitize_hexcolor(ncolor, 6, TRUE, M.color)
+		L[index] = ncolor
+
 	source.update_icon()
 	return TRUE
 
@@ -153,6 +149,7 @@
 	var/datum/action/polychromic/P = actions_by_atom[source]
 	if(!P)
 		P = new (source)
+		P.name = "Modify [source]'\s Colors"
 		actions_by_atom[source] = P
 		P.check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 		RegisterSignal(P, COMSIG_ACTION_TRIGGER, .proc/activate_action)
@@ -187,4 +184,4 @@
 	background_icon_state = "bg_polychromic"
 	use_target_appearance = TRUE
 	button_icon_state = null
-	target_appearance_matrix = list(0.75,0,0,0,0.75,0)
+	target_appearance_matrix = list(0.8,0,0,0,0.8,0)
