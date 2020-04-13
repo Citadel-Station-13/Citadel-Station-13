@@ -33907,7 +33907,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/integrated_electronics/analyzer,
 /obj/machinery/computer/security/telescreen/circuitry{
 	pixel_y = 30
 	},
