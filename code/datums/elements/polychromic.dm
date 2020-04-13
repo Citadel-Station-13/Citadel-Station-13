@@ -6,20 +6,20 @@
 /datum/element/polychromic
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 3
-	var/overlays_states //A list or a number of states. In the latter case, the atom icon_state/item_state will be used followed by a number for the overlays.
-	var/list/colors_by_atom = list() //list of color strings or mutable appearance depending on the above variable.
+	var/overlays_states //A list or a number of states. In the latter case, the atom icon_state/item_state will be used followed by a number.
+	var/list/colors_by_atom = list() //list of color strings or mutable appearances, depending on the above variable.
 	var/icon_file
 	var/list/overlays_names //wrap numbers into text strings please.
 	var/list/actions_by_atom = list()
 	var/poly_flags
-	//item variables
-	var/worn_file //used for boths held and worn overlays if present.
+	var/worn_file //used in place of items' held or mob overlay icons if present.
 
 /datum/element/polychromic/Attach(datum/target, list/colors, states, _icon, _flags = POLYCHROMIC_ALTCLICK|POLYCHROMIC_NO_HELD, _worn, list/names = list("Primary", "Secondary", "Tertiary", "Quaternary", "Quinary", "Senary"))
 	. = ..()
-	var/states_len = length(overlays_states)
+	var/make_appearances = islist(overlays_states)
+	var/states_len = make_appearances ? length(states) : states
 	var/names_len = length(names)
-	if(!states_len || names_len || !isatom(target))
+	if(!states_len || !names_len || !isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	var/atom/A = target
 
@@ -30,14 +30,9 @@
 
 	var/mut_icon = icon_file || A.icon
 	var/list/L = list()
-	if(islist(overlays_states))
-		for(var/I in overlays_states)
-			var/col = popleft(colors) || "#FFFFFF"
-			L += mutable_appearance(mut_icon, I, color = col)
-	else
-		for(var/I in 1 to overlays_states)
-			var/col = LAZYACCESS(colors, I) || "#FFFFFF"
-			L += col
+	for(var/I in 1 to states_len)
+		var/col = LAZYACCESS(colors, I) || "#FFFFFF"
+		L += make_appearances ? mutable_appearance(mut_icon, overlays_states[I], color = col) : col
 	colors_by_atom[A] = L
 
 	RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlays)
@@ -46,12 +41,12 @@
 		RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 		RegisterSignal(A, COMSIG_CLICK_ALT, .proc/set_color)
 
-	if(!overlays_names && names)
+	if(!overlays_names && names) //generate
 		overlays_names = names
 		var/diff = states_len - names_len
-		if(diff > 0) //It will be ugly, but still functional.
+		if(diff > 0)
 			for(var/i in 1 to diff)
-				overlays_names += "[names_len + i]"
+				overlays_names += "[names_len + i]°"
 		else if(diff < 0)
 			overlays_names.len += diff
 
@@ -61,13 +56,13 @@
 			RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/remove_user_action)
 		AddElement(A, /datum/element/update_icon_updates_onmob) //Since we can change the overall aspect of the item.
 		RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
-	else if(_flags & POLYCHROMIC_ACTION && ismob(A)) //Not safe until mob icon updating procs are standarized and stop using cut_overlays()
+	else if(_flags & POLYCHROMIC_ACTION && ismob(A)) //in the event mob update icon procs are ever standarized.
 		var/datum/action/polychromic/P = new(A)
 		RegisterSignal(P, COMSIG_ACTION_TRIGGER, .proc/activate_action)
 		actions_by_atom[A] = P
 		P.Grant(A)
 
-	A.update_icon()
+	A.update_icon() //apply the overlays.
 
 /datum/element/polychromic/Detach(atom/A)
 	. = ..()
@@ -75,10 +70,9 @@
 	colors_by_atom -= A
 	var/datum/action/polychromic/P = actions_by_atom[A]
 	if(P)
+		actions_by_atom -= A
 		qdel(P)
-	actions_by_atom -= A
-	if(poly_flags & POLYCHROMIC_ALTCLICK)
-		UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(A, list(COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_WORN_OVERLAYS))
 
 /datum/element/polychromic/proc/apply_overlays(atom/source, list/overlays)
 	var/list/L = colors_by_atom[source]

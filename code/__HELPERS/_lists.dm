@@ -555,7 +555,7 @@
 	for(var/i in deep_list)
 		var/key = i
 		if(isnum(key))
-			key = "[key]"
+			L += "[key]"
 			continue
 		if(islist(key))
 			key = deep_list2params(key)
