@@ -67,14 +67,12 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
 	var/src_max_y = 0
 	var/list/refined_src = new/list()
 
-	for (var/i in turfs_src)
-		var/turf/T = i
+	for (var/turf/T in turfs_src)
 		src_min_x = min(src_min_x,T.x)
 		src_min_y = min(src_min_y,T.y)
 		src_max_x = max(src_max_x,T.y)
 		src_max_y = max(src_max_y,T.y)
-	for (var/i in turfs_src)
-		var/turf/T = i
+	for (var/turf/T in turfs_src)
 		refined_src[T] = "[T.x - src_min_x].[T.y - src_min_y]"
 
 	var/trg_min_x = 99999
@@ -83,8 +81,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
 	var/trg_max_y = 0
 	var/list/refined_trg = new/list()
 
-	for (var/i in turfs_trg)
-		var/turf/T = i
+	for (var/turf/T in turfs_trg)
 		trg_min_x = min(trg_min_x,T.x)
 		trg_min_y = min(trg_min_y,T.y)
 		trg_max_x = max(trg_max_x,T.y)
@@ -92,8 +89,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
 
 	var/diff_x = round(((src_max_x - src_min_x) - (trg_max_x - trg_min_x))/2)
 	var/diff_y = round(((src_max_y - src_min_y) - (trg_max_y - trg_min_y))/2)
-	for (var/i in turfs_trg)
-		var/turf/T = i
+	for (var/turf/T in turfs_trg)
 		refined_trg["[T.x - trg_min_x + diff_x].[T.y - trg_min_y + diff_y]"] = T
 
 	var/list/toupdate = new/list()
