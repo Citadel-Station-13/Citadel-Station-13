@@ -390,8 +390,6 @@
 	. = ..()
 	if(slot == SLOT_SHOES)
 		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
-	else
-		UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
 
 /obj/item/clothing/shoes/wallwalkers/dropped(mob/user)
 	. = ..()
