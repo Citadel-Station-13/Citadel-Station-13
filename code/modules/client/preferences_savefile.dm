@@ -400,6 +400,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
 	S["eye_color"]				>> eye_color
+	S["use_custom_skin_tone"]	>> use_custom_skin_tone
 	S["skin_tone"]				>> skin_tone
 	S["hair_style_name"]		>> hair_style
 	S["facial_style_name"]		>> facial_hair_style
@@ -548,7 +549,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hair_color						= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 3, 0)
 	eye_color						= sanitize_hexcolor(eye_color, 3, 0)
-	skin_tone						= sanitize_inlist(skin_tone, GLOB.skin_tones)
+	use_custom_skin_tone			= sanitize_integer(use_custom_skin_tone, FALSE, TRUE, initial(use_custom_skin_tone))
+	if(use_custom_skin_tone)
+		skin_tone					= sanitize_hexcolor(skin_tone, 6, TRUE, "#FFFFFF")
+	else
+		skin_tone					= sanitize_inlist(skin_tone, GLOB.skin_tones - GLOB.nonstandard_skin_tones, initial(skin_tone))
 	horn_color						= sanitize_hexcolor(horn_color, 3, FALSE)
 	wing_color						= sanitize_hexcolor(wing_color, 3, FALSE, "#FFFFFF")
 	backbag							= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
@@ -657,6 +662,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)
 	WRITE_FILE(S["eye_color"]				, eye_color)
+	WRITE_FILE(S["use_custom_skin_tone"]	, use_custom_skin_tone)
 	WRITE_FILE(S["skin_tone"]				, skin_tone)
 	WRITE_FILE(S["hair_style_name"]			, hair_style)
 	WRITE_FILE(S["facial_style_name"]		, facial_hair_style)

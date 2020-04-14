@@ -89,11 +89,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/facial_hair_style = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
+	var/use_custom_skin_tone = FALSE
 	var/eye_color = "000"				//Eye color
 	var/horn_color = "85615a"			//Horn color
 	var/wing_color = "fff"				//Wing color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF",
+		"mcolor2" = "FFF",
+		"mcolor3" = "FFF",
 		"tail_lizard" = "Smooth",
 		"tail_human" = "None",
 		"snout" = "Round",
@@ -108,8 +111,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"insect_wings" = "Plain",
 		"insect_fluff" = "None",
 		"insect_markings" = "None",
-		"mcolor2" = "FFF",
-		"mcolor3" = "FFF",
 		"mam_body_markings" = "Plain",
 		"mam_ears" = "None",
 		"mam_snouts" = "None",
@@ -361,7 +362,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<h3>Skin Tone</h3>"
 
-				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
+				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=s_tone;task=input'>[use_custom_skin_tone ? "custom: <span style='border:1px solid #161616; background-color: [skin_tone];'>&nbsp;&nbsp;&nbsp;</span>" : skin_tone]</a><BR>"
 
 			var/mutant_colors
 			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
@@ -763,7 +764,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(features["has_cock"])
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
 						dat += "<b>Penis Color:</b></a><BR>"
-						dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)</a><br>"
+						dat += "<span style='border: 1px solid #161616; background-color: [SKINTONE2HEX(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)</a><br>"
 					else
 						dat += "<b>Penis Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><br>"
@@ -781,7 +782,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(features["has_balls"])
 						if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
 							dat += "<b>Testicles Color:</b></a><BR>"
-							dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
+							dat += "<span style='border: 1px solid #161616; background-color: [SKINTONE2HEX(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
 						else
 							dat += "<b>Testicles Color:</b></a><BR>"
 							dat += "<span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><br>"
@@ -793,7 +794,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>Vagina Type:</b> <a style='display:block;width:100px' href='?_src_=prefs;preference=vag_shape;task=input'>[features["vag_shape"]]</a>"
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
 						dat += "<b>Vagina Color:</b></a><BR>"
-						dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
+						dat += "<span style='border: 1px solid #161616; background-color: [SKINTONE2HEX(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
 					else
 						dat += "<b>Vagina Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><br>"
@@ -806,7 +807,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(features["has_breasts"])
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
 						dat += "<b>Color:</b></a><BR>"
-						dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
+						dat += "<span style='border: 1px solid #161616; background-color: [SKINTONE2HEX(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
 					else
 						dat += "<b>Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><br>"
@@ -1438,6 +1439,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					eye_color = random_eye_color()
 				if("s_tone")
 					skin_tone = random_skin_tone()
+					use_custom_skin_tone = null
 				if("bag")
 					backbag = pick(GLOB.backbaglist)
 				if("suit")
@@ -1834,9 +1836,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["insect_markings"] = new_insect_markings
 
 				if("s_tone")
-					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
+					var/list/choices = GLOB.skin_tones - GLOB.nonstandard_skin_tones + "custom"
+					var/new_s_tone = input(user, "Choose your character's skin tone:", "Character Preference")  as null|anything in choices
 					if(new_s_tone)
-						skin_tone = new_s_tone
+						if(new_s_tone == "custom")
+							var/default = use_custom_skin_tone ? skin_tone : null
+							var/custom_tone = input(user, "Choose your custom skin tone:", "Character Preference", default) as color|null
+							if(custom_tone)
+								var/temp_hsv = RGBtoHSV(new_s_tone)
+								if(ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3])
+									to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+								else
+									use_custom_skin_tone = TRUE
+									skin_tone = custom_tone
+						else
+							use_custom_skin_tone = FALSE
+							skin_tone = new_s_tone
 
 				if("taur")
 					var/list/snowflake_taur_list = list()
@@ -2430,6 +2445,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.wing_color = wing_color
 
 	character.skin_tone = skin_tone
+	character.dna.skin_tone_override = use_custom_skin_tone ? skin_tone : null
 	character.hair_style = hair_style
 	character.facial_hair_style = facial_hair_style
 	character.underwear = underwear
