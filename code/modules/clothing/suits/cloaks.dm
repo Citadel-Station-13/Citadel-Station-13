@@ -91,3 +91,14 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF | GOLIATH_RESISTANCE
+
+/obj/item/clothing/neck/cloak/polychromic
+	name = "polychromic cloak"
+	desc = "For when you want to show off your horrible colour coordination skills."
+	icon_state = "polyce"
+	item_state = "qmcloak"
+	var/list/poly_colors = list("#FFFFFF", "#FFFFFF", "#808080")
+
+/obj/item/clothing/neck/cloak/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 3)

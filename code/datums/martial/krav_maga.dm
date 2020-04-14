@@ -145,7 +145,7 @@
 	log_combat(A, D, "punched")
 	var/picked_hit_type = pick("punches", "kicks")
 	var/bonus_damage = damage_roll(A,D)
-	if(CHECK_MOBILITY(D, MOBILITY_STAND))
+	if(!CHECK_MOBILITY(D, MOBILITY_STAND))
 		bonus_damage += 10
 		picked_hit_type = "stomps on"
 	D.apply_damage(bonus_damage, BRUTE, affecting, armor_block)
@@ -165,7 +165,7 @@
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
-	var/damage = damage_roll(A,D)
+	var/damage = (damage_roll(A,D)*2)
 	if(D.mobility_flags & MOBILITY_STAND)
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
 					"<span class='userdanger'>You're slapped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)

@@ -332,7 +332,7 @@
 		data = list("misc" = 1)
 	data["misc"]++
 	M.jitteriness = min(M.jitteriness+4,10)
-	if(iscultist(M))
+	if(iscultist(M, FALSE, TRUE))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			if(!BM.holy_dispel)
 				BM.holy_dispel = TRUE
@@ -361,7 +361,7 @@
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data["misc"] >= 60)	// 30 units, 135 seconds
-		if(iscultist(M) || is_servant_of_ratvar(M))
+		if(iscultist(M, FALSE, TRUE) || is_servant_of_ratvar(M, FALSE, TRUE))
 			if(iscultist(M))
 				SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 			else if(is_servant_of_ratvar(M))
@@ -1070,11 +1070,11 @@
 	to_chat(M, "<span class='userdanger'>You start feeling your guts twisting painfully!</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 
-/datum/reagent/iron/overdose_process(mob/living/carbon/C)
+/datum/reagent/iron/overdose_process(mob/living/M)
 	if(prob(20))
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		if (istype(L))
-			C.applyLiverDamage(2) //mild until the fabled med rework comes out. the organ damage galore
+		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
+		if(L)
+			L.applyOrganDamage(2)
 	..()
 
 /datum/reagent/gold

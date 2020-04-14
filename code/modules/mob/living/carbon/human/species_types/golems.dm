@@ -469,7 +469,7 @@
 	var/cooldown = 150
 	var/last_teleport = 0
 
-/datum/action/innate/unstable_teleport/IsAvailable()
+/datum/action/innate/unstable_teleport/IsAvailable(silent = FALSE)
 	if(..())
 		if(world.time > last_teleport + cooldown)
 			return 1

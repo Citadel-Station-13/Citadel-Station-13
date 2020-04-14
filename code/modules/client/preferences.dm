@@ -150,7 +150,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ipc_antenna" = "None",
 		"flavor_text" = "",
 		"meat_type" = "Mammalian",
-		"body_model" = MALE
+		"body_model" = MALE,
+		"body_size" = RESIZE_DEFAULT_SIZE
 		)
 
 	var/list/custom_names = list()
@@ -294,7 +295,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 			dat += "<a href='?_src_=prefs;preference=nameless'>Be nameless: [nameless ? "Yes" : "No"]</a><BR>"
 
-			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
+			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Age:</b> <a style='display:block;width:30px' href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
@@ -345,7 +346,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
 			dat += "<h2>Body</h2>"
-			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
+			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			if(gender != NEUTER && pref_species.sexes)
 				dat += "<b>Body Model:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=body_model'>[features["body_model"] == MALE ? "Masculine" : "Feminine"]</a><BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
@@ -378,6 +379,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Tertiary Color:</b><BR>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 				mutant_colors = TRUE
+
+			if (CONFIG_GET(number/body_size_min) != CONFIG_GET(number/body_size_max))
+				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]]%</a><br>"
 
 			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
 
@@ -2119,6 +2123,38 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_toggle_color)
 						hud_toggle_color = new_toggle_color
 
+				if("gender")
+					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) as null|anything in list(MALE,FEMALE,"nonbinary","object")
+					if(!chosengender)
+						return
+					switch(chosengender)
+						if("nonbinary")
+							chosengender = PLURAL
+							features["body_model"] = pick(MALE, FEMALE)
+						if("object")
+							chosengender = NEUTER
+							features["body_model"] = MALE
+						else
+							features["body_model"] = chosengender
+					gender = chosengender
+					facial_hair_style = random_facial_hair_style(gender)
+					hair_style = random_hair_style(gender)
+
+				if("body_size")
+					var/min = CONFIG_GET(number/body_size_min)
+					var/max = CONFIG_GET(number/body_size_max)
+					var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
+					var/new_body_size = input(user, "Choose your desired sprite size:\n([min*100]%-[max*100]%), Warning: May make your character look distorted[danger > min ? ", and an exponential slowdown will occur for those smaller than [danger*100]%!" : "!"]", "Character Preference", features["body_size"]*100) as num|null
+					if (new_body_size)
+						new_body_size = CLAMP(new_body_size * 0.01, min, max)
+						var/dorfy
+						if(danger > new_body_size)
+							dorfy = alert(user, "The chosen size appears to be smaller than the threshold of [danger*100]%, which will lead to an added exponential slowdown. Are you sure about that?", "Dwarfism Alert", "Yes", "Move it to the threshold", "No")
+							if(!dorfy || dorfy == "Move it above the threshold")
+								new_body_size = danger
+						if(dorfy != "No")
+							features["body_size"] = new_body_size
+
 		else
 			switch(href_list["preference"])
 				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
@@ -2171,22 +2207,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("publicity")
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
-				if("gender")
-					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) as null|anything in list(MALE,FEMALE,"nonbinary","object")
-					if(!chosengender)
-						return
-					switch(chosengender)
-						if("nonbinary")
-							chosengender = PLURAL
-							features["body_model"] = pick(MALE, FEMALE)
-						if("object")
-							chosengender = NEUTER
-							features["body_model"] = MALE
-						else
-							features["body_model"] = chosengender
-					gender = chosengender
-					facial_hair_style = random_facial_hair_style(gender)
-					hair_style = random_hair_style(gender)
 
 				if("body_model")
 					features["body_model"] = features["body_model"] == MALE ? FEMALE : MALE
@@ -2431,6 +2451,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		pref_species = new /datum/species/human
 		save_character()
 
+	var/old_size = character.dna.features["body_size"]
+
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
@@ -2451,6 +2473,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.Digitigrade_Leg_Swap(TRUE)
 
 	character.give_genitals(TRUE) //character.update_genitals() is already called on genital.update_appearance()
+
+	character.dna.update_body_size(old_size)
 
 	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_COPIED_TO, src, icon_updates, roundstart_checks)
 

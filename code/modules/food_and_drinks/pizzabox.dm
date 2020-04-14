@@ -86,8 +86,8 @@
 			tag_overlay.pixel_y = boxes.len * 3
 			add_overlay(tag_overlay)
 
-/obj/item/pizzabox/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/pizzabox/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	var/current_offset = 2
 	if(isinhands)
 		for(var/V in boxes) //add EXTRA BOX per box

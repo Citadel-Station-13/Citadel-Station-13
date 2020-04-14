@@ -12,7 +12,7 @@
 		RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else if(ismob(target))
-		RegisterSignal(target, COMSIG_MOB_SPELL_CAST_CHECK, .proc/on_cast)
+		RegisterSignal(target, COMSIG_MOB_SPELL_CAN_CAST, .proc/on_cast)
 		stacked_spellcasting_by_user[target]++
 	else
 		return ELEMENT_INCOMPATIBLE
@@ -21,24 +21,24 @@
 
 /datum/element/spellcasting/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_MOB_SPELL_CAST_CHECK))
+	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_MOB_SPELL_CAN_CAST))
 	if(users_by_item[target])
 		var/mob/user = users_by_item[target]
 		stacked_spellcasting_by_user[user]--
 		if(!stacked_spellcasting_by_user[user])
 			stacked_spellcasting_by_user -= user
-			UnregisterSignal(user, COMSIG_MOB_SPELL_CAST_CHECK)
+			UnregisterSignal(user, COMSIG_MOB_SPELL_CAN_CAST)
 	else if(ismob(target))
 		stacked_spellcasting_by_user[target]--
 		if(!stacked_spellcasting_by_user[target])
 			stacked_spellcasting_by_user -= target
 
 /datum/element/spellcasting/proc/on_equip(datum/source, mob/equipper, slot)
-	if(!(slot in cast_slots))
+	if(!(cast_slots & slotdefine2slotbit(slot)))
 		return
 	users_by_item[source] = equipper
 	if(!stacked_spellcasting_by_user[equipper])
-		RegisterSignal(equipper, COMSIG_MOB_SPELL_CAST_CHECK, .proc/on_cast)
+		RegisterSignal(equipper, COMSIG_MOB_SPELL_CAN_CAST, .proc/on_cast)
 	stacked_spellcasting_by_user[equipper]++
 
 /datum/element/spellcasting/proc/on_drop(datum/source, mob/user)
@@ -48,7 +48,7 @@
 	stacked_spellcasting_by_user[user]--
 	if(!stacked_spellcasting_by_user[user])
 		stacked_spellcasting_by_user -= user
-		UnregisterSignal(user, COMSIG_MOB_SPELL_CAST_CHECK)
+		UnregisterSignal(user, COMSIG_MOB_SPELL_CAN_CAST)
 
 /datum/element/spellcasting/proc/on_cast(mob/caster, obj/effect/proc_holder/spell)
 	return cast_flags
