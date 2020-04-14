@@ -44066,6 +44066,7 @@
 /area/science/misc_lab)
 "cbe" = (
 /obj/structure/table/reinforced,
+/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white,
