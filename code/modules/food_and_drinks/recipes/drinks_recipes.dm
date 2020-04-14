@@ -958,7 +958,7 @@
 	name = "Mush Crush"
 	id = /datum/reagent/consumable/ethanol/mush_crush
 	results = list(/datum/reagent/consumable/ethanol/mush_crush = 10)
-	required_reagents = list(/datum/reagent/iron = 5,  /datum/reagent/water = 5, /datum/reagent/toxin/coffeepowder = 10)
+	required_reagents = list(/datum/reagent/iron = 5,  /datum/reagent/ash = 5, /datum/reagent/toxin/coffeepowder = 10)
 
 /datum/chemical_reaction/darkbrew
 	name = "Darkbrew"
