@@ -612,6 +612,12 @@
 		/obj/item/clothing/mask/breath/medical = 1
 		)
  
+/obj/effect/spawner/lootdrop/welder_tools/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/low_tools/no_turf
+	spawn_on_turf = FALSE
+ 
 /obj/effect/spawner/lootdrop/breathing_tanks/no_turf
 	spawn_on_turf = FALSE
 
