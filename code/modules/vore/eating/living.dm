@@ -42,8 +42,8 @@
 			vore_selected = vore_organs[1]
 			return TRUE
 
-	//Or, we can create a basic one for them
-	if(!LAZYLEN(vore_organs))
+/mob/living/proc/lazy_init_belly()
+	if(!length(vore_organs))
 		LAZYINITLIST(vore_organs)
 		var/obj/belly/B = new /obj/belly(src)
 		vore_selected = B
@@ -61,6 +61,7 @@
 			// Critical adjustments due to TG grab changes - Poojawa
 
 /mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
+	lazy_init_belly()
 	if(!user || !prey || !pred)
 		return
 
@@ -100,14 +101,17 @@
 // Eating procs depending on who clicked what
 //
 /mob/living/proc/feed_grabbed_to_self(var/mob/living/user, var/mob/living/prey)
+	user.lazy_init_belly()
 	var/belly = user.vore_selected
 	return perform_the_nom(user, prey, user, belly)
 
 /mob/living/proc/feed_self_to_grabbed(var/mob/living/user, var/mob/living/pred)
+	pred.lazy_init_belly()
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
+	pred.lazy_init_belly()
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 
