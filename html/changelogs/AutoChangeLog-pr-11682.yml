@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscdel: "No more station integrity goal"
+  - tweak: "Upload-hacked-law goal only picksif there's an AI to upload to"

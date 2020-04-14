@@ -302,10 +302,21 @@
 			if(!S || S.icon_state == "none")
 				continue
 			var/aroused_state = G.aroused_state && S.alt_aroused
+			var/accessory_icon = S.icon
+			var/do_center = S.center
+			var/dim_x = S.dimension_x
+			var/dim_y = S.dimension_y
+			if(G.genital_flags & GENITAL_CAN_TAUR && S.taur_icon && (!S.feat_taur || dna.features[S.feat_taur]) && dna.species.mutant_bodyparts["taur"])
+				var/datum/sprite_accessory/taur/T = GLOB.taur_list[dna.features["taur"]]
+				if(T?.taur_mode & S.accepted_taurs)
+					accessory_icon = S.taur_icon
+					do_center = TRUE
+					dim_x = S.taur_dimension_x
+					dim_y = S.taur_dimension_y
 
-			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			if(S.center)
-				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
+			var/mutable_appearance/genital_overlay = mutable_appearance(accessory_icon, layer = -layer)
+			if(do_center)
+				genital_overlay = center_image(genital_overlay, dim_x, dim_y)
 
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(skin_tone)]"
@@ -353,11 +364,10 @@
 		if(ishuman(src) && dna.species.id == "human")
 			dna.features["genitals_use_skintone"] = TRUE
 			dna.species.use_skintones = TRUE
-		if(MUTCOLORS)
-			if(src.dna.species.fixed_mut_color)
-				dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
-				dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
-				return
+		if(src.dna.species.fixed_mut_color)
+			dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
+			dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
+			return
 		//So people who haven't set stuff up don't get rainbow surprises.
 		dna.features["cock_color"] = "[dna.features["mcolor"]]"
 		dna.features["breasts_color"] = "[dna.features["mcolor"]]"

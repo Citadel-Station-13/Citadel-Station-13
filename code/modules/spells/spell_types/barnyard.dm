@@ -5,7 +5,7 @@
 	charge_type = "recharge"
 	charge_max	= 150
 	charge_counter = 0
-	clothes_req = 0
+	clothes_req = NONE
 	stat_allowed = 0
 	invocation = "KN'A FTAGHU, PUCK 'BTHNK!"
 	invocation_type = "shout"

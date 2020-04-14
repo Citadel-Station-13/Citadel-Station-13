@@ -142,6 +142,14 @@
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
 
+//Cloth Floors
+
+/obj/item/stack/tile/padded
+	name = "padded floor tile"
+	desc = "These are soft and cushy, they'd make good pillows. They look very comfortable, although what they're used for is discomforting."
+	icon_state = "tile_padded"
+	turf_type = /turf/open/floor/padded
+
 //Basalt
 /obj/item/stack/tile/basalt
 	name = "basalt tile"

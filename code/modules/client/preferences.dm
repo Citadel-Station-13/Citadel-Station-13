@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"cock_length" = COCK_SIZE_DEF,
 		"cock_diameter_ratio" = COCK_DIAMETER_RATIO_DEF,
 		"cock_color" = "fff",
+		"cock_taur" = FALSE,
 		"has_balls" = FALSE,
 		"balls_color" = "fff",
 		"balls_shape" = DEF_BALLS_SHAPE,
@@ -762,7 +763,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						dat += "<b>Penis Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><br>"
-					dat += "<b>Penis Shape:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]]</a>"
+					var/tauric_shape = FALSE
+					if(features["cock_taur"])
+						var/datum/sprite_accessory/penis/P = GLOB.cock_shapes_list[features["cock_shape"]]
+						if(P.taur_icon && pref_species.mutant_bodyparts["taur"])
+							var/datum/sprite_accessory/taur/T = GLOB.taur_list[features["taur"]]
+							if(T.taur_mode & P.accepted_taurs)
+								tauric_shape = TRUE
+					dat += "<b>Penis Shape:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]][tauric_shape ? " (Taur)" : ""]</a>"
 					dat += "<b>Penis Length:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inch(es)</a>"
 					dat += "<b>Penis Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=cock_visibility;task=input'>[features["cock_visibility"]]</a>"
 					dat += "<b>Has Testicles:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a>"
@@ -1610,7 +1618,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("mutant_color2")
-					var/new_mutantcolor = input(user, "Choose your character's secondary alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's secondary alien/mutant color:", "Character Preference","#"+features["mcolor2"]) as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -1621,7 +1629,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("mutant_color3")
-					var/new_mutantcolor = input(user, "Choose your character's tertiary alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's tertiary alien/mutant color:", "Character Preference","#"+features["mcolor3"]) as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -1922,7 +1930,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				//Genital code
 				if("cock_color")
-					var/new_cockcolor = input(user, "Penis color:", "Character Preference") as color|null
+					var/new_cockcolor = input(user, "Penis color:", "Character Preference","#"+features["cock_color"]) as color|null
 					if(new_cockcolor)
 						var/temp_hsv = RGBtoHSV(new_cockcolor)
 						if(new_cockcolor == "#000000")
@@ -1941,8 +1949,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("cock_shape")
 					var/new_shape
-					new_shape = input(user, "Penis shape:", "Character Preference") as null|anything in GLOB.cock_shapes_list
+					var/list/hockeys = list()
+					if(pref_species.mutant_bodyparts["taur"])
+						var/datum/sprite_accessory/taur/T = GLOB.taur_list[features["taur"]]
+						for(var/A in GLOB.cock_shapes_list)
+							var/datum/sprite_accessory/penis/P = GLOB.cock_shapes_list[A]
+							if(P.taur_icon && T.taur_mode & P.accepted_taurs)
+								LAZYSET(hockeys, "[A] (Taur)", A)
+					new_shape = input(user, "Penis shape:", "Character Preference") as null|anything in (GLOB.cock_shapes_list + hockeys)
 					if(new_shape)
+						features["cock_taur"] = FALSE
+						if(hockeys[new_shape])
+							new_shape = hockeys[new_shape]
+							features["cock_taur"] = TRUE
 						features["cock_shape"] = new_shape
 
 				if("cock_visibility")
@@ -1951,7 +1970,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["cock_visibility"] = n_vis
 
 				if("balls_color")
-					var/new_ballscolor = input(user, "Testicles Color:", "Character Preference") as color|null
+					var/new_ballscolor = input(user, "Testicles Color:", "Character Preference","#"+features["balls_color"]) as color|null
 					if(new_ballscolor)
 						var/temp_hsv = RGBtoHSV(new_ballscolor)
 						if(new_ballscolor == "#000000")
@@ -1978,7 +1997,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["breasts_shape"] = new_shape
 
 				if("breasts_color")
-					var/new_breasts_color = input(user, "Breast Color:", "Character Preference") as color|null
+					var/new_breasts_color = input(user, "Breast Color:", "Character Preference","#"+features["breasts_color"]) as color|null
 					if(new_breasts_color)
 						var/temp_hsv = RGBtoHSV(new_breasts_color)
 						if(new_breasts_color == "#000000")
@@ -2000,7 +2019,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["vag_shape"] = new_shape
 
 				if("vag_color")
-					var/new_vagcolor = input(user, "Vagina color:", "Character Preference") as color|null
+					var/new_vagcolor = input(user, "Vagina color:", "Character Preference","#"+features["vag_color"]) as color|null
 					if(new_vagcolor)
 						var/temp_hsv = RGBtoHSV(new_vagcolor)
 						if(new_vagcolor == "#000000")

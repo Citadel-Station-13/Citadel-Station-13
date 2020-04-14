@@ -243,6 +243,7 @@
 				//door.req_access = req_access
 				door.electronics = electronics
 				door.heat_proof = heat_proof_finished
+				door.security_level = 0
 				if(electronics.one_access)
 					door.req_one_access = electronics.accesses
 				else

@@ -49,6 +49,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(src)] might be running a modified client! (failed can_see on AI click of [A] (Turf Loc: [ADMIN_VERBOSEJMP(pixel_turf)]))")
 		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A] (Turf Loc: [AREACOORD(pixel_turf)]))"
 		log_admin(message)
+		to_chat(src, "<span class='warning'>You're experiencing a bug. Reconnect immediately to fix it. Admins have been notified.</span>")
 		if(REALTIMEOFDAY >= chnotify + 9000)
 			chnotify = REALTIMEOFDAY
 			send2irc_adminless_only("NOCHEAT", message)

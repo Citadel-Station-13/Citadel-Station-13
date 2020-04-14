@@ -11768,7 +11768,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/theatre)
 "atY" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /obj/machinery/light{

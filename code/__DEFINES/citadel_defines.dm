@@ -25,6 +25,7 @@
 #define GENITAL_CAN_AROUSE		(1<<8)
 #define GENITAL_UNDIES_HIDDEN	(1<<9)
 #define UPDATE_OWNER_APPEARANCE	(1<<10)
+#define GENITAL_CAN_TAUR		(1<<11)
 
 
 #define DEF_VAGINA_SHAPE	"Human"

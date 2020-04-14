@@ -74,6 +74,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/addbunkerbypass,
 	/client/proc/revokebunkerbypass,
 	/client/proc/stop_sounds,
+	/client/proc/mark_datum_mapview,
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/datum/admins/proc/open_borgopanel
