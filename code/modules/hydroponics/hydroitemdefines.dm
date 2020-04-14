@@ -193,3 +193,8 @@
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 50)
+
+/obj/item/reagent_containers/glass/bottle/killer/plant_b_gone
+	name = "bottle of plant-b-gone"
+	desc = "Contains plant killer."
+	list_reagents = list(/datum/reagent/toxin/plantbgone = 50)

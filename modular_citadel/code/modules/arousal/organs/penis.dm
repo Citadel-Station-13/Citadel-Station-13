@@ -3,6 +3,7 @@
 	desc = "A male reproductive organ."
 	icon_state = "penis"
 	icon = 'modular_citadel/icons/obj/genitals/penis.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_PENIS
 	masturbation_verb = "stroke"

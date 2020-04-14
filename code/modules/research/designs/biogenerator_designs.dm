@@ -10,6 +10,14 @@
 	make_reagents = list(/datum/reagent/consumable/milk = 10)
 	category = list("initial","Food")
 
+/datum/design/soy
+	name = "10u Soy Milk"
+	id = "soy"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 20)
+	make_reagents = list(/datum/reagent/consumable/soymilk = 10)
+	category = list("initial","Food")
+
 /datum/design/cream
 	name = "10u Cream"
 	id = "cream"
@@ -24,6 +32,14 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 100)
 	build_path = /obj/item/reagent_containers/food/condiment/milk
+	category = list("initial","Food")
+
+/datum/design/soymilk_carton
+	name = "Soy Milk Carton"
+	id = "soymilk_carton"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 100)
+	build_path = /obj/item/reagent_containers/food/condiment/soymilk
 	category = list("initial","Food")
 
 /datum/design/cream_carton
@@ -121,6 +137,14 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 50)
 	build_path = /obj/item/reagent_containers/glass/bottle/killer/pestkiller
+	category = list("initial","Botany Chemicals")
+
+/datum/design/plant_b_gone
+	name = "Plant-B-Gone"
+	id = "plant_b_gone"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 50)
+	build_path = /obj/item/reagent_containers/glass/bottle/killer/plant_b_gone
 	category = list("initial","Botany Chemicals")
 
 /datum/design/ammonia

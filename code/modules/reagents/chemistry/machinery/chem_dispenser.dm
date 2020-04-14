@@ -497,7 +497,8 @@
 	upgrade_reagents = list(
 		/datum/reagent/consumable/banana,
 		/datum/reagent/consumable/berryjuice,
-		/datum/reagent/consumable/strawberryjuice
+		/datum/reagent/consumable/strawberryjuice,
+		/datum/reagent/consumable/vanilla
 	)
 	upgrade_reagents2 = list(
 		/datum/reagent/consumable/applejuice,

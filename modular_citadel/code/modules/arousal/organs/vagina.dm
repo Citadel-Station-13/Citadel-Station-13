@@ -3,6 +3,7 @@
 	desc = "A female reproductive organ."
 	icon = 'modular_citadel/icons/obj/genitals/vagina.dmi'
 	icon_state = ORGAN_SLOT_VAGINA
+	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = "vagina"
 	size = 1 //There is only 1 size right now
