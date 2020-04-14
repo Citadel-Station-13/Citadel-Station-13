@@ -965,3 +965,12 @@
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of bungo juice"
 	glass_desc = "Exotic! You feel like you are on vacation already."
+
+/datum/reagent/consumable/coldscales
+	name = "Coldscales"
+	color = "#5AEB52" //(90, 235, 82)
+	description = "A cold looking drink made for people with scales."
+	taste_description = "dead flies"
+	glass_icon_state = "coldscales"
+	glass_name = "glass of coldscales"
+	glass_desc = "A soft green drink that looks inviting!"

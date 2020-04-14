@@ -370,6 +370,8 @@
 			M.stuttering = 0
 			holder.del_reagent(type)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			return
+	if(isangel(M))
+		quality = DRINK_GOOD
 	holder.remove_reagent(type, 0.4)	//fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
