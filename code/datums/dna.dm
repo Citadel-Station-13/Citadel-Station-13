@@ -302,7 +302,7 @@
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	generate_dna_blocks()
-	features = random_features(species?.id)
+	features = random_features(species?.id, holder?.gender)
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna

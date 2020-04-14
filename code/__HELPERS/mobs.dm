@@ -47,7 +47,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/socks, GLOB.socks_list)
 	return pick(GLOB.socks_list)
 
-/proc/random_features(intendedspecies)
+/proc/random_features(intendedspecies, intended_gender)
 	if(!GLOB.tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
 	if(!GLOB.tails_list_lizard.len)
@@ -149,7 +149,13 @@
 	var/color2 = random_short_color()
 	var/color3 = random_short_color()
 
-	//CIT CHANGE - changes this entire return to support cit's snowflake parts
+	var/body_model = MALE
+	switch(intended_gender)
+		if(MALE || FEMALE)
+			body_model = intended_gender
+		if(PLURAL)
+			body_model = pick(MALE,FEMALE)
+
 	return(list(
 		"mcolor"			= color1,
 		"mcolor2"			= color2,
@@ -209,7 +215,7 @@
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
 		"meat_type"			= "Mammalian",
-		"body_model"		= MALE
+		"body_model"		= body_model
 		))
 
 /proc/random_hair_style(gender)
