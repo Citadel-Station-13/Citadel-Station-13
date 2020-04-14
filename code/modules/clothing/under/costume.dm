@@ -91,12 +91,12 @@
 	name = "polychromic kilt"
 	desc = "It's not a skirt!"
 	icon_state = "polykilt"
-	hasprimary = TRUE
-	hassecondary = TRUE
-	primary_color = "#FFFFFF"
-	secondary_color = "#F08080"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	mutantrace_variation = NONE
+
+/obj/item/clothing/under/costume/kilt/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#FFFFFF", "#F08080"), 2)
 
 /obj/item/clothing/under/costume/gladiator
 	name = "gladiator uniform"

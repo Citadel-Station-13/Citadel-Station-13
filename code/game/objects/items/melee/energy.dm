@@ -324,7 +324,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
-/obj/item/melee/transforming/energy/sword/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/melee/transforming/energy/sword/cx/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(active)
 		if(isinhands)

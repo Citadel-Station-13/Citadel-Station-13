@@ -451,8 +451,8 @@
 		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return BLOCK_NONE
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands && current_charges)
 		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 

@@ -109,11 +109,9 @@
 	desc = "For when you want to show off your horrible colour coordination skills."
 	icon_state = "polysuit"
 	item_state = "sl_suit"
-	hasprimary = TRUE
-	hassecondary = TRUE
-	hastertiary = TRUE
-	primary_color = "#FFFFFF"
-	secondary_color = "#FFFFFF"
-	tertiary_color = "#808080"
 	can_adjust = FALSE
 	mutantrace_variation = NONE
+
+/obj/item/clothing/under/suit/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#FFFFFF", "#FFFFFF", "#808080"), 3)
