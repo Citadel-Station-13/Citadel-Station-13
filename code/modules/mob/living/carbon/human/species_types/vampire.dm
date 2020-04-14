@@ -82,7 +82,7 @@
 				to_chat(H, "<span class='notice'>You're already full!</span>")
 				return
 			//This checks whether or not they are wearing a garlic clove on their neck
-			if(!sucking_checks(victim, TRUE, FALSE))
+			if(!blood_sucking_checks(victim, TRUE, FALSE))
 				return
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
@@ -96,7 +96,7 @@
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
 				return
 			//Here we check now for both the garlic cloves on the neck and for blood in the victims bloodstream.
-			if(!sucking_checks(victim, TRUE, TRUE))
+			if(!blood_sucking_checks(victim, TRUE, TRUE))
 				return
 			if(!do_after(H, 30, target = victim))
 				return

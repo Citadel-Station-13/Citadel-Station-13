@@ -296,7 +296,7 @@
 	category = CAT_CLOTHING
 
 
-/datum/crafting_recipe/wintercoat_cosmic
+/datum/crafting_recipe/garlic_necklace
 	name = "Garlic Necklace"
 	result = /obj/item/clothing/neck/garlic_necklace
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 15,

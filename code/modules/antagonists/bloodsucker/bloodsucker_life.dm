@@ -247,7 +247,7 @@
 	owner.current.apply_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 	ADD_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker") // Come after UNCONSCIOUS or else it fails
 	ADD_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")	// Without this, you'll just keep dying while you recover.
-	ADD_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")	// So you can heal in 0 G. otherwise you just...heal forever.
+	ADD_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")	// So you can heal in space. Otherwise you just...heal forever.
 	ADD_TRAIT(owner.current, TRAIT_RESISTLOWPRESSURE, "bloodsucker")
 	// Visuals
 	owner.current.update_sight()
@@ -260,7 +260,6 @@
 /datum/antagonist/bloodsucker/proc/Torpor_End()
 	owner.current.stat = SOFT_CRIT
 	owner.current.remove_status_effect(STATUS_EFFECT_UNCONSCIOUS)
-	owner.current.cure_fakedeath("bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_FAKEDEATH, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_NODEATH, "bloodsucker")
 	REMOVE_TRAIT(owner.current, TRAIT_RESISTHIGHPRESSURE, "bloodsucker")

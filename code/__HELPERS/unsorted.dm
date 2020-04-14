@@ -1565,7 +1565,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		world.TgsChatBroadcast()
 
 //Checks to see if either the victim has a garlic necklace or garlic in their blood
-/proc/sucking_checks(var/mob/living/carbon/target, check_neck, check_blood)
+/proc/blood_sucking_checks(var/mob/living/carbon/target, check_neck, check_blood)
 	//Bypass this if the target isnt carbon.
 	if(!iscarbon(target))
 		return TRUE 
