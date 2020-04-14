@@ -151,7 +151,7 @@
 
 	var/body_model = MALE
 	switch(intended_gender)
-		if(MALE || FEMALE)
+		if(MALE, FEMALE)
 			body_model = intended_gender
 		if(PLURAL)
 			body_model = pick(MALE,FEMALE)
