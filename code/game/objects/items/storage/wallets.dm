@@ -101,11 +101,11 @@
 	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	var/item1_type = /obj/effect/spawner/lootdrop/space_cash
+	var/item1_type = /obj/effect/spawner/lootdrop/space_cash/no_turf
 	var/item2_type
 	if(prob(50))
-		item2_type = /obj/effect/spawner/lootdrop/space_cash
-	var/item3_type = /obj/effect/spawner/lootdrop/coin
+		item2_type = /obj/effect/spawner/lootdrop/space_cash/no_turf
+	var/item3_type = /obj/effect/spawner/lootdrop/coin/no_turf
 
 	spawn(2)
 		if(item1_type)
