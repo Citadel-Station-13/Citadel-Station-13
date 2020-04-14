@@ -144,6 +144,8 @@
 			return FALSE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
 			return FALSE
+		if(AmBloodsucker(clonemind.current)) //If the mind is a bloodsucker
+			return FALSE
 	if(clonemind.active)	//somebody is using that mind
 		if( ckey(clonemind.key)!=ckey )
 			return FALSE
@@ -158,8 +160,6 @@
 		INVOKE_ASYNC(src, .proc/horrifyingsound)
 		mess = TRUE
 		update_icon()
-		return FALSE
-	if(isvamp(clonemind)) //If the mind is a bloodsucker
 		return FALSE
 
 	attempting = TRUE //One at a time!!
