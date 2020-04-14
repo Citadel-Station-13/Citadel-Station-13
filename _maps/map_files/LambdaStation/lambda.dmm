@@ -1556,7 +1556,6 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
@@ -3033,7 +3032,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "agR" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/prison{
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
@@ -30338,7 +30337,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar/atrium)
 "bbF" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -59988,7 +59987,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "ccw" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -60523,7 +60522,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "cdE" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/effect/landmark/blobstart,
@@ -60557,7 +60556,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "cdH" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -62828,7 +62827,7 @@
 	},
 /area/maintenance/aft)
 "ciL" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -83922,7 +83921,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "cXf" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/light/small{

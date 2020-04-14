@@ -1337,7 +1337,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "adf" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/prison{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
@@ -11677,7 +11677,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aAs" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/plating,
@@ -13056,7 +13056,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/cryopod)
 "aDL" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/structure/mirror{
@@ -13944,7 +13944,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "aGk" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/structure/mirror{
@@ -21467,7 +21467,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aZt" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/structure/mirror{
@@ -44066,7 +44066,6 @@
 /area/science/misc_lab)
 "cbe" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white,
@@ -55621,7 +55620,7 @@
 	},
 /area/crew_quarters/theatre)
 "iTU" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/wood,
@@ -56804,7 +56803,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "myh" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
@@ -57483,7 +57482,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "oIW" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -60606,7 +60605,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/pool)
 "ycd" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/structure/mirror{

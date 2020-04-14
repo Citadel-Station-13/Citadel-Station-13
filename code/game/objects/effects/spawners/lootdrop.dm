@@ -2,6 +2,7 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
+	var/spawn_on_turf = TRUE
 	var/lootcount = 1		//how many items will be spawned
 	var/lootdoubles = TRUE	//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
@@ -10,7 +11,7 @@
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
 	if(loot && loot.len)
-		var/turf/T = get_turf(src)
+		var/atom/A = spawn_on_turf ? get_turf(src) : loc
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
@@ -18,7 +19,7 @@
 				loot.Remove(lootspawn)
 
 			if(lootspawn)
-				var/atom/movable/spawned_loot = new lootspawn(T)
+				var/atom/movable/spawned_loot = new lootspawn(A)
 				if (!fan_out_items)
 					if (pixel_x != 0)
 						spawned_loot.pixel_x = pixel_x
@@ -448,6 +449,7 @@
 /obj/effect/spawner/lootdrop/low_loot_toilet
 	name = "random low toilet spawner"
 	lootcount = 1
+	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
 //This is ment for "low" loot that anyone could fine in a toilet, for better gear use high loot toilet
 	loot = list("" = 30,
@@ -457,41 +459,42 @@
 		/obj/item/clothing/glasses/sunglasses/blindfold = 4,
 		/obj/item/clothing/glasses/sunglasses = 1,
 		/obj/item/toy/plush/random = 5,
-		/obj/effect/spawner/lootdrop/gloves = 5,
-		/obj/effect/spawner/lootdrop/glowstick = 5,
-		/obj/effect/spawner/lootdrop/coin = 3,
-		/obj/effect/spawner/lootdrop/cig_packs = 10,
-		/obj/effect/spawner/lootdrop/cigars_cases = 2,
-		/obj/effect/spawner/lootdrop/space_cash = 5,
+		/obj/effect/spawner/lootdrop/gloves/no_turf = 5,
+		/obj/effect/spawner/lootdrop/glowstick/no_turf = 5,
+		/obj/effect/spawner/lootdrop/coin/no_turf = 3,
+		/obj/effect/spawner/lootdrop/cig_packs/no_turf = 10,
+		/obj/effect/spawner/lootdrop/cigars_cases/no_turf = 2,
+		/obj/effect/spawner/lootdrop/space_cash/no_turf = 5,
 		/obj/item/reagent_containers/food/snacks/grown/cannabis = 5,
 		/obj/item/storage/pill_bottle/dice = 5,
 		/obj/item/toy/cards/deck = 5,
-		/obj/effect/spawner/lootdrop/druggie_pill = 5
+		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5
 		)
 
 /obj/effect/spawner/lootdrop/prison_loot_toilet
 	name = "random prison toilet spawner"
 	lootcount = 1
+	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
 //This is ment for "prison" loot that is rather rare and ment for "prisoners if they get a crowbar to fine, or sec.
 	loot = list("" = 10,
 		/obj/item/lighter = 5,
 		/obj/item/poster/random_contraband = 5,
 		/obj/item/clothing/glasses/sunglasses = 5,
-		/obj/effect/spawner/lootdrop/coin = 5,
-		/obj/effect/spawner/lootdrop/cig_packs = 10,
-		/obj/effect/spawner/lootdrop/cigars_cases = 5,
+		/obj/effect/spawner/lootdrop/coin/no_turf = 5,
+		/obj/effect/spawner/lootdrop/cig_packs/no_turf = 10,
+		/obj/effect/spawner/lootdrop/cigars_cases/no_turf = 5,
 		/obj/item/reagent_containers/food/snacks/grown/cannabis = 5,
 		/obj/item/storage/pill_bottle/dice = 5,
 		/obj/item/toy/cards/deck = 5,
-		/obj/effect/spawner/lootdrop/druggie_pill = 5,
+		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5,
 		/obj/item/kitchen/knife = 5,
 		/obj/item/screwdriver = 5,
-		/obj/item/crowbar/red = 0.5, //Dont you need a crowbar to open this?
+		/obj/item/crowbar/red = 1, //Dont you need a crowbar to open this?
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/reagent_containers/food/drinks/bottle/vodka = 2,
 		/obj/item/radio = 5,
-		/obj/item/flashlight = 4.5,
+		/obj/item/flashlight = 4,
 		/obj/item/clothing/mask/breath = 2,
 		/obj/item/tank/internals/emergency_oxygen = 3,
 		/obj/item/storage/box/mre/menu4/safe = 3,
@@ -501,13 +504,14 @@
 /obj/effect/spawner/lootdrop/high_loot_toilet
 	name = "random high toilet spawner"
 	lootcount = 1
+	spawn_on_turf = FALSE
 //Note this is out of a 100 - Meaning the number you see is also the percent its going to pick that
 //The items inside are always going to be something usefull, illegal and likely traitorous.
 	loot = list(
 		/obj/item/clothing/glasses/sunglasses = 5,
-		/obj/effect/spawner/lootdrop/coin = 5,
-		/obj/effect/spawner/lootdrop/space_cash = 5,
-		/obj/effect/spawner/lootdrop/druggie_pill = 5,
+		/obj/effect/spawner/lootdrop/coin/no_turf = 5,
+		/obj/effect/spawner/lootdrop/space_cash/no_turf = 5,
+		/obj/effect/spawner/lootdrop/druggie_pill/no_turf = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 5,
 		/obj/item/suppressor = 5,
 		/obj/item/toy/cards/deck/syndicate = 5,
@@ -607,3 +611,30 @@
 		/obj/item/clothing/mask/breath = 5,
 		/obj/item/clothing/mask/breath/medical = 1
 		)
+ 
+/obj/effect/spawner/lootdrop/breathing_tanks/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/breathing_masks/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/coin/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/space_cash/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/druggie_pill/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/gloves/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/cig_packs/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/cigars_cases/no_turf
+	spawn_on_turf = FALSE
+
+/obj/effect/spawner/lootdrop/glowstick/no_turf
+	spawn_on_turf = FALSE

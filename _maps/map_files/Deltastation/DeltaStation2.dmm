@@ -12048,7 +12048,7 @@
 "aAm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -12059,7 +12059,7 @@
 /area/crew_quarters/toilet/auxiliary)
 "aAn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -12071,7 +12071,7 @@
 /area/crew_quarters/toilet/auxiliary)
 "aAo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -19681,7 +19681,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aNx" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/prison{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -26182,7 +26182,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
 "aWX" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /obj/machinery/airalarm{
@@ -59858,6 +59858,7 @@
 /area/crew_quarters/heads/captain)
 "bXh" = (
 /obj/structure/toilet{
+	contents = newlist(/obj/item/toy/snappop/phoenix);
 	dir = 4
 	},
 /obj/machinery/light{
@@ -82141,7 +82142,7 @@
 "cIa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -82152,7 +82153,7 @@
 /area/crew_quarters/toilet/restrooms)
 "cIb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -82164,7 +82165,7 @@
 /area/crew_quarters/toilet/restrooms)
 "cIc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -89653,7 +89654,7 @@
 	},
 /area/medical/storage)
 "cUP" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -115313,7 +115314,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/abandoned)
@@ -116756,7 +116757,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "dPN" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -126145,7 +126146,6 @@
 /area/quartermaster/storage)
 "hic" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white/side{
@@ -127144,7 +127144,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "qhc" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white/side{

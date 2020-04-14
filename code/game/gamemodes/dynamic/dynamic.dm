@@ -54,12 +54,18 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	// Current storyteller
 	var/datum/dynamic_storyteller/storyteller = null
 	// Threat logging vars
+	/// Starting threat level, for things that increase it but can bring it back down.
+	var/initial_threat_level = 0
 	/// Target threat level right now. Events and antags will try to keep the round at this level.
 	var/threat_level = 0
 	/// The current antag threat. Recalculated every time a ruletype starts or ends.
 	var/threat = 0
-	/// Starting threat level, for things that increase it but can bring it back down.
-	var/initial_threat_level = 0
+	/// Threat average over the course of the round, for endgame logs.
+	var/threat_average = 0
+	/// Number of times threat average has been calculated, for calculating above.
+	var/threat_average_weight = 0
+	/// Last time a threat average sample was taken. Used for weighting the rolling average.
+	var/last_threat_sample_time = 0
 	/// Things that cause a rolling threat adjustment to be displayed at roundend.
 	var/list/threat_tallies = list()
 	/// Running information about the threat. Can store text or datum entries.
@@ -199,7 +205,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		if(threatadd > 0)
 			create_threat(threatadd)
 		else
-			spend_threat(-threatadd)
+			remove_threat(threatadd)
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
@@ -241,6 +247,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			. += "<b>Peaceful Waypoint</b></center><BR>"
 			. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive. However, even deep in our territory there may be subversive elements, especially for such a high-value target as your station. Keep an eye out, but don't expect much trouble."
 			set_security_level(SEC_LEVEL_GREEN)
+			station_goals.len = 0
 			for(var/T in subtypesof(/datum/station_goal))
 				var/datum/station_goal/G = new T
 				if(!(G in station_goals))
@@ -251,6 +258,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				. += "<b>Core Territory</b></center><BR>"
 				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
 				set_security_level(SEC_LEVEL_GREEN)
+				station_goals.len = 0
 				for(var/T in subtypesof(/datum/station_goal))
 					var/datum/station_goal/G = new T
 					if(!(G in station_goals))
@@ -490,7 +498,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			starting_rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(starting_rule.flags & HIGHLANDER_RULESET)	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
-			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level <= GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= starting_rule
 					if(drafted_rules.len <= 0)
@@ -715,6 +723,16 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 	threat = storyteller.calculate_threat() + added_threat
+	if(threat_average_weight)
+		var/cur_sample_weight = world.time - last_threat_sample_time
+		threat_average = ((threat_average * threat_average_weight) + (threat * cur_sample_weight)) / (threat_average_weight + cur_sample_weight)
+		threat_average_weight += cur_sample_weight
+		last_threat_sample_time  = world.time
+	else
+		threat_average = threat
+		threat_average_weight++
+		last_threat_sample_time = world.time
+
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
 	for(var/I in type_list)

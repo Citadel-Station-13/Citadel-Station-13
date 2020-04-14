@@ -11768,7 +11768,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/theatre)
 "atY" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /obj/machinery/light{
@@ -26358,7 +26358,6 @@
 	dir = 8
 	},
 /obj/item/integrated_circuit_printer,
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /obj/effect/turf_decal/tile/neutral,
