@@ -13,7 +13,11 @@
 
 /datum/action/bloodsucker/lunge/New()
 	. = ..()
-	RegisterSignal(owner, COMSIG_CARBON_TACKLED, .proc/Delayed_DeactivatePower)
+	
+
+/datum/action/bloodsucker/lunge/Destroy()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_CARBON_TACKLED)
 
 /datum/action/bloodsucker/lunge/ActivatePower()
 	var/mob/living/user = owner
@@ -26,13 +30,15 @@
 	T.skill_mod = 5
 	T.min_distance = 2
 	active = TRUE
+	RegisterSignal(user, COMSIG_CARBON_TACKLED, .proc/DeactivatePower)
 	while(B && ContinueActive(user))
 		B.AddBloodVolume(-0.1)
 		sleep(5)
 	
-/datum/action/bloodsucker/lunge/proc/Delayed_DeactivatePower()
+/*/datum/action/bloodsucker/lunge/proc/Delayed_DeactivatePower()
 	addtimer(CALLBACK(src, .proc/DeactivatePower), 1 SECONDS, TIMER_UNIQUE)
-
+*/
 /datum/action/bloodsucker/lunge/DeactivatePower(mob/living/user = owner)
 	. = ..()
 	qdel(user.GetComponent(/datum/component/tackler))
+	UnregisterSignal(user, COMSIG_CARBON_TACKLED)

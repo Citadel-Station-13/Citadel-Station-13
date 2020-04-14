@@ -143,8 +143,6 @@
 		return
 
 	var/mob/living/carbon/target = hit
-	var/mob/living/carbon/human/T = target
-	var/mob/living/carbon/human/S = user
 
 	var/roll = rollTackle(target)
 	user.tackling = FALSE
@@ -190,9 +188,9 @@
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
 			target.Knockdown(30)
-			if(ishuman(target) && ishuman(user))
-				S.dna.species.grab(S, T)
-				S.setGrabState(GRAB_PASSIVE)
+			if(ishuman(target) && iscarbon(user))
+				target.grabbedby(user)
+				target.grippedby(user, instant = TRUE)
 
 		if(5 to INFINITY) // absolutely BODIED
 			user.visible_message("<span class='warning'>[user] lands a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", "<span class='userdanger'>You land a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", target)
@@ -203,11 +201,11 @@
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
 			target.Knockdown(30)
-			if(ishuman(target) && ishuman(user))
+			if(ishuman(target) && iscarbon(user))
 				target.grabbedby(user)
-				target.grippedby(user, instant = TRUE) //instant aggro grab
+				target.grippedby(user, instant = TRUE)
 
-	SEND_SIGNAL(user, COMSIG_CARBON_TACKLED, "tackle completed")
+	SEND_SIGNAL(user, COMSIG_CARBON_TACKLED, roll)
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 /**
