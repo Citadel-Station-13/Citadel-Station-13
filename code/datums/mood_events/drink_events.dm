@@ -25,7 +25,7 @@
 
 /datum/mood_event/race_drink
 	description = "<span class='nicegreen'>That drink was made for me!</span>\n"
-	mood_change = 10
+	mood_change = 6
 	timeout = 20 MINUTES
 
 /datum/mood_event/amazingtaste
