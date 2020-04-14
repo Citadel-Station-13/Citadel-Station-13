@@ -26,5 +26,4 @@
 	desc = "A clove of garlic on a cable, tied to itself in a circle, just might fit around your neck. For <strike>loonies<strike> people who fear getting their blood sucked."
 	icon_state = "garlic_necklace"
 	item_state = "garlic_necklace"
-	alternate_worn_icon = 'icons/mob/neck.dmi' 
 	
