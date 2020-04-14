@@ -63,13 +63,13 @@
 	if(hit_atom)
 		if(isliving(hit_atom))
 			var/mob/living/L = hit_atom
-			if(!L.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+			if(L.run_block(src, 0, "the [name]", ATTACK_TYPE_TACKLE, 0, src) & BLOCK_SUCCESS)
+				DefaultCombatKnockdown(40, 1, 1)
+			else
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
 				L.DefaultCombatKnockdown(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
-			else
-				DefaultCombatKnockdown(40, 1, 1)
 
 			toggle_leap(0)
 		else if(hit_atom.density && !hit_atom.CanPass(src))

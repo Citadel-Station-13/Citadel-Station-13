@@ -8,10 +8,8 @@
 /proc/invertHTML(HTMLstring)
 	if(!istext(HTMLstring))
 		CRASH("Given non-text argument!")
-		return
 	else if(length(HTMLstring) != 7)
 		CRASH("Given non-HTML argument!")
-		return
 	else if(length_char(HTMLstring) != 7)
 		CRASH("Given non-hex symbols in argument!")
 	var/textr = copytext(HTMLstring, 2, 4)

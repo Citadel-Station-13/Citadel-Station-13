@@ -150,7 +150,7 @@ export const ChemDispenser = props => {
                     <AnimatedNumber
                       initial={0}
                       value={data.beakerCurrentVolume} />
-                    /{data.beakerMaxVolume} units
+                    /{data.beakerMaxVolume} units, {data.beakerCurrentpH} pH
                   </Fragment>
                 )
               || 'No beaker'}

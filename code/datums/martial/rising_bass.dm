@@ -78,6 +78,7 @@
 	return TRUE
 
 /datum/martial_art/the_rising_bass/proc/sideKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	var/damage = (damage_roll(A,D)*0.5)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		var/dir = A.dir & (NORTH | SOUTH) ? pick(EAST, WEST) : pick(NORTH, SOUTH)
 		var/oppdir = dir == NORTH ? SOUTH : dir == SOUTH ? NORTH : dir == EAST ? WEST : EAST
@@ -87,7 +88,7 @@
 		D.visible_message("<span class='warning'>[A] kicks [D] in the side, sliding them over!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the side, forcing you to step away!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-		D.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
+		D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
 		D.DefaultCombatKnockdown(60)
 		var/L = !checkfordensity(H,D) ? (!checkfordensity(K,D) ? D.loc : K) : H
 		D.forceMove(L)
@@ -96,6 +97,7 @@
 	return TRUE
 
 /datum/martial_art/the_rising_bass/proc/shoulderFlip(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	var/damage = (damage_roll(A,D) + 25)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		var/turf/H = get_step(A, get_dir(D,A))
 		var/L = checkfordensity(H,D) ? H : A.loc
@@ -104,8 +106,8 @@
 						  "<span class='userdanger'>[A] flips you over their shoulder, slamming you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.emote("scream")
-		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
-		D.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+		D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
+		D.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
 		D.Sleeping(60)
 		D.DefaultCombatKnockdown(300)
 		D.forceMove(L)
@@ -114,6 +116,7 @@
 	return FALSE
 
 /datum/martial_art/the_rising_bass/proc/repulsePunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	var/damage = damage_roll(A,D)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND) && repulsecool < world.time)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] smashes [D] in the chest, throwing them away!</span>", \
@@ -121,7 +124,7 @@
 		playsound(get_turf(A), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		var/atom/F = get_edge_target_turf(D, get_dir(A, get_step_away(D, A)))
 		D.throw_at(F, 10, 1)
-		D.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
+		D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
 		D.DefaultCombatKnockdown(90)
 		log_combat(A, D, "repulse punched (Rising Bass)")
 		repulsecool = world.time + 3 SECONDS
@@ -129,12 +132,13 @@
 	return FALSE
 
 /datum/martial_art/the_rising_bass/proc/footSmash(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	var/damage = (damage_roll(A,D)*0.5)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] smashes their foot down on [D]'s foot!</span>", \
 						  "<span class='userdanger'>[A] smashes your foot!</span>")
 		playsound(get_turf(A), 'sound/weapons/punch1.ogg', 50, 1, -1)
-		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		D.apply_damage(damage, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		D.dropItemToGround(D.get_active_held_item())
 		log_combat(A, D, "foot smashed (Rising Bass)")
 		return TRUE
@@ -181,7 +185,7 @@
 	. = ..()
 	if(A.incapacitated(FALSE, TRUE)) //NO STUN
 		return BULLET_ACT_HIT
-	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+	if(!CHECK_ALL_MOBILITY(A, MOBILITY_USE|MOBILITY_STAND)) //NO UNABLE TO USE, NO DODGING ON THE FLOOR
 		return BULLET_ACT_HIT
 	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
 		return BULLET_ACT_HIT

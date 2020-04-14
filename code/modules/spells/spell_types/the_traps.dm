@@ -5,7 +5,6 @@
 	charge_max = 250
 	cooldown_min = 50
 
-	clothes_req = 1
 	invocation = "CAVERE INSIDIAS"
 	invocation_type = "shout"
 	range = 3

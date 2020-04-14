@@ -7,6 +7,8 @@
 /mob/living/proc/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
 	if(!iscarbon(src))
 		return Paralyze(amount, updating, ignore_canknockdown)
+	if(!ignore_canknockdown && !(status_flags & CANKNOCKDOWN))
+		return FALSE
 	if(istype(buckled, /obj/vehicle/ridden))
 		buckled.unbuckle_mob(src)
 	var/drop_items = amount > 80		//80 is cutoff for old item dropping behavior

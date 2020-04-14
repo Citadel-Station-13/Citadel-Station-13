@@ -31,6 +31,7 @@
 	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
+	var/list/conflicts //any mutations that might conflict. put mutation typepath defines in here. make sure to enter it both ways (so that A conflicts with B, and B with A)
 	var/can_chromosome = CHROMOSOME_NONE //can we take chromosomes? 0: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
 	var/chromosome_name   //purely cosmetic
 	var/modified = FALSE  //ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
@@ -60,6 +61,14 @@
 		return TRUE
 	if(limb_req && !H.get_bodypart(limb_req))
 		return TRUE
+	for(var/M in H.dna.mutations)//check for conflicting powers
+		var/datum/mutation/human/mewtayshun = M
+		if(LAZYLEN(mewtayshun.conflicts))
+			for(var/cons in mewtayshun.conflicts)
+				var/datum/mutation/human/conflicter = cons
+				if(conflicter == type)
+					to_chat(H, "<span class='warning'>You feel your genes resisting something.</span>")
+					return TRUE
 	owner = H
 	dna = H.dna
 	dna.mutations += src

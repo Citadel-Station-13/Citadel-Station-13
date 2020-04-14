@@ -1,0 +1,11 @@
+{
+    "map_name": "CogStation",
+    "map_path": "map_files/CogStation",
+    "map_file": "CogStation.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_cog",
+	    "emergency": "emergency_cog"
+    }
+}
