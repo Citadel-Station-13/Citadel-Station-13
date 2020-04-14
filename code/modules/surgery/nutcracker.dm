@@ -17,7 +17,7 @@
 	var/list/organs = M.getorganszone("head") + M.getorganszone("eyes") + M.getorganszone("mouth")
 	for(var/internal_organ in organs)
 		var/obj/item/organ/I = internal_organ
-		I.Remove(M)
+		I.Remove()
 		I.forceMove(T)
 	head.drop_limb()
 	qdel(head)

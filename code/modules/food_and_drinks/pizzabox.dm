@@ -86,8 +86,8 @@
 			tag_overlay.pixel_y = boxes.len * 3
 			add_overlay(tag_overlay)
 
-/obj/item/pizzabox/worn_overlays(isinhands, icon_file)
-	. = list()
+/obj/item/pizzabox/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	var/current_offset = 2
 	if(isinhands)
 		for(var/V in boxes) //add EXTRA BOX per box
@@ -220,7 +220,7 @@
 			unprocess()
 			qdel(src)
 	if(!bomb_active || bomb_defused)
-		if(bomb_defused && bomb in src)
+		if(bomb_defused && (bomb in src))
 			bomb.defuse()
 			bomb_active = FALSE
 			unprocess()
@@ -231,7 +231,7 @@
 	if(boxes.len >= 3 && prob(25 * boxes.len))
 		disperse_pizzas()
 
-/obj/item/pizzabox/throw_impact(atom/movable/AM)
+/obj/item/pizzabox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(boxes.len >= 2 && prob(20 * boxes.len))
 		disperse_pizzas()
 

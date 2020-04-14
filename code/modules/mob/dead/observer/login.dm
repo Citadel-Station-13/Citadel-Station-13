@@ -6,7 +6,7 @@
 	var/preferred_form = null
 
 	if(IsAdminGhost(src))
-		has_unlimited_silicon_privilege = 1
+		silicon_privileges = ALL
 
 	if(client.prefs.unlock_content)
 		preferred_form = client.prefs.ghost_form

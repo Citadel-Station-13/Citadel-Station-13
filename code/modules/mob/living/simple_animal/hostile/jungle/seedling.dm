@@ -13,6 +13,7 @@
 	icon_state = "seedling"
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
+	threat = 0.5
 	maxHealth = 100
 	health = 100
 	melee_damage_lower = 30
@@ -29,7 +30,8 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
-	anchored = TRUE
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	blood_volume = 0
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
 	var/obj/seedling_weakpoint/weak_point
 	var/mob/living/beam_debuff_target

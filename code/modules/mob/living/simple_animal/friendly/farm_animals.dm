@@ -17,7 +17,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	faction = list("neutral")
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	attack_same = 1
 	attacktext = "kicks"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -112,7 +112,7 @@
 	icon_dead = "cow_dead"
 	icon_gib = "cow_gib"
 	gender = FEMALE
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak = list("moo?","moo","MOOOOOO")
 	speak_emote = list("moos","moos hauntingly")
 	emote_hear = list("brays.")
@@ -160,7 +160,7 @@
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
-		Knockdown(60,ignore_canknockdown = TRUE)
+		DefaultCombatKnockdown(60,ignore_canknockdown = TRUE)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)
@@ -189,7 +189,7 @@
 	icon_dead = "chick_dead"
 	icon_gib = "chick_gib"
 	gender = FEMALE
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps.")
@@ -197,7 +197,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -235,7 +235,7 @@
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
 	gender = FEMALE
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	icon_state = "chicken_brown"
 	icon_living = "chicken_brown"
 	icon_dead = "chicken_brown_dead"
@@ -246,7 +246,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 2)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
 	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
 	response_help  = "pets"
@@ -454,13 +454,13 @@
 	name = "udder"
 
 /obj/item/udder/Initialize()
-	create_reagents(50)
-	reagents.add_reagent("milk", 20)
+	create_reagents(50, NONE, NO_REAGENTS_VALUE)
+	reagents.add_reagent(/datum/reagent/consumable/milk, 20)
 	. = ..()
 
 /obj/item/udder/proc/generateMilk()
 	if(prob(5))
-		reagents.add_reagent("milk", rand(5, 10))
+		reagents.add_reagent(/datum/reagent/consumable/milk, rand(5, 10))
 
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/reagent_containers/glass/G = O

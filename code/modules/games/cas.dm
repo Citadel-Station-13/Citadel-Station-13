@@ -93,7 +93,7 @@
 		qdel(SC)
 	update_icon()
 
-/obj/item/toy/cards/deck/cas/update_icon()
+/obj/item/toy/cards/deck/cas/update_icon_state()
 	if(cards.len < 26)
 		icon_state = "deck_[deckstyle]_low"
 
@@ -130,11 +130,13 @@
 	update_icon()
 
 /obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
+	. = ..()
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	Flip()
+	return TRUE
 
-/obj/item/toy/cards/singlecard/cas/update_icon()
+/obj/item/toy/cards/singlecard/cas/update_icon_state()
 	if(flipped)
 		icon_state = "[card_face]_flipped"
 	else

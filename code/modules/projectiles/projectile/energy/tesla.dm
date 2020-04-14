@@ -7,10 +7,11 @@
 	var/zap_range = 3
 	var/power = 10000
 
-/obj/item/projectile/energy/tesla/fire(setAngle)
-	if(firer)
-		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
-	..()
+/obj/item/projectile/energy/tesla/fire(setAngle, atom/direct_target)
+	var/atom/source = fired_from || firer
+	if(source)
+		chain = source.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+	return ..()
 
 /obj/item/projectile/energy/tesla/on_hit(atom/target)
 	. = ..()

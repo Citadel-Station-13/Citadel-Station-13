@@ -18,10 +18,23 @@
 
 /obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
-	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
+	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams. <span class='boldnotice'>Right click in combat mode to fire a taser shot with a cooldown.</span>"
 	icon_state = "advtaser"
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/electrode)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/electrode/security = FALSE)
 	ammo_x_offset = 2
+	// Not enough guns have altfire systems like this yet for this to be a universal framework.
+	var/last_altfire = 0
+	var/altfire_delay = 15
+
+/obj/item/gun/energy/e_gun/advtaser/altafterattack(atom/target, mob/user, proximity_flag, params)
+	. = TRUE
+	if(last_altfire + altfire_delay > world.time)
+		return
+	var/current_index = current_firemode_index
+	set_firemode_to_type(/obj/item/ammo_casing/energy/electrode)
+	process_afterattack(target, user, proximity_flag, params)
+	set_firemode_index(current_index)
+	last_altfire = world.time
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"

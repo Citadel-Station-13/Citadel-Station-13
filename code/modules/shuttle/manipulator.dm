@@ -31,14 +31,14 @@
 		SSshuttle.manipulator = null
 		. = ..()
 
-/obj/machinery/shuttle_manipulator/update_icon()
-	cut_overlays()
+/obj/machinery/shuttle_manipulator/update_overlays()
+	. = ..()
 	var/mutable_appearance/hologram_projection = mutable_appearance(icon, "hologram_on")
 	hologram_projection.pixel_y = 22
 	var/mutable_appearance/hologram_ship = mutable_appearance(icon, "hologram_whiteship")
 	hologram_ship.pixel_y = 27
-	add_overlay(hologram_projection)
-	add_overlay(hologram_ship)
+	. += hologram_projection
+	. += hologram_ship
 
 /obj/machinery/shuttle_manipulator/can_interact(mob/user)
 	// Only admins can use this, but they can use it from anywhere

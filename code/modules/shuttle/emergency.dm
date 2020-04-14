@@ -2,14 +2,43 @@
 #define ENGINES_START_TIME 100
 #define ENGINES_STARTED (SSshuttle.emergency.mode == SHUTTLE_IGNITING)
 #define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED || (ENGINES_STARTED))
+#define MAX_AUTH_INPUTS 6
+
+#define NOT_BEGUN 0
+#define STAGE_1 1
+#define STAGE_2 2
+#define STAGE_3 3
+#define STAGE_4 4
+#define HIJACKED 5
 
 /obj/machinery/computer/emergency_shuttle
 	name = "emergency shuttle console"
 	desc = "For shuttle control."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
+	resistance_flags = INDESTRUCTIBLE
 	var/auth_need = 3
 	var/list/authorized = list()
+	var/auth_cooldown //these two vars are used to quell spam.
+	var/auth_combo = 0
+
+	var/hijack_last_stage_increase = 0
+	var/hijack_stage_time = 50
+	var/hijack_stage_cooldown = 50
+	var/hijack_flight_time_increase = 300
+	var/hijack_completion_flight_time_set = 100		//How long in deciseconds to set shuttle's timer after hijack is done.
+	var/hijack_hacking = FALSE
+	var/hijack_announce = TRUE
+
+/obj/machinery/computer/emergency_shuttle/examine(mob/user)
+	. = ..()
+	if(hijack_announce)
+		. += "<span class='danger'>Security systems present on console. Any unauthorized tampering will result in an emergency announcement.</span>"
+	if(user?.mind?.get_hijack_speed())
+		. += "<span class='danger'>Alt click on this to attempt to hijack the shuttle. This will take multiple tries (current: stage [SSshuttle.emergency.hijack_status]/[HIJACKED]).</span>"
+		. += "<span class='notice'>It will take you [(hijack_stage_time * user.mind.get_hijack_speed()) / 10] seconds to reprogram a stage of the shuttle's navigational firmware, and the console will undergo automated timed lockout for [hijack_stage_cooldown/10] seconds after each stage.</span>"
+		if(hijack_announce)
+			. += "<span class='warning'>It is probably best to fortify your position as to be uninterrupted during the attempt, given the automatic announcements..</span>"
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/card/id))
@@ -21,7 +50,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "emergency_shuttle_console", name,
-			400, 400, master_ui, state)
+			400, 350, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/emergency_shuttle/ui_data()
@@ -67,6 +96,13 @@
 		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
+	if(auth_cooldown <= world.time)
+		auth_combo = 0
+
+	else if(auth_combo >= MAX_AUTH_INPUTS)
+		to_chat(user, "<span class='warning'>Authorizations controller lockdown engaged, please wait [CEILING(auth_cooldown - world.time, 1)] before trying again.</span>")
+		return
+
 	var/old_len = authorized.len
 
 	switch(action)
@@ -91,6 +127,10 @@
 			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
 		if(repeal)
 			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
+		auth_cooldown = world.time + 15 SECONDS
+		if(++auth_combo == MAX_AUTH_INPUTS) //C-c-combo breaker!
+			say("Authorization controller abuse detected, lockdown engaged.")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
@@ -132,6 +172,71 @@
 		minor_announce("The emergency shuttle will launch in \
 			[TIME_LEFT] seconds", system_error, alert=TRUE)
 		. = TRUE
+
+/obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()
+	var/obj/docking_port/mobile/emergency/shuttle = SSshuttle.emergency
+	shuttle.hijack_status++
+	if(hijack_announce)
+		announce_hijack_stage()
+	hijack_last_stage_increase = world.time
+	say("Navigational protocol error! Rebooting systems.")
+	if(shuttle.mode == SHUTTLE_ESCAPE)
+		if(shuttle.hijack_status == HIJACKED)
+			shuttle.setTimer(hijack_completion_flight_time_set)
+		else
+			shuttle.setTimer(shuttle.timeLeft(1) + hijack_flight_time_increase)		//give the guy more time to hijack if it's already in flight.
+	return shuttle.hijack_status
+
+/obj/machinery/computer/emergency_shuttle/AltClick(user)
+	attempt_hijack_stage(user)
+
+/obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
+	if(!user.CanReach(src))
+		return
+	if(!user?.mind?.get_hijack_speed())
+		to_chat(user, "<span class='warning'>You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone.</span.")
+		return
+	if(hijack_hacking == TRUE)
+		return
+	if(SSshuttle.emergency.hijack_status >= HIJACKED)
+		to_chat(user, "<span class='warning'>The emergency shuttle is already loaded with a corrupt navigational payload. What more do you want from it?</span>")
+		return
+	if(hijack_last_stage_increase >= world.time + hijack_stage_cooldown)
+		say("Error - Catastrophic software error detected. Input is currently on timeout.")
+		return
+	hijack_hacking = TRUE
+	to_chat(user, "<span class='boldwarning'>You [SSshuttle.emergency.hijack_status == NOT_BEGUN? "begin" : "continue"] to override [src]'s navigational protocols.</span>")
+	say("Software override initiated.")
+	. = FALSE
+	if(do_after(user, hijack_stage_time * (1 / user.mind.get_hijack_speed()), target = src))
+		increase_hijack_stage()
+		. = TRUE
+		to_chat(user, "<span class='notice'>You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds.</span>")
+	hijack_hacking = FALSE
+
+/obj/machinery/computer/emergency_shuttle/proc/announce_hijack_stage()
+	var/msg
+	switch(SSshuttle.emergency.hijack_status)
+		if(NOT_BEGUN)
+			return
+		if(STAGE_1)
+			var/datum/species/S = new
+			msg = "AUTHENTICATING - FAIL. AUTHENTICATING - FAIL. AUTHENTICATING - FAI###### Welcome, technician JOHN DOE."
+			qdel(S)
+		if(STAGE_2)
+			msg = "Warning: Navigational route fails \"IS_AUTHORIZED\". Please try againNN[scramble_message_replace_chars("againagainagainagainagain", 70)]."
+		if(STAGE_3)
+			var/hex = ""
+			for(var/i in 1 to 8)
+				hex += num2hex(rand(1,16))
+			msg = "CRC mismatch at 0x[hex] in calculated route buffer. Full reset initiated of FTL_NAVIGATION_SERVICES. Memory decrypted for automatic repair."
+		if(STAGE_4)
+			msg = "~ACS_directive module_load(cyberdyne.exploit.nanotrasen.shuttlenav)... NT key mismatch. Confirm load? Y...###Reboot complete. $SET transponder_state = 0; System link initiated with connected engines..."
+		if(HIJACKED)
+			msg = "<font color='red'>SYSTEM OVERRIDE - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
+			([scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]) \
+			{AUTH - ROOT (uid: 0)}.</font>[SSshuttle.emergency.mode == SHUTTLE_ESCAPE? "Diverting from existing route - Bluespace exit in [hijack_completion_flight_time_set/10] seconds." : ""]"
+	minor_announce(scramble_message_replace_chars(msg, replaceprob = 10), "Emergency Shuttle", TRUE)
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
 	. = ..()
@@ -185,6 +290,7 @@
 	dir = EAST
 	port_direction = WEST
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
+	var/hijack_status = NOT_BEGUN
 
 /obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
 	return SHUTTLE_CAN_DOCK //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
@@ -250,37 +356,7 @@
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, "shuttlerecalled", "Priority")
 
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
-	var/has_people = FALSE
-	var/hijacker_present = FALSE
-	for(var/mob/living/player in GLOB.player_list)
-		if(player.mind)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(shuttle_areas[get_area(player)])
-					has_people = TRUE
-					var/location = get_turf(player.mind.current)
-					//Non-antag present. Can't hijack.
-					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
-						return FALSE
-					//Antag present, doesn't stop but let's see if we actually want to hijack
-					var/prevent = FALSE
-					for(var/datum/antagonist/A in player.mind.antag_datums)
-						if(A.can_hijack == HIJACK_HIJACKER)
-							hijacker_present = TRUE
-							prevent = FALSE
-							break //If we have both prevent and hijacker antags assume we want to hijack.
-						else if(A.can_hijack == HIJACK_PREVENT)
-							prevent = TRUE
-					if(prevent)
-						return FALSE
-
-
-	return has_people && hijacker_present
+	return hijack_status == HIJACKED
 
 /obj/docking_port/mobile/emergency/proc/ShuttleDBStuff()
 	set waitfor = FALSE
@@ -422,7 +498,7 @@
 	mode = SHUTTLE_ESCAPE
 	launch_status = ENDGAME_LAUNCHED
 	setTimer(SSshuttle.emergencyEscapeTime)
-	priority_announce("The Emergency Shuttle preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+	priority_announce("The Emergency Shuttle is preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 
 
 /obj/docking_port/mobile/pod
@@ -458,8 +534,9 @@
 	density = FALSE
 	clockwork = TRUE //it'd look weird
 
-/obj/machinery/computer/shuttle/pod/update_icon()
-	return
+/obj/machinery/computer/shuttle/pod/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
 	. = SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
@@ -524,7 +601,7 @@
 	anchored = TRUE
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
-	integrity_failure = 100
+	integrity_failure = 0.2
 	component_type = /datum/component/storage/concrete/emergency
 
 /obj/item/storage/pod/PopulateContents()
@@ -567,3 +644,10 @@
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED
 #undef IS_DOCKED
+#undef MAX_AUTH_INPUTS
+#undef NOT_BEGUN
+#undef STAGE_1
+#undef STAGE_2
+#undef STAGE_3
+#undef STAGE_4
+#undef HIJACKED

@@ -7,8 +7,6 @@
 #define AMMO_DROP_LIFETIME 300
 #define CTF_REQUIRED_PLAYERS 4
 
-
-
 /obj/item/twohanded/ctf
 	name = "banner"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -210,7 +208,6 @@
 				toggle_all_ctf(user)
 			return
 
-
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
 		var/remaining = CTF_REQUIRED_PLAYERS - num
@@ -267,6 +264,9 @@
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(ctf_gear)
+	M.dna.species.punchdamagehigh = 25
+	M.dna.species.punchdamagelow = 25
+	M.AddElement(/datum/element/ghost_role_eligibility)
 	spawned_mobs += M
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
@@ -371,18 +371,18 @@
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
+/proc/ctf_floor_vanish(atom/target)
+	if(isturf(target.loc))
+		qdel(target)
+
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 	mag_type = /obj/item/ammo_box/magazine/m50/ctf
 
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/m50/ctf
 	ammo_type = /obj/item/ammo_casing/a50/ctf
@@ -403,24 +403,16 @@
 	desc = "This looks like it could really hurt in melee."
 	force = 50
 
-/obj/item/gun/ballistic/automatic/laser/ctf/dropped()
+/obj/item/gun/ballistic/automatic/laser/ctf/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/laser/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
-/obj/item/ammo_box/magazine/recharge/ctf/dropped()
+/obj/item/ammo_box/magazine/recharge/ctf/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
 
 /obj/item/ammo_casing/caseless/laser/ctf
 	projectile_type = /obj/item/projectile/beam/ctf
@@ -438,9 +430,9 @@
 	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
+	if(isliving(target))
+		var/mob/living/H = target
+		if((RED_TEAM in H.faction) || (BLUE_TEAM in H.faction))
 			. = TRUE
 
 // RED TEAM GUNS
@@ -473,6 +465,21 @@
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
+// MELEE GANG
+/obj/item/claymore/ctf
+	slot_flags = ITEM_SLOT_BACK
+	armour_penetration = 100
+	total_mass = 1
+
+/obj/item/claymore/ctf/pre_attack(atom/target, mob/user, params)
+	if(!is_ctf_target(target))
+		return TRUE
+	return ..()
+
+/obj/item/claymore/ctf/dropped(mob/user)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
+
 /datum/outfit/ctf
 	name = "CTF"
 	ears = /obj/item/radio/headset
@@ -486,6 +493,7 @@
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf
+	back = /obj/item/claymore/ctf
 
 /datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)

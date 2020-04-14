@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "Suicide and cryo now prevents ghost/midround roles for a definite duration of 30 minutes (and more if that was done before 30 minutes in the game passed), down from the rest of the round."
-  - bugfix: "fixed several midround roles bypassing and nulling the aforementioned prevention measures."

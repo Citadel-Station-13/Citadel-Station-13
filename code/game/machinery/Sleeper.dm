@@ -14,14 +14,14 @@
 	circuit = /obj/item/circuitboard/machine/sleeper
 	req_access = list(ACCESS_CMO) //Used for reagent deletion and addition of non medicines
 	var/efficiency = 1
-	var/min_health = -25
+	var/min_health = 30
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
-		list("oculine","inacusiate"),
-		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
-		list("omnizine")
+		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane),
+		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
+		list(/datum/reagent/medicine/antitoxin, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/pen_acid),
+		list(/datum/reagent/medicine/omnizine)
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
@@ -71,7 +71,7 @@
 		reagents.maximum_volume = (500*E)
 
 
-/obj/machinery/sleeper/update_icon()
+/obj/machinery/sleeper/update_icon_state()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "-open"
@@ -106,7 +106,7 @@
 		return
 	if(is_operational() && occupant)
 		var/datum/reagent/R = pick(reagents.reagent_list)
-		inject_chem(R.id, occupant)
+		inject_chem(R.type, occupant)
 		open_machine()
 	//Is this too much?
 	if(severity == EMP_HEAVY)
@@ -181,12 +181,14 @@
 		open_machine()
 
 /obj/machinery/sleeper/AltClick(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
+	. = ..()
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if(state_open)
 		close_machine()
 	else
 		open_machine()
+	return TRUE
 
 /obj/machinery/sleeper/examine(mob/user)
 	. = ..()
@@ -205,19 +207,22 @@
 
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
+	var/chemical_list = list()
+	var/blood_percent = 0
+
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
-	data["efficiency"] = efficiency
-	data["current_vol"] = reagents.total_volume
-	data["tot_capacity"] = reagents.maximum_volume
+	data["blood_levels"] = blood_percent
+	data["blood_status"] = "Patient either has no blood, or does not require it to function."
+	data["chemical_list"] = chemical_list
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = reagents.has_reagent(chem)
 		R = GLOB.chemical_reagents_list[chem]
-		data["synthchems"] += list(list("name" = R.name, "id" = R.id, "synth_allowed" = synth_allowed(chem)))
+		data["synthchems"] += list(list("name" = R.name, "id" = R.type, "synth_allowed" = synth_allowed(chem)))
 	for(var/datum/reagent/R in reagents.reagent_list)
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = R.volume, "purity" = R.purity, "allowed" = chem_allowed(R.id)))
+		data["chems"] += list(list("name" = R.name, "id" = R.type, "vol" = R.volume, "purity" = R.purity, "allowed" = chem_allowed(R.type)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -245,10 +250,13 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
-		data["occupant"]["reagents"] = list()
-		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
+		
+		if(mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
-				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+				chemical_list += list(list("name" = R.name, "volume" = R.volume))
+		else
+			chemical_list = "Patient has no reagents."
+
 		data["occupant"]["failing_organs"] = list()
 		var/mob/living/carbon/C = mob_occupant
 		if(C)
@@ -257,21 +265,25 @@
 					continue
 				data["occupant"]["failing_organs"] += list(list("name" = Or.name))
 
-		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
-			var/blood_id = C.get_blood_id()
-			if(blood_id)
-				data["occupant"]["blood"] = list() // We can start populating this list.
-				var/blood_type = C.dna.blood_type
-				if(blood_id != "blood") // special blood substance
-					var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
-					if(R)
-						blood_type = R.name
-					else
-						blood_type = blood_id
-				data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
-				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
-				data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
-				data["occupant"]["blood"]["bloodType"] = blood_type
+		if(istype(C)) //Non-carbons shouldn't be able to enter sleepers, but this is to prevent runtimes if something ever breaks
+			if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
+				blood_percent = round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+				var/blood_id = C.get_blood_id()
+				var/blood_warning = ""
+				if(blood_percent < 80)
+					blood_warning = "Patient has low blood levels."
+				if(blood_percent < 60)
+					blood_warning = "Patient has DANGEROUSLY low blood levels."
+				if(blood_id)
+					var/blood_type = C.dna.blood_type
+					if(!(blood_id in GLOB.blood_reagent_types)) // special blood substance
+						var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
+						if(R)
+							blood_type = R.name
+						else
+							blood_type = blood_id
+					data["blood_status"] = "Patient has [blood_type] type blood. [blood_warning]"
+				data["blood_levels"] = blood_percent
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
@@ -287,34 +299,34 @@
 				open_machine()
 			. = TRUE
 		if("inject")
-			var/chem = params["chem"]
+			var/chem = text2path(params["chem"])
 			var/amount = text2num(params["volume"])
-			if(!is_operational() || !mob_occupant)
+			if(!is_operational() || !mob_occupant || isnull(chem))
 				return
-			if(mob_occupant.health < min_health && chem != "epinephrine")
+			if(mob_occupant.health < min_health && chem != /datum/reagent/medicine/epinephrine)
 				return
 			if(inject_chem(chem, usr, amount))
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
 		if("synth")
-			var/chem = params["chem"]
+			var/chem = text2path(params["chem"])
 			if(!is_operational())
 				return
 			reagents.add_reagent(chem_buttons[chem], 10) //other_purity = 0.75 for when the mechanics are in
 		if("purge")
-			var/chem = params["chem"]
+			var/chem = text2path(params["chem"])
 			if(allowed(usr))
 				if(!is_operational())
 					return
-				reagents.remove_reagent(chem, 10)
+				reagents.remove_reagent(chem, 1000)
 				return
 			if(chem in available_chems)
 				if(!is_operational())
 					return
 				/*var/datum/reagent/R = reagents.has_reagent(chem) //For when purity effects are in
 				if(R.purity < 0.8)*/
-				reagents.remove_reagent(chem, 10)
+				reagents.remove_reagent(chem, 1000)
 			else
 				visible_message("<span class='warning'>Access Denied.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -340,7 +352,7 @@
 	if(!mob_occupant || !mob_occupant.reagents)
 		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
+	var/occ_health = mob_occupant.health > min_health || chem == /datum/reagent/medicine/epinephrine
 	return amount && occ_health
 
 /obj/machinery/sleeper/proc/synth_allowed(chem)
@@ -371,7 +383,7 @@
 /obj/machinery/sleeper/syndie/Initialize()
 	. = ..()
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
+	component_parts += new /obj/item/circuitboard/machine/sleeper/syndie(null)
 	component_parts += new /obj/item/stock_parts/matter_bin/super(null)
 	component_parts += new /obj/item/stock_parts/manipulator/pico(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)
@@ -382,7 +394,7 @@
 /obj/machinery/sleeper/syndie/fullupgrade/Initialize()
 	. = ..()
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
+	component_parts += new /obj/item/circuitboard/machine/sleeper/syndie(null)
 	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
 	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)

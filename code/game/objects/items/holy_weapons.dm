@@ -51,41 +51,36 @@
 	item_state = "knight_hospitaller"
 // CITADEL CHANGES ENDS HERE
 
-/obj/item/holybeacon
+/obj/item/choice_beacon/holy
 	name = "armaments beacon"
 	desc = "Contains a set of armaments for the chaplain."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "gangtool-red"
-	item_state = "radio"
 
-/obj/item/holybeacon/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !GLOB.holy_armor_type)
-		beacon_armor(user)
+/obj/item/choice_beacon/holy/canUseBeacon(mob/living/user)
+	if(user.mind && user.mind.isholy)
+		return ..()
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+		return FALSE
 
-/obj/item/holybeacon/proc/beacon_armor(mob/M)
-	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
-	var/list/display_names = list()
-	for(var/V in holy_armor_list)
-		var/atom/A = V
-		display_names += list(initial(A.name) = A)
+/obj/item/choice_beacon/holy/generate_display_names()
+	var/static/list/holy_item_list
+	if(!holy_item_list)
+		holy_item_list = list()
+		var/list/templist = typesof(/obj/item/storage/box/holy)
+		for(var/V in templist)
+			var/atom/A = V
+			holy_item_list[initial(A.name)] = A
+	return holy_item_list
 
-	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
+/obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
+	if(!GLOB.holy_armor_type)
+		..()
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
+		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
+		GLOB.holy_armor_type = choice
+	else
+		to_chat(M, "<span class='warning'>A selection has already been made. Self-Destructing...</span>")
 		return
-
-	var/index = display_names.Find(choice)
-	var/A = holy_armor_list[index]
-
-	GLOB.holy_armor_type = A
-	var/holy_armor_box = new A
-
-	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
-
-	if(holy_armor_box)
-		qdel(src)
-		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -127,7 +122,7 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	item_state = "cage"
 	worn_x_dimension = 64
@@ -243,7 +238,7 @@
 	if(user.mind && (user.mind.isholy) && !reskinned)
 		reskin_holy_weapon(user)
 
-/obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
+/obj/item/nullrod/proc/reskin_holy_weapon(mob/living/L)
 	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/holy_weapon
@@ -254,8 +249,8 @@
 		if (initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
 
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+	var/choice = input(L, "What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+	if(QDELETED(src) || !choice || !in_range(L, src) || !CHECK_MOBILITY(L, MOBILITY_USE) || reskinned)
 		return
 
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
@@ -268,7 +263,7 @@
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
 		qdel(src)
-		M.put_in_active_hand(holy_weapon)
+		L.put_in_active_hand(holy_weapon)
 
 /obj/item/nullrod/proc/jedi_spin(mob/living/user)
 	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
@@ -308,8 +303,8 @@
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands)
-	. = list()
+/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
 
@@ -333,9 +328,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+/obj/item/nullrod/claymore/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(attack_type & ATTACK_TYPE_PROJECTILE) // Don't bring a sword to a gunfight
+		return NONE
 	return ..()
 
 /obj/item/nullrod/claymore/darkblade
@@ -468,6 +463,16 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
+/obj/item/nullrod/scythe/talking/process()
+	for(var/mob/living/simple_animal/shade/S in contents)
+		if(S.mind)
+			return
+		else
+			qdel(S)
+	possessed = FALSE
+	visible_message("<span class='warning'>The blade makes a short sigh. The spirit within seems to have passed on...</span>")
+	return PROCESS_KILL
+
 /obj/item/nullrod/scythe/talking/relaymove(mob/user)
 	return //stops buckled message spam for the ghost.
 
@@ -479,16 +484,18 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
 		S.ckey = C.ckey
 		S.status_flags |= GODMODE
 		S.language_holder = user.language_holder.copy(S)
+		S.AddElement(/datum/element/ghost_role_eligibility,penalize_on_ghost = TRUE)
+		START_PROCESSING(SSprocessing,src)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
@@ -673,7 +680,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
-		user.Knockdown(60)
+		user.DefaultCombatKnockdown(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -789,7 +796,7 @@
 
 	praying = TRUE
 	if(do_after(user, 20, target = M))
-		M.reagents?.add_reagent("holywater", 5)
+		M.reagents?.add_reagent(/datum/reagent/water/holywater, 5)
 		to_chat(M, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
 		M.adjustToxLoss(-5, TRUE, TRUE)
 		M.adjustOxyLoss(-5)

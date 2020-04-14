@@ -22,7 +22,7 @@
 	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
 		if(iscarbon(L))
-			L.Knockdown(100)
+			L.DefaultCombatKnockdown(100)
 			L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in [L.p_their()] body!</span>")
 			L.adjustBruteLoss(15)
 		unbuckle_mob(L)
@@ -117,6 +117,6 @@
 			return
 	skewee.visible_message("<span class='danger'>[skewee] comes free of [src] with a squelching pop!</span>", \
 	"<span class='boldannounce'>You come free of [src]!</span>")
-	skewee.Knockdown(30)
+	skewee.DefaultCombatKnockdown(30)
 	playsound(skewee, 'sound/misc/desceration-03.ogg', 50, TRUE)
 	unbuckle_mob(skewee)

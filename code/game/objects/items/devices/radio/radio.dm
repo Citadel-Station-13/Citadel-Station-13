@@ -11,7 +11,7 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=75, MAT_GLASS=25)
+	custom_materials = list(/datum/material/iron=75, /datum/material/glass=25)
 	obj_flags = USES_TGUI
 
 	var/on = TRUE
@@ -29,6 +29,7 @@
 	var/freqlock = FALSE  // Frequency lock to stop the user from untuning specialist radios.
 	var/use_command = FALSE  // If true, broadcasts will be large and BOLD.
 	var/command = FALSE  // If true, use_command can be toggled at will.
+	var/commandspan = SPAN_COMMAND //allow us to set what the fuck we want for headsets
 
 	// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
@@ -111,7 +112,14 @@
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
+		var/ui_width = 360
+		var/ui_height = 106
+		if(subspace_transmission)
+			if(channels.len > 0)
+				ui_height += 6 + channels.len * 21
+			else
+				ui_height += 24
+		ui = new(user, src, ui_key, "radio", name, ui_width, ui_height, master_ui, state)
 		ui.open()
 
 /obj/item/radio/ui_data(mob/user)
@@ -206,7 +214,7 @@
 		return
 
 	if(use_command)
-		spans |= SPAN_COMMAND
+		spans |= commandspan
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -274,7 +282,7 @@
 	signal.levels = list(T.z)
 	signal.broadcast()
 
-/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return

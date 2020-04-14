@@ -11,7 +11,7 @@
 	LAZYINITLIST(blood_DNA) //Kinda needed
 	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)
-	create_reagents(300)
+	create_reagents(300, NONE, NO_REAGENTS_VALUE)
 	if(loc && isturf(loc))
 		for(var/obj/effect/decal/cleanable/C in loc)
 			if(C != src && C.type == type && !QDELETED(C))

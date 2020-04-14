@@ -50,6 +50,7 @@
 	name = "venus human trap"
 	desc = "Now you know how the fly feels."
 	icon_state = "venus_human_trap"
+	threat = 1
 	layer = SPACEVINE_MOB_LAYER
 	health = 50
 	maxHealth = 50
@@ -94,7 +95,7 @@
 				if(prob(grasp_pull_chance))
 					setDir(get_dir(src,L) )//staaaare
 					step(L,get_dir(L,src)) //reel them in
-					L.Knockdown(60) //you can't get away now~
+					L.DefaultCombatKnockdown(60) //you can't get away now~
 
 		if(grasping.len < max_grasps)
 			grasping:

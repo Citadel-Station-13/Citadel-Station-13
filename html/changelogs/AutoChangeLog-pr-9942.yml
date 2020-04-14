@@ -1,4 +1,0 @@
-author: "Useroth"
-delete-after: True
-changes: 
-  - bugfix: "the new plants now properly get their reagents and reagent genes instead of being empty with UNKNOWN reagents listed in the DNA machine"

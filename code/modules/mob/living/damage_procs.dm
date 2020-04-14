@@ -88,7 +88,7 @@
 		if(EFFECT_STUN)
 			Stun(effect * hit_percent)
 		if(EFFECT_KNOCKDOWN)
-			Knockdown(effect * hit_percent, override_stamdmg = knockdown_stammax ? CLAMP(knockdown_stamoverride, 0, knockdown_stammax-getStaminaLoss()) : knockdown_stamoverride)
+			DefaultCombatKnockdown(effect * hit_percent, override_stamdmg = knockdown_stammax ? CLAMP(knockdown_stamoverride, 0, knockdown_stammax-getStaminaLoss()) : knockdown_stamoverride)
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
 		if(EFFECT_IRRADIATE)
@@ -110,7 +110,7 @@
 
 /mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0, kd_stamoverride, kd_stammax)
 	if(blocked >= 100)
-		return 0
+		return BULLET_ACT_BLOCK
 	if(stun)
 		apply_effect(stun, EFFECT_STUN, blocked)
 	if(knockdown)
@@ -131,7 +131,7 @@
 		apply_damage(stamina, STAMINA, null, blocked)
 	if(jitter)
 		apply_effect(jitter, EFFECT_JITTER, blocked)
-	return 1
+	return BULLET_ACT_HIT
 
 
 /mob/living/proc/getBruteLoss()
@@ -225,10 +225,10 @@
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
+/mob/living/proc/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
 
-/mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
+/mob/living/proc/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.

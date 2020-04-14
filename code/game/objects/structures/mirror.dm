@@ -7,7 +7,7 @@
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
@@ -23,12 +23,11 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 
 		//handle facial hair (if necessary)
-		if(H.gender == MALE)
+		if(H.gender != FEMALE)
 			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return	//no tele-grooming
@@ -134,7 +133,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = reject_bad_name(stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN))
 
 			if(!newname)
 				return
@@ -226,9 +225,13 @@
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(new_eye_color)
-				H.eye_color = sanitize_hexcolor(new_eye_color)
+				var/n_color = sanitize_hexcolor(new_eye_color)
+				var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+				if(eyes)
+					eyes.eye_color = n_color
+				H.eye_color = n_color
 				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-				H.update_body()
+				H.dna.species.handle_body()
 	if(choice)
 		curse(user)
 

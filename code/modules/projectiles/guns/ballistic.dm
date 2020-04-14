@@ -19,8 +19,7 @@
 	chamber_round()
 	update_icon()
 
-/obj/item/gun/ballistic/update_icon()
-	..()
+/obj/item/gun/ballistic/update_icon_state()
 	if(current_skin)
 		icon_state = "[unique_reskin[current_skin]][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
 	else
@@ -163,7 +162,7 @@
 			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
 			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
-			B.Remove(user)
+			B.Remove()
 			B.forceMove(T)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user

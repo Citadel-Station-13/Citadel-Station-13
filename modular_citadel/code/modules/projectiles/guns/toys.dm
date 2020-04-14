@@ -57,7 +57,7 @@
 	desc = "An authentic cap-firing reproduction of a F3 Justicar big-bore revolver! Pretend to blow your friend's brains out with this 100% safe toy! Satisfaction guaranteed!"
 	icon_state = "justicar"
 	icon = 'modular_citadel/icons/obj/guns/toys.dmi'
-	materials = list(MAT_METAL=2000, MAT_GLASS=250)
+	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=250)
 
 
 /obj/item/toy/gun/m41
@@ -65,4 +65,4 @@
 	desc = "A toy replica of the Corporate Mercenaries' standard issue rifle. For Avtomat is inscribed on the side."
 	icon_state = "toym41"
 	icon = 'modular_citadel/icons/obj/guns/toys.dmi'
-	materials = list(MAT_METAL=2000, MAT_GLASS=250)
+	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=250)

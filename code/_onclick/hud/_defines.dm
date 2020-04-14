@@ -107,6 +107,10 @@
 #define ui_internal "EAST-1:28,CENTER+1:19"//CIT CHANGE - moves internal icon up a little bit to accommodate for the stamina meter
 #define ui_mood "EAST-1:28,CENTER-3:10"
 
+//living
+#define ui_living_pull "EAST-1:28,CENTER-2:15"
+#define ui_living_health "EAST-1:28,CENTER:15"
+
 //borgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
 
@@ -159,3 +163,14 @@
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER:24"
 #define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
 #define ui_ghost_pai "SOUTH: 6, CENTER+2:24"
+
+
+//UI position overrides for 1:1 screen layout. (default is 7:5)
+#define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
+#define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
+#define ui_combat_toggle "EAST-4:22,SOUTH:5"
+
+#define ui_boxcraft "EAST-4:22,SOUTH+1:6"
+#define ui_boxarea "EAST-4:6,SOUTH+1:6"
+#define ui_boxlang "EAST-5:22,SOUTH+1:6"
+#define ui_boxvore	"EAST-5:22,SOUTH+1:6"

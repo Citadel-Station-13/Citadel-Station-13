@@ -1,7 +1,0 @@
-author: "Fox McCloud, Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes being able to mech-punch other mobs, as a pacifist"
-  - bugfix: "Fixes being able to hurt people, as a pacifist, by throwing them into a wall or other mob, or by using most martial arts (save for the unpredictable psychotic brawl, and the stamina-damage-only boxing)."
-  - balance: "Buffs boxing to outdamage natural stamina regeneration. Made the chance of outright missing your opponent actually possible."
-  - tweak: "Pacifists can now engage in the (laughably not harmful) sweet sweet art of boxing now."

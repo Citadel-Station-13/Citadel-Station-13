@@ -4,7 +4,7 @@
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
-	materials = list()
+	custom_materials = null
 	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/picture_frame
@@ -43,10 +43,10 @@
 		return list()
 	return ..()
 
-/obj/item/wallframe/picture/update_icon()
-	cut_overlays()
+/obj/item/wallframe/picture/update_overlays()
+	. = ..()
 	if(displayed)
-		add_overlay(image(displayed))
+		. += image(displayed)
 
 /obj/item/wallframe/picture/after_attach(obj/O)
 	..()
@@ -145,10 +145,10 @@
 	if(framed)
 		framed.show(user)
 
-/obj/structure/sign/picture_frame/update_icon()
-	cut_overlays()
+/obj/structure/sign/picture_frame/update_overlays()
+	. = ..()
 	if(framed)
-		add_overlay(image(framed))
+		. += image(framed)
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

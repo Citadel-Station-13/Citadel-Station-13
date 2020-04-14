@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "fixed rogue pixels on the energy gu- ahem blaster carbine... and a few apc lights states being neigh-indistinguishable."

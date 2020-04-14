@@ -23,6 +23,8 @@
 	if(proximity_flag)
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
+			if(G.no_pin_required)
+				return
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.forceMove(get_turf(G))
 				G.pin.gun_remove(user)
@@ -60,21 +62,18 @@
 
 /obj/item/firing_pin/proc/auth_fail(mob/living/user)
 	if(user)
-		user.show_message(fail_message, 1)
+		user.show_message(fail_message, MSG_VISUAL)
 	if(selfdestruct)
 		if(user)
-			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
+			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", MSG_VISUAL)
 			to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
 		explosion(get_turf(gun), -1, 0, 2, 3)
 		if(gun)
 			qdel(gun)
 
-
-
 /obj/item/firing_pin/magic
 	name = "magic crystal shard"
 	desc = "A small enchanted shard which allows magical weapons to fire."
-
 
 // Test pin, works only near firing range.
 /obj/item/firing_pin/test_range
@@ -135,7 +134,7 @@
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
+	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && HAS_TRAIT(user.mind, TRAIT_CLOWN_MENTALITY))))
 		return FALSE
 	return TRUE
 
@@ -229,3 +228,16 @@
 	if(gun)
 		gun.pin = null
 	return ..()
+
+//Station Locked
+
+/obj/item/firing_pin/away
+	name = "station locked pin"
+	desc = "A firing pin that only will fire when off the station."
+
+/obj/item/firing_pin/away/pin_auth(mob/living/user)
+	var/area/station_area = get_area(src)
+	if(!station_area || is_station_level(station_area.z))
+		to_chat(user, "<span class='warning'>The pin beeps, refusing to fire.</span>")
+		return FALSE
+	return TRUE

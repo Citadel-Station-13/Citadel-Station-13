@@ -8,7 +8,7 @@
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/recycler
-	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
+	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob, or upon deconstruction.
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
@@ -18,11 +18,15 @@
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), INFINITY, FALSE, null, null, null, TRUE)
-	AddComponent(/datum/component/butchering, 1, amount_produced,amount_produced/5)
+	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
+	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/plasma, /datum/material/gold, /datum/material/diamond, /datum/material/plastic, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, FALSE, null, null, null, TRUE)
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
+
+/obj/machinery/recycler/deconstruct(disassembled = TRUE)
+	safety_mode = TRUE //to stop stock parts and circuit from being deleted.
+	return ..()
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
@@ -35,15 +39,16 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
 	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
-	. += "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	. += "The safety-mode light is [safety_mode ? "on" : "off"]."
-	. += "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."
+	. += "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.</span>"
+	. += {"The power light is [(stat & NOPOWER) ? "off" : "on"].
+	The safety-mode light is [safety_mode ? "on" : "off"].
+	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -76,35 +81,34 @@
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
 	return TRUE
 
-/obj/machinery/recycler/update_icon()
-	..()
+/obj/machinery/recycler/update_icon_state()
 	var/is_powered = !(stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-/obj/machinery/recycler/Bumped(atom/movable/AM)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
+/obj/machinery/recycler/CanPass(atom/movable/AM)
+	. = ..()
 	if(!anchored)
-		return
-	if(safety_mode)
 		return
 
 	var/move_dir = get_dir(loc, AM.loc)
 	if(move_dir == eat_dir)
-		eat(AM)
+		return TRUE
+
+/obj/machinery/recycler/Crossed(atom/movable/AM)
+	eat(AM)
+	. = ..()
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
+	if(stat & (BROKEN|NOPOWER) || safety_mode)
+		return
+
 	var/list/to_eat
-	if(isitem(AM0))
-		to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
-	else
-		to_eat = list(AM0)
+
+	to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
 
 	var/items_recycled = 0
-
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
@@ -194,9 +198,6 @@
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
-	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
-		butchering.Butcher(src,L)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"

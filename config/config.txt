@@ -6,6 +6,8 @@ $include comms.txt
 $include antag_rep.txt
 $include donator_groupings.txt
 $include dynamic_config.txt
+$include plushies/defines.txt
+$include job_threats.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -110,6 +112,9 @@ LOG_GAME
 ## log player votes
 LOG_VOTE
 
+## log player crafting
+LOG_CRAFT
+
 ## log client Whisper
 LOG_WHISPER
 
@@ -179,6 +184,18 @@ VOTE_DELAY 6000
 
 ## time period (deciseconds) which voting session will last (default 1 minute)
 VOTE_PERIOD 600
+
+## autovote initial delay (deciseconds) before first automatic transfer vote call (default 120 minutes)
+## Set to 0 to disable the subsystem altogether.
+VOTE_AUTOTRANSFER_INITIAL 72000
+
+## autovote delay (deciseconds) before sequential automatic transfer votes are called (default 30 minutes)
+VOTE_AUTOTRANSFER_INTERVAL 18000
+
+## autovote maximum votes until automatic transfer call. (default 4)
+## Set to 0 to force automatic crew transfer after the 'vote_autotransfer_initial' elapsed.
+## Set to -1 to disable the maximum votes cap.
+VOTE_AUTOTRANSFER_MAXIMUM 4
 
 ## prevents dead players from voting or starting votes
 # NO_DEAD_VOTE
@@ -381,6 +398,15 @@ MAPROTATION
 ## When it's set to zero, the map will be randomly picked each round
 ALLOW_MAP_VOTING 1
 
+## Map voting type
+## Determines what kind of vote the map vote is
+## Options are:
+##   PLURALITY (default, only vote for one option)
+##   APPROVAL (can vote for as many as you want), I
+##   IRV (vote by ranked choice, winner determined by instant runoff algorithm)
+##   SCORE (give individual rankings of each choice, winner determined by majority judgement algorithm)
+MAP_VOTE_TYPE SCORE
+
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
 ## A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
@@ -435,8 +461,14 @@ MINUTE_CLICK_LIMIT 400
 ##How long to wait between messaging admins about occurences of a unique error
 #ERROR_MSG_DELAY 50
 
-## Send a message to IRC when starting a new game
-#IRC_ANNOUNCE_NEW_GAME
+## Chat Announce Options
+## Various messages to be sent to game chats
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
+## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
+## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+
+## Send a message with the station name starting a new game
+#CHAT_ANNOUNCE_NEW_GAME
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS
@@ -467,9 +499,28 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ## Uncomment to set the number of /world/Reboot()s before the DreamDaemon restarts itself. 0 means restart every round. Requires tgstation server tools.
 #ROUNDS_UNTIL_HARD_RESTART 10
 
+## Number of days for an individual panic bunker passthrough entry to be wiped. Note that they're also wiped as soon as a player is in the database.
+#MAX_BUNKER_DAYS 7
 
 ##Default screen resolution, in tiles.
 ##	By default, this is 15x15, which gets simplified to 7 by BYOND, as it is a 1:1 screen ratio.
 ##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 21x15
+
+### FAIL2TOPIC:
+### Automated IP bans for world/Topic() spammers
+### NOTE FOR WINDOWS HOSTS: This requires you to be running dreamdaemon as an administrator for it to work at all. TGS3 handles this automatically, and honestly there's no reason not to be using TGS3 if you're hosting on Windows.
+### NOTE FOR LINUX HOSTS: This requires manual setup of iptables. Beware that improper configuration of this can and will irreversibly fuck up a server, so please don't tinker with it if you don't know what you're doing.
+## Enabled
+#FAIL2TOPIC_ENABLED
+## Minimum wait time in deciseconds between valid requests 
+FAIL2TOPIC_RATE_LIMIT 10
+## Number of requests after breaching rate limit that triggers a ban
+FAIL2TOPIC_MAX_FAILS 5
+## Firewall rule name used on physical server
+## FOR LINUX HOSTS: This is used as the chain name. The iptables chain doesn't get created or hooked up to INPUT automatically, so you'll have to get that set up yourself. Recommended name: BYOND
+FAIL2TOPIC_RULE_NAME _dd_fail2topic
+
+## Enable automatic profiling - Byond 513.1506 and newer only.
+#AUTO_PROFILE

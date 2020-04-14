@@ -8,6 +8,7 @@
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
+	threat = 3
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 
@@ -81,6 +82,7 @@
 
 /datum/antagonist/monkey/leader
 	name = "Monkey Leader"
+	threat = 5
 	monkey_only = FALSE
 
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)

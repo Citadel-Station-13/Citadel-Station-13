@@ -1,4 +1,0 @@
-author: "GrayRachnid"
-delete-after: True
-changes: 
-  - bugfix: "Fixes golden toolbox missing inhand sprite"

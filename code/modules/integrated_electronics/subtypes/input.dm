@@ -349,10 +349,11 @@
 		set_pin_data(IC_OUTPUT, 2, H.desc)
 
 		if(istype(H, /mob/living))
-			var/mob/living/M = H
-			var/msg = M.examine()
+			var/mob/living/carbon/human/D = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_EXAMINER)
+			var/msg = H.examine(D)
 			if(msg)
 				set_pin_data(IC_OUTPUT, 2, msg)
+			unset_busy_human_dummy(DUMMY_HUMAN_SLOT_EXAMINER)
 
 		set_pin_data(IC_OUTPUT, 3, H.x-T.x)
 		set_pin_data(IC_OUTPUT, 4, H.y-T.y)
@@ -859,7 +860,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 5
 
-/obj/item/integrated_circuit/input/microphone/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/item/integrated_circuit/input/microphone/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	. = ..()
 	var/translated = FALSE
 	if(speaker && message)
@@ -1090,6 +1091,7 @@
 		"Titanium"		= IC_PINTYPE_NUMBER,
 		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
 		"Biomass"				= IC_PINTYPE_NUMBER,
+		"Plastic"				= IC_PINTYPE_NUMBER
 		)
 	activators = list(
 		"scan" = IC_PINTYPE_PULSE_IN,
@@ -1098,7 +1100,7 @@
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 40
-	var/list/mtypes = list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_BIOMASS)
+	var/list/mtypes = list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/biomass, /datum/material/plastic)
 
 
 /obj/item/integrated_circuit/input/matscan/do_work()
@@ -1108,10 +1110,9 @@
 	if(!mt) //Invalid input
 		return
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
-		for(var/I in 1 to mtypes.len)
-			var/datum/material/M = mt.materials[mtypes[I]]
-			if(M)
-				set_pin_data(IC_OUTPUT, I, M.amount)
+		for(var/I in mtypes)
+			if(I in mt.materials)
+				set_pin_data(IC_OUTPUT, I, mt.materials[I])
 			else
 				set_pin_data(IC_OUTPUT, I, null)
 		push_data()
@@ -1308,36 +1309,5 @@
 
 
 	set_pin_data(IC_OUTPUT, 2, regurgitated_contents)
-	push_data()
-	activate_pin(2)
-
-//Degens
-/obj/item/integrated_circuit/input/bonermeter
-	name = "bonermeter"
-	desc = "Detects the target's arousal and various statistics about the target's arousal levels. Invasive!"
-	icon_state = "medscan"
-	complexity = 4
-	inputs = list("target" = IC_PINTYPE_REF)
-	outputs = list(
-		"current arousal" = IC_PINTYPE_NUMBER,
-		"minimum arousal" = IC_PINTYPE_NUMBER,
-		"maximum arousal" = IC_PINTYPE_NUMBER,
-		"can be aroused" = IC_PINTYPE_BOOLEAN
-		)
-	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
-	spawn_flags = IC_SPAWN_RESEARCH
-	power_draw_per_use = 40
-
-/obj/item/integrated_circuit/input/bonermeter/do_work()
-
-	var/mob/living/L = get_pin_data_as_type(IC_INPUT, 1, /mob/living)
-
-	if(!istype(L) || !L.Adjacent(get_turf(src)) ) //Invalid input
-		return
-
-	set_pin_data(IC_OUTPUT,	1, L.getArousalLoss())
-	set_pin_data(IC_OUTPUT,	2, L.min_arousal)
-	set_pin_data(IC_OUTPUT,	3, L.max_arousal)
-	set_pin_data(IC_OUTPUT,	4, L.canbearoused)
 	push_data()
 	activate_pin(2)

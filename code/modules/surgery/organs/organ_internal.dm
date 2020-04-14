@@ -25,6 +25,7 @@
 	var/now_fixed
 	var/high_threshold_cleared
 	var/low_threshold_cleared
+	rad_flags = RAD_NO_CONTAMINATE
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -32,7 +33,7 @@
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, special = 1)
+		replaced.Remove(TRUE)
 		if(drop_if_replaced)
 			replaced.forceMove(get_turf(M))
 		else
@@ -53,20 +54,19 @@
 	return TRUE
 
 //Special is for instant replacement like autosurgeons
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/proc/Remove(special = FALSE)
+	if(owner)
+		owner.internal_organs -= src
+		if(owner.internal_organs_slot[slot] == src)
+			owner.internal_organs_slot.Remove(slot)
+		if((organ_flags & ORGAN_VITAL) && !special && !(owner.status_flags & GODMODE))
+			owner.death()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.Remove(owner)
+		. = owner //for possible subtypes specific post-removal code.
 	owner = null
-	if(M)
-		M.internal_organs -= src
-		if(M.internal_organs_slot[slot] == src)
-			M.internal_organs_slot.Remove(slot)
-		if((organ_flags & ORGAN_VITAL) && !special && !(M.status_flags & GODMODE))
-			M.death()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Remove(M)
 	START_PROCESSING(SSobj, src)
-
-	return TRUE
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
@@ -143,8 +143,9 @@
 	var/healing_amount = -(maxHealth * healing_factor)
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-	applyOrganDamage(healing_amount) //to FERMI_TWEAK
-	//Make it so each threshold is stuck.
+	if(healing_amount)
+		applyOrganDamage(healing_amount) //to FERMI_TWEAK
+		//Make it so each threshold is stuck.
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
@@ -172,7 +173,7 @@
 	name = "appendix"
 	icon_state = "appendix"
 	icon = 'icons/obj/surgery.dmi'
-	list_reagents = list("nutriment" = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtype = RAW | MEAT | GROSS
 
 
@@ -184,7 +185,7 @@
 	if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
-		Remove(owner, TRUE)
+		Remove(TRUE)
 	return ..()
 
 /obj/item/organ/attack(mob/living/carbon/M, mob/user)
@@ -205,14 +206,15 @@
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
 	if(!d) //Micro-optimization.
-		return
+		return FALSE
 	if(maximum < damage)
-		return
+		return FALSE
 	damage = CLAMP(damage + d, 0, maximum)
-	var/mess = check_damage_thresholds(owner)
+	var/mess = check_damage_thresholds()
 	prev_damage = damage
 	if(mess && owner)
 		to_chat(owner, mess)
+	return TRUE
 
 ///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
@@ -224,7 +226,7 @@
   * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
   *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
   */
-/obj/item/organ/proc/check_damage_thresholds(var/M)
+/obj/item/organ/proc/check_damage_thresholds()
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage
@@ -337,7 +339,7 @@
 				T = new dna.species.mutanttongue()
 			else
 				T = new()
-			oT.Remove(src)
+			oT.Remove()
 			qdel(oT)
 			T.Insert(src)
 

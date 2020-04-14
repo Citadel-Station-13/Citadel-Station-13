@@ -4,6 +4,10 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup"
 	))
 
+GLOBAL_LIST_INIT(duplicate_forbidden_vars_by_type, typecacheof_assoc_list(list(
+	/obj/item/gun/energy = "ammo_type"
+	)))
+
 /proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc = FALSE, atom/newloc = null, nerf = FALSE, holoitem=FALSE)
 	RETURN_TYPE(original.type)
 	if(!original)
@@ -16,7 +20,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 		O = new original.type(newloc)
 
 	if(perfectcopy && O && original)
-		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)
+		for(var/V in original.vars - GLOB.duplicate_forbidden_vars - GLOB.duplicate_forbidden_vars_by_type[O.type])
 			if(islist(original.vars[V]))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
@@ -59,23 +63,34 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 
 	var/src_min_x = 99999
 	var/src_min_y = 99999
+	var/src_max_x = 0
+	var/src_max_y = 0
 	var/list/refined_src = new/list()
 
 	for (var/turf/T in turfs_src)
 		src_min_x = min(src_min_x,T.x)
 		src_min_y = min(src_min_y,T.y)
+		src_max_x = max(src_max_x,T.y)
+		src_max_y = max(src_max_y,T.y)
 	for (var/turf/T in turfs_src)
 		refined_src[T] = "[T.x - src_min_x].[T.y - src_min_y]"
 
 	var/trg_min_x = 99999
 	var/trg_min_y = 99999
+	var/trg_max_x = 0
+	var/trg_max_y = 0
 	var/list/refined_trg = new/list()
 
 	for (var/turf/T in turfs_trg)
 		trg_min_x = min(trg_min_x,T.x)
 		trg_min_y = min(trg_min_y,T.y)
+		trg_max_x = max(trg_max_x,T.y)
+		trg_max_y = max(trg_max_y,T.y)
+
+	var/diff_x = round(((src_max_x - src_min_x) - (trg_max_x - trg_min_x))/2)
+	var/diff_y = round(((src_max_y - src_min_y) - (trg_max_y - trg_min_y))/2)
 	for (var/turf/T in turfs_trg)
-		refined_trg["[T.x - trg_min_x].[T.y - trg_min_y]"] = T
+		refined_trg["[T.x - trg_min_x + diff_x].[T.y - trg_min_y + diff_y]"] = T
 
 	var/list/toupdate = new/list()
 

@@ -8,6 +8,7 @@
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
+	threat = 10
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
@@ -30,6 +31,7 @@
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
+	var/maxgeneticpoints = 10
 	var/purchasedpowers = list()
 	var/mimicing = ""
 	var/canrespec = 0
@@ -54,8 +56,10 @@
 	var/honorific
 	if(owner.current.gender == FEMALE)
 		honorific = "Ms."
-	else
+	else if(owner.current.gender == MALE)
 		honorific = "Mr."
+	else
+		honorific = "Mx."
 	if(GLOB.possible_changeling_IDs.len)
 		changelingID = pick(GLOB.possible_changeling_IDs)
 		GLOB.possible_changeling_IDs -= changelingID
@@ -95,16 +99,23 @@
 			to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.dna.remove_mutation(CLOWNMUT)
 
-/datum/antagonist/changeling/proc/reset_properties()
+/datum/antagonist/changeling/proc/reset_properties(hardReset = FALSE)
 	changeling_speak = 0
 	chosen_sting = null
-	geneticpoints = initial(geneticpoints)
+
+	geneticpoints = maxgeneticpoints
 	sting_range = initial(sting_range)
-	chem_storage = initial(chem_storage)
-	chem_recharge_rate = initial(chem_recharge_rate)
-	chem_charges = min(chem_charges, chem_storage)
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
+
+	if (hardReset)
+		chem_storage = initial(chem_storage)
+		chem_recharge_rate = initial(chem_recharge_rate)
+		geneticpoints = initial(geneticpoints)
+		maxgeneticpoints = initial(maxgeneticpoints)
+
+	chem_charges = min(chem_charges, chem_storage)
+
 
 /datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
@@ -284,7 +295,6 @@
 			prof.name_list[slot] = I.name
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
-			prof.item_color_list[slot] = I.item_color
 			prof.item_state_list[slot] = I.item_state
 			prof.exists_list[slot] = 1
 		else
@@ -500,7 +510,6 @@
 	var/list/appearance_list = list()
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
-	var/list/item_color_list = list()
 	var/list/item_state_list = list()
 
 	var/underwear
@@ -523,7 +532,6 @@
 	newprofile.appearance_list = appearance_list.Copy()
 	newprofile.flags_cover_list = flags_cover_list.Copy()
 	newprofile.exists_list = exists_list.Copy()
-	newprofile.item_color_list = item_color_list.Copy()
 	newprofile.item_state_list = item_state_list.Copy()
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
@@ -552,11 +560,17 @@
 	if(objectives.len)
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+			if(objective.completable)
+				var/completion = objective.check_completion()
+				if(completion >= 1)
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+				else if(completion <= 0)
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+					changelingwin = FALSE
+				else
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				changelingwin = 0
+				parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 			count++
 
 	if(changelingwin)

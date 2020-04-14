@@ -2,7 +2,7 @@
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = NONE
 	phase_allowed = 1
 	selection_type = "range"
 	range = -1
@@ -25,8 +25,7 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
-			user.SetStun(0, FALSE)
-			user.SetKnockdown(0, FALSE)
+			user.SetAllImmobility(0)
 			user.setStaminaLoss(0, 0)
 			var/obj/effect/dummy/phased_mob/shadow/S2 = new(get_turf(user.loc))
 			user.forceMove(S2)
@@ -91,7 +90,7 @@
 	return
 
 /obj/effect/dummy/phased_mob/shadow/bullet_act()
-	return
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/shadow/singularity_act()
 	return

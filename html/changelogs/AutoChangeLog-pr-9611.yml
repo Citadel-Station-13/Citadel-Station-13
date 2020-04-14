@@ -1,6 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Cargo has passive point generation again at 750 points/minute"
-  - balance: "Mindshield crate price increased from 3000 to 4000"
-  - balance: "Miasma sell price reduced from 15/mol to 4/mol"

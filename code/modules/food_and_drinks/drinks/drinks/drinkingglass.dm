@@ -6,7 +6,7 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
-	materials = list(MAT_GLASS=500)
+	custom_materials = list(/datum/material/glass=500)
 	max_integrity = 20
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
@@ -45,7 +45,7 @@
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
 	volume = 15
-	materials = list(MAT_GLASS=100)
+	custom_materials = list(/datum/material/glass=100)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()
@@ -81,19 +81,19 @@
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
 	name = "Soda Water"
-	list_reagents = list("sodawater" = 50)
+	list_reagents = list(/datum/reagent/consumable/sodawater = 50)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola
 	name = "Space Cola"
-	list_reagents = list("cola" = 50)
+	list_reagents = list(/datum/reagent/consumable/space_cola = 50)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
-	list_reagents = list("nuka_cola" = 50)
+	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/syndicatebomb
 	name = "Syndicat Bomb"
-	list_reagents = list("syndicatebomb" = 50)
+	list_reagents = list(/datum/reagent/consumable/ethanol/syndicatebomb = 50)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
@@ -103,7 +103,7 @@
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
 				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-				reagents.add_reagent("eggyolk", 5)
+				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 5)
 				qdel(E)
 			return
 	else

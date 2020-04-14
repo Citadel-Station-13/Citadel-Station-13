@@ -6,7 +6,7 @@
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 
 /obj/item/clothing/suit/hooded/New()
-	MakeHood()
+	hood = MakeHelmet()
 	..()
 
 /obj/item/clothing/suit/hooded/Destroy()
@@ -14,11 +14,15 @@
 	qdel(hood)
 	hood = null
 
-/obj/item/clothing/suit/hooded/proc/MakeHood()
+/obj/item/clothing/suit/proc/MakeHelmet(obj/item/clothing/head/H)
+	SEND_SIGNAL(src, COMSIG_SUIT_MADE_HELMET, H)
+	return H
+
+/obj/item/clothing/suit/hooded/MakeHelmet(obj/item/clothing/head/hooded/H)
 	if(!hood)
-		var/obj/item/clothing/head/hooded/W = new hoodtype(src)
-		W.suit = src
-		hood = W
+		H = new hoodtype(src)
+		H.suit = src
+		return ..()
 
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()
@@ -45,7 +49,7 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/suit/hooded/dropped()
+/obj/item/clothing/suit/hooded/dropped(mob/user)
 	..()
 	RemoveHood()
 
@@ -76,7 +80,7 @@
 	suit = null
 	return ..()
 
-/obj/item/clothing/head/hooded/dropped()
+/obj/item/clothing/head/hooded/dropped(mob/user)
 	..()
 	if(suit)
 		suit.RemoveHood()
@@ -92,11 +96,11 @@
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	else
-		suit_toggle(user)
+	suit_toggle(user)
+	return TRUE
 
 /obj/item/clothing/suit/toggle/ui_action_click()
 	suit_toggle()
@@ -125,7 +129,7 @@
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize()
-	MakeHelmet()
+	helmet = MakeHelmet()
 	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
@@ -140,13 +144,13 @@
 		suit.helmet = null
 	return ..()
 
-/obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
+/obj/item/clothing/suit/space/hardsuit/MakeHelmet(obj/item/clothing/head/helmet/space/hardsuit/H)
 	if(!helmettype)
 		return
 	if(!helmet)
-		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
-		W.suit = src
-		helmet = W
+		H = new helmettype(src)
+		H.suit = src
+		return ..()
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
 	..()
@@ -174,13 +178,12 @@
 	else
 		helmet.forceMove(src)
 
-/obj/item/clothing/suit/space/hardsuit/dropped()
+/obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
 	..()
 	RemoveHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
-	var/mob/living/carbon/human/H = src.loc
-	var/datum/species/pref_species = H.dna.species
+	var/mob/living/carbon/human/H = loc
 	if(!helmettype)
 		return
 	if(!helmet)
@@ -194,18 +197,6 @@
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
 			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
-				if(helmet.mutantrace_variation)
-					if("mam_snouts" in pref_species.default_features)
-						if(H.dna.features["mam_snouts"] != "None")
-							helmet.muzzle_var = ALT_STYLE
-
-					else if("snout" in pref_species.default_features)
-						if(H.dna.features["snout"] != "None")
-							helmet.muzzle_var = ALT_STYLE
-					else
-						helmet.muzzle_var = NORMAL_STYLE
-					H.update_inv_head()
-
 				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()

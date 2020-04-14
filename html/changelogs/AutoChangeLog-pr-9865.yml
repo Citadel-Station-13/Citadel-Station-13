@@ -1,4 +1,0 @@
-author: "Useroth"
-delete-after: True
-changes: 
-  - bugfix: "numbered storages now are sorted in a consistent way, instead of depending on ordering of their contents var"

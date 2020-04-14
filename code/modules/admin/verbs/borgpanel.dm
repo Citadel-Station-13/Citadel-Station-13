@@ -23,8 +23,8 @@
 
 /datum/borgpanel/New(to_user, mob/living/silicon/robot/to_borg)
 	if(!istype(to_borg))
-		CRASH("Borg panel is only available for borgs")
 		qdel(src)
+		CRASH("Borg panel is only available for borgs")
 
 	user = CLIENT_FROM_VAR(to_user)
 
@@ -47,7 +47,7 @@
 		"emagged" = borg.emagged,
 		"active_module" = "[borg.module.type]",
 		"lawupdate" = borg.lawupdate,
-		"lockdown" = borg.lockcharge,
+		"lockdown" = borg.locked_down,
 		"scrambledcodes" = borg.scrambledcodes
 	)
 	.["upgrades"] = list()
@@ -122,8 +122,8 @@
 				message_admins("[key_name_admin(user)] disabled lawsync on [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] disabled lawsync on [key_name(borg)].")
 		if ("toggle_lockdown")
-			borg.SetLockdown(!borg.lockcharge)
-			if (borg.lockcharge)
+			borg.SetLockdown(!borg.locked_down)
+			if (borg.locked_down)
 				message_admins("[key_name_admin(user)] locked down [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] locked down [key_name(borg)].")
 			else

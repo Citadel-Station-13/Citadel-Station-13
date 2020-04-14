@@ -16,4 +16,4 @@
 	desc = "A syringe filled with a strange viscous liquid. It might be best to leave it alone."
 	amount_per_transfer_from_this = 1
 	volume = 1
-	list_reagents = list("xenomicrobes" = 1)
+	list_reagents = list(/datum/reagent/xenomicrobes = 1)

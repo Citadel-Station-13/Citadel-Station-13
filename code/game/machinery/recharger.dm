@@ -10,27 +10,47 @@
 	pass_flags = PASSTABLE
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
+	var/using_power = FALSE //Did we put power into "charging" last process()?
 
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
-		/obj/item/gun/ballistic/automatic/magrifle_e,
-		/obj/item/gun/ballistic/automatic/pistol/mag_e))
+		/obj/item/twohanded/electrostaff,
+		/obj/item/gun/ballistic/automatic/magrifle))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
+
+/obj/machinery/recharger/examine(mob/user)
+	. = ..()
+	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
+		return
+
+	if(charging)
+		. += {"<span class='notice'>\The [src] contains:</span>
+		<span class='notice'>- \A [charging].</span>"}
+
+	if(!(stat & (NOPOWER|BROKEN)))
+		. += "<span class='notice'>The status display reads:</span>"
+		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.</span>"
+		if(charging)
+			var/obj/item/stock_parts/cell/C = charging.get_cell()
+			. += "<span class='notice'>- \The [charging]'s cell is at <b>[C.percent()]%</b>.</span>"
 
 /obj/machinery/recharger/proc/setCharging(new_charging)
 	charging = new_charging
 	if (new_charging)
 		START_PROCESSING(SSmachines, src)
 		use_power = ACTIVE_POWER_USE
-		update_icon(scan = TRUE)
+		using_power = TRUE
+		update_icon()
 	else
 		use_power = IDLE_POWER_USE
+		using_power = FALSE
 		update_icon()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
@@ -53,7 +73,7 @@
 
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
-			if(!isarea(a) || a.power_equip == 0)
+			if(!a || !a.powered(EQUIP))
 				to_chat(user, "<span class='notice'>[src] blinks red as you try to insert [G].</span>")
 				return 1
 
@@ -103,23 +123,23 @@
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return PROCESS_KILL
 
-	var/using_power = 0
+	using_power = FALSE
 	if(charging)
 		var/obj/item/stock_parts/cell/C = charging.get_cell()
 		if(C)
 			if(C.charge < C.maxcharge)
 				C.give(C.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
-				using_power = 1
-			update_icon(using_power)
+				using_power = TRUE
+			update_icon()
 
 		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 			var/obj/item/ammo_box/magazine/recharge/R = charging
 			if(R.stored_ammo.len < R.max_ammo)
 				R.stored_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
-				using_power = 1
-			update_icon(using_power)
+				using_power = TRUE
+			update_icon()
 			return
 	else
 		return PROCESS_KILL
@@ -144,20 +164,15 @@
 				B.cell.charge = 0
 
 
-/obj/machinery/recharger/update_icon(using_power = 0, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon_state()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
-		return
-	if(scan)
-		icon_state = "rechargeroff"
-		return
-	if(panel_open)
+	else if(panel_open)
 		icon_state = "rechargeropen"
-		return
-	if(charging)
+	else if(charging)
 		if(using_power)
 			icon_state = "recharger1"
 		else
 			icon_state = "recharger2"
-		return
-	icon_state = "recharger0"
+	else
+		icon_state = "recharger0"

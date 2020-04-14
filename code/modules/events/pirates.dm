@@ -15,7 +15,7 @@
 
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
-	var/datum/comm_message/threat
+	var/datum/comm_message/threat_message
 	var/payoff = 0
 	var/paid_off = FALSE
 	var/ship_name = "Space Privateers Association"
@@ -28,16 +28,16 @@
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 	if(fake)
 		return
-	threat = new
+	threat_message = new
 	payoff = round(SSshuttle.points * 0.80)
-	threat.title = "Business proposition"
-	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
-	threat.possible_answers = list("We'll pay.","No way.")
-	threat.answer_callback = CALLBACK(src,.proc/answered)
-	SScommunications.send_message(threat,unique = TRUE)
+	threat_message.title = "Business proposition"
+	threat_message.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
+	threat_message.possible_answers = list("We'll pay.","No way.")
+	threat_message.answer_callback = CALLBACK(src,.proc/answered)
+	SScommunications.send_message(threat_message,unique = TRUE)
 
 /datum/round_event/pirates/proc/answered()
-	if(threat && threat.answered == 1)
+	if(threat_message && threat_message.answered == 1)
 		if(SSshuttle.points >= payoff)
 			SSshuttle.points -= payoff
 			priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
@@ -157,7 +157,7 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon()
+/obj/machinery/shuttle_scrambler/update_icon_state()
 	if(active)
 		icon_state = "dominator-blue"
 	else
@@ -177,6 +177,7 @@
 	shuttleId = "pirateship"
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
+	resistance_flags = INDESTRUCTIBLE
 	light_color = LIGHT_COLOR_RED
 	possible_destinations = "pirateship_away;pirateship_home;pirateship_custom"
 
@@ -184,6 +185,7 @@
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
 	shuttleId = "pirateship"
+	resistance_flags = INDESTRUCTIBLE
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
 	x_offset = 9
@@ -226,6 +228,7 @@
 	desc = "This sophisticated machine scans the nearby space for items of value."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
+	resistance_flags = INDESTRUCTIBLE
 	density = TRUE
 	var/cooldown = 300
 	var/next_use = 0
@@ -259,6 +262,7 @@
 	name = "cargo hold pad"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle-o"
+	resistance_flags = INDESTRUCTIBLE
 	var/idle_state = "lpad-idle-o"
 	var/warmup_state = "lpad-idle"
 	var/sending_state = "lpad-beam"
@@ -272,6 +276,7 @@
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
+	resistance_flags = INDESTRUCTIBLE
 	var/status_report = "Idle"
 	var/obj/machinery/piratepad/pad
 	var/warmup_time = 100

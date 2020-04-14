@@ -22,6 +22,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/nonviolent, /datum/quirk/paraplegic)
+	threat = 1
 
 /datum/outfit/job/detective
 	name = "Detective"
@@ -29,7 +30,7 @@
 
 	belt = /obj/item/pda/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/det
+	uniform = /obj/item/clothing/under/rank/security/detective
 	neck = /obj/item/clothing/neck/tie/black
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/det_suit

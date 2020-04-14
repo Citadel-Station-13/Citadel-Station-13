@@ -6,12 +6,15 @@
 /datum/action
 	var/name = "Generic Action"
 	var/desc = null
-	var/obj/target = null
+	var/atom/target = null
 	var/check_flags = 0
+	var/required_mobility_flags = MOBILITY_USE
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
 	var/transparent_when_unavailable = TRUE
+	var/use_target_appearance = FALSE
+	var/list/target_appearance_matrix //if set, will be used to transform the target button appearance as an arglist.
 
 	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
@@ -31,6 +34,7 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
+	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
 
 /datum/action/Destroy()
 	if(owner)
@@ -86,54 +90,70 @@
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
+	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, target) & COMPONENT_ACTION_BLOCK_TRIGGER)
 		return FALSE
 	return TRUE
 
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/IsAvailable()
+/datum/action/proc/IsAvailable(silent = FALSE)
 	if(!owner)
-		return 0
+		return FALSE
+	var/mob/living/L = owner
+	if(istype(L) && !CHECK_ALL_MOBILITY(L, required_mobility_flags))
+		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_STUN)
-		if(owner.IsKnockdown() || owner.IsStun())
-			return 0
+		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE))
+			return FALSE
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
-			return 0
+		if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_STAND))
+			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
-	if(button)
-		if(!status_only)
-			button.name = name
-			button.desc = desc
-			if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
-				var/list/settings = owner.hud_used.get_action_buttons_icons()
-				if(button.icon != settings["bg_icon"])
-					button.icon = settings["bg_icon"]
-				if(button.icon_state != settings["bg_state"])
-					button.icon_state = settings["bg_state"]
-			else
-				if(button.icon != button_icon)
-					button.icon = button_icon
-				if(button.icon_state != background_icon_state)
-					button.icon_state = background_icon_state
+	if(!button)
+		return
+	if(!status_only)
+		button.name = name
+		button.desc = desc
+		if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			var/list/settings = owner.hud_used.get_action_buttons_icons()
+			if(button.icon != settings["bg_icon"])
+				button.icon = settings["bg_icon"]
+			if(button.icon_state != settings["bg_state"])
+				button.icon_state = settings["bg_state"]
+		else
+			if(button.icon != button_icon)
+				button.icon = button_icon
+			if(button.icon_state != background_icon_state)
+				button.icon_state = background_icon_state
 
+		if(!use_target_appearance)
 			ApplyIcon(button, force)
 
-		if(!IsAvailable())
-			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
-		else
-			button.color = rgb(255,255,255,255)
-			return 1
+		else if(target && button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
+			var/mutable_appearance/M = new(target)
+			M.layer = FLOAT_LAYER
+			M.plane = FLOAT_PLANE
+			if(target_appearance_matrix)
+				var/list/L = target_appearance_matrix
+				M.transform = matrix(L[1], L[2], L[3], L[4], L[5], L[6])
+			button.cut_overlays()
+			button.add_overlay(M)
+			button.appearance_cache = target.appearance
+
+	if(!IsAvailable(TRUE))
+		button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	else
+		button.color = rgb(255,255,255,255)
+		return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
@@ -141,11 +161,26 @@
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
+/datum/action/ghost
+	icon_icon = 'icons/mob/mob.dmi'
+	button_icon_state = "ghost"
+	name = "Ghostize"
+	desc = "Turn into a ghost and freely come back to your body."
+
+/datum/action/ghost/Trigger()
+	if(!..())
+		return 0
+	var/mob/M = target
+	M.ghostize(1)
+
+/datum/action/proc/OnUpdatedIcon()
+	UpdateButtonIcon()
 
 //Presets for item actions
 /datum/action/item_action
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	button_icon_state = null
+	use_target_appearance = TRUE
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
 
@@ -168,23 +203,6 @@
 		var/obj/item/I = target
 		I.ui_action_click(owner, src)
 	return 1
-
-/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
-	if(button_icon && button_icon_state)
-		// If set, use the custom icon that we set instead
-		// of the item appearence
-		..()
-	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
-		var/obj/item/I = target
-		var/old_layer = I.layer
-		var/old_plane = I.plane
-		I.layer = FLOAT_LAYER //AAAH
-		I.plane = FLOAT_PLANE //^ what that guy said
-		current_button.cut_overlays()
-		current_button.add_overlay(I)
-		I.layer = old_layer
-		I.plane = old_plane
-		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -283,26 +301,13 @@
 			name = "Toggle Friendly Fire \[ON\]"
 	..()
 
-/datum/action/item_action/synthswitch
-	name = "Change Synthesizer Instrument"
-	desc = "Change the type of instrument your synthesizer is playing as."
-
-/datum/action/item_action/synthswitch/Trigger()
-	if(istype(target, /obj/item/instrument/piano_synth))
-		var/obj/item/instrument/piano_synth/synth = target
-		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
-		if(!synth.insTypes[chosen])
-			return
-		return synth.changeInstrument(chosen)
-	return ..()
-
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
 	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "vortex_recall"
 
-/datum/action/item_action/vortex_recall/IsAvailable()
+/datum/action/item_action/vortex_recall/IsAvailable(silent = FALSE)
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
@@ -314,7 +319,7 @@
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
-/datum/action/item_action/clock/IsAvailable()
+/datum/action/item_action/clock/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	return ..()
@@ -323,7 +328,7 @@
 	name = "Create Judicial Marker"
 	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
-/datum/action/item_action/clock/toggle_visor/IsAvailable()
+/datum/action/item_action/clock/toggle_visor/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -402,7 +407,7 @@
 /datum/action/item_action/jetpack_stabilization
 	name = "Toggle Jetpack Stabilization"
 
-/datum/action/item_action/jetpack_stabilization/IsAvailable()
+/datum/action/item_action/jetpack_stabilization/IsAvailable(silent = FALSE)
 	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
 		return 0
@@ -410,6 +415,7 @@
 
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_CONSCIOUS
+	required_mobility_flags = NONE
 
 /datum/action/item_action/hands_free/activate
 	name = "Activate"
@@ -418,7 +424,8 @@
 	name = "Shift Nerves"
 
 /datum/action/item_action/explosive_implant
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	name = "Activate Explosive Implant"
 
 /datum/action/item_action/toggle_research_scanner
@@ -457,7 +464,7 @@
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
 
-/datum/action/item_action/organ_action/IsAvailable()
+/datum/action/item_action/organ_action/IsAvailable(silent = FALSE)
 	var/obj/item/organ/I = target
 	if(!I.owner)
 		return 0
@@ -533,6 +540,73 @@
 		cooldown = world.time
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
+/datum/action/item_action/removeAPCs
+	name = "Relinquish APC"
+	desc = "Let go of an APC, relinquish control back to the station."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijackx"
+
+/datum/action/item_action/removeAPCs/Trigger()
+	var/list/areas = list()
+	for (var/area/a in owner.siliconaccessareas)
+		areas[a.name] = a
+	var/removeAPC = input("Select an APC to remove:","Remove APC Control",1) as null|anything in areas
+	if (!removeAPC)
+		return
+	var/area/area = areas[removeAPC]
+	var/obj/machinery/power/apc/apc = area.get_apc()
+	if (!apc || !(area in owner.siliconaccessareas))
+		return
+	apc.hijacker = null
+	apc.update_icon()
+	apc.set_hijacked_lighting()
+	owner.toggleSiliconAccessArea(area)
+
+/datum/action/item_action/accessAPCs
+	name = "Access APC Interface"
+	desc = "Open the APC's interface."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijacky"
+
+/datum/action/item_action/accessAPCs/Trigger()
+	var/list/areas = list()
+	for (var/area/a in owner.siliconaccessareas)
+		areas[a.name] = a
+	var/accessAPC = input("Select an APC to access:","Access APC Interface",1) as null|anything in areas
+	if (!accessAPC)
+		return
+	var/area/area = areas[accessAPC]
+	var/obj/machinery/power/apc/apc = area.get_apc()
+	if (!apc || !(area in owner.siliconaccessareas))
+		return
+	apc.ui_interact(owner)
+
+/datum/action/item_action/stealthmodetoggle
+	name = "Toggle Stealth Mode"
+	desc = "Toggles the stealth mode on the hijack implant."
+	icon_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "hijackz"
+
+/datum/action/item_action/stealthmodetoggle/Trigger()
+	var/obj/item/implant/hijack/H = target
+	if (!istype(H))
+		return
+	if (H.stealthcooldown > world.time)
+		to_chat(owner,"<span class='warning'>The hijack implant's stealth mode toggle is still rebooting!</span>")
+		return
+	H.stealthmode = !H.stealthmode
+	for (var/area/area in H.imp_in.siliconaccessareas)
+		var/obj/machinery/power/apc/apc = area.get_apc()
+		if (apc)
+			apc.set_hijacked_lighting()
+			apc.update_icon()
+	H.stealthcooldown = world.time + 15 SECONDS
+	H.toggle_eyes()
+	to_chat(owner,"<span class='notice'>You toggle the hijack implant's stealthmode [H.stealthmode ? "on" : "off"].</span>")
+
+/datum/action/item_action/flash
+	name = "Flash"
+
 //Preset for spells
 /datum/action/spell_action
 	check_flags = 0
@@ -559,39 +633,40 @@
 		return FALSE
 	if(target)
 		var/obj/effect/proc_holder/S = target
-		S.Click()
+		S.Trigger(usr)
 		return TRUE
 
-/datum/action/spell_action/IsAvailable()
+/datum/action/spell_action/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	return TRUE
 
 /datum/action/spell_action/spell
 
-/datum/action/spell_action/spell/IsAvailable()
+/datum/action/spell_action/spell/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	var/obj/effect/proc_holder/spell/S = target
 	if(owner)
-		return S.can_cast(owner)
+		return S.can_cast(owner, FALSE, silent)
 	return FALSE
 
 /datum/action/spell_action/alien
 
-/datum/action/spell_action/alien/IsAvailable()
+/datum/action/spell_action/alien/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	var/obj/effect/proc_holder/alien/ab = target
 	if(owner)
-		return ab.cost_check(ab.check_turf,owner,1)
+		return ab.cost_check(ab.check_turf,owner,silent)
 	return FALSE
 
 
 
 //Preset for general and toggled actions
 /datum/action/innate
-	check_flags = 0
+	check_flags = NONE
+	required_mobility_flags = NONE
 	var/active = 0
 
 /datum/action/innate/Trigger()
@@ -625,7 +700,7 @@
 	button.maptext_width = 24
 	button.maptext_height = 12
 
-/datum/action/cooldown/IsAvailable()
+/datum/action/cooldown/IsAvailable(silent = FALSE)
 	return next_use_time <= world.time
 
 /datum/action/cooldown/proc/StartCooldown()
@@ -742,3 +817,11 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
+
+/proc/get_action_of_type(mob/M, var/action_type)
+	if(!M.actions || !ispath(action_type, /datum/action))
+		return
+	for(var/datum/action/A in M.actions)
+		if(istype(A, action_type))
+			return A
+	return

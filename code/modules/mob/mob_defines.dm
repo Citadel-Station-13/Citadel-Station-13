@@ -8,6 +8,8 @@
 	pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -22,13 +24,14 @@
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/zone_selected = null
+	var/zone_selected = BODY_ZONE_CHEST
 
 	var/computer_id = null
 	var/list/logging = list()
-	var/obj/machinery/machine = null
+	var/atom/machine = null
 
 	var/next_move = null
+	var/create_area_cooldown
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
@@ -37,7 +40,7 @@
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
-	var/canmove = 1
+	var/is_shifted = FALSE
 
 	//MOVEMENT SPEED
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
@@ -80,10 +83,8 @@
 	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/move_on_shuttle = 1 // Can move on the shuttle.
 
-//The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
-	var/mob/living/carbon/LAssailant = null
-
-	var/list/obj/user_movement_hooks	//Passes movement in client/Move() to these!
+	/// The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
+	var/datum/weakref/LAssailant
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
@@ -94,11 +95,17 @@
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
-	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
+	var/silicon_privileges = NONE // Can they interact with station electronics
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
+	/**
+	  * The sound made on death
+	  *
+	  * leave null for no sound. used for *deathgasp
+	  */
+	var/deathsound = null
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
@@ -113,3 +120,8 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
+	var/siliconaccessareas = list()
+	var/siliconaccesstoggle = FALSE
+
+	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.

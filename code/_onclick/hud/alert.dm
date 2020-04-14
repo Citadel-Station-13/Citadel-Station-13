@@ -213,6 +213,16 @@ or something covering your eyes."
 	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
 	icon_state = "high"
 
+/obj/screen/alert/mind_control
+	name = "Mind Control"
+	desc = "Your mind has been hijacked! Click to view the mind control command."
+	icon_state = "mind_control"
+	var/command
+
+/obj/screen/alert/mind_control/Click()
+	var/mob/living/L = usr
+	to_chat(L, "<span class='mind_control'>[command]</span>")
+
 /obj/screen/alert/hypnosis
 	name = "Hypnosis"
 	desc = "Something's hypnotizing you, but you're not really sure about what."
@@ -263,7 +273,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
-	if(L.canmove)
+	if(CHECK_MOBILITY(L, MOBILITY_MOVE))
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
 
@@ -324,7 +334,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 	var/datum/antagonist/cult/antag = mob_viewer.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	if(!antag)
+	if(!antag?.cult_team)
 		return
 	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
 
@@ -591,7 +601,7 @@ so as to remain in compliance with the most up-to-date laws."
 	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
-	if((L.canmove) && (L.last_special <= world.time))
+	if(CHECK_MOBILITY(L, MOBILITY_MOVE) && (L.last_special <= world.time))
 		return L.resist_restraints()
 
 /obj/screen/alert/restrained/buckled/Click()

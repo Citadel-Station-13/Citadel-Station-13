@@ -60,13 +60,13 @@
 		_contents_limbo = null
 	if(_user_limbo)
 		for(var/i in _user_limbo)
-			show_to(i)
+			ui_show(i)
 		_user_limbo = null
 
 /datum/component/storage/concrete/_insert_physical_item(obj/item/I, override = FALSE)
 	. = TRUE
 	var/atom/real_location = real_location()
-	if(I.loc != real_location)
+	if(I.loc != real_location && real_location)
 		I.forceMove(real_location)
 	refresh_mob_views()
 

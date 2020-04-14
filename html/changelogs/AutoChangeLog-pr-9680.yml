@@ -1,9 +1,0 @@
-author: "Owai-Seek"
-delete-after: True
-changes: 
-  - rscadd: "\"silly\" bounties"
-  - rscadd: "\"gardenchef\" bounties"
-  - rscdel: "several bounties that require seriously good RNG to pull off."
-  - tweak: "moved several chef and assistant bounties to silly and gardenchef"
-  - balance: "modified several bounty point rewards"
-  - server: "added new files \"silly.dm\" and \"gardenchef.dm\""

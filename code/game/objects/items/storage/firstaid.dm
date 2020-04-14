@@ -176,17 +176,35 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 16
+	STR.max_items = 8
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/defibrillator/compact/combat/loaded(src)
+	new /obj/item/reagent_containers/hypospray/combat/omnizine(src)
+	new /obj/item/reagent_containers/medspray/styptic(src)
+	new /obj/item/reagent_containers/medspray/silver_sulf(src)
+	new /obj/item/healthanalyzer/advanced(src)
+	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
+	new /obj/item/clothing/glasses/hud/health/night/syndicate(src)
+
+/obj/item/storage/firstaid/tactical/nukeop
+	name = "improved combat medical kit"
+
+/obj/item/storage/firstaid/tactical/nukeop/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/reagent_containers/syringe/lethal/choral(src)
-	new /obj/item/clothing/glasses/hud/health/night(src)
+	new /obj/item/reagent_containers/medspray/styptic(src)
+	new /obj/item/reagent_containers/medspray/silver_sulf(src)
+	new /obj/item/healthanalyzer/advanced(src)
+	new /obj/item/reagent_containers/syringe/lethal/choral(src) // what the fuck does anyone use this piece of shit for
+	new /obj/item/clothing/glasses/hud/health/night/syndicate(src)
 
 /*
  * Pill Bottles
@@ -421,8 +439,8 @@
 	if(empty)
 		return
 	new /obj/item/hypospray/mkii/tricord(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/tricord(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/tricord(src)
 
 /obj/item/storage/hypospraykit/fire
 	name = "burn treatment hypospray kit"
@@ -434,8 +452,8 @@
 	if(empty)
 		return
 	new /obj/item/hypospray/mkii/burn(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/kelotane(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/kelotane(src)
 
 /obj/item/storage/hypospraykit/toxin
 	name = "toxin treatment hypospray kit"
@@ -446,8 +464,8 @@
 	if(empty)
 		return
 	new /obj/item/hypospray/mkii/toxin(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/antitoxin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/antitoxin(src)
 
 /obj/item/storage/hypospraykit/o2
 	name = "oxygen deprivation hypospray kit"
@@ -458,8 +476,8 @@
 	if(empty)
 		return
 	new /obj/item/hypospray/mkii/oxygen(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/dexalin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/dexalin(src)
 
 /obj/item/storage/hypospraykit/enlarge
 	name = "organomegaly trauma hypospray kit"
@@ -470,12 +488,12 @@
 	if(empty)
 		return
 	new /obj/item/hypospray/mkii/enlarge(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
 
 /obj/item/storage/hypospraykit/brute
 	name = "brute trauma hypospray kit"
@@ -486,8 +504,8 @@
 	if(empty)
 		return
 	new /obj/item/hypospray/mkii/brute(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/bicaridine(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/bicaridine(src)
 
 /obj/item/storage/hypospraykit/tactical
 	name = "combat hypospray kit"
@@ -499,31 +517,23 @@
 		return
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/hypospray/mkii/CMO/combat(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/combat(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/combat(src)
 
 /obj/item/storage/hypospraykit/cmo
 	name = "deluxe hypospray kit"
 	desc = "A kit containing a Deluxe hypospray and Vials."
 	icon_state = "tactical-mini"
 
-/obj/item/storage/hypospraykit/cmo/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.can_hold = typecacheof(list(
-	/obj/item/hypospray/mkii,
-	/obj/item/reagent_containers/glass/bottle/vial))
-
 /obj/item/storage/hypospraykit/cmo/PopulateContents()
 	if(empty)
 		return
 	new /obj/item/hypospray/mkii/CMO(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/tricord(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/charcoal(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/salglu(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/dexalin(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/synthflesh(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/tricord(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/charcoal(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/salglu(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/dexalin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/synthflesh(src)
 
 /obj/item/storage/box/vials
 	name = "box of hypovials"

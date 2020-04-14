@@ -39,7 +39,7 @@ WALK_DELAY 4
 ## Entries completely override all subtypes. Later entries have precedence over earlier entries.
 ## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and
 ## /mob/living/carbon/human on the last entry, the last entry will override the first.
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
+MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 1
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
@@ -92,6 +92,7 @@ PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
 PROBABILITY CLOWNOPS 0
+PROBABILITY BLOODSUCKER 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -114,6 +115,7 @@ CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
+CONTINUOUS BLOODSUCKER
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -419,11 +421,13 @@ ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
+ROUNDSTART_RACES synthliz
 #ROUNDSTART_RACES fly
 #ROUNDSTART_RACES insect
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 ROUNDSTART_RACES felinid
+ROUNDSTART_RACES dwarf
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly
@@ -528,6 +532,9 @@ LAVALAND_BUDGET 60
 ## Space Ruin Budged
 Space_Budget 16
 
+## Station Ruin Budget
+STATION_SPACE_BUDGET 10
+
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
 ## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
@@ -558,6 +565,15 @@ ROUNDSTART_TRAITS
 ## Enable night shifts ##
 #ENABLE_NIGHT_SHIFTS
 
+## Makes night shifts only affect in-code public-flagged areas. Nightshifts hit the level as defined in __DEFINES/misc.dm that this is set to and anything below. ##
+NIGHT_SHIFT_PUBLIC_AREAS_ONLY 1
+
+## Nightshift toggles REQUIRE APC authorization ##
+#NIGHTSHIFT_TOGGLE_REQUIRES_AUTH
+
+## Nightshift toggles in public areas REQUIRE APC authorization ##
+NIGHTSHIFT_TOGGLE_PUBLIC_REQUIRES_AUTH
+
 ## Enable randomized shift start times##
 #RANDOMIZE_SHIFT_TIME
 
@@ -572,3 +588,48 @@ MONKEYCAP 64
 
 #Replaces standard extended/secret dichotomy with extended and calm/chaotic votes for dynamic.
 DYNAMIC_VOTING
+
+## Choose which Engine to start the round with. Weight is after the comma. Setting the weight to 0 removes the engine from rotation.
+BOX_RANDOM_ENGINE Box SM,3
+BOX_RANDOM_ENGINE Box Tesla,3
+BOX_RANDOM_ENGINE Box Singulo,3
+BOX_RANDOM_ENGINE Box SM 1x3,1
+BOX_RANDOM_ENGINE Box SM 5x5,1
+BOX_RANDOM_ENGINE Box SM 3x,0
+BOX_RANDOM_ENGINE Box TEG,3
+BOX_RANDOM_ENGINE Box Empty,0
+BOX_RANDOM_ENGINE Box Antimatter,1
+BOX_RANDOM_ENGINE Box P.A.C.M.A.N,1
+
+## Whether or not there's a mode tier list vote after the secret/extended vote.
+MODETIER_VOTING
+
+## Number of modes dropped by the modetier vote during mode selection, after vote.
+DROPPED_MODES 3
+
+## Whether the suicide verb is allowed.
+# SUICIDE_ALLOWED
+
+## Breast cups selectable from the character creation menu. Keep em lowercase.
+BREASTS_CUPS_PREFS a
+BREASTS_CUPS_PREFS b
+BREASTS_CUPS_PREFS c
+BREASTS_CUPS_PREFS d
+BREASTS_CUPS_PREFS e
+
+## Minimum and maximum limits for penis length from the character creation menu.
+PENIS_MIN_INCHES_PREFS 1
+PENIS_MAX_INCHES_PREFS 20
+
+## Body size configs, the feature will be disabled if both min and max have the same value.
+BODY_SIZE_MIN 1
+BODY_SIZE_MAX 1
+
+## Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+## to compensate for their smaller hitbox.
+## To disable, just make sure the value is lower than 'body_size_min'
+THRESHOLD_BODY_SIZE_SLOWDOWN 0.85
+
+## Multiplier used in the smaller strides slowdown calculation.
+## Doesn't apply to floating or crawling mobs.
+BODY_SIZE_SLOWDOWN_MULTIPLIER 0.25

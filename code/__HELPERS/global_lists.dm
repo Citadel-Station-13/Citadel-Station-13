@@ -51,26 +51,9 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/antenna, GLOB.ipc_antennas_list, roundstart = TRUE)
 	//genitals
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
-	for(var/K in GLOB.cock_shapes_list)
-		var/datum/sprite_accessory/penis/value = GLOB.cock_shapes_list[K]
-		GLOB.cock_shapes_icons[K] = value.icon_state
-
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
-	GLOB.breasts_size_list = list ("a", "b", "c", "d", "e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
-	GLOB.gentlemans_organ_names = list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ",
-	"cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret",
-	"baloney pony", "schlanger", "Mutton dagger", "old blind bob","Hanging Johnny", "fishing rod", "Tally whacker", "polly rocket",
-	"One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett",
-	"Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior")
-	for(var/K in GLOB.breasts_shapes_list)
-		var/datum/sprite_accessory/breasts/value = GLOB.breasts_shapes_list[K]
-		GLOB.breasts_shapes_icons[K] = value.icon_state
-
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
-	for(var/K in GLOB.balls_shapes_list)
-		var/datum/sprite_accessory/testicles/value = GLOB.balls_shapes_list[K]
-		GLOB.balls_shapes_icons[K] = value.icon_state
 
 	for(var/gpath in subtypesof(/obj/item/organ/genital))
 		var/obj/item/organ/genital/G = gpath
@@ -87,17 +70,32 @@
 	for(var/path in subtypesof(/datum/surgery))
 		GLOB.surgeries_list += new path()
 
-	//Materials
-	for(var/path in subtypesof(/datum/material))
-		var/datum/material/D = new path()
-		GLOB.materials_list[D.id] = D
-
 	//Emotes
 	for(var/path in subtypesof(/datum/emote))
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
+	//Uplink Items
+	for(var/path in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/I = path
+		if(!initial(I.item)) //We add categories to a separate list.
+			GLOB.uplink_categories |= initial(I.category)
+			continue
+		GLOB.uplink_items += path
+	//(sub)typesof entries are listed by the order they are loaded in the code, so we'll have to rearrange them here.
+	GLOB.uplink_items = sortList(GLOB.uplink_items, /proc/cmp_uplink_items_dsc)
+
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
+
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/init_ref_coin_values) //so the current procedure doesn't sleep because of UNTIL()
+
+	for(var/path in subtypesof(/area/holodeck))
+		var/area/holodeck/A = path
+		var/list/compatibles = initial(A.compatible_holodeck_comps)
+		if(!compatibles || initial(A.abstract_type) == path)
+			continue
+		for(var/comp in compatibles)
+			LAZYADD(GLOB.holodeck_areas_prototypes[comp], A)
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
@@ -116,3 +114,10 @@
 		for(var/path in subtypesof(prototype))
 			L+= path
 		return L
+
+/proc/init_ref_coin_values()
+	for(var/path in typesof(/obj/item/coin))
+		var/obj/item/coin/C = new path
+		UNTIL(C.flags_1 & INITIALIZED_1) //we want to make sure the value is calculated and not null.
+		GLOB.coin_values[path] = C.value
+		qdel(C)

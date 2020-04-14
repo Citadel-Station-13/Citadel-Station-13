@@ -17,7 +17,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -44,7 +44,7 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_icon()
-	myarea = get_area(src)
+	myarea = get_base_area(src)
 	LAZYADD(myarea.firealarms, src)
 
 /obj/machinery/firealarm/Destroy()
@@ -55,12 +55,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/firealarm/update_icon()
-	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	var/area/A = src.loc
-	A = A.loc
-
+/obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
 		return
@@ -69,23 +64,36 @@
 		icon_state = "firex"
 		return
 
+	icon_state = "fire0"
+
 	if(stat & NOPOWER)
-		icon_state = "fire0"
 		return
 
-	if(is_station_level(z))
-		add_overlay("overlay_[GLOB.security_level]")
-		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-	else
-		add_overlay("overlay_[SEC_LEVEL_GREEN]")
-		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+/obj/machinery/firealarm/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
-	if(detecting)
-		add_overlay("overlay_[A.fire ? "fire" : "clear"]")
-		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[A.fire ? "fire" : "clear"]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	. += "fire_overlay"
+
+	if(is_station_level(z))
+		. += "fire_[GLOB.security_level]"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 	else
-		add_overlay("overlay_fire")
-		SSvis_overlays.add_vis_overlay(src, icon, "overlay_fire", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		. += "fire_[SEC_LEVEL_GREEN]"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
+
+	var/area/A = src.loc
+	A = A.loc
+
+	if(!detecting || !A.fire)
+		. += "fire_off"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
+	else if(obj_flags & EMAGGED)
+		. += "fire_emagged"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
+	else
+		. += "fire_on"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -101,6 +109,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	update_icon()
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
@@ -112,51 +121,39 @@
 		alarm()
 	..()
 
-/obj/machinery/firealarm/proc/alarm()
-	if(!is_operational() && (last_alarm+FIREALARM_COOLDOWN < world.time))
+/obj/machinery/firealarm/proc/alarm(mob/user)
+	if(!is_operational() || (last_alarm+FIREALARM_COOLDOWN > world.time))
 		return
 	last_alarm = world.time
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	if(user)
+		log_game("[user] triggered a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/proc/reset()
+/obj/machinery/firealarm/proc/reset(mob/user)
 	if(!is_operational())
 		return
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	A.firereset(src)
+	if(user)
+		log_game("[user] reset a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "firealarm", name, 300, 150, master_ui, state)
-		ui.open()
-
-/obj/machinery/firealarm/ui_data(mob/user)
-	var/list/data = list()
-	data["emagged"] = obj_flags & EMAGGED ? 1 : 0
-
-	if(is_station_level(z))
-		data["seclevel"] = get_security_level()
+/obj/machinery/firealarm/attack_hand(mob/user)
+	if(buildstage != 2)
+		return ..()
+	add_fingerprint(user)
+	var/area/A = get_base_area(src)
+	if(A.fire)
+		reset(user)
 	else
-		data["seclevel"] = "green"
+		alarm(user)
 
-	var/area/A = get_area(src)
-	data["alarm"] = A.fire
+/obj/machinery/firealarm/attack_ai(mob/user)
+	return attack_hand(user)
 
-	return data
-
-/obj/machinery/firealarm/ui_act(action, params)
-	if(..() || buildstage != 2)
-		return
-	switch(action)
-		if("reset")
-			reset()
-			. = TRUE
-		if("alarm")
-			alarm()
-			. = TRUE
+/obj/machinery/firealarm/attack_robot(mob/user)
+	return attack_hand(user)
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -199,6 +196,12 @@
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
 					update_icon()
+					return
+				else if(W.force) //hit and turn it on
+					..()
+					var/area/A = get_base_area(src)
+					if(!A.fire)
+						alarm()
 					return
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
@@ -254,6 +257,20 @@
 					return
 	return ..()
 
+/obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
+	return FALSE
+
+/obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
+			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+			"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
+			buildstage = 1
+			update_icon()
+			return TRUE
+	return FALSE
 
 /obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -306,7 +323,7 @@
 /obj/machinery/firealarm/partyalarm/reset()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	if (!A || !A.party)
 		return
 	A.party = FALSE
@@ -315,15 +332,10 @@
 /obj/machinery/firealarm/partyalarm/alarm()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	if (!A || A.party || A.name == "Space")
 		return
 	A.party = TRUE
 	if (!party_overlay)
 		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
 	A.add_overlay(party_overlay)
-
-/obj/machinery/firealarm/partyalarm/ui_data(mob/user)
-	. = ..()
-	var/area/A = get_area(src)
-	.["alarm"] = A && A.party

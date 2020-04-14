@@ -39,7 +39,7 @@
 	blacklisted = TRUE
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYES,NOGENITALS,NOAROUSAL)
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 	mutant_organs = list(/obj/item/organ/heart/nightmare)
 	mutant_brain = /obj/item/organ/brain/nightmare
@@ -51,11 +51,7 @@
 	. = ..()
 	to_chat(C, "[info_text]")
 
-	C.real_name = "[pick(GLOB.nightmare_names)]"
-	C.name = C.real_name
-	if(C.mind)
-		C.mind.name = C.real_name
-	C.dna.real_name = C.real_name
+	C.fully_replace_character_name("[pick(GLOB.nightmare_names)]")
 
 /datum/species/shadow/nightmare/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -64,8 +60,8 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			H.visible_message("<span class='danger'>[H] dances in the shadows, evading [P]!</span>")
 			playsound(T, "bullet_miss", 75, 1)
-			return -1
-	return 0
+			return BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
 	return FALSE
@@ -88,10 +84,10 @@
 	shadowwalk = SW
 
 
-/obj/item/organ/brain/nightmare/Remove(mob/living/carbon/M, special = 0)
-	if(shadowwalk)
-		M.RemoveSpell(shadowwalk)
-	..()
+/obj/item/organ/brain/nightmare/Remove(special = FALSE)
+	if(shadowwalk && owner)
+		owner.RemoveSpell(shadowwalk)
+	return ..()
 
 
 /obj/item/organ/heart/nightmare
@@ -104,6 +100,9 @@
 	var/obj/item/light_eater/blade
 	decay_factor = 0
 
+/obj/item/organ/heart/nightmare/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -124,18 +123,15 @@
 		blade = new/obj/item/light_eater
 		M.put_in_hands(blade)
 
-/obj/item/organ/heart/nightmare/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/nightmare/Remove(special = FALSE)
 	respawn_progress = 0
-	if(blade && special != HEART_SPECIAL_SHADOWIFY)
+	if(!QDELETED(owner) && blade && special != HEART_SPECIAL_SHADOWIFY)
+		owner.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
 		QDEL_NULL(blade)
-		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
-	..()
+	return ..()
 
 /obj/item/organ/heart/nightmare/Stop()
 	return 0
-
-/obj/item/organ/heart/nightmare/update_icon()
-	return //always beating visually
 
 /obj/item/organ/heart/nightmare/on_death()
 	if(!owner)
@@ -150,7 +146,7 @@
 		owner.revive(full_heal = TRUE)
 		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
 			var/mob/living/carbon/old_owner = owner
-			Remove(owner, HEART_SPECIAL_SHADOWIFY)
+			Remove(HEART_SPECIAL_SHADOWIFY)
 			old_owner.set_species(/datum/species/shadow)
 			Insert(old_owner, HEART_SPECIAL_SHADOWIFY)
 			to_chat(owner, "<span class='userdanger'>You feel the shadows invade your skin, leaping into the center of your chest! You're alive!</span>")
@@ -183,15 +179,21 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(isopenturf(AM)) //So you can actually melee with it
-		return
-	if(isliving(AM))
+	if(isopenturf(AM))
+		var/turf/open/T = AM
+		if(T.light_range && !isspaceturf(T)) //no fairy grass or light tile can escape the fury of the darkness.
+			to_chat(user, "<span class='notice'>You scrape away [T] with your [name] and snuff out its lights.</span>")
+			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	else if(isliving(AM))
 		var/mob/living/L = AM
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
-			if(!borg.lamp_cooldown)
+			if(borg.lamp_intensity)
 				borg.update_headlamp(TRUE, INFINITY)
 				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
+			for(var/obj/item/assembly/flash/cyborg/F in borg.held_items)
+				if(!F.crit_fail)
+					F.burn_out()
 		else
 			for(var/obj/item/O in AM)
 				if(O.light_range && O.light_power)
@@ -211,6 +213,16 @@
 		PDA.f_lum = 0
 		PDA.update_icon()
 		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
+	else if(istype(O, /obj/item/gun))
+		var/obj/item/gun/weapon = O
+		if(weapon.gun_light)
+			var/obj/item/flashlight/seclite/light = weapon.gun_light
+			light.forceMove(get_turf(weapon))
+			light.burn()
+			weapon.gun_light = null
+			weapon.update_gunlight()
+			QDEL_NULL(weapon.alight)
+			visible_message("<span class='danger'>[light] on [O] flickers out and disintegrates!</span>")
 	else
 		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 		O.burn()

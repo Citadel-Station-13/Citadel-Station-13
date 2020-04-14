@@ -5,6 +5,7 @@
 	icon_state = "door1"
 	opacity = 1
 	density = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 	max_integrity = 350
@@ -229,7 +230,7 @@
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0
 
-/obj/machinery/door/update_icon()
+/obj/machinery/door/update_icon_state()
 	if(density)
 		icon_state = "door1"
 	else
@@ -287,9 +288,10 @@
 				return
 
 	operating = TRUE
-
 	do_animate("closing")
 	layer = closingLayer
+	if(!safe)
+		crush()
 	sleep(5)
 	density = TRUE
 	sleep(5)
@@ -301,8 +303,6 @@
 	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
-	else
-		crush()
 	return 1
 
 /obj/machinery/door/proc/CheckForMobs()
@@ -319,10 +319,10 @@
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Knockdown(100)
+			L.DefaultCombatKnockdown(100)
 		else if(ismonkey(L)) //For monkeys
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			L.Knockdown(100)
+			L.DefaultCombatKnockdown(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)

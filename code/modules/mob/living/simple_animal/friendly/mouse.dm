@@ -10,6 +10,7 @@
 	emote_see = list("runs in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
+	blood_volume = 250
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
@@ -21,7 +22,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
@@ -30,11 +31,11 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg'=1), 100)
 	if(!body_color)
-		body_color = pick( list("brown","gray","white") )
+		body_color = pick(list("brown","gray","white"))
+	AddElement(/datum/element/mob_holder, "mouse_[body_color]")
 	icon_state = "mouse_[body_color]"
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
-
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
@@ -63,7 +64,7 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	if(isbelly(loc))
+	if(!isturf(loc))
 		return
 
 	if(prob(chew_probability))
@@ -75,7 +76,7 @@
 					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
 					playsound(src, 'sound/effects/sparks2.ogg', 100, 1)
 					C.deconstruct()
-					death(toast=1)
+					death(toast=TRUE)
 				else
 					C.deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
@@ -112,9 +113,10 @@
 	icon_state = "mouse_gray_dead"
 	bitesize = 3
 	eatverb = "devour"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 
 /obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
 	reagents.clear_reagents()
+

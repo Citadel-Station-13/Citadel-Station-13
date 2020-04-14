@@ -20,12 +20,14 @@
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
 /datum/component/orbiter/RegisterWithParent()
+	. = ..()
 	var/atom/target = parent
 	while(ismovableatom(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react)
 		target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
+	. = ..()
 	var/atom/target = parent
 	while(ismovableatom(target))
 		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
@@ -39,9 +41,9 @@
 	orbiters = null
 	return ..()
 
-/datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, list/arguments)
-	if(arguments)
-		begin_orbit(arglist(arguments))
+/datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	if(!newcomp)
+		begin_orbit(arglist(args.Copy(3)))
 		return
 	// The following only happens on component transfers
 	orbiters += newcomp.orbiters

@@ -1,14 +1,13 @@
 /datum/reagent/fermi/yamerol
 	name = "Yamerol"
-	id = "yamerol"
 	description = "For when you've trouble speaking or breathing, just yell YAMEROL! A chem that helps soothe any congestion problems and at high concentrations restores damaged lungs and tongues!"
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
 	pH = 8.6
 	overdose_threshold = 35
-	impure_chem 			= "yamerol_tox"
+	impure_chem 			= /datum/reagent/impure/yamerol_tox
 	inverse_chem_val 		= 0.4
-	inverse_chem		= "yamerol_tox"
+	inverse_chem		= /datum/reagent/impure/yamerol_tox
 	can_synth = TRUE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
@@ -30,11 +29,11 @@
 				nT = new C.dna.species.mutanttongue()
 			else
 				nT = new()
-			T.Remove(C)
+			T.Remove()
 			qdel(T)
 			nT.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(type, 10)
 	..()
 
 /datum/reagent/fermi/yamerol/overdose_process(mob/living/carbon/C)
@@ -50,7 +49,7 @@
 				T = new()
 			T.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue reform in your mouth.</span>")
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(type, 10)
 		else
 			if((oT.name == "fluffy tongue") && (purity == 1))
 				var/obj/item/organ/tongue/T
@@ -58,23 +57,22 @@
 					T = new C.dna.species.mutanttongue()
 				else
 					T = new()
-				oT.Remove(C)
+				oT.Remove()
 				qdel(oT)
 				T.Insert(C)
 				to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
-				holder.remove_reagent(src.id, "10")
+				holder.remove_reagent(type, 10)
 
 		if(!C.getorganslot(ORGAN_SLOT_LUNGS))
 			var/obj/item/organ/lungs/yamerol/L = new()
 			L.Insert(C)
 			to_chat(C, "<span class='notice'>You feel the yamerol merge in your chest.</span>")
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(type, 10)
 	C.adjustOxyLoss(-3)
 	..()
 
 /datum/reagent/impure/yamerol_tox
 	name = "Yamer oh no"
-	id = "yamerol_tox"
 	description = "A dangerous, cloying toxin that stucks to a patient’s respiratory system, damaging their tongue, lungs and causing suffocation."
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
@@ -96,7 +94,6 @@
 
 /datum/reagent/synthtissue
 	name = "Synthtissue"
-	id = "synthtissue"
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
 	metabolization_rate = 0.05 //Give them time to graft
@@ -143,7 +140,7 @@
 		if(data["grown_volume"] > 175) //I don't think this is even possible, but damn to I want to see if someone can (bare in mind it takes 2s to grow 0.05u)
 			if(volume >= 14)
 				if(C.regenerate_organs(only_one = TRUE))
-					C.reagents.remove_reagent(id, 15)
+					C.reagents.remove_reagent(type, 15)
 					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
 
 	data["injected_vol"] -= metabolization_rate

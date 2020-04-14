@@ -48,7 +48,7 @@
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
-		victim.Knockdown(stun_time)
+		victim.DefaultCombatKnockdown(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
@@ -136,7 +136,7 @@
 	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)
-	victim.reagents.add_reagent("adminordrazine",25)
+	victim.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
 	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
 	victim.client.color = pure_red

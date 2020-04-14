@@ -1,7 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - tweak: "The lavaland clown ruin has some new pranks ready."
-  - rscadd: "Added a new loot item to the lavaland clown ruin."
-  - rscdel: "Removed the slime core from said ruin."
-  - balance: "The clown PDA now properly slips people on jogging move intent regardless of fatigue. Honkmother's will."

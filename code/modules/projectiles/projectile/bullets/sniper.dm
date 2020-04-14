@@ -7,6 +7,7 @@
 	knockdown = 100
 	dismemberment = 50
 	armour_penetration = 50
+	zone_accuracy_factor = 100		//guarunteed 100%
 	var/breakthings = TRUE
 
 /obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
@@ -34,7 +35,7 @@
 	icon_state = "gauss"
 	name = "penetrator round"
 	damage = 60
-	forcedodge = TRUE
+	movement_type = FLYING | UNSTOPPABLE
 	dismemberment = 0 //It goes through you cleanly.
 	knockdown = 0
 	breakthings = FALSE

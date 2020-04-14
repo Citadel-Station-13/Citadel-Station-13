@@ -4,6 +4,7 @@
 	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
 	antag_moodlet = /datum/mood_event/focused
+	threat = 30
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -12,7 +13,6 @@
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
-	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/wizard/on_gain()
 	register()
@@ -61,9 +61,9 @@
 		owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
-	var/datum/objective/new_objective = new("Cause as much creative mayhem as you can aboard the station! The more outlandish your methods of achieving this, the better! Make sure there's a decent amount of crew alive to tell of your tale.")
-	new_objective.completed = TRUE //So they can greentext without admin intervention.
+	var/datum/objective/flavor/wizard/new_objective = new
 	new_objective.owner = owner
+	new_objective.forge_objective()
 	objectives += new_objective
 
 	if (!(locate(/datum/objective/escape) in objectives))
@@ -94,6 +94,7 @@
 	to_chat(owner, "<span class='boldannounce'>You are the Space Wizard!</span>")
 	to_chat(owner, "<B>The Space Wizards Federation has given you the following tasks:</B>")
 	owner.announce_objectives()
+	to_chat(owner, "<B>These are merely guidelines! The federation are your masters, but you forge your own path!</B>")
 	to_chat(owner, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
 	to_chat(owner, "The spellbook is bound to you, and others cannot use it.")
 	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
@@ -109,7 +110,7 @@
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/mob/living/wiz_mob = owner.current
-	var/newname = copytext(sanitize(input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+	var/newname = reject_bad_name(stripped_input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname, MAX_NAME_LEN))
 
 	if (!newname)
 		newname = randomname
@@ -177,6 +178,10 @@
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
+		if(APPRENTICE_MARTIAL)
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nuclear_fist(null))
+			H.put_in_hands(new /obj/item/book/granter/martial/plasma_fist(H))
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned mystical martial abilities. You are also able to use the Nuclear Fist at will.")
 
 /datum/antagonist/wizard/apprentice/create_objectives()
 	var/datum/objective/protect/new_objective = new /datum/objective/protect
@@ -261,11 +266,17 @@
 	var/count = 1
 	var/wizardwin = 1
 	for(var/datum/objective/objective in objectives)
-		if(objective.check_completion())
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+		if(objective.completable)
+			var/completion = objective.check_completion()
+			if(completion >= 1)
+				parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+			else if(completion <= 0)
+				parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				wizardwin = FALSE
+			else
+				parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-			wizardwin = 0
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 
 	if(wizardwin)

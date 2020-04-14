@@ -234,6 +234,7 @@
 
 /datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
 	abstract_type = /datum/config_entry/number/movedelay
+	integer = FALSE
 
 /datum/config_entry/number/movedelay/ValidateAndSet()
 	. = ..()
@@ -248,6 +249,18 @@
 /datum/config_entry/number/movedelay/run_delay
 
 /datum/config_entry/number/movedelay/walk_delay
+
+/datum/config_entry/number/movedelay/sprint_speed_increase
+	config_entry_value = 1
+
+/datum/config_entry/number/movedelay/sprint_buffer_max
+	config_entry_value = 24
+
+/datum/config_entry/number/movedelay/sprint_stamina_cost
+	config_entry_value = 1.4
+
+/datum/config_entry/number/movedelay/sprint_buffer_regen_per_ds
+	config_entry_value = 0.4
 
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
@@ -322,6 +335,10 @@
 	config_entry_value = 16
 	min_val = 0
 
+/datum/config_entry/number/station_space_budget
+	config_entry_value = 10
+	min_val = 0
+
 /datum/config_entry/flag/allow_random_events	// Enables random events mid-round when set
 
 /datum/config_entry/number/events_min_time_mul	// Multipliers for random events minimal starting time and minimal players amounts
@@ -362,11 +379,28 @@
 
 /datum/config_entry/flag/enable_night_shifts
 
+/datum/config_entry/number/night_shift_public_areas_only
+	config_entry_value = NIGHTSHIFT_AREA_PUBLIC
+
+/datum/config_entry/flag/nightshift_toggle_requires_auth
+	config_entry_value = FALSE
+
+/datum/config_entry/flag/nightshift_toggle_public_requires_auth
+	config_entry_value = TRUE
+
 /datum/config_entry/flag/randomize_shift_time
 
 /datum/config_entry/flag/shift_time_realtime
 
 /datum/config_entry/keyed_list/antag_rep
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/job_threat
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/antag_threat
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
 
@@ -376,6 +410,66 @@
 
 /datum/config_entry/flag/disable_stambuffer
 
-/datum/config_entry/number/auto_transfer_delay
-	config_entry_value = 72000
+/datum/config_entry/keyed_list/box_random_engine
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+	lowercase = FALSE
+	splitter = ","
+
+/datum/config_entry/flag/pai_custom_holoforms
+
+/datum/config_entry/number/marauder_delay_non_reebe
+	config_entry_value = 1800
 	min_val = 0
+
+/datum/config_entry/flag/allow_clockwork_marauder_on_station
+	config_entry_value = TRUE
+
+/datum/config_entry/flag/modetier_voting
+
+/datum/config_entry/number/dropped_modes
+	config_entry_value = 3
+
+/datum/config_entry/flag/suicide_allowed
+
+/datum/config_entry/keyed_list/breasts_cups_prefs
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+	config_entry_value = list("a", "b", "c", "d", "e") //keep these lowercase
+
+/datum/config_entry/number/penis_min_inches_prefs
+	config_entry_value = 1
+	min_val = 0
+
+/datum/config_entry/number/penis_max_inches_prefs
+	config_entry_value = 20
+	min_val = 0
+
+/datum/config_entry/keyed_list/safe_visibility_toggles
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+	config_entry_value = list(GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER) //refer to cit_helpers for all toggles.
+
+//Body size configs, the feature will be disabled if both min and max have the same value.
+/datum/config_entry/number/body_size_min
+	config_entry_value = RESIZE_DEFAULT_SIZE
+	min_val = 0.1 //to avoid issues with zeros and negative values.
+	max_val = RESIZE_DEFAULT_SIZE
+
+/datum/config_entry/number/body_size_max
+	config_entry_value = RESIZE_DEFAULT_SIZE
+	min_val = RESIZE_DEFAULT_SIZE
+
+//Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+//to compensate for their smaller hitbox.
+//To disable, just make sure the value is lower than 'body_size_min'
+/datum/config_entry/number/threshold_body_size_slowdown
+	config_entry_value = RESIZE_DEFAULT_SIZE * 0.85
+	min_val = 0
+	max_val = RESIZE_DEFAULT_SIZE
+
+//multiplicative slowdown multiplier. See 'dna.update_body_size' for the operation.
+//doesn't apply to floating or crawling mobs
+/datum/config_entry/number/body_size_slowdown_multiplier
+	config_entry_value = 0.25
+	min_val = 0.1 //To encourage folks to disable the slowdown through the above config instead.

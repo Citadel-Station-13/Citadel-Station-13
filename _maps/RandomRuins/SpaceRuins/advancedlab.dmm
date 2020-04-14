@@ -219,7 +219,7 @@
 /obj/structure/closet{
 	name = "Official Clothing"
 	},
-/obj/item/clothing/under/rank/centcom_commander,
+/obj/item/clothing/under/rank/centcom/commander,
 /obj/item/clothing/head/centhat,
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/suit/armor/vest,

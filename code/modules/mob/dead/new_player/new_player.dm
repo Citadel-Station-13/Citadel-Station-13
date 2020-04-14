@@ -10,9 +10,6 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = FALSE
-
-	anchored = TRUE	//  don't get pushed around
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
@@ -583,7 +580,7 @@
 		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
-	var/dat = "<html><body>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>"
 	dat += "<h4>Crew Manifest</h4>"
 	dat += GLOB.data_core.get_manifest(OOC = 1)
 

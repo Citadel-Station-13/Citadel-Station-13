@@ -6,6 +6,7 @@
 	value = -2
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
+	antag_removal_text = "Your antagonistic nature has removed your blood deficiency."
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
 /datum/quirk/blooddeficiency/on_process()
@@ -22,16 +23,23 @@
 	value = -1
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
-	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
+
+/datum/quirk/depression/on_process()
+	if(prob(0.05))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression", /datum/mood_event/depression)
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
 	value = -1
 	mood_quirk = TRUE
+	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	var/obj/item/heirloom
 	var/where
+
+GLOBAL_LIST_EMPTY(family_heirlooms)
 
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -47,6 +55,8 @@
 			heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie)
 		if("Medical Doctor")
 			heirloom_type = /obj/item/healthanalyzer/advanced
+		if("Paramedic")
+			heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
 		if("Station Engineer")
 			heirloom_type = /obj/item/wirecutters/brass
 		if("Atmospheric Technician")
@@ -71,6 +81,7 @@
 		/obj/item/lighter,
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
+	GLOB.family_heirlooms += heirloom
 	var/list/slots = list(
 		"in your left pocket" = SLOT_L_STORE,
 		"in your right pocket" = SLOT_R_STORE,
@@ -135,14 +146,14 @@
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
-	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
-	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
+	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES))
+		H.put_in_hands(glasses)
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
+	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 
 /datum/quirk/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -163,7 +174,8 @@
 	desc = "Bright lights irritate you. Your eyes start to water, your skin feels itchy against the photon radiation, and your hair gets dry and frizzy. Maybe it's a medical condition. If only Nanotrasen was more considerate of your needs..."
 	value = -1
 	gain_text = "<span class='danger'>The safty of light feels off...</span>"
-	lose_text = "<span class='notice'>Enlighing.</span>"
+	lose_text = "<span class='notice'>Enlightening.</span>"
+	medical_record_text = "Despite my warnings, the patient refuses turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
 
 /datum/quirk/lightless/on_process()
 	var/turf/T = get_turf(quirk_holder)
@@ -181,11 +193,7 @@
 	gain_text = "<span class='danger'>You feel repulsed by the thought of violence!</span>"
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
-
-/datum/quirk/nonviolent/on_process()
-	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
-		qdel(src)
+	antag_removal_text = "Your antagonistic nature has caused you to renounce your pacifism."
 
 /datum/quirk/paraplegic
 	name = "Paraplegic"
@@ -282,7 +290,7 @@
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 
 /datum/quirk/insanity/on_process()
-	if(quirk_holder.reagents.has_reagent("mindbreaker"))
+	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
 		quirk_holder.hallucination = 0
 		return
 	if(prob(2)) //we'll all be mad soon enough
@@ -332,31 +340,33 @@
 	medical_record_text = "Patient has an extreme or irrational fear and aversion to an undefined stimuli."
 	var/datum/brain_trauma/mild/phobia/phobia
 
-/datum/quirk/phobia/add()
+/datum/quirk/phobia/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
 	phobia = new
-	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
+	H.gain_trauma(phobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(phobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/mute
 	name = "Mute"
 	desc = "Due to some accident, medical condition, or simply by choice, you are completely unable to speak."
 	value = -2 //HALP MAINTS
-	mob_trait = TRAIT_MUTE
 	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
 	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
 	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
+	antag_removal_text = "Your antagonistic nature has caused your voice to be heard."
 	var/datum/brain_trauma/severe/mute/mute
 
 /datum/quirk/mute/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	mute = new
-	H.gain_trauma(mute, TRAUMA_RESILIENCE_SURGERY)
+	H.gain_trauma(mute, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/quirk/mute/on_process()
-	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
-		qdel(src)
-
+/datum/quirk/mute/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H?.cure_trauma_type(mute, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/unstable
 	name = "Unstable"
@@ -373,7 +383,7 @@
 	value = -4
 	gain_text = "<span class='danger'>You can't see anything.</span>"
 	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
-	medical_record_text = "Subject has permanent blindness."
+	medical_record_text = "Patient has permanent blindness."
 
 /datum/quirk/blindness/add()
 	quirk_holder.become_blind(ROUNDSTART_TRAIT)
@@ -384,3 +394,15 @@
 	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes eyes
 		H.put_in_hands(glasses)
 	H.regenerate_icons()
+
+/datum/quirk/blindness/remove()
+	quirk_holder?.cure_blind(ROUNDSTART_TRAIT)
+
+/datum/quirk/coldblooded
+	name = "Cold-blooded"
+	desc = "Your body doesn't create its own internal heat, requiring external heat regulation."
+	value = -2
+	medical_record_text = "Patient is ectothermic."
+	mob_trait = TRAIT_COLDBLOODED
+	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
+	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"

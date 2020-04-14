@@ -38,21 +38,22 @@
 			board.one_access = 1
 			board.accesses = req_one_access
 
-
-/obj/machinery/button/update_icon()
-	cut_overlays()
+/obj/machinery/button/update_icon_state()
 	if(panel_open)
 		icon_state = "button-open"
-		if(device)
-			add_overlay("button-device")
-		if(board)
-			add_overlay("button-board")
-
+	else if(stat & (NOPOWER|BROKEN))
+		icon_state = "[skin]-p"
 	else
-		if(stat & (NOPOWER|BROKEN))
-			icon_state = "[skin]-p"
-		else
-			icon_state = skin
+		icon_state = skin
+
+/obj/machinery/button/update_overlays()
+	. = ..()
+	if(!panel_open)
+		return
+	if(device)
+		. += "button-device"
+	if(board)
+		. += "button-board"
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))
@@ -168,7 +169,7 @@
 	if(device)
 		device.pulsed()
 
-	addtimer(CALLBACK(src, .proc/update_icon), 15)
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 15)
 
 /obj/machinery/button/power_change()
 	..()
@@ -264,4 +265,4 @@
 	desc = "Used for building buttons."
 	icon_state = "button"
 	result_path = /obj/machinery/button
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT)

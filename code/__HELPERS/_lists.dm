@@ -174,6 +174,15 @@
 						L[T] = TRUE
 		return L
 
+/proc/typecacheof_assoc_list(list/pathlist, ignore_root_path = FALSE)
+	. = list()
+	if(!istype(pathlist))
+		return
+	for(var/P in pathlist)
+		var/value = pathlist[P]
+		for(var/T in (ignore_root_path ? subtypesof(P) : typesof(P)))
+			.[T] = value
+
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
 	if(istype(list))
@@ -540,6 +549,27 @@
 	. = list()
 	for(var/thing in flat_list)
 		.[thing] = TRUE
+
+/proc/deep_list2params(list/deep_list)
+	var/list/L = list()
+	for(var/i in deep_list)
+		var/key = i
+		if(isnum(key))
+			L += "[key]"
+			continue
+		if(islist(key))
+			key = deep_list2params(key)
+		else if(!istext(key))
+			key = "[REF(key)]"
+		L += "[key]"
+		var/value = deep_list[key]
+		if(!isnull(value))
+			if(islist(value))
+				value = deep_list2params(value)
+			else if(!(istext(key) || isnum(key)))
+				value = "[REF(value)]"
+			L["[key]"] = "[value]"
+	return list2params(L)
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)

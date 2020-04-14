@@ -25,37 +25,37 @@
 	var/flavour_name = "vanilla"
 	var/obj/item/reagent_containers/beaker = null
 	var/static/list/icecream_vat_reagents = list(
-		"milk" = 6,
-		"flour" = 6,
-		"sugar" = 6,
-		"ice" = 6,
-		"cocoa" = 6,
-		"vanilla" = 6,
-		"berryjuice" = 6,
-		"singulo" = 6,
-		"peachjuice" = 6,
-		"grapejuice" = 6)
+		/datum/reagent/consumable/milk = 6,
+		/datum/reagent/consumable/flour = 6,
+		/datum/reagent/consumable/sugar = 6,
+		/datum/reagent/consumable/ice = 6,
+		/datum/reagent/consumable/coco = 6,
+		/datum/reagent/consumable/vanilla = 6,
+		/datum/reagent/consumable/berryjuice = 6,
+		/datum/reagent/consumable/ethanol/singulo = 6,
+		/datum/reagent/consumable/peachjuice = 6,
+		/datum/reagent/consumable/grapejuice = 6)
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
 		if(ICECREAM_CHOCOLATE)
-			return list("milk", "ice", "cocoa")
+			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/coco)
 		if(ICECREAM_STRAWBERRY)
-			return list("milk", "ice", "berryjuice")
+			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/berryjuice)
 		if(ICECREAM_CUSTOM)
-			return list("milk", "ice")
+			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice)
 		if(ICECREAM_PEACH)
-			return list("milk", "ice", "peachjuice")
+			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/peachjuice)
 		if(ICECREAM_GRAPE)
-			return list("milk", "ice", "grapejuice")
+			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/grapejuice)
 		if(ICECREAM_BLUE)
-			return list("milk", "ice", "singulo")
+			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/ethanol/singulo)
 		if(CONE_WAFFLE)
-			return list("flour", "sugar")
+			return list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar)
 		if(CONE_CHOC)
-			return list("flour", "sugar", "cocoa")
+			return list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco)
 		else //ICECREAM_VANILLA
-			return list("milk", "ice", "vanilla")
+			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/vanilla)
 
 
 /obj/machinery/icecream_vat/proc/get_flavour_name(flavour_type)
@@ -113,7 +113,7 @@
 	dat += "<b>VAT CONTENT</b><br>"
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume]"
-		dat += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A><BR>"
+		dat += "<A href='?src=[REF(src)];disposeI=[R.type]'>Purge</A><BR>"
 	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a> <a href='?src=[REF(src)];close=1'>Close</a>"
 
 	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 500, src)
@@ -131,9 +131,8 @@
 					I.add_ice_cream(flavour_name, beaker.reagents)
 				else
 					I.add_ice_cream(flavour_name)
-				I.add_ice_cream(flavour_name)
 				if(I.reagents.total_volume < 10)
-					I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
+					I.reagents.add_reagent(/datum/reagent/consumable/sugar, 10 - I.reagents.total_volume)
 				updateDialog()
 			else
 				to_chat(user, "<span class='warning'>There is not enough ice cream left!</span>")
@@ -245,43 +244,43 @@
 	icon_state = "icecream_cone_[cone_name]"
 	switch (cone_type)
 		if ("waffle")
-			reagents.add_reagent("nutriment", 1)
+			reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		if ("chocolate")
-			reagents.add_reagent("cocoa", 1) // chocolate ain't as nutritious kids
+			reagents.add_reagent(/datum/reagent/consumable/coco, 1) // chocolate ain't as nutritious kids
 
 	desc = "Delicious [cone_name] cone, but no ice cream."
 
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R = null)
+/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R)
 	name = "[flavour_name] icecream"
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")
 			desc = "A delicious [cone_type] cone filled with vanilla ice cream. All the other ice creams take content from it."
-			reagents.add_reagent("vanilla", 3)
+			reagents.add_reagent(/datum/reagent/consumable/vanilla, 3)
 			filling_color = "#ECE1C1"
 		if ("chocolate")
 			desc = "A delicious [cone_type] cone filled with chocolate ice cream. Surprisingly, made with real cocoa."
-			reagents.add_reagent("cocoa", 3)
+			reagents.add_reagent(/datum/reagent/consumable/coco, 3)
 			filling_color = "#93673B"
 		if ("strawberry")
 			desc = "A delicious [cone_type] cone filled with strawberry ice cream. Definitely not made with real strawberries."
-			reagents.add_reagent("berryjuice", 3)
+			reagents.add_reagent(/datum/reagent/consumable/berryjuice, 3)
 			filling_color = "#EFB4B4"
 		if ("peach")
 			desc = "A delicious [cone_type] cone filled with peach ice cream. Definitely made with real peaches!"
-			reagents.add_reagent("peachjuice", 3)
+			reagents.add_reagent(/datum/reagent/consumable/peachjuice, 3)
 			filling_color = "#E78108"
 		if ("grape")
 			desc = "A delicious [cone_type] cone filled with grape ice cream. Surprisingly, made with real pink grape, likely not real sugarcanes used."
-			reagents.add_reagent("grapejuice", 3)
+			reagents.add_reagent(/datum/reagent/consumable/grapejuice, 3)
 			filling_color = "#FF1493"
 		if ("blue")
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
-			reagents.add_reagent("singulo", 3)
+			reagents.add_reagent(/datum/reagent/consumable/ethanol/singulo, 3)
 			filling_color = "#ACBCED"
 		if ("mob")
 			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry..."
-			reagents.add_reagent("liquidgibs", 3)
+			reagents.add_reagent(/datum/reagent/liquidgibs, 3)
 			filling_color = "#EFB4B4"
 		if ("custom")
 			if(R && R.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
@@ -311,14 +310,16 @@
 	qdel(src)
 
 /obj/machinery/icecream_vat/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
+	return TRUE
 
 /obj/machinery/icecream_vat/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && user.can_hold_items())
 			user.put_in_hands(beaker)
 	if(new_beaker)
 		beaker = new_beaker

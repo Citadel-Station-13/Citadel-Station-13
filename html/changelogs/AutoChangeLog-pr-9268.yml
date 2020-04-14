@@ -1,5 +1,0 @@
-author: "Fermis"
-delete-after: True
-changes: 
-  - tweak: "Purity, Astral, RNG, MK, SMilk, SDGF, furranium, hatmium, eigen, nanite."
-  - bugfix: "Eigen and purity."

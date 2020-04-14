@@ -20,33 +20,29 @@
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/twohanded/shockpaddles/paddles
-	var/obj/item/stock_parts/cell/high/cell
+	var/obj/item/stock_parts/cell/cell
 	var/combat = FALSE //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 	var/healdisk = FALSE // Will we shock people dragging the body?
 	var/pullshocksafely = FALSE //Dose the unit have the healdisk upgrade?
 	var/primetime = 0 // is the defib faster
 	var/timedeath = 10
+	var/disarm_shock_time = 10
+	var/always_emagged = FALSE
 
 /obj/item/defibrillator/get_cell()
 	return cell
 
 /obj/item/defibrillator/Initialize() //starts without a cell for rnd
 	. = ..()
+	if(cell)
+		cell = new cell(src)
 	paddles = make_paddles()
-	update_icon()
-	return
-
-/obj/item/defibrillator/loaded/Initialize() //starts with hicap
-	. = ..()
-	cell = new(src)
-	update_icon()
-	return
-
-/obj/item/defibrillator/update_icon()
 	update_power()
-	update_overlays()
-	update_charge()
+	return
+
+/obj/item/defibrillator/loaded
+	cell = /obj/item/stock_parts/cell/high
 
 /obj/item/defibrillator/proc/update_power()
 	if(!QDELETED(cell))
@@ -56,29 +52,27 @@
 			powered = TRUE
 	else
 		powered = FALSE
+	update_icon()
 
-/obj/item/defibrillator/proc/update_overlays()
-	cut_overlays()
+/obj/item/defibrillator/update_overlays()
+	. = ..()
 	if(!on)
-		add_overlay("[initial(icon_state)]-paddles")
+		. += "[initial(icon_state)]-paddles"
 	if(powered)
-		add_overlay("[initial(icon_state)]-powered")
-	if(!cell)
-		add_overlay("[initial(icon_state)]-nocell")
-	if(!safety)
-		add_overlay("[initial(icon_state)]-emagged")
-
-/obj/item/defibrillator/proc/update_charge()
-	if(powered) //so it doesn't show charge if it's unpowered
+		. += "[initial(icon_state)]-powered"
 		if(!QDELETED(cell))
 			var/ratio = cell.charge / cell.maxcharge
 			ratio = CEILING(ratio*4, 1) * 25
 			add_overlay("[initial(icon_state)]-charge[ratio]")
+	if(!cell)
+		. += "[initial(icon_state)]-nocell"
+	if(!safety)
+		. += "[initial(icon_state)]-emagged"
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
-	update_icon()
+	update_power()
 
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
@@ -126,7 +120,7 @@
 				return
 			cell = W
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
-			update_icon()
+			update_power()
 
 	else if(istype(W, /obj/item/screwdriver))
 		if(cell)
@@ -134,12 +128,13 @@
 			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			update_icon()
+			update_power()
 	else
 		return ..()
 
 /obj/item/defibrillator/emag_act(mob/user)
 	. = ..()
+	always_emagged = TRUE
 	safety = !safety
 	to_chat(user, "<span class='warning'>You silently [safety ? "enable" : "disable"] [src]'s safety protocols with the cryptographic sequencer.</span>")
 	return TRUE
@@ -154,11 +149,11 @@
 		safety = FALSE
 		visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, 0)
-	else
+	else if(!always_emagged)
 		safety = TRUE
 		visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, 0)
-	update_icon()
+	update_power()
 
 /obj/item/defibrillator/proc/toggle_paddles()
 	set name = "Toggle Paddles"
@@ -171,14 +166,14 @@
 		if(!usr.put_in_hands(paddles))
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
-			update_icon()
+			update_power()
 			return
 	else
 		//Remove from their hands and back onto the defib unit
 		paddles.unwield()
 		remove_paddles(user)
 
-	update_icon()
+	update_power()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -190,7 +185,7 @@
 	..()
 	if((slot_flags == ITEM_SLOT_BACK && slot != SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != SLOT_BELT))
 		remove_paddles(user)
-		update_icon()
+		update_power()
 
 /obj/item/defibrillator/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == user.getBackSlot())
@@ -214,12 +209,12 @@
 	if(cell)
 		if(cell.charge < (paddles.revivecost+chrgdeductamt))
 			powered = FALSE
-			update_icon()
+			update_power()
 		if(cell.use(chrgdeductamt))
-			update_icon()
+			update_power()
 			return TRUE
 		else
-			update_icon()
+			update_power()
 			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck(mob/user)
@@ -233,7 +228,7 @@
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
 		paddles.cooldown = FALSE
 		paddles.update_icon()
-		update_icon()
+		update_power()
 
 /obj/item/defibrillator/compact
 	name = "compact defibrillator"
@@ -247,27 +242,22 @@
 	if(slot == user.getBeltSlot())
 		return TRUE
 
-/obj/item/defibrillator/compact/loaded/Initialize()
-	. = ..()
-	cell = new(src)
-	update_icon()
+/obj/item/defibrillator/compact/loaded
+	cell = /obj/item/stock_parts/cell/high
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
 	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
 	combat = TRUE
 	safety = FALSE
-
-/obj/item/defibrillator/compact/combat/loaded/Initialize()
-	. = ..()
-	cell = new /obj/item/stock_parts/cell/infinite(src)
-	update_icon()
+	always_emagged = TRUE
+	disarm_shock_time = 0
+	cell = /obj/item/stock_parts/cell/infinite
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
-		update_icon()
 		return
 
 //paddles
@@ -293,8 +283,13 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
+	var/disarm_shock_time = 10
 
 	var/mob/listeningTo
+
+/obj/item/twohanded/shockpaddles/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
 	. = ..()
@@ -337,14 +332,11 @@
 		busy = FALSE
 		update_icon()
 
-/obj/item/twohanded/shockpaddles/update_icon()
+/obj/item/twohanded/shockpaddles/update_icon_state()
 	icon_state = "defibpaddles[wielded]"
 	item_state = "defibpaddles[wielded]"
 	if(cooldown)
 		icon_state = "defibpaddles[wielded]_cooldown"
-	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
-		C.update_inv_hands()
 
 /obj/item/twohanded/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -371,7 +363,7 @@
 		return
 	defib.on = FALSE
 	forceMove(defib)
-	defib.update_icon()
+	defib.update_power()
 
 /obj/item/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/M, obj/O)
 	if(!req_defib)
@@ -429,35 +421,21 @@
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
-	else if(can_defib(H))
+	else if(H.can_defib())
 		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 	do_help(H, user)
 
-/obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H) //Our code here is different than tg, if it breaks in testing; BUG_PROBABLE_CAUSE
-	var/obj/item/organ/heart = H.getorgan(/obj/item/organ/heart)
-	if(H.suiciding || H.hellbound || HAS_TRAIT(H, TRAIT_HUSK))
-		return
-	if((world.time - H.timeofdeath) > tlimit)
-		return
-	if((H.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (H.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
-		return
-	if(!heart || (heart.organ_flags & ORGAN_FAILING))
-		return
-	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || H.suiciding)
-		return
-	return TRUE
-
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(req_defib)
-		if(defib.pullshocksafely && isliving(H.pulledby))
-			H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
-	else
-		var/mob/living/M = H.pulledby
-		if(M.electrocute_act(30, src))
-			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
-			M.emote("scream")
+	if(!H.pulledby || !isliving(H.pulledby))
+		return
+	if(req_defib && defib.pullshocksafely)
+		H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
+		return
+	var/mob/living/M = H.pulledby
+	if(M.electrocute_act(30, src))
+		M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
+		M.emote("scream")
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)
@@ -467,11 +445,11 @@
 	M.visible_message("<span class='danger'>[user] hastily places [src] on [M]'s chest!</span>", \
 			"<span class='userdanger'>[user] hastily places [src] on [M]'s chest!</span>")
 	busy = TRUE
-	if(do_after(user, 10, target = M))
+	if(do_after(user, isnull(defib?.disarm_shock_time)? disarm_shock_time : defib.disarm_shock_time, target = M))
 		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
 		M.adjustStaminaLoss(50)
-		M.Knockdown(100)
+		M.DefaultCombatKnockdown(100)
 		M.updatehealth() //forces health update before next life tick
 		playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 		M.emote("gasp")
@@ -528,7 +506,7 @@
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			log_combat(user, H, "overloaded the heart of", defib)
-			H.Knockdown(100)
+			H.DefaultCombatKnockdown(100)
 			H.Jitter(100)
 			if(req_defib)
 				defib.deductcharge(revivecost)
@@ -734,31 +712,30 @@
 /obj/item/disk/medical
 	name = "Defibrillator Upgrade Disk"
 	desc = "A blank upgrade disk, made for a defibrillator"
-	icon = 'modular_citadel/icons/obj/defib_disks.dmi'
-	icon_state = "upgrade_disk"
-	item_state = "heal_disk"
+	icon_state = "heal_disk"
+	item_state = "defib_disk"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/disk/medical/defib_heal
 	name = "Defibrillator Healing Disk"
 	desc = "An upgrade which increases the healing power of the defibrillator"
 	icon_state = "heal_disk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
+	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 
 /obj/item/disk/medical/defib_shock
 	name = "Defibrillator Anti-Shock Disk"
 	desc = "A safety upgrade that guarantees only the patient will get shocked"
 	icon_state = "zap_disk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
+	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 
 /obj/item/disk/medical/defib_decay
 	name = "Defibrillator Body-Decay Extender Disk"
 	desc = "An upgrade allowing the defibrillator to work on more decayed bodies"
 	icon_state = "body_disk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
+	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 16000, /datum/material/silver = 6000, /datum/material/titanium = 2000)
 
 /obj/item/disk/medical/defib_speed
 	name = "Defibrillator Fast Charge Disk"
 	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
 	icon_state = "fast_disk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
+	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/gold = 26000, /datum/material/silver = 26000)

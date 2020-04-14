@@ -30,8 +30,9 @@
 	magpulse = !magpulse
 	icon_state = "[magboot_state][magpulse]"
 	to_chat(user, "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>")
-	user.update_inv_shoes()	//so our mob-overlays update
-	user.update_gravity(user.has_gravity())
+	if(user)
+		user.update_inv_shoes()	//so our mob-overlays update
+		user.update_gravity(user.has_gravity())
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -52,8 +53,51 @@
 	slowdown_active = SHOES_SLOWDOWN
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/shoes/magboots/advance/debug
+
+/obj/item/clothing/shoes/magboots/advance/debug/Initialize()
+	. = ..()
+	var/mob/living/L = loc
+	if(istype(L))
+		attack_self(L)
+
+/obj/item/clothing/shoes/magboots/paramedic
+	desc = "A pair of magboots decked in colors matching the equipment of an emergency medical technician."
+	name = "paramedic magboots"
+	icon_state = "para_magboots0"
+	magboot_state = "para_magboots"
+
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."
 	name = "blood-red magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
+
+/obj/item/clothing/shoes/magboots/crushing
+	desc = "Normal looking magboots that are altered to increase magnetic pull to crush anything underfoot."
+
+/obj/item/clothing/shoes/magboots/crushing/proc/crush(mob/living/user)
+	if (!isturf(user.loc) || !magpulse)
+		return
+	var/turf/T = user.loc
+	for (var/mob/living/A in T)
+		if (A != user && A.lying)
+			A.adjustBruteLoss(rand(10,13))
+			to_chat(A,"<span class='userdanger'>[user]'s magboots press down on you, crushing you!</span>")
+			A.emote("scream")
+
+/obj/item/clothing/shoes/magboots/crushing/attack_self(mob/user)
+	. = ..()
+	if (magpulse)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED,.proc/crush)
+	else
+		UnregisterSignal(user,COMSIG_MOVABLE_MOVED)
+
+/obj/item/clothing/shoes/magboots/crushing/equipped(mob/user,slot)
+	. = ..()
+	if (slot == SLOT_SHOES && magpulse)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED,.proc/crush)
+
+/obj/item/clothing/shoes/magboots/crushing/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user,COMSIG_MOVABLE_MOVED)

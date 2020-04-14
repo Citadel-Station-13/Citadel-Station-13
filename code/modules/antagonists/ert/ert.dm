@@ -10,9 +10,9 @@
 	var/datum/outfit/outfit = /datum/outfit/ert/security
 	var/role = "Security Officer"
 	var/list/name_source
+	threat = -5
 	show_in_antagpanel = FALSE
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
 	update_name()
@@ -33,6 +33,12 @@
 /datum/antagonist/ert/deathsquad/New()
 	. = ..()
 	name_source = GLOB.commando_names
+
+/datum/antagonist/ert/deathsquad/apply_innate_effects(mob/living/mob_override)
+	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
+
+/datum/antagonist/ert/deathsquad/remove_innate_effects(mob/living/mob_override)
+	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
 
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 

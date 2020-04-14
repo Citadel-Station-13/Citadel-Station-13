@@ -15,7 +15,7 @@
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
-	reagents_add = list("bicaridine" = 0.2, "nutriment" = 0.05)
+	reagents_add = list(/datum/reagent/medicine/bicaridine = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/poppy
 	seed = /obj/item/seeds/poppy
@@ -27,7 +27,7 @@
 	bitesize_mod = 3
 	tastes = list("sesame seeds" = 1)
 	foodtype = VEGETABLES | GROSS
-	distill_reagent = "vermouth"
+	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -68,12 +68,13 @@
 	icon_dead = "spacemanstrumpet-dead"
 	mutatelist = list()
 	genes = list(/datum/plant_gene/reagent/polypyr)
-	reagents_add = list("nutriment" = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
 
-/obj/item/seeds/poppy/lily/trumpet/Initialize()
-	..()
-	unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
+/obj/item/seeds/poppy/lily/trumpet/Initialize(mapload, nogenes = FALSE)
+	. = ..()
+	if(!nogenes)
+		unset_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_EXTRACTABLE)
 
 /obj/item/reagent_containers/food/snacks/grown/trumpet
 	seed = /obj/item/seeds/poppy/lily/trumpet
@@ -119,7 +120,7 @@
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	reagents_add = list("nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -130,7 +131,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 3
-	distill_reagent = "vermouth"
+	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -148,7 +149,7 @@
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
-	reagents_add = list("cornoil" = 0.08, "nutriment" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/cooking_oil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
@@ -184,7 +185,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/moonflower
 	genes = list(/datum/plant_gene/trait/glow/purple)
 	mutatelist = list()
-	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.02, "nutriment" = 0.02)
+	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/moonflower
@@ -195,7 +196,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
-	distill_reagent = "absinthe" //It's made from flowers.
+	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 	tastes = list("glowbugs" = 1)
 
 // Novaflower
@@ -209,7 +210,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
 	mutatelist = list()
-	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, "nutriment" = 0)
+	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
 
 /obj/item/grown/novaflower
@@ -227,7 +228,7 @@
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
-	grind_results = list("capsaicin" = 0, "condensedcapsaicin" = 0)
+	grind_results = list(/datum/reagent/consumable/capsaicin = 0, /datum/reagent/consumable/condensedcapsaicin = 0)
 	tastes = list("cooked sunflower" = 1)
 
 /obj/item/grown/novaflower/add_juice()
@@ -277,7 +278,7 @@
 	icon_grow = "bee_balm-grow"
 	icon_dead = "bee_balm-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/bee_balm/honey) //Lower odds of becoming honey
-	reagents_add = list("spaceacillin" = 0.1, "sterilizine" = 0.05)
+	reagents_add = list(/datum/reagent/medicine/spaceacillin = 0.1, /datum/reagent/space_cleaner/sterilizine = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/bee_balm
 	seed = /obj/item/seeds/bee_balm
@@ -305,7 +306,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "bee_balmalt-grow"
 	icon_dead = "bee_balmalt-dead"
-	reagents_add = list("honey" = 0.1, "lye" = 0.3) //To make wax
+	reagents_add = list(/datum/reagent/consumable/honey = 0.1, /datum/reagent/lye = 0.3) //To make wax
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/bee_balm/honey

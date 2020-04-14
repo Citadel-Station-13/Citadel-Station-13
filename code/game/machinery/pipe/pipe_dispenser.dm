@@ -34,7 +34,8 @@
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
 		return 1
-	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	var/mob/living/L = usr
+	if(!anchored || !istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)
@@ -93,14 +94,14 @@
 
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
-	if(!usr.canmove || usr.stat || usr.restrained())
+/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/living/user)
+	if(!istype(user) || !CHECK_MOBILITY(user, MOBILITY_USE))
 		return
 
 	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
 		return
 
-	if (get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if (get_dist(user, src) > 1 || get_dist(src,pipe) > 1 )
 		return
 
 	if (pipe.anchored)

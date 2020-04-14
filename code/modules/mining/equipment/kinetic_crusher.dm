@@ -16,7 +16,7 @@
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
-	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
+	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
@@ -28,6 +28,15 @@
 	var/backstab_bonus = 30
 	var/light_on = FALSE
 	var/brightness_on = 7
+
+/obj/item/twohanded/kinetic_crusher/cyborg //probably give this a unique sprite later
+	desc = "An integrated version of the standard kinetic crusher with a grinded down axe head to dissuade mis-use against crewmen. Deals damage equal to the standard crusher against creatures, however."
+	force = 10 //wouldn't want to give a borg a 20 brute melee weapon unemagged now would we
+	detonation_damage = 60
+	wielded = 1
+
+/obj/item/twohanded/kinetic_crusher/cyborg/unwield()
+	return
 
 /obj/item/twohanded/kinetic_crusher/Initialize()
 	. = ..()
@@ -146,18 +155,15 @@
 	else
 		set_light(0)
 
-/obj/item/twohanded/kinetic_crusher/update_icon()
-	..()
-	cut_overlays()
-	if(!charged)
-		add_overlay("[icon_state]_uncharged")
-	if(light_on)
-		add_overlay("[icon_state]_lit")
-	spawn(1)
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
+/obj/item/twohanded/kinetic_crusher/update_icon_state()
 	item_state = "crusher[wielded]"
+
+/obj/item/twohanded/kinetic_crusher/update_overlays()
+	. = ..()
+	if(!charged)
+		. += "[icon_state]_uncharged"
+	if(light_on)
+		. += "[icon_state]_lit"
 
 //destablizing force
 /obj/item/projectile/destabilizer
@@ -427,19 +433,23 @@
 	desc = "A glowing trinket that was originally the Hierophant's beacon. Suitable as a trophy for a kinetic crusher."
 	icon_state = "vortex_talisman"
 	denied_type = /obj/item/crusher_trophy/vortex_talisman
+	var/vortex_cd
 
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
-	return "mark detonation to create a barrier you can pass"
+	return "mark detonation to create a barrier you can pass that lasts for <b>7.5 seconds</b>, with a cooldown of <b>9 seconds</b> after creation."
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
+	if(vortex_cd >= world.time)
+		return
 	var/turf/T = get_turf(user)
-	new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //a wall only you can pass!
+	var/obj/effect/temp_visual/hierophant/wall/crusher/W = new (T, user) //a wall only you can pass!
 	var/turf/otherT = get_step(T, turn(user.dir, 90))
 	if(otherT)
 		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
 	otherT = get_step(T, turn(user.dir, -90))
 	if(otherT)
 		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
+	vortex_cd = world.time + W.duration * 1.2
 
 /obj/effect/temp_visual/hierophant/wall/crusher
 	duration = 75

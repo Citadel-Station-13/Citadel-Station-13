@@ -4,7 +4,7 @@
 /mob/living/carbon/human/resist_embedded()
 	if(handcuffed || legcuffed || (wear_suit && wear_suit.breakouttime))
 		return
-	if(canmove && !on_fire)
+	if(CHECK_MOBILITY(src, MOBILITY_MOVE) && !on_fire)
 		for(var/obj/item/bodypart/L in bodyparts)
 			if(istype(L) && L.embedded_objects.len)
 				for(var/obj/item/I in L.embedded_objects)
@@ -19,10 +19,10 @@
 	L.embedded_objects -= I
 	L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class*painmul)//It hurts to rip it out, get surgery you dingus. And if you're ripping it out quickly via resist, it's gonna hurt even more
 	I.forceMove(get_turf(src))
+	I.unembedded()
 	user.put_in_hands(I)
 	user.emote("scream")
 	user.visible_message("[user] rips [I] out of [user.p_their()] [L.name]!","<span class='notice'>You remove [I] from your [L.name].</span>")
 	if(!has_embedded_objects())
 		clear_alert("embeddedobject")
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	return

@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - balance: "White Ships, Telerelays and a defunk mining post are now always going to spawn."
+  - spellcheck: "Corrects a few desc on station side ruins"

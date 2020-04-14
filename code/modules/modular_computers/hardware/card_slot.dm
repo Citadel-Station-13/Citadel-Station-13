@@ -73,6 +73,13 @@
 
 
 /obj/item/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null, forced = 0)
+	if (get_dist(src,user) > 1)
+		if (iscarbon(user))
+			var/mob/living/carbon/H = user
+			if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
+				return FALSE
+		else
+			return FALSE
 	if(!stored_card && !stored_card2)
 		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
 		return FALSE

@@ -52,10 +52,16 @@
 	productivity = P
 	max_items = max_storage
 
+
+/obj/machinery/biogenerator/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.</span>"
+
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
-/obj/machinery/biogenerator/update_icon()
+/obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
 	else if(!src.beaker)
@@ -190,7 +196,7 @@
 						dat += "<A href='?src=[REF(src)];create=[D.id];amount=5'>x5</A>"
 					if(ispath(D.build_path, /obj/item/stack))
 						dat += "<A href='?src=[REF(src)];create=[D.id];amount=10'>x10</A>"
-					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
+					dat += "([D.materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]/efficiency])<br>"
 				dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -210,9 +216,9 @@
 	var/S = 0
 	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
-		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
+		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
 			points += 1*productivity
-		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
+		else points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)*10*productivity
 		qdel(I)
 	if(S)
 		processing = TRUE
@@ -226,15 +232,15 @@
 	else
 		menustat = "void"
 
-/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = 1)
-	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
+/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
+	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
 		return FALSE
-	if (materials[MAT_BIOMASS]*multiplier/efficiency > points)
+	if (materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency > points)
 		menustat = "nopoints"
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[MAT_BIOMASS]*multiplier/efficiency
+			points -= materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
 		return TRUE

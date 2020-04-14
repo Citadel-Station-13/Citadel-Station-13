@@ -11,7 +11,7 @@
 /datum/progressbar/New(mob/User, goal_number, atom/target)
 	. = ..()
 	if (!istype(target))
-		EXCEPTION("Invalid target given")
+		CRASH("Invalid target given")
 	if (goal_number)
 		goal = goal_number
 	bar = image('icons/effects/progessbar.dmi', target, "prog_bar_0", HUD_LAYER)

@@ -1,0 +1,4 @@
+author: "Xantholne"
+delete-after: True
+changes: 
+  - bugfix: "bumbles will stop sleeping so much"

@@ -28,6 +28,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/hilbertshotel
 	)))
 
+GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
+	/mob/living/simple_animal/revenant,
+	/mob/living/simple_animal/slaughter
+	)))
+
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
 	id = "supply"
@@ -50,16 +55,27 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /obj/docking_port/mobile/supply/canMove()
 	if(is_station_level(z))
-		return check_blacklist(shuttle_areas)
+		return check_blacklist(shuttle_areas, GLOB.blacklisted_cargo_types - GLOB.cargo_shuttle_leave_behind_typecache)
 	return ..()
 
-/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
+/obj/docking_port/mobile/supply/enterTransit()
+	var/list/leave_behind = list()
+	for(var/i in check_blacklist(shuttle_areas, GLOB.cargo_shuttle_leave_behind_typecache))
+		var/atom/movable/AM = i
+		leave_behind[AM] = AM.loc
+	. = ..()
+	for(var/kicked in leave_behind)
+		var/atom/movable/victim = kicked
+		var/atom/oldloc = leave_behind[victim]
+		victim.forceMove(oldloc)
+
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances, list/typecache)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
 		for(var/trf in shuttle_area)
 			var/turf/T = trf
 			for(var/a in T.GetAllContents())
-				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+				if(is_type_in_typecache(a, typecache))
 					return FALSE
 				if(istype(a, /obj/structure/closet))//Prevents eigenlockers from ending up at CC
 					var/obj/structure/closet/c = a
@@ -150,13 +166,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		msg += export_text + "\n"
 		SSshuttle.points += ex.total_value[E]
 
-	for(var/datum/reagent/R in ex.total_reagents)
-		var/amount = ex.total_reagents[R]
-		var/value = amount*R.value
-		if(!value)
-			continue
-		msg += "[value] credits: received [amount]u of [R.name].\n"
+	for(var/chem in ex.reagents_value)
+		var/value = ex.reagents_value[chem]
+		msg += "[value > 0 ? "+" : ""][value] credits: received [ex.reagents_volume[chem]]u of [chem].\n"
 		SSshuttle.points += value
+
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	SSshuttle.centcom_message = msg
 	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [ex.exported_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

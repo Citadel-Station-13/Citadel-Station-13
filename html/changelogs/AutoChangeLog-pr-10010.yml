@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixing implant cases being lost inside implant pads when trying to eject them with your active hand full."
-  - tweak: "Moved the implant pad's case ejection from attack_hand() to AltClick(), added examination infos about it."

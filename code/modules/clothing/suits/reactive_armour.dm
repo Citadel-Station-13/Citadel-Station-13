@@ -36,8 +36,8 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	hit_reaction_chance = 50 // Only on the chest yet blocks all attacks?
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	var/hit_reaction_chance = 50
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !(active)
@@ -50,7 +50,8 @@
 		icon_state = "reactiveoff"
 		item_state = "reactiveoff"
 	add_fingerprint(user)
-	return
+	if(user.get_item_by_slot(SLOT_WEAR_SUIT) == src)
+		user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
 	. = ..()
@@ -61,6 +62,14 @@
 	item_state = "reactiveoff"
 	reactivearmor_cooldown = world.time + 200
 
+/obj/item/clothing/suit/armor/reactive/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!active)
+		return BLOCK_NONE
+	return block_action(owner, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+
+/obj/item/clothing/suit/armor/reactive/proc/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	return BLOCK_NONE
+
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
@@ -70,17 +79,15 @@
 	var/rad_amount_before = 120
 	reactivearmor_cooldown_duration = 100
 
-/obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
+/obj/item/clothing/suit/armor/reactive/teleport/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
 			return
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
-		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, 1)
-		var/list/turfs = new/list()
+		playsound(get_turf(owner), 'sound/magic/blink.ogg', 100, 1)
+		var/list/turfs = new
 		var/turf/old = get_turf(src)
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -95,12 +102,13 @@
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked))
 			return
-		H.forceMove(picked)
+		do_teleport(H, picked, no_effects = TRUE, channel = TELEPORT_CHANNEL_WORMHOLE)
 		radiation_pulse(old, rad_amount_before)
 		radiation_pulse(src, rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_PASSTHROUGH
+		return BLOCK_SUCCESS | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT | BLOCK_TARGET_DODGED
+	return BLOCK_NONE
 
 //Fire
 
@@ -108,9 +116,7 @@
 	name = "reactive incendiary armor"
 	desc = "An experimental suit of armor with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
 
-/obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
+/obj/item/clothing/suit/armor/reactive/fire/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</span>")
@@ -123,8 +129,8 @@
 				C.IgniteMob()
 		owner.fire_stacks = -20
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_INTERNAL
+	return BLOCK_NONE
 
 //Stealth
 
@@ -133,9 +139,7 @@
 	reactivearmor_cooldown_duration = 65
 	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 
-/obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
+/obj/item/clothing/suit/armor/reactive/stealth/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive stealth system on [owner] activates, but is still recharging its holographic emitters!</span>")
@@ -149,7 +153,8 @@
 		spawn(40)
 			owner.alpha = initial(owner.alpha)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_INTERNAL
+	return BLOCK_NONE
 
 //Tesla
 
@@ -174,9 +179,7 @@
 	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
 		user.flags_1 |= TESLA_IGNORE_1
 
-/obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return FALSE
+/obj/item/clothing/suit/armor/reactive/tesla/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -195,7 +198,8 @@
 				M.adjustFireLoss(legacy_dmg)
 				playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return TRUE
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_INTERNAL
+	return NONE
 
 //Repulse
 
@@ -204,9 +208,7 @@
 	reactivearmor_cooldown_duration = 20
 	desc = "An experimental suit of armor that violently throws back attackers."
 
-/obj/item/clothing/suit/armor/reactive/repulse/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
+/obj/item/clothing/suit/armor/reactive/repulse/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The repulse generator is still recharging!</span>")
@@ -214,16 +216,27 @@
 		playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, 1)
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], converting the attack into a wave of force!</span>")
 		var/turf/T = get_turf(owner)
-		var/list/thrown_items = list()
-		for(var/atom/movable/A in range(T, 7))
-			if(A == owner || A.anchored || thrown_items[A])
+		var/list/cachedrange = range(T, 7) - owner
+		var/safety = 50
+		var/list/to_throw = list()
+		for(var/mob/living/L in cachedrange)
+			if(L.move_resist > MOVE_FORCE_EXTREMELY_STRONG)
 				continue
-			var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(A, T)))
-			A.throw_at(throwtarget,10,1)
-			thrown_items[A] = A
-
+			to_throw += L
+		for(var/obj/O in cachedrange)
+			if(O.anchored)
+				continue
+			to_throw += O
+		for(var/i in to_throw)
+			if(!safety)
+				break
+			var/atom/movable/AM = i
+			var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(AM, T)))
+			AM.throw_at(throwtarget,10,1)
+			safety--
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_INTERNAL
+	return BLOCK_NONE
 
 /obj/item/clothing/suit/armor/reactive/table
 	name = "reactive table armor"
@@ -231,9 +244,7 @@
 	desc = "If you can't beat the memes, embrace them."
 	var/tele_range = 10
 
-/obj/item/clothing/suit/armor/reactive/table/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
+/obj/item/clothing/suit/armor/reactive/table/block_action(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
@@ -241,7 +252,7 @@
 			return
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams [H.p_them()] into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
-		owner.Knockdown(40)
+		owner.DefaultCombatKnockdown(40)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -259,8 +270,8 @@
 		H.forceMove(picked)
 		new /obj/structure/table(get_turf(owner))
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_INTERNAL
+	return BLOCK_NONE
 
 /obj/item/clothing/suit/armor/reactive/table/emp_act()
 	return

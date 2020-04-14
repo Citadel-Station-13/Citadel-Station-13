@@ -28,10 +28,8 @@
 	if(stat != DEAD)
 		handle_brain_damage()
 
-	/* BUG_PROBABLE_CAUSE
 	if(stat != DEAD)
 		handle_liver()
-	*/
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -80,7 +78,7 @@
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-	if(reagents.has_reagent("lexorin"))
+	if(reagents.has_reagent(/datum/reagent/toxin/lexorin))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
@@ -98,7 +96,7 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || (lungs && lungs.organ_flags & ORGAN_FAILING))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
@@ -156,7 +154,7 @@
 
 	//CRIT
 	if(!breath || (breath.total_moles() == 0) || !lungs)
-		if(reagents.has_reagent("epinephrine") && lungs)
+		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine) && lungs)
 			return
 		adjustOxyLoss(1)
 
@@ -280,7 +278,7 @@
 		if(miasma_partialpressure > MINIMUM_MOLES_DELTA_TO_MOVE)
 
 			if(prob(0.05 * miasma_partialpressure))
-				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(TRUE, 2,3)
 				miasma_disease.name = "Unknown"
 				ForceContractDisease(miasma_disease, TRUE, TRUE)
 
@@ -334,9 +332,10 @@
 	var/obj/item/clothing/check
 	var/internals = FALSE
 
-	for(check in GET_INTERNAL_SLOTS(src))
-		if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
-			internals = TRUE
+	if(!HAS_TRAIT(src, TRAIT_NO_INTERNALS))
+		for(check in GET_INTERNAL_SLOTS(src))
+			if(CHECK_BITFIELD(check.clothing_flags, ALLOWINTERNALS))
+				internals = TRUE
 	if(internal)
 		if(internal.loc != src)
 			internal = null
@@ -356,12 +355,12 @@
 	if(istype(loc, /obj/structure/closet/crate/coffin)|| istype(loc, /obj/structure/closet/body_bag) || istype(loc, /obj/structure/bodycontainer))
 		return
 
-	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(reagents.has_reagent("formaldehyde", 15) || HAS_TRAIT(src, TRAIT_HUSK))
+	// No decay if formaldehyde/preservahyde in corpse or when the corpse is charred
+	if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || HAS_TRAIT(src, TRAIT_HUSK) || reagents.has_reagent(/datum/reagent/preservahyde, 1))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(bodytemperature <= T0C-10 || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
+	if((bodytemperature <= T0C-10) || !(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		return
 
 	// Wait a bit before decaying
@@ -376,9 +375,15 @@
 
 	var/turf/open/miasma_turf = deceasedturf
 
-	var/list/cached_gases = miasma_turf.air.gases
+	var/datum/gas_mixture/stank = new
 
-	cached_gases[/datum/gas/miasma] += 0.1
+	stank.gases[/datum/gas/miasma] = 0.1
+
+	stank.temperature = BODYTEMP_NORMAL
+
+	miasma_turf.assume_air(stank)
+
+	miasma_turf.air_update_turf()
 
 /mob/living/carbon/proc/handle_blood()
 	return
@@ -396,6 +401,8 @@
 			if(O)
 				O.on_life()
 	else
+		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/preservahyde, 1)) // No organ decay if the body contains formaldehyde. Or preservahyde.
+			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			if(O)
@@ -424,7 +431,6 @@
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
-		var/datum/mutation/human/HM
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -447,9 +453,9 @@
 						dna.previous.Remove("blood_type")
 					dna.temporary_mutations.Remove(mut)
 					continue
-				HM = GLOB.mutations_list[mut]
-				HM.force_lose(src)
-				dna.temporary_mutations.Remove(mut)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			if(HM && HM.timed)
+				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
@@ -505,10 +511,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss() && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
-		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
+	if(getStaminaLoss() && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))		//CIT CHANGE - prevents stamina regen while combat mode is active
+		adjustStaminaLoss(!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
-	if(!recoveringstam && incomingstammult != 1)
+	if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && incomingstammult != 1)
 		incomingstammult = max(0.01, incomingstammult)
 		incomingstammult = min(1, incomingstammult*2)
 
@@ -516,10 +522,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(bufferedstam && world.time > stambufferregentime)
 		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
 		bufferedstam = max(bufferedstam - drainrate, 0)
-		adjustStaminaLoss(drainrate*0.5)
 	//END OF CIT CHANGES
 
-	var/restingpwr = 1 + 4 * resting
+	var/restingpwr = 1 + 4 * !CHECK_MOBILITY(src, MOBILITY_STAND)
 
 	//Dizziness
 	if(dizziness)
@@ -578,6 +583,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 	if(cultslurring)
 		cultslurring = max(cultslurring-1, 0)
+
+	if(clockcultslurring)
+		clockcultslurring = max(clockcultslurring-1, 0)
 
 	if(silent)
 		silent = max(silent-1, 0)
@@ -659,6 +667,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
+	if (HAS_TRAIT(src, TRAIT_COLDBLOODED))
+		return 0 //Return 0 as your natural temperature. Species proc handle_environment() will adjust your temperature based on this.
+
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
 	switch(bodytemperature)
 		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //Cold damage limit is 50 below the default, the temperature where you start to feel effects.
@@ -677,27 +688,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
-	if(liver)
-		if(liver.damage < liver.maxHealth)
-			liver.organ_flags |= ORGAN_FAILING
-			liver_failure()
-	else
+	if(!liver || liver.organ_flags & ORGAN_FAILING)
 		liver_failure()
-
-/mob/living/carbon/proc/undergoing_liver_failure()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && liver.failing)
-		return TRUE
-
-/mob/living/carbon/proc/return_liver_damage()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		return liver.damage
-
-/mob/living/carbon/proc/applyLiverDamage(var/d)
-	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
-	if(L)
-		L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
@@ -705,8 +697,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER))
 		return
 	adjustToxLoss(4, TRUE,  TRUE)
-	if(prob(30))
-		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
+	if(prob(15))
+		to_chat(src, "<span class='danger'>You feel a stabbing pain in your abdomen!</span>")
 
 
 ////////////////

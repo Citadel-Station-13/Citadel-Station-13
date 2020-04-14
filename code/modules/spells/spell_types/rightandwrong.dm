@@ -102,6 +102,12 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
 	G.unlock()
+	var/datum/antagonist/survivalist/guns/our_antag_datum = H.mind.has_antag_datum(/datum/antagonist/survivalist/guns)
+	if(our_antag_datum)
+		var/datum/objective/hoard/O = new()
+		O.owner = H
+		O.set_target(G)
+		our_antag_datum.objectives += O
 	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, 1)
 
 	var/in_hand = H.put_in_hands(G) // not always successful
@@ -128,6 +134,13 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	var/obj/item/M = new magic_type(get_turf(H))
 	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
 
+	var/datum/antagonist/survivalist/magic/our_antag_datum = H.mind.has_antag_datum(/datum/antagonist/survivalist/magic)
+	if(istype(our_antag_datum))
+		var/datum/objective/hoard/O = new()
+		O.owner = H
+		O.set_target(M)
+		our_antag_datum.objectives += O
+
 	var/in_hand = H.put_in_hands(M)
 
 	to_chat(H, "<span class='warning'>\A [M] appears [in_hand ? "in your hand" : "at your feet"]!</span>")
@@ -150,7 +163,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		var/turf/T = get_turf(H)
-		if(T && is_away_level(T.z))
+		if((T && is_away_level(T.z)) || HAS_TRAIT(H, TRAIT_NO_MIDROUND_ANTAG))
 			continue
 		if(summon_type == SUMMON_MAGIC)
 			give_magic(H)

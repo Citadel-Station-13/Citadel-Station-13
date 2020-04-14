@@ -12,7 +12,6 @@
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
 	. = ..()
@@ -47,7 +46,7 @@
 	var/on = FALSE
 	var/light_overlay = "envirohelm-light"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	if(!light_overlay)
@@ -68,7 +67,7 @@
 		var/datum/action/A=X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands, icon_file)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands && on)
 		. += mutable_appearance(icon_file, light_overlay)

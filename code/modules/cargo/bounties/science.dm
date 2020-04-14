@@ -25,7 +25,7 @@
 /datum/bounty/item/science/nightvision_goggles
 	name = "Night Vision Goggles"
 	description = "An electrical storm has busted all the lights at CentCom. While management is waiting for replacements, perhaps some night vision goggles can be shipped?"
-	reward = 1000
+	reward = 1250
 	wanted_types = list(/obj/item/clothing/glasses/night, /obj/item/clothing/glasses/meson/night, /obj/item/clothing/glasses/hud/health/night, /obj/item/clothing/glasses/hud/security/night, /obj/item/clothing/glasses/hud/diagnostic/night)
 
 /datum/bounty/item/science/experimental_welding_tool
@@ -55,7 +55,7 @@
 
 /datum/bounty/item/science/advanced_mop
 	name = "Advanced Mop"
-	description = "Excuse me. I'd like to request $17 for a push broom rebristling. Either that, or an advanced mop."
+	description = "Excuse me. I'd like to request 17 credits for a push broom rebristling. Either that, or an advanced mop."
 	reward = 3000
 	wanted_types = list(/obj/item/mop/advanced)
 
@@ -108,7 +108,7 @@
 	wanted_types = list(/obj/item/stock_parts/micro_laser/quadultra)
 
 /datum/bounty/item/science/fakecrystals
-	name = "synthetic bluespace crystals"
+	name = "Synthetic Bluespace Crystals"
 	description = "Don't, uh, tell anyone, but one of our BSA arrays might have had a little... accident. Send us some bluespace crystals so we can recalibrate it before anyone realizes. The whole set uses artificial bluespace crystals, so we need and not any other type of bluespace crystals..."
 	reward = 8000
 	required_count = 5

@@ -66,7 +66,7 @@
 	item_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
@@ -113,9 +113,7 @@
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 	dynamic_hair_suffix = ""
-
 	dog_fashion = /datum/dog_fashion/head/rabbit
-
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -180,6 +178,7 @@
 	icon_state = "xenos"
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
+	alternate_screams = list('sound/voice/hiss6.ogg')
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/fedora
@@ -205,7 +204,6 @@
 	item_state = "sombrero"
 	desc = "You can practically taste the fiesta."
 	flags_inv = HIDEHAIR
-
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
 /obj/item/clothing/head/sombrero/green
@@ -369,3 +367,69 @@
 	item_state = "assu_helmet"
 	desc = "A cheap replica of old riot helmet without visor. It has \"D.A.B.\" written on the front."
 	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/hotel
+	name = "Telegram cap"
+	desc = "A bright red cap warn by hotel staff. Or people who want to be a singing telegram"
+	icon_state = "telegram"
+	dog_fashion = /datum/dog_fashion/head/telegram
+
+/obj/item/clothing/head/colour
+	name = "Singer cap"
+	desc = "A light white hat that has bands of color. Just makes you want to sing and dance!"
+	icon_state = "colour"
+	dog_fashion = /datum/dog_fashion/head/colour
+
+/obj/item/clothing/head/christmashat
+	name = "red santa hat"
+	desc = "A red Christmas Hat! How festive!"
+	icon_state = "christmashat"
+	item_state = "christmashat"
+
+/obj/item/clothing/head/christmashatg
+	name = "green santa hat"
+	desc = "A green Christmas Hat! How festive!"
+	icon_state = "christmashatg"
+	item_state = "christmashatg"
+
+/obj/item/clothing/head/cowboyhat
+	name = "cowboy hat"
+	desc = "A standard brown cowboy hat, yeehaw."
+	icon_state = "cowboyhat"
+	item_state= "cowboyhat"
+
+/obj/item/clothing/head/cowboyhat/black
+	name = "black cowboy hat"
+	desc = "A a black cowboy hat, perfect for any outlaw"
+	icon_state = "cowboyhat_black"
+	item_state= "cowboyhat_black"
+
+/obj/item/clothing/head/cowboyhat/white
+	name = "white cowboy hat"
+	desc = "A white cowboy hat, perfect for your every day rancher"
+	icon_state = "cowboyhat_white"
+	item_state= "cowboyhat_white"
+
+/obj/item/clothing/head/cowboyhat/pink
+	name = "pink cowboy hat"
+	desc = "A pink cowboy? more like cowgirl hat, just don't be a buckle bunny."
+	icon_state = "cowboyhat_pink"
+	item_state= "cowboyhat_pink"
+
+/obj/item/clothing/head/cowboyhat/sec
+	name = "security cowboy hat"
+	desc = "A security cowboy hat, perfect for any true lawman"
+	icon_state = "cowboyhat_sec"
+	item_state= "cowboyhat_sec"
+
+/obj/item/clothing/head/squatter_hat
+	name = "slav squatter hat"
+	icon_state = "squatter_hat"
+	item_state = "squatter_hat"
+	desc = "Cyka blyat."
+
+/obj/item/clothing/head/russobluecamohat
+	name = "russian blue camo beret"
+	desc = "A symbol of discipline, honor, and lots and lots of removal of some type of skewered food."
+	icon_state = "russobluecamohat"
+	item_state = "russobluecamohat"

@@ -31,14 +31,14 @@
 			ready = FALSE
 	update_icon()
 
-/obj/item/supplypod_beacon/update_icon()
-	cut_overlays()
+/obj/item/supplypod_beacon/update_overlays()
+	. = ..()
 	if (launched)
-		add_overlay("sp_green")
+		. += "sp_green"
 	else if (ready)
-		add_overlay("sp_yellow")
+		. += "sp_yellow"
 	else if (linked)
-		add_overlay("sp_orange")
+		. += "sp_orange"
 
 /obj/item/supplypod_beacon/proc/endLaunch()
 	launched = FALSE
@@ -76,12 +76,14 @@
 	to_chat(user, "<span class='notice'>[src] linked to [C].</span>")
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
-	if (!user.canUseTopic(src, !issilicon(user)))
+	. = ..()
+	if (!user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return
 	if (express_console)
 		unlink_console()
 	else
 		to_chat(user, "<span class='notice'>There is no linked console!</span>")
+	return TRUE
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console

@@ -46,9 +46,9 @@
 	else
 		return 0
 
-/obj/machinery/power/proc/avail()
+/obj/machinery/power/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
 	else
 		return 0
 
@@ -382,6 +382,7 @@
 	return null
 
 /area/proc/get_apc()
+	var/target = base_area ? base_area : src
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		if(APC.area == src)
+		if(APC.area == target)
 			return APC

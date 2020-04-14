@@ -46,7 +46,7 @@
 	var/list/organs = M.getorganszone("head") + M.getorganszone("eyes") + M.getorganszone("mouth")
 	for(var/internal_organ in organs)
 		var/obj/item/organ/I = internal_organ
-		I.Remove(M)
+		I.Remove()
 		I.forceMove(T)
 	head.drop_limb()
 	qdel(head)
@@ -88,25 +88,6 @@
 				to_chat(user, "<span class='notice'>You successfully compress [target]! The compressor now has [charges] charges.</span>")
 		else
 			to_chat(user, "<span class='notice'>Anomalous error. Summon a coder.</span>")
-
-	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_GROIN)
-		var/mob/living/carbon/human/H = target
-		var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
-		if(!P)
-			return
-		playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 1)
-		H.visible_message("<span class='warning'>[user] is preparing to shrink [H]\'s [P.name] with their bluespace compression kit!</span>")
-		if(do_mob(user, H, 40) && charges > 0 && P.length > 0)
-			H.visible_message("<span class='warning'>[user] has shrunk [H]\'s [P.name]!</span>")
-			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 50, 1)
-			sparks()
-			flash_lighting_fx(3, 3, LIGHT_COLOR_CYAN)
-			charges -= 1
-			var/p_name = P.name
-			P.modify_size(-5)
-			if(QDELETED(P))
-				H.visible_message("<span class='warning'>[H]\'s [p_name] vanishes!</span>")
-
 
 /obj/item/compressionkit/attackby(obj/item/I, mob/user, params)
 	..()

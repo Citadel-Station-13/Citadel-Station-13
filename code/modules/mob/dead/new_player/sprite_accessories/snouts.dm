@@ -151,11 +151,12 @@
 /datum/sprite_accessory/mam_snouts
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	recommended_species = list("mammal", "slimeperson", "insect", "podweak")
 
 /datum/sprite_accessory/mam_snouts/none
 	name = "None"
 	icon_state = "none"
-
+	recommended_species = null
 
 /datum/sprite_accessory/mam_snouts/bird
 	name = "Beak"
@@ -243,6 +244,10 @@
 /datum/sprite_accessory/mam_snouts/shark
 	name = "Shark"
 	icon_state = "shark"
+
+/datum/sprite_accessory/mam_snouts/hshark
+	name = "hShark"
+	icon_state = "hshark"
 
 /datum/sprite_accessory/mam_snouts/toucan
 	name = "Toucan"

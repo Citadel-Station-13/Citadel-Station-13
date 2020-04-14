@@ -3,7 +3,7 @@
 /obj/item/projectile/bullet/honker
 	damage = 0
 	knockdown = 60
-	forcedodge = TRUE
+	movement_type = FLYING | UNSTOPPABLE
 	nodamage = TRUE
 	candink = FALSE
 	hitsound = 'sound/items/bikehorn.ogg'

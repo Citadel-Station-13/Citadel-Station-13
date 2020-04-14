@@ -113,7 +113,7 @@
 	return TRUE
 
 
-/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
 	if (message_mode == MODE_INTERCOM)
 		return  // Avoid hearing the same thing twice
@@ -147,4 +147,4 @@
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
 	inverse = TRUE
-	materials = list(MAT_METAL = 75, MAT_GLASS = 25)
+	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)

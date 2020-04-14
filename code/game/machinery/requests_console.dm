@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	..()
 	update_icon()
 
-/obj/machinery/requests_console/update_icon()
+/obj/machinery/requests_console/update_icon_state()
 	if(stat & NOPOWER)
 		set_light(0)
 	else
@@ -263,10 +263,9 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(reject_bad_text(href_list["write"]))
-		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
-
-		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
+	if(href_list["write"])
+		dpt = ckey(reject_bad_text(href_list["write"])) //write contains the string of the receiving department's name
+		var/new_message = stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -282,7 +281,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
+		var/new_message = reject_bad_text(stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN))
 		if(new_message)
 			message = new_message
 			if (text2num(href_list["priority"]) < 2)
@@ -438,9 +437,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	return
 
 /obj/machinery/requests_console/say_mod(input, message_mode)
-	var/ending = copytext(input, length(input) - 2)
-	if (ending == "!!!")
-		. = "blares"
+	if(spantext_char(input, "!", -3))
+		return "blares"
 	else
 		. = ..()
 
@@ -471,7 +469,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			if(newmessagepriority < EXTREME_MESSAGE_PRIORITY)
 				newmessagepriority = EXTREME_MESSAGE_PRIORITY
 				update_icon()
-			if(1)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 				say(title)
 			messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"

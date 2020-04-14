@@ -145,6 +145,12 @@
 
 	return not_handled //For future deeper overrides
 
+/mob/living/carbon/human/equipped_speed_mods()
+	. = ..()
+	for(var/sloties in get_all_slots() - list(l_store, r_store, s_store))
+		var/obj/item/thing = sloties
+		. += thing?.slowdown
+
 /mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
 	var/index = get_held_index_of_item(I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
@@ -191,7 +197,6 @@
 		if(G.vision_correction)
 			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
 				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-			adjust_eye_damage(0)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		if(!QDELETED(src))

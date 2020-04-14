@@ -7,8 +7,8 @@
 
 	if(!gibbed)
 		emote("deathgasp")
-	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
+
+	disable_intentional_combat_mode(TRUE, FALSE)
 
 	. = ..()
 
@@ -43,7 +43,7 @@
 					continue
 				var/org_zone = check_zone(O.zone) //both groin and chest organs.
 				if(org_zone == BODY_ZONE_CHEST)
-					O.Remove(src)
+					O.Remove()
 					O.forceMove(Tsec)
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
@@ -55,7 +55,7 @@
 			if(no_organs && !istype(I, /obj/item/organ/brain))
 				qdel(I)
 				continue
-			I.Remove(src)
+			I.Remove()
 			I.forceMove(Tsec)
 			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
@@ -66,7 +66,6 @@
 		BP.drop_limb()
 		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
-/mob/living/carbon/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE)
-	if(combatmode)
-		toggle_combat_mode(TRUE, TRUE)
+/mob/living/carbon/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
+	disable_intentional_combat_mode(TRUE, FALSE)
 	return ..()

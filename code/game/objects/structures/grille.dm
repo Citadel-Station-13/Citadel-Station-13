@@ -10,7 +10,7 @@
 	layer = BELOW_OBJ_LAYER
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 	max_integrity = 50
-	integrity_failure = 20
+	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 	var/rods_broken = TRUE
@@ -22,7 +22,7 @@
 	. = ..()
 	update_icon()
 
-/obj/structure/grille/update_icon()
+/obj/structure/grille/update_icon_state()
 	if(QDELETED(src) || broken)
 		return
 
@@ -84,7 +84,7 @@
 
 /obj/structure/grille/attack_animal(mob/user)
 	. = ..()
-	if(!shock(user, 70))
+	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille)
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
@@ -258,7 +258,7 @@
 			take_damage(1, BURN, 0, 0)
 	..()
 
-/obj/structure/grille/hitby(AM as mob|obj)
+/obj/structure/grille/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isobj(AM))
 		if(prob(50) && anchored && !broken)
 			var/obj/O = AM

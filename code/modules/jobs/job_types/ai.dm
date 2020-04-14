@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_SILICON
 	display_order = JOB_DISPLAY_ORDER_AI
 	var/do_special_check = TRUE
+	threat = 5
 
 /datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly, announce, latejoin, datum/outfit/outfit_override, client/preference_source = null)
 	if(visualsOnly)
@@ -36,7 +37,7 @@
 			qdel(lateJoinCore)
 	var/mob/living/silicon/ai/AI = H
 	AI.apply_pref_name("ai", M.client)			//If this runtimes oh well jobcode is fucked.
-	AI.set_core_display_icon(M.client)
+	AI.set_core_display_icon(null, M.client)
 
 	//we may have been created after our borg
 	if(SSticker.current_state == GAME_STATE_SETTING_UP)

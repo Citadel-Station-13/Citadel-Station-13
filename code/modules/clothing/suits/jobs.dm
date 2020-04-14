@@ -155,28 +155,6 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = NONE
 
-//Security
-/obj/item/clothing/suit/security/officer
-	name = "security officer's jacket"
-	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
-	icon_state = "officerbluejacket"
-	item_state = "officerbluejacket"
-	body_parts_covered = CHEST|ARMS
-
-/obj/item/clothing/suit/security/warden
-	name = "warden's jacket"
-	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
-	icon_state = "wardenbluejacket"
-	item_state = "wardenbluejacket"
-	body_parts_covered = CHEST|ARMS
-
-/obj/item/clothing/suit/security/hos
-	name = "head of security's jacket"
-	desc = "This piece of clothing was specifically designed for asserting superior authority."
-	icon_state = "hosbluejacket"
-	item_state = "hosbluejacket"
-	body_parts_covered = CHEST|ARMS
-
 //Surgeon
 /obj/item/clothing/suit/apron/surgical
 	name = "surgical apron"
@@ -207,7 +185,7 @@
 	item_state = "techpriest"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/techpriest
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	mutantrace_variation = NONE
 
 /obj/item/clothing/head/hooded/techpriest
 	name = "techpriest's hood"
@@ -216,4 +194,19 @@
 	item_state = "techpriesthood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
+
+
+//Paramedic
+
+/obj/item/clothing/suit/toggle/labcoat/paramedic
+	name = "paramedic vest"
+	desc = "A dark blue vest with reflective strips for emergency medical technicians."
+	icon_state = "paramedic-vest"
+	item_state = "paramedic-vest"
+
+/obj/item/clothing/suit/toggle/labcoat/emt
+	name = "emt vest"
+	desc = "A dark blue vest with reflective strips for emergency medical technicians."
+	icon_state = "labcoat_emt"
+	item_state = "labcoat_emt"

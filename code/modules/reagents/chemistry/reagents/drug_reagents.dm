@@ -1,6 +1,5 @@
 /datum/reagent/drug
 	name = "Drug"
-	id = "drug"
 	value = 12
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
@@ -8,11 +7,11 @@
 
 /datum/reagent/drug/on_mob_end_metabolize(mob/living/M)
 	if(trippy)
-		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
-	id = "space_drugs"
+	value = 6
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
@@ -21,7 +20,7 @@
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
-		if(M.canmove)
+		if(CHECK_MOBILITY(M, MOBILITY_MOVE))
 			if(prob(10))
 				step(M, pick(GLOB.cardinals))
 	if(prob(7))
@@ -30,7 +29,7 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/overdose, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
@@ -39,7 +38,7 @@
 
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
-	id = "nicotine"
+	value = 0
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -53,8 +52,7 @@
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
+	M.AdjustAllImmobility(-20, 0)
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	..()
@@ -62,7 +60,6 @@
 
 /datum/reagent/drug/crank
 	name = "Crank"
-	id = "crank"
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
 	color = "#FA00C8"
@@ -74,8 +71,7 @@
 	if(prob(5))
 		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
+	M.AdjustAllImmobility(-20, 0)
 	M.AdjustUnconscious(-20, 0)
 	..()
 	. = 1
@@ -110,7 +106,6 @@
 
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
-	id = "krokodil"
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
 	color = "#0064B4"
@@ -162,7 +157,6 @@
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
-	id = "methamphetamine"
 	description = "Reduces stun times by about 300%, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
@@ -176,18 +170,19 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	L.ignore_slowdown(id)
+	L.ignore_slowdown(type)
+	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
-	L.unignore_slowdown(id)
+	L.unignore_slowdown(type)
+	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.AdjustStun(-40, 0)
-	M.AdjustKnockdown(-40, 0)
+	M.AdjustAllImmobility(-40, 0)
 	M.AdjustUnconscious(-40, 0)
 	M.adjustStaminaLoss(-7.5 * REM, 0)
 	if(jitter)
@@ -201,7 +196,7 @@
 	. = 1
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i in 1 to 4)
 			step(M, pick(GLOB.cardinals))
 	if(prob(20))
@@ -228,7 +223,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 4, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
@@ -238,7 +233,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(20)
@@ -250,7 +245,6 @@
 	. = 1
 
 /datum/reagent/drug/methamphetamine/changeling
-	id = "changelingmeth"
 	name = "Changeling Adrenaline"
 	addiction_threshold = 35
 	overdose_threshold = 35
@@ -259,7 +253,6 @@
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
-	id = "bath_salts"
 	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
@@ -271,16 +264,16 @@
 
 /datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	if(rage)
 		QDEL_NULL(rage)
 	..()
@@ -292,7 +285,7 @@
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4)
 	M.hallucination += 5
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
 	..()
@@ -300,7 +293,7 @@
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
 	M.hallucination += 5
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i in 1 to 8)
 			step(M, pick(GLOB.cardinals))
 	if(prob(20))
@@ -311,7 +304,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
 	M.hallucination += 10
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(5)
@@ -322,7 +315,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
 	M.hallucination += 20
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(10)
@@ -334,7 +327,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
 	M.hallucination += 30
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 12, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
@@ -346,7 +339,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
 	M.hallucination += 30
-	if(M.canmove && !ismovableatom(M.loc))
+	if(CHECK_MOBILITY(M, MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 16, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(50)
@@ -360,7 +353,6 @@
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
-	id = "aranesp"
 	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
@@ -380,7 +372,6 @@
 
 /datum/reagent/drug/happiness
 	name = "Happiness"
-	id = "happiness"
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	reagent_state = LIQUID
 	color = "#FFF378"
@@ -390,11 +381,11 @@
 
 /datum/reagent/drug/happiness/on_mob_add(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_FEARLESS, id)
+	ADD_TRAIT(L, TRAIT_FEARLESS, type)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
 
 /datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_FEARLESS, id)
+	REMOVE_TRAIT(L, TRAIT_FEARLESS, type)
 	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
 	..()
 
@@ -458,7 +449,6 @@
 
 /datum/reagent/drug/skooma
 	name = "Skooma"
-	id = "skooma"
 	description = "An ancient, highly-addictive drug of long-forgotten times. It greatly improves the user's speed and strength, but heavily impedes their intelligence and agility."
 	reagent_state = LIQUID
 	color = "#F3E0F9"
@@ -470,25 +460,29 @@
 
 /datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	L.next_move_modifier *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.physiology)
 			H.physiology.stamina_mod *= 0.5
 		if(H.dna && H.dna.species)
-			H.dna.species.punchdamagehigh *= 5
+			H.dna.species.punchdamagehigh += 4
+			H.dna.species.punchdamagelow  += 4
+			H.dna.species.punchstunthreshold -= 2
 
 /datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	L.remove_movespeed_modifier(id)
+	L.remove_movespeed_modifier(type)
 	L.next_move_modifier *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.physiology)
 			H.physiology.stamina_mod *= 2
 		if(H.dna && H.dna.species)
-			H.dna.species.punchdamagehigh *= 0.2
+			H.dna.species.punchdamagehigh -= 4
+			H.dna.species.punchdamagelow -= 4
+			H.dna.species.punchstunthreshold += 2
 
 /datum/reagent/drug/skooma/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM)

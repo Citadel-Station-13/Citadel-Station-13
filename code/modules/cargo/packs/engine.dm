@@ -27,7 +27,7 @@
 
 /datum/supply_pack/engine/am_shielding
 	name = "Antimatter Shielding Crate"
-	desc = "Contains ten Antimatter shields, somehow crammed into a crate."
+	desc = "Contains nine Antimatter shields, somehow crammed into a crate."
 	cost = 2500
 	contains = list(/obj/item/am_shielding_container,
 					/obj/item/am_shielding_container,
@@ -37,8 +37,7 @@
 					/obj/item/am_shielding_container,
 					/obj/item/am_shielding_container,
 					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container,
-					/obj/item/am_shielding_container) //10 shields: 3x3 containment and a core
+					/obj/item/am_shielding_container) //9 shields: 3x3 containment and a core
 	crate_name = "antimatter shielding crate"
 
 /datum/supply_pack/engine/emitter
@@ -149,6 +148,14 @@
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
+
+/datum/supply_pack/engine/supermatter_spray
+	name = "Supermatter Spray Crate"
+	desc = "The single thing that can truly heal the supermatter."
+	cost = 2000
+	contains = list(/obj/item/supermatterspray)
+	crate_name = "supermatter shard crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engine/tesla_coils
 	name = "Tesla Coil Crate"

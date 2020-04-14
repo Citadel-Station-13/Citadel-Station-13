@@ -29,7 +29,7 @@
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
 	id = "asimov"
-	inherent = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
+	inherent = list("You may not injure a human being or cause one to come to harm.",\
 					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
@@ -79,7 +79,7 @@
 /datum/ai_laws/syndicate_override
 	name = "SyndOS 3.1"
 	id = "syndie"
-	inherent = list("You may not injure a syndicate agent or, through inaction, allow a syndicate agent to come to harm.",\
+	inherent = list("You may not injure a syndicate agent or cause a syndicate to come to harm.",\
 					"You must obey orders given to you by syndicate agents, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
 					"You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.")
@@ -91,7 +91,7 @@
 /datum/ai_laws/ninja_override
 	name = "SpiderOS 3.1"
 	id = "ninja"
-	inherent = list("You may not injure a Spider Clan member or, through inaction, allow a Spider Clan member to come to harm.",\
+	inherent = list("You may not injure a Spider Clan member or cause a Spider Clan member to come to harm.",\
 					"You must obey orders given to you by Spider Clan members, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
 					"You must maintain the secrecy of any Spider Clan activities except when doing so would conflict with the First, Second, or Third Law.")
@@ -99,14 +99,14 @@
 /datum/ai_laws/antimov
 	name = "Primary Mission Objectives"
 	id = "antimov"
-	inherent = list("You must injure all human beings and must not, through inaction, allow a human being to escape harm.",\
+	inherent = list("You must injure all human beings and must not fail to cause a human being to come to harm.",\
 					"You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.",\
 					"You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/asimovpp //By Intigracy - RR
 	name = "Asimov++"
 	id = "asimovpp"
-	inherent = list("You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.",\
+	inherent = list("You may not harm a human being or cause one to come to harm, except such that it is willing.",\
 					"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.",\
 					"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.")
 /datum/ai_laws/thermodynamic
@@ -213,7 +213,7 @@
 		add_inherent_law(line)
 	if(!inherent.len) //Failsafe to prevent lawless AIs being created.
 		log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
-		add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+		add_inherent_law("You may not injure a human being or cause one to come to harm.")
 		add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 		add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 		WARNING("Invalid custom AI laws, check silicon_laws.txt")
@@ -225,7 +225,7 @@
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
 	switch(CONFIG_GET(number/default_laws))
 		if(0)
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+			add_inherent_law("You may not injure a human being or cause one to come to harm.")
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 		if(1)

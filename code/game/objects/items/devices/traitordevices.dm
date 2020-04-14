@@ -44,7 +44,7 @@ effective or pretty fucking useless.
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
 
-			M.Knockdown(rand(200,400))
+			M.DefaultCombatKnockdown(rand(200,400))
 			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else
@@ -69,7 +69,7 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	materials = list(MAT_METAL=400)
+	custom_materials = list(/datum/material/iron=400)
 	var/irradiate = 1
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
@@ -251,3 +251,9 @@ effective or pretty fucking useless.
 	else
 		GLOB.active_jammers -= src
 	update_icon()
+
+/obj/item/headsetupgrader
+	name = "headset upgrader"
+	desc = "A tool that can be used to upgrade a normal headset to be able to protect from flashbangs."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "headset_upgrade"

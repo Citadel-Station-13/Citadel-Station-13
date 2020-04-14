@@ -113,8 +113,6 @@
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
-	item_color = "[eggcolor]"
-
 /obj/item/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
@@ -140,96 +138,8 @@
 		containsPrize = FALSE
 		qdel(src)
 
-//Easter Recipes + food
-/obj/item/reagent_containers/food/snacks/hotcrossbun
-	bitesize = 2
-	name = "hot-cross bun"
-	desc = "The Cross represents the Assistants that died for your sins."
-	icon_state = "hotcrossbun"
-
-/datum/crafting_recipe/food/hotcrossbun
-	name = "Hot-Cross Bun"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
-		/datum/reagent/consumable/sugar = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/hotcrossbun
-	category = CAT_MISCFOOD
-
-
-/obj/item/reagent_containers/food/snacks/store/cake/brioche
-	name = "brioche cake"
-	desc = "A ring of sweet, glazed buns."
-	icon_state = "briochecake"
-	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/brioche
-	slices_num = 6
-	bonus_reagents = list("nutriment" = 10, "vitamin" = 2)
-
-/obj/item/reagent_containers/food/snacks/cakeslice/brioche
-	name = "brioche cake slice"
-	desc = "Delicious sweet-bread. Who needs anything else?"
-	icon_state = "briochecake_slice"
-	filling_color = "#FFD700"
-
-/datum/crafting_recipe/food/briochecake
-	name = "Brioche cake"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
-		/datum/reagent/consumable/sugar = 2
-	)
-	result = /obj/item/reagent_containers/food/snacks/store/cake/brioche
-	category = CAT_MISCFOOD
-
-/obj/item/reagent_containers/food/snacks/scotchegg
-	name = "scotch egg"
-	desc = "A boiled egg wrapped in a delicious, seasoned meatball."
-	icon_state = "scotchegg"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
-	bitesize = 3
-	filling_color = "#FFFFF0"
-	list_reagents = list("nutriment" = 6)
-
-/datum/crafting_recipe/food/scotchegg
-	name = "Scotch egg"
-	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
-		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/scotchegg
-	category = CAT_MISCFOOD
-
-/obj/item/reagent_containers/food/snacks/soup/mammi
-	name = "Mammi"
-	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
-	icon_state = "mammi"
-	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
-	list_reagents = list("nutriment" = 8, "vitamin" = 1)
-
-/datum/crafting_recipe/food/mammi
-	name = "Mammi"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
-		/datum/reagent/consumable/milk = 5
-	)
-	result = /obj/item/reagent_containers/food/snacks/soup/mammi
-	category = CAT_MISCFOOD
-
-/obj/item/reagent_containers/food/snacks/chocolatebunny
-	name = "chocolate bunny"
-	desc = "Contains less than 10% real rabbit!"
-	icon_state = "chocolatebunny"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
-	filling_color = "#A0522D"
-
-/datum/crafting_recipe/food/chocolatebunny
-	name = "Chocolate bunny"
-	reqs = list(
-		/datum/reagent/consumable/sugar = 2,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/chocolatebunny
-	category = CAT_MISCFOOD
+/*
+Easter Recipes + Food moved to appropriate files.
+\code\modules\food_and_drinks\
+\code\modules\food_and_drinks\recipes\
+*/

@@ -41,7 +41,7 @@
 		return TRUE
 
 	//We'll load our client's organs if we have one
-	if(client && client.prefs_vr)
+	if(client?.prefs)
 		if(!copy_from_prefs_vr())
 			to_chat(src,"<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>")
 			return FALSE
@@ -158,7 +158,7 @@
 		swallow_time = istype(prey, /mob/living/carbon/human) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
 
 	//Timer and progress bar
-	if(!do_after(user, swallow_time, prey))
+	if(!do_after(user, swallow_time, TRUE, prey))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
@@ -237,6 +237,8 @@
 			return
 		//Actual escaping
 		B.release_specific_contents(src,TRUE) //we might as well take advantage of that specific belly's handling. Else we stay blinded forever.
+		message_admins("[src] used OOC escape to escape from [B.owner]'s belly.")
+		log_consent("[src] used OOC escape to escape from [B.owner]'s belly.")
 		src.stop_sound_channel(CHANNEL_PREYLOOP)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		for(var/mob/living/simple_animal/SA in range(10))
@@ -255,50 +257,27 @@
 			return
 		//Actual escaping
 		belly.go_out(src) //Just force-ejects from the borg as if they'd clicked the eject button.
+		message_admins("[src] used OOC escape from a dogborg sleeper.")
+		log_consent("[src] used OOC escape from a dogborg sleeper.")
 	else
 		to_chat(src,"<span class='alert'>You aren't inside anyone, though, is the thing.</span>")
 
-//
-//	Verb for saving vore preferences to save file
-//
-/mob/living/proc/save_vore_prefs()
-	if(!client || !client.prefs_vr)
-		return FALSE
-	if(!copy_to_prefs_vr())
-		return FALSE
-	if(!client.prefs_vr.save_vore())
-		return FALSE
-
-	return TRUE
-
-/mob/living/proc/apply_vore_prefs()
-	if(!client || !client.prefs_vr)
-		return FALSE
-	if(!client.prefs_vr.load_vore())
-		return FALSE
-	if(!copy_from_prefs_vr())
-		return FALSE
-
-	return TRUE
-
 /mob/living/proc/copy_to_prefs_vr()
-	if(!client || !client.prefs_vr)
-		to_chat(src,"<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
+	if(!client || !client.prefs)
+		to_chat(src,"<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
 
-	var/datum/vore_preferences/P = client.prefs_vr
-
-	P.digestable = src.digestable
-	P.devourable = src.devourable
-	P.feeding = src.feeding
-	P.vore_taste = src.vore_taste
+	client.prefs.digestable = digestable
+	client.prefs.devourable = devourable
+	client.prefs.feeding = feeding
+	client.prefs.vore_taste = vore_taste
 
 	var/list/serialized = list()
-	for(var/belly in src.vore_organs)
+	for(var/belly in vore_organs)
 		var/obj/belly/B = belly
 		serialized += list(B.serialize()) //Can't add a list as an object to another list in Byond. Thanks.
 
-	P.belly_prefs = serialized
+	client.prefs.belly_prefs = serialized
 
 	return TRUE
 
@@ -306,21 +285,20 @@
 //	Proc for applying vore preferences, given bellies
 //
 /mob/living/proc/copy_from_prefs_vr()
-	if(!client || !client.prefs_vr)
-		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
+	if(!client || !client.prefs)
+		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
 	vorepref_init = TRUE
 
-	var/datum/vore_preferences/P = client.prefs_vr
 
-	digestable = P.digestable
-	devourable = P.devourable
-	feeding = P.feeding
-	vore_taste = P.vore_taste
+	digestable = client.prefs.digestable
+	devourable = client.prefs.devourable
+	feeding = client.prefs.feeding
+	vore_taste = client.prefs.vore_taste
 
 	release_vore_contents(silent = TRUE)
-	vore_organs.Cut()
-	for(var/entry in P.belly_prefs)
+	QDEL_LIST(vore_organs)
+	for(var/entry in client.prefs.belly_prefs)
 		list_to_object(entry,src)
 
 	return TRUE
@@ -372,20 +350,31 @@
 //
 // Clearly super important. Obviously.
 //
-/mob/living/proc/lick(var/mob/living/tasted in oview(1))
+/mob/living/proc/lick()
 	set name = "Lick Someone"
 	set category = "Vore"
 	set desc = "Lick someone nearby!"
 
-	if(!istype(tasted))
+	if(incapacitated(ignore_restraints = TRUE))
+		to_chat(src, "<span class='warning'>You can't do that while incapacitated.</span>")
 		return
 
-	if(src == stat)
+	var/list/choices
+	for(var/mob/living/L in view(1))
+		if(L != src && (!L.ckey || L.client?.prefs.lickable) && Adjacent(L))
+			LAZYADD(choices, L)
+
+	if(!choices)
 		return
 
-	src.setClickCooldown(100)
+	var/mob/living/tasted = input(src, "Who would you like to lick? (Excluding yourself and those with the preference disabled)", "Licking") as null|anything in choices
 
-	src.visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
+	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.lickable)) || !Adjacent(tasted) || incapacitated(ignore_restraints = TRUE))
+		return
+
+	setClickCooldown(100)
+
+	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
 
 /mob/living/proc/get_taste_message(allow_generic = TRUE, datum/species/mrace)
@@ -400,10 +389,12 @@
 			taste_message += "they haven't bothered to set their flavor text"
 		else
 			taste_message += "a plain old normal [src]"
-
-/*	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.touching.reagent_list.len) //Just the first one otherwise I'll go insane.
-			var/datum/reagent/R = H.touching.reagent_list[1]
-			taste_message += " You also get the flavor of [R.taste_description] from something on them"*/
 	return taste_message
+//	Check if an object is capable of eating things, based on vore_organs
+//
+/proc/is_vore_predator(var/mob/living/O)
+	if(istype(O))
+		if(O.vore_organs.len > 0)
+			return TRUE
+
+	return FALSE

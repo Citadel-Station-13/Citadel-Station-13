@@ -3,7 +3,7 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
-	materials = list(MAT_METAL=100)
+	custom_materials = list(/datum/material/iron=100)
 	attachable = TRUE
 	var/armed = FALSE
 
@@ -46,9 +46,9 @@
 			return FALSE
 		switch(type)
 			if("feet")
-				if(!H.shoes)
+				if(!H.shoes || !(H.shoes.body_parts_covered & FEET))
 					affecting = H.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-					H.Knockdown(60)
+					H.DefaultCombatKnockdown(60)
 			if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 				if(!H.gloves)
 					affecting = H.get_bodypart(type)
@@ -130,10 +130,10 @@
 	return FALSE
 
 
-/obj/item/assembly/mousetrap/hitby(A as mob|obj)
+/obj/item/assembly/mousetrap/hitby(atom/hit_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(!armed)
 		return ..()
-	visible_message("<span class='warning'>[src] is triggered by [A].</span>")
+	visible_message("<span class='warning'>[src] is triggered by [hit_atom].</span>")
 	triggered(null)
 
 

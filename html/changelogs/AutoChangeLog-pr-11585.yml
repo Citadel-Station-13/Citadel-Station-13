@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - bugfix: "beams should no longer go across the map and mess everything up if their source or target isn't on a turf."

@@ -1,3 +1,5 @@
+#define SIGNAL_TRAIT(trait_ref) "trait [trait_ref]"
+
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
 	do { \
@@ -6,12 +8,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
+			SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 			} \
 		} \
 	} while (0)
@@ -31,7 +35,8 @@
 				} \
 			};\
 			if (!length(_L[trait])) { \
-				_L -= trait \
+				_L -= trait; \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_REMOVE_TRAIT); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -46,7 +51,8 @@
 			for (var/_T in _L) { \
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
-					_L -= _T } \
+					_L -= _T ; \
+					SEND_SIGNAL(target, SIGNAL_TRAIT(_T), COMPONENT_REMOVE_TRAIT); } \
 				};\
 				if (!length(_L)) { \
 					target.status_traits = null\
@@ -55,6 +61,7 @@
 	} while (0)
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
 //mob traits
 #define TRAIT_BLIND 			"blind"
@@ -66,6 +73,7 @@
 #define TRAIT_HUSK				"husk"
 #define TRAIT_NOCLONE			"noclone"
 #define TRAIT_CLUMSY			"clumsy"
+#define TRAIT_CHUNKYFINGERS		"chunkyfingers" //means that you can't use weapons with normal trigger guards.
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_PACIFISM			"pacifism"
@@ -75,6 +83,7 @@
 #define TRAIT_DISFIGURED		"disfigured"
 #define TRAIT_XENO_HOST			"xeno_host"	//Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_STUNIMMUNE		"stun_immunity"
+#define TRAIT_TASED_RESISTANCE	"tased_resistance" //prevents you from suffering most of the effects of being tased
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
@@ -109,6 +118,7 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_HIJACKER			"hijacker"
 #define TRAIT_SIXTHSENSE		"sixthsense"
 #define TRAIT_DISSECTED			"dissected"
 #define TRAIT_FEARLESS			"fearless"
@@ -117,18 +127,58 @@
 #define TRAIT_PARALYSIS_R_ARM	"para-r-arm"
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
+#define TRAIT_DISK_VERIFIER     "disk-verifier"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
-#define	TRAIT_STRONG_GRABBER	"strong_grabber"
-#define	TRAIT_CALCIUM_HEALER	"calcium_healer"
+#define TRAIT_QUICK_CARRY		"quick-carry"
+#define TRAIT_QUICKER_CARRY		"quicker-carry"
+#define TRAIT_STRONG_GRABBER	"strong_grabber"
+#define TRAIT_CALCIUM_HEALER	"calcium_healer"
+#define TRAIT_MAGIC_CHOKE		"magic_choke"
 #define TRAIT_CAPTAIN_METABOLISM "captain-metabolism"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON           "surgeon"
+#define TRAIT_COLDBLOODED		"coldblooded"	// Your body is literal room temperature. Does not make you immune to the temp.
+#define TRAIT_NONATURALHEAL		"nonaturalheal"	// Only Admins can heal you. NOTHING else does it unless it's given the god tag.
+#define TRAIT_NORUNNING			"norunning"		// You walk!
+#define TRAIT_NOMARROW			"nomarrow"		// You don't make blood, with chemicals or nanites.
+#define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
+#define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
+#define TRAIT_NO_MIDROUND_ANTAG	"no-midround-antag" //can't be turned into an antag by random events
+#define TRAIT_PUGILIST	"pugilist" //This guy punches people for a living
+#define TRAIT_KI_VAMPIRE	"ki-vampire" //when someone with this trait rolls maximum damage on a punch and stuns the target, they regain some stamina and do clone damage
+#define TRAIT_PASSTABLE			"passtable"
+
+// mobility flag traits
+// IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
+// BUT FOR NOW, THESE ARE HOOKED TO DO update_mobility() VIA COMSIG IN living_mobility.dm
+// SO IF YOU ADD MORE, BESURE TO UPDATE IT THERE.
+
+/// Disallow movement
+#define TRAIT_MOBILITY_NOMOVE		"mobility_nomove"
+/// Disallow pickup
+#define TRAIT_MOBILITY_NOPICKUP		"mobility_nopickup"
+/// Disallow item use
+#define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
+
+#define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
+
+/**
+  * COMBAT MODE/SPRINT MODE TRAITS
+  */
+
+/// Prevents combat mode from being active.
+#define TRAIT_COMBAT_MODE_LOCKED		"combatmode_locked"
+/// Prevents sprinting from being active.
+#define TRAIT_SPRINT_LOCKED				"sprint_locked"
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
+#define INNATE_TRAIT "innate"
+
 
 // item traits
 #define TRAIT_NODROP            "nodrop"
@@ -151,19 +201,24 @@
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"
-#define TRAIT_CROCRIN_IMMUNE    "crocin_immune"
+#define TRAIT_PERMABONER		"permanent_arousal"
+#define TRAIT_NEVERBONER		"never_aroused"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
-#define TRAIT_EXHIBITIONIST		"exhibitionist"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
-#define TRAIT_PHARMA            "hepatic_pharmacokinesis"
 #define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"
-#define TRAIT_ASSBLASTUSA       "assblastusa"
 #define TRAIT_CULT_EYES 		"cult_eyes"
+#define TRAIT_AUTO_CATCH_ITEM	"auto_catch_item"
+#define TRAIT_CLOWN_MENTALITY	"clown_mentality" // The future is now, clownman.
 #define TRAIT_FREESPRINT		"free_sprinting"
-
+#define TRAIT_XRAY_VISION       "xray_vision"
+#define TRAIT_THERMAL_VISION    "thermal_vision"
+#define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
+#define TRAIT_NO_INTERNALS		"no-internals"
+#define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
+#define TRAIT_MUTATION_STASIS			"mutation_stasis" //Prevents processed genetics mutations from processing.
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -184,10 +239,16 @@
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
+#define GHOSTROLE_TRAIT "ghostrole"
+#define APHRO_TRAIT "aphro"
+#define BLOODSUCKER_TRAIT "bloodsucker"
+#define SHOES_TRAIT "shoes" //inherited from your sweet kicks
+#define GLOVE_TRAIT "glove" //inherited by your cool gloves
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
 #define CLONING_POD_TRAIT "cloning-pod"
+#define VIRTUAL_REALITY_TRAIT "vr_trait"
 #define CHANGELING_DRAIN "drain"
 #define CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
@@ -216,5 +277,13 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
+#define MARTIAL_ARTIST_TRAIT "martial_artist"
+#define SLEEPING_CARP_TRAIT "sleeping_carp"
+#define RISING_BASS_TRAIT "rising_bass"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
+#define TIMESTOP_TRAIT "timestop"
+#define NUKEOP_TRAIT "nuke-op"
+#define CLOWNOP_TRAIT "clown-op"
+#define MEGAFAUNA_TRAIT "megafauna"
+#define DEATHSQUAD_TRAIT "deathsquad"

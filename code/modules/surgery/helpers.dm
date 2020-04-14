@@ -34,7 +34,7 @@
 				continue
 			if(S.lying_required && !(M.lying))
 				continue
-			if(!S.can_start(user, M))
+			if(!S.can_start(user, M, I))
 				continue
 			for(var/path in S.target_mobtypes)
 				if(istype(M, path))
@@ -64,7 +64,7 @@
 				return
 			if(S.lying_required && !(M.lying))
 				return
-			if(!S.can_start(user, M))
+			if(!S.can_start(user, M, I))
 				return
 
 			if(S.ignore_clothes || get_location_accessible(M, selected_zone))

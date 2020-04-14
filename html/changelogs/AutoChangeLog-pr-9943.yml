@@ -1,5 +1,0 @@
-author: "dapnee"
-delete-after: True
-changes: 
-  - bugfix: "Communications console window no longer updates, won't steal focus anymore."
-  - bugfix: "Trimline neutral end exists now."

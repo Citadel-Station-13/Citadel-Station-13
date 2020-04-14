@@ -32,6 +32,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define TESLA_IGNORE_1				(1<<13) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
 #define INITIALIZED_1				(1<<14)  //Whether /atom/Initialize() has already run for the object
 #define ADMIN_SPAWNED_1			(1<<15) 	//was this spawned by an admin? used for stat tracking stuff.
+#define PREVENT_CONTENTS_EXPLOSION_1 (1<<16) /// should not get harmed if this gets caught by an explosion?
 
 //turf-only flags
 #define NOJAUNT_1					(1<<0)
@@ -53,12 +54,13 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSCLOSEDTURF	(1<<5)
 #define LETPASSTHROW	(1<<6)
 
-
 //Movement Types
-#define GROUND (1<<0)
-#define FLYING (1<<1)
-#define VENTCRAWLING (1<<2)
-#define FLOATING (1<<3)
+#define GROUND				(1<<0)
+#define FLYING				(1<<1)
+#define VENTCRAWLING		(1<<2)
+#define FLOATING			(1<<3)
+#define UNSTOPPABLE			(1<<4)			//When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
+#define CRAWLING			(1<<5)			//Applied if you're crawling around on the ground/resting.
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)
@@ -90,3 +92,30 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // radiation
 #define RAD_PROTECT_CONTENTS (1<<0)
 #define RAD_NO_CONTAMINATE (1<<1)
+
+//Mob mobility var flags
+/// any flag
+#define CHECK_MOBILITY(target, flags) CHECK_BITFIELD(target.mobility_flags, flags)
+#define CHECK_ALL_MOBILITY(target, flags) CHECK_MULTIPLE_BITFIELDS(target.mobility_flags, flags)
+
+/// can move
+#define MOBILITY_MOVE			(1<<0)
+/// can, and is, standing up.
+#define MOBILITY_STAND			(1<<1)
+/// can pickup items
+#define MOBILITY_PICKUP			(1<<2)
+/// can use items and interact with world objects like opening closets/etc
+#define MOBILITY_USE			(1<<3)
+/// can use interfaces like consoles
+#define MOBILITY_UI				(1<<4)
+/// can use storage item
+#define MOBILITY_STORAGE		(1<<5)
+/// can pull things
+#define MOBILITY_PULL			(1<<6)
+/// can hold non-nodropped items voluntarily
+#define MOBILITY_HOLD			(1<<7)
+/// Can resist out of buckling, grabs, cuffs, etc, in the usual order (buckle --> cuffs --> grab)
+#define MOBILITY_RESIST			(1<<8)
+
+#define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_RESIST)
+#define MOBILITY_FLAGS_ANY_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)

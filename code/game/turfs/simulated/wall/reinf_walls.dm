@@ -202,15 +202,20 @@
 				return 1
 	return 0
 
-/turf/closed/wall/r_wall/proc/update_icon()
+/turf/closed/wall/r_wall/update_icon()
+	. = ..()
 	if(d_state != INTACT)
 		smooth = SMOOTH_FALSE
 		clear_smooth_overlays()
-		icon_state = "r_wall-[d_state]"
 	else
 		smooth = SMOOTH_TRUE
 		queue_smooth_neighbors(src)
 		queue_smooth(src)
+
+/turf/closed/wall/r_wall/update_icon_state()
+	if(d_state != INTACT)
+		icon_state = "r_wall-[d_state]"
+	else
 		icon_state = "r_wall"
 
 /turf/closed/wall/r_wall/singularity_pull(S, current_size)
@@ -251,5 +256,24 @@
 	smooth = SMOOTH_FALSE
 
 /turf/closed/wall/r_wall/syndicate/overspace
+	icon_state = "map-overspace"
+	fixed_underlay = list("space"=1)
+
+/////////////////////Pirate Ship walls/////////////////////
+
+/turf/closed/wall/r_wall/syndicate/pirate
+	desc = "Yarr just try to blow this to smithereens!"
+	explosion_block = 30
+	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate/pirate, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium/pirate, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+
+/turf/closed/wall/r_wall/syndicate/pirate/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "map-shuttle_nd"
+
+/turf/closed/wall/r_wall/syndicate/pirate/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+
+/turf/closed/wall/r_wall/syndicate/pirate/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)

@@ -15,7 +15,7 @@
 	req_access = list(ACCESS_ENGINE_EQUIP)
 //	use_power = NO_POWER_USE
 	max_integrity = 350
-	integrity_failure = 80
+	integrity_failure = 0.2
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/stored_power = 0
@@ -45,8 +45,8 @@
 			eject()
 		else
 			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma])
-			loaded_tank.air_contents.gases[/datum/gas/plasma] -= gasdrained
-			loaded_tank.air_contents.gases[/datum/gas/tritium] += gasdrained
+			loaded_tank.air_contents.gases[/datum/gas/plasma] -= 2.7 * gasdrained
+			loaded_tank.air_contents.gases[/datum/gas/tritium] += 	2.7 * gasdrained
 			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
 
 			var/power_produced = RAD_COLLECTOR_OUTPUT
@@ -110,7 +110,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		loaded_tank = W
-		update_icons()
+		update_icon()
 	else if(W.GetID())
 		if(allowed(user))
 			if(active)
@@ -197,21 +197,21 @@
 	if(active)
 		toggle_power()
 	else
-		update_icons()
+		update_icon()
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	. = ..()
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
 		stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
-/obj/machinery/power/rad_collector/proc/update_icons()
-	cut_overlays()
+/obj/machinery/power/rad_collector/update_overlays()
+	. = ..()
 	if(loaded_tank)
-		add_overlay("ptank")
+		. += "ptank"
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		add_overlay("on")
+		. += "on"
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()
@@ -222,7 +222,7 @@
 	else
 		icon_state = "ca"
 		flick("ca_deactive", src)
-	update_icons()
+	update_icon()
 	return
 
 #undef RAD_COLLECTOR_EFFICIENCY

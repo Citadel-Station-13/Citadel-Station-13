@@ -4,7 +4,7 @@
 	invocation_type = "none"
 	include_user = 1
 	range = -1
-	clothes_req = 0
+	clothes_req = NONE
 	item_type = /obj/item/twohanded/pitchfork/demonic
 
 	school = "conjuration"
@@ -37,7 +37,7 @@
 	invocation = "Just sign on the dotted line."
 	include_user = 0
 	range = 5
-	clothes_req = 0
+	clothes_req = NONE
 
 	school = "conjuration"
 	charge_max = 150
@@ -79,7 +79,7 @@
 
 	school = "evocation"
 	charge_max = 80
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "Your very soul will catch fire!"
 	invocation_type = "shout"
 	range = 2
@@ -92,7 +92,7 @@
 	name = "Infernal Jaunt"
 	desc = "Use hellfire to phase out of existence."
 	charge_max = 200
-	clothes_req = 0
+	clothes_req = NONE
 	selection_type = "range"
 	range = -1
 	cooldown_min = 0
@@ -167,7 +167,7 @@
 	name = "Sin Touch"
 	desc = "Subtly encourage someone to sin."
 	charge_max = 1800
-	clothes_req = 0
+	clothes_req = NONE
 	selection_type = "range"
 	range = 2
 	cooldown_min = 0
@@ -198,7 +198,7 @@
 		if(H.anti_magic_check(FALSE, TRUE))
 			continue
 		H.mind.add_antag_datum(/datum/antagonist/sintouched)
-		H.Knockdown(400)
+		H.DefaultCombatKnockdown(400)
 
 
 /obj/effect/proc_holder/spell/targeted/summon_dancefloor
@@ -206,7 +206,7 @@
 	desc = "When what a Devil really needs is funk."
 	include_user = 1
 	range = -1
-	clothes_req = 0
+	clothes_req = NONE
 
 	school = "conjuration"
 	charge_max = 10
@@ -234,7 +234,7 @@
 		dancefloor_exists = FALSE
 		for(var/i in 1 to dancefloor_turfs.len)
 			var/turf/T = dancefloor_turfs[i]
-			T.ChangeTurf(dancefloor_turfs_types[i])
+			T.ChangeTurf(dancefloor_turfs_types[i], flags = CHANGETURF_INHERIT_AIR)
 	else
 		var/list/funky_turfs = RANGE_TURFS(1, user)
 		for(var/turf/closed/solid in funky_turfs)
@@ -248,7 +248,7 @@
 			var/turf/T = t
 			dancefloor_turfs[i] = T
 			dancefloor_turfs_types[i] = T.type
-			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
+			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b, flags = CHANGETURF_INHERIT_AIR)
 			i++
 
 /datum/effect_system/smoke_spread/transparent/dancefloor_devil

@@ -4,8 +4,8 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
-	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	mutant_bodyparts = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "deco_wings" = "None")
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
 	mutant_heart = /obj/item/organ/heart/vampire
@@ -81,6 +81,9 @@
 			if(H.blood_volume >= BLOOD_VOLUME_MAXIMUM)
 				to_chat(H, "<span class='notice'>You're already full!</span>")
 				return
+			//This checks whether or not they are wearing a garlic clove on their neck
+			if(!blood_sucking_checks(victim, TRUE, FALSE))
+				return
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
 				return
@@ -91,6 +94,9 @@
 			if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
+				return
+			//Here we check now for both the garlic cloves on the neck and for blood in the victims bloodstream.
+			if(!blood_sucking_checks(victim, TRUE, TRUE))
 				return
 			if(!do_after(H, 30, target = victim))
 				return
@@ -146,5 +152,7 @@
 	if(transfer_name)
 		H.name = caster.name
 
-	clothes_req = 0
-	human_req = 0
+
+	clothes_req = NONE
+	mobs_whitelist = null
+	mobs_blacklist = null

@@ -72,7 +72,7 @@
 	power_channel = ENVIRON
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
-	integrity_failure = 80
+	integrity_failure = 0.33
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
@@ -207,7 +207,7 @@
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
 	if(name == initial(name))
-		name = "[get_area_name(src)] Air Alarm"
+		name = "[get_area_name(src, get_base_area = TRUE)] Air Alarm"
 
 	power_change()
 	set_frequency(frequency)
@@ -229,7 +229,7 @@
 			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>"
 
 /obj/machinery/airalarm/ui_status(mob/user)
-	if(user.has_unlimited_silicon_privilege && aidisabled)
+	if(hasSiliconAccessInArea(user) && aidisabled)
 		to_chat(user, "AI control has been disabled.")
 	else if(!shorted)
 		return ..()
@@ -245,12 +245,12 @@
 /obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list(
 		"locked" = locked,
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = hasSiliconAccessInArea(user),
 		"emagged" = (obj_flags & EMAGGED ? 1 : 0),
 		"danger_level" = danger_level,
 	)
 
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	data["atmos_alarm"] = A.atmosalm
 	data["fire_alarm"] = A.fire
 
@@ -288,7 +288,7 @@
 								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id] * partial_pressure)
 		))
 
-	if(!locked || user.has_unlimited_silicon_privilege)
+	if(!locked || hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE))
 		data["vents"] = list()
 		for(var/id_tag in A.air_vent_names)
 			var/long_name = A.air_vent_names[id_tag]
@@ -368,12 +368,14 @@
 /obj/machinery/airalarm/ui_act(action, params)
 	if(..() || buildstage != 2)
 		return
-	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
+	var/silicon_access = hasSiliconAccessInArea(usr)
+	var/bot_priviledges = silicon_access || (usr.silicon_privileges & PRIVILEDGES_DRONE)
+	if((locked && !bot_priviledges) || (silicon_access && aidisabled))
 		return
 	var/device_id = params["id_tag"]
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
+			if(bot_priviledges && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
 		if("power", "toggle_filter", "widenet", "scrubbing")
@@ -386,9 +388,10 @@
 			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
-			var/area/A = get_area(src)
-			var/target = input("New target pressure:", name, A.air_vent_info[device_id][(action == "set_external_pressure" ? "external" : "internal")]) as num|null
-			if(!isnull(target) && !..())
+
+			var/target = params["value"]
+			if(!isnull(target))
+
 				send_signal(device_id, list("[action]" = target), usr)
 				. = TRUE
 		if("reset_external_pressure")
@@ -420,12 +423,12 @@
 			apply_mode()
 			. = TRUE
 		if("alarm")
-			var/area/A = get_area(src)
+			var/area/A = get_base_area(src)
 			if(A.atmosalert(2, src))
 				post_alert(2)
 			. = TRUE
 		if("reset")
-			var/area/A = get_area(src)
+			var/area/A = get_base_area(src)
 			if(A.atmosalert(0, src))
 				post_alert(0)
 			. = TRUE
@@ -456,7 +459,7 @@
 		return 0
 
 /obj/machinery/airalarm/proc/refresh_all()
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	for(var/id_tag in A.air_vent_names)
 		var/list/I = A.air_vent_info[id_tag]
 		if(I && I["timestamp"] + AALARM_REPORT_TIMEOUT / 2 > world.time)
@@ -507,7 +510,7 @@
 			return "Flood"
 
 /obj/machinery/airalarm/proc/apply_mode()
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
 			for(var/device_id in A.air_scrub_names)
@@ -621,10 +624,7 @@
 					"set_internal_pressure" = 0
 				))
 
-/obj/machinery/airalarm/update_icon()
-	set_light(0)
-	cut_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+/obj/machinery/airalarm/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "alarm0"
 		return
@@ -633,37 +633,42 @@
 		icon_state = "alarmx"
 		return
 
-	if(panel_open)
-		switch(buildstage)
-			if(2)
-				icon_state = "alarmx"
-			if(1)
-				icon_state = "alarm_b2"
-			if(0)
-				icon_state = "alarm_b1"
+	if(!panel_open)
+		icon_state = "alarm1"
 		return
 
-	icon_state = "alarm1"
+	switch(buildstage)
+		if(2)
+			icon_state = "alarmx"
+		if(1)
+			icon_state = "alarm_b2"
+		if(0)
+			icon_state = "alarm_b1"
+
+/obj/machinery/airalarm/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/overlay_state = AALARM_OVERLAY_OFF
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
-			add_overlay(AALARM_OVERLAY_GREEN)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
-			set_light(brightness_on)
 		if(1)
-			add_overlay(AALARM_OVERLAY_WARN)
 			overlay_state = AALARM_OVERLAY_WARN
 			light_color = LIGHT_COLOR_LAVA
-			set_light(brightness_on)
 		if(2)
-			add_overlay(AALARM_OVERLAY_DANGER)
 			overlay_state = AALARM_OVERLAY_DANGER
 			light_color = LIGHT_COLOR_RED
-			set_light(brightness_on)
 
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	if(overlay_state != AALARM_OVERLAY_OFF)
+		. += overlay_state
+		set_light(brightness_on)
+	else
+		set_light(0)
+
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 	update_light()
 
 /obj/machinery/airalarm/process()
@@ -715,7 +720,7 @@
 		return
 
 	var/datum/signal/alert_signal = new(list(
-		"zone" = get_area_name(src),
+		"zone" = get_area_name(src, get_base_area = TRUE),
 		"type" = "Atmospheric"
 	))
 	if(alert_level==2)
@@ -728,7 +733,7 @@
 	frequency.post_signal(src, alert_signal, range = -1)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
-	var/area/A = get_area(src)
+	var/area/A = get_base_area(src)
 
 	var/new_area_danger_level = 0
 	for(var/obj/machinery/airalarm/AA in A)
@@ -822,12 +827,27 @@
 
 	return ..()
 
+/obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
+	return FALSE
+
+/obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
+			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+			"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
+			buildstage = 1
+			update_icon()
+			return TRUE
+	return FALSE
+
 /obj/machinery/airalarm/AltClick(mob/user)
-	..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	. = ..()
+	if(!user.canUseTopic(src, !hasSiliconAccessInArea(user)) || !isturf(loc))
 		return
-	else
-		togglelock(user)
+	togglelock(user)
+	return TRUE
 
 /obj/machinery/airalarm/proc/togglelock(mob/living/user)
 	if(stat & (NOPOWER|BROKEN))

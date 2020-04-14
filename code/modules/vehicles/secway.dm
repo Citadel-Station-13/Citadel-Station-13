@@ -27,9 +27,9 @@
 
 /obj/vehicle/ridden/secway/relaymove(mob/user, direction)
 	var/new_speed = normalspeed
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.sprinting && charge)
+	if(isliving(user))
+		var/mob/living/L = user
+		if((L.combat_flags & COMBAT_FLAG_SPRINT_TOGGLED) && charge)
 			charge--
 			new_speed = chargespeed
 	var/datum/component/riding/D = GetComponent(/datum/component/riding)

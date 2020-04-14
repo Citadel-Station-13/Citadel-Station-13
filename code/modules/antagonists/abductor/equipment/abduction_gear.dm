@@ -17,7 +17,7 @@
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	allowed = list(
 		/obj/item/abductor,
-		/obj/item/abductor_baton,
+		/obj/item/abductor/baton,
 		/obj/item/melee/baton,
 		/obj/item/gun/energy,
 		/obj/item/restraints/handcuffs
@@ -28,6 +28,11 @@
 	var/datum/icon_snapshot/disguise
 	var/stealth_armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 15, "bomb" = 15, "bio" = 15, "rad" = 15, "fire" = 70, "acid" = 70)
 	var/combat_armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 90, "acid" = 90)
+
+/obj/item/clothing/suit/armor/abductor/vest/Initialize()
+	. = ..()
+	stealth_armor = getArmor(arglist(stealth_armor))
+	combat_armor = getArmor(arglist(combat_armor))
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT))
@@ -57,7 +62,7 @@
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to activate the vest if he's actually wearing it.
-		return 1
+		return TRUE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
@@ -87,13 +92,9 @@
 		M.cut_overlays()
 		M.regenerate_icons()
 
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/abductor/vest/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	. = ..()
 	DeactivateStealth()
-	return 0
-
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
-	DeactivateStealth()
-	return 0
 
 /obj/item/clothing/suit/armor/abductor/vest/ui_action_click()
 	switch(mode)
@@ -111,13 +112,15 @@
 			to_chat(loc, "<span class='warning'>Combat injection is still recharging.</span>")
 			return
 		var/mob/living/carbon/human/M = loc
-		M.do_adrenaline(150, FALSE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
+		M.adjustStaminaLoss(-75)
+		M.SetUnconscious(0)
+		M.SetAllImmobility(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
-	if(combat_cooldown==initial(combat_cooldown))
+	if(combat_cooldown == initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/Destroy()
@@ -131,9 +134,11 @@
 
 /obj/item/abductor
 	icon = 'icons/obj/abductor.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
 /obj/item/abductor/proc/AbductorCheck(mob/user)
-	if(HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
+	if (HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
 	if (istype(user) && user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
@@ -158,8 +163,6 @@
 	desc = "A dual-mode tool for retrieving specimens and scanning appearances. Scanning can be done through cameras."
 	icon_state = "gizmo_scan"
 	item_state = "silencer"
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
 	var/obj/machinery/abductor/console/console
@@ -218,12 +221,9 @@
 	if(marked == target)
 		to_chat(user, "<span class='warning'>This specimen is already marked!</span>")
 		return
-	if(ishuman(target))
-		if(isabductor(target))
-			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
-		else
-			prepare(target,user)
+	if(isabductor(target) || iscow(target))
+		marked = target
+		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
 		prepare(target,user)
 
@@ -247,8 +247,6 @@
 	desc = "A compact device used to shut down communications equipment."
 	icon_state = "silencer"
 	item_state = "gizmo"
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
 /obj/item/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
@@ -292,8 +290,6 @@
 			or to send a command to a test subject with a charged gland."
 	icon_state = "mind_device_message"
 	item_state = "silencer"
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	var/mode = MIND_DEVICE_MESSAGE
 
 /obj/item/abductor/mind_device/attack_self(mob/user)
@@ -389,6 +385,17 @@
 	item_state = "alienpistol"
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
+/obj/item/gun/energy/shrink_ray
+	name = "shrink ray blaster"
+	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
+			That or it's just space magic. Either way, it shrinks stuff."
+	ammo_type = list(/obj/item/ammo_casing/energy/shrink)
+	item_state = "shrink_ray"
+	icon_state = "shrink_ray"
+	fire_delay = 30
+	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
+
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
@@ -410,8 +417,9 @@
 		<br>
 		Congratulations! You are now trained for invasive xenobiology research!"}
 
-/obj/item/paper/guides/antag/abductor/update_icon()
-	return
+/obj/item/paper/guides/antag/abductor/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/paper/guides/antag/abductor/AltClick()
 	return //otherwise it would fold into a paperplane.
@@ -422,21 +430,22 @@
 #define BATON_PROBE 3
 #define BATON_MODES 4
 
-/obj/item/abductor_baton
+/obj/item/abductor/baton
 	name = "advanced baton"
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 	var/mode = BATON_STUN
-	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	force = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
 
-/obj/item/abductor_baton/proc/toggle(mob/living/user=usr)
+/obj/item/abductor/baton/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/abductor/baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
 	var/txt
 	switch(mode)
@@ -452,7 +461,7 @@
 	to_chat(usr, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
 
-/obj/item/abductor_baton/update_icon()
+/obj/item/abductor/baton/update_icon_state()
 	switch(mode)
 		if(BATON_STUN)
 			icon_state = "wonderprodStun"
@@ -467,8 +476,8 @@
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/abductor_baton/attack(mob/target, mob/living/user)
-	if(!isabductor(user))
+/obj/item/abductor/baton/attack(mob/target, mob/living/user)
+	if(!AbductorCheck(user))
 		return
 
 	if(iscyborg(target))
@@ -482,11 +491,9 @@
 
 	user.do_attack_animation(L)
 
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
-			return 0
+	if(L.run_block(src, 0, "[user]'s [src]", ATTACK_TYPE_MELEE, 0, user, check_zone(user.zone_selected)) & BLOCK_SUCCESS)
+		playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
+		return FALSE
 
 	switch (mode)
 		if(BATON_STUN)
@@ -498,22 +505,22 @@
 		if(BATON_PROBE)
 			ProbeAttack(L,user)
 
-/obj/item/abductor_baton/attack_self(mob/living/user)
+/obj/item/abductor/baton/attack_self(mob/living/user)
 	toggle(user)
 
-/obj/item/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
+/obj/item/abductor/baton/proc/StunAttack(mob/living/L,mob/living/user)
 
 	L.lastattacker = user.real_name
 	L.lastattackerckey = user.ckey
 
 	L.adjustStaminaLoss(35) //because previously it took 5-6 hits to actually "incapacitate" someone for the purposes of the sleep inducement
-	L.Knockdown(140)
+	L.DefaultCombatKnockdown(140)
 	L.apply_effect(EFFECT_STUTTER, 7)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -521,7 +528,7 @@
 
 	log_combat(user, L, "stunned")
 
-/obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
+/obj/item/abductor/baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.incapacitated(TRUE, TRUE))
 		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
 			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is interfering with the sleep inducement!</span>")
@@ -531,7 +538,7 @@
 			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 		L.Sleeping(1200)
 		log_combat(user, L, "put to sleep")
 	else
@@ -545,13 +552,13 @@
 		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel drowsy!</span>")
 
-/obj/item/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
+/obj/item/abductor/baton/proc/CuffAttack(mob/living/L,mob/living/user)
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
 		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
-			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
@@ -565,7 +572,7 @@
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
 
-/obj/item/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
+/obj/item/abductor/baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
 						"<span class='userdanger'>[user] probes you!</span>")
 
@@ -610,7 +617,7 @@
 	S.start()
 	. = ..()
 
-/obj/item/abductor_baton/examine(mob/user)
+/obj/item/abductor/baton/examine(mob/user)
 	. = ..()
 	switch(mode)
 		if(BATON_STUN)
@@ -629,20 +636,51 @@
 	icon_state = "abductor_headset"
 	item_state = "abductor_headset"
 	keyslot2 = new /obj/item/encryptionkey/heads/captain
+	bowman = TRUE
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
 	make_syndie()
 
-/obj/item/radio/headset/abductor/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
-
 /obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		return // Stops humans from disassembling abductor headsets.
 	return ..()
 
+/obj/item/abductor_machine_beacon
+	name = "machine beacon"
+	desc = "A beacon designed to instantly tele-construct abductor machinery."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "beacon"
+	w_class = WEIGHT_CLASS_TINY
+	var/obj/machinery/spawned_machine
+
+/obj/item/abductor_machine_beacon/attack_self(mob/user)
+	..()
+	user.visible_message("<span class='notice'>[user] places down [src] and activates it.</span>", "<span class='notice'>You place down [src] and activate it.</span>")
+	user.dropItemToGround(src)
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
+	addtimer(CALLBACK(src, .proc/try_spawn_machine), 30)
+
+/obj/item/abductor_machine_beacon/proc/try_spawn_machine()
+	var/viable = FALSE
+	if(isfloorturf(loc))
+		var/turf/T = loc
+		viable = TRUE
+		for(var/obj/thing in T.contents)
+			if(thing.density || ismachinery(thing) || isstructure(thing))
+				viable = FALSE
+	if(viable)
+		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
+		var/new_machine = new spawned_machine(loc)
+		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!</span>")
+		qdel(src)
+	else
+		playsound(src, 'sound/machines/buzz-two.ogg', 50)
+
+/obj/item/abductor_machine_beacon/chem_dispenser
+	name = "beacon - Reagent Synthesizer"
+	spawned_machine = /obj/machinery/chem_dispenser/abductor
 
 /obj/item/scalpel/alien
 	name = "alien scalpel"
@@ -706,11 +744,11 @@
 	framestackamount = 1
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
 			qdel(src)
@@ -760,9 +798,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "bed"
 	can_buckle = 1
-	buckle_lying = 1
 
-	var/static/list/injected_reagents = list("corazone")
+	var/static/list/injected_reagents = list(/datum/reagent/medicine/corazone)
 
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()
@@ -798,3 +835,11 @@
 	airlock_type = /obj/machinery/door/airlock/abductor
 	material_type = /obj/item/stack/sheet/mineral/abductor
 	noglass = TRUE
+
+/obj/item/clothing/under/abductor
+	desc = "The most advanced form of jumpsuit known to reality, looks uncomfortable."
+	name = "alien jumpsuit"
+	icon_state = "abductor"
+	item_state = "bl_suit"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 0)
+	can_adjust = 0

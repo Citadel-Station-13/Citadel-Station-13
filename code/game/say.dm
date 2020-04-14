@@ -28,19 +28,21 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		language = get_default_language()
 	send_speech(message, 7, src, , spans, message_language=language)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
-	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
+/atom/movable/proc/send_speech(message, range = 7, atom/movable/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
+	var/rendered = compose_message(src, message_language, message, , spans, message_mode, source)
 	for(var/_AM in get_hearers_in_view(range, source))
 		var/atom/movable/AM = _AM
-		AM.Hear(rendered, src, message_language, message, , spans, message_mode)
+		AM.Hear(rendered, src, message_language, message, , spans, message_mode, source)
 
-/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
+/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE, atom/movable/source)
+	if(!source)
+		source = speaker
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -73,8 +75,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return ""
 
 /atom/movable/proc/say_mod(input, message_mode)
-	var/ending = copytext(input, length(input))
-	if(copytext(input, length(input) - 1) == "!!")
+	var/ending = copytext_char(input, -1)
+	if(copytext_char(input, -2) == "!!")
 		return verb_yell
 	else if(ending == "?")
 		return verb_ask
@@ -87,7 +89,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!input)
 		input = "..."
 
-	if(copytext(input, length(input) - 1) == "!!")
+	if(copytext_char(input, -2) == "!!")
 		spans |= SPAN_YELL
 
 	var/spanned = attach_spans(input, spans)
@@ -122,10 +124,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/returntext = GLOB.reverseradiochannels["[freq]"]
 	if(returntext)
 		return returntext
-	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
+	return "[copytext_char("[freq]", 1, 4)].[copytext_char("[freq]", 4, 5)]"
 
-/proc/attach_spans(input, list/spans)
-	return "[message_spans_start(spans)][input]</span>"
+/atom/movable/proc/attach_spans(input, list/spans)
+	var/customsayverb = findtext(input, "*")
+	if(customsayverb)
+		input = capitalize(copytext(input, customsayverb + length(input[customsayverb])))
+	if(input)
+		return "[message_spans_start(spans)][input]</span>"
+	else
+		return
 
 /proc/message_spans_start(list/spans)
 	var/output = "<span class='"
@@ -135,7 +143,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return output
 
 /proc/say_test(text)
-	var/ending = copytext(text, length(text))
+	var/ending = copytext_char(text, -1)
 	if (ending == "?")
 		return "1"
 	else if (ending == "!")

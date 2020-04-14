@@ -19,7 +19,7 @@ SLIME SCANNER
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_METAL=150)
+	custom_materials = list(/datum/material/iron=150)
 
 /obj/item/t_scanner/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -28,7 +28,7 @@ SLIME SCANNER
 /obj/item/t_scanner/attack_self(mob/user)
 
 	on = !on
-	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
+	icon_state = copytext_char(icon_state, 1, -1) + "[on]"
 
 	if(on)
 		START_PROCESSING(SSobj, src)
@@ -75,7 +75,7 @@ SLIME SCANNER
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=200)
+	custom_materials = list(/datum/material/iron=200)
 	var/mode = 1
 	var/scanmode = 0
 	var/advanced = FALSE
@@ -150,7 +150,10 @@ SLIME SCANNER
 		msg += "\n\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>"
 		if(advanced)
 			msg += "\n\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>"
-
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(advanced && H.has_dna())
+			msg += "\n\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>"
 
 	to_chat(user, msg)
 	msg = ""
@@ -262,7 +265,7 @@ SLIME SCANNER
 						temp_message += " <span class='info'>Subject has abnormal brain fuctions.</span>"
 
 					//Astrogen shenanigans
-					if(H.reagents.has_reagent("astral"))
+					if(H.reagents.has_reagent(/datum/reagent/fermi/astral))
 						if(H.mind)
 							temp_message += " <span class='danger'>Warning: subject may be possesed.</span>"
 						else
@@ -272,10 +275,8 @@ SLIME SCANNER
 			//LIVER
 			else if(istype(O, /obj/item/organ/liver))
 				var/obj/item/organ/liver/L = O
-				if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated
+				if(L.organ_flags & ORGAN_FAILING && H.stat != DEAD) //might be depreciated
 					temp_message += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
-				if(L.swelling > 20)
-					temp_message += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
 
 			//HEART
 			else if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
@@ -307,11 +308,11 @@ SLIME SCANNER
 			//GENERAL HANDLER
 			if(!damage_message)
 				if(O.organ_flags & ORGAN_FAILING)
-					damage_message += " <span class='alert'><b>End Stage [O.name] failure detected.</b></span>"
+					damage_message += " <span class='alert'><b>Chronic [O.name] failure detected.</b></span>"
 				else if(O.damage > O.high_threshold)
-					damage_message += " <span class='alert'>Chronic [O.name] failure detected.</span>"
+					damage_message += " <span class='alert'>Acute [O.name] failure detected.</span>"
 				else if(O.damage > O.low_threshold && advanced)
-					damage_message += " <font color='red'>Acute [O.name] failure detected.</span>"
+					damage_message += " <font color='red'>Minor [O.name] failure detected.</span>"
 
 			if(temp_message || damage_message)
 				msg += "\t<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
@@ -326,8 +327,8 @@ SLIME SCANNER
 				breathes = FALSE
 			if(NOBLOOD in C.dna.species.species_traits)
 				blooded = FALSE
-		var/has_liver = (!(NOLIVER in C.dna.species.species_traits))
-		var/has_stomach = (!(NOSTOMACH in C.dna.species.species_traits))
+		var/has_liver = C.dna && !(NOLIVER in C.dna.species.species_traits)
+		var/has_stomach = C.dna && !(NOSTOMACH in C.dna.species.species_traits)
 		if(!M.getorganslot(ORGAN_SLOT_EYES))
 			msg += "\t<span class='alert'><b>Subject does not have eyes.</b></span>\n"
 		if(!M.getorganslot(ORGAN_SLOT_EARS))
@@ -407,25 +408,23 @@ SLIME SCANNER
 	// Blood Level
 	if(M.has_dna())
 		var/mob/living/carbon/C = M
-		var/blood_id = C.get_blood_id()
-		if(blood_id)
+		var/blood_typepath = C.get_blood_id()
+		if(blood_typepath)
 			if(ishuman(C))
 				if(H.bleed_rate)
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
-			var/blood_percent =  round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
+			var/blood_percent =  round((C.scan_blood_volume() / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/blood_type = C.dna.blood_type
-			if(blood_id != ("blood" || "jellyblood"))//special blood substance
-				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
+			if(!(blood_typepath in GLOB.blood_reagent_types))
+				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_typepath]
 				if(R)
 					blood_type = R.name
-				else
-					blood_type = blood_id
-			if(C.blood_volume <= (BLOOD_VOLUME_SAFE*C.blood_ratio) && C.blood_volume > (BLOOD_VOLUME_OKAY*C.blood_ratio))
-				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
-			else if(C.blood_volume <= (BLOOD_VOLUME_OKAY*C.blood_ratio))
-				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
+			if(C.scan_blood_volume() <= (BLOOD_VOLUME_SAFE*C.blood_ratio) && C.scan_blood_volume() > (BLOOD_VOLUME_OKAY*C.blood_ratio))
+				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.scan_blood_volume()] cl,</span> <span class='info'>type: [blood_type]</span>\n"
+			else if(C.scan_blood_volume() <= (BLOOD_VOLUME_OKAY*C.blood_ratio))
+				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.scan_blood_volume()] cl,</span> <span class='info'>type: [blood_type]</span>\n"
 			else
-				msg += "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>\n"
+				msg += "<span class='info'>Blood level [blood_percent] %, [C.scan_blood_volume()] cl, type: [blood_type]</span>\n"
 
 		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
@@ -465,9 +464,9 @@ SLIME SCANNER
 			else
 				msg += "<span class='notice'>Subject is not addicted to any reagents.</span>\n"
 
-			if(M.reagents.has_reagent("fermiTox"))
-				var/datum/reagent/fermiTox = M.reagents.has_reagent("fermiTox")
-				switch(fermiTox.volume)
+			var/datum/reagent/impure/fermiTox/F = M.reagents.has_reagent(/datum/reagent/impure/fermiTox)
+			if(istype(F,/datum/reagent/impure/fermiTox))
+				switch(F.volume)
 					if(5 to 10)
 						msg += "<span class='notice'>Subject contains a low amount of toxic isomers.</span>\n"
 					if(10 to 25)
@@ -486,7 +485,8 @@ SLIME SCANNER
 	set name = "Switch Verbosity"
 	set category = "Object"
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
 		return
 
 	mode = !mode
@@ -518,8 +518,8 @@ SLIME SCANNER
 	throw_speed = 3
 	throw_range = 7
 	tool_behaviour = TOOL_ANALYZER
-	materials = list(MAT_METAL=30, MAT_GLASS=20)
-	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/cooldown = FALSE
 	var/cooldown_time = 250
 	var/accuracy // 0 is the best accuracy.
@@ -590,10 +590,10 @@ SLIME SCANNER
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C, 0.01)] &deg;C ([round(environment.temperature, 0.01)] K)</span>")
 
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
-	..()
+	. = ..()
 
 	if(user.canUseTopic(src))
-
+		. = TRUE
 		if(cooldown)
 			to_chat(user, "<span class='warning'>[src]'s barometer function is preparing itself.</span>")
 			return
@@ -708,7 +708,7 @@ SLIME SCANNER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=30, MAT_GLASS=20)
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
 
 /obj/item/slime_scanner/attack(mob/living/M, mob/living/user)
 	if(user.stat || user.eye_blind)
@@ -767,7 +767,7 @@ SLIME SCANNER
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=200)
+	custom_materials = list(/datum/material/iron=200)
 
 /obj/item/nanite_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s nanites.</span>")
@@ -777,3 +777,104 @@ SLIME SCANNER
 	var/response = SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, TRUE)
 	if(!response)
 		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
+
+/obj/item/sequence_scanner
+	name = "genetic sequence scanner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gene"
+	item_state = "healthanalyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 3
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	custom_materials = list(/datum/material/iron=200)
+	var/list/discovered = list() //hit a dna console to update the scanners database
+	var/list/buffer
+	var/ready = TRUE
+	var/cooldown = 200
+
+/obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
+	add_fingerprint(user)
+	if (!HAS_TRAIT_NOT_FROM(M, TRAIT_RADIMMUNE,BLOODSUCKER_TRAIT)) //no scanning if its a husk or DNA-less Species
+		user.visible_message("<span class='notice'>[user] analyzes [M]'s genetic sequence.</span>", \
+							"<span class='notice'>You analyze [M]'s genetic sequence.</span>")
+		gene_scan(M, user)
+
+	else
+		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
+
+/obj/item/sequence_scanner/attack_self(mob/user)
+	display_sequence(user)
+
+/obj/item/sequence_scanner/attack_self_tk(mob/user)
+	return
+
+/obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
+	. = ..()
+	if(!istype(O) || !proximity)
+		return
+
+	if(istype(O, /obj/machinery/computer/scan_consolenew))
+		var/obj/machinery/computer/scan_consolenew/C = O
+		if(C.stored_research)
+			to_chat(user, "<span class='notice'>[name] linked to central research database.</span>")
+			discovered = C.stored_research.discovered_mutations
+		else
+			to_chat(user,"<span class='warning'>No database to update from.</span>")
+
+/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/C, mob/living/user)
+	if(!iscarbon(C) || !C.has_dna())
+		return
+	buffer = C.dna.mutation_index
+	to_chat(user, "<span class='notice'>Subject [C.name]'s DNA sequence has been saved to buffer.</span>")
+	if(LAZYLEN(buffer))
+		for(var/A in buffer)
+			to_chat(user, "<span class='notice'>[get_display_name(A)]</span>")
+
+
+/obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
+	if(!LAZYLEN(buffer) || !ready)
+		return
+	var/list/options = list()
+	for(var/A in buffer)
+		options += get_display_name(A)
+
+	var/answer = input(user, "Analyze Potential", "Sequence Analyzer")  as null|anything in sortList(options)
+	if(answer && ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		var/sequence
+		for(var/A in buffer) //this physically hurts but i dont know what anything else short of an assoc list
+			if(get_display_name(A) == answer)
+				sequence = buffer[A]
+				break
+
+		if(sequence)
+			var/display
+			for(var/i in 0 to length_char(sequence) / DNA_MUTATION_BLOCKS-1)
+				if(i)
+					display += "-"
+				display += copytext_char(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+
+			to_chat(user, "<span class='boldnotice'>[display]</span><br>")
+
+		ready = FALSE
+		icon_state = "[icon_state]_recharging"
+		addtimer(CALLBACK(src, .proc/recharge), cooldown, TIMER_UNIQUE)
+
+/obj/item/sequence_scanner/proc/recharge()
+	icon_state = initial(icon_state)
+	ready = TRUE
+
+/obj/item/sequence_scanner/proc/get_display_name(mutation)
+	var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation)
+	if(!HM)
+		return "ERROR"
+	if(mutation in discovered)
+		return  "[HM.name] ([HM.alias])"
+	else
+		return HM.alias

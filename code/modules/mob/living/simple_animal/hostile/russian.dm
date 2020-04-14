@@ -6,13 +6,14 @@
 	icon_living = "russianmelee"
 	icon_dead = "russianmelee_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
+	threat = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5

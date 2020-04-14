@@ -7,6 +7,7 @@
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
+	move_resist = INFINITY
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = 0
@@ -113,7 +114,8 @@
 
 
 /obj/singularity/bullet_act(obj/item/projectile/P)
-	return 0 //Will there be an impact? Who knows.  Will we see it? No.
+	qdel(P)
+	return BULLET_ACT_HIT //Will there be an impact? Who knows.  Will we see it? No.
 
 
 /obj/singularity/Bump(atom/A)

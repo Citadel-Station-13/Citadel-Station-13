@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	. += "<span class='notice'>Use in-hand to place a [singular_name].</span>"
 	. += "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>"
 
-/obj/item/stack/marker_beacon/update_icon()
+/obj/item/stack/marker_beacon/update_icon_state()
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
 
 /obj/item/stack/marker_beacon/attack_self(mob/user)
@@ -59,6 +59,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 /obj/item/stack/marker_beacon/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
+	. = TRUE
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
@@ -128,9 +129,10 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		return ..()
 
 /obj/structure/marker_beacon/AltClick(mob/living/user)
-	..()
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
+	. = TRUE
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return

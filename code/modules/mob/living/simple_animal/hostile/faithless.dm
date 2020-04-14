@@ -4,7 +4,8 @@
 	icon_state = "faithless"
 	icon_living = "faithless"
 	icon_dead = "faithless_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	threat = 1
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
@@ -19,6 +20,7 @@
 	spacewalk = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
+	blood_volume = 0
 
 	harm_intent_damage = 10
 	obj_damage = 50
@@ -40,6 +42,6 @@
 	. = ..()
 	if(. && prob(12) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.Knockdown(60)
+		C.DefaultCombatKnockdown(60)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 				"<span class='userdanger'>\The [src] knocks you down!</span>")
