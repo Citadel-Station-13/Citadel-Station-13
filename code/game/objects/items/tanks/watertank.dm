@@ -376,8 +376,8 @@
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 
-/obj/item/reagent_containers/chemtank/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE) //apply chemcolor and level
-	. = list()
+/obj/item/reagent_containers/chemtank/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE) //apply chemcolor and level
+	. = ..()
 	//inhands + reagent_filling
 	if(!isinhands && reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")

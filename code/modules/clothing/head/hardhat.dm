@@ -124,7 +124,7 @@
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 	update_icon()
 
-/obj/item/clothing/head/hardhat/weldhat/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/clothing/head/hardhat/weldhat/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
 		. += mutable_appearance('icons/mob/clothing/head.dmi', "weldhelmet")

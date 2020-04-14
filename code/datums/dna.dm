@@ -41,6 +41,7 @@
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))
 		return
+	var/old_size = destination.dna.features["body_size"]
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
@@ -55,6 +56,8 @@
 		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
 	if(transfer_SE)
 		destination.dna.mutation_index = mutation_index
+
+	destination.dna.update_body_size(old_size)
 
 	SEND_SIGNAL(destination, COMSIG_CARBON_IDENTITY_TRANSFERRED_TO, src, transfer_SE)
 
@@ -368,7 +371,9 @@
 /mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
 
 	if(newfeatures)
+		var/old_size = dna.features["body_size"]
 		dna.features = newfeatures
+		dna.update_body_size(old_size)
 
 	if(mrace)
 		var/datum/species/newrace = new mrace.type
@@ -644,3 +649,15 @@
 						gib()
 				else
 					set_species(/datum/species/dullahan)
+
+/datum/dna/proc/update_body_size(old_size)
+	if(!holder || features["body_size"] == old_size)
+		return
+	holder.resize = features["body_size"] / old_size
+	holder.update_transform()
+	var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
+	if(features["body_size"] < danger)
+		var/slowdown = 1 + round(danger/features["body_size"], 0.1) * CONFIG_GET(number/body_size_slowdown_multiplier)
+		holder.add_movespeed_modifier(MOVESPEED_ID_SMALL_STRIDE, TRUE, 100, NONE, TRUE, slowdown, ALL, FLOATING|CRAWLING)
+	else if(old_size < danger)
+		holder.remove_movespeed_modifier(MOVESPEED_ID_SMALL_STRIDE)

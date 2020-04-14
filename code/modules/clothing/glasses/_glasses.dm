@@ -346,8 +346,8 @@
 		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands && ishuman(loc) && !colored_before)
 		var/mob/living/carbon/human/H = loc
 		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")

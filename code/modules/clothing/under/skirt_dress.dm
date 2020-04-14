@@ -211,21 +211,18 @@
 	desc = "A fancy skirt made with polychromic threads."
 	icon_state = "polyskirt"
 	item_state = "rainbow"
-	hasprimary = TRUE
-	hassecondary = TRUE
-	hastertiary = TRUE
-	primary_color = "#FFFFFF"
-	secondary_color = "#F08080"
-	tertiary_color = "#808080"
 	mutantrace_variation = NONE
+	var/list/poly_colors = list("#FFFFFF", "#F08080", "#808080")
+
+/obj/item/clothing/under/dress/skirt/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 3)
 
 /obj/item/clothing/under/dress/skirt/polychromic/pleated
 	name = "polychromic pleated skirt"
 	desc = "A magnificent pleated skirt complements the woolen polychromatic sweater."
 	icon_state = "polypleat"
 	item_state = "rainbow"
-	primary_color = "#8CC6FF"
-	secondary_color = "#808080"
-	tertiary_color = "#FF3535"
 	body_parts_covered = CHEST|GROIN|ARMS
 	mutantrace_variation = NONE
+	poly_colors = list("#8CC6FF", "#808080", "#FF3535")

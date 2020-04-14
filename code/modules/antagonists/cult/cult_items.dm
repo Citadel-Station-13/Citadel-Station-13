@@ -222,7 +222,7 @@
 	phasein = /obj/effect/temp_visual/dir_setting/cult/phase
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
-/datum/action/innate/dash/cult/IsAvailable()
+/datum/action/innate/dash/cult/IsAvailable(silent = FALSE)
 	if(iscultist(holder) && current_charges)
 		return TRUE
 	else
@@ -242,7 +242,7 @@
 	sword = bastard
 	holder = user
 
-/datum/action/innate/cult/spin2win/IsAvailable()
+/datum/action/innate/cult/spin2win/IsAvailable(silent = FALSE)
 	if(iscultist(holder) && cooldown <= world.time)
 		return TRUE
 	else
@@ -451,8 +451,8 @@
 		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return BLOCK_NONE
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands && current_charges)
 		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 

@@ -43,7 +43,7 @@
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for vampires
+	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
 		return
 	if(!H.blood_volume)
 		H.blood_volume += 5
@@ -84,7 +84,7 @@
 	background_icon_state = "bg_alien"
 	required_mobility_flags = NONE
 
-/datum/action/innate/regenerate_limbs/IsAvailable()
+/datum/action/innate/regenerate_limbs/IsAvailable(silent = FALSE)
 	if(..())
 		var/mob/living/carbon/human/H = owner
 		var/list/limbs_to_heal = H.get_missing_limbs()
@@ -223,7 +223,7 @@
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/split_body/IsAvailable()
+/datum/action/innate/split_body/IsAvailable(silent = FALSE)
 	if(..())
 		var/mob/living/carbon/human/H = owner
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
@@ -776,7 +776,7 @@
 	..()
 	species = _species
 
-/datum/action/innate/use_extract/IsAvailable()
+/datum/action/innate/use_extract/IsAvailable(silent = FALSE)
 	if(..())
 		if(species && species.current_extract && (world.time > species.extract_cooldown))
 			return TRUE

@@ -22,7 +22,7 @@
 		for(var/obj/item/I in contents)
 			. += I.get_belt_overlay()
 
-/obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands && onmob_overlays)
 		for(var/obj/item/I in contents)

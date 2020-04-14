@@ -89,6 +89,14 @@
 
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/init_ref_coin_values) //so the current procedure doesn't sleep because of UNTIL()
 
+	for(var/path in subtypesof(/area/holodeck))
+		var/area/holodeck/A = path
+		var/list/compatibles = initial(A.compatible_holodeck_comps)
+		if(!compatibles || initial(A.abstract_type) == path)
+			continue
+		for(var/comp in compatibles)
+			LAZYADD(GLOB.holodeck_areas_prototypes[comp], A)
+
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
