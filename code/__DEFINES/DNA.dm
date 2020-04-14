@@ -136,8 +136,8 @@
 #define NOAROUSAL		20	//Stops all arousal effects
 #define NOGENITALS		21	//Cannot create, use, or otherwise have genitals
 #define MATRIXED		22	//if icon is color matrix'd
-#define SKINTONE		23
-#define CUSTOM_SKINTONE	24 //adds a "_g" suffix to bodypart overlays icon states
+#define SKINTONE		23	//uses skin tones
+#define CUSTOM_SKINTONE	24	//adds a "_g" suffix to bodypart overlays icon states if a custom skintone is used.
 #define HORNCOLOR		25
 #define WINGCOLOR		26
 

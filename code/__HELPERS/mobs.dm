@@ -281,7 +281,7 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	"indian" = "#b87840",
 	"african1" = "#754523",
 	"african2" = "#471c18",
-	"orange" = "#ffc905", //Spray tan overdose.
+	"orange" = "#ffc905" //Spray tan overdose.
 	))
 
 GLOBAL_LIST_INIT(nonstandard_skin_tones, list("orange"))
