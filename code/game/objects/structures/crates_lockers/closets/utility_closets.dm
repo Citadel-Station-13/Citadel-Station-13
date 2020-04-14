@@ -50,10 +50,10 @@
 			// doot
 
 		if ("rng")
-			new /obj/effect/spawner/lootdrop/breathing_tanks(src)
-			new /obj/effect/spawner/lootdrop/breathing_tanks(src)
-			new /obj/effect/spawner/lootdrop/breathing_masks(src)
-			new /obj/effect/spawner/lootdrop/breathing_masks(src)
+			new /obj/effect/spawner/lootdrop/breathing_tanks/no_turf(src)
+			new /obj/effect/spawner/lootdrop/breathing_tanks/no_turf(src)
+			new /obj/effect/spawner/lootdrop/breathing_masks/no_turf(src)
+			new /obj/effect/spawner/lootdrop/breathing_masks/no_turf(src)
 
 			return
 
@@ -106,7 +106,7 @@
 	if(prob(70))
 		new /obj/item/wrench(src)
 	if(prob(70))
-		new /obj/effect/spawner/lootdrop/welder_tools(src)
+		new /obj/effect/spawner/lootdrop/welder_tools/no_turf(src)
 	if(prob(70))
 		new /obj/item/crowbar(src)
 	if(prob(70))
@@ -114,7 +114,7 @@
 	if(prob(70))
 		new /obj/item/t_scanner(src)
 	if(prob(70))
-		new /obj/effect/spawner/lootdrop/low_tools(src) //Spare random basic tool
+		new /obj/effect/spawner/lootdrop/low_tools/no_turf(src) //Spare random basic tool
 	if(prob(20))
 		new /obj/item/storage/belt/utility(src)
 	if(prob(30))
