@@ -353,7 +353,7 @@
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
-	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
+	description = "Amps you up and gets you going, fixes stamina damage you might have but can cause toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
 	pH = 9.2
@@ -362,7 +362,7 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.adjustStaminaLoss(-18, 0)
+	M.adjustStaminaLoss(-10, 0)
 	M.adjustToxLoss(0.5, 0)
 	if(prob(50))
 		M.losebreath++
