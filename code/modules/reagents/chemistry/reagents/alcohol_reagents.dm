@@ -2397,7 +2397,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/nord_king
 	name = "Nord King"
 	color = "#EB1010" //(235, 16, 16)
-	description = "Strong mead mixed with more honey and ethanol. Known to beloved by most pallets."
+	description = "Strong mead mixed with more honey and ethanol. Known to beloved by most palettes."
 	boozepwr = 50 //strong!
 	taste_description = "honey and red wine"
 	glass_icon_state = "nord_king"
@@ -2453,7 +2453,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "copper and AC power"
 	glass_icon_state = "bug_zapper"
 	glass_name = "glass of Bug Zapper"
-	glass_desc = "An odd mix of copper, lemon juice and power meant for none-human consumption."
+	glass_desc = "An odd mix of copper, lemon juice and power meant for non-human consumption."
 
 /datum/reagent/consumable/ethanol/bug_zapper/on_mob_life(mob/living/carbon/M)
 	if(isinsect(M) || isflyperson(M) || ismoth(M))
@@ -2482,7 +2482,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/darkbrew
 	name = "Darkbrew"
 	color = "#000000" //(0, 0, 0)
-	description = "Contained and acholic dark matter."
+	description = "Contained dark matter mixed with coffee."
 	boozepwr = 5 //No booze really
 	taste_description = "Shadows and coffee trees"
 	glass_icon_state = "darkbrew"
@@ -2503,7 +2503,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 15
 	taste_description = "Milk and salt"
 	glass_icon_state = "hollow_bone"
-	glass_name = "skull of Hollw Bone"
+	glass_name = "skull of Hollow Bone"
 	glass_desc = "Mixing of milk and bone hurting juice for enjoyment for rather skinny people."
 
 /datum/reagent/consumable/ethanol/hollow_bone/on_mob_life(mob/living/carbon/M)
@@ -2533,12 +2533,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/jell_wyrm
 	name = "Jell Wyrm"
 	color = "#FF6200" //(255, 98, 0)
-	description = "Horrable mix of Co2, toxins and heat. Meant for slime based live."
+	description = "Horrible mix of Co2, toxins and heat. Meant for slime based life."
 	boozepwr = 40
 	taste_description = "tropical sea"
 	glass_icon_state = "jell_wyrm"
 	glass_name = "glass of Jell Wyrm"
-	glass_desc = "A bubbly drink that is rather inviting to those that don't know who is meant for."
+	glass_desc = "A bubbly drink that is rather inviting to those that don't know who it's meant for."
 
 /datum/reagent/consumable/ethanol/jell_wyrm/on_mob_life(mob/living/carbon/M)
 	if(isjellyperson(M) || isstartjelly(M) || isslimeperson(M) || isluminescent(M))
@@ -2551,7 +2551,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/laval_spit //Yes Laval
 	name = "Laval Spit"
 	color = "#DE3009" //(222, 48, 9)
-	description = "Heat minerals and some mauna loa. Meant for rock based live."
+	description = "Heat minerals and some mauna loa. Meant for rock based life."
 	boozepwr = 30
 	taste_description = "tropical island"
 	glass_icon_state = "laval_spit"
