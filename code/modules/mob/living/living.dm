@@ -646,6 +646,11 @@
 		// Return as we should only resist one thing at a time. Give clickdelay if the grab wasn't passive.
 		return old_gs? TRUE : FALSE
 
+	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
+		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
+		changeNext_move(CLICK_CD_MELEE)
+		return FALSE
+		
 	// unbuckling yourself. stops the chain if you try it.
 	if(buckled && last_special <= world.time)
 		log_combat(src, buckled, "resisted buckle")
@@ -676,10 +681,7 @@
 		resist_restraints() //trying to remove cuffs.
 		// DO NOT GIVE CLICKDELAY - last_special handles this.
 		return FALSE
-	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
-		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
-		changeNext_move(CLICK_CD_MELEE)
-		return FALSE
+
 
 /// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
 /mob/proc/attempt_resist_grab(moving_resist, forced, log = TRUE)
