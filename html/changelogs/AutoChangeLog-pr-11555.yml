@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - balance: "Fireman carrying now makes the person being carried unable to use items. Piggybacking now slows down the person being ridden. In both cases, the person riding will be dazed when forcefully dismounted, and dazed for a second if dismounting from piggybacking"

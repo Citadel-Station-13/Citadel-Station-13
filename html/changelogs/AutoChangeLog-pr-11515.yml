@@ -1,0 +1,8 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - tweak: "Dynamic reworked to be more \"storyteller-like\": threat is now how threatened the station is right now and threat level is how much the mode wants the station to be threatened."
+  - tweak: "Random storyteller is now truly random."
+  - tweak: "Story storyteller now gives a nice rising-action-climax-falling action curve for threat level."
+  - tweak: "\"Chaotic\" storyteller now simply ramps up threat level as round goes on."
+  - rscadd: "\"Classic\" storyteller, basically doing what \"random\" did before."

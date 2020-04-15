@@ -1,0 +1,5 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "new reagent 'Condensed Cooking Oil'"
+  - tweak: "list of chems that can go into fried non-food items was changed"
