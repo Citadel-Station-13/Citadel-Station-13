@@ -11,7 +11,7 @@
 #define STORAGE_LIMIT_MAX_W_CLASS			(1<<3)
 
 #define STORAGE_FLAGS_LEGACY_DEFAULT		(STORAGE_LIMIT_MAX_ITEMS | STORAGE_LIMIT_COMBINED_W_CLASS | STORAGE_LIMIT_MAX_W_CLASS)
-#define STORAGE_FLAGS_VOLUME_DEFAULT		(STORAGE_LIMIT_MAX_ITEMS | STORAGE_LIMIT_VOLUME | STORAGE_LIMIT_MAX_W_CLASS)
+#define STORAGE_FLAGS_VOLUME_DEFAULT		(STORAGE_LIMIT_VOLUME | STORAGE_LIMIT_MAX_W_CLASS)
 
 //ITEM INVENTORY WEIGHT, FOR w_class
 /// Usually items smaller then a human hand, ex: Playing Cards, Lighter, Scalpel, Coins/Money
@@ -27,10 +27,34 @@
 /// Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe - Can not fit in Boh
 #define WEIGHT_CLASS_GIGANTIC 6
 
+#define DEFAULT_VOLUME_TINY				1
+#define DEFAULT_VOLUME_SMALL			2
+#define DEFAULT_VOLUME_NORMAL			4
+#define DEFAULT_VOLUME_BULKY			8
+#define DEFAULT_VOLUME_HUGE				16
+#define DEFAULT_VOLUME_GIGANTIC			32
+
+GLOBAL_LIST_INIT(default_weight_class_to_volume, list(
+	"[WEIGHT_CLASS_TINY]" = DEFAULT_VOLUME_TINY,
+	"[WEIGHT_CLASS_SMALL]" = DEFAULT_VOLUME_SMALL,
+	"[WEIGHT_CLASS_NORMAL]" = DEFAULT_VOLUME_NORMAL,
+	"[WEIGHT_CLASS_BULKY]" = DEFAULT_VOLUME_BULKY,
+	"[WEIGHT_CLASS_HUGE]" = DEFAULT_VOLUME_HUGE,
+	"[WEIGHT_CLASS_GIGANTIC]" = DEFAULT_VOLUME_GIGANTIC
+	))
+
 /// Macro for automatically getting the volume of an item from its w_class.
-#define AUTO_SCALE_VOLUME(w_class)							(2 ** w_class)
+#define AUTO_SCALE_VOLUME(w_class)							(GLOB.default_Weight_class_to_volume["[w_class]"])
 /// Macro for automatically getting the volume of a storage item from its max_w_class and max_combined_w_class.
 #define AUTO_SCALE_STORAGE_VOLUME(w_class, max_combined_w_class)		(AUTO_SCALE_VOLUME(w_class) * (max_combined_w_class / w_class))
+
+// Let's keep all of this in one place. given what we put above anyways..
+#define MAX_WEIGHT_CLASS_BACKPACK					WEIGHT_CLASS_NORMAL
+#define MAX_WEIGHT_CLASS_BAG_OF_HOLDING				WEIGHT_CLASS_BULKY
+
+#define STORAGE_VOLUME_BACKPACK						(DEFAULT_VOLUME_NORMAL * 7)
+#define STORAGE_VOLUME_DUFFLEBAG					(DEFAULT_VOLUME_NORMAL * 10)
+#define STORAGE_VOLUME_BAG_OF_HOLDING				(DEFAULT_VOLUME_NORMAL * 20)
 
 // UI defines
 /// Size of volumetric box icon
