@@ -19,6 +19,11 @@
 	circuit = /obj/item/circuitboard/machine/telecomms/bus
 	var/change_frequency = 0
 
+/obj/machinery/telecomms/bus/RefreshParts()
+	idle_power_usage = 50
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+		idle_power_usage -= (P.rating * 2) //Has 2 manipulators
+
 /obj/machinery/telecomms/bus/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	if(!istype(signal) || !is_freq_listening(signal))
 		return

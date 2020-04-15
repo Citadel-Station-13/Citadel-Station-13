@@ -893,7 +893,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					accessory_overlay.icon_state = "m_ears_none_[layertext]"
 				if(bodypart == "tail")
 					accessory_overlay.icon_state = "m_tail_husk_[layertext]"
-				if(MATRIXED)
+				if(S.color_src == MATRIXED)
 					var/list/husklist = list()
 					husklist += ReadRGB("#a3a3a3")
 					husklist += ReadRGB("#a3a3a3")
@@ -1456,6 +1456,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(target.check_martial_melee_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
 		return FALSE
+	
+	if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
+		user.adjustStaminaLossBuffered(1.5)
+	else
+		user.adjustStaminaLossBuffered(3.5)
+	
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return TRUE
 	else
@@ -1473,8 +1479,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
-
-		user.adjustStaminaLossBuffered(3.5) //CITADEL CHANGE - makes punching cause staminaloss
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 		var/puncherstam = user.getStaminaLoss()
@@ -1534,13 +1538,24 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			if((punchedstam > 50) && prob(punchedstam*0.5)) //If our punch victim has been hit above the threshold, and they have more than 50 stamina damage, roll for stun, probability of 1% per 2 stamina damage
+				
 				target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
 								"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 				to_chat(user, "<span class='danger'>You knock [target] down!</span>")
+				
 				var/knockdown_duration = 40 + (punchedstam + (punchedbrute*0.5))*0.8 - armor_block
 				target.DefaultCombatKnockdown(knockdown_duration)
 				target.forcesay(GLOB.hit_appends)
 				log_combat(user, target, "got a stun punch with their previous punch")
+				
+				if(HAS_TRAIT(user, TRAIT_KI_VAMPIRE) && !HAS_TRAIT(target, TRAIT_NOBREATH) && (punchedbrute < 100)) //If we're a ki vampire we also sap them of lifeforce, but only if they're not too beat up. Also living organics only.
+					user.adjustBruteLoss(-5)
+					user.adjustFireLoss(-5)
+					user.adjustStaminaLoss(-20)
+					
+					target.adjustCloneLoss(10)
+					target.adjustBruteLoss(10)
+
 		else if(!(target.mobility_flags & MOBILITY_STAND))
 			target.forcesay(GLOB.hit_appends)
 

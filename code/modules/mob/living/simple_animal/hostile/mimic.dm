@@ -11,6 +11,7 @@
 	speed = 0
 	maxHealth = 250
 	health = 250
+	blood_volume = 0
 	gender = NEUTER
 	mob_biotypes = NONE
 

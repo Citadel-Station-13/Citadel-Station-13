@@ -132,7 +132,6 @@
 /obj/item/clothing/mask/cowmask
 	name = "Cow mask with a builtin voice modulator."
 	desc = "A rubber cow mask,"
-	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
 	clothing_flags = VOICEBOX_TOGGLABLE

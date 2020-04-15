@@ -1028,7 +1028,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/toilet{
+/obj/structure/toilet/secret/prison{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -15496,7 +15496,7 @@
 	},
 /area/maintenance/fore)
 "aDP" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -16890,7 +16890,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aGz" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -18173,7 +18173,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aJa" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -18200,7 +18200,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aJc" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -32280,7 +32280,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/captain/private)
 "bkL" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 13
 	},
 /obj/machinery/light,
@@ -40361,7 +40361,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
 "bBp" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -41832,7 +41832,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
 "bEv" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -43537,7 +43537,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "bHQ" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -81886,7 +81886,6 @@
 /area/maintenance/aft)
 "gRS" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
@@ -82471,7 +82470,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "ohj" = (
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /obj/structure/table/reinforced,

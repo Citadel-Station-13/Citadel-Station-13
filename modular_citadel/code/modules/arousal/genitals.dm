@@ -364,11 +364,10 @@
 		if(ishuman(src) && dna.species.id == "human")
 			dna.features["genitals_use_skintone"] = TRUE
 			dna.species.use_skintones = TRUE
-		if(MUTCOLORS)
-			if(src.dna.species.fixed_mut_color)
-				dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
-				dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
-				return
+		if(src.dna.species.fixed_mut_color)
+			dna.features["cock_color"] = "[dna.species.fixed_mut_color]"
+			dna.features["breasts_color"] = "[dna.species.fixed_mut_color]"
+			return
 		//So people who haven't set stuff up don't get rainbow surprises.
 		dna.features["cock_color"] = "[dna.features["mcolor"]]"
 		dna.features["breasts_color"] = "[dna.features["mcolor"]]"

@@ -30,7 +30,16 @@
 	var/was_running = (user.m_intent == MOVE_INTENT_RUN)
 	if(was_running)
 		user.toggle_move_intent()
-	while(B && ContinueActive(user) && !(user.m_intent == MOVE_INTENT_RUN))
+	while(bloodsuckerdatum && ContinueActive(user) || user.m_intent == MOVE_INTENT_RUN)
+		if(istype(user.buckled, /obj/vehicle)) //We dont want people using fortitude being able to use vehicles
+			var/obj/vehicle/V = user.buckled
+			var/datum/component/riding/VRD = V.GetComponent(/datum/component/riding)
+			if(VRD)
+				VRD.force_dismount(user)
+				to_chat(user, "<span class='notice'>You trip off the [V], your muscles too heavy for it to support you.</span>")
+			else
+				V.unbuckle_mob(user, force = TRUE)
+				to_chat(user, "<span class='notice'>You fall off the [V], your weight making you too heavy to be supported by it.</span>")
 		// Pay Blood Toll (if awake)
 		if(user.stat == CONSCIOUS)
 			B.AddBloodVolume(-0.5)

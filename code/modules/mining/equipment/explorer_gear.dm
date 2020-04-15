@@ -117,10 +117,10 @@
 	glass_overlay.appearance_flags = RESET_COLOR
 	. += glass_overlay
 
-/obj/item/clothing/head/helmet/space/hostile_environment/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/clothing/head/helmet/space/hostile_environment/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', "hostile_env_glass")
+		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/head.dmi', "hostile_env_glass")
 		M.appearance_flags = RESET_COLOR
 		. += M
 
