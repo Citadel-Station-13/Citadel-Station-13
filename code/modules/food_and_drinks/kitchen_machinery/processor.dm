@@ -152,6 +152,12 @@
 	name = "slime processor"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
+/obj/machinery/processor/slime/RefreshParts()
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		rating_amount = B.rating
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		rating_speed = (M.rating + 1)
+
 /obj/machinery/processor/slime/Initialize()
 	. = ..()
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/processor/slime(null)
