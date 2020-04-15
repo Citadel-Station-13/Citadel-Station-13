@@ -27,7 +27,7 @@
 	T.base_knockdown = 3 SECONDS
 	T.range = 4
 	T.speed = 0.8
-	T.skill_mod = 5
+	T.skill_mod = 5 //Monstrous tackling
 	T.min_distance = 2
 	active = TRUE
 	user.toggle_throw_mode()
