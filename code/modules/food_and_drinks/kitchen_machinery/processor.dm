@@ -17,7 +17,7 @@
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		rating_amount = B.rating
+		rating_amount = (B.rating + 1)
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
