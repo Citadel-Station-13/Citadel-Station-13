@@ -460,11 +460,11 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/bullet_shield
-	name = "Telescopic Riot Shield"
+	name = "Bullet Resistant Riot Shield"
 	desc = "An advanced riot shield made bullet resistant plastics and heavy metals to protect against projectile harm."
 	id = "bullet_shield"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/silver = 2000, /datum/material/titanium = 1200, /datum/material/plastic = 100 2500)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/silver = 2000, /datum/material/titanium = 1200, /datum/material/plastic = 2500)
 	build_path = /obj/item/shield/riot/bullet_proof
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
