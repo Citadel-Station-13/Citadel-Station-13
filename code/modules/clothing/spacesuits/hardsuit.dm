@@ -30,7 +30,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	on = !on
-	user.update_inv_head()	//so our mob-overlays update
+	update_icon() //the mob overlay update is already done by the update_icon_updates_onmob element.
 	if(on)
 		set_light(brightness_on)
 	else

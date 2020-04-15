@@ -140,7 +140,7 @@
 		to_chat(user, "<span class='notice'>You lean quietly toward [target] and secretly draw out your fangs...</span>")
 	else
 		to_chat(user, "<span class='warning'>You pull [target] close to you and draw out your fangs...</span>")
-	if(!do_mob(user, target, feed_time,0,1,extra_checks=CALLBACK(src, .proc/ContinueActive, user, target)))//sleep(10)
+	if(!do_mob(user, target, feed_time, 0, 1, extra_checks = CALLBACK(src, .proc/ContinueActive, user, target)))//sleep(10)
 		to_chat(user, "<span class='warning'>Your feeding was interrupted.</span>")
 		//DeactivatePower(user,target)
 		return
@@ -166,7 +166,7 @@
 		var/deadmessage = target.stat == DEAD ? "" : " <i>[target.p_they(TRUE)] looks dazed, and will not remember this.</i>"
 		user.visible_message("<span class='notice'>[user] puts [target]'s wrist up to [user.p_their()] mouth.</span>", \
 						 	 "<span class='notice'>You secretly slip your fangs into [target]'s wrist.[deadmessage]</span>", \
-						 	 vision_distance = notice_range, ignored_mobs=target) // Only people who AREN'T the target will notice this action.
+						 	 vision_distance = notice_range, ignored_mobs = target) // Only people who AREN'T the target will notice this action.
 		// Warn Feeder about Witnesses...
 		var/was_unnoticed = TRUE
 		for(var/mob/living/M in viewers(notice_range, owner))
@@ -257,11 +257,11 @@
 				to_chat(user, "<span class='notice'>Your victim is dead. [target.p_their(TRUE)] blood barely nourishes you.</span>")
 				warning_target_dead = TRUE
 		// Full?
-		if(!warning_full && user.blood_volume >= bloodsuckerdatum.maxBloodVolume)
+		if(!warning_full && user.blood_volume >= bloodsuckerdatum.max_blood_volume)
 			to_chat(user, "<span class='notice'>You are full. Further blood will be wasted.</span>")
 			warning_full = TRUE
 		// Blood Remaining? (Carbons/Humans only)
-		if(iscarbon(target) && !target.AmBloodsucker(1))
+		if(iscarbon(target) && !AmBloodsucker(target, TRUE))
 			if(target.blood_volume <= BLOOD_VOLUME_BAD && warning_target_bloodvol > BLOOD_VOLUME_BAD)
 				to_chat(user, "<span class='warning'>Your victim's blood volume is fatally low!</span>")
 			else if(target.blood_volume <= BLOOD_VOLUME_OKAY && warning_target_bloodvol > BLOOD_VOLUME_OKAY)
@@ -275,8 +275,9 @@
 			break
 
 		// Blood Gulp Sound
-		owner.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
-
+		owner.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
+		if(!amSilent)
+			target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 	// DONE!
 	//DeactivatePower(user,target)
 	if(amSilent)
@@ -294,12 +295,12 @@
 
 
 /datum/action/bloodsucker/feed/proc/CheckKilledTarget(mob/living/user, mob/living/target)
-	// Bad Vampire. You shouldn't do that.
+	// Bad Bloodsucker. You shouldn't do that.
 	if(target && target.stat >= DEAD && ishuman(target))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankkilled", /datum/mood_event/drankkilled) // BAD // in bloodsucker_life.dm
 
 /datum/action/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
-	return ..()  && target && (!target_grappled || user.pulling == target)// Active, and still Antag,
+	return ..()  && target && (!target_grappled || user.pulling == target) && blood_sucking_checks(target, TRUE, TRUE) // Active, and still antag,
 	// NOTE: We only care about pulling if target started off that way. Mostly only important for Aggressive feed.
 
 /datum/action/bloodsucker/feed/proc/ApplyVictimEffects(mob/living/target)
