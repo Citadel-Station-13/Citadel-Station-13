@@ -190,6 +190,7 @@
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
 #define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"		//sent when a mob/login() finishes: (client)
+#define COMSIG_MOB_CLIENT_LOGOUT "comsig_mob_client_logout"		//sent when a mob/logout() starts: (client)
 #define COMSIG_MOB_CLIENT_MOVE "comsig_mob_client_move"			//sent when client/Move() finishes with no early returns: (client, direction, n, oldloc)
 #define COMSIG_LIVING_GUN_PROCESS_FIRE "living_gun_process_fire"	//from base of /obj/item/gun/proc/process_fire(): (atom/target, params, zone_override)
 // This returns flags as defined for block in __DEFINES/combat.dm!

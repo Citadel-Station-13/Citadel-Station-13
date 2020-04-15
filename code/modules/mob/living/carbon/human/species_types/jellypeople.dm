@@ -43,7 +43,7 @@
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for vampires
+	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
 		return
 	if(!H.blood_volume)
 		H.blood_volume += 5

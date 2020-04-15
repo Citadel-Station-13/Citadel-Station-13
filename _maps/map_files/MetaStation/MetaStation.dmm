@@ -81886,7 +81886,6 @@
 /area/maintenance/aft)
 "gRS" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
@@ -82471,7 +82470,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "ohj" = (
-/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /obj/structure/table/reinforced,
