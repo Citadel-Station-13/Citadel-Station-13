@@ -23,7 +23,7 @@
 		return TRUE
 	return FALSE
 
-///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch, has a chance to crit
+///Gnashing Teeth: Harm Harm, high force punch on every second harm punch, has a chance to crit for near triple damage
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
@@ -44,7 +44,7 @@
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 		log_combat(A, D, "strong punched (Sleeping Carp)")//so as to not double up on logging
 	D.apply_damage((damage + 15) + crit_damage, BRUTE, affecting)
-	return
+	return TRUE
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
 /datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -57,7 +57,7 @@
 	D.throw_at(throw_target, 7, 14, A)
 	D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
-	return
+	return TRUE
 
 ///Keelhaul: Harm Grab combo, knocks people down, deals stamina damage while they're on the floor
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -77,7 +77,7 @@
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	log_combat(A, D, "dropkicked (Sleeping Carp)")
-	return
+	return TRUE
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
@@ -89,6 +89,7 @@
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
 	var/damage = (damage_roll(A,D) + 5)
+	var/stunthreshold = A.dna.species.punchstunthreshold
 	if(check_streak(A,D))
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
@@ -99,6 +100,9 @@
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	D.apply_damage(damage, BRUTE, affecting)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	if(CHECK_MOBILITY(D, MOBILITY_STAND) && damage >= stunthreshold)
+		to_chat(D, "<span class='danger'>You stumble and fall!</span>")
+		D.DefaultCombatKnockdown(10, override_hardstun = 0.01, override_stam = damage)
 	log_combat(A, D, "punched (Sleeping Carp)")
 	return TRUE
 
