@@ -11,6 +11,7 @@
 	bloodsucker_can_buy = TRUE
 	amToggle = TRUE
 	warn_constant_cost = TRUE
+	var/was_running
 
 	var/fortitude_resist // So we can raise and lower your brute resist based on what your level_current WAS.
 
@@ -27,10 +28,11 @@
 		fortitude_resist = max(0.3, 0.7 - level_current * 0.1)
 		H.physiology.brute_mod *= fortitude_resist
 		H.physiology.burn_mod *= fortitude_resist
-	var/was_running = (user.m_intent == MOVE_INTENT_RUN)
+	was_running = (user.m_intent == MOVE_INTENT_RUN)
 	if(was_running)
 		user.toggle_move_intent()
-	while(bloodsuckerdatum && ContinueActive(user) || user.m_intent == MOVE_INTENT_RUN)
+		was_running = TRUE
+	while(B && ContinueActive(user) || user.m_intent == MOVE_INTENT_RUN)
 		if(istype(user.buckled, /obj/vehicle)) //We dont want people using fortitude being able to use vehicles
 			var/obj/vehicle/V = user.buckled
 			var/datum/component/riding/VRD = V.GetComponent(/datum/component/riding)
@@ -57,3 +59,6 @@
 	var/mob/living/carbon/human/H = owner
 	H.physiology.brute_mod /= fortitude_resist
 	H.physiology.burn_mod /= fortitude_resist
+	if(was_running && user.m_intent == MOVE_INTENT_WALK)
+		user.toggle_move_intent()
+
