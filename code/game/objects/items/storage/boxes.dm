@@ -953,7 +953,7 @@
 							  /obj/item/reagent_containers/food/snacks/grown/corn,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
-							  /obj/item/reagent_containers/food/snacks/meatball,
+							  /obj/item/reagent_containers/food/snacks/faggot,
 							  /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
 							  /obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
 							  /obj/item/reagent_containers/food/snacks/grown/citrus/lime,
@@ -1005,7 +1005,7 @@
 /obj/item/storage/box/ingredients/italian/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
-		new /obj/item/reagent_containers/food/snacks/meatball(src)
+		new /obj/item/reagent_containers/food/snacks/faggot(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
@@ -1028,7 +1028,7 @@
 		new /obj/item/reagent_containers/food/snacks/grown/potato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
-	new /obj/item/reagent_containers/food/snacks/meatball(src)
+	new /obj/item/reagent_containers/food/snacks/faggot(src)
 
 /obj/item/storage/box/ingredients/fruity
 	theme_name = "fruity"
@@ -1084,7 +1084,7 @@
 	new /obj/item/reagent_containers/food/snacks/carpmeat(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/xeno(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(src)
-	new /obj/item/reagent_containers/food/snacks/meatball(src)
+	new /obj/item/reagent_containers/food/snacks/faggot(src)
 
 /obj/item/storage/box/ingredients/exotic
 	theme_name = "exotic"

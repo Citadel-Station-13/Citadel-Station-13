@@ -18,7 +18,6 @@
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	M.nutrition += nutriment_factor
-	M.CheckBloodsuckerEatFood(nutriment_factor)
 	holder.remove_reagent(type, metabolization_rate)
 
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -424,50 +423,6 @@
 				M.emote(pick("twitch","giggle"))
 	..()
 
-/datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
-	name = "Garlic Juice"
-	//id = "garlic"
-	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
-	color = "#FEFEFE"
-	taste_description = "garlic"
-	metabolization_rate = 0.15 * REAGENTS_METABOLISM
-
-/datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
-	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
-		if(prob(min(25, current_cycle)))
-			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You can barely think...</span>")
-			M.Stun(10)
-			M.Jitter(10)
-			return
-
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.job == "Cook")
-			if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
-				H.heal_bodypart_damage(1, 1, 0)
-				. = 1
-	..()
-
-/datum/reagent/consumable/garlic/reaction_mob(mob/living/M, method, reac_volume)
-	if(AmBloodsucker(M, TRUE)) //Theyll be immune to garlic as long as they masquarade, but they cant do it if they already have it.
-		switch(method)
-			if(INGEST)
-				if(prob(min(30, current_cycle)))
-					to_chat(M, "<span class='warning'>You cant get the smell of garlic out of your nose! You cant think straight because of it!</span>")
-					M.Jitter(15)
-				if(prob(min(15, current_cycle)))
-					M.visible_message("<span class='danger'>Something you ate is burning your stomach!</span>", "<span class='warning'>[M] clutches their stomach and falls to the ground!</span>")
-					M.Knockdown(20)
-					M.emote("scream")
-				if(prob(min(5, current_cycle)) && iscarbon(M))
-					var/mob/living/carbon/C
-					C.vomit()	
-			if(INJECT)
-				if(prob(min(20, current_cycle)))
-					to_chat(M, "<span class='warning'>You feel like your veins are boiling!</span>")
-					M.emote("scream")
-					M.adjustFireLoss(5)
-	..()
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	value = 3

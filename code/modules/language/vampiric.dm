@@ -1,4 +1,4 @@
-//	BLOODSUCKER LANGUAGE //
+//	VAMPIRE LANGUAGE //
 
 /datum/language/vampiric
 	name = "Blah-Sucker"

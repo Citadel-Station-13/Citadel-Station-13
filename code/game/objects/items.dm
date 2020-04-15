@@ -41,11 +41,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/hitsound = null
 	var/usesound = null
 	var/throwhitsound = null
-
-	/// Weight class for how much storage capacity it uses and how big it physically is meaning storages can't hold it if their maximum weight class isn't as high as it.
 	var/w_class = WEIGHT_CLASS_NORMAL
-	/// Volume override for the item, otherwise automatically calculated from w_class.
-	var/w_volume
 
 	/// The amount of stamina it takes to swing an item in a normal melee attack do not lie to me and say it's for realism because it ain't. If null it will autocalculate from w_class.
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
@@ -867,11 +863,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
-
-/// Get an item's volume that it uses when being stored.
-/obj/item/proc/get_w_volume()
-	// if w_volume is 0 you fucked up anyways lol
-	return w_volume || AUTO_SCALE_VOLUME(w_class)
 
 /obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
 	return

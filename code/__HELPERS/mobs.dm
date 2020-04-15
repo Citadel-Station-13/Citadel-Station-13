@@ -209,8 +209,7 @@
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
 		"meat_type"			= "Mammalian",
-		"body_model"		= MALE,
-		"body_size"			= RESIZE_DEFAULT_SIZE
+		"body_model"		= MALE
 		))
 
 /proc/random_hair_style(gender)

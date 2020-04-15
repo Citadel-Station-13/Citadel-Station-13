@@ -395,7 +395,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["body_is_always_random"]	>> be_random_body
 	S["gender"]					>> gender
 	S["body_model"]				>> features["body_model"]
-	S["body_size"]				>> features["body_size"]
 	S["age"]					>> age
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
@@ -569,14 +568,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
 	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
 
-	var/static/size_min
-	if(!size_min)
-		size_min = CONFIG_GET(number/body_size_min)
-	var/static/size_max
-	if(!size_max)
-		size_max = CONFIG_GET(number/body_size_max)
-	features["body_size"]			= sanitize_integer(features["body_size"], size_min, size_max, RESIZE_DEFAULT_SIZE)
-
 	var/static/list/B_sizes
 	if(!B_sizes)
 		var/list/L = CONFIG_GET(keyed_list/breasts_cups_prefs)
@@ -652,7 +643,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["body_is_always_random"]	, be_random_body)
 	WRITE_FILE(S["gender"]					, gender)
 	WRITE_FILE(S["body_model"]				, features["body_model"])
-	WRITE_FILE(S["body_size"]				, features["body_size"])
 	WRITE_FILE(S["age"]						, age)
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)

@@ -854,7 +854,7 @@
 /mob/living/carbon/proc/can_defib()
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 	var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
-	if(suiciding || hellbound || HAS_TRAIT(src, TRAIT_HUSK) || AmBloodsucker(src))
+	if(suiciding || hellbound || HAS_TRAIT(src, TRAIT_HUSK))
 		return
 	if((world.time - timeofdeath) > tlimit)
 		return

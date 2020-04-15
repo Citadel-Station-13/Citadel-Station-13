@@ -5,8 +5,7 @@
 	var/obj/item/organ/O
 	// Heart
 	O = owner.current.getorganslot(ORGAN_SLOT_HEART)
-
-	if(!istype(O, /obj/item/organ/heart/vampheart) && !istype(O, /obj/item/organ/heart/demon))
+	if(!istype(O, /obj/item/organ/heart/vampheart))
 		qdel(O)
 		var/obj/item/organ/heart/vampheart/H = new
 		H.Insert(owner.current)

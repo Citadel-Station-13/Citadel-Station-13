@@ -1,0 +1,9 @@
+author: "KathrinBailey"
+delete-after: True
+changes: 
+  - rscadd: "New shutter sprites"
+  - rscadd: "Reinforced Shutter"
+  - rscadd: "Radiation Shutter"
+  - rscadd: "Window Shutter"
+  - tweak: "Shutters not being blast doors functionally."
+  - balance: "Shutter armour block and health."

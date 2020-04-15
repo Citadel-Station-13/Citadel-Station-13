@@ -64,7 +64,7 @@
 			else
 				I.forceMove(drop_location())
 			to_chat(user, "<span class='notice'>You find [I] in the cistern.</span>")
-			w_items = max(w_items - I.w_class, 0)
+			w_items -= I.w_class
 	else
 		open = !open
 		update_icon()
@@ -114,12 +114,6 @@
 		secret = new secret_type(src)
 		secret.desc += "" //In case you want to add something to the item that spawns
 		contents += secret
-
-/obj/structure/toilet/secret/LateInitialize()
-	. = ..()
-	w_items = 0 //recalculate total weight thanks to the secret.
-	for(var/obj/item/I in contents)
-		w_items += I.w_class
 
 /obj/structure/toilet/secret/low_loot
 	secret_type = /obj/effect/spawner/lootdrop/low_loot_toilet
