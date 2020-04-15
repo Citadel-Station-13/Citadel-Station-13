@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Liver failure is back!"
-  - tweak: "standarized a few (prefs off) side effects from enlargment chems on livers to do organ damage instead without the blood volume whackiness."
-  - tweak: "High liver damage now slows mobs down."

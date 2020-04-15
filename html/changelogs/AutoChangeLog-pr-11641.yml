@@ -1,6 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscdel: "Nymphomania removed"
-  - code_imp: "Exhibitionism ignored by preferences now, since it was also removed"
-  - code_imp: "Quirk migration now does an admin log instead of a stack trace"

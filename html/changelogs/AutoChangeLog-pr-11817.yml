@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Latejoin changelings for dynamic"
-  - bugfix: "Average threat calculation works now"

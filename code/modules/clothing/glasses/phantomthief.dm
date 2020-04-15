@@ -23,8 +23,8 @@
 		else
 			. += "<span class='notice'>[DisplayTimeText(nextadrenalinepop - world.time)] left before the adrenaline injector can be used again."
 
-/obj/item/clothing/glasses/phantomthief/syndicate/proc/injectadrenaline(mob/user, combatmodestate)
-	if(istype(user) && combatmodestate && world.time >= nextadrenalinepop)
+/obj/item/clothing/glasses/phantomthief/syndicate/proc/injectadrenaline(mob/living/user, was_forced = FALSE)
+	if(user.combat_flags & COMBAT_FLAG_COMBAT_TOGGLED && world.time >= nextadrenalinepop)
 		nextadrenalinepop = world.time + 5 MINUTES
 		user.reagents.add_reagent(/datum/reagent/syndicateadrenals, 5)
 		user.playsound_local(user, 'sound/misc/adrenalinject.ogg', 100, 0, pressure_affected = FALSE)
