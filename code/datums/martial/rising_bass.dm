@@ -88,7 +88,7 @@
 						  "<span class='userdanger'>[A] kicks you in the side, forcing you to step away!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
-		D.DefaultCombatKnockdown(60, override_hardstun = 1, override_stam = damage)
+		D.DefaultCombatKnockdown(60, override_hardstun = 1, override_stamdmg = damage)
 		var/L = !checkfordensity(H,D) ? (!checkfordensity(K,D) ? D.loc : K) : H
 		D.forceMove(L)
 		log_combat(A, D, "side kicked (Rising Bass)")
