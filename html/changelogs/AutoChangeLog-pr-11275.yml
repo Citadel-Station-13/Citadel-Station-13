@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "Reenabled the swarmers event. Also blacklisted another dozen other machineries and structures that may be critical to the shift or station integrity from swarmers' HUNGER for materials."
-  - bugfix: "Fixed find_safe_turfs() searching for turfs with concentration of oxygen lower than 16 rather higher."
