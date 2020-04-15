@@ -435,9 +435,9 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-//////////
-//MISC////
-//////////
+///////////
+//Shields//
+///////////
 
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
@@ -448,6 +448,30 @@
 	build_path = /obj/item/shield/riot/tele
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/laser_shield
+	name = "Laser Resistant Riot Shield"
+	desc = "An advanced riot shield made of darker glasses to prevent laser fire from passing through."
+	id = "laser_shield"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 4000, /datum/material/silver = 800, /datum/material/titanium = 600, /datum/material/plasma = 5000)
+	build_path = /obj/item/shield/riot/laser_proof
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/bullet_shield
+	name = "Telescopic Riot Shield"
+	desc = "An advanced riot shield made bullet resistant plastics and heavy metals to protect against projectile harm."
+	id = "bullet_shield"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/silver = 2000, /datum/material/titanium = 1200, /datum/material/plastic = 100 2500)
+	build_path = /obj/item/shield/riot/bullet_proof
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+//////////
+//MISC////
+//////////
 
 /datum/design/suppressor
 	name = "Suppressor"
