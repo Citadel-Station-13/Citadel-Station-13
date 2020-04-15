@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(default_weight_class_to_volume, list(
 	))
 
 /// Macro for automatically getting the volume of an item from its w_class.
-#define AUTO_SCALE_VOLUME(w_class)							(GLOB.default_Weight_class_to_volume["[w_class]"])
+#define AUTO_SCALE_VOLUME(w_class)							(GLOB.default_weight_class_to_volume["[w_class]"])
 /// Macro for automatically getting the volume of a storage item from its max_w_class and max_combined_w_class.
 #define AUTO_SCALE_STORAGE_VOLUME(w_class, max_combined_w_class)		(AUTO_SCALE_VOLUME(w_class) * (max_combined_w_class / w_class))
 
