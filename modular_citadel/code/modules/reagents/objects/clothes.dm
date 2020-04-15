@@ -5,7 +5,7 @@
 	name = "Synthetic hat"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "cowboy"
-	desc = "A sythesized hat, you can't seem to take it off. And tips their hat."
+	desc = "A synthesized hat, you can't seem to take it off. And tips their hat."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	//item_flags = NODROP //Tips their hat!
 

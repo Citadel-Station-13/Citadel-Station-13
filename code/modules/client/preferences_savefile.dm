@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	26
+#define SAVEFILE_VERSION_MAX	28
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -145,6 +145,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(features["meat_type"] == "Inesct")
 			features["meat_type"] = "Insect"
 
+	if(current_version < 27)
+		var/tennis
+		S["feature_balls_shape"] >> tennis
+		if(tennis == "Hidden")
+			features["balls_visibility"] = GEN_VISIBLE_NEVER
+
+	if(current_version < 28)
+		var/hockey
+		S["feature_cock_shape"] >> hockey
+		var/list/malformed_hockeys = list("Taur, Flared" = "Flared", "Taur, Knotted" = "Knotted", "Taur, Tapered" = "Tapered")
+		if(malformed_hockeys[hockey])
+			features["cock_shape"] = malformed_hockeys[hockey]
+			features["cock_taur"] = TRUE
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -200,6 +214,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["auto_fit_viewport"]	>> auto_fit_viewport
 	S["sprint_spacebar"]	>> sprint_spacebar
 	S["sprint_toggle"]		>> sprint_toggle
+	S["hud_toggle_flash"]	>> hud_toggle_flash
+	S["hud_toggle_color"]	>> hud_toggle_color
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
@@ -239,6 +255,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	sprint_spacebar	= sanitize_integer(sprint_spacebar, 0, 1, initial(sprint_spacebar))
 	sprint_toggle	= sanitize_integer(sprint_toggle, 0, 1, initial(sprint_toggle))
+	hud_toggle_flash = sanitize_integer(hud_toggle_flash, 0, 1, initial(hud_toggle_flash))
+	hud_toggle_color = sanitize_hexcolor(hud_toggle_color, 6, 1, initial(hud_toggle_color))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -248,7 +266,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	pda_skin		= sanitize_inlist(pda_skin, GLOB.pda_reskins, PDA_SKIN_ALT)
-
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 	widescreenpref			= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
@@ -301,6 +318,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
 	WRITE_FILE(S["sprint_spacebar"], sprint_spacebar)
 	WRITE_FILE(S["sprint_toggle"], sprint_toggle)
+	WRITE_FILE(S["hud_toggle_flash"], hud_toggle_flash)
+	WRITE_FILE(S["hud_toggle_color"], hud_toggle_color)
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
@@ -376,6 +395,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["body_is_always_random"]	>> be_random_body
 	S["gender"]					>> gender
 	S["body_model"]				>> features["body_model"]
+	S["body_size"]				>> features["body_size"]
 	S["age"]					>> age
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
@@ -427,7 +447,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
-	S["feature_exhibitionist"]			>> features["exhibitionist"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
 	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
@@ -447,22 +466,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_cock_color"]				>> features["cock_color"]
 	S["feature_cock_length"]			>> features["cock_length"]
 	S["feature_cock_diameter"]			>> features["cock_diameter"]
-	S["feature_has_sheath"]				>> features["sheath_color"]
+	S["feature_cock_taur"]				>> features["cock_taur"]
+	S["feature_cock_visibility"]		>> features["cock_visibility"]
 	//balls features
 	S["feature_has_balls"]				>> features["has_balls"]
 	S["feature_balls_color"]			>> features["balls_color"]
 	S["feature_balls_size"]				>> features["balls_size"]
-	S["feature_balls_shape"]			>> features["balls_shape"]
+	S["feature_balls_visibility"]		>> features["balls_visibility"]
 	//breasts features
 	S["feature_has_breasts"]			>> features["has_breasts"]
 	S["feature_breasts_size"]			>> features["breasts_size"]
 	S["feature_breasts_shape"]			>> features["breasts_shape"]
 	S["feature_breasts_color"]			>> features["breasts_color"]
 	S["feature_breasts_producing"]		>> features["breasts_producing"]
+	S["feature_breasts_visibility"]		>> features["breasts_visibility"]
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
 	S["feature_vag_shape"]				>> features["vag_shape"]
 	S["feature_vag_color"]				>> features["vag_color"]
+	S["feature_vag_visibility"]			>> features["vag_visibility"]
 	//womb features
 	S["feature_has_womb"]				>> features["has_womb"]
 	//flavor text
@@ -547,16 +569,28 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["insect_markings"] 	= sanitize_inlist(features["insect_markings"], GLOB.insect_markings_list, "None")
 	features["insect_wings"] 		= sanitize_inlist(features["insect_wings"], GLOB.insect_wings_list)
 
+	var/static/size_min
+	if(!size_min)
+		size_min = CONFIG_GET(number/body_size_min)
+	var/static/size_max
+	if(!size_max)
+		size_max = CONFIG_GET(number/body_size_max)
+	features["body_size"]			= sanitize_integer(features["body_size"], size_min, size_max, RESIZE_DEFAULT_SIZE)
+
 	var/static/list/B_sizes
 	if(!B_sizes)
-		B_sizes = CONFIG_GET(keyed_list/breasts_cups_prefs)
-		B_sizes = B_sizes.Copy()
+		var/list/L = CONFIG_GET(keyed_list/breasts_cups_prefs)
+		B_sizes = L.Copy()
 	var/static/min_D
 	if(!min_D)
 		min_D = CONFIG_GET(number/penis_min_inches_prefs)
 	var/static/max_D
 	if(!max_D)
 		max_D = CONFIG_GET(number/penis_max_inches_prefs)
+	var/static/safe_visibilities
+	if(!safe_visibilities)
+		var/list/L = CONFIG_GET(keyed_list/safe_visibility_toggles)
+		safe_visibilities = L.Copy()
 
 	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], B_sizes, BREASTS_SIZE_DEF)
 	features["cock_length"]			= sanitize_integer(features["cock_length"], min_D, max_D, COCK_SIZE_DEF)
@@ -568,6 +602,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, FALSE, "FFF")
 	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, FALSE, "FFF")
 	features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, FALSE, "FFF")
+	features["breasts_visibility"]	= sanitize_inlist(features["breasts_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
+	features["cock_visibility"]		= sanitize_inlist(features["cock_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
+	features["balls_visibility"]	= sanitize_inlist(features["balls_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
+	features["vag_visibility"]		= sanitize_inlist(features["vag_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
+
 
 	features["flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
 
@@ -613,6 +652,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["body_is_always_random"]	, be_random_body)
 	WRITE_FILE(S["gender"]					, gender)
 	WRITE_FILE(S["body_model"]				, features["body_model"])
+	WRITE_FILE(S["body_size"]				, features["body_size"])
 	WRITE_FILE(S["age"]						, age)
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)
@@ -648,6 +688,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_insect_markings"]			, features["insect_markings"])
 	WRITE_FILE(S["feature_meat"]					, features["meat_type"])
 
+	WRITE_FILE(S["feature_has_cock"], features["has_cock"])
+	WRITE_FILE(S["feature_cock_shape"], features["cock_shape"])
+	WRITE_FILE(S["feature_cock_color"], features["cock_color"])
+	WRITE_FILE(S["feature_cock_length"], features["cock_length"])
+	WRITE_FILE(S["feature_cock_taur"], features["cock_taur"])
+	WRITE_FILE(S["feature_cock_visibility"], features["cock_visibility"])
+
+	WRITE_FILE(S["feature_has_balls"], features["has_balls"])
+	WRITE_FILE(S["feature_balls_color"], features["balls_color"])
+	WRITE_FILE(S["feature_balls_size"], features["balls_size"])
+	WRITE_FILE(S["feature_balls_visibility"], features["balls_visibility"])
+
+	WRITE_FILE(S["feature_has_breasts"], features["has_breasts"])
+	WRITE_FILE(S["feature_breasts_size"], features["breasts_size"])
+	WRITE_FILE(S["feature_breasts_shape"], features["breasts_shape"])
+	WRITE_FILE(S["feature_breasts_color"], features["breasts_color"])
+	WRITE_FILE(S["feature_breasts_producing"], features["breasts_producing"])
+	WRITE_FILE(S["feature_breasts_visibility"], features["breasts_visibility"])
+
+	WRITE_FILE(S["feature_has_vag"], features["has_vag"])
+	WRITE_FILE(S["feature_vag_shape"], features["vag_shape"])
+	WRITE_FILE(S["feature_vag_color"], features["vag_color"])
+	WRITE_FILE(S["feature_vag_visibility"], features["vag_visibility"])
+
+	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

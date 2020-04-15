@@ -11,6 +11,7 @@
 	icon_living = "leaper"
 	icon_dead = "leaper_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	threat = 2
 	maxHealth = 300
 	health = 300
 	ranged = TRUE

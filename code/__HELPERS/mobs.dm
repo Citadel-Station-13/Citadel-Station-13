@@ -184,8 +184,8 @@
 		"cock_length"		= COCK_SIZE_DEF,
 		"cock_diameter_ratio"	= COCK_DIAMETER_RATIO_DEF,
 		"cock_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"cock_taur"			= FALSE,
 		"has_balls" 		= FALSE,
-		"balls_internal" 	= FALSE,
 		"balls_color" 		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"balls_size"		= BALLS_SIZE_DEF,
 		"balls_shape"		= DEF_BALLS_SHAPE,
@@ -200,18 +200,17 @@
 		"has_vag"			= FALSE,
 		"vag_shape"			= pick(GLOB.vagina_shapes_list),
 		"vag_color"			= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		"vag_clits"			= 1,
-		"vag_clit_diam"		= 0.25,
-		"vag_clit_len"		= 0.25,
 		"has_womb"			= FALSE,
-		"womb_cum_rate"		= CUM_RATE,
-		"womb_cum_mult"		= CUM_RATE_MULT,
-		"womb_efficiency"	= CUM_EFFICIENCY,
+		"balls_visibility"	= GEN_VISIBLE_NO_UNDIES,
+		"breasts_visibility"= GEN_VISIBLE_NO_UNDIES,
+		"cock_visibility"	= GEN_VISIBLE_NO_UNDIES,
+		"vag_visibility"	= GEN_VISIBLE_NO_UNDIES,
 		"ipc_screen"		= snowflake_ipc_antenna_list ? pick(snowflake_ipc_antenna_list) : "None",
 		"ipc_antenna"		= "None",
 		"flavor_text"		= "",
 		"meat_type"			= "Mammalian",
-		"body_model"		= MALE
+		"body_model"		= MALE,
+		"body_size"			= RESIZE_DEFAULT_SIZE
 		))
 
 /proc/random_hair_style(gender)
@@ -582,3 +581,16 @@ GLOBAL_LIST_EMPTY(species_list)
 		chosen = pick(mob_spawn_meancritters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
+
+/proc/passtable_on(target, source)
+	var/mob/living/L = target
+	if(!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
+		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
+	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
+	L.pass_flags |= PASSTABLE
+
+/proc/passtable_off(target, source)
+	var/mob/living/L = target
+	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
+	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
+		L.pass_flags &= ~PASSTABLE

@@ -144,6 +144,8 @@
 			return FALSE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
 			return FALSE
+		if(AmBloodsucker(clonemind.current)) //If the mind is a bloodsucker
+			return FALSE
 	if(clonemind.active)	//somebody is using that mind
 		if( ckey(clonemind.key)!=ckey )
 			return FALSE
@@ -158,8 +160,6 @@
 		INVOKE_ASYNC(src, .proc/horrifyingsound)
 		mess = TRUE
 		update_icon()
-		return FALSE
-	if(isvamp(clonemind)) //If the mind is a bloodsucker
 		return FALSE
 
 	attempting = TRUE //One at a time!!
@@ -180,6 +180,7 @@
 
 	//Get the clone body ready
 	maim_clone(H)
+	ADD_TRAIT(H, TRAIT_MUTATION_STASIS, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
@@ -369,6 +370,7 @@
 		return
 
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	REMOVE_TRAIT(mob_occupant, TRAIT_MUTATION_STASIS, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
 	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, CLONING_POD_TRAIT)

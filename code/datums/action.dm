@@ -6,13 +6,15 @@
 /datum/action
 	var/name = "Generic Action"
 	var/desc = null
-	var/obj/target = null
+	var/atom/target = null
 	var/check_flags = 0
 	var/required_mobility_flags = MOBILITY_USE
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
 	var/transparent_when_unavailable = TRUE
+	var/use_target_appearance = FALSE
+	var/list/target_appearance_matrix //if set, will be used to transform the target button appearance as an arglist.
 
 	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
@@ -88,14 +90,14 @@
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
+	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, target) & COMPONENT_ACTION_BLOCK_TRIGGER)
 		return FALSE
 	return TRUE
 
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/IsAvailable()
+/datum/action/proc/IsAvailable(silent = FALSE)
 	if(!owner)
 		return FALSE
 	var/mob/living/L = owner
@@ -116,29 +118,42 @@
 	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
-	if(button)
-		if(!status_only)
-			button.name = name
-			button.desc = desc
-			if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
-				var/list/settings = owner.hud_used.get_action_buttons_icons()
-				if(button.icon != settings["bg_icon"])
-					button.icon = settings["bg_icon"]
-				if(button.icon_state != settings["bg_state"])
-					button.icon_state = settings["bg_state"]
-			else
-				if(button.icon != button_icon)
-					button.icon = button_icon
-				if(button.icon_state != background_icon_state)
-					button.icon_state = background_icon_state
+	if(!button)
+		return
+	if(!status_only)
+		button.name = name
+		button.desc = desc
+		if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			var/list/settings = owner.hud_used.get_action_buttons_icons()
+			if(button.icon != settings["bg_icon"])
+				button.icon = settings["bg_icon"]
+			if(button.icon_state != settings["bg_state"])
+				button.icon_state = settings["bg_state"]
+		else
+			if(button.icon != button_icon)
+				button.icon = button_icon
+			if(button.icon_state != background_icon_state)
+				button.icon_state = background_icon_state
 
+		if(!use_target_appearance)
 			ApplyIcon(button, force)
 
-		if(!IsAvailable())
-			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
-		else
-			button.color = rgb(255,255,255,255)
-			return 1
+		else if(target && button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
+			var/mutable_appearance/M = new(target)
+			M.layer = FLOAT_LAYER
+			M.plane = FLOAT_PLANE
+			if(target_appearance_matrix)
+				var/list/L = target_appearance_matrix
+				M.transform = matrix(L[1], L[2], L[3], L[4], L[5], L[6])
+			button.cut_overlays()
+			button.add_overlay(M)
+			button.appearance_cache = target.appearance
+
+	if(!IsAvailable(TRUE))
+		button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	else
+		button.color = rgb(255,255,255,255)
+		return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
@@ -165,6 +180,7 @@
 /datum/action/item_action
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	button_icon_state = null
+	use_target_appearance = TRUE
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
 
@@ -187,23 +203,6 @@
 		var/obj/item/I = target
 		I.ui_action_click(owner, src)
 	return 1
-
-/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
-	if(button_icon && button_icon_state)
-		// If set, use the custom icon that we set instead
-		// of the item appearence
-		..()
-	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
-		var/obj/item/I = target
-		var/old_layer = I.layer
-		var/old_plane = I.plane
-		I.layer = FLOAT_LAYER //AAAH
-		I.plane = FLOAT_PLANE //^ what that guy said
-		current_button.cut_overlays()
-		current_button.add_overlay(I)
-		I.layer = old_layer
-		I.plane = old_plane
-		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -302,23 +301,13 @@
 			name = "Toggle Friendly Fire \[ON\]"
 	..()
 
-/datum/action/item_action/synthswitch
-	name = "Change Synthesizer Instrument"
-	desc = "Change the type of instrument your synthesizer is playing as."
-
-/datum/action/item_action/synthswitch/Trigger()
-	if(istype(target, /obj/item/instrument/piano_synth))
-		var/obj/item/instrument/piano_synth/synth = target
-		return synth.selectInstrument()
-	return ..()
-
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
 	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "vortex_recall"
 
-/datum/action/item_action/vortex_recall/IsAvailable()
+/datum/action/item_action/vortex_recall/IsAvailable(silent = FALSE)
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
@@ -330,7 +319,7 @@
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
-/datum/action/item_action/clock/IsAvailable()
+/datum/action/item_action/clock/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	return ..()
@@ -339,7 +328,7 @@
 	name = "Create Judicial Marker"
 	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
-/datum/action/item_action/clock/toggle_visor/IsAvailable()
+/datum/action/item_action/clock/toggle_visor/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -418,7 +407,7 @@
 /datum/action/item_action/jetpack_stabilization
 	name = "Toggle Jetpack Stabilization"
 
-/datum/action/item_action/jetpack_stabilization/IsAvailable()
+/datum/action/item_action/jetpack_stabilization/IsAvailable(silent = FALSE)
 	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
 		return 0
@@ -475,7 +464,7 @@
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
 
-/datum/action/item_action/organ_action/IsAvailable()
+/datum/action/item_action/organ_action/IsAvailable(silent = FALSE)
 	var/obj/item/organ/I = target
 	if(!I.owner)
 		return 0
@@ -644,32 +633,32 @@
 		return FALSE
 	if(target)
 		var/obj/effect/proc_holder/S = target
-		S.Click()
+		S.Trigger(usr)
 		return TRUE
 
-/datum/action/spell_action/IsAvailable()
+/datum/action/spell_action/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	return TRUE
 
 /datum/action/spell_action/spell
 
-/datum/action/spell_action/spell/IsAvailable()
+/datum/action/spell_action/spell/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	var/obj/effect/proc_holder/spell/S = target
 	if(owner)
-		return S.can_cast(owner)
+		return S.can_cast(owner, FALSE, silent)
 	return FALSE
 
 /datum/action/spell_action/alien
 
-/datum/action/spell_action/alien/IsAvailable()
+/datum/action/spell_action/alien/IsAvailable(silent = FALSE)
 	if(!target)
 		return FALSE
 	var/obj/effect/proc_holder/alien/ab = target
 	if(owner)
-		return ab.cost_check(ab.check_turf,owner,1)
+		return ab.cost_check(ab.check_turf,owner,silent)
 	return FALSE
 
 
@@ -711,7 +700,7 @@
 	button.maptext_width = 24
 	button.maptext_height = 12
 
-/datum/action/cooldown/IsAvailable()
+/datum/action/cooldown/IsAvailable(silent = FALSE)
 	return next_use_time <= world.time
 
 /datum/action/cooldown/proc/StartCooldown()

@@ -61,7 +61,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=stupify'>Make all players stupid</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
@@ -452,14 +452,14 @@
 					var/datum/round_event/disease_outbreak/DO = E
 					DO.virus_type = virus
 
-		if("retardify")
+		if("stupify")
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
-			message_admins("[key_name_admin(usr)] made everybody retarded")
+			message_admins("[key_name_admin(usr)] made everybody stupid")
 
 		if("eagles")//SCRAW
 			if(!check_rights(R_FUN))

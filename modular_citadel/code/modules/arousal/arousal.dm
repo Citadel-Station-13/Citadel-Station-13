@@ -33,7 +33,7 @@
 		hidden_underwear = on_off
 		hidden_socks = on_off
 
-	update_body()
+	update_body(TRUE)
 
 
 /mob/living/carbon/human/proc/adjust_arousal(strength,aphro = FALSE,maso = FALSE) // returns all genitals that were adjust

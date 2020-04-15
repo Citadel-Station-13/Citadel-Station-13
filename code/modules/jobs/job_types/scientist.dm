@@ -17,6 +17,7 @@
 	minimal_access = list(ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MINERAL_STOREROOM)
 
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
+	threat = 1.2
 
 /datum/outfit/job/scientist
 	name = "Scientist"

@@ -29,6 +29,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/paraplegic, /datum/quirk/insanity)
+	threat = 2
 
 /datum/outfit/job/ce
 	name = "Chief Engineer"
@@ -41,7 +42,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/chief_engineer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hardhat/white
-	gloves = /obj/item/clothing/gloves/color/black/ce
+	gloves = /obj/item/clothing/gloves/color/black
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced=1)
 
 	backpack = /obj/item/storage/backpack/industrial

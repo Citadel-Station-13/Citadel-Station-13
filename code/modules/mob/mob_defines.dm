@@ -8,6 +8,8 @@
 	pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -83,8 +85,6 @@
 
 	/// The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/datum/weakref/LAssailant
-
-	var/list/obj/user_movement_hooks	//Passes movement in client/Move() to these!
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 

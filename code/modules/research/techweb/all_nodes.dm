@@ -79,7 +79,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "defibrillator_compact", "smartdartgun", "medicinalsmartdart", "pHmeter")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "defibrillator_compact", "smartdartgun", "medicinalsmartdart", "pHmeter", "containmentbodybag")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/bio_process
@@ -221,23 +221,21 @@
 	description = "Unlock the potential of the mysterious of why CC decided to not build these around the station themselves."
 	prereq_ids = list("adv_engi", "high_efficiency")
 	design_ids = list("meteor_defence", "meteor_console")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-*/
 
-//datum/techweb_node/adv_meteor_defense
-	//id = "adv_meteor_defense"
-	//display_name = "Meteor Defense Research"
-	//description = "New and improved coding and lock on tech for meteor defence!"
-	//prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
-	//design_ids = list("meteor_disk")
-	//research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+/datum/techweb_node/adv_meteor_defense
+	id = "adv_meteor_defense"
+	display_name = "Meteor Defense Research"
+	description = "New and improved coding and lock on tech for meteor defence!"
+	prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
+	design_ids = list("meteor_disk")
+*/
 
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
 	display_name = "Games and Toys"
 	description = "For the slackers on the station."
 	prereq_ids = list("comptech")
-	design_ids = list("arcade_battle", "arcade_orion", "slotmachine", "autoylathe")
+	design_ids = list("arcade_battle", "arcade_orion", "arcade_minesweeper", "slotmachine", "autoylathe")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /////////////////////////Bluespace tech/////////////////////////

@@ -33,6 +33,13 @@
 				/obj/item/organ/ears/cat = 1)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/papermask
+	name = "Paper Mask"
+	result = /obj/item/clothing/mask/paper
+	time = 10
+	reqs = list(/obj/item/paper = 20)
+	category = CAT_CLOTHING
+
 ////////
 //Huds//
 ////////
@@ -286,4 +293,13 @@
 	reqs = list(/obj/item/clothing/suit/hooded/wintercoat = 1,
 				/obj/item/bedsheet/cosmos = 1)
 	time = 60
+	category = CAT_CLOTHING
+
+
+/datum/crafting_recipe/garlic_necklace
+	name = "Garlic Necklace"
+	result = /obj/item/clothing/neck/garlic_necklace
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 15,
+				/obj/item/stack/cable_coil = 10)
+	time = 100 //Takes awhile to put all the garlics on the coil and knot it.
 	category = CAT_CLOTHING

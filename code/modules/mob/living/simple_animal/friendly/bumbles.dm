@@ -49,7 +49,7 @@
 
 /mob/living/simple_animal/pet/bumbles/handle_automated_movement()
 	. = ..()
-	if(!isturf(loc) || !CHECK_MOBILITY(src, MOBILITY_MOVE)  || buckled)
+	if(!isturf(loc) || buckled)
 		return
 	if(!resting && prob(1))
 		emote("me", EMOTE_VISIBLE, pick("curls up on the surface below ", "is looking very sleepy.", "buzzes softly ", "looks around for a flower nap "))
@@ -57,6 +57,7 @@
 	else if (resting && prob(1))
 		emote("me", EMOTE_VISIBLE, pick("wakes up with a smiling buzz.", "rolls upside down before waking up.", "stops resting."))
 		set_resting(FALSE)
+
 /mob/living/simple_animal/pet/bumbles/update_mobility()
 	. = ..()
 	if(stat != DEAD)

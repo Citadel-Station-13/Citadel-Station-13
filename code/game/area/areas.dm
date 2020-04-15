@@ -63,6 +63,7 @@
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
+
 	/// Color on minimaps, if it's null (which is default) it makes one at random.
 	var/minimap_color
 

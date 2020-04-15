@@ -1,0 +1,4 @@
+author: "Auris456852"
+delete-after: True
+changes: 
+  - rscadd: "Added printer sound for admins that plays when someone messages Centcomm or the Syndicate. Just like RP!"

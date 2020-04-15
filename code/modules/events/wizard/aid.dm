@@ -15,7 +15,7 @@
 			var/spell_improved = FALSE
 			for(var/obj/effect/proc_holder/spell/S in L.mind.spell_list)
 				if(S.clothes_req)
-					S.clothes_req = 0
+					S.clothes_req = NONE
 					spell_improved = TRUE
 			if(spell_improved)
 				to_chat(L, "<span class='notice'>You suddenly feel like you never needed those garish robes in the first place...</span>")

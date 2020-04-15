@@ -2,18 +2,6 @@
 //Be sure to update the min/max of these if you do change them.
 //Measurements are in imperial units. Inches, feet, yards, miles. Tsp, tbsp, cups, quarts, gallons, etc
 
-//HUD stuff
-#define  ui_arousal "EAST-1:28,CENTER-4:8"//Below the health doll
-#define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
-#define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
-#define ui_combat_toggle "EAST-4:22,SOUTH:5"
-
-//1:1 HUD layout stuff
-#define ui_boxcraft "EAST-4:22,SOUTH+1:6"
-#define ui_boxarea "EAST-4:6,SOUTH+1:6"
-#define ui_boxlang "EAST-5:22,SOUTH+1:6"
-#define ui_boxvore	"EAST-5:22,SOUTH+1:6"
-
 //Filters
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, color="#04080F")
 
@@ -35,6 +23,9 @@
 #define MASTURBATE_LINKED_ORGAN	(1<<6) //used to pass our mission to the linked organ
 #define CAN_CLIMAX_WITH			(1<<7)
 #define GENITAL_CAN_AROUSE		(1<<8)
+#define GENITAL_UNDIES_HIDDEN	(1<<9)
+#define UPDATE_OWNER_APPEARANCE	(1<<10)
+#define GENITAL_CAN_TAUR		(1<<11)
 
 
 #define DEF_VAGINA_SHAPE	"Human"
@@ -70,6 +61,12 @@
 #define MILK_RATE			5
 #define MILK_RATE_MULT		1
 #define MILK_EFFICIENCY		1
+
+//visibility toggles defines to avoid errors typos code errors.
+#define GEN_VISIBLE_ALWAYS "Always visible"
+#define GEN_VISIBLE_NO_CLOTHES "Hidden by clothes"
+#define GEN_VISIBLE_NO_UNDIES "Hidden by underwear"
+#define GEN_VISIBLE_NEVER "Always hidden"
 
 //Individual logging define
 #define INDIVIDUAL_LOOC_LOG "LOOC log"

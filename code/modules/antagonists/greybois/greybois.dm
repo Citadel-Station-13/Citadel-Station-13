@@ -2,6 +2,7 @@
 	name = "Emergency Assistant"
 	show_name_in_check_antagonists = TRUE
 	show_in_antagpanel = FALSE
+	threat = -1
 	var/mission = "Assist the station."
 	var/datum/outfit/outfit = /datum/outfit/ert/greybois
 

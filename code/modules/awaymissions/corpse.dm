@@ -208,7 +208,7 @@
 	else
 		H.skin_tone = random_skin_tone()
 	H.update_hair()
-	H.update_body()
+	H.update_body() //update_genitals arg FALSE because these don't quite require/have them most times.
 	if(outfit)
 		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)

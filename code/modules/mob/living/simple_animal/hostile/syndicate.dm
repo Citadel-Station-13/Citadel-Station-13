@@ -28,6 +28,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
+	threat = 1
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1

@@ -16,6 +16,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_MIME
 
+	threat = 0
+
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
 	H.apply_pref_name("mime", M.client)

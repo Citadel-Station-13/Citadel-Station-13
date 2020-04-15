@@ -1,0 +1,6 @@
+author: "dapnee"
+delete-after: True
+changes: 
+  - rscadd: "plant disk sorter in botany, bounty console for the rest of cargo, a missing air alarm in the incinerator"
+  - tweak: "fixed a decal in front of security, moved an AIR alarm so it doesn't look awful to ghosts/AI, asteroids don't delete air anymore, fixed more active turfs, the buttons in the bridge \"should\" work now, HoP and cargo desks should be secure now"
+  - rscdel: "quarters that found their way out of the quartermaster's back room"

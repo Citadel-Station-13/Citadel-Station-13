@@ -1,0 +1,6 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - config: "Added configs for various antag threat levels."
+  - bugfix: "Fixed a runtime in threat calculation."
+  - tweak: "Fixed up some misleading texts."

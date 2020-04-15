@@ -17,6 +17,14 @@
 
 	. = ..()
 
+/datum/antagonist/disease/threat()
+	var/mob/camera/disease/D = owner.current
+	var/final_threat = 0
+	for(var/V in D.purchased_abilities)
+		var/datum/disease_ability/A = V
+		final_threat += (A.cost/8)*A.malefit
+	return final_threat*D.hosts
+
 /datum/antagonist/disease/greet()
 	to_chat(owner.current, "<span class='notice'>You are the [owner.special_role]!</span>")
 	to_chat(owner.current, "<span class='notice'>Infect members of the crew to gain adaptation points, and spread your infection further.</span>")

@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Actually made things work as intended."
-  - code_imp: "Removed a redundant turf melting check from the supermatter."

@@ -1,5 +1,0 @@
-author: "Dennok, ported by Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "Lava rivers no longer burn into basalt."
-  - code_imp: "The river generator can now specify baseturfs."

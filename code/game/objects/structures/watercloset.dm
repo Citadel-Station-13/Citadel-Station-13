@@ -12,12 +12,10 @@
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
-
 /obj/structure/toilet/Initialize()
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
-
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	. = ..()
@@ -66,15 +64,13 @@
 			else
 				I.forceMove(drop_location())
 			to_chat(user, "<span class='notice'>You find [I] in the cistern.</span>")
-			w_items -= I.w_class
+			w_items = max(w_items - I.w_class, 0)
 	else
 		open = !open
 		update_icon()
 
-
 /obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
-
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/crowbar))
@@ -116,12 +112,23 @@
 	. = ..()
 	if (secret_type)
 		secret = new secret_type(src)
-		secret.desc += " It's a secret!"
-		w_items += secret.w_class
+		secret.desc += "" //In case you want to add something to the item that spawns
 		contents += secret
 
+/obj/structure/toilet/secret/LateInitialize()
+	. = ..()
+	w_items = 0 //recalculate total weight thanks to the secret.
+	for(var/obj/item/I in contents)
+		w_items += I.w_class
 
+/obj/structure/toilet/secret/low_loot
+	secret_type = /obj/effect/spawner/lootdrop/low_loot_toilet
 
+/obj/structure/toilet/secret/high_loot
+	secret_type = /obj/effect/spawner/lootdrop/high_loot_toilet
+
+/obj/structure/toilet/secret/prison
+	secret_type = /obj/effect/spawner/lootdrop/prison_loot_toilet
 
 /obj/structure/urinal
 	name = "urinal"
@@ -193,7 +200,6 @@
 			"<span class='italics'>You hear metal and squishing noises.</span>")
 		exposed = !exposed
 	return TRUE
-
 
 /obj/item/reagent_containers/food/urinalcake
 	name = "urinal cake"
@@ -278,7 +284,6 @@
 		add_hiddenprint(user)
 	return TRUE
 
-
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(on)
@@ -315,7 +320,6 @@
 		else if(isobj(AM))
 			wash_obj(AM)
 
-
 /obj/machinery/shower/proc/wash_obj(obj/O)
 	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	. = O.clean_blood()
@@ -324,7 +328,6 @@
 		var/obj/item/I = O
 		I.acid_level = 0
 		I.extinguish()
-
 
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
@@ -335,7 +338,6 @@
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
-
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
@@ -667,10 +669,8 @@
 /obj/structure/sink/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)
 
-
 //Shower Curtains//
 //Defines used are pre-existing in layers.dm//
-
 
 /obj/structure/curtain
 	name = "curtain"
@@ -726,7 +726,6 @@
 		deconstruct()
 
 	return TRUE
-
 
 /obj/structure/curtain/attack_hand(mob/user)
 	. = ..()

@@ -5,7 +5,9 @@
 
 /obj/mecha/proc/get_stats_html()
 	. = {"<html>
-						<head><title>[src.name] data</title>
+						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+						<title>[name] data</title>
 						<style>
 						body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
@@ -149,7 +151,7 @@
 
 
 /obj/mecha/proc/get_log_html()
-	. = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
+	. = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
 		. += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
 						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
@@ -162,7 +164,9 @@
 	if(!id_card || !user)
 		return
 	. = {"<html>
-						<head><style>
+						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+						<style>
 						h1 {font-size:15px;margin-bottom:4px;}
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
 						a {color:#0f0;}
@@ -192,6 +196,7 @@
 		return
 	. = {"<html>
 						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 						<style>
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
 						a {padding:2px 5px; background:#32CD32;color:#000;display:block;margin:2px;text-align:center;text-decoration:none;}

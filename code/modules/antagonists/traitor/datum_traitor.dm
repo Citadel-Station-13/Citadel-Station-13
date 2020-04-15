@@ -12,6 +12,7 @@
 	var/datum/traitor_class/traitor_kind
 	var/datum/contractor_hub/contractor_hub
 	hijack_speed = 0.5				//10 seconds per hijack stage by default
+	threat = 5
 
 /datum/antagonist/traitor/New()
 	..()
@@ -21,11 +22,6 @@
 
 /datum/antagonist/traitor/proc/set_traitor_kind(var/kind)
 	traitor_kind = GLOB.traitor_classes[kind]
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(traitor_kind.cost)
-			mode.spend_threat(traitor_kind.cost)
-			mode.log_threat("[traitor_kind.cost] was spent due to [owner.name] being a [traitor_kind.name].")
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))
@@ -38,12 +34,12 @@
 		var/list/weights = list()
 		for(var/C in GLOB.traitor_classes)
 			var/datum/traitor_class/class = GLOB.traitor_classes[C]
-			var/weight = (1.5*class.weight)/(0.5+NUM_E**(-chaos_weight*class.chaos)) // just a logistic function
+			var/weight = LOGISTIC_FUNCTION(1.5*class.weight,chaos_weight,class.chaos,0)
 			weights[C] = weight
 		var/choice = pickweightAllowZero(weights)
 		if(!choice)
-			choice = GLOB.traitor_classes[TRAITOR_HUMAN]
-		set_traitor_kind(pickweightAllowZero(weights))
+			choice = GLOB.traitor_classes[TRAITOR_HUMAN] // it's an "easter egg"
+		set_traitor_kind(choice)
 		traitor_kind.weight *= 0.8 // less likely this round
 	SSticker.mode.traitors += owner
 	owner.special_role = special_role
@@ -99,6 +95,13 @@
 		if(should_equip)
 			equip(silent)
 		owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
+
+/datum/antagonist/traitor/antag_panel_objectives()
+	. = ..()
+	if(contractor_hub?.assigned_targets && length(contractor_hub.assigned_targets))
+		. += "<i><b>Contract Targets</b></i>:<br>"
+		for(var/datum/mind/M in contractor_hub.assigned_targets)
+			. += "<b> - </b>[key_name(M, FALSE, TRUE)]<br>"
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -294,3 +297,6 @@
 
 /datum/antagonist/traitor/is_gamemode_hero()
 	return SSticker.mode.name == "traitor"
+
+/datum/antagonist/traitor/threat()
+	return (..())+traitor_kind.threat

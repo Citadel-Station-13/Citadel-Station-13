@@ -54,16 +54,22 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	// Current storyteller
 	var/datum/dynamic_storyteller/storyteller = null
 	// Threat logging vars
-	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
-	var/threat_level = 0
-	/// Set at the beginning of the round. Spent by the mode to "purchase" rules.
-	var/threat = 0 
 	/// Starting threat level, for things that increase it but can bring it back down.
 	var/initial_threat_level = 0
+	/// Target threat level right now. Events and antags will try to keep the round at this level.
+	var/threat_level = 0
+	/// The current antag threat. Recalculated every time a ruletype starts or ends.
+	var/threat = 0
+	/// Threat average over the course of the round, for endgame logs.
+	var/threat_average = 0
+	/// Number of times threat average has been calculated, for calculating above.
+	var/threat_average_weight = 0
+	/// Last time a threat average sample was taken. Used for weighting the rolling average.
+	var/last_threat_sample_time = 0
 	/// Things that cause a rolling threat adjustment to be displayed at roundend.
 	var/list/threat_tallies = list()
 	/// Running information about the threat. Can store text or datum entries.
-	var/list/threat_log = list() 
+	var/list/threat_log = list()
 	/// As above, but with info such as refunds.
 	var/list/threat_log_verbose = list()
 	/// List of roundstart rules used for selecting the rules.
@@ -127,6 +133,8 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	var/only_ruleset_executed = FALSE
 	/// Antags rolled by rules so far, to keep track of and discourage scaling past a certain ratio of crew/antags especially on lowpop.
 	var/antags_rolled = 0
+	// Arbitrary threat addition, for fudging purposes.
+	var/added_threat = 50
 
 /datum/game_mode/dynamic/New() // i have NO IDEA if this is the proper way to do this.
 	..()
@@ -150,11 +158,11 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	GLOB.dynamic_first_midround_delay_max = CONFIG_GET(number/dynamic_first_midround_delay_max)*600
 
 /datum/game_mode/dynamic/admin_panel()
-	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</A><BR>"
-	dat += "Threat Level: <b>[threat_level]</b><br/>"
+	dat += "Target threat: <b>[threat_level]</b><br/>"
 
-	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
+	dat += "Current threat: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
 	dat += "Storyteller: <b>[storyteller.name]</b><br/>"
 	dat += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
@@ -172,9 +180,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[storyteller.get_injection_chance(TRUE)]%</b> chance)<BR>"
-	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
-	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
-	dat += "Event: [(event_injection_cooldown-world.time)>60*10 ? "[round((event_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(event_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];forceevent=1'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+	dat += "Event: [(event_injection_cooldown-world.time)>60*10 ? "[round((event_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(event_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];forceevent=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -197,7 +205,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 		if(threatadd > 0)
 			create_threat(threatadd)
 		else
-			spend_threat(-threatadd)
+			remove_threat(threatadd)
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
@@ -239,6 +247,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			. += "<b>Peaceful Waypoint</b></center><BR>"
 			. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive. However, even deep in our territory there may be subversive elements, especially for such a high-value target as your station. Keep an eye out, but don't expect much trouble."
 			set_security_level(SEC_LEVEL_GREEN)
+			station_goals.len = 0
 			for(var/T in subtypesof(/datum/station_goal))
 				var/datum/station_goal/G = new T
 				if(!(G in station_goals))
@@ -249,6 +258,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				. += "<b>Core Territory</b></center><BR>"
 				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
 				set_security_level(SEC_LEVEL_GREEN)
+				station_goals.len = 0
 				for(var/T in subtypesof(/datum/station_goal))
 					var/datum/station_goal/G = new T
 					if(!(G in station_goals))
@@ -261,11 +271,11 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				. += "<b>Uncharted Space</b></center><BR>"
 				. += "Congratulations and thank you for participating in the NT 'Frontier' space program! Your station is actively orbiting a high value system far from the nearest support stations. Little is known about your region of space, and the opportunity to encounter the unknown invites greater glory. You are encouraged to elevate security as necessary to protect Nanotrasen assets."
 				set_security_level(SEC_LEVEL_BLUE)
-		if(80 to 99)
+		if(80 to 95)
 			. += "<b>Black Orbit</b></center><BR>"
 			. += "As part of a mandatory security protocol, we are required to inform you that as a result of your orbital pattern directly behind an astrological body (oriented from our nearest observatory), your station will be under decreased monitoring and support. It is anticipated that your extreme location and decreased surveillance could pose security risks. Avoid unnecessary risks and attempt to keep your station in one piece."
 			set_security_level(SEC_LEVEL_AMBER)
-		if(100)
+		if(96 to 100)
 			. += "<b>Impending Doom</b></center><BR>"
 			. += "Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station.<BR>"
 			. += "Good luck."
@@ -330,7 +340,6 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
-	threat = threat_level
 	SSblackbox.record_feedback("tally","dynamic_threat",threat_level,"Initial threat level")
 	SSblackbox.record_feedback("tally","dynamic_threat",GLOB.dynamic_curve_centre,"Curve centre")
 	SSblackbox.record_feedback("tally","dynamic_threat",GLOB.dynamic_curve_width,"Curve width")
@@ -340,9 +349,10 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	storyteller = new GLOB.dynamic_storyteller_type // this is where all the initialization happens
 	storyteller.on_start()
 	SSblackbox.record_feedback("text","dynamic_storyteller",1,storyteller.name)
-	message_admins("Dynamic mode parameters for the round:")
-	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
-	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
+	message_admins("Dynamic mode parameters for the round:\n\
+	Storyteller is [storyteller.name].\n\
+	Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].\n\
+	Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
 	log_game("DYNAMIC: Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
@@ -404,7 +414,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 
 /datum/game_mode/dynamic/post_setup(report)
 	update_playercounts()
-			
+
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()
@@ -463,7 +473,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				log_game("DYNAMIC: Additional ruleset picked successfully, now [executed_rules.len] picked. [extra_rulesets_amount] remaining.")
 	else
 
-		if(threat >= 50)
+		if(threat_level >= 50)
 			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
 		log_game("DYNAMIC: Picking first roundstart ruleset failed. drafted_rules.len = [drafted_rules.len] and threat = [threat]/[threat_level]")
 		return FALSE
@@ -488,7 +498,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			starting_rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(starting_rule.flags & HIGHLANDER_RULESET)	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
-			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level <= GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= starting_rule
 					if(drafted_rules.len <= 0)
@@ -509,10 +519,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	drafted_rules -= starting_rule
 
 	starting_rule.trim_candidates()
-	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
+	starting_rule.scale_up(extra_rulesets_amount, threat_level)
 	if (starting_rule.pre_execute())
-		spend_threat(starting_rule.cost + added_threat)
-		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> -[starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat", verbose = TRUE)
+		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> [starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat", verbose = TRUE)
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(starting_rule.flags & ONLY_RULESET)
@@ -534,8 +543,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 /datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if(rule.execute())
-		if(rule.persistent)
-			current_rules += rule
+		current_rules += rule
 		SSblackbox.record_feedback("associative","dynamic_rulesets",1,rule.get_blackbox_info())
 		return TRUE
 	rule.clean_up()	// Refund threat, delete teams and so on.
@@ -607,8 +615,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	if ((forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= threat)))
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
-			spend_threat(new_rule.cost)
-			log_threat("[new_rule.ruletype] - <b>[new_rule.name]</b> -[new_rule.cost] threat", verbose = TRUE)
+			log_threat("[new_rule.ruletype] - <b>[new_rule.name]</b> [new_rule.cost] threat", verbose = TRUE)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGHLANDER_RULESET)
 					highlander_executed = TRUE
@@ -617,8 +624,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 				log_game("DYNAMIC: Making a call to a specific ruleset...[new_rule.name]!")
 				SSblackbox.record_feedback("associative","dynamic_rulesets",1,new_rule.get_blackbox_info())
 				executed_rules += new_rule
-				if (new_rule.persistent)
-					current_rules += new_rule
+				current_rules += new_rule
 				return TRUE
 		else if (forced)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of eligible players.")
@@ -629,8 +635,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
-		spend_threat(rule.cost)
-		log_threat("[rule.ruletype] [rule.name] spent [rule.cost]", verbose = TRUE)
+		log_threat("[rule.ruletype] [rule.name] added [rule.cost]", verbose = TRUE)
 		if(rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
@@ -649,7 +654,7 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 	return FALSE
 
 /datum/game_mode/dynamic/process()
-	if (pop_last_updated < world.time - (60 SECONDS))
+	if (pop_last_updated < world.time - (120 SECONDS))
 		pop_last_updated = world.time
 		update_playercounts()
 
@@ -658,9 +663,9 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			current_rules -= rule
 			SSblackbox.record_feedback("tally","dynamic",1,"Rulesets finished")
 			SSblackbox.record_feedback("associative","dynamic_rulesets_finished",1,rule.get_blackbox_info())
-	
+
 	storyteller.do_process()
-	
+
 	if (midround_injection_cooldown < world.time)
 		if (GLOB.dynamic_forced_extended)
 			return
@@ -717,6 +722,16 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 					current_players[CURRENT_OBSERVERS].Add(M)
 					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
+	threat = storyteller.calculate_threat() + added_threat
+	if(threat_average_weight)
+		var/cur_sample_weight = world.time - last_threat_sample_time
+		threat_average = ((threat_average * threat_average_weight) + (threat * cur_sample_weight)) / (threat_average_weight + cur_sample_weight)
+		threat_average_weight += cur_sample_weight
+		last_threat_sample_time  = world.time
+	else
+		threat_average = threat
+		threat_average_weight++
+		last_threat_sample_time = world.time
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
@@ -767,25 +782,23 @@ GLOBAL_VAR_INIT(dynamic_storyteller_type, /datum/dynamic_storyteller/classic)
 			SSblackbox.record_feedback("tally","dynamic",1,"Successful latejoin injections")
 			latejoin_injection_cooldown = storyteller.get_latejoin_cooldown() + world.time
 
-/// Refund threat, but no more than threat_level.
-/datum/game_mode/dynamic/proc/refund_threat(regain)
-	threat = min(threat_level,threat+regain)
-	SSblackbox.record_feedback("tally","dynamic_threat",regain,"Refunded threat")
-	log_threat("[regain] refunded. Threat is now [threat].", verbose = TRUE)
-
-/// Generate threat and increase the threat_level if it goes beyond, capped at 100
+/// Increase the threat level.
 /datum/game_mode/dynamic/proc/create_threat(gain)
-	threat = min(100, threat+gain)
-	if(threat > threat_level)
-		threat_level = threat
-	SSblackbox.record_feedback("tally","dynamic_threat",gain,"Created threat")
-	log_threat("[gain] created. Threat is now [threat] and threat level is now [threat_level].", verbose = TRUE)
+	threat_level += gain
+	SSblackbox.record_feedback("tally","dynamic_threat",gain,"Created threat level")
+	log_threat("[gain] created. Threat level is now [threat_level].", verbose = TRUE)
 
-/// Expend threat, can't fall under 0.
+/// Decrease the threat level.
+/datum/game_mode/dynamic/proc/remove_threat(loss)
+	threat_level -= loss
+	SSblackbox.record_feedback("tally","dynamic_threat",loss,"Removed threat level")
+	log_threat("[loss] removed. Threat level is now [threat_level].", verbose = TRUE)
+
+/// Fill up more of the threat level.
 /datum/game_mode/dynamic/proc/spend_threat(cost)
-	threat = max(threat-cost,0)
-	SSblackbox.record_feedback("tally","dynamic_threat",cost,"Threat spent")
-	log_threat("[cost] spent. Threat is now [threat].", verbose = TRUE)
+	added_threat += cost
+	SSblackbox.record_feedback("tally","dynamic_threat",cost,"Threat added")
+	log_threat("[cost] added. Threat is now [threat].", verbose = TRUE)
 
 /// Turns the value generated by lorentz distribution to threat value between 0 and 100.
 /datum/game_mode/dynamic/proc/lorentz_to_threat(x)

@@ -77,14 +77,14 @@
 
 /datum/sabotage_objective/processing/supermatter/can_run()
 	return (locate(/obj/machinery/power/supermatter_crystal) in GLOB.machines)
-
+/*
 /datum/sabotage_objective/station_integrity
 	name = "Make sure the station is at less than 80% integrity by the end. Smash walls, windows etc. to reach this goal."
 	sabotage_type = "integrity"
 
 /datum/sabotage_objective/station_integrity/check_conditions()
 	return 5-(max(SSticker.station_integrity*4,320)/80)
-
+*/
 /datum/sabotage_objective/cloner
 	name = "Destroy all Nanotrasen cloning machines."
 	sabotage_type = "cloner"
@@ -97,6 +97,9 @@
 	sabotage_type = "ailaw"
 	special_equipment = list(/obj/item/aiModule/syndicate)
 	excludefromjob = list("Chief Engineer","Research Director","Head of Personnel","Captain","Chief Medical Officer","Head Of Security")
+
+/datum/sabotage_objective/ai_law/can_run()
+	return length(active_ais())
 
 /datum/sabotage_objective/ai_law/check_conditions()
 	for (var/i in GLOB.ai_list)

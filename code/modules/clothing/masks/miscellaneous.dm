@@ -132,7 +132,6 @@
 /obj/item/clothing/mask/cowmask
 	name = "Cow mask with a builtin voice modulator."
 	desc = "A rubber cow mask,"
-	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
 	clothing_flags = VOICEBOX_TOGGLABLE
@@ -343,3 +342,45 @@
 	desc =  "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
 	icon_state = "banddurathread"
 
+/obj/item/clothing/mask/paper
+	name = "paper mask"
+	desc = "A neat, circular mask made out of paper."
+	icon_state = "plainmask"
+	item_state = "plainmask"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	resistance_flags = FLAMMABLE
+	max_integrity = 100
+	actions_types = list(/datum/action/item_action/adjust)
+
+
+/obj/item/clothing/mask/paper/ui_action_click(mob/user)
+	if(!istype(user) || user.incapacitated())
+		return
+
+	var/list/options = list()
+	options["Blank"] = "plainmask"
+	options["Neutral"] = "neutralmask"
+	options["Eyes"] = "eyemask"
+	options["Sleeping"] ="sleepingmask"
+	options["Heart"] = "heartmask"
+	options["Core"] = "coremask"
+	options["Plus"] = "plusmask"
+	options["Square"] ="squaremask"
+	options["Bullseye"] = "bullseyemask"
+	options["Vertical"] = "verticalmask"
+	options["Horizontal"] = "horizontalmask"
+	options["X"] ="xmask"
+	options["Bugeyes"] = "bugmask"
+	options["Double"] = "doublemask"
+	options["Mark"] = "markmask"
+
+	var/choice = input(user,"What symbol would you want on this mask?","Morph Mask") in options
+
+	if(src && choice && !user.incapacitated() && in_range(user,src))
+		icon_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
+		to_chat(user, "<span class='notice'>Your paper mask now has a [choice] symbol!</span>")
+		return 1

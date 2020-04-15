@@ -22,7 +22,7 @@
 		for(var/obj/item/I in contents)
 			. += I.get_belt_overlay()
 
-/obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands && onmob_overlays)
 		for(var/obj/item/I in contents)
@@ -708,6 +708,7 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
+	dying_key = DYE_REGISTRY_FANNYPACK
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
@@ -804,3 +805,4 @@
 	attack_verb = list("bashed", "slashes", "prods", "pokes")
 	fitting_swords = list(/obj/item/melee/rapier)
 	starting_sword = /obj/item/melee/rapier
+

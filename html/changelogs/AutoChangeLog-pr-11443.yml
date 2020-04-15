@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Melee attacks now stagger people, preventing them from sprinting until the (relatively short lived) effect runs out. Duration equation is [(1.5 + (w_class/7.5)) * force]."

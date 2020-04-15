@@ -47,6 +47,9 @@
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
 
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
 	assemble_baseturfs()
 
 	levelupdate()

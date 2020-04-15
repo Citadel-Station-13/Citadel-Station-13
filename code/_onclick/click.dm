@@ -152,10 +152,10 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1)
+			UnarmedAttack(A, 1)
 	else
 		if(W)
-			W.afterattack(A,src,0,params)
+			W.ranged_attack_chain(src, A, params)
 		else
 			RangedAttack(A,params)
 

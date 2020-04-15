@@ -100,12 +100,11 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	for(var/obj/O in mob.user_movement_hooks)
-		O.intercept_user_move(direction, mob, n, oldloc)
-
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.setDir(turn(mob.dir, 180))
+
+	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc)
 
 /// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()
@@ -354,7 +353,7 @@
 	if(m_intent == MOVE_INTENT_RUN)
 		m_intent = MOVE_INTENT_WALK
 	else
-		if (HAS_TRAIT(src,TRAIT_NORUNNING))	// FULPSTATION 7/10/19 So you can't run during fortitude.
+		if (HAS_TRAIT(src,TRAIT_NORUNNING))
 			to_chat(src, "You find yourself unable to run.")
 			return FALSE
 		m_intent = MOVE_INTENT_RUN

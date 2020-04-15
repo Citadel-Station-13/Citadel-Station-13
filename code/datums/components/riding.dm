@@ -191,20 +191,28 @@
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
+	var/fireman_carrying = FALSE
 
 /datum/component/riding/human/Initialize()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
-	var/mob/living/carbon/human/H = parent
-	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
 	. = ..()
+	var/mob/living/carbon/human/H = parent
+	if(!length(H.buckled_mobs))
+		H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+	if(!fireman_carrying)
+		M.Daze(25)
+	REMOVE_TRAIT(M, TRAIT_MOBILITY_NOUSE, src)
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/H = parent
-	H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN)
+	if(length(H.buckled_mobs))
+		H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = fireman_carrying? FIREMAN_CARRY_SLOWDOWN : PIGGYBACK_CARRY_SLOWDOWN)
+	if(fireman_carrying)
+		ADD_TRAIT(M, TRAIT_MOBILITY_NOUSE, src)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	var/mob/living/carbon/human/H = parent
@@ -236,11 +244,11 @@
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
 
-
 /datum/component/riding/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.DefaultCombatKnockdown(60)
+	user.Daze(50)
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg

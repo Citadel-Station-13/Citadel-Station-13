@@ -6,6 +6,7 @@
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
+	threat = 1
 	gender = NEUTER
 	health = 50
 	maxHealth = 50

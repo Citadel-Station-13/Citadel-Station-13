@@ -8,6 +8,8 @@
 	var/obj/screen/craft/C = new()
 	C.icon = H.ui_style
 	H.static_inventory += C
+	if(!CL.prefs.widescreenpref)
+		C.screen_loc = ui_boxcraft
 	CL.screen += C
 	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
 

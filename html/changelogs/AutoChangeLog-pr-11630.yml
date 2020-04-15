@@ -1,0 +1,4 @@
+author: "bunny232"
+delete-after: True
+changes: 
+  - bugfix: "Box secmos now is now longer connected to the scrubber loop"

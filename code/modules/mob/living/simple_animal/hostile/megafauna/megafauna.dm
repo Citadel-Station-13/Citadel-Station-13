@@ -26,7 +26,6 @@
 	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
-	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	var/list/crusher_loot
 	var/medal_type

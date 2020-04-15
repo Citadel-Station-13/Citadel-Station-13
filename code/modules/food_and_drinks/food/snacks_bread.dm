@@ -179,6 +179,18 @@
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 
+/obj/item/reagent_containers/food/snacks/garlicbread
+	name = "garlic bread"
+	desc = "Alas, it is limited."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "garlicbread"
+	item_state = "garlicbread"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin= 4, /datum/reagent/consumable/garlic = 2)
+	bitesize = 3
+	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
+	foodtype = GRAIN
+
 /obj/item/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
 	desc = "If you can see this description the code for the deep fryer fucked up."
@@ -189,12 +201,11 @@
 GLOBAL_VAR_INIT(frying_hardmode, TRUE)
 GLOBAL_VAR_INIT(frying_bad_chem_add_volume, TRUE)
 GLOBAL_LIST_INIT(frying_bad_chems, list(
-/datum/reagent/toxin/bad_food = 10,
-/datum/reagent/clf3 = 2,
+/datum/reagent/toxin/bad_food = 3,
 /datum/reagent/drug/aranesp = 2,
-/datum/reagent/blackpowder = 10,
-/datum/reagent/phlogiston = 3,
-/datum/reagent/toxin/cyanide = 3,
+/datum/reagent/toxin = 2,
+/datum/reagent/lithium = 2,
+/datum/reagent/mercury = 2,
 ))
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
@@ -227,8 +238,10 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			var/bad_chem = GLOB.frying_bad_chems[R]
 			var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
 			if(GLOB.frying_bad_chem_add_volume)
-				reagents.maximum_volume += bad_chem_amount
+				reagents.maximum_volume += bad_chem_amount + 2 //Added room for condensed cooking oil
 			reagents.add_reagent(bad_chem, bad_chem_amount)
+			//All fried inedible items also get condensed cooking oil added, which induces minor vomiting and heart damage
+			reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 2)
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(trash)

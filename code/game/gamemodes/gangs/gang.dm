@@ -4,6 +4,7 @@
 	can_coexist_with_others = FALSE
 	job_rank = ROLE_GANG
 	antagpanel_category = "Gang"
+	threat = 2
 	var/hud_type = "gangster"
 	var/message_name = "Gangster"
 	var/datum/team/gang/gang
@@ -167,6 +168,7 @@
 	name = "Gang boss"
 	hud_type = "gang_boss"
 	message_name = "Leader"
+	threat = 10
 
 /datum/antagonist/gang/boss/on_gain()
 	..()

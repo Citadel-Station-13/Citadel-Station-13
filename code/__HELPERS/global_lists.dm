@@ -54,11 +54,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
-	GLOB.gentlemans_organ_names = list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ",
-	"cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret",
-	"baloney pony", "schlanger", "Mutton dagger", "old blind bob","Hanging Johnny", "fishing rod", "Tally whacker", "polly rocket",
-	"One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett",
-	"Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior")
 
 	for(var/gpath in subtypesof(/obj/item/organ/genital))
 		var/obj/item/organ/genital/G = gpath
@@ -93,6 +88,14 @@
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/init_ref_coin_values) //so the current procedure doesn't sleep because of UNTIL()
+
+	for(var/path in subtypesof(/area/holodeck))
+		var/area/holodeck/A = path
+		var/list/compatibles = initial(A.compatible_holodeck_comps)
+		if(!compatibles || initial(A.abstract_type) == path)
+			continue
+		for(var/comp in compatibles)
+			LAZYADD(GLOB.holodeck_areas_prototypes[comp], A)
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
