@@ -10,20 +10,12 @@
 	make_reagents = list(/datum/reagent/consumable/milk = 10)
 	category = list("initial","Food")
 
-/datum/design/soy
-	name = "10u Soy Milk"
-	id = "soy"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 20)
-	make_reagents = list(/datum/reagent/consumable/soymilk = 10)
-	category = list("initial","Food")
-
-/datum/design/cream
-	name = "10u Cream"
-	id = "cream"
+/datum/design/enzyme
+	name = "10u Universal Enzyme"
+	id = "enzyme"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 30)
-	make_reagents = list(/datum/reagent/consumable/cream = 10)
+	make_reagents = list(/datum/reagent/consumable/enzyme = 10)
 	category = list("initial","Food")
 
 /datum/design/milk_carton
@@ -50,14 +42,6 @@
 	build_path = /obj/item/reagent_containers/food/drinks/bottle/cream
 	category = list("initial","Food")
 
-/datum/design/black_pepper
-	name = "10u Black Pepper"
-	id = "black_pepper"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 25)
-	make_reagents = list(/datum/reagent/consumable/blackpepper = 10)
-	category = list("initial","Food")
-
 /datum/design/pepper_mill
 	name = "Pepper Mill"
 	id = "pepper_mill"
@@ -67,12 +51,22 @@
 	make_reagents = list()
 	category = list("initial","Food")
 
-/datum/design/enzyme
-	name = "10u Universal Enzyme"
-	id = "enzyme"
+/datum/design/bbq_bottle
+	name = "BBQ Bottle"
+	id = "bbq_bottle"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 30)
-	make_reagents = list(/datum/reagent/consumable/enzyme = 10)
+	materials = list(/datum/material/biomass = 250)
+	build_path = /obj/item/reagent_containers/food/condiment/bbqsauce
+	make_reagents = list()
+	category = list("initial","Food")
+
+/datum/design/soy_bottle
+	name = "Soy Bottle"
+	id = "soy_bottle"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 250)
+	build_path = /obj/item/reagent_containers/food/condiment/soysauce
+	make_reagents = list()
 	category = list("initial","Food")
 
 /datum/design/flour_sack
@@ -81,6 +75,14 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 150)
 	build_path = /obj/item/reagent_containers/food/condiment/flour
+	category = list("initial","Food")
+
+/datum/design/rice_sack
+	name = "Rice Sack"
+	id = "rice_sack"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 150)
+	build_path = /obj/item/reagent_containers/food/condiment/rice
 	category = list("initial","Food")
 
 /datum/design/monkey_cube
