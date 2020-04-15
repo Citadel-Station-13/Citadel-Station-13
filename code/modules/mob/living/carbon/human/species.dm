@@ -1615,8 +1615,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"You hear a slap."
 		)
 		return FALSE
-	else if(attacker_style && attacker_style.disarm_act(user,target))
-		return 1
+		
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
@@ -1624,7 +1623,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			user.adjustStaminaLossBuffered(1)
 		else
 			user.adjustStaminaLossBuffered(3)
-
+		
+		if(attacker_style && attacker_style.disarm_act(user,target))
+			return TRUE
+		
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		//var/randomized_zone = ran_zone(user.zone_selected) CIT CHANGE - comments out to prevent compiling errors
