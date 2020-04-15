@@ -21,7 +21,7 @@
 	/// See: [/datum/component/tackler/var/speed]
 	var/tackle_speed = 1
 	/// See: [/datum/component/tackler/var/skill_mod]
-	var/skill_mod = 0
+	var/skill_mod = 1
 
 /obj/item/clothing/gloves/tackler/equipped(mob/user, slot)
 	. = ..()
@@ -61,7 +61,7 @@
 	tackle_stam_cost = 35
 	base_knockdown = 1.5 SECONDS
 	tackle_range = 5
-	skill_mod = 2
+	skill_mod = 3
 
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

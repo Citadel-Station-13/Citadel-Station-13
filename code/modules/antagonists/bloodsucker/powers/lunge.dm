@@ -20,7 +20,7 @@
 	UnregisterSignal(owner, COMSIG_CARBON_TACKLED)
 
 /datum/action/bloodsucker/lunge/ActivatePower()
-	var/mob/living/user = owner
+	var/mob/living/carbon/user = owner
 	var/datum/antagonist/bloodsucker/B = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	var/datum/component/tackler/T = user.LoadComponent(/datum/component/tackler)
 	T.stamina_cost = 50
@@ -30,14 +30,16 @@
 	T.skill_mod = 5
 	T.min_distance = 2
 	active = TRUE
-	RegisterSignal(user, COMSIG_CARBON_TACKLED, .proc/DeactivatePower)
+	user.toggle_throw_mode()
+	RegisterSignal(user, COMSIG_CARBON_TACKLED, .proc/DelayedDeactivatePower)
 	while(B && ContinueActive(user))
 		B.AddBloodVolume(-0.1)
 		sleep(5)
-	
-/*/datum/action/bloodsucker/lunge/proc/Delayed_DeactivatePower()
+
+//Without this, the leap component would get removed too early, causing the normal crash into effects.
+/datum/action/bloodsucker/lunge/proc/DelayedDeactivatePower() 
 	addtimer(CALLBACK(src, .proc/DeactivatePower), 1 SECONDS, TIMER_UNIQUE)
-*/
+
 /datum/action/bloodsucker/lunge/DeactivatePower(mob/living/user = owner)
 	. = ..()
 	qdel(user.GetComponent(/datum/component/tackler))

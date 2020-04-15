@@ -190,7 +190,6 @@
 			target.Knockdown(30)
 			if(ishuman(target) && iscarbon(user))
 				target.grabbedby(user)
-				target.grippedby(user, instant = TRUE)
 
 		if(5 to INFINITY) // absolutely BODIED
 			user.visible_message("<span class='warning'>[user] lands a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", "<span class='userdanger'>You land a monster tackle on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", target)
