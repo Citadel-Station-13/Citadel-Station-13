@@ -353,7 +353,7 @@
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
-	description = "Amps you up and gets you going, fixes stamina damage you might have but can cause toxin and oxygen damage."
+	description = "Amps you up and gets you going, fixing stamina damage but possibly causing toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
 	pH = 9.2
