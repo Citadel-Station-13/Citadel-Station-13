@@ -102,7 +102,7 @@
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND) && damage >= stunthreshold)
 		to_chat(D, "<span class='danger'>You stumble and fall!</span>")
-		D.DefaultCombatKnockdown(10, override_hardstun = 0.01, override_stam = damage)
+		D.DefaultCombatKnockdown(10, override_hardstun = 0.01, override_stamdmg = damage)
 	log_combat(A, D, "punched (Sleeping Carp)")
 	return TRUE
 

@@ -109,7 +109,7 @@
 	D.apply_damage(damage + 10, BRUTE, BODY_ZONE_HEAD)
 	if(damage >= stunthreshold)
 		D.Sleeping(60)
-	D.DefaultCombatKnockdown(300, override_hardstun = 1, override_stam = 50)
+	D.DefaultCombatKnockdown(300, override_hardstun = 1, override_stamdmg = 50)
 	D.forceMove(L)
 	log_combat(A, D, "shoulder flipped (Rising Bass)")
 	return TRUE
@@ -125,7 +125,7 @@
 		var/atom/F = get_edge_target_turf(D, get_dir(A, get_step_away(D, A)))
 		D.throw_at(F, 10, 1)
 		D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
-		D.DefaultCombatKnockdown(90, override_hardstun = 1, override_stam = damage*2)
+		D.DefaultCombatKnockdown(90, override_hardstun = 1, override_stamdmg = damage*2)
 		D.confused += min(damage, 20)
 		log_combat(A, D, "repulse punched (Rising Bass)")
 		repulsecool = world.time + 3 SECONDS
@@ -170,7 +170,7 @@
 		D.visible_message("<span class='danger'>[A] trips [D]!</span>", \
 					"<span class='userdanger'>You're tripped by [A]!</span>", "<span class='hear'>You hear something thump against the floor!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='danger'>You trip [D]!</span>")
-		D.DefaultCombatKnockdown(10, override_hardstun = 0.01, override_stam = damage)
+		D.DefaultCombatKnockdown(10, override_hardstun = 0.01, override_stamdmg = damage)
 		D.Dizzy(damage)
 	else
 		D.visible_message("<span class='danger'>[A] jabs [D] in the stomach!</span>", \
