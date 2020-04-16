@@ -197,6 +197,7 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	item_state = "zipties"
+	color = "white"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	custom_materials = null
