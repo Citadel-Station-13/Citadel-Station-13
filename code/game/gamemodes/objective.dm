@@ -23,8 +23,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	GLOB.objectives -= src
 	if(owner)
 		for(var/datum/antagonist/A in owner.antag_datums)
-			if(locate(src) in A.objectives)
-				A.objectives -= src
+			A.objectives -= src
 	if(team)
 		team.objectives -= src
 	. = ..()
