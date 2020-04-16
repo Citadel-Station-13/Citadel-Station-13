@@ -185,7 +185,8 @@ BLIND     // can't see anything
 			alpha_masks = list(alpha_masks)
 		for(var/k in alpha_masks)
 			var/list/L = GLOB.worn_alpha_masks[k]
-			M.filters += filter(type="alpha", x = L[1], y = L[2], icon = L[3])
+			if(L)
+				M.filters += filter(type="alpha", x = L[1], y = L[2], icon = L[3])
 	. = GLOB.alpha_masked_worn_clothing_icons[index] = M
 
 #else
