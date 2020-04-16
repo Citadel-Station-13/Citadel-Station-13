@@ -163,7 +163,6 @@
 	color = pick(cable_colors)
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
@@ -203,7 +202,9 @@
 	custom_materials = null
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
-	color = null
+
+/obj/item/restraints/handcuffs/cable/zipties/attack_self() //Zipties arent cable
+	return
 
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
