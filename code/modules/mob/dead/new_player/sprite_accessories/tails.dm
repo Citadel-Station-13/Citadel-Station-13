@@ -1,8 +1,10 @@
 /datum/sprite_accessory/tails
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	mutant_part_string = "tail"
 
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	mutant_part_string = "tailwag"
 
 /******************************************
 ************* Lizard Tails ****************
@@ -43,10 +45,12 @@
 /datum/sprite_accessory/tails/lizard/none
 	name = "None"
 	icon_state = "None"
+	relevant_layers = null
 
 /datum/sprite_accessory/tails_animated/lizard/none
 	name = "None"
 	icon_state = "None"
+	relevant_layers = null
 
 /datum/sprite_accessory/tails/lizard/axolotl
 	name = "Axolotl"
@@ -85,10 +89,12 @@
 /datum/sprite_accessory/tails/human/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /datum/sprite_accessory/tails_animated/human/none
 	name = "None"
 	icon_state = "none"
+	relevant_layers = null
 
 /datum/sprite_accessory/tails/human/ailurus
 	name = "Red Panda"
@@ -502,20 +508,23 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	recommended_species = list("mammal", "slimeperson", "podweak", "felinid", "insect")
+	mutant_part_string = "tail"
 
 /datum/sprite_accessory/mam_tails/none
 	name = "None"
 	icon_state = "none"
 	recommended_species = null
+	relevant_layers = null
 
 /datum/sprite_accessory/mam_tails_animated
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	mutant_part_string = "tail"
 
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"
 	icon_state = "none"
-	color_src = MATRIXED
+	relevant_layers = null
 
 /datum/sprite_accessory/mam_tails/ailurus
 	name = "Red Panda"
@@ -576,7 +585,7 @@
 /datum/sprite_accessory/mam_tails_animated/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
-	
+
 /datum/sprite_accessory/mam_tails/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"

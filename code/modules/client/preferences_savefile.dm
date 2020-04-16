@@ -159,6 +159,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			features["cock_shape"] = malformed_hockeys[hockey]
 			features["cock_taur"] = TRUE
 
+	if(current_version < 29)
+		switch(features["taur"])
+			if("Husky", "Lab", "Shepherd", "Fox", "Wolf")
+				features["taur"] = "Canine"
+			if("Panther", "Tiger")
+				features["taur"] = "Feline"
+			if("Cow")
+				features["taur"] = "Cow (Spotted)"
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return

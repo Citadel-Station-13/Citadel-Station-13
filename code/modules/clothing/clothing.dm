@@ -173,12 +173,37 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
-/proc/generate_female_clothing(index,t_color,icon,type)
-	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
-	var/icon/female_s				= icon("icon"='icons/mob/clothing/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
-	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
-	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
-	GLOB.female_clothing_icons[index] = female_clothing_icon
+#if DM_VERSION >= 513 // Yes! Filters!
+
+/proc/generate_alpha_masked_clothing(index,state,icon,layer,female,alpha_masks)
+	var/mutable_appearance/M = mutable_appearance(icon, state, layer = layer)
+	if(female)
+		var/icon/female_s = icon('icons/mob/clothing/uniform.dmi', "[(female == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+		M.filters += filter(type="alpha",icon = female_s)
+	if(alpha_masks)
+		if(istext(alpha_masks))
+			alpha_masks = list(alpha_masks)
+		for(var/k in alpha_masks)
+			var/list/L = GLOB.worn_alpha_masks[k]
+			M.filters += filter(type="alpha", x = L[1], y = L[2], icon = L[3])
+	. = GLOB.alpha_masked_worn_clothing_icons[index] = M
+
+#else
+
+/proc/generate_alpha_masked_clothing(index,state,icon,layer,female,alpha_masks)
+	var/icon/I	= icon(icon, state)
+	if(female)
+		var/icon/female_s = icon('icons/mob/clothing/uniform.dmi', "[(female == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+		I.Blend(female_s, ICON_MULTIPLY)
+	if(alpha_masks)
+		if(istext(alpha_masks))
+			alpha_masks = list(alpha_masks)
+		for(var/k in alpha_masks)
+			var/list/L = GLOB.worn_alpha_masks[k]
+			I.Blend(L[3], ICON_MULTIPLY, L[1], L[2])
+	GLOB.alpha_masked_worn_clothing_icons[index] = fcopy_rsc(I)
+
+#endif
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(user))

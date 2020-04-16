@@ -16,6 +16,7 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
+
 /proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, roundstart = FALSE, skip_prototype = TRUE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
@@ -60,6 +61,9 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
+	var/list/relevant_layers //list of layers that this accessory uses. As of now only used in species.handle_mutant_bodyparts(), but that's where most sprite accessories are anyway.
+	var/mutant_part_string //Also used in species.handle_mutant_bodyparts() to generate the overlay icon state.
+	var/alpha_mask_state
 
 	//Special / holdover traits for Citadel specific sprites.
 	var/extra = FALSE
@@ -74,6 +78,22 @@
 
 	//For soft-restricting markings to species IDs
 	var/list/recommended_species
+
+/datum/sprite_accessory/New()
+	if(alpha_mask_state)
+		alpha_mask_state = "[icon]-[alpha_mask_state]" //foolproofing against states with same name but different files.
+		if(!GLOB.worn_alpha_masks[alpha_mask_state])
+			var/image/I = icon(icon, alpha_mask_state)
+			var/x_offset = 0
+			var/y_offset = 0
+			if(center)
+				x_offset = -((dimension_x/world.icon_size)-1)*(world.icon_size*0.5)
+				y_offset = -((dimension_y/world.icon_size)-1)*(world.icon_size*0.5)
+				if(dimension_x < world.icon_size)
+					x_offset *= -1
+				if(dimension_y < world.icon_size)
+					y_offset *= -1
+			GLOB.worn_alpha_masks[alpha_mask_state] = list(x_offset, y_offset, I)
 
 /datum/sprite_accessory/underwear
 	icon = 'icons/mob/clothing/underwear.dmi'
