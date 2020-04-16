@@ -1836,7 +1836,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["insect_markings"] = new_insect_markings
 
 				if("s_tone")
-					var/list/choices = GLOB.skin_tones - GLOB.nonstandard_skin_tones + "custom"
+					var/list/choices = GLOB.skin_tones - GLOB.nonstandard_skin_tones
+					if(CONFIG_GET(number/allow_custom_skintones))
+						choices += "custom"
 					var/new_s_tone = input(user, "Choose your character's skin tone:", "Character Preference")  as null|anything in choices
 					if(new_s_tone)
 						if(new_s_tone == "custom")

@@ -550,7 +550,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 3, 0)
 	eye_color						= sanitize_hexcolor(eye_color, 3, 0)
 	use_custom_skin_tone			= sanitize_integer(use_custom_skin_tone, FALSE, TRUE, initial(use_custom_skin_tone))
-	if(use_custom_skin_tone)
+	if(use_custom_skin_tone && CONFIG_GET(number/allow_custom_skintones))
 		skin_tone					= sanitize_hexcolor(skin_tone, 6, TRUE, "#FFFFFF")
 	else
 		skin_tone					= sanitize_inlist(skin_tone, GLOB.skin_tones - GLOB.nonstandard_skin_tones, initial(skin_tone))

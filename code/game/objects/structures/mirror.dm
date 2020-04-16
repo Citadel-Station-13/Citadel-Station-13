@@ -158,7 +158,10 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(H, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones + "custom"
+				var/list/choices = GLOB.skin_tones
+				if(CONFIG_GET(number/allow_custom_skintones))
+					choices += "custom"
+				var/new_s_tone = input(H, "Choose your skin tone:", "Race change")  as null|anything in choices
 				if(new_s_tone)
 					if(new_s_tone == "custom")
 						var/default = H.dna.skin_tone_override || null
