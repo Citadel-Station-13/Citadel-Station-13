@@ -27,7 +27,7 @@
 	dimension_x = 64
 	color_src = MATRIXED
 	recommended_species = list("human", "lizard", "insect", "mammal", "xeno", "jelly", "slimeperson", "podweak")
-	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_UPPER_LAYER, BODY_FRONT_LAYER)
+	relevant_layers = list(BODY_ADJ_UPPER_LAYER, BODY_FRONT_LAYER)
 	var/taur_mode = NONE //Must be a single specific tauric suit variation bitflag. Don't do FLAG_1|FLAG_2
 	var/alt_taur_mode = NONE //Same as above.
 	var/hide_legs = USE_HOOF_CLIP_MASK

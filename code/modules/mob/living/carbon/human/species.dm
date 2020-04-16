@@ -597,8 +597,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
-	var/list/relevant_layers = list()
-	var/list/dna_feature_as_text_string = list()
 	var/list/standing	= list()
 
 	H.remove_overlay(BODY_BEHIND_LAYER)
@@ -740,6 +738,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(!bodyparts_to_add)
 		return
+
+	var/list/relevant_layers = list()
+	var/list/dna_feature_as_text_string = list()
 
 	for(var/bodypart in bodyparts_to_add)
 		var/datum/sprite_accessory/S
