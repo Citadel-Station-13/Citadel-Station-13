@@ -179,8 +179,8 @@
 /obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return FALSE
-	for(var/mob/living/L in contents)
-		if(!issilicon(L) && !isbrain(L))
+	for(var/mob/living/L in GetAllContents())
+		if(!ispAI(L) && !isbrain(L))
 			to_chat(S, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
 			return FALSE
 	return ..()
@@ -416,6 +416,57 @@
 	to_chat(S, "<span class='warning'>Destroying this object would cause a catastrophic chain reaction. Aborting.</span>")
 	return FALSE
 
+/obj/machinery/ore_silo/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object, however tempting it's, will disrupt the research development that may serve for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/rnd/server/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object, will disrupt the research development that may serve for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/pool/swarmer_act(mob/living/simple_animal/hostile/swarmer/S) //pool's closed, but not.
+	to_chat(S, "<span class='warning'>The pool must not be closed, it will provide healthy fun for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/structure/pool/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>The pool must not be closed, it will provide healthy fun for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/structure/holosign/barrier/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/static/list/lazy_typecache = typecacheof(list(/obj/structure/holosign/barrier/engineering, /obj/structure/holosign/barrier/firelock, /obj/structure/holosign/barrier/atmos, /obj/structure/holosign/barrier/combifan))
+	if(lazy_typecache[type])
+		to_chat(S, "<span class='warning'>Destroying this holographic barrier may not benefit us. Aborting.</span>")
+		return FALSE
+	return ..()
+
+/obj/machinery/dominator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/computer/bsa_control/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/bsa/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/dna_vault/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/structure/filler/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This advanced piece of technology may be of use for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/computer/sat_control/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object will lower the station shielding against space debris. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/satellite/meteor_shield/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object will lower the station shielding against space debris. Aborting.</span>")
+	return FALSE
+
 ////END CTRL CLICK FOR SWARMERS////
 
 /mob/living/simple_animal/hostile/swarmer/proc/Fabricate(atom/fabrication_object,fabrication_cost = 0)
@@ -429,6 +480,14 @@
 	return new fabrication_object(loc)
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(atom/movable/target)
+	if(isobj(target))
+		var/obj/O = target
+		if(O.resistance_flags & INDESTRUCTIBLE)
+			return FALSE
+	for(var/mob/living/L in GetAllContents())
+		if(!ispAI(L) && !isbrain(L))
+			to_chat(src, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
+			return FALSE
 	var/resource_gain = target.IntegrateAmount()
 	if(resources + resource_gain > max_resources)
 		to_chat(src, "<span class='warning'>We cannot hold more materials!</span>")

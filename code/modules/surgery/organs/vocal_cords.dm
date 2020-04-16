@@ -74,7 +74,7 @@
 	..()
 	cords = target
 
-/datum/action/item_action/organ_action/colossus/IsAvailable()
+/datum/action/item_action/organ_action/colossus/IsAvailable(silent = FALSE)
 	if(world.time < cords.next_command)
 		return FALSE
 	if(!owner)
@@ -632,7 +632,7 @@
 	..()
 	cords = target
 
-/datum/action/item_action/organ_action/velvet/IsAvailable()
+/datum/action/item_action/organ_action/velvet/IsAvailable(silent = FALSE)
 	return TRUE
 
 /datum/action/item_action/organ_action/velvet/Trigger()

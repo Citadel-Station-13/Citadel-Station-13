@@ -92,6 +92,22 @@
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/clockwork_slab
+	name = "Clockwork Slab"
+	desc = "A reverse engineered clockwork slab. Is this really a good idea?."
+	item = /obj/item/clockwork/slab/traitor
+	cost = 20
+	refundable = TRUE
+	restricted_roles = list("Chaplain")
+
+/datum/uplink_item/role_restricted/arcane_tome
+	name = "Arcane Tome"
+	desc = "A replica of a Nar'sian tome. This is probably a bad idea.."
+	item = /obj/item/tome/traitor
+	cost = 20
+	refundable = TRUE
+	restricted_roles = list("Chaplain")
+
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"
 	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. \

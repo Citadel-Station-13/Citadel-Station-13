@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
+#define isvampire(A) (is_species(A,/datum/species/vampire))
 
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))

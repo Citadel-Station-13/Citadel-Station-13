@@ -275,10 +275,8 @@ SLIME SCANNER
 			//LIVER
 			else if(istype(O, /obj/item/organ/liver))
 				var/obj/item/organ/liver/L = O
-				if(H.undergoing_liver_failure() && H.stat != DEAD) //might be depreciated
+				if(L.organ_flags & ORGAN_FAILING && H.stat != DEAD) //might be depreciated
 					temp_message += "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
-				if(L.swelling > 20)
-					temp_message += " <span class='danger'>Subject is suffering from an enlarged liver.</span>" //i.e. shrink their liver or give them a transplant.
 
 			//HEART
 			else if(ishuman(M) && (istype(O, /obj/item/organ/heart)))
