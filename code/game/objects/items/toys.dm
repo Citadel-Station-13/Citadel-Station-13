@@ -273,15 +273,12 @@
 			var/obj/item/twohanded/dualsaber/toy/newSaber = new /obj/item/twohanded/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = TRUE
-				newSaber.item_color = "rainbow"
 			qdel(W)
 			qdel(src)
 	else if(istype(W, /obj/item/multitool))
 		if(!hacked)
 			hacked = TRUE
-			item_color = "rainbow"
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
-
 			if(active)
 				update_icon()
 				user.update_inv_hands()
@@ -352,7 +349,7 @@
 		update_light()
 	return TRUE
 
-/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(active)
 		if(isinhands)

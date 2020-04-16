@@ -695,7 +695,7 @@
 							holo_icon = client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
 						else
 							holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
-					else if("xeno queen")
+					if("xeno queen")
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
 						holo_icon = getHologramIcon(icon(icon_list[input], input))

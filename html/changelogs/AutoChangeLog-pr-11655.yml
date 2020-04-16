@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "The crusher's vortex talisman trophy now has a cooldown between each spawned wall."

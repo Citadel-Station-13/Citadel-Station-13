@@ -12,7 +12,7 @@
 	var/suittoggled = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE
 
-/obj/item/clothing/suit/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
+/obj/item/clothing/suit/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
