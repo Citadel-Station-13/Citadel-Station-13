@@ -1556,6 +1556,7 @@
 	dir = 8
 	},
 /obj/structure/table,
+/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
