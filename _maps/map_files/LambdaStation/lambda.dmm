@@ -64875,6 +64875,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ctE" = (
@@ -69204,7 +69205,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cCS" = (
