@@ -922,7 +922,7 @@
 	name = "Cold Scales"
 	id = /datum/reagent/consumable/ethanol/coldscales
 	results = list(/datum/reagent/consumable/ethanol/coldscales = 3)
-	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/ethanol/lizardwine = 1,  /datum/reagent/consumable/menthol = 1)
+	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/toxin/slimejelly = 1,  /datum/reagent/consumable/menthol = 1)
 
 /datum/chemical_reaction/oil_drum
 	name = "Oil Drum"
