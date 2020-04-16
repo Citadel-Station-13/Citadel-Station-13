@@ -5,7 +5,7 @@
 This system allows you to update individual mob-overlays, without regenerating them all each time.
 When we generate overlays we generate the standing version and then rotate the mob as necessary..
 
-As of the time of writing there are 20 layers within this list. Please try to keep this from increasing. //22 and counting, good job guys
+As of the time of writing there are 20 layers within this list. Please try to keep this from increasing. //32 and counting, good job guys
 	var/overlays_standing[20]		//For the standing stance
 
 Most of the time we only wish to update one overlay:
@@ -340,7 +340,7 @@ There are several things that need to be remembered:
 			muzzled = TRUE
 		else if(dna.species.mutant_bodyparts["snout"] && dna.features["snout"] != "None")
 			muzzled = TRUE
-		if(muzzled && H.mutantrace_variation & STYLE_MUZZLE &6 !(H.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
+		if(muzzled && H.mutantrace_variation & STYLE_MUZZLE && !(H.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
 			alt_icon = H.anthro_mob_worn_overlay || 'icons/mob/clothing/head_muzzled.dmi'
 			variation_flag |= STYLE_MUZZLE
 
