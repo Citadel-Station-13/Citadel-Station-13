@@ -783,7 +783,7 @@
 		if(istype(O, /obj/item/reagent_containers/food/snacks/customizable))
 			var/obj/item/reagent_containers/food/snacks/customizable/splashed_custom_food = O
 			splashed_custom_food.total_quality += 10000
-r
+
 /datum/reagent/consumable/char
 	name = "Char"
 	description = "Essence of the grill. Has strange properties when overdosed."
