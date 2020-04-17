@@ -776,7 +776,7 @@
 
 /datum/reagent/consumable/secretsauce/reaction_obj(obj/O, reac_volume)
 	//splashing any amount above or equal to 1u of secret sauce onto a piece of food turns its quality to 100
-	if(reac_volume >= 1 && istype(O, /obj/item/reagent_containers/food))
+	if(reac_volume >= 1 && isfood(O))
 		var/obj/item/reagent_containers/food/splashed_food = O
 		splashed_food.adjust_food_quality(100)
 		// if it's a customisable food, we need to edit its total quality too, to prevent its quality resetting from adding more ingredients!

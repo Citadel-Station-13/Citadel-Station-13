@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	item_flags = fried.item_flags
 	obj_flags = fried.obj_flags
 
-	if(istype(fried, /obj/item/reagent_containers/food))
+	if(isfood(fried))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)
 		qdel(fried)
 	else

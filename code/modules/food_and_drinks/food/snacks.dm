@@ -303,7 +303,7 @@ All foods are distributed among various categories. Use common sense.
 	if(cooked_type)
 		result = new cooked_type(T)
 		//if the result is food, set its food quality to the original food item's quality
-		if(istype(result, /obj/item/reagent_containers/food))
+		if(isfood(result))
 			var/obj/item/reagent_containers/food/food_output = result
 			food_output.adjust_food_quality(food_quality + quality_increase)
 		if(istype(M))

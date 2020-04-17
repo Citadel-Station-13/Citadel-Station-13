@@ -99,7 +99,7 @@
 			butchered_items += new sinew (T)
 		meat.guaranteed_butcher_results.Remove(sinew)
 	for(var/butchered_item in butchered_items)
-		if(istype(butchered_item, /obj/item/reagent_containers/food))
+		if(isfood(butchered_item))
 			var/obj/item/reagent_containers/food/butchered_meat = butchered_item
 			butchered_meat.food_quality = meat_quality
 	if(butcher)

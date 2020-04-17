@@ -240,6 +240,8 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
+#define isfood(A) (istype(A, /obj/item/reagent_containers/food))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 

@@ -105,7 +105,7 @@ God bless America.
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
 			//setup food quality for item depending on if it's edible or not
-			if(istype(I, /obj/item/reagent_containers/food))
+			if(isfood(I))
 				var/obj/item/reagent_containers/food/original_food = I
 				frying.adjust_food_quality(original_food.food_quality) //food quality remains unchanged until degree of frying is calculated
 			else

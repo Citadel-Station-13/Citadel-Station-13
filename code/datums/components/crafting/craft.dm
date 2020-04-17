@@ -201,7 +201,7 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(isitem(I))
-					if(istype(I, /obj/item/reagent_containers/food))
+					if(isfood(I))
 						var/obj/item/reagent_containers/food/food_result = I
 						var/total_quality = 0
 						var/total_items = 0
