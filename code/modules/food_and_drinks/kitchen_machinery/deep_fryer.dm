@@ -109,7 +109,7 @@ God bless America.
 				var/obj/item/reagent_containers/food/original_food = I
 				frying.adjust_food_quality(original_food.food_quality) //food quality remains unchanged until degree of frying is calculated
 			else
-				frying.food_quality = 10 //inedible fried item has low quality
+				frying.adjust_food_quality(10) //inedible fried item has low quality
 			icon_state = "fryer_on"
 			fry_loop.start()
 

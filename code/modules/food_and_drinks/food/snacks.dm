@@ -297,7 +297,7 @@ All foods are distributed among various categories. Use common sense.
 			else
 				S.reagents.add_reagent(r_id, amount)
 
-/obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M, var/quality_increase)
+/obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
 	var/turf/T = get_turf(src)
 	var/obj/item/result
 	if(cooked_type)
@@ -305,7 +305,7 @@ All foods are distributed among various categories. Use common sense.
 		//if the result is food, set its food quality to the original food item's quality
 		if(isfood(result))
 			var/obj/item/reagent_containers/food/food_output = result
-			food_output.adjust_food_quality(food_quality + quality_increase)
+			food_output.adjust_food_quality(food_quality + M.quality_increase)
 		if(istype(M))
 			initialize_cooked_food(result, M.efficiency)
 		else

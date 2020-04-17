@@ -310,7 +310,7 @@
 
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
-		O.microwave_act(src, quality_increase)
+		O.microwave_act(src)
 		if(O.custom_materials?.len)
 			metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
