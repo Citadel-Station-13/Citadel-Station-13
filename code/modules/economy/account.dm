@@ -13,6 +13,8 @@
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
+		if(!SSeconomy)
+			log_world("Wack")
 		SSeconomy.bank_accounts += src
 	account_holder = newname
 	account_job = job
@@ -42,7 +44,7 @@
 	return FALSE
 
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
-	if(!transferable || !from.has_money(amount))
+	if(!from.transferable || !from.has_money(amount))
 		return FALSE
 	adjust_money(amount)
 	from.adjust_money(-amount)
@@ -77,7 +79,7 @@
 		*/
 		var/mob/card_holder = recursive_loc_check(A, /mob)
 		if(ismob(card_holder)) //If on a mob
-			if(card_holder.client && !(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
+			if(!card_holder.client || (!(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 				return
 
 			card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep.ogg', 50, TRUE)
@@ -92,7 +94,7 @@
 				break
 		else
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
-				if(M.client && !(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
+				if(!M.client || (!(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 					return
 				M.playsound_local(get_turf(M), 'sound/machines/twobeep.ogg', 50, TRUE)
 				if(M.can_hear())

@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(potentialRandomVRlevels, generateMapList(filename = "[global.co
 	if(GLOB.awaydestinations.len)	//crude, but it saves another var!
 		return
 
-	if(GLOB.potentialRandomZlevels && GLOB.potentialRandomZlevels.len)
+	if(GLOB.potentialRandomZlevels?.len)
 		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
 		var/map = pick(GLOB.potentialRandomZlevels)
 		var/list/traits = list(ZTRAIT_AWAY = TRUE)

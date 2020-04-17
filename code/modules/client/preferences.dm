@@ -2275,6 +2275,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("ghost_pda")
 					chat_toggles ^= CHAT_GHOSTPDA
 
+				if("income_pings")
+					chat_toggles ^= CHAT_BANKCARD
+
 				if("pull_requests")
 					chat_toggles ^= CHAT_PULLR
 

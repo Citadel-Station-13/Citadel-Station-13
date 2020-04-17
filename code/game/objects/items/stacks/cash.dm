@@ -3,8 +3,8 @@
 	singular_name = "bill"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
-	amount = INFINITY
-	max_amount = 20
+	amount = 1
+	max_amount = INFINITY
 	throwforce = 0
 	throw_speed = 2
 	throw_range = 2

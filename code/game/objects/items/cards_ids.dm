@@ -179,11 +179,14 @@
 	. = ..()
 	if(mapload && access_txt)
 		access = text2access(access_txt)
-	var/turf/T = get_turf(src)
-	if(bank_support == ID_FREE_BANK_ACCOUNT && is_vr_level(T.z)) //economy is quite exploitable on VR in so many ways.
-		bank_support = ID_NO_BANK_ACCOUNT
-	else if(bank_support == ID_LOCKED_BANK_ACCOUNT)
-		registered_account = new /datum/bank_account/remote/non_transferable(pick(GLOB.redacted_strings))
+	switch(bank_support)
+		if(ID_FREE_BANK_ACCOUNT)
+			var/turf/T = get_turf(src)
+			if(is_vr_level(T.z)) //economy is exploitable on VR in so many ways.
+				bank_support = ID_NO_BANK_ACCOUNT
+		if(ID_LOCKED_BANK_ACCOUNT)
+			registered_account = new /datum/bank_account/remote/non_transferable(pick(GLOB.redacted_strings))
+
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -566,17 +569,6 @@ update_label("John Doe", "Clowny")
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
 	. = ..()
 
-/obj/item/card/id/debug
-	name = "\improper Debug ID"
-	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
-	icon_state = "centcom"
-	assignment = "Jannie"
-
-/obj/item/card/id/debug/Initialize()
-	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
-	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	. = ..()
-
 /obj/item/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
@@ -785,4 +777,5 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/debug/Initialize()
 	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	. = ..()
