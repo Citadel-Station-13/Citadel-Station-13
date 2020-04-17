@@ -28,7 +28,6 @@
 	else
 		..()
 
-
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
 		to_chat(user, "<span class='danger'>The crate's anti-tamper system activates!</span>")

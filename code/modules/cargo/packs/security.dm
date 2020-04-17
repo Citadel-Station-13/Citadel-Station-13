@@ -38,7 +38,7 @@
 	crate_name = "armor crate"
 
 /datum/supply_pack/security/civ_protection
-	name = "Civilian Rifle Crate "
+	name = "Civilian Rifle Crate"
 	desc = "Three 10mm rifles weapons, these outdated rifles are slow to use. Requires Security access to open."
 	cost = 3000 //Really shit, but hey its better to nothing
 	contains = list(/obj/item/gun/ballistic/automatic/surplus,

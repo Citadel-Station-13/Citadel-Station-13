@@ -55,6 +55,7 @@
 	hidden = TRUE
 	contains = list(/obj/item/stack/sheet/mineral/plastitanium/fifty)
 	crate_name = "plastitanium sheets crate"
+
 /datum/supply_pack/materials/plastitanium_glass50
 	name = "50 Plastitanium Glass Sheets"
 	desc = "Look out from your evil empire with fifty plastitanium glass sheets."
