@@ -475,3 +475,7 @@
 /datum/config_entry/number/body_size_slowdown_multiplier
 	config_entry_value = 0.25
 	min_val = 0.1 //To encourage folks to disable the slowdown through the above config instead.
+
+//Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
+/datum/config_entry/number/allow_custom_skintones
+	config_entry_value = 1

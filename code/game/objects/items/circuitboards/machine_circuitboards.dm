@@ -245,7 +245,7 @@
 		/obj/machinery/vending/autodrobe = "AutoDrobe",
 		/obj/machinery/vending/assist = "\improper Vendomat",
 		/obj/machinery/vending/engivend = "\improper Engi-Vend",
-		/obj/machinery/vending/engivend = "\improper YouTool",
+		/obj/machinery/vending/tool = "\improper YouTool",
 		/obj/machinery/vending/sustenance = "\improper Sustenance Vendor",
 		/obj/machinery/vending/dinnerware = "\improper Plasteel Chef's Dinnerware Vendor",
 		/obj/machinery/vending/cart = "\improper PTech",

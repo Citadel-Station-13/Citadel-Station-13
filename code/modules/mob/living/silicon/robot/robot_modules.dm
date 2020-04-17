@@ -146,11 +146,9 @@
 	has_snowflake_deadsprite = TRUE
 	cyborg_pixel_offset = -16
 	hat_offset = INFINITY
-	var/obj/item/I = new /obj/item/analyzer/nose/flavour(src)
-	basic_modules += I
-	I = new /obj/item/soap/tongue/flavour(src)
-	basic_modules += I
-	I = new /obj/item/dogborg/sleeper/K9/flavour(src)
+	basic_modules += new /obj/item/dogborg_nose(src)
+	basic_modules += new /obj/item/dogborg_tongue(src)
+	var/obj/item/dogborg/sleeper/K9/flavour/I = new(src)
 	if(istype(src, /obj/item/robot_module/engineering))
 		I.icon_state = "decompiler"
 	if(istype(src, /obj/item/robot_module/security))

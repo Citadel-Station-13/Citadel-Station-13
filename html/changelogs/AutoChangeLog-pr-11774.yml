@@ -1,0 +1,6 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "Maints have seen an uptick in left over types of welders, and tools. As well as different types of masks"
+  - rscadd: "New type of 02 locker - Rng! It can have almost any type of gas/breath mask and almost any type of o2 tank as well as even plasma men internals - Fancy!"
+  - tweak: "Tool lockers have 70% odds to have a spare random tool inside!"
