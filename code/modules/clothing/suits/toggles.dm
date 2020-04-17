@@ -37,7 +37,6 @@
 	..()
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
-	src.icon_state = "[initial(icon_state)]"
 	suittoggled = FALSE
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
@@ -45,9 +44,14 @@
 		H.update_inv_wear_suit()
 	else
 		hood.forceMove(src)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_icon()
+
+/obj/item/clothing/suit/hooded/update_icon_state()
+	icon_state = "[initial(icon_state)]"
+	if(ishuman(hood.loc))
+		var/mob/living/human/H = hood.loc
+		if(H.head == hood)
+			icon_state += "_t"
 
 /obj/item/clothing/suit/hooded/dropped(mob/user)
 	..()
@@ -65,11 +69,8 @@
 				return
 			else if(H.equip_to_slot_if_possible(hood,SLOT_HEAD,0,0,1))
 				suittoggled = TRUE
-				src.icon_state = "[initial(icon_state)]_t"
+				update_icon()
 				H.update_inv_wear_suit()
-				for(var/X in actions)
-					var/datum/action/A = X
-					A.UpdateButtonIcon()
 	else
 		RemoveHood()
 

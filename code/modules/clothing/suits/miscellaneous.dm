@@ -975,7 +975,7 @@
 	item_state = "coatpoly"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/polychromic
 
-/obj/item/clothing/suit/hooded/wintercoat/ComponentInitialize()
+/obj/item/clothing/suit/hooded/wintercoat/polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, list("#6A6964", "#C4B8A6", "#0000FF"), 3)
 
