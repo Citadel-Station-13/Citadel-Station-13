@@ -23,7 +23,7 @@
 	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
-	var/fixing = /obj/item/stack/sheet/mineral/titanium
+	var/repair_material = /obj/item/stack/sheet/mineral/titanium
 	transparent = TRUE
 	max_integrity = 75
 
@@ -107,7 +107,7 @@ obj/item/shield/riot/bullet_proof
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	transparent = FALSE
-	fixing = /obj/item/stack/sheet/mineral/wood
+	repair_material = /obj/item/stack/sheet/mineral/wood
 	max_integrity = 65
 
 /obj/item/shield/riot/roman/fake
@@ -129,7 +129,7 @@ obj/item/shield/riot/bullet_proof
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	custom_materials = null
 	resistance_flags = FLAMMABLE
-	fixing = /obj/item/stack/sheet/mineral/wood
+	repair_material = /obj/item/stack/sheet/mineral/wood
 	block_chance = 30
 	transparent = FALSE
 	max_integrity = 55
@@ -211,7 +211,7 @@ obj/item/shield/riot/bullet_proof
 
 /obj/item/shield/riot/tower/swat
 	name = "swat shield"
-	desc = "A massive, heavy shield that can block a lot of attacks, can take a lot of abuse before braking."
+	desc = "A massive, heavy shield that can block a lot of attacks, can take a lot of abuse before breaking."
 	max_integrity = 175
 	block_chance = 50
 
