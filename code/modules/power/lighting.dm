@@ -313,7 +313,7 @@
 /obj/machinery/light/update_overlays()
 	. = ..()
 	if(on && status == LIGHT_OK)
-		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, EMISSIVE_LAYER, EMISSIVE_PLANE)
+		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, FLOAT_LAYER, FLOAT_PLANE)
 		glowybit.alpha = CLAMP(light_power*250, 30, 200)
 		. += glowybit
 
