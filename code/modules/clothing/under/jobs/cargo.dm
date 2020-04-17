@@ -17,7 +17,7 @@
 /obj/item/clothing/under/rank/cargo/tech
 	name = "cargo technician's jumpsuit"
 	desc = "Shooooorts! They're comfy and easy to wear!"
-	icon_state = "cargotech"
+	icon_state = "cargo"
 	item_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	alt_covers_chest = TRUE
