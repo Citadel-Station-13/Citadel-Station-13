@@ -98,7 +98,7 @@
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
-	if(src.GetComponent(/datum/component/tackler))
+	if(GetComponent(/datum/component/tackler))
 		return
 	if(throwingdatum?.thrower && iscyborg(throwingdatum.thrower))
 		var/mob/living/silicon/robot/R = throwingdatum.thrower

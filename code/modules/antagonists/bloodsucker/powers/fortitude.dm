@@ -31,7 +31,6 @@
 	was_running = (user.m_intent == MOVE_INTENT_RUN)
 	if(was_running)
 		user.toggle_move_intent()
-		was_running = TRUE
 	while(B && ContinueActive(user) || user.m_intent == MOVE_INTENT_RUN)
 		if(istype(user.buckled, /obj/vehicle)) //We dont want people using fortitude being able to use vehicles
 			var/obj/vehicle/V = user.buckled

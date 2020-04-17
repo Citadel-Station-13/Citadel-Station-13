@@ -69,8 +69,8 @@
 	id = /obj/item/card/id/ert/Security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	belt = /obj/item/storage/belt/security/full
+	back = /obj/item/storage/backpack/security
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\

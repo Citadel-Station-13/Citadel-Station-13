@@ -154,7 +154,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 30)
 	strip_mod = 0.9
 
-/obj/item/clothing/gloves/tackler/combat/insulated
+/obj/item/clothing/gloves/combat
 	name = "combat gloves"
 	desc = "These tactical gloves are fireproof and shock resistant."
 	icon_state = "combat"

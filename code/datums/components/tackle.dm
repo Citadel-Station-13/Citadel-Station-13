@@ -84,8 +84,8 @@
 		to_chat(user, "<span class='warning'>You're not ready to tackle!</span>")
 		return
 
-	if(user.has_status_effect(STATUS_EFFECT_TASED)) // can't tackle if you just got shoved
-		to_chat(user, "<span class='warning'>You cant tackle while you are tased!</span>")
+	if(user.has_status_effect(STATUS_EFFECT_TASED)) // can't tackle if you just got tased
+		to_chat(user, "<span class='warning'>You can't tackle while tased!</span>")
 		return
 
 	user.face_atom(A)
@@ -353,7 +353,7 @@
 
 		if(94 to 98)
 			user.visible_message("<span class='danger'>[user] slams face-first into [hit] with a concerning squish, immediately going limp!</span>", "<span class='userdanger'>You slam face-first into [hit], and immediately lose consciousness!</span>")
-			user.adjustStaminaLoss(30)
+			user.adjustStaminaLoss(100)
 			user.adjustBruteLoss(30)
 			user.Unconscious(100)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
@@ -370,7 +370,7 @@
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
-			user.Knockdown(40)
+			user.DefaultCombatKnockdown(40)
 			shake_camera(user, 5, 5)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 2.5)
@@ -380,14 +380,14 @@
 			user.adjustStaminaLoss(30)
 			user.adjustBruteLoss(10)
 			user.confused += 10
-			user.Knockdown(30)
+			user.DefaultCombatKnockdown(30)
 			shake_camera(user, 3, 4)
 
 		if(1 to 63)
 			user.visible_message("<span class='danger'>[user] slams into [hit]!</span>", "<span class='userdanger'>You slam into [hit]!</span>")
 			user.adjustStaminaLoss(20)
 			user.adjustBruteLoss(10)
-			user.Knockdown(30)
+			user.DefaultCombatKnockdown(30)
 			shake_camera(user, 2, 2)
 
 	playsound(user, 'sound/weapons/smash.ogg', 70, TRUE)
@@ -413,13 +413,14 @@
 			//shard.AddElement(/datum/element/embed, shard.embedding)
 		W.obj_destruction()
 		user.adjustStaminaLoss(10 * speed)
-		user.Paralyze(30)
+		user.DefaultCombatKnockdown(40)
+		user.Paralyze(5)
 		user.visible_message("<span class='danger'>[user] slams into [W] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You slam into [W] and shatter it, shredding yourself with glass!</span>")
 
 	else
 		user.visible_message("<span class='danger'>[user] slams into [W] like a bug, then slowly slides off it!</span>", "<span class='userdanger'>You slam into [W] like a bug, then slowly slide off it!</span>")
-		user.Paralyze(10)
-		user.Knockdown(30)
+		user.Paralyze(2)
+		user.DefaultCombatKnockdown(20)
 		W.take_damage(20 * speed)
 		user.adjustStaminaLoss(10 * speed)
 		user.adjustBruteLoss(5 * speed)
@@ -464,8 +465,8 @@
 	owner.visible_message("<span class='danger'>[owner] trips over [kevved] and slams into it face-first[HOW_big_of_a_miss_did_we_just_make]!</span>", "<span class='userdanger'>You trip over [kevved] and slam into it face-first[HOW_big_of_a_miss_did_we_just_make]!</span>")
 	owner.adjustStaminaLoss(20 + messes.len * 2)
 	owner.adjustBruteLoss(10 + messes.len)
-	owner.Paralyze(5 * messes.len) // half a second of paralyze for each thing you knock around
-	owner.Knockdown(20 + 5 * messes.len) // 2 seconds of knockdown after the paralyze
+	owner.Paralyze(2 * messes.len)
+	owner.DefaultCombatKnockdown(20 + 5 * messes.len) // 2 seconds of knockdown after the paralyze
 
 	for(var/obj/item/I in messes)
 		var/dist = rand(1, 3)
