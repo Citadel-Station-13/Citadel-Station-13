@@ -10,6 +10,7 @@
 	icon_state = "red_suit_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
 	name = "treasure hunter uniform"
