@@ -48,6 +48,21 @@
 	contains = list(/obj/item/stack/sheet/plasteel/fifty)
 	crate_name = "plasteel sheets crate"
 
+/datum/supply_pack/materials/plastitanium50
+	name = "50 Plastitanium Sheets"
+	desc = "Build an evil empire with fifty plastitanium sheets."
+	cost = 9250
+	hidden = TRUE
+	contains = list(/obj/item/stack/sheet/mineral/plastitanium/fifty)
+	crate_name = "plastitanium sheets crate"
+/datum/supply_pack/materials/plastitanium_glass50
+	name = "50 Plastitanium Glass Sheets"
+	desc = "Look out from your evil empire with fifty plastitanium glass sheets."
+	cost = 9500
+	hidden = TRUE
+	contains = list(/obj/item/stack/sheet/plastitaniumglass/fifty)
+	crate_name = "plastitanium glass sheets crate"
+
 /datum/supply_pack/materials/plastic50
 	name = "50 Plastic Sheets"
 	desc = "Build a limitless amount of toys with fifty plastic sheets!"

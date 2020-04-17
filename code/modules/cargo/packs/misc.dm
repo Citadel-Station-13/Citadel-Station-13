@@ -441,4 +441,16 @@
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// Illegal Supplies ////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
+/datum/supply_pack/misc/jammer
+	name = "Radio Jammer Crate"
+	desc = "(*!&@3#Contains &@8#. &R@!# no access &5@# open."
+	cost = 4500 //Kinda usless
+	hidden = TRUE
+	access = null
+	contains = list(/obj/item/jammer)
+	crate_name = "radio jammer crate"
+	crate_type = /obj/structure/closet/crate/syndicate

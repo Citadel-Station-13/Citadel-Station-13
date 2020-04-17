@@ -37,6 +37,15 @@
 					/obj/item/clothing/suit/armor/vest)
 	crate_name = "armor crate"
 
+/datum/supply_pack/security/civ_protection
+	name = "Civilian Rifle Crate "
+	desc = "Three 10mm rifles weapons, these outdated rifles are slow to use. Requires Security access to open."
+	cost = 3000 //Really shit, but hey its better to nothing
+	contains = list(/obj/item/gun/ballistic/automatic/surplus,
+					/obj/item/gun/ballistic/automatic/surplus,
+					/obj/item/gun/ballistic/automatic/surplus)
+	crate_name = "civiaian rifle crate"
+
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
 	desc = "Three stamina-draining disabler weapons. Requires Security access to open."
@@ -163,6 +172,17 @@
 					/obj/item/storage/box/handcuffs)
 	crate_name = "security supply crate"
 
+/datum/supply_pack/security/stechkins_crate
+	name = "Stechkin 10mm Pistol"
+	desc = "Contains two 10mm automatic pistols with threaded barrel for suppressors. No access needed."
+	cost = 9000
+	hidden = TRUE
+	access = null
+	contains = list(/obj/item/gun/ballistic/automatic/pistol,
+					/obj/item/gun/ballistic/automatic/pistol)
+	crate_name = "stechkin pistol crate"
+	crate_type = /obj/structure/closet/crate/syndicate
+
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
 	desc = "Upgrade your arsenal with 10 standard firing pins. Requires Security access to open."
@@ -197,6 +217,17 @@
 					/obj/item/gun/energy/e_gun/advtaser,
 					/obj/item/gun/energy/e_gun/advtaser)
 	crate_name = "taser crate"
+
+/datum/supply_pack/security/throwingweapons
+	name = "Throwing Weapons"
+	desc = "Contains two boxes of shurikens and reinforced bolas. Requires no access to open."
+	cost = 5500
+	hidden = TRUE
+	access = null
+	contains = list(/obj/item/storage/box/syndie_kit/throwing_weapons,
+					/obj/item/storage/box/syndie_kit/throwing_weapons)
+	crate_name = "throwing weapons crate"
+	crate_type = /obj/structure/closet/crate/syndicate
 
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"

@@ -299,6 +299,20 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/sydi_spacesuits
+	name = "Syndicate Space Suits"
+	desc = "(*!&@#Contains two sets of black and red space suit, and two syndicate masks, good luck Operative.#@*$"
+	hidden = TRUE
+	cost = 4500 //Good armor, space proof and no access needed
+	contains = list(/obj/item/clothing/head/helmet/space/syndicate,
+					/obj/item/clothing/head/helmet/space/syndicate,
+					/obj/item/clothing/suit/space/syndicate,
+					/obj/item/clothing/suit/space/syndicate,
+					/obj/item/clothing/mask/gas/syndicate,
+					/obj/item/clothing/mask/gas/syndicate)
+	crate_name = "eva space suit crate"
+	crate_type = /obj/structure/closet/crate/syndicate
+
 /datum/supply_pack/emergency/weedcontrol
 	name = "Weed Control Crate"
 	desc = "Keep those invasive species OUT. Contains a scythe, gasmask, two sprays of Plant-B-Gone, and two anti-weed chemical grenades. Warranty void if used on ambrosia. Requires Hydroponics access to open."

@@ -9,6 +9,17 @@
 /datum/supply_pack/costumes_toys
 	group = "Costumes & Toys"
 
+
+/datum/supply_pack/medical/any_costume
+	name = "Any Costume"
+	desc = "Contains a box of chameleon technology that allows you to be in any costume at any time! Requires no access to open."
+	cost = 6500
+	hidden = TRUE //This pains me to make it emag only
+	access = null
+	contains = list(/obj/item/storage/box/syndie_kit/chameleon)
+	crate_name = "any costume crate"
+	crate_type = /obj/structure/closet/crate/syndicate
+
 /datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)

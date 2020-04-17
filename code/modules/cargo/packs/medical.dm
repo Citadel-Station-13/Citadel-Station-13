@@ -64,6 +64,17 @@
 					/obj/item/storage/box/beakers)
 	crate_name = "chemical crate"
 
+/datum/supply_pack/medical/dart_pistols
+	name = "Dart Pistols"
+	desc = "Contains two miniaturized version of a normal syringe gun. Requires no access to open."
+	cost = 7500
+	hidden = TRUE
+	access = null
+	contains = list(/obj/item/gun/syringe/syndicate,
+					/obj/item/gun/syringe/syndicate)
+	crate_name = "dart pistol weapons crate"
+	crate_type = /obj/structure/closet/crate/syndicate
+
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
 	desc = "Contains two defibrillators for bringing the recently deceased back to life."

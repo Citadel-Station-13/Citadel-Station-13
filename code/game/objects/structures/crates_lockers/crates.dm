@@ -175,6 +175,12 @@
 	new /obj/item/bodypart/r_leg/robot/surplus(src)
 	new /obj/item/bodypart/r_leg/robot/surplus(src)
 
+/obj/structure/closet/crate/syndicate
+	desc = "A Plastitanium crate."
+	name = "Plastitanium Crate"
+	icon_state = "syndicate"
+	material_drop =/obj/item/stack/sheet/mineral/plastitanium
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
