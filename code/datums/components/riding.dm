@@ -72,6 +72,9 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(M)
 
+/datum/component/riding/proc/additional_offset_checks()
+	return TRUE
+
 /datum/component/riding/proc/handle_vehicle_offsets()
 	var/atom/movable/AM = parent
 	var/AM_dir = "[AM.dir]"
@@ -83,16 +86,19 @@
 			var/list/offsets = get_offsets(passindex)
 			var/rider_dir = get_rider_dir(passindex)
 			buckled_mob.setDir(rider_dir)
-			dir_loop:
-				for(var/offsetdir in offsets)
-					if(offsetdir == AM_dir)
-						var/list/diroffsets = offsets[offsetdir]
-						buckled_mob.pixel_x = diroffsets[1]
-						if(diroffsets.len >= 2)
-							buckled_mob.pixel_y = diroffsets[2]
-						if(diroffsets.len == 3)
-							buckled_mob.layer = diroffsets[3]
-						break dir_loop
+			for(var/offsetdir in offsets)
+				if(offsetdir == AM_dir)
+					var/list/diroffsets = offsets[offsetdir]
+					buckled_mob.pixel_x = diroffsets[1]
+					message_admins(diroffsets[1])
+					if(diroffsets.len >= 2)
+						buckled_mob.pixel_y = diroffsets[2]
+						message_admins(diroffsets[2])
+					if(diroffsets.len == 3)
+						buckled_mob.layer = diroffsets[3]
+					break
+	if (!additional_offset_checks())
+		return
 	var/list/static/default_vehicle_pixel_offsets = list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 0), TEXT_EAST = list(0, 0), TEXT_WEST = list(0, 0))
 	var/px = default_vehicle_pixel_offsets[AM_dir]
 	var/py = default_vehicle_pixel_offsets[AM_dir]
@@ -153,7 +159,6 @@
 	if(user.incapacitated())
 		Unbuckle(user)
 		return
-
 	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
 		return
 	last_vehicle_move = world.time
@@ -175,8 +180,8 @@
 		else
 			last_move_diagonal = FALSE
 
-		handle_vehicle_layer()
 		handle_vehicle_offsets()
+		handle_vehicle_layer()
 	else
 		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to [drive_verb] [AM].</span>")
 
@@ -226,6 +231,7 @@
 		force_dismount(target)
 
 /datum/component/riding/human/handle_vehicle_layer()
+	. = ..()
 	var/atom/movable/AM = parent
 	if(AM.buckled_mobs && AM.buckled_mobs.len)
 		for(var/mob/M in AM.buckled_mobs) //ensure proper layering of piggyback and carry, sometimes weird offsets get applied
@@ -249,6 +255,10 @@
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
+
+/datum/component/riding/human/additional_offset_checks()
+	var/mob/living/carbon/human/H = parent
+	return !H.buckled
 
 /datum/component/riding/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
