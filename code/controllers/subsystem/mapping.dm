@@ -438,9 +438,12 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		else
 			if(answer in GLOB.potentialRandomZlevels)
 				away_name = answer
+				var/list/traits = list(ZTRAIT_AWAY = TRUE)
+				if(answer in GLOB.potentialRandomVRlevels)
+					traits[ZTRAIT_VIRTUAL_REALITY] = TRUE
 				to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
 				var/datum/map_template/template = new(away_name, "Away Mission")
-				away_level = template.load_new_z()
+				away_level = template.load_new_z(traits)
 			else
 				return
 

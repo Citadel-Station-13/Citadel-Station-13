@@ -10,6 +10,7 @@
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	strip_mod = 0.9
+	custom_price = 75
 
 /obj/item/clothing/gloves/fingerless/pugilist
 	name = "armwraps"

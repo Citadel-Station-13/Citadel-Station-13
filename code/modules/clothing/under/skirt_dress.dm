@@ -15,6 +15,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 60
 
 /obj/item/clothing/under/dress/skirt/red
 	name = "red skirt"
@@ -24,6 +25,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 60
 
 /obj/item/clothing/under/dress/skirt/purple
 	name = "purple skirt"
@@ -33,6 +35,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 60
 
 /obj/item/clothing/under/dress/sundress
 	name = "sundress"
@@ -146,6 +149,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	custom_price = 60
 
 /obj/item/clothing/under/dress/skirt/plaid/blue
 	name = "blue plaid skirt"

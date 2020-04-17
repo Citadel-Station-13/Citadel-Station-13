@@ -1025,6 +1025,27 @@ B --><-- A
 /proc/get_random_station_turf()
 	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
+/proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
+	for (var/i in 1 to 5)
+		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
+		var/turf/target
+		while (L.len && !target)
+			var/I = rand(1, L.len)
+			var/turf/T = L[I]
+			var/area/X = get_area(T)
+			if(!T.density && X.valid_territory)
+				var/clear = TRUE
+				for(var/obj/O in T)
+					if(O.density)
+						clear = FALSE
+						break
+				if(clear)
+					target = T
+			if (!target)
+				L.Cut(I,I+1)
+		if (target)
+			return target
+
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
 	var/closest_distance
@@ -1568,7 +1589,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/blood_sucking_checks(var/mob/living/carbon/target, check_neck, check_blood)
 	//Bypass this if the target isnt carbon.
 	if(!iscarbon(target))
-		return TRUE 
+		return TRUE
 	if(check_neck)
 		if(istype(target.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
 			return FALSE

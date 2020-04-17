@@ -136,6 +136,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
+	custom_price = 75
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
@@ -276,6 +277,7 @@
 	icon_state = "cig_paper_pack"
 	icon_type = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
+	custom_price = 25
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()

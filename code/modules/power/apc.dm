@@ -1350,7 +1350,7 @@
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
 			area.poweralert(0, src)
-		
+
 		else if(cell_percent < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
@@ -1579,4 +1579,5 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
+	custom_price = 50
 	desc = "Heavy-duty switching circuits for power control."

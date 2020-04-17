@@ -11,6 +11,7 @@ SLIME SCANNER
 /obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
+	custom_price = 150
 	icon = 'icons/obj/device.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
@@ -79,6 +80,7 @@ SLIME SCANNER
 	var/mode = 1
 	var/scanmode = 0
 	var/advanced = FALSE
+	custom_price = 300
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")

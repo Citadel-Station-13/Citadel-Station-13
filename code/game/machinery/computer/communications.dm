@@ -163,11 +163,15 @@
 					else if(!S.prerequisites_met())
 						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
-						if(SSshuttle.points >= S.credit_cost)
+						var/points_to_check
+						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+						if(D)
+							points_to_check = D.account_balance
+						if(points_to_check >= S.credit_cost)
 							var/obj/machinery/shuttle_manipulator/M = locate() in GLOB.machines
 							if(M)
 								SSshuttle.shuttle_purchased = TRUE
-								SSshuttle.points -= S.credit_cost
+								D.adjust_money(-S.credit_cost)
 								minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
 								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
@@ -576,7 +580,8 @@
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=[REF(src)];operation=enableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=viewmessage'>Cancel</A> \]"
 
 		if(STATE_PURCHASE)
-			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			dat += "Budget: [D.account_balance] Credits.<BR>"
 			dat += "<BR>"
 			dat += "<b>Caution: Purchasing dangerous shuttles may lead to mutiny and/or death.</b><br>"
 			dat += "<BR>"

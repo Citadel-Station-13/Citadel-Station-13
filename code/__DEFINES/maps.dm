@@ -38,6 +38,7 @@ require only minor tweaks.
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
 #define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
+#define ZTRAIT_VIRTUAL_REALITY "Virtual Reality"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
@@ -71,6 +72,7 @@ require only minor tweaks.
     ZTRAIT_BOMBCAP_MULTIPLIER = 5, \
     ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
 #define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
+#define ZTRAITS_VR list(ZTRAIT_VIRTUAL_REALITY = TRUE, ZTRAIT_AWAY = TRUE)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"

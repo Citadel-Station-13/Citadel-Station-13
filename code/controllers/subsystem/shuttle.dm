@@ -35,10 +35,8 @@ SUBSYSTEM_DEF(shuttle)
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
-	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
-	var/passive_supply_points_per_minute = 125
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -112,9 +110,6 @@ SUBSYSTEM_DEF(shuttle)
 			if(idle && not_centcom_evac && not_in_use)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
-
-	if(!(times_fired % CEILING(600/wait, 1)))
-		points += passive_supply_points_per_minute
 
 	var/esETA = emergency?.getModeStr()
 	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
@@ -559,7 +554,6 @@ SUBSYSTEM_DEF(shuttle)
 
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
-	points = SSshuttle.points
 	emergencyNoEscape = SSshuttle.emergencyNoEscape
 	emergencyCallAmount = SSshuttle.emergencyCallAmount
 	shuttle_purchased = SSshuttle.shuttle_purchased

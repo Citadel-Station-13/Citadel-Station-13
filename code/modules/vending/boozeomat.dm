@@ -4,7 +4,7 @@
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
 	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 30,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,		
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,
 					/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/tequila = 5,
@@ -41,6 +41,9 @@
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access = list(ACCESS_BAR)
 	refill_canister = /obj/item/vending_refill/boozeomat
+	default_price = 120
+	extra_price = 100
+	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/boozeomat/all_access
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. This model appears to have no access restrictions."

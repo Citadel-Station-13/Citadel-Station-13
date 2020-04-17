@@ -11,6 +11,9 @@
 	premium = list(/obj/item/melee/skateboard/pro = 3,
 					/obj/item/melee/skateboard/hoverboard = 1)
 	refill_canister = /obj/item/vending_refill/games
+	default_price = 50
+	extra_price = 250
+	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/games
 	machine_name = "\improper Good Clean Fun"

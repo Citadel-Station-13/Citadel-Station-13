@@ -472,6 +472,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
+	custom_price = 75
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -566,7 +567,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 	var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
 	user.put_in_hands(result)
-	result.color = color 
+	result.color = color
 	to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
 
 //add cables to the stack
@@ -849,4 +850,4 @@ By design, d1 is the smallest direction and d2 is the highest
 	. = ..()
 	var/list/cable_colors = GLOB.cable_colors
 	color = pick(cable_colors)
-	
+

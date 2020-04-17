@@ -138,11 +138,18 @@
 					/obj/item/clothing/head/christmashat = 3,
 					/obj/item/clothing/head/christmashatg = 3,
 					/obj/item/clothing/under/costume/drfreeze = 1)    //End of Cit Changes
+
 	refill_canister = /obj/item/vending_refill/autodrobe
+	default_price = 180
+	extra_price = 360
+	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."
 	req_access = null
+
+/obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
 
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"

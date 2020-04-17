@@ -583,6 +583,9 @@ NIGHTSHIFT_TOGGLE_PUBLIC_REQUIRES_AUTH
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
 
+## Enable the capitalist agenda on your server.
+ECONOMY
+
 ## Uncomment to use TG-style combat
 #DISABLE_STAMBUFFER
 
