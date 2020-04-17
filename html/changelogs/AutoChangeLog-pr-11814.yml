@@ -1,5 +1,0 @@
-author: "kappa-sama"
-delete-after: True
-changes: 
-  - balance: "doubles the Stam damage of nonlethal krav stompers"
-  - bugfix: "no longer Krav Maga stomp people that are standing"

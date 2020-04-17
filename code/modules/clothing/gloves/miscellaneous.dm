@@ -52,7 +52,7 @@
 	name = "armwraps of unyielding resolve"
 	desc = "A series of armwraps, soaked in holy water. Makes you pretty keen to smite evil magic users."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	enhancement = 1 //It is not magic that makes you punch harder, but force of will. Trust me.
+	enhancement = 2 //It is not magic that makes you punch harder, but force of will. Trust me.
 	secondary_trait = TRAIT_ANTIMAGIC
 	var/chaplain_spawnable = TRUE
 
@@ -115,14 +115,15 @@
 	if(input)
 		warcry = input
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug
+/obj/item/clothing/gloves/fingerless/pugilist/hug
 	name = "Hugs of the North Star"
 	desc = "The armbands of a humble friend. Makes you pretty keen to go let everyone know how much you appreciate them!"
-	warcry = "owo" //Shouldn't ever come into play
+	icon_state = "rapid"
+	item_state = "rapid"
 	enhancement = 0
 	secondary_trait = TRAIT_PACIFISM //You are only here to hug and be friends!
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/Touch(mob/target, proximity = TRUE)
+/obj/item/clothing/gloves/fingerless/pugilist/hug/Touch(mob/target, proximity = TRUE)
 	if(!isliving(target))
 		return
 
@@ -135,9 +136,6 @@
 	else
 		M.changeNext_move(CLICK_CD_RAPID)
 
-	return FALSE
-
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/AltClick(mob/user)
 	return FALSE
 
 /obj/item/clothing/gloves/botanic_leather

@@ -68,11 +68,11 @@
 
 		B = new
 		if(H.dna.species.use_skintones && H.dna.features["genitals_use_skintone"])
-			B.color = skintone2hex(H.skin_tone)
+			B.color = SKINTONE2HEX(H.skin_tone)
 		else if(M.dna.features["breasts_color"])
 			B.color = "#[M.dna.features["breasts_color"]]"
 		else
-			B.color = skintone2hex(H.skin_tone)
+			B.color = SKINTONE2HEX(H.skin_tone)
 		B.size = "flat"
 		B.cached_size = 0
 		B.prev_size = 0
