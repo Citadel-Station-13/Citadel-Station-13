@@ -46,7 +46,7 @@
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
-	else if(istype(W, fixing))
+	else if(istype(W, repair_material))
 		if(obj_integrity >= max_integrity)
 			to_chat(user, "<span class='warning'>[src] is already in perfect condition.</span>")
 		else
