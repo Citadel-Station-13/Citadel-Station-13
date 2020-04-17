@@ -22,6 +22,7 @@
 		/obj/item/gun/energy,
 		/obj/item/restraints/handcuffs
 		)
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	var/mode = VEST_STEALTH
 	var/stealth_active = 0
 	var/combat_cooldown = 10
