@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR)
 	inherent_traits = list()
 	limbs_id = "human"
-	use_skintones = 1
+	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	say_mod = "bellows" //high energy, EXTRA BIOLOGICAL FUEL
 	damage_overlay_type = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human

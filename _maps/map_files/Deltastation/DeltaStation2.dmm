@@ -126146,6 +126146,7 @@
 /area/quartermaster/storage)
 "hic" = (
 /obj/structure/table/reinforced,
+/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white/side{
@@ -127144,6 +127145,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "qhc" = (
 /obj/structure/table/reinforced,
+/obj/item/integrated_electronics/analyzer,
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white/side{
