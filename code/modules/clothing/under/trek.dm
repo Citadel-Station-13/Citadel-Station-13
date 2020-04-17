@@ -96,6 +96,22 @@
 	icon_state = "trek_ds9_medsci"
 	item_state = "trek_ds9_medsci"
 
+//The Motion Picture
+/obj/item/clothing/under/trek/fedutil
+	name = "federation utility uniform"
+	desc = "The uniform worn by United Federation enlisted crew members in 2285s."
+	icon_state = "trek_tmp_enlist"
+	item_state = "r_suit"
+
+/obj/item/clothing/under/trek/fedutil/trainee
+	name = "federation trainee utility uniform"
+	desc = "The uniform worn by United Federation enlisted trainees in 2285s."
+	icon_state = "trek_tmp_trainee"
+
+/obj/item/clothing/under/trek/fedutil/service
+	name = "federation service uniform"
+	desc = "The uniform worn by United Federation enlists for service work in 2285s."
+	icon_state = "trek_tmp_service"
 
 //Q
 /obj/item/clothing/under/trek/Q
