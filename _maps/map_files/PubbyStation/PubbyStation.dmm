@@ -27443,6 +27443,7 @@
 /area/science/explab)
 "bmZ" = (
 /obj/structure/table/reinforced,
+/obj/item/integrated_electronics/analyzer,
 /obj/machinery/magnetic_controller{
 	autolink = 1;
 	pixel_x = -28;
@@ -60714,6 +60715,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "vmG" = (
 /obj/structure/table/reinforced,
+/obj/item/integrated_electronics/analyzer,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

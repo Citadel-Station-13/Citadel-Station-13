@@ -67,10 +67,15 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
-#define isvampire(A) (is_species(A,/datum/species/vampire))
+#define isangel(A) (is_species(A, /datum/species/angel))
+#define isvampire(A) (is_species(A, /datum/species/vampire))
+#define ismush(A) (is_species(A, /datum/species/mush))
+#define isshadow(A) (is_species(A, /datum/species/shadow))
+#define isskeleton(A) (is_species(A, /datum/species/skeleton))
 
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
+#define issynthliz(A) (is_species(A, /datum/species/synthliz))
 #define ismammal(A) (is_species(A, /datum/species/mammal))
 #define isavian(A) (is_species(A, /datum/species/avian))
 #define isaquatic(A) (is_species(A, /datum/species/aquatic))
