@@ -49,7 +49,7 @@
 /obj/item/clothing/suit/hooded/update_icon_state()
 	icon_state = "[initial(icon_state)]"
 	if(ishuman(hood.loc))
-		var/mob/living/human/H = hood.loc
+		var/mob/living/carbon/human/H = hood.loc
 		if(H.head == hood)
 			icon_state += "_t"
 
