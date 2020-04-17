@@ -44,6 +44,7 @@
 /obj/item/clothing/under/trek/medsci/next
 	desc = "The uniform worn by medsci officers. This one's from the mid 2360s."
 	icon_state = "trek_next_medsci"
+	item_state = "b_suit"
 
 
 //ENT
@@ -67,34 +68,34 @@
 /obj/item/clothing/under/trek/command/voy
 	desc = "The uniform worn by command officers of the 2370s."
 	icon_state = "trek_voy_command"
-	item_state = "trek_voy_command"
+	item_state = "r_suit"
 
 /obj/item/clothing/under/trek/engsec/voy
 	desc = "The uniform worn by operations officers of the 2370s."
 	icon_state = "trek_voy_engsec"
-	item_state = "trek_voy_engsec"
+	item_state = "y_suit"
 
 /obj/item/clothing/under/trek/medsci/voy
 	desc = "The uniform worn by medsci officers of the 2370s."
 	icon_state = "trek_voy_medsci"
-	item_state = "trek_voy_medsci"
+	item_state = "b_suit"
 
 
 //DS9
 /obj/item/clothing/under/trek/command/ds9
 	desc = "The uniform worn by command officers of the 2380s."
 	icon_state = "trek_ds9_command"
-	item_state = "trek_ds9_command"
+	item_state = "r_suit"
 
 /obj/item/clothing/under/trek/engsec/ds9
 	desc = "The uniform worn by operations officers of the 2380s."
 	icon_state = "trek_ds9_engsec"
-	item_state = "trek_ds9_engsec"
+	item_state = "y_suit"
 
 /obj/item/clothing/under/trek/medsci/ds9
 	desc = "The uniform undershirt worn by medsci officers of the 2380s."
 	icon_state = "trek_ds9_medsci"
-	item_state = "trek_ds9_medsci"
+	item_state = "b_suit"
 
 //The Motion Picture
 /obj/item/clothing/under/trek/fedutil
