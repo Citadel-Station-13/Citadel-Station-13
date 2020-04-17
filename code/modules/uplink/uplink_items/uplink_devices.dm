@@ -20,6 +20,12 @@
 	item = /obj/item/emagrecharge
 	cost = 2
 
+/datum/uplink_item/device_tools/bluespacerecharge
+	name = "Bluespace Crystal Recharging Device"
+	desc = "A small device intended for recharging Wall Walking boots. Using it will add six charges to them. Use ten bluespace crystals on this recharger to add three more charges to it. "
+	item = /obj/item/bluespacerecharge
+	cost = 2
+
 /datum/uplink_item/device_tools/phantomthief
 	name = "Syndicate Mask"
 	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
@@ -185,8 +191,9 @@
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after injection."
-	item = /obj/item/reagent_containers/syringe/stimulants
+			5 minutes after fully injecting yourself. Can inject yourself, or others, 5 times and through hardsuits. \
+			Each injection will gives around a minute of stimulants."
+	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
 

@@ -188,7 +188,7 @@
 
 /datum/component/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)
-	var/send_feedback = 1
+	var/send_feedback = TRUE
 	if(check_contents(user, R, contents))
 		if(check_tools(user, R, contents))
 			if(do_after(user, R.time, target = user))
@@ -217,7 +217,7 @@
 				if(send_feedback)
 					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
 					log_craft("[I] crafted by [user] at [loc_name(I.loc)]")
-				return 0
+				return FALSE
 			return "."
 		return ", missing tool."
 	return ", missing component."
@@ -420,8 +420,11 @@
 	switch(action)
 		if("make")
 			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
-			busy = TRUE
 			ui_interact(usr)
+			if(busy)
+				to_chat(usr, "<span class='warning'>You are already making something!</span>")
+				return
+			busy = TRUE
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
 				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")

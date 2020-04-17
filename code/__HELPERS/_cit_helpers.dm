@@ -112,7 +112,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	set desc = "Toggles seeing LocalOutOfCharacter chat"
 	prefs.chat_toggles ^= CHAT_LOOC
 	prefs.save_preferences()
-	src << "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."
+	to_chat(src, "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /mob/living/carbon/proc/has_penis()

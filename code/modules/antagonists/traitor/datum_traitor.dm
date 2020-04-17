@@ -38,8 +38,8 @@
 			weights[C] = weight
 		var/choice = pickweightAllowZero(weights)
 		if(!choice)
-			choice = GLOB.traitor_classes[TRAITOR_HUMAN]
-		set_traitor_kind(pickweightAllowZero(weights))
+			choice = GLOB.traitor_classes[TRAITOR_HUMAN] // it's an "easter egg"
+		set_traitor_kind(choice)
 		traitor_kind.weight *= 0.8 // less likely this round
 	SSticker.mode.traitors += owner
 	owner.special_role = special_role

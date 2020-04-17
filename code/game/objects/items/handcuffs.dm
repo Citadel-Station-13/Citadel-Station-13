@@ -113,7 +113,7 @@
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff"
 	item_state = "coil"
-	color =  "red"
+	color =  "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
@@ -132,35 +132,28 @@
 	to_chat(user, "<span class='notice'>You unwind the cable restraints back into coil</span>")
 	
 /obj/item/restraints/handcuffs/cable/red
-	item_color = "red"
 	color = "#ff0000"
 
 /obj/item/restraints/handcuffs/cable/yellow
-	item_color = "yellow"
 	color = "#ffff00"
 
 /obj/item/restraints/handcuffs/cable/blue
-	item_color = "blue"
 	color = "#1919c8"
 
 /obj/item/restraints/handcuffs/cable/green
-	item_color = "green"
 	color = "#00aa00"
 
 /obj/item/restraints/handcuffs/cable/pink
-	item_color = "pink"
 	color = "#ff3ccd"
 
 /obj/item/restraints/handcuffs/cable/orange
-	item_color = "orange"
 	color = "#ff8000"
 
 /obj/item/restraints/handcuffs/cable/cyan
-	item_color = "cyan"
 	color = "#00ffff"
 
 /obj/item/restraints/handcuffs/cable/white
-	item_color = "white"
+	color = null
 
 /obj/item/restraints/handcuffs/cable/random
 
@@ -209,7 +202,7 @@
 	custom_materials = null
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
-	item_color = "white"
+	color = null
 
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."

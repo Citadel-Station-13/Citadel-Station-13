@@ -404,6 +404,12 @@
 	new /obj/item/gun/ballistic/revolver(src)
 	new /obj/item/ammo_box/a357(src)
 
+/obj/item/storage/box/syndie_kit/pistol
+
+/obj/item/storage/box/syndie_kit/pistol/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+
 /obj/item/storage/box/syndie_kit/contract_kit
 	name = "contractor kit"
 	desc = "Supplied to Syndicate contractors in active mission areas."

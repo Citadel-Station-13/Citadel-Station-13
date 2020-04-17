@@ -276,7 +276,23 @@ Works together with spawning an observer, noted above.
 		if (!(client.prefs.chat_toggles & CHAT_OOC))
 			client.prefs.chat_toggles ^= CHAT_OOC
 	transfer_ckey(ghost, FALSE)
-	ghost.AddElement(/datum/element/ghost_role_eligibility,penalize) // technically already run earlier, but this adds the penalty
+	if(penalize)
+		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
+		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
+		if(world.time < roundstart_quit_limit) //add up the time difference to their antag rolling penalty if they quit before half a (ingame) hour even passed.
+			penalty += roundstart_quit_limit - world.time
+		if(penalty)
+			penalty += world.realtime
+			if(SSautotransfer.can_fire && SSautotransfer.maxvotes)
+				var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
+				if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
+					penalty = CANT_REENTER_ROUND
+			if(!(ckey in GLOB.client_ghost_timeouts))
+				GLOB.client_ghost_timeouts += ckey
+				GLOB.client_ghost_timeouts[ckey] = 0
+			else if(GLOB.client_ghost_timeouts[ckey] == CANT_REENTER_ROUND)
+				return
+			GLOB.client_ghost_timeouts[ckey] = max(GLOB.client_ghost_timeouts[ckey],penalty)
 	// needs to be done AFTER the ckey transfer, too
 	return ghost
 

@@ -5,12 +5,15 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 3
+	var/sword_color
 	total_mass = 0.4 //Survival flashlights typically weigh around 5 ounces.
 
 /obj/item/melee/transforming/energy/Initialize()
 	. = ..()
 	total_mass_on = (total_mass_on ? total_mass_on : (w_class_on * 0.75))
 	if(active)
+		if(sword_color)
+			icon_state = "sword[sword_color]"
 		set_light(brightness_on)
 		START_PROCESSING(SSobj, src)
 
@@ -37,8 +40,8 @@
 	. = ..()
 	if(.)
 		if(active)
-			if(item_color)
-				icon_state = "sword[item_color]"
+			if(sword_color)
+				icon_state = "sword[sword_color]"
 			START_PROCESSING(SSobj, src)
 			set_light(brightness_on)
 		else
@@ -103,12 +106,19 @@
 	embedding = list("embed_chance" = 75, "embedded_impact_pain_multiplier" = 10)
 	armour_penetration = 35
 	block_chance = 50
+	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
+
+/obj/item/melee/transforming/energy/sword/Initialize(mapload)
+	. = ..()
+	set_sword_color()
+
+/obj/item/melee/transforming/energy/sword/proc/set_sword_color()
+	if(LAZYLEN(possible_colors))
+		light_color = possible_colors[pick(possible_colors)]
 
 /obj/item/melee/transforming/energy/sword/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
 	if(active)
-		if(. && item_color)
-			icon_state = "sword[item_color]"
 		AddElement(/datum/element/sword_point)
 	else
 		RemoveElement(/datum/element/sword_point)
@@ -119,7 +129,9 @@
 	return ..()
 
 /obj/item/melee/transforming/energy/sword/cyborg
-	item_color = "red"
+	sword_color = "red"
+	light_color = "#ff0000"
+	possible_colors = null
 	var/hitcost = 50
 
 /obj/item/melee/transforming/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
@@ -140,7 +152,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "esaw_0"
 	icon_state_on = "esaw_1"
-	item_color = null //stops icon from breaking when turned on.
+	sword_color = null //stops icon from breaking when turned on.
 	hitcost = 75 //Costs more than a standard cyborg esword
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
@@ -152,15 +164,13 @@
 	return NONE
 
 /obj/item/melee/transforming/energy/sword/saber
-	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
+	possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
 	var/hacked = FALSE
 
-/obj/item/melee/transforming/energy/sword/saber/Initialize(mapload)
-	. = ..()
+/obj/item/melee/transforming/energy/sword/saber/set_sword_color()
 	if(LAZYLEN(possible_colors))
-		var/set_color = pick(possible_colors)
-		item_color = set_color
-		light_color = possible_colors[set_color]
+		sword_color = pick(possible_colors)
+		light_color = possible_colors[sword_color]
 
 /obj/item/melee/transforming/energy/sword/saber/process()
 	. = ..()
@@ -185,7 +195,7 @@
 	if(istype(W, /obj/item/multitool))
 		if(!hacked)
 			hacked = TRUE
-			item_color = "rainbow"
+			sword_color = "rainbow"
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
 
 			if(active)
@@ -204,6 +214,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	icon_state_on = "cutlass1"
 	light_color = "#ff0000"
+	possible_colors = null
 
 /obj/item/melee/transforming/energy/blade
 	name = "energy blade"
@@ -271,32 +282,8 @@
 	return TRUE
 
 /obj/item/melee/transforming/energy/sword/cx/transform_weapon(mob/living/user, supress_message_text)
-	active = !active				//I'd use a ..() here but it'd inherit from the regular esword's proc instead, so SPAGHETTI CODE
-	if(active)						//also I'd need to rip out the iconstate changing bits
-		force = force_on
-		throwforce = throwforce_on
-		hitsound = hitsound_on
-		throw_speed = 4
-		if(attack_verb_on.len)
-			attack_verb = attack_verb_on
-		w_class = w_class_on
-		START_PROCESSING(SSobj, src)
-		set_light(brightness_on)
-		update_icon()
-	else
-		force = initial(force)
-		throwforce = initial(throwforce)
-		hitsound = initial(hitsound)
-		throw_speed = initial(throw_speed)
-		if(attack_verb_off.len)
-			attack_verb = attack_verb_off
-		w_class = initial(w_class)
-		STOP_PROCESSING(SSobj, src)
-		set_light(0)
-		update_icon()
-	transform_messages(user, supress_message_text)
-	add_fingerprint(user)
-	return TRUE
+	. = ..()
+	update_icon()
 
 /obj/item/melee/transforming/energy/sword/cx/transform_messages(mob/living/user, supress_message_text)
 	playsound(user, active ? 'sound/weapons/nebon.ogg' : 'sound/weapons/neboff.ogg', 65, 1)
@@ -337,7 +324,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to recolor it.</span>"
 
-/obj/item/melee/transforming/energy/sword/cx/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/melee/transforming/energy/sword/cx/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(active)
 		if(isinhands)

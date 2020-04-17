@@ -556,23 +556,18 @@ By design, d1 is the smallest direction and d2 is the highest
 		new_cable.update_icon()
 
 /obj/item/stack/cable_coil/attack_self(mob/user)
-	if(!check_cable_amount(user))
+	if(!use(15))
+		to_chat(user, "<span class='notice'>You dont have enough cable coil to make restraints out of them</span>")
 		return
 	to_chat(user, "<span class='notice'>You start making some cable restraints.</span>")
-	if(do_after(user, 30, TRUE, user) && check_cable_amount(user))
-		amount -= 15
-		var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
-		user.put_in_hands(result)
-		result.color = color 
-		to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
+	if(!do_after(user, 30, TRUE, user, TRUE))
+		to_chat(user, "<span class='notice'>You fail to make cable restraints, you need to stand still while doing so.</span>")
+		give(15)
 		return
-	to_chat(user, "<span class='notice'>You fail to make cable restraints, you need to stand still while doing so.</span>")
-
-/obj/item/stack/cable_coil/proc/check_cable_amount(user)
-	if(amount < 15) //We dont care about cyborgs here, so we dont use get_amount()
-		to_chat(user, "<span class='notice'>You dont have enough cable coil to make restraints out of them</span>")
-		return FALSE
-	return TRUE
+	var/obj/item/restraints/handcuffs/cable/result = new(get_turf(user))
+	user.put_in_hands(result)
+	result.color = color 
+	to_chat(user, "<span class='notice'>You make some restraints out of cable</span>")
 
 //add cables to the stack
 /obj/item/stack/cable_coil/proc/give(extra)

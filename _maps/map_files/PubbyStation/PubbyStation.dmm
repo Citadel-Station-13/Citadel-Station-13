@@ -2285,7 +2285,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "ahb" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/prison{
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
@@ -9106,7 +9106,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/heads/captain)
 "avK" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
@@ -14667,7 +14667,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aIl" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -16490,7 +16490,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria/lunchroom)
 "aNc" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -21324,7 +21324,7 @@
 "aYm" = (
 /obj/structure/closet/crate/wooden/toy,
 /obj/item/lipstick/random,
-/obj/item/clothing/gloves/color/rainbow/clown,
+/obj/item/clothing/gloves/color/rainbow,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -47393,7 +47393,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "cgO" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -47734,7 +47734,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "ciq" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -55939,7 +55939,7 @@
 /turf/open/floor/carpet,
 /area/chapel/office)
 "kgR" = (
-/obj/structure/toilet{
+/obj/structure/toilet/secret/low_loot{
 	dir = 4
 	},
 /turf/open/floor/plating,

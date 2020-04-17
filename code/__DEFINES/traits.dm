@@ -147,6 +147,8 @@
 #define TRAIT_NOPULSE			"nopulse"		// Your heart doesn't beat.
 #define TRAIT_EXEMPT_HEALTH_EVENTS	"exempt-health-events"
 #define TRAIT_NO_MIDROUND_ANTAG	"no-midround-antag" //can't be turned into an antag by random events
+#define TRAIT_PUGILIST	"pugilist" //This guy punches people for a living
+#define TRAIT_KI_VAMPIRE	"ki-vampire" //when someone with this trait rolls maximum damage on a punch and stuns the target, they regain some stamina and do clone damage
 #define TRAIT_PASSTABLE			"passtable"
 
 // mobility flag traits
@@ -240,8 +242,8 @@
 #define GHOSTROLE_TRAIT "ghostrole"
 #define APHRO_TRAIT "aphro"
 #define BLOODSUCKER_TRAIT "bloodsucker"
-#define CLOTHING_TRAIT "clothing" //used for quirky carrygloves
 #define SHOES_TRAIT "shoes" //inherited from your sweet kicks
+#define GLOVE_TRAIT "glove" //inherited by your cool gloves
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
@@ -275,6 +277,7 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
+#define MARTIAL_ARTIST_TRAIT "martial_artist"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define RISING_BASS_TRAIT "rising_bass"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"

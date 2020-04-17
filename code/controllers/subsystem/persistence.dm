@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_dynamic_rules = list(list(),list(),list())
 	var/list/saved_storytellers = list("foo","bar","baz")
+	var/list/average_dynamic_threat = 50
 	var/list/saved_maps
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
@@ -191,6 +192,8 @@ SUBSYSTEM_DEF(persistence)
 	if(!json)
 		return
 	saved_storytellers = json["data"]
+	if(saved_storytellers.len > 3)
+		average_dynamic_threat = saved_storytellers[4]
 	saved_storytellers.len = 3
 
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
@@ -434,9 +437,10 @@ SUBSYSTEM_DEF(persistence)
 	saved_storytellers[3] = saved_storytellers[2]
 	saved_storytellers[2] = saved_storytellers[1]
 	saved_storytellers[1] = mode.storyteller.name
+	average_dynamic_threat = (mode.threat_average + average_dynamic_threat) / 2
 	var/json_file = file("data/RecentStorytellers.json")
 	var/list/file_data = list()
-	file_data["data"] = saved_storytellers
+	file_data["data"] = saved_storytellers + average_dynamic_threat
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 

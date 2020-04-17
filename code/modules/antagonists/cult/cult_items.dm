@@ -6,6 +6,21 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/tome/traitor
+	var/spent = FALSE
+
+/obj/item/tome/traitor/check_uplink_validity()
+	return !spent
+
+/obj/item/tome/traitor/attack_self(mob/living/user)
+	if(!iscultist(user) && !spent)
+		to_chat(user, "<span class='userdanger'>You press your hand onto [src], sinister tendrils of corrupted magic swirling around you. Was this the best of ideas?</span>")
+		if(user.mind.add_antag_datum(/datum/antagonist/cult/neutered/traitor))
+			spent = TRUE
+		else
+			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
+	return ..()
+
 /obj/item/melee/cultblade/dagger
 	name = "ritual dagger"
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
@@ -207,7 +222,7 @@
 	phasein = /obj/effect/temp_visual/dir_setting/cult/phase
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
-/datum/action/innate/dash/cult/IsAvailable()
+/datum/action/innate/dash/cult/IsAvailable(silent = FALSE)
 	if(iscultist(holder) && current_charges)
 		return TRUE
 	else
@@ -227,7 +242,7 @@
 	sword = bastard
 	holder = user
 
-/datum/action/innate/cult/spin2win/IsAvailable()
+/datum/action/innate/cult/spin2win/IsAvailable(silent = FALSE)
 	if(iscultist(holder) && cooldown <= world.time)
 		return TRUE
 	else
@@ -436,8 +451,8 @@
 		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return BLOCK_NONE
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands && current_charges)
 		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 
@@ -509,7 +524,7 @@
 	var/static/curselimit = 0
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
-	if(!iscultist(user))
+	if(!iscultist(user, TRUE))
 		user.dropItemToGround(src, TRUE)
 		user.DefaultCombatKnockdown(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")

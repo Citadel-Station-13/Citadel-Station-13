@@ -1,0 +1,4 @@
+author: "UristMcAstronaut"
+delete-after: True
+changes: 
+  - rscadd: "Adds circuit analyzers to maps and to integrated circuit printer and circuitry starter crate."
