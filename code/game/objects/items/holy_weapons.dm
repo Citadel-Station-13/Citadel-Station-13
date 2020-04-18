@@ -122,7 +122,7 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	item_state = "cage"
 	worn_x_dimension = 64
@@ -187,6 +187,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/book/bible, HOLY_WEAPONS, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/hooded/chaplain_hood
 	name = "follower hood"
@@ -303,8 +304,8 @@
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
 

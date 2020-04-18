@@ -11,12 +11,11 @@
 	var/current_amount = 0	//How many projectiles left.
 	var/projectiles_per_fire = 1		//Projectiles per fire. Probably not a good thing to use unless you override ready_projectile().
 
-/obj/effect/proc_holder/spell/aimed/Click()
-	var/mob/living/user = usr
+/obj/effect/proc_holder/spell/aimed/Trigger(mob/user, skip_can_cast = TRUE)
 	if(!istype(user))
 		return
 	var/msg
-	if(!can_cast(user, FALSE, TRUE))
+	if(!skip_can_cast && !can_cast(user, FALSE, TRUE))
 		msg = "<span class='warning'>You can no longer cast [name]!</span>"
 		remove_ranged_ability(msg)
 		return

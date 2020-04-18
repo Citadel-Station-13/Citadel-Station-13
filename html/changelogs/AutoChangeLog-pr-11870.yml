@@ -1,0 +1,4 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - bugfix: "Mimes have made catnip plants not become invisible. How helpful."

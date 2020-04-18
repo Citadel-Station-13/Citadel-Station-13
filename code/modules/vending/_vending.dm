@@ -234,28 +234,28 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!.)
 		return
 
-		var/dump_amount = 0
-		var/found_anything = TRUE
-		while (found_anything)
-			found_anything = FALSE
-			for(var/record in shuffle(product_records))
-				var/datum/data/vending_product/R = record
-				if(R.amount <= 0) //Try to use a record that actually has something to dump.
-					continue
-				var/dump_path = R.product_path
-				if(!dump_path)
-					continue
-				R.amount--
-				// busting open a vendor will destroy some of the contents
-				if(found_anything && prob(80))
-					continue
+	var/dump_amount = 0
+	var/found_anything = TRUE
+	while (found_anything)
+		found_anything = FALSE
+		for(var/record in shuffle(product_records))
+			var/datum/data/vending_product/R = record
+			if(R.amount <= 0) //Try to use a record that actually has something to dump.
+				continue
+			var/dump_path = R.product_path
+			if(!dump_path)
+				continue
+			R.amount--
+			// busting open a vendor will destroy some of the contents
+			if(found_anything && prob(80))
+				continue
 
-				var/obj/O = new dump_path(loc)
-				step(O, pick(GLOB.alldirs))
-				found_anything = TRUE
-				dump_amount++
-				if (dump_amount >= 16)
-					return
+			var/obj/O = new dump_path(loc)
+			step(O, pick(GLOB.alldirs))
+			found_anything = TRUE
+			dump_amount++
+			if (dump_amount >= 16)
+				return
 
 GLOBAL_LIST_EMPTY(vending_products)
 /**
@@ -601,7 +601,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							QDEL_NULL(coin)
 						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
 						coin = null
-					QDEL_NULL(coin)
+				QDEL_NULL(coin)
 			else if(!(R in product_records))
 				vend_ready = TRUE
 				message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
@@ -628,14 +628,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 			return
-	if("takeoutcoin")
-		usr.put_in_hands(coin)
-		to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
-		coin = null
-		return
+		if("takeoutcoin")
+			usr.put_in_hands(coin)
+			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
+			coin = null
+			return
 			
-	else if("togglevoice" && panel_open)
-		shut_up = !shut_up
+		if("togglevoice")
+			if(panel_open)
+				shut_up = !shut_up
 				
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))

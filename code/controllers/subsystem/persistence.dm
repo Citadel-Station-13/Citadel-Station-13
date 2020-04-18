@@ -192,7 +192,8 @@ SUBSYSTEM_DEF(persistence)
 	if(!json)
 		return
 	saved_storytellers = json["data"]
-	average_dynamic_threat = saved_storytellers[4]
+	if(saved_storytellers.len > 3)
+		average_dynamic_threat = saved_storytellers[4]
 	saved_storytellers.len = 3
 
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()

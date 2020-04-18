@@ -6,7 +6,7 @@
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 
 /obj/item/clothing/suit/hooded/New()
-	MakeHood()
+	hood = MakeHelmet()
 	..()
 
 /obj/item/clothing/suit/hooded/Destroy()
@@ -14,11 +14,15 @@
 	qdel(hood)
 	hood = null
 
-/obj/item/clothing/suit/hooded/proc/MakeHood()
+/obj/item/clothing/suit/proc/MakeHelmet(obj/item/clothing/head/H)
+	SEND_SIGNAL(src, COMSIG_SUIT_MADE_HELMET, H)
+	return H
+
+/obj/item/clothing/suit/hooded/MakeHelmet(obj/item/clothing/head/hooded/H)
 	if(!hood)
-		var/obj/item/clothing/head/hooded/W = new hoodtype(src)
-		W.suit = src
-		hood = W
+		H = new hoodtype(src)
+		H.suit = src
+		return ..()
 
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()
@@ -125,7 +129,7 @@
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize()
-	MakeHelmet()
+	helmet = MakeHelmet()
 	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
@@ -140,13 +144,13 @@
 		suit.helmet = null
 	return ..()
 
-/obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
+/obj/item/clothing/suit/space/hardsuit/MakeHelmet(obj/item/clothing/head/helmet/space/hardsuit/H)
 	if(!helmettype)
 		return
 	if(!helmet)
-		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
-		W.suit = src
-		helmet = W
+		H = new helmettype(src)
+		H.suit = src
+		return ..()
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
 	..()
