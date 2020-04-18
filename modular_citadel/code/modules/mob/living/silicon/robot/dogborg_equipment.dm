@@ -268,7 +268,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	else if(isliving(target))
 		var/mob/living/L = target
 		if(!status)
-			if(L.ckey && !(L.client?.prefs.lickable))
+			if(L.ckey && !(L.client?.prefs.vore_flags & LICKABLE))
 				to_chat(R, "<span class='danger'>ERROR ERROR: Target not lickable. Aborting display-of-affection subroutine.</span>")
 				return
 			if(check_zone(R.zone_selected) == "head")
@@ -327,7 +327,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		return
 	var/mob/living/silicon/robot/R = user
 	var/mob/living/L = target
-	if(L.ckey && !(L.client?.prefs.lickable))
+	if(L.ckey && !(L.client?.prefs.vore_flags & LICKABLE))
 		to_chat(R, "<span class='danger'>ERROR ERROR: Target not lickable. Aborting display-of-affection subroutine.</span>")
 		return
 
