@@ -15,7 +15,7 @@
 
 /datum/component/personal_crafting
 	var/busy
-	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
+	var/viewing_category = 1
 	var/viewing_subcategory = 1
 	var/list/categories = list(
 				CAT_WEAPONRY = list(
@@ -24,6 +24,7 @@
 				),
 				CAT_ROBOT = CAT_NONE,
 				CAT_MISC = list(
+					CAT_MISC,
 					CAT_TOOL,
 					CAT_FURNITURE,
 				),
