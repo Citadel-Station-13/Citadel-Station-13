@@ -93,7 +93,7 @@
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 	value = 0.5
-
+	nutriment_factor = 15 * REAGENTS_METABOLISM //The are the best food for you!
 	brute_heal = 1
 	burn_heal = 1
 
@@ -179,7 +179,6 @@
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	description = "A salty sauce made from the soy plant."
-	nutriment_factor = ` * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_description = "umami"
 
@@ -625,7 +624,7 @@
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
 	value = 15
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
