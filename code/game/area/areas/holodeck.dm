@@ -6,8 +6,6 @@
 	hidden = TRUE
 
 	var/obj/machinery/computer/holodeck/linked
-	var/list/compatible_holodeck_comps
-	var/abstract_type = /area/holodeck
 	var/restricted = 0 // if true, program goes on emag list
 
 /*
@@ -55,8 +53,6 @@
 */
 /area/holodeck/rec_center
 	name = "\improper Recreational Holodeck"
-	compatible_holodeck_comps = list(/obj/machinery/computer/holodeck)
-	abstract_type = /area/holodeck/rec_center
 
 /area/holodeck/rec_center/offline
 	name = "Holodeck - Offline"
