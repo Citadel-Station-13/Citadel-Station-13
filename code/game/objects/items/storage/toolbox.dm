@@ -252,13 +252,9 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	item_state = "ammobox"
 
 /obj/item/storage/toolbox/ammo/PopulateContents()
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
-	new /obj/item/ammo_box/a762(src)
+	new /obj/item/ammo_box/magazine/m10mm/rifle(src)
+	new /obj/item/ammo_box/magazine/m10mm/rifle(src)
+	new /obj/item/ammo_box/magazine/m10mm/rifle(src)
 
 /obj/item/storage/toolbox/infiltrator
 	name = "insidious case"

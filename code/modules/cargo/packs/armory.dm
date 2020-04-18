@@ -170,7 +170,7 @@
 	cost = 7500
 	contraband = TRUE
 	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
-					/obj/item/ammo_box/a762,
+					/obj/item/ammo_box/magazine/m10mm/rifle,
 					/obj/item/storage/toolbox/ammo,
 					/obj/item/clothing/suit/armor/vest/russian,
 					/obj/item/clothing/head/helmet/rus_helmet,
@@ -181,13 +181,23 @@
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/shotgun/boltaction)
+					/obj/item/gun/ballistic/automatic/surplus)
 	crate_name = "surplus military crate"
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 5)
 		var/item = pick(contains)
 		new item(C)
+
+/datum/supply_pack/security/armory/russian_sniper
+	name = "Russian Sniper Crate"
+	desc = "Shoot those that oppose you from fair with grate strength with this kit of a Mosin Nagant, some food and ammo. Armory access to open."
+	cost = 7500 //Illegal tech + is strong
+	contraband = TRUE //illegal tech + 60 damage gun.
+	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
+					/obj/item/ammo_box/a762,
+					/obj/item/gun/ballistic/shotgun/boltaction)
+	crate_name = "surplus military crate"
 
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
