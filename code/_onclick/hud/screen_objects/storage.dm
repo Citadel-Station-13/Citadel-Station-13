@@ -67,6 +67,9 @@
 /obj/screen/storage/volumetric_box/Click(location, control, params)
 	return our_item.Click(location, control, params)
 
+/obj/screen/storage/volumetric_box/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	return our_item.MouseDrop(over, src_location, over_location, src_control, over_control, params)
+
 /obj/screen/storage/volumetric_box/center
 	icon_state = "stored_continue"
 	var/obj/screen/storage/stored_left/left
