@@ -182,7 +182,7 @@
 	switch(bank_support)
 		if(ID_FREE_BANK_ACCOUNT)
 			var/turf/T = get_turf(src)
-			if(is_vr_level(T.z)) //economy is exploitable on VR in so many ways.
+			if(T && is_vr_level(T.z)) //economy is exploitable on VR in so many ways.
 				bank_support = ID_NO_BANK_ACCOUNT
 		if(ID_LOCKED_BANK_ACCOUNT)
 			registered_account = new /datum/bank_account/remote/non_transferable(pick(GLOB.redacted_strings))
