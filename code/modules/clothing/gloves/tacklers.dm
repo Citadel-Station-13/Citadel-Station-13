@@ -55,7 +55,7 @@
 /obj/item/clothing/gloves/tackler/combat
 	name = "gorilla gloves"
 	desc = "Premium quality combative gloves, heavily reinforced to give the user an edge in close combat tackles, though they are more taxing to use than normal gripper gloves. Fireproof to boot!"
-	icon_state = "black"
+	icon_state = "combat"
 	item_state = "blackgloves"
 
 	tackle_stam_cost = 35
