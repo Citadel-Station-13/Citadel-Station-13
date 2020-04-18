@@ -431,7 +431,7 @@
 
 /obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
-	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes. WARRING Eating to many at once may lead to bodily harm!</I>"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes. WARING: Eating to many at once may lead to bodily harm!</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
 
