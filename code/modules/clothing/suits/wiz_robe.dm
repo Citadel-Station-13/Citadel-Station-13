@@ -79,6 +79,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	var/magic_flags = SPELL_WIZARD_ROBE
 
 /obj/item/clothing/suit/wizrobe/ComponentInitialize()
@@ -115,6 +116,7 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
+	mutantrace_variation = STYLE_DIGITIGRADE
 	magic_flags = SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR
 
 /obj/item/clothing/suit/wizrobe/magusred
@@ -122,6 +124,7 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	item_state = "magusred"
+	mutantrace_variation = STYLE_DIGITIGRADE
 	magic_flags = SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR
 
 /obj/item/clothing/suit/wizrobe/santa
@@ -129,6 +132,7 @@
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/wizrobe/fake
 	desc = "A rather dull blue robe meant to mimick real wizard robes."
