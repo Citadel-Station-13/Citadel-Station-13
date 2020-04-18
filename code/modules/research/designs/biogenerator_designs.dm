@@ -208,5 +208,5 @@
 	id = "rice_hat"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 300)
-	build_path = /obj/item/clothing/head/rice_hat 
+	build_path = /obj/item/clothing/head/rice_hat
 	category = list("initial","Organic Materials")
