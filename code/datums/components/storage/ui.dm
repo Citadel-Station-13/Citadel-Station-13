@@ -198,7 +198,7 @@
 			M.active_storage.ui_hide(M)
 		M.active_storage = src
 	LAZYOR(is_using, M)
-	if(volumetric_ui())
+	if(!M.client?.prefs?.no_tetris_storage && volumetric_ui())
 		//new volumetric ui bay-style
 		M.client.screen |= orient2hud_volumetric(M, maxallowedscreensize)
 	else
