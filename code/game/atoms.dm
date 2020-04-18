@@ -397,13 +397,13 @@
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
 	var/blood_id = get_blood_id()
-	if(!(blood_id in blood_reagent_types))
+	if(!(blood_id in GLOB.blood_reagent_types))
 		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	var/blood_id = get_blood_id()
-	if(!(blood_id in blood_reagent_types))
+	if(!(blood_id in GLOB.blood_reagent_types))
 		return
 	var/list/blood_dna = list()
 	if(dna)
