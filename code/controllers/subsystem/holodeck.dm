@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(holodeck)
 	var/list/emag_program_cache = list() //like above, but dangerous.
 	var/list/offline_programs = list() //default when offline.
 	var/list/target_holodeck_area = list()
+	var/list/rejected_areas = list()
 
 /datum/controller/subsystem/holodeck/Initialize()
 	. = ..()
@@ -17,6 +18,7 @@ SUBSYSTEM_DEF(holodeck)
 		offline_programs[path] = pop(get_areas(initial(H.offline_program)), FALSE)
 		target_holodeck_area[path] = pop(get_areas(initial(H.holodeck_type)), FALSE)
 
+
  /*
   * The sole scope of this datum is to generate lists of holodeck programs caches per holodeck computer type.
   */
@@ -27,7 +29,7 @@ SUBSYSTEM_DEF(holodeck)
 	var/list/compatible_holodeck_comps //list of typepaths of holodeck computers that can access this category.
 
 /datum/holodeck_cache/New()
-	if(!master_type)
+	if(!master_type || !compatible_holodeck_comps)
 		return
 	var/list/to_add = typesof(master_type) - skip_types
 	var/list/programs
@@ -35,10 +37,9 @@ SUBSYSTEM_DEF(holodeck)
 	for(var/typekey in to_add)
 		var/area/holodeck/A = GLOB.areas_by_type[typekey]
 		if(!A || !A.contents.len)
+			LAZYOR(SSholodeck.rejected_areas[typekey], compatible_holodeck_comps)
 			continue
-		var/list/info_this = list()
-		info_this["name"] = A.name
-		info_this["type"] = A.type
+		var/list/info_this = list("name" = A.name, "type" = A.type)
 		if(A.restricted)
 			LAZYADD(emag_programs, list(info_this))
 		else

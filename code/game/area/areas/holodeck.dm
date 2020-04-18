@@ -13,6 +13,16 @@
 	Asserts are to avoid the inevitable infinite loops
 */
 
+/area/holodeck/Initialize()
+	. = ..()
+	var/list/update_holodeck_cache = SSholodeck?.rejected_areas[type]
+	if(update_holodeck_cache)
+		var/list/info_this = list("name" = name, "type" = type)
+		var/list/target = restricted ? SSholodeck.emag_program_cache : SSholodeck.program_cache
+		for(var/A in update_holodeck_cache)
+			LAZYADD(target[A], info_this)
+		SSholodeck.rejected_areas -= type
+
 /area/holodeck/powered(var/chan)
 	if(!requires_power)
 		return 1
