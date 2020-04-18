@@ -33,6 +33,7 @@
 //STATION PETS
 /mob/living/simple_animal/pet
 	vore_flags = DEVOURABLE | DIGESTABLE | FEEDING
+	vore_default_mode = DM_HOLD
 
 /mob/living/simple_animal/sloth
 	vore_flags = DEVOURABLE | DIGESTABLE
@@ -43,10 +44,12 @@
 //HOSTILE MOBS
 /mob/living/simple_animal/hostile/retaliate/goat
 	vore_flags = DEVOURABLE | DIGESTABLE | FEEDING
+	vore_default_mode = DM_HOLD
 
 
 /mob/living/simple_animal/hostile/lizard
 	vore_flags = DEVOURABLE | DIGESTABLE | FEEDING
+	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/alien
 	vore_flags = FEEDING
