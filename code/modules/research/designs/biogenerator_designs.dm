@@ -2,7 +2,7 @@
 ///////Biogenerator Designs ///////
 ///////////////////////////////////
 
-//Please be wary to not add inorganic items to the results such as glass bottles and metal.
+//Please be wary to not add inorganic items to the results such as generic glass bottles and metal.
 //as they kind of defeat the design of this feature.
 
 /datum/design/milk
