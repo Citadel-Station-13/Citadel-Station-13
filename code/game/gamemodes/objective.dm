@@ -1292,7 +1292,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 
 /datum/objective/syndicatesupermatter
 	name = "keep SM intact"
-	explanation_text = "Keep supermatter engine onboard the cruiser intact."
+	explanation_text = "Keep the supermatter engine onboard the cruiser intact."
 
 /datum/objective/syndicatesupermatter/check_completion()
 	if(GLOB.syndicate_supermatter_engine)
