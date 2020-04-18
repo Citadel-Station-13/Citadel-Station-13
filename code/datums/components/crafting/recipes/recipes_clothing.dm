@@ -41,7 +41,7 @@
 	category = CAT_CLOTHING
 	
 /datum/crafting_recipe/armwraps
-	name = "armwraps"
+	name = "Armwraps"
 	result = /obj/item/clothing/gloves/fingerless/pugilist
 	time = 60
 	tools = list(TOOL_WIRECUTTER)
@@ -51,7 +51,7 @@
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/armwrapsplusone
-	name = "armwraps of mighty fists"
+	name = "Armwraps of Mighty Fists"
 	result = /obj/item/clothing/gloves/fingerless/pugilist/magic
 	time = 300
 	tools = list(TOOL_WIRECUTTER, /obj/item/book/codex_gigas, /obj/item/clothing/head/wizard, /obj/item/clothing/suit/wizrobe)
