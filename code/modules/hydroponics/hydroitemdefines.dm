@@ -184,7 +184,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
-/obj/item/reagent_containers/glass/bottle/killer/weedkiller 
+/obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 50)

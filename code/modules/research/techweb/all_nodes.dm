@@ -1029,7 +1029,7 @@
 	TW.research_points = list()
 	for(var/i in processing)
 		var/datum/techweb_node/TN = i
-		TW.add_point_list(TN.research_costs) 
+		TW.add_point_list(TN.research_costs)
 	return TW.research_points
 
 /proc/total_techweb_points_printout()

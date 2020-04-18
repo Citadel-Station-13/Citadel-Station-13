@@ -613,4 +613,4 @@
 	id = "meteor_console"
 	build_path = /obj/item/circuitboard/computer/sat_control
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING 
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
