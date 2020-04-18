@@ -23,7 +23,10 @@
 					CAT_AMMO,
 				),
 				CAT_ROBOT = CAT_NONE,
-				CAT_MISC = CAT_NONE,
+				CAT_MISC = list(
+					CAT_TOOL,
+					CAT_FURNITURE,
+				),
 				CAT_PRIMAL = CAT_NONE,
 				CAT_FOOD = list(
 					CAT_BREAD,
