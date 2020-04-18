@@ -6,6 +6,7 @@
 	desc = "Female milk producing organs."
 	icon_state = "breasts"
 	icon = 'modular_citadel/icons/obj/genitals/breasts.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_BREASTS
 	size = BREASTS_SIZE_DEF // "c". Refer to the breast_values static list below for the cups associated number values

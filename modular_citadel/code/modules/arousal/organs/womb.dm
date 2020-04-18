@@ -3,6 +3,7 @@
 	desc = "A female reproductive organ."
 	icon = 'modular_citadel/icons/obj/genitals/vagina.dmi'
 	icon_state = "womb"
+	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_WOMB
 	genital_flags = GENITAL_INTERNAL|GENITAL_FUID_PRODUCTION

@@ -15,6 +15,7 @@
 	var/datum/component/storage/concrete/master		//If not null, all actions act on master and this is just an access point.
 
 	var/list/can_hold								//if this is set, only things in this typecache will fit.
+	var/list/can_hold_extra							//if this is set, it will also be able to hold these.
 	var/list/cant_hold								//if this is set, anything in this typecache will not be able to fit.
 
 	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
@@ -493,26 +494,27 @@
 		if(M && !stop_messages)
 			host.add_fingerprint(M)
 		return FALSE
-	if(length(can_hold))
-		if(!is_type_in_typecache(I, can_hold))
+	if(!length(can_hold_extra) || !is_type_in_typecache(I, can_hold_extra))
+		if(length(can_hold))
+			if(!is_type_in_typecache(I, can_hold))
+				if(!stop_messages)
+					to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
+				return FALSE
+		if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
-		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
-		return FALSE
-	// STORAGE LIMITS
+		if(storage_flags & STORAGE_LIMIT_MAX_W_CLASS)
+			if(I.w_class > max_w_class)
+				if(!stop_messages)
+					to_chat(M, "<span class='warning'>[I] is too long for [host]!</span>")
+				return FALSE
+		// STORAGE LIMITS
 	if(storage_flags & STORAGE_LIMIT_MAX_ITEMS)
 		if(real_location.contents.len >= max_items)
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] has too many things in it, make some space!</span>")
 			return FALSE //Storage item is full
-	if(storage_flags & STORAGE_LIMIT_MAX_W_CLASS)
-		if(I.w_class > max_w_class)
-			if(!stop_messages)
-				to_chat(M, "<span class='warning'>[I] is too long for [host]!</span>")
-			return FALSE
 	if(storage_flags & STORAGE_LIMIT_COMBINED_W_CLASS)
 		var/sum_w_class = I.w_class
 		for(var/obj/item/_I in real_location)

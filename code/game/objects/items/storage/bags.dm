@@ -48,7 +48,8 @@
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 30
 	STR.max_items = 30
-	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
+	STR.can_hold_extra = typecacheof(list(/obj/item/organ/lungs, /obj/item/organ/liver, /obj/item/organ/stomach, /obj/item/clothing/shoes/sneakers, /obj/item/clothing/shoes/laceup, /obj/item/clothing/shoes/wraps, /obj/item/clothing/shoes/sandal, /obj/item/clothing/shoes/winterboots, /obj/item/clothing/shoes/cyborg, /obj/item/clothing/shoes/roman, /obj/item/clothing/shoes/griffin, /obj/item/clothing/shoes/singery, /obj/item/clothing/shoes/singerb, /obj/item/clothing/shoes/cowboyboots))
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear, /obj/item/storage/wallet, /obj/item/organ/brain))
 	STR.limited_random_access = TRUE
 	STR.limited_random_access_stack_position = 3
 
