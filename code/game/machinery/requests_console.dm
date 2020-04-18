@@ -469,7 +469,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			if(newmessagepriority < EXTREME_MESSAGE_PRIORITY)
 				newmessagepriority = EXTREME_MESSAGE_PRIORITY
 				update_icon()
-			if(1)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 				say(title)
 			messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"

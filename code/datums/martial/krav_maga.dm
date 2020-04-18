@@ -98,13 +98,13 @@
 /datum/martial_art/krav_maga/proc/leg_sweep(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	var/obj/item/bodypart/affecting = D.get_bodypart(BODY_ZONE_CHEST)
 	var/armor_block = D.run_armor_check(affecting, "melee")
-	var/damage = damage_roll(A,D)
+	var/damage = (damage_roll(A,D)*2 + 25)
 	if(!CHECK_MOBILITY(D, MOBILITY_STAND))
 		return FALSE
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
-	D.apply_damage(damage + 25, STAMINA, affecting, armor_block)
+	D.apply_damage(damage, STAMINA, affecting, armor_block)
 	D.DefaultCombatKnockdown(80, override_hardstun = 1, override_stamdmg = 0)
 	log_combat(A, D, "leg sweeped")
 	return TRUE
@@ -145,7 +145,7 @@
 	log_combat(A, D, "punched")
 	var/picked_hit_type = pick("punches", "kicks")
 	var/bonus_damage = damage_roll(A,D)
-	if(CHECK_MOBILITY(D, MOBILITY_STAND))
+	if(!CHECK_MOBILITY(D, MOBILITY_STAND))
 		bonus_damage += 10
 		picked_hit_type = "stomps on"
 	D.apply_damage(bonus_damage, BRUTE, affecting, armor_block)
@@ -166,13 +166,14 @@
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 	var/damage = damage_roll(A,D)
-	if(D.mobility_flags & MOBILITY_STAND)
+	var/stunthreshold = A.dna.species.punchstunthreshold
+	if(CHECK_MOBILITY(D, MOBILITY_STAND))
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
 					"<span class='userdanger'>You're slapped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='danger'>You jab [D]!</span>")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-		D.apply_damage(damage + 5, STAMINA, affecting, armor_block)
+		D.apply_damage(damage*2 + 15, STAMINA, affecting, armor_block)
 		log_combat(A, D, "punched nonlethally")
 	else
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
@@ -180,11 +181,12 @@
 		to_chat(A, "<span class='danger'>You stomp [D]!</span>")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-		D.apply_damage(damage + 10, STAMINA, affecting, armor_block)
+		D.apply_damage(damage*2 + 20, STAMINA, affecting, armor_block)
 		log_combat(A, D, "stomped nonlethally")
-	if(prob(D.getStaminaLoss()))
+	if(damage >= stunthreshold)
 		D.visible_message("<span class='warning'>[D] sputters and recoils in pain!</span>", "<span class='userdanger'>You recoil in pain as you are jabbed in a nerve!</span>")
 		D.drop_all_held_items()
+	
 	return TRUE
 
 //Krav Maga Gloves
