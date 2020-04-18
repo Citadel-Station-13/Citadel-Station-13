@@ -514,6 +514,7 @@
 #include "code\datums\elements\ghost_role_eligibility.dm"
 #include "code\datums\elements\mob_holder.dm"
 #include "code\datums\elements\polychromic.dm"
+#include "code\datums\elements\shielded.dm"
 #include "code\datums\elements\spellcasting.dm"
 #include "code\datums\elements\swimming.dm"
 #include "code\datums\elements\sword_point.dm"
