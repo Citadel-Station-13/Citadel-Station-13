@@ -2,8 +2,8 @@
 ///////Biogenerator Designs ///////
 ///////////////////////////////////
 
-//Please be wary of not adding inorganic items to the results such as glass bottles and metal.
-//since they kind of defeat the design of this feature.
+//Please be wary to not add inorganic items to the results such as glass bottles and metal.
+//as they kind of defeat the design of this feature.
 
 /datum/design/milk
 	name = "10u Milk"
