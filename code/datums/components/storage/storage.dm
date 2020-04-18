@@ -15,7 +15,7 @@
 	var/datum/component/storage/concrete/master		//If not null, all actions act on master and this is just an access point.
 
 	var/list/can_hold								//if this is set, only things in this typecache will fit.
-	var/list/can_hold_extra							//if this is set, it will also be able to hold these.
+	var/list/can_hold_extra							///can hold these items regardless of weight class restrictions.
 	var/list/cant_hold								//if this is set, anything in this typecache will not be able to fit.
 
 	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
