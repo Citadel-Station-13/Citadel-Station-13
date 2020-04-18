@@ -193,7 +193,7 @@
 	name = "Russian Sniper Crate"
 	desc = "Shoot those that oppose you from far with great strength with this kit of a mosin nagant, some food, and ammo. Armory access to open."
 	cost = 7500
-	hiddne = TRUE //illegal tech + 60 damage gun.
+	hidden = TRUE //Illegal tech + 60 damage gun.
 	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
 					/obj/item/ammo_box/a762,
 					/obj/item/gun/ballistic/shotgun/boltaction)
