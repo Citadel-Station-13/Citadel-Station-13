@@ -191,7 +191,7 @@
 
 /datum/supply_pack/security/armory/russian_sniper
 	name = "Russian Sniper Crate"
-	desc = "Shoot those that oppose you from fair with grate strength with this kit of a Mosin Nagant, some food and ammo. Armory access to open."
+	desc = "Shoot those that oppose you from far with great strength with this kit of a mosin nagant, some food, and ammo. Armory access to open."
 	cost = 7500
 	hiddne = TRUE //illegal tech + 60 damage gun.
 	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
