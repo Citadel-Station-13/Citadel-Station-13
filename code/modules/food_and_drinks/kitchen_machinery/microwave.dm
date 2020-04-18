@@ -243,7 +243,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
 
-	if(prob(dirty * 5 - (5 / efficiency - 5)) //a clean unupgraded microwave has no risk of failure
+	if(prob(dirty * 5 / (5 * efficiency))) //a clean unupgraded microwave has no risk of failure
 		muck()
 		return
 	for(var/obj/O in ingredients)
