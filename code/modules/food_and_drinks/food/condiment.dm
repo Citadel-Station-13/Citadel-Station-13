@@ -227,12 +227,7 @@
 	list_reagents = list(/datum/reagent/consumable/mayonnaise = 50)
 	possible_states = list()
 
-/obj/item/reagent_containers/food/condiment/bbqsauce
-	name = "bbq sauce"
-	desc = "An unholy cocktail that's impossible to say no to."
-	icon_state = "bbqsauce"
-	list_reagents = list(/datum/reagent/consumable/bbqsauce = 50)
-	possible_states = list()
+
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 
@@ -316,7 +311,7 @@
 	list_reagents = list(/datum/reagent/consumable/astrotame = 5)
 
 //Other Sauce
-/obj/item/reagent_containers/food/condiment/pack/bbqsauce
+/obj/item/reagent_containers/food/condiment/pack/bbqsauce 
 	name = "bbq sauce pack"
 	originalname = "bbq sauce"
 	list_reagents = list(/datum/reagent/consumable/bbqsauce = 10)

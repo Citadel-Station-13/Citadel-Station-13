@@ -293,20 +293,20 @@
 	name = "Broom"
 	desc = "Just your everyday standard broom."
 	id = "broom"
-	build_type = PROTOLATHE | AUTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 600)
 	build_path = /obj/item/twohanded/broom
-	category = list("initial", "Equipment", "Misc")
+	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/mop
 	name = "Mop"
 	desc = "Just your everyday standard mop."
 	id = "mop"
-	build_type = PROTOLATHE | AUTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1200, /datum/material/glass = 100)
 	build_path = /obj/item/mop
-	category = list("initial", "Equipment", "Misc")
+	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/advmop
@@ -329,16 +329,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/normtrash
-	name = "Trashbag"
-	desc = "It's a bag for trash, you put garbage in it."
-	id = "normtrash"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/plastic = 2000)
-	build_path = /obj/item/storage/bag/trash
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/blutrash
 	name = "Trashbag of Holding"
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
@@ -356,17 +346,6 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
 	build_path = /obj/item/janiupgrade
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
-/datum/design/paint_remover
-	name = "Paint Remover"
-	desc = "Removes stains from the floor, and not much else."
-	id = "paint_remover"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 1000)
-	reagents_list = list(/datum/reagent/acetone = 60)
-	build_path = /obj/item/paint/paint_remover
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -634,4 +613,4 @@
 	id = "meteor_console"
 	build_path = /obj/item/circuitboard/computer/sat_control
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING 
