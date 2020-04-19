@@ -383,7 +383,7 @@
 /datum/reagent/consumable/space_cola
 	name = "Cola"
 	description = "A refreshing beverage."
-	nutriment_factor = 0
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
 	glass_icon_state  = "glass_brown"
@@ -418,7 +418,7 @@
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
 	description = "Blows right through you like a space wind."
-	nutriment_factor = 0
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#102000" // rgb: 16, 32, 0
 	taste_description = "sweet citrus soda"
 	glass_icon_state = "Space_mountain_wind_glass"
@@ -436,7 +436,7 @@
 /datum/reagent/consumable/dr_gibb
 	name = "Dr. Gibb"
 	description = "A delicious blend of 42 different flavours."
-	nutriment_factor = 0
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#102000" // rgb: 16, 32, 0
 	taste_description = "cherry soda" // FALSE ADVERTISING
 	glass_icon_state = "dr_gibb_glass"
@@ -451,7 +451,7 @@
 /datum/reagent/consumable/space_up
 	name = "Space-Up"
 	description = "Tastes like a hull breach in your mouth."
-	nutriment_factor = 0
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#00FF00" // rgb: 0, 255, 0
 	taste_description = "cherry soda"
 	glass_icon_state = "space-up_glass"
@@ -466,7 +466,7 @@
 /datum/reagent/consumable/lemon_lime
 	name = "Lemon Lime"
 	description = "A tangy substance made of 0.5% natural citrus!"
-	nutriment_factor = 0
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "tangy lime and lemon soda"
 	glass_icon_state = "glass_yellow"
@@ -480,7 +480,7 @@
 /datum/reagent/consumable/pwr_game
 	name = "Pwr Game"
 	description = "The only drink with the PWR that true gamers crave."
-	nutriment_factor = 0
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
 	glass_icon_state = "glass_red"
@@ -494,7 +494,7 @@
 /datum/reagent/consumable/shamblers
 	name = "Shambler's Juice"
 	description = "~Shake me up some of that Shambler's Juice!~"
-	nutriment_factor = 0
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#f00060" // rgb: 94, 0, 38
 	taste_description = "carbonated metallic soda"
 	glass_icon_state = "glass_red"
@@ -854,7 +854,7 @@
 /datum/reagent/consumable/sol_dry
 	name = "Sol Dry"
 	description = "A soothing, mellow drink made from ginger."
-	nutriment_factor = 0
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#f7d26a"
 	quality = DRINK_NICE
 	taste_description = "sweet ginger spice"
