@@ -604,3 +604,7 @@
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()
 	return
+
+/// Mode specific info for ghost game_info
+/datum/game_mode/proc/ghost_info()
+	return
