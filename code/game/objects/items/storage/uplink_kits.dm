@@ -495,3 +495,13 @@
 	new item2(src)
 	new item3(src)
 	new /obj/item/paper/contractor_guide(src)	//Paper guide
+	
+
+/obj/item/storage/box/syndie_kit/northstar
+
+/obj/item/storage/box/syndie_kit/northstar/PopulateContents()
+	new /obj/item/clothing/gloves/fingerless/pugilist/rapid(src)
+	new /obj/item/clothing/accessory/padding(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
