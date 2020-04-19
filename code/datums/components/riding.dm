@@ -26,7 +26,6 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
-	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_dir_changed)
 
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	restore_position(M)
@@ -47,11 +46,6 @@
 
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
-
-/datum/component/riding/proc/vehicle_dir_changed(from_dir, to_dir)
-	spawn
-		handle_vehicle_offsets()
-		handle_vehicle_layer()
 
 /datum/component/riding/proc/vehicle_moved(datum/source)
 	var/atom/movable/AM = parent
