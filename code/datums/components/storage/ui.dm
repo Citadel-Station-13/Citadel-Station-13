@@ -175,7 +175,7 @@
 	. += ui_left
 	// Then, closer, which is also our right element.
 	ui_close = get_ui_close()
-	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y + row - 1]:[screen_pixel_y]"
+	ui_close.screen_loc = "[screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + maxcolumns]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	. += ui_close
 
 /**

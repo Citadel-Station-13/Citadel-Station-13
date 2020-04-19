@@ -108,7 +108,6 @@
 		message = replacetext(message," drink "," liquid ")
 		message = replacetext(message," feminist "," empowered woman ")
 		message = replacetext(message," i hate you "," you're a mean ")
-		message = replacetext(message," jew "," jewish ")
 		message = replacetext(message," shit "," shiz ")
 		message = replacetext(message," crap "," poo ")
 		message = replacetext(message," slut "," tease ")
