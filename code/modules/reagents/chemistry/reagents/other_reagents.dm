@@ -1034,6 +1034,14 @@
 			// +20% success propability on each step, useful while operating in less-than-perfect conditions
 	..()
 
+/datum/reagent/space_cleaner/sterilizine/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		reac_volume = min((reac_volume / 10), G.amount)
+		new/obj/item/stack/medical/gauze/adv(get_turf(G), reac_volume)
+		G.use(reac_volume)
+
+
 /datum/reagent/iron
 	name = "Iron"
 	description = "Pure iron is a metal."
